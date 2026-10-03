@@ -1,0 +1,6 @@
+ram-guard: PID 95436; host 71.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/local-formal-helper-causes-20261003/verify.py", line 113, in <module>
+    assert all(r['matched']==r['expected'] for r in rows),'actual current helper accepts unrelated primary causes'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual current helper accepts unrelated primary causes

@@ -1,0 +1,8 @@
+ram-guard: PID 44769; host 59.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared cause corruption rejects: primary_cause
+shared cause corruption rejects: input_class
+shared cause corruption rejects: matched_kind
+shared cause corruption rejects: accepted_kind
+shared cause corruption rejects: missing_context
+shared cause corruption rejects: extra_field
+Exact8 helper callers/32 real captured contexts:8 genuine positives and8 unrelated primary matches; complete selected products/kinds and current source/Git scope reconcile. Direct/trace/wider consumers remain open.

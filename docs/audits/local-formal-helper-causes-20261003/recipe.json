@@ -1,0 +1,33 @@
+{
+  "baseline": "21f4887c6ee4bf34efd37f35b6a400052008c4f3",
+  "commands": {
+    "bind": "scripts/run_with_ram_guard.sh -- python3 docs/audits/local-formal-helper-causes-20261003/bind.py",
+    "cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/local-formal-helper-causes-20261003/verify.py",
+    "current_consumer": "scripts/run_with_ram_guard.sh -- python3 docs/audits/local-formal-helper-causes-20261003/verify.py --trust-current",
+    "positive_inputs": "scripts/run_with_ram_guard.sh -- perl docs/audits/local-formal-helper-causes-20261003/positive_inputs.pl",
+    "probe": "scripts/run_with_ram_guard.sh -- perl docs/audits/local-formal-helper-causes-20261003/probe.pl",
+    "producer": "FSMGEN_LOCAL_FORMAL_ORIGIN_CAPTURE=docs/audits/local-formal-helper-causes-20261003/products scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2052-isf-local-formal-origin-authority.t",
+    "shape_control": "scripts/run_with_ram_guard.sh -- python3 docs/audits/local-formal-helper-causes-20261003/verify.py --extra-field-at-load"
+  },
+  "draft_seal": "manifest-initial-unqualified.json; premature, reader domain expectation had one extra space",
+  "final_counterfactuals": {
+    "extra-field-at-load": 1,
+    "trust-current": 1
+  },
+  "final_input_readback_status": 0,
+  "native_runtime": "not run",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.2",
+  "rendered_check": "normalizes observed mdBook typographic apostrophe; initial literal-punctuation failure retained",
+  "source_boundary": "clean21f source before producer; persisted binding before new wrong-control probe; independent current/Git equality after probes",
+  "statuses": {
+    "book": 0,
+    "current-producer": 0,
+    "draft-extra-field-at-load": 0,
+    "extra-field-at-load-red": 1,
+    "focused": 0,
+    "probe": 8,
+    "trust-current-red": 1,
+    "verify": 0
+  },
+  "visual_qa": "not performed"
+}

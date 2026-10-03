@@ -1,0 +1,4 @@
+ram-guard: PID 54958; host 76.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+domain constructor boundary source
+ACTUAL '(actor domains (clock-domains (domain core (clock clk) :default))(interface (input start) (input allow) (input payload (width 3)) (input other (width 3)) (output result (width 3)) (output done))(transaction main (ports (input allow) (input payload (width 3)) (input other (width 3)) (output result (width 3))) (on start) (select result allow payload other) (complete done)))'
+EXPECTED '(actor domains (clock-domains (domain core (clock clk) :default)) (interface (input start) (input allow) (input payload (width 3)) (input other (width 3)) (output result (width 3)) (output done))(transaction main (ports (input allow) (input payload (width 3)) (input other (width 3)) (output result (width 3))) (on start) (select result allow payload other) (complete done)))'

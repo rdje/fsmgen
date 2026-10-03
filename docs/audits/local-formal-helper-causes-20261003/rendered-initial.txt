@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/local-formal-helper-causes-20261003/rendered_verify.py", line 7, in <module>
+    for phrase in ['unrelated parser errors quoting a source label', "JSON encoding errors quoting an object's class name", 'real-producer diagnosis', 'immediate complete-cause repair before imported qualification']:assert phrase in text,phrase
+                                                                                                                                                                                                                               ^^^^^^^^^^^^^^
+AssertionError: JSON encoding errors quoting an object's class name

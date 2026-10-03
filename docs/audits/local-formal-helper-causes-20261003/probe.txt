@@ -1,0 +1,99 @@
+ram-guard: PID 55872; host 79.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+ok 1 - equal-body origin transplant / positive actually refuses
+ok 2 - equal-body origin transplant / positive names the actual cause
+ok 3 - equal-body origin transplant / wrong_context actually refuses
+ok 4 - equal-body origin transplant / wrong_context names the actual cause
+ok 5 - equal-body origin transplant / wrong_input_echo actually refuses
+not ok 6 - equal-body origin transplant / wrong_input_echo names the actual cause
+#   Failed test 'equal-body origin transplant / wrong_input_echo names the actual cause'
+#   at docs/audits/local-formal-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 7 - equal-body origin transplant / wrong_input_plain actually refuses
+ok 8 - equal-body origin transplant / wrong_input_plain names the actual cause
+ok 9 - actual clone callback lost / positive actually refuses
+ok 10 - actual clone callback lost / positive names the actual cause
+ok 11 - actual clone callback lost / wrong_source_plain actually refuses
+ok 12 - actual clone callback lost / wrong_source_plain names the actual cause
+ok 13 - actual clone callback lost / wrong_source_echo actually refuses
+ok 14 - actual clone callback lost / wrong_source_echo names the actual cause
+ok 15 - actual clone callback lost / wrong_label_echo actually refuses
+not ok 16 - actual clone callback lost / wrong_label_echo names the actual cause
+#   Failed test 'actual clone callback lost / wrong_label_echo names the actual cause'
+#   at docs/audits/local-formal-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 17 - actual Storable callback lost / positive actually refuses
+ok 18 - actual Storable callback lost / positive names the actual cause
+ok 19 - actual Storable callback lost / wrong_source_plain actually refuses
+ok 20 - actual Storable callback lost / wrong_source_plain names the actual cause
+ok 21 - actual Storable callback lost / wrong_source_echo actually refuses
+ok 22 - actual Storable callback lost / wrong_source_echo names the actual cause
+ok 23 - actual Storable callback lost / wrong_label_echo actually refuses
+not ok 24 - actual Storable callback lost / wrong_label_echo names the actual cause
+#   Failed test 'actual Storable callback lost / wrong_label_echo names the actual cause'
+#   at docs/audits/local-formal-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 25 - imported producer boundary / positive actually refuses
+ok 26 - imported producer boundary / positive names the actual cause
+ok 27 - imported producer boundary / wrong_source_plain actually refuses
+ok 28 - imported producer boundary / wrong_source_plain names the actual cause
+ok 29 - imported producer boundary / wrong_source_echo actually refuses
+ok 30 - imported producer boundary / wrong_source_echo names the actual cause
+ok 31 - imported producer boundary / wrong_label_echo actually refuses
+not ok 32 - imported producer boundary / wrong_label_echo names the actual cause
+#   Failed test 'imported producer boundary / wrong_label_echo names the actual cause'
+#   at docs/audits/local-formal-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 33 - actor network boundary / positive actually refuses
+ok 34 - actor network boundary / positive names the actual cause
+ok 35 - actor network boundary / wrong_source_plain actually refuses
+ok 36 - actor network boundary / wrong_source_plain names the actual cause
+ok 37 - actor network boundary / wrong_source_echo actually refuses
+ok 38 - actor network boundary / wrong_source_echo names the actual cause
+ok 39 - actor network boundary / wrong_label_echo actually refuses
+not ok 40 - actor network boundary / wrong_label_echo names the actual cause
+#   Failed test 'actor network boundary / wrong_label_echo names the actual cause'
+#   at docs/audits/local-formal-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 41 - generated transaction boundary / positive actually refuses
+ok 42 - generated transaction boundary / positive names the actual cause
+ok 43 - generated transaction boundary / wrong_source_plain actually refuses
+ok 44 - generated transaction boundary / wrong_source_plain names the actual cause
+ok 45 - generated transaction boundary / wrong_source_echo actually refuses
+ok 46 - generated transaction boundary / wrong_source_echo names the actual cause
+ok 47 - generated transaction boundary / wrong_label_echo actually refuses
+not ok 48 - generated transaction boundary / wrong_label_echo names the actual cause
+#   Failed test 'generated transaction boundary / wrong_label_echo names the actual cause'
+#   at docs/audits/local-formal-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 49 - domain constructor boundary / positive actually refuses
+ok 50 - domain constructor boundary / positive names the actual cause
+ok 51 - domain constructor boundary / wrong_source_plain actually refuses
+ok 52 - domain constructor boundary / wrong_source_plain names the actual cause
+ok 53 - domain constructor boundary / wrong_source_echo actually refuses
+ok 54 - domain constructor boundary / wrong_source_echo names the actual cause
+ok 55 - domain constructor boundary / wrong_label_echo actually refuses
+not ok 56 - domain constructor boundary / wrong_label_echo names the actual cause
+#   Failed test 'domain constructor boundary / wrong_label_echo names the actual cause'
+#   at docs/audits/local-formal-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 57 - no formal preparation boundary / positive actually refuses
+ok 58 - no formal preparation boundary / positive names the actual cause
+ok 59 - no formal preparation boundary / wrong_source_plain actually refuses
+ok 60 - no formal preparation boundary / wrong_source_plain names the actual cause
+ok 61 - no formal preparation boundary / wrong_source_echo actually refuses
+ok 62 - no formal preparation boundary / wrong_source_echo names the actual cause
+ok 63 - no formal preparation boundary / wrong_label_echo actually refuses
+not ok 64 - no formal preparation boundary / wrong_label_echo names the actual cause
+#   Failed test 'no formal preparation boundary / wrong_label_echo names the actual cause'
+#   at docs/audits/local-formal-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+1..64
+# Looks like you failed 8 tests of 64.

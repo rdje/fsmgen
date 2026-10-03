@@ -1,0 +1,6 @@
+claim-inventory: wrote doctrine/claim_verification/inventory.jsonl
+claim-inventory: current-surface census and independent census agree (numeric_lines=13226, candidates=1976, quantified=963, conservative=1013, constants=2891, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1976)
+claim-inventory: partition adoption_reference_or_structure=118
+claim-inventory: partition code_or_data_example=3317
+claim-inventory: partition derived_and_watched_projection=184
+claim-inventory: partition identifier_literal_or_navigation=7631

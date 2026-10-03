@@ -1,0 +1,5 @@
+ram-guard: PID 609; host 81.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/2052-isf-local-formal-origin-authority.t .. ok
+All tests successful.
+Files=1, Tests=19,  7 wallclock secs ( 0.04 usr  0.01 sys +  3.80 cusr  1.13 csys =  4.98 CPU)
+Result: PASS

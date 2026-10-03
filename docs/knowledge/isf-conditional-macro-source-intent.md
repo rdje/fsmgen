@@ -68,16 +68,16 @@ forgeries and closes imports. Separate qualifications cover
 
 T2052 privately authenticates local source, follows actual LoweringIR/Storable
 clone references into canonical FormalLowering/ClauseResolver, and binds returned clauses to catalog/call/path/ordinal and explicit input/output
-formal identities; whole literal clauses/products/kinds agree.
+formal identities/aliases/roles; whole literal clauses/products/kinds agree.
 Sibling/pin shadows, locals, nested calls/clauses, equal-body origins, first
 samples and existing declines qualify; opaque forgery, missing clone and
-comparison-bypass controls falsify omissions. Reload helpers select first lines;
-the residual constructor now compares its complete cause. Broader helper/cold
-qualification remains open; Carp stacks and input labels can echo wanted text. The old invalid actors fixture/full-stack matcher falsely qualified a network
+comparison-bypass controls falsify omissions. The reload helper's first-line substrings falsely accept actual parser labels and
+JSON object-class echoes. [Diagnosis](../audits/local-formal-helper-causes-20261003/scope.txt)
+owns complete-cause repair. The residual constructor compares complete causes;
+wider helper/cold review is open. Carp stacks also echo regex text. The old invalid actors fixture/full-stack matcher falsely qualified a network
 reason. A valid instance/actual echo RED supersedes it; prior archives stay intact.
 Views detach. Imports, networks,
 generated specialization and domains refuse. Qualification/adoption remain `.5.2.2.3` successors; production/admission unchanged.
 
-Products and literal predicates/effects/aliases/roles re-derive scope; intent
-RED/shared corruption falsify parity. Tests/source/recipes/receipts/seals endure. No new language,
+No new language,
 HDL/macro/output runtime, public route widening or completed delivery is proved.

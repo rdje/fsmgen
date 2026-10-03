@@ -1,0 +1,6 @@
+ram-guard: PID 92733; host 68.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/local-formal-helper-causes-20261003/verify.py", line 82, in <module>
+    for row in rows:assert set(row)=={'id','site','band','input','error','first_line','accepted','matched','expected','pattern','full_trace_matched'},'unexpected incoming cause field'
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpected incoming cause field
