@@ -1,0 +1,3 @@
+ram-guard: PID 8105; host 64.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+actor input write current_fixture
+/transactions/0 keys {'ports'} set()

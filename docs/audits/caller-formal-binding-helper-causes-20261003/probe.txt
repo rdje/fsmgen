@@ -1,0 +1,442 @@
+ok 1 - shadow/input/input/input/value / current_fixture rejected
+ok 2 - shadow/input/input/input/value / current_fixture diagnostic
+ok 3 - shadow/input/input/input/value / current_fixture whole trace cannot qualify a different primary category
+ok 4 - shadow/input/input/input/value / current_fixture whole caller stays unchanged
+ok 5 - shadow/input/input/input/value / wrong_native_shape rejected
+not ok 6 - shadow/input/input/input/value / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/input/input/value / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x76800105d0), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x7680012450), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x7680011fd8)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x7680011fd8)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x7680011fd8), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/input/input/value / wrong_native_shape") called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 7 - shadow/input/input/input/value / wrong_native_shape whole trace cannot qualify a different primary category
+ok 8 - shadow/input/input/input/value / wrong_native_shape whole caller stays unchanged
+ok 9 - shadow/input/input/input/(+ value observed) / current_fixture rejected
+ok 10 - shadow/input/input/input/(+ value observed) / current_fixture diagnostic
+ok 11 - shadow/input/input/input/(+ value observed) / current_fixture whole trace cannot qualify a different primary category
+ok 12 - shadow/input/input/input/(+ value observed) / current_fixture whole caller stays unchanged
+ok 13 - shadow/input/input/input/(+ value observed) / wrong_native_shape rejected
+not ok 14 - shadow/input/input/input/(+ value observed) / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/input/input/(+ value observed) / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x7680003c78), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x767f615348), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x7680004870)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x7680004870)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x7680004870), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/input/input/(+ value observed) / wrong_native_shape") called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 15 - shadow/input/input/input/(+ value observed) / wrong_native_shape whole trace cannot qualify a different primary category
+ok 16 - shadow/input/input/input/(+ value observed) / wrong_native_shape whole caller stays unchanged
+ok 17 - shadow/output/input/input / current_fixture rejected
+ok 18 - shadow/output/input/input / current_fixture diagnostic
+ok 19 - shadow/output/input/input / current_fixture whole trace cannot qualify a different primary category
+ok 20 - shadow/output/input/input / current_fixture whole caller stays unchanged
+ok 21 - shadow/output/input/input / wrong_native_shape rejected
+ok 22 - shadow/output/input/input / wrong_native_shape diagnostic
+not ok 23 - shadow/output/input/input / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'shadow/output/input/input / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 24 - shadow/output/input/input / wrong_native_shape whole caller stays unchanged
+ok 25 - shadow/input/input/output/value / current_fixture rejected
+ok 26 - shadow/input/input/output/value / current_fixture diagnostic
+ok 27 - shadow/input/input/output/value / current_fixture whole trace cannot qualify a different primary category
+ok 28 - shadow/input/input/output/value / current_fixture whole caller stays unchanged
+ok 29 - shadow/input/input/output/value / wrong_native_shape rejected
+not ok 30 - shadow/input/input/output/value / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/input/output/value / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x767fc29228), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x767f620ac8), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x7680013c48)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x7680013c48)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x7680013c48), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/input/output/value / wrong_native_shape") called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 31 - shadow/input/input/output/value / wrong_native_shape whole trace cannot qualify a different primary category
+ok 32 - shadow/input/input/output/value / wrong_native_shape whole caller stays unchanged
+ok 33 - shadow/input/input/output/(+ value observed) / current_fixture rejected
+ok 34 - shadow/input/input/output/(+ value observed) / current_fixture diagnostic
+ok 35 - shadow/input/input/output/(+ value observed) / current_fixture whole trace cannot qualify a different primary category
+ok 36 - shadow/input/input/output/(+ value observed) / current_fixture whole caller stays unchanged
+ok 37 - shadow/input/input/output/(+ value observed) / wrong_native_shape rejected
+not ok 38 - shadow/input/input/output/(+ value observed) / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/input/output/(+ value observed) / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x767f620b70), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x767f659438), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x768000c9c0)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x768000c9c0)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x768000c9c0), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/input/output/(+ value observed) / wrong_native_s"...) called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 39 - shadow/input/input/output/(+ value observed) / wrong_native_shape whole trace cannot qualify a different primary category
+ok 40 - shadow/input/input/output/(+ value observed) / wrong_native_shape whole caller stays unchanged
+ok 41 - shadow/output/input/output / current_fixture rejected
+ok 42 - shadow/output/input/output / current_fixture diagnostic
+ok 43 - shadow/output/input/output / current_fixture whole trace cannot qualify a different primary category
+ok 44 - shadow/output/input/output / current_fixture whole caller stays unchanged
+ok 45 - shadow/output/input/output / wrong_native_shape rejected
+ok 46 - shadow/output/input/output / wrong_native_shape diagnostic
+not ok 47 - shadow/output/input/output / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'shadow/output/input/output / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 48 - shadow/output/input/output / wrong_native_shape whole caller stays unchanged
+ok 49 - shadow/input/output/input/value / current_fixture rejected
+ok 50 - shadow/input/output/input/value / current_fixture diagnostic
+ok 51 - shadow/input/output/input/value / current_fixture whole trace cannot qualify a different primary category
+ok 52 - shadow/input/output/input/value / current_fixture whole caller stays unchanged
+ok 53 - shadow/input/output/input/value / wrong_native_shape rejected
+not ok 54 - shadow/input/output/input/value / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/output/input/value / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x767fbfdd38), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x767f658e40), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x767f6a2c30)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x767f6a2c30)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x767f6a2c30), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/output/input/value / wrong_native_shape") called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 55 - shadow/input/output/input/value / wrong_native_shape whole trace cannot qualify a different primary category
+ok 56 - shadow/input/output/input/value / wrong_native_shape whole caller stays unchanged
+ok 57 - shadow/input/output/input/(+ value observed) / current_fixture rejected
+ok 58 - shadow/input/output/input/(+ value observed) / current_fixture diagnostic
+ok 59 - shadow/input/output/input/(+ value observed) / current_fixture whole trace cannot qualify a different primary category
+ok 60 - shadow/input/output/input/(+ value observed) / current_fixture whole caller stays unchanged
+ok 61 - shadow/input/output/input/(+ value observed) / wrong_native_shape rejected
+not ok 62 - shadow/input/output/input/(+ value observed) / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/output/input/(+ value observed) / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x767f640360), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x767f65adb0), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x767f684a20)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x767f684a20)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x767f684a20), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/output/input/(+ value observed) / wrong_native_s"...) called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 63 - shadow/input/output/input/(+ value observed) / wrong_native_shape whole trace cannot qualify a different primary category
+ok 64 - shadow/input/output/input/(+ value observed) / wrong_native_shape whole caller stays unchanged
+ok 65 - shadow/output/output/input / current_fixture rejected
+ok 66 - shadow/output/output/input / current_fixture diagnostic
+ok 67 - shadow/output/output/input / current_fixture whole trace cannot qualify a different primary category
+ok 68 - shadow/output/output/input / current_fixture whole caller stays unchanged
+ok 69 - shadow/output/output/input / wrong_native_shape rejected
+ok 70 - shadow/output/output/input / wrong_native_shape diagnostic
+not ok 71 - shadow/output/output/input / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'shadow/output/output/input / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 72 - shadow/output/output/input / wrong_native_shape whole caller stays unchanged
+ok 73 - shadow/input/output/output/value / current_fixture rejected
+ok 74 - shadow/input/output/output/value / current_fixture diagnostic
+ok 75 - shadow/input/output/output/value / current_fixture whole trace cannot qualify a different primary category
+ok 76 - shadow/input/output/output/value / current_fixture whole caller stays unchanged
+ok 77 - shadow/input/output/output/value / wrong_native_shape rejected
+not ok 78 - shadow/input/output/output/value / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/output/output/value / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x7680001120), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x767fbfe138), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x767f78f378)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x767f78f378)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x767f78f378), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/output/output/value / wrong_native_shape") called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 79 - shadow/input/output/output/value / wrong_native_shape whole trace cannot qualify a different primary category
+ok 80 - shadow/input/output/output/value / wrong_native_shape whole caller stays unchanged
+ok 81 - shadow/input/output/output/(+ value observed) / current_fixture rejected
+ok 82 - shadow/input/output/output/(+ value observed) / current_fixture diagnostic
+ok 83 - shadow/input/output/output/(+ value observed) / current_fixture whole trace cannot qualify a different primary category
+ok 84 - shadow/input/output/output/(+ value observed) / current_fixture whole caller stays unchanged
+ok 85 - shadow/input/output/output/(+ value observed) / wrong_native_shape rejected
+not ok 86 - shadow/input/output/output/(+ value observed) / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/output/output/(+ value observed) / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x767fc2a438), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x7680003840), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x767f78f4f8)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x767f78f4f8)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x767f78f4f8), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/output/output/(+ value observed) / wrong_native_"...) called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 87 - shadow/input/output/output/(+ value observed) / wrong_native_shape whole trace cannot qualify a different primary category
+ok 88 - shadow/input/output/output/(+ value observed) / wrong_native_shape whole caller stays unchanged
+ok 89 - shadow/output/output/output / current_fixture rejected
+ok 90 - shadow/output/output/output / current_fixture diagnostic
+ok 91 - shadow/output/output/output / current_fixture whole trace cannot qualify a different primary category
+ok 92 - shadow/output/output/output / current_fixture whole caller stays unchanged
+ok 93 - shadow/output/output/output / wrong_native_shape rejected
+ok 94 - shadow/output/output/output / wrong_native_shape diagnostic
+not ok 95 - shadow/output/output/output / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'shadow/output/output/output / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 96 - shadow/output/output/output / wrong_native_shape whole caller stays unchanged
+ok 97 - shadow/input/storage/input/value / current_fixture rejected
+ok 98 - shadow/input/storage/input/value / current_fixture diagnostic
+ok 99 - shadow/input/storage/input/value / current_fixture whole trace cannot qualify a different primary category
+ok 100 - shadow/input/storage/input/value / current_fixture whole caller stays unchanged
+ok 101 - shadow/input/storage/input/value / wrong_native_shape rejected
+not ok 102 - shadow/input/storage/input/value / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/storage/input/value / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x76800074e0), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x76800097e0), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x768000bc30)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x768000bc30)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x768000bc30), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/storage/input/value / wrong_native_shape") called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 103 - shadow/input/storage/input/value / wrong_native_shape whole trace cannot qualify a different primary category
+ok 104 - shadow/input/storage/input/value / wrong_native_shape whole caller stays unchanged
+ok 105 - shadow/input/storage/input/(+ value observed) / current_fixture rejected
+ok 106 - shadow/input/storage/input/(+ value observed) / current_fixture diagnostic
+ok 107 - shadow/input/storage/input/(+ value observed) / current_fixture whole trace cannot qualify a different primary category
+ok 108 - shadow/input/storage/input/(+ value observed) / current_fixture whole caller stays unchanged
+ok 109 - shadow/input/storage/input/(+ value observed) / wrong_native_shape rejected
+not ok 110 - shadow/input/storage/input/(+ value observed) / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/storage/input/(+ value observed) / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x768000e0a8), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x76800076f0), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x767f103630)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x767f103630)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x767f103630), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/storage/input/(+ value observed) / wrong_native_"...) called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 111 - shadow/input/storage/input/(+ value observed) / wrong_native_shape whole trace cannot qualify a different primary category
+ok 112 - shadow/input/storage/input/(+ value observed) / wrong_native_shape whole caller stays unchanged
+ok 113 - shadow/output/storage/input / current_fixture rejected
+ok 114 - shadow/output/storage/input / current_fixture diagnostic
+ok 115 - shadow/output/storage/input / current_fixture whole trace cannot qualify a different primary category
+ok 116 - shadow/output/storage/input / current_fixture whole caller stays unchanged
+ok 117 - shadow/output/storage/input / wrong_native_shape rejected
+ok 118 - shadow/output/storage/input / wrong_native_shape diagnostic
+not ok 119 - shadow/output/storage/input / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'shadow/output/storage/input / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 120 - shadow/output/storage/input / wrong_native_shape whole caller stays unchanged
+ok 121 - shadow/input/storage/output/value / current_fixture rejected
+ok 122 - shadow/input/storage/output/value / current_fixture diagnostic
+ok 123 - shadow/input/storage/output/value / current_fixture whole trace cannot qualify a different primary category
+ok 124 - shadow/input/storage/output/value / current_fixture whole caller stays unchanged
+ok 125 - shadow/input/storage/output/value / wrong_native_shape rejected
+not ok 126 - shadow/input/storage/output/value / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/storage/output/value / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x768000ef78), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x7680011f30), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x7680019d50)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x7680019d50)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x7680019d50), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/storage/output/value / wrong_native_shape") called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 127 - shadow/input/storage/output/value / wrong_native_shape whole trace cannot qualify a different primary category
+ok 128 - shadow/input/storage/output/value / wrong_native_shape whole caller stays unchanged
+ok 129 - shadow/input/storage/output/(+ value observed) / current_fixture rejected
+ok 130 - shadow/input/storage/output/(+ value observed) / current_fixture diagnostic
+ok 131 - shadow/input/storage/output/(+ value observed) / current_fixture whole trace cannot qualify a different primary category
+ok 132 - shadow/input/storage/output/(+ value observed) / current_fixture whole caller stays unchanged
+ok 133 - shadow/input/storage/output/(+ value observed) / wrong_native_shape rejected
+not ok 134 - shadow/input/storage/output/(+ value observed) / wrong_native_shape diagnostic
+#   Failed test 'shadow/input/storage/output/(+ value observed) / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'caller': activation bind role must be input or output
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076.
+# 	FSM::Scheduler::ISF::LoweringIR::_parse_activation_bind_clause(ARRAY(0x7680015720), "Transaction 'caller': activation") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7054
+# 	FSM::Scheduler::ISF::LoweringIR::_activation_bindings_from_clause(ARRAY(0x7680010978), "caller", "transaction body") called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x768001c5b8)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x768001c5b8)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x768001c5b8), qr(width (?:8 does not match actor signal 'value' width 4|4 does)..., "shadow/input/storage/output/(+ value observed) / wrong_native"...) called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8))'
+ok 135 - shadow/input/storage/output/(+ value observed) / wrong_native_shape whole trace cannot qualify a different primary category
+ok 136 - shadow/input/storage/output/(+ value observed) / wrong_native_shape whole caller stays unchanged
+ok 137 - shadow/output/storage/output / current_fixture rejected
+ok 138 - shadow/output/storage/output / current_fixture diagnostic
+ok 139 - shadow/output/storage/output / current_fixture whole trace cannot qualify a different primary category
+ok 140 - shadow/output/storage/output / current_fixture whole caller stays unchanged
+ok 141 - shadow/output/storage/output / wrong_native_shape rejected
+ok 142 - shadow/output/storage/output / wrong_native_shape diagnostic
+not ok 143 - shadow/output/storage/output / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'shadow/output/storage/output / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 144 - shadow/output/storage/output / wrong_native_shape whole caller stays unchanged
+ok 145 - actor input write / current_fixture rejected
+ok 146 - actor input write / current_fixture diagnostic
+ok 147 - actor input write / current_fixture whole trace cannot qualify a different primary category
+ok 148 - actor input write / current_fixture whole caller stays unchanged
+ok 149 - actor input write / wrong_native_shape rejected
+ok 150 - actor input write / wrong_native_shape diagnostic
+not ok 151 - actor input write / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'actor input write / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 152 - actor input write / wrong_native_shape whole caller stays unchanged
+ok 153 - actor output read / current_fixture rejected
+ok 154 - actor output read / current_fixture diagnostic
+ok 155 - actor output read / current_fixture whole trace cannot qualify a different primary category
+ok 156 - actor output read / current_fixture whole caller stays unchanged
+ok 157 - actor output read / wrong_native_shape rejected
+ok 158 - actor output read / wrong_native_shape diagnostic
+not ok 159 - actor output read / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'actor output read / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 160 - actor output read / wrong_native_shape whole caller stays unchanged
+ok 161 - callee formal is not caller variable / current_fixture rejected
+ok 162 - callee formal is not caller variable / current_fixture diagnostic
+ok 163 - callee formal is not caller variable / current_fixture whole trace cannot qualify a different primary category
+ok 164 - callee formal is not caller variable / current_fixture whole caller stays unchanged
+ok 165 - callee formal is not caller variable / wrong_native_shape rejected
+ok 166 - callee formal is not caller variable / wrong_native_shape diagnostic
+not ok 167 - callee formal is not caller variable / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'callee formal is not caller variable / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 168 - callee formal is not caller variable / wrong_native_shape whole caller stays unchanged
+ok 169 - rule scope / current_fixture rejected
+ok 170 - rule scope / current_fixture diagnostic
+ok 171 - rule scope / current_fixture whole trace cannot qualify a different primary category
+ok 172 - rule scope / current_fixture whole caller stays unchanged
+ok 173 - rule scope / wrong_native_shape rejected
+ok 174 - rule scope / wrong_native_shape diagnostic
+not ok 175 - rule scope / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'rule scope / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 176 - rule scope / wrong_native_shape whole caller stays unchanged
+ok 177 - wrong direction / current_fixture rejected
+ok 178 - wrong direction / current_fixture diagnostic
+ok 179 - wrong direction / current_fixture whole trace cannot qualify a different primary category
+ok 180 - wrong direction / current_fixture whole caller stays unchanged
+ok 181 - wrong direction / wrong_native_shape rejected
+ok 182 - wrong direction / wrong_native_shape diagnostic
+not ok 183 - wrong direction / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'wrong direction / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 184 - wrong direction / wrong_native_shape whole caller stays unchanged
+ok 185 - unknown callee port / current_fixture rejected
+ok 186 - unknown callee port / current_fixture diagnostic
+ok 187 - unknown callee port / current_fixture whole trace cannot qualify a different primary category
+ok 188 - unknown callee port / current_fixture whole caller stays unchanged
+ok 189 - unknown callee port / wrong_native_shape rejected
+ok 190 - unknown callee port / wrong_native_shape diagnostic
+not ok 191 - unknown callee port / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'unknown callee port / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 192 - unknown callee port / wrong_native_shape whole caller stays unchanged
+ok 193 - missing binding / current_fixture rejected
+ok 194 - missing binding / current_fixture diagnostic
+ok 195 - missing binding / current_fixture whole trace cannot qualify a different primary category
+ok 196 - missing binding / current_fixture whole caller stays unchanged
+ok 197 - missing binding / wrong_native_shape rejected
+not ok 198 - missing binding / wrong_native_shape diagnostic
+#   Failed test 'missing binding / wrong_native_shape diagnostic'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 23.
+#                   'Transaction 'worker': malformed or stale formal identity projection
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7225.
+# 	FSM::Scheduler::ISF::LoweringIR::_transaction_port_map(HASH(0x767f77bd38)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7134
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_activation_bindings(HASH(0x767f7797b0), HASH(0x767f780ab0), HASH(0x767f77bd38), ARRAY(0x767f783078), "Transaction 'caller': do target 'worker'", HASH(0x767f770138)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 4424
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_transaction_port_bindings(FSM::Scheduler::ISF::LoweringIR=HASH(0x767f1dbdf8), HASH(0x767f7797b0)) called at (eval 49) line 22
+# 	eval {...} called at (eval 49) line 22
+# 	main::admission(HASH(0x767f7797b0)) called at (eval 49) line 27
+# 	main::rejects(HASH(0x767f7797b0), qr(requires '\(bind), "missing binding / wrong_native_shape") called at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 78
+# '
+#     doesn't match '(?^:requires '\(bind)'
+ok 199 - missing binding / wrong_native_shape whole trace cannot qualify a different primary category
+ok 200 - missing binding / wrong_native_shape whole caller stays unchanged
+ok 201 - duplicate binding / current_fixture rejected
+ok 202 - duplicate binding / current_fixture diagnostic
+ok 203 - duplicate binding / current_fixture whole trace cannot qualify a different primary category
+ok 204 - duplicate binding / current_fixture whole caller stays unchanged
+ok 205 - duplicate binding / wrong_native_shape rejected
+ok 206 - duplicate binding / wrong_native_shape diagnostic
+not ok 207 - duplicate binding / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'duplicate binding / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 208 - duplicate binding / wrong_native_shape whole caller stays unchanged
+ok 209 - wrong timing / current_fixture rejected
+ok 210 - wrong timing / current_fixture diagnostic
+ok 211 - wrong timing / current_fixture whole trace cannot qualify a different primary category
+ok 212 - wrong timing / current_fixture whole caller stays unchanged
+ok 213 - wrong timing / wrong_native_shape rejected
+ok 214 - wrong timing / wrong_native_shape diagnostic
+not ok 215 - wrong timing / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'wrong timing / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 216 - wrong timing / wrong_native_shape whole caller stays unchanged
+ok 217 - live repeat / current_fixture rejected
+ok 218 - live repeat / current_fixture diagnostic
+ok 219 - live repeat / current_fixture whole trace cannot qualify a different primary category
+ok 220 - live repeat / current_fixture whole caller stays unchanged
+ok 221 - live repeat / wrong_native_shape rejected
+ok 222 - live repeat / wrong_native_shape diagnostic
+not ok 223 - live repeat / wrong_native_shape whole trace cannot qualify a different primary category
+#   Failed test 'live repeat / wrong_native_shape whole trace cannot qualify a different primary category'
+#   at docs/audits/caller-formal-binding-helper-causes-20261003/probe.pl line 80.
+#          got: '1'
+#     expected: '0'
+ok 224 - live repeat / wrong_native_shape whole caller stays unchanged
+1..224
+# Looks like you failed 28 tests of 224.

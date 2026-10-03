@@ -1,0 +1,1 @@
+PASS rendered binding-helper diagnosis; visual QA not performed.

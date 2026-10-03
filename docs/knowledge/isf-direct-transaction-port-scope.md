@@ -33,7 +33,7 @@ identity. That admission is not independent local state.
 
 _binding_signal_info now resolves an explicit caller formal before actor
 interface/storage, using the formal's declared width and transaction-variable
-role. T1933 qualifies scalar/expression reads and output actuals against actor
+role. T1933 covers scalar/expression reads and output actuals against actor
 input/output/storage shadows, width mismatch controls, callee directions,
 timing and static-zero pruning. Actor-scope restrictions remain intact; rules
 cannot borrow transaction formals. This is source binding validation only:
@@ -54,22 +54,9 @@ T1935 covers those failures, valid reorderings/reset/init, existing collisions,
 zero-pruned versus live targets, strict carriers and complete public reports.
 This does not establish separate physical ownership for explicit locals.
 
-The audit reproduction uses actor status width 8 and reset 19, a worker status
-input or output width 8, and a narrower input control width 4. Role/width merges
-fail. The historical parent status input width 4 bound to worker payload width 4
-was wrongly validated as actor status width 8; .3.1.1 repairs that lookup. Separate first/second transactions with
-status output width 4 assign 3/5; public reports admit them but emit one status
-register and disconnected state loops inside one FSM root.
+Historical audit: actor/worker status width8, reset19 and narrower control width4 expose role/width merges. .3.1.1 repairs caller width precedence. Same-name sibling output formals assigning3/5 once shared one register and disconnected FSM loops; current production scope supersedes that boundary.
 
-Scope repair must distinguish caller and callee endpoints, declaration metadata,
-typed operands, rule payload fan-in destinations and authored report names.
-Global textual replacement can corrupt state/type/member names or messages.
-.49.2.2 owns collision-safe private identities and lexical binding lookup;
-.49.2.3 owns local-call runtime signoff. The prerequisite .32.1.3.3.1 owns the
-already reproduced unreachable local caller and independently triggered
-consumer. Its leaves separate terminal synchronization, controller contract
-selection and executable repair. Existing binding tests prove artifact/report
-shape, not completion of that runtime prerequisite.
+Scope distinguishes caller/callee endpoints, declarations, typed operands, rule payload destinations and authored reports. Global replacement corrupts state/type/member names or messages. .49.2.2 owns identities/lookup; .49.2.3 owns local-call runtime. .32.1.3.3.1 owns unreachable caller/independently triggered consumer, terminal synchronization, controller contracts and executable repair. Binding artifact/report tests do not close that runtime prerequisite.
 
 FormalIdentityPlan now provides a detached declaration plan. Owner identities
 are structured actor/transaction/formal tuples. Each direct formal receives a
@@ -234,5 +221,7 @@ Quoted-division diagnostics .52, wait examples .49.2.2.6 and extract replay .53
 are qualified. .49.2.2.3 connects the resolvers and must still prove complete
 physical reservations and source-report preservation. T1936 checks complete causes and valid static-param live bindings.
 [Repair](../audits/formal-source-context-cause-repair-20261003/scope.txt) qualifies its helper/subset boundary; wider cold semantics remain open.
+
+T1933 helper cause safety is still defective: real earlier binding-shape errors match regex echoes. All current fixtures reach intended categories; private live endpoint checks differ from full preparation's params subset. [Diagnosis](../audits/caller-formal-binding-helper-causes-20261003/scope.txt) owns immediate .2.3.7 repair.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2.

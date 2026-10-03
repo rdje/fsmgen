@@ -1,0 +1,21 @@
+{
+  "baseline": "64628a4089349f7a23e333eef70584c30dc08dad",
+  "commands": {
+    "actual_consumer_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/caller-formal-binding-helper-causes-20261003/verify.py --trust-current",
+    "book": "mdbook build docs/book",
+    "cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/caller-formal-binding-helper-causes-20261003/verify.py",
+    "ordinary_current": "scripts/run_with_ram_guard.sh -- bash docs/audits/caller-formal-binding-helper-causes-20261003/final_producers.sh",
+    "producer": "scripts/run_with_ram_guard.sh -- bash docs/audits/caller-formal-binding-helper-causes-20261003/run.sh",
+    "rendered": "python3 docs/audits/caller-formal-binding-helper-causes-20261003/rendered_verify.py"
+  },
+  "native": "not invoked",
+  "scope": "56 input-band rows; complete actor/binding-report finite models, other prepared internals retained observations only",
+  "statuses": {
+    "actual_consumer_red": 1,
+    "cold": 0,
+    "current": 0,
+    "ordinary": 0,
+    "producer": 28
+  },
+  "visual_qa": "not performed"
+}

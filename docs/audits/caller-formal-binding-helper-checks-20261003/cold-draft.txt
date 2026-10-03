@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/caller-formal-binding-helper-causes-20261003/verify.py", line 111, in <module>
+    data=load(B/'causes.json');verify_rows(data)
+                               ~~~~~~~~~~~^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/caller-formal-binding-helper-causes-20261003/verify.py", line 105, in verify_rows
+    same([r['id'],r['band'],r['spec'],r['source']],[s['id'],band,s,source(s['args'])]);a,c=expected_actor(s,band);same(r['actor'],a);same(r['control'],c)
+                                                                                                                  ~~~~^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/caller-formal-binding-helper-causes-20261003/verify.py", line 7, in same
+    def same(a,b):assert enc(a)==enc(b),'whole typed mismatch'
+                         ^^^^^^^^^^^^^^
+AssertionError: whole typed mismatch

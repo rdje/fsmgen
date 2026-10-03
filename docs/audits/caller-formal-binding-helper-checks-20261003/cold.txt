@@ -1,0 +1,10 @@
+shared corruption rejects: cause
+shared corruption rejects: input
+shared corruption rejects: matched_kind
+shared corruption rejects: primary_kind
+shared corruption rejects: extra_field
+shared corruption rejects: membership
+whole corruption rejects: whole_kind
+whole corruption rejects: whole_binding
+whole corruption rejects: whole_field
+PASS 28 current primary categories, 15 wrong cause matches and 13 wrong cause rejects; complete finite actors/source/binding reports/kinds. Wider prepared semantics remain open.

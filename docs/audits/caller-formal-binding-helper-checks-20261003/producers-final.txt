@@ -1,0 +1,2 @@
+ram-guard: PID 21481; host 58.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS unchanged actual T1933 and ordinary source products.

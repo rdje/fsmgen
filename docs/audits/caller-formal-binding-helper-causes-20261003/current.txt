@@ -1,0 +1,4 @@
+t/1933-isf-caller-formal-binding-scope.t .. ok
+All tests successful.
+Files=1, Tests=12, 25 wallclock secs ( 0.01 usr  0.00 sys + 16.91 cusr  7.07 csys = 23.99 CPU)
+Result: PASS
