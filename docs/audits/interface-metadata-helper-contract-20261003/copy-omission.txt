@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/interface-metadata-helper-contract-20261003/verify.py", line 66, in <module>
+    assert copies == expected_copies and len(copies) == 8, 'complete original source copy-site membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete original source copy-site membership

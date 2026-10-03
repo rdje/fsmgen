@@ -3976,11 +3976,42 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify the exact t/1983-isf-interface-port-metadata.t named helper and bounded callers.`
   Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
   Verification: `pending`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.1`
+  Status: `done`
+  Goal: `Bind T1983 helper/caller/metadata contracts and finite native applicability before probes.`
+  Acceptance: `Authenticate complete current test and public metadata producer/source dependencies, original named locator and all syntactic assertion/copy/callback contexts against current Git and decision0113/book. Distinguish generic classified context from full cause assurance; enumerate actual supported producer operations before execution. Source names imply no runtime/native behavior. Split later cause/copy/field/source/replay obligations as needed; commit exact finite contract/probe plan before native observations.`
+  Verification: `Sealed docs/audits/interface-metadata-helper-contract-20261003 binds complete selected Git29bb555ab5 test/provider/public facade/parser/package/path/frontend/locality sources to the immutable preceding named plan. Re-derivation: full bodies/hash/byte identity plus separate byte-token/expression producer and line/literal reader prove exact rejects helper and two actual syntactic callback sites, two label-string tokens and one definition. All eight source-level test copy expressions reconcile; these are syntax units, never runtime counts. Helper asserts refusal, unanchored generic metadata prefix on unsaved full error and empty warnings; adjacent first-line generic context and full-error output-member fragment stay separately selected. Provider private copies detach before numeric reads and numeric output rebuilding is intentional; exact source/layout/null/empty/type/domain/signed/state contracts follow decision0113/book. Imported package public route uses ImportResolver/SourceFrontend read and published Lispish parse API; planned host Perl metadata/public parsing selects no HDL compiler/simulator, macro transport or proxy/controller runtime, and no submodule implementation is read. Actual native/cause/copy/product meaning remains .2/.3-owned before classification or repairs; preceding broad coverage source proof must be pinned before hot public changes. Falsification: actual string-label-as-call authority promotion RED1 at call-site closure and full source-copy omission RED1 at population. Durability: complete source/contract/role/route/probe plan, producer/independent reader/actual controls/status/manifest and task/card/book/Git. Initial capacity excess51 bytes and reader adjacent-line error retained unqualified; card compaction within unchanged ceiling and exact corrected producer/reader/receipt qualify; actual source inspection corrects it before complete ordinary/control readback. No current provider/test/public schema/admission/HDL or old sealed evidence changes. Public-book All tests successful2/308, build/rendered/KM/task/fixed capacity/fresh claims/staged doctrines/hooks close before actual .2 profile. Generic classified context is not promoted to complete cause safety; existing metadata public-product qualifications keep their finite scope.`
+  Commit: `this slice; resolve with work-unit Git subject`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.2`
+  Status: `pending`
+  Goal: `Profile actual T1983 metadata callbacks and contextual diagnostic assurance.`
+  Acceptance: `Run only source-owned qualified Perl metadata routes under the RAM guard after .1 closes. Save actual errors immediately in observer, complete inputs/results/warnings/assertions/caller kind/topology and source-copy streams. Reconcile every real helper/adjacent refusal, independent intended complete causes and genuine earlier/caller/primary-path controls before classifying gaps. Own every observed defect with reproduction/impact/priority and bounded repair leaf before source changes; retain source/provider/submodule/native-cold boundaries.`
+  Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3`
+  Status: `pending`
+  Goal: `Qualify complete T1983 metadata source/product/copy field meanings and assurance.`
+  Acceptance: `Join complete .2 observations to original resolved scalar/record/list/member/type/domain sources, packed paths/ranges/order/signed/state-model facts, intentional numeric output projection and unchanged-source isolation. Copies and value-only comparisons are not kind authority. Split bounded semantic cohorts/native referent/topology/counterfactual controls before execution when needed; qualify every changed field and mandatory unchanged control. Freeze preceding coverage qualification before any new hot public-source changes, without rewriting sealed evidence.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.4`
+  Status: `pending`
+  Goal: `Join T1983 actual roles, causes, products/copy assurance and completed repairs.`
+  Acceptance: `Independently close the exact original named declaration and complete actual helper/adjacent callback/copy/source/product/cause/warning membership against current source with all required native/control/semantic legs and completed repair owners. Preserve finite cold/native/provider/submodule limits; no feature/runtime/admission expansion or all-consumer inference. Sync book/fact/frontier and commit cleanly before T1986 review.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3`
   Status: `pending`
@@ -6467,3 +6498,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '2026-10-02T22:06:57.570581' -- docs/ARTIFACT_CLEANUP.md retrieves the prior latest-only cleanup commit. Fresh UTC capture exceeds the daily threshold. Complete exact Git source/decoy/index membership and fixed-node/locality/link/untracked checks locate two duplicate generated replay caches, without admitting logs/native/compiler artifacts to deletion.
 - [x] **ADDRESSED (verified)** — Final fixed inspect/apply and saved ordinary reader pass; all selected regular members and complete public index views authenticate, immediate reinspection matches, dated exact residue is absent and whole protected before/after bytes/Git fingerprints conserve. Actual decoy-as-original, member omission and protected-index controls each RED1; latest-only date/summary and maintenance guidance synchronized.
 - [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and sealed saved cleanup reader pass. No native/compiler run or public source behavior changes; originals/current book/logs/receipt/native workspaces remain and Rust log/bin locations are censused. Fixed capacity, fresh claims and staged [doctrine] all doctrine checks passed precede normal commit.
+
+## Acceptance Checklist — interface-metadata helper source contracts
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub rejects' -- t/1983-isf-interface-port-metadata.t binds named-helper introduction. Full exact current source shows one named definition, two call expressions and two textual labels; helper generic prefix/warnings and adjacent fragments do not declare complete causes or source-copy kind authority. Public metadata/private numeric projection and imported package routes define finite probes.
+- [x] **ADDRESSED (verified)** — Complete selected source bodies, original named membership, exact helper/adjacent assertion/copy contracts and source-owned host-route plan independently rederive. Actual label-token-as-call promotion and copy-site omission are RED1 at their intended source contracts; corrected full reader passes. Actual cause/product/copy/native and any repair work remain owned successors.
+- [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and sealed source/contract/control readback pass. Provider/current tests/public admission/old archives unchanged; no metadata or native HDL probe executed. Task integrity, Knowledge Map and fixed capacity/fresh claim/staged doctrine gates close before actual profile.

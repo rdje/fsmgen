@@ -1,0 +1,1 @@
+PASS complete selected current Git contracts: T1983 has five same-file name tokens (one definition/two calls/two strings) and eight source copy sites; these are syntax units, not runtime call/copy counts. Actual source-owned metadata probes remain pending.

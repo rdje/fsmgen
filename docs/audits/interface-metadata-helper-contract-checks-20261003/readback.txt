@@ -1,0 +1,1 @@
+PASS complete immutable source/helper/token/copy contracts independently bind source-owned metadata routes. Generic context/warning assertions are not promoted to full cause or kind/native runtime assurance; actual probes and semantic/control qualification remain owned.

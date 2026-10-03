@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-library`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **9** uniquely owned question entries.
+> **2** facts · **10** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,6 +12,7 @@
 - q="how are imported conditional origins authenticated?" · facts=[isf-library-document-origin-authority](../../docs/knowledge/isf-library-document-origin-authority.md)
 - q="how can importing actor logic read a library-owned output?" · facts=[isf-library-parent-port-ownership](../../docs/knowledge/isf-library-parent-port-ownership.md)
 - q="how do nondefault-domain library clock and reset bindings work?" · facts=[isf-library-parent-port-ownership](../../docs/knowledge/isf-library-parent-port-ownership.md)
+- q="what does T1983 metadata helper check?" · facts=[isf-library-document-origin-authority](../../docs/knowledge/isf-library-document-origin-authority.md)
 - q="where is the current refusal consumer census?" · facts=[isf-library-document-origin-authority](../../docs/knowledge/isf-library-document-origin-authority.md)
 - q="why did the FIFO library top leave the parent data_in port unconnected?" · facts=[isf-library-parent-port-ownership](../../docs/knowledge/isf-library-parent-port-ownership.md)
 

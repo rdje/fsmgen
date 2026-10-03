@@ -186,7 +186,15 @@ reusable and reservation review now closes with the repairs below. The
 assigns a bounded source-contract review to every selected record helper before
 native probes; actual causes, products, copy kinds and native applicability remain
 open. Names do not establish
-actual refusal-consumer roles or native applicability. The resource helper and adjacent preparation assertion now compare complete
+actual refusal-consumer roles or native applicability.
+
+The [interface-metadata helper contract](../../../docs/audits/interface-metadata-helper-contract-20261003/scope.txt)
+binds its callback sites and adjacent assertions before probes. It checks generic
+diagnostic context and warnings. Review of this test's copied graphs and diagnostic
+assertions remains open; existing public metadata qualification retains its scope.
+The plan selects host metadata and public parsing calls.
+
+The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
 primary messages containing wanted codes, reject. The
 [resource cause repair](../../../docs/audits/formal-resource-cause-repair-20261003/scope.txt)

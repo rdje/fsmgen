@@ -1,0 +1,49 @@
+Owned by SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.1.
+
+T1983's exact rejects helper invokes a supplied metadata operation under a local
+warning collector, asserts refusal, checks a generic metadata prefix against the
+full native error and expects no warnings. It does not save the error immediately
+or declare each complete intended cause. Adjacent stringified-prefix controls
+save a first line and classify generic metadata context; the parser output-member
+refusal checks a full-error fragment. These are observed assertion contracts,
+not established complete-cause defects or assurances before actual controls.
+
+The source has five name tokens: one definition, two real helper call sites and
+two strings in test labels. Eight source-level test dclone sites remain selected.
+These units are declarations/expressions, never resolved runtime call/copy counts.
+The actual producer operations are capture_interface_port_metadata and
+snapshot_interface_port_metadata. The public contract distinguishes unknown null
+from known empty, inputs/outputs in source order, alias/domain identity, nested
+record/list scalar paths, ordered packed ranges and numeric signed/state metadata.
+Private copies detach before numeric validation; output numeric projection is
+intentional. Whole source/copy/input/output semantics and assertion strength
+require actual observation and later complete field qualification.
+
+Finite native applicability: planned probes are actual host Perl metadata calls
+and public ISF/Lispish/package parse interfaces using repository-local fixtures.
+The imported package route reads its file through project-owned ImportResolver
+and SourceFrontend, then invokes the published Lispish parse API. It selects no
+HDL compiler/simulator, proxy/controller runtime or macro transport. Submodule
+implementations are not inspected or modified. Standard host dependencies are
+used through their interfaces, not reimplemented. RAM monitoring remains required.
+
+Re-derivation: complete selected current Git29bb555ab5 test/provider/frontend/
+package/path/locality bodies and byte/hash identity join the immutable previous
+named source/locator. A producer token/expression map and separate line/literal
+reader reconcile all source roles, exact helper/adjacent contracts and copy sites;
+decision0113 and book supply source/layout/report boundaries. Falsification:
+promoting the actual two string-label tokens to calls is RED1 at call-site
+membership; complete copy-site omission is RED1. These test the source plan,
+not runtime cause safety. Durability: full source/context/route plan, producer/
+independent reader, actual controls/receipts/manifest, task/fact/book and Git.
+
+Successor .2 profiles all actual callbacks, original/copy streams, saved errors,
+warnings, assertion consumers and supported products with real earlier/caller/
+primary controls. .3 owns complete source/product/copy meanings and assures that
+the preceding broad coverage source qualification is pinned before new hot public
+source changes. Every observed defect is owned before repair. No provider/test/
+public schema/admission, native HDL or old sealed evidence changes occur here.
+
+The first source reader used an off-by-one line for the adjacent parser assertion.
+The exact failed producer/reader/receipt remain unqualified; source inspection
+corrects the line before full ordinary/control verification and sealing.
