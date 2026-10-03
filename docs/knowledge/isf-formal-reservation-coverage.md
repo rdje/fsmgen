@@ -41,9 +41,9 @@ Pure actor copies retain kinds/sharing; complete lowering/carriers/scope results
 agree. The [cause repair](../audits/reservation-coverage-cause-repair-20261003/scope.txt)
 uses complete causes and saved native errors; wrong-cause, exact-prior and actual
 declaration-guard bypass controls qualify.
-[Module capture](../audits/reservation-coverage-module-capture-20261003/scope.txt)
-binds full originals/pure copies; field meanings/snapshots remain open before P2 .13.
-Constructors/moved-root stay cold.
+[Generated fields](../audits/reservation-coverage-generated-module-fields-20261003/scope.txt)
+bind originals/pure copies and RHS/provenance/widths. Reusable/ATL/snapshots
+remain open before P2 .13; constructors/moved-root stay cold.
 
 This detached guard establishes the final declaration check for the prepared
 ISF-to-FSM module boundary. It does not replace source or executable admission,

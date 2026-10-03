@@ -1,0 +1,9 @@
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-generated-module-fields-20261003/verify.py", line 104, in <module>
+    assert '$ir->{ports} = [grep {' in storage and '$used{$_->{name}}' in storage
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

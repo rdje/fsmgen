@@ -1,0 +1,60 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.3.
+Complete native data: ../reservation-coverage-module-capture-20261003, sealed
+at source boundary66924fd50. Auxiliary complete source contracts are bound to
+c0b6f49c81288e5dae6c44087b7239ab5d67da0b. No provider/test changes.
+
+This cohort closes all actual changed fields in generated coverage, case-folded
+helper, declaration permutation, rule_coverage and monitor_coverage captures.
+Independent source S-expressions require complete authored clauses, interfaces,
+rule binds and three-cycle monitor window. Exact physical source clauses and
+formal identity records preserve pin/storage shadows, the rule's authored input
+binding and the helper-looking monitor formal's distinct physical storage.
+Literal numeric producer contracts require readiness, drive/spawn requests,
+parent/child completion pulses, rule trigger pulse, monitor arm/pending/fail
+set bits and pending/age reset zeroes. Provenance RHS fields must retain the
+same target, operator, producer category, container/assignment identity and
+guard as those assignments. All affected declared width lookup fields retain
+numeric four from the authored interfaces. These finite contracts enumerate
+the complete changed-field roster; the reader does not infer field meanings
+from counts, filenames or whole byte equality.
+
+Actual builder code inherits actor width lookup entries into the worker, then
+selects its public port set from usage and canonical handshakes/completions.
+The worker's unused data/result width metadata remains numeric four in IR;
+it is absent from ports, carrier interface and size declarations. The first
+reader incorrectly assumed every width entry was an emitted port; that failed
+reader/receipt is retained unqualified. The second carrier corruption selected
+a size declaration, so it did not falsify the intended assignment contract;
+its exact reader/receipt is retained unqualified. The final control selects the
+actual pending-set assignment and rejects. The third source-pointer typo and
+failed receipt are retained unqualified. No product defect is inferred from
+these verification-model corrections.
+
+The independent structured-carrier parser checks every affected numeric
+assignment, operator, output direction and guard in its own state/DT container,
+plus the present/absent width declarations. Monitor age width2 and helper
+arm/pending/fail width1 remain separate from the width4 private formal. Original
+module graphs and genuine pure copies satisfy all finite contracts. Every
+actual Storable copy in this cohort fails the kind-preserving model; real
+Storable-as-field-authority promotion exits1 at readiness RHS. Guard,
+provenance-target, declared-width, physical-identity and carrier-assignment
+corruptions are passed through the full model and reject.
+
+Re-derivation: authenticated complete source/Git/capture closure, independent
+literal authored/physical/producer models, full exact field-set reconciliation,
+and structured carrier readback. Falsification: genuine Storable competing
+authority and semantic/identity/carrier corruptions reject against those
+contracts. Durability: referenced immutable complete native inputs/copies/
+results/carriers/TAP/status/source closure, additional full producer/book source
+bodies, independent reader and initial failed drafts/receipts, genuine RED,
+recipe/manifest/task/card/book/Git. Source bodies and literal contracts qualify
+field meanings; digests only authenticate the retained bytes. Complete ordinary
+caller/result/carrier/coverage conservation inherits the authenticated module
+capture, not a new cross-root or native-runtime assertion.
+
+Reusable/storage and ATL field semantics are module .4/.5-owned; .6 joins all
+fields and actor-only preparation propagation. Coverage snapshots/mutation
+seeds and final join precede P2 .13 copy repair. Complete controller/constructor,
+arbitrary native, source CLI/API and moved-root semantics remain cold. Error
+trace source coordinates alone are represented with literal ${REPO_ROOT}.
+All native field kinds/values/topology and prior sealed archives stay unchanged.

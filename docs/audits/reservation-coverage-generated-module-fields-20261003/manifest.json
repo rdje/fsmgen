@@ -1,0 +1,54 @@
+{
+  "REPRODUCE.txt": {
+    "bytes": 1219,
+    "sha256": "36441256e1fad555c4930ef2d1d8110824c67a757d7978badcfb4a7fd216e335"
+  },
+  "initial-readback.txt": {
+    "bytes": 991,
+    "sha256": "d9d571b5777b0e8e4af94cab72bbaa161677f87e4af4519a0069a8b3da41166d"
+  },
+  "initial-reader.txt": {
+    "bytes": 13306,
+    "sha256": "65824b1820e8d1ebada81cf9c042f9af13990b0ad62d5d7d45bca6ab34e4713f"
+  },
+  "scope.txt": {
+    "bytes": 4149,
+    "sha256": "e8e9a07981a480c2bddb3cb44f3b829277d0215f880119fa695282ef7bad5a64"
+  },
+  "second-readback.txt": {
+    "bytes": 821,
+    "sha256": "9589670177d9e3c4ef36394bfe54fef19f6d150e5cd7c83a81972f3949f7a5e4"
+  },
+  "second-reader.txt": {
+    "bytes": 13848,
+    "sha256": "9d2d641d803a881160c3a5d5e626d2bfa613327cf78d68a2f5b137f08cc77bcc"
+  },
+  "source-contracts.json": {
+    "bytes": 228351,
+    "sha256": "2d41af27fafabd087eb6a183660ad80bf7424548f8ce43970b4c24443b9c5019"
+  },
+  "third-readback.txt": {
+    "bytes": 904,
+    "sha256": "9148d54e43719d47703a9bef4349f2ddbd15ff90cf8b719a5385d8f6a1ed7136"
+  },
+  "third-reader.txt": {
+    "bytes": 16325,
+    "sha256": "c7e4e21bb10d76439a6b4d7a652f66cf9e7d3438913a9338b1e81a79c0d1bea2"
+  },
+  "trust-storable.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "trust-storable.txt": {
+    "bytes": 1211,
+    "sha256": "d580381f7dfb00baa25b0df30e4ac9c207fed8fbe86406edc852523a42b90153"
+  },
+  "verify.py": {
+    "bytes": 17511,
+    "sha256": "dd64d017a88db5b12688cb031d11fd5db89bcdc40b4948532cad699d81fa19a2"
+  },
+  "verify.txt": {
+    "bytes": 1039,
+    "sha256": "403b07dec8f520aaee37c1e70e5c22c0db2ca3b4e68054f4937657d0668f584d"
+  }
+}

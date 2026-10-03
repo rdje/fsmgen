@@ -240,9 +240,12 @@ source declarations. Scalar-preserving actor copies retain complete source
 kinds and sharing; complete ordinary lowering results, emitted carriers and
 coverage scope records agree with the original test. The [module capture](../../../docs/audits/reservation-coverage-module-capture-20261003/scope.txt)
 binds complete module originals and deeply isolated pure copies to the source
-and original coverage profile. Ordinary lowering/carrier/scope results agree;
-generated, reusable and ATL field meanings, source preparation propagation,
-and successful/refused snapshots remain open. The test-copy repair follows
+and original coverage profile. Ordinary lowering/carrier/scope results agree.
+The [generated-field qualification](../../../docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt)
+checks readiness/request/completion RHS, monitor set/clear/reset constants,
+provenance and declared widths. Unused worker width metadata stays separate
+from emitted port declarations. Reusable and ATL fields, source preparation
+propagation, and successful/refused snapshots remain open. The test-copy repair follows
 those cohorts; this profile does not establish a production coverage defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when

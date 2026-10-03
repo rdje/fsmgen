@@ -1,0 +1,17 @@
+From the repository root, cold non-mutating readback:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-generated-module-fields-20261003/verify.py
+Genuine Storable competing authority must exit 1 at readiness RHS:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-generated-module-fields-20261003/verify.py --trust-storable
+
+This reader authenticates the whole sealed module capture and its original
+source/prior closure before independently binding this finite field cohort.
+It leaves all retained archives unchanged. Source-contracts.json supplies the
+complete auxiliary completion/storage/emit producers and public monitor docs
+with Git identity and byte/hash evidence. The new manifest authenticates this
+reader and its artifacts. It is not field-meaning evidence on its own.
+
+Fresh changed-provider observations require a new owning task and sibling on
+the repository volume; follow the original complete module capture recipe.
+Retain this archive unchanged. Qualify new field rosters against independent
+source/producer/carrier models and actual lossy controls before sealing.
+This cohort does not qualify remaining reusable/ATL propagation or snapshots.

@@ -1,0 +1,1 @@
+PASS rendered generated-field result, metadata/port distinction, open reusable/ATL/snapshot boundary and qualification link; visual QA remains pending.

@@ -1,0 +1,242 @@
+import argparse
+import copy
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/reservation-coverage-generated-module-fields-20261003')
+CAPTURE = Path('docs/audits/reservation-coverage-module-capture-20261003')
+parser = argparse.ArgumentParser()
+parser.add_argument('--trust-storable', action='store_true')
+options = parser.parse_args()
+
+
+def same(a, b):
+    if type(a) is not type(b):
+        return False
+    if isinstance(a, dict):
+        return a.keys() == b.keys() and all(same(a[k], b[k]) for k in a)
+    if isinstance(a, list):
+        return len(a) == len(b) and all(same(x, y) for x, y in zip(a, b))
+    return a == b
+
+
+def plain(value):
+    if isinstance(value, list) and len(value) == 2:
+        if value[0] == 'hash':
+            return {k: plain(v) for k, v in value[1].items()}
+        if value[0] == 'array':
+            return [plain(v) for v in value[1]]
+    return value
+
+
+def sexps(text):
+    roots, stack = [], []
+    for token in re.findall(r'\(|\)|[^\s()]+', text):
+        if token == '(':
+            node = []
+            (stack[-1] if stack else roots).append(node)
+            stack.append(node)
+        elif token == ')':
+            assert stack, 'unbalanced closing parenthesis'
+            stack.pop()
+        else:
+            assert stack, ('token outside expression', token)
+            stack[-1].append(token)
+    assert not stack, 'unbalanced opening parenthesis'
+    return roots
+
+
+def named(rows, name):
+    found = [row for row in rows if isinstance(row, list) and row and row[0] == name]
+    assert len(found) == 1, ('expected unique expression', name)
+    return found[0]
+
+
+subprocess.run(['python3', '-B', str(CAPTURE / 'verify.py')], check=True)
+if (BASE / 'manifest.json').exists():
+    manifest = json.loads((BASE / 'manifest.json').read_text())
+    assert {p.name for p in BASE.iterdir()} == set(manifest) | {'manifest.json'}
+    for name, record in manifest.items():
+        raw = (BASE / name).read_bytes()
+        assert len(raw) == record['bytes'] and hashlib.sha256(raw).hexdigest() == record['sha256'], name
+contracts = json.loads((BASE / 'source-contracts.json').read_text())
+for name, record in contracts['sources'].items():
+    raw = subprocess.check_output(['git', 'show', contracts['revision'] + ':' + name])
+    assert raw == record['body'].encode()
+    assert len(raw) == record['bytes'] and hashlib.sha256(raw).hexdigest() == record['sha256']
+binding = json.loads((CAPTURE / 'bindings.json').read_text())
+source = binding['sources']['t/1960-isf-formal-reservation-coverage.t']
+lowerer = binding['sources']['perl/FSM/Scheduler/ISF/LoweringIR.pm']
+heredocs = re.findall(r"<<'ISF'[^\n]*\n(.*?)\nISF", source, re.S)
+assert len(heredocs) == 3
+authored = [sexps(text)[0] for text in heredocs]
+coverage_source, rule_source, monitor_source = authored
+assert [actor[:2] for actor in authored] == [
+    ['actor', 'coverage'], ['actor', 'rule_coverage'], ['actor', 'monitor_coverage']]
+main = next(x for x in coverage_source if isinstance(x, list) and x[:2] == ['transaction', 'main'])
+worker = next(x for x in coverage_source if isinstance(x, list) and x[:2] == ['transaction', 'worker'])
+assert main[3:] == [['on', 'start'], ['set', 'payload', 'data'],
+                    ['set', 'value_reg', 'payload'], ['drive', 'isf_port_main', 'payload'],
+                    ['wait', 'value_reg'], ['spawn', 'worker', 'as', 'job'],
+                    ['await_all', 'done'], ['complete', 'done']]
+assert worker[2:] == [['wait', '1'], ['complete', 'notice']]
+assert named(rule_source, 'rule') == ['rule', 'isf_port', 'fire',
+                                    ['trigger', 'main', ['bind', ['input', 'payload', 'din']]]]
+monitor_tx = named(monitor_source, 'transaction')
+assert monitor_tx[3:] == [['on', 'fire'], ['set', 'payload', '3'],
+                         ['assert', ['monitor', ['within', 'ack', '3']]],
+                         ['set', 'observed', 'payload']]
+# Bind the independent literal contracts to their complete actual producers.
+for literal in ("{ lhs => 'can_accept', rhs => 1, op => '=' }",
+                "rhs=>1,op=>'<1',source_kind=>'complete_pulse'",
+                "rhs => 1, op => '=', source_kind => 'drive_call_start'",
+                "rhs => 1, op => '=', source_kind => 'spawn_start'",
+                "rhs => 1, op => '<1', source_kind => 'rule_trigger_source'",
+                "rhs              => $assignment->{rhs}"):
+    assert literal in lowerer, literal
+completion = contracts['sources']['perl/FSM/Scheduler/ISF/ChildCompletionOutputs.pm']['body']
+assert "%$assignment, lhs => 'done', source_kind => 'activation_completion_pulse'" in completion
+assert 'For a three-cycle window' in contracts['sources']['docs/book/src/13h-lowering-reference.md']['body']
+
+ordinary = json.loads((CAPTURE / 'ordinary.json').read_text())
+pure = json.loads((CAPTURE / 'pure.json').read_text())
+roster = json.loads((CAPTURE / 'field-roster.json').read_text())
+
+
+def assignment(container, lhs, op, rhs, kind=None, guard=None):
+    value = {'lhs': lhs, 'op': op, 'rhs': rhs}
+    if kind is not None:
+        value['source_kind'] = kind
+    if guard is not None:
+        value['guard'] = {'expr': guard}
+    return container, value
+
+
+def specs(index):
+    idle = assignment('main_idle_0', 'can_accept', '=', 1)
+    if index in (0, 1, 2):
+        drive = 'ISF_PORT_MAIN' if index == 1 else 'isf_port_main'
+        return [(None, 'states', idle),
+                (None, 'states', assignment('main_drive_3', drive + '_start', '=', 1, 'drive_call_start')),
+                (None, 'states', assignment('main_spawn_5', 'job_start', '=', 1, 'spawn_start')),
+                (None, 'states', assignment('main_done_7', 'done', '<1', 1, 'complete_pulse')),
+                ('worker', 'states', assignment('worker_done_1', 'notice', '<1', 1, 'complete_pulse')),
+                ('worker', 'states', assignment('worker_done_1', 'done', '<1', 1, 'activation_completion_pulse'))]
+    if index == 8:
+        return [(None, 'states', idle),
+                (None, 'states', assignment('main_done_2', 'done', '<1', 1, 'complete_pulse')),
+                (None, 'dt_blocks', assignment('isf_port', 'isf_port_main', '<1', 1, 'rule_trigger_source'))]
+    assert index == 9
+    arm, pending, age, fail = ['main_assert_2_' + role for role in ('arm', 'pending', 'age', 'fail')]
+    start = f'(& {arm} (! {pending}))'
+    expiry = f'(& {pending} (! ack) (== {age} 2))'
+    return [(None, 'states', idle),
+            (None, 'states', assignment('main_assert_2', arm, '=', 1, 'contract_arm_request')),
+            (None, 'dt_blocks', assignment('main_assert_2_monitor', pending, '<-', 1, 'contract_pending_set', start)),
+            (None, 'dt_blocks', assignment('main_assert_2_monitor', pending, '<-', 0, 'contract_pending_clear', f'(| (& {pending} ack) {expiry})')),
+            (None, 'dt_blocks', assignment('main_assert_2_monitor', age, '<-', 0, 'contract_age_reset', start)),
+            (None, 'dt_blocks', assignment('main_assert_2_monitor', fail, '<-', 1, 'contract_fail', f'(| (& {arm} {pending}) {expiry})'))]
+
+
+def qualify(index, graph, files):
+    module = plain(graph)
+    expected_name = 'coverage' if index in (0, 1, 2) else 'rule_coverage' if index == 8 else 'monitor_coverage'
+    assert module['actor_name'] == expected_name
+    scopes = {None: module, **module['children']}
+    assert set(module['children']) == ({'worker'} if index in (0, 1, 2) else set())
+    field_paths = set()
+    carrier = {name: sexps(body)[0] for name, body in files.items()}
+    for child, family, (container_name, expected) in specs(index):
+        scope = scopes[child]
+        prefix = '/1' if child is None else '/1/children/1/' + child + '/1'
+        containers = scope[family]
+        ci = next(i for i, c in enumerate(containers) if c['name'] == container_name)
+        container = containers[ci]
+        assert sum(c['name'] == container_name for c in containers) == 1
+        matches = [(i, a) for i, a in enumerate(container['assignments'])
+                   if a['lhs'] == expected['lhs'] and a.get('source_kind') == expected.get('source_kind')]
+        assert len(matches) == 1, (index, container_name, expected['lhs'])
+        ai, actual = matches[0]
+        assert same(actual, expected), ('numeric producer assignment', index, container_name, expected, actual)
+        field_paths.add(f'{prefix}/{family}/1/{ci}/1/assignments/1/{ai}/1/rhs')
+        candidates = [(i, p) for i, p in enumerate(scope['assignment_provenance'])
+                      if p['activation']['container_name'] == container_name and p['assignment_index'] == ai]
+        assert len(candidates) == 1
+        pi, provenance = candidates[0]
+        assert provenance['target'] == expected['lhs'] and provenance['operator'] == expected['op']
+        assert same(provenance['rhs'], expected['rhs']), ('numeric provenance', index, container_name)
+        assert provenance['source_kind'] == (expected.get('source_kind') or 'scheduler_can_accept')
+        assert provenance['activation']['container_kind'] == ('state' if family == 'states' else 'dt')
+        assert same(provenance['activation']['assignment_guard'], expected.get('guard'))
+        field_paths.add(f'{prefix}/assignment_provenance/1/{pi}/1/rhs')
+        file = (expected_name if child is None else child) + '.fsm'
+        assert carrier[file][0] == '?fsm:' + (expected_name if child is None else child)
+        block = named(carrier[file], container_name if family == 'states' else '-' + container_name)
+        lhs = expected['lhs'] + ('>' if any(p['name'] == expected['lhs'] and p['direction'] == 'output' for p in scope['ports']) else '')
+        emitted = [expected['op'], [lhs, str(expected['rhs'])]]
+        if 'guard' in expected:
+            emitted += ['<', sexps(expected['guard']['expr'])[0]]
+        assert sum(same(node, emitted) for node in block[1:]) == 1, ('carrier assignment', index, container_name, emitted)
+    # Widths are independently sourced from interface declarations, not counts.
+    widths = ['data', 'result'] if index in (0, 1, 2) else ['din', 'observed'] if index == 8 else ['observed']
+    source_actor = authored[0 if index in (0, 1, 2) else 1 if index == 8 else 2]
+    interface = named(source_actor, 'interface')
+    for child, scope in scopes.items():
+        prefix = '/1' if child is None else '/1/children/1/' + child + '/1'
+        file = (expected_name if child is None else child) + '.fsm'
+        sizes = named(carrier[file], '+size')
+        for name in widths:
+            declaration = next(p for p in interface[1:] if p[1] == name)
+            assert declaration[2:] == [['width', '4']]
+            assert same(scope['signal_widths'][name], 4), ('declared width kind/value', index, child, name)
+            port = next(p for p in scope['ports'] if p['name'] == name)
+            assert port['direction'] == declaration[0] and port['width'] == '4'
+            assert named(sizes, name) == [name, '4']
+            field_paths.add(prefix + '/signal_widths/1/' + name)
+    assert field_paths == {row[0] for row in roster[index]['differences']}, ('complete field contract', index)
+    return field_paths
+
+
+for index in (0, 1, 2, 8, 9):
+    files = plain(pure['lowerings'][index]['result'])['files']
+    actual = ordinary['copies'][index]['copy'] if options.trust_storable else ordinary['copies'][index]['before']
+    qualify(index, actual, files)
+    qualify(index, pure['copies'][index]['copy'], files)
+    assert same(pure['copies'][index]['before'], pure['copies'][index]['copy'])
+    try:
+        qualify(index, ordinary['copies'][index]['copy'], files)
+    except AssertionError:
+        pass
+    else:
+        raise AssertionError(('actual Storable kind loss accepted', index))
+
+# Corruptions are passed through the full semantic/identity/carrier model.
+good = pure['copies'][9]['copy']
+files = plain(pure['lowerings'][9]['result'])['files']
+for label, mutate in (
+        ('guard', lambda m: m[1]['dt_blocks'][1][0][1]['assignments'][1][0][1]['guard'][1].update(expr='ack')),
+        ('provenance target', lambda m: m[1]['assignment_provenance'][1][0][1].update(target='wrong')),
+        ('declared width', lambda m: m[1]['signal_widths'][1].update(observed=8)),
+        ('physical identity', lambda m: m[1].update(actor_name='wrong'))):
+    bad = copy.deepcopy(good)
+    mutate(bad)
+    try:
+        qualify(9, bad, files)
+    except AssertionError:
+        pass
+    else:
+        raise AssertionError(('semantic corruption accepted', label))
+bad_files = dict(files)
+bad_files['monitor_coverage.fsm'] = files['monitor_coverage.fsm'].replace('(main_assert_2_pending 1)', '(main_assert_2_pending 0)', 1)
+try:
+    qualify(9, good, bad_files)
+except AssertionError:
+    pass
+else:
+    raise AssertionError('carrier mutation accepted')
+print('PASS complete generated/case-fold/permuted/rule/monitor field roster, literal source/producer assignments, provenance and declared-width contracts.')
+print('PASS structured emitted-carrier constants/guards/widths and genuine pure copies; every actual lossy module copy and semantic/identity/carrier corruptions reject.')
+print('OPEN: reusable/ATL fields, actor-only preparation propagation and snapshots retain their owners; complete controllers/constructors/native/moved-root stay cold.')

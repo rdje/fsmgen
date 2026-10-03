@@ -1,0 +1,5 @@
+t/1941-isf-formal-preallocation-admission.t .. ok
+t/1945-isf-formal-child-products.t ........... ok
+All tests successful.
+Files=2, Tests=8, 22 wallclock secs ( 0.01 usr  0.00 sys + 14.30 cusr  6.49 csys = 20.80 CPU)
+Result: PASS
