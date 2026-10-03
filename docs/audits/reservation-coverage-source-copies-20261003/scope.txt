@@ -1,0 +1,48 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.2
+Source boundary: 020eb331b64040d49ac95dfe40171076e6557fd5.
+
+This source cohort runs unchanged T1960 under actual Test::More and public
+preparation/lowering/coverage APIs. Ordinary and pure modes differ only at the
+exact authored-HASH and prepared-physical actor copy statements. All 16 actual
+actor-copy observations retain complete original and copy graphs. Every caller
+preserves its values, primitive kinds and plain sharing; every copy is deeply
+isolated from its original. The ordinary authored FIFO copy changes
+four numeric bank-slot indexes and two resolved data-port binding widths into
+strings. The vector ATL authored copy changes its numeric route width into a
+string. Other actor copies preserve their incoming kinds; physical FIFO/ATL
+inputs inherit the earlier authored-copy differences.
+
+Independent literal fixture contracts name the depth-four data bank and all
+slots, the data_in/data_out use bindings, and reader.payload -> writer.payload
+resolved vector route. Complete original/profile graphs authenticate these
+source fields rather than inferring semantics from a count or filename. Genuine
+pure copies retain numeric values and all graph topology. Preparation retains
+each caller; its source/reusable/activation/wiring kind propagation is fully
+captured but not independently modeled by this source cohort. The module
+successor owns that meaning. Both modes produce exactly equal complete ordinary
+lowering results, emitted carrier text and returned coverage scope records.
+Actual primary refusals and complete original public input graphs preserve their
+own mode's caller values/kinds. Native stack addresses are retained observations,
+not a cross-run identity contract. Strict exported-carrier checks pass in each
+actual unchanged test run; no HDL compiler or simulator is invoked.
+
+Re-derivation: verify.py authenticates immutable complete Git source membership,
+selected full bodies, prior profile and all actor-copy graphs with type-aware
+comparison and literal source-field contracts. Falsification: --trust-storable
+uses the genuine lossy copy as source authority and fails; both real lossy
+source products fail their independent field contracts. Kind-only, route-identity
+and whole-actor corruptions reject. Durability: complete source/native graphs,
+actual TAP/status, producer/reader/coordinate ledger, recipe, manifest, task,
+canonical card, book and Git. New archive digests authenticate exact recorded
+bytes; source and literal field comparisons supply independent semantic evidence.
+
+Exact observed FIFO library_source coordinates are encoded as literal
+${REPO_ROOT}/isf/common/fifo.isf, with a complete coordinate ledger. Python
+reader traceback source coordinates use the same repository-root marker. All other
+values, scalar kinds and topology are unchanged. This proves recorded source
+identity at this root, not moved-root qualification. Complete parser/constructor,
+internal module/controller propagation, snapshots/mutation seeds, arbitrary
+native referents and source-CLI/API mapping remain explicit successor/cold work.
+P2 .13 cannot start until the remaining module/snapshot cohorts and join close.
+Cause repair stays separate and unchanged. No source/test/provider/predicate,
+public schema/syntax/admission, native/submodule, legacy or prior archive change.

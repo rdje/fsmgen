@@ -234,9 +234,13 @@ The [bounded coverage profile](../../../docs/audits/reservation-coverage-helper-
 preserves the actual final-coverage calls and refusal consumers. The verifier
 preserves its actual inputs; some test Storable copies change numeric scalars
 into strings. For example, a numeric assignment value can become `"1"` in a
-detached test copy. Complete source/module field qualification remains open.
-The test-copy repair is owned and scheduled after
-that qualification; this profile does not establish a production coverage defect.
+detached test copy. The [actor-copy qualification](../../../docs/audits/reservation-coverage-source-copies-20261003/scope.txt)
+binds changed FIFO bank indexes/binding widths and vector ATL route width to
+source declarations. Scalar-preserving actor copies retain complete source
+kinds and sharing; complete ordinary lowering results, emitted carriers and
+coverage scope records agree with the original test. Internal module propagation
+and successful/refused snapshots remain open. The test-copy repair follows
+those cohorts; this profile does not establish a production coverage defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For

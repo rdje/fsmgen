@@ -9,7 +9,7 @@ date: 2026-10-03
 status: current
 tags: [isf, formals, reservations, declarations, scope, ownership]
 evidence: perl/FSM/Scheduler/ISF/FormalReservationCoverage.pm; perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm; t/1960-isf-formal-reservation-coverage.t; t/1957-isf-formal-domain-reservation-integration.t
-reverify: scripts/run_with_ram_guard.sh -- bash docs/audits/reservation-coverage-cause-repair-checks-20261003/check.sh
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-source-copy-checks-20261003/reverify.py
 ---
 
 FormalReservationCoverage::verify takes original prepared source, its canonical
@@ -33,14 +33,15 @@ ATL/vector/batch children, storage, rule payload and monitor formals. T1957 adds
 combined domain/resource/storage/completion/crossing cases; see
 [generated-domain identities](isf-generated-domain-identities.md).
 
-The [bounded current profile](../audits/reservation-coverage-helper-causes-20261003/scope.txt)
-retains native calls, original QR consumers and copies. Actual API inputs preserve
-values/kinds/sharing; some test Storable copies change numbers to strings.
-The [cause repair](../audits/reservation-coverage-cause-repair-20261003/scope.txt)
-compares complete causes with immediately saved errors and real native controls.
-Exact prior checks and declaration-only guard bypass fail; whole ordinary inputs/
-products conserve. Complete clone-field/product semantics remain .4.3-unqualified;
-P2 .13 owns copy/snapshot repair afterward. The verifier rejects correctly.
+The [profile](../audits/reservation-coverage-helper-causes-20261003/scope.txt)
+retains native calls, QR consumers and copies; actual API inputs preserve
+values/kinds/sharing. [Actor-copy qualification](../audits/reservation-coverage-source-copies-20261003/scope.txt)
+binds lost numeric FIFO indexes/binding widths and ATL route width to source.
+Pure actor copies retain kinds/sharing; complete lowering/carriers/scope results
+agree. The [cause repair](../audits/reservation-coverage-cause-repair-20261003/scope.txt)
+uses complete causes and saved native errors; wrong-cause, exact-prior and actual
+declaration-guard bypass controls qualify. The verifier rejects correctly.
+Internal module/snapshot semantics remain .4.3-open; P2 .13 owns repair afterward.
 Wider constructors/moved-root work stays cold.
 
 This detached guard establishes the final declaration check for the prepared

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-source-copies-20261003/verify.py", line 167, in <module>
+    actor_field_contract(row['copy'], actor)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-source-copies-20261003/verify.py", line 132, in actor_field_contract
+    assert type(item['index']) is int and item['index'] == i, ('numeric FIFO slot', i)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('numeric FIFO slot', 0)

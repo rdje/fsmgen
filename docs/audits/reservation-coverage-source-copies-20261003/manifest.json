@@ -1,0 +1,74 @@
+{
+  "REPRODUCE.txt": {
+    "bytes": 1452,
+    "sha256": "6a7f8f88b6e9a5a845c135da3d68573bce6ef005190897aedfe509775e6e2aec"
+  },
+  "bindings.json": {
+    "bytes": 1723453,
+    "sha256": "ff959bd8063f4ae27e468364e3b46baf28d7828a8f88a7f25186763592e309dc"
+  },
+  "coordinates.json": {
+    "bytes": 3857,
+    "sha256": "e540ff6448ca5dbaaeb9fcee25329994db5e58e6086bd0bd82b383d3238be017"
+  },
+  "initial-reader.txt": {
+    "bytes": 12408,
+    "sha256": "11c584643647f0d688f04bafaba7636eb1d91598d323df8031476f40217b5bb0"
+  },
+  "initial-trust-storable.txt": {
+    "bytes": 548,
+    "sha256": "ac03a269b110c1fc352ea42b8aa1dc5234a0438a87a8ff7c1874c84c539ea765"
+  },
+  "observe.pl": {
+    "bytes": 5598,
+    "sha256": "abbb2fbe8e52de4bccd9bf8757e759c026112020e49c931e744413978f6bd797"
+  },
+  "ordinary.json": {
+    "bytes": 3413531,
+    "sha256": "b638c1a0d79e8afcc6d92928a21e44ac5a9d1c4a117032e0c2e4c7ef3250d507"
+  },
+  "ordinary.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "ordinary.txt": {
+    "bytes": 202,
+    "sha256": "6c3ee31a549d8c47f5acfe2efdcc4ff6fc6bfd9df6b7d3e27a5f0d9c34fa52b2"
+  },
+  "portable.py": {
+    "bytes": 1257,
+    "sha256": "e06715c0a7c2b1bb18abe401d52a4b006c24a936d3e0b96f1318a45ef75fa1cc"
+  },
+  "pure.json": {
+    "bytes": 3413121,
+    "sha256": "787917c2b16d8667acabd87391fbe7ba880da1517b83a15ef7f969f28d27961f"
+  },
+  "pure.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "pure.txt": {
+    "bytes": 202,
+    "sha256": "39653dbc1b3da7051590af6511cf09fda80d531d505aa6008107bd30a037740a"
+  },
+  "scope.txt": {
+    "bytes": 3401,
+    "sha256": "5d8cf79822df0b6c47ee5940a9a331142e459e38ccd3ea697f851cdea7e83227"
+  },
+  "trust-storable.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "trust-storable.txt": {
+    "bytes": 548,
+    "sha256": "0a967cdeb3273056aa8525e9b05324b19f8ce83c38210135a72452003ac89ab7"
+  },
+  "verify.py": {
+    "bytes": 13017,
+    "sha256": "c226b03ef6df4ef7cdac55d3549e5a345bcd73c0ae4f26c78d914b944d886f22"
+  },
+  "verify.txt": {
+    "bytes": 534,
+    "sha256": "efde91d10b1ddceedea54dfd6d97decd55784dcc0e6ef5e3ce9b59528a66af2c"
+  }
+}

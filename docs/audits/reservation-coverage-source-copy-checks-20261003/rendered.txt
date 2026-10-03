@@ -1,0 +1,1 @@
+PASS rendered actor-copy result, source-field scope, remaining module/snapshot boundary and source link; visual QA remains pending.

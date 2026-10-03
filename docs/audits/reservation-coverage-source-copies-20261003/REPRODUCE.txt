@@ -1,0 +1,20 @@
+Cold, non-mutating readback from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-source-copies-20261003/verify.py
+The genuine competing-authority mode must exit 1:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-source-copies-20261003/verify.py --trust-storable
+
+For fresh observations, own a new task leaf and sibling on the repository volume.
+Retain this sealed directory unchanged. Authenticate the complete source boundary
+in bindings.json; do not claim these observations qualify changed provider inputs.
+Copy observe.pl to the sibling, changing only its explicit output base, and run it
+under the RAM guard with original mode and FSMGEN_COVERAGE_SOURCE_COPY_MODE=pure.
+Each run executes unchanged T1960 with actual carrier checks. Save original
+TAP/status and native records before comparison. Apply the exact portable.py
+FIFO-coordinate encoding to the sibling and retain the complete coordinate
+ledger; never coerce other source fields or primitive kinds. Rebind producer,
+source revision and full input identities, apply independent source-field
+contracts and real lossy-copy controls, and seal only after verification.
+
+The cold reader checks historical source objects through Git, not a mutable
+claim that every recorded source body describes current HEAD. Full constructors,
+module/snapshot/controller meaning and moved-root behavior need their own owners.
