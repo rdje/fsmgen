@@ -1,0 +1,15 @@
+Cold, non-mutating readback from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-module-join-20261003/verify.py
+  python3 -B docs/audits/reservation-coverage-module-join-20261003/derive_join.py
+Actual original Storable kind-authority promotion must exit1 at module zero:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-module-join-20261003/verify.py --trust-storable
+
+The join reader authenticates committed ownership and executes every immutable
+family reader, each binding complete source/native membership and independent
+finite field meanings. Its stack-based full difference reconciliation is
+separate from the recursive roster producer. All retained evidence stays cold.
+
+New sources/providers or changed field contracts require an owned new sibling
+on the repository volume and fresh complete captures/models. Preserve these
+seals. The next owner qualifies successful/refused snapshots and mutation seeds;
+this join does not authorize test-copy repair before that and the final join.

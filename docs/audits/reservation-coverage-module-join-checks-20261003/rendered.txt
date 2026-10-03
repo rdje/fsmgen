@@ -1,0 +1,1 @@
+PASS rendered complete module/propagation join, open snapshot/seed boundary and qualification link; visual QA remains pending.

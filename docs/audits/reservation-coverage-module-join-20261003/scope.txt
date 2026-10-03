@@ -1,0 +1,48 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.6.
+This joins the already sealed actor/module corpora and independently completed
+module field families. ownership.json binds the exact committed task revision,
+full task bytes/hash, distinct generated/reusable/ATL owners, immutable reader
+directories and source/module/preparation ordinals. The source-bound current
+module capture authenticates every initial-profile module original/copy too;
+no earlier native graph or seal is rewritten.
+
+The joined-fields roster retains all ten module observations, including the
+one copy without additional kind loss. Its unit is (module observation ordinal,
+complete graph path); every actual changed field is assigned to its independent
+generated/rule/monitor, reusable/storage or ATL model. Complete native source
+and copy graphs preserve originals, pure kind fidelity/deep isolation and
+ordinary preparation/lowering/carrier/coverage acceptance/results as qualified
+by their capture readers. This join does not substitute count or byte equality
+for those field meanings.
+
+Every actor-only preparation result is also reconciled. Only FIFO and vector
+preparation contain kind differences: their complete source bank/binding and
+child selection/guard/provenance paths, or source route plus parent activation/
+wiring width paths, match the independently qualified models exactly. Every
+other complete preparation result has no original/pure mode difference. The
+full per-instance/path inventory, including unchanged rows, is retained rather
+than accepting just observed successes or dropping empty cohorts.
+
+Re-derivation: separate recursive roster producer and independent typed stack
+reader derive the full original module/preparation field sets. The reader
+executes all three independent source/producer/field/structured-carrier models,
+authenticates complete historical source/Git/native membership and the exact
+committed owner statuses, and joins every family/path without overlap or gaps.
+Falsification: module/field/preparation omissions and wrong owners reject;
+actual original Storable module-copy authority promotion genuinely exits1 at
+module zero. The independent family readers also reject their recorded real
+captured/inherited Storable and semantic/endpoint/carrier controls. Durability:
+whole referenced immutable native graphs/sources/results/carriers/TAP/status,
+complete committed ownership binding, separate producer/joined roster/reader,
+actual RED/status, recipe/manifest/task/card/book/Git. Digests authenticate bytes;
+source/field models and complete reconciliation provide the finite meaning and
+membership evidence.
+
+This closes bounded module-copy field and actor-only preparation propagation
+qualification, not complete untouched constructor/controller semantics.
+Successful/refused triple snapshots, module/allocation mutation seeds and the
+final coverage-copy join remain separately owned before P2 .13 repair.
+Arbitrary native referents, source CLI/API, wider controllers/constructors and
+moved-root behavior stay cold. Only trace source coordinates are represented
+with literal ${REPO_ROOT}. No provider/test/predicate/public syntax/schema/
+admission/native/submodule/legacy or prior archive changes.

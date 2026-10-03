@@ -1,0 +1,42 @@
+{
+  "REPRODUCE.txt": {
+    "bytes": 1074,
+    "sha256": "6a4c8a61277c0ec73bc517922607331dd691af1a4a3498bc8233d562ff3874c9"
+  },
+  "derive-join.txt": {
+    "bytes": 140,
+    "sha256": "2a51fbf72c3db8596dbb90c15bad22efcef70bfab4d034ed9bf8b6c9d2858bf2"
+  },
+  "derive_join.py": {
+    "bytes": 2119,
+    "sha256": "ffc1b0df42dc78e50022f102f5f7d97e5c40bccaafa6e586462052f82b76759a"
+  },
+  "joined-fields.json": {
+    "bytes": 16318,
+    "sha256": "4d097f289b435857548089777cb1c3fade06abff6c6f6134a6964f1feb0100a6"
+  },
+  "ownership.json": {
+    "bytes": 1297,
+    "sha256": "e7a355fe45104e16e038d865101d4c6cd3c23c7e84c731f1de3e2b0ee6eeef56"
+  },
+  "scope.txt": {
+    "bytes": 3266,
+    "sha256": "ec47aa49d09dde7db63216cb3fe6d593211cd7a2fc9e51a0f21f379b6b8921d7"
+  },
+  "trust-storable.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "trust-storable.txt": {
+    "bytes": 4476,
+    "sha256": "723e69e7fcb1968be49de7e27b146e5631384b42272d150b1ae4b2c33ec1e382"
+  },
+  "verify.py": {
+    "bytes": 6774,
+    "sha256": "0be6db3fd4b24b19c2a7853df7920378d7b75dd506f65b0230557a0fcd041080"
+  },
+  "verify.txt": {
+    "bytes": 4770,
+    "sha256": "b438de6e1582e2910e7e7dc3aa0a30bdcc09e3d082c7f07967dca3f4b721e09b"
+  }
+}

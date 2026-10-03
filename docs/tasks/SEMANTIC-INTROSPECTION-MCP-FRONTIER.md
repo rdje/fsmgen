@@ -3782,11 +3782,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify actual captured module copies and ordinary result/carrier conservation.`
   Acceptance: `After source cohort, bind every actual build_module capture before and after copy. Model changed scalar assignment/provenance, signal/port/data-link widths by source-owned contracts and actual complete emitted carriers; compare genuine ordinary originals and pure copies. Independently close all module field differences or split finite semantic cohorts; do not promote cold controller/constructor meanings.`
-  Verification: `pending`
-  Commit: `children below`
+  Verification: `All six completed children close exact module membership, generated/reusable/ATL field meanings and inherited FIFO/vector preparation differences through the sealed complete module join. Independent derivation, actual lossy-copy authority and omission/owner controls pass their declared safety outcomes; whole original/pure graphs and ordinary products/carriers conserve. Snapshot/seeds and final coverage join remain .4/.5-owned before P2 .13; wider controller/constructor/native/moved-root meanings remain cold.`
+  Commit: `this commit; authenticated completed children`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.6`
 
@@ -3826,11 +3826,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Join all module-copy field contracts and source preparation propagation.`
   Acceptance: `Reconcile every actual current/initial module capture, changed field and ordinary result/carrier with the family models and actual controls. Independently close retained actor-only preparation kind propagation from source .2 under these models or own an exact further cohort. Commit complete bounded module handoff before snapshot/mutation-seed .4 and eventual P2 .13 repair; preserve wider cold limitations.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Sealed docs/audits/reservation-coverage-module-join-20261003 authenticates completed cohort owners and complete captured membership. Re-derivation: independent recursive whole typed deltas versus separate stack reader and source/producer/carrier family models. Units are changed (module ordinal,path) fields: 149 in nine of ten captures; preparation fields: 49 in two of twelve observations, exactly FIFO44/vector5. Falsification: real Storable kind authority RED1; missing module/field/preparation and wrong-owner controls reject. Durability: complete Git-bound sources, immutable manifest and cold reader/reproduction; post-seal checks sibling. All source/caller/pure graphs and ordinary product/cause/carrier conservation remain authenticated. Public-book Files=2/Tests=308, build/rendered pass; staged doctrines/hooks required. Snapshots/seeds and final join precede P2 .13; wider controllers/constructors/native/moved-root and visual QA stay cold.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4`
   Status: `pending`
@@ -6169,3 +6169,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '$modules{$ir->{actor_name}} = dclone($ir)' binds capture introduction98f0cc146; complete first-touch native original/copies locate ATL numeric assignment/provenance/fan-in/width loss at T1960 line51 and inherited vector source width at authored-copy line30. Immutable actual trigger/watchdog/fan-in and endpoint producer bodies root the independent field contracts.
 - [x] **ADDRESSED (verified)** — Every actual resolved/vector/batch module and actor-preparation kind difference reconciles with independent literal source/producer/endpoint/carrier models and a separate complete roster. Original/pure pass; actual captured/inherited Storable RED controls and fan-in/endpoint/width/carrier corruptions reject. Full join/snapshot owners keep copy repair and wider controller/timeout signoff gated.
 - [x] **NO REGRESSION** — Focused resolved-child All tests successful, Files=1, Tests=66; public-book Files=2, Tests=308, rendered build and Knowledge Map readback pass. Exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks close the slice; hot sources/tests/providers and prior sealed evidence stay unchanged.
+
+## Acceptance Checklist — complete module and preparation join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S '$modules{$ir->{actor_name}} = dclone($ir)' binds capture introduction98f0cc146; exact first-touch module captures and actor-only preparations retain primitive-kind loss at T1960 line51 and authored-copy line30. Independently derived whole deltas reconcile every field to authenticated completed source/producer/carrier owners.
+- [x] **ADDRESSED (verified)** — Complete module/preparation membership, every typed field path and owner reconcile through independent readers and immutable Git source closure. Actual Storable kind-authority RED1 plus module/field/preparation omission and owner corruptions reject. Snapshots/seeds/final join retain ownership before P2 repair; broader controller/constructor/native meanings stay cold.
+- [x] **NO REGRESSION** — Public-book All tests successful, Files=2, Tests=308; rendered build and Knowledge Map readback pass. Full ordinary source/caller/product/carrier/cause conservation authenticates prior observations; no hot provider/test edits. Exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.

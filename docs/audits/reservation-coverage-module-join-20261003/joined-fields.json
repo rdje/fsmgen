@@ -1,0 +1,325 @@
+{
+  "modules": [
+    {
+      "cohort": "generated",
+      "ordinal": 0,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/3/1/rhs",
+        "/1/assignment_provenance/1/7/1/rhs",
+        "/1/assignment_provenance/1/8/1/rhs",
+        "/1/children/1/worker/1/assignment_provenance/1/0/1/rhs",
+        "/1/children/1/worker/1/assignment_provenance/1/1/1/rhs",
+        "/1/children/1/worker/1/signal_widths/1/data",
+        "/1/children/1/worker/1/signal_widths/1/result",
+        "/1/children/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+        "/1/children/1/worker/1/states/1/2/1/assignments/1/1/1/rhs",
+        "/1/signal_widths/1/data",
+        "/1/signal_widths/1/result",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/3/1/assignments/1/0/1/rhs",
+        "/1/states/1/5/1/assignments/1/0/1/rhs",
+        "/1/states/1/7/1/assignments/1/0/1/rhs"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "ordinal": 1,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/3/1/rhs",
+        "/1/assignment_provenance/1/7/1/rhs",
+        "/1/assignment_provenance/1/8/1/rhs",
+        "/1/children/1/worker/1/assignment_provenance/1/0/1/rhs",
+        "/1/children/1/worker/1/assignment_provenance/1/1/1/rhs",
+        "/1/children/1/worker/1/signal_widths/1/data",
+        "/1/children/1/worker/1/signal_widths/1/result",
+        "/1/children/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+        "/1/children/1/worker/1/states/1/2/1/assignments/1/1/1/rhs",
+        "/1/signal_widths/1/data",
+        "/1/signal_widths/1/result",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/3/1/assignments/1/0/1/rhs",
+        "/1/states/1/5/1/assignments/1/0/1/rhs",
+        "/1/states/1/7/1/assignments/1/0/1/rhs"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "ordinal": 2,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/3/1/rhs",
+        "/1/assignment_provenance/1/7/1/rhs",
+        "/1/assignment_provenance/1/8/1/rhs",
+        "/1/children/1/worker/1/assignment_provenance/1/0/1/rhs",
+        "/1/children/1/worker/1/assignment_provenance/1/1/1/rhs",
+        "/1/children/1/worker/1/signal_widths/1/data",
+        "/1/children/1/worker/1/signal_widths/1/result",
+        "/1/children/1/worker/1/states/1/2/1/assignments/1/0/1/rhs",
+        "/1/children/1/worker/1/states/1/2/1/assignments/1/1/1/rhs",
+        "/1/signal_widths/1/data",
+        "/1/signal_widths/1/result",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/3/1/assignments/1/0/1/rhs",
+        "/1/states/1/5/1/assignments/1/0/1/rhs",
+        "/1/states/1/7/1/assignments/1/0/1/rhs"
+      ]
+    },
+    {
+      "cohort": "reusable",
+      "ordinal": 3,
+      "paths": []
+    },
+    {
+      "cohort": "reusable",
+      "ordinal": 4,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/3/1/rhs",
+        "/1/signal_widths/1/control_out",
+        "/1/signal_widths/1/wdata",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/3/1/assignments/1/0/1/rhs"
+      ]
+    },
+    {
+      "cohort": "atl",
+      "ordinal": 5,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/2/1/rhs",
+        "/1/assignment_provenance/1/3/1/rhs",
+        "/1/assignment_provenance/1/4/1/rhs",
+        "/1/assignment_provenance/1/5/1/rhs",
+        "/1/children/1/atl_resolved_child_pipeline__worker/1/assignment_provenance/1/0/1/rhs",
+        "/1/children/1/atl_resolved_child_pipeline__worker/1/assignment_provenance/1/1/1/rhs",
+        "/1/children/1/atl_resolved_child_pipeline__worker/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/children/1/atl_resolved_child_pipeline__worker/1/states/1/1/1/assignments/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/0/1/sources/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/0/1/sources/1/1/1/rhs",
+        "/1/compatible_fanin_groups/1/1/1/sources/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/1/1/sources/1/1/1/rhs",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/1/1/assignments/1/0/1/rhs",
+        "/1/states/1/3/1/assignments/1/0/1/rhs",
+        "/1/states/1/4/1/assignments/1/0/1/rhs",
+        "/1/states/1/4/1/assignments/1/1/1/rhs"
+      ]
+    },
+    {
+      "cohort": "atl",
+      "ordinal": 6,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/2/1/rhs",
+        "/1/assignment_provenance/1/3/1/rhs",
+        "/1/assignment_provenance/1/4/1/rhs",
+        "/1/assignment_provenance/1/5/1/rhs",
+        "/1/assignment_provenance/1/6/1/rhs",
+        "/1/assignment_provenance/1/7/1/rhs",
+        "/1/atl_top_instances/1/0/1/children/1/0/1/data_links/1/0/1/width",
+        "/1/atl_top_instances/1/0/1/children/1/1/1/data_links/1/0/1/width",
+        "/1/children/1/atl_two_child_vector_data_pipeline__reader/1/assignment_provenance/1/0/1/rhs",
+        "/1/children/1/atl_two_child_vector_data_pipeline__reader/1/assignment_provenance/1/2/1/rhs",
+        "/1/children/1/atl_two_child_vector_data_pipeline__reader/1/ports/1/1/1/width",
+        "/1/children/1/atl_two_child_vector_data_pipeline__reader/1/signal_widths/1/payload",
+        "/1/children/1/atl_two_child_vector_data_pipeline__reader/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/children/1/atl_two_child_vector_data_pipeline__reader/1/states/1/2/1/assignments/1/0/1/rhs",
+        "/1/children/1/atl_two_child_vector_data_pipeline__writer/1/assignment_provenance/1/0/1/rhs",
+        "/1/children/1/atl_two_child_vector_data_pipeline__writer/1/assignment_provenance/1/1/1/rhs",
+        "/1/children/1/atl_two_child_vector_data_pipeline__writer/1/ports/1/1/1/width",
+        "/1/children/1/atl_two_child_vector_data_pipeline__writer/1/signal_widths/1/payload",
+        "/1/children/1/atl_two_child_vector_data_pipeline__writer/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/children/1/atl_two_child_vector_data_pipeline__writer/1/states/1/1/1/assignments/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/0/1/sources/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/0/1/sources/1/1/1/rhs",
+        "/1/compatible_fanin_groups/1/1/1/sources/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/1/1/sources/1/1/1/rhs",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/1/1/assignments/1/0/1/rhs",
+        "/1/states/1/3/1/assignments/1/0/1/rhs",
+        "/1/states/1/4/1/assignments/1/0/1/rhs",
+        "/1/states/1/6/1/assignments/1/0/1/rhs",
+        "/1/states/1/7/1/assignments/1/0/1/rhs",
+        "/1/states/1/7/1/assignments/1/1/1/rhs"
+      ]
+    },
+    {
+      "cohort": "atl",
+      "ordinal": 7,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/2/1/rhs",
+        "/1/assignment_provenance/1/3/1/rhs",
+        "/1/assignment_provenance/1/4/1/rhs",
+        "/1/assignment_provenance/1/5/1/rhs",
+        "/1/assignment_provenance/1/6/1/rhs",
+        "/1/children/1/atl_two_child_trigger_batch_pipeline__reader/1/assignment_provenance/1/0/1/rhs",
+        "/1/children/1/atl_two_child_trigger_batch_pipeline__reader/1/assignment_provenance/1/1/1/rhs",
+        "/1/children/1/atl_two_child_trigger_batch_pipeline__reader/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/children/1/atl_two_child_trigger_batch_pipeline__reader/1/states/1/1/1/assignments/1/0/1/rhs",
+        "/1/children/1/atl_two_child_trigger_batch_pipeline__writer/1/assignment_provenance/1/0/1/rhs",
+        "/1/children/1/atl_two_child_trigger_batch_pipeline__writer/1/assignment_provenance/1/1/1/rhs",
+        "/1/children/1/atl_two_child_trigger_batch_pipeline__writer/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/children/1/atl_two_child_trigger_batch_pipeline__writer/1/states/1/1/1/assignments/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/0/1/sources/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/0/1/sources/1/1/1/rhs",
+        "/1/compatible_fanin_groups/1/1/1/sources/1/0/1/rhs",
+        "/1/compatible_fanin_groups/1/1/1/sources/1/1/1/rhs",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/1/1/assignments/1/0/1/rhs",
+        "/1/states/1/1/1/assignments/1/1/1/rhs",
+        "/1/states/1/4/1/assignments/1/0/1/rhs",
+        "/1/states/1/5/1/assignments/1/0/1/rhs",
+        "/1/states/1/5/1/assignments/1/1/1/rhs"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "ordinal": 8,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/2/1/rhs",
+        "/1/assignment_provenance/1/3/1/rhs",
+        "/1/dt_blocks/1/0/1/assignments/1/0/1/rhs",
+        "/1/signal_widths/1/din",
+        "/1/signal_widths/1/observed",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/2/1/assignments/1/0/1/rhs"
+      ]
+    },
+    {
+      "cohort": "generated",
+      "ordinal": 9,
+      "paths": [
+        "/1/assignment_provenance/1/0/1/rhs",
+        "/1/assignment_provenance/1/2/1/rhs",
+        "/1/assignment_provenance/1/4/1/rhs",
+        "/1/assignment_provenance/1/5/1/rhs",
+        "/1/assignment_provenance/1/6/1/rhs",
+        "/1/assignment_provenance/1/8/1/rhs",
+        "/1/dt_blocks/1/0/1/assignments/1/0/1/rhs",
+        "/1/dt_blocks/1/0/1/assignments/1/1/1/rhs",
+        "/1/dt_blocks/1/0/1/assignments/1/2/1/rhs",
+        "/1/dt_blocks/1/0/1/assignments/1/4/1/rhs",
+        "/1/signal_widths/1/observed",
+        "/1/states/1/0/1/assignments/1/0/1/rhs",
+        "/1/states/1/2/1/assignments/1/0/1/rhs"
+      ]
+    }
+  ],
+  "preparations": [
+    {
+      "cohort": null,
+      "ordinal": 0,
+      "paths": []
+    },
+    {
+      "cohort": null,
+      "ordinal": 1,
+      "paths": []
+    },
+    {
+      "cohort": null,
+      "ordinal": 2,
+      "paths": []
+    },
+    {
+      "cohort": null,
+      "ordinal": 3,
+      "paths": []
+    },
+    {
+      "cohort": "reusable",
+      "ordinal": 4,
+      "paths": [
+        "/1/actor/1/library_uses/1/0/1/actor/1/storage/1/3/1/signals/1/0/1/index",
+        "/1/actor/1/library_uses/1/0/1/actor/1/storage/1/3/1/signals/1/1/1/index",
+        "/1/actor/1/library_uses/1/0/1/actor/1/storage/1/3/1/signals/1/2/1/index",
+        "/1/actor/1/library_uses/1/0/1/actor/1/storage/1/3/1/signals/1/3/1/index",
+        "/1/actor/1/library_uses/1/0/1/bindings/1/3/1/width",
+        "/1/actor/1/library_uses/1/0/1/bindings/1/7/1/width",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/68/1/activation/1/assignment_guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/68/1/condition_terms/1/eq:wr_ptr",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/69/1/activation/1/assignment_guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/69/1/condition_terms/1/eq:wr_ptr",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/70/1/activation/1/assignment_guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/70/1/condition_terms/1/eq:wr_ptr",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/71/1/activation/1/assignment_guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/71/1/condition_terms/1/eq:wr_ptr",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/72/1/activation/1/assignment_guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/72/1/condition_terms/1/eq:rd_ptr",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/73/1/activation/1/assignment_guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/73/1/condition_terms/1/eq:rd_ptr",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/74/1/activation/1/assignment_guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/74/1/condition_terms/1/eq:rd_ptr",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/75/1/activation/1/assignment_guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/assignment_provenance/1/75/1/condition_terms/1/eq:rd_ptr",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/declared_storage/1/3/1/signals/1/0/1/index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/declared_storage/1/3/1/signals/1/1/1/index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/declared_storage/1/3/1/signals/1/2/1/index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/declared_storage/1/3/1/signals/1/3/1/index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/28/1/assignments/1/0/1/bank_index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/28/1/assignments/1/0/1/guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/28/1/assignments/1/1/1/bank_index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/28/1/assignments/1/1/1/guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/28/1/assignments/1/2/1/bank_index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/28/1/assignments/1/2/1/guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/28/1/assignments/1/3/1/bank_index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/28/1/assignments/1/3/1/guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/29/1/assignments/1/0/1/bank_index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/29/1/assignments/1/0/1/guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/29/1/assignments/1/1/1/bank_index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/29/1/assignments/1/1/1/guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/29/1/assignments/1/2/1/bank_index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/29/1/assignments/1/2/1/guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/29/1/assignments/1/3/1/bank_index",
+        "/1/reusable_child_products/1/children/1/fifo_library_use__u_fifo/1/dt_blocks/1/29/1/assignments/1/3/1/guard/1/expr_ast/1/2",
+        "/1/reusable_child_products/1/library_uses/1/0/1/bindings/1/3/1/width",
+        "/1/reusable_child_products/1/library_uses/1/0/1/bindings/1/7/1/width"
+      ]
+    },
+    {
+      "cohort": null,
+      "ordinal": 5,
+      "paths": []
+    },
+    {
+      "cohort": null,
+      "ordinal": 6,
+      "paths": []
+    },
+    {
+      "cohort": "atl",
+      "ordinal": 7,
+      "paths": [
+        "/1/actor/1/actor_network/1/data_movements/1/0/1/width",
+        "/1/parent_activation_products/1/ports/1/6/1/width",
+        "/1/parent_activation_products/1/ports/1/7/1/width",
+        "/1/parent_wiring_products/1/ports/1/6/1/width",
+        "/1/parent_wiring_products/1/ports/1/7/1/width"
+      ]
+    },
+    {
+      "cohort": null,
+      "ordinal": 8,
+      "paths": []
+    },
+    {
+      "cohort": null,
+      "ordinal": 9,
+      "paths": []
+    },
+    {
+      "cohort": null,
+      "ordinal": 10,
+      "paths": []
+    },
+    {
+      "cohort": null,
+      "ordinal": 11,
+      "paths": []
+    }
+  ]
+}

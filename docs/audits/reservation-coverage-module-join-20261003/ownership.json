@@ -1,0 +1,46 @@
+{
+  "cohorts": [
+    {
+      "directory": "docs/audits/reservation-coverage-generated-module-fields-20261003",
+      "module_ordinals": [
+        0,
+        1,
+        2,
+        8,
+        9
+      ],
+      "name": "generated",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.3",
+      "preparation_ordinals": []
+    },
+    {
+      "directory": "docs/audits/reservation-coverage-reusable-module-fields-20261003",
+      "module_ordinals": [
+        3,
+        4
+      ],
+      "name": "reusable",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.4",
+      "preparation_ordinals": [
+        4
+      ]
+    },
+    {
+      "directory": "docs/audits/reservation-coverage-atl-module-fields-20261003",
+      "module_ordinals": [
+        5,
+        6,
+        7
+      ],
+      "name": "atl",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3.5",
+      "preparation_ordinals": [
+        7
+      ]
+    }
+  ],
+  "revision": "97f9d89f132065a0014815917ab5f25362995684",
+  "task_bytes": 1091663,
+  "task_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+  "task_sha256": "e00c58c031d7fb51bd824f58807570563526f7fdecf98f31655313d5dbb57ec7"
+}
