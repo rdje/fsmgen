@@ -1,0 +1,3 @@
+ram-guard: PID 63933; host 64.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Global symbol "$mixed" requires explicit package name (did you forget to declare "my $mixed"?) at docs/audits/reusable-product-helper-causes-20261003/ordinary.pl line 19.
+Unmatched ( in regex; marked by <-- HERE in m/( <-- HERE transaction worker/ at docs/audits/reusable-product-helper-causes-20261003/ordinary.pl line 30.

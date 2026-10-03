@@ -191,6 +191,15 @@ active eval-source frames. Complete ordinary products are conserved; pointer
 records and update rosters have finite independent models, while wider internal
 semantics remain under cold review. Reusable/reservation and remaining
 named/framework cohorts stay open.
+The [reusable-product diagnosis](../../../docs/audits/reusable-product-helper-causes-20261003/scope.txt)
+finds the same cause gap in library/ATL admission helpers and one adjacent
+parent-width assertion. Complete declared-cause repair is owned. Its ordinary
+products also expose two distinct primitive-kind gaps: the test projection's
+Storable copy loses some FIFO numeric JSON kinds, and the private ATL output-width
+check numerically inspects caller-owned widths. Actual detached-value controls
+preserve the caller and retain identical preparation/module outputs. These small
+repairs precede further cohort review; they add no composition or HDL runtime
+support. Whole constructor and child-internal semantic qualification remains open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
 

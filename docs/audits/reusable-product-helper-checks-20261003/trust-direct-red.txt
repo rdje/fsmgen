@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reusable-product-helper-causes-20261003/verify.py", line 127, in <module>
+    assert all(r['matched'] == int(r['band'] == 'current_fixture') for r in data['rows'][30:]), 'one actual direct primary echo'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: one actual direct primary echo

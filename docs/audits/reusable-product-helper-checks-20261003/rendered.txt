@@ -1,0 +1,1 @@
+PASS rendered reusable diagnosis and owned kind defects; visual QA not performed.

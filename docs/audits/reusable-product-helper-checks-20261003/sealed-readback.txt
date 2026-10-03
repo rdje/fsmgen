@@ -1,0 +1,11 @@
+ram-guard: PID 55359; host 62.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+cause corruption rejects: cause
+cause corruption rejects: source
+cause corruption rejects: kind
+cause corruption rejects: actor
+cause corruption rejects: field
+cause corruption rejects: member
+whole corruption rejects: origin
+whole corruption rejects: kind
+whole corruption rejects: field
+PASS finite actual causes/mutations/identities/kinds, source closure, real clone/width roots and complete observations; wider constructor/child semantics remain cold-owned.

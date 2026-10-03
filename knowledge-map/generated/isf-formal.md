@@ -131,7 +131,7 @@ _Potential resource pointer declarations share the executable arbitration produc
 
 _Reusable library and resolved ATL products share real child construction_
 
-- **date:** 2026-09-27 · **status:** current
+- **date:** 2026-10-03 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-formal-reusable-products.md`](../../docs/knowledge/isf-formal-reusable-products.md)
 
 ### isf-formal-source-binding-reports

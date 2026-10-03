@@ -1,0 +1,4 @@
+t/1947-isf-formal-reusable-products.t .. ok
+All tests successful.
+Files=1, Tests=3, 14 wallclock secs ( 0.01 usr  0.01 sys +  8.29 cusr  4.36 csys = 12.67 CPU)
+Result: PASS

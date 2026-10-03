@@ -1,0 +1,5 @@
+t/1945-isf-formal-child-products.t .. ok
+t/1231-isf-library-generated-top.t .. ok
+All tests successful.
+Files=2, Tests=7, 15 wallclock secs ( 0.01 usr  0.01 sys +  9.97 cusr  4.56 csys = 14.55 CPU)
+Result: PASS

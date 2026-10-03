@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reusable-product-helper-causes-20261003/verify.py", line 188, in <module>
+    assert all(r['physical_equal'] and r['reprepared_equal'] for r in products['rows']), 'actual test projection/source kind gaps'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual test projection/source kind gaps

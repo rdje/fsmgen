@@ -5,49 +5,19 @@ answers:
   - "are reusable library and ATL child declarations retained before formal allocation?"
   - "what does reusable_child_products include in source preparation?"
   - "does formal preparation preserve reusable parameters and ATL child data ports?"
-date: 2026-09-27
+date: 2026-10-03
 status: current
 tags: [isf, formals, reservations, library, atl, children, scope]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1947-isf-formal-reusable-products.t; t/1945-isf-formal-child-products.t; t/1231-isf-library-generated-top.t; t/1330-isf-atl-resolved-child-fixture-coverage.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1947-isf-formal-reusable-products.t t/1945-isf-formal-child-products.t t/1231-isf-library-generated-top.t
 ---
-Current integration: [production formal scope](isf-production-formal-scope.md)
-now consumes the qualified preparation products. The producer-specific account
-below records its original qualification boundary; pending global integration
-statements are historical. Independent-controller and local-call execution
-remain separately gated.
+Current integration: [production formal scope](isf-production-formal-scope.md) consumes preparation products. Independent-controller/local-call execution and the separately owned reusable formal exception remain gated.
 
+_build_module_child_products shares generated children, library uses, resolved ATL actors, selected tops and child data-interface marking between build_module and preparation. Preparation uses a detached actor and separate generated/reusable views. reusable_child_products contains children keyed by module, library_uses and atl_top_instances, excluding generated transaction modules. Parent declaration merging is unnecessary to construct them.
 
-_build_module_child_products is the unchanged production order for generated
-transaction children, library uses, resolved ATL actors, selected ATL top records
-and child data-interface marking. Both build_module and prepare_formal_source
-use it. Preparation passes a separate actor clone and independently detaches
-its generated_child_products and reusable_child_products views. The latter
-contains children keyed by module, library_uses and atl_top_instances; it excludes
-generated transaction modules. No parent declaration merge or connection is
-needed to construct these actual child modules.
+Missing module/shell, cross-kind module collisions and ATL composition admission apply to preparation. External unresolved intent fabricates no module. Parameter/binding/origin/storage/bank/public-port/data-endpoint products remain actual producer outputs; child finalization is independent of the parent. T1947 covers FIFO, trigger/event, vector ingress/egress, actor routes and trigger batches, mixed generated/library scopes, detachment, raw parent conflicts and strict carriers. Its local_delay control avoids an existing public payload pin.
 
-Canonical module-conflict checks, missing-shell/module errors and supported ATL
-composition admission apply to preparation too. Unresolved external actor intent
-fabricates no module. Library parameters, binding metadata, storage/bank logic,
-origin, child public ports and selected ATL data endpoints remain actual producer
-outputs. Reusable children keep their own semantic finalization. These are child
-modules and selected composition records, not an emitted or finalized parent.
+[Diagnosis](../audits/reusable-product-helper-causes-20261003/scope.txt) qualifies actual helper/direct false causes; .2.3.9 owns complete reasons. First-line fragments still accept primary echoes. .2.3.10 owns test Storable projection kind loss; pure copying restores FIFO products. .2.3.11 immediately owns actual ATL caller-width flag changes at _ensure_atl_child_data_source_ports: detached-value controls preserve callers and complete outputs. Original/prepared FIFO JSON stays intact; misleading Storable snapshots remain unqualified. Finite source/clause/mutation/schema/origin/kind models pass; wider constructors/child internals remain cold observations, not whole-kind signoff. Runtime origin coordinates are portable-encoded; moved-root proof remains .1.2.4-owned.
 
-T1947 compares complete production products on FIFO, resolved trigger/event,
-vector ingress/egress, actor-to-actor data and trigger-batch fixtures. Detached
-parent formal rewriting preserves those products and strict child carriers pass.
-Mixed generated/library children, source/product isolation, independent raw
-parent width conflicts, missing shells/modules, cross-kind module collisions
-and unsupported ATL groups retain their real boundaries. The added control
-formal uses local_delay because one ATL fixture already has a public payload
-pin; its initial payload spelling correctly triggered the existing direct
-formal/pin collision refusal.
-
-[Grant/priority/finalization declaration preservation](isf-formal-arbitration-namespace.md)
-is now separately qualified. Parent storage/named-completion/readback connections
-and outer domain namespace realization still require coverage before complete
-reservations or automatic production formal renaming. No new HDL runtime
-qualification is claimed. Library readback behavior remains owned by
-[isf-library-parent-port-ownership](isf-library-parent-port-ownership.md).
+[Grant/priority/finalization](isf-formal-arbitration-namespace.md) and [library readback](isf-library-parent-port-ownership.md) own adjacent boundaries. Historical parent/domain closure is separate; no new HDL runtime claim.
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.2.2.2.1.

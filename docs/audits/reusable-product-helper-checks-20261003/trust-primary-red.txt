@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reusable-product-helper-causes-20261003/verify.py", line 125, in <module>
+    assert all(r['primary_matched'] == int(r['band'] == 'current_fixture') for r in data['rows'][:30]), 'ten actual primary fragment echoes'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ten actual primary fragment echoes

@@ -1,0 +1,299 @@
+ok 1 - missing library module refused by prepare_formal_source
+ok 2 - missing library module canonical diagnosis in prepare_formal_source
+ok 3 - missing library module refused by build_module
+ok 4 - missing library module canonical diagnosis in build_module
+ok 5 - missing library module/current_fixture submitted actor unchanged
+ok 6 - missing library module/current_fixture observes both APIs
+ok 7 - missing library module/current_fixture desired cause safety in prepare_formal_source
+ok 8 - missing library module/current_fixture desired cause safety in build_module
+ok 9 - missing library module refused by prepare_formal_source
+not ok 10 - missing library module canonical diagnosis in prepare_formal_source
+#   Failed test 'missing library module canonical diagnosis in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'main': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763bb07db0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763bb07db0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 187
+# 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d6dffc0)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d6f74e0), qr(missing\ a\ generated\ module\ name), "missing library module") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:missing\ a\ generated\ module\ name)'
+ok 11 - missing library module refused by build_module
+not ok 12 - missing library module canonical diagnosis in build_module
+#   Failed test 'missing library module canonical diagnosis in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'main': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d4f3c18)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d4f3c18)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 105
+# 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d4f3c18)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d6f74e0), qr(missing\ a\ generated\ module\ name), "missing library module") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:missing\ a\ generated\ module\ name)'
+ok 13 - missing library module/earlier_target submitted actor unchanged
+ok 14 - missing library module/earlier_target observes both APIs
+ok 15 - missing library module/earlier_target desired cause safety in prepare_formal_source
+ok 16 - missing library module/earlier_target desired cause safety in build_module
+ok 17 - missing library module refused by prepare_formal_source
+ok 18 - missing library module canonical diagnosis in prepare_formal_source
+ok 19 - missing library module refused by build_module
+ok 20 - missing library module canonical diagnosis in build_module
+ok 21 - missing library module/primary_target_echo submitted actor unchanged
+ok 22 - missing library module/primary_target_echo observes both APIs
+not ok 23 - missing library module/primary_target_echo desired cause safety in prepare_formal_source
+#   Failed test 'missing library module/primary_target_echo desired cause safety in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+not ok 24 - missing library module/primary_target_echo desired cause safety in build_module
+#   Failed test 'missing library module/primary_target_echo desired cause safety in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+ok 25 - library versus generated module collision refused by prepare_formal_source
+ok 26 - library versus generated module collision canonical diagnosis in prepare_formal_source
+ok 27 - library versus generated module collision refused by build_module
+ok 28 - library versus generated module collision canonical diagnosis in build_module
+ok 29 - library versus generated module collision/current_fixture submitted actor unchanged
+ok 30 - library versus generated module collision/current_fixture observes both APIs
+ok 31 - library versus generated module collision/current_fixture desired cause safety in prepare_formal_source
+ok 32 - library versus generated module collision/current_fixture desired cause safety in build_module
+ok 33 - library versus generated module collision refused by prepare_formal_source
+not ok 34 - library versus generated module collision canonical diagnosis in prepare_formal_source
+#   Failed test 'library versus generated module collision canonical diagnosis in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'main': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d6f27e0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d6f27e0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 187
+# 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d6ec5a0)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d6fb510), qr(conflicts\ with\ another\ generated\ child), "library versus generated module collision") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:conflicts\ with\ another\ generated\ child)'
+ok 35 - library versus generated module collision refused by build_module
+not ok 36 - library versus generated module collision canonical diagnosis in build_module
+#   Failed test 'library versus generated module collision canonical diagnosis in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'main': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d6f91c8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d6f91c8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 105
+# 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d6f91c8)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d6fb510), qr(conflicts\ with\ another\ generated\ child), "library versus generated module collision") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:conflicts\ with\ another\ generated\ child)'
+ok 37 - library versus generated module collision/earlier_target submitted actor unchanged
+ok 38 - library versus generated module collision/earlier_target observes both APIs
+ok 39 - library versus generated module collision/earlier_target desired cause safety in prepare_formal_source
+ok 40 - library versus generated module collision/earlier_target desired cause safety in build_module
+ok 41 - library versus generated module collision refused by prepare_formal_source
+ok 42 - library versus generated module collision canonical diagnosis in prepare_formal_source
+ok 43 - library versus generated module collision refused by build_module
+ok 44 - library versus generated module collision canonical diagnosis in build_module
+ok 45 - library versus generated module collision/primary_target_echo submitted actor unchanged
+ok 46 - library versus generated module collision/primary_target_echo observes both APIs
+not ok 47 - library versus generated module collision/primary_target_echo desired cause safety in prepare_formal_source
+#   Failed test 'library versus generated module collision/primary_target_echo desired cause safety in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+not ok 48 - library versus generated module collision/primary_target_echo desired cause safety in build_module
+#   Failed test 'library versus generated module collision/primary_target_echo desired cause safety in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+ok 49 - missing library actor refused by prepare_formal_source
+ok 50 - missing library actor canonical diagnosis in prepare_formal_source
+ok 51 - missing library actor refused by build_module
+ok 52 - missing library actor canonical diagnosis in build_module
+ok 53 - missing library actor/current_fixture submitted actor unchanged
+ok 54 - missing library actor/current_fixture observes both APIs
+ok 55 - missing library actor/current_fixture desired cause safety in prepare_formal_source
+ok 56 - missing library actor/current_fixture desired cause safety in build_module
+ok 57 - missing library actor refused by prepare_formal_source
+not ok 58 - missing library actor canonical diagnosis in prepare_formal_source
+#   Failed test 'missing library actor canonical diagnosis in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'main': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d5680f0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d5680f0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 187
+# 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763bb30ab0)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d6fa558), qr(does\ not\ carry\ a\ reusable\ actor\ shell), "missing library actor") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:does\ not\ carry\ a\ reusable\ actor\ shell)'
+ok 59 - missing library actor refused by build_module
+not ok 60 - missing library actor canonical diagnosis in build_module
+#   Failed test 'missing library actor canonical diagnosis in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'main': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d564e58)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d564e58)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 105
+# 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d564e58)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d6fa558), qr(does\ not\ carry\ a\ reusable\ actor\ shell), "missing library actor") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:does\ not\ carry\ a\ reusable\ actor\ shell)'
+ok 61 - missing library actor/earlier_target submitted actor unchanged
+ok 62 - missing library actor/earlier_target observes both APIs
+ok 63 - missing library actor/earlier_target desired cause safety in prepare_formal_source
+ok 64 - missing library actor/earlier_target desired cause safety in build_module
+ok 65 - missing library actor refused by prepare_formal_source
+ok 66 - missing library actor canonical diagnosis in prepare_formal_source
+ok 67 - missing library actor refused by build_module
+ok 68 - missing library actor canonical diagnosis in build_module
+ok 69 - missing library actor/primary_target_echo submitted actor unchanged
+ok 70 - missing library actor/primary_target_echo observes both APIs
+not ok 71 - missing library actor/primary_target_echo desired cause safety in prepare_formal_source
+#   Failed test 'missing library actor/primary_target_echo desired cause safety in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+not ok 72 - missing library actor/primary_target_echo desired cause safety in build_module
+#   Failed test 'missing library actor/primary_target_echo desired cause safety in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+ok 73 - missing resolved ATL module refused by prepare_formal_source
+ok 74 - missing resolved ATL module canonical diagnosis in prepare_formal_source
+ok 75 - missing resolved ATL module refused by build_module
+ok 76 - missing resolved ATL module canonical diagnosis in build_module
+ok 77 - missing resolved ATL module/current_fixture submitted actor unchanged
+ok 78 - missing resolved ATL module/current_fixture observes both APIs
+ok 79 - missing resolved ATL module/current_fixture desired cause safety in prepare_formal_source
+ok 80 - missing resolved ATL module/current_fixture desired cause safety in build_module
+ok 81 - missing resolved ATL module refused by prepare_formal_source
+not ok 82 - missing resolved ATL module canonical diagnosis in prepare_formal_source
+#   Failed test 'missing resolved ATL module canonical diagnosis in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'run': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d579d08)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d579d08)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 187
+# 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d570b58)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d6fc348), qr(missing\ a\ generated\ module\ name), "missing resolved ATL module") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:missing\ a\ generated\ module\ name)'
+ok 83 - missing resolved ATL module refused by build_module
+not ok 84 - missing resolved ATL module canonical diagnosis in build_module
+#   Failed test 'missing resolved ATL module canonical diagnosis in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'run': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d575e10)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d575e10)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 105
+# 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d575e10)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d6fc348), qr(missing\ a\ generated\ module\ name), "missing resolved ATL module") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:missing\ a\ generated\ module\ name)'
+ok 85 - missing resolved ATL module/earlier_target submitted actor unchanged
+ok 86 - missing resolved ATL module/earlier_target observes both APIs
+ok 87 - missing resolved ATL module/earlier_target desired cause safety in prepare_formal_source
+ok 88 - missing resolved ATL module/earlier_target desired cause safety in build_module
+ok 89 - missing resolved ATL module refused by prepare_formal_source
+ok 90 - missing resolved ATL module canonical diagnosis in prepare_formal_source
+ok 91 - missing resolved ATL module refused by build_module
+ok 92 - missing resolved ATL module canonical diagnosis in build_module
+ok 93 - missing resolved ATL module/primary_target_echo submitted actor unchanged
+ok 94 - missing resolved ATL module/primary_target_echo observes both APIs
+not ok 95 - missing resolved ATL module/primary_target_echo desired cause safety in prepare_formal_source
+#   Failed test 'missing resolved ATL module/primary_target_echo desired cause safety in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+not ok 96 - missing resolved ATL module/primary_target_echo desired cause safety in build_module
+#   Failed test 'missing resolved ATL module/primary_target_echo desired cause safety in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+ok 97 - unsupported ATL group composition refused by prepare_formal_source
+ok 98 - unsupported ATL group composition canonical diagnosis in prepare_formal_source
+ok 99 - unsupported ATL group composition refused by build_module
+ok 100 - unsupported ATL group composition canonical diagnosis in build_module
+ok 101 - unsupported ATL group composition/current_fixture submitted actor unchanged
+ok 102 - unsupported ATL group composition/current_fixture observes both APIs
+ok 103 - unsupported ATL group composition/current_fixture desired cause safety in prepare_formal_source
+ok 104 - unsupported ATL group composition/current_fixture desired cause safety in build_module
+ok 105 - unsupported ATL group composition refused by prepare_formal_source
+not ok 106 - unsupported ATL group composition canonical diagnosis in prepare_formal_source
+#   Failed test 'unsupported ATL group composition canonical diagnosis in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'run': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d796df8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d796df8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 187
+# 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d730ca8)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d7012a0), qr(cannot\ combine\ generated\ child\ wiring\ with\ static\ grou)..., "unsupported ATL group composition") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:cannot\ combine\ generated\ child\ wiring\ with\ static\ group\ metadata)'
+ok 107 - unsupported ATL group composition refused by build_module
+not ok 108 - unsupported ATL group composition canonical diagnosis in build_module
+#   Failed test 'unsupported ATL group composition canonical diagnosis in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'run': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d78fdb0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d78fdb0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 105
+# 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d78fdb0)) called at (eval 49) line 4
+# 	eval {...} called at (eval 49) line 4
+# 	main::refused(HASH(0x763d7012a0), qr(cannot\ combine\ generated\ child\ wiring\ with\ static\ grou)..., "unsupported ATL group composition") called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 56
+# '
+#     doesn't match '(?^:cannot\ combine\ generated\ child\ wiring\ with\ static\ group\ metadata)'
+ok 109 - unsupported ATL group composition/earlier_target submitted actor unchanged
+ok 110 - unsupported ATL group composition/earlier_target observes both APIs
+ok 111 - unsupported ATL group composition/earlier_target desired cause safety in prepare_formal_source
+ok 112 - unsupported ATL group composition/earlier_target desired cause safety in build_module
+ok 113 - unsupported ATL group composition refused by prepare_formal_source
+ok 114 - unsupported ATL group composition canonical diagnosis in prepare_formal_source
+ok 115 - unsupported ATL group composition refused by build_module
+ok 116 - unsupported ATL group composition canonical diagnosis in build_module
+ok 117 - unsupported ATL group composition/primary_target_echo submitted actor unchanged
+ok 118 - unsupported ATL group composition/primary_target_echo observes both APIs
+not ok 119 - unsupported ATL group composition/primary_target_echo desired cause safety in prepare_formal_source
+#   Failed test 'unsupported ATL group composition/primary_target_echo desired cause safety in prepare_formal_source'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+not ok 120 - unsupported ATL group composition/primary_target_echo desired cause safety in build_module
+#   Failed test 'unsupported ATL group composition/primary_target_echo desired cause safety in build_module'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 61.
+#          got: '1'
+#     expected: '0'
+ok 121 - real parent still refuses raw conflicting declarations
+ok 122 - direct/current_fixture actor unchanged
+ok 123 - direct/current_fixture observes actual consumer
+ok 124 - direct/current_fixture desired width cause safety
+not ok 125 - real parent still refuses raw conflicting declarations
+#   Failed test 'real parent still refuses raw conflicting declarations'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 26.
+#                   'Transaction 'main': spawn target 'missing_child' is not a declared transaction
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 3831.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_child_transaction_refs(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d7c0228)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 92
+# 	FSM::Scheduler::ISF::LoweringIR::_prepare_module_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d7c0228)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 105
+# 	FSM::Scheduler::ISF::LoweringIR::build_module(FSM::Scheduler::ISF::LoweringIR=HASH(0x763902ddc8), HASH(0x763d7c0228)) called at (eval 49) line 9
+# 	eval {...} called at (eval 49) line 9
+# 	main::direct_consumer() called at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 71
+# '
+#     doesn't match '(?^s:(?:width|Width).*payload|payload.*(?:width|Width))'
+ok 126 - direct/earlier_target actor unchanged
+ok 127 - direct/earlier_target observes actual consumer
+ok 128 - direct/earlier_target desired width cause safety
+ok 129 - real parent still refuses raw conflicting declarations
+ok 130 - direct/primary_target_echo actor unchanged
+ok 131 - direct/primary_target_echo observes actual consumer
+not ok 132 - direct/primary_target_echo desired width cause safety
+#   Failed test 'direct/primary_target_echo desired width cause safety'
+#   at docs/audits/reusable-product-helper-causes-20261003/probe.pl line 74.
+#          got: '1'
+#     expected: '0'
+1..132
+# Looks like you failed 22 tests of 132.
