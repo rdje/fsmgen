@@ -3759,9 +3759,46 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify T1960 source projection, module capture and input-snapshot kind drift.`
   Acceptance: `Close every actual .1 native clone difference across source projection, captured IR, successful read-only snapshots, rejection snapshots and mutation seeds. Bind complete source/actor/module/plan fields, ordinary results/carriers and actual original/pure-copy controls before repair. Keep constructor/report/controller meanings cold where not independently modeled; source-value equality alone cannot authenticate JSON kinds. Immediate P2 .2.3.13 owns test copy/snapshot repair after this bounded qualification. Split further if a source/product cohort exceeds a safe slice.`
+  Verification: `pending`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.1`
+  Status: `done`
+  Goal: `Split actual coverage copy qualification into bounded source, module and snapshot cohorts.`
+  Acceptance: `Read current exact test copy sites and authenticated initial profile, preserve all existing repair/cold ownership, declare executable cohorts before further runtime observations; no field meaning or repair signoff from the split.`
+  Verification: `Current T1960 qualify has authored HASH and physical actor copies, build_module capture, successful triple snapshot; reject has a triple snapshot; negative controls copy actual modules and the allocation plan. Children .2/.3/.4 own their distinct products and controls, .5 joins complete membership before P2 .13. Original profile remains immutable and its finite differences are observations only. Source test/provider/predicate bytes remain unchanged. The staged gate exposed saturated task_evidence lines/bytes; measured allowance plus the declared ratchet step is refreshed under the active parent with baseline and ceilings unchanged. Task integrity and staged doctrine gate pass; no public behavior or book claim changes.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.2`
+  Status: `pending`
+  Goal: `Qualify actual authored and physical actor copies against complete source fields.`
+  Acceptance: `Bind current exact T1960 source and authentic profile originals; retain fresh first-touch complete actors and copies for every fixture. Independently reconstruct changed FIFO bank indexes/binding widths and ATL network data widths from public source contracts; compare genuine original versus value-preserving copies through preparation and ordinary lowering/carriers. Preserve all values/kinds/plain sharing and explicit constructor/moved-root cold limits. Source cohort only; no test repair.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.3`
+  Status: `pending`
+  Goal: `Qualify actual captured module copies and ordinary result/carrier conservation.`
+  Acceptance: `After source cohort, bind every actual build_module capture before and after copy. Model changed scalar assignment/provenance, signal/port/data-link widths by source-owned contracts and actual complete emitted carriers; compare genuine ordinary originals and pure copies. Independently close all module field differences or split finite semantic cohorts; do not promote cold controller/constructor meanings.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4`
+  Status: `pending`
+  Goal: `Qualify successful/refused snapshots and genuine mutation seeds.`
+  Acceptance: `Bind every actual successful/rejected triple snapshot and module/allocation mutation seed against qualified complete products. Independently enumerate all remaining actual kind differences, map each to its source/product field contract, exercise complete caller-kind and plain-sharing controls, and demonstrate current value-only assertion insufficiency with real mutations. Keep exact causes and native-marker identity/shape boundary; no repair before complete qualification.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.5`
+  Status: `pending`
+  Goal: `Join complete coverage copy qualification and hand off to P2 repair.`
+  Acceptance: `Reconcile every immutable initial copy and every current exact copy site with cohort outcomes, independent source/product/result/carrier semantics and genuine controls or explicitly owned cold limitations. Require all changed field cohorts closed before P2 .13 test copy/snapshot repair. Sync canonical fact/book/frontier, retain complete instruments/evidence and commit clean.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6046,3 +6083,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Exact prior helper accepts26 unrelated unsupported-reference native errors raised at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 41; preserved full native traces include ` at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 41`. Exact Git prior consumer reproduces real Test::More RED195/Failed26/Perl26. Both stack and primary-path echoes require complete causes.
 - [x] **ADDRESSED (verified)** — Saved errors and thirteen independent complete declarations PASS T1960/T2063 Files=2/Tests=239, with26 genuine wrong-cause controls rejected. Independent exact source delta/current graph/cause/ordinary product/original clone closure PASS. Actual declaration-only bypass and exact prior consumer fail; real safety promotions RED1 and typed corruptions reject. Original copy/snapshot and broader cold/native/moved-root legs remain explicitly owned.
 - [x] **NO REGRESSION** — Focused reservation/domain `All tests successful` Files=2/Tests=7; public-book `All tests successful` Files=2/Tests=308, rendered repair and `knowledge-map: OK`. All ordinary input/result and known native control boundaries conserve. Fixed capacity/fresh claims/staged doctrines/normal hooks precede commit; visual QA pending.
+
+## Acceptance Checklist — coverage copy cohort split
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `scripts/check_doctrines.sh` emitted task_evidence owned-allowance breaches for task-tree lines and bytes; the new executable cohorts exceed the previous allowance. Current exact T1960 copy sites establish the scope; git log -S 1201708 identifies 8bfa82f5b as the previous capacity declaration. No runtime field interpretation is claimed.
+- [x] **ADDRESSED (verified)** — `scripts/check_task_tree_integrity.pl` accepts the new complete direct-child graph. The documented allowance formula measures all registry targets plus each declared ratchet step, retaining baseline and enforcement ceilings; source-only qualification is the next leaf.
+- [x] **NO REGRESSION** — The complete `scripts/check_doctrines.sh` gate requires [doctrine] all doctrine checks passed after exact capacity and claim-inventory refresh; staged index and checked worktree agree. No source, provider, predicate, public behavior or historical archive changes.
