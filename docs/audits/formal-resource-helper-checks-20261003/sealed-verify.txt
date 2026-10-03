@@ -1,0 +1,11 @@
+ram-guard: PID 53260; host 78.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared corruption rejects: cause
+shared corruption rejects: source
+shared corruption rejects: matched_kind
+shared corruption rejects: actor
+shared corruption rejects: field
+shared corruption rejects: member
+whole corruption rejects: whole_kind
+whole corruption rejects: whole_pointer
+whole corruption rejects: whole_field
+PASS six genuine helper causes/twelve false matches, corrected direct one false match; seven complete ordinary actors and finite pointer/schema/kind models. Wider prepared/module semantics open.

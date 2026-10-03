@@ -182,7 +182,14 @@ A [current cohort handoff](../../../docs/audits/residual-named-helper-cohorts-20
 assigns exact pending owners for formal/resource, aggregate-record, public-query,
 process/governance, producer-role and backend/native review. Names do not establish
 actual refusal-consumer roles or native applicability. Formal resource/reusable
-and reservation helpers are next; remaining named/framework cohorts stay open.
+and reservation helpers follow the immediate resource cause repair; remaining
+named/framework cohorts stay open. The resource helper and adjacent preparation
+assertion still match wanted codes inside unrelated unsupported statements.
+[Resource diagnosis](../../../docs/audits/formal-resource-helper-causes-20261003/scope.txt)
+separates genuine arbitration causes from those echoes. Compiled observer controls
+keep expectations out of active eval-source frames. Ordinary pointer declarations
+and update rosters have finite independent models; wider internal semantics remain
+under cold review.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
 

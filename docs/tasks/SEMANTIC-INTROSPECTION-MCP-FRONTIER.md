@@ -3707,9 +3707,39 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify formal resource, reusable and reservation named consumers.`
   Acceptance: `Read exact current T1944/T1947/T1959/T1960 helpers/callers and public/source-owned producer contracts; split each safe source slice before runtime probes, preserve whole products/kinds and cold limits, own confirmed complete-cause repairs before edits.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.1`
+  Status: `done`
+  Goal: `Diagnose the exact T1944 formal-resource rejected helper.`
+  Acceptance: `Include the adjacent direct prepare_formal_source malformed-name assertion so its actual primary code echo is not left unowned. Resolve original build_module inputs and resource admission codes/full causes versus caller-stack echoes. Keep actual producer and test consumer intact; retain complete actors/resource/preparation/module products/kinds with independent finite cold models and genuine counterfactuals. Own every confirmed helper/fixture/producer defect before edits; source CLI only, no external native tool.`
+  Verification: `Exact unchanged T1944 helper/Test::More/actual APIs retain18 helper rows: six genuine resource causes and12 false matches from real unsupported statements. Six wrong primary messages themselves contain wanted codes; first-line code safety is RED1. Actual T1944 PASS1/3, helper desired-cause RED72/Failed12/Perl12. Adjacent exact preparation assertion has three corrected rows: genuine cause matches, plain wrong cause rejects, primary code echo falsely matches; mixed direct RED9/Failed2/Perl2 distinguishes one correct negative like failure from one desired-safety failure. Whole submitted actors remain unchanged. Initial direct active-string eval contaminates wrong-body stack with wanted regex; tools expose exact frame at direct.pl line34. Draft instrument/data/TAP retained unqualified; compile-before-call consumer has no active string-eval frame and plain wrong error contains no wanted code. This instrumentation defect is fixed and verified before classification. Total13 real false matches are owned by immediate P2 .2.3.8 before source/test edits. Independent literal whole source/actors/native mutations/full causes/kinds, unchanged Git/hash/provider/test source closure and exact Perl replay pass. Seven whole ordinary actors/preparation/modules retained; cold complete actor/clone, potential pointer records/count widths, actual pointer roles/membership and selected grant-update lhs/rhs rosters plus returned schemas qualify finite fields. Other guards/wiring/controller/report/module internals remain source-bound cold .1.3 observations. Actual helper/direct and first-line-code safety promotions RED1; six typed row and three whole kind/pointer/schema corruptions reject. Book build/rendered text/public-book2/308/KM pass; visual QA pending. Distinct independent models, real API counterfactuals, complete data/instruments/receipts/recipe/seal/Git satisfy claim legs. Fixed capacity/fresh inventory/staged doctrines/hooks close diagnosis, then complete-cause .2.3.8 precedes reusable/reservation review; no provider/test/production/shared predicate/old archive/native or legacy changes.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.2`
+  Status: `pending`
+  Goal: `Qualify T1947 reusable-product refused helper.`
+  Acceptance: `Read complete current helper/callers, reusable public integration contracts and existing child-formal bug ownership; split safe source diagnosis/repairs with real controls and whole product/cold limits without submodule implementation or native widening.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.3`
+  Status: `pending`
+  Goal: `Qualify T1959 prepared-reservation rejected helper.`
+  Acceptance: `Read exact helper/callers/producer contracts and resolve complete declared causes with genuine controls and independent source/product/kind/cold closure; schedule repairs before edits.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4`
+  Status: `pending`
+  Goal: `Qualify T1960 reservation-coverage reject helper.`
+  Acceptance: `Read exact caller/coverage contracts and distinguish structured coverage failures from full exception matching. Qualify actual producer controls and finite cold semantics, own repairs before edits, then hand off to record cohort .3.3.3.`
   Verification: `pending`
   Commit: `pending`
 
@@ -3828,7 +3858,7 @@ For FSMGen, the analogs are:
   Verification: `pending`
   Commit: `pending`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.7`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.8`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.1`
   Status: `done`
@@ -3894,6 +3924,13 @@ For FSMGen, the analogs are:
   Acceptance: `P2 real current false cause attribution: native binding-role corruption fails earlier with activation bind role must be input or output, but fifteen helper patterns falsely match their regex echoed in the actual caller stack. Thirteen other wrong-shape controls reject; all28 original fixture inputs reach their intended primary categories. The private binding validator's live repeat input genuinely checks endpoints, unlike complete source preparation's earlier subset restriction; do not silently widen executable admission. Commit .1.2.3.2.3.2 diagnosis before edits. Use complete independently resolved context/role/width/timing/port reasons, retain caller/formal lexical scope and live-site pruning, add permanent real producer controls and exact prior/bypass checks. Preserve whole source/actor/binding/preparation/kind observations, independent literal/Git/cold models with explicit semantic limits and book/docs. No provider/shared predicate/production/native or old archive edits; residual named/framework remains owned.`
   Verification: `T1933 compares complete declared context/role/width/timing/port causes through unchanged DiagnosticCause; authored inputs, caller/formal scope, rules and pruning remain intact. T2057 runs exact current helper/real APIs with observed deliberate negative assertions:28 positive causes and56 real earlier-shape/label controls over84 rows; actual default/control PASS2/264. Exact sealed prior producer only changes immutable source-read/output adapters and remains RED224/Failed28/Perl28, separating13 correct negative likes from15 false stack matches; whole instrument/input/actor/flag closure independently reconciles. Real runtime private-validator bypass makes actual repaired T1933 RED12/Failed8/Perl8, and whole invalid-width actor is admitted with empty error/unchanged1. Actual prior and bypass cold safety promotions RED1. Independent literal complete current T1933 delta, before/after full source bindings and Git/hash closure allow only changed T1933/new T2057; all providers/shared predicate/old archives remain unchanged. Literal source/spec/actor/role/tag/context/reason/label/assertion/kind models and real Perl predicate replay pass; six typed row and three whole kind/binding/schema corruptions reject. Full18 ordinary source/preparation products conserve sealed diagnosis; prior complete actor/binding-report/schema/member qualification carries forward, other returned internals remain cold .1.3 observations. Initial reader variable collision and reused unchanged console label retained unqualified; corrected reader and guarded identical-byte rebind pass. Focused transaction binding/source-context4/58, public-book2/308, book build/rendered text and KM pass; visual QA pending. Source/data/traces/instruments/recipe/seal/Git supply durability; independent models and real prior/bypass/corruptions are distinct claim legs. Fixed capacity/fresh inventory/staged doctrines/hooks close repair; residual named/framework .1.2.3.2.3.3 follows, wider/native/full CI/push remain separate.`
   Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.8`
+  Status: `pending`
+  Goal: `Repair T1944 complete resource refusal causes and adjacent direct name assertion.`
+  Acceptance: `P2 real false verification: all six original helper fixtures reach intended arbitration errors, but twelve real earlier unsupported transaction statements pass the regex code consumer. Six wrong primary messages themselves contain the wanted code, so first-line code matching is insufficient. Root is T1944 rejected helper line69/full-error like with LoweringIR build_module before arbitration; impact is masking earlier failures. Adjacent direct prepare_formal_source name assertion also falsely matches one primary-code echo; its plain wrong cause correctly rejects after removing the active-eval observer artifact. All13 actual false matches and full causes are qualified by .1.2.3.2.3.3.2.1 before editing. Commit diagnosis first; replace with independently complete resource/context/reasons, retain source admission/projection/resource products/kinds and whole outputs with explicit cold limits, permanent real controls and exact prior/bypass proof. No production/shared predicate/native or old archive changes; wider direct review remains owned.`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.3`
   Status: `pending`
@@ -5837,3 +5874,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Current helper repairs change source bytes since the immutable named declaration; `git log -S diagnostic_cause_matches -- t/1933-isf-caller-formal-binding-scope.t` returns e3febc5c29ac10887f0fedb308bebbe3ea7ab30f in docs/audits/residual-named-helper-cohort-checks-20261003/source-history.txt. Real prior-source promotion is RED1; its narrower declaration cannot qualify this current ownership contract.
 - [x] **ADDRESSED (verified)** — Complete source/line/identifier/primitive-kind and independent route closure PASS; every declared row references a live task ID, finite repairs retain exact source provenance, and pending cohorts remain semantically unqualified. Real prior source/row-owner counterfactuals and shared corruptions reject.
 - [x] **NO REGRESSION** — Public-book `All tests successful` Files=2/Tests=308, rendered book and `knowledge-map: OK`; source/test/provider/production unchanged. Fixed capacity/fresh inventory/staged doctrines/hooks precede commit.
+
+## Acceptance — formal resource cause diagnosis .1.2.3.2.3.3.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — T1944 rejected at line69 matches code regexes in full exceptions. Actual unrelated unsupported statements raise at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181; wanted code occurs in helper stack or unsupported-statement primary text, producing twelve false helper matches and one corrected direct match. Complete raw traces retain the exact locus and original consumer.
+- [x] **ADDRESSED (verified)** — Finite diagnosis and immediate P2 .2.3.8 own complete-cause repair. Independent full source/actor/pointer/kind models/replay pass; actual helper/direct/first-line-code safety promotions RED1. The active-eval direct observer artifact is retained unqualified and corrected compile-before-call measurement passes plain wrong-cause control.
+- [x] **NO REGRESSION** — Actual T1944 `All tests successful` Files=1/Tests=3, public-book `All tests successful` Files=2/Tests=308, rendered book and `knowledge-map: OK`; fixed capacity/fresh inventory/staged doctrines/hooks precede commit.

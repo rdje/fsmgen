@@ -1,0 +1,2 @@
+ram-guard: PID 35972; host 58.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Actual desired-cause probe status 12; inspect complete causes before classification.

@@ -1,0 +1,25 @@
+{
+  "baseline": "00abbe80401c7d36f481dd2a65d01bf7ac41dca6",
+  "commands": {
+    "book": "mdbook build docs/book",
+    "cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-resource-helper-causes-20261003/verify.py",
+    "direct_ordinary": "scripts/run_with_ram_guard.sh -- bash docs/audits/formal-resource-helper-causes-20261003/final_producers.sh",
+    "direct_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-resource-helper-causes-20261003/verify.py --trust-direct",
+    "first_line_code_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-resource-helper-causes-20261003/verify.py --trust-first-line-code",
+    "helper_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-resource-helper-causes-20261003/verify.py --trust-helper",
+    "producer": "scripts/run_with_ram_guard.sh -- bash docs/audits/formal-resource-helper-causes-20261003/run.sh"
+  },
+  "native": "not invoked",
+  "scope": "18 helper/three corrected direct rows, seven full ordinary observations and declared finite source/pointer models; wider internals unqualified",
+  "statuses": {
+    "cold": 0,
+    "corrected_direct": 2,
+    "current": 0,
+    "direct_red": 1,
+    "first_line_code_red": 1,
+    "helper_probe": 12,
+    "helper_red": 1,
+    "ordinary": 0
+  },
+  "visual_qa": "not performed"
+}

@@ -124,7 +124,7 @@ _Detached final module guard checks prepared reservations and private formal own
 
 _Potential resource pointer declarations share the executable arbitration producer_
 
-- **date:** 2026-09-27 · **status:** current
+- **date:** 2026-10-03 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-formal-resource-products.md`](../../docs/knowledge/isf-formal-resource-products.md)
 
 ### isf-formal-reusable-products

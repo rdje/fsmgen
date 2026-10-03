@@ -5,45 +5,20 @@ answers:
   - "are round robin resource pointer names reserved during formal preparation?"
   - "what does resource_signal_products prove about resource arbitration?"
   - "can a raw formal shadow a round robin pointer before physical renaming?"
-date: 2026-09-27
+date: 2026-10-03
 status: current
 tags: [isf, formals, reservations, resources, arbitration]
 evidence: perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1944-isf-formal-resource-products.t; t/1218-isf-rule-slot-resource-arbitration.t
 reverify: scripts/run_with_ram_guard.sh prove -Iperl t/1944-isf-formal-resource-products.t t/1218-isf-rule-slot-resource-arbitration.t
 ---
-Current integration: [production formal scope](isf-production-formal-scope.md)
-now consumes the qualified preparation products. The producer-specific account
-below records its original qualification boundary; pending global integration
-statements are historical. Independent-controller and local-call execution
-remain separately gated.
+Current integration: [production formal scope](isf-production-formal-scope.md) consumes the qualified products. Below is the historical producer boundary; independent-controller/local-call execution remains gated.
 
+Resource arbitration adds round-robin pointers after earlier preparation stages. T1944 derives their absence from production roles. Shared _round_robin_pointer_declaration supplies name/width/role to executable arbitration and potential resource_signal_products; selected kinds with users sort by source resource name. Malformed names use canonical errors.
 
-Round-robin pointer declarations appear during resource arbitration, after the
-earlier formal-preparation product stages. T1944 derives the actual pointer
-from production storage roles and verifies it was absent from that inventory.
-The shared _round_robin_pointer_declaration producer now supplies name, width
-and storage role to both executable arbitration and resource_signal_products.
-The latter contains potential declarations for selected round-robin resource
-kinds with users, sorted by source resource name. Malformed pointer-producing
-resource names fail through the shared canonical diagnostic.
+Inventory is not admission/grant proof. It may return potential declarations despite fixed collisions, unknown/overlapping users or member errors; executable arbitration still refuses them. Priority, unused and unsupported-kind resources add none. Names come from the canonical producer, never fabricated IR or executable bypass.
 
-This is a declaration inventory, not resource admission or a grant model.
-Fixed-symbol collisions, unknown/overlapping users and member errors remain
-executable arbitration obligations. Collection can return a potential declaration
-for such a resource; actual lowering must still reject it. Priority, unused and
-unsupported-kind resources add no pointer declaration. No fabricated parent IR
-or bypass of executable validation is used to obtain names.
+T1944 compares counters/roles/grant-update targets, independent width boundaries, permutation identities, detachment, raw alias projection, strict carriers and genuine invalid-resource fixtures. Prior native schedule comparison preserves executable grants/metadata. [Namespace qualification](isf-formal-arbitration-namespace.md) observes grants, priority and finalization; only pointers extend the namespace. Historical parent/domain reservation/rewrite closure follows that stage, not this inventory.
 
-T1944 compares actual counters/roles and grant update targets across supported
-resource kinds, tests independent width boundaries, stable source/permutation
-identities and detached snapshots, and separates a raw formal/pointer alias
-through explicit physical projection. Strict projected carriers and canonical
-invalid-resource controls pass. Exact before/after native schedule comparison
-retains executable grants and metadata. The subsequent
-[arbitration namespace qualification](isf-formal-arbitration-namespace.md)
-observes actual grants, priority and finalization stages: only these pointer
-declarations extend their declaration namespace. Parent ownership connections
-and outer domain composition remain later obligations before complete
-reservations or automatic production rewriting can be claimed.
+Cause safety remains open. The code-regex helper and adjacent preparation assertion accept real unrelated statement errors through stack/primary echoes. [Diagnosis](../audits/formal-resource-helper-causes-20261003/scope.txt) owns .2.3.8 complete-cause repair. Active eval-source observers can echo expectations; only the corrected compiled direct consumer qualifies. Finite whole actor/pointer/schema models pass; other internals remain cold-owned.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.2.3.2.2.1.

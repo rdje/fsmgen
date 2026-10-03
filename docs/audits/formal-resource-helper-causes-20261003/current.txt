@@ -1,0 +1,4 @@
+t/1944-isf-formal-resource-products.t .. ok
+All tests successful.
+Files=1, Tests=3,  9 wallclock secs ( 0.01 usr  0.00 sys +  4.70 cusr  2.49 csys =  7.20 CPU)
+Result: PASS

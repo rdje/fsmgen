@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-resource-helper-causes-20261003/verify.py", line 81, in <module>
+    if '--trust-direct' in sys.argv:assert all(r['matched']==int(r['band']=='current_fixture') for r in direct['rows']),'actual direct consumer accepts an unsupported-statement code echo'
+                                           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual direct consumer accepts an unsupported-statement code echo

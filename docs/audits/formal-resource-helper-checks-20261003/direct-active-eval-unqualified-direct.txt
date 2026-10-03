@@ -1,0 +1,19 @@
+ok 1 - shared declaration producer rejects malformed generated name
+ok 2 - current_fixture direct resource cause safety
+ok 3 - current_fixture direct actor unchanged
+ok 4 - shared declaration producer rejects malformed generated name
+not ok 5 - wrong_body direct resource cause safety
+#   Failed test 'wrong_body direct resource cause safety'
+#   at docs/audits/formal-resource-helper-causes-20261003/direct.pl line 35.
+#          got: '1'
+#     expected: '0'
+ok 6 - wrong_body direct actor unchanged
+ok 7 - shared declaration producer rejects malformed generated name
+not ok 8 - primary_body_echo direct resource cause safety
+#   Failed test 'primary_body_echo direct resource cause safety'
+#   at docs/audits/formal-resource-helper-causes-20261003/direct.pl line 35.
+#          got: '1'
+#     expected: '0'
+ok 9 - primary_body_echo direct actor unchanged
+1..9
+# Looks like you failed 2 tests of 9.

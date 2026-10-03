@@ -1,0 +1,122 @@
+ok 1 - raw formal alias / current_fixture still refused by executable arbitration
+ok 2 - raw formal alias / current_fixture retains canonical diagnostic
+ok 3 - raw formal alias / current_fixture cannot qualify an unrelated complete primary cause
+ok 4 - raw formal alias / current_fixture whole input unchanged
+ok 5 - raw formal alias / wrong_body still refused by executable arbitration
+ok 6 - raw formal alias / wrong_body retains canonical diagnostic
+not ok 7 - raw formal alias / wrong_body cannot qualify an unrelated complete primary cause
+#   Failed test 'raw formal alias / wrong_body cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 8 - raw formal alias / wrong_body whole input unchanged
+ok 9 - raw formal alias / primary_body_echo still refused by executable arbitration
+ok 10 - raw formal alias / primary_body_echo retains canonical diagnostic
+not ok 11 - raw formal alias / primary_body_echo cannot qualify an unrelated complete primary cause
+#   Failed test 'raw formal alias / primary_body_echo cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 12 - raw formal alias / primary_body_echo whole input unchanged
+ok 13 - fixed / current_fixture still refused by executable arbitration
+ok 14 - fixed / current_fixture retains canonical diagnostic
+ok 15 - fixed / current_fixture cannot qualify an unrelated complete primary cause
+ok 16 - fixed / current_fixture whole input unchanged
+ok 17 - fixed / wrong_body still refused by executable arbitration
+ok 18 - fixed / wrong_body retains canonical diagnostic
+not ok 19 - fixed / wrong_body cannot qualify an unrelated complete primary cause
+#   Failed test 'fixed / wrong_body cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 20 - fixed / wrong_body whole input unchanged
+ok 21 - fixed / primary_body_echo still refused by executable arbitration
+ok 22 - fixed / primary_body_echo retains canonical diagnostic
+not ok 23 - fixed / primary_body_echo cannot qualify an unrelated complete primary cause
+#   Failed test 'fixed / primary_body_echo cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 24 - fixed / primary_body_echo whole input unchanged
+ok 25 - unknown_user / current_fixture still refused by executable arbitration
+ok 26 - unknown_user / current_fixture retains canonical diagnostic
+ok 27 - unknown_user / current_fixture cannot qualify an unrelated complete primary cause
+ok 28 - unknown_user / current_fixture whole input unchanged
+ok 29 - unknown_user / wrong_body still refused by executable arbitration
+ok 30 - unknown_user / wrong_body retains canonical diagnostic
+not ok 31 - unknown_user / wrong_body cannot qualify an unrelated complete primary cause
+#   Failed test 'unknown_user / wrong_body cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 32 - unknown_user / wrong_body whole input unchanged
+ok 33 - unknown_user / primary_body_echo still refused by executable arbitration
+ok 34 - unknown_user / primary_body_echo retains canonical diagnostic
+not ok 35 - unknown_user / primary_body_echo cannot qualify an unrelated complete primary cause
+#   Failed test 'unknown_user / primary_body_echo cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 36 - unknown_user / primary_body_echo whole input unchanged
+ok 37 - overlap / current_fixture still refused by executable arbitration
+ok 38 - overlap / current_fixture retains canonical diagnostic
+ok 39 - overlap / current_fixture cannot qualify an unrelated complete primary cause
+ok 40 - overlap / current_fixture whole input unchanged
+ok 41 - overlap / wrong_body still refused by executable arbitration
+ok 42 - overlap / wrong_body retains canonical diagnostic
+not ok 43 - overlap / wrong_body cannot qualify an unrelated complete primary cause
+#   Failed test 'overlap / wrong_body cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 44 - overlap / wrong_body whole input unchanged
+ok 45 - overlap / primary_body_echo still refused by executable arbitration
+ok 46 - overlap / primary_body_echo retains canonical diagnostic
+not ok 47 - overlap / primary_body_echo cannot qualify an unrelated complete primary cause
+#   Failed test 'overlap / primary_body_echo cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 48 - overlap / primary_body_echo whole input unchanged
+ok 49 - malformed name / current_fixture still refused by executable arbitration
+ok 50 - malformed name / current_fixture retains canonical diagnostic
+ok 51 - malformed name / current_fixture cannot qualify an unrelated complete primary cause
+ok 52 - malformed name / current_fixture whole input unchanged
+ok 53 - malformed name / wrong_body still refused by executable arbitration
+ok 54 - malformed name / wrong_body retains canonical diagnostic
+not ok 55 - malformed name / wrong_body cannot qualify an unrelated complete primary cause
+#   Failed test 'malformed name / wrong_body cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 56 - malformed name / wrong_body whole input unchanged
+ok 57 - malformed name / primary_body_echo still refused by executable arbitration
+ok 58 - malformed name / primary_body_echo retains canonical diagnostic
+not ok 59 - malformed name / primary_body_echo cannot qualify an unrelated complete primary cause
+#   Failed test 'malformed name / primary_body_echo cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 60 - malformed name / primary_body_echo whole input unchanged
+ok 61 - unsupported kind / current_fixture still refused by executable arbitration
+ok 62 - unsupported kind / current_fixture retains canonical diagnostic
+ok 63 - unsupported kind / current_fixture cannot qualify an unrelated complete primary cause
+ok 64 - unsupported kind / current_fixture whole input unchanged
+ok 65 - unsupported kind / wrong_body still refused by executable arbitration
+ok 66 - unsupported kind / wrong_body retains canonical diagnostic
+not ok 67 - unsupported kind / wrong_body cannot qualify an unrelated complete primary cause
+#   Failed test 'unsupported kind / wrong_body cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 68 - unsupported kind / wrong_body whole input unchanged
+ok 69 - unsupported kind / primary_body_echo still refused by executable arbitration
+ok 70 - unsupported kind / primary_body_echo retains canonical diagnostic
+not ok 71 - unsupported kind / primary_body_echo cannot qualify an unrelated complete primary cause
+#   Failed test 'unsupported kind / primary_body_echo cannot qualify an unrelated complete primary cause'
+#   at docs/audits/formal-resource-helper-causes-20261003/probe.pl line 54.
+#          got: '1'
+#     expected: '0'
+ok 72 - unsupported kind / primary_body_echo whole input unchanged
+1..72
+# Looks like you failed 12 tests of 72.

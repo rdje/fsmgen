@@ -1,0 +1,26 @@
+ok 1 - shared declaration producer rejects malformed generated name
+ok 2 - current_fixture direct resource cause safety
+ok 3 - current_fixture direct actor unchanged
+not ok 4 - shared declaration producer rejects malformed generated name
+#   Failed test 'shared declaration producer rejects malformed generated name'
+#   at docs/audits/formal-resource-helper-causes-20261003/direct.pl line 26.
+#                   'Transaction 'main': unsupported '(unsupported_clause ...)' clause in transaction body
+#  at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6181.
+# 	FSM::Scheduler::ISF::LoweringIR::_validate_supported_transaction_clauses(ARRAY(0x7a58b0a2e8), "main", "transaction", undef, HASH(0x7a57e39ac8), HASH(0x7a58b0a7b0)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 5954
+# 	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x7a58c55dc8), HASH(0x7a58b0a378), HASH(0x7a58b0a7b0), 0, HASH(0x7a57e39ac8), HASH(0x7a57c82360), HASH(0x7a58b00fd8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 212
+# 	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x7a58c55dc8), HASH(0x7a58afa9d8)) called at (eval 49) line 1
+# 	eval {...} called at (eval 49) line 1
+# 	main::direct_consumer() called at docs/audits/formal-resource-helper-causes-20261003/direct.pl line 35
+# '
+#     doesn't match '(?^:isf_resource_round_robin_name_shape)'
+ok 5 - wrong_body direct resource cause safety
+ok 6 - wrong_body direct actor unchanged
+ok 7 - shared declaration producer rejects malformed generated name
+not ok 8 - primary_body_echo direct resource cause safety
+#   Failed test 'primary_body_echo direct resource cause safety'
+#   at docs/audits/formal-resource-helper-causes-20261003/direct.pl line 36.
+#          got: '1'
+#     expected: '0'
+ok 9 - primary_body_echo direct actor unchanged
+1..9
+# Looks like you failed 2 tests of 9.
