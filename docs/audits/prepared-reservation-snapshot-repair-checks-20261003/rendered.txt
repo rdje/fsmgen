@@ -1,0 +1,1 @@
+PASS rendered snapshot repair and explicit native/cold boundaries; visual QA not performed.

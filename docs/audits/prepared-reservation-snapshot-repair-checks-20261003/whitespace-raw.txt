@@ -1,0 +1,30 @@
+docs/audits/prepared-reservation-snapshot-repair-20261003/bypass-red.txt:56: trailing whitespace.
++    # 
+docs/audits/prepared-reservation-snapshot-repair-20261003/bypass-red.txt:335: trailing whitespace.
++    # 
+docs/audits/prepared-reservation-snapshot-repair-20261003/bypass-red.txt:377: trailing whitespace.
++docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl .. 
+docs/audits/prepared-reservation-snapshot-repair-20261003/bypass-red.txt:379: trailing whitespace.
++Failed 2/4 subtests 
+docs/audits/prepared-reservation-snapshot-repair-20261003/mutate.txt:56: trailing whitespace.
++docs/audits/prepared-reservation-snapshot-repair-20261003/observe.pl .. 
+docs/audits/prepared-reservation-snapshot-repair-20261003/mutate.txt:58: trailing whitespace.
++Failed 1/4 subtests 
+docs/audits/prepared-reservation-snapshot-repair-20261003/prior-copy.txt:51: trailing whitespace.
++docs/audits/prepared-reservation-snapshot-repair-20261003/observe.pl .. 
+docs/audits/prepared-reservation-snapshot-repair-20261003/prior-copy.txt:53: trailing whitespace.
++Failed 1/4 subtests 
+docs/audits/prepared-reservation-snapshot-repair-20261003/source-delta.patch:18: trailing whitespace.
++ 
+docs/audits/prepared-reservation-snapshot-repair-20261003/source-delta.patch:87: trailing whitespace.
++ 
+docs/audits/prepared-reservation-snapshot-repair-20261003/source-delta.patch:101: trailing whitespace.
++ 
+docs/audits/prepared-reservation-snapshot-repair-20261003/source-delta.patch:140: trailing whitespace.
++ 
+docs/audits/prepared-reservation-snapshot-repair-20261003/source-delta.patch:162: trailing whitespace.
++ 
+docs/audits/prepared-reservation-snapshot-repair-20261003/source-delta.patch:183: trailing whitespace.
++ 
+docs/audits/prepared-reservation-snapshot-repair-20261003/source-delta.patch:190: trailing whitespace.
++ 

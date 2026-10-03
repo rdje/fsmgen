@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/prepared-reservation-snapshot-repair-20261003/verify.py", line 144, in <module>
+    if args.trust_prior_copy:copies_preserve(prior_copy['clones'])
+                             ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "${REPO_ROOT}/docs/audits/prepared-reservation-snapshot-repair-20261003/verify.py", line 79, in copies_preserve
+    assert equal(row['before'],row['clone']),('complete copy kind/topology',i)
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('complete copy kind/topology', 49)

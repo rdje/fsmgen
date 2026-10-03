@@ -1,0 +1,4 @@
+docs/audits/prepared-reservation-snapshot-repair-20261003/observe.pl .. ok
+All tests successful.
+Files=1, Tests=4,  4 wallclock secs ( 0.01 usr  0.01 sys +  3.16 cusr  0.48 csys =  3.66 CPU)
+Result: PASS

@@ -60,26 +60,49 @@ sub expected_cause {
 
 open $fh,'<:raw','t/1959-isf-prepared-formal-reservations.t' or die $!;
 my $test=do {local $/;<$fh>};close $fh or die $!;
+my $copy_start=index($test,'sub source_value_copy {');
+my $copy_end=index($test,'my $lowerer =',$copy_start);
+die 'exact snapshot helpers missing' unless $copy_start>=0 && $copy_end>$copy_start;
+my $snapshots=substr($test,$copy_start,$copy_end-$copy_start);
 my $start=index($test,'sub rejected {');my $end=index($test,'my $simple =',$start);
 die 'exact helper missing' unless $start>=0 && $end>$start;
 my $helper=substr($test,$start,$end-$start);
-$start=index($test,'my $ok = eval {collect($bad); 1};');
+$start=index($test,'my $before = input_snapshot($bad);');
 $end=index($test,"\n};",$start);die 'exact direct cycle assertion missing' unless $start>=0 && $end>$start;
 my $direct=substr($test,$start,$end-$start);
 {
  package CurrentReservationCauseSubject;
- use Storable qw(dclone);
- our ($bad,@bits,@errors);
- sub collect {FSM::Scheduler::ISF::PreparedFormalReservations->collect($_[0])}
+ use Scalar::Util qw(refaddr blessed reftype);
+ our ($bad,$mutate,@bits,@errors);
+ sub collect {
+  my ($input) = @_;
+  my ($result, $error);
+  my $ok = eval {
+   $result = FSM::Scheduler::ISF::PreparedFormalReservations->collect($input);
+   1;
+  };
+  $error = $@;
+  if ($mutate) {
+   my $slot = $input->{generated_child_products}{worker}{assignment_provenance}[0];
+   die 'missing declared kind-mutation target' unless ref($slot) eq 'HASH';
+   my $json = JSON::PP->new->canonical;
+   my $value = $slot->{rhs};
+   my $text = $json->encode($value);
+   die 'unexpected kind-mutation value' unless $text eq '1' || $text eq '"1"';
+   $slot->{rhs} = $json->decode($text eq '1' ? '"1"' : '1');
+  }
+  die $error unless $ok;
+  return $result;
+ }
  sub ok {push @bits,$_[0]?1:0;return $_[0]}
- sub is_deeply {return 1}
+ sub is {my $same=$_[0] eq $_[1];push @bits,$same?1:0;return $same}
  sub diag {}
  sub diagnostic_cause_matches {
   push @errors,$_[0];return FSM::Test::DiagnosticCause::diagnostic_cause_matches(@_);
  }
 }
 # Compile before native API calls; no active source eval can echo a reason.
-eval 'package CurrentReservationCauseSubject; our $bad;'.$helper.'sub direct_consumer {'.$direct."\n}";die $@ if $@;
+eval 'package CurrentReservationCauseSubject; our $bad;'.$snapshots.$helper.'sub direct_consumer {'.$direct."\n}";die $@ if $@;
 my @captures;
 for my $row (@{$fixtures->{rows}}) {
  my $input=restore($row->{before});my $before=graph($input);
@@ -87,14 +110,41 @@ for my $row (@{$fixtures->{rows}}) {
  @CurrentReservationCauseSubject::bits=();@CurrentReservationCauseSubject::errors=();
  if ($row->{direct}) {$CurrentReservationCauseSubject::bad=$input;CurrentReservationCauseSubject::direct_consumer()}
  else {CurrentReservationCauseSubject::rejected($input,$expected,"$row->{label} / $row->{band}")}
- is_deeply(\@CurrentReservationCauseSubject::bits,[1,$row->{band} eq 'current_fixture'?1:0],"$row->{label} / $row->{band}: complete cause only");
+ is_deeply(\@CurrentReservationCauseSubject::bits,[1,$row->{band} eq 'current_fixture'?1:0,1],"$row->{label} / $row->{band}: complete cause and input assertion");
  is((split /\n/,$CurrentReservationCauseSubject::errors[0])[0],(split /\n/,$row->{error})[0],"$row->{label} / $row->{band}: actual primary conserved");
  is($json->encode(graph($input)),$json->encode($before),"$row->{label} / $row->{band}: complete caller graph and kinds unchanged");
  push @captures,{label=>$row->{label},direct=>$row->{direct},band=>$row->{band},expected_cause=>$expected,
   before=>$before,after=>graph($input),error=>$CurrentReservationCauseSubject::errors[0],assertions=>[@CurrentReservationCauseSubject::bits]};
 }
+my %kind_labels = map {$_ => 1} (
+ 'missing domain', 'wrong domain owner', 'missing nested actor', 'missing child module',
+ 'missing nested producer', 'erased domain in both product maps', 'wrong partition realization',
+ 'erased child IR', 'erased partition',
+);
+my @kind_captures;
+for my $row (@{$fixtures->{rows}}) {
+ my $label = $row->{label} =~ s/ has a focused diagnostic$//r;
+ next unless $row->{band} eq 'current_fixture' && $kind_labels{$label};
+ my $input = restore($row->{before});
+ my $before = graph($input);
+ my $expected = expected_cause($row->{label});
+ @CurrentReservationCauseSubject::bits = ();
+ @CurrentReservationCauseSubject::errors = ();
+ local $CurrentReservationCauseSubject::mutate = 1;
+ CurrentReservationCauseSubject::rejected($input, $expected, "$row->{label} / kind mutation");
+ is_deeply(\@CurrentReservationCauseSubject::bits, [1,1,0], "$row->{label}: actual kind mutation is detected");
+ is((split /\n/, $CurrentReservationCauseSubject::errors[0])[0], $expected,
+    "$row->{label}: genuine native cause retained");
+ isnt($json->encode(graph($input)), $json->encode($before), "$row->{label}: real input kind changed");
+ push @kind_captures, {
+  label => $row->{label}, before => $before, after => graph($input),
+  error => $CurrentReservationCauseSubject::errors[0],
+  assertions => [@CurrentReservationCauseSubject::bits],
+ };
+}
+is(scalar @kind_captures, 9, 'every declared domain kind-mutation control executes');
 if (defined $ENV{FSMGEN_PREPARED_CAUSE_CAPTURE}) {
  open my $out,'>:raw',$ENV{FSMGEN_PREPARED_CAUSE_CAPTURE} or die $!;
- print {$out} $json->encode({rows=>\@captures}),"\n" or die $!;close $out or die $!;
+ print {$out} $json->encode({rows=>\@captures,kind_controls=>\@kind_captures}),"\n" or die $!;close $out or die $!;
 }
 done_testing;

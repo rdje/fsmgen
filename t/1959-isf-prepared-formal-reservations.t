@@ -2,7 +2,8 @@
 use strict;
 use warnings;
 use Test::More;
-use Storable qw(dclone);
+use JSON::PP;
+use Scalar::Util qw(refaddr blessed reftype);
 use lib 'perl', 't/lib';
 use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use FSM::Adapter::ISF;
@@ -10,6 +11,53 @@ use FSM::Scheduler::ISF::LoweringIR;
 use FSM::Scheduler::ISF::PreparedFormalReservations;
 use FSM::Scheduler::ISF::FormalReservationInventory;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
+
+sub source_value_copy {
+    my ($value, $copies) = @_;
+    return $value unless ref($value);
+    die 'unexpected source reference' if blessed($value)
+        || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');
+    $copies ||= {};
+    my $address = refaddr($value);
+    return $copies->{$address} if exists $copies->{$address};
+    my $copy = ref($value) eq 'HASH' ? {} : [];
+    $copies->{$address} = $copy;
+    if (ref($value) eq 'HASH') {
+        $copy->{$_} = source_value_copy($value->{$_}, $copies) for keys %$value;
+    } else {
+        push @$copy, source_value_copy($_, $copies) for @$value;
+    }
+    return $copy;
+}
+
+sub snapshot_graph {
+    my ($value, $seen, $path) = @_;
+    return $value unless ref($value);
+    $seen ||= {}; $path //= '';
+    my $address = refaddr($value);
+    return ['reference', $seen->{$address}] if exists $seen->{$address};
+    $seen->{$address} = $path;
+    if (blessed($value)) {
+        # The cause controls use this empty native HASH. Other unsupported
+        # referents have no declared snapshot contract and fail closed.
+        die 'unexpected native snapshot reference' unless ref($value) eq 'PreparedCauseSentinel'
+            && reftype($value) eq 'HASH' && !keys %$value;
+        return ['empty_native_hash', ref($value), $address];
+    }
+    if (ref($value) eq 'HASH') {
+        my %copy;
+        for my $key (sort keys %$value) {
+            my $escaped = $key; $escaped =~ s/~/~0/g; $escaped =~ s{/}{~1}g;
+            $copy{$key} = snapshot_graph($value->{$key}, $seen, "$path/$escaped");
+        }
+        return ['hash', \%copy];
+    }
+    return ['array', [map {snapshot_graph($value->[$_], $seen, "$path/$_")} 0..$#$value]]
+        if ref($value) eq 'ARRAY';
+    die 'unexpected snapshot reference';
+}
+
+sub input_snapshot {JSON::PP->new->canonical->encode(snapshot_graph($_[0]))}
 
 my $lowerer = FSM::Scheduler::ISF::LoweringIR->new;
 sub prepare {
@@ -22,13 +70,13 @@ sub prepare {
 sub collect {FSM::Scheduler::ISF::PreparedFormalReservations->collect($_[0])}
 sub rejected {
     my ($prepared, $expected_cause, $label) = @_;
-    my $before = dclone($prepared);
+    my $before = input_snapshot($prepared);
     my $ok = eval {collect($prepared); 1};
     my $error = $@;
     ok(!$ok, "$label rejected");
     ok(diagnostic_cause_matches($error, $expected_cause), "$label has a focused diagnostic")
         or diag($error);
-    is_deeply($prepared, $before, "$label validation does not mutate input");
+    is(input_snapshot($prepared), $before, "$label validation preserves input kinds and references");
 }
 my $simple = prepare(<<'ISF');
 (actor checked_reservations (clock clk) (reset rst_n)
@@ -40,7 +88,7 @@ my $simple = prepare(<<'ISF');
 ISF
 
 subtest 'checked inputs retain complete conservative product provenance without parent execution' => sub {
-    my $before = dclone($simple);
+    my $before = input_snapshot($simple);
     my $result = collect($simple);
     is($result->{model}, 'isf_prepared_formal_reservations_v1', 'explicit checked model');
     my $partial = FSM::Scheduler::ISF::FormalReservationInventory->collect({
@@ -56,35 +104,37 @@ subtest 'checked inputs retain complete conservative product provenance without 
     is_deeply(collect(\%permuted), $result, 'input hash insertion order cannot affect output');
     $result->{scopes}[0]{reserved_names}{mutated} = 1;
     ok(!$result->{reserved_names}{mutated}, 'scope and union snapshots are independent');
-    is_deeply($simple, $before, 'collection preserves source preparation');
+    is(input_snapshot($simple), $before, 'collection preserves source preparation kinds and references');
 };
 
 subtest 'every top-level category is required even when empty' => sub {
     for my $field (sort keys %$simple) {
-        my $bad = dclone($simple); delete $bad->{$field};
+        my $bad = source_value_copy($simple); delete $bad->{$field};
         rejected($bad, "Prepared formal reservations have incomplete preparation (missing: $field; unexpected: )", "missing $field");
-        $bad = dclone($simple); $bad->{$field} = 'wrong shape';
+        $bad = source_value_copy($simple); $bad->{$field} = 'wrong shape';
         rejected($bad, "Prepared formal reservations have malformed preparation field '$field'", "malformed $field");
     }
-    my $bad = dclone($simple); $bad->{new_producer_products} = {};
+    my $bad = source_value_copy($simple); $bad->{new_producer_products} = {};
     rejected($bad, "Prepared formal reservations have incomplete preparation (missing: ; unexpected: new_producer_products)", 'unknown producer must be classified');
-    $bad = dclone($simple); delete $bad->{transaction_products}{main};
+    $bad = source_value_copy($simple); delete $bad->{transaction_products}{main};
     rejected($bad, "Prepared formal reservations have incomplete transaction products (missing: main; unexpected: )", 'missing live transaction producer');
-    $bad = dclone($simple); $bad->{transactions}{ghost} = {};
+    $bad = source_value_copy($simple); $bad->{transactions}{ghost} = {};
     rejected($bad, "Prepared formal reservations have incomplete transaction contexts (missing: ; unexpected: ghost)", 'unknown context');
-    $bad = dclone($simple); $bad->{generated_children}{ghost} = 1;
+    $bad = source_value_copy($simple); $bad->{generated_children}{ghost} = 1;
     rejected($bad, "Prepared formal reservations have unknown generated_children membership", 'unknown generated child');
-    $bad = dclone($simple); $bad->{domain_partition} = {kind => 'future_partition'};
+    $bad = source_value_copy($simple); $bad->{domain_partition} = {kind => 'future_partition'};
     rejected($bad, "Prepared formal reservations have an unknown domain partition kind", 'unknown partition');
-    $bad = dclone($simple); $bad->{reusable_child_products}{unclassified} = {};
+    $bad = source_value_copy($simple); $bad->{reusable_child_products}{unclassified} = {};
     rejected($bad, "Prepared formal reservations have incomplete reusable children (missing: ; unexpected: unclassified)", 'unclassified reusable product');
-    $bad = dclone($simple); $bad->{actor_context}{cycle} = $bad;
+    $bad = source_value_copy($simple); $bad->{actor_context}{cycle} = $bad;
+    my $before = input_snapshot($bad);
     my $ok = eval {collect($bad); 1};
     my $error = $@;
     ok(!$ok, 'cyclic preparation rejected before recursive validation');
     ok(diagnostic_cause_matches($error,
         "Formal reservation inventory has a cycle at '/actor_context/cycle'"),
         'cycle diagnostic retained') or diag($error);
+    is(input_snapshot($bad), $before, 'cycle refusal preserves the complete input graph');
 };
 
 my $domains = prepare(<<'ISF');
@@ -98,7 +148,9 @@ my $domains = prepare(<<'ISF');
  (transaction remote (domain aux) (wait 2) (complete aux_seen)))
 ISF
 subtest 'actual independent domains and child modules keep separate typed scopes' => sub {
+    my $before = input_snapshot($domains);
     my $result = collect($domains);
+    is(input_snapshot($domains), $before, 'domain collection preserves complete source kinds and references');
     is_deeply([map {$_->{identity}} @{$result->{scopes}}], [
         ['actor_domain', 'scoped_reservations', 'aux', 'parent'],
         ['actor_domain', 'scoped_reservations', 'core', 'parent'],
@@ -120,7 +172,9 @@ subtest 'actual independent domains and child modules keep separate typed scopes
         [sub {$_[0]{domain_source_products}{core}{preparation}{generated_child_products}{worker} = {}}, "Prepared formal reservations have malformed child scope 'worker'", 'erased child IR'],
         [sub {$_[0]{domain_partition} = undef; $_[0]{domain_source_products} = {}}, "Prepared formal reservations are missing the source domain partition", 'erased partition'],
     ) {
-        my $bad = dclone($domains); $mutation->[0]->($bad); rejected($bad, $mutation->[1], $mutation->[2]);
+        my $bad = source_value_copy($domains);
+        is(input_snapshot($bad), input_snapshot($domains), 'domain mutation fixture preserves complete source kinds');
+        $mutation->[0]->($bad); rejected($bad, $mutation->[1], $mutation->[2]);
     }
 };
 
@@ -128,15 +182,21 @@ subtest 'reusable children and static-zero exclusions follow actual preparation'
     open my $fh, '<', 'isf/fifo_library_use.isf' or die $!;
     my $source = do {local $/; <$fh>}; close $fh or die $!;
     my $p = prepare($source, 'isf/fifo_library_use.isf');
+    my $before = input_snapshot($p);
     my $r = collect($p);
+    is(input_snapshot($p), $before, 'FIFO collection preserves complete source kinds and references');
     is_deeply([map {$_->{identity}[-1]} grep {$_->{identity}[-2] eq 'child'} @{$r->{scopes}}],
         [sort keys %{$p->{reusable_child_products}{children}}], 'actual library modules supply child scopes');
     my $pruned = prepare('(actor pruned (transaction main (repeat 0 (spawn worker as job)) (wait 1)) (transaction worker (wait 1)))');
     ok(keys %{$pruned->{pruned_transactions}}, 'real static-zero producer exclusion exercised');
+    $before = input_snapshot($pruned);
     ok(collect($pruned), 'pruned targets do not require live context/products');
+    is(input_snapshot($pruned), $before, 'static-zero collection preserves complete source kinds and references');
     my $single = prepare('(actor single (clock-domains (domain core (clock clk) (reset rst_n) :default)) (transaction main (wait 1)))');
+    $before = input_snapshot($single);
     is_deeply([map {$_->{identity}} @{collect($single)->{scopes}}], [['actor_module', 'single', 'parent']],
         'single declared domain keeps one module and no fabricated domain products');
+    is(input_snapshot($single), $before, 'single-domain collection preserves complete source kinds and references');
 };
 
 done_testing();

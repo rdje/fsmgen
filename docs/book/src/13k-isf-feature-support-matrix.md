@@ -217,10 +217,17 @@ the [complete-cause repair](../../../docs/audits/prepared-reservation-cause-repa
 now rejects those unrelated causes. Exact old checks and a genuine preparation
 membership bypass fail. Ordinary scope products conserve. The
 [snapshot diagnosis](../../../docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt)
-shows that existing test clones change generated child assignment numbers to
-strings, while value-only assertions miss a deliberately injected kind-only
-input mutation. The actual collector preserves its complete inputs. Snapshot
-and comparison repair is owned by .12.2.2 and comes next. Whole ordinary scope/token
+found that the former test clones changed generated child assignment numbers to
+strings, while value-only assertions missed a deliberately injected kind-only
+input mutation. The [snapshot repair](../../../docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt)
+preserves those numeric source values in detached fixture copies. For example,
+an assignment value `1` stays numeric instead of becoming the string `"1"`.
+First-touch comparisons retain complete scalar kinds and plain reference sharing,
+including the cycle control. Real Storable and kind-only mutation controls now
+fail the strengthened test; the preparation-membership bypass still fails.
+The actual collector preserves its complete inputs and ordinary scope products.
+The empty native marker control has only an identity/empty-shape contract;
+arbitrary unsupported referents remain unqualified. Whole ordinary scope/token
 inventories have independent finite models, while wider constructor semantics
 and moved-root qualification remain open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)

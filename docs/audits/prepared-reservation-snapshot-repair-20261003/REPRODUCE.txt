@@ -1,0 +1,5 @@
+From repository root, with repository-local data and the default RAM guard:
+scripts/run_with_ram_guard.sh -- bash docs/audits/prepared-reservation-snapshot-repair-checks-20261003/produce.sh
+FSMGEN_PREPARED_CAUSE_CAPTURE=docs/audits/prepared-reservation-snapshot-repair-20261003/current-causes.json scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1959-isf-prepared-formal-reservations.t t/2062-isf-prepared-reservation-diagnostic-causes.t
+scripts/run_with_ram_guard.sh -- bash docs/audits/prepared-reservation-snapshot-repair-checks-20261003/check.sh
+Use a task-owned copy when reproducing producers; never overwrite the sealed envelope. Collect native TAP and process statuses, run the actual schema bypass, bind exact source delta, and portable-encode only recorded root-coordinate spelling before independent readback. Current unit baseline is9c6b619; immutable diagnosis/cause envelopes authenticate original controls. Wider native/constructor/moved-root legs stay explicit. No native HDL execution or public schema change.

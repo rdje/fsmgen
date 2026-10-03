@@ -1,0 +1,6 @@
+ram-guard: PID 74174; host 72.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1959-isf-prepared-formal-reservations.t ............ ok
+t/2062-isf-prepared-reservation-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=554,  8 wallclock secs ( 0.04 usr  0.01 sys +  5.85 cusr  0.71 csys =  6.61 CPU)
+Result: PASS

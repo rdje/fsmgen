@@ -1,0 +1,1 @@
+knowledge-map: OK (1264 facts, 6933 unique questions, 7110 answer occurrences, 183 bounded topic shards; query parity verified)

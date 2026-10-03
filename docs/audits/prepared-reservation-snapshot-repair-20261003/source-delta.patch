@@ -1,0 +1,288 @@
+diff --git a/t/1959-isf-prepared-formal-reservations.t b/t/1959-isf-prepared-formal-reservations.t
+index 7320a19c8..187bc70cd 100644
+--- a/t/1959-isf-prepared-formal-reservations.t
++++ b/t/1959-isf-prepared-formal-reservations.t
+@@ -2,7 +2,8 @@
+ use strict;
+ use warnings;
+ use Test::More;
+-use Storable qw(dclone);
++use JSON::PP;
++use Scalar::Util qw(refaddr blessed reftype);
+ use lib 'perl', 't/lib';
+ use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
+ use FSM::Adapter::ISF;
+@@ -11,6 +12,53 @@ use FSM::Scheduler::ISF::PreparedFormalReservations;
+ use FSM::Scheduler::ISF::FormalReservationInventory;
+ use FSM::Scheduler::ISF::FormalIdentityPlan;
+ 
++sub source_value_copy {
++    my ($value, $copies) = @_;
++    return $value unless ref($value);
++    die 'unexpected source reference' if blessed($value)
++        || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');
++    $copies ||= {};
++    my $address = refaddr($value);
++    return $copies->{$address} if exists $copies->{$address};
++    my $copy = ref($value) eq 'HASH' ? {} : [];
++    $copies->{$address} = $copy;
++    if (ref($value) eq 'HASH') {
++        $copy->{$_} = source_value_copy($value->{$_}, $copies) for keys %$value;
++    } else {
++        push @$copy, source_value_copy($_, $copies) for @$value;
++    }
++    return $copy;
++}
++
++sub snapshot_graph {
++    my ($value, $seen, $path) = @_;
++    return $value unless ref($value);
++    $seen ||= {}; $path //= '';
++    my $address = refaddr($value);
++    return ['reference', $seen->{$address}] if exists $seen->{$address};
++    $seen->{$address} = $path;
++    if (blessed($value)) {
++        # The cause controls use this empty native HASH. Other unsupported
++        # referents have no declared snapshot contract and fail closed.
++        die 'unexpected native snapshot reference' unless ref($value) eq 'PreparedCauseSentinel'
++            && reftype($value) eq 'HASH' && !keys %$value;
++        return ['empty_native_hash', ref($value), $address];
++    }
++    if (ref($value) eq 'HASH') {
++        my %copy;
++        for my $key (sort keys %$value) {
++            my $escaped = $key; $escaped =~ s/~/~0/g; $escaped =~ s{/}{~1}g;
++            $copy{$key} = snapshot_graph($value->{$key}, $seen, "$path/$escaped");
++        }
++        return ['hash', \%copy];
++    }
++    return ['array', [map {snapshot_graph($value->[$_], $seen, "$path/$_")} 0..$#$value]]
++        if ref($value) eq 'ARRAY';
++    die 'unexpected snapshot reference';
++}
++
++sub input_snapshot {JSON::PP->new->canonical->encode(snapshot_graph($_[0]))}
++
+ my $lowerer = FSM::Scheduler::ISF::LoweringIR->new;
+ sub prepare {
+     my ($source, $path) = @_;
+@@ -22,13 +70,13 @@ sub prepare {
+ sub collect {FSM::Scheduler::ISF::PreparedFormalReservations->collect($_[0])}
+ sub rejected {
+     my ($prepared, $expected_cause, $label) = @_;
+-    my $before = dclone($prepared);
++    my $before = input_snapshot($prepared);
+     my $ok = eval {collect($prepared); 1};
+     my $error = $@;
+     ok(!$ok, "$label rejected");
+     ok(diagnostic_cause_matches($error, $expected_cause), "$label has a focused diagnostic")
+         or diag($error);
+-    is_deeply($prepared, $before, "$label validation does not mutate input");
++    is(input_snapshot($prepared), $before, "$label validation preserves input kinds and references");
+ }
+ my $simple = prepare(<<'ISF');
+ (actor checked_reservations (clock clk) (reset rst_n)
+@@ -40,7 +88,7 @@ my $simple = prepare(<<'ISF');
+ ISF
+ 
+ subtest 'checked inputs retain complete conservative product provenance without parent execution' => sub {
+-    my $before = dclone($simple);
++    my $before = input_snapshot($simple);
+     my $result = collect($simple);
+     is($result->{model}, 'isf_prepared_formal_reservations_v1', 'explicit checked model');
+     my $partial = FSM::Scheduler::ISF::FormalReservationInventory->collect({
+@@ -56,35 +104,37 @@ subtest 'checked inputs retain complete conservative product provenance without
+     is_deeply(collect(\%permuted), $result, 'input hash insertion order cannot affect output');
+     $result->{scopes}[0]{reserved_names}{mutated} = 1;
+     ok(!$result->{reserved_names}{mutated}, 'scope and union snapshots are independent');
+-    is_deeply($simple, $before, 'collection preserves source preparation');
++    is(input_snapshot($simple), $before, 'collection preserves source preparation kinds and references');
+ };
+ 
+ subtest 'every top-level category is required even when empty' => sub {
+     for my $field (sort keys %$simple) {
+-        my $bad = dclone($simple); delete $bad->{$field};
++        my $bad = source_value_copy($simple); delete $bad->{$field};
+         rejected($bad, "Prepared formal reservations have incomplete preparation (missing: $field; unexpected: )", "missing $field");
+-        $bad = dclone($simple); $bad->{$field} = 'wrong shape';
++        $bad = source_value_copy($simple); $bad->{$field} = 'wrong shape';
+         rejected($bad, "Prepared formal reservations have malformed preparation field '$field'", "malformed $field");
+     }
+-    my $bad = dclone($simple); $bad->{new_producer_products} = {};
++    my $bad = source_value_copy($simple); $bad->{new_producer_products} = {};
+     rejected($bad, "Prepared formal reservations have incomplete preparation (missing: ; unexpected: new_producer_products)", 'unknown producer must be classified');
+-    $bad = dclone($simple); delete $bad->{transaction_products}{main};
++    $bad = source_value_copy($simple); delete $bad->{transaction_products}{main};
+     rejected($bad, "Prepared formal reservations have incomplete transaction products (missing: main; unexpected: )", 'missing live transaction producer');
+-    $bad = dclone($simple); $bad->{transactions}{ghost} = {};
++    $bad = source_value_copy($simple); $bad->{transactions}{ghost} = {};
+     rejected($bad, "Prepared formal reservations have incomplete transaction contexts (missing: ; unexpected: ghost)", 'unknown context');
+-    $bad = dclone($simple); $bad->{generated_children}{ghost} = 1;
++    $bad = source_value_copy($simple); $bad->{generated_children}{ghost} = 1;
+     rejected($bad, "Prepared formal reservations have unknown generated_children membership", 'unknown generated child');
+-    $bad = dclone($simple); $bad->{domain_partition} = {kind => 'future_partition'};
++    $bad = source_value_copy($simple); $bad->{domain_partition} = {kind => 'future_partition'};
+     rejected($bad, "Prepared formal reservations have an unknown domain partition kind", 'unknown partition');
+-    $bad = dclone($simple); $bad->{reusable_child_products}{unclassified} = {};
++    $bad = source_value_copy($simple); $bad->{reusable_child_products}{unclassified} = {};
+     rejected($bad, "Prepared formal reservations have incomplete reusable children (missing: ; unexpected: unclassified)", 'unclassified reusable product');
+-    $bad = dclone($simple); $bad->{actor_context}{cycle} = $bad;
++    $bad = source_value_copy($simple); $bad->{actor_context}{cycle} = $bad;
++    my $before = input_snapshot($bad);
+     my $ok = eval {collect($bad); 1};
+     my $error = $@;
+     ok(!$ok, 'cyclic preparation rejected before recursive validation');
+     ok(diagnostic_cause_matches($error,
+         "Formal reservation inventory has a cycle at '/actor_context/cycle'"),
+         'cycle diagnostic retained') or diag($error);
++    is(input_snapshot($bad), $before, 'cycle refusal preserves the complete input graph');
+ };
+ 
+ my $domains = prepare(<<'ISF');
+@@ -98,7 +148,9 @@ my $domains = prepare(<<'ISF');
+  (transaction remote (domain aux) (wait 2) (complete aux_seen)))
+ ISF
+ subtest 'actual independent domains and child modules keep separate typed scopes' => sub {
++    my $before = input_snapshot($domains);
+     my $result = collect($domains);
++    is(input_snapshot($domains), $before, 'domain collection preserves complete source kinds and references');
+     is_deeply([map {$_->{identity}} @{$result->{scopes}}], [
+         ['actor_domain', 'scoped_reservations', 'aux', 'parent'],
+         ['actor_domain', 'scoped_reservations', 'core', 'parent'],
+@@ -120,7 +172,9 @@ subtest 'actual independent domains and child modules keep separate typed scopes
+         [sub {$_[0]{domain_source_products}{core}{preparation}{generated_child_products}{worker} = {}}, "Prepared formal reservations have malformed child scope 'worker'", 'erased child IR'],
+         [sub {$_[0]{domain_partition} = undef; $_[0]{domain_source_products} = {}}, "Prepared formal reservations are missing the source domain partition", 'erased partition'],
+     ) {
+-        my $bad = dclone($domains); $mutation->[0]->($bad); rejected($bad, $mutation->[1], $mutation->[2]);
++        my $bad = source_value_copy($domains);
++        is(input_snapshot($bad), input_snapshot($domains), 'domain mutation fixture preserves complete source kinds');
++        $mutation->[0]->($bad); rejected($bad, $mutation->[1], $mutation->[2]);
+     }
+ };
+ 
+@@ -128,15 +182,21 @@ subtest 'reusable children and static-zero exclusions follow actual preparation'
+     open my $fh, '<', 'isf/fifo_library_use.isf' or die $!;
+     my $source = do {local $/; <$fh>}; close $fh or die $!;
+     my $p = prepare($source, 'isf/fifo_library_use.isf');
++    my $before = input_snapshot($p);
+     my $r = collect($p);
++    is(input_snapshot($p), $before, 'FIFO collection preserves complete source kinds and references');
+     is_deeply([map {$_->{identity}[-1]} grep {$_->{identity}[-2] eq 'child'} @{$r->{scopes}}],
+         [sort keys %{$p->{reusable_child_products}{children}}], 'actual library modules supply child scopes');
+     my $pruned = prepare('(actor pruned (transaction main (repeat 0 (spawn worker as job)) (wait 1)) (transaction worker (wait 1)))');
+     ok(keys %{$pruned->{pruned_transactions}}, 'real static-zero producer exclusion exercised');
++    $before = input_snapshot($pruned);
+     ok(collect($pruned), 'pruned targets do not require live context/products');
++    is(input_snapshot($pruned), $before, 'static-zero collection preserves complete source kinds and references');
+     my $single = prepare('(actor single (clock-domains (domain core (clock clk) (reset rst_n) :default)) (transaction main (wait 1)))');
++    $before = input_snapshot($single);
+     is_deeply([map {$_->{identity}} @{collect($single)->{scopes}}], [['actor_module', 'single', 'parent']],
+         'single declared domain keeps one module and no fabricated domain products');
++    is(input_snapshot($single), $before, 'single-domain collection preserves complete source kinds and references');
+ };
+ 
+ done_testing();
+diff --git a/t/2062-isf-prepared-reservation-diagnostic-causes.t b/t/2062-isf-prepared-reservation-diagnostic-causes.t
+index 9111ada18..e566dd0ef 100644
+--- a/t/2062-isf-prepared-reservation-diagnostic-causes.t
++++ b/t/2062-isf-prepared-reservation-diagnostic-causes.t
+@@ -60,26 +60,49 @@ sub expected_cause {
+ 
+ open $fh,'<:raw','t/1959-isf-prepared-formal-reservations.t' or die $!;
+ my $test=do {local $/;<$fh>};close $fh or die $!;
++my $copy_start=index($test,'sub source_value_copy {');
++my $copy_end=index($test,'my $lowerer =',$copy_start);
++die 'exact snapshot helpers missing' unless $copy_start>=0 && $copy_end>$copy_start;
++my $snapshots=substr($test,$copy_start,$copy_end-$copy_start);
+ my $start=index($test,'sub rejected {');my $end=index($test,'my $simple =',$start);
+ die 'exact helper missing' unless $start>=0 && $end>$start;
+ my $helper=substr($test,$start,$end-$start);
+-$start=index($test,'my $ok = eval {collect($bad); 1};');
++$start=index($test,'my $before = input_snapshot($bad);');
+ $end=index($test,"\n};",$start);die 'exact direct cycle assertion missing' unless $start>=0 && $end>$start;
+ my $direct=substr($test,$start,$end-$start);
+ {
+  package CurrentReservationCauseSubject;
+- use Storable qw(dclone);
+- our ($bad,@bits,@errors);
+- sub collect {FSM::Scheduler::ISF::PreparedFormalReservations->collect($_[0])}
++ use Scalar::Util qw(refaddr blessed reftype);
++ our ($bad,$mutate,@bits,@errors);
++ sub collect {
++  my ($input) = @_;
++  my ($result, $error);
++  my $ok = eval {
++   $result = FSM::Scheduler::ISF::PreparedFormalReservations->collect($input);
++   1;
++  };
++  $error = $@;
++  if ($mutate) {
++   my $slot = $input->{generated_child_products}{worker}{assignment_provenance}[0];
++   die 'missing declared kind-mutation target' unless ref($slot) eq 'HASH';
++   my $json = JSON::PP->new->canonical;
++   my $value = $slot->{rhs};
++   my $text = $json->encode($value);
++   die 'unexpected kind-mutation value' unless $text eq '1' || $text eq '"1"';
++   $slot->{rhs} = $json->decode($text eq '1' ? '"1"' : '1');
++  }
++  die $error unless $ok;
++  return $result;
++ }
+  sub ok {push @bits,$_[0]?1:0;return $_[0]}
+- sub is_deeply {return 1}
++ sub is {my $same=$_[0] eq $_[1];push @bits,$same?1:0;return $same}
+  sub diag {}
+  sub diagnostic_cause_matches {
+   push @errors,$_[0];return FSM::Test::DiagnosticCause::diagnostic_cause_matches(@_);
+  }
+ }
+ # Compile before native API calls; no active source eval can echo a reason.
+-eval 'package CurrentReservationCauseSubject; our $bad;'.$helper.'sub direct_consumer {'.$direct."\n}";die $@ if $@;
++eval 'package CurrentReservationCauseSubject; our $bad;'.$snapshots.$helper.'sub direct_consumer {'.$direct."\n}";die $@ if $@;
+ my @captures;
+ for my $row (@{$fixtures->{rows}}) {
+  my $input=restore($row->{before});my $before=graph($input);
+@@ -87,14 +110,41 @@ for my $row (@{$fixtures->{rows}}) {
+  @CurrentReservationCauseSubject::bits=();@CurrentReservationCauseSubject::errors=();
+  if ($row->{direct}) {$CurrentReservationCauseSubject::bad=$input;CurrentReservationCauseSubject::direct_consumer()}
+  else {CurrentReservationCauseSubject::rejected($input,$expected,"$row->{label} / $row->{band}")}
+- is_deeply(\@CurrentReservationCauseSubject::bits,[1,$row->{band} eq 'current_fixture'?1:0],"$row->{label} / $row->{band}: complete cause only");
++ is_deeply(\@CurrentReservationCauseSubject::bits,[1,$row->{band} eq 'current_fixture'?1:0,1],"$row->{label} / $row->{band}: complete cause and input assertion");
+  is((split /\n/,$CurrentReservationCauseSubject::errors[0])[0],(split /\n/,$row->{error})[0],"$row->{label} / $row->{band}: actual primary conserved");
+  is($json->encode(graph($input)),$json->encode($before),"$row->{label} / $row->{band}: complete caller graph and kinds unchanged");
+  push @captures,{label=>$row->{label},direct=>$row->{direct},band=>$row->{band},expected_cause=>$expected,
+   before=>$before,after=>graph($input),error=>$CurrentReservationCauseSubject::errors[0],assertions=>[@CurrentReservationCauseSubject::bits]};
+ }
++my %kind_labels = map {$_ => 1} (
++ 'missing domain', 'wrong domain owner', 'missing nested actor', 'missing child module',
++ 'missing nested producer', 'erased domain in both product maps', 'wrong partition realization',
++ 'erased child IR', 'erased partition',
++);
++my @kind_captures;
++for my $row (@{$fixtures->{rows}}) {
++ my $label = $row->{label} =~ s/ has a focused diagnostic$//r;
++ next unless $row->{band} eq 'current_fixture' && $kind_labels{$label};
++ my $input = restore($row->{before});
++ my $before = graph($input);
++ my $expected = expected_cause($row->{label});
++ @CurrentReservationCauseSubject::bits = ();
++ @CurrentReservationCauseSubject::errors = ();
++ local $CurrentReservationCauseSubject::mutate = 1;
++ CurrentReservationCauseSubject::rejected($input, $expected, "$row->{label} / kind mutation");
++ is_deeply(\@CurrentReservationCauseSubject::bits, [1,1,0], "$row->{label}: actual kind mutation is detected");
++ is((split /\n/, $CurrentReservationCauseSubject::errors[0])[0], $expected,
++    "$row->{label}: genuine native cause retained");
++ isnt($json->encode(graph($input)), $json->encode($before), "$row->{label}: real input kind changed");
++ push @kind_captures, {
++  label => $row->{label}, before => $before, after => graph($input),
++  error => $CurrentReservationCauseSubject::errors[0],
++  assertions => [@CurrentReservationCauseSubject::bits],
++ };
++}
++is(scalar @kind_captures, 9, 'every declared domain kind-mutation control executes');
+ if (defined $ENV{FSMGEN_PREPARED_CAUSE_CAPTURE}) {
+  open my $out,'>:raw',$ENV{FSMGEN_PREPARED_CAUSE_CAPTURE} or die $!;
+- print {$out} $json->encode({rows=>\@captures}),"\n" or die $!;close $out or die $!;
++ print {$out} $json->encode({rows=>\@captures,kind_controls=>\@kind_captures}),"\n" or die $!;close $out or die $!;
+ }
+ done_testing;

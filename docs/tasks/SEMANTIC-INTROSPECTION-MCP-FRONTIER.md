@@ -3954,10 +3954,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12`
-  Status: `active`
+  Status: `done`
   Goal: `Repair T1959 checked-reservation refusal helper and adjacent cycle assertion.`
   Acceptance: `P2 real false verification discovered by SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.3: exact helper accepts unrelated unsupported native references before schema/ownership validation through expected regex stack echoes, and complete expected-cause text quoted in the reference path fools primary fragment matching. Adjacent direct cycle assertion likewise accepts a primary path echo; its plain earlier control is safe. Commit bounded diagnosis first, then save real errors immediately and compare independently complete category/membership/domain/child/cycle causes. Retain exact schema/member/source/ordinary scope and primitive kinds with explicit cold limits; replace lossy before snapshots with first-touch graph/JSON evidence where needed. Add permanent real inputs/earlier/primary controls, exact prior helper and genuine checked-validator bypass before signoff. No production acceptance, public wire/schema/syntax, shared predicate, submodule/native/legacy or old archive edits; wider cold semantics remain separate.`
-  Verification: `pending`
+  Verification: `Completed through .12.1 complete-cause repair and .12.2 first-touch snapshot/copy repair. Actual native earlier/primary causes cannot masquerade as complete expected reasons; ordinary full inputs, explicit corrected fixture kinds and scope/token results remain qualified. Real prior cause/clone/mutation/schema controls fail independently. Test-only repair preserves provider/public schema/native boundaries and immutable prior archives; wider native/constructor/moved-root semantics remain explicitly owned. T1960 coverage review follows the committed closure.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.2`
   Commit: `children below`
 
@@ -3969,10 +3969,10 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.2`
-  Status: `active`
+  Status: `done`
   Goal: `Strengthen T1959 first-touch input snapshots and primitive-kind assertions.`
   Acceptance: `After .12.1 cause repair is committed, replace value-only/Storable before snapshots with explicit first-touch plain/native graph evidence and complete kind-sensitive comparison for supported source products and known unsupported-reference/cycle controls. Read/source-bind all snapshot paths and isolate real prior clone or comparison gaps before changing tests. Preserve actual checked admission and ordinary scope/token products, retain whole before/after/native reference semantics with explicit opaque or cold boundaries, genuine prior/bypass controls and focused regressions. Split again if complete unsupported-reference snapshot semantics exceed a safe slice. No production/shared predicate/public schema/native/submodule/old archive change.`
-  Verification: `pending`
+  Verification: `Committed diagnosis .1 precedes test-only .2 repair: actual source clones retain numeric kinds and plain sharing; helper/direct/success snapshots compare complete first-touch kinds and topology. Genuine Storable and kind-only full-consumer controls fail, and permanent domain controls observe real kind changes while retaining native causes. Known empty marker identity/shape is explicit; arbitrary native referents and wider semantic/moved-root legs stay cold. Source closure, whole ordinary result conservation, focused checks and book/card/gates complete in .2 before T1960.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.2.2`
   Commit: `children below`
 
@@ -3984,11 +3984,11 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.12.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair the evidenced T1959 snapshot and comparison gaps.`
   Acceptance: `After diagnosis .1 is committed, strengthen only the actual first-touch snapshot/comparison gaps it establishes. Retain complete plain source products, kind-sensitive comparisons, known cycle/marker controls and explicit wider native-reference limits. Add real prior and mutation controls, preserve whole checked admission/results and source closure, synchronize book/card, and commit with focused regressions and normal doctrine gates before T1960 coverage review.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Current T1959/T2062 All tests successful2/554. Scalar-preserving plain source copies and first-touch tagged snapshots retain complete primitive kinds and sharing/cycle topology; unsupported referents fail closed outside the known empty marker identity/shape contract. All58 actual fixture copies/originals preserve, and all64 ordinary caller graphs conserve. Nine actual source originals match diagnosis; only60 source-declared surviving worker rhs positions in refused fixtures correct old clone strings1 to genuine numbers1. Complete acceptance, primary causes and full outputs, including six scope/token inventories, conserve. All174 native cause controls retain full inputs/primaries and real snapshot decisions; nine permanent actual domain kind mutations produce[1,1,0] with genuine causes and exactly one changed field. Actual original Storable call restoration yields full current RED1/4 with domain subtest3/inner9-of42; actual ten-input collector-return kind mutation yields RED1/4, same subtest3/inner10-of42. Original value-only consumer mutation PASS remains authenticated in sealed diagnosis. Prior-copy/mutation safety promotions RED1; kind/back-edge corruptions reject. Exact reused checked-schema bypass remains RED1/4/Failed2/Perl2, inner24/147 and2/42; every adjacent provider guard remains. Independent complete Git membership/hash/selected bodies and exact delta permit only T1959/T2062; DSL/fixtures/provider/predicate/old archives/native/submodule/legacy unchanged. Authenticated independent graph grammar and literal source-kind table, genuine native controls, full input/copy/error/output/TAP/status/instruments/bindings/recipe/seal/task/card/book/Git supply distinct claim legs. Broader constructor/controller/report meanings remain cold .1.3; current root coordinate spelling does not prove moved-root .1.2.4. Focused reservation/domain All tests successful2/7 and book build/rendered/public-book2/308/KM pass, visual QA pending. Fixed capacity/fresh claims/staged doctrines/hooks close .12.2/.12 before T1960 coverage review.`
+  Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.3`
   Status: `pending`
@@ -5986,3 +5986,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual fresh domain setup Storable clones at t/1959-isf-prepared-formal-reservations.t line 123 change declared child assignment numeric kinds to strings; actual originals preserve. `git log -S 'my $bad = dclone($domains)' -- t/1959-isf-prepared-formal-reservations.t` binds introduction d57f11f450a4a39bd892ec21c2730ac6d4dd3cc6 and full historical source. Real value-only consumer still passes deliberate kind-only mutations.
 - [x] **ADDRESSED (diagnosis verified; repair owned)** — Complete source/Git closure, native graph and independent literal kind/path table pass; real consumer mutation conserves acceptance/results/causes while falsifying input kinds, and its cold promotion genuinely RED1. Kind/back-edge corruptions reject. Immediate child .12.2.2 owns clone/snapshot/comparison repair; wider native/constructor/moved-root semantics remain explicit.
 - [x] **NO REGRESSION** — Unchanged T1959/T2062 `All tests successful` Files=2/Tests=526; public-book `All tests successful` Files=2/Tests=308, rendered book and `knowledge-map: OK`. Complete ordinary caller/results and native causes conserve authenticated sealed data. Fixed capacity/fresh claims/staged doctrines/normal hooks precede commit.
+
+## Acceptance — prepared-reservation snapshot repair .2.3.12.2.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Committed .12.2.1 first-touch native diagnosis locates lossy domain setup clones at original t/1959-isf-prepared-formal-reservations.t line 123 and value-only helper comparison. `git log -S 'my $bad = dclone($domains)' -- t/1959-isf-prepared-formal-reservations.t` authenticates introduction d57f11f450a4a39bd892ec21c2730ac6d4dd3cc6 with complete historical source. Actual prior Storable restoration fails nine strengthened domain-copy assertions, and real collector-return kind mutation fails ten input assertions.
+- [x] **ADDRESSED (verified)** — Complete scalar-preserving source copies and first-touch kind/topology snapshots pass T1959/T2062, Files=2/Tests=554. Independent whole source/Git closure, bounded source-kind corrections, input/result/cause conservation and permanent real native kind controls pass. Genuine prior-copy/mutation/schema controls fail; cold promotions and kind/back-edge corruptions reject. Wider unsupported-native, constructor and moved-root legs stay explicit.
+- [x] **NO REGRESSION** — Focused reservation/domain `All tests successful` Files=2/Tests=7; public-book `All tests successful` Files=2/Tests=308, rendered book and `knowledge-map: OK`. Whole ordinary acceptance/results and actual first causes conserve; fixed capacity/fresh claims/staged doctrines/normal hooks complete before commit and T1960 activation.

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/prepared-reservation-snapshot-repair-20261003/verify.py", line 146, in <module>
+    for i,row in enumerate(mutated['calls']):assert equal(row['before'],row['after']),('false input preservation',i)
+                                                    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('false input preservation', 51)

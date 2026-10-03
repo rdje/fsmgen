@@ -1,0 +1,2 @@
+PASS exact test-only/source closure; complete current source copies and ordinary caller kinds/topology; explicitly bounded source-kind corrections: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 4, 8, 8, 8, 4, 4, 0, 0, 0]
+PASS whole acceptance/results/primary-cause conservation, permanent complete-cause/kind controls and genuine mutation/prior-copy RED; kind/topology corruptions reject. Wider native/constructor/moved-root semantics remain cold.

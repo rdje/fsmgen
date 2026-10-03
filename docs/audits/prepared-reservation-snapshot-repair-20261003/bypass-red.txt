@@ -1,0 +1,387 @@
+ram-guard: PID 17046; host 70.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+    #   Failed test 'missing actor has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'actor'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748a08f168), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748a08f168), ARRAY(0x748c0720f0), ARRAY(0x748c0b2648)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748a08f168)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748a08f168)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748a08f168), "Prepared formal reservations have incomplete preparation (mis"..., "missing actor") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing actor_context has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'actor_context'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c055f00), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c055f00), ARRAY(0x748b8aa678), ARRAY(0x748b8b0690)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c055f00)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c055f00)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c055f00), "Prepared formal reservations have incomplete preparation (mis"..., "missing actor_context") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing deferred_formal_collisions has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'deferred_formal_collisions'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c0763d8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c0763d8), ARRAY(0x748b8b5168), ARRAY(0x748c06c120)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c0763d8)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c0763d8)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c0763d8), "Prepared formal reservations have incomplete preparation (mis"..., "missing deferred_formal_collisions") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing domain_partition rejected'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 76.
+
+    #   Failed test 'missing domain_partition has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # 
+
+    #   Failed test 'missing domain_source_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'domain_source_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748b8b26d8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748b8b26d8), ARRAY(0x748b6c2ba0), ARRAY(0x748c0789c0)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748b8b26d8)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748b8b26d8)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748b8b26d8), "Prepared formal reservations have incomplete preparation (mis"..., "missing domain_source_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing generated_child_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'generated_child_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c070918), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c070918), ARRAY(0x748b8c2f30), ARRAY(0x748b6ebe88)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c070918)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c070918)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c070918), "Prepared formal reservations have incomplete preparation (mis"..., "missing generated_child_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing generated_children has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'generated_children'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748b8b5f18), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748b8b5f18), ARRAY(0x748b8cc828), ARRAY(0x748b8a9468)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748b8b5f18)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748b8b5f18)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748b8b5f18), "Prepared formal reservations have incomplete preparation (mis"..., "missing generated_children") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing parent_activation_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_activation_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c06c888), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c06c888), ARRAY(0x748b8afc30), ARRAY(0x748b8a4ee8)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c06c888)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c06c888)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c06c888), "Prepared formal reservations have incomplete preparation (mis"..., "missing parent_activation_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing parent_completion_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_completion_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c066dc8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c066dc8), ARRAY(0x748b6c0810), ARRAY(0x748b647a68)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c066dc8)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c066dc8)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c066dc8), "Prepared formal reservations have incomplete preparation (mis"..., "missing parent_completion_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing parent_named_completion_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_named_completion_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748b8c37c8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748b8c37c8), ARRAY(0x748b6c2030), ARRAY(0x748b8bbaf8)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748b8c37c8)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748b8c37c8)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748b8c37c8), "Prepared formal reservations have incomplete preparation (mis"..., "missing parent_named_completion_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing parent_payload_snapshot_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_payload_snapshot_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748b8ceb70), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748b8ceb70), ARRAY(0x748b6bb978), ARRAY(0x748b6ebb58)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748b8ceb70)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748b8ceb70)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748b8ceb70), "Prepared formal reservations have incomplete preparation (mis"..., "missing parent_payload_snapshot_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing parent_point_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_point_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c071888), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c071888), ARRAY(0x748b8afe58), ARRAY(0x748b8cba38)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c071888)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c071888)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c071888), "Prepared formal reservations have incomplete preparation (mis"..., "missing parent_point_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing parent_storage_read_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_storage_read_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c02daf8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c02daf8), ARRAY(0x748c04d330), ARRAY(0x748b8cb0d8)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c02daf8)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c02daf8)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c02daf8), "Prepared formal reservations have incomplete preparation (mis"..., "missing parent_storage_read_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing parent_storage_write_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_storage_write_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748af97690), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748af97690), ARRAY(0x748c04df78), ARRAY(0x748c0252b8)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748af97690)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748af97690)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748af97690), "Prepared formal reservations have incomplete preparation (mis"..., "missing parent_storage_write_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing parent_wiring_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_wiring_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748b8bf228), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748b8bf228), ARRAY(0x748b8a7738), ARRAY(0x748b8a9408)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748b8bf228)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748b8bf228)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748b8bf228), "Prepared formal reservations have incomplete preparation (mis"..., "missing parent_wiring_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing pruned_transactions has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'pruned_transactions'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c01c438), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c01c438), ARRAY(0x748b6c3fa8), ARRAY(0x748b6ddb70)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c01c438)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c01c438)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c01c438), "Prepared formal reservations have incomplete preparation (mis"..., "missing pruned_transactions") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing resource_signal_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'resource_signal_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c020dc8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c020dc8), ARRAY(0x748c078960), ARRAY(0x748b6dfdf8)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c020dc8)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c020dc8)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c020dc8), "Prepared formal reservations have incomplete preparation (mis"..., "missing resource_signal_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing reusable_child_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'reusable_child_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748b6c15e8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748b6c15e8), ARRAY(0x748b6e4ab0), ARRAY(0x748b8b3ee8)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748b6c15e8)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748b6c15e8)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748b6c15e8), "Prepared formal reservations have incomplete preparation (mis"..., "missing reusable_child_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing transaction_binding_report_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'transaction_binding_report_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748b6e5288), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748b6e5288), ARRAY(0x748afdf2d0), ARRAY(0x748c026150)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748b6e5288)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748b6e5288)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748b6e5288), "Prepared formal reservations have incomplete preparation (mis"..., "missing transaction_binding_report_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing transaction_products has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'transaction_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748c0b09c0), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c0b09c0), ARRAY(0x748b6df7f8), ARRAY(0x748c06a768)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c0b09c0)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c0b09c0)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c0b09c0), "Prepared formal reservations have incomplete preparation (mis"..., "missing transaction_products") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing transactions has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'transactions'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748b6d5be8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 44
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748b6d5be8), ARRAY(0x748b6e6120), ARRAY(0x748b6dd810)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748b6d5be8)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748b6d5be8)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748b6d5be8), "Prepared formal reservations have incomplete preparation (mis"..., "missing transactions") called at ./t/1959-isf-prepared-formal-reservations.t line 113
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "every top-level category is required even when empty", CODE(0x748b8ba408)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("every top-level category is required even when empty", CODE(0x748b8ba408)) called at ./t/1959-isf-prepared-formal-reservations.t line 138
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'unknown producer must be classified rejected'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 76.
+
+    #   Failed test 'unknown producer must be classified has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # 
+    # Looks like you failed 24 tests of 147.
+
+#   Failed test 'every top-level category is required even when empty'
+#   at ./t/1959-isf-prepared-formal-reservations.t line 138.
+
+    #   Failed test 'missing nested actor has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'actor'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748baa8b40), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 104
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748ba008a0), ARRAY(0x748c1f1510), ARRAY(0x748ba18780)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748ba008a0)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748ba008a0)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748ba008a0), "Prepared formal reservations have incomplete preparation (mis"..., "missing nested actor") called at ./t/1959-isf-prepared-formal-reservations.t line 177
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "actual independent domains and child modules keep separate ty"..., CODE(0x748b6c9168)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual independent domains and child modules keep separate ty"..., CODE(0x748b6c9168)) called at ./t/1959-isf-prepared-formal-reservations.t line 179
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+
+    #   Failed test 'missing nested producer has a focused diagnostic'
+    #   at ./t/1959-isf-prepared-formal-reservations.t line 77.
+    # Prepared formal reservations have malformed preparation field 'parent_completion_products'
+    #  at (eval 5) line 10.
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_shape(HASH(0x748babefd8), HASH(0x748905e558), "preparation") called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 104
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::_prepare_scopes(HASH(0x748c1b5288), ARRAY(0x748bad9198), ARRAY(0x748bacdb10)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 34
+    # 	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x748c1b5288)) called at ./t/1959-isf-prepared-formal-reservations.t line 70
+    # 	main::collect(HASH(0x748c1b5288)) called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	eval {...} called at ./t/1959-isf-prepared-formal-reservations.t line 74
+    # 	main::rejected(HASH(0x748c1b5288), "Prepared formal reservations have incomplete preparation (mis"..., "missing nested producer") called at ./t/1959-isf-prepared-formal-reservations.t line 177
+    # 	main::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	eval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374
+    # 	Test::Builder::subtest(Test::Builder=HASH(0x7489819af8), "actual independent domains and child modules keep separate ty"..., CODE(0x748b6c9168)) called at /System/Library/Perl/5.34/Test/More.pm line 809
+    # 	Test::More::subtest("actual independent domains and child modules keep separate ty"..., CODE(0x748b6c9168)) called at ./t/1959-isf-prepared-formal-reservations.t line 179
+    # 	require ./t/1959-isf-prepared-formal-reservations.t called at docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl line 18
+    # Looks like you failed 2 tests of 42.
+
+#   Failed test 'actual independent domains and child modules keep separate typed scopes'
+#   at ./t/1959-isf-prepared-formal-reservations.t line 179.
+# Looks like you failed 2 tests of 4.
+docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl .. 
+Dubious, test returned 2 (wstat 512, 0x200)
+Failed 2/4 subtests 
+
+Test Summary Report
+-------------------
+docs/audits/prepared-reservation-snapshot-repair-20261003/bypass.pl (Wstat: 512 Tests: 4 Failed: 2)
+  Failed tests:  2-3
+  Non-zero exit status: 2
+Files=1, Tests=4,  3 wallclock secs ( 0.01 usr  0.01 sys +  1.47 cusr  0.53 csys =  2.02 CPU)
+Result: FAIL

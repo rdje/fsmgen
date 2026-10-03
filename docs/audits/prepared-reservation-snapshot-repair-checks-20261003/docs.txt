@@ -1,0 +1,2 @@
+ram-guard: PID 43125; host 71.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS book build, rendered text, public-book checks and Knowledge Map.
