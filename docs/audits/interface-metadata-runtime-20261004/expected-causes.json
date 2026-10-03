@@ -1,0 +1,27 @@
+{
+  "snapshot": [
+    "expected port metadata array", "expected port metadata entry", "missing metadata key",
+    "missing metadata key", "unknown metadata key", "invalid or duplicate port name", "invalid direction",
+    "invalid port width", "invalid port width", "invalid domain", "invalid domain",
+    "invalid type alias", "invalid type alias", "invalid resolved type kind", "type facts require an alias",
+    "record requires scalar field metadata", "record requires scalar field metadata", "unknown metadata key",
+    "invalid or duplicate field path", "invalid or duplicate field path",
+    "field ranges do not form ordered packed layout", "field ranges do not form ordered packed layout",
+    "field ranges do not form ordered packed layout", "field ranges do not form ordered packed layout",
+    "record field layout does not cover the port", "invalid scalar field signed property",
+    "invalid scalar field state model", "invalid or duplicate port name", "inputs must precede outputs",
+    "invalid port width", "invalid resolved type kind"
+  ],
+  "capture": [
+    "expected inputs array", "expected declared port", "invalid declared port name", "invalid declared port width",
+    "port 'packet' type width disagrees", "port 'packet' lacks resolved type",
+    "resolved aggregate width disagrees with members", "invalid or duplicate record member",
+    "invalid resolved state model", "invalid resolved signed property",
+    "port 'packet' has type facts without an alias", "list-root interface metadata remains unsupported", "cyclic resolved type"
+  ],
+  "adjacent": [
+    "Invalid ISF interface port metadata: invalid declared port width",
+    "Invalid ISF interface port metadata: expected port metadata entry",
+    "record output field writes are not yet admitted"
+  ]
+}

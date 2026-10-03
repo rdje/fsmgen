@@ -1,0 +1,1 @@
+PASS rendered native metadata context/adjacent filename defects and owned field/repair boundary; visual QA remains pending.

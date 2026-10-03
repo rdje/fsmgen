@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/interface-metadata-runtime-20261004/verify.py", line 71, in <module>
+    assert len(test_copies) == 43 and len(provider_copies) == 102, 'complete native copy population'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete native copy population

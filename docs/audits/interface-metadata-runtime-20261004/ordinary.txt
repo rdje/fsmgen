@@ -1,0 +1,193 @@
+Name "FSM::Adapter::ISF::parse_file" used only once: possible typo at docs/audits/interface-metadata-runtime-20261004/observe.pl line 128.
+Name "FSM::Adapter::ISF::parse_source" used only once: possible typo at docs/audits/interface-metadata-runtime-20261004/observe.pl line 125.
+Name "main::rejects" used only once: possible typo at docs/audits/interface-metadata-runtime-20261004/observe.pl line 136.
+Prototype mismatch: sub main::is_deeply: none vs ($$;$) at /System/Library/Perl/5.34/Exporter.pm line 63.
+ at ./t/1983-isf-interface-port-metadata.t line 4.
+# Subtest: declared scalar ports retain ordering and alias facts
+    ok 1 - input order followed by output order, including unused declarations
+    ok 2 - closed result is JSON-safe
+    ok 3 - projection does not share parser objects
+    ok 4 - explicit domains override the declared default
+    ok 5 - metadata preserves nonempty opaque port names without inventing source restrictions
+    1..5
+ok 1 - declared scalar ports retain ordering and alias facts
+# Subtest: capture and snapshot detach before first numeric read on valid and refused facts
+    ok 1 - capture preserves original scalar kinds on its first read
+    ok 2 - capture still returns the same independently expected numeric layout
+    ok 3 - capture output mutation cannot reach source facts
+    ok 4 - capture rejects a malformed suffix after valid numeric facts
+    ok 5 - capture retains a classified first diagnostic
+    ok 6 - capture refused first read cannot mutate valid prefix facts
+    ok 7 - snapshot preserves original scalar kinds on its first read
+    ok 8 - snapshot still returns the same independently expected numeric layout
+    ok 9 - snapshot output mutation cannot reach source facts
+    ok 10 - snapshot rejects a malformed suffix after valid numeric facts
+    ok 11 - snapshot retains a classified first diagnostic
+    ok 12 - snapshot refused first read cannot mutate valid prefix facts
+    1..12
+ok 2 - capture and snapshot detach before first numeric read on valid and refused facts
+# Subtest: resolved record preparation preserves independently expected leaf ranges
+    ok 1 - nested record/list leaves have authored order and exact packed ranges
+    ok 2 - nested type objects remain detached
+    ok 3 - snapshot does not share nested fields
+    ok 4 - record output field writer remains deferred
+    ok 5 - existing authored-field refusal remains precise
+    1..5
+ok 3 - resolved record preparation preserves independently expected leaf ranges
+# Subtest: imported scalar and record aliases retain qualified identity
+    ok 1 - imported scalar alias is not flattened to an anonymous width
+    ok 2 - record producer retains imported alias
+    ok 3 - independent imported layout oracle
+    1..3
+ok 4 - imported scalar and record aliases retain qualified identity
+# Subtest: unknown and known empty metadata stay distinct
+    ok 1 - absent declarations are unknown
+    ok 2 - unknown snapshot remains null
+    ok 3 - known empty declarations remain empty
+    ok 4 - known empty snapshot remains empty
+    ok 5 - required entry keys match decision 0113
+    ok 6 - optional entry keys match the selected schema
+    ok 7 - scalar field key family is explicit
+    ok 8 - list roots remain outside the selected contract
+    ok 9 - discovery values are detached
+    1..9
+ok 5 - unknown and known empty metadata stay distinct
+# Subtest: closed snapshots reject malformed and contradictory metadata
+    ok 1 - malformed snapshot 0 fails closed
+    ok 2 - contextual bounded diagnostic
+    ok 3 - invalid metadata does not emit incidental Perl warnings
+    ok 4 - malformed snapshot 1 fails closed
+    ok 5 - contextual bounded diagnostic
+    ok 6 - invalid metadata does not emit incidental Perl warnings
+    ok 7 - malformed snapshot 2 fails closed
+    ok 8 - contextual bounded diagnostic
+    ok 9 - invalid metadata does not emit incidental Perl warnings
+    ok 10 - malformed snapshot 3 fails closed
+    ok 11 - contextual bounded diagnostic
+    ok 12 - invalid metadata does not emit incidental Perl warnings
+    ok 13 - malformed snapshot 4 fails closed
+    ok 14 - contextual bounded diagnostic
+    ok 15 - invalid metadata does not emit incidental Perl warnings
+    ok 16 - malformed snapshot 5 fails closed
+    ok 17 - contextual bounded diagnostic
+    ok 18 - invalid metadata does not emit incidental Perl warnings
+    ok 19 - malformed snapshot 6 fails closed
+    ok 20 - contextual bounded diagnostic
+    ok 21 - invalid metadata does not emit incidental Perl warnings
+    ok 22 - malformed snapshot 7 fails closed
+    ok 23 - contextual bounded diagnostic
+    ok 24 - invalid metadata does not emit incidental Perl warnings
+    ok 25 - malformed snapshot 8 fails closed
+    ok 26 - contextual bounded diagnostic
+    ok 27 - invalid metadata does not emit incidental Perl warnings
+    ok 28 - malformed snapshot 9 fails closed
+    ok 29 - contextual bounded diagnostic
+    ok 30 - invalid metadata does not emit incidental Perl warnings
+    ok 31 - malformed snapshot 10 fails closed
+    ok 32 - contextual bounded diagnostic
+    ok 33 - invalid metadata does not emit incidental Perl warnings
+    ok 34 - malformed snapshot 11 fails closed
+    ok 35 - contextual bounded diagnostic
+    ok 36 - invalid metadata does not emit incidental Perl warnings
+    ok 37 - malformed snapshot 12 fails closed
+    ok 38 - contextual bounded diagnostic
+    ok 39 - invalid metadata does not emit incidental Perl warnings
+    ok 40 - malformed snapshot 13 fails closed
+    ok 41 - contextual bounded diagnostic
+    ok 42 - invalid metadata does not emit incidental Perl warnings
+    ok 43 - malformed snapshot 14 fails closed
+    ok 44 - contextual bounded diagnostic
+    ok 45 - invalid metadata does not emit incidental Perl warnings
+    ok 46 - malformed snapshot 15 fails closed
+    ok 47 - contextual bounded diagnostic
+    ok 48 - invalid metadata does not emit incidental Perl warnings
+    ok 49 - malformed snapshot 16 fails closed
+    ok 50 - contextual bounded diagnostic
+    ok 51 - invalid metadata does not emit incidental Perl warnings
+    ok 52 - malformed snapshot 17 fails closed
+    ok 53 - contextual bounded diagnostic
+    ok 54 - invalid metadata does not emit incidental Perl warnings
+    ok 55 - malformed snapshot 18 fails closed
+    ok 56 - contextual bounded diagnostic
+    ok 57 - invalid metadata does not emit incidental Perl warnings
+    ok 58 - malformed snapshot 19 fails closed
+    ok 59 - contextual bounded diagnostic
+    ok 60 - invalid metadata does not emit incidental Perl warnings
+    ok 61 - malformed snapshot 20 fails closed
+    ok 62 - contextual bounded diagnostic
+    ok 63 - invalid metadata does not emit incidental Perl warnings
+    ok 64 - malformed snapshot 21 fails closed
+    ok 65 - contextual bounded diagnostic
+    ok 66 - invalid metadata does not emit incidental Perl warnings
+    ok 67 - malformed snapshot 22 fails closed
+    ok 68 - contextual bounded diagnostic
+    ok 69 - invalid metadata does not emit incidental Perl warnings
+    ok 70 - malformed snapshot 23 fails closed
+    ok 71 - contextual bounded diagnostic
+    ok 72 - invalid metadata does not emit incidental Perl warnings
+    ok 73 - malformed snapshot 24 fails closed
+    ok 74 - contextual bounded diagnostic
+    ok 75 - invalid metadata does not emit incidental Perl warnings
+    ok 76 - malformed snapshot 25 fails closed
+    ok 77 - contextual bounded diagnostic
+    ok 78 - invalid metadata does not emit incidental Perl warnings
+    ok 79 - malformed snapshot 26 fails closed
+    ok 80 - contextual bounded diagnostic
+    ok 81 - invalid metadata does not emit incidental Perl warnings
+    ok 82 - malformed snapshot 27 fails closed
+    ok 83 - contextual bounded diagnostic
+    ok 84 - invalid metadata does not emit incidental Perl warnings
+    ok 85 - malformed snapshot 28 fails closed
+    ok 86 - contextual bounded diagnostic
+    ok 87 - invalid metadata does not emit incidental Perl warnings
+    ok 88 - malformed snapshot 29 fails closed
+    ok 89 - contextual bounded diagnostic
+    ok 90 - invalid metadata does not emit incidental Perl warnings
+    ok 91 - malformed snapshot 30 fails closed
+    ok 92 - contextual bounded diagnostic
+    ok 93 - invalid metadata does not emit incidental Perl warnings
+    1..93
+ok 6 - closed snapshots reject malformed and contradictory metadata
+# Subtest: producer rejects inconsistent resolved declarations without warnings
+    ok 1 - invalid producer input fails closed
+    ok 2 - contextual bounded diagnostic
+    ok 3 - invalid metadata does not emit incidental Perl warnings
+    ok 4 - invalid producer input fails closed
+    ok 5 - contextual bounded diagnostic
+    ok 6 - invalid metadata does not emit incidental Perl warnings
+    ok 7 - invalid producer input fails closed
+    ok 8 - contextual bounded diagnostic
+    ok 9 - invalid metadata does not emit incidental Perl warnings
+    ok 10 - invalid producer input fails closed
+    ok 11 - contextual bounded diagnostic
+    ok 12 - invalid metadata does not emit incidental Perl warnings
+    ok 13 - invalid producer input fails closed
+    ok 14 - contextual bounded diagnostic
+    ok 15 - invalid metadata does not emit incidental Perl warnings
+    ok 16 - invalid producer input fails closed
+    ok 17 - contextual bounded diagnostic
+    ok 18 - invalid metadata does not emit incidental Perl warnings
+    ok 19 - invalid producer input fails closed
+    ok 20 - contextual bounded diagnostic
+    ok 21 - invalid metadata does not emit incidental Perl warnings
+    ok 22 - invalid producer input fails closed
+    ok 23 - contextual bounded diagnostic
+    ok 24 - invalid metadata does not emit incidental Perl warnings
+    ok 25 - invalid producer input fails closed
+    ok 26 - contextual bounded diagnostic
+    ok 27 - invalid metadata does not emit incidental Perl warnings
+    ok 28 - invalid producer input fails closed
+    ok 29 - contextual bounded diagnostic
+    ok 30 - invalid metadata does not emit incidental Perl warnings
+    ok 31 - invalid producer input fails closed
+    ok 32 - contextual bounded diagnostic
+    ok 33 - invalid metadata does not emit incidental Perl warnings
+    ok 34 - invalid producer input fails closed
+    ok 35 - contextual bounded diagnostic
+    ok 36 - invalid metadata does not emit incidental Perl warnings
+    ok 37 - invalid producer input fails closed
+    ok 38 - contextual bounded diagnostic
+    ok 39 - invalid metadata does not emit incidental Perl warnings
+    1..39
+ok 7 - producer rejects inconsistent resolved declarations without warnings
+1..7

@@ -1,0 +1,10 @@
+ram-guard: PID 52180; host 69.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1303-isf-public-live-book-paths-audit.t .. ok
+t/1305-isf-book-feature-matrix-audit.t ..... ok
+All tests successful.
+Files=2, Tests=308,  1 wallclock secs ( 0.01 usr  0.01 sys +  1.11 cusr  0.07 csys =  1.20 CPU)
+Result: PASS
+ INFO Book building has started
+ INFO Running the html backend
+ WARN search index is very large (15052918 bytes)
+ INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/docs/book/book`

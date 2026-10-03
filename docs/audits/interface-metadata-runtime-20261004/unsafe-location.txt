@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/interface-metadata-runtime-20261004/verify.py", line 121, in <module>
+    assert classified == 0, 'native location echo cannot establish metadata primary context'
+           ^^^^^^^^^^^^^^^
+AssertionError: native location echo cannot establish metadata primary context

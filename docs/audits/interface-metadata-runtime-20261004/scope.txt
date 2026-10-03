@@ -1,0 +1,69 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.2.
+
+This dated native profile closes actual observation and diagnostic diagnosis,
+not source/product/copy-field semantic assurance or repair. Complete immutable
+Git dd85fe5b10 bodies bind the original test/provider/facade/parser/package/path/
+frontend/locality contracts and the actual record-value validator caller.
+Host Perl v5.34.1, Storable 3.23 and JSON::PP 4.06 were observed through their
+interfaces. Public package parsing invokes Lispish without inspecting its
+implementation. No HDL compiler/simulator, macro transport, proxy/controller
+runtime, submodule implementation or pin changes are selected.
+
+Re-derivation: native streams retain complete inputs/results/errors/warnings,
+primitive kinds, sharing/cycles, copies, parser products and actual assertions.
+There are 44 named helper calls, 105 metadata API invocations (including nested
+producer snapshots and parser/record-value callers), 145 copies (43 original
+test copies and 102 provider private copies), three public parser invocations
+and 166 leaf assertion consumers. The independently declared 31 snapshot and
+13 capture causes agree with every helper refusal. Two adjacent numeric-prefix
+refusals and one parser writer refusal reconcile separately. Full source
+mutation populations, native TAP and a separate reader reconcile every test
+copy site, every private copy/API invocation, helper/consumer bounds and all
+unchanged caller graphs. Primitive kinds and whole ordinary before/after input
+graphs conserve; this is a read-only observation, not a proof that copied field
+kinds or arbitrary product semantics are adequate. The .3 successor owns those
+meanings and controls; the .5 repair precedes the .4 outcome join.
+
+Falsification: the unchanged complete helper rejects real unsupported CODE-item
+Storable errors at the ordinary module coordinate. Carp verbosity does not add
+label/argument echoes to those native errors, so no positive stack-echo claim is
+made. A complete byte-identical provider module copied to a fixed repository-
+local loader root with the generic metadata prefix produces the same real
+earlier Storable refusal. All three helper assertions now pass even though the
+primary starts "Can't store CODE items". No error string or producer body is
+fabricated. The adjacent exact writer-fragment consumer rejects a real public
+no-actor-root refusal at an ordinary filename, then accepts that same earlier
+refusal when the wanted phrase is the actual source filename in its primary
+message. Both false positives are P2 test-assurance defects owned by .5 with
+reproduction, impact and bounded repair requirements before any hot edits.
+Independent unsafe-location authority promotion, unsafe-primary-fragment
+promotion and complete native copy omission each fail RED1 at their own
+contract. The public metadata schema/producer behavior remains unchanged.
+
+Durability: complete sources/bindings/declared causes, observer/probe bodies,
+native ordinary and actual counterfactual streams/TAP/statuses, independent
+reader/control outputs and sealed manifest; task/fact/book and Git. Source
+graph reference coordinates are projected from the API argument-array /0 root
+to its first input only when joining that input to a private-copy graph. All
+original captures remain whole, and no scalar kinds or values are normalized.
+Only repository root prefixes in captured runtime coordinates become
+${REPO_ROOT}; actual selected module paths remain repository-relative.
+
+Initial observer import binding omitted parser/record-value aliases: source and
+private-copy closure exposed that gap. Exact initial stream/body remain
+unqualified; wrappers installed before facade loading close all actual calls.
+The first location attempt loaded the ordinary root first and rejected; it is
+unqualified for location testing, and the final selected module coordinate is
+explicit. An unknown transaction-clause control was accepted by the public
+parser and therefore was no earlier-error control: pass-through parsing is not
+lowering support, as README states. Exact initial evidence is unqualified; the
+explicit no-actor-root guard supplies the real earlier refusal. Initial reader
+outer-subtest counting and cycle root-coordinate mismatches remain unqualified
+with exact bodies/receipts; source-bounded counting and typed reference-path
+projection correct them before complete positive/control readback and sealing.
+
+Current diagnostic and copy tests remain unchanged until complete field/copy
+qualification and preceding coverage source-context freezing. General native
+objects, arbitrary metadata populations, all-consumer cause assurance, visual
+book QA, historical startup/parent qualification and native EPERM stay outside
+this finite profile and with their existing owners.

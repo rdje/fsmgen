@@ -1,0 +1,48 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.2.
+Source contracts: preceding sealed interface-metadata-helper-contract-20261003.
+Observe the complete current T1983 test through its compiled real helper and
+public metadata/parser APIs. Retain original/private/test copies, primitive
+kinds/sharing, inputs/results, immediately saved errors, warnings and actual
+Test::More consumers. Calls/copies are resolved from observations, not guessed
+from source expression counts. Native routes remain host-only with public
+package parsing; no HDL/native proxy/macro runtime or submodule source inspection.
+
+Expected causes are declared before the first observation, independently from
+the original test mutations and complete current provider guards. They serve a
+profile cross-check; the current helper only promises generic classified context
+and warning/refusal assertions. They do not retroactively strengthen that helper.
+Actual unknown/empty, alias/domain/layout/numeric projection and copy meaning
+qualification remains the following owned leaf, even when ordinary observations
+agree. Run real Storable earlier-error/caller/primary-location controls before
+claiming contextual safety. Own any observed gaps before public source repair.
+
+Actual Storable earlier errors do not expand with Carp verbosity; ordinary
+caller label/argument controls reject, so they are no positive echo evidence.
+Before the next probe, select a complete byte-identical metadata module copy in
+a fixed repository-local loader root whose directory name contains the generic
+metadata prefix. Invoke the same public snapshot API with an unsupported CODE
+item; only the module's actual source-file coordinate changes. Preserve whole
+source hashes and native primary errors. This tests whether an actual native
+file-location echo can masquerade as metadata context, never a fabricated die.
+The first projected invocation put the ordinary loader root first and therefore
+loaded the primary module. Its actual rejection/receipt remains unqualified for
+file-location testing. Require the selected module coordinate in the capture
+and put the fixed echo root first before re-running this probe.
+
+The first adjacent control replaced a transaction clause with an unknown clause.
+The public parser accepted it: its pass-through clause normalization selects no
+lowering support. README distinguishes parsing from support, and the current
+Parser leaves non-body clauses for downstream lowering. This is not an earlier
+error control; retain exact initial source/outcomes unqualified and do not infer
+a public-admission defect. The replacement control changes only the actor root
+token to library, selecting the explicit public-parser no-actor-root refusal.
+A wanted fragment in its actual filename tests primary-message echoes.
+
+The initial observer loaded the facade/parser before wrapping the metadata
+exports. Complete source-level public API import/copy reconciliation revealed
+pre-bound parser capture aliases outside that API stream. Preserve that exact
+initial observer/capture/TAP unqualified. Install metadata wrappers before
+loading the facade/parser, then wrap its public parse methods. Reconcile every
+provider private-copy call with API entries and null/pre-copy refusals before
+claiming complete observation. This is instrumentation recovery, not a provider
+defect or a claim that the initial partial stream covers all actual calls.

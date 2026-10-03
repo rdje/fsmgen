@@ -1,0 +1,20 @@
+ok 1 - record output field writer remains deferred
+ok 2 - existing authored-field refusal remains precise
+not ok 3 - record output field writer remains deferred
+#   Failed test 'record output field writer remains deferred'
+#   at (eval 49) line 1.
+not ok 4 - existing authored-field refusal remains precise
+#   Failed test 'existing authored-field refusal remains precise'
+#   at docs/audits/interface-metadata-runtime-20261004/adjacent-controls.pl line 31.
+#                   ''
+#     doesn't match '(?^:record output field writes are not yet admitted)'
+not ok 5 - record output field writer remains deferred
+#   Failed test 'record output field writer remains deferred'
+#   at (eval 49) line 1.
+not ok 6 - existing authored-field refusal remains precise
+#   Failed test 'existing authored-field refusal remains precise'
+#   at docs/audits/interface-metadata-runtime-20261004/adjacent-controls.pl line 31.
+#                   ''
+#     doesn't match '(?^:record output field writes are not yet admitted)'
+1..6
+# Looks like you failed 4 tests of 6.

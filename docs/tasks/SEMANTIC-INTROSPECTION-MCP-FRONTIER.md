@@ -3982,7 +3982,7 @@ For FSMGen, the analogs are:
   Verification: `pending`
   Commit: `children below`
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.4`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.1`
   Status: `done`
@@ -3992,11 +3992,11 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Profile actual T1983 metadata callbacks and contextual diagnostic assurance.`
   Acceptance: `Run only source-owned qualified Perl metadata routes under the RAM guard after .1 closes. Save actual errors immediately in observer, complete inputs/results/warnings/assertions/caller kind/topology and source-copy streams. Reconcile every real helper/adjacent refusal, independent intended complete causes and genuine earlier/caller/primary-path controls before classifying gaps. Own every observed defect with reproduction/impact/priority and bounded repair leaf before source changes; retain source/provider/submodule/native-cold boundaries.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Sealed docs/audits/interface-metadata-runtime-20261004 binds complete original Gitdd85fe5b10 source contracts plus actual ISFRecordPortValues caller. Re-derivation: complete native inputs/results/errors/warnings/kinds/sharing/copies/parser products and Test::More decisions independently reconcile44 helpers,105 API calls,145 copies(43 test/102 private),3 parser invocations and166 leaf consumers;31 snapshot/13 capture declared causes agree, plus2 adjacent numerical refusals and1 writer refusal. Eight original test copy expressions close every actual copy population; all private copies join invocation identities and complete original caller graphs conserve. Native host Perl5.34.1/Storable3.23/JSON::PP4.06; published package/Lispish parsing only, no HDL/proxy/macro/submodule implementation execution. Exact helper rejects ordinary real earlier Storable CODE errors, and Carp verbosity yields no caller-label/argument echo evidence. Actual byte-identical module path containing generic prefix makes the same earlier native refusal pass all3 helper checks although primary begins Cant store CODE items. Adjacent exact writer fragment rejects ordinary public no-actor-root refusal, then accepts its actual filename primary echo. P2 defects own reproduction/impact/immediate bounded .5 repair after .3 field/copy signoff and preceding coverage-source freeze; no hot edits yet. Falsification: actual unsafe native location authority promotion RED1, primary-filename fragment promotion RED1 and complete copy omission RED1. Durability: whole sources/bindings/declared causes/native streams/TAP/statuses/probe/reader/control/manifest/task/card/book/Git. Initial pre-bound import aliases, loader order, accepted unknown-clause non-error control and reader outer-subtest/cycle-coordinate errors retained unqualified; actual source/API closure and typed /0 reference-root projection correct them without scalar normalization. Ordinary copied-field/product meanings remain .3-owned, not inferred from observed copies or value-only comparisons. Original native T1983 All tests successful1/7 and profile166 leaves pass; public-book2/308/build/rendered sealed readback checked. Fixed capacity/fresh claims/staged doctrines/hooks complete before successor .3.`
+  Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3`
   Status: `pending`
@@ -4010,6 +4010,14 @@ For FSMGen, the analogs are:
   Goal: `Join T1983 actual roles, causes, products/copy assurance and completed repairs.`
   Acceptance: `Independently close the exact original named declaration and complete actual helper/adjacent callback/copy/source/product/cause/warning membership against current source with all required native/control/semantic legs and completed repair owners. Preserve finite cold/native/provider/submodule limits; no feature/runtime/admission expansion or all-consumer inference. Sync book/fact/frontier and commit cleanly before T1986 review.`
   Verification: `pending`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.5`
+  Status: `pending`
+  Goal: `Repair the evidenced T1983 generic-context file-location false positive.`
+  Acceptance: `P2 owned test-assurance defect: unchanged helper accepts a real earlier Storable CODE refusal as metadata context when the exact byte-identical provider module loads from a repository-local path containing the generic prefix. Reproduce with guarded controls.pl primary and authenticated echo loader root; ordinary earlier refusal rejects, projected earlier refusal passes all three helper assertions while primary begins Can't store CODE items. This can misclassify a real native failure after root relocation. Save native error immediately and bind diagnostic context to its primary cause after .3 pins preceding coverage source qualification and completes field/copy signoff. Also P2: adjacent output-writer fragment accepts real no-actor-root refusal when the public source filename contains its wanted phrase. Both helper and adjacent controls preserve native producer errors; require complete independent output-writer primary context/reason to reject that echo. Preserve public metadata behavior, complete ordinary products/caller kinds/causes and all old sealed evidence; run actual exact-prior/repaired unsafe controls and a genuine producer-bypass control, focused native/book/staged gates, then commit before .4 outcome join.`
+  Verification: `pending; reproduction docs/audits/interface-metadata-runtime-20261004/primary-location.json and complete source/path binding. No hot test/provider changes before source-context freeze.`
   Commit: `pending`
 
 
@@ -6504,3 +6512,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub rejects' -- t/1983-isf-interface-port-metadata.t binds named-helper introduction. Full exact current source shows one named definition, two call expressions and two textual labels; helper generic prefix/warnings and adjacent fragments do not declare complete causes or source-copy kind authority. Public metadata/private numeric projection and imported package routes define finite probes.
 - [x] **ADDRESSED (verified)** — Complete selected source bodies, original named membership, exact helper/adjacent assertion/copy contracts and source-owned host-route plan independently rederive. Actual label-token-as-call promotion and copy-site omission are RED1 at their intended source contracts; corrected full reader passes. Actual cause/product/copy/native and any repair work remain owned successors.
 - [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and sealed source/contract/control readback pass. Provider/current tests/public admission/old archives unchanged; no metadata or native HDL probe executed. Task integrity, Knowledge Map and fixed capacity/fresh claim/staged doctrine gates close before actual profile.
+
+## Acceptance Checklist — interface-metadata actual runtime diagnosis
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub rejects' -- t/1983-isf-interface-port-metadata.t binds the unchanged generic-prefix helper; full original/native streams locate its real Storable file-coordinate false positive and the adjacent writer-fragment public-parser filename echo. Original helper/copy/API contracts and native imported aliases close before classification.
+- [x] **ADDRESSED (diagnosis complete; repair owned)** — Whole native44 helper/105 API/145 copy/166 consumer membership and independently declared ordinary causes reconcile; actual unsafe location/primary authority and copy-omission controls are RED1. Both P2 defects have .5 reproduction/impact/repair ownership; .3 owns complete source/product/copy meanings and source-context freeze before hot edits.
+- [x] **NO REGRESSION** — scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1983-isf-interface-port-metadata.t: All tests successful; Files=1, Tests=7. Complete observed ordinary166 leaves pass, original caller kinds/graphs conserve, public-book2/308 and rendered build checked. No hot test/provider or public admission changes; fixed capacity/fresh claims/staged doctrine/hooks close before commit.

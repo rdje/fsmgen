@@ -189,10 +189,14 @@ open. Names do not establish
 actual refusal-consumer roles or native applicability.
 
 The [interface-metadata helper contract](../../../docs/audits/interface-metadata-helper-contract-20261003/scope.txt)
-binds its callback sites and adjacent assertions before probes. It checks generic
-diagnostic context and warnings. Review of this test's copied graphs and diagnostic
-assertions remains open; existing public metadata qualification retains its scope.
-The plan selects host metadata and public parsing calls.
+binds its callback sites and adjacent assertions. Its [native profile](../../../docs/audits/interface-metadata-runtime-20261004/scope.txt)
+records complete API, copy, error, warning and assertion streams. A real Storable
+error passes the generic context check when the module path contains the wanted
+prefix. An adjacent output-writer assertion accepts a different parser error when
+the source filename contains its wanted phrase. Both test-assurance defects are
+owned for repair after the copied-field review and preceding source-context
+qualification. Existing public metadata qualification retains its finite scope;
+provider behavior and public admission are unchanged.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

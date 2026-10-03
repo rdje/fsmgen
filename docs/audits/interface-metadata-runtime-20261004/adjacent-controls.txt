@@ -1,0 +1,17 @@
+ok 1 - record output field writer remains deferred
+ok 2 - existing authored-field refusal remains precise
+ok 3 - record output field writer remains deferred
+not ok 4 - existing authored-field refusal remains precise
+#   Failed test 'existing authored-field refusal remains precise'
+#   at docs/audits/interface-metadata-runtime-20261004/adjacent-controls.pl line 29.
+#                   'Error: no (actor ...) root found in 'field-refused.isf'
+#  at perl/FSM/Adapter/ISF/Parser.pm line 118.
+# 	FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7af4c54de0), "(library refused (types (type packet_t (record (flag bit)))) "..., "field-refused.isf") called at perl/FSM/Adapter/ISF.pm line 72
+# 	FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7af4c54ed0), "(library refused (types (type packet_t (record (flag bit)))) "..., "field-refused.isf") called at docs/audits/interface-metadata-runtime-20261004/adjacent-controls.pl line 39
+# 	eval {...} called at docs/audits/interface-metadata-runtime-20261004/adjacent-controls.pl line 39
+# '
+#     doesn't match '(?^:record output field writes are not yet admitted)'
+ok 5 - record output field writer remains deferred
+ok 6 - existing authored-field refusal remains precise
+1..6
+# Looks like you failed 1 test of 6.

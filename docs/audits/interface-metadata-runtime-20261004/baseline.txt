@@ -1,0 +1,4 @@
+t/1983-isf-interface-port-metadata.t .. ok
+All tests successful.
+Files=1, Tests=7,  3 wallclock secs ( 0.01 usr  0.00 sys +  0.60 cusr  0.75 csys =  1.36 CPU)
+Result: PASS

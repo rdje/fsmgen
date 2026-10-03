@@ -1,0 +1,4 @@
+ok 1 - ordinary earlier refusal fails closed
+ok 2 - contextual bounded diagnostic
+ok 3 - invalid metadata does not emit incidental Perl warnings
+1..3

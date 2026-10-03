@@ -1,0 +1,12 @@
+commit 7d56bf85736f75d0ff12a52cec0b1639ae668a5c
+Author: Richard DJE <richard.dje@gmail.com>
+Date:   Wed Sep 30 03:33:39 2026 +0200
+
+    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.1: qualify detached port metadata producer
+    
+    Add closed source-ordered port snapshots and shared packed leaf ranges.
+    Qualify scalar/imported/nested metadata, copy isolation and hostile shapes;
+    repair demonstrated Perl list-context validation argument defects.
+    
+    Keep record source ports and public report wiring explicitly pending.
+    Validate focused producer/aggregate controls, syntax, book and doctrines.

@@ -1,0 +1,29 @@
+ok 1 - ordinary metadata fails closed
+ok 2 - contextual bounded diagnostic
+ok 3 - invalid metadata does not emit incidental Perl warnings
+ok 4 - ordinary earlier refusal fails closed
+not ok 5 - contextual bounded diagnostic
+#   Failed test 'contextual bounded diagnostic'
+#   at docs/audits/interface-metadata-runtime-20261004/controls.pl line 29.
+#                   'Can't store CODE items at perl/FSM/Support/ISFInterfacePortMetadata.pm line 142.
+# '
+#     doesn't match '(?^:Invalid ISF interface port metadata:)'
+ok 6 - invalid metadata does not emit incidental Perl warnings
+ok 7 - Invalid ISF interface port metadata: caller label only fails closed
+not ok 8 - contextual bounded diagnostic
+#   Failed test 'contextual bounded diagnostic'
+#   at docs/audits/interface-metadata-runtime-20261004/controls.pl line 29.
+#                   'Can't store CODE items at perl/FSM/Support/ISFInterfacePortMetadata.pm line 142.
+# '
+#     doesn't match '(?^:Invalid ISF interface port metadata:)'
+ok 9 - invalid metadata does not emit incidental Perl warnings
+ok 10 - ordinary earlier refusal fails closed
+not ok 11 - contextual bounded diagnostic
+#   Failed test 'contextual bounded diagnostic'
+#   at docs/audits/interface-metadata-runtime-20261004/controls.pl line 29.
+#                   'Can't store CODE items at perl/FSM/Support/ISFInterfacePortMetadata.pm line 40.
+# '
+#     doesn't match '(?^:Invalid ISF interface port metadata:)'
+ok 12 - invalid metadata does not emit incidental Perl warnings
+1..12
+# Looks like you failed 3 tests of 12.

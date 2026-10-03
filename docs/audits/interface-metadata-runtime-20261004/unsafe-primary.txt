@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/interface-metadata-runtime-20261004/verify.py", line 131, in <module>
+    assert not safe, 'actual filename phrase cannot establish complete output-writer cause'
+           ^^^^^^^^
+AssertionError: actual filename phrase cannot establish complete output-writer cause
