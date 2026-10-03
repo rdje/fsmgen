@@ -170,11 +170,14 @@ genuine binding-validation bypass qualify the
 [source-context repair](../../../docs/audits/formal-source-context-cause-repair-20261003/scope.txt).
 Whole ordinary products and primitive kinds are conserved within the prior
 source-bound scope; wider internal product semantics remain under cold review.
-The caller-formal-binding helper still matches some unrelated binding-shape
-failures through regex arguments echoed in its stack. Its current fixtures reach
-their intended primary categories; complete-cause repair is the immediate next
-slice. The [binding-helper diagnosis](../../../docs/audits/caller-formal-binding-helper-causes-20261003/scope.txt)
-retains exact source actors and ordinary binding reports with explicit cold limits.
+The caller-formal-binding helper now compares complete declared causes for
+caller width precedence, actor restrictions, callee ports and roles, timing,
+duplicates and live endpoints. Real earlier binding-shape errors and labels
+containing wanted text fail its predicate. The exact prior helper reproduces
+false stack matches, and a genuine validation bypass makes the repaired test
+fail. The [binding-helper repair](../../../docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt)
+conserves whole ordinary products and primitive kinds within the declared
+source and binding-report scope; wider internal semantics remain under cold review.
 Remaining named/framework cohorts still need qualification.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.

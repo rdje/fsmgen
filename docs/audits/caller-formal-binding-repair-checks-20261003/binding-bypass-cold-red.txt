@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/caller-formal-binding-cause-repair-20261003/verify.py", line 66, in <module>
+    if '--binding-bypass' in sys.argv:assert bypass['accepted']==0,'real binding-validation bypass accepts an invalid width'
+                                             ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: real binding-validation bypass accepts an invalid width

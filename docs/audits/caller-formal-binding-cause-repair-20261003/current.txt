@@ -1,0 +1,5 @@
+t/1933-isf-caller-formal-binding-scope.t .............. ok
+t/2057-isf-caller-formal-binding-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=264, 27 wallclock secs ( 0.02 usr  0.01 sys + 17.82 cusr  7.28 csys = 25.13 CPU)
+Result: PASS

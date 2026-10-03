@@ -1,0 +1,2 @@
+ram-guard: PID 29899; host 69.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS current helper, exact prior RED and ordinary products.

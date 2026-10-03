@@ -222,6 +222,6 @@ are qualified. .49.2.2.3 connects the resolvers and must still prove complete
 physical reservations and source-report preservation. T1936 checks complete causes and valid static-param live bindings.
 [Repair](../audits/formal-source-context-cause-repair-20261003/scope.txt) qualifies its helper/subset boundary; wider cold semantics remain open.
 
-T1933 helper cause safety is still defective: real earlier binding-shape errors match regex echoes. All current fixtures reach intended categories; private live endpoint checks differ from full preparation's params subset. [Diagnosis](../audits/caller-formal-binding-helper-causes-20261003/scope.txt) owns immediate .2.3.7 repair.
+T1933 now compares complete causes. T2057 checks real earlier binding errors and label echoes; exact prior/bypass controls qualify [repair](../audits/caller-formal-binding-cause-repair-20261003/scope.txt). Private live endpoint checking differs from full preparation's params subset; wider cold semantics stay open.
 
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.2.2.

@@ -1,0 +1,26 @@
+{
+  "knowledge_cards": {
+    "bytes_each": 31755,
+    "bytes_total": 3873439,
+    "files": 1258,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 53023
+  },
+  "shipped_behavior": {
+    "bytes_each": 282517,
+    "bytes_total": 3731349,
+    "files": 64,
+    "line_bytes_each": 7542,
+    "lines_each": 4681,
+    "lines_total": 67444
+  },
+  "task_evidence": {
+    "bytes_each": 2366453,
+    "bytes_total": 12370759,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 6882,
+    "lines_total": 116911
+  }
+}

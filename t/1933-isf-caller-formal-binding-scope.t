@@ -10,6 +10,7 @@ use JSON::PP;
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::LoweringIR;
@@ -46,10 +47,11 @@ sub admission {
     return ($ok, $@);
 }
 sub rejects {
-    my ($actor, $pattern, $label) = @_;
+    my ($actor, $expected_cause, $label) = @_;
     my ($ok, $error) = admission($actor);
     ok(!$ok, "$label rejected");
-    like($error, $pattern, "$label diagnostic");
+    ok(diagnostic_cause_matches($error, $expected_cause), "$label diagnostic")
+        or diag($error);
 }
 
 for my $actor_kind (qw(input output storage)) {
@@ -65,7 +67,11 @@ for my $actor_kind (qw(input output storage)) {
                 is_deeply($actor, $before, 'validation preserves source declarations');
                 my ($worker) = grep {$_->{name} eq 'worker'} @{$actor->{transactions}};
                 $worker->{ports}{inputs}[0]{width} = 8;
-                rejects($actor, qr/width (?:8 does not match actor signal 'value' width 4|4 does not match transaction port width 8)/,
+                my $expected_cause = "Transaction 'caller': do target 'worker' "
+                    . ($actual eq 'value'
+                        ? "binding for port 'payload' width 8 does not match actor signal 'value' width 4"
+                        : "input binding expression for port 'payload' width 4 does not match transaction port width 8");
+                rejects($actor, $expected_cause,
                     "$actual does not borrow wider actor width");
             }
             my $actor = parse(source(actor_kind => $actor_kind,
@@ -76,7 +82,7 @@ for my $actor_kind (qw(input output storage)) {
             ok($ok, 'output actual targets the caller variable') or diag($error);
             my ($worker) = grep {$_->{name} eq 'worker'} @{$actor->{transactions}};
             $worker->{ports}{outputs}[0]{width} = 8;
-            rejects($actor, qr/width 8 does not match actor signal 'value' width 4/,
+            rejects($actor, "Transaction 'caller': do target 'worker' binding for port 'result' width 8 does not match actor signal 'value' width 4",
                 'output actual keeps caller width');
         };
     }
@@ -86,27 +92,27 @@ subtest 'actor restrictions and sibling scope are preserved' => sub {
     my $input = parse(source(actor_kind => 'input', formal => '',
         callee => '(ports (output result (width 8)))',
         body => '(do worker (bind (output result value)))'));
-    rejects($input, qr/targets actor input 'value'.*read-only/, 'actor input write');
+    rejects($input, "Transaction 'caller': do target 'worker' output binding for port 'result' targets actor input 'value', but actor inputs are read-only", 'actor input write');
     my $output = parse(source(actor_kind => 'output', formal => '',
         callee => '(ports (input payload (width 8)))'));
-    rejects($output, qr/reads actor output 'value'.*readback/, 'actor output read');
+    rejects($output, "Transaction 'caller': do target 'worker' input binding for port 'payload' reads actor output 'value', but actor output readback is not public", 'actor output read');
     my $unknown = parse(source(actor_kind => 'none', formal => '',
         callee => '(ports (input value (width 4)))',
         body => '(do worker (bind (input value value)))'));
-    rejects($unknown, qr/unknown actor signal 'value'/, 'callee formal is not caller variable');
+    rejects($unknown, "Transaction 'caller': do target 'worker' binding for port 'value' references unknown actor signal 'value'", 'callee formal is not caller variable');
     my $rule = parse(source(actor_kind => 'output'));
     $rule->{transactions}[0]{clauses} = [];
     $rule->{rules} = [{name => 'dispatch', actions => [['trigger', 'worker', ['bind', ['input', 'payload', 'value']]]]}];
-    rejects($rule, qr/Rule 'dispatch'.*reads actor output 'value'/, 'rule never borrows transaction formal');
+    rejects($rule, "Rule 'dispatch': trigger target 'worker' input binding for port 'payload' reads actor output 'value', but actor output readback is not public", 'rule never borrows transaction formal');
 };
 
 subtest 'callee contract and live-site pruning are unchanged' => sub {
     for my $case (
-        ['(do worker (bind (output payload value)))', qr/uses role 'output'.*declares 'input'/, 'wrong direction'],
-        ['(do worker (bind (input missing value)))', qr/unknown transaction port 'missing'/, 'unknown callee port'],
-        ['(do worker)', qr/requires '\(bind/, 'missing binding'],
-        ['(do worker (bind (input payload value) (input payload value)))', qr/duplicate binding/, 'duplicate binding'],
-        ['(do worker (bind (input payload value (timing live))))', qr/requested timing 'live'.*activation_region/, 'wrong timing'],
+        ['(do worker (bind (output payload value)))', "Transaction 'caller': do target 'worker' binding for port 'payload' uses role 'output' but the transaction declares 'input'", 'wrong direction'],
+        ['(do worker (bind (input missing value)))', "Transaction 'caller': do target 'worker' binds unknown transaction port 'missing' on 'worker'", 'unknown callee port'],
+        ['(do worker)', "Transaction 'caller': do target 'worker' requires '(bind ...)' because transaction 'worker' declares ports", 'missing binding'],
+        ['(do worker (bind (input payload value) (input payload value)))', "Transaction 'caller': activation has duplicate binding for transaction port 'payload'", 'duplicate binding'],
+        ['(do worker (bind (input payload value (timing live))))', "Transaction 'caller': do target 'worker' input binding for port 'payload' requested timing 'live', but this activation currently uses 'activation_region'; behavior-changing timing conversion is not supported yet", 'wrong timing'],
     ) {
         rejects(parse(source(actor_kind => 'storage', body => $case->[0])), $case->[1], $case->[2]);
     }
@@ -115,7 +121,7 @@ subtest 'callee contract and live-site pruning are unchanged' => sub {
     ok($ok, 'static-zero binding endpoints stay pruned') or diag($error);
     rejects(parse(source(actor_kind => 'storage',
         body => '(repeat 1 (do worker (bind (input missing nonexistent))))')),
-        qr/unknown transaction port 'missing'/, 'live repeat checks endpoints');
+        "Transaction 'caller': repeat-body do target 'worker' binds unknown transaction port 'missing' on 'worker'", 'live repeat checks endpoints');
 };
 
 subtest 'physical storage and caller formal remain separate' => sub {

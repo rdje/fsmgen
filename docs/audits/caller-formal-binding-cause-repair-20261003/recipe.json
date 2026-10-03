@@ -1,0 +1,23 @@
+{
+  "baseline": "6254f4c8db7373c1df0a02cc380b85115cd64cbb",
+  "commands": {
+    "book": "mdbook build docs/book",
+    "bypass": "scripts/run_with_ram_guard.sh -- bash docs/audits/caller-formal-binding-cause-repair-20261003/bypass.sh",
+    "bypass_cold_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/caller-formal-binding-cause-repair-20261003/verify.py --binding-bypass",
+    "cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/caller-formal-binding-cause-repair-20261003/verify.py",
+    "prior_cold_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/caller-formal-binding-cause-repair-20261003/verify.py --prior-consumer",
+    "producer": "scripts/run_with_ram_guard.sh -- bash docs/audits/caller-formal-binding-cause-repair-20261003/run.sh"
+  },
+  "native": "not invoked",
+  "scope": "finite84 current rows, prior56 rows, one bypass actor and full ordinary conservation; wider internals remain unqualified",
+  "statuses": {
+    "binding_bypass": 8,
+    "bypass_cold_red": 1,
+    "cold": 0,
+    "current": 0,
+    "ordinary": 0,
+    "prior_cold_red": 1,
+    "prior_consumer": 28
+  },
+  "visual_qa": "not performed"
+}

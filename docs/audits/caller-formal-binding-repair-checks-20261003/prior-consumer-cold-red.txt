@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/caller-formal-binding-cause-repair-20261003/verify.py", line 63, in <module>
+    if '--prior-consumer' in sys.argv:assert all(r['matched']==r['primary_matched'] for r in prior['rows']),'real prior consumer accepts fifteen wrong causes'
+                                             ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: real prior consumer accepts fifteen wrong causes

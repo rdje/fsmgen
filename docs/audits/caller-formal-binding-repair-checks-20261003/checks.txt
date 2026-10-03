@@ -1,0 +1,2 @@
+ram-guard: PID 53209; host 77.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS independent current/prior/bypass and focused binding regression.

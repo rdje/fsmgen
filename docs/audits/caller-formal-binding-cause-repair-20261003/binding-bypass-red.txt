@@ -1,0 +1,334 @@
+# Subtest: input caller formal shadows actor input
+    ok 1 - value reads caller width and role
+    ok 2 - validation preserves source declarations
+    not ok 3 - value does not borrow wider actor width rejected
+    #   Failed test 'value does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 4 - value does not borrow wider actor width diagnostic
+    #   Failed test 'value does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 5 - (+ value observed) reads caller width and role
+    ok 6 - validation preserves source declarations
+    not ok 7 - (+ value observed) does not borrow wider actor width rejected
+    #   Failed test '(+ value observed) does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 8 - (+ value observed) does not borrow wider actor width diagnostic
+    #   Failed test '(+ value observed) does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 9 - output actual targets the caller variable
+    not ok 10 - output actual keeps caller width rejected
+    #   Failed test 'output actual keeps caller width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 11 - output actual keeps caller width diagnostic
+    #   Failed test 'output actual keeps caller width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    1..11
+    # Looks like you failed 6 tests of 11.
+not ok 1 - input caller formal shadows actor input
+#   Failed test 'input caller formal shadows actor input'
+#   at ./t/1933-isf-caller-formal-binding-scope.t line 87.
+# Subtest: output caller formal shadows actor input
+    ok 1 - value reads caller width and role
+    ok 2 - validation preserves source declarations
+    not ok 3 - value does not borrow wider actor width rejected
+    #   Failed test 'value does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 4 - value does not borrow wider actor width diagnostic
+    #   Failed test 'value does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 5 - (+ value observed) reads caller width and role
+    ok 6 - validation preserves source declarations
+    not ok 7 - (+ value observed) does not borrow wider actor width rejected
+    #   Failed test '(+ value observed) does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 8 - (+ value observed) does not borrow wider actor width diagnostic
+    #   Failed test '(+ value observed) does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 9 - output actual targets the caller variable
+    not ok 10 - output actual keeps caller width rejected
+    #   Failed test 'output actual keeps caller width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 11 - output actual keeps caller width diagnostic
+    #   Failed test 'output actual keeps caller width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    1..11
+    # Looks like you failed 6 tests of 11.
+not ok 2 - output caller formal shadows actor input
+#   Failed test 'output caller formal shadows actor input'
+#   at ./t/1933-isf-caller-formal-binding-scope.t line 87.
+# Subtest: input caller formal shadows actor output
+    ok 1 - value reads caller width and role
+    ok 2 - validation preserves source declarations
+    not ok 3 - value does not borrow wider actor width rejected
+    #   Failed test 'value does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 4 - value does not borrow wider actor width diagnostic
+    #   Failed test 'value does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 5 - (+ value observed) reads caller width and role
+    ok 6 - validation preserves source declarations
+    not ok 7 - (+ value observed) does not borrow wider actor width rejected
+    #   Failed test '(+ value observed) does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 8 - (+ value observed) does not borrow wider actor width diagnostic
+    #   Failed test '(+ value observed) does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 9 - output actual targets the caller variable
+    not ok 10 - output actual keeps caller width rejected
+    #   Failed test 'output actual keeps caller width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 11 - output actual keeps caller width diagnostic
+    #   Failed test 'output actual keeps caller width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    1..11
+    # Looks like you failed 6 tests of 11.
+not ok 3 - input caller formal shadows actor output
+#   Failed test 'input caller formal shadows actor output'
+#   at ./t/1933-isf-caller-formal-binding-scope.t line 87.
+# Subtest: output caller formal shadows actor output
+    ok 1 - value reads caller width and role
+    ok 2 - validation preserves source declarations
+    not ok 3 - value does not borrow wider actor width rejected
+    #   Failed test 'value does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 4 - value does not borrow wider actor width diagnostic
+    #   Failed test 'value does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 5 - (+ value observed) reads caller width and role
+    ok 6 - validation preserves source declarations
+    not ok 7 - (+ value observed) does not borrow wider actor width rejected
+    #   Failed test '(+ value observed) does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 8 - (+ value observed) does not borrow wider actor width diagnostic
+    #   Failed test '(+ value observed) does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 9 - output actual targets the caller variable
+    not ok 10 - output actual keeps caller width rejected
+    #   Failed test 'output actual keeps caller width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 11 - output actual keeps caller width diagnostic
+    #   Failed test 'output actual keeps caller width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    1..11
+    # Looks like you failed 6 tests of 11.
+not ok 4 - output caller formal shadows actor output
+#   Failed test 'output caller formal shadows actor output'
+#   at ./t/1933-isf-caller-formal-binding-scope.t line 87.
+# Subtest: input caller formal shadows actor storage
+    ok 1 - value reads caller width and role
+    ok 2 - validation preserves source declarations
+    not ok 3 - value does not borrow wider actor width rejected
+    #   Failed test 'value does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 4 - value does not borrow wider actor width diagnostic
+    #   Failed test 'value does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 5 - (+ value observed) reads caller width and role
+    ok 6 - validation preserves source declarations
+    not ok 7 - (+ value observed) does not borrow wider actor width rejected
+    #   Failed test '(+ value observed) does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 8 - (+ value observed) does not borrow wider actor width diagnostic
+    #   Failed test '(+ value observed) does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 9 - output actual targets the caller variable
+    not ok 10 - output actual keeps caller width rejected
+    #   Failed test 'output actual keeps caller width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 11 - output actual keeps caller width diagnostic
+    #   Failed test 'output actual keeps caller width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    1..11
+    # Looks like you failed 6 tests of 11.
+not ok 5 - input caller formal shadows actor storage
+#   Failed test 'input caller formal shadows actor storage'
+#   at ./t/1933-isf-caller-formal-binding-scope.t line 87.
+# Subtest: output caller formal shadows actor storage
+    ok 1 - value reads caller width and role
+    ok 2 - validation preserves source declarations
+    not ok 3 - value does not borrow wider actor width rejected
+    #   Failed test 'value does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 4 - value does not borrow wider actor width diagnostic
+    #   Failed test 'value does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 5 - (+ value observed) reads caller width and role
+    ok 6 - validation preserves source declarations
+    not ok 7 - (+ value observed) does not borrow wider actor width rejected
+    #   Failed test '(+ value observed) does not borrow wider actor width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 8 - (+ value observed) does not borrow wider actor width diagnostic
+    #   Failed test '(+ value observed) does not borrow wider actor width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 9 - output actual targets the caller variable
+    not ok 10 - output actual keeps caller width rejected
+    #   Failed test 'output actual keeps caller width rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 11 - output actual keeps caller width diagnostic
+    #   Failed test 'output actual keeps caller width diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    1..11
+    # Looks like you failed 6 tests of 11.
+not ok 6 - output caller formal shadows actor storage
+#   Failed test 'output caller formal shadows actor storage'
+#   at ./t/1933-isf-caller-formal-binding-scope.t line 87.
+# Subtest: actor restrictions and sibling scope are preserved
+    not ok 1 - actor input write rejected
+    #   Failed test 'actor input write rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 2 - actor input write diagnostic
+    #   Failed test 'actor input write diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    not ok 3 - actor output read rejected
+    #   Failed test 'actor output read rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 4 - actor output read diagnostic
+    #   Failed test 'actor output read diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    not ok 5 - callee formal is not caller variable rejected
+    #   Failed test 'callee formal is not caller variable rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 6 - callee formal is not caller variable diagnostic
+    #   Failed test 'callee formal is not caller variable diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    not ok 7 - rule never borrows transaction formal rejected
+    #   Failed test 'rule never borrows transaction formal rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 8 - rule never borrows transaction formal diagnostic
+    #   Failed test 'rule never borrows transaction formal diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    1..8
+    # Looks like you failed 8 tests of 8.
+not ok 7 - actor restrictions and sibling scope are preserved
+#   Failed test 'actor restrictions and sibling scope are preserved'
+#   at ./t/1933-isf-caller-formal-binding-scope.t line 107.
+# Subtest: callee contract and live-site pruning are unchanged
+    not ok 1 - wrong direction rejected
+    #   Failed test 'wrong direction rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 2 - wrong direction diagnostic
+    #   Failed test 'wrong direction diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    not ok 3 - unknown callee port rejected
+    #   Failed test 'unknown callee port rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 4 - unknown callee port diagnostic
+    #   Failed test 'unknown callee port diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    not ok 5 - missing binding rejected
+    #   Failed test 'missing binding rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 6 - missing binding diagnostic
+    #   Failed test 'missing binding diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    not ok 7 - duplicate binding rejected
+    #   Failed test 'duplicate binding rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 8 - duplicate binding diagnostic
+    #   Failed test 'duplicate binding diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    not ok 9 - wrong timing rejected
+    #   Failed test 'wrong timing rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 10 - wrong timing diagnostic
+    #   Failed test 'wrong timing diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    ok 11 - static-zero binding endpoints stay pruned
+    not ok 12 - live repeat checks endpoints rejected
+    #   Failed test 'live repeat checks endpoints rejected'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 52.
+    not ok 13 - live repeat checks endpoints diagnostic
+    #   Failed test 'live repeat checks endpoints diagnostic'
+    #   at ./t/1933-isf-caller-formal-binding-scope.t line 53.
+    # 
+    1..13
+    # Looks like you failed 12 tests of 13.
+not ok 8 - callee contract and live-site pruning are unchanged
+#   Failed test 'callee contract and live-site pruning are unchanged'
+#   at ./t/1933-isf-caller-formal-binding-scope.t line 125.
+# Subtest: physical storage and caller formal remain separate
+    ok 1 - production accepts independent caller formal storage
+    ok 2 - actor storage no longer creates a physical merge conflict
+    1..2
+ok 9 - physical storage and caller formal remain separate
+# Subtest: direct actor-pin shadows emit separate private storage
+    ok 1 - input width 4 input binding uses private caller storage
+    ok 2 - actor pin keeps its original width
+    ok 3 - native strict check admits separated identities
+    ok 4 - input width 4 output binding uses private caller storage
+    ok 5 - actor pin keeps its original width
+    ok 6 - native strict check admits separated identities
+    ok 7 - input width 8 input binding uses private caller storage
+    ok 8 - actor pin keeps its original width
+    ok 9 - native strict check admits separated identities
+    ok 10 - input width 8 output binding uses private caller storage
+    ok 11 - actor pin keeps its original width
+    ok 12 - native strict check admits separated identities
+    ok 13 - output width 4 input binding uses private caller storage
+    ok 14 - actor pin keeps its original width
+    ok 15 - native strict check admits separated identities
+    ok 16 - output width 4 output binding uses private caller storage
+    ok 17 - actor pin keeps its original width
+    ok 18 - native strict check admits separated identities
+    ok 19 - output width 8 input binding uses private caller storage
+    ok 20 - actor pin keeps its original width
+    ok 21 - native strict check admits separated identities
+    ok 22 - output width 8 output binding uses private caller storage
+    ok 23 - actor pin keeps its original width
+    ok 24 - native strict check admits separated identities
+    1..24
+ok 10 - direct actor-pin shadows emit separate private storage
+# Subtest: generated interfaces and zero-pruned targets keep their separate paths
+    ok 1 - generated target avoids direct merge gate
+    ok 2 - generated public formal keeps its name and width
+    ok 3 - generated source strict-checks
+    ok 4 - pruned target avoids direct merge gate
+    ok 5 - zero-pruned target has no physical states
+    ok 6 - pruned source strict-checks
+    1..6
+ok 11 - generated interfaces and zero-pruned targets keep their separate paths
+# Subtest: unshadowed source, carriers and complete public reports
+    ok 1 - binding_scope.fsm strict carrier replay
+    ok 2 - fsmgen_check native success
+    ok 3 - fsmgen_check complete native/API parity
+    ok 4 - fsmgen_check protocol success
+    ok 5 - fsmgen_check complete newline/API parity
+    ok 6 - fsmgen_semantic_introspect native success
+    ok 7 - fsmgen_semantic_introspect complete native/API parity
+    ok 8 - fsmgen_semantic_introspect protocol success
+    ok 9 - fsmgen_semantic_introspect complete newline/API parity
+    ok 10 - fsmgen_schedule_preview native success
+    ok 11 - fsmgen_schedule_preview complete native/API parity
+    ok 12 - fsmgen_schedule_preview protocol success
+    ok 13 - fsmgen_schedule_preview complete newline/API parity
+    1..13
+ok 12 - unshadowed source, carriers and complete public reports
+1..12
+# Looks like you failed 8 tests of 12.

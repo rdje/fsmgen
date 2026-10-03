@@ -1,0 +1,10 @@
+shared corruption rejects: cause
+shared corruption rejects: input
+shared corruption rejects: expectation
+shared corruption rejects: matched_kind
+shared corruption rejects: extra_field
+shared corruption rejects: membership
+whole corruption rejects: whole_kind
+whole corruption rejects: whole_binding
+whole corruption rejects: whole_field
+PASS current complete causes/84 rows, exact prior false matches, real bypass, full ordinary conservation and finite source/kind closure; wider internal semantics remain open.

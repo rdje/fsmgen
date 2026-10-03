@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/caller-formal-binding-cause-repair-20261003/verify.py", line 41, in <module>
+    prior=load(B/'prior-causes.json');verify_rows(prior)
+                                      ~~~~~~~~~~~^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/caller-formal-binding-cause-repair-20261003/models.py", line 91, in verify_rows
+    same([r['id'],r['band'],r['spec'],r['source']],[s['id'],band,s,source(s['args'])]);a,c=expected_actor(s,band);same(r['actor'],a);same(r['control'],c)
+                                                                   ~~~~~~^^^^^^^^^^^
+TypeError: 'str' object is not callable

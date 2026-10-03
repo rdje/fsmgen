@@ -1,0 +1,1 @@
+PASS real binding-validation bypass capture.
