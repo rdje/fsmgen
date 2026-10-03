@@ -1,0 +1,82 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-module-capture-20261003/verify.py", line 90, in <module>
+    task = Path('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md').read_text()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md'
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-generated-module-fields-20261003/verify.py", line 58, in <module>
+    subprocess.run(['python3', '-B', str(CAPTURE / 'verify.py')], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-module-capture-20261003/verify.py']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-module-join-20261003/verify.py", line 71, in <module>
+    subprocess.run(['python3', '-B', str(Path(row['directory']) / 'verify.py')], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-generated-module-fields-20261003/verify.py']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-snapshot-capture-20261003/verify.py", line 63, in <module>
+    subprocess.run(['python3', '-B', 'docs/audits/reservation-coverage-module-join-20261003/verify.py'], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-module-join-20261003/verify.py']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-snapshot-normal-fields-20261003/verify.py", line 75, in <module>
+    subprocess.run(['python3', '-B', str(CAPTURE / 'verify.py')], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-snapshot-capture-20261003/verify.py']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-snapshot-field-join-20261003/verify.py", line 60, in <module>
+    subprocess.run(['python3', '-B', str(directory / 'verify.py')], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-snapshot-normal-fields-20261003/verify.py']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-value-only-controls-20261003/verify.py", line 57, in <module>
+    subprocess.run(['python3', '-B', 'docs/audits/reservation-coverage-snapshot-field-join-20261003/verify.py'], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-snapshot-field-join-20261003/verify.py']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-plain-native-boundary-20261003/verify.py", line 56, in <module>
+    subprocess.run(['python3', '-B', 'docs/audits/reservation-coverage-value-only-controls-20261003/verify.py'], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-value-only-controls-20261003/verify.py']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-snapshot-native-join-20261003/verify.py", line 50, in <module>
+    subprocess.run(['python3', '-B', 'docs/audits/reservation-coverage-plain-native-boundary-20261003/verify.py'], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-plain-native-boundary-20261003/verify.py']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/.artifacts/reservation-coverage-historical-context-20261003/93ff524834b748004510e10befad4df4cd8cc5fe/ordinary/tree/docs/audits/reservation-coverage-qualification-join-20261003/verify.py", line 75, in <module>
+    subprocess.run(['python3', '-B', 'docs/audits/reservation-coverage-snapshot-native-join-20261003/verify.py'], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', '-B', 'docs/audits/reservation-coverage-snapshot-native-join-20261003/verify.py']' returned non-zero exit status 1.

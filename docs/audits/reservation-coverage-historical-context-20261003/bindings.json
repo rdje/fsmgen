@@ -1,0 +1,7 @@
+{
+  "reader": "docs/audits/reservation-coverage-source-copy-checks-20261003/reverify.py",
+  "reader_bytes": 479,
+  "reader_sha256": "a787d162ba8068e3837581d4e8004aa4564eab02d2585b97e135d62641534c20",
+  "revision": "93ff524834b748004510e10befad4df4cd8cc5fe",
+  "workspace": ".artifacts/reservation-coverage-historical-context-20261003"
+}

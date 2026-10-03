@@ -277,7 +277,10 @@ The [complete coverage qualification](../../../docs/audits/reservation-coverage-
 now joins every initial/current copy site and observed field with its actor,
 module or snapshot semantic owner. Unchanged seeds remain required controls.
 The test-copy repair follows this completed qualification; the current copies
-remain unrepaired. These controls do not establish a production defect.
+remain unrepaired. The [historical replay context](../../../docs/audits/reservation-coverage-historical-context-20261003/scope.txt)
+keeps this complete qualification bound to its original sources when later test
+helpers change; live repaired behavior requires its own native checks.
+These controls do not establish a production defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For

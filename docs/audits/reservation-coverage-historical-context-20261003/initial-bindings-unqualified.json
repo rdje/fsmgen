@@ -1,0 +1,7 @@
+{
+  "reader": "docs/audits/reservation-coverage-qualification-join-20261003/verify.py",
+  "reader_bytes": 9798,
+  "reader_sha256": "ec3c38ceb8dd068eff24eab79836f7a5d56ea27cbde0d28297755a8d0640f4a2",
+  "revision": "93ff524834b748004510e10befad4df4cd8cc5fe",
+  "workspace": ".artifacts/reservation-coverage-historical-context-20261003"
+}

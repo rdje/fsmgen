@@ -1,0 +1,10 @@
+Run from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-historical-context-20261003/verify.py
+For a new live cold replay, use an owned output sibling:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-historical-context-20261003/run_context.py --binding docs/audits/reservation-coverage-historical-context-20261003/bindings.json --output docs/audits/reservation-coverage-historical-context-checks-20261003 --mode ordinary
+The --mode decoy replay must fail the pinned canonical reader exactly at the
+changed projected T1960 source identity, then return success for detecting it.
+--trust-decoy on verify.py must return1 at the actual source-mismatch promotion.
+Caches and separate Git indexes stay under the declared .artifacts path. No
+primary source/index/config, extra repository or sealed evidence is written.
+After sealing, never use this corpus as --output. Live repair is .13.2-owned.

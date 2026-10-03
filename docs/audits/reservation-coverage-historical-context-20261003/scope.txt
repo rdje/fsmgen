@@ -1,0 +1,51 @@
+Owned by SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.13.1.
+
+Historical qualification context only; current T1960/T2063 stay unchanged.
+The complete canonical pre-repair cause/copy qualification is bound to immutable
+revision93ff524834b748004510e10befad4df4cd8cc5fe, with full reader byte identity.
+It includes old live-source byte checks and one direct owning-task read; those
+cannot be interpreted as assertions about later repaired live test bytes.
+
+Population: all regular tracked bin/perl/t/scripts/isf files, all tracked
+reservation-coverage audit paths, and the exact owning task file at that revision.
+Units: 3472 selected Git files, 162992888 uncompressed source/evidence bytes;
+not all repository files or current product/defect counts. Independent literal
+root enumeration/Git object reading reproduces each file's mode/blob/byte/hash,
+never accepting totals in place of membership. No submodule traversal occurs.
+
+Re-derivation: published Git object and index commands project only those pinned
+files into an owned repository-local cache, with a separately generated Git
+index. The same primary Git object store supplies every historical query; no
+other repository, clone, worktree registration or primary index/config change
+is created. Complete original cause and copy qualification genuinely replays
+there. Every projected member and cache directory is checked for plain/local
+membership and same-volume storage; runtime absolute paths derive from the root,
+while persisted workspace/reader paths stay repository-relative.
+
+Falsification: a separate owned projection adds one real comment to T1960 while
+its index/revision and every other source stay pinned. That source identity
+drift is observed before replay, and the actual unchanged canonical cause
+reader fails RED1 at t/1960-isf-formal-reservation-coverage.t's complete original
+byte check. --trust-decoy independently promotes that actual unsafe projection
+as an original-source authority and fails RED1 at the declared mismatch. The
+ordinary context passes full qualification. Primary Git index/config/HEAD and
+resolved revision fingerprints conserve within each actual invocation; captured
+hashes are dated evidence, never shadows of current Git state.
+Durability: full pinned reader/bindings, complete per-file context metadata,
+actual ordinary/decoy outputs/status, original source-drift RED/counterfactual,
+producer/independent reader/manifest, task/book and Git. Existing sealed source/
+semantic/native artifacts are only read. After sealing, replay output uses an
+owned sibling; never overwrite this corpus. Generated cache trees/indexes are
+reproducible and are not the sole copy of evidence.
+
+The first context omitted the directly read task file and failed at that exact
+missing dependency. Its complete producer and failing reader receipts remain
+unqualified. The corrected selector includes the exact pinned task and full
+canonical cause/copy chain; both complete positive and real decoy controls pass
+qualification. No earlier archive or live source was changed to obtain a pass.
+
+Immediate successor .13.2 performs the live copy/snapshot repair and separately
+checks genuine current native caller/source/product/cause conservation and
+mutations. Historical replay does not establish later hot-source semantics.
+General native/constructor/controller/report/runtime/moved-root meanings and
+visual QA retain cold owners; public admission/schema boundaries stay fixed.
