@@ -1,0 +1,8 @@
+whole corruption rejects: whole_kind
+whole corruption rejects: whole_guard
+whole corruption rejects: whole_field
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-source-context-cause-repair-20261003/verify.py", line 109, in <module>
+    if '--prior-consumer' in sys.argv:assert all(r['matched']==r['primary_matched'] for r in prior['rows']),'actual prior consumer promotes unrelated primary causes'
+                                             ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual prior consumer promotes unrelated primary causes

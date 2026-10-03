@@ -1,0 +1,8 @@
+t/1933-isf-caller-formal-binding-scope.t .............. ok
+t/1935-isf-local-declaration-admission.t .............. ok
+t/1936-isf-formal-source-context.t .................... ok
+t/1941-isf-formal-preallocation-admission.t ........... ok
+t/2056-isf-formal-source-context-diagnostic-causes.t .. ok
+All tests successful.
+Files=5, Tests=88, 64 wallclock secs ( 0.03 usr  0.01 sys + 43.72 cusr 19.17 csys = 62.93 CPU)
+Result: PASS

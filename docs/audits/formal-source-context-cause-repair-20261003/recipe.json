@@ -1,0 +1,25 @@
+{
+  "baseline": "4ed8478c149cf632238dd120570756c96c717dcb",
+  "commands": {
+    "book": "mdbook build docs/book",
+    "bypass_cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-source-context-cause-repair-20261003/verify.py --binding-bypass",
+    "bypass_input": "scripts/run_with_ram_guard.sh -- perl docs/audits/formal-source-context-cause-repair-20261003/bypass_input.pl",
+    "cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-source-context-cause-repair-20261003/verify.py",
+    "focused": "scripts/run_with_ram_guard.sh -- bash docs/audits/formal-source-context-repair-checks-20261003/check.sh",
+    "prior_cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/formal-source-context-cause-repair-20261003/verify.py --prior-consumer",
+    "producer": "scripts/run_with_ram_guard.sh -- bash docs/audits/formal-source-context-cause-repair-20261003/run.sh",
+    "rendered": "python3 docs/audits/formal-source-context-cause-repair-20261003/rendered_verify.py"
+  },
+  "expected_statuses": {
+    "binding-bypass-red": 1,
+    "bypass-cold": 1,
+    "cold": 0,
+    "current": 0,
+    "ordinary": 0,
+    "prior-cold": 1,
+    "prior-consumer-red": 13
+  },
+  "internal_product_semantics": "same finite predecessor qualification; other cold semantics remain open",
+  "native": "not invoked",
+  "visual_qa": "not performed"
+}

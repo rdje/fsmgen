@@ -1,0 +1,8 @@
+whole corruption rejects: whole_kind
+whole corruption rejects: whole_guard
+whole corruption rejects: whole_field
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-source-context-cause-repair-20261003/verify.py", line 115, in <module>
+    if '--binding-bypass' in sys.argv:assert bypass['error'].splitlines()[0]==causes['live binding'],'actual bypass reaches a different primary cause'
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual bypass reaches a different primary cause

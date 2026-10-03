@@ -1,0 +1,10 @@
+whole corruption rejects: whole_kind
+whole corruption rejects: whole_guard
+whole corruption rejects: whole_field
+shared corruption rejects: cause
+shared corruption rejects: input
+shared corruption rejects: assertion_kind
+shared corruption rejects: expected
+shared corruption rejects: membership
+shared corruption rejects: extra_field
+PASS complete-cause current helper/seven contracts/21 real rows, valid live fixture and separate subset boundary, whole ordinary conservation, exact prior consumer and real binding bypass. Internal product semantics beyond prior scope remain open.

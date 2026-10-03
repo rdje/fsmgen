@@ -1,0 +1,7 @@
+ram-guard: PID 52744; host 75.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Transaction 'worker': '(local bad ...)' requires a '(width N)' with a positive integer
+ at perl/FSM/Scheduler/ISF/LoweringIR.pm line 13456.
+	FSM::Scheduler::ISF::LoweringIR::_parse_local_decl(ARRAY(0x7851e3d3d8), "worker", HASH(0x7851e43fa8), HASH(0x7851d4c7f8)) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 6069
+	FSM::Scheduler::ISF::LoweringIR::_build_transaction(FSM::Scheduler::ISF::LoweringIR=HASH(0x7851e488d0), HASH(0x7851e3d2b8), HASH(0x7851e43fa8), 0, undef, HASH(0x7851c9cab0), undef) called at perl/FSM/Scheduler/ISF/LoweringIR.pm line 212
+	FSM::Scheduler::ISF::LoweringIR::prepare_formal_source(FSM::Scheduler::ISF::LoweringIR=HASH(0x7851e488d0), HASH(0x7851e472b8)) called at docs/audits/formal-source-context-cause-repair-20261003/bypass_input.pl line 17
+	eval {...} called at docs/audits/formal-source-context-cause-repair-20261003/bypass_input.pl line 17

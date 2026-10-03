@@ -1,0 +1,98 @@
+# Subtest: direct count and runtime expression scopes stay distinct
+    ok 1 - preparation never mutates original source
+    ok 2 - prepared source retains authored records
+    ok 3 - only explicit local shields a formal, not inferred samples
+    ok 4 - direct runtime expressions use actor static scope
+    ok 5 - standalone counts include transaction parameters
+    ok 6 - actor context cannot borrow transaction parameter
+    ok 7 - scalar static wait remains static while expression reads the formal
+    ok 8 - repeat keeps static count parameter
+    ok 9 - repeat body reads renamed runtime formal
+    ok 10 - inferred sample collection does not shield an explicit formal
+    ok 11 - rewritten scalar wait remains statically lowered
+    ok 12 - rewritten scalar wait retains the parameter value
+    ok 13 - rewritten expression retains runtime count kind
+    ok 14 - runtime wait references the physical formal
+    ok 15 - runtime read reaches scoped formal
+    ok 16 - direct count parameter does not become a parent HDL parameter
+    ok 17 - direct.fsm strict replay
+    ok 18 - returned contexts and source are detached
+    1..18
+ok 1 - direct count and runtime expression scopes stay distinct
+# Subtest: generated child parameters belong to its expression scope
+    ok 1 - actual placement supplies scope
+    ok 2 - generated parameter is an emitted expression symbol
+    ok 3 - caller cannot borrow child parameter
+    ok 4 - generated public formal identity remains public
+    ok 5 - generated parameter expression unchanged
+    ok 6 - worker.fsm strict replay
+    1..6
+ok 2 - generated child parameters belong to its expression scope
+# Subtest: canonical enum and imported payload paths retain exact identities
+    ok 1 - canonical static identity LIMIT
+    ok 2 - canonical static identity ACTOR_COUNT
+    ok 3 - canonical static identity LANES
+    ok 4 - canonical static identity local_mode.IDLE
+    ok 5 - canonical static identity local_mode.BUSY
+    ok 6 - canonical static identity shared.COUNT
+    ok 7 - canonical static identity shared.PAIR
+    ok 8 - canonical static identity shared.PAIR.lo
+    ok 9 - canonical static identity shared.PAIR.hi
+    ok 10 - canonical static identity shared.LANES
+    ok 11 - canonical static identity shared.LANES[0]
+    ok 12 - canonical static identity shared.LANES[1]
+    ok 13 - canonical static identity shared.mode.IDLE
+    ok 14 - canonical static identity shared.mode.BUSY
+    ok 15 - no invented runtime static identity shared
+    ok 16 - no invented runtime static identity local_mode
+    ok 17 - no invented runtime static identity shared.MISSING
+    ok 18 - no invented runtime static identity shared.LANES[2]
+    ok 19 - no invented runtime static identity LANES[0]
+    ok 20 - enum member retained while same-spelled formal root is renamed
+    1..20
+ok 3 - canonical enum and imported payload paths retain exact identities
+# Subtest: validated zero regions bypass dead binding resolution
+    ok 1 - zero-only child remains pruned
+    ok 2 - dead target local is not newly validated
+    ok 3 - structural paths select nested zero bodies precisely
+    ok 4 - dead bindings stay untouched instead of failing detached lookup
+    ok 5 - live bound repeat requires static parameter overrides rejected before rewriting
+    ok 6 - live bound repeat requires static parameter overrides complete source cause
+    ok 7 - valid live activation checks binding endpoints rejected before rewriting
+    not ok 8 - valid live activation checks binding endpoints complete source cause
+    #   Failed test 'valid live activation checks binding endpoints complete source cause'
+    #   at ./t/1936-isf-formal-source-context.t line 56.
+    ok 9 - malformed dead binding shape rejected before rewriting
+    ok 10 - malformed dead binding shape complete source cause
+    ok 11 - unknown dead target rejected before rewriting
+    ok 12 - unknown dead target complete source cause
+    1..12
+    # Looks like you failed 1 test of 12.
+not ok 4 - validated zero regions bypass dead binding resolution
+#   Failed test 'validated zero regions bypass dead binding resolution'
+#   at ./t/1936-isf-formal-source-context.t line 183.
+# Subtest: context omissions and stale pruning paths fail closed
+    ok 1 - missing locals rejected
+    ok 2 - missing static_symbols rejected
+    ok 3 - missing static_count_symbols rejected
+    ok 4 - missing pruned_repeats rejected
+    ok 5 - missing named_drives rejected
+    ok 6 - invalid or stale pruning path clauses/999 rejected
+    ok 7 - invalid or stale pruning path clauses/1 rejected
+    ok 8 - invalid or stale pruning path invalid/path rejected
+    1..8
+ok 5 - context omissions and stale pruning paths fail closed
+# Subtest: source checks run before parent identity merging
+    ok 1 - contexts do not require a conflicting parent merge
+    ok 2 - production separates the source formal from actor storage
+    ok 3 - source context integrates without a physical merge conflict
+    ok 4 - malformed retained clause rejected before rewriting
+    ok 5 - malformed retained clause complete source cause
+    ok 6 - malformed retained clause rejected before rewriting
+    ok 7 - malformed retained clause complete source cause
+    ok 8 - malformed retained clause rejected before rewriting
+    ok 9 - malformed retained clause complete source cause
+    1..9
+ok 6 - source checks run before parent identity merging
+1..6
+# Looks like you failed 1 test of 6.

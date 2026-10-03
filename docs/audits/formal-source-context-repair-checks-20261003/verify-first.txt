@@ -1,0 +1,10 @@
+ram-guard: PID 71441; host 50.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+/Volumes/SSD/Documents/github/fsmgen/docs/audits/formal-source-context-cause-repair-20261003/verify.py:60: SyntaxWarning: "\(" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\("? A raw string is also an option.
+  $live =~ s/\(do worker \(bind/(do worker (params (COUNT 1)) (bind/;
+shared corruption rejects: cause
+shared corruption rejects: input
+shared corruption rejects: assertion_kind
+shared corruption rejects: expected
+shared corruption rejects: membership
+shared corruption rejects: extra_field
+PASS complete-cause current helper/seven contracts/21 real rows, valid live fixture and separate subset boundary, whole ordinary conservation, exact prior consumer and real binding bypass. Internal product semantics beyond prior scope remain open.

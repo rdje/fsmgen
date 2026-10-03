@@ -1,0 +1,5 @@
+t/1936-isf-formal-source-context.t .................... ok
+t/2056-isf-formal-source-context-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=48,  5 wallclock secs ( 0.01 usr  0.01 sys +  3.07 cusr  1.38 csys =  4.47 CPU)
+Result: PASS

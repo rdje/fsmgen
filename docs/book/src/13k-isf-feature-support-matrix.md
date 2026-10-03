@@ -162,12 +162,15 @@ These are lexical tokens, including possible strings/comments; they do not count
 parsed functions or calls and establish no semantic safety. The local-formal
 helper delegates its diagnostic predicate and was outside the old filtered named
 cohort. Its complete-cause repair is qualified within its declared scope.
-The formal source-context helper still checks whole traces and falsely accepts
-parser failures that echo caller expectations or source comments. Its existing
-live-binding fixture reaches an earlier static-parameter restriction, so that
-control does not establish the intended binding refusal. The
-[source-context diagnosis](../../../docs/audits/formal-source-context-helper-causes-20261003/scope.txt)
-owns immediate helper and fixture repair. Remaining named/framework cohorts
+The formal source-context helper now compares complete first causes. Its live
+binding control uses the documented static parameters and reaches the intended
+port check; the earlier static-parameter restriction has a separate exact
+refusal. Real parser/source-comment controls, the exact prior consumer and a
+genuine binding-validation bypass qualify the
+[source-context repair](../../../docs/audits/formal-source-context-cause-repair-20261003/scope.txt).
+Whole ordinary products and primitive kinds are conserved within the prior
+source-bound scope; wider internal product semantics remain under cold review.
+Remaining named/framework cohorts
 still need qualification.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.

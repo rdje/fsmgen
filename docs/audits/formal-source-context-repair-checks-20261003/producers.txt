@@ -1,0 +1,6 @@
+ram-guard: PID 68364; host 70.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+bind: 0 (expected 0)
+current: 0 (expected 0)
+ordinary: 0 (expected 0)
+prior-consumer-red: 13 (expected 13)
+binding-bypass-red: 1 (expected 1)

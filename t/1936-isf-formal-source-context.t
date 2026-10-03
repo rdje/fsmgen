@@ -7,6 +7,7 @@ use File::Temp qw(tempdir);
 use JSON::PP;
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use FSM::Test::SourceQueryRunner;
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
@@ -48,10 +49,11 @@ sub rewritten {
         plan => $plan, %{$prepared->{transactions}{$name}})->{transaction}, $plan);
 }
 sub rejects {
-    my ($text, $pattern, $label) = @_;
+    my ($text, $expected, $label) = @_;
     my $ok = eval {prepare($text); 1};
+    my $error = $@;
     ok(!$ok, "$label rejected before rewriting");
-    like($@, $pattern, "$label source diagnostic");
+    ok(diagnostic_cause_matches($error, $expected), "$label complete source cause");
 }
 
 subtest 'direct count and runtime expression scopes stay distinct' => sub {
@@ -162,11 +164,22 @@ ISF
     my ($tx) = rewritten($prepared, 'main');
     is_deeply($tx->{clauses}, $prepared->{actor}{transactions}[0]{clauses}, 'dead bindings stay untouched instead of failing detached lookup');
     (my $live = $base) =~ s/\(repeat ZERO/\(repeat 1/;
-    rejects($live, qr/unknown transaction port 'missing'/, 'same binding made live');
+    rejects($live,
+        "Transaction 'main': when-body nested repeat generated do bindings require static '(params ...)' overrides in the current nested generated blocking-do subset",
+        'live bound repeat requires static parameter overrides');
+    $live =~ s/\(do worker \(bind/(do worker (params (COUNT 1)) (bind/;
+    $live =~ s/\(transaction worker \(ports \(input data \(width 4\)\)\)/(transaction worker (ports (input data (width 4))) (params (COUNT 1))/;
+    rejects($live,
+        "Transaction 'main': repeat-body do target 'worker' binds unknown transaction port 'missing' on 'worker'",
+        'valid live activation checks binding endpoints');
     (my $malformed = $base) =~ s/\(input missing unknown\)/(input missing)/;
-    rejects($malformed, qr/bind.*(?:entries|input|requires)/, 'malformed dead binding shape');
+    rejects($malformed,
+        "Transaction 'main': do target 'worker' bind entries must be '(input port expr [(timing snapshot|live)])' or '(output port signal)'",
+        'malformed dead binding shape');
     (my $missing = $base) =~ s/\(do worker/\(do absent/;
-    rejects($missing, qr/not a declared transaction/, 'unknown dead target');
+    rejects($missing,
+        "Transaction 'main': do target 'absent' is not a declared transaction",
+        'unknown dead target');
 };
 
 subtest 'context omissions and stale pruning paths fail closed' => sub {
@@ -197,9 +210,21 @@ subtest 'source checks run before parent identity merging' => sub {
     ok($ok, 'production separates the source formal from actor storage') or diag($@);
     is($@, '', 'source context integrates without a physical merge conflict');
     for my $case (
-        ['(local scratch (width 4) (init 1))', '(local scratch (width 4) (typo 1))', qr/unsupported local option/],
-        ['(wait count)', '(wait (bogus count))', qr/supported expression operator shape/],
-        ['(repeat count (set value count))', '(repeat count (local nested (width 4)))', qr/unsupported.*local/],
+        [
+            '(local scratch (width 4) (init 1))',
+            '(local scratch (width 4) (typo 1))',
+            "Transaction 'main': unsupported local option 'typo'",
+        ],
+        [
+            '(wait count)',
+            '(wait (bogus count))',
+            "Transaction 'main': runtime dynamic wait count expression '(bogus count)' must use a supported expression operator shape in transaction body",
+        ],
+        [
+            '(repeat count (set value count))',
+            '(repeat count (local nested (width 4)))',
+            "Transaction 'main': unsupported '(local ...)' clause in repeat body",
+        ],
     ) {
         my $text = $source;
         $text =~ s/\Q$case->[0]\E/$case->[1]/;
