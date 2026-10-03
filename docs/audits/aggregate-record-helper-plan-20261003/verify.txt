@@ -1,0 +1,1 @@
+PASS independently bound 14 complete source/declaration members, exact prior locators and distinct authoritative per-source review leaves; no cause/native/runtime admission is inferred.

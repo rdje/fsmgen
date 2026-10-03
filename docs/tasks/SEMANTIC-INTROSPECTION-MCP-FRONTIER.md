@@ -3960,9 +3960,123 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify aggregate-record named consumers and source/backend applicability.`
   Acceptance: `Read exact current T1983/T1986-T1991/T1993/T1998/T2021/T2027/T2028/T2030/T2035 helper contexts and actual source contracts; split bounded slices, resolve causes/structured/trace consumers and native applicability before execution, preserve whole products and own repairs.`
+  Verification: `pending`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.7, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.8, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.9, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.10, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.11, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.12, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.13, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.14, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.15, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.16`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.1`
+  Status: `done`
+  Goal: `Bind the aggregate-record named membership to bounded per-source review owners.`
+  Acceptance: `Reconcile immutable cohort membership against complete current Git source bytes and exact declaration identities; assign every selected source to one bounded review leaf before probes. Source/topic names imply no consumer role, cause safety or native eligibility. Preserve sealed handoffs, own source drift if found, repair stale formal-cohort book status and retain complete independent membership/omission/owner controls with focused documentation gates before commit.`
+  Verification: `Sealed docs/audits/aggregate-record-helper-plan-20261003 binds all14 source files/14 byte-anchored declarations to complete immutable Git3951ccbc6e bodies, exact prior locators and distinct per-source review owners. Re-derivation: byte-regex producer and separate line scanner authenticate full source/hash/size, complete previous cohort membership and authoritative parent/direct-child/per-source task contracts;16 children separately own split,14 reviews and final join. Current selected sources equal the sealed earlier bytes at capture; no future hot-source currency or actual role/cause/product/copy/native qualification inferred. Falsification: actual broad prior cohort-owner promotion RED1 at per-source ownership, complete member omission RED1 at membership; earlier broader handoff remains valid for its own contract. Durability: full source/locator/owner plan, producer/reader/actual counterfactual outputs/status/manifest, task/card/book and Git. Intermediate book formal/reusable/reservation-open statements were stale after completed repairs; corrected to reflect finite completed qualification while aggregate/other named/framework scopes remain open. No test/provider/public admission/native tool/submodule changes or execution. Public-book All tests successful2/308, build/rendered and sealed reader/task integrity/KM checks close; fixed capacity/fresh claims/staged doctrines/hooks complete before first .2 T1983 source-contract review. General constructor/controller/moved-root/native-access/visual QA remain separately owned.`
+  Commit: `this slice; resolve with work-unit Git subject`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2`
+  Status: `pending`
+  Goal: `Qualify the exact t/1983-isf-interface-port-metadata.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3`
+  Status: `pending`
+  Goal: `Qualify the exact t/1986-isf-record-port-value-gates.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.4`
+  Status: `pending`
+  Goal: `Qualify the exact t/1987-isf-record-port-declaration-scopes.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.5`
+  Status: `pending`
+  Goal: `Qualify the exact t/1988-isf-record-port-context-gates.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.6`
+  Status: `pending`
+  Goal: `Qualify the exact t/1989-isf-record-port-root-classification.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.7`
+  Status: `pending`
+  Goal: `Qualify the exact t/1990-isf-record-port-sample-facts.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.8`
+  Status: `pending`
+  Goal: `Qualify the exact t/1991-isf-record-port-sample-contexts.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.9`
+  Status: `pending`
+  Goal: `Qualify the exact t/1993-isf-record-port-sample-ownership.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.10`
+  Status: `pending`
+  Goal: `Qualify the exact t/1998-isf-record-input-source-admission.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.11`
+  Status: `pending`
+  Goal: `Qualify the exact t/2021-isf-record-input-generated-refusals.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.12`
+  Status: `pending`
+  Goal: `Qualify the exact t/2027-isf-record-input-backend-profiles.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.13`
+  Status: `pending`
+  Goal: `Qualify the exact t/2028-isf-record-input-verilog-profile.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.14`
+  Status: `pending`
+  Goal: `Qualify the exact t/2030-isf-record-output-writer-admission.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.15`
+  Status: `pending`
+  Goal: `Qualify the exact t/2035-isf-record-output-target-profiles.t named helper and bounded callers.`
+  Acceptance: `Read complete current helper/caller/producer contracts and relevant roadmap/book sections; resolve actual refusal/structured/trace/framework role and native applicability before execution. Bind whole original source/products/kinds, independently declared causes and real native errors; use genuine earlier/primary/caller echo, exact prior and producer-bypass controls where applicable. Do not promote lexical declarations or value-only copies as semantic assurance. Split copy/field/native qualification when needed, own every evidenced defect before edits and commit each bounded verified slice. Public/submodule/cold access boundaries remain intact.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.16`
+  Status: `pending`
+  Goal: `Join all aggregate-record named outcomes and owned repairs.`
+  Acceptance: `Independently reconcile the complete declared per-source/helper membership, actual roles, qualified causes/products/copy kinds/native applicability and completed repair owners. Preserve explicit unresolved cold/access/framework limits, exact source provenance and all mandatory unchanged/negative controls. No subtotal or lexical count substitutes for whole outcome closure; hand off to public-query cohort only from a clean committed state.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6334,3 +6448,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'dclone' -- t/1960-isf-formal-reservation-coverage.t and sealed history.txt identify original lossy-copy introduction; complete prior captures reproduce41/548 typed differences and real success/refusal kind controls remain GREEN. Full source/field qualifications bind each difference; actual marker replacement exposes native identity assurance.
 - [x] **ADDRESSED (verified)** — Actual live39 copies and23 whole-kind snapshots pass; exact prior-pure/current source/preparation/module/caller/carrier/scope/cause graphs join. Actual strengthened kind controls RED1 each, Storable/alias copy controls RED1 each and native replacement RED3/234 at declared consumers; full cold reader plus unsafe-authority/omission controls pass qualification.
 - [x] **NO REGRESSION** — scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1959-isf-prepared-formal-reservations.t t/1960-isf-formal-reservation-coverage.t t/2063-isf-coverage-diagnostic-causes.t: All tests successful; Files=3, Tests=243. Native39 complete causes/classes/shapes and ordinary caller/result graphs conserve; repaired syntax OK, public-book2/308 and rendered build checked.
+
+## Acceptance Checklist — bounded aggregate-record named review plan
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Qualify aggregate-record named consumers' -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md identifies prior broad cohort ownership. Full immutable source/locator membership has one aggregate owner per row, not per-file source-contract leaves; actual prior-owner promotion fails that narrower planning contract.
+- [x] **ADDRESSED (verified)** — Complete14 source/declaration members bind distinct bounded review leaves with separate split/join owners, independently authenticated Git/source/locator/task contracts and real prior-owner/member-omission RED controls. Stale formal/reservation-open book statements corrected; runtime/cause/native applicability remains pending before execution.
+- [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and sealed source/ownership readback pass. No hot tests/providers or native tool execution changes; task integrity and unchanged capacity/fresh claims/staged doctrine gates close before first source review.

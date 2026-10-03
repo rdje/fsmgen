@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/aggregate-record-helper-plan-20261003/verify.py", line 45, in <module>
+    assert owner == parent + '.' + str(number), 'broad cohort owner cannot prove per-source review ownership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: broad cohort owner cannot prove per-source review ownership

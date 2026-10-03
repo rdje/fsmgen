@@ -178,9 +178,14 @@ false stack matches, and a genuine validation bypass makes the repaired test
 fail. The [binding-helper repair](../../../docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt)
 conserves whole ordinary products and primitive kinds within the declared
 source and binding-report scope; wider internal semantics remain under cold review.
-A [current cohort handoff](../../../docs/audits/residual-named-helper-cohorts-20261003/scope.txt)
-assigns exact pending owners for formal/resource, aggregate-record, public-query,
-process/governance, producer-role and backend/native review. Names do not establish
+A [cohort handoff](../../../docs/audits/residual-named-helper-cohorts-20261003/scope.txt)
+assigns review owners for formal/resource, aggregate-record, public-query,
+process/governance, producer-role and backend/native review. Formal resource,
+reusable and reservation review now closes with the repairs below. The
+[aggregate-record review plan](../../../docs/audits/aggregate-record-helper-plan-20261003/scope.txt)
+assigns a bounded source-contract review to every selected record helper before
+native probes; actual causes, products, copy kinds and native applicability remain
+open. Names do not establish
 actual refusal-consumer roles or native applicability. The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
 primary messages containing wanted codes, reject. The
@@ -189,7 +194,7 @@ retains exact prior failures and a genuine resource-validation bypass that makes
 the repaired test fail. Compiled observer controls keep expectations out of
 active eval-source frames. Complete ordinary products are conserved; pointer
 records and update rosters have finite independent models, while wider internal
-semantics remain under cold review. Reusable/reservation and remaining
+semantics remain under cold review. Aggregate-record and other
 named/framework cohorts stay open.
 The [reusable-product diagnosis](../../../docs/audits/reusable-product-helper-causes-20261003/scope.txt)
 finds the same cause gap in library/ATL admission helpers and one adjacent
@@ -206,8 +211,8 @@ restoring the exact old copier makes the strengthened checks fail. The private A
 check now compares a detached scalar, preserving the complete caller on both
 accepted and refused routes. The [width-kind repair](../../../docs/audits/atl-source-width-kind-repair-20261003/scope.txt)
 retains identical preparation/module outputs and exact prior failure controls.
-The cause and test-copy repairs are complete; reservation and remaining cohorts
-still require review. These repairs
+The formal resource, reusable and reservation cause/copy repairs are complete;
+aggregate-record and remaining cohorts still require review. These repairs
 add no composition or HDL runtime support. Whole constructor and child-internal semantic qualification remains open.
 The [prepared-reservation diagnosis](../../../docs/audits/prepared-reservation-helper-causes-20261003/scope.txt)
 finds unrelated unsupported-reference causes accepted by the test helper and an

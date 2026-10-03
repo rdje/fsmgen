@@ -1,0 +1,50 @@
+{
+  "collect.py": {
+    "bytes": 2176,
+    "sha256": "d49cd87d6d4b0b506cf801e932ed1750181f08fa51e8c70363a00630a348044b"
+  },
+  "collect.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "collect.txt": {
+    "bytes": 190,
+    "sha256": "24ff2a045b13f53ff542659343c44a59917ef4be9f1f86e86762810625dac4ab"
+  },
+  "member-omission.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "member-omission.txt": {
+    "bytes": 354,
+    "sha256": "05c99481444ac0f6e3db3bc16058d50d9a72894c402565b56095288e636eafbc"
+  },
+  "plan.json": {
+    "bytes": 175222,
+    "sha256": "93ee988b9e7fd062e56d0c22e92a60725efc0bf0a6c67164417d060653fa71fe"
+  },
+  "prior-owner.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "prior-owner.txt": {
+    "bytes": 396,
+    "sha256": "3403bf67f0c0bfe431b87e26d9933bac6544d22a15640ad1f1cbc74910259d7d"
+  },
+  "scope.txt": {
+    "bytes": 2557,
+    "sha256": "15dfdc71b69e650ee7c9cbcec37daa8e97388b8f4bb5768ed294121107c0fa93"
+  },
+  "verify.py": {
+    "bytes": 3592,
+    "sha256": "f0a967d4a65e5bdcb2bf16d4a77a31198aa3af1798eb2e2f6dc48bdb53632aba"
+  },
+  "verify.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "verify.txt": {
+    "bytes": 186,
+    "sha256": "ccbb12f4fd99c333efd16698b3626f2212e87826297d9efa832b8252582c629f"
+  }
+}

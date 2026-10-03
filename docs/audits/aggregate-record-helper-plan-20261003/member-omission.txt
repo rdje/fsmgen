@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/aggregate-record-helper-plan-20261003/verify.py", line 25, in <module>
+    assert [row['path'] for row in rows] == paths, 'complete selected source membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete selected source membership

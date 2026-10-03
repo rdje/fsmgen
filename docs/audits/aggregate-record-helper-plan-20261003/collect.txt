@@ -1,0 +1,1 @@
+PASS complete aggregate-record declaration membership binds 14 sources/14 declarations to distinct review leaves; split/join have separate owners; native and behavior review remain pending.
