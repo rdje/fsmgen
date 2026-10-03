@@ -1,0 +1,1 @@
+PASS rendered snapshot join preserves complete native cause/identity/empty-shape and actual replacement RED, finite scope and final qualification before live repair; audit link resolves. Visual QA remains pending.

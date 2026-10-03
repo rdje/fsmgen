@@ -1,0 +1,10 @@
+Run from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-snapshot-native-join-20261003/verify.py
+The --trust-value-only variant must exit1 at the actual unchanged-value/native-ID
+contradiction, never a manifest/import/source failure. Ordinary native prove
+passes234; the actual replacement mode deliberately fails only identity test12.
+Never rerun observe.pl into the sealed directory. A new owned sibling may adapt
+its output base, run explicit ordinary/replacement modes under the RAM guard,
+then compare full typed observations and within-run identities. Actual native
+addresses need not equal historical numbers; primaries and whole non-ID graphs
+must conserve. Final coverage qualification precedes the live P2 copy repair.

@@ -1,0 +1,18 @@
+ram-guard: PID 73151; host 70.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+
+#   Failed test 'late register / earlier_reference: empty native marker identity retained'
+#   at ./t/2063-isf-coverage-diagnostic-causes.t line 131.
+#          got: '534495902816'
+#     expected: '534485297336'
+# Looks like you failed 1 test of 234.
+docs/audits/reservation-coverage-snapshot-native-join-20261003/observe.pl .. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/234 subtests 
+
+Test Summary Report
+-------------------
+docs/audits/reservation-coverage-snapshot-native-join-20261003/observe.pl (Wstat: 256 Tests: 234 Failed: 1)
+  Failed test:  12
+  Non-zero exit status: 1
+Files=1, Tests=234,  4 wallclock secs ( 0.01 usr  0.00 sys +  3.88 cusr  0.03 csys =  3.92 CPU)
+Result: FAIL

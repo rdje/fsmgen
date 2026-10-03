@@ -1,0 +1,48 @@
+Owned by SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.2.2.
+
+This closes complete finite snapshot assurance before the final coverage join;
+it does not repair T1960 or qualify general native/constructor/controller data.
+Full current T1960/T2063/provider/cause-predicate sources and complete owning task
+bytes are bound to immutable Git. Completed capture, field, real value-only
+consumer and prospective plain/native helper owners are authenticated exactly.
+Their sealed readers retain source/product/caller-kind and topology semantics.
+
+Units: the exact existing T2063 corpus of 39 native refused cases: thirteen
+current intended reasons, thirteen earlier-reference refusals and thirteen
+primary-path echoes. Both native modes retain every case, complete caller graphs,
+actual native errors, intended reasons, helper assertion decisions and results.
+There are 26 known empty native-marker inputs per run. Identity numbers are
+within-invocation evidence, never stable across runs or portable locators.
+
+Re-derivation: ordinary mode runs current T2063 unchanged and passes all 234
+assertions. The independently observed first-touch graphs preserve original
+native identities, classes, empty shapes and all plain primitive kinds/sharing.
+The cold reader compares every native call to the test's own complete capture,
+the prior sealed cause-repair corpus and the ordinary/replacement counterpart.
+All actual errors are saved immediately and matched as complete intended causes,
+not substring hits; incidental stack addresses naturally vary.
+
+Falsification: replacement mode changes exactly one real CoverageCauseSentinel
+empty HASH after the actual earlier-reference refusal for the first late-register
+case. The old marker remains strongly referenced while a new same-class empty
+marker is allocated, preventing recycled-address ambiguity. Every intended
+cause/result/helper bit and complete value-only graph remains unchanged; the
+existing original-identity assertion alone fails (test12, one of234). The
+candidate first-touch graph independently detects just that actual identity
+change. --trust-value-only promotes the genuinely unchanged actual value graph
+as an identity authority and must fail RED1 at that contradiction. Nonempty/
+wrong-class/unsupported references remain refusal controls from the completed
+prospective boundary, not newly supported native meanings.
+Durability: exact Git/source/full-task/owner closure, runnable native observer,
+complete actual before/after/result/error/test streams for both modes, full
+TAP/status/identity RED and cold counterfactual receipts, manifest/task/fact/book
+and Git. No producer writes after sealing; subsequent cold receipts use the
+owned sibling. Only trace absolute-root prefixes are encoded as ${REPO_ROOT}.
+
+Snapshot join: complete capture and every ordinary/rebuilt-input field, real
+successful/refused value-only kind counterexamples, plain kinds/aliases/cycles/
+deep isolation and finite native identity/class/shape refusal limits all have
+separately completed owners/readers. Final coverage .5 must reconcile all initial
+copy sites/cohorts before P2 .13 repairs the test. Current provider/test/public
+interfaces/submodules/old archives remain unchanged. Arbitrary native referents,
+constructor/controller/runtime, moved-root execution and visual QA stay cold.

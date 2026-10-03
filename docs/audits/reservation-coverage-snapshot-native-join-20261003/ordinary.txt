@@ -1,0 +1,5 @@
+ram-guard: PID 73062; host 70.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+docs/audits/reservation-coverage-snapshot-native-join-20261003/observe.pl .. ok
+All tests successful.
+Files=1, Tests=234,  4 wallclock secs ( 0.01 usr  0.00 sys +  3.89 cusr  0.03 csys =  3.93 CPU)
+Result: PASS
