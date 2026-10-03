@@ -209,6 +209,13 @@ retains identical preparation/module outputs and exact prior failure controls.
 The cause and test-copy repairs are complete; reservation and remaining cohorts
 still require review. These repairs
 add no composition or HDL runtime support. Whole constructor and child-internal semantic qualification remains open.
+The [prepared-reservation diagnosis](../../../docs/audits/prepared-reservation-helper-causes-20261003/scope.txt)
+finds unrelated unsupported-reference causes accepted by the test helper and an
+adjacent cycle assertion. Primary paths containing the expected phrase also fool
+fragment checks. The production collector rejects those inputs correctly;
+complete-cause test repair is the next owned step. Whole ordinary scope/token
+inventories have independent finite models, while wider constructor semantics
+and moved-root qualification remain open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
 

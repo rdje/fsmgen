@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/prepared-reservation-helper-causes-20261003/verify.py", line 81, in <module>
+    assert all(r['assertions'][1]==int(r['band']=='current_fixture') for r in data['rows']),'current full-error consumers accept111 wrong causes'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: current full-error consumers accept111 wrong causes

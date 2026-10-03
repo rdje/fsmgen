@@ -15,5 +15,5 @@
 
 _Checked prepared reservation inputs retain explicit module scopes_
 
-- **date:** 2026-09-27 · **status:** current
+- **date:** 2026-10-03 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-prepared-formal-reservations.md`](../../docs/knowledge/isf-prepared-formal-reservations.md)

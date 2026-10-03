@@ -1,0 +1,4 @@
+t/1959-isf-prepared-formal-reservations.t .. ok
+All tests successful.
+Files=1, Tests=4,  2 wallclock secs ( 0.01 usr  0.01 sys +  1.12 cusr  0.43 csys =  1.57 CPU)
+Result: PASS

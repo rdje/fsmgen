@@ -1,0 +1,6 @@
+Cause consumer bands: Counter({('current_fixture', 0, 1, 1): 57, ('primary_cause_echo', 0, 1, 1): 57, ('earlier_reference', 0, 1, 0): 53, ('earlier_reference', 0, 0, 0): 4, ('current_fixture', 1, 1, 1): 1, ('earlier_reference', 1, 0, 0): 1, ('primary_cause_echo', 1, 1, 1): 1})
+Inputs: whole graph values/kinds unchanged.
+Unrelated matches: 111
+Safe earlier helper labels: ['missing parent_named_completion_products has a focused diagnostic', 'missing parent_payload_snapshot_products has a focused diagnostic', 'missing transaction_binding_report_products has a focused diagnostic', 'malformed transaction_binding_report_products has a focused diagnostic']
+First unrelated native error: ["Formal reservation inventory has unsupported reference at '/_early_reference'", ' at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 41.']
+Default actual API records: 64 Counter({0: 58, 1: 6})

@@ -1,0 +1,46 @@
+ram-guard: PID 40099; host 82.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Carp public VERSION=1.52 MaxArgLen=64
+missing parent_named_completion_products has a focused diagnostic
+pattern=(?^:incomplete preparation.*missing: parent_named_completion_products)
+Formal reservation inventory has unsupported reference at '/_early_reference'
+ at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 41.
+	FSM::Scheduler::ISF::FormalReservationInventory::_walk(PreparedCauseSentinel=HASH(0x7b9c9083a8), "/_early_reference", HASH(0x7b9b61fa80), HASH(0x7b9b113270)) called at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 53
+	FSM::Scheduler::ISF::FormalReservationInventory::_walk(HASH(0x7b9bc0fe28), "", HASH(0x7b9b61fa80), HASH(0x7b9b113270)) called at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 16
+	FSM::Scheduler::ISF::FormalReservationInventory::collect("FSM::Scheduler::ISF::FormalReservationInventory", HASH(0x7b9bc0fe28)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 32
+	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x7b9bc0fe28)) called at docs/audits/prepared-reservation-helper-causes-20261003/probe.pl line 69
+	PreparedReservationCauseSubject::collect(HASH(0x7b9bc0fe28)) called at (eval 35889) line 4
+	eval {...} called at (eval 35889) line 4
+	PreparedReservationCauseSubject::rejected(HASH(0x7b9bc0fe28), qr(incomplete preparation.*missing: parent_named_completion_prod)..., "missing parent_named_completion_products has a focused diagno"...) called at docs/audits/prepared-reservation-helper-causes-20261003/probe.pl line 96
+missing parent_payload_snapshot_products has a focused diagnostic
+pattern=(?^:incomplete preparation.*missing: parent_payload_snapshot_products)
+Formal reservation inventory has unsupported reference at '/_early_reference'
+ at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 41.
+	FSM::Scheduler::ISF::FormalReservationInventory::_walk(PreparedCauseSentinel=HASH(0x7b9b1d3b88), "/_early_reference", HASH(0x7b9b276678), HASH(0x7b9b1e6528)) called at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 53
+	FSM::Scheduler::ISF::FormalReservationInventory::_walk(HASH(0x7b9b43eac8), "", HASH(0x7b9b276678), HASH(0x7b9b1e6528)) called at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 16
+	FSM::Scheduler::ISF::FormalReservationInventory::collect("FSM::Scheduler::ISF::FormalReservationInventory", HASH(0x7b9b43eac8)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 32
+	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x7b9b43eac8)) called at docs/audits/prepared-reservation-helper-causes-20261003/probe.pl line 69
+	PreparedReservationCauseSubject::collect(HASH(0x7b9b43eac8)) called at (eval 35889) line 4
+	eval {...} called at (eval 35889) line 4
+	PreparedReservationCauseSubject::rejected(HASH(0x7b9b43eac8), qr(incomplete preparation.*missing: parent_payload_snapshot_prod)..., "missing parent_payload_snapshot_products has a focused diagno"...) called at docs/audits/prepared-reservation-helper-causes-20261003/probe.pl line 96
+missing transaction_binding_report_products has a focused diagnostic
+pattern=(?^:incomplete preparation.*missing: transaction_binding_report_products)
+Formal reservation inventory has unsupported reference at '/_early_reference'
+ at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 41.
+	FSM::Scheduler::ISF::FormalReservationInventory::_walk(PreparedCauseSentinel=HASH(0x7b9b1f00d8), "/_early_reference", HASH(0x7b9af9a8d0), HASH(0x7b9a851a80)) called at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 53
+	FSM::Scheduler::ISF::FormalReservationInventory::_walk(HASH(0x7b9acfded0), "", HASH(0x7b9af9a8d0), HASH(0x7b9a851a80)) called at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 16
+	FSM::Scheduler::ISF::FormalReservationInventory::collect("FSM::Scheduler::ISF::FormalReservationInventory", HASH(0x7b9acfded0)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 32
+	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x7b9acfded0)) called at docs/audits/prepared-reservation-helper-causes-20261003/probe.pl line 69
+	PreparedReservationCauseSubject::collect(HASH(0x7b9acfded0)) called at (eval 35889) line 4
+	eval {...} called at (eval 35889) line 4
+	PreparedReservationCauseSubject::rejected(HASH(0x7b9acfded0), qr(incomplete preparation.*missing: transaction_binding_report_p)..., "missing transaction_binding_report_products has a focused dia"...) called at docs/audits/prepared-reservation-helper-causes-20261003/probe.pl line 96
+malformed transaction_binding_report_products has a focused diagnostic
+pattern=(?^:malformed preparation field 'transaction_binding_report_products')
+Formal reservation inventory has unsupported reference at '/_early_reference'
+ at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 41.
+	FSM::Scheduler::ISF::FormalReservationInventory::_walk(PreparedCauseSentinel=HASH(0x7b9bd10b28), "/_early_reference", HASH(0x7b9a4110c0), HASH(0x7b9af63840)) called at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 53
+	FSM::Scheduler::ISF::FormalReservationInventory::_walk(HASH(0x7b9bca2f48), "", HASH(0x7b9a4110c0), HASH(0x7b9af63840)) called at perl/FSM/Scheduler/ISF/FormalReservationInventory.pm line 16
+	FSM::Scheduler::ISF::FormalReservationInventory::collect("FSM::Scheduler::ISF::FormalReservationInventory", HASH(0x7b9bca2f48)) called at perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm line 32
+	FSM::Scheduler::ISF::PreparedFormalReservations::collect("FSM::Scheduler::ISF::PreparedFormalReservations", HASH(0x7b9bca2f48)) called at docs/audits/prepared-reservation-helper-causes-20261003/probe.pl line 69
+	PreparedReservationCauseSubject::collect(HASH(0x7b9bca2f48)) called at (eval 35889) line 4
+	eval {...} called at (eval 35889) line 4
+	PreparedReservationCauseSubject::rejected(HASH(0x7b9bca2f48), qr(malformed preparation field 'transaction_binding_report_produ)..., "malformed transaction_binding_report_products has a focused d"...) called at docs/audits/prepared-reservation-helper-causes-20261003/probe.pl line 96

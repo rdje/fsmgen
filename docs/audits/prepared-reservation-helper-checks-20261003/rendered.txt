@@ -1,0 +1,1 @@
+PASS rendered checked-reservation cause diagnosis; visual QA not performed.

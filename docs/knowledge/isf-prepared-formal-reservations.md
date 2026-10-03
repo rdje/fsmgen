@@ -5,7 +5,7 @@ answers:
   - "how are missing prepared formal reservation categories rejected?"
   - "does the checked reservation collector prove final emitted completeness?"
   - "how are parent child and domain reservation scopes represented?"
-date: 2026-09-27
+date: 2026-10-03
 status: current
 tags: [isf, formals, reservations, preparation, scope]
 evidence: perl/FSM/Scheduler/ISF/PreparedFormalReservations.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; t/1959-isf-prepared-formal-reservations.t; t/1957-isf-formal-domain-reservation-integration.t
@@ -23,16 +23,9 @@ match the source partition, logical owner and actual scheduled-domain source.
 Nested preparation is checked independently. Unsupported references and cycles
 fail through the existing inventory traversal before scope recursion.
 
-The result retains the same conservative reserved_names/origins union as the
-previous complete product selection, plus deterministic scopes with typed
-identities. Ordinary parents use actor_module/actor/parent; independently emitted
-domains use actor_domain/actor/domain/parent; child scopes append child and the
-actual child product key instead of parent. Multi-domain monolithic preparation
-is not advertised as an emitted module. Each scope has its own detached name and
-JSON-pointer provenance inventory; the union can conservatively reserve names
-across scopes without merging their physical ownership.
+Results retain a conservative reserved_names/origins union and deterministic typed scopes: actor_module/actor/parent for ordinary parents, actor_domain/actor/domain/parent for emitted domains; child scopes append child/module instead of parent. Multi-domain monolithic preparation is not an emitted module. Each detached scope has JSON-pointer provenance; the union does not merge physical ownership.
 
-T1959 qualifies every missing or malformed top-level category, unknown producers,
+T1959 exercises missing or malformed top-level category, unknown producers,
 missing live or child products, erased/misidentified domains, cycles, reordered
 input hashes, detached snapshots, source storage/formal shadows, real FIFO
 children, static-zero exclusions and a single declared domain. T1957 now consumes
@@ -45,4 +38,6 @@ inputs to actual admitted module scopes and detects omitted declarations.
 [Production formal lowering](isf-production-formal-scope.md) consumes the checked
 inventory before allocating private names. The generic partial collector remains available for individual producer
 qualification. Existing controller, local-call and runtime limitations remain.
+[Cause diagnosis](../audits/prepared-reservation-helper-causes-20261003/scope.txt) finds real earlier/primary false matches in the test helper and adjacent cycle assertion; .2.3.12 owns immediate complete-cause repair. Collector admission remains correct. Complete source/graph and conservative scope/token models pass; wider constructors/moved-root semantics stay separately owned.
+
 Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.49.2.2.3.2.2.3.1.

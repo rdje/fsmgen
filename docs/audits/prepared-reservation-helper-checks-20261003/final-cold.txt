@@ -1,0 +1,10 @@
+cause corruption rejects: cause
+cause corruption rejects: graph-kind
+cause corruption rejects: marker
+cause corruption rejects: field
+cause corruption rejects: member
+cause corruption rejects: pattern
+whole corruption rejects: scope
+whole corruption rejects: token
+whole corruption rejects: kind
+PASS finite complete causes/graphs/source/mutations and whole conservative inventories/scopes; wider constructors and relocated-root semantics remain owned.

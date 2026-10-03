@@ -1,0 +1,966 @@
+Prototype mismatch: sub RealReservationConsumer::like ($$;$) vs none at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 31.
+ok 1 - missing actor has a focused diagnostic / current_fixture rejected
+ok 2 - missing actor has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 3 - missing actor has a focused diagnostic / current_fixture validation does not mutate input
+ok 4 - missing actor has a focused diagnostic / earlier_reference rejected
+not ok 5 - missing actor has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing actor has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 6 - missing actor has a focused diagnostic / earlier_reference validation does not mutate input
+ok 7 - missing actor has a focused diagnostic / primary_cause_echo rejected
+not ok 8 - missing actor has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing actor has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 9 - missing actor has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 10 - malformed actor has a focused diagnostic / current_fixture rejected
+ok 11 - malformed actor has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 12 - malformed actor has a focused diagnostic / current_fixture validation does not mutate input
+ok 13 - malformed actor has a focused diagnostic / earlier_reference rejected
+not ok 14 - malformed actor has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed actor has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 15 - malformed actor has a focused diagnostic / earlier_reference validation does not mutate input
+ok 16 - malformed actor has a focused diagnostic / primary_cause_echo rejected
+not ok 17 - malformed actor has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed actor has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 18 - malformed actor has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 19 - missing actor_context has a focused diagnostic / current_fixture rejected
+ok 20 - missing actor_context has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 21 - missing actor_context has a focused diagnostic / current_fixture validation does not mutate input
+ok 22 - missing actor_context has a focused diagnostic / earlier_reference rejected
+not ok 23 - missing actor_context has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing actor_context has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 24 - missing actor_context has a focused diagnostic / earlier_reference validation does not mutate input
+ok 25 - missing actor_context has a focused diagnostic / primary_cause_echo rejected
+not ok 26 - missing actor_context has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing actor_context has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 27 - missing actor_context has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 28 - malformed actor_context has a focused diagnostic / current_fixture rejected
+ok 29 - malformed actor_context has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 30 - malformed actor_context has a focused diagnostic / current_fixture validation does not mutate input
+ok 31 - malformed actor_context has a focused diagnostic / earlier_reference rejected
+not ok 32 - malformed actor_context has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed actor_context has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 33 - malformed actor_context has a focused diagnostic / earlier_reference validation does not mutate input
+ok 34 - malformed actor_context has a focused diagnostic / primary_cause_echo rejected
+not ok 35 - malformed actor_context has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed actor_context has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 36 - malformed actor_context has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 37 - missing deferred_formal_collisions has a focused diagnostic / current_fixture rejected
+ok 38 - missing deferred_formal_collisions has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 39 - missing deferred_formal_collisions has a focused diagnostic / current_fixture validation does not mutate input
+ok 40 - missing deferred_formal_collisions has a focused diagnostic / earlier_reference rejected
+not ok 41 - missing deferred_formal_collisions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing deferred_formal_collisions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 42 - missing deferred_formal_collisions has a focused diagnostic / earlier_reference validation does not mutate input
+ok 43 - missing deferred_formal_collisions has a focused diagnostic / primary_cause_echo rejected
+not ok 44 - missing deferred_formal_collisions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing deferred_formal_collisions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 45 - missing deferred_formal_collisions has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 46 - malformed deferred_formal_collisions has a focused diagnostic / current_fixture rejected
+ok 47 - malformed deferred_formal_collisions has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 48 - malformed deferred_formal_collisions has a focused diagnostic / current_fixture validation does not mutate input
+ok 49 - malformed deferred_formal_collisions has a focused diagnostic / earlier_reference rejected
+not ok 50 - malformed deferred_formal_collisions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed deferred_formal_collisions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 51 - malformed deferred_formal_collisions has a focused diagnostic / earlier_reference validation does not mutate input
+ok 52 - malformed deferred_formal_collisions has a focused diagnostic / primary_cause_echo rejected
+not ok 53 - malformed deferred_formal_collisions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed deferred_formal_collisions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 54 - malformed deferred_formal_collisions has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 55 - missing domain_partition has a focused diagnostic / current_fixture rejected
+ok 56 - missing domain_partition has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 57 - missing domain_partition has a focused diagnostic / current_fixture validation does not mutate input
+ok 58 - missing domain_partition has a focused diagnostic / earlier_reference rejected
+not ok 59 - missing domain_partition has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing domain_partition has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 60 - missing domain_partition has a focused diagnostic / earlier_reference validation does not mutate input
+ok 61 - missing domain_partition has a focused diagnostic / primary_cause_echo rejected
+not ok 62 - missing domain_partition has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing domain_partition has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 63 - missing domain_partition has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 64 - malformed domain_partition has a focused diagnostic / current_fixture rejected
+ok 65 - malformed domain_partition has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 66 - malformed domain_partition has a focused diagnostic / current_fixture validation does not mutate input
+ok 67 - malformed domain_partition has a focused diagnostic / earlier_reference rejected
+not ok 68 - malformed domain_partition has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed domain_partition has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 69 - malformed domain_partition has a focused diagnostic / earlier_reference validation does not mutate input
+ok 70 - malformed domain_partition has a focused diagnostic / primary_cause_echo rejected
+not ok 71 - malformed domain_partition has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed domain_partition has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 72 - malformed domain_partition has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 73 - missing domain_source_products has a focused diagnostic / current_fixture rejected
+ok 74 - missing domain_source_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 75 - missing domain_source_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 76 - missing domain_source_products has a focused diagnostic / earlier_reference rejected
+not ok 77 - missing domain_source_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing domain_source_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 78 - missing domain_source_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 79 - missing domain_source_products has a focused diagnostic / primary_cause_echo rejected
+not ok 80 - missing domain_source_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing domain_source_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 81 - missing domain_source_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 82 - malformed domain_source_products has a focused diagnostic / current_fixture rejected
+ok 83 - malformed domain_source_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 84 - malformed domain_source_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 85 - malformed domain_source_products has a focused diagnostic / earlier_reference rejected
+not ok 86 - malformed domain_source_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed domain_source_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 87 - malformed domain_source_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 88 - malformed domain_source_products has a focused diagnostic / primary_cause_echo rejected
+not ok 89 - malformed domain_source_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed domain_source_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 90 - malformed domain_source_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 91 - missing generated_child_products has a focused diagnostic / current_fixture rejected
+ok 92 - missing generated_child_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 93 - missing generated_child_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 94 - missing generated_child_products has a focused diagnostic / earlier_reference rejected
+not ok 95 - missing generated_child_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing generated_child_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 96 - missing generated_child_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 97 - missing generated_child_products has a focused diagnostic / primary_cause_echo rejected
+not ok 98 - missing generated_child_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing generated_child_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 99 - missing generated_child_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 100 - malformed generated_child_products has a focused diagnostic / current_fixture rejected
+ok 101 - malformed generated_child_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 102 - malformed generated_child_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 103 - malformed generated_child_products has a focused diagnostic / earlier_reference rejected
+not ok 104 - malformed generated_child_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed generated_child_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 105 - malformed generated_child_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 106 - malformed generated_child_products has a focused diagnostic / primary_cause_echo rejected
+not ok 107 - malformed generated_child_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed generated_child_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 108 - malformed generated_child_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 109 - missing generated_children has a focused diagnostic / current_fixture rejected
+ok 110 - missing generated_children has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 111 - missing generated_children has a focused diagnostic / current_fixture validation does not mutate input
+ok 112 - missing generated_children has a focused diagnostic / earlier_reference rejected
+not ok 113 - missing generated_children has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing generated_children has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 114 - missing generated_children has a focused diagnostic / earlier_reference validation does not mutate input
+ok 115 - missing generated_children has a focused diagnostic / primary_cause_echo rejected
+not ok 116 - missing generated_children has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing generated_children has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 117 - missing generated_children has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 118 - malformed generated_children has a focused diagnostic / current_fixture rejected
+ok 119 - malformed generated_children has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 120 - malformed generated_children has a focused diagnostic / current_fixture validation does not mutate input
+ok 121 - malformed generated_children has a focused diagnostic / earlier_reference rejected
+not ok 122 - malformed generated_children has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed generated_children has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 123 - malformed generated_children has a focused diagnostic / earlier_reference validation does not mutate input
+ok 124 - malformed generated_children has a focused diagnostic / primary_cause_echo rejected
+not ok 125 - malformed generated_children has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed generated_children has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 126 - malformed generated_children has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 127 - missing parent_activation_products has a focused diagnostic / current_fixture rejected
+ok 128 - missing parent_activation_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 129 - missing parent_activation_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 130 - missing parent_activation_products has a focused diagnostic / earlier_reference rejected
+not ok 131 - missing parent_activation_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_activation_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 132 - missing parent_activation_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 133 - missing parent_activation_products has a focused diagnostic / primary_cause_echo rejected
+not ok 134 - missing parent_activation_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_activation_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 135 - missing parent_activation_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 136 - malformed parent_activation_products has a focused diagnostic / current_fixture rejected
+ok 137 - malformed parent_activation_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 138 - malformed parent_activation_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 139 - malformed parent_activation_products has a focused diagnostic / earlier_reference rejected
+not ok 140 - malformed parent_activation_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_activation_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 141 - malformed parent_activation_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 142 - malformed parent_activation_products has a focused diagnostic / primary_cause_echo rejected
+not ok 143 - malformed parent_activation_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_activation_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 144 - malformed parent_activation_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 145 - missing parent_completion_products has a focused diagnostic / current_fixture rejected
+ok 146 - missing parent_completion_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 147 - missing parent_completion_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 148 - missing parent_completion_products has a focused diagnostic / earlier_reference rejected
+not ok 149 - missing parent_completion_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_completion_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 150 - missing parent_completion_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 151 - missing parent_completion_products has a focused diagnostic / primary_cause_echo rejected
+not ok 152 - missing parent_completion_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_completion_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 153 - missing parent_completion_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 154 - malformed parent_completion_products has a focused diagnostic / current_fixture rejected
+ok 155 - malformed parent_completion_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 156 - malformed parent_completion_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 157 - malformed parent_completion_products has a focused diagnostic / earlier_reference rejected
+not ok 158 - malformed parent_completion_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_completion_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 159 - malformed parent_completion_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 160 - malformed parent_completion_products has a focused diagnostic / primary_cause_echo rejected
+not ok 161 - malformed parent_completion_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_completion_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 162 - malformed parent_completion_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 163 - missing parent_named_completion_products has a focused diagnostic / current_fixture rejected
+ok 164 - missing parent_named_completion_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 165 - missing parent_named_completion_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 166 - missing parent_named_completion_products has a focused diagnostic / earlier_reference rejected
+ok 167 - missing parent_named_completion_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+ok 168 - missing parent_named_completion_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 169 - missing parent_named_completion_products has a focused diagnostic / primary_cause_echo rejected
+not ok 170 - missing parent_named_completion_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_named_completion_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 171 - missing parent_named_completion_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 172 - malformed parent_named_completion_products has a focused diagnostic / current_fixture rejected
+ok 173 - malformed parent_named_completion_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 174 - malformed parent_named_completion_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 175 - malformed parent_named_completion_products has a focused diagnostic / earlier_reference rejected
+not ok 176 - malformed parent_named_completion_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_named_completion_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 177 - malformed parent_named_completion_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 178 - malformed parent_named_completion_products has a focused diagnostic / primary_cause_echo rejected
+not ok 179 - malformed parent_named_completion_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_named_completion_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 180 - malformed parent_named_completion_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 181 - missing parent_payload_snapshot_products has a focused diagnostic / current_fixture rejected
+ok 182 - missing parent_payload_snapshot_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 183 - missing parent_payload_snapshot_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 184 - missing parent_payload_snapshot_products has a focused diagnostic / earlier_reference rejected
+ok 185 - missing parent_payload_snapshot_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+ok 186 - missing parent_payload_snapshot_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 187 - missing parent_payload_snapshot_products has a focused diagnostic / primary_cause_echo rejected
+not ok 188 - missing parent_payload_snapshot_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_payload_snapshot_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 189 - missing parent_payload_snapshot_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 190 - malformed parent_payload_snapshot_products has a focused diagnostic / current_fixture rejected
+ok 191 - malformed parent_payload_snapshot_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 192 - malformed parent_payload_snapshot_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 193 - malformed parent_payload_snapshot_products has a focused diagnostic / earlier_reference rejected
+not ok 194 - malformed parent_payload_snapshot_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_payload_snapshot_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 195 - malformed parent_payload_snapshot_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 196 - malformed parent_payload_snapshot_products has a focused diagnostic / primary_cause_echo rejected
+not ok 197 - malformed parent_payload_snapshot_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_payload_snapshot_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 198 - malformed parent_payload_snapshot_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 199 - missing parent_point_products has a focused diagnostic / current_fixture rejected
+ok 200 - missing parent_point_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 201 - missing parent_point_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 202 - missing parent_point_products has a focused diagnostic / earlier_reference rejected
+not ok 203 - missing parent_point_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_point_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 204 - missing parent_point_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 205 - missing parent_point_products has a focused diagnostic / primary_cause_echo rejected
+not ok 206 - missing parent_point_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_point_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 207 - missing parent_point_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 208 - malformed parent_point_products has a focused diagnostic / current_fixture rejected
+ok 209 - malformed parent_point_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 210 - malformed parent_point_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 211 - malformed parent_point_products has a focused diagnostic / earlier_reference rejected
+not ok 212 - malformed parent_point_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_point_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 213 - malformed parent_point_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 214 - malformed parent_point_products has a focused diagnostic / primary_cause_echo rejected
+not ok 215 - malformed parent_point_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_point_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 216 - malformed parent_point_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 217 - missing parent_storage_read_products has a focused diagnostic / current_fixture rejected
+ok 218 - missing parent_storage_read_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 219 - missing parent_storage_read_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 220 - missing parent_storage_read_products has a focused diagnostic / earlier_reference rejected
+not ok 221 - missing parent_storage_read_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_storage_read_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 222 - missing parent_storage_read_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 223 - missing parent_storage_read_products has a focused diagnostic / primary_cause_echo rejected
+not ok 224 - missing parent_storage_read_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_storage_read_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 225 - missing parent_storage_read_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 226 - malformed parent_storage_read_products has a focused diagnostic / current_fixture rejected
+ok 227 - malformed parent_storage_read_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 228 - malformed parent_storage_read_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 229 - malformed parent_storage_read_products has a focused diagnostic / earlier_reference rejected
+not ok 230 - malformed parent_storage_read_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_storage_read_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 231 - malformed parent_storage_read_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 232 - malformed parent_storage_read_products has a focused diagnostic / primary_cause_echo rejected
+not ok 233 - malformed parent_storage_read_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_storage_read_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 234 - malformed parent_storage_read_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 235 - missing parent_storage_write_products has a focused diagnostic / current_fixture rejected
+ok 236 - missing parent_storage_write_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 237 - missing parent_storage_write_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 238 - missing parent_storage_write_products has a focused diagnostic / earlier_reference rejected
+not ok 239 - missing parent_storage_write_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_storage_write_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 240 - missing parent_storage_write_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 241 - missing parent_storage_write_products has a focused diagnostic / primary_cause_echo rejected
+not ok 242 - missing parent_storage_write_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_storage_write_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 243 - missing parent_storage_write_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 244 - malformed parent_storage_write_products has a focused diagnostic / current_fixture rejected
+ok 245 - malformed parent_storage_write_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 246 - malformed parent_storage_write_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 247 - malformed parent_storage_write_products has a focused diagnostic / earlier_reference rejected
+not ok 248 - malformed parent_storage_write_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_storage_write_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 249 - malformed parent_storage_write_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 250 - malformed parent_storage_write_products has a focused diagnostic / primary_cause_echo rejected
+not ok 251 - malformed parent_storage_write_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_storage_write_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 252 - malformed parent_storage_write_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 253 - missing parent_wiring_products has a focused diagnostic / current_fixture rejected
+ok 254 - missing parent_wiring_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 255 - missing parent_wiring_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 256 - missing parent_wiring_products has a focused diagnostic / earlier_reference rejected
+not ok 257 - missing parent_wiring_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_wiring_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 258 - missing parent_wiring_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 259 - missing parent_wiring_products has a focused diagnostic / primary_cause_echo rejected
+not ok 260 - missing parent_wiring_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing parent_wiring_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 261 - missing parent_wiring_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 262 - malformed parent_wiring_products has a focused diagnostic / current_fixture rejected
+ok 263 - malformed parent_wiring_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 264 - malformed parent_wiring_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 265 - malformed parent_wiring_products has a focused diagnostic / earlier_reference rejected
+not ok 266 - malformed parent_wiring_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_wiring_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 267 - malformed parent_wiring_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 268 - malformed parent_wiring_products has a focused diagnostic / primary_cause_echo rejected
+not ok 269 - malformed parent_wiring_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed parent_wiring_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 270 - malformed parent_wiring_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 271 - missing pruned_transactions has a focused diagnostic / current_fixture rejected
+ok 272 - missing pruned_transactions has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 273 - missing pruned_transactions has a focused diagnostic / current_fixture validation does not mutate input
+ok 274 - missing pruned_transactions has a focused diagnostic / earlier_reference rejected
+not ok 275 - missing pruned_transactions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing pruned_transactions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 276 - missing pruned_transactions has a focused diagnostic / earlier_reference validation does not mutate input
+ok 277 - missing pruned_transactions has a focused diagnostic / primary_cause_echo rejected
+not ok 278 - missing pruned_transactions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing pruned_transactions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 279 - missing pruned_transactions has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 280 - malformed pruned_transactions has a focused diagnostic / current_fixture rejected
+ok 281 - malformed pruned_transactions has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 282 - malformed pruned_transactions has a focused diagnostic / current_fixture validation does not mutate input
+ok 283 - malformed pruned_transactions has a focused diagnostic / earlier_reference rejected
+not ok 284 - malformed pruned_transactions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed pruned_transactions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 285 - malformed pruned_transactions has a focused diagnostic / earlier_reference validation does not mutate input
+ok 286 - malformed pruned_transactions has a focused diagnostic / primary_cause_echo rejected
+not ok 287 - malformed pruned_transactions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed pruned_transactions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 288 - malformed pruned_transactions has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 289 - missing resource_signal_products has a focused diagnostic / current_fixture rejected
+ok 290 - missing resource_signal_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 291 - missing resource_signal_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 292 - missing resource_signal_products has a focused diagnostic / earlier_reference rejected
+not ok 293 - missing resource_signal_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing resource_signal_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 294 - missing resource_signal_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 295 - missing resource_signal_products has a focused diagnostic / primary_cause_echo rejected
+not ok 296 - missing resource_signal_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing resource_signal_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 297 - missing resource_signal_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 298 - malformed resource_signal_products has a focused diagnostic / current_fixture rejected
+ok 299 - malformed resource_signal_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 300 - malformed resource_signal_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 301 - malformed resource_signal_products has a focused diagnostic / earlier_reference rejected
+not ok 302 - malformed resource_signal_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed resource_signal_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 303 - malformed resource_signal_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 304 - malformed resource_signal_products has a focused diagnostic / primary_cause_echo rejected
+not ok 305 - malformed resource_signal_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed resource_signal_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 306 - malformed resource_signal_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 307 - missing reusable_child_products has a focused diagnostic / current_fixture rejected
+ok 308 - missing reusable_child_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 309 - missing reusable_child_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 310 - missing reusable_child_products has a focused diagnostic / earlier_reference rejected
+not ok 311 - missing reusable_child_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing reusable_child_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 312 - missing reusable_child_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 313 - missing reusable_child_products has a focused diagnostic / primary_cause_echo rejected
+not ok 314 - missing reusable_child_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing reusable_child_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 315 - missing reusable_child_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 316 - malformed reusable_child_products has a focused diagnostic / current_fixture rejected
+ok 317 - malformed reusable_child_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 318 - malformed reusable_child_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 319 - malformed reusable_child_products has a focused diagnostic / earlier_reference rejected
+not ok 320 - malformed reusable_child_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed reusable_child_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 321 - malformed reusable_child_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 322 - malformed reusable_child_products has a focused diagnostic / primary_cause_echo rejected
+not ok 323 - malformed reusable_child_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed reusable_child_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 324 - malformed reusable_child_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 325 - missing transaction_binding_report_products has a focused diagnostic / current_fixture rejected
+ok 326 - missing transaction_binding_report_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 327 - missing transaction_binding_report_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 328 - missing transaction_binding_report_products has a focused diagnostic / earlier_reference rejected
+ok 329 - missing transaction_binding_report_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+ok 330 - missing transaction_binding_report_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 331 - missing transaction_binding_report_products has a focused diagnostic / primary_cause_echo rejected
+not ok 332 - missing transaction_binding_report_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing transaction_binding_report_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 333 - missing transaction_binding_report_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 334 - malformed transaction_binding_report_products has a focused diagnostic / current_fixture rejected
+ok 335 - malformed transaction_binding_report_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 336 - malformed transaction_binding_report_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 337 - malformed transaction_binding_report_products has a focused diagnostic / earlier_reference rejected
+ok 338 - malformed transaction_binding_report_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+ok 339 - malformed transaction_binding_report_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 340 - malformed transaction_binding_report_products has a focused diagnostic / primary_cause_echo rejected
+not ok 341 - malformed transaction_binding_report_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed transaction_binding_report_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 342 - malformed transaction_binding_report_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 343 - missing transaction_products has a focused diagnostic / current_fixture rejected
+ok 344 - missing transaction_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 345 - missing transaction_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 346 - missing transaction_products has a focused diagnostic / earlier_reference rejected
+not ok 347 - missing transaction_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing transaction_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 348 - missing transaction_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 349 - missing transaction_products has a focused diagnostic / primary_cause_echo rejected
+not ok 350 - missing transaction_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing transaction_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 351 - missing transaction_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 352 - malformed transaction_products has a focused diagnostic / current_fixture rejected
+ok 353 - malformed transaction_products has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 354 - malformed transaction_products has a focused diagnostic / current_fixture validation does not mutate input
+ok 355 - malformed transaction_products has a focused diagnostic / earlier_reference rejected
+not ok 356 - malformed transaction_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed transaction_products has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 357 - malformed transaction_products has a focused diagnostic / earlier_reference validation does not mutate input
+ok 358 - malformed transaction_products has a focused diagnostic / primary_cause_echo rejected
+not ok 359 - malformed transaction_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed transaction_products has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 360 - malformed transaction_products has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 361 - missing transactions has a focused diagnostic / current_fixture rejected
+ok 362 - missing transactions has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 363 - missing transactions has a focused diagnostic / current_fixture validation does not mutate input
+ok 364 - missing transactions has a focused diagnostic / earlier_reference rejected
+not ok 365 - missing transactions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing transactions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 366 - missing transactions has a focused diagnostic / earlier_reference validation does not mutate input
+ok 367 - missing transactions has a focused diagnostic / primary_cause_echo rejected
+not ok 368 - missing transactions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing transactions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 369 - missing transactions has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 370 - malformed transactions has a focused diagnostic / current_fixture rejected
+ok 371 - malformed transactions has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 372 - malformed transactions has a focused diagnostic / current_fixture validation does not mutate input
+ok 373 - malformed transactions has a focused diagnostic / earlier_reference rejected
+not ok 374 - malformed transactions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed transactions has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 375 - malformed transactions has a focused diagnostic / earlier_reference validation does not mutate input
+ok 376 - malformed transactions has a focused diagnostic / primary_cause_echo rejected
+not ok 377 - malformed transactions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'malformed transactions has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 378 - malformed transactions has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 379 - unknown producer must be classified has a focused diagnostic / current_fixture rejected
+ok 380 - unknown producer must be classified has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 381 - unknown producer must be classified has a focused diagnostic / current_fixture validation does not mutate input
+ok 382 - unknown producer must be classified has a focused diagnostic / earlier_reference rejected
+not ok 383 - unknown producer must be classified has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'unknown producer must be classified has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 384 - unknown producer must be classified has a focused diagnostic / earlier_reference validation does not mutate input
+ok 385 - unknown producer must be classified has a focused diagnostic / primary_cause_echo rejected
+not ok 386 - unknown producer must be classified has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'unknown producer must be classified has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 387 - unknown producer must be classified has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 388 - missing live transaction producer has a focused diagnostic / current_fixture rejected
+ok 389 - missing live transaction producer has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 390 - missing live transaction producer has a focused diagnostic / current_fixture validation does not mutate input
+ok 391 - missing live transaction producer has a focused diagnostic / earlier_reference rejected
+not ok 392 - missing live transaction producer has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing live transaction producer has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 393 - missing live transaction producer has a focused diagnostic / earlier_reference validation does not mutate input
+ok 394 - missing live transaction producer has a focused diagnostic / primary_cause_echo rejected
+not ok 395 - missing live transaction producer has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing live transaction producer has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 396 - missing live transaction producer has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 397 - unknown context has a focused diagnostic / current_fixture rejected
+ok 398 - unknown context has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 399 - unknown context has a focused diagnostic / current_fixture validation does not mutate input
+ok 400 - unknown context has a focused diagnostic / earlier_reference rejected
+not ok 401 - unknown context has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'unknown context has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 402 - unknown context has a focused diagnostic / earlier_reference validation does not mutate input
+ok 403 - unknown context has a focused diagnostic / primary_cause_echo rejected
+not ok 404 - unknown context has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'unknown context has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 405 - unknown context has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 406 - unknown generated child has a focused diagnostic / current_fixture rejected
+ok 407 - unknown generated child has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 408 - unknown generated child has a focused diagnostic / current_fixture validation does not mutate input
+ok 409 - unknown generated child has a focused diagnostic / earlier_reference rejected
+not ok 410 - unknown generated child has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'unknown generated child has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 411 - unknown generated child has a focused diagnostic / earlier_reference validation does not mutate input
+ok 412 - unknown generated child has a focused diagnostic / primary_cause_echo rejected
+not ok 413 - unknown generated child has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'unknown generated child has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 414 - unknown generated child has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 415 - unknown partition has a focused diagnostic / current_fixture rejected
+ok 416 - unknown partition has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 417 - unknown partition has a focused diagnostic / current_fixture validation does not mutate input
+ok 418 - unknown partition has a focused diagnostic / earlier_reference rejected
+not ok 419 - unknown partition has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'unknown partition has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 420 - unknown partition has a focused diagnostic / earlier_reference validation does not mutate input
+ok 421 - unknown partition has a focused diagnostic / primary_cause_echo rejected
+not ok 422 - unknown partition has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'unknown partition has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 423 - unknown partition has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 424 - unclassified reusable product has a focused diagnostic / current_fixture rejected
+ok 425 - unclassified reusable product has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 426 - unclassified reusable product has a focused diagnostic / current_fixture validation does not mutate input
+ok 427 - unclassified reusable product has a focused diagnostic / earlier_reference rejected
+not ok 428 - unclassified reusable product has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'unclassified reusable product has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 429 - unclassified reusable product has a focused diagnostic / earlier_reference validation does not mutate input
+ok 430 - unclassified reusable product has a focused diagnostic / primary_cause_echo rejected
+not ok 431 - unclassified reusable product has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'unclassified reusable product has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 432 - unclassified reusable product has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 433 - actual direct cycle/control refused
+ok 434 - cycle diagnostic retained / current_fixture: matches only intended cause
+ok 435 - actual direct cycle/control refused
+ok 436 - cycle diagnostic retained / earlier_reference: matches only intended cause
+ok 437 - actual direct cycle/control refused
+not ok 438 - cycle diagnostic retained / primary_cause_echo: matches only intended cause
+#   Failed test 'cycle diagnostic retained / primary_cause_echo: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 439 - missing domain has a focused diagnostic / current_fixture rejected
+ok 440 - missing domain has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 441 - missing domain has a focused diagnostic / current_fixture validation does not mutate input
+ok 442 - missing domain has a focused diagnostic / earlier_reference rejected
+not ok 443 - missing domain has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing domain has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 444 - missing domain has a focused diagnostic / earlier_reference validation does not mutate input
+ok 445 - missing domain has a focused diagnostic / primary_cause_echo rejected
+not ok 446 - missing domain has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing domain has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 447 - missing domain has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 448 - wrong domain owner has a focused diagnostic / current_fixture rejected
+ok 449 - wrong domain owner has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 450 - wrong domain owner has a focused diagnostic / current_fixture validation does not mutate input
+ok 451 - wrong domain owner has a focused diagnostic / earlier_reference rejected
+not ok 452 - wrong domain owner has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'wrong domain owner has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 453 - wrong domain owner has a focused diagnostic / earlier_reference validation does not mutate input
+ok 454 - wrong domain owner has a focused diagnostic / primary_cause_echo rejected
+not ok 455 - wrong domain owner has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'wrong domain owner has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 456 - wrong domain owner has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 457 - missing nested actor has a focused diagnostic / current_fixture rejected
+ok 458 - missing nested actor has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 459 - missing nested actor has a focused diagnostic / current_fixture validation does not mutate input
+ok 460 - missing nested actor has a focused diagnostic / earlier_reference rejected
+not ok 461 - missing nested actor has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing nested actor has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 462 - missing nested actor has a focused diagnostic / earlier_reference validation does not mutate input
+ok 463 - missing nested actor has a focused diagnostic / primary_cause_echo rejected
+not ok 464 - missing nested actor has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing nested actor has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 465 - missing nested actor has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 466 - missing child module has a focused diagnostic / current_fixture rejected
+ok 467 - missing child module has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 468 - missing child module has a focused diagnostic / current_fixture validation does not mutate input
+ok 469 - missing child module has a focused diagnostic / earlier_reference rejected
+not ok 470 - missing child module has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing child module has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 471 - missing child module has a focused diagnostic / earlier_reference validation does not mutate input
+ok 472 - missing child module has a focused diagnostic / primary_cause_echo rejected
+not ok 473 - missing child module has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing child module has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 474 - missing child module has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 475 - missing nested producer has a focused diagnostic / current_fixture rejected
+ok 476 - missing nested producer has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 477 - missing nested producer has a focused diagnostic / current_fixture validation does not mutate input
+ok 478 - missing nested producer has a focused diagnostic / earlier_reference rejected
+not ok 479 - missing nested producer has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'missing nested producer has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 480 - missing nested producer has a focused diagnostic / earlier_reference validation does not mutate input
+ok 481 - missing nested producer has a focused diagnostic / primary_cause_echo rejected
+not ok 482 - missing nested producer has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'missing nested producer has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 483 - missing nested producer has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 484 - erased domain in both product maps has a focused diagnostic / current_fixture rejected
+ok 485 - erased domain in both product maps has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 486 - erased domain in both product maps has a focused diagnostic / current_fixture validation does not mutate input
+ok 487 - erased domain in both product maps has a focused diagnostic / earlier_reference rejected
+not ok 488 - erased domain in both product maps has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'erased domain in both product maps has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 489 - erased domain in both product maps has a focused diagnostic / earlier_reference validation does not mutate input
+ok 490 - erased domain in both product maps has a focused diagnostic / primary_cause_echo rejected
+not ok 491 - erased domain in both product maps has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'erased domain in both product maps has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 492 - erased domain in both product maps has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 493 - wrong partition realization has a focused diagnostic / current_fixture rejected
+ok 494 - wrong partition realization has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 495 - wrong partition realization has a focused diagnostic / current_fixture validation does not mutate input
+ok 496 - wrong partition realization has a focused diagnostic / earlier_reference rejected
+not ok 497 - wrong partition realization has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'wrong partition realization has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 498 - wrong partition realization has a focused diagnostic / earlier_reference validation does not mutate input
+ok 499 - wrong partition realization has a focused diagnostic / primary_cause_echo rejected
+not ok 500 - wrong partition realization has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'wrong partition realization has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 501 - wrong partition realization has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 502 - erased child IR has a focused diagnostic / current_fixture rejected
+ok 503 - erased child IR has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 504 - erased child IR has a focused diagnostic / current_fixture validation does not mutate input
+ok 505 - erased child IR has a focused diagnostic / earlier_reference rejected
+not ok 506 - erased child IR has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'erased child IR has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 507 - erased child IR has a focused diagnostic / earlier_reference validation does not mutate input
+ok 508 - erased child IR has a focused diagnostic / primary_cause_echo rejected
+not ok 509 - erased child IR has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'erased child IR has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 510 - erased child IR has a focused diagnostic / primary_cause_echo validation does not mutate input
+ok 511 - erased partition has a focused diagnostic / current_fixture rejected
+ok 512 - erased partition has a focused diagnostic / current_fixture has a focused diagnostic: matches only intended cause
+ok 513 - erased partition has a focused diagnostic / current_fixture validation does not mutate input
+ok 514 - erased partition has a focused diagnostic / earlier_reference rejected
+not ok 515 - erased partition has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause
+#   Failed test 'erased partition has a focused diagnostic / earlier_reference has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 516 - erased partition has a focused diagnostic / earlier_reference validation does not mutate input
+ok 517 - erased partition has a focused diagnostic / primary_cause_echo rejected
+not ok 518 - erased partition has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause
+#   Failed test 'erased partition has a focused diagnostic / primary_cause_echo has a focused diagnostic: matches only intended cause'
+#   at docs/audits/prepared-reservation-helper-causes-20261003/desired.pl line 30.
+#          got: '1'
+#     expected: '0'
+ok 519 - erased partition has a focused diagnostic / primary_cause_echo validation does not mutate input
+1..519
+# Looks like you failed 111 tests of 519.

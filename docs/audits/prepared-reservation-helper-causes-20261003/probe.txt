@@ -1,0 +1,206 @@
+Prototype mismatch: sub main::like ($$;$) vs none at /System/Library/Perl/5.34/Exporter.pm line 63.
+ at ./t/1959-isf-prepared-formal-reservations.t line 4.
+# Subtest: checked inputs retain complete conservative product provenance without parent execution
+    ok 1 - explicit checked model
+    ok 2 - all previously qualified products are retained
+    ok 3 - structural provenance is preserved
+    ok 4 - ordinary actor has one explicit parent scope
+    ok 5 - actual drive helper candidate remains reserved
+    ok 6 - input hash insertion order cannot affect output
+    ok 7 - scope and union snapshots are independent
+    ok 8 - collection preserves source preparation
+    1..8
+ok 1 - checked inputs retain complete conservative product provenance without parent execution
+# Subtest: every top-level category is required even when empty
+    ok 1 - missing actor rejected
+    ok 2 - missing actor has a focused diagnostic
+    ok 3 - missing actor validation does not mutate input
+    ok 4 - malformed actor rejected
+    ok 5 - malformed actor has a focused diagnostic
+    ok 6 - malformed actor validation does not mutate input
+    ok 7 - missing actor_context rejected
+    ok 8 - missing actor_context has a focused diagnostic
+    ok 9 - missing actor_context validation does not mutate input
+    ok 10 - malformed actor_context rejected
+    ok 11 - malformed actor_context has a focused diagnostic
+    ok 12 - malformed actor_context validation does not mutate input
+    ok 13 - missing deferred_formal_collisions rejected
+    ok 14 - missing deferred_formal_collisions has a focused diagnostic
+    ok 15 - missing deferred_formal_collisions validation does not mutate input
+    ok 16 - malformed deferred_formal_collisions rejected
+    ok 17 - malformed deferred_formal_collisions has a focused diagnostic
+    ok 18 - malformed deferred_formal_collisions validation does not mutate input
+    ok 19 - missing domain_partition rejected
+    ok 20 - missing domain_partition has a focused diagnostic
+    ok 21 - missing domain_partition validation does not mutate input
+    ok 22 - malformed domain_partition rejected
+    ok 23 - malformed domain_partition has a focused diagnostic
+    ok 24 - malformed domain_partition validation does not mutate input
+    ok 25 - missing domain_source_products rejected
+    ok 26 - missing domain_source_products has a focused diagnostic
+    ok 27 - missing domain_source_products validation does not mutate input
+    ok 28 - malformed domain_source_products rejected
+    ok 29 - malformed domain_source_products has a focused diagnostic
+    ok 30 - malformed domain_source_products validation does not mutate input
+    ok 31 - missing generated_child_products rejected
+    ok 32 - missing generated_child_products has a focused diagnostic
+    ok 33 - missing generated_child_products validation does not mutate input
+    ok 34 - malformed generated_child_products rejected
+    ok 35 - malformed generated_child_products has a focused diagnostic
+    ok 36 - malformed generated_child_products validation does not mutate input
+    ok 37 - missing generated_children rejected
+    ok 38 - missing generated_children has a focused diagnostic
+    ok 39 - missing generated_children validation does not mutate input
+    ok 40 - malformed generated_children rejected
+    ok 41 - malformed generated_children has a focused diagnostic
+    ok 42 - malformed generated_children validation does not mutate input
+    ok 43 - missing parent_activation_products rejected
+    ok 44 - missing parent_activation_products has a focused diagnostic
+    ok 45 - missing parent_activation_products validation does not mutate input
+    ok 46 - malformed parent_activation_products rejected
+    ok 47 - malformed parent_activation_products has a focused diagnostic
+    ok 48 - malformed parent_activation_products validation does not mutate input
+    ok 49 - missing parent_completion_products rejected
+    ok 50 - missing parent_completion_products has a focused diagnostic
+    ok 51 - missing parent_completion_products validation does not mutate input
+    ok 52 - malformed parent_completion_products rejected
+    ok 53 - malformed parent_completion_products has a focused diagnostic
+    ok 54 - malformed parent_completion_products validation does not mutate input
+    ok 55 - missing parent_named_completion_products rejected
+    ok 56 - missing parent_named_completion_products has a focused diagnostic
+    ok 57 - missing parent_named_completion_products validation does not mutate input
+    ok 58 - malformed parent_named_completion_products rejected
+    ok 59 - malformed parent_named_completion_products has a focused diagnostic
+    ok 60 - malformed parent_named_completion_products validation does not mutate input
+    ok 61 - missing parent_payload_snapshot_products rejected
+    ok 62 - missing parent_payload_snapshot_products has a focused diagnostic
+    ok 63 - missing parent_payload_snapshot_products validation does not mutate input
+    ok 64 - malformed parent_payload_snapshot_products rejected
+    ok 65 - malformed parent_payload_snapshot_products has a focused diagnostic
+    ok 66 - malformed parent_payload_snapshot_products validation does not mutate input
+    ok 67 - missing parent_point_products rejected
+    ok 68 - missing parent_point_products has a focused diagnostic
+    ok 69 - missing parent_point_products validation does not mutate input
+    ok 70 - malformed parent_point_products rejected
+    ok 71 - malformed parent_point_products has a focused diagnostic
+    ok 72 - malformed parent_point_products validation does not mutate input
+    ok 73 - missing parent_storage_read_products rejected
+    ok 74 - missing parent_storage_read_products has a focused diagnostic
+    ok 75 - missing parent_storage_read_products validation does not mutate input
+    ok 76 - malformed parent_storage_read_products rejected
+    ok 77 - malformed parent_storage_read_products has a focused diagnostic
+    ok 78 - malformed parent_storage_read_products validation does not mutate input
+    ok 79 - missing parent_storage_write_products rejected
+    ok 80 - missing parent_storage_write_products has a focused diagnostic
+    ok 81 - missing parent_storage_write_products validation does not mutate input
+    ok 82 - malformed parent_storage_write_products rejected
+    ok 83 - malformed parent_storage_write_products has a focused diagnostic
+    ok 84 - malformed parent_storage_write_products validation does not mutate input
+    ok 85 - missing parent_wiring_products rejected
+    ok 86 - missing parent_wiring_products has a focused diagnostic
+    ok 87 - missing parent_wiring_products validation does not mutate input
+    ok 88 - malformed parent_wiring_products rejected
+    ok 89 - malformed parent_wiring_products has a focused diagnostic
+    ok 90 - malformed parent_wiring_products validation does not mutate input
+    ok 91 - missing pruned_transactions rejected
+    ok 92 - missing pruned_transactions has a focused diagnostic
+    ok 93 - missing pruned_transactions validation does not mutate input
+    ok 94 - malformed pruned_transactions rejected
+    ok 95 - malformed pruned_transactions has a focused diagnostic
+    ok 96 - malformed pruned_transactions validation does not mutate input
+    ok 97 - missing resource_signal_products rejected
+    ok 98 - missing resource_signal_products has a focused diagnostic
+    ok 99 - missing resource_signal_products validation does not mutate input
+    ok 100 - malformed resource_signal_products rejected
+    ok 101 - malformed resource_signal_products has a focused diagnostic
+    ok 102 - malformed resource_signal_products validation does not mutate input
+    ok 103 - missing reusable_child_products rejected
+    ok 104 - missing reusable_child_products has a focused diagnostic
+    ok 105 - missing reusable_child_products validation does not mutate input
+    ok 106 - malformed reusable_child_products rejected
+    ok 107 - malformed reusable_child_products has a focused diagnostic
+    ok 108 - malformed reusable_child_products validation does not mutate input
+    ok 109 - missing transaction_binding_report_products rejected
+    ok 110 - missing transaction_binding_report_products has a focused diagnostic
+    ok 111 - missing transaction_binding_report_products validation does not mutate input
+    ok 112 - malformed transaction_binding_report_products rejected
+    ok 113 - malformed transaction_binding_report_products has a focused diagnostic
+    ok 114 - malformed transaction_binding_report_products validation does not mutate input
+    ok 115 - missing transaction_products rejected
+    ok 116 - missing transaction_products has a focused diagnostic
+    ok 117 - missing transaction_products validation does not mutate input
+    ok 118 - malformed transaction_products rejected
+    ok 119 - malformed transaction_products has a focused diagnostic
+    ok 120 - malformed transaction_products validation does not mutate input
+    ok 121 - missing transactions rejected
+    ok 122 - missing transactions has a focused diagnostic
+    ok 123 - missing transactions validation does not mutate input
+    ok 124 - malformed transactions rejected
+    ok 125 - malformed transactions has a focused diagnostic
+    ok 126 - malformed transactions validation does not mutate input
+    ok 127 - unknown producer must be classified rejected
+    ok 128 - unknown producer must be classified has a focused diagnostic
+    ok 129 - unknown producer must be classified validation does not mutate input
+    ok 130 - missing live transaction producer rejected
+    ok 131 - missing live transaction producer has a focused diagnostic
+    ok 132 - missing live transaction producer validation does not mutate input
+    ok 133 - unknown context rejected
+    ok 134 - unknown context has a focused diagnostic
+    ok 135 - unknown context validation does not mutate input
+    ok 136 - unknown generated child rejected
+    ok 137 - unknown generated child has a focused diagnostic
+    ok 138 - unknown generated child validation does not mutate input
+    ok 139 - unknown partition rejected
+    ok 140 - unknown partition has a focused diagnostic
+    ok 141 - unknown partition validation does not mutate input
+    ok 142 - unclassified reusable product rejected
+    ok 143 - unclassified reusable product has a focused diagnostic
+    ok 144 - unclassified reusable product validation does not mutate input
+    ok 145 - cyclic preparation rejected before recursive validation
+    ok 146 - cycle diagnostic retained
+    1..146
+ok 2 - every top-level category is required even when empty
+# Subtest: actual independent domains and child modules keep separate typed scopes
+    ok 1 - monolithic preparation is not mislabeled as an emitted module
+    ok 2 - caller scope contains injected ready port
+    ok 3 - caller helper does not leak to sibling scope
+    ok 4 - callee scope contains external idle state
+    ok 5 - child retains its independent module inventory
+    ok 6 - missing domain rejected
+    ok 7 - missing domain has a focused diagnostic
+    ok 8 - missing domain validation does not mutate input
+    ok 9 - wrong domain owner rejected
+    ok 10 - wrong domain owner has a focused diagnostic
+    ok 11 - wrong domain owner validation does not mutate input
+    ok 12 - missing nested actor rejected
+    ok 13 - missing nested actor has a focused diagnostic
+    ok 14 - missing nested actor validation does not mutate input
+    ok 15 - missing child module rejected
+    ok 16 - missing child module has a focused diagnostic
+    ok 17 - missing child module validation does not mutate input
+    ok 18 - missing nested producer rejected
+    ok 19 - missing nested producer has a focused diagnostic
+    ok 20 - missing nested producer validation does not mutate input
+    ok 21 - erased domain in both product maps rejected
+    ok 22 - erased domain in both product maps has a focused diagnostic
+    ok 23 - erased domain in both product maps validation does not mutate input
+    ok 24 - wrong partition realization rejected
+    ok 25 - wrong partition realization has a focused diagnostic
+    ok 26 - wrong partition realization validation does not mutate input
+    ok 27 - erased child IR rejected
+    ok 28 - erased child IR has a focused diagnostic
+    ok 29 - erased child IR validation does not mutate input
+    ok 30 - erased partition rejected
+    ok 31 - erased partition has a focused diagnostic
+    ok 32 - erased partition validation does not mutate input
+    1..32
+ok 3 - actual independent domains and child modules keep separate typed scopes
+# Subtest: reusable children and static-zero exclusions follow actual preparation
+    ok 1 - actual library modules supply child scopes
+    ok 2 - real static-zero producer exclusion exercised
+    ok 3 - pruned targets do not require live context/products
+    ok 4 - single declared domain keeps one module and no fabricated domain products
+    1..4
+ok 4 - reusable children and static-zero exclusions follow actual preparation
+1..4
+Captured 58 original refusal consumers / 174 actual cause bands.
