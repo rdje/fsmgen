@@ -5,6 +5,7 @@ for reader in (
     'docs/audits/reservation-coverage-module-capture-20261003/verify.py',
     'docs/audits/reservation-coverage-generated-module-fields-20261003/verify.py',
     'docs/audits/reservation-coverage-reusable-module-fields-20261003/verify.py',
+    'docs/audits/reservation-coverage-atl-module-fields-20261003/verify.py',
 ):
     subprocess.run(['python3', '-B', reader], check=True)
-print('PASS current coverage cause, actor-copy and module-capture/generated/reusable-field qualification; all readers leave retained evidence unchanged.')
+print('PASS current coverage cause, actor-copy and module-capture/generated/reusable/ATL-field qualification; all readers leave retained evidence unchanged.')

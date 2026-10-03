@@ -1,0 +1,46 @@
+{
+  "REPRODUCE.txt": {
+    "bytes": 1301,
+    "sha256": "8515638cbe5b65be1bf48384aff320da748b5bf23f38e5230c49ebabfa84418c"
+  },
+  "derive-roster.txt": {
+    "bytes": 104,
+    "sha256": "c53ee9274ae9937334b1d794b4bc8fdfdc0a50c10dac893a48585eda1e8fccbd"
+  },
+  "derive_roster.py": {
+    "bytes": 1625,
+    "sha256": "540327b47c825370b8b0b3f3885e95992c4348ecf88e0f3873cbbf477248a3ab"
+  },
+  "qualified-fields.json": {
+    "bytes": 5574,
+    "sha256": "6d60a7e938b0654b69bd451bb114866e3cf3b1514b4512be6a5a9ef02015df6a"
+  },
+  "scope.txt": {
+    "bytes": 4336,
+    "sha256": "fb18dddc31fb029c6465aef41d73e6a0f12703e872d8375377f2e5b29e4cdee6"
+  },
+  "trust-inherited.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "trust-inherited.txt": {
+    "bytes": 1640,
+    "sha256": "cad3e14cdcbec7464e59c2127e12fd3707a755d057c2c36ce70edefd031dec2c"
+  },
+  "trust-storable.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "trust-storable.txt": {
+    "bytes": 1623,
+    "sha256": "34bc780b4c1a977e76769440e338750d911f7c5c1af53637c652fb4cb1776714"
+  },
+  "verify.py": {
+    "bytes": 16828,
+    "sha256": "4b545ffb780b526c7a88fc18b0749b31e7c2dcff589b14ea54419d3f6fb0542f"
+  },
+  "verify.txt": {
+    "bytes": 1577,
+    "sha256": "f9538760905a17ab13c661e4fa98e5970d4fb1e6d5a2e67c5a5e035f339b34c3"
+  }
+}

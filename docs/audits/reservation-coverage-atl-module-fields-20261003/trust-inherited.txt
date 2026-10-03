@@ -1,0 +1,15 @@
+PASS authenticated complete source actors and original profile; all authored/physical copy sites retained.
+PASS independent FIFO bank/binding and ATL route field contracts, genuine pure-copy preservation/deep isolation and exact ordinary lowering/carrier/scope results.
+PASS real Storable competing authority and retained kind/value/route corruptions reject.
+OPEN: preparation/internal module propagation semantics, snapshot/mutation seed assurance, full constructors/controllers and moved-root qualification remain owned successors.
+PASS immutable complete source/prior membership, exact current module captures and typed field-instance roster with per-family owners.
+PASS original/caller kind/topology/deep-isolation conservation, genuine pure module copies and complete preparation/lowering/carrier/scope result equality.
+PASS actual lossy module-copy kind counterfactual and roster omission/owner/identity corruptions reject.
+OPEN: generated/reusable/ATL field meanings, actor-only preparation propagation and snapshot assurance remain .3-.6/.4-owned; constructors/controllers/moved-root stay cold.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-atl-module-fields-20261003/verify.py", line 258, in <module>
+    fields = preparation_fields(graph)
+  File "${REPO_ROOT}/docs/audits/reservation-coverage-atl-module-fields-20261003/verify.py", line 233, in preparation_fields
+    assert same(p['actor']['actor_network']['data_movements'], [vector_route()]), 'numeric source route'
+           ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: numeric source route

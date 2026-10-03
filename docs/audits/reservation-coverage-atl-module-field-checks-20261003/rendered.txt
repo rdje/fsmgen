@@ -1,0 +1,1 @@
+PASS rendered ATL numeric/endpoint field result, open join/snapshot boundary and qualification link; visual QA remains pending.

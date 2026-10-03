@@ -1,0 +1,17 @@
+From the repository root, cold non-mutating readback:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-atl-module-fields-20261003/verify.py
+  python3 -B docs/audits/reservation-coverage-atl-module-fields-20261003/derive_roster.py
+Both real authority promotions must exit1 at the retained declared contract:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-atl-module-fields-20261003/verify.py --trust-storable
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-atl-module-fields-20261003/verify.py --trust-inherited
+
+The reader authenticates complete sealed source and module corpora before its
+independent literal source/product/endpoint/carrier models. A separate recursive
+roster producer enumerates original native kind differences; the semantic reader
+uses a stack traversal and complete independently modeled field set. Neither
+uses production guards/collectors/mappers as its expected-value oracle.
+
+Fresh changed-provider observations require an owning task and new sibling on
+the repository volume; follow the source/module capture recipes and keep all
+seals unchanged. This reader qualifies the recorded finite field corpus, not
+arbitrary controllers, constructor bodies or moved-root/native execution.
