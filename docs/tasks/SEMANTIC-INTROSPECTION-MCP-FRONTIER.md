@@ -3691,9 +3691,60 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Split and qualify the residual named/framework membership after the formal-source and binding cohorts.`
   Acceptance: `Use immutable named membership and exact current source to declare further bounded cohorts, distinguishing actual refusal consumers, structured/code/trace evidence, lexical non-consumers and dynamic/framework/native applicability. Preserve prior finite repaired scopes without treating them as all-caller signoff; unresolved tokens remain owned until the named outcome join.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.6, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.7`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.1`
+  Status: `done`
+  Goal: `Bind current residual named membership and assign exact bounded review ownership.`
+  Acceptance: `Roll forward immutable57 token locators to current Git/source bytes, preserve lexical units and finite repaired owners, declare all residual cohort IDs with no semantic classification or runtime signoff. Independently reconcile complete rows/sources/kinds, ownership and real stale/unowned counterfactuals; sync book/card/task then commit before runtime cohort review.`
+  Verification: `Current57 byte-defined declaration tokens/52 whole source contexts and2545 Perl suffix/shebang metadata bind baselinee3febc5. Prior57(path,function) membership is conserved; current lines/offsets/identifier tokens and whole-source bytes are fresh. Each row has exactly one task-owned cohort: five source-file finite repair references match declared evidence-revision whole bytes; residual rows are explicitly pending actual role/cause/applicability review under six bounded .3.3.2-.7 cohorts. Independent Git cat-file/line-by-line source/identifier/kind/schema and independent routing/task-ID existence reconcile. Real prior whole-source promotion RED1 and real old lexical rows lacking new exact per-row owners RED1; old broad handoff was valid for its narrower contract. Eight shared line/offset kinds, owner, source, membership, identifier, metadata and schema corruptions reject. Full data/source bodies/locators/owners/instruments/raw receipts/recipe/seal/Git preserve durability, independent reconstruction and actual counterfactuals are separate claim legs. No AST/caller/runtime/native/framework or fresh universal lexical census qualification. Provider/test/production/older archives unchanged. Book build/rendered text/public-book2/308 and KM pass; visual QA pending. Fixed capacity/fresh inventory/staged doctrines/hooks complete handoff, then formal resource/reusable/reservation .3.3.2 is next; other source/native/dynamic/cold cohorts stay owned.`
+  Commit: `this commit`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2`
+  Status: `pending`
+  Goal: `Qualify formal resource, reusable and reservation named consumers.`
+  Acceptance: `Read exact current T1944/T1947/T1959/T1960 helpers/callers and public/source-owned producer contracts; split each safe source slice before runtime probes, preserve whole products/kinds and cold limits, own confirmed complete-cause repairs before edits.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3`
+  Status: `pending`
+  Goal: `Qualify aggregate-record named consumers and source/backend applicability.`
+  Acceptance: `Read exact current T1983/T1986-T1991/T1993/T1998/T2021/T2027/T2028/T2030/T2035 helper contexts and actual source contracts; split bounded slices, resolve causes/structured/trace consumers and native applicability before execution, preserve whole products and own repairs.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.4`
+  Status: `pending`
+  Goal: `Qualify public semantic-source query named consumers.`
+  Acceptance: `Read current T1880/T1883/T1885 helpers/callers, report/oracle and process boundaries; distinguish structured outcome fields from exception causes, probe real APIs with exact source/product/cold closure, split repairs before changes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.5`
+  Status: `pending`
+  Goal: `Qualify process-coordinator and governance/VIAL named consumers.`
+  Acceptance: `Read T1832/T1550/T1638/T1790 exact helpers/callers and producer contracts; split source-only or admitted cohorts, distinguish structured codes/transport/status from cause assertions and retain genuine failure controls.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.6`
+  Status: `pending`
+  Goal: `Resolve named producer/governance declarations that may be lexical non-consumers.`
+  Acceptance: `Read complete selected production/script contexts for ExpressionBuilder, ProcessSupervisor Connection/Service, claim/task integrity and promotion scripts. Prove actual role through source and contracts; names alone do not classify non-consumers. Runtime assertions, delegation and unmatched callers retain explicit owners.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.7`
+  Status: `pending`
+  Goal: `Resolve remaining VIAL/backend/native framework helper applicability.`
+  Acceptance: `Read T1543/T1600/T1656/T1671/T1731-T1739/T1747/T1816 exact helpers/public integration contracts, then split source-only versus native-required qualification. No compiler/simulator or submodule implementation inspection without existing admission; access blockers and dynamic/framework gaps remain owned.`
   Verification: `pending`
   Commit: `pending`
 
@@ -5780,3 +5831,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — The exact prior helper matches wanted regexes in the stack after `Transaction 'caller': activation bind role must be input or output` at perl/FSM/Scheduler/ISF/LoweringIR.pm line 7076. Real prior capture reproduces fifteen false matches in docs/audits/caller-formal-binding-cause-repair-20261003/prior-causes.json.
 - [x] **ADDRESSED (verified)** — Complete declared causes in T1933 and exact helper controls in T2057 PASS Files=2/Tests=264. Real earlier causes/labels reject, real prior consumer and validator bypass are RED; independent cold models/replay, prior/bypass safety RED1 and whole ordinary conservation pass.
 - [x] **NO REGRESSION** — Focused binding/source-context `All tests successful` Files=4/Tests=58, public-book `All tests successful` Files=2/Tests=308, rendered book and `knowledge-map: OK`; fixed capacity/fresh inventory/staged doctrines/hooks precede commit.
+
+## Acceptance — residual named cohort handoff .1.2.3.2.3.3.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Current helper repairs change source bytes since the immutable named declaration; `git log -S diagnostic_cause_matches -- t/1933-isf-caller-formal-binding-scope.t` returns e3febc5c29ac10887f0fedb308bebbe3ea7ab30f in docs/audits/residual-named-helper-cohort-checks-20261003/source-history.txt. Real prior-source promotion is RED1; its narrower declaration cannot qualify this current ownership contract.
+- [x] **ADDRESSED (verified)** — Complete source/line/identifier/primitive-kind and independent route closure PASS; every declared row references a live task ID, finite repairs retain exact source provenance, and pending cohorts remain semantically unqualified. Real prior source/row-owner counterfactuals and shared corruptions reject.
+- [x] **NO REGRESSION** — Public-book `All tests successful` Files=2/Tests=308, rendered book and `knowledge-map: OK`; source/test/provider/production unchanged. Fixed capacity/fresh inventory/staged doctrines/hooks precede commit.

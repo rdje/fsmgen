@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/residual-named-helper-cohorts-20261003/verify.py", line 61, in <module>
+    if '--trust-prior-row-owners' in sys.argv:assert all('review_owner' in r for r in prior['current_named_definition_tokens']),'real prior lexical declarations contain no exact row-specific cohort ownership'
+                                                     ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: real prior lexical declarations contain no exact row-specific cohort ownership

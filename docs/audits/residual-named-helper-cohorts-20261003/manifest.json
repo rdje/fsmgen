@@ -1,0 +1,37 @@
+{
+  "baseline": "e3febc5c29ac10887f0fedb308bebbe3ea7ab30f",
+  "members": {
+    "collect.py": {
+      "bytes": 2601,
+      "sha256": "11965414c63268dbd7dcf1b698c735e64db12a45031418385b58ce1f4bdb18a1"
+    },
+    "collect.txt": {
+      "bytes": 200,
+      "sha256": "47103fa2cacd02a225a8edd97551d489e60ffbbd00e374ff8c7ac538c65e0996"
+    },
+    "membership.json": {
+      "bytes": 1335892,
+      "sha256": "13bfbe95b38f6ad8fa82233045f752087b28ad26aff3df7ac1073b7874232456"
+    },
+    "owners.json": {
+      "bytes": 2874,
+      "sha256": "860b5d2d1ebd1700aa70128abdaf6d27cfc0d34b240445766c30cb0dd8737f40"
+    },
+    "recipe.json": {
+      "bytes": 989,
+      "sha256": "66366aef3ab434c63359d462b379dc978936372c11e8f67e60f2bb71eac0b256"
+    },
+    "rendered_verify.py": {
+      "bytes": 564,
+      "sha256": "eb63fed2b73acc4824e5af585e7cadd41c564588136679169b8573ec0acb11a0"
+    },
+    "scope.txt": {
+      "bytes": 3656,
+      "sha256": "19e9dcd61c27d513ff001a5602ef01dbe0d4076ee6f555b7d65baa795645645d"
+    },
+    "verify.py": {
+      "bytes": 6570,
+      "sha256": "31fa81178d6ee3d206edc060276d9bcc8fa1a90d2880cf695efb4485078443f9"
+    }
+  }
+}

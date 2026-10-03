@@ -1,0 +1,10 @@
+ram-guard: PID 53572; host 82.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared corruption rejects: line_kind
+shared corruption rejects: offset_kind
+shared corruption rejects: owner
+shared corruption rejects: source
+shared corruption rejects: member
+shared corruption rejects: identifier
+shared corruption rejects: metadata
+shared corruption rejects: shape
+PASS complete current Git/byte/line/identifier/kind/owner closure: 57 declarations, 52 source files, 2545 Perl files; no AST/caller/runtime/cause qualification.

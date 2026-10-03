@@ -48,14 +48,5 @@ closes packages/ATL. [ATL](isf-atl-document-origin-authority.md) owns resolved
 static clones. Preparation/adoption remain later; public gates apply. No new macros, scheduling
 admission or HDL/macro runtime is proved.
 
-Constructors and library/file helpers compare complete causes; caller/label
-echoes reject. Reverify: `python3 docs/audits/origin-helper-cause-repair-20261002/verify.py`.
-Ten validator/finalizer sites compare complete causes, including generic mutation
-reasons. Argument/source/label echoes reject; prior consumers give RED. Products,
-kinds and causes reverify:
-`python3 docs/audits/validator-finalizer-cause-repair-20261003/verify.py`.
-Named units/current tokens: [membership](../audits/named-helper-membership-20261003/scope.txt).
-Broader current/cold qualification is open. The [lexical census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt)
-is ASCII Perl discovery with overlapping comments/strings/declarations; cause
-safety is unproved. Kinds/numeric forms:
-`python3 docs/audits/current-diagnostic-lexical-kinds-20261002/verify.py`.
+Constructors, library/file helpers and ten validator/finalizer sites compare complete causes, including generic mutations. Caller/argument/source/label echoes reject; prior consumers give RED. Guarded readers: [origin](../audits/origin-helper-cause-repair-20261002/verify.py), [validator](../audits/validator-finalizer-cause-repair-20261003/verify.py).
+[Named membership](../audits/named-helper-membership-20261003/scope.txt) owns lexical units; [current cohorts](../audits/residual-named-helper-cohorts-20261003/scope.txt) assign pending row owners and preserve finite repairs. Roles/calls/framework/native eligibility remain unqualified. The [ASCII census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt) overlaps comments/strings/declarations; its [kind reader](../audits/current-diagnostic-lexical-kinds-20261002/verify.py) qualifies numeric forms. Broader cause/cold review stays open.

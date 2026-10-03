@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/residual-named-helper-cohorts-20261003/verify.py", line 60, in <module>
+    if '--trust-prior-sources' in sys.argv:assert all(s==prior['source_snapshots'][p] for p,s in sources.items()),'real prior source snapshots are stale for the repaired current helpers'
+                                                  ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: real prior source snapshots are stale for the repaired current helpers

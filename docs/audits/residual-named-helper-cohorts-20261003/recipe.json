@@ -1,0 +1,19 @@
+{
+  "baseline": "e3febc5c29ac10887f0fedb308bebbe3ea7ab30f",
+  "commands": {
+    "book": "mdbook build docs/book",
+    "cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/residual-named-helper-cohorts-20261003/verify.py",
+    "collector": "scripts/run_with_ram_guard.sh -- python3 docs/audits/residual-named-helper-cohorts-20261003/collect.py",
+    "prior_row_owner_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/residual-named-helper-cohorts-20261003/verify.py --trust-prior-row-owners",
+    "prior_source_red": "scripts/run_with_ram_guard.sh -- python3 docs/audits/residual-named-helper-cohorts-20261003/verify.py --trust-prior-sources"
+  },
+  "native": "not invoked",
+  "scope": "current byte-defined declaration/ownership only; actual helper roles, callers, cause safety and native/framework eligibility unqualified",
+  "statuses": {
+    "cold": 0,
+    "collector": 0,
+    "prior_row_owner_red": 1,
+    "prior_source_red": 1
+  },
+  "visual_qa": "not performed"
+}

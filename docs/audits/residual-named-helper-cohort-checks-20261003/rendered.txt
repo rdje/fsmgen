@@ -1,0 +1,1 @@
+PASS rendered pending cohort handoff; visual QA not performed.

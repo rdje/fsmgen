@@ -1,0 +1,2 @@
+ram-guard: PID 92559; host 72.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Declared 57 current tokens across 52 whole source files; metadata 2545 Perl files. No runtime qualification.

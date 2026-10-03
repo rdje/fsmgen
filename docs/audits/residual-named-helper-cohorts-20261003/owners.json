@@ -1,0 +1,17 @@
+{
+  "repaired": {
+    "t/1933-isf-caller-formal-binding-scope.t": {"suffix":".2.3.7","revision":"e3febc5c29ac10887f0fedb308bebbe3ea7ab30f"},
+    "t/1936-isf-formal-source-context.t": {"suffix":".2.3.6","revision":"64628a4089349f7a23e333eef70584c30dc08dad"},
+    "t/2046-isf-library-document-origin-authority.t": {"suffix":".2.3.2","revision":"fe8c412afd02507cbdcdd4ca756ce5421af1aed7"},
+    "t/2048-isf-file-document-origin-authority.t": {"suffix":".2.3.2","revision":"fe8c412afd02507cbdcdd4ca756ce5421af1aed7"},
+    "t/2052-isf-local-formal-origin-authority.t": {"suffix":".2.3.5","revision":"09c9dcbaea274020207dc0f4d8d6c43623dcae62"}
+  },
+  "cohorts": {
+    "2": ["t/1944-isf-formal-resource-products.t","t/1947-isf-formal-reusable-products.t","t/1959-isf-prepared-formal-reservations.t","t/1960-isf-formal-reservation-coverage.t"],
+    "3": ["t/1983-isf-interface-port-metadata.t","t/1986-isf-record-port-value-gates.t","t/1987-isf-record-port-declaration-scopes.t","t/1988-isf-record-port-context-gates.t","t/1989-isf-record-port-root-classification.t","t/1990-isf-record-port-sample-facts.t","t/1991-isf-record-port-sample-contexts.t","t/1993-isf-record-port-sample-ownership.t","t/1998-isf-record-input-source-admission.t","t/2021-isf-record-input-generated-refusals.t","t/2027-isf-record-input-backend-profiles.t","t/2028-isf-record-input-verilog-profile.t","t/2030-isf-record-output-writer-admission.t","t/2035-isf-record-output-target-profiles.t"],
+    "4": ["t/1880-vial-public-source-inspection.t","t/1883-semantic-source-query-cohort.t","t/1885-semantic-source-query-oracles.t"],
+    "5": ["t/1832-process-coordinator-admission.t","t/1550-vial-semantic-ir.t","t/1638-claim-verification-dispositions.t","t/1790-vial-regression-promotion-evidence-transport.t"],
+    "6": ["perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm","perl/FSM/Support/ProcessSupervisor/Connection.pm","perl/FSM/Support/ProcessSupervisor/Service.pm","scripts/check_claim_verification.pl","scripts/check_task_tree_integrity.pl","scripts/run_vial_regression_promotion_budget_qualification.pl","scripts/run_vial_regression_promotion_gate.pl"],
+    "7": ["t/1543-direct-vhdl-reduction-expression-readiness.t","t/1600-vial-architecture-scale-workload-foundation.t","t/1656-vial-architecture-scale-measurement-foundation.t","t/1671-vial-vhdl-portable-trace-v2.t","t/1731-vial-ghdl-capture-evidence-admission.t","t/1732-vial-ghdl-state-evidence-admission.t","t/1733-vial-ghdl-terminal-payload-resume-admission.t","t/1734-vial-verilator-terminal-resume-admission.t","t/1735-vial-ghdl-authority-object-admission.t","t/1736-vial-ghdl-object-descriptor-admission.t","t/1737-vial-ghdl-state-owner-file-admission.t","t/1738-vial-ghdl-handle-state-scalar-types.t","t/1739-vial-ghdl-request-scalar-types.t","t/1747-vial-osvvm-outer-persisted-json-file-admission.t","t/1816-rust-proxy-integration.t"]
+  }
+}

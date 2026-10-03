@@ -178,7 +178,11 @@ false stack matches, and a genuine validation bypass makes the repaired test
 fail. The [binding-helper repair](../../../docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt)
 conserves whole ordinary products and primitive kinds within the declared
 source and binding-report scope; wider internal semantics remain under cold review.
-Remaining named/framework cohorts still need qualification.
+A [current cohort handoff](../../../docs/audits/residual-named-helper-cohorts-20261003/scope.txt)
+assigns exact pending owners for formal/resource, aggregate-record, public-query,
+process/governance, producer-role and backend/native review. Names do not establish
+actual refusal-consumer roles or native applicability. Formal resource/reusable
+and reservation helpers are next; remaining named/framework cohorts stay open.
 See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
 for exact units, source boundaries and remaining review ownership.
 
