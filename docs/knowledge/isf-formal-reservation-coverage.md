@@ -25,11 +25,9 @@ formals may extend it with planned names; they retain counters/signal_widths,
 transaction_port ownership and separation from fixed ports/storage/blocks/types.
 Children receive no parent allowance. Returned scope identities are detached.
 
-T1960 checks public modules/carriers, removes wait
-reservations while preserving allocation, and injects late register/assignment,
-module membership/identity/nesting, stale-plan and formal width/role/block-alias
-controls. Its fixtures include case-fold conflicts, permutations, generated/FIFO/
-ATL/vector/batch children, storage, rule payload and monitor formals. T1957 adds
+T1960 checks public modules/carriers and producer, module membership/identity/
+nesting, stale-plan and formal width/role/block-alias refusals, with generated/
+FIFO/ATL/vector/batch, storage/rule/monitor fixtures. T1957 adds
 combined domain/resource/storage/completion/crossing cases; see
 [generated-domain identities](isf-generated-domain-identities.md).
 
@@ -41,7 +39,7 @@ uses complete causes and saved native errors; wrong-cause, exact-prior and actua
 declaration-guard bypass controls qualify.
 [Module join](../audits/reservation-coverage-module-join-20261003/scope.txt) closes field cohorts and FIFO/vector propagation.
 [Snapshot capture](../audits/reservation-coverage-snapshot-capture-20261003/scope.txt) binds remaining copies.
-[Consumer controls](../audits/reservation-coverage-value-only-controls-20261003/scope.txt) bind fields and real kind counterexamples; plain/native controls precede P2 .13.
+[Helper boundary](../audits/reservation-coverage-plain-native-boundary-20261003/scope.txt) binds fields, real kind counterexamples and candidate aliases/cycles/isolation/native identity; actual native replay and joins precede P2 .13.
 Constructors/moved-root stay cold.
 
 This guard checks final declarations at the prepared ISF-to-FSM boundary. It does not replace source or executable admission,

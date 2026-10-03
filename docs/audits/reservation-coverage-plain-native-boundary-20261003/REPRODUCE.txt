@@ -1,0 +1,10 @@
+Run from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reservation-coverage-plain-native-boundary-20261003/verify.py
+All --trust-storable/alias/cycle/native variants must exit1 at their declared
+actual observation contradiction, never an import/manifest/source failure.
+Never rerun the probe into this sealed directory. A fresh owned sibling may
+adapt only its base output path, run probe.pl under the RAM guard, and compare
+complete typed observations. Native addresses vary across invocations; compare
+within-invocation identity relations and class/shape, not historical numbers.
+Only trace root prefixes use ${REPO_ROOT}; input graphs remain unnormalized.
+Actual T2063 replay/full snapshot and final joins precede P2 copy repair.

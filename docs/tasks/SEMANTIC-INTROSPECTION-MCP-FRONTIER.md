@@ -3897,9 +3897,26 @@ For FSMGen, the analogs are:
   Commit: `this commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify finite plain/native snapshot controls and join full snapshot assurance.`
   Acceptance: `Bind actual plain alias/cycle/deep-isolation and finite empty CoverageCauseSentinel identity/class/shape controls to current source/contracts and complete causes. Require genuine known-bad kind/back-edge/native identity or shape controls, preserve unsupported referent cold limits, and join complete capture/field/real-consumer qualification. Commit bounded snapshot handoff before final .5 and P2 .13 repair.`
+  Verification: `Plain/candidate boundary and actual native cause/identity replay have separate finite children; the latter joins complete snapshot assurance before final .5/P2 .13.`
+  Commit: `children below`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.2.1`
+  Status: `done`
+  Goal: `Qualify plain alias/cycle/deep isolation and finite candidate native snapshot boundary.`
+  Acceptance: `Bind the existing qualified T1959 plain copier/first-touch graph snapshot recipe and an exact CoverageCauseSentinel-only adaptation as a prospective T1960 repair candidate. Run real plain aliases/cycle/isolation and primitive-kind probes, actual Storable topology controls, native empty-marker identity/class/shape and unsupported-reference refusal controls. Independent graph/source readers and genuine kind/back-edge/native corruption controls must reject unsafe authorities. No repair before final qualification.`
+  Verification: `Sealed docs/audits/reservation-coverage-plain-native-boundary-20261003 authenticates full T1959 Git source/helper and exact single-class candidate adaptation. Re-derivation: all62 native reconstructed complete before/copy/after typed graphs preserve primitive kinds and alias/cycle topology, with independent descriptor-stack container counts and actual zero-overlap native census. Explicit mixed primitive/undef shared-root-cycle fixture passes candidate and finite Storable topology; actual candidate value mutation proves original isolation. Falsification: genuine retained lossy T1960 Storable, actual recopied alias, actual broken root backedge and actual same-class empty marker replacement authority promotions all RED1 at declared contradictions. Five finite unsupported shape/class/scalar/blessed cases refuse with complete helper causes. Durability: full source/probe/native observations/receipts/counterfactuals/manifest/cold reader and task/fact/book/Git. Descriptor reconstruction does not replay hidden original flags or qualify arbitrary constructors/native referents; Storable finite topology is not general kind assurance. Focused T1959/T1960/T2063 All tests successful3/243; public-book2/308, build/rendered pass. Actual native replay/snapshot join .2 and final .5 precede P2 .13 repair. Provider/current tests/public schema/submodules/prior sealed evidence unchanged; controllers/moved-root/visual QA remain cold. Fixed capacity/fresh claims/staged doctrines/hooks close slice.`
+  Commit: `this slice; resolve with work-unit Git subject`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.2.4.3.4.3.2.2`
+  Status: `pending`
+  Goal: `Qualify actual coverage native identity/shape causes and join full snapshot assurance.`
+  Acceptance: `Run exact current T2063 native cause/identity/class/empty-shape cases unchanged and a genuine empty-marker replacement after the real API refuses. Preserve complete intended causes/results and all ordinary caller graphs; existing identity assertion must expose the real replacement. Join complete capture/field/value-only/plain/native outcomes with bounded prospective helper contracts, then close snapshot .4 and commit before final coverage .5/P2 .13. General native/controller/constructor/moved-root meanings stay cold.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6270,3 +6287,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone([$p, $allocation, $actual]);' binds capture introduction98f0cc146; current T1960 value-only input comparisons at exact qualify/reject source sites accept equal-spelling numeric/string caller changes. Full actual native success/refusal mutations at source-owned worker notice provenance RHS remain green, with lossy snapshot expected string1 and unchanged actual intended causes.
 - [x] **ADDRESSED (diagnosis verified; repair owned)** — Complete native current source/call/consumer/kind streams and allowed propagation prove both isolated unsafe PASS outcomes. Actual success/refusal consumer-authority promotions genuinely RED1; value and omission controls reject. Pure/field and ordinary product/cause/carrier conservation stay authenticated. Finite plain/native controls, final joins and immediate P2 .13 own the remaining assurance/repair work.
 - [x] **NO REGRESSION** — Actual current T1960 ordinary/success/refusal All tests successful, Files=1, Tests=5 each; public-book Files=2, Tests=308, rendered build and Knowledge Map readback pass. Mutation modes are intentionally unsafe-assurance demonstrations, not caller-purity passes. Hot provider/test unchanged; exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.
+
+## Acceptance Checklist — prospective plain/native helper boundary
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub source_value_copy' -- t/1959-isf-prepared-formal-reservations.t binds the existing repaired scalar-preserving recipe at f0e2ddc90; current coverage Storable observations lose primitive kinds. Exact helper body/class adaptation and original source/API corpora locate the prospective copy/snapshot boundary without widening native support.
+- [x] **ADDRESSED (candidate qualified; live repair owned)** — Complete reconstructed native graphs and independent source/descriptor/address readers pass kind/topology/isolation contracts; actual Storable-kind, alias, root-cycle and native replacement promotions each RED1. Finite unsupported classes/shapes/referents refuse. Actual coverage native replay/full snapshot and final joins precede the owned P2 .13 repair.
+- [x] **NO REGRESSION** — Focused current T1959/T1960/T2063 All tests successful, Files=3, Tests=243; public-book Files=2, Tests=308, build/rendered and Knowledge Map readback pass. Provider/current test/public interfaces unchanged; exact capacity/fresh claims/staged [doctrine] all doctrine checks passed and mandatory hooks complete before commit.

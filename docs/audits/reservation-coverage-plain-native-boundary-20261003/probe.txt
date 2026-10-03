@@ -1,0 +1,2 @@
+ram-guard: PID 45224; host 68.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS native candidate copy/snapshot probes completed; independent reader must qualify results.

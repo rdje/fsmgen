@@ -264,8 +264,13 @@ reconciles every changed field and unchanged-copy control with the completed
 models. [Real value-only controls](../../../docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt)
 change numeric `1` to string `"1"` in a caller provenance field after an actual
 successful or refused call. The current test stays green in both cases, so its
-value comparison does not prove caller-kind preservation. Plain-sharing and
-finite native-marker controls remain open before the test-copy repair. The test-copy repair follows those cohorts; this profile does not establish a production coverage defect.
+value comparison does not prove caller-kind preservation. The prospective
+[plain/native helper boundary](../../../docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt)
+preserves captured primitive kinds, aliases, cycles and deep copy isolation.
+Actual broken-sharing controls reject. Its snapshot distinguishes a replaced
+empty native marker by identity and refuses undeclared native classes or shapes.
+This finite candidate qualification precedes the actual coverage native replay,
+complete joins and test-copy repair; it does not establish a production defect.
 The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For

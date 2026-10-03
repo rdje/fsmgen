@@ -1,0 +1,1 @@
+PASS rendered chapter retains candidate kinds/aliases/cycles/isolation, known native identity/refusal limit and exact audit link; actual native/full joins and repair remain future. Visual QA remains pending.
