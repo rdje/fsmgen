@@ -61,7 +61,7 @@ subtest 'equal physical actors do not authorize a different original operation' 
         'original operations and source/catalog identities remain different');
     my $auth = $class->from_source($products{select}{source}, 'select.isf');
     refuses(sub {$auth->validate($products{authored}{context},$products{authored}{proof})},
-        qr/proof differs from authoritative source/, 'equal-body origin transplant');
+        'local formal origin proof differs from authoritative source', 'equal-body origin transplant');
 };
 
 subtest 'sibling formal ownership is explicit even with equal source spelling' => sub {
@@ -126,9 +126,9 @@ subtest 'first assignment and inline cond keep exact canonical declines' => sub 
 
 subtest 'actual missing clone association fails before a proof is frozen' => sub {
     refuses(sub {FSM::Test::LocalFormalOriginAuthority::DropClone->from_source($products{select}{source},'select.isf')},
-        qr/conditional clone association missing/, 'actual clone callback lost');
+        'local formal origin conditional clone association missing', 'actual clone callback lost');
     refuses(sub {FSM::Test::LocalFormalOriginAuthority::DropStorable->from_source($products{select}{source},'select.isf')},
-        qr/conditional clone association missing/, 'actual Storable callback lost');
+        'local formal origin conditional clone association missing', 'actual Storable callback lost');
 };
 
 subtest 'unqualified producer scopes remain explicitly closed' => sub {
@@ -136,34 +136,34 @@ subtest 'unqualified producer scopes remain explicitly closed' => sub {
         . $header . '(imports (library lib as imported))'
         . "(transaction main $ports (on start) (select result allow payload other) (complete done)))";
     refuses(sub {$class->from_source($imports,'imports.isf')},
-        qr/imported source authority is not qualified/,'imported producer boundary');
+        'conditional origin imported source authority is not qualified','imported producer boundary');
     my $network = $header . '(instance remote of external_worker)'
         . "(transaction main $ports (on start) (select result allow payload other) (complete done)))";
     refuses(sub {$class->from_source($network,'network.isf')},
-        qr/reusable\/network scope is not qualified/,'actor network boundary');
+        'local formal origin reusable/network scope is not qualified','actor network boundary');
     my $generated = $header . '(transaction worker (params (MODE 1)) (wait 1))'
         . "(transaction main $ports (on start) (do worker (params (MODE 1))) (select result allow payload other) (complete done)))";
     refuses(sub {$class->from_source($generated,'generated.isf')},
-        qr/generated specialization is not qualified/,'generated transaction boundary');
+        'local formal origin generated specialization is not qualified','generated transaction boundary');
     my $domain = '(actor domains (clock-domains (domain core (clock clk) :default))'
         . '(interface (input start) (input allow) (input payload (width 3))'
         . ' (input other (width 3)) (output result (width 3)) (output done))'
         . "(transaction main $ports (on start) (select result allow payload other) (complete done)))";
     refuses(sub {$class->from_source($domain,'domain.isf')},
-        qr/domain scope is not qualified/,'domain constructor boundary');
+        'local formal origin domain scope is not qualified','domain constructor boundary');
     my $plain = $header . '(transaction main (on start) (select result allow payload other) (complete done)))';
     refuses(sub {$class->from_source($plain,'plain.isf')},
-        qr/requires an unprojected direct formal/,'no formal preparation boundary');
+        'local formal origin requires an unprojected direct formal','no formal preparation boundary');
 };
 
 subtest 'caller regex text cannot authenticate an unrelated Carp diagnostic' => sub {
     my $error = unrelated_refusal(qr/expected_refusal_marker/);
     like($error,qr/expected_refusal_marker/,'actual Carp stack contains caller regex text');
     is(first_line($error),'unrelated failure','literal actual first diagnostic line');
-    ok(!diagnostic_matches($error,qr/expected_refusal_marker/),
+    ok(!diagnostic_matches($error,'expected_refusal_marker'),
         'first-line matcher rejects the echoed caller expectation');
     capture('diagnostic_echo',{error=>$error,expected=>'expected_refusal_marker',
-        matched=>diagnostic_matches($error,qr/expected_refusal_marker/)?1:0});
+        matched=>diagnostic_matches($error,'expected_refusal_marker')?1:0});
 };
 done_testing;
 
@@ -224,19 +224,20 @@ sub ordinary {
     is($json->encode($actor),$before,'complete canonical caller remains unchanged');
 }
 sub refuses {
-    my ($operation,$pattern,$name)=@_;
+    my ($operation,$expected,$name)=@_;
     my $accepted=eval {$operation->();1};
     my $error=$@;
     ok(!$accepted,$name);
-    ok(diagnostic_matches($error,$pattern),'exact first-line refusal mechanism');
+    ok(diagnostic_matches($error,$expected),'complete refusal cause');
     capture($name,{accepted=>$accepted?1:0,error=>$error});
 }
 sub clone {$json->decode($json->encode($_[0]))}
 sub first_line {$_[0] =~ /\A([^\n]*)/ ? $1 : ''}
 sub diagnostic_matches {
-    my ($error,$pattern)=@_;
-    my $subject=$ENV{FSMGEN_FORMAL_DIAGNOSTIC_FULL_STACK} ? $error : first_line($error);
-    return $subject =~ $pattern ? 1 : 0;
+    my ($error,$expected)=@_;
+    return $error =~ /\Q$expected\E/ ? 1 : 0
+        if $ENV{FSMGEN_FORMAL_DIAGNOSTIC_FULL_STACK};
+    return diagnostic_cause_matches($error,$expected);
 }
 sub unrelated_refusal {
     my ($pattern)=@_;

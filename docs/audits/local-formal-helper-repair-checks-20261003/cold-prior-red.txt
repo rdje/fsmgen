@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/local-formal-helper-cause-repair-20261003/verify.py", line 99, in <module>
+    if '--prior-helper' in sys.argv:assert all(r['prior']==int(r['band']=='positive') for r in prior['rows']),'actual prior helper falsely matches wrong causes'
+                                           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual prior helper falsely matches wrong causes

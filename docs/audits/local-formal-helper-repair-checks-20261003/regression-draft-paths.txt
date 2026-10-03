@@ -1,0 +1,15 @@
+t/2043-isf-conditional-origin-parser.t .............. ok
+t/2044-isf-conditional-origin-source-authority.t .... ok
+Cannot detect source of 't/2045-isf-conditional-origin-file-parser.t'! at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 256.
+	TAP::Parser::IteratorFactory::detect_source(TAP::Parser::IteratorFactory=HASH(0x7992066828), TAP::Parser::Source=HASH(0x7991282900)) called at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 211
+	TAP::Parser::IteratorFactory::make_iterator(TAP::Parser::IteratorFactory=HASH(0x7992066828), TAP::Parser::Source=HASH(0x7991282900)) called at /System/Library/Perl/5.34/TAP/Parser.pm line 472
+	TAP::Parser::_initialize(TAP::Parser=HASH(0x7992067ba0), HASH(0x7991228de0)) called at /System/Library/Perl/5.34/TAP/Object.pm line 55
+	TAP::Object::new("TAP::Parser", HASH(0x7991228de0)) called at /System/Library/Perl/5.34/TAP/Object.pm line 130
+	TAP::Object::_construct(TAP::Harness=HASH(0x7991a26888), "TAP::Parser", HASH(0x7991228de0)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 856
+	TAP::Harness::make_parser(TAP::Harness=HASH(0x7991a26888), TAP::Parser::Scheduler::Job=HASH(0x7991bf5af8)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 655
+	TAP::Harness::_aggregate_single(TAP::Harness=HASH(0x7991a26888), TAP::Parser::Aggregator=HASH(0x7991ae44c8), TAP::Parser::Scheduler=HASH(0x7991bf58a0)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 747
+	TAP::Harness::aggregate_tests(TAP::Harness=HASH(0x7991a26888), TAP::Parser::Aggregator=HASH(0x7991ae44c8), "t/2043-isf-conditional-origin-parser.t", "t/2044-isf-conditional-origin-source-authority.t", "t/2045-isf-conditional-origin-file-parser.t", "t/2046-isf-file-origin-authority.t", "t/2047-isf-library-document-origin-authority.t", "t/2048-isf-library-document-origin-forgeries.t", ...) called at /System/Library/Perl/5.34/TAP/Harness.pm line 558
+	TAP::Harness::__ANON__() called at /System/Library/Perl/5.34/TAP/Harness.pm line 571
+	TAP::Harness::runtests(TAP::Harness=HASH(0x7991a26888), "t/2043-isf-conditional-origin-parser.t", "t/2044-isf-conditional-origin-source-authority.t", "t/2045-isf-conditional-origin-file-parser.t", "t/2046-isf-file-origin-authority.t", "t/2047-isf-library-document-origin-authority.t", "t/2048-isf-library-document-origin-forgeries.t", "t/2049-path-search-autoload-after-chdir.t", ...) called at /System/Library/Perl/5.34/App/Prove.pm line 548
+	App::Prove::_runtests(App::Prove=HASH(0x7991004948), HASH(0x7991a1c0d8), "t/2043-isf-conditional-origin-parser.t", "t/2044-isf-conditional-origin-source-authority.t", "t/2045-isf-conditional-origin-file-parser.t", "t/2046-isf-file-origin-authority.t", "t/2047-isf-library-document-origin-authority.t", "t/2048-isf-library-document-origin-forgeries.t", ...) called at /System/Library/Perl/5.34/App/Prove.pm line 506
+	App::Prove::run(App::Prove=HASH(0x7991004948)) called at /usr/bin/prove line 13

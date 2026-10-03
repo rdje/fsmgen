@@ -1,0 +1,117 @@
+
+#   Failed test 'equal-body origin transplant / wrong_input_echo has the declared complete cause'
+#   at t/2055-isf-local-formal-helper-diagnostic-causes.t line 74.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'actual clone callback lost / wrong_label_echo has the declared complete cause'
+#   at t/2055-isf-local-formal-helper-diagnostic-causes.t line 74.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'actual Storable callback lost / wrong_label_echo has the declared complete cause'
+#   at t/2055-isf-local-formal-helper-diagnostic-causes.t line 74.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'imported producer boundary / wrong_label_echo has the declared complete cause'
+#   at t/2055-isf-local-formal-helper-diagnostic-causes.t line 74.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'actor network boundary / wrong_label_echo has the declared complete cause'
+#   at t/2055-isf-local-formal-helper-diagnostic-causes.t line 74.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'generated transaction boundary / wrong_label_echo has the declared complete cause'
+#   at t/2055-isf-local-formal-helper-diagnostic-causes.t line 74.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'domain constructor boundary / wrong_label_echo has the declared complete cause'
+#   at t/2055-isf-local-formal-helper-diagnostic-causes.t line 74.
+#          got: '1'
+#     expected: '0'
+
+#   Failed test 'no formal preparation boundary / wrong_label_echo has the declared complete cause'
+#   at t/2055-isf-local-formal-helper-diagnostic-causes.t line 74.
+#          got: '1'
+#     expected: '0'
+# Looks like you failed 8 tests of 64.
+t/2055-isf-local-formal-helper-diagnostic-causes.t .. 
+ok 1 - equal-body origin transplant / positive actually refuses
+ok 2 - equal-body origin transplant / positive has the declared complete cause
+ok 3 - equal-body origin transplant / wrong_context actually refuses
+ok 4 - equal-body origin transplant / wrong_context has the declared complete cause
+ok 5 - equal-body origin transplant / wrong_input_echo actually refuses
+not ok 6 - equal-body origin transplant / wrong_input_echo has the declared complete cause
+ok 7 - equal-body origin transplant / wrong_input_plain actually refuses
+ok 8 - equal-body origin transplant / wrong_input_plain has the declared complete cause
+ok 9 - actual clone callback lost / positive actually refuses
+ok 10 - actual clone callback lost / positive has the declared complete cause
+ok 11 - actual clone callback lost / wrong_source_plain actually refuses
+ok 12 - actual clone callback lost / wrong_source_plain has the declared complete cause
+ok 13 - actual clone callback lost / wrong_source_echo actually refuses
+ok 14 - actual clone callback lost / wrong_source_echo has the declared complete cause
+ok 15 - actual clone callback lost / wrong_label_echo actually refuses
+not ok 16 - actual clone callback lost / wrong_label_echo has the declared complete cause
+ok 17 - actual Storable callback lost / positive actually refuses
+ok 18 - actual Storable callback lost / positive has the declared complete cause
+ok 19 - actual Storable callback lost / wrong_source_plain actually refuses
+ok 20 - actual Storable callback lost / wrong_source_plain has the declared complete cause
+ok 21 - actual Storable callback lost / wrong_source_echo actually refuses
+ok 22 - actual Storable callback lost / wrong_source_echo has the declared complete cause
+ok 23 - actual Storable callback lost / wrong_label_echo actually refuses
+not ok 24 - actual Storable callback lost / wrong_label_echo has the declared complete cause
+ok 25 - imported producer boundary / positive actually refuses
+ok 26 - imported producer boundary / positive has the declared complete cause
+ok 27 - imported producer boundary / wrong_source_plain actually refuses
+ok 28 - imported producer boundary / wrong_source_plain has the declared complete cause
+ok 29 - imported producer boundary / wrong_source_echo actually refuses
+ok 30 - imported producer boundary / wrong_source_echo has the declared complete cause
+ok 31 - imported producer boundary / wrong_label_echo actually refuses
+not ok 32 - imported producer boundary / wrong_label_echo has the declared complete cause
+ok 33 - actor network boundary / positive actually refuses
+ok 34 - actor network boundary / positive has the declared complete cause
+ok 35 - actor network boundary / wrong_source_plain actually refuses
+ok 36 - actor network boundary / wrong_source_plain has the declared complete cause
+ok 37 - actor network boundary / wrong_source_echo actually refuses
+ok 38 - actor network boundary / wrong_source_echo has the declared complete cause
+ok 39 - actor network boundary / wrong_label_echo actually refuses
+not ok 40 - actor network boundary / wrong_label_echo has the declared complete cause
+ok 41 - generated transaction boundary / positive actually refuses
+ok 42 - generated transaction boundary / positive has the declared complete cause
+ok 43 - generated transaction boundary / wrong_source_plain actually refuses
+ok 44 - generated transaction boundary / wrong_source_plain has the declared complete cause
+ok 45 - generated transaction boundary / wrong_source_echo actually refuses
+ok 46 - generated transaction boundary / wrong_source_echo has the declared complete cause
+ok 47 - generated transaction boundary / wrong_label_echo actually refuses
+not ok 48 - generated transaction boundary / wrong_label_echo has the declared complete cause
+ok 49 - domain constructor boundary / positive actually refuses
+ok 50 - domain constructor boundary / positive has the declared complete cause
+ok 51 - domain constructor boundary / wrong_source_plain actually refuses
+ok 52 - domain constructor boundary / wrong_source_plain has the declared complete cause
+ok 53 - domain constructor boundary / wrong_source_echo actually refuses
+ok 54 - domain constructor boundary / wrong_source_echo has the declared complete cause
+ok 55 - domain constructor boundary / wrong_label_echo actually refuses
+not ok 56 - domain constructor boundary / wrong_label_echo has the declared complete cause
+ok 57 - no formal preparation boundary / positive actually refuses
+ok 58 - no formal preparation boundary / positive has the declared complete cause
+ok 59 - no formal preparation boundary / wrong_source_plain actually refuses
+ok 60 - no formal preparation boundary / wrong_source_plain has the declared complete cause
+ok 61 - no formal preparation boundary / wrong_source_echo actually refuses
+ok 62 - no formal preparation boundary / wrong_source_echo has the declared complete cause
+ok 63 - no formal preparation boundary / wrong_label_echo actually refuses
+not ok 64 - no formal preparation boundary / wrong_label_echo has the declared complete cause
+1..64
+Dubious, test returned 8 (wstat 2048, 0x800)
+Failed 8/64 subtests 
+
+Test Summary Report
+-------------------
+t/2055-isf-local-formal-helper-diagnostic-causes.t (Wstat: 2048 Tests: 64 Failed: 8)
+  Failed tests:  6, 16, 24, 32, 40, 48, 56, 64
+  Non-zero exit status: 8
+Files=1, Tests=64,  3 wallclock secs ( 0.01 usr  0.00 sys +  1.33 cusr  0.52 csys =  1.86 CPU)
+Result: FAIL

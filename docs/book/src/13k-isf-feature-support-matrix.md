@@ -116,15 +116,17 @@ original catalog and call identities remain distinct. It preserves explicit
 input/output formal identities through sibling and actor-pin shadows, nested
 clauses and inline calls. Complete ordinary preparation, physical actors, plans
 and primitive kinds agree; missing associations and forged reloads refuse.
-The local formal reload helper selects the first diagnostic line; its residual
-constructor assertion compares the complete cause. Perl stacks can echo caller
-patterns, and primary messages can quote input labels. Its substring check can falsely accept unrelated parser errors quoting a source
-label, or JSON encoding errors quoting an object's class name. The
-[real-producer diagnosis](../../../docs/audits/local-formal-helper-causes-20261003/scope.txt)
-owns immediate complete-cause repair before imported qualification. Broader
-helper and cold consumer qualification remains open. The initial invalid network fixture falsely passed
-a full-stack match; a valid instance fixture and a genuine echoed-regex control
-now qualify that boundary. Earlier evidence remains archived as superseded.
+The local formal reload helper and residual constructor assertion compare the
+complete declared first cause. Permanent real-producer controls reject unrelated
+parser errors that quote a source label and JSON encoding errors that quote an
+object's class name. The [complete-cause repair](../../../docs/audits/local-formal-helper-cause-repair-20261003/scope.txt)
+qualifies these boundaries with whole ordinary products and primitive kinds,
+the exact prior helper, and an actual source-authentication bypass. Intentional
+stack evidence remains separate: Perl stacks can echo caller patterns.
+Broader helper and cold consumer qualification remains open. The initial invalid
+network fixture falsely passed a full-stack match; a valid instance fixture and
+a genuine echoed-regex control now qualify that boundary. Earlier evidence
+remains archived as superseded.
 The file-origin and library-document helpers now compare complete declared
 first causes. Their original actors/proofs, primitive kinds and boundary reasons
 are requalified by independent source oracles and genuine caller-echo,

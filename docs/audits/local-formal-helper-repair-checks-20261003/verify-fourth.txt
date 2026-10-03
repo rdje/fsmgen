@@ -1,0 +1,8 @@
+ram-guard: PID 28558; host 86.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+shared corruption rejects: cause
+shared corruption rejects: input
+shared corruption rejects: current_kind
+shared corruption rejects: prior_kind
+shared corruption rejects: extra_field
+shared corruption rejects: membership
+PASS exact source delta, whole closed products/inputs/kinds, complete causes, prior helper/trace/source bypass and typed controls. Wider consumers remain open.

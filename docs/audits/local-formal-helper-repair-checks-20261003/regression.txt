@@ -1,0 +1,14 @@
+t/2043-isf-conditional-origin-parser.t .............. ok
+t/2044-isf-conditional-origin-source-authority.t .... ok
+t/2045-isf-same-source-library-origins.t ............ ok
+t/2046-isf-library-document-origin-authority.t ...... ok
+t/2047-isf-atl-document-origin-authority.t .......... ok
+t/2048-isf-file-document-origin-authority.t ......... ok
+t/2049-pathsearch-module-origin.t ................... ok
+t/2052-isf-local-formal-origin-authority.t .......... ok
+t/2053-isf-constructor-diagnostic-causes.t .......... ok
+t/2054-isf-validator-finalizer-diagnostic-causes.t .. ok
+t/2055-isf-local-formal-helper-diagnostic-causes.t .. ok
+All tests successful.
+Files=11, Tests=356, 127 wallclock secs ( 0.43 usr  0.09 sys + 112.01 cusr  7.04 csys = 119.57 CPU)
+Result: PASS

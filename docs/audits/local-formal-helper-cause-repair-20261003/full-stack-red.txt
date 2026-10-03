@@ -1,0 +1,19 @@
+
+    #   Failed test 'first-line matcher rejects the echoed caller expectation'
+    #   at t/2052-isf-local-formal-origin-authority.t line 163.
+    # Looks like you failed 1 test of 3.
+
+#   Failed test 'caller regex text cannot authenticate an unrelated Carp diagnostic'
+#   at t/2052-isf-local-formal-origin-authority.t line 167.
+# Looks like you failed 1 test of 19.
+t/2052-isf-local-formal-origin-authority.t .. 
+Dubious, test returned 1 (wstat 256, 0x100)
+Failed 1/19 subtests 
+
+Test Summary Report
+-------------------
+t/2052-isf-local-formal-origin-authority.t (Wstat: 256 Tests: 19 Failed: 1)
+  Failed test:  19
+  Non-zero exit status: 1
+Files=1, Tests=19,  4 wallclock secs ( 0.05 usr  0.00 sys +  3.34 cusr  0.44 csys =  3.83 CPU)
+Result: FAIL

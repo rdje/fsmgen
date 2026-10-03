@@ -1,0 +1,23 @@
+{
+  "baseline": "1b14d447c14267d63da9faaa43152497934244e0",
+  "commands": {
+    "bind": "scripts/run_with_ram_guard.sh -- python3 docs/audits/local-formal-helper-cause-repair-20261003/bind.py",
+    "book": "mdbook build docs/book",
+    "bypass_cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/local-formal-helper-cause-repair-20261003/verify.py --source-bypass",
+    "cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/local-formal-helper-cause-repair-20261003/verify.py",
+    "focused": "scripts/run_with_ram_guard.sh -- bash docs/audits/local-formal-helper-repair-checks-20261003/check.sh",
+    "prior_cold": "scripts/run_with_ram_guard.sh -- python3 docs/audits/local-formal-helper-cause-repair-20261003/verify.py --prior-helper",
+    "producers": "scripts/run_with_ram_guard.sh -- bash docs/audits/local-formal-helper-cause-repair-20261003/run.sh",
+    "rendered": "python3 docs/audits/local-formal-helper-cause-repair-20261003/rendered_verify.py"
+  },
+  "expected_prove_statuses": {
+    "current": 0,
+    "full-stack-red": 1,
+    "prior-helper-red": 1,
+    "source-bypass-red": 1
+  },
+  "native": "not invoked",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.2.3.5",
+  "previous_archives": "unchanged",
+  "visual_qa": "not performed"
+}

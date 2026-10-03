@@ -1,0 +1,970 @@
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 40.
+
+#   Failed test 'actual formal origin select'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 40.
+
+#   Failed test 'actual formal origin min'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 40.
+
+#   Failed test 'actual formal origin max'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 40.
+
+#   Failed test 'actual formal origin cond'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 35.
+
+#   Failed test 'actual formal origin when-bit'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 35.
+
+#   Failed test 'actual formal origin unless-bit'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 35.
+
+#   Failed test 'actual formal origin when-field'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 35.
+
+#   Failed test 'actual formal origin unless-field'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 40.
+
+#   Failed test 'actual formal origin authored'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 45.
+
+#   Failed test 'actual formal origin nested'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 35.
+
+#   Failed test 'actual formal origin local'
+#   at t/2052-isf-local-formal-origin-authority.t line 54.
+
+    #   Failed test 'equal-body origin transplant'
+    #   at t/2052-isf-local-formal-origin-authority.t line 230.
+
+    #   Failed test 'complete refusal cause'
+    #   at t/2052-isf-local-formal-origin-authority.t line 231.
+    # Looks like you failed 2 tests of 4.
+
+#   Failed test 'equal physical actors do not authorize a different original operation'
+#   at t/2052-isf-local-formal-origin-authority.t line 65.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 16 tests of 41.
+
+#   Failed test 'actual nested inline calls retain the original producer and call frames'
+#   at t/2052-isf-local-formal-origin-authority.t line 92.
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual origin forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual path forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scope forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual target forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual coverage forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual scalar_kind forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual plan forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+
+    #   Failed test 'actual extra forgery refused'
+    #   at t/2052-isf-local-formal-origin-authority.t line 203.
+
+    #   Failed test 'independent complete source authority'
+    #   at t/2052-isf-local-formal-origin-authority.t line 204.
+    #                   ''
+    #     doesn't match '(?^:differs from authoritative source)'
+    # Looks like you failed 32 tests of 70.
+
+#   Failed test 'first authored activation and macro sample conserve existing behavior'
+#   at t/2052-isf-local-formal-origin-authority.t line 102.
+# Looks like you failed 14 tests of 19.
+t/2052-isf-local-formal-origin-authority.t .. 
+Dubious, test returned 14 (wstat 3584, 0xe00)
+Failed 14/19 subtests 
+
+Test Summary Report
+-------------------
+t/2052-isf-local-formal-origin-authority.t (Wstat: 3584 Tests: 19 Failed: 14)
+  Failed tests:  1-12, 14-15
+  Non-zero exit status: 14
+Files=1, Tests=19,  4 wallclock secs ( 0.04 usr  0.01 sys +  3.27 cusr  0.53 csys =  3.85 CPU)
+Result: FAIL

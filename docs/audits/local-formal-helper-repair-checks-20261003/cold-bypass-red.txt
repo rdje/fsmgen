@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/local-formal-helper-cause-repair-20261003/verify.py", line 123, in <module>
+    if '--source-bypass' in sys.argv:assert all(c['accepted']==0 for n in ordinary for c in bypass[n]['controls']),'actual source authentication bypass admits forgeries'
+                                            ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual source authentication bypass admits forgeries

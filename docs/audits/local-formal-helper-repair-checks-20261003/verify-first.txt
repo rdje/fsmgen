@@ -1,0 +1,9 @@
+ram-guard: PID 51530; host 61.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/local-formal-helper-cause-repair-20261003/verify.py", line 18, in <module>
+    seal(PRIOR,True);seal(B)
+    ~~~~^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/local-formal-helper-cause-repair-20261003/verify.py", line 14, in seal
+    rows=load(p/'manifest.json')['members']
+         ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'members'

@@ -1,0 +1,1 @@
+PASS rendered formal helper repair text; visual QA not performed.

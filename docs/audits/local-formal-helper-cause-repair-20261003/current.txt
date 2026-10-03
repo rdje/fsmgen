@@ -1,0 +1,5 @@
+t/2052-isf-local-formal-origin-authority.t .......... ok
+t/2055-isf-local-formal-helper-diagnostic-causes.t .. ok
+All tests successful.
+Files=2, Tests=83,  9 wallclock secs ( 0.05 usr  0.01 sys +  5.00 cusr  1.54 csys =  6.60 CPU)
+Result: PASS

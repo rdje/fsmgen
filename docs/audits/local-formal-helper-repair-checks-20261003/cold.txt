@@ -1,0 +1,10 @@
+shared corruption rejects: cause
+shared corruption rejects: input
+shared corruption rejects: current_kind
+shared corruption rejects: prior_kind
+shared corruption rejects: extra_field
+shared corruption rejects: membership
+whole product corruption rejects: whole_kind
+whole product corruption rejects: whole_guard
+whole product corruption rejects: whole_membership
+PASS exact source delta, whole closed products/inputs/kinds, complete causes, prior helper/trace/source bypass and typed controls. Wider consumers remain open.
