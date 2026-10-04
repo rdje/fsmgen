@@ -484,9 +484,11 @@ detachment. It retains the known private range sibling kind transition while
 the outer value caller stays unchanged. The [copied-field source reader](../../../docs/audits/record-value-original-fields-20261005/scope.txt)
 now joins every copied width to its complete source type, carrier role and
 ancestor context, preserving raw kinds and compatible-source candidate sets.
-The graph/field join, consumer truth and the full alias run’s downstream causes
-remain open. The semantic join and cold replay precede the candidate-parent
-join and permanent test-copy and consumer repairs.
+The [input/private semantic join](../../../docs/audits/record-value-original-input-join-20261005/scope.txt)
+now binds every own graph and field to the same source/caller context, raw
+kinds and detached copy boundary. Consumer truth and the full alias run’s
+downstream causes remain open. The complete semantic join and cold replay
+precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

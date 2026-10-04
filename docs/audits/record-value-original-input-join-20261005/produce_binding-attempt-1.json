@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-input-join-20261005/produce_binding.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "Captured exact done graph/field owners and every whole committed prerequisite/check member.\n"
+}

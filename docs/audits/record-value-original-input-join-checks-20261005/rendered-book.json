@@ -1,0 +1,12 @@
+{
+  "markers": [
+    "input/private semantic join",
+    "same source/caller context",
+    "raw kinds and detached copy boundary",
+    "downstream causes remain open",
+    "complete semantic join and cold replay"
+  ],
+  "path": "docs/book/book/13k-isf-feature-support-matrix.html",
+  "result": "PASS rendered source/input/private graph-field join with consumer/cause/alias/semantic/cold boundaries open; browser visual QA remains pending",
+  "status": 0
+}
