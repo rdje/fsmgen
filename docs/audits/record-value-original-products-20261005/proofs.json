@@ -1,0 +1,93 @@
+{
+  "controls": [
+    {
+      "control": "omit-api",
+      "error": "complete current API/parser/private populations",
+      "status": 1
+    },
+    {
+      "control": "borrow-source-model",
+      "error": "exact own source model allocation",
+      "status": 1
+    },
+    {
+      "control": "wrong-source-role",
+      "error": "exact own source model allocation",
+      "status": 1
+    },
+    {
+      "control": "kind-only-result",
+      "error": "whole current result primitive kinds and source meaning",
+      "status": 1
+    },
+    {
+      "control": "wrong-call-owner",
+      "error": "complete source operation/caller/context allocation",
+      "status": 1
+    },
+    {
+      "control": "false-acceptance-kind",
+      "error": "complete source operation/caller/context allocation",
+      "status": 1
+    },
+    {
+      "control": "wrong-private-api",
+      "error": "actual private-stage API ownership",
+      "status": 1
+    },
+    {
+      "control": "omit-parser",
+      "error": "complete current API/parser/private populations",
+      "status": 1
+    },
+    {
+      "control": "kind-only-parser",
+      "error": "whole current authored parser product primitive kinds",
+      "status": 1
+    }
+  ],
+  "proofs": [
+    {
+      "api_source_products": 9283,
+      "authored_parser_products": 4,
+      "mode": "ordinary",
+      "parser_results": {
+        "bytes": 15965,
+        "sha256": "ebd6071b8a789309cd79bd6992e7f6a7abdd878e1df52e487f290c6c332f1ba0"
+      },
+      "private_source_allocations": 680,
+      "results": {
+        "bytes": 411895,
+        "sha256": "b35c0f72d33842d04940f87af435396c0698e0c2222254b11a24abf899ba6ede"
+      }
+    },
+    {
+      "api_source_products": 9283,
+      "authored_parser_products": 4,
+      "mode": "storable",
+      "parser_results": {
+        "bytes": 15965,
+        "sha256": "ebd6071b8a789309cd79bd6992e7f6a7abdd878e1df52e487f290c6c332f1ba0"
+      },
+      "private_source_allocations": 680,
+      "results": {
+        "bytes": 411895,
+        "sha256": "b35c0f72d33842d04940f87af435396c0698e0c2222254b11a24abf899ba6ede"
+      }
+    },
+    {
+      "api_source_products": 9283,
+      "authored_parser_products": 4,
+      "mode": "controls",
+      "parser_results": {
+        "bytes": 15965,
+        "sha256": "ebd6071b8a789309cd79bd6992e7f6a7abdd878e1df52e487f290c6c332f1ba0"
+      },
+      "private_source_allocations": 680,
+      "results": {
+        "bytes": 411895,
+        "sha256": "b35c0f72d33842d04940f87af435396c0698e0c2222254b11a24abf899ba6ede"
+      }
+    }
+  ]
+}

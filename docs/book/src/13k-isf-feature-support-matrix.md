@@ -475,10 +475,13 @@ isolation failures. The full alias run also preserves downstream mutations and
 its real abort; separate bad-provider trials keep every original input intact.
 The [independent original copy reader](../../../docs/audits/record-value-original-copy-reader-20261004/scope.txt)
 now qualifies unchanged-input copy kinds, complete graph identity, readonly
-inputs and detachment, including the actual bad-provider trials. Whole
-API/parser/consumer products and the full alias run’s downstream causes remain
-open. Their semantic join and cold replay precede the candidate-parent join and
-permanent test-copy and consumer repairs.
+inputs and detachment, including the actual bad-provider trials. The
+[original source-product reader](../../../docs/audits/record-value-original-products-20261005/scope.txt)
+now qualifies complete API/parser results against their own source models and
+conserves private-source allocations. Changed input/private graphs, consumer
+truth and the full alias run’s downstream causes remain open. Their semantic
+join and cold replay precede the candidate-parent join and permanent test-copy
+and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

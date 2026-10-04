@@ -4454,11 +4454,48 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify whole current original-candidate API/parser/consumer and alias-cause products.`
   Acceptance: `Reconstruct every candidate/Storable/unchanged-input-control original API/parser/helper/consumer/copy/field/caller/source allocation against its own independently established source model. Attribute all actual kind changes from test-copy interventions without erasing raw error/class/coordinate bytes. Independently derive full alias downstream source mutations, changed inputs, actual consumer failures, omitted later operations and precise raw abort boundary. Preserve complete non-target semantics and genuine source/model/product/cause corruptions; a graph-only helper proof cannot close this leaf.`
+  Verification: `Bound complete result/source/operation allocation separately from changed input/private-stage kinds, original consumer/helper/primary/native coordinate semantics and full alias downstream mutation/abort. Exact source-authored whole product models remain prerequisites; no parity-only or graph-only closure discharges this parent.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.1`
+  Status: `done`
+  Goal: `Qualify complete original-candidate API and parser results against established source models.`
+  Acceptance: `Bind full current capture/copy-reader and original product/semantic/model archives and completed source owners. Independently join every ordinary/Storable/unchanged-input-control API index to its exact own source family/model and complete primitive-kind result, caller/helper/parse and private-stage/operation allocation; qualify complete authored parser result graphs. Genuine omitted/borrowed-role/model/product/kind/allocation and false-green controls reject. Whole changed input/private graphs, consumers/helpers/raw causes/coordinates and alias downstream semantics remain siblings; no result parity is promoted to those claims.`
+  Verification: `Complete docs/audits/record-value-original-products-20261005/scope.txt binds28 exact done source/model/copy prerequisite bodies and15 whole committed archives atGitf183e8e7a. Independently select every original9283 API model index/family and full typed source result across ordinary/Storable/unchanged-input-control modes; every current result equals its own qualified authored/source product. Complete four authored parser results and680 private-stage source/API/caller/helper/parse memberships conserve, with exact current API operation/parse span allocation. Accepted statuses are conserved observations, not new cause-truth proof. Nine actual omitted/borrowed-source/wrong-family/kind/owner/bool/private/parser controls reject at exact intended causes. First attempted kind control assigned the already-string width and failed falsely; full initial program/raw status1 retain, then genuine string8-to-number8 corruption rejects. Exact current source bodies match the old model/candidate contracts. Complete saved proofs rederive, sealed watcher passes; public original/book cohort Files3 Tests318/book build/task integrity and staged doctrine/hooks qualify the slice. Close result/source allocation only; whole changed input/private graphs .2, consumer/helper/cause/coordinate semantics .3, full alias downstream .4 and product join .5 remain pending before complete semantic join/cold replay/permanent repair.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.2`
+  Status: `pending`
+  Goal: `Qualify changed original candidate API input and private-stage graph semantics.`
+  Acceptance: `Rebuild all current complete input/after/private/result/field/root and actual source-copy intervention relationships from own source recipes and qualified candidate inputs. Independently derive scalar kind propagation, declared property/order/role/source/caller/parse/helper allocation, readonly, private copy identity and complete non-target graph conservation for ordinary/Storable/unchanged-input-control. Actual foreign source/field, kind-only, missing-stage/edge and aliasing controls reject; retain exact full native data.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3`
+  Status: `pending`
+  Goal: `Qualify original candidate consumer/helper/parser cause and coordinate semantics.`
+  Acceptance: `Independently derive all original consumer operands/outcomes and helper source/API/parse/consumer/copy spans, whole parser inputs/source coordinates and intended primary cause boundaries. Preserve full raw native class/message/coordinate bytes and explicitly separate per-capture addresses from causes without broad normalization. Actual first-cause/full-stack/wrong-caller/false-green/omission/source-model controls reject; host-native wider causal assurance remains owned.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.4`
+  Status: `pending`
+  Goal: `Qualify full alias-provider downstream mutations and genuine abort.`
+  Acceptance: `Independently derive original source alias lifetime, every mutation, shifted API/helper/parser/copy/consumer/source/caller allocation, true failed consumer operands/outcomes, omitted later operations and precise full raw abort boundary. Join actual complete-clone-before-alias recursion and native identity with every changed source/input/product/field model; actual borrowed ordinary/earlier/wrong-cause/truncated/false-green controls reject. Do not replace full alias run with isolated unchanged-input trials.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.5`
+  Status: `pending`
+  Goal: `Join whole original candidate API/parser/private/consumer/alias semantics.`
+  Acceptance: `Bind four exact completed source-owned child bodies and immutable full proof populations. Join every source model, graph primitive kind, operation/caller/private/helper/parse/consumer/field allocation and genuine control with all ordinary/Storable/trial/alias native products and full cause/coordinate boundaries. No loss, wrong role or borrowed identity can qualify; close only this parent before complete independent graph/product semantic join and native/cold replay.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.3`
   Status: `pending`
@@ -5809,3 +5846,10 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'original native copy capture is complete' -- docs/TASK_TREE.md` identifies `100f540f5` as the observation boundary. Value-only T1986 consumers accept actual Storable scalar-kind losses; native trial operands and independently derived typed models expose that gap. Complete graph/identity qualification is separated from API/consumer and full alias downstream semantics before implementation. Two exact guard refusals establish no successful receipt; earlier recovery prose overstated the absence of saved proofs, which the completed independent re-derivation now authenticates.
 - [x] **ADDRESSED (verified)** — The guarded independent `verify.py` completes status0 and re-derives all original copy/joint graph and genuine provider-trial proofs from separately qualified original source models and typed graph interpretation. Complete current Git/archive/owner authority authenticates; exact edge/kind/identity/population/readonly/isolation/recursion and assertion operands/outcomes qualify. Eleven deliberate corruptions reject at the intended graph or assertion boundary. The complete saved proof regenerates identically. Scope names the API/consumer/alias semantic and cold replay legs still missing; no permanent product/test repair is claimed.
 - [x] **NO REGRESSION** — All tests successful, Files=2, Tests=308 for current public-book audits; `mdbook build docs/book` passes. Production/T1986 and every prior immutable capture/model member remain unchanged. Final sealed reader, task integrity, Knowledge Map, exact book aggregate authority, claim inventory and staged doctrine/normal-hook checks run before commit. The first checkpoint gate's missing evidence signature is retained and corrected using these actual focused tests. Full API/consumer/alias semantics, cold replay, historical native causality and full-CI/push gates remain open.
+
+
+## Acceptance Checklist — original candidate source results
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'whole API/consumer and full alias downstream semantics are next' -- docs/TASK_TREE.md` locates the committed graph-only boundary at `f183e8e7a`. Actual ordinary candidate inputs preserve scalar kinds previously changed by Storable, while complete API results conserve. The mixed successor needs distinct result, input/private, consumer/cause and alias owners. Initial `verify.py` control raises `ValueError: false-green result/source control: kind-only-result` because it reassigned an already-string width; full source/receipt retain before the genuine kind mutation.
+- [x] **ADDRESSED (verified)** — Independently select every exact own source family/index/model and complete typed result from the qualified source product archives. Guarded `verify.py` passes all ordinary/Storable/unchanged-input-control whole API and authored parser results, private source memberships and caller/helper/parse allocations. Nine genuine complete-record mutations reject at their exact intended source/result/allocation boundaries, including string8-to-number8 and string watchdog-to-number promotion. Complete model/candidate sources and committed done owners authenticate, and saved proofs regenerate identically. This closes result conservation only; changed inputs/private graphs and true consumers/causes/alias semantics remain sibling work.
+- [x] **NO REGRESSION** — All tests successful, Files=3, Tests=318 for unchanged T1986 and both public-book audits; `mdbook build docs/book` passes. Every prior immutable capture/copy/source/model proof and production/test/provider body remains unchanged. Final sealed result reader, current task/KM/exact containment/claim and staged doctrine/normal-hook checks qualify before commit. All missing semantic/cold/permanent/host-native/full-CI legs remain explicit; no gate or resource cutoff is weakened.

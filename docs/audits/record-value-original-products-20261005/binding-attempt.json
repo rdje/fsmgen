@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-products-20261005/produce_binding.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "Captured complete committed source/model/copy/capture owners and archive authority; no results generated.\n",
+  "working_directory": "."
+}

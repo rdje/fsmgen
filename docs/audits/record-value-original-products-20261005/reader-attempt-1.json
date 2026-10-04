@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-products-20261005/verify.py"
+  ],
+  "status": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-products-20261005/verify.py\", line 231, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-products-20261005/verify.py\", line 221, in main\n    result = {'proofs': proofs, 'controls': controls(records, products, source_models)}\n                                            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-products-20261005/verify.py\", line 201, in controls\n    rejects('kind-only-result', 'whole current result primitive kinds and source meaning',\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            lambda r, p: r['ordinary']['api'][target]['result'][1]['packet'][1]['type_spec'][1].update(width='8'))\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-products-20261005/verify.py\", line 194, in rejects\n    raise ValueError('false-green result/source control: ' + name)\nValueError: false-green result/source control: kind-only-result\n",
+  "stdout": "PASS full original-source capture membership/program/source/fixture/host/TAP/status and genuine provider observations. Alias downstream mutation/abort is retained; independent graph/source/product qualification and replay remain pending.\nPASS independently qualified original17 unchanged-input copy/joint/kind/readonly/identity/isolation graphs and genuine Storable/alias trials; full API/consumer and alias downstream semantics remain open.\n",
+  "working_directory": "."
+}

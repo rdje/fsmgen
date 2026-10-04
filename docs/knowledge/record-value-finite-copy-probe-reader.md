@@ -7,6 +7,7 @@ answers:
   - "how can the finite copy probes be replayed without changing sealed evidence?"
   - "are original T1986 candidate copy inputs captured?"
   - "what qualifies original T1986 candidate copy graphs?"
+  - "do original T1986 candidate API results match their source models?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -21,8 +22,12 @@ evidence: >-
   docs/audits/record-value-original-candidate-20261004/check_capture.py;
   docs/audits/record-value-original-copy-reader-20261004/scope.txt;
   docs/audits/record-value-original-copy-reader-20261004/verify.py;
+  docs/audits/record-value-original-products-20261005/scope.txt;
+  docs/audits/record-value-original-products-20261005/verify.py;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
+  scripts/run_with_ram_guard.sh -- python3 -B
+  docs/audits/record-value-original-products-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-original-copy-reader-20261004/verify.py &&
   python3 -B docs/audits/record-value-original-candidate-20261004/check_capture.py &&
@@ -51,6 +56,7 @@ products. Original candidate captures now retain complete unchanged-input
 Storable/alias trials and the full alias run's downstream mutation and abort.
 Independent typed source models now qualify the unchanged-original copy
 graphs and genuine provider trials, including readonly and detachment. Whole
-API/consumer and full alias downstream semantics, their join and cold replay
-remain open. The candidate-parent join, hot baseline/consumer repairs and
+API/parser results now qualify against their own source models; private-source
+allocations conserve. Changed input/private graphs, consumer/cause truth, full
+alias downstream semantics, their join and cold replay remain open. The candidate-parent join, hot baseline/consumer repairs and
 host-native refusal qualification remain separately owned successors.
