@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-copy-fields-20261004/verify.py", line 244, in <module>
+    assert [fact['path'] for fact in candidate] == [node[0] for node in actual_nodes], 'complete original copied width membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete original copied width membership

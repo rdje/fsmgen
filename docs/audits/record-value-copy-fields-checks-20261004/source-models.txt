@@ -1,0 +1,1 @@
+PASS complete source-declared candidate/public virtual carrier models built; all-copy source/stage role reader remains required.

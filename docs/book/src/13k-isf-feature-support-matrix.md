@@ -259,8 +259,15 @@ The [authored record-value layouts](../../../docs/audits/record-value-fields-202
 independently bind local/imported resolved types, aliases, member/list order,
 signed/state presence and packed scalar ranges. Original parser type/storage
 products match complete numeric models; a private copied fixture cannot stand
-in for that authority. Every copied-field role and complete actor/API product
-remain separate qualification steps before assurance repair.
+in for that authority. Whole actor/API products remain separately owned.
+
+The [copied-field qualification](../../../docs/audits/record-value-copy-fields-20261004/scope.txt)
+covers the complete original copy population and keeps raw numeric/string kinds.
+Full types and scalar properties match source-declared candidates; storage and
+default-port carriers keep distinct roles. Metadata layouts follow authored
+ranges. A compatible private-stage spelling does not establish final numeric
+product kinds or safe, isolated copying. Whole actor/API products, copy assurance
+and native cause controls remain owned.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

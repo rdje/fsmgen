@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "sub refuses {",
+    "--format=%H %s",
+    "--",
+    "t/1986-isf-record-port-value-gates.t"
+  ],
+  "status": 0
+}

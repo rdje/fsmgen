@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-copy-fields-20261004/verify.py", line 117, in <module>
+    assert exact(models['roots'], expected_roots), 'complete source-declared candidate domain, including signed2 mutation'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete source-declared candidate domain, including signed2 mutation

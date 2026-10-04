@@ -1,0 +1,58 @@
+{
+  "binding.json": {
+    "bytes": 779381,
+    "sha256": "e5373a4ff2ae290b9a2ecd4ff807382addf9f5fca58199eb917631f33d2ac548"
+  },
+  "card-after.txt": {
+    "bytes": 3388,
+    "sha256": "8eef727635f61ce3e77237e2d5276a67b0b0382e3017bc034ff66f3c1e8f1ff3"
+  },
+  "doc-updates.json": {
+    "bytes": 301361,
+    "sha256": "0dfbd880775473238fe2583b6ccb831fbab63408191ceb4bdccc57748fca0762"
+  },
+  "fields.json": {
+    "bytes": 8570697,
+    "sha256": "2b2cca83d41ba0077d3f5d83a62f6b662ab31dc08667451712f6b362a1c783d7"
+  },
+  "initial-storage-kind-unqualified-gaps.json": {
+    "bytes": 15340,
+    "sha256": "61fca49c546fc2f9b219d90a1147e1c86992a6be588082df9f1e4916d08d0c1e"
+  },
+  "initial-storage-kind-unqualified-produce.py": {
+    "bytes": 4285,
+    "sha256": "71cef823881ffb28ec7162b433d7960c83c700d86f95e1ed273d0cbba716bbba"
+  },
+  "plan.txt": {
+    "bytes": 2869,
+    "sha256": "b15c9a3d87e90de69258f5abd6432cc1a73cf5bd0774c824cb300f9048241a0d"
+  },
+  "produce.py": {
+    "bytes": 8288,
+    "sha256": "120d66ca70b81e2cbbc46b3c0cbc7a30578d74e1d683fd7d9f091d9e6f7f0727"
+  },
+  "role-plan.txt": {
+    "bytes": 2499,
+    "sha256": "e437899afcc06a0189b58a0c8ef857a26f6ae4a18fd900e0703917d6a12910e5"
+  },
+  "scope.txt": {
+    "bytes": 4196,
+    "sha256": "1080c737fe5c156d10151f6615f77267c0d4a56cb08adc037062f3b80c8c7698"
+  },
+  "source-models.json": {
+    "bytes": 72942,
+    "sha256": "a438b22fe5b09c4302763c28494b0593f2824a811eb1c2eef9e522806e9f1a56"
+  },
+  "source_models.py": {
+    "bytes": 3545,
+    "sha256": "b8991570a1790c27187bd3f25b569d12a57b7ce6cefe24ed89b9a84371559316"
+  },
+  "unqualified-source-node-gaps.json": {
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "verify.py": {
+    "bytes": 20048,
+    "sha256": "e31834befb3eda9ca19ad0b89b0ecf786d958502ff261ece22d30f0c447e56bd"
+  }
+}

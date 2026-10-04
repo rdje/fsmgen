@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-copy-fields-20261004/verify.py",
+    "--omit-field"
+  ],
+  "status": 1
+}
