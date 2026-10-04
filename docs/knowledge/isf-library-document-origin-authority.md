@@ -20,7 +20,7 @@ evidence: >-
   docs/audits/interface-metadata-runtime-20261004/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
-  python3 -B docs/audits/interface-metadata-fields-20261004/verify.py;
+  python3 -B docs/audits/interface-metadata-copy-controls-20261004/verify.py;
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/2046-isf-library-document-origin-authority.t
   t/2045-isf-same-source-library-origins.t
@@ -37,12 +37,21 @@ Missing/unused/changed documents/forms, forged products and late mutations refus
 Finalization rechecks uses, targets, identities and parameter kinds. Stale clones repair at finalization; initial seal is intermediate.
 Views detach; comparison bypass fails with canonical producers.
 
-Same-source first; reused exports retain distinct uses, external aliases separate constructors. Equal bodies retain constructor/operation identities. Catalogs/hashes cannot replace bytes. Original tokens partition sources; undefined singleton tails cannot serialize them.
+Reused exports retain distinct uses; external aliases separate constructors. Equal bodies retain constructor/operation identities. Catalogs/hashes cannot replace bytes. Original tokens partition sources; undefined tails cannot serialize them.
 
 Parser/scheduler stay intact; local authority closes imports, this provider packages/ATL.
 [ATL](isf-atl-document-origin-authority.md) binds resolved static clones.
 Preparation/adoption later; public gates apply. No new macros, scheduling
 admission or HDL/macro runtime is proved.
 
-Constructors, library/file helpers and ten validator/finalizer sites bind complete causes and generic mutations. Caller/argument/source/label echoes reject; prior consumers RED. Guarded readers: [origin](../audits/origin-helper-cause-repair-20261002/verify.py), [validator](../audits/validator-finalizer-cause-repair-20261003/verify.py).
-[Names](../audits/named-helper-membership-20261003/scope.txt) owns lexical units; [cohorts](../audits/residual-named-helper-cohorts-20261003/scope.txt) own review. The [record plan](../audits/aggregate-record-helper-plan-20261003/scope.txt) splits sources. [Fields](../audits/interface-metadata-fields-20261004/scope.txt) bind width sources and numeric products. [Native probes](../audits/interface-metadata-runtime-20261004/scope.txt) expose Storable location and parser filename false positives; copy assurance/context repair stay open. [ASCII census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt) overlaps text; its [kind reader](../audits/current-diagnostic-lexical-kinds-20261002/verify.py) qualifies numeric forms. Cold review stays open.
+Constructors, library/file helpers and ten validator/finalizer sites bind complete causes and mutations. Caller/argument/source/label echoes reject; prior consumers RED. Guarded readers: [origin](../audits/origin-helper-cause-repair-20261002/verify.py), [validator](../audits/validator-finalizer-cause-repair-20261003/verify.py).
+[Names](../audits/named-helper-membership-20261003/scope.txt) owns lexical units;
+[cohorts](../audits/residual-named-helper-cohorts-20261003/scope.txt) own review. [Record
+plan](../audits/aggregate-record-helper-plan-20261003/scope.txt) splits sources. Widths bind numeric
+products. [Native probes](../audits/interface-metadata-runtime-20261004/scope.txt) expose Storable
+location and parser filename false positives;
+[Copies](../audits/interface-metadata-copy-controls-20261004/scope.txt) preserve ordinary products;
+kind/alias/projection controls expose owned assurance gaps. Context repair stays open. [ASCII
+census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt) overlaps text; its [kind
+reader](../audits/current-diagnostic-lexical-kinds-20261002/verify.py) qualifies numeric forms. Cold
+review stays open.

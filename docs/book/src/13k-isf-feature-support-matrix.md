@@ -200,8 +200,12 @@ provider behavior and public admission are unchanged.
 The [field qualification](../../../docs/audits/interface-metadata-fields-20261004/scope.txt)
 binds every observed width change to declared local/imported types and checks
 complete numeric metadata results. Private validation copies may hold decimal
-strings before numeric rebuilding. Actual test-copy and assertion assurance
-remains open before the owned repairs.
+strings before numeric rebuilding. The [actual copy controls](../../../docs/audits/interface-metadata-copy-controls-20261004/scope.txt)
+show that scalar-preserving copies conserve ordinary products. The old test
+still passes a caller number-to-string mutation, an aliased fixture copy and a
+real numeric-rebuilding bypass. Those three test-assurance gaps have bounded
+repair ownership; the live provider remains correct. The candidate copier also
+preserves the actual rejected cyclic type without sharing caller references.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

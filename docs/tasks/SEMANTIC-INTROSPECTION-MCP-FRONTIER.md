@@ -4022,9 +4022,32 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify actual copy/kind/topology and producer-consumer counterfactual assurance.`
   Acceptance: `Under complete .2 source meanings, replay exact original and source-kind-preserving test-only copy variants through real providers; join every original/copy/API/caller/result/error/warning/assertion graph. Use genuine same-valued kind, alias/copy and native supported cycle controls; prove each actual changed field and unchanged seed. Do not change intentional provider private numeric projection. Own and repair any evidenced test-copy/snapshot gap in a separately bounded leaf after source qualification; no undocumented native/class capability or public behavior expansion.`
+  Verification: `pending`
+  Commit: `children below`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.1`
+  Status: `done`
+  Goal: `Qualify genuine original/pure/kind/alias/projection/cycle metadata assurance controls.`
+  Acceptance: `Bind the exact complete original test/provider/qualified plain copier before probes. Replay original and scalar-preserving test-only copies through actual public APIs, with full input/result/error/warning/copy/consumer/source-byte streams. Select one real first successful actor-interface input width8 number-to-string mutation after the actual call, one domain-interface test-copy alias and a minimal genuine numeric snapshot rebuilding bypass; keep original producer guard/error paths and all other source properties. Call the candidate copier on the actual cyclic-refusal input and prove complete kinds/sharing/ref population/no original overlap; arbitrary native classes remain cold. Reconcile whole source-meaning/model populations and exact ordinary products/causes, explicitly label counterfactual expectations and own every observed assurance gap with reproduction/priority before source repair.`
+  Verification: `docs/audits/interface-metadata-copy-controls-20261004/verify.py independently binds complete11 immutable sources, actual six native105 API/145 copy/166 leaf streams and source-qualified whole products/causes. Pure43 test copies conserve original kinds/sharing/isolation; actual kind/alias/projection controls reproduce three owned false GREENS, cycle7 references preserve a real back-edge without overlap. Unsafe authorities and copy omission are RED1; controls/receipts/manifest retained. Public-book2/308/build/rendered and staged gates close; diagnosis only, .2 owns hot test repair.`
+  Commit: `this slice (Git subject identifies leaf)`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.2`
+  Status: `pending`
+  Goal: `Repair only evidenced T1983 test copy/snapshot/product kind assurance gaps.`
+  Acceptance: `P2 defects reproduced by docs/audits/interface-metadata-copy-controls-20261004/observe.pl: kind and pure-kind change actual first successful capture caller width8 number to string8 while all166 leaf assertions stay GREEN; alias returns original domain-interface source with8 overlapping references and all166 GREEN; projection removes exactly two numeric rebuilding casts in complete producer functions and all166 GREEN despite typed public results changing. Original14 test copies also lose64 qualified source width kinds. These gaps mask caller kind mutation, nonisolated fixture copies and nonnumeric final metadata in this test; current real provider behavior remains correct. Implement only after .1 native evidence and original .2 source-field/preceding-source-context qualification. Preserve intentional private producer projection and public behavior. Use qualified plain kind/sharing-preserving copies with complete copy/reference/isolation assertions and source-kind read-only snapshots; strengthen actual numeric metadata product comparisons where genuine projection bypass proves a gap. Own each defect with exact reproduction/impact first, preserve every actual ordinary caller/product/primary cause and original-source role, and exercise exact-prior/repaired kind/alias/lossy-copy/projection/native-cycle controls. Add permanent meaningful assurance tests as needed, sync book and run focused native/staged gates before commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.3`
+  Status: `pending`
+  Goal: `Join actual metadata copy/consumer qualification and completed repairs.`
+  Acceptance: `Independently join complete original/current copy/API/source/cause/product/consumer and field/native/control memberships with every required semantic authority and completed bounded repair. Preserve private numeric rebuilding, unchanged caller contracts and finite plain/cycle/native boundaries. Source-qualified field omissions/unsafe authorities remain RED; no value-only or counts-only signoff. Commit exact assurance join before outer .4 source/product join and parent .5 diagnostic repair.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6560,3 +6583,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone($actor)' -- t/1983-isf-interface-port-metadata.t locates the original test baseline. Complete exact native typed graphs identify all94 width pairs and113 unchanged copies; independent authored local/imported/validator source/type/packed models separate original facts, private accepted spellings and final numeric metadata.
 - [x] **ADDRESSED (qualification complete)** — Whole59 accepted products match strict independently derived declaration/layout/alias/domain/null-empty models; actual imported fixture bytes and original source/copy/API/consumer populations conserve. Genuine private-stage promotion, source-order and field omission controls are RED1. Actual copier/consumer strength stays owned successor .3 before separately tracked repairs.
 - [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and complete original native/cause/field readers pass. Actual166 ordinary leaf consumers preserve whole original graphs/primary causes; no current tests/providers/public source/admission/native hardware changes. Preceding complete source qualification stays pinned and sealed evidence unchanged.
+
+## Acceptance Checklist — interface-metadata actual copy/consumer controls
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone($actor)' -- t/1983-isf-interface-port-metadata.t binds value-only baselines and copied fixtures. Complete genuine caller-kind/alias/numeric-projection controls retain all original166 successful leaf assertions despite typed/read-only/isolation faults; exact source/body/field roles precede classification.
+- [x] **ADDRESSED (diagnosis complete; repair owned)** — Complete original/pure/control stream and actual cycle/source-model reader pass. Pure test copies conserve kinds/sharing/isolation and ordinary whole products/primary causes. Unsafe consumer authorities and copy omission are RED1; all three P2 gaps have bounded .2 reproduction/impact/repair ownership before hot edits. Initial literal eval-coordinate reader failure is retained and corrected by full original/compiled function binding.
+- [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and independent complete native readers pass. All six native original166 consumer runs pass; live test/provider/public admission unchanged, private numeric rebuilding retained. Fixed knowledge-card capacity, fresh claims, task integrity/staged doctrine/hooks close before commit.

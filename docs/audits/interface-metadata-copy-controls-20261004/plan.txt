@@ -1,0 +1,16 @@
+Owner SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.1.
+Exact original/current T1983 and public metadata provider stay unchanged. Whole
+qualified plain copier from T1959 is selected by explicit same-body name rename.
+Source-qualified original field/private numeric meanings must precede these
+native controls. Run original and test-only pure copies, same-valued width8
+number->string after a real first successful capture (original and pure), and
+one actual domain-interface test-copy alias. Preserve all other source values
+and producer behavior. Numeric-projection mode compiles the complete original
+snapshot/field functions with exactly two 0+ removals, retaining every guard and
+other statement; capture real public operations and whole source/results/errors.
+Also copy the actual cyclic-refusal input through the candidate plain copier,
+prove complete kinds/sharing/reference population/isolation before clone-cycle
+cleanup and delegate to unchanged metadata validation. No arbitrary native
+class/HDL/macro/proxy/submodule implementation selection. Retain all originals,
+input/output/copy/consumer/source bytes/TAP/statuses before classifying gaps;
+source-kind/read-only/copy/product defects get bounded repair ownership first.

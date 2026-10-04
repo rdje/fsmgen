@@ -1,0 +1,1 @@
+PASS built chapter contains actual copy controls, three owned test-assurance faults, provider numeric boundary and actual cyclic-copy qualification. Visual QA stays separately open.
