@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-products-20261004/verify.py",
+    "--omit-call"
+  ],
+  "expected_failure": "complete original actor/value/core API product membership",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py\", line 118, in <module>\n    assert [row['index'] for row in rows] == list(range(len(native['api']))), 'complete original actor/value/core API product membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original actor/value/core API product membership\n",
+  "status": 1,
+  "working_directory": "."
+}

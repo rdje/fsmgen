@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-products-20261004/produce.py"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

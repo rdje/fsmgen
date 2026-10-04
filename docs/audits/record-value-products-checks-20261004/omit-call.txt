@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py", line 118, in <module>
+    assert [row['index'] for row in rows] == list(range(len(native['api']))), 'complete original actor/value/core API product membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete original actor/value/core API product membership

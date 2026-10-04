@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-products-20261004/verify.py",
+    "--wrong-parse"
+  ],
+  "expected_failure": "exact source parse/outcome/bounds allocation for every nested API",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py\", line 188, in <module>\n    assert exact(row['parse_link'], expected_link), 'exact source parse/outcome/bounds allocation for every nested API'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact source parse/outcome/bounds allocation for every nested API\n",
+  "status": 1,
+  "working_directory": "."
+}

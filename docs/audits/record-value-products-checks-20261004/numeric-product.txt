@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py", line 166, in <module>
+    assert exact(row['expected_product'], expected) and exact(expected, actual['result']), 'complete original source-modeled API product primitive kinds'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete original source-modeled API product primitive kinds

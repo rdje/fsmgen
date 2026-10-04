@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py", line 155, in <module>
+    assert row['source_index'] == index and row['whole_source_model'] == digest(model) and row['whole_completed_join'] == digest(completed), 'exact own source/completed join allocation despite identical native values'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact own source/completed join allocation despite identical native values

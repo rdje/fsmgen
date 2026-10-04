@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-products-20261004/verify.py",
+    "--numeric-product"
+  ],
+  "expected_failure": "complete original source-modeled API product primitive kinds",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py\", line 166, in <module>\n    assert exact(row['expected_product'], expected) and exact(expected, actual['result']), 'complete original source-modeled API product primitive kinds'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original source-modeled API product primitive kinds\n",
+  "status": 1,
+  "working_directory": "."
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-products-20261004/verify.py",
+    "--wrong-family"
+  ],
+  "expected_failure": "exact original API source family and operation role",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py\", line 152, in <module>\n    assert row['kind'] == kind and row['family'] == family, 'exact original API source family and operation role'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact original API source family and operation role\n",
+  "status": 1,
+  "working_directory": "."
+}

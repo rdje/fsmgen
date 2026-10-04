@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py", line 81, in <module>
+    assert [row['index'] for row in actors] == list(range(len(native['parses']))) == [0, 1, 2, 3], 'complete original actor/parse product membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete original actor/parse product membership

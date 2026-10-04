@@ -1,0 +1,268 @@
+{
+  "rows": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-actors-20261004/verify.py"
+      ],
+      "family": "actors",
+      "keys": [
+        "command",
+        "process_filename_policy",
+        "status"
+      ],
+      "status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-actors-20261004/verify.py",
+        "--omit-product"
+      ],
+      "family": "actors",
+      "keys": [
+        "command",
+        "process_filename_policy",
+        "status"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-actors-20261004/verify.py",
+        "--swap-source-role"
+      ],
+      "family": "actors",
+      "keys": [
+        "command",
+        "process_filename_policy",
+        "status"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-actors-20261004/verify.py",
+        "--trust-private-product"
+      ],
+      "family": "actors",
+      "keys": [
+        "command",
+        "process_filename_policy",
+        "status"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-actors-20261004/verify.py",
+        "--numeric-source-tokens"
+      ],
+      "family": "actors",
+      "keys": [
+        "command",
+        "process_filename_policy",
+        "status"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-actors-20261004/verify.py",
+        "--omit-default-family"
+      ],
+      "family": "actors",
+      "keys": [
+        "command",
+        "process_filename_policy",
+        "status"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-api-join-20261004/verify.py"
+      ],
+      "family": "api-join",
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-api-join-20261004/verify.py",
+        "--omit-api"
+      ],
+      "family": "api-join",
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-api-join-20261004/verify.py",
+        "--omit-copy"
+      ],
+      "family": "api-join",
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-api-join-20261004/verify.py",
+        "--incomplete-owner"
+      ],
+      "family": "api-join",
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-api-join-20261004/verify.py",
+        "--swap-field"
+      ],
+      "family": "api-join",
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-core-join-20261004/verify.py"
+      ],
+      "family": "core-join",
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-core-join-20261004/verify.py",
+        "--omit-call"
+      ],
+      "family": "core-join",
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-core-join-20261004/verify.py",
+        "--same-model"
+      ],
+      "family": "core-join",
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-core-join-20261004/verify.py",
+        "--wrong-family"
+      ],
+      "family": "core-join",
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-core-join-20261004/verify.py",
+        "--numeric-product"
+      ],
+      "family": "core-join",
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-core-join-20261004/verify.py",
+        "--omit-private"
+      ],
+      "family": "core-join",
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    }
+  ],
+  "source_revision": "bddc62876343529bc5a02de4265381070ed42081",
+  "status": 0
+}

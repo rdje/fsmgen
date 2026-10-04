@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-products-20261004/verify.py",
+    "--same-model"
+  ],
+  "expected_failure": "exact own source/completed join allocation despite identical native values",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py\", line 155, in <module>\n    assert row['source_index'] == index and row['whole_source_model'] == digest(model) and row['whole_completed_join'] == digest(completed), 'exact own source/completed join allocation despite identical native values'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own source/completed join allocation despite identical native values\n",
+  "status": 1,
+  "working_directory": "."
+}

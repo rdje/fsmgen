@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-products-20261004/verify.py",
+    "--omit-private"
+  ],
+  "expected_failure": "complete original own private clone/field product membership",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-products-20261004/verify.py\", line 193, in <module>\n    assert [row['index'] for row in private] == sorted(expected_private) == indices, 'complete original own private clone/field product membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original own private clone/field product membership\n",
+  "status": 1,
+  "working_directory": "."
+}

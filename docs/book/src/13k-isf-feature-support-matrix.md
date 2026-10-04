@@ -430,6 +430,16 @@ in its dated source/document context, including the full inherited native and
 source proofs. This closes only the core product lane. The whole actor/API
 join, permanent original consumers and full native diagnostic assurance remain
 separately owned.
+The [complete actor/API product join](../../../docs/audits/record-value-products-20261004/scope.txt)
+now binds all four original actor outcomes and every value/core call to its own
+completed source model and full native product. All private preparation clones
+and field records retain their API owners; nested calls retain their exact
+source parse and operation bounds. Missing actors/calls/private stages, borrowed
+models with identical native values, wrong API families or parse owners, numeric
+promotion and genuine kind-changing private actor copies reject. Complete actor,
+value and core proofs reexecute in dated contexts with every inherited native
+and source proof. This closes product semantics only; whole semantic/helper
+closure, permanent original consumer assurance and full native causes follow.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the
