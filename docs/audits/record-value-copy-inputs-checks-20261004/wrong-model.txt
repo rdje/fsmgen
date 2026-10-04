@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-copy-inputs-20261004/verify.py", line 76, in <module>
+    assert exact(row['semantic'], semantic['copies'][index]), 'whole own source/field/native semantic assignment retains'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: whole own source/field/native semantic assignment retains

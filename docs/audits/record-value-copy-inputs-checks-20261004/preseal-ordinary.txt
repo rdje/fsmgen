@@ -1,0 +1,1 @@
+PASS complete original17 test-copy input/source/field/recipe contract; actual legacy kind-changing indices=[80, 273, 434, 477, 519, 529, 538, 547, 557, 567, 577, 586, 595, 605, 614]; width occurrences={'before': 194, 'after': 194}. Candidate topology/native/actual-copy execution and permanent hot repairs remain open.

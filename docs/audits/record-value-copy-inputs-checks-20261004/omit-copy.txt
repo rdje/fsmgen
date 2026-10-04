@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-copy-inputs-20261004/verify.py", line 65, in <module>
+    assert [row['index'] for row in data['rows']] == expected_indices and len(expected_indices) == 17, 'every original whole test-copy input/source/field record retains'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: every original whole test-copy input/source/field record retains

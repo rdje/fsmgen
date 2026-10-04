@@ -1,0 +1,47 @@
+[
+  {
+    "body": "sub source_value_copy {\n    my ($value, $copies) = @_;\n    return $value unless ref($value);\n    die 'unexpected source reference' if blessed($value)\n        || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');\n    $copies ||= {};\n    my $address = refaddr($value);\n    return $copies->{$address} if exists $copies->{$address};\n    my $copy = ref($value) eq 'HASH' ? {} : [];\n    $copies->{$address} = $copy;\n    if (ref($value) eq 'HASH') {\n        $copy->{$_} = source_value_copy($value->{$_}, $copies) for keys %$value;\n    } else {\n        push @$copy, source_value_copy($_, $copies) for @$value;\n    }\n    return $copy;\n}\n\n",
+    "bytes": 629,
+    "end_line": 36,
+    "name": "source_value_copy",
+    "sha256": "36ff65d4cab9bf3eb451f8a3289d780709c5de69a39f0e10eedda1598d726be2",
+    "source_path": "t/1960-isf-formal-reservation-coverage.t",
+    "start_line": 19
+  },
+  {
+    "body": "sub snapshot_graph {\n    my ($value, $seen, $path) = @_;\n    return $value unless ref($value);\n    $seen ||= {}; $path //= '';\n    my $address = refaddr($value);\n    return ['reference', $seen->{$address}] if exists $seen->{$address};\n    $seen->{$address} = $path;\n    if (blessed($value)) {\n        # The cause controls use this empty native HASH. Other unsupported\n        # referents have no declared snapshot contract and fail closed.\n        die 'unexpected native snapshot reference' unless ref($value) eq 'CoverageCauseSentinel'\n            && reftype($value) eq 'HASH' && !keys %$value;\n        return ['empty_native_hash', ref($value), $address];\n    }\n    if (ref($value) eq 'HASH') {\n        my %copy;\n        for my $key (sort keys %$value) {\n            my $escaped = $key; $escaped =~ s/~/~0/g; $escaped =~ s{/}{~1}g;\n            $copy{$key} = snapshot_graph($value->{$key}, $seen, \"$path/$escaped\");\n        }\n        return ['hash', \\%copy];\n    }\n    return ['array', [map {snapshot_graph($value->[$_], $seen, \"$path/$_\")} 0..$#$value]]\n        if ref($value) eq 'ARRAY';\n    die 'unexpected snapshot reference';\n}\n\n",
+    "bytes": 1134,
+    "end_line": 63,
+    "name": "snapshot_graph",
+    "sha256": "348bd8f708003bc638af3b6d7339c93dfd8131181910120ceaa845c381d25f72",
+    "source_path": "t/1960-isf-formal-reservation-coverage.t",
+    "start_line": 37
+  },
+  {
+    "body": "sub input_snapshot {JSON::PP->new->canonical->encode(snapshot_graph($_[0]))}\n\n",
+    "bytes": 78,
+    "end_line": 65,
+    "name": "input_snapshot",
+    "sha256": "98045b09baa045a913ec351264f98f052a824b27047b3d45cca97fa053a1fcc0",
+    "source_path": "t/1960-isf-formal-reservation-coverage.t",
+    "start_line": 64
+  },
+  {
+    "body": "sub source_references {\n    my @pending = ($_[0]);\n    my %seen;\n    while (@pending) {\n        my $value = pop @pending;\n        next unless ref($value);\n        die 'unexpected source reference' if blessed($value)\n            || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');\n        my $address = refaddr($value);\n        next if exists $seen{$address};\n        $seen{$address} = 1;\n        push @pending, ref($value) eq 'HASH' ? values(%$value) : @$value;\n    }\n    return \\%seen;\n}\n\n",
+    "bytes": 492,
+    "end_line": 81,
+    "name": "source_references",
+    "sha256": "486653f8c10e4e8cda626bbbe139033e13eefa01d5585d48e617f7e8347cfe65",
+    "source_path": "t/1960-isf-formal-reservation-coverage.t",
+    "start_line": 66
+  },
+  {
+    "body": "sub source_copy {\n    my ($value, $label) = @_;\n    my $before = input_snapshot($value);\n    my $original = source_references($value);\n    my $copy = source_value_copy($value);\n    my $copied = source_references($copy);\n    my $shared = grep {exists $original->{$_}} keys %$copied;\n    is(input_snapshot($value), $before, \"$label copy preserves original kinds and sharing\");\n    is(input_snapshot($copy), $before, \"$label copy preserves kinds and sharing\");\n    is(scalar(keys %$copied), scalar(keys %$original), \"$label copy preserves reference population\");\n    is($shared, 0, \"$label copy is isolated from source\");\n    return $copy;\n}\n\n",
+    "bytes": 640,
+    "end_line": 95,
+    "name": "source_copy",
+    "sha256": "48213dac979fd7e3ce5a2d85f29be1163949399b65dbe1a629029af12a66e29b",
+    "source_path": "t/1960-isf-formal-reservation-coverage.t",
+    "start_line": 82
+  }
+]

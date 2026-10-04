@@ -4371,11 +4371,41 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify the finite kind-preserving copy and whole graph assertion helpers for T1986.`
   Acceptance: `Use complete original17 test-copy graphs and independently qualified authored/type/product/source models to reproduce Storable kind loss. Reuse only authenticated same-project plain HASH/ARRAY scalar-preserving recipes with cycle/share memoization and independently prove full primitive kinds, edges, reachable identity, readonly and detachment. Genuine Storable/alias/sharing/cycle/native unsupported controls must distinguish claims; preserve actual original cycle-refusal applicability. Candidate qualification precedes hot test-copy changes and does not close permanent consumer assurance.`
+  Verification: `Active before helper/source/model/artifact changes. Original cold semantic authority committed atb63195f3; T1986 and production remain unchanged. Reuse only exact authenticated finite same-project recipe bodies, reconstruct every original test-copy graph and independently qualify all kind/edge/identity/readonly/isolation/sharing/cycle controls before hot repair.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.1`
+  Status: `done`
+  Goal: `Bind complete original test-copy inputs and finite helper qualification contract.`
+  Acceptance: `Authenticate every original17 complete native test-copy/source/full-field record and actual legacy kind differences against immutable completed source/semantic owners. Capture exact existing same-project plain copy/snapshot/identity recipe bodies and declare finite class/topology/applicability constraints plus bounded original-input/topology/native/join successors. Independently verify complete membership, original roles/callers/kinds/fields and genuine legacy/omission/owner authority rejections. No candidate helper or hot repair closure.`
+  Verification: `Complete docs/audits/record-value-copy-inputs-20261004/scope.txt binds22 full Gitb63195f3 source bodies/thirty done owners to every original17 whole native/source/field/semantic copy input, complete authored/source domains and five exact existing copy/snapshot/reference/assertion recipe bodies. Independent raw membership/own source model/caller/native graph/readonly/width reader passes; fifteen actual Storable copies change kinds and cannot be baseline authority. All194 before/after width occurrences retain. Original inputs are plain trees; no original sharing/cycle input is claimed. Actual legacy-copy authority, omission, foreign model and wrong named recipe each intended RED1. Final9-member sealed watcher PASS; book Files2 Tests308/build PASS. Snapshot old CoverageCauseSentinel exception stays explicit and requires stricter T1986 adaptation in .2. Close only input/contract leaf, not candidate/native/hot repairs. Remaining topology/native, actual original candidate execution and full candidate join have bounded .2/.3/.4 owners.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2`
+  Status: `pending`
+  Goal: `Qualify finite copy and graph helpers with genuine topology and native controls.`
+  Acceptance: `Run authenticated scalar-preserving helper bodies on complete declared plain HASH/ARRAY/primitive/share/cycle probes; independent full native joint graphs and source expectations must prove kinds, readonly, sharing, reference population and detachment. Genuine Storable/alias/sharing/cycle/source-mutation/native unsupported controls reject at intended helper assertions; preserve full raw outputs/errors. Do not infer structured clone cycle or universal native class support.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3`
+  Status: `pending`
+  Goal: `Qualify candidate helpers on every actual original T1986 native test-copy input.`
+  Acceptance: `Execute unchanged original T1986 source with test-copy-only candidate instrumentation, actual Storable and correct-clone-then-alias controls. Complete all17 copy/input/field/native joint/kind/caller/source records and all original outcomes retain declared meaning; independent native/source/field readers and complete original cold proof must pass. Own each actual before/after kind difference and full raw cause/coordinate boundary; candidate instrumentation does not close permanent hot consumer repair.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.4`
+  Status: `pending`
+  Goal: `Join complete finite T1986 helper candidate qualification.`
+  Acceptance: `Join exact completed source/input, topology/native and actual-original-copy owners and whole immutable native/source/field/helper/control records. Reexecute all independent readers and genuine RED controls, preserve full class/kind/edge/caller/source/role/cycle semantics and named missing legs. Close only candidate parent before hot test-copy and permanent caller/consumer repairs.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.3`
   Status: `pending`
@@ -7108,3 +7138,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'current selected source drift: ' -- docs/audits/record-value-semantic-join-20261004/verify.py binds immutable original current-file source authority at0da4675ac61460451f030001adad075157a6efb4. Actual fixture target-alias source and done-to-pending completed-owner changes each make that original reader RED1 at exact source/owner authority. A hot repair therefore needs its full original comparison context pinned rather than editing old evidence or silently omitting source identity.
 - [x] **ADDRESSED (verified)** — Complete original21 full source bodies/full committed task/29 done owners/complete own runtime and declared fixture inputs authenticate independently. Original ordinary/all nine reached semantic RED with every inherited source/native/model proof reexecute full exact command/program/interpreter/status/output context. Actual complete source/owner decoys reject; independent omission and genuine decoy-authority promotions each RED1. Whole source/task/non-target bodies, input bytes/SHA, own runtime and primary Git index conserve. Final11-member sealed ordinary/decoy watcher PASS; cold authority deliberately leaves current hot test transformations, baseline-kind/consumer repair and native causes to their owners.
 - [x] **NO REGRESSION** — All tests successful; actual public book Files=2 Tests=308 and mdBook build PASS. No live production/test/guard edits; all prior source/native/model/product/field/control artifacts stay immutable. Only exact invoked original main/authenticated native module File-frame filename coordinates qualify full replay; every other source line/message/argument/root byte retains. Exact original/current documentation transformation, fresh task/KM/containment/final claim census and staged doctrines/hooks precede commit. No permanent consumer/cause/HDL/full-CI/push closure.
+
+## Acceptance Checklist — complete original copy inputs and finite helper contract
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone($actor);' -- t/1986-isf-record-port-value-gates.t binds original Storable baseline introduction02827d840254d6cdbfa4020be7910bb7ae9ac4cb. Whole authenticated native copy records reproduce fifteen kind-changing test baselines despite legacy-green consumers. All original before inputs are trees; inferred sharing/cycle/native helper support would lack actual applicability controls. Exact existing T1960 source_copy/snapshot bodies locate finite native exception and the stricter T1986 boundary that must be independently qualified.
+- [x] **ADDRESSED (input contract verified)** — All seventeen whole original copy/source/field/native/semantic records and194 widths per boundary retain exact own models/callers/kinds and complete authored/source domains. Independent topology/full raw membership and recipe source-line/bytes/SHA reader passes. Genuine actual legacy-copy authority, omission, foreign semantic allocation and wrong named recipe each reach intended RED1. Complete22 source/thirty done-owner/five recipe bodies and final9-member sealed watcher authenticate. Bounded topology/native, actual-original-copy and candidate-join successors own every missing candidate leg before hot repair; no candidate or permanent assurance closure.
+- [x] **NO REGRESSION** — All tests successful; actual public book Files=2 Tests=308 and mdBook build PASS. No live production/test/helper/provider change; all previous whole source/native/field/model/product/control evidence remains immutable. Recent committed original pinned watcher reexecutes ordinary/all nine RED and every inherited native/source proof; this leaf reauthenticates that boundary. Exact current book transformation, fresh task/KM/containment/final claim census and staged doctrines/hooks precede commit. No generalized native/cyclic structured clone/HDL/full-CI/push signoff.

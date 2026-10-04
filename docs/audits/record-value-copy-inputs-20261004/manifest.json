@@ -1,0 +1,38 @@
+{
+  "binding.json": {
+    "bytes": 1035856,
+    "sha256": "fdfd1acf303247163b9b6e31d41d7e1e6e2bd753023e9abb26dd8c13ac6cc51e"
+  },
+  "check_controls.py": {
+    "bytes": 1503,
+    "sha256": "b40bca3603b696391caffdd9bf4c44e67aee7939f291ff810da2584fe06c8c01"
+  },
+  "controls.json": {
+    "bytes": 3119,
+    "sha256": "b4d18be237edd17225c8b89268dc7877e2cc13dc945ea72604107a56c954d164"
+  },
+  "doc-updates.json": {
+    "bytes": 325689,
+    "sha256": "c6e6e6a83491c67f98269b928b8225ed8ed9b80a30d71dc0dad3d9daa6206f56"
+  },
+  "inputs.json": {
+    "bytes": 1482499,
+    "sha256": "d62fa3517e522d76cf47fa424cd6a85837fecb946de3493011b1880e89ee73d0"
+  },
+  "produce.py": {
+    "bytes": 2857,
+    "sha256": "f1d895ed1275a9433b59b1e672568fd573ee8bcb32f80b582a5fb809ea120726"
+  },
+  "recipes.json": {
+    "bytes": 4365,
+    "sha256": "7049ed4ae3a7e8613878d9273c475867eca19bbe89333723ba61902dd7bf68f3"
+  },
+  "scope.txt": {
+    "bytes": 3679,
+    "sha256": "c75e1794e015d0c49dfea5053e9ba7e6378fa5b0b76f632265626c513e620bd8"
+  },
+  "verify.py": {
+    "bytes": 7201,
+    "sha256": "f1c8ef1151cbb1a075d6963f50404cdd1eafdc8a153f71dad9a23f065b02e09b"
+  }
+}

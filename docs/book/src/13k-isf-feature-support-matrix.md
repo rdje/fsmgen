@@ -456,6 +456,11 @@ now pins complete original source and task authority before permanent test chang
 The original proof and every rejecting control run in that exact dated context;
 changed source or completed-owner authority rejects. This preserves the original
 comparison boundary while current copy and consumer repairs remain separately owned.
+The [complete original copy-input contract](../../../docs/audits/record-value-copy-inputs-20261004/scope.txt)
+now binds every test-copy graph and field to its source and completed semantic owner.
+Actual Storable outputs lose primitive-kind information and reject as baseline authority.
+These original inputs are trees; sharing, cycles and native-reference boundaries need
+separate candidate probes before any permanent copy or consumer repair.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the
