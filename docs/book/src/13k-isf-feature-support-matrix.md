@@ -325,8 +325,20 @@ Capture handoffs keep their raw width spelling, and caller graphs retain.
 Genuine missing products/stages, wrong source roles, private width-string
 promotion and capture misallocation reject. This profile's snapshots all
 succeed; broader snapshot refusals and unknown/empty inputs are covered by their
-separate metadata contracts. Range/clone/identity products and native assurance
-remain open. The
+separate metadata contracts. The [complete range proof](../../../docs/audits/record-value-ranges-20261004/scope.txt)
+binds every four-hundred-thirty-seven original call: four-hundred-seventeen
+source-declared metadata leaf paths and twenty source/reference paths. Independent
+reverse packed intervals verify four-hundred-thirty-one whole successful products
+and six complete returned failure maps, including unknown members, invalid item
+and scalar indices, malformed paths and a nearest scalar shadow. Returned range
+widths/endpoints are numeric; resolved types keep their exact own clone-input
+preparation spellings. Successful subaggregate ranges still meet the separate
+value gate's scalar-leaf refusal. One private list-offset calculation promotes
+a sibling width from string to number; its whole source/copy/caller relation is
+retained, while the original reference caller stays unchanged. Missing calls or
+type stages, wrong same-width ranges/failure truths, coercing a prepared type width and
+concealing that private change reject. Recursive clone/identity products and
+native assurance remain open. The
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

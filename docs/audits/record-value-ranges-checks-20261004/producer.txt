@@ -1,0 +1,1 @@
+PASS complete original437 source-call/root/path/private-type range models:417 source-declared metadata leaf calls and20 source/reference calls. All431 own final type-clone inputs bind; six full returned failure maps retain. Native product comparison remains separate.

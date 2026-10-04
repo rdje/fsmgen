@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-ranges-20261004/verify.py", line 178, in <module>
+    assert [row['index'] for row in rows] == [i for i, row in enumerate(native['api']) if row['kind'] == 'range'], 'every whole original range call/source/product membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: every whole original range call/source/product membership

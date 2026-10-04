@@ -1,0 +1,1372 @@
+{
+  "after_kind": "int",
+  "before_kind": "str",
+  "changed_source_path": "/members/body/members/lanes/items/1/width",
+  "physical_width": 2,
+  "range": {
+    "expected_product": [
+      "hash",
+      {
+        "high": 2,
+        "low": 2,
+        "ok": 1,
+        "type_spec": [
+          "hash",
+          {
+            "kind": "bit",
+            "signed": "0",
+            "state_model": "two_state",
+            "width": "1"
+          }
+        ],
+        "width": 1
+      }
+    ],
+    "index": 4825,
+    "original": {
+      "accepted": 1,
+      "after": [
+        "array",
+        [
+          "FSM::Package::AggregatePathSupport",
+          "root_type_spec",
+          [
+            "hash",
+            {
+              "kind": "record",
+              "member_order": [
+                "array",
+                [
+                  "header",
+                  "body"
+                ]
+              ],
+              "members": [
+                "hash",
+                {
+                  "body": [
+                    "hash",
+                    {
+                      "kind": "record",
+                      "member_order": [
+                        "array",
+                        [
+                          "count",
+                          "lanes"
+                        ]
+                      ],
+                      "members": [
+                        "hash",
+                        {
+                          "count": [
+                            "hash",
+                            {
+                              "kind": "bits",
+                              "signed": "1",
+                              "state_model": "four_state",
+                              "width": "3"
+                            }
+                          ],
+                          "lanes": [
+                            "hash",
+                            {
+                              "items": [
+                                "array",
+                                [
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bit",
+                                      "signed": "0",
+                                      "state_model": "two_state",
+                                      "width": "1"
+                                    }
+                                  ],
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bits",
+                                      "signed": "0",
+                                      "width": 2
+                                    }
+                                  ]
+                                ]
+                              ],
+                              "kind": "list",
+                              "signed": 0,
+                              "width": 3
+                            }
+                          ]
+                        }
+                      ],
+                      "signed": 0,
+                      "width": 6
+                    }
+                  ],
+                  "header": [
+                    "hash",
+                    {
+                      "kind": "bits",
+                      "signed": "0",
+                      "width": "2"
+                    }
+                  ]
+                }
+              ],
+              "signed": 0,
+              "width": 8
+            }
+          ],
+          "path_text",
+          ".body.lanes[0]"
+        ]
+      ],
+      "before": [
+        "array",
+        [
+          "FSM::Package::AggregatePathSupport",
+          "root_type_spec",
+          [
+            "hash",
+            {
+              "kind": "record",
+              "member_order": [
+                "array",
+                [
+                  "header",
+                  "body"
+                ]
+              ],
+              "members": [
+                "hash",
+                {
+                  "body": [
+                    "hash",
+                    {
+                      "kind": "record",
+                      "member_order": [
+                        "array",
+                        [
+                          "count",
+                          "lanes"
+                        ]
+                      ],
+                      "members": [
+                        "hash",
+                        {
+                          "count": [
+                            "hash",
+                            {
+                              "kind": "bits",
+                              "signed": "1",
+                              "state_model": "four_state",
+                              "width": "3"
+                            }
+                          ],
+                          "lanes": [
+                            "hash",
+                            {
+                              "items": [
+                                "array",
+                                [
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bit",
+                                      "signed": "0",
+                                      "state_model": "two_state",
+                                      "width": "1"
+                                    }
+                                  ],
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bits",
+                                      "signed": "0",
+                                      "width": "2"
+                                    }
+                                  ]
+                                ]
+                              ],
+                              "kind": "list",
+                              "signed": 0,
+                              "width": 3
+                            }
+                          ]
+                        }
+                      ],
+                      "signed": 0,
+                      "width": 6
+                    }
+                  ],
+                  "header": [
+                    "hash",
+                    {
+                      "kind": "bits",
+                      "signed": "0",
+                      "width": "2"
+                    }
+                  ]
+                }
+              ],
+              "signed": 0,
+              "width": 8
+            }
+          ],
+          "path_text",
+          ".body.lanes[0]"
+        ]
+      ],
+      "caller": [
+        "FSM::Support::ISFRecordPortValues",
+        "perl/FSM/Support/ISFRecordPortValues.pm",
+        83
+      ],
+      "error": "",
+      "helper": null,
+      "kind": "range",
+      "parse": null,
+      "primary": "",
+      "result": [
+        "hash",
+        {
+          "high": 2,
+          "low": 2,
+          "ok": 1,
+          "type_spec": [
+            "hash",
+            {
+              "kind": "bit",
+              "signed": "0",
+              "state_model": "two_state",
+              "width": "1"
+            }
+          ],
+          "width": 1
+        }
+      ],
+      "warnings": []
+    },
+    "source_recipe": {
+      "parent_index": 4751,
+      "parent_kind": "reference",
+      "path_text": ".body.lanes[0]",
+      "source_root": [
+        "hash",
+        {
+          "kind": "record",
+          "member_order": [
+            "array",
+            [
+              "header",
+              "body"
+            ]
+          ],
+          "members": [
+            "hash",
+            {
+              "body": [
+                "hash",
+                {
+                  "kind": "record",
+                  "member_order": [
+                    "array",
+                    [
+                      "count",
+                      "lanes"
+                    ]
+                  ],
+                  "members": [
+                    "hash",
+                    {
+                      "count": [
+                        "hash",
+                        {
+                          "kind": "bits",
+                          "signed": 1,
+                          "state_model": "four_state",
+                          "width": 3
+                        }
+                      ],
+                      "lanes": [
+                        "hash",
+                        {
+                          "items": [
+                            "array",
+                            [
+                              [
+                                "hash",
+                                {
+                                  "kind": "bit",
+                                  "signed": 0,
+                                  "state_model": "two_state",
+                                  "width": 1
+                                }
+                              ],
+                              [
+                                "hash",
+                                {
+                                  "kind": "bits",
+                                  "signed": 0,
+                                  "width": 2
+                                }
+                              ]
+                            ]
+                          ],
+                          "kind": "list",
+                          "signed": 0,
+                          "width": 3
+                        }
+                      ]
+                    }
+                  ],
+                  "signed": 0,
+                  "width": 6
+                }
+              ],
+              "header": [
+                "hash",
+                {
+                  "kind": "bits",
+                  "signed": 0,
+                  "width": 2
+                }
+              ]
+            }
+          ],
+          "signed": 0,
+          "width": 8
+        }
+      ],
+      "whole_source_call": {
+        "access": "read",
+        "allow_whole": 0,
+        "caller": [
+          "main",
+          "./t/1986-isf-record-port-value-gates.t",
+          77
+        ],
+        "context": "control",
+        "helper": null,
+        "token": "packet.body.lanes[0]"
+      },
+      "whole_source_parent": {
+        "bytes": 56660,
+        "sha256": "83c671939b96a30c3fd967f43148bb96c6292067b7615402cfa263c05786b497"
+      }
+    },
+    "type_stage": {
+      "index": 4841,
+      "record": {
+        "accepted": 1,
+        "after": [
+          "array",
+          [
+            "FSM::Package::AggregatePathSupport",
+            [
+              "hash",
+              {
+                "kind": "bit",
+                "signed": "0",
+                "state_model": "two_state",
+                "width": "1"
+              }
+            ]
+          ]
+        ],
+        "before": [
+          "array",
+          [
+            "FSM::Package::AggregatePathSupport",
+            [
+              "hash",
+              {
+                "kind": "bit",
+                "signed": "0",
+                "state_model": "two_state",
+                "width": "1"
+              }
+            ]
+          ]
+        ],
+        "caller": [
+          "FSM::Package::AggregatePathSupport",
+          "perl/FSM/Package/AggregatePathSupport.pm",
+          295
+        ],
+        "error": "",
+        "helper": null,
+        "kind": "structured-clone",
+        "parse": null,
+        "primary": "",
+        "result": [
+          "hash",
+          {
+            "kind": "bit",
+            "signed": "0",
+            "state_model": "two_state",
+            "width": "1"
+          }
+        ],
+        "warnings": []
+      }
+    }
+  },
+  "reference_index": 4751,
+  "whole_private_roots": [
+    {
+      "accepted": 1,
+      "after": [
+        "hash",
+        {
+          "role": "input",
+          "type_spec": [
+            "hash",
+            {
+              "kind": "record",
+              "member_order": [
+                "array",
+                [
+                  "header",
+                  "body"
+                ]
+              ],
+              "members": [
+                "hash",
+                {
+                  "body": [
+                    "hash",
+                    {
+                      "kind": "record",
+                      "member_order": [
+                        "array",
+                        [
+                          "count",
+                          "lanes"
+                        ]
+                      ],
+                      "members": [
+                        "hash",
+                        {
+                          "count": [
+                            "hash",
+                            {
+                              "kind": "bits",
+                              "signed": 1,
+                              "state_model": "four_state",
+                              "width": "3"
+                            }
+                          ],
+                          "lanes": [
+                            "hash",
+                            {
+                              "items": [
+                                "array",
+                                [
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bit",
+                                      "signed": 0,
+                                      "state_model": "two_state",
+                                      "width": "1"
+                                    }
+                                  ],
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bits",
+                                      "signed": 0,
+                                      "width": "2"
+                                    }
+                                  ]
+                                ]
+                              ],
+                              "kind": "list",
+                              "signed": 0,
+                              "width": 3
+                            }
+                          ]
+                        }
+                      ],
+                      "signed": 0,
+                      "width": 6
+                    }
+                  ],
+                  "header": [
+                    "hash",
+                    {
+                      "kind": "bits",
+                      "signed": 0,
+                      "width": "2"
+                    }
+                  ]
+                }
+              ],
+              "signed": 0,
+              "width": 8
+            }
+          ]
+        }
+      ],
+      "api": 4751,
+      "before": [
+        "hash",
+        {
+          "role": "input",
+          "type_spec": [
+            "hash",
+            {
+              "kind": "record",
+              "member_order": [
+                "array",
+                [
+                  "header",
+                  "body"
+                ]
+              ],
+              "members": [
+                "hash",
+                {
+                  "body": [
+                    "hash",
+                    {
+                      "kind": "record",
+                      "member_order": [
+                        "array",
+                        [
+                          "count",
+                          "lanes"
+                        ]
+                      ],
+                      "members": [
+                        "hash",
+                        {
+                          "count": [
+                            "hash",
+                            {
+                              "kind": "bits",
+                              "signed": 1,
+                              "state_model": "four_state",
+                              "width": "3"
+                            }
+                          ],
+                          "lanes": [
+                            "hash",
+                            {
+                              "items": [
+                                "array",
+                                [
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bit",
+                                      "signed": 0,
+                                      "state_model": "two_state",
+                                      "width": "1"
+                                    }
+                                  ],
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bits",
+                                      "signed": 0,
+                                      "width": "2"
+                                    }
+                                  ]
+                                ]
+                              ],
+                              "kind": "list",
+                              "signed": 0,
+                              "width": 3
+                            }
+                          ]
+                        }
+                      ],
+                      "signed": 0,
+                      "width": 6
+                    }
+                  ],
+                  "header": [
+                    "hash",
+                    {
+                      "kind": "bits",
+                      "signed": 0,
+                      "width": "2"
+                    }
+                  ]
+                }
+              ],
+              "signed": 0,
+              "width": 8
+            }
+          ]
+        }
+      ],
+      "caller": [
+        "FSM::Support::ISFRecordPortValues",
+        "perl/FSM/Support/ISFRecordPortValues.pm",
+        60
+      ],
+      "copy": [
+        "hash",
+        {
+          "role": "input",
+          "type_spec": [
+            "hash",
+            {
+              "kind": "record",
+              "member_order": [
+                "array",
+                [
+                  "header",
+                  "body"
+                ]
+              ],
+              "members": [
+                "hash",
+                {
+                  "body": [
+                    "hash",
+                    {
+                      "kind": "record",
+                      "member_order": [
+                        "array",
+                        [
+                          "count",
+                          "lanes"
+                        ]
+                      ],
+                      "members": [
+                        "hash",
+                        {
+                          "count": [
+                            "hash",
+                            {
+                              "kind": "bits",
+                              "signed": "1",
+                              "state_model": "four_state",
+                              "width": "3"
+                            }
+                          ],
+                          "lanes": [
+                            "hash",
+                            {
+                              "items": [
+                                "array",
+                                [
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bit",
+                                      "signed": "0",
+                                      "state_model": "two_state",
+                                      "width": "1"
+                                    }
+                                  ],
+                                  [
+                                    "hash",
+                                    {
+                                      "kind": "bits",
+                                      "signed": "0",
+                                      "width": "2"
+                                    }
+                                  ]
+                                ]
+                              ],
+                              "kind": "list",
+                              "signed": "0",
+                              "width": 3
+                            }
+                          ]
+                        }
+                      ],
+                      "signed": "0",
+                      "width": 6
+                    }
+                  ],
+                  "header": [
+                    "hash",
+                    {
+                      "kind": "bits",
+                      "signed": "0",
+                      "width": "2"
+                    }
+                  ]
+                }
+              ],
+              "signed": "0",
+              "width": 8
+            }
+          ]
+        }
+      ],
+      "copy_reference_count": 13,
+      "error": "",
+      "helper": null,
+      "index": 313,
+      "kind": "value-private",
+      "original_reference_count": 13,
+      "parse": null,
+      "shared_with_original": 0
+    }
+  ],
+  "whole_reference_caller": {
+    "accepted": 1,
+    "after": [
+      "array",
+      [
+        "scope",
+        [
+          "hash",
+          {
+            "held": [
+              "hash",
+              {
+                "role": "storage",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "header",
+                        "body"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "body": [
+                          "hash",
+                          {
+                            "kind": "record",
+                            "member_order": [
+                              "array",
+                              [
+                                "count",
+                                "lanes"
+                              ]
+                            ],
+                            "members": [
+                              "hash",
+                              {
+                                "count": [
+                                  "hash",
+                                  {
+                                    "kind": "bits",
+                                    "signed": 1,
+                                    "state_model": "four_state",
+                                    "width": "3"
+                                  }
+                                ],
+                                "lanes": [
+                                  "hash",
+                                  {
+                                    "items": [
+                                      "array",
+                                      [
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bit",
+                                            "signed": 0,
+                                            "state_model": "two_state",
+                                            "width": "1"
+                                          }
+                                        ],
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bits",
+                                            "signed": 0,
+                                            "width": "2"
+                                          }
+                                        ]
+                                      ]
+                                    ],
+                                    "kind": "list",
+                                    "signed": 0,
+                                    "width": 3
+                                  }
+                                ]
+                              }
+                            ],
+                            "signed": 0,
+                            "width": 6
+                          }
+                        ],
+                        "header": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": "2"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "output": [
+              "hash",
+              {
+                "role": "output",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "header",
+                        "body"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "body": [
+                          "hash",
+                          {
+                            "kind": "record",
+                            "member_order": [
+                              "array",
+                              [
+                                "count",
+                                "lanes"
+                              ]
+                            ],
+                            "members": [
+                              "hash",
+                              {
+                                "count": [
+                                  "hash",
+                                  {
+                                    "kind": "bits",
+                                    "signed": 1,
+                                    "state_model": "four_state",
+                                    "width": "3"
+                                  }
+                                ],
+                                "lanes": [
+                                  "hash",
+                                  {
+                                    "items": [
+                                      "array",
+                                      [
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bit",
+                                            "signed": 0,
+                                            "state_model": "two_state",
+                                            "width": "1"
+                                          }
+                                        ],
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bits",
+                                            "signed": 0,
+                                            "width": "2"
+                                          }
+                                        ]
+                                      ]
+                                    ],
+                                    "kind": "list",
+                                    "signed": 0,
+                                    "width": 3
+                                  }
+                                ]
+                              }
+                            ],
+                            "signed": 0,
+                            "width": 6
+                          }
+                        ],
+                        "header": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": "2"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "packet": [
+              "hash",
+              {
+                "role": "input",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "header",
+                        "body"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "body": [
+                          "hash",
+                          {
+                            "kind": "record",
+                            "member_order": [
+                              "array",
+                              [
+                                "count",
+                                "lanes"
+                              ]
+                            ],
+                            "members": [
+                              "hash",
+                              {
+                                "count": [
+                                  "hash",
+                                  {
+                                    "kind": "bits",
+                                    "signed": 1,
+                                    "state_model": "four_state",
+                                    "width": "3"
+                                  }
+                                ],
+                                "lanes": [
+                                  "hash",
+                                  {
+                                    "items": [
+                                      "array",
+                                      [
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bit",
+                                            "signed": 0,
+                                            "state_model": "two_state",
+                                            "width": "1"
+                                          }
+                                        ],
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bits",
+                                            "signed": 0,
+                                            "width": "2"
+                                          }
+                                        ]
+                                      ]
+                                    ],
+                                    "kind": "list",
+                                    "signed": 0,
+                                    "width": 3
+                                  }
+                                ]
+                              }
+                            ],
+                            "signed": 0,
+                            "width": 6
+                          }
+                        ],
+                        "header": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": "2"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "scalar": [
+              "hash",
+              {
+                "role": "output",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "token",
+        "packet.body.lanes[0]",
+        "access",
+        "read",
+        "allow_whole",
+        0,
+        "context",
+        "control"
+      ]
+    ],
+    "before": [
+      "array",
+      [
+        "scope",
+        [
+          "hash",
+          {
+            "held": [
+              "hash",
+              {
+                "role": "storage",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "header",
+                        "body"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "body": [
+                          "hash",
+                          {
+                            "kind": "record",
+                            "member_order": [
+                              "array",
+                              [
+                                "count",
+                                "lanes"
+                              ]
+                            ],
+                            "members": [
+                              "hash",
+                              {
+                                "count": [
+                                  "hash",
+                                  {
+                                    "kind": "bits",
+                                    "signed": 1,
+                                    "state_model": "four_state",
+                                    "width": "3"
+                                  }
+                                ],
+                                "lanes": [
+                                  "hash",
+                                  {
+                                    "items": [
+                                      "array",
+                                      [
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bit",
+                                            "signed": 0,
+                                            "state_model": "two_state",
+                                            "width": "1"
+                                          }
+                                        ],
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bits",
+                                            "signed": 0,
+                                            "width": "2"
+                                          }
+                                        ]
+                                      ]
+                                    ],
+                                    "kind": "list",
+                                    "signed": 0,
+                                    "width": 3
+                                  }
+                                ]
+                              }
+                            ],
+                            "signed": 0,
+                            "width": 6
+                          }
+                        ],
+                        "header": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": "2"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "output": [
+              "hash",
+              {
+                "role": "output",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "header",
+                        "body"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "body": [
+                          "hash",
+                          {
+                            "kind": "record",
+                            "member_order": [
+                              "array",
+                              [
+                                "count",
+                                "lanes"
+                              ]
+                            ],
+                            "members": [
+                              "hash",
+                              {
+                                "count": [
+                                  "hash",
+                                  {
+                                    "kind": "bits",
+                                    "signed": 1,
+                                    "state_model": "four_state",
+                                    "width": "3"
+                                  }
+                                ],
+                                "lanes": [
+                                  "hash",
+                                  {
+                                    "items": [
+                                      "array",
+                                      [
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bit",
+                                            "signed": 0,
+                                            "state_model": "two_state",
+                                            "width": "1"
+                                          }
+                                        ],
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bits",
+                                            "signed": 0,
+                                            "width": "2"
+                                          }
+                                        ]
+                                      ]
+                                    ],
+                                    "kind": "list",
+                                    "signed": 0,
+                                    "width": 3
+                                  }
+                                ]
+                              }
+                            ],
+                            "signed": 0,
+                            "width": 6
+                          }
+                        ],
+                        "header": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": "2"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "packet": [
+              "hash",
+              {
+                "role": "input",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "header",
+                        "body"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "body": [
+                          "hash",
+                          {
+                            "kind": "record",
+                            "member_order": [
+                              "array",
+                              [
+                                "count",
+                                "lanes"
+                              ]
+                            ],
+                            "members": [
+                              "hash",
+                              {
+                                "count": [
+                                  "hash",
+                                  {
+                                    "kind": "bits",
+                                    "signed": 1,
+                                    "state_model": "four_state",
+                                    "width": "3"
+                                  }
+                                ],
+                                "lanes": [
+                                  "hash",
+                                  {
+                                    "items": [
+                                      "array",
+                                      [
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bit",
+                                            "signed": 0,
+                                            "state_model": "two_state",
+                                            "width": "1"
+                                          }
+                                        ],
+                                        [
+                                          "hash",
+                                          {
+                                            "kind": "bits",
+                                            "signed": 0,
+                                            "width": "2"
+                                          }
+                                        ]
+                                      ]
+                                    ],
+                                    "kind": "list",
+                                    "signed": 0,
+                                    "width": 3
+                                  }
+                                ]
+                              }
+                            ],
+                            "signed": 0,
+                            "width": 6
+                          }
+                        ],
+                        "header": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": "2"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "scalar": [
+              "hash",
+              {
+                "role": "output",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "token",
+        "packet.body.lanes[0]",
+        "access",
+        "read",
+        "allow_whole",
+        0,
+        "context",
+        "control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "error": "",
+    "helper": null,
+    "kind": "reference",
+    "parse": null,
+    "primary": "",
+    "result": [
+      "hash",
+      {
+        "high": 2,
+        "low": 2,
+        "path_text": ".body.lanes[0]",
+        "role": "input",
+        "root": "packet",
+        "type_spec": [
+          "hash",
+          {
+            "kind": "bit",
+            "signed": "0",
+            "state_model": "two_state",
+            "width": "1"
+          }
+        ],
+        "width": 1
+      }
+    ],
+    "warnings": []
+  }
+}

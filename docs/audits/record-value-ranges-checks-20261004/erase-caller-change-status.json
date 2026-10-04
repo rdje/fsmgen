@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-ranges-20261004/verify.py",
+    "--erase-caller-change"
+  ],
+  "working_directory": ".",
+  "status": 1
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-ranges-20261004/verify.py", line 211, in <module>
+    assert delta == [{'path': '/2/members/body/members/lanes/items/1/width', 'before': '2', 'after': 2, 'before_kind': 'str', 'after_kind': 'int'}], 'sole complete actual private sibling-width caller kind change'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sole complete actual private sibling-width caller kind change

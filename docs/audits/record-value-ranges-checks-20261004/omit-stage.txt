@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-ranges-20261004/verify.py", line 225, in <module>
+    assert stage is not None and exact(row['type_stage'], stage), 'every own complete range-final type stage membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: every own complete range-final type stage membership
