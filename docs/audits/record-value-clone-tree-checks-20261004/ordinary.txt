@@ -1,0 +1,2 @@
+ram-guard: PID 7668; host 81.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS every8251 original recursive clone from all1448 complete source roots:6803 source-owned children,5911 hash/892 array caller edges,2628 containers/5623 scalars. Independent path inventory/bottom-up whole products preserve every key/order/primitive kind/source/context; actual joint referents are detached. Genuine alias provider and semantic allocation controls reject. Whole helper/consumer/full-cause qualification remains open.

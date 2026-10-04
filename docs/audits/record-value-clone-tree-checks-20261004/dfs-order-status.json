@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-tree-20261004/verify.py",
+    "--dfs-order"
+  ],
+  "expected_failure": "independent full source path parent and DFS allocation",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 170, in <module>\n    assert exact(row['source_path'], source['source_path']) and row['parent_index'] == source['parent_index'], 'independent full source path parent and DFS allocation'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent full source path parent and DFS allocation\n",
+  "status": 1,
+  "working_directory": "."
+}

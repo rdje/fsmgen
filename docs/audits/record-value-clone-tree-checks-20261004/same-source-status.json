@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-tree-20261004/verify.py",
+    "--same-source"
+  ],
+  "expected_failure": "exact recursive own source root despite equal values",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 169, in <module>\n    assert row['root_index'] == source['root_index'] and exact(row['whole_source_root'], source['whole_source_root']), 'exact recursive own source root despite equal values'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact recursive own source root despite equal values\n",
+  "status": 1,
+  "working_directory": "."
+}

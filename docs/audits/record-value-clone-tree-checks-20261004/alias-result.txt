@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py", line 176, in <module>
+    referents[index] = native_graph.check_joint(actual)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/native.py", line 127, in check_joint
+    assert not inputs & results, 'actual complete structured clone input/result referents must be detached'
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual complete structured clone input/result referents must be detached

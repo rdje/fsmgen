@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-tree-20261004/verify.py",
+    "--omit-call"
+  ],
+  "expected_failure": "every original recursive clone operation membership",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 121, in <module>\n    assert [row['index'] for row in rows] == indices, 'every original recursive clone operation membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every original recursive clone operation membership\n",
+  "status": 1,
+  "working_directory": "."
+}

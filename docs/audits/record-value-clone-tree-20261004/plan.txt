@@ -1,0 +1,6 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.4.2.2
+Population: every original structured-clone operation rooted in the complete qualified source roots.
+RE-DERIVE: recursive plain container/scalar source clone and preorder stream model.
+FALSIFY: separate whole source path inventory, ordered path ranks and bottom-up graph reconstruction; exact source/root/context/kind/native referents plus reached omit/key/order/DFS/caller/source/kind/genuine provider alias controls.
+DURABILITY: complete current/historical sources, exact completed owners/all prior seals, full recipes/products/producer/reader/control/replay packets and exact dated source-root proof ordinary/RED replay watcher.
+Missing: complete API/helper consumer and host-native full causes remain their later task owners; finite original inputs have no cyclic clone support claim.

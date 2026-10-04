@@ -1,0 +1,98 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-tree-20261004/verify.py",
+      "--omit-call"
+    ],
+    "expected_failure": "every original recursive clone operation membership",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 121, in <module>\n    assert [row['index'] for row in rows] == indices, 'every original recursive clone operation membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every original recursive clone operation membership\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-tree-20261004/verify.py",
+      "--omit-key"
+    ],
+    "expected_failure": "whole recursive clone source product keys/order/primitive kinds/context",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 172, in <module>\n    assert exact(row['record'], source['record']), 'whole recursive clone source product keys/order/primitive kinds/context'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole recursive clone source product keys/order/primitive kinds/context\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-tree-20261004/verify.py",
+      "--array-order"
+    ],
+    "expected_failure": "whole recursive clone source product keys/order/primitive kinds/context",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 172, in <module>\n    assert exact(row['record'], source['record']), 'whole recursive clone source product keys/order/primitive kinds/context'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole recursive clone source product keys/order/primitive kinds/context\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-tree-20261004/verify.py",
+      "--dfs-order"
+    ],
+    "expected_failure": "independent full source path parent and DFS allocation",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 170, in <module>\n    assert exact(row['source_path'], source['source_path']) and row['parent_index'] == source['parent_index'], 'independent full source path parent and DFS allocation'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent full source path parent and DFS allocation\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-tree-20261004/verify.py",
+      "--wrong-caller"
+    ],
+    "expected_failure": "exact root versus hash/array recursive caller",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 171, in <module>\n    assert row['record']['caller'] == source['record']['caller'], 'exact root versus hash/array recursive caller'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact root versus hash/array recursive caller\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-tree-20261004/verify.py",
+      "--same-source"
+    ],
+    "expected_failure": "exact recursive own source root despite equal values",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 169, in <module>\n    assert row['root_index'] == source['root_index'] and exact(row['whole_source_root'], source['whole_source_root']), 'exact recursive own source root despite equal values'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact recursive own source root despite equal values\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-tree-20261004/verify.py",
+      "--numeric-kind"
+    ],
+    "expected_failure": "whole recursive clone source product keys/order/primitive kinds/context",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 172, in <module>\n    assert exact(row['record'], source['record']), 'whole recursive clone source product keys/order/primitive kinds/context'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole recursive clone source product keys/order/primitive kinds/context\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-tree-20261004/verify.py",
+      "--alias-result"
+    ],
+    "expected_failure": "actual complete structured clone input/result referents must be detached",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 176, in <module>\n    referents[index] = native_graph.check_joint(actual)\n                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/native.py\", line 127, in check_joint\n    assert not inputs & results, 'actual complete structured clone input/result referents must be detached'\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual complete structured clone input/result referents must be detached\n",
+    "status": 1,
+    "working_directory": "."
+  }
+]

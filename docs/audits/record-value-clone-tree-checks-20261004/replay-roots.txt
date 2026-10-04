@@ -1,0 +1,2 @@
+ram-guard: PID 92262; host 72.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS complete source-root proof ordinary/all four source/allocation/kind RED controls reexecute exact dated source/doc/owner/runtime contexts with its whole repaired native proof and original joint/native records. Only exact invoked Python File-frame filename qualifies.

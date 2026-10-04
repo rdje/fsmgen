@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-tree-20261004/verify.py",
+    "--wrong-caller"
+  ],
+  "expected_failure": "exact root versus hash/array recursive caller",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 171, in <module>\n    assert row['record']['caller'] == source['record']['caller'], 'exact root versus hash/array recursive caller'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact root versus hash/array recursive caller\n",
+  "status": 1,
+  "working_directory": "."
+}

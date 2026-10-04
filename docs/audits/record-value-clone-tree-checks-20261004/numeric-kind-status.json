@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-tree-20261004/verify.py",
+    "--numeric-kind"
+  ],
+  "expected_failure": "whole recursive clone source product keys/order/primitive kinds/context",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-tree-20261004/verify.py\", line 172, in <module>\n    assert exact(row['record'], source['record']), 'whole recursive clone source product keys/order/primitive kinds/context'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole recursive clone source product keys/order/primitive kinds/context\n",
+  "status": 1,
+  "working_directory": "."
+}

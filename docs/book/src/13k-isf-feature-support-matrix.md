@@ -375,7 +375,23 @@ actual clone result authority. A separate declared subtree inventory and literal
 scalar index/slice witnesses verify source allocation. Missing roots, wrong roles,
 an identical type borrowed from a different source call, and promotion of a raw
 width string reject. The full repaired native proof and its controls reexecute in
-their exact dated context. Recursive tree/output products remain the next step.
+their exact dated context. The
+[complete recursive tree proof](../../../docs/audits/record-value-clone-tree-20261004/scope.txt)
+now expands those source-owned roots into every original recursive operation.
+All eight-thousand-two-hundred-fifty-one whole input/output products retain:
+six-thousand-eight-hundred-three children, with five-thousand-nine-hundred-eleven
+hash-child calls and eight-hundred-ninety-two array-child calls. Plain hashes
+copy every key; arrays preserve every position; scalar values keep their exact
+kinds, including unresolved nulls and raw width strings. A separate breadth-first
+source-path inventory reconstructs whole products from the leaves upward and
+checks each call's source root, parent, depth-first order and caller. Joint native
+graphs establish detachment for every container. Missing operations/keys,
+reordered arrays or calls, wrong callers, identical-valued source substitutions,
+raw numeric promotion and the genuine alias-returning provider reject. Complete
+source-root and native proofs reexecute with all their controls in dated contexts.
+This finite observed population has no cyclic clone inputs; cyclic support is
+not inferred. Permanent original consumer assurance and full native causes
+remain owned follow-ups.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the
