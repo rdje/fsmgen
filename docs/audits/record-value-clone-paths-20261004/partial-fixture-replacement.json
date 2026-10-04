@@ -1,0 +1,70 @@
+[
+  {
+    "files": {
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Adapter/ISF.pm": {
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Adapter/ISF/Parser.pm": {
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Package/AggregatePathSupport.pm": {
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Package/ImportResolver.pm": {
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Package/Parser.pm": {
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Package/PayloadTypeSupport.pm": {
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Pipeline/SourceFrontend.pm": {
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/ProjectDataLocality.pm": {
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Support/ISFRecordPortScopes.pm": {
+        "bytes": 8722,
+        "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+      },
+      ".artifacts/record-value-clone-paths-replay-20261004/first/perl/FSM/Support/ISFRecordPortValues.pm": {
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      }
+    },
+    "preserved_full_source_binding": "docs/audits/record-value-clone-paths-20261004/binding.json",
+    "removed_owned_selected_input_placeholder": ".artifacts/record-value-clone-paths-replay-20261004/first/perl"
+  },
+  {
+    "files": {
+      ".artifacts/record-value-clone-paths-replay-20261004/first/t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "preserved_full_source_binding": "docs/audits/record-value-clone-paths-20261004/binding.json",
+    "removed_owned_selected_input_placeholder": ".artifacts/record-value-clone-paths-replay-20261004/first/t/lib"
+  }
+]

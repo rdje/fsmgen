@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/portability.py", line 37, in <module>
+    assert not Path(row['command'][2]).is_absolute() and row['command'][2] == str(BASE / 'verify.py'), 'every stored control command is repository-relative and names the exact current reader'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: every stored control command is repository-relative and names the exact current reader

@@ -1,0 +1,27 @@
+{
+  "book": {
+    "baseline": {
+      "bytes_total": 3756666,
+      "files": 64,
+      "lines_total": 67757
+    },
+    "current": {
+      "bytes_total": 3757598,
+      "files": 64,
+      "lines_total": 67769
+    },
+    "delta": {
+      "bytes_total": 932,
+      "files": 0,
+      "lines_total": 12
+    }
+  },
+  "task_evidence": {
+    "bytes_each": 2366453,
+    "bytes_total": 12686095,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 7025,
+    "lines_total": 118154
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "binding.json": {
+    "bytes": 942529,
+    "sha256": "01428dbbd8916a4d8a5330082e9276575d1ea9b7812e8e9883c8d12039f7484b"
+  },
+  "native-command-portability-gap.txt": {
+    "bytes": 944,
+    "sha256": "fdecd4936992b1414c5399a330fc859e39fc5fb451a6edd1ce460e07adfb4755"
+  },
+  "owners.json": {
+    "bytes": 11572,
+    "sha256": "b4639222ff2d0f30aeb961ec9bc2fc64db1ff0212bc6382ed020a7bec0d536fe"
+  },
+  "plan.txt": {
+    "bytes": 623,
+    "sha256": "9a275d9de5cfed7a4ee20616210d863258d8cc8a4bef9d0d53dc1a2b27588f5a"
+  },
+  "produce.py": {
+    "bytes": 1022,
+    "sha256": "4ea5822e67899f8ebee3803011292f07ff57d46af7e0fa6b6cbb0a50dbd2e4c6"
+  },
+  "replay_clones.py": {
+    "bytes": 5032,
+    "sha256": "e3e066a97e57bdaf2d3652c32c74233236d5492fa85050e042a0d39502cacbd6"
+  },
+  "root-recipes.json": {
+    "bytes": 5582003,
+    "sha256": "a1bd766267f785e650b09ae55e1f435089ec13af99ecc94d8eaae3f31c852caf"
+  },
+  "source_roots.py": {
+    "bytes": 7655,
+    "sha256": "ab5dd3a8c8224ac13fdb61c54ec2c7390cf459ede245f2462a9ee6974c3ecaa1"
+  },
+  "verify.py": {
+    "bytes": 11490,
+    "sha256": "78c40b5cb2519cd971f3f24934d6ffc6533a3b384af577566defee807026b12f"
+  }
+}

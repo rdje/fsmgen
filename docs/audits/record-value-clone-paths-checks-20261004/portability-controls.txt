@@ -1,0 +1,2 @@
+ram-guard: PID 22032; host 79.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS actual original absolute command, wrong program filename, wrong cause and root-bearing semantic text reject at intended portable boundaries.

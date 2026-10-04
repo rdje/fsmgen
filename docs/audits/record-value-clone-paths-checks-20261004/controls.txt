@@ -1,0 +1,1 @@
+PASS all five controls actually reject at intended membership/joint reachable-sharing/raw input kind assertions; genuine alias native profile remains125-original-consumer green.

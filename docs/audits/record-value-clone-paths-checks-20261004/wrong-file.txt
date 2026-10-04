@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/portability.py", line 108, in <module>
+    output = qualify(raw, filenames)
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/portability.py", line 52, in qualify
+    assert match[2] in names, 'exact bound main/imported native module filename coordinate'
+           ^^^^^^^^^^^^^^^^^
+AssertionError: exact bound main/imported native module filename coordinate

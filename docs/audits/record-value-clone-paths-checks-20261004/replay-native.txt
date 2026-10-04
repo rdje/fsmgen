@@ -1,0 +1,2 @@
+ram-guard: PID 61572; host 78.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS complete unchanged original native ordinary/actual shared-result runs retain every selected source/API/copy/helper/product/consumer pass and8251 full joint clone records. Raw native error streams/synthetic trace/temp import nonce stay separate; no full cause identity is claimed.

@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-paths-20261004/verify.py",
+      "--omit-call"
+    ],
+    "expected_failure": "every whole original structured clone call membership",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/verify.py\", line 111, in <module>\n    assert [i for i, _ in calls] == indices, 'every whole original structured clone call membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every whole original structured clone call membership\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-paths-20261004/verify.py",
+      "--alias-result"
+    ],
+    "expected_failure": "actual complete structured clone input/result referents must be detached",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/verify.py\", line 125, in <module>\n    check_joint(row)\n    ~~~~~~~~~~~^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/native.py\", line 127, in check_joint\n    assert not inputs & results, 'actual complete structured clone input/result referents must be detached'\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual complete structured clone input/result referents must be detached\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-paths-20261004/verify.py",
+      "--false-zero"
+    ],
+    "expected_failure": "independent reachable referents match actual input/result/shared census",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/verify.py\", line 125, in <module>\n    check_joint(row)\n    ~~~~~~~~~~~^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/native.py\", line 119, in check_joint\n    assert all(type(n) is int for n in observed) and actual_counts == observed, 'independent reachable referents match actual input/result/shared census'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent reachable referents match actual input/result/shared census\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-paths-20261004/verify.py",
+      "--joint-swap"
+    ],
+    "expected_failure": "independent reachable referents match actual input/result/shared census",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/verify.py\", line 125, in <module>\n    check_joint(row)\n    ~~~~~~~~~~~^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/native.py\", line 119, in check_joint\n    assert all(type(n) is int for n in observed) and actual_counts == observed, 'independent reachable referents match actual input/result/shared census'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent reachable referents match actual input/result/shared census\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-paths-20261004/verify.py",
+      "--wrong-kind"
+    ],
+    "expected_failure": "whole joint input ties original before arguments",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/verify.py\", line 125, in <module>\n    check_joint(row)\n    ~~~~~~~~~~~^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/native.py\", line 122, in check_joint\n    assert exact(graph(arguments[1]), graph(decoded['input'])), 'whole joint input ties original before arguments'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole joint input ties original before arguments\n",
+    "status": 1,
+    "working_directory": "."
+  }
+]

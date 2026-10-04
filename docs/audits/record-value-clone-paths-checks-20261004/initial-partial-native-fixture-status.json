@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-paths-20261004/portability.py",
+    "--record"
+  ],
+  "working_directory": ".",
+  "status": 1,
+  "qualification": "No native semantic rejection: selected21-source-only fixture lacks published own runtime dependency PayloadLiteralSupport.pm; preserve first failure then supply complete own Perl/test-support runtime through repository-relative same-volume links."
+}

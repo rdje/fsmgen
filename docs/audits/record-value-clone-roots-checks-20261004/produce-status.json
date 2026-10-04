@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-roots-20261004/produce.py"
+  ],
+  "working_directory": ".",
+  "status": 0,
+  "qualification": "Root source preparation only; full inherited native replay failed, not root/source closure."
+}

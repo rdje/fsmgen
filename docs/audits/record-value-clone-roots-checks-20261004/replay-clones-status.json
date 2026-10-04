@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-roots-20261004/replay_clones.py"
+  ],
+  "working_directory": ".",
+  "status": 1,
+  "qualification": "Root source preparation only; full inherited native replay failed, not root/source closure."
+}

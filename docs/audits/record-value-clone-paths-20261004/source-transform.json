@@ -1,0 +1,61 @@
+{
+  "check_controls.py": {
+    "replacements": [
+      [
+        "BASE = Path(__file__).parent",
+        "BASE = Path('docs/audits/record-value-clone-paths-20261004')"
+      ],
+      [
+        "CHECKS = Path('docs/audits/record-value-structured-clones-checks-20261004')",
+        "CHECKS = Path('docs/audits/record-value-clone-paths-checks-20261004')"
+      ]
+    ],
+    "source": "docs/audits/record-value-clones-20261004/check_controls.py"
+  },
+  "replay_native.py": {
+    "replacements": [
+      [
+        "BASE = Path(__file__).parent",
+        "BASE = Path('docs/audits/record-value-clone-paths-20261004')"
+      ]
+    ],
+    "source": "docs/audits/record-value-clones-20261004/replay_native.py"
+  },
+  "verify.py": {
+    "replacements": [
+      [
+        "BASE = Path(__file__).parent",
+        "BASE = Path('docs/audits/record-value-clone-paths-20261004')"
+      ],
+      [
+        "assert binding == json.loads((NATIVE / 'binding.json').read_text())\n",
+        ""
+      ],
+      [
+        "binding['revision'] == '721e997ec6ccdf9851f2eef3b07fb7b8e098c63e'",
+        "binding['revision'] == '169794fe076d56d22c30e90fe077f464adc1923f'"
+      ],
+      [
+        "'snapshots', 'ranges')",
+        "'snapshots', 'ranges', 'clones', 'clone-roots')"
+      ],
+      [
+        "assert owners == json.loads((NATIVE / 'owners.json').read_text()) and len(owners) == 3",
+        "assert len(owners) == 4"
+      ],
+      [
+        "(BASE / 'observer-transform.json')",
+        "(Path('docs/audits/record-value-clones-20261004') / 'observer-transform.json')"
+      ],
+      [
+        "(BASE / 'legacy-conservation.json')",
+        "(Path('docs/audits/record-value-clones-20261004') / 'legacy-conservation.json')"
+      ],
+      [
+        "(BASE / 'referents.json')",
+        "(Path('docs/audits/record-value-clones-20261004') / 'referents.json')"
+      ]
+    ],
+    "source": "docs/audits/record-value-clones-20261004/verify.py"
+  }
+}

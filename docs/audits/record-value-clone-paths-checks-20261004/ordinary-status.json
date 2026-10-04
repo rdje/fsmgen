@@ -1,0 +1,11 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-paths-20261004/portability.py"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

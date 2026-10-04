@@ -348,10 +348,22 @@ container. Every separate recorded clone value still agrees, and all original
 one-hundred-twenty-five assertions pass, while every container result shares its
 input referents. Joint evidence rejects this real false green; value snapshots
 and original consumers alone cannot establish detachment. Both complete native
-runs reexecute from unchanged sources. Raw process error streams, the synthetic
-trace and generated import nonce remain separately captured. Full clone source/
+runs reexecute from unchanged sources. Complete encoded process errors, the
+synthetic trace and generated import nonce remain separately captured. The
+observer keeps its original repository-root placeholder encoding; byte-exact
+host-native cause equality remains unqualified. Full clone source/
 tree semantics, permanent consumer assurance and intended native causes remain
 owned follow-up work. The
+[native command repair](../../../docs/audits/record-value-clone-paths-20261004/scope.txt)
+supersedes a command-binding flaw in that proof: Python supplied absolute
+reader paths, so replay at another working root refused before semantics. Stored
+commands now name the exact reader with repository-relative paths. The complete
+ordinary proof and all five rejecting controls run at two actual working roots,
+including the unchanged full native ordinary and shared-result profiles. Only
+the exact main/imported-module traceback filename coordinates qualify; all
+messages, arguments and other root-bearing semantic text remain exact. Complete
+project-owned Perl/test-support runtime membership and bytes are watched. Original
+evidence and the first missing-dependency fixture failure remain preserved.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

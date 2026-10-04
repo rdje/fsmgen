@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-paths-20261004/portability.py",
+    "--root-echo"
+  ],
+  "expected_failure": "complete actual semantic/control output beyond only exact program filenames",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/portability.py\", line 111, in <module>\n    assert output == historic(prior['output']), 'complete actual semantic/control output beyond only exact program filenames'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete actual semantic/control output beyond only exact program filenames\n",
+  "status": 1,
+  "working_directory": "."
+}

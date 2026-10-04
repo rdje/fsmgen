@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/portability.py", line 111, in <module>
+    assert output == historic(prior['output']), 'complete actual semantic/control output beyond only exact program filenames'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete actual semantic/control output beyond only exact program filenames

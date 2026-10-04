@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-roots-20261004/verify.py", line 171, in <module>
+    assert run.returncode == 0, run.stdout + run.stderr
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-roots-20261004/replay_clones.py", line 76, in <module>
+    assert run.returncode == (1 if flag else 0), run.stdout + run.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-clone-roots-native-replay-20261004/docs/audits/record-value-clones-20261004/verify.py", line 105, in <module>
+    assert receipt['command'][:3] == ['python3', '-B', str(BASE / 'verify.py')]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+

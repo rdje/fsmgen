@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-paths-20261004/portability.py",
+    "--wrong-file"
+  ],
+  "expected_failure": "exact bound main/imported native module filename coordinate",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/portability.py\", line 108, in <module>\n    output = qualify(raw, filenames)\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-paths-20261004/portability.py\", line 52, in qualify\n    assert match[2] in names, 'exact bound main/imported native module filename coordinate'\n           ^^^^^^^^^^^^^^^^^\nAssertionError: exact bound main/imported native module filename coordinate\n",
+  "status": 1,
+  "working_directory": "."
+}
