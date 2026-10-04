@@ -1,0 +1,2 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.2.1
+Sealed current API/private graph/source-intervention checks. Exact known private range kind transition retained; copied-field/consumer/cause/alias/cold/permanent qualification remains open.

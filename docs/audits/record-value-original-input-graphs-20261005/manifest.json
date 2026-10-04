@@ -1,0 +1,50 @@
+{
+  "binding-attempt.json": {
+    "bytes": 303,
+    "sha256": "73de535c3260328966948aaad1e9a3116d48c40f65addb5556046d84d1e0e15d"
+  },
+  "binding.json": {
+    "bytes": 1206545,
+    "sha256": "611e0d5bac2fcd16685dd7cb287a846cd38aa78582921e76eab98e85410df089"
+  },
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "045a368a66dec464a361dcfb960fc53206da78b1ef4a12db0a99d549ff24385a"
+  },
+  "book-transform.json": {
+    "bytes": 330520,
+    "sha256": "16367c631a1206ab2954fdece9553f2657b77cbd99cf11d6452c984ed00ddd07"
+  },
+  "initial-private-range-boundary-verify.py": {
+    "bytes": 16021,
+    "sha256": "dddab3e86d213324a0f7ade28c3c2316c4eff788c87b849b5e0e5ec76399a83a"
+  },
+  "initial-proof-before-explicit-range-boundary.json": {
+    "bytes": 285628,
+    "sha256": "62538510b7f604c562b267da89a04ead3e87b552eb8e6ca76d71ac0aa851bf0f"
+  },
+  "produce_binding.py": {
+    "bytes": 1553,
+    "sha256": "e501f245c9df9aa36826f222ca61a87c022c5c2dbb7ea7f46dc707afe8947904"
+  },
+  "proofs.json": {
+    "bytes": 285786,
+    "sha256": "f79690f4ced38c3eb8746b638ea0d39c19a9d8fbff59abe9550dea8178d7ad9a"
+  },
+  "reader-attempt-1.json": {
+    "bytes": 1155,
+    "sha256": "0d2e22ca34854de09a7f424401e15b77da50d000a7b5566a3a9439f4e4a941a0"
+  },
+  "reader-attempt-2.json": {
+    "bytes": 1237,
+    "sha256": "d0a147a61cc61b8060473b1a82a2aeb86788500fd03ce7cbc57b6ed459eca5ca"
+  },
+  "scope.txt": {
+    "bytes": 4009,
+    "sha256": "e301824a803c90cf587dc65fe6d22b37b6c30443b2bc7fb26f059c85a87b0005"
+  },
+  "verify.py": {
+    "bytes": 18670,
+    "sha256": "1c83ae6db7e81da570eb068657e201c4394ded1c475b4987fb34f323de17014f"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-input-graphs-20261005/verify.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS full original-source capture membership/program/source/fixture/host/TAP/status and genuine provider observations. Alias downstream mutation/abort is retained; independent graph/source/product qualification and replay remain pending.\nPASS independently qualified original17 unchanged-input copy/joint/kind/readonly/identity/isolation graphs and genuine Storable/alias trials; full API/consumer and alias downstream semantics remain open.\nPASS all original9283 API/four authored parser whole results and680 private source allocations across candidate/Storable/unchanged-input-control modes. Input/private graphs, consumers/helpers/raw causes and full alias downstream semantics remain open.\nPASS complete current original API before/after and private/test before/after/result/joint graphs, source-derived copy interventions, primitive kinds, private/test readonly and actual detachment. Exact known private range sibling kind change retains; outer caller is unchanged. Copied-field and consumer/cause/full-alias semantics remain open.\n"
+}

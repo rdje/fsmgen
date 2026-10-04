@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-input-graphs-20261005/produce_binding.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "Captured complete committed original source/input/stage/result/graph owner and archive authority.\n",
+  "working_directory": "."
+}

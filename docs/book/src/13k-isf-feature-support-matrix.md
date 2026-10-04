@@ -478,10 +478,13 @@ now qualifies unchanged-input copy kinds, complete graph identity, readonly
 inputs and detachment, including the actual bad-provider trials. The
 [original source-product reader](../../../docs/audits/record-value-original-products-20261005/scope.txt)
 now qualifies complete API/parser results against their own source models and
-conserves private-source allocations. Changed input/private graphs, consumer
-truth and the full alias run’s downstream causes remain open. Their semantic
-join and cold replay precede the candidate-parent join and permanent test-copy
-and consumer repairs.
+conserves private-source allocations. The [source-intervention graph reader](../../../docs/audits/record-value-original-input-graphs-20261005/scope.txt)
+now qualifies complete input/private graphs, typed edges, readonly copies and
+detachment. It retains the known private range sibling kind transition while
+the outer value caller stays unchanged. Complete copied-field/source records,
+consumer truth and the full alias run’s downstream causes remain open. Their
+semantic join and cold replay precede the candidate-parent join and permanent
+test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the
