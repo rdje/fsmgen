@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py", line 142, in <module>
+    assert [row['index'] for row in copies] == list(range(len(native['copies']))) == list(range(len(fields))), 'complete original copied graph/field/source membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete original copied graph/field/source membership

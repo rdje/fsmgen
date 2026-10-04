@@ -1,0 +1,1 @@
+PASS whole source/field/product/native/observation relationship join retained: 697 copies, 9283 APIs, four parsers, 43 helpers and 125 consumer observations. Complete child semantic and native joint oracles remain required; legacy pass flags and helper patterns do not qualify strong consumer or intended cause assurance.

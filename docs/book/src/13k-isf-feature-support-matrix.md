@@ -440,6 +440,17 @@ promotion and genuine kind-changing private actor copies reject. Complete actor,
 value and core proofs reexecute in dated contexts with every inherited native
 and source proof. This closes product semantics only; whole semantic/helper
 closure, permanent original consumer assurance and full native causes follow.
+The [complete semantic join](../../../docs/audits/record-value-semantic-join-20261004/scope.txt)
+now binds the full authored/source field domain, every original copied field and
+actor/API product, and all helper/consumer source and callback relationships.
+Each raw caller, primitive kind, model and allocation remains exact, including
+native ancestor-cycle boundaries. Omitted fields/products/consumers, wrong source
+properties, copied-field assignments or helper ownership reject. The genuine
+alias provider still preserves every separate clone value and legacy consumer
+pass but fails the full joint-graph allocation check. Dated field/source and
+product proofs reexecute with their controls and inherited native proofs. This
+closes field/source/product semantics; permanent consumer/baseline-kind repair
+and complete intended host-native causes remain open.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

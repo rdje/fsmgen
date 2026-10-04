@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py", line 182, in <module>
+    rebuilt = check_joint(row)
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/native.py", line 127, in check_joint
+    assert not inputs & results, 'actual complete structured clone input/result referents must be detached'
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual complete structured clone input/result referents must be detached

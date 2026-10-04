@@ -1,0 +1,2 @@
+ram-guard: PID 62922; host 71.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS complete original source/field/product/native relationship semantics: 697 copies/9283 APIs/four parses/43 helpers/125 raw consumer observations and all8251 joint clone records retain own source, role, kind, caller, model and allocation. Complete dated field/source/product/native proofs and genuine controls reexecute. Only semantic parent closes; legacy consumer flags/helper regexes do not qualify permanent baseline, detachment-test or host-native intended-cause assurance.

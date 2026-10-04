@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py", line 135, in <module>
+    assert row['helper_model'] == digest(helpers[helper]), 'exact source helper owner for complete consumer observation'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact source helper owner for complete consumer observation

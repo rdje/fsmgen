@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-semantic-join-20261004/verify.py",
+    "--omit-product"
+  ],
+  "expected_failure": "complete whole source-modeled actor/API/private/context product join retains",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantic-join-20261004/verify.py\", line 102, in <module>\n    assert exact(data['products'], products), 'complete whole source-modeled actor/API/private/context product join retains'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete whole source-modeled actor/API/private/context product join retains\n",
+  "status": 1,
+  "working_directory": "."
+}

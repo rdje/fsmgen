@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-semantics-20261004/check_controls.py"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

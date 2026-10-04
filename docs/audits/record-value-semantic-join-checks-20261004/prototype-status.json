@@ -1,0 +1,6 @@
+{
+  "archive": "docs/audits/record-value-semantics-20261004",
+  "final_status": 1,
+  "final_output": "docs/audits/record-value-semantics-checks-20261004/ordinary.txt",
+  "qualification": "unqualified sealed profile/ledger mismatch"
+}

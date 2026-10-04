@@ -1,0 +1,98 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-semantics-20261004/verify.py",
+      "--omit-field"
+    ],
+    "expected_failure": "complete original copied graph/field/source membership",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 142, in <module>\n    assert [row['index'] for row in copies] == list(range(len(native['copies']))) == list(range(len(fields))), 'complete original copied graph/field/source membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original copied graph/field/source membership\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-semantics-20261004/verify.py",
+      "--omit-product"
+    ],
+    "expected_failure": "complete whole source-modeled actor/API/private/context product join retains",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 94, in <module>\n    assert exact(data['products'], products), 'complete whole source-modeled actor/API/private/context product join retains'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete whole source-modeled actor/API/private/context product join retains\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-semantics-20261004/verify.py",
+      "--wrong-source"
+    ],
+    "expected_failure": "whole independently qualified source root/node/property/kind domain retains",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 87, in <module>\n    assert exact(source_models['source'], read('copy-fields', 'source-models.json')), 'whole independently qualified source root/node/property/kind domain retains'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole independently qualified source root/node/property/kind domain retains\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-semantics-20261004/verify.py",
+      "--wrong-field"
+    ],
+    "expected_failure": "each original source field/model is allocated to its own whole native copy",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 149, in <module>\n    assert exact(row['whole_field'], fields[index]) and exact(row['completed_field_join'], field_join[index]), 'each original source field/model is allocated to its own whole native copy'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: each original source field/model is allocated to its own whole native copy\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-semantics-20261004/verify.py",
+      "--wrong-helper"
+    ],
+    "expected_failure": "exact source helper callback/consumer/parse span allocation",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 114, in <module>\n    assert exact(row['spans'], spans), 'exact source helper callback/consumer/parse span allocation'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact source helper callback/consumer/parse span allocation\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-semantics-20261004/verify.py",
+      "--omit-consumer"
+    ],
+    "expected_failure": "complete original consumer observation/source membership",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 121, in <module>\n    assert [row['index'] for row in consumers] == list(range(len(native['consumers']))), 'complete original consumer observation/source membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original consumer observation/source membership\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-semantics-20261004/verify.py",
+      "--wrong-consumer-owner"
+    ],
+    "expected_failure": "exact source helper owner for complete consumer observation",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 135, in <module>\n    assert row['helper_model'] == digest(helpers[helper]), 'exact source helper owner for complete consumer observation'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact source helper owner for complete consumer observation\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-semantics-20261004/verify.py",
+      "--alias-authority"
+    ],
+    "expected_failure": "actual complete structured clone input/result referents must be detached",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 182, in <module>\n    rebuilt = check_joint(row)\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/native.py\", line 127, in check_joint\n    assert not inputs & results, 'actual complete structured clone input/result referents must be detached'\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual complete structured clone input/result referents must be detached\n",
+    "status": 1,
+    "working_directory": "."
+  }
+]

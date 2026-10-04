@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-semantics-20261004/verify.py",
+    "--omit-consumer"
+  ],
+  "expected_failure": "complete original consumer observation/source membership",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 121, in <module>\n    assert [row['index'] for row in consumers] == list(range(len(native['consumers']))), 'complete original consumer observation/source membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original consumer observation/source membership\n",
+  "status": 1,
+  "working_directory": "."
+}

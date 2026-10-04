@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-semantics-20261004/verify.py"
+  ],
+  "working_directory": ".",
+  "status": 1,
+  "qualification": "unqualified final native conservation ledger profile mismatch"
+}

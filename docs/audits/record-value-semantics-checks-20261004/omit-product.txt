@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py", line 94, in <module>
+    assert exact(data['products'], products), 'complete whole source-modeled actor/API/private/context product join retains'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete whole source-modeled actor/API/private/context product join retains

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-semantic-join-20261004/verify.py",
+    "--wrong-source"
+  ],
+  "expected_failure": "whole independently qualified source root/node/property/kind domain retains",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantic-join-20261004/verify.py\", line 95, in <module>\n    assert exact(source_models['source'], read('copy-fields', 'source-models.json')), 'whole independently qualified source root/node/property/kind domain retains'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole independently qualified source root/node/property/kind domain retains\n",
+  "status": 1,
+  "working_directory": "."
+}

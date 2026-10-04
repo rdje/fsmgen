@@ -1,0 +1,8 @@
+{
+  "full_after_bytes_differ": true,
+  "original_records": 53,
+  "reexecuted_records": 53,
+  "same_raw_before_membership": true,
+  "source": "original structured-clones capture vs clones ordinary-reexecuted capture",
+  "whole_semantic_payload_byte_identical": true
+}

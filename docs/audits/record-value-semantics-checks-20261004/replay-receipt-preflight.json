@@ -1,0 +1,188 @@
+{
+  "rows": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-replay-portability-20261004/verify.py"
+      ],
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-replay-portability-20261004/verify.py",
+        "--omit-copy"
+      ],
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-replay-portability-20261004/verify.py",
+        "--omit-actor"
+      ],
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py"
+      ],
+      "keys": [
+        "command",
+        "status",
+        "working_directory"
+      ],
+      "status": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py",
+        "--omit-actor"
+      ],
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py",
+        "--omit-call"
+      ],
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py",
+        "--same-model"
+      ],
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py",
+        "--wrong-family"
+      ],
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py",
+        "--omit-private"
+      ],
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py",
+        "--numeric-product"
+      ],
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py",
+        "--trust-private-actor"
+      ],
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-products-20261004/verify.py",
+        "--wrong-parse"
+      ],
+      "keys": [
+        "command",
+        "expected_failure",
+        "output",
+        "status",
+        "working_directory"
+      ],
+      "status": 1
+    }
+  ],
+  "source_revision": "cf3e7830204a42ff7370f86dd8fa54d01287c7c4",
+  "status": 0
+}

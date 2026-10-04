@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py", line 87, in <module>
+    assert exact(source_models['source'], read('copy-fields', 'source-models.json')), 'whole independently qualified source root/node/property/kind domain retains'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: whole independently qualified source root/node/property/kind domain retains

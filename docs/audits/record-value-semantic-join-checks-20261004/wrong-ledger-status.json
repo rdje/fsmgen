@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-semantic-join-20261004/verify.py",
+    "--wrong-ledger"
+  ],
+  "expected_failure": "whole reexecuted native capture retains its own full raw difference ledger",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantic-join-20261004/verify.py\", line 195, in <module>\n    assert exact(conserved(native, ordinary, True), reexecuted_ledger), 'whole reexecuted native capture retains its own full raw difference ledger'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole reexecuted native capture retains its own full raw difference ledger\n",
+  "status": 1,
+  "working_directory": "."
+}

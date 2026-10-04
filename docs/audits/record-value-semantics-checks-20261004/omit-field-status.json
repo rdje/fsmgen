@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-semantics-20261004/verify.py",
+    "--omit-field"
+  ],
+  "expected_failure": "complete original copied graph/field/source membership",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantics-20261004/verify.py\", line 142, in <module>\n    assert [row['index'] for row in copies] == list(range(len(native['copies']))) == list(range(len(fields))), 'complete original copied graph/field/source membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original copied graph/field/source membership\n",
+  "status": 1,
+  "working_directory": "."
+}

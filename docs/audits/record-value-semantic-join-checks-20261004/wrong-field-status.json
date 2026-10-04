@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-semantic-join-20261004/verify.py",
+    "--wrong-field"
+  ],
+  "expected_failure": "each original source field/model is allocated to its own whole native copy",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-semantic-join-20261004/verify.py\", line 157, in <module>\n    assert exact(row['whole_field'], fields[index]) and exact(row['completed_field_join'], field_join[index]), 'each original source field/model is allocated to its own whole native copy'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: each original source field/model is allocated to its own whole native copy\n",
+  "status": 1,
+  "working_directory": "."
+}
