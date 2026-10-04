@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-scopes-20261004/verify.py", line 153, in <module>
+    assert exact(actual, row['expected_product']), 'whole original source/stage scope product and exact primitive kinds: ' + row['label']
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: whole original source/stage scope product and exact primitive kinds: resolved-alias

@@ -4183,9 +4183,39 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify every original T1986 value scope/reference/copy API product.`
   Acceptance: `Independently model all accepted/refused scope, reference and copy outputs from complete original arguments/source/type/layout/root-role and nearest lexical/formal masks. Whole caller graphs and first-touch kinds, scalar ranges and intentional private preparation spelling preserve; final numeric facts are exact. Genuine product omission/role/kind/private-authority controls reject before assurance repair.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.1`
+  Status: `done`
+  Goal: `Qualify all original T1986 scope argument/caller/source and whole products.`
+  Acceptance: `Model every accepted/refused scope from independently qualified whole source/root/type and nearest-local masking rules. Bind complete original argument/caller/first-touch graphs and every private per-root clone stage to the full source/field authority. Rebuild complete expected scope products through independent merge/validation/structured-clone rules; private spelling is a recorded preparation boundary, not standalone final semantic authority. Exact kinds and numerical facts retain; omission, root-role, nearest-mask and private-product controls reject.`
+  Verification: `Complete docs/audits/record-value-scopes-20261004/scope.txt binds current21 Gitd79e5e19 sources and added complete scope contract at both current/original native revisions. Independent source-only forty ordered full root/type/role/mask/caller recipes intend27 preparations/13 refusals. Separate semantic producer rebuilds complete products from qualified source shape, own original per-root private width/signed preparation spellings and explicit numerical aggregate signed validation; actual native results are never model authority. Full every original argument/caller/first-touch/parse/helper/error/warning/product and private-stage graph ledger retains. Independent whole source/property/order/kind/nearest-mask/stage/native product reader passes all40; original caller graphs preserve. Actual omission, role corruption, unresolved-local borrowing outer packet, numeric promotion of original private width and original metadata-private copy3 /inputs/0/type_spec product graft reject RED1. Full private counterexample retains equal resolved meaning and different raw kinds. Initial reader wrongly required caller alias topology after detached structured cloning; source-only producer was correct, first reader/failure retained and only source comparison repaired; strict whole product topology remains. Prior three semantic readers/twelve RED controls reexecute with exact historical inputs/docs and portable coordinates. Current source/card/book/archives/instrument watcher, immutable manifest and book All tests successful Files=2 Tests=308/build PASS. Native causes/copy assurance and reference/copy/core products remain owned.`
+  Commit: `this scope-product work-unit commit (derive exact SHA with git log --grep)`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Qualify all original T1986 reference argument/caller/source and whole products.`
+  Acceptance: `After scope closure, independently model every accepted/refused/unresolved whole-root and scalar/member/list/index/slice reference from complete arguments, exact source fields and lexical roles. Whole caller kinds and private numerical preparation retain, final widths/ranges are numeric. Genuine whole-product/path/role/kind/private-authority controls reject.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.3`
+  Status: `pending`
+  Goal: `Qualify all original T1986 copy argument/caller/source and whole products.`
+  Acceptance: `After scope/reference closure, independently model each accepted/refused/no-obligation copy from complete declared-reference shapes, root roles, exact full recursive type identity, payload separation and caller facts. Preserve first-touch kinds, invalid width descriptor and source semantics. Genuine omission, type/role/semantic-return and private-authority controls reject.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.4`
+  Status: `pending`
+  Goal: `Join complete original T1986 value scope/reference/copy products.`
+  Acceptance: `Join completed three value API owners, complete source/field/actor authority, every native caller/argument/product/refusal and typed preparation/final fact. Reexecute semantic readers and controls with exact source/document boundaries and portable process coordinates; close only value API products before core API/native assurance.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6836,3 +6866,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'complete reader/control replay identity and outcomes' -- docs/audits/record-value-field-join-20261004/replay_children.py roots the comparator at f315d5848d4d51b6a0b47d6f3c8ac1699c1a04e3. Real legacy outer reader falsely returns RED1 at a distinct complete working root after both semantic readers and all seven controls pass; saved complete streams differ only in the exact invoked process File-header filename. No native/product/cause change is inferred. First unused status-book input and shared scratch-link failures expose instrument assumptions; exact historical input sets and isolated oracle fixtures correct them with originals retained.
 - [x] **ADDRESSED (verified)** — Separate complete portable source/owner/graph/field/actor reader passes at both real and second root-local coordinates. Three semantic readers and twelve rejecting controls reexecute with full exact receipts and watched runtime profile. Narrow exact process-filename qualification conserves all other bytes; independent actual-stream oracle rejects changed line/message/argument roots and distinguishes blanket prefix substitution. Wrong semantic message, process filename, extra root-bearing error, full copied-field omission and whole actor omission return RED1. Immutable native/model/source/semantic quantities retain. P2 closes for the bound interpreter/input/working-root profile; no full-checkout or universal interpreter promise.
 - [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308 and rendered build PASS. Current20 source/document transforms, three completed owners, all prior sealed native/model/field/actor bytes and all fifteen complete semantic replay outcomes authenticate at both working-root coordinates. Fixed card capacity remains bounded; fresh task/KM/claim/containment and staged doctrine/hooks precede commit. Providers/public admission and native copy/cause assurance remain unchanged and separately owned; value/core API products are next. Initial staged gate rejects a claim census taken before final containment measurements; retained receipt, final-surface census and repeated full gate are required.
+
+## Acceptance Checklist — complete original T1986 scope products
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub record_value_scope' -- perl/FSM/Support/ISFRecordPortValues.pm locates the original detached preparation contract. Complete source/private-field evidence distinguishes exact caller kinds, source identity, numeric aggregate validation and retained preparation spellings; value-equivalent private metadata is insufficient scope-product authority. The first independent reader compares caller type sharing with intentionally detached result trees and refuses; source-only expected products were already detached. Retain first reader/failure, correct that source comparison and keep strict whole result/reference topology.
+- [x] **ADDRESSED (verified)** — Source-only full forty recipes and independent semantic rebuild match every original whole scope product:27 accepted preparations/13 refusals. Complete root/type/property/order/mask/role/source/own private-stage/numeric-kind/caller graphs conserve. Omission, output-role corruption, borrowing a masked outer declaration, private-width numeric promotion and genuine original metadata-private copy3 full type graft all RED1. Separate primitive-kind/type walk, source and original/current scope-contract equality bind every field. Native errors remain full dated opaque evidence; intended cause and copy safety stay open. No provider/test/admission repair.
+- [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308 and rendered build PASS. All prior source/native/model/field/actor/portable archives authenticate unchanged; three prior semantic readers and twelve RED controls reexecute with exact historical documents/source and portable coordinates. Current21 source/doc/recipe/complete input/product/instrument watcher passes after seal. Fixed card capacity shrinks; task/KM/exact containment/final-surface claim census and staged doctrines/hooks precede commit. Reference products follow from the committed clean tree.

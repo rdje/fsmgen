@@ -280,7 +280,15 @@ The [whole record-value actors](../../../docs/audits/record-value-actors-2026100
 match independent source-first local/imported models, including defaults, empty
 optional families, transaction clauses, raw type tokens, storage signals, package
 roots and metadata. Both original public-source refusals publish no actor product.
-Complete value/path and metadata/core API products remain under review. The
+The [complete scope proof](../../../docs/audits/record-value-scopes-20261004/scope.txt)
+binds all forty original calls: twenty-seven preparations and thirteen refusals.
+Source-only root recipes cover local/formal masks, imported/local aliases, all
+malformed facts and the refused output actor's preparatory scopes. Whole inputs,
+caller kinds and detached scope products retain. Preparation type facts keep
+their exact recorded width/signed spellings; aggregate signed validation is
+numeric. A genuine equal-meaning private metadata type has different primitive
+kinds and cannot supply the scope product. Reference/copy and metadata/core API
+products remain under review. The
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

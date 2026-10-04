@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-scopes-20261004/verify.py",
+    "--numeric-private-width"
+  ],
+  "working_directory": ".",
+  "status": 1
+}
