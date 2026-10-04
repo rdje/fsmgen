@@ -1,0 +1,82 @@
+{
+  "copy-omission.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "copy-omission.txt": {
+    "bytes": 1891,
+    "sha256": "b59ee87e019fcf4fd7c4ab087e1edf0f8b293ecc6504054c82072aba7f4e7be4"
+  },
+  "derive.py": {
+    "bytes": 2826,
+    "sha256": "32df4f86ed585fab44f2fd88b610a327bc7fecb4358211af12d6b5da82d40fff"
+  },
+  "field-omission.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "field-omission.txt": {
+    "bytes": 2027,
+    "sha256": "e203a656157c968ef89aa154be531cce9efd3e3a01e3812cb118b96f95879e15"
+  },
+  "inputs.json": {
+    "bytes": 21859,
+    "sha256": "73c2d6d89ae037ee6f48138a38435f204a5af9f11ec29f78011f94c7c4db3477"
+  },
+  "join.json": {
+    "bytes": 139158,
+    "sha256": "85021f598fae4e00618011370bcc5cea17133ee41dc85a9f295ee4ddcf34a9ac"
+  },
+  "original-field-omission.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "original-field-omission.txt": {
+    "bytes": 745,
+    "sha256": "f71ebead878497052ac2afac6ec8c27ce24ed963f68984b1523775a128e9050b"
+  },
+  "original-private-authority.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "original-private-authority.txt": {
+    "bytes": 681,
+    "sha256": "e92b84a73821fcc84c61475929626d60abdad60f108a95672d63e84f1a38e45f"
+  },
+  "original-source-order.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "original-source-order.txt": {
+    "bytes": 651,
+    "sha256": "4ee5689410418db831f87c2727be3e6f0e82b01ed1b8719e51621a0ecc942b4c"
+  },
+  "plan.txt": {
+    "bytes": 874,
+    "sha256": "f57e6965dd6d2490cb9b7d5ce7637a6ee34007568c8c827b2373e57060323d68"
+  },
+  "private-authority.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "private-authority.txt": {
+    "bytes": 1966,
+    "sha256": "d04061d93f401db261cf927377ef7b7c09101eb3b2fefa25176cdad85f96377b"
+  },
+  "readback.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "readback.txt": {
+    "bytes": 2000,
+    "sha256": "933518b54290091fd80ea776fa3f9f0761b54be35514a5528d8e39a3e5fcff3a"
+  },
+  "scope.txt": {
+    "bytes": 3739,
+    "sha256": "04702cc07cce28694250eef2e6a01b893d20752b2bb71ac6ff3bf3f579ca64f5"
+  },
+  "verify.py": {
+    "bytes": 8080,
+    "sha256": "4bc5f295883e95ba8e5e5d56402dfbbdf558bf0dcf7261341e6aa8d7a55856fa"
+  }
+}

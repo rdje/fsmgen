@@ -1,0 +1,1 @@
+PASS rebuilt chapter binds complete original/current copy populations, restored seed kinds, intentional private spellings and final numeric product authority. Visual QA remains open.

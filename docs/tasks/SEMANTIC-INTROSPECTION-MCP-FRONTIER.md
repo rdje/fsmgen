@@ -4022,10 +4022,10 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify actual copy/kind/topology and producer-consumer counterfactual assurance.`
   Acceptance: `Under complete .2 source meanings, replay exact original and source-kind-preserving test-only copy variants through real providers; join every original/copy/API/caller/result/error/warning/assertion graph. Use genuine same-valued kind, alias/copy and native supported cycle controls; prove each actual changed field and unchanged seed. Do not change intentional provider private numeric projection. Own and repair any evidenced test-copy/snapshot gap in a separately bounded leaf after source qualification; no undocumented native/class capability or public behavior expansion.`
-  Verification: `pending`
+  Verification: `All three child leaves close actual original/pure/cycle/control diagnosis, bounded T1983 assurance repair and complete independent source/copy/API/product/cause/consumer join. docs/audits/interface-metadata-copy-join-20261004/verify.py binds every member, original/current private-field role and native outcome; no counts-only or private-stage product authority. All three P2 copy/readonly/numeric assertion gaps repaired; diagnostics remain parent .5-owned before T1983 final outcome.`
   Commit: `children below`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.3`
@@ -4045,11 +4045,11 @@ For FSMGen, the analogs are:
   Commit: `this slice (Git subject identifies leaf)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Join actual metadata copy/consumer qualification and completed repairs.`
   Acceptance: `Independently join complete original/current copy/API/source/cause/product/consumer and field/native/control memberships with every required semantic authority and completed bounded repair. Preserve private numeric rebuilding, unchanged caller contracts and finite plain/cycle/native boundaries. Source-qualified field omissions/unsafe authorities remain RED; no value-only or counts-only signoff. Commit exact assurance join before outer .4 source/product join and parent .5 diagnostic repair.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `docs/audits/interface-metadata-copy-join-20261004/verify.py independently joins complete original145/current144 copies, original94/current62 field populations,105 API and334 consumers with all source/product/cause/native controls. Original30 private conversions plus32 restored original declared frame leaves qualify all current26 private clones;41 test copies retain kinds/sharing/isolation and real7-reference cyclic copy qualifies. Omission/private-stage/original field-order controls RED1; all bounded actual kind/alias/lossy/projection repairs and whole59 final products/caller graphs/primary causes conserve. Public-book/build/rendered and staged gates close; outer source/product .4 and diagnostic .5 stay owned.`
+  Commit: `this slice (Git subject identifies leaf)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.4`
   Status: `pending`
@@ -6595,3 +6595,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone($actor)' -- t/1983-isf-interface-port-metadata.t binds lossy baselines and value-only product comparisons. Genuine prior caller-kind/alias/numeric-bypass controls stay GREEN; complete immutable source/field models distinguish original facts, intentional private spellings and numeric final products before repair.
 - [x] **ADDRESSED (verified)** — Exact bounded T1983 transformation and complete ordinary current-source/API/copy/parser/consumer readback pass. Every actual fixture copy now checks kinds/sharing/reference population/isolation; readonly snapshots and numeric products compare typed whole graphs. Actual kind/alias/Storable-restoration/projection controls fail their intended assertions; omission/promotion controls RED1. Actual cyclic input strong-copy proof passes and real provider refusal conserves; all three P2 assurance gaps repaired before outer joins.
 - [x] **NO REGRESSION** — scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1983-isf-interface-port-metadata.t: All tests successful; Files=1, Tests=7. All ordinary330 permanent and334 native audit leaf checks pass; whole source/products/primary causes conserve. Public-book2/308/build/rendered and preceding full historical coverage replays pass; private rebuilding/public admission unchanged. Fresh claim/task/KM/fixed capacity/staged doctrine/hooks close before commit; diagnostic .5 remains owned.
+
+## Acceptance Checklist — interface-metadata complete copy/consumer/source join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone($actor)' -- t/1983-isf-interface-port-metadata.t binds original lossy baselines and the qualified repair. Full current graphs show source-kind recovery moves32 original declared leaves into private numeric-copy conversions; counts alone could incorrectly treat intentional private spellings as product or copy-assurance failure.
+- [x] **ADDRESSED (verified)** — Separate producer/independent recursive reader join all original/current copies, field paths, source roles, API/products/primary causes, original/strong consumers and actual native/control outcomes. Every current62 private width conversion has original source authority;41 test copies and cyclic topology preserve kinds/sharing/isolation. Correspondence/field omission and private-stage authority controls RED1; original field/order/private controls remain RED1. Bounded repair children close; diagnostic defects remain separately owned.
+- [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and complete sealed original/current/source-model/native readers pass. No further current code/provider/test edits; all ordinary products/caller kinds/primary causes conserve, private numeric rebuilding retained. Fresh claim/task/KM/fixed capacity and staged doctrine/hooks close before outer join.

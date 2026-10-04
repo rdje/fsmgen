@@ -1,0 +1,6020 @@
+{
+  "api": [
+    {
+      "accepted": 1,
+      "current": 0,
+      "helper": null,
+      "original": 0,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 1,
+      "helper": null,
+      "original": 1,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 2,
+      "helper": null,
+      "original": 2,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 3,
+      "helper": null,
+      "original": 3,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 4,
+      "helper": null,
+      "original": 4,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 5,
+      "helper": null,
+      "original": 5,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 6,
+      "helper": null,
+      "original": 6,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 7,
+      "helper": null,
+      "original": 7,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 8,
+      "helper": null,
+      "original": 8,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 9,
+      "helper": null,
+      "original": 9,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 10,
+      "helper": null,
+      "original": 10,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 11,
+      "helper": null,
+      "original": 11,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 12,
+      "helper": null,
+      "original": 12,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 13,
+      "helper": null,
+      "original": 13,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 14,
+      "helper": null,
+      "original": 14,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 15,
+      "helper": null,
+      "original": 15,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 16,
+      "helper": null,
+      "original": 16,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 17,
+      "helper": null,
+      "original": 17,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 18,
+      "helper": null,
+      "original": 18,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 19,
+      "helper": null,
+      "original": 19,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 20,
+      "helper": null,
+      "original": 20,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 21,
+      "helper": null,
+      "original": 21,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 22,
+      "helper": null,
+      "original": 22,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 23,
+      "helper": null,
+      "original": 23,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 24,
+      "helper": null,
+      "original": 24,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 25,
+      "helper": null,
+      "original": 25,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 26,
+      "helper": null,
+      "original": 26,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 27,
+      "helper": null,
+      "original": 27,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 28,
+      "helper": null,
+      "original": 28,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 29,
+      "helper": null,
+      "original": 29,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 30,
+      "helper": null,
+      "original": 30,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 31,
+      "helper": null,
+      "original": 31,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 32,
+      "helper": null,
+      "original": 32,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 33,
+      "helper": null,
+      "original": 33,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 34,
+      "helper": null,
+      "original": 34,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 35,
+      "helper": null,
+      "original": 35,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 36,
+      "helper": null,
+      "original": 36,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 37,
+      "helper": null,
+      "original": 37,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 38,
+      "helper": null,
+      "original": 38,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 39,
+      "helper": null,
+      "original": 39,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 40,
+      "helper": null,
+      "original": 40,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 41,
+      "helper": null,
+      "original": 41,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 42,
+      "helper": null,
+      "original": 42,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 43,
+      "helper": null,
+      "original": 43,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 44,
+      "helper": null,
+      "original": 44,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 45,
+      "helper": null,
+      "original": 45,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 46,
+      "helper": null,
+      "original": 46,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 47,
+      "helper": null,
+      "original": 47,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 48,
+      "helper": null,
+      "original": 48,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 49,
+      "helper": null,
+      "original": 49,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 50,
+      "helper": null,
+      "original": 50,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 51,
+      "helper": null,
+      "original": 51,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 52,
+      "helper": null,
+      "original": 52,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 53,
+      "helper": null,
+      "original": 53,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 54,
+      "helper": null,
+      "original": 54,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 55,
+      "helper": null,
+      "original": 55,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 56,
+      "helper": null,
+      "original": 56,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 57,
+      "helper": null,
+      "original": 57,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 58,
+      "helper": null,
+      "original": 58,
+      "role": "capture"
+    },
+    {
+      "accepted": 1,
+      "current": 59,
+      "helper": null,
+      "original": 59,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 1,
+      "current": 60,
+      "helper": null,
+      "original": 60,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 61,
+      "helper": 0,
+      "original": 61,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 62,
+      "helper": 1,
+      "original": 62,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 63,
+      "helper": 2,
+      "original": 63,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 64,
+      "helper": 3,
+      "original": 64,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 65,
+      "helper": 4,
+      "original": 65,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 66,
+      "helper": 5,
+      "original": 66,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 67,
+      "helper": 6,
+      "original": 67,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 68,
+      "helper": 7,
+      "original": 68,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 69,
+      "helper": 8,
+      "original": 69,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 70,
+      "helper": 9,
+      "original": 70,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 71,
+      "helper": 10,
+      "original": 71,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 72,
+      "helper": 11,
+      "original": 72,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 73,
+      "helper": 12,
+      "original": 73,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 74,
+      "helper": 13,
+      "original": 74,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 75,
+      "helper": 14,
+      "original": 75,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 76,
+      "helper": 15,
+      "original": 76,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 77,
+      "helper": 16,
+      "original": 77,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 78,
+      "helper": 17,
+      "original": 78,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 79,
+      "helper": 18,
+      "original": 79,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 80,
+      "helper": 19,
+      "original": 80,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 81,
+      "helper": 20,
+      "original": 81,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 82,
+      "helper": 21,
+      "original": 82,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 83,
+      "helper": 22,
+      "original": 83,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 84,
+      "helper": 23,
+      "original": 84,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 85,
+      "helper": 24,
+      "original": 85,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 86,
+      "helper": 25,
+      "original": 86,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 87,
+      "helper": 26,
+      "original": 87,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 88,
+      "helper": 27,
+      "original": 88,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 89,
+      "helper": 28,
+      "original": 89,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 90,
+      "helper": 29,
+      "original": 90,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 91,
+      "helper": 30,
+      "original": 91,
+      "role": "snapshot"
+    },
+    {
+      "accepted": 0,
+      "current": 92,
+      "helper": 31,
+      "original": 92,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 93,
+      "helper": 32,
+      "original": 93,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 94,
+      "helper": 33,
+      "original": 94,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 95,
+      "helper": 34,
+      "original": 95,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 96,
+      "helper": 35,
+      "original": 96,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 97,
+      "helper": 36,
+      "original": 97,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 98,
+      "helper": 37,
+      "original": 98,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 99,
+      "helper": 38,
+      "original": 99,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 100,
+      "helper": 39,
+      "original": 100,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 101,
+      "helper": 40,
+      "original": 101,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 102,
+      "helper": 41,
+      "original": 102,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 103,
+      "helper": 42,
+      "original": 103,
+      "role": "capture"
+    },
+    {
+      "accepted": 0,
+      "current": 104,
+      "helper": 43,
+      "original": 104,
+      "role": "capture"
+    }
+  ],
+  "consumers": [
+    {
+      "current": 0,
+      "helper": null,
+      "kind": "is",
+      "label": "input order followed by output order, including unused declarations",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 1,
+      "helper": null,
+      "kind": "is",
+      "label": "closed result is JSON-safe",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 2,
+      "helper": null,
+      "kind": "is",
+      "label": "projection does not share parser objects",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 3,
+      "helper": null,
+      "kind": "is",
+      "label": "domain interface copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 4,
+      "helper": null,
+      "kind": "is",
+      "label": "domain interface copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 5,
+      "helper": null,
+      "kind": "is",
+      "label": "domain interface copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 6,
+      "helper": null,
+      "kind": "is",
+      "label": "domain interface copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 7,
+      "helper": null,
+      "kind": "is_deeply",
+      "label": "explicit domains override the declared default",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 8,
+      "helper": null,
+      "kind": "is",
+      "label": "metadata preserves nonempty opaque port names without inventing source restrictions",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 9,
+      "helper": null,
+      "kind": "is",
+      "label": "capture numeric seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 10,
+      "helper": null,
+      "kind": "is",
+      "label": "capture numeric seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 11,
+      "helper": null,
+      "kind": "is",
+      "label": "capture numeric seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 12,
+      "helper": null,
+      "kind": "is",
+      "label": "capture numeric seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 13,
+      "helper": null,
+      "kind": "is",
+      "label": "capture preserves original scalar kinds on its first read",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 14,
+      "helper": null,
+      "kind": "is",
+      "label": "capture still returns the same independently expected numeric layout",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 15,
+      "helper": null,
+      "kind": "is",
+      "label": "capture output mutation cannot reach source facts",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 16,
+      "helper": null,
+      "kind": "is",
+      "label": "capture refused numeric seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 17,
+      "helper": null,
+      "kind": "is",
+      "label": "capture refused numeric seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 18,
+      "helper": null,
+      "kind": "is",
+      "label": "capture refused numeric seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 19,
+      "helper": null,
+      "kind": "is",
+      "label": "capture refused numeric seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 20,
+      "helper": null,
+      "kind": "ok",
+      "label": "capture rejects a malformed suffix after valid numeric facts",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 21,
+      "helper": null,
+      "kind": "like",
+      "label": "capture retains a classified first diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 22,
+      "helper": null,
+      "kind": "is",
+      "label": "capture refused first read cannot mutate valid prefix facts",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 23,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot numeric seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 24,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot numeric seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 25,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot numeric seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 26,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot numeric seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 27,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot preserves original scalar kinds on its first read",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 28,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot still returns the same independently expected numeric layout",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 29,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot output mutation cannot reach source facts",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 30,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot refused numeric seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 31,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot refused numeric seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 32,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot refused numeric seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 33,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot refused numeric seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 34,
+      "helper": null,
+      "kind": "ok",
+      "label": "snapshot rejects a malformed suffix after valid numeric facts",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 35,
+      "helper": null,
+      "kind": "like",
+      "label": "snapshot retains a classified first diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 36,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot refused first read cannot mutate valid prefix facts",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 37,
+      "helper": null,
+      "kind": "is",
+      "label": "nested record/list leaves have authored order and exact packed ranges",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 38,
+      "helper": null,
+      "kind": "is",
+      "label": "nested type objects remain detached",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 39,
+      "helper": null,
+      "kind": "is",
+      "label": "snapshot does not share nested fields",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 40,
+      "helper": null,
+      "kind": "ok",
+      "label": "record output field writer remains deferred",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 41,
+      "helper": null,
+      "kind": "like",
+      "label": "existing authored-field refusal remains precise",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 42,
+      "helper": null,
+      "kind": "is",
+      "label": "imported scalar alias is not flattened to an anonymous width",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 43,
+      "helper": null,
+      "kind": "is",
+      "label": "record producer retains imported alias",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 44,
+      "helper": null,
+      "kind": "is",
+      "label": "independent imported layout oracle",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 45,
+      "helper": null,
+      "kind": "is",
+      "label": "absent declarations are unknown",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 46,
+      "helper": null,
+      "kind": "is",
+      "label": "unknown snapshot remains null",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 47,
+      "helper": null,
+      "kind": "is_deeply",
+      "label": "known empty declarations remain empty",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 48,
+      "helper": null,
+      "kind": "is_deeply",
+      "label": "known empty snapshot remains empty",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 49,
+      "helper": null,
+      "kind": "is_deeply",
+      "label": "required entry keys match decision 0113",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 50,
+      "helper": null,
+      "kind": "is_deeply",
+      "label": "optional entry keys match the selected schema",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 51,
+      "helper": null,
+      "kind": "is_deeply",
+      "label": "scalar field key family is explicit",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 52,
+      "helper": null,
+      "kind": "is_deeply",
+      "label": "list roots remain outside the selected contract",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 53,
+      "helper": null,
+      "kind": "is",
+      "label": "discovery values are detached",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 54,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 55,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 56,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 57,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 58,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 59,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 60,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 61,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 62,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 63,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 64,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 65,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 66,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 67,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 68,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 69,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 70,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 71,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 72,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 73,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 74,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 75,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 76,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 77,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 78,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 79,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 80,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 81,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 82,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 83,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 84,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 85,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 86,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 87,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 88,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 89,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 90,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 91,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 92,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 93,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 94,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 95,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 96,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 97,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 98,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 99,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 100,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 101,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 102,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 103,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 104,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 105,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 106,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 107,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 108,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 109,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 110,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 111,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 112,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 113,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 114,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 115,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 116,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 117,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 118,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 119,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 120,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 121,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 122,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 123,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 124,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 125,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 126,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 127,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 128,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 129,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 130,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 131,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 132,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 133,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 134,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 135,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 136,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 137,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 138,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 139,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 140,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 141,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 142,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 143,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 144,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 145,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 146,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 147,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 148,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 149,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 150,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 151,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 152,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 153,
+      "helper": null,
+      "kind": "is",
+      "label": "malformed snapshot seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 154,
+      "helper": null,
+      "kind": "is",
+      "label": "duplicate metadata entry copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 155,
+      "helper": null,
+      "kind": "is",
+      "label": "duplicate metadata entry copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 156,
+      "helper": null,
+      "kind": "is",
+      "label": "duplicate metadata entry copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 157,
+      "helper": null,
+      "kind": "is",
+      "label": "duplicate metadata entry copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 158,
+      "helper": 0,
+      "kind": "ok",
+      "label": "malformed snapshot 0 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 159,
+      "helper": 0,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 160,
+      "helper": 0,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 161,
+      "helper": 1,
+      "kind": "ok",
+      "label": "malformed snapshot 1 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 162,
+      "helper": 1,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 163,
+      "helper": 1,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 164,
+      "helper": 2,
+      "kind": "ok",
+      "label": "malformed snapshot 2 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 165,
+      "helper": 2,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 166,
+      "helper": 2,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 167,
+      "helper": 3,
+      "kind": "ok",
+      "label": "malformed snapshot 3 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 168,
+      "helper": 3,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 169,
+      "helper": 3,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 170,
+      "helper": 4,
+      "kind": "ok",
+      "label": "malformed snapshot 4 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 171,
+      "helper": 4,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 172,
+      "helper": 4,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 173,
+      "helper": 5,
+      "kind": "ok",
+      "label": "malformed snapshot 5 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 174,
+      "helper": 5,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 175,
+      "helper": 5,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 176,
+      "helper": 6,
+      "kind": "ok",
+      "label": "malformed snapshot 6 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 177,
+      "helper": 6,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 178,
+      "helper": 6,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 179,
+      "helper": 7,
+      "kind": "ok",
+      "label": "malformed snapshot 7 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 180,
+      "helper": 7,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 181,
+      "helper": 7,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 182,
+      "helper": 8,
+      "kind": "ok",
+      "label": "malformed snapshot 8 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 183,
+      "helper": 8,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 184,
+      "helper": 8,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 185,
+      "helper": 9,
+      "kind": "ok",
+      "label": "malformed snapshot 9 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 186,
+      "helper": 9,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 187,
+      "helper": 9,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 188,
+      "helper": 10,
+      "kind": "ok",
+      "label": "malformed snapshot 10 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 189,
+      "helper": 10,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 190,
+      "helper": 10,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 191,
+      "helper": 11,
+      "kind": "ok",
+      "label": "malformed snapshot 11 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 192,
+      "helper": 11,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 193,
+      "helper": 11,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 194,
+      "helper": 12,
+      "kind": "ok",
+      "label": "malformed snapshot 12 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 195,
+      "helper": 12,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 196,
+      "helper": 12,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 197,
+      "helper": 13,
+      "kind": "ok",
+      "label": "malformed snapshot 13 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 198,
+      "helper": 13,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 199,
+      "helper": 13,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 200,
+      "helper": 14,
+      "kind": "ok",
+      "label": "malformed snapshot 14 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 201,
+      "helper": 14,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 202,
+      "helper": 14,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 203,
+      "helper": 15,
+      "kind": "ok",
+      "label": "malformed snapshot 15 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 204,
+      "helper": 15,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 205,
+      "helper": 15,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 206,
+      "helper": 16,
+      "kind": "ok",
+      "label": "malformed snapshot 16 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 207,
+      "helper": 16,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 208,
+      "helper": 16,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 209,
+      "helper": 17,
+      "kind": "ok",
+      "label": "malformed snapshot 17 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 210,
+      "helper": 17,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 211,
+      "helper": 17,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 212,
+      "helper": 18,
+      "kind": "ok",
+      "label": "malformed snapshot 18 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 213,
+      "helper": 18,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 214,
+      "helper": 18,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 215,
+      "helper": 19,
+      "kind": "ok",
+      "label": "malformed snapshot 19 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 216,
+      "helper": 19,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 217,
+      "helper": 19,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 218,
+      "helper": 20,
+      "kind": "ok",
+      "label": "malformed snapshot 20 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 219,
+      "helper": 20,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 220,
+      "helper": 20,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 221,
+      "helper": 21,
+      "kind": "ok",
+      "label": "malformed snapshot 21 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 222,
+      "helper": 21,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 223,
+      "helper": 21,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 224,
+      "helper": 22,
+      "kind": "ok",
+      "label": "malformed snapshot 22 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 225,
+      "helper": 22,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 226,
+      "helper": 22,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 227,
+      "helper": 23,
+      "kind": "ok",
+      "label": "malformed snapshot 23 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 228,
+      "helper": 23,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 229,
+      "helper": 23,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 230,
+      "helper": 24,
+      "kind": "ok",
+      "label": "malformed snapshot 24 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 231,
+      "helper": 24,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 232,
+      "helper": 24,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 233,
+      "helper": 25,
+      "kind": "ok",
+      "label": "malformed snapshot 25 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 234,
+      "helper": 25,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 235,
+      "helper": 25,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 236,
+      "helper": 26,
+      "kind": "ok",
+      "label": "malformed snapshot 26 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 237,
+      "helper": 26,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 238,
+      "helper": 26,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 239,
+      "helper": 27,
+      "kind": "ok",
+      "label": "malformed snapshot 27 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 240,
+      "helper": 27,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 241,
+      "helper": 27,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 242,
+      "helper": 28,
+      "kind": "ok",
+      "label": "malformed snapshot 28 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 243,
+      "helper": 28,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 244,
+      "helper": 28,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 245,
+      "helper": 29,
+      "kind": "ok",
+      "label": "malformed snapshot 29 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 246,
+      "helper": 29,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 247,
+      "helper": 29,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 248,
+      "helper": 30,
+      "kind": "ok",
+      "label": "malformed snapshot 30 fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 249,
+      "helper": 30,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 250,
+      "helper": 30,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 251,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 252,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 253,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 254,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 255,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 256,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 257,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 258,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 259,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 260,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 261,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 262,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 263,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 264,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 265,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 266,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 267,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 268,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 269,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 270,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 271,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 272,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 273,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 274,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 275,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 276,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 277,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 278,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 279,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 280,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 281,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 282,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 283,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 284,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 285,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 286,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 287,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 288,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 289,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 290,
+      "helper": null,
+      "kind": "is",
+      "label": "invalid producer seed copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 291,
+      "helper": 31,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 292,
+      "helper": 31,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 293,
+      "helper": 31,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 294,
+      "helper": 32,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 295,
+      "helper": 32,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 296,
+      "helper": 32,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 297,
+      "helper": 33,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 298,
+      "helper": 33,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 299,
+      "helper": 33,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 300,
+      "helper": 34,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 301,
+      "helper": 34,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 302,
+      "helper": 34,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 303,
+      "helper": 35,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 304,
+      "helper": 35,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 305,
+      "helper": 35,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 306,
+      "helper": 36,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 307,
+      "helper": 36,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 308,
+      "helper": 36,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 309,
+      "helper": 37,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 310,
+      "helper": 37,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 311,
+      "helper": 37,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 312,
+      "helper": 38,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 313,
+      "helper": 38,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 314,
+      "helper": 38,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 315,
+      "helper": 39,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 316,
+      "helper": 39,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 317,
+      "helper": 39,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 318,
+      "helper": 40,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 319,
+      "helper": 40,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 320,
+      "helper": 40,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 321,
+      "helper": 41,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 322,
+      "helper": 41,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 323,
+      "helper": 41,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 324,
+      "helper": 42,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 325,
+      "helper": 42,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 326,
+      "helper": 42,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 327,
+      "helper": 43,
+      "kind": "is",
+      "label": "actual cyclic input copy preserves original kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 328,
+      "helper": 43,
+      "kind": "is",
+      "label": "actual cyclic input copy preserves kinds and sharing",
+      "role": "strong copy check"
+    },
+    {
+      "current": 329,
+      "helper": 43,
+      "kind": "is",
+      "label": "actual cyclic input copy preserves reference population",
+      "role": "strong copy check"
+    },
+    {
+      "current": 330,
+      "helper": 43,
+      "kind": "is",
+      "label": "actual cyclic input copy is isolated from source",
+      "role": "strong copy check"
+    },
+    {
+      "current": 331,
+      "helper": 43,
+      "kind": "ok",
+      "label": "invalid producer input fails closed",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 332,
+      "helper": 43,
+      "kind": "like",
+      "label": "contextual bounded diagnostic",
+      "role": "qualified original consumer"
+    },
+    {
+      "current": 333,
+      "helper": 43,
+      "kind": "is_deeply",
+      "label": "invalid metadata does not emit incidental Perl warnings",
+      "role": "qualified original consumer"
+    }
+  ],
+  "copies": [
+    {
+      "current": 0,
+      "original": 0,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 1,
+      "original": 1,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": null,
+      "original": 2,
+      "role": "typed readonly snapshot replaces lossy baseline",
+      "source_line": 41
+    },
+    {
+      "current": 2,
+      "original": 3,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 3,
+      "original": 4,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 4,
+      "original": 5,
+      "role": "strong test fixture copy",
+      "source_line": 47
+    },
+    {
+      "current": 5,
+      "original": 6,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 6,
+      "original": 7,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 7,
+      "original": 8,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 8,
+      "original": 9,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 9,
+      "original": 10,
+      "role": "strong test fixture copy",
+      "source_line": 91
+    },
+    {
+      "current": 10,
+      "original": 11,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 11,
+      "original": 12,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 12,
+      "original": 13,
+      "role": "strong test fixture copy",
+      "source_line": 99
+    },
+    {
+      "current": 13,
+      "original": 14,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 14,
+      "original": 15,
+      "role": "strong test fixture copy",
+      "source_line": 91
+    },
+    {
+      "current": 15,
+      "original": 16,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 16,
+      "original": 17,
+      "role": "strong test fixture copy",
+      "source_line": 99
+    },
+    {
+      "current": 17,
+      "original": 18,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": null,
+      "original": 19,
+      "role": "typed readonly snapshot replaces lossy baseline",
+      "source_line": 116
+    },
+    {
+      "current": 18,
+      "original": 20,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 19,
+      "original": 21,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 20,
+      "original": 22,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 21,
+      "original": 23,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 22,
+      "original": 24,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 23,
+      "original": 25,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 24,
+      "original": 26,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 25,
+      "original": 27,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 26,
+      "original": 28,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 27,
+      "original": 29,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 28,
+      "original": 30,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 29,
+      "original": 31,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 30,
+      "original": 32,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 31,
+      "original": 33,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 32,
+      "original": 34,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 33,
+      "original": 35,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 34,
+      "original": 36,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 35,
+      "original": 37,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 36,
+      "original": 38,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 37,
+      "original": 39,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 38,
+      "original": 40,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 39,
+      "original": 41,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 40,
+      "original": 42,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 41,
+      "original": 43,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 42,
+      "original": 44,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 43,
+      "original": 45,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 44,
+      "original": 46,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 45,
+      "original": 47,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 46,
+      "original": 48,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 47,
+      "original": 49,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 48,
+      "original": 50,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 49,
+      "original": 51,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 50,
+      "original": 52,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 51,
+      "original": 53,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 52,
+      "original": 54,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 53,
+      "original": 55,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 54,
+      "original": 56,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 55,
+      "original": 57,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 56,
+      "original": 58,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 57,
+      "original": 59,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 58,
+      "original": 60,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 59,
+      "original": 61,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 60,
+      "original": 62,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 61,
+      "original": 63,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 62,
+      "original": 64,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 63,
+      "original": 65,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 64,
+      "original": 66,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 65,
+      "original": 67,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 66,
+      "original": 68,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 67,
+      "original": 69,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 68,
+      "original": 70,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 69,
+      "original": 71,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 70,
+      "original": 72,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 71,
+      "original": 73,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 72,
+      "original": 74,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 73,
+      "original": 75,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 74,
+      "original": 76,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 75,
+      "original": 77,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 76,
+      "original": 78,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 77,
+      "original": 79,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 78,
+      "original": 80,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 79,
+      "original": 81,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 80,
+      "original": 82,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 81,
+      "original": 83,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 82,
+      "original": 84,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 83,
+      "original": 85,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 84,
+      "original": 86,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 85,
+      "original": 87,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 86,
+      "original": 88,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 87,
+      "original": 89,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 88,
+      "original": 90,
+      "role": "strong test fixture copy",
+      "source_line": 186
+    },
+    {
+      "current": 89,
+      "original": 91,
+      "role": "strong test fixture copy",
+      "source_line": 184
+    },
+    {
+      "current": 90,
+      "original": 92,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 91,
+      "original": 93,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 92,
+      "original": 94,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 93,
+      "original": 95,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 94,
+      "original": 96,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 95,
+      "original": 97,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 96,
+      "original": 98,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 97,
+      "original": 99,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 98,
+      "original": 100,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 99,
+      "original": 101,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 100,
+      "original": 102,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 101,
+      "original": 103,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 102,
+      "original": 104,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 103,
+      "original": 105,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 104,
+      "original": 106,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 105,
+      "original": 107,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 106,
+      "original": 108,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 107,
+      "original": 109,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 108,
+      "original": 110,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 109,
+      "original": 111,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 110,
+      "original": 112,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 111,
+      "original": 113,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 112,
+      "original": 114,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 113,
+      "original": 115,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 114,
+      "original": 116,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 115,
+      "original": 117,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 116,
+      "original": 118,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 117,
+      "original": 119,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 118,
+      "original": 120,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 119,
+      "original": 121,
+      "role": "private detached numeric validation copy",
+      "source_line": 142
+    },
+    {
+      "current": 120,
+      "original": 122,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 121,
+      "original": 123,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 122,
+      "original": 124,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 123,
+      "original": 125,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 124,
+      "original": 126,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 125,
+      "original": 127,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 126,
+      "original": 128,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 127,
+      "original": 129,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 128,
+      "original": 130,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 129,
+      "original": 131,
+      "role": "strong test fixture copy",
+      "source_line": 212
+    },
+    {
+      "current": 130,
+      "original": 132,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 131,
+      "original": 133,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 132,
+      "original": 134,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 133,
+      "original": 135,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 134,
+      "original": 136,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 135,
+      "original": 137,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 136,
+      "original": 138,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 137,
+      "original": 139,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 138,
+      "original": 140,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 139,
+      "original": 141,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 140,
+      "original": 142,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 141,
+      "original": 143,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    },
+    {
+      "current": 143,
+      "original": 144,
+      "role": "private detached numeric validation copy",
+      "source_line": 40
+    }
+  ],
+  "current_private_fields": [
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 1,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 1,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "8",
+      "api": 1,
+      "before_kind": "int",
+      "before_value": 8,
+      "copy": 1,
+      "path": "/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 1,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 1,
+      "path": "/3/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 3,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 3,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "8",
+      "api": 3,
+      "before_kind": "int",
+      "before_value": 8,
+      "copy": 3,
+      "path": "/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 3,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 3,
+      "path": "/3/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 5,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 6,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "8",
+      "api": 5,
+      "before_kind": "int",
+      "before_value": 8,
+      "copy": 6,
+      "path": "/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 5,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 6,
+      "path": "/3/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 7,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 8,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 13,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 18,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 13,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 18,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 13,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 18,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 13,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 18,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "10",
+      "api": 14,
+      "before_kind": "int",
+      "before_value": 10,
+      "copy": 19,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 17,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 22,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 21,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 26,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 25,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 30,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 29,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 34,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 33,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 38,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 37,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 42,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 41,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 46,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 45,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 50,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "8",
+      "api": 51,
+      "before_kind": "int",
+      "before_value": 8,
+      "copy": 56,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 51,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 56,
+      "path": "/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "8",
+      "api": 53,
+      "before_kind": "int",
+      "before_value": 8,
+      "copy": 58,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 53,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 58,
+      "path": "/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 54,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 59,
+      "path": "/inputs/0/type_spec/members/code/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 54,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 59,
+      "path": "/inputs/0/type_spec/members/flag/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 55,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 60,
+      "path": "/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 94,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 132,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 94,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 132,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 94,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 132,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 94,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 132,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 95,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 133,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 95,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 133,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 95,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 133,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 95,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 133,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 96,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 134,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 96,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 134,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 96,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 134,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 96,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 134,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 98,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 136,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 98,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 136,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 98,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 136,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 98,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 136,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 99,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 137,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 99,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 137,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 99,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 137,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 99,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 137,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 100,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 138,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 100,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 138,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 100,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 138,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 100,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 138,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 101,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 139,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 101,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 139,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 101,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 139,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 101,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 139,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "3",
+      "api": 102,
+      "before_kind": "int",
+      "before_value": 3,
+      "copy": 140,
+      "path": "/inputs/0/type_spec/members/payload/members/count/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "1",
+      "api": 102,
+      "before_kind": "int",
+      "before_value": 1,
+      "copy": 140,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "2",
+      "api": 102,
+      "before_kind": "int",
+      "before_value": 2,
+      "copy": 140,
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width"
+    },
+    {
+      "after_kind": "str",
+      "after_value": "4",
+      "api": 102,
+      "before_kind": "int",
+      "before_value": 4,
+      "copy": 140,
+      "path": "/inputs/0/type_spec/members/subtype/width"
+    }
+  ],
+  "cycle_copies": [
+    142
+  ],
+  "original_fields": [
+    {
+      "api": 1,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 1,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 1,
+      "copied": {
+        "kind": "str",
+        "value": "8"
+      },
+      "copy": 1,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 8
+      },
+      "path": "/1/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 1,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 1,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/3/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/storage/0/signals/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/storage/0/signals/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/storage/0/signals/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/storage/0/signals/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/storage/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/storage/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/storage/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/storage/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/type_symbols/local/frame_t/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/type_symbols/local/frame_t/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/type_symbols/local/frame_t/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 2,
+      "kind": "test",
+      "line": 41,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/type_symbols/local/frame_t/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": 3,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 4,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 3,
+      "copied": {
+        "kind": "str",
+        "value": "8"
+      },
+      "copy": 4,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 8
+      },
+      "path": "/1/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 3,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 4,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/3/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 5,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 7,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 5,
+      "copied": {
+        "kind": "str",
+        "value": "8"
+      },
+      "copy": 7,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 8
+      },
+      "path": "/1/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 5,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 7,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/3/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 7,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 9,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 10,
+      "kind": "test",
+      "line": 91,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 10,
+      "kind": "test",
+      "line": 91,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 10,
+      "kind": "test",
+      "line": 91,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 10,
+      "kind": "test",
+      "line": 91,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 13,
+      "kind": "test",
+      "line": 99,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 13,
+      "kind": "test",
+      "line": 99,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 13,
+      "kind": "test",
+      "line": 99,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 13,
+      "kind": "test",
+      "line": 99,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 19,
+      "kind": "test",
+      "line": 116,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 19,
+      "kind": "test",
+      "line": 116,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 19,
+      "kind": "test",
+      "line": 116,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 19,
+      "kind": "test",
+      "line": 116,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": 13,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 20,
+      "kind": "provider",
+      "line": 40,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 13,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 20,
+      "kind": "provider",
+      "line": 40,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 13,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 20,
+      "kind": "provider",
+      "line": 40,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 13,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 20,
+      "kind": "provider",
+      "line": 40,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 14,
+      "copied": {
+        "kind": "str",
+        "value": "10"
+      },
+      "copy": 21,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 10
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 17,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 24,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 21,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 28,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 25,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 32,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 29,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 36,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 33,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 40,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 37,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 44,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 41,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 48,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 45,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 52,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 51,
+      "copied": {
+        "kind": "str",
+        "value": "8"
+      },
+      "copy": 58,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 8
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 51,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 58,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/1/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 53,
+      "copied": {
+        "kind": "str",
+        "value": "8"
+      },
+      "copy": 60,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 8
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 53,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 60,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/1/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 54,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 61,
+      "kind": "provider",
+      "line": 40,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/code/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 54,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 61,
+      "kind": "provider",
+      "line": 40,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/flag/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": 55,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 62,
+      "kind": "provider",
+      "line": 142,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/0/width",
+      "role": "private numeric validation input"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 122,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 122,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 122,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 122,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 123,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 123,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 123,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 123,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 124,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 124,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 124,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 124,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 125,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 125,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 125,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 125,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 126,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 126,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 126,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 126,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 127,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 127,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 127,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 127,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 128,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 128,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 128,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 128,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 129,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 129,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 129,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 129,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 130,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 130,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 130,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 130,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "3"
+      },
+      "copy": 131,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 3
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/count/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "1"
+      },
+      "copy": 131,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 1
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/0/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "2"
+      },
+      "copy": 131,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 2
+      },
+      "path": "/inputs/0/type_spec/members/payload/members/lanes/items/1/width",
+      "role": "test source/baseline fixture"
+    },
+    {
+      "api": null,
+      "copied": {
+        "kind": "str",
+        "value": "4"
+      },
+      "copy": 131,
+      "kind": "test",
+      "line": 212,
+      "original": {
+        "kind": "int",
+        "value": 4
+      },
+      "path": "/inputs/0/type_spec/members/subtype/width",
+      "role": "test source/baseline fixture"
+    }
+  ]
+}

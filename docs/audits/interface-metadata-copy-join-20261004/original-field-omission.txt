@@ -1,0 +1,6 @@
+PASS complete native helper/adjacent/API/private/test-copy/assertion populations and independent ordinary causes bind immutable source; actual Storable location and parser primary-filename echoes expose two owned contextual false positives. Field/copy semantics remain .3-owned before .5 repairs and .4 join.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/interface-metadata-fields-20261004/verify.py", line 238, in <module>
+    assert derived == rows and unchanged == facts['unchanged_copy_ordinals'], 'complete original width field and unchanged-control membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete original width field and unchanged-control membership

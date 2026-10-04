@@ -211,6 +211,11 @@ alias, Storable-restoration and numeric-bypass controls now fail the intended
 assertions; ordinary products and primary causes remain the same. The actual
 rejected cyclic type also copies without sharing caller references. Contextual
 diagnostic repairs remain separately owned.
+The [complete copy join](../../../docs/audits/interface-metadata-copy-join-20261004/scope.txt)
+binds original and repaired copy populations to their source fields and final
+products. Preserving numeric test seeds makes some private clones stringify
+additional numeric leaves; final numeric metadata and caller graphs remain
+the same. Private validation copies remain distinct from product authority.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
