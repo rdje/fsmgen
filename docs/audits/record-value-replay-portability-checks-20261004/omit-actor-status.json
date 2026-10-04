@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-replay-portability-20261004/verify.py",
+    "--omit-actor"
+  ],
+  "working_directory": ".",
+  "status": 1
+}

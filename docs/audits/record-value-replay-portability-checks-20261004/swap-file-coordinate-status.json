@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-replay-portability-20261004/portable_replay.py",
+    "--check",
+    "--swap-file-coordinate"
+  ],
+  "working_directory": ".artifacts/record-value-portability-root-20261004",
+  "status": 1
+}

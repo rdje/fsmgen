@@ -280,10 +280,15 @@ The [whole record-value actors](../../../docs/audits/record-value-actors-2026100
 match independent source-first local/imported models, including defaults, empty
 optional families, transaction clauses, raw type tokens, storage signals, package
 roots and metadata. Both original public-source refusals publish no actor product.
-Complete value/path and metadata/core API products remain under review. A separate
-owned repair addresses absolute repository roots in captured Python replay
-traceback comparisons; field semantics are retained, while cross-root replay
-durability remains unqualified.
+Complete value/path and metadata/core API products remain under review. The
+[portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
+now binds each Python process filename to its exact invoked reader. The original
+comparison rejects identical semantic controls at a second working root; the
+superseding complete field/actor join passes there while preserving all other
+frame, source-line and message bytes. Root paths inside argument/error text stay
+exact. All source/typed/native/field/actor meanings and rejecting controls
+conserve for the recorded interpreter/input profile; native copy/cause assurance
+remains separate.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

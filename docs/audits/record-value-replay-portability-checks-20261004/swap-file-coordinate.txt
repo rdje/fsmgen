@@ -1,0 +1,8 @@
+record-value-fields-20261004 ordinary 0
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-portability-root-20261004/docs/audits/record-value-replay-portability-20261004/portable_replay.py", line 105, in <module>
+    output = qualified(raw_output, filename, relative)
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-portability-root-20261004/docs/audits/record-value-replay-portability-20261004/portable_replay.py", line 38, in qualified
+    assert match[2] == filename, 'exact bound reader process filename coordinate'
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact bound reader process filename coordinate

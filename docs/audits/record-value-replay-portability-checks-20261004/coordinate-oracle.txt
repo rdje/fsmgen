@@ -1,0 +1,1 @@
+PASS independent real old/new control streams differ only in exact process filename coordinate. Qualified full streams agree; line/message changes and root echoes in actual argument data stay different. A blanket prefix rule demonstrably erases that competing data change and is refused.

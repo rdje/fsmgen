@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-replay-portability-20261004/verify.py", line 101, in <module>
+    assert data['whole_actor_models'] == identity(actors), 'complete actor/source/type/property/kind products'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete actor/source/type/property/kind products

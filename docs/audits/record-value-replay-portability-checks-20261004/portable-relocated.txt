@@ -1,0 +1,16 @@
+record-value-fields-20261004 ordinary 0
+record-value-fields-20261004 --omit-type 1
+record-value-fields-20261004 --swap-order 1
+record-value-fields-20261004 --trust-private-product 1
+record-value-copy-fields-20261004 ordinary 0
+record-value-copy-fields-20261004 --omit-field 1
+record-value-copy-fields-20261004 --swap-source-role 1
+record-value-copy-fields-20261004 --trust-private-product 1
+record-value-copy-fields-20261004 --swap-malformed-model 1
+record-value-actors-20261004 ordinary 0
+record-value-actors-20261004 --omit-product 1
+record-value-actors-20261004 --swap-source-role 1
+record-value-actors-20261004 --trust-private-product 1
+record-value-actors-20261004 --numeric-source-tokens 1
+record-value-actors-20261004 --omit-default-family 1
+PASS three full semantic readers and all twelve RED controls; exact complete legacy outputs conserve beyond bound process filename coordinates. Current source/input/kind/error semantics remain unchanged.

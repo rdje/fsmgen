@@ -1,0 +1,6 @@
+record-value-fields-20261004 ordinary 0
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-portability-root-20261004/docs/audits/record-value-replay-portability-20261004/portable_replay.py", line 110, in <module>
+    assert output == historical(previous['output'], relative), 'full immutable semantic output beyond exact process coordinate'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: full immutable semantic output beyond exact process coordinate

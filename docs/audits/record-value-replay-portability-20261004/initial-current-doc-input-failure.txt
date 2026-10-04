@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-replay-portability-20261004/portable_replay.py", line 103, in <module>
+    assert previous['inputs'] == inputs
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,66 @@
+{
+  "binding.json": {
+    "bytes": 927264,
+    "sha256": "a2c8949d5cfb5989c408a63a70a7b22e2465f9b7c22e03a0db22bd567722f304"
+  },
+  "doc-updates.json": {
+    "bytes": 304447,
+    "sha256": "9b627397431db1fa571343a18fa5aa8e04402e9364cf571464626b9b9e752696"
+  },
+  "initial-current-doc-input-disposition.txt": {
+    "bytes": 796,
+    "sha256": "1059199e55825b444156110d3b76033057fff3ecd0148443ee794c95f757602c"
+  },
+  "initial-current-doc-input-failure.txt": {
+    "bytes": 271,
+    "sha256": "3a50e09f7cf1e99962f118ce25b79339220b8f4a254cd20617cb362412588e43"
+  },
+  "initial-current-doc-input-portable_replay.py": {
+    "bytes": 6373,
+    "sha256": "ac335807daf829cbf6bd96be7f0a78cd9eb5089e6b4d93b7bb68d7adb9dcc159"
+  },
+  "initial-shared-fixture-coordinate-oracle.py": {
+    "bytes": 4143,
+    "sha256": "73a5f0f674f6e7760f1d0e47bdbcb9220715d766c439be9eefbec6fcb6fd2a19"
+  },
+  "join.json": {
+    "bytes": 721239,
+    "sha256": "babb09d48f16921332c8bbd9210ad2ac5791bde6a84283bd18f61eda0451a497"
+  },
+  "old-reader-relocated.json": {
+    "bytes": 4838,
+    "sha256": "cf710012cc7ace0db0ad091621d9a683336f88379ff11fd0fd91cc91a36045fc"
+  },
+  "plan.txt": {
+    "bytes": 976,
+    "sha256": "94c4cf81e29de91c9b32a3a13427aa4bad90a878982c801838153dd024dbddbf"
+  },
+  "portable-replays.json": {
+    "bytes": 86470,
+    "sha256": "af7732a9de3c1283d7da33a621990b46964a5b67f1510808bcb2222852c3e0f5"
+  },
+  "portable_replay.py": {
+    "bytes": 7008,
+    "sha256": "aa2202130885f8bf91c55b2c0d679bc02ff0b99094dee3c28984e3c5388ab3ad"
+  },
+  "produce.py": {
+    "bytes": 2847,
+    "sha256": "5d3f87126466135002949013bbed24ff89b5225a9e45f80df8741b1fd0f816c9"
+  },
+  "reproduce.py": {
+    "bytes": 2060,
+    "sha256": "379ce3ee9f2c4feb702f36349c216e5dea90dde00107ec2df7998a70a2809118"
+  },
+  "scope.txt": {
+    "bytes": 4546,
+    "sha256": "25d415f6429d1d15b1b73b010327bc8457afe7d4d14ae7c8560fc27904c1c862"
+  },
+  "verify.py": {
+    "bytes": 8161,
+    "sha256": "3f128fe750cc697748a723efdceb04127d09bae1fca5588c6fd7899aa1bd3fc9"
+  },
+  "verify_coordinates.py": {
+    "bytes": 4153,
+    "sha256": "e98322e4c70d6a864e2fa567faddf3969447632081540d62aa7334116184df75"
+  }
+}

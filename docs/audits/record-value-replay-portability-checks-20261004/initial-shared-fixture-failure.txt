@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-replay-portability-20261004/verify.py", line 109, in <module>
+    assert run.returncode == 0, run.stdout + run.stderr
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-replay-portability-20261004/verify_coordinates.py", line 34, in <module>
+    assert os.readlink(link) == expected_link
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
