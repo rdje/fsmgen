@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-candidate-20261004/controls.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS observation omission/host/status/abort/producer/coordinate guards reject their actual controls; independent semantics remain pending.\n",
+  "working_directory": "."
+}

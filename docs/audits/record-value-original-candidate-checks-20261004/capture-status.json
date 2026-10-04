@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-candidate-20261004/check_capture.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS full original-source capture membership/program/source/fixture/host/TAP/status and genuine provider observations. Alias downstream mutation/abort is retained; independent graph/source/product qualification and replay remain pending.\n",
+  "working_directory": "."
+}

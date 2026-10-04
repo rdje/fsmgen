@@ -1,0 +1,8 @@
+{
+  "path": "docs/book/book/13k-isf-feature-support-matrix.html",
+  "phrases": [
+    "original candidate captures",
+    "These are observations. Independent source/caller/product checks and replay"
+  ],
+  "result": "PASS text and links; visual browser QA remains separately pending"
+}

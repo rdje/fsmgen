@@ -5,6 +5,7 @@ answers:
   - "are the T1986 finite copy probes independently qualified?"
   - "what validates plain copy helper sharing and detachment?"
   - "how can the finite copy probes be replayed without changing sealed evidence?"
+  - "are original T1986 candidate copy inputs captured?"
 date: 2026-10-04
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -15,8 +16,11 @@ evidence: >-
   docs/audits/record-value-copy-reader-20261004/verify.py;
   docs/audits/record-value-copy-reader-20261004/replay.py;
   docs/audits/record-value-copy-probes-20261004/manifest.json;
+  docs/audits/record-value-original-candidate-20261004/scope.txt;
+  docs/audits/record-value-original-candidate-20261004/check_capture.py;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
+  python3 -B docs/audits/record-value-original-candidate-20261004/check_capture.py &&
   python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-copy-reader-20261004/replay.py
@@ -38,5 +42,8 @@ Replay creates a fresh same-volume fixture with exact pinned sources. Whole
 native records and both output streams remain retained; addresses keep their
 actual per-capture lifetimes. Sealed producers never run in their own archive.
 The finite join now authenticates exact completed owners and complete fresh
-products. Actual original inputs, the candidate-parent join, hot baseline/consumer
-repairs and host-native refusal qualification remain separately owned successors.
+products. Original candidate captures now retain complete unchanged-input
+Storable/alias trials and the full alias run's downstream mutation and abort.
+These observations remain unqualified until independent source/product checks
+and replay. The candidate-parent join, hot baseline/consumer repairs and
+host-native refusal qualification remain separately owned successors.

@@ -1,0 +1,37 @@
+[
+  {
+    "error": "complete captured native population",
+    "name": "omit-original-copy",
+    "status": 1
+  },
+  {
+    "error": "each original input receives both actual providers",
+    "name": "omit-bad-provider-trial",
+    "status": 1
+  },
+  {
+    "error": "actual mode native status",
+    "name": "promote-native-status",
+    "status": 1
+  },
+  {
+    "error": "whole observed native host profile",
+    "name": "wrong-host-profile",
+    "status": 1
+  },
+  {
+    "error": "actual alias abort boundary",
+    "name": "hide-alias-abort",
+    "status": 1
+  },
+  {
+    "error": "whole executed capture producer",
+    "name": "borrow-producer-authority",
+    "status": 1
+  },
+  {
+    "error": "relative native fixture",
+    "name": "absolute-fixture-coordinate",
+    "status": 1
+  }
+]

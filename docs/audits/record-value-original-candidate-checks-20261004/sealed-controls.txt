@@ -1,0 +1,1 @@
+PASS observation omission/host/status/abort/producer/coordinate guards reject their actual controls; independent semantics remain pending.
