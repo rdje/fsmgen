@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-runtime-20261004/verify.py", line 115, in <module>
+    assert [row['label'] for row in helpers] == labels, 'complete actual helper/source-loop membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete actual helper/source-loop membership

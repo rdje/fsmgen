@@ -4114,11 +4114,48 @@ For FSMGen, the analogs are:
   Commit: `this commit (source plan/card repair; work-unit subject)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete actual T1986 native causes, source products, copies and assurance outcomes.`
   Acceptance: `After .1 source contracts close, profile all actual calls/helpers/copies/caller kinds/errors/warnings/consumers and complete products with genuine producer operations. Declare independent complete intended causes and source/field/product models before deriving safety; actual earlier/primary/caller and exact prior plus validation-bypass controls must distinguish unsafe interpretations. Respect established payload versus recursive record identity and caller data contracts; finite native/cyclic applicability must be explicit. Split bounded profile/semantic/copy/cause/outcome leaves as evidence requires, own every defect before hot fixes, commit each verified slice with book/fact/frontier synchronization. Preserve public providers/admission/submodule/cold boundaries and complete finite T1983 evidence; no unrelated consumer signoff.`
   Verification: `pending`
   Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.1`
+  Status: `done`
+  Goal: `Profile complete actual original T1986 native operations and assurance roles.`
+  Acceptance: `Bind whole selected committed sources and exact original helper. Observe every real value/metadata/path/identity/payload/parser callback, Storable copy, Test::More consumer, warning and native error with whole pre/post kinds/reference graphs and full ordinary local/imported products. Preserve actual cyclic candidate and original refusal without arbitrary native-class copying. Lexical sites and artificial stack self-test remain separate. Establish actual native/runtime population before independently modeled semantics or genuine controls; no hot test/provider/admission edits. Record instrument failures and owned observed gaps before successor repairs.`
+  Verification: `Complete original native docs/audits/record-value-runtime-20261004/{observe.pl,produce.py,verify.py,ordinary.json,profile.json,scope.txt,manifest.json} binds Git40fe7eb full19 source bodies and unchanged original T1986. Actual selected9283 APIs include recursive8251 clones/437 ranges,40 scope/68 reference/22 copy/227 capture/220 snapshot/14 identity/4 payload;697 real copies split17 test/447 metadata/233 value,43 helpers,125 leaf consumers,4 parsers,0 warnings. Whole input/result/error/primary/caller/copy/kind/sharing/isolation graphs and all actual helper/consumer/site/source memberships bind independently; full unwrapped125 leaf TAP agrees. Actual two cyclic private root/capture copies preserve the ancestor cycle and isolate referents; unchanged metadata guard refuses before cyclic snapshot. Four actual omission/unsafe-kind/synthetic-native controls RED1. P2 observed kind-changing original test-copy/value-only baseline gap is .3-owned; .2 authored/private-stage/final-product and .4 intended cause/native controls remain open. Initial nonexistent root-export/prototype warning and guessed-cycle-count instruments are fully retained and source-corrected, not provider defects. Focused3/318, book2/308/rendered build and sealed full reader PASS in sibling checks; card source-only watcher superseded exactly with native profile/fail-closed reverify, fixed capacity preserved. Fresh acceptance/task/KM/claim/staged doctrine/hooks close before .2 models.`
+  Commit: `this commit (complete original native profile; work-unit subject)`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2`
+  Status: `pending`
+  Goal: `Qualify original T1986 authored fields, source products and private type semantics.`
+  Acceptance: `Independently model complete source-local/imported actors and resolved recursive scalar/record/list fields, roles/ranges, intentional private numeric spellings and final numeric outputs. Bind all actual calls/copies/kinds/consumers to source authority and rederive/falsify/durability controls; preserve exact recursive identity versus payload compatibility and established first-touch requirements.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3`
+  Status: `pending`
+  Goal: `Qualify and repair actual T1986 copy and consumer assurance where evidenced.`
+  Acceptance: `P2 owned: actual original Storable test-copy width-kind conversions and value-only actor isolation/deep consumers cannot establish original kind-preserving baselines; reproduce with complete retained copy/native consumer graphs, then genuine controls and independent source models before repair. Use complete native current/prior/strong graph controls for primitive kinds, readonly/isolation/sharing, full copies and final numeric products; actual cyclic applicability must bind native source and unchanged refusal. Own each defect before bounded hot repair, independently verify full before/after and source/type/product/caller meanings; split each verified repair when necessary.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.4`
+  Status: `pending`
+  Goal: `Qualify and repair complete actual T1986 refusal causes where evidenced.`
+  Acceptance: `Declare complete intended causes from independent public provider contracts and source facts. Genuine earlier/primary/caller echo, exact prior and guard-bypass controls must distinguish contextual fragments from cause identity; artificial stack errors cannot stand in for real operations. Own defects before changes, preserve complete raw native errors/source arguments and full products/copies/kinds; bounded permanent regressions and native/source readers close each repair.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.5`
+  Status: `pending`
+  Goal: `Join complete finite T1986 native/source/copy/cause helper outcome.`
+  Acceptance: `Join exact completed child owners, full original/current source/products/kinds/native/copy/consumer/warning/error/control membership and independent semantic authorities. Run omission/promotion controls, synchronize bounded book/fact/frontier and close only finite T1986 leaf without broader native-class/backend/HDL/cold/admission claims.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.4`
   Status: `pending`
@@ -6676,3 +6713,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub refuses {' -- t/1986-isf-record-port-value-gates.t binds02827d840254d6cdbfa4020be7910bb7ae9ac4cb. Complete source includes first-line fragment helper and artificial stack self-test; they do not prove actual native causes or Storable/deep kind/isolation assurance. git log -S 'Record outputs,' -- docs/knowledge/isf-aggregate-port-request-baseline.md binds the exact stale current-output assertion contradicted by canonical admitted source/book contracts.
 - [x] **ADDRESSED (verified)** — Independent complete original/current source/helper/wrapper/fixture/copy/provider reader passes; label-as-call, actual copy omission, synthetic-native and stale-current-output controls RED1. Exact card repair preserves complete historical intake and input/generated/native boundary facts while linking current admitted declarations/whole copies; fixed card capacity conserved. Original T1986/providers and earlier sealed proofs remain unchanged; actual native semantic/copy/cause assurance stays successor-owned.
 - [x] **NO REGRESSION** — All tests successful; canonical output Files=3, Tests=18; input/frontend/public-book Files=3, Tests=313 and rendered build PASS. Complete independent source/role/card watcher passes; initial no-write instrument failures retained and corrected. Fresh task/card/KM/claim/unchanged ceilings and staged doctrine/hooks precede the native qualification slice.
+
+## Acceptance Checklist — complete original T1986 native observation
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub refuses {' -- t/1986-isf-record-port-value-gates.t binds the original helper and exact source calls. Full actual native source-bound API/copy/consumer graphs expose kind-changing Storable fixtures and value-only baseline/deep comparisons; lexical/synthetic roles do not establish real cause/copy semantics. Initial observer root export, prototype and guessed-cycle-count failures are instrument defects, retained and corrected from full public source/interface contracts.
+- [x] **ADDRESSED (observation verified; semantic repair owned)** — Complete independent source/native/helper/copy/site/consumer/TAP/kind/reference/error/primary reader passes. Actual helper/copy omission, original kind-loss promotion and synthetic-native controls RED1. Actual ancestor cycle is preserved in two isolated native copies and the unchanged guard refuses; original APIs preserve caller first-touch kinds. P2 copy/consumer gap has explicit .3 ownership, with .2 source-product models and .4 intended native-cause controls before any hot repair. Card/current-source watcher and full historical evidence retain precise scope.
+- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=318, complete unwrapped125 leaf labels/pass outcomes match observed original TAP. Updated public book All tests successful; Files=2, Tests=308 and rendered build PASS. No T1986/provider/public admission edits; full immutable source/native/typed/control reader passes. Fresh bounded card/KM/task/claim/unchanged ceilings and staged doctrine/hooks precede semantic successor.

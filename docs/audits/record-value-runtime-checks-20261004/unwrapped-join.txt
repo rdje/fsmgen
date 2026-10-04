@@ -1,0 +1,1 @@
+PASS all125 original observed leaf labels/pass outcomes exactly match complete unwrapped T1986 native TAP. Exact raw log retained; readable projection removes only line margins. Original top-level10 subtests are separate units.

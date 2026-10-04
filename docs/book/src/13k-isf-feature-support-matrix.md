@@ -248,6 +248,13 @@ compatibility; unresolved/local/formal shadows retain their declared roles.
 Actual native causes, copied-field meanings and assurance controls remain owned
 before any further test repair.
 
+The [native record-value profile](../../../docs/audits/record-value-runtime-20261004/scope.txt)
+records actual selected APIs, helpers, copies, leaf consumers and complete
+local/imported parser products. It retains cyclic input and its unchanged
+refusal, and exposes numeric width kinds becoming strings in original test
+copies. Source/product models and genuine copy/cause controls remain owned
+before assurance repair; observing a passing test does not close those legs.
+
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
 primary messages containing wanted codes, reject. The

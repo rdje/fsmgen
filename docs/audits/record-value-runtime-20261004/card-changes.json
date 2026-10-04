@@ -1,0 +1,10 @@
+[
+  [
+    "python3 -B docs/audits/record-value-helper-contract-20261004/verify.py; scripts/run_with_ram_guard.sh",
+    "python3 -B docs/audits/record-value-runtime-20261004/verify.py && scripts/run_with_ram_guard.sh"
+  ],
+  [
+    "T1986 [source contracts](../audits/record-value-helper-contract-20261004/scope.txt)\nbind real calls, first-line fragments and synthetic stack checks; native proof is open.",
+    "T1986 [profile](../audits/record-value-runtime-20261004/scope.txt) binds calls, first-line fragments,\nsynthetic checks and typed graphs; copy/cause/product proof stays open."
+  ]
+]

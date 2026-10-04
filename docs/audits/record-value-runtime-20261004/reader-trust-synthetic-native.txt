@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-runtime-20261004/verify.py", line 193, in <module>
+    assert synthetic[0]['helper'] is not None, 'artificial stack check is not a genuine native helper producer'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: artificial stack check is not a genuine native helper producer

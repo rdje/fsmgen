@@ -1,0 +1,475 @@
+t/1986-isf-record-port-value-gates.t .......
+# Subtest: validation preserves caller JSON kinds on first touch
+    ok 1 - scope validation retains original typed JSON
+    ok 2 - reference validation retains original typed JSON
+    ok 3 - copy validation retains original typed JSON
+    1..3
+ok 1 - validation preserves caller JSON kinds on first touch
+# Subtest: diagnostic oracle rejects an expected pattern present only in the stack
+    ok 1 - known bad full trace contains the caller pattern
+    ok 2 - oracle selects the actual message
+    ok 3 - the same false cause cannot satisfy the diagnostic oracle
+    1..3
+ok 2 - diagnostic oracle rejects an expected pattern present only in the stack
+# Subtest: resolved alias identity and allowed root roles
+    ok 1 - input to owner storage accepts resolved alias equivalence
+    ok 2 - prepared storage to output contract accepts identity
+    ok 3 - prepared input to output contract accepts identity
+    ok 4 - copy independently enforces target role refuses
+    ok 5 - copy independently enforces target role names the cause in its diagnostic line
+    ok 6 - whole input target refuses
+    ok 7 - whole input target names the cause in its diagnostic line
+    ok 8 - scalar input target refuses
+    ok 9 - scalar input target names the cause in its diagnostic line
+    ok 10 - prepared scalar output target retains allowed role
+    ok 11 - prepared scope does not share parser types
+    1..11
+ok 3 - resolved alias identity and allowed root roles
+# Subtest: same packed width does not establish record identity
+    ok 1 - renamed has independently expected equal packed width
+    ok 2 - renamed copy identity refuses
+    ok 3 - renamed copy identity names the cause in its diagnostic line
+    ok 4 - reordered has independently expected equal packed width
+    ok 5 - reordered copy identity refuses
+    ok 6 - reordered copy identity names the cause in its diagnostic line
+    ok 7 - signed_data has independently expected equal packed width
+    ok 8 - signed_data copy identity refuses
+    ok 9 - signed_data copy identity names the cause in its diagnostic line
+    ok 10 - four has independently expected equal packed width
+    ok 11 - four copy identity refuses
+    ok 12 - four copy identity names the cause in its diagnostic line
+    ok 13 - two has independently expected equal packed width
+    ok 14 - two copy identity refuses
+    ok 15 - two copy identity names the cause in its diagnostic line
+    ok 16 - bit_kind has independently expected equal packed width
+    ok 17 - bit_kind copy identity refuses
+    ok 18 - bit_kind copy identity names the cause in its diagnostic line
+    ok 19 - explicit state-model difference refuses
+    ok 20 - explicit state-model difference names the cause in its diagnostic line
+    ok 21 - signed_data retains the established payload compatibility contract
+    ok 22 - four retains the established payload compatibility contract
+    ok 23 - two retains the established payload compatibility contract
+    ok 24 - bit_kind retains the established payload compatibility contract
+    ok 25 - independent nested packed width
+    ok 26 - independent flattened packed width
+    ok 27 - nested shape cannot be flattened for copy identity refuses
+    ok 28 - nested shape cannot be flattened for copy identity names the cause in its diagnostic line
+    ok 29 - nested list item order retains type identity refuses
+    ok 30 - nested list item order retains type identity names the cause in its diagnostic line
+    1..30
+ok 4 - same packed width does not establish record identity
+# Subtest: core scalar paths retain exact packed range and property facts
+    ok 1 - independent nested signed/four-state leaf range
+    ok 2 - independent nested list-item leaf range
+    ok 3 - leaf results do not share scope facts
+    ok 4 - packet refuses
+    ok 5 - packet names the cause in its diagnostic line
+    ok 6 - packet.body refuses
+    ok 7 - packet.body names the cause in its diagnostic line
+    ok 8 - packet.body.lanes refuses
+    ok 9 - packet.body.lanes names the cause in its diagnostic line
+    ok 10 - packet.unknown refuses
+    ok 11 - packet.unknown names the cause in its diagnostic line
+    ok 12 - packet.body.lanes[2] refuses
+    ok 13 - packet.body.lanes[2] names the cause in its diagnostic line
+    ok 14 - packet.body.count[3] refuses
+    ok 15 - packet.body.count[3] names the cause in its diagnostic line
+    ok 16 - packet..count refuses
+    ok 17 - packet..count names the cause in its diagnostic line
+    ok 18 - whole-value permission does not allow subaggregate writes refuses
+    ok 19 - whole-value permission does not allow subaggregate writes names the cause in its diagnostic line
+    1..19
+ok 5 - core scalar paths retain exact packed range and property facts
+# Subtest: nearest lexical declarations mask outer type and role facts
+    ok 1 - unresolved local masks the outer record type
+    ok 2 - nearest formal output is writable despite outer input name
+    ok 3 - formal type owns local path width
+    ok 4 - formal does not borrow an outer member refuses
+    ok 5 - formal does not borrow an outer member names the cause in its diagnostic line
+    ok 6 - scalar local retains its width and writable role
+    ok 7 - scalar local cannot borrow an outer record refuses
+    ok 8 - scalar local cannot borrow an outer record names the cause in its diagnostic line
+    ok 9 - scalar local slice retains core range and writable local role
+    ok 10 - scalar local bit index stays scalar
+    ok 11 - an unresolved type cannot erase a known input role refuses
+    ok 12 - an unresolved type cannot erase a known input role names the cause in its diagnostic line
+    ok 13 - unrelated enum roots stay with existing enum validation
+    ok 14 - unrelated package roots stay with package validation
+    1..14
+ok 6 - nearest lexical declarations mask outer type and role facts
+# Subtest: record copy gates preserve existing scalar and storage-only contracts
+    ok 1 - different storage-only types use the prior assignment contract
+    ok 2 - scalar ports introduce no record copy obligation
+    ok 3 - unrelated literal/expression handling remains with caller
+    ok 4 - equal/unequal scalar carrier is not a record copy refuses
+    ok 5 - equal/unequal scalar carrier is not a record copy names the cause in its diagnostic line
+    ok 6 - record target cannot treat an expression as a same-type root refuses
+    ok 7 - record target cannot treat an expression as a same-type root names the cause in its diagnostic line
+    ok 8 - existing list storage scalar leaves remain resolvable
+    ok 9 - root list is not a same-type record copy refuses
+    ok 10 - root list is not a same-type record copy names the cause in its diagnostic line
+    1..10
+ok 7 - record copy gates preserve existing scalar and storage-only contracts
+# Subtest: imported and local aliases with identical resolved records match
+    ok 1 - package spelling does not affect resolved identity
+    1..1
+ok 8 - imported and local aliases with identical resolved records match
+# Subtest: closed malformed facts fail before comparison or path traversal
+    ok 1 - unknown key refuses
+    ok 2 - unknown key names the cause in its diagnostic line
+    ok 3 - bad root width refuses
+    ok 4 - bad root width names the cause in its diagnostic line
+    ok 5 - bad scalar signed refuses
+    ok 6 - bad scalar signed names the cause in its diagnostic line
+    ok 7 - missing signed refuses
+    ok 8 - missing signed names the cause in its diagnostic line
+    ok 9 - aggregate signed refuses
+    ok 10 - aggregate signed names the cause in its diagnostic line
+    ok 11 - aggregate state refuses
+    ok 12 - aggregate state names the cause in its diagnostic line
+    ok 13 - bad state refuses
+    ok 14 - bad state names the cause in its diagnostic line
+    ok 15 - duplicate order refuses
+    ok 16 - duplicate order names the cause in its diagnostic line
+    ok 17 - unlisted member refuses
+    ok 18 - unlisted member names the cause in its diagnostic line
+    ok 19 - cyclic member refuses
+    ok 20 - cyclic member names the cause in its diagnostic line
+    ok 21 - deferred kind refuses
+    ok 22 - deferred kind names the cause in its diagnostic line
+    ok 23 - unknown role refuses
+    ok 24 - unknown role names the cause in its diagnostic line
+    ok 25 - unknown scope argument refuses
+    ok 26 - unknown scope argument names the cause in its diagnostic line
+    ok 27 - nonbinary whole-value permission refuses
+    ok 28 - nonbinary whole-value permission names the cause in its diagnostic line
+    ok 29 - contradictory copy descriptor refuses
+    ok 30 - contradictory copy descriptor names the cause in its diagnostic line
+    1..30
+ok 9 - closed malformed facts fail before comparison or path traversal
+# Subtest: output member writes and list-root source carriers remain closed
+    ok 1 - output frame source refuses
+    ok 2 - output frame source names the cause in its diagnostic line
+    ok 3 - input lanes source refuses
+    ok 4 - input lanes source names the cause in its diagnostic line
+    1..4
+ok 10 - output member writes and list-root source carriers remain closed
+1..10
+ok
+t/1303-isf-public-live-book-paths-audit.t ..
+ok 1 - summary exposes ISF overview plus child book chapters
+ok 2 - ISF overview is first book path
+ok 3
+ok 4 - --capability-manifest succeeds
+ok 5 - --capability-manifest keeps stderr clean
+ok 6 - --emit-capability-manifest succeeds
+ok 7 - --emit-capability-manifest keeps stderr clean
+ok 8 - direct ISF public-interface contract exposes live_document_paths as an array
+ok 9 - direct ISF public-interface contract advertises exactly the ISF mdBook chapter set from SUMMARY order
+ok 10 - direct ISF public-interface contract advertises support book path docs/book/src/14-feature-backlog.md
+ok 11 - direct ISF public-interface contract advertises support book path docs/book/src/90-reference-map.md
+ok 12 - in-process capability manifest exposes live_document_paths as an array
+ok 13 - in-process capability manifest advertises exactly the ISF mdBook chapter set from SUMMARY order
+ok 14 - in-process capability manifest advertises support book path docs/book/src/14-feature-backlog.md
+ok 15 - in-process capability manifest advertises support book path docs/book/src/90-reference-map.md
+ok 16 - CLI capability manifest exposes live_document_paths as an array
+ok 17 - CLI capability manifest advertises exactly the ISF mdBook chapter set from SUMMARY order
+ok 18 - CLI capability manifest advertises support book path docs/book/src/14-feature-backlog.md
+ok 19 - CLI capability manifest advertises support book path docs/book/src/90-reference-map.md
+ok 20 - CLI alias capability manifest exposes live_document_paths as an array
+ok 21 - CLI alias capability manifest advertises exactly the ISF mdBook chapter set from SUMMARY order
+ok 22 - CLI alias capability manifest advertises support book path docs/book/src/14-feature-backlog.md
+ok 23 - CLI alias capability manifest advertises support book path docs/book/src/90-reference-map.md
+1..23
+ok
+t/1305-isf-book-feature-matrix-audit.t .....
+ok 1 - ISF feature support matrix is reachable from the mdBook summary
+ok 2 - ISF composition chapter is reachable from the mdBook summary
+ok 3 - ISF feature backlog chapter is reachable from the mdBook summary
+ok 4 - feature backlog landing exposes the complete stable-topic set
+ok 5 - task tree documents book-facing feature backlog owner coverage
+ok 6 - task tree owner coverage lists feature backlog category Language Ergonomics
+ok 7 - task tree owner coverage lists feature backlog category Aggregate Types And Data
+ok 8 - task tree owner coverage lists feature backlog category Composition
+ok 9 - task tree owner coverage lists feature backlog category Intent Scheduling Format
+ok 10 - task tree owner coverage lists feature backlog category Backends And Validation
+ok 11 - task tree owner coverage lists feature backlog category Embedding And Public APIs
+ok 12 - task tree owner coverage makes future task tree required explicit
+ok 13 - feature backlog introduction makes future task tree required explicit
+ok 14 - task tree owner coverage makes not an implementation permission slip explicit
+ok 15 - feature backlog introduction makes not an implementation permission slip explicit
+ok 16 - ISF feature support matrix is advertised through live_document_paths
+ok 17 - matrix documents `.isf` CLI input as shipped
+ok 18 - matrix documents Public parser and scheduler facades as shipped bounded surface
+ok 19 - matrix documents Actor envelope as shipped
+ok 20 - matrix documents Actor report metadata and params as shipped bounded surface
+ok 21 - matrix documents Single-clock timing as shipped
+ok 22 - matrix documents Multi-clock domains as shipped bounded surface
+ok 23 - matrix documents Acknowledged event CDC as shipped bounded surface
+ok 24 - matrix documents Interface ports as shipped
+ok 25 - matrix documents Actor-owned scalar storage as shipped
+ok 26 - matrix documents Actor-owned banks as shipped bounded surface
+ok 27 - matrix documents Type aliases and package imports as shipped bounded surface
+ok 28 - matrix documents Packed record actor inputs as shipped bounded surface
+ok 29 - matrix documents Enum member values as shipped bounded surface
+ok 30 - matrix documents Aggregate scalar leaves as shipped bounded surface
+ok 31 - matrix documents Transaction entry as shipped
+ok 32 - matrix documents Transaction ports and activation bindings as shipped bounded surface
+ok 33 - matrix documents Transaction assignments as shipped
+ok 34 - matrix documents Runtime expression divisor safety as shipped bounded surface
+ok 35 - matrix documents Named and inline drives as shipped
+ok 36 - matrix documents Await and latency as shipped
+ok 37 - matrix documents Static and dynamic waits as shipped bounded surface
+ok 38 - matrix documents Transaction control flow as shipped bounded surface
+ok 39 - matrix documents Transaction stages as shipped bounded surface
+ok 40 - matrix documents Temporal contracts as shipped bounded surface
+ok 41 - matrix documents Data manipulation as shipped bounded surface
+ok 42 - matrix documents Rules and trigger fan-in as shipped
+ok 43 - matrix documents Rule conflicts and priorities as shipped bounded surface
+ok 44 - matrix documents Resources as shipped bounded surface
+ok 45 - matrix documents Blocking child activation as shipped bounded surface
+ok 46 - matrix documents Spawned generated children as shipped bounded surface
+ok 47 - matrix documents Reusable ISF libraries as shipped bounded surface
+ok 48 - matrix documents Schedule reports as shipped bounded surface
+ok 49 - matrix documents Schedule report schema and storage roles as shipped bounded surface
+ok 50 - matrix documents Diagnostics and downstream issue reporting as shipped
+ok 51 - matrix keeps representative example marker (clock-domains
+ok 52 - matrix keeps representative example marker ./bin/fsmgen --strict isf/apb_requester.isf
+ok 53 - matrix keeps representative example marker (crossings
+ok 54 - matrix keeps representative example marker (stage wait_ready
+ok 55 - matrix keeps representative example marker (monitor (within
+ok 56 - matrix keeps representative example marker (transaction read_word
+ok 57 - matrix keeps representative example marker (bind
+ok 58 - matrix keeps representative example marker transaction_port_bindings[]
+ok 59 - matrix keeps representative example marker (repeat count
+ok 60 - matrix keeps representative example marker (types
+ok 61 - matrix keeps representative example marker (storage
+ok 62 - matrix keeps representative example marker (resources
+ok 63 - matrix keeps representative example marker (spawn worker as w0
+ok 64 - matrix keeps representative example marker (imports
+ok 65 - matrix keeps representative example marker --emit-schedule-json
+ok 66 - matrix keeps representative example marker --strict --outdir .artifacts/ial1/isf-build
+ok 67 - matrix keeps representative example marker I2C-like fixture
+ok 68 - matrix keeps representative example marker burst-reader fixture
+ok 69 - matrix keeps representative example marker UART-like fixture
+ok 70 - matrix keeps representative example marker phase fixture
+ok 71 - matrix keeps representative example marker switch fixture
+ok 72 - matrix keeps representative example marker when fixture
+ok 73 - matrix keeps representative example marker generated-composition fixture
+ok 74 - matrix keeps representative example marker rule/resource fixture
+ok 75 - matrix keeps representative example marker stage fixture
+ok 76 - matrix keeps representative example marker FIFO datapath fixture
+ok 77 - matrix keeps representative example marker FIFO controller fixture
+ok 78 - matrix keeps representative example marker FIFO library fixture
+ok 79 - matrix keeps representative example marker ATL temporary trigger-batch fixture
+ok 80 - matrix keeps representative example marker same-source/same-sink scalar or exact-width vector generated-child actor-to-actor routes are shipped through that two-child top
+ok 81 - matrix keeps representative example marker one exact-width vector top-level input-pin to resolved-child input route
+ok 82 - matrix keeps representative example marker same-child vector multi-route subset
+ok 83 - matrix keeps representative example marker its own exact matching top-input/child-input width
+ok 84 - matrix keeps representative example marker vector_pin_to_actor_handoff
+ok 85 - matrix keeps representative example marker top_level_input_pin_resolved_child_endpoint_exact_width
+ok 86 - matrix keeps representative example marker one exact-width vector resolved-child output to top-level output route
+ok 87 - matrix keeps representative example marker vector same-child pin-egress multi-route extension
+ok 88 - matrix keeps representative example marker exact matching child-output/top-output width
+ok 89 - matrix keeps representative example marker vector_actor_to_pin_handoff
+ok 90 - matrix keeps representative example marker top_level_output_pin_resolved_child_endpoint_exact_width
+ok 91 - matrix keeps representative example marker actor-to-actor route between two resolved children through the generated ATL
+ok 92 - matrix keeps representative example marker one named drive-call cycle
+ok 93 - matrix keeps representative example marker Generated-child actor-to-actor and pin route support is intentionally
+ok 94 - matrix keeps representative example marker generated handoffs, and one named
+ok 95 - matrix keeps representative example marker route drive unparameterized
+ok 96 - matrix keeps representative example marker route drive call remains
+ok 97 - matrix keeps representative example marker argument-free: `(drive
+ok 98 - matrix keeps representative example marker route endpoint-expression hardening
+ok 99 - matrix keeps representative example marker (writer.payload (+ reader.payload 1))
+ok 100 - matrix keeps representative example marker ((+ writer.payload 1) reader.payload)
+ok 101 - matrix keeps representative example marker source-order independent
+ok 102 - matrix keeps representative example marker ((out) 1)
+ok 103 - matrix keeps representative example marker placing the named `forward_payload` route drive before
+ok 104 - matrix keeps representative example marker ./bin/fsmgen -l sv isf/apb_requester.isf
+ok 105 - matrix keeps representative example marker "schema_version": 1
+ok 106 - matrix keeps representative example marker "actor_params"
+ok 107 - matrix keeps representative example marker "actor_phases"
+ok 108 - matrix keeps representative example marker dynamic_wait_counter
+ok 109 - matrix keeps representative example marker consecutive runtime waits
+ok 110 - matrix keeps representative example marker bank access predecessors
+ok 111 - matrix keeps representative example marker sample-preserving zero-count clones
+ok 112 - matrix keeps representative example marker independent scalar setters
+ok 113 - matrix keeps representative example marker independent shifts
+ok 114 - matrix keeps representative example marker independent assemble states
+ok 115 - matrix keeps representative example marker independent extract states
+ok 116 - matrix keeps representative example marker independent bank loads
+ok 117 - matrix keeps representative example marker independent bank stores
+ok 118 - matrix keeps representative example marker top-level await_all/await_any sync states
+ok 119 - matrix keeps representative example marker top-level spawn states
+ok 120 - matrix keeps representative example marker top-level transaction phase states
+ok 121 - matrix keeps representative example marker top-level ready/valid stages
+ok 122 - matrix keeps representative example marker top-level monitor arm states
+ok 123 - matrix keeps representative example marker loop decision states
+ok 124 - matrix keeps representative example marker top-level repeat-body local blocking do
+ok 125 - matrix keeps representative example marker plain local `while -> when -> repeat -> do`
+ok 126 - matrix keeps representative example marker documented top-level, top-level repeat, top-level branch/loop, loop-contained repeat, deeper branch-contained repeat, and top-level `when`/`switch` nested-repeat contexts
+ok 127 - matrix keeps representative example marker same-body proof rule owns the child lifetime
+ok 128 - matrix keeps representative example marker generated instances must have deterministic static top wiring
+ok 129 - matrix keeps representative example marker every pending generated-spawn done set must be observed only by `await_any` and drained by a later exact same-body `await_all`
+ok 130 - matrix keeps representative example marker Loop-contained local-do fanout has no public child-count cap once exact-set proofs hold
+ok 131 - matrix keeps representative example marker Repeat-body activation matrix note: the shipped nested-repeat activation shapes under top-level `when` and `switch` branches are described by construction
+ok 132 - matrix keeps representative example marker The accepted activation kinds are local `do`, generated-child `do`, generated `do` with static `(params ...)`
+ok 133 - matrix keeps representative example marker generated `do` with `(bind ...)` handoffs
+ok 134 - matrix keeps representative example marker optional bind handoffs plus same-domain metadata
+ok 135 - matrix keeps representative example marker a blocking `do` must observe its own fresh done handoff
+ok 136 - matrix keeps representative example marker declared same-domain metadata records ownership without adding CDC
+ok 137 - matrix keeps representative example marker observations before the `do`, post-`do` observations, and second post-spawn observations
+ok 138 - matrix keeps representative example marker an accepted blocking `do` may run while generated spawns are already pending
+ok 139 - matrix keeps representative example marker may be followed by one or more later generated spawns before the final drain
+ok 140 - matrix keeps representative example marker The documented top-level `when` and `switch` branch paths mirror each other
+ok 141 - matrix keeps representative example marker Spawned generated children
+ok 142 - matrix keeps representative example marker (spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])
+ok 143 - matrix keeps representative example marker same-body drain rule owns the generated-child lifetime
+ok 144 - matrix keeps representative example marker samples before or after spawn before same-body sync
+ok 145 - matrix keeps representative example marker samples before or after repeat-body do before the repeat check
+ok 146 - matrix keeps representative example marker multi-pending repeat-body await_any with mandatory same-body await_all drain
+ok 147 - matrix keeps representative example marker actor parameter wait count
+ok 148 - matrix keeps representative example marker (/ numerator 0)
+ok 149 - matrix keeps representative example marker (/ numerator ZERO)
+ok 150 - matrix keeps representative example marker exactly one missing part width
+ok 151 - matrix keeps representative example marker exactly one missing destination field width
+ok 152 - matrix keeps representative example marker schedule_report_full_schema_stable
+ok 153 - matrix keeps representative example marker ./bin/fsmgen-issue-bundle
+ok 154 - matrix keeps representative example marker --issue-id sf-0001
+ok 155 - matrix keeps representative example marker --failure-class unknown
+ok 156 - matrix keeps representative example marker commands.sh
+ok 157 - matrix keeps explicit non-claim: Multi-bit CDC payloads
+ok 158 - matrix keeps explicit non-claim: Generated or spawned nested activation
+ok 159 - matrix keeps explicit non-claim: DEEPER-nested cross-domain
+ok 160 - matrix keeps explicit non-claim: Dynamic division/modulo nonzero proof is not shipped
+ok 161 - matrix keeps explicit non-claim: Enum members are not writable targets
+ok 162 - matrix keeps explicit non-claim: Record output member writes
+ok 163 - matrix keeps explicit non-claim: root-list interface ports
+ok 164 - matrix keeps explicit non-claim: Backlog resource kinds
+ok 165 - matrix keeps explicit non-claim: Actor-level phase and stage metadata is report-only
+ok 166 - matrix keeps explicit non-claim: Direct `(on ...)` activation-site `(params ...)`
+ok 167 - matrix keeps explicit non-claim: Rule-trigger output bindings
+ok 168 - matrix keeps explicit non-claim: snapshot-vs-live binding timing selection
+ok 169 - matrix keeps explicit non-claim: Nested stages
+ok 170 - matrix keeps explicit non-claim: Temporal contracts beyond the top-level bounded eventual subset
+ok 171 - matrix keeps explicit non-claim: remapping or reuse
+ok 172 - matrix keeps explicit non-claim: parameterized route drive definitions
+ok 173 - matrix keeps explicit non-claim: route drive-call actual arguments
+ok 174 - matrix keeps explicit non-claim: Missing same-body drains, cross-domain activation without an explicit crossing, deeper branch/loop nesting, implicit CDC, dynamic generated-child specialization, and broader outstanding-child lifetime semantics remain fail-closed
+ok 175 - matrix keeps explicit non-claim: Missing drains, parent-body sync after repeat exit, cross-domain `spawn`, dynamic per-iteration specialization, implicit CDC, and broader generated-child lifetime semantics remain fail-closed
+ok 176 - matrix keeps explicit non-claim: Raw parser actor hashes
+ok 177 - matrix keeps explicit non-claim: VHDL is recognized as a target family
+ok 178 - matrix no longer treats all actor-to-actor generated-child routes as backlog
+ok 179 - matrix no longer claims positive multi-child ATL top scheduling remains backlog
+ok 180 - composition chapter no longer says the reserved actor-to-actor route shape now fails closed as a whole
+ok 181 - composition chapter no longer uses stale reserved-route fail-closed wording
+ok 182 - feature backlog no longer says the reserved actor-to-actor route shape now fails closed as a whole
+ok 183 - feature backlog no longer uses stale reserved-route fail-closed wording
+ok 184 - downstream handoff no longer says the reserved actor-to-actor route shape now fails closed as a whole
+ok 185 - downstream handoff no longer uses stale reserved-route fail-closed wording
+ok 186 - ATL design proposal no longer says the reserved actor-to-actor route shape now fails closed as a whole
+ok 187 - ATL design proposal no longer uses stale reserved-route fail-closed wording
+ok 188 - ATL design proposal no longer uses blanket generated-child actor-to-actor route deferral for one-child pin routes
+ok 189 - composition chapter states selected generated-child actor-to-actor route is shipped narrowly
+ok 190 - downstream handoff states selected generated-child actor-to-actor route is shipped narrowly
+ok 191 - feature backlog states selected generated-child actor-to-actor route is shipped narrowly
+ok 192 - ATL design proposal distinguishes one-child pin-ingress route scope from actor-to-actor routing
+ok 193 - ATL design proposal distinguishes one-child pin-egress route scope from actor-to-actor routing
+ok 194 - ATL design proposal states the selected generated-child actor-to-actor route is shipped
+ok 195 - ATL design proposal keeps broader generated-child route features deferred
+ok 196 - composition chapter keeps a dedicated ATL actor-network section
+ok 197 - ATL composition section keeps concept marker: \#\#\# Actor-As-Network Boundary And Direct Instances
+ok 198 - ATL composition section keeps concept marker: \#\#\# Drive-Body Data Movement
+ok 199 - ATL composition section keeps concept marker: \#\#\# Trigger And Event Pulses
+ok 200 - ATL composition section keeps concept marker: \#\#\# Static Groups Versus Task-Scoped Associations
+ok 201 - ATL composition section keeps concept marker: \#\#\# Generated-Child Top Data Routes
+ok 202 - ATL composition section keeps concept marker: The enclosing actor is the network boundary
+ok 203 - ATL composition section keeps concept marker: rather than a `(network ...)` section
+ok 204 - ATL composition section keeps concept marker: drive-body pair shape in `(sink source)` order
+ok 205 - ATL composition section keeps concept marker: Events are one-cycle control
+ok 206 - ATL composition section keeps concept marker: pulses with no payloads in ATL v0
+ok 207 - ATL composition section keeps concept marker: static review metadata, not a permanent runtime association
+ok 208 - ATL composition section keeps concept marker: lifetime `task_scoped`
+ok 209 - ATL composition section keeps concept marker: These one-child pin-ingress routes do not include actor-to-actor
+ok 210 - ATL composition section keeps concept marker: This one-child pin-egress route does not include actor-to-actor
+ok 211 - ATL composition section keeps concept marker: The selected generated-child actor-to-actor data-route shape across two
+ok 212 - ATL composition section keeps concept marker: generated handoff
+ok 213 - ATL composition section keeps concept marker: route mux/storage
+ok 214 - ATL composition section keeps concept marker: fan-in/fan-out
+ok 215 - ATL composition section keeps concept marker: ready/backpressure
+ok 216 - ATL composition section keeps concept marker: payload protocols
+ok 217 - ATL composition section keeps concept marker: recursive actor networks
+ok 218 - ATL composition section keeps concept marker: permanent actor grouping
+ok 219 - downstream handoff keeps a dedicated ATL actor-network section
+ok 220 - downstream ATL section keeps concept marker: \#\#\# 12.5.1. Actor-As-Network Boundary And Direct Instances
+ok 221 - downstream ATL section keeps concept marker: \#\#\# 12.5.2. Drive-Body Data Movement And Endpoint Vocabulary
+ok 222 - downstream ATL section keeps concept marker: \#\#\# 12.5.3. Static Groups Versus Task-Scoped Associations
+ok 223 - downstream ATL section keeps concept marker: \#\#\# 12.5.4. Trigger And Event Pulses
+ok 224 - downstream ATL section keeps concept marker: \#\#\# 12.5.5. Generated-Child Route Terms And Boundaries
+ok 225 - downstream ATL section keeps concept marker: \#\#\# 12.5.6. Generated Child Artifacts And Top Data Routes
+ok 226 - downstream ATL section keeps concept marker: The enclosing actor is the network boundary
+ok 227 - downstream ATL section keeps concept marker: static ATL declarations in `(network ...)`
+ok 228 - downstream ATL section keeps concept marker: drive body pair stays `(sink source)`
+ok 229 - downstream ATL section keeps concept marker: `connect`, `transfer`, and `move` are not public ATL v0 movement clauses
+ok 230 - downstream ATL section keeps concept marker: scheduling: "metadata_only"
+ok 231 - downstream ATL section keeps concept marker: lifetime: "task_scoped"
+ok 232 - downstream ATL section keeps concept marker: events are one-cycle control pulses
+ok 233 - downstream ATL section keeps concept marker: one-cycle parent output named `actor_transaction_start`
+ok 234 - downstream ATL section keeps concept marker: Route lifetime is one named drive-call cycle
+ok 235 - downstream ATL section keeps concept marker: Generated handoffs are deterministic
+ok 236 - downstream ATL section keeps concept marker: Handoff remapping is not shipped
+ok 237 - downstream ATL section keeps concept marker: Route muxing and route storage are not shipped
+ok 238 - downstream ATL section keeps concept marker: Fan-in and fan-out are not shipped
+ok 239 - downstream ATL section keeps concept marker: Ready/backpressure is not shipped
+ok 240 - downstream ATL section keeps concept marker: Payload protocols are not shipped
+ok 241 - downstream ATL section keeps concept marker: Route endpoint expressions are not shipped
+ok 242 - downstream ATL section keeps concept marker: sink expression such as `(+ writer.payload 1)`
+ok 243 - downstream ATL section keeps concept marker: source-order independent
+ok 244 - downstream ATL section keeps concept marker: ((out) 1)
+ok 245 - downstream ATL section keeps concept marker: accepted actor-to-actor route is also source-order independent
+ok 246 - downstream ATL section keeps concept marker: exact-width vector two-child actor-to-actor route set
+ok 247 - downstream ATL section keeps concept marker: broader actor-to-actor generated-child
+ok 248 - composition chapter keeps a dedicated generated-child route terms section
+ok 249 - generated-child route terms section keeps marker: \#\#\#\#\# Route Lifetime And Value Boundary
+ok 250 - generated-child route terms section keeps marker: \#\#\#\#\# Generated Handoffs
+ok 251 - generated-child route terms section keeps marker: \#\#\#\#\# Handoff Remapping
+ok 252 - generated-child route terms section keeps marker: \#\#\#\#\# Diagnostic Ownership
+ok 253 - generated-child route terms section keeps marker: \#\#\#\#\# Route Muxing And Route Storage
+ok 254 - generated-child route terms section keeps marker: \#\#\#\#\# Fan-In And Fan-Out
+ok 255 - generated-child route terms section keeps marker: \#\#\#\#\# Ready/Backpressure
+ok 256 - generated-child route terms section keeps marker: \#\#\#\#\# Payload Protocols
+ok 257 - generated-child route terms section keeps marker: one child output reaches one child input
+ok 258 - generated-child route terms section keeps marker: named drive-call cycle
+ok 259 - generated-child route terms section keeps marker: Parameterized route drive definitions
+ok 260 - generated-child route terms section keeps marker: drive-call actual arguments
+ok 261 - generated-child route terms section keeps marker: Route endpoint expressions
+ok 262 - generated-child route terms section keeps marker: sink expression such as `(+ writer.payload 1)`
+ok 263 - generated-child route terms section keeps marker: source-order independent
+ok 264 - generated-child route terms section keeps marker: ((out) 1)
+ok 265 - generated-child route terms section keeps marker: accepted actor-to-actor route is source-order independent
+ok 266 - generated-child route terms section keeps marker: Generated handoffs are
+ok 267 - generated-child route terms section keeps marker: Handoff remapping would
+ok 268 - generated-child route terms section keeps marker: Route muxing would
+ok 269 - generated-child route terms section keeps marker: storage would hold route data across cycles
+ok 270 - generated-child route terms section keeps marker: Fan-in would
+ok 271 - generated-child route terms section keeps marker: Fan-out would
+ok 272 - generated-child route terms section keeps marker: Ready/backpressure would
+ok 273 - generated-child route terms section keeps marker: Payload protocols would
+ok 274 - generated-child route terms section keeps marker: Parser-owned diagnostics
+ok 275 - generated-child route terms section keeps marker: The lowerer repeats the safety check
+ok 276 - generated-child route terms section keeps marker: already registered generated
+ok 277 - generated-child route terms section keeps marker: transfers each value during its named drive-call cycle
+ok 278 - feature backlog does not present closed task trees as current owners
+ok 279 - feature backlog keeps owner-truth marker: Historical task-tree record:
+ok 280 - feature backlog keeps owner-truth marker: That tree is closed; future repeat-body child-activation behavior needs a new
+ok 281 - feature backlog keeps owner-truth marker: task-tree leaf before implementation.
+ok 282 - feature backlog keeps owner-truth marker: That tree is closed; future ATL behavior changes need a new task-tree leaf
+ok 283 - ATL design proposal does not present the closed ATL tree as a current owner
+ok 284 - ATL design proposal keeps the historical task-tree label
+ok 285 - ATL design proposal states future ATL changes need new task-tree leaves
+1..285
+ok
+All tests successful.
+Files=3, Tests=318,  3 wallclock secs ( 0.02 usr  0.01 sys +  1.73 cusr  0.50 csys =  2.26 CPU)
+Result: PASS

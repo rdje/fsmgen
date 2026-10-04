@@ -1,0 +1,115 @@
+Initial reader expected three actual cyclic helper copies without completing referent-path classification; reader RED1. Complete native referent paths below distinguish actual ancestor cycles from DAG sharing; corrected independent classification precedes any qualification.
+[
+  {
+    "index": 606,
+    "kind": "value-private",
+    "caller": [
+      "FSM::Support::ISFRecordPortValues",
+      "perl/FSM/Support/ISFRecordPortValues.pm",
+      29
+    ],
+    "reference_paths": [],
+    "copy_reference_paths": []
+  },
+  {
+    "index": 607,
+    "kind": "metadata-private",
+    "caller": [
+      "FSM::Support::ISFInterfacePortMetadata",
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm",
+      40
+    ],
+    "reference_paths": [],
+    "copy_reference_paths": []
+  },
+  {
+    "index": 608,
+    "kind": "metadata-private",
+    "caller": [
+      "FSM::Support::ISFInterfacePortMetadata",
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm",
+      142
+    ],
+    "reference_paths": [],
+    "copy_reference_paths": []
+  },
+  {
+    "index": 609,
+    "kind": "value-private",
+    "caller": [
+      "FSM::Support::ISFRecordPortValues",
+      "perl/FSM/Support/ISFRecordPortValues.pm",
+      29
+    ],
+    "reference_paths": [],
+    "copy_reference_paths": []
+  },
+  {
+    "index": 610,
+    "kind": "metadata-private",
+    "caller": [
+      "FSM::Support::ISFInterfacePortMetadata",
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm",
+      40
+    ],
+    "reference_paths": [],
+    "copy_reference_paths": []
+  },
+  {
+    "index": 611,
+    "kind": "metadata-private",
+    "caller": [
+      "FSM::Support::ISFInterfacePortMetadata",
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm",
+      142
+    ],
+    "reference_paths": [],
+    "copy_reference_paths": []
+  },
+  {
+    "index": 612,
+    "kind": "value-private",
+    "caller": [
+      "FSM::Support::ISFRecordPortValues",
+      "perl/FSM/Support/ISFRecordPortValues.pm",
+      29
+    ],
+    "reference_paths": [
+      [
+        "/type_spec/members/data",
+        "/type_spec",
+        true
+      ]
+    ],
+    "copy_reference_paths": [
+      [
+        "/type_spec/members/data",
+        "/type_spec",
+        true
+      ]
+    ]
+  },
+  {
+    "index": 613,
+    "kind": "metadata-private",
+    "caller": [
+      "FSM::Support::ISFInterfacePortMetadata",
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm",
+      40
+    ],
+    "reference_paths": [
+      [
+        "/inputs/0/type_spec/members/data",
+        "/inputs/0/type_spec",
+        true
+      ]
+    ],
+    "copy_reference_paths": [
+      [
+        "/inputs/0/type_spec/members/data",
+        "/inputs/0/type_spec",
+        true
+      ]
+    ]
+  }
+]
