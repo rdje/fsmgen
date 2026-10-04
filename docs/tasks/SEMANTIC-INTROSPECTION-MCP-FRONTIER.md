@@ -4386,11 +4386,34 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify finite copy and graph helpers with genuine topology and native controls.`
   Acceptance: `Run authenticated scalar-preserving helper bodies on complete declared plain HASH/ARRAY/primitive/share/cycle probes; independent full native joint graphs and source expectations must prove kinds, readonly, sharing, reference population and detachment. Genuine Storable/alias/sharing/cycle/source-mutation/native unsupported controls reject at intended helper assertions; preserve full raw outputs/errors. Do not infer structured clone cycle or universal native class support.`
+  Verification: `Active before candidate/probe/source/artifact changes. Complete original input/contract slice is committed at0ea51c8d. Authenticate exact stricter plain snapshot adaptation; execute finite primitive/tree/sharing/cycle/native and genuine bad-provider controls with complete joint native/source graphs and independent topology/kind/readonly/detachment readers. Actual original17 inputs and hot repair remain later owners.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.1`
+  Status: `done`
+  Goal: `Capture finite candidate native probes and genuine bad-provider outcomes.`
+  Acceptance: `Capture exact five authenticated recipe bodies and strict plain snapshot transformation; all eight finite primitive/tree/share/cycle probes and four native-boundary assertions must execute. Actual Storable/correct-clone-then-alias/broken-sharing/cycle/input-kind/result-kind modes must reach declared permanent helper assertions with full native graphs/TAP/status/program identities. Commit observations only; independent topology/kind/readonly/detachment reader and final qualification remain .2/.3.`
+  Verification: `Observations only: docs/audits/record-value-copy-probes-20261004/scope.txt authenticates exact five recipe bodies and strict plain snapshot transformation; eight native primitive/tree/shared/hash-cycle/array-cycle cases plus four unsupported native assertions execute. Ordinary36 PASS. Genuine Storable kind loss, correct-clone-then-alias, broken sharing, cycle alias, input NUM-to-STRING and result NUM-to-STRING modes fail intended helper assertions at statuses1/1/2/3/1/1. Full native before/after/result/joint graphs, actual assertion operands, class/shape/identity/full raw errors/host and TAP/command/status/program records retain. Final15-member sealed capture checker PASS; public book Files2 Tests308/build PASS. Independent joint/source/model/topology/kind/readonly/detachment falsification and fresh durability replay remain missing and owned .2; full finite join .3. Unit grew beyond safe single slice; commit observations and resume independent reader from clean source boundary. No candidate/hot/production/native-universal/structured-cycle signoff.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Independently qualify complete finite candidate native probe graphs and controls.`
+  Acceptance: `Authenticate whole capture/source/recipe/host/command/status/TAP and raw native errors; independently reconstruct every joint graph/declared edge/target/reachable set and exact primitive/source expectations. Prove readonly, kinds, sharing, reference population and actual detachment for ordinary; prove exact genuine failures and full non-target conservation for six bad modes. Native class/shape/identity must retain per actual capture. Reexecute into fresh same-volume outputs without rerunning sealed producers in place or normalizing raw native causes/IDs.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.3`
+  Status: `pending`
+  Goal: `Join complete finite native helper probe qualification.`
+  Acceptance: `Join exact capture and independent reader owners with full ordinary/control/native/source/recipe records and actual reexecuted outcomes. Close only topology/native candidate lane after all finite checks and genuine authority controls pass; actual original17 inputs, candidate-parent join and hot repairs remain open. No unobserved/native-universal/structured-cycle support.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3`
   Status: `pending`
@@ -7144,3 +7167,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone($actor);' -- t/1986-isf-record-port-value-gates.t binds original Storable baseline introduction02827d840254d6cdbfa4020be7910bb7ae9ac4cb. Whole authenticated native copy records reproduce fifteen kind-changing test baselines despite legacy-green consumers. All original before inputs are trees; inferred sharing/cycle/native helper support would lack actual applicability controls. Exact existing T1960 source_copy/snapshot bodies locate finite native exception and the stricter T1986 boundary that must be independently qualified.
 - [x] **ADDRESSED (input contract verified)** — All seventeen whole original copy/source/field/native/semantic records and194 widths per boundary retain exact own models/callers/kinds and complete authored/source domains. Independent topology/full raw membership and recipe source-line/bytes/SHA reader passes. Genuine actual legacy-copy authority, omission, foreign semantic allocation and wrong named recipe each reach intended RED1. Complete22 source/thirty done-owner/five recipe bodies and final9-member sealed watcher authenticate. Bounded topology/native, actual-original-copy and candidate-join successors own every missing candidate leg before hot repair; no candidate or permanent assurance closure.
 - [x] **NO REGRESSION** — All tests successful; actual public book Files=2 Tests=308 and mdBook build PASS. No live production/test/helper/provider change; all previous whole source/native/field/model/product/control evidence remains immutable. Recent committed original pinned watcher reexecutes ordinary/all nine RED and every inherited native/source proof; this leaf reauthenticates that boundary. Exact current book transformation, fresh task/KM/containment/final claim census and staged doctrines/hooks precede commit. No generalized native/cyclic structured clone/HDL/full-CI/push signoff.
+
+## Acceptance Checklist — finite native probe observations only
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub source_value_copy' -- t/1960-isf-formal-reservation-coverage.t binds the authenticated plain-copy recipe source. Complete original test-copy inputs are trees and actual legacy copies change kinds, so sharing/cycle/native and bad-provider applicability must be executed rather than inferred. Exact old snapshot native exception is removed only for the stricter T1986 plain profile. Candidate helper and joint-graph truth remain unqualified until independent source/graph validation and fresh replay.
+- [x] **ADDRESSED (native observations captured)** — Actual ordinary36 assertions PASS across eight primitive/tree/share/cycle cases and four unsupported-native assertions. Six genuine Storable/correct-clone-then-alias/broken-sharing/cycle/source-kind/result-kind providers fail exact declared helper assertions with statuses1/1/2/3/1/1. Full native graphs, operands, class/shape/identity/raw errors and whole TAP/command/status/program records authenticate under final15-member sealed capture checker. Independent re-derivation/falsification of graph/source expectations and fresh durability reexecution explicitly remain missing, owned by .2 and final join .3; no helper qualification or permanent repair closure.
+- [x] **NO REGRESSION** — All tests successful; actual public book Files=2 Tests=308 and mdBook build PASS. Live production/T1986/guard sources and all prior source/native/field/model/product/control archives remain unchanged. Exact source transformation tightens only finite candidate snapshot profile; all raw native data and messages remain unnormalized. Fresh task/KM/containment/final claim census and staged doctrines/hooks precede observations-only commit. No actual-original17 candidate execution, hot consumer, native-universal, structured-cycle, HDL/full-CI/push signoff.

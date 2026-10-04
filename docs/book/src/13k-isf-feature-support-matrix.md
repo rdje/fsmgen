@@ -461,6 +461,11 @@ now binds every test-copy graph and field to its source and completed semantic o
 Actual Storable outputs lose primitive-kind information and reject as baseline authority.
 These original inputs are trees; sharing, cycles and native-reference boundaries need
 separate candidate probes before any permanent copy or consumer repair.
+The [finite native probe captures](../../../docs/audits/record-value-copy-probes-20261004/scope.txt)
+now retain ordinary primitive/tree/sharing/cycle observations and genuine bad-provider
+failures, including kind loss, aliasing and readonly violations. These captures remain
+unqualified until the independent joint-graph/source reader and fresh replay finish;
+permanent test-copy and consumer repairs remain open.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

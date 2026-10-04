@@ -1,0 +1,42 @@
+ok 1 - null copy preserves original kinds and sharing
+ok 2 - null copy preserves kinds and sharing
+ok 3 - null copy preserves reference population
+ok 4 - null copy is isolated from source
+ok 5 - number copy preserves original kinds and sharing
+ok 6 - number copy preserves kinds and sharing
+ok 7 - number copy preserves reference population
+ok 8 - number copy is isolated from source
+ok 9 - string copy preserves original kinds and sharing
+ok 10 - string copy preserves kinds and sharing
+ok 11 - string copy preserves reference population
+ok 12 - string copy is isolated from source
+ok 13 - empty-array copy preserves original kinds and sharing
+ok 14 - empty-array copy preserves kinds and sharing
+ok 15 - empty-array copy preserves reference population
+ok 16 - empty-array copy is isolated from source
+not ok 17 - tree copy preserves original kinds and sharing
+ok 18 - tree copy preserves kinds and sharing
+ok 19 - tree copy preserves reference population
+ok 20 - tree copy is isolated from source
+ok 21 - shared copy preserves original kinds and sharing
+ok 22 - shared copy preserves kinds and sharing
+ok 23 - shared copy preserves reference population
+ok 24 - shared copy is isolated from source
+ok 25 - hash-cycle copy preserves original kinds and sharing
+ok 26 - hash-cycle copy preserves kinds and sharing
+ok 27 - hash-cycle copy preserves reference population
+ok 28 - hash-cycle copy is isolated from source
+ok 29 - array-cycle copy preserves original kinds and sharing
+ok 30 - array-cycle copy preserves kinds and sharing
+ok 31 - array-cycle copy preserves reference population
+ok 32 - array-cycle copy is isolated from source
+ok 33 - CoverageCauseSentinel copy refuses unsupported native reference
+ok 34 - CoverageCauseSentinel snapshot refuses unsupported native reference
+ok 35 - CopyProbeNativeSentinel copy refuses unsupported native reference
+ok 36 - CopyProbeNativeSentinel snapshot refuses unsupported native reference
+1..36
+#   Failed test 'tree copy preserves original kinds and sharing'
+#   at docs/audits/record-value-copy-probes-20261004/probe.pl line 68.
+#          got: '["hash",{"children":["array",[null,["hash",{"width":7}]]],"number":"1","string":"1"}]'
+#     expected: '["hash",{"children":["array",[null,["hash",{"width":7}]]],"number":1,"string":"1"}]'
+# Looks like you failed 1 test of 36.

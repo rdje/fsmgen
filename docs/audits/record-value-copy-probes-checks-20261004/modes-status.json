@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-copy-probes-20261004/run_modes.py"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

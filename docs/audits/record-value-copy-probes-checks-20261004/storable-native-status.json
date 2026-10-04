@@ -1,0 +1,21 @@
+{
+  "command": [
+    "perl",
+    "docs/audits/record-value-copy-probes-20261004/probe.pl",
+    "storable",
+    "docs/audits/record-value-copy-probes-20261004/storable.json"
+  ],
+  "output": "ok 1 - null copy preserves original kinds and sharing\nok 2 - null copy preserves kinds and sharing\nok 3 - null copy preserves reference population\nok 4 - null copy is isolated from source\nok 5 - number copy preserves original kinds and sharing\nok 6 - number copy preserves kinds and sharing\nok 7 - number copy preserves reference population\nok 8 - number copy is isolated from source\nok 9 - string copy preserves original kinds and sharing\nok 10 - string copy preserves kinds and sharing\nok 11 - string copy preserves reference population\nok 12 - string copy is isolated from source\nok 13 - empty-array copy preserves original kinds and sharing\nok 14 - empty-array copy preserves kinds and sharing\nok 15 - empty-array copy preserves reference population\nok 16 - empty-array copy is isolated from source\nok 17 - tree copy preserves original kinds and sharing\nnot ok 18 - tree copy preserves kinds and sharing\nok 19 - tree copy preserves reference population\nok 20 - tree copy is isolated from source\nok 21 - shared copy preserves original kinds and sharing\nok 22 - shared copy preserves kinds and sharing\nok 23 - shared copy preserves reference population\nok 24 - shared copy is isolated from source\nok 25 - hash-cycle copy preserves original kinds and sharing\nok 26 - hash-cycle copy preserves kinds and sharing\nok 27 - hash-cycle copy preserves reference population\nok 28 - hash-cycle copy is isolated from source\nok 29 - array-cycle copy preserves original kinds and sharing\nok 30 - array-cycle copy preserves kinds and sharing\nok 31 - array-cycle copy preserves reference population\nok 32 - array-cycle copy is isolated from source\nok 33 - CoverageCauseSentinel copy refuses unsupported native reference\nok 34 - CoverageCauseSentinel snapshot refuses unsupported native reference\nok 35 - CopyProbeNativeSentinel copy refuses unsupported native reference\nok 36 - CopyProbeNativeSentinel snapshot refuses unsupported native reference\n1..36\n#   Failed test 'tree copy preserves kinds and sharing'\n#   at docs/audits/record-value-copy-probes-20261004/probe.pl line 68.\n#          got: '[\"hash\",{\"children\":[\"array\",[null,[\"hash\",{\"width\":7}]]],\"number\":\"1\",\"string\":\"1\"}]'\n#     expected: '[\"hash\",{\"children\":[\"array\",[null,[\"hash\",{\"width\":7}]]],\"number\":1,\"string\":\"1\"}]'\n# Looks like you failed 1 test of 36.\n",
+  "programs": {
+    "candidate.pl": {
+      "bytes": 2749,
+      "sha256": "e10ef526c01fc88fedbaaa8bd7053dbc9cbd5ae10317c753924386d0608eae16"
+    },
+    "probe.pl": {
+      "bytes": 5316,
+      "sha256": "317e02bd5fab02905dc169120630eff058ba3fa451262f836a465fcd08ba6660"
+    }
+  },
+  "status": 1,
+  "working_directory": "."
+}

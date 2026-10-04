@@ -1,0 +1,9 @@
+{
+  "command": [
+    "mdbook",
+    "build",
+    "docs/book"
+  ],
+  "working_directory": ".",
+  "status": 0
+}
