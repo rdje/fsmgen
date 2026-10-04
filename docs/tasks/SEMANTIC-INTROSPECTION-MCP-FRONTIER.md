@@ -4221,11 +4221,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify every original T1986 metadata/range/clone/identity/payload product.`
   Acceptance: `Bind every original capture, snapshot, range, recursive structured-clone, strict identity and payload-compatibility product and caller graph to independent complete source/layout/field and published operation contracts. Preserve all recursive member/list/state/signed/source kinds and actual private numerical rebuilding/cycle boundaries. Whole product/control membership and competing private/final authority controls reject.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `All six capture/snapshot/range/structured-clone/identity-payload/core-join children done. Every original whole core product and exact own source/model/native/private-stage/field/context allocation qualifies with complete dated child ordinary/RED/native reexecution. Sealed complete join and five controls pass; only core product parent closes before all actor/API/semantic/native consumer/cause assurance.`
+  Commit: `this slice`
 
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.6`
@@ -4324,11 +4324,11 @@ For FSMGen, the analogs are:
   Commit: `this complete identity/payload qualification work-unit commit (derive exact SHA with git log --grep)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Join complete original T1986 core API product semantics.`
   Acceptance: `Join exact completed capture/snapshot/range/clone/identity-payload owners, every original whole core API/native/source/model/private-stage and field record. Reexecute ordinary semantic proofs and rejecting controls in exact document/source contexts; close only core product parent before all-product join/native assurance.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete original9153 core native/source/model/product/context join,447 metadata-private clone/full-field relations,220 capture handoffs and431 final range stages pass. Five reached allocation/role/primitive/private controls reject RED1; all five child ordinary/all26 direct RED and inherited native/source/model proofs reexecute exact dated contexts. Preserve first status-only receipt adapter KeyError with full programs/output/status; exact known schema correction passes final sealed watcher. Scope: docs/audits/record-value-core-join-20261004/scope.txt; actual book Files2 Tests308/build PASS. Close only core join/product parent; whole actor/API join is next.`
+  Commit: `this slice`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.4`
@@ -7047,3 +7047,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub declared_type_conflicts' -- perl/FSM/Composition/InterfacePortBuilder.pm binds the public canonical comparison at45023cd3a4e6bbbc408cb3ad610edd7e25a5d37e. Original T1986 native14 copy110 comparisons and four direct payload138 calls have equal packed width8; width alone cannot establish recursive type identity. Published payload relation deliberately accepts sign/state/unit-kind differences that strict copies reject. Actual different source/copy parents can yield identical complete arguments, so value equality alone cannot qualify allocation.
 - [x] **ADDRESSED (verified)** — Whole source/private preparation recipes and independent complete property/path/read-location/ordered-shape witnesses qualify every14 strict/four payload argument/product/caller/kind/context:five equivalent/nine conflicting strict pairs/four narrower accepts, unchanged before/after graphs. Five reached omission/width-only/strict-payload/identical-argument parent/raw-kind RED1 controls reject. Eight actual public same-width payload source controls distinguish four property accepts from four shape/order false results with whole caller/input/output/kinds unchanged, and reexecute byte exactly. Full dated clone ordinary/five RED plus inherited native/root/tree families and sealed current source/owner/model/control/reexecution watcher pass.
 - [x] **NO REGRESSION** — All tests successful; actual public book Files=2 Tests=308 and mdBook build PASS. Complete current21 sources/docs/eleven completed owners/full immutable native/source/private/copy/clone/model/control records remain watched; production/test/providers unchanged. Only exact invoked main/authenticated native graph module Python File-frame filenames qualify, with inherited JSON encoding/full host-native cause/consumer gaps explicit. Bounded canonical fact, fresh task/KM/exact containment/final claim census and staged doctrines/hooks precede commit; whole core/API/helper assurance remains owned, with no broad generic/malformed signature or HDL claim.
+
+## Acceptance Checklist — complete original core API product join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub capture_interface_port_metadata' -- perl/FSM/Support/ISFInterfacePortMetadata.pm binds the detached source contract at7d56bf85736f75d0ff12a52cec0b1639ae668a5c. Completed capture/snapshot/range/clone/identity products require whole original membership and exact model/private/field allocation before core closure. Actually identical whole native calls belong to distinct source models; value/membership conservation cannot establish allocation. First new replay adapter assumes command/cwd fields in newer status-only ordinary receipts and raises KeyError command after the child semantics pass; full first adapter/program/output/status retains unqualified.
+- [x] **ADDRESSED (verified)** — Whole completed source/native models join every9153 original core call,447 own metadata-private clone/full-field records,220 capture handoffs,431 final range stages and full recursive clone/identity paths. Separate raw population/role/product/kind/link reader passes; five actual omission/identical-native wrong-model/wrong-family/NUM-to-STRING/private-omission controls reach intended RED1. All five dated child ordinary/all26 direct RED and every inherited native/source/model family reexecute complete source/doc/full-own-runtime contexts. Exact known status-only schema correction retains sealed program/current command/full historical output checks; final sealed watcher passes. Initial inline containment selector rejects registry header with KeyError surface_id before writing; corrected header-aware selector produces exact task/book census. Final claim census follows resulting-tree measurements. Close only core join and core product parent.
+- [x] **NO REGRESSION** — All tests successful; actual public book Files=2 Tests=308 and mdBook build PASS. Complete current21 sources/docs/fourteen done owners/full immutable native/source/private/value/core/model/control archives retain unchanged; production/test/providers unchanged. Only exact invoked main/authenticated native graph module Python File-frame filenames qualify, with original encoded native errors and host-native full-cause gap explicit. Bounded canonical fact, fresh task/KM/exact containment/final claim census and staged doctrines/hooks precede commit; whole actor/API/semantic joins and permanent original consumer/native-cause assurance stay owned.

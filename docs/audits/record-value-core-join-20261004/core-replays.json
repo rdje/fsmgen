@@ -1,0 +1,3503 @@
+{
+  "binding_revision": "3b00150fd1d4899144b18aac1daf930616a2b744",
+  "families": [
+    {
+      "family": "captures",
+      "receipts": [
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-captures-20261004/verify.py"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/captures"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149049,
+              "sha256": "006f78eb5222205524ac4d7dd3b7cb1a25b5fb7750223d7e7b68597c2db64b2a"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "c5ed186522e9b7f7232dbc1f7ae8f0157c58c922bae6ef60a39f4c5d58e53650"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "PASS all original227 metadata captures:220 complete source-directed numeric products/seven source-owned refusals, every227 detached stage/full field record, whole raw caller/source/kind boundaries and independent reverse packed layouts. Snapshot/core/native assurance remain separate.\n",
+          "programs": {
+            "docs/audits/record-value-captures-20261004/verify.py": {
+              "bytes": 14552,
+              "sha256": "2d423be181915c70d017bf3f6c1647391584c9ba231a28b831ac496ea65ef945"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 0,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/captures"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-captures-20261004/verify.py",
+            "--omit-product"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/captures"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149049,
+              "sha256": "006f78eb5222205524ac4d7dd3b7cb1a25b5fb7750223d7e7b68597c2db64b2a"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "c5ed186522e9b7f7232dbc1f7ae8f0157c58c922bae6ef60a39f4c5d58e53650"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-captures-20261004/verify.py\", line 147, in <module>\n    assert [row['index'] for row in rows] == [i for i, row in enumerate(native['api']) if row['kind'] == 'capture'], 'every original whole capture product membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every original whole capture product membership\n",
+          "programs": {
+            "docs/audits/record-value-captures-20261004/verify.py": {
+              "bytes": 14552,
+              "sha256": "2d423be181915c70d017bf3f6c1647391584c9ba231a28b831ac496ea65ef945"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/captures"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-captures-20261004/verify.py",
+            "--omit-stage"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/captures"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149049,
+              "sha256": "006f78eb5222205524ac4d7dd3b7cb1a25b5fb7750223d7e7b68597c2db64b2a"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "c5ed186522e9b7f7232dbc1f7ae8f0157c58c922bae6ef60a39f4c5d58e53650"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-captures-20261004/verify.py\", line 158, in <module>\n    assert len(stages) == 1 and exact(row['private'], stages[0]), 'own complete original capture-private stage membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: own complete original capture-private stage membership\n",
+          "programs": {
+            "docs/audits/record-value-captures-20261004/verify.py": {
+              "bytes": 14552,
+              "sha256": "2d423be181915c70d017bf3f6c1647391584c9ba231a28b831ac496ea65ef945"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/captures"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-captures-20261004/verify.py",
+            "--swap-layout"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/captures"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149049,
+              "sha256": "006f78eb5222205524ac4d7dd3b7cb1a25b5fb7750223d7e7b68597c2db64b2a"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "c5ed186522e9b7f7232dbc1f7ae8f0157c58c922bae6ef60a39f4c5d58e53650"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-captures-20261004/verify.py\", line 233, in <module>\n    assert exact(graph(product), model_product), 'independent complete source packed-field/numeric metadata projection'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent complete source packed-field/numeric metadata projection\n",
+          "programs": {
+            "docs/audits/record-value-captures-20261004/verify.py": {
+              "bytes": 14552,
+              "sha256": "2d423be181915c70d017bf3f6c1647391584c9ba231a28b831ac496ea65ef945"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/captures"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-captures-20261004/verify.py",
+            "--private-width"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/captures"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149049,
+              "sha256": "006f78eb5222205524ac4d7dd3b7cb1a25b5fb7750223d7e7b68597c2db64b2a"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "c5ed186522e9b7f7232dbc1f7ae8f0157c58c922bae6ef60a39f4c5d58e53650"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-captures-20261004/verify.py\", line 233, in <module>\n    assert exact(graph(product), model_product), 'independent complete source packed-field/numeric metadata projection'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent complete source packed-field/numeric metadata projection\n",
+          "programs": {
+            "docs/audits/record-value-captures-20261004/verify.py": {
+              "bytes": 14552,
+              "sha256": "2d423be181915c70d017bf3f6c1647391584c9ba231a28b831ac496ea65ef945"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/captures"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-captures-20261004/verify.py",
+            "--strict-value-authority"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/captures"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149049,
+              "sha256": "006f78eb5222205524ac4d7dd3b7cb1a25b5fb7750223d7e7b68597c2db64b2a"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "c5ed186522e9b7f7232dbc1f7ae8f0157c58c922bae6ef60a39f4c5d58e53650"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-captures-20261004/verify.py\", line 226, in <module>\n    assert error == row['expected_refusal'], 'independent metadata versus strict-value source refusal relation'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent metadata versus strict-value source refusal relation\n",
+          "programs": {
+            "docs/audits/record-value-captures-20261004/verify.py": {
+              "bytes": 14552,
+              "sha256": "2d423be181915c70d017bf3f6c1647391584c9ba231a28b831ac496ea65ef945"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/captures"
+        }
+      ],
+      "source_revision": "8ad89be8b96421a6d53cc524ab274fbe176eb721"
+    },
+    {
+      "family": "snapshots",
+      "receipts": [
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-snapshots-20261004/verify.py"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149780,
+              "sha256": "93c36248d32d6c8c85cb7c6b6bd66af5c37e316b205d8ea9a6803c6aa27d3fec"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3335,
+              "sha256": "00f26aa951150ffb83c57c7dfd4d9925968d657a95aef8e3f42e77d3e7104ce1"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "PASS every original220 snapshot/source-built capture/handoff/own private stage/full-field/native product. Complete closed ordered schemas, numeric widths/ranges/signed/state and raw callers retain. Later core APIs and native assurance remain separate.\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-snapshots-20261004/verify.py": {
+              "bytes": 12262,
+              "sha256": "0cc6559b732b26a4e9163aa300725865610c1472b4551f53e839256f44528256"
+            }
+          },
+          "status": 0,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-snapshots-20261004/verify.py",
+            "--omit-product"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149780,
+              "sha256": "93c36248d32d6c8c85cb7c6b6bd66af5c37e316b205d8ea9a6803c6aa27d3fec"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3335,
+              "sha256": "00f26aa951150ffb83c57c7dfd4d9925968d657a95aef8e3f42e77d3e7104ce1"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-snapshots-20261004/verify.py\", line 138, in <module>\n    assert [row['index'] for row in rows] == [i for i, row in enumerate(native['api']) if row['kind'] == 'snapshot'], 'every original whole snapshot product membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every original whole snapshot product membership\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-snapshots-20261004/verify.py": {
+              "bytes": 12262,
+              "sha256": "0cc6559b732b26a4e9163aa300725865610c1472b4551f53e839256f44528256"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-snapshots-20261004/verify.py",
+            "--omit-stage"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149780,
+              "sha256": "93c36248d32d6c8c85cb7c6b6bd66af5c37e316b205d8ea9a6803c6aa27d3fec"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3335,
+              "sha256": "00f26aa951150ffb83c57c7dfd4d9925968d657a95aef8e3f42e77d3e7104ce1"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-snapshots-20261004/verify.py\", line 170, in <module>\n    assert len(stages) == 1 and exact(stages[0], row['private']), 'every own whole original snapshot-private stage membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every own whole original snapshot-private stage membership\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-snapshots-20261004/verify.py": {
+              "bytes": 12262,
+              "sha256": "0cc6559b732b26a4e9163aa300725865610c1472b4551f53e839256f44528256"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-snapshots-20261004/verify.py",
+            "--wrong-role"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149780,
+              "sha256": "93c36248d32d6c8c85cb7c6b6bd66af5c37e316b205d8ea9a6803c6aa27d3fec"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3335,
+              "sha256": "00f26aa951150ffb83c57c7dfd4d9925968d657a95aef8e3f42e77d3e7104ce1"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-snapshots-20261004/verify.py\", line 188, in <module>\n    assert exact(graph(model), parent['expected_product']) and exact(row['expected_product'], parent['expected_product']), 'independent whole schema/source/private/final numeric snapshot product'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent whole schema/source/private/final numeric snapshot product\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-snapshots-20261004/verify.py": {
+              "bytes": 12262,
+              "sha256": "0cc6559b732b26a4e9163aa300725865610c1472b4551f53e839256f44528256"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-snapshots-20261004/verify.py",
+            "--private-numerics"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149780,
+              "sha256": "93c36248d32d6c8c85cb7c6b6bd66af5c37e316b205d8ea9a6803c6aa27d3fec"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3335,
+              "sha256": "00f26aa951150ffb83c57c7dfd4d9925968d657a95aef8e3f42e77d3e7104ce1"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-snapshots-20261004/verify.py\", line 188, in <module>\n    assert exact(graph(model), parent['expected_product']) and exact(row['expected_product'], parent['expected_product']), 'independent whole schema/source/private/final numeric snapshot product'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent whole schema/source/private/final numeric snapshot product\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-snapshots-20261004/verify.py": {
+              "bytes": 12262,
+              "sha256": "0cc6559b732b26a4e9163aa300725865610c1472b4551f53e839256f44528256"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-snapshots-20261004/verify.py",
+            "--swapped-capture"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 149780,
+              "sha256": "93c36248d32d6c8c85cb7c6b6bd66af5c37e316b205d8ea9a6803c6aa27d3fec"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3335,
+              "sha256": "00f26aa951150ffb83c57c7dfd4d9925968d657a95aef8e3f42e77d3e7104ce1"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-snapshots-20261004/verify.py\", line 153, in <module>\n    assert row['whole_capture_model'] == identity(parent), 'complete independently source-built capture model allocation'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete independently source-built capture model allocation\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-snapshots-20261004/verify.py": {
+              "bytes": 12262,
+              "sha256": "0cc6559b732b26a4e9163aa300725865610c1472b4551f53e839256f44528256"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/snapshots"
+        }
+      ],
+      "source_revision": "e439fe4e8309285ea7ebc4ec097be047a1001ba2"
+    },
+    {
+      "family": "ranges",
+      "receipts": [
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-ranges-20261004/verify.py"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/ranges"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 150795,
+              "sha256": "55350e090672f8aa8095745348c3f7ed68b333abb2efa9d43fcc931dfa9c4e94"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3329,
+              "sha256": "222e57ef1b7bed7875ff9f926dadcbeb8aee5ddde4c5e4f851f61c37eb9fb042"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "PASS all437 whole original source/private-type range products:431 successes and six returned failure maps; every431 own final type stage,417 metadata/20 value source-call roles and sole private sibling width-kind change retain. Original reference callers preserve. Later core/native assurance remains open.\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-ranges-20261004/verify.py": {
+              "bytes": 15939,
+              "sha256": "39fb3d8c6ab084be6df08e2265c2e93a201ba1a9c1118c9f51b39618538a2b1e"
+            }
+          },
+          "status": 0,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/ranges"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-ranges-20261004/verify.py",
+            "--omit-product"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/ranges"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 150795,
+              "sha256": "55350e090672f8aa8095745348c3f7ed68b333abb2efa9d43fcc931dfa9c4e94"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3329,
+              "sha256": "222e57ef1b7bed7875ff9f926dadcbeb8aee5ddde4c5e4f851f61c37eb9fb042"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-ranges-20261004/verify.py\", line 178, in <module>\n    assert [row['index'] for row in rows] == [i for i, row in enumerate(native['api']) if row['kind'] == 'range'], 'every whole original range call/source/product membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every whole original range call/source/product membership\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-ranges-20261004/verify.py": {
+              "bytes": 15939,
+              "sha256": "39fb3d8c6ab084be6df08e2265c2e93a201ba1a9c1118c9f51b39618538a2b1e"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/ranges"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-ranges-20261004/verify.py",
+            "--omit-stage"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/ranges"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 150795,
+              "sha256": "55350e090672f8aa8095745348c3f7ed68b333abb2efa9d43fcc931dfa9c4e94"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3329,
+              "sha256": "222e57ef1b7bed7875ff9f926dadcbeb8aee5ddde4c5e4f851f61c37eb9fb042"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-ranges-20261004/verify.py\", line 225, in <module>\n    assert stage is not None and exact(row['type_stage'], stage), 'every own complete range-final type stage membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every own complete range-final type stage membership\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-ranges-20261004/verify.py": {
+              "bytes": 15939,
+              "sha256": "39fb3d8c6ab084be6df08e2265c2e93a201ba1a9c1118c9f51b39618538a2b1e"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/ranges"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-ranges-20261004/verify.py",
+            "--swap-range"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/ranges"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 150795,
+              "sha256": "55350e090672f8aa8095745348c3f7ed68b333abb2efa9d43fcc931dfa9c4e94"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3329,
+              "sha256": "222e57ef1b7bed7875ff9f926dadcbeb8aee5ddde4c5e4f851f61c37eb9fb042"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-ranges-20261004/verify.py\", line 248, in <module>\n    assert exact(graph(expected), row['expected_product']), 'independent whole source interval/failure/private-type primitive product'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent whole source interval/failure/private-type primitive product\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-ranges-20261004/verify.py": {
+              "bytes": 15939,
+              "sha256": "39fb3d8c6ab084be6df08e2265c2e93a201ba1a9c1118c9f51b39618538a2b1e"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/ranges"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-ranges-20261004/verify.py",
+            "--wrong-refusal"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/ranges"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 150795,
+              "sha256": "55350e090672f8aa8095745348c3f7ed68b333abb2efa9d43fcc931dfa9c4e94"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3329,
+              "sha256": "222e57ef1b7bed7875ff9f926dadcbeb8aee5ddde4c5e4f851f61c37eb9fb042"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-ranges-20261004/verify.py\", line 248, in <module>\n    assert exact(graph(expected), row['expected_product']), 'independent whole source interval/failure/private-type primitive product'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent whole source interval/failure/private-type primitive product\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-ranges-20261004/verify.py": {
+              "bytes": 15939,
+              "sha256": "39fb3d8c6ab084be6df08e2265c2e93a201ba1a9c1118c9f51b39618538a2b1e"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/ranges"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-ranges-20261004/verify.py",
+            "--numeric-type"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/ranges"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 150795,
+              "sha256": "55350e090672f8aa8095745348c3f7ed68b333abb2efa9d43fcc931dfa9c4e94"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3329,
+              "sha256": "222e57ef1b7bed7875ff9f926dadcbeb8aee5ddde4c5e4f851f61c37eb9fb042"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-ranges-20261004/verify.py\", line 248, in <module>\n    assert exact(graph(expected), row['expected_product']), 'independent whole source interval/failure/private-type primitive product'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent whole source interval/failure/private-type primitive product\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-ranges-20261004/verify.py": {
+              "bytes": 15939,
+              "sha256": "39fb3d8c6ab084be6df08e2265c2e93a201ba1a9c1118c9f51b39618538a2b1e"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/ranges"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-ranges-20261004/verify.py",
+            "--erase-caller-change"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/ranges"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 150795,
+              "sha256": "55350e090672f8aa8095745348c3f7ed68b333abb2efa9d43fcc931dfa9c4e94"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3329,
+              "sha256": "222e57ef1b7bed7875ff9f926dadcbeb8aee5ddde4c5e4f851f61c37eb9fb042"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-ranges-20261004/verify.py\", line 211, in <module>\n    assert delta == [{'path': '/2/members/body/members/lanes/items/1/width', 'before': '2', 'after': 2, 'before_kind': 'str', 'after_kind': 'int'}], 'sole complete actual private sibling-width caller kind change'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: sole complete actual private sibling-width caller kind change\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-ranges-20261004/verify.py": {
+              "bytes": 15939,
+              "sha256": "39fb3d8c6ab084be6df08e2265c2e93a201ba1a9c1118c9f51b39618538a2b1e"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/ranges"
+        }
+      ],
+      "source_revision": "0c02f701e0e683e56a6c6aa64b446d56e281c6bf"
+    },
+    {
+      "family": "clone-join",
+      "receipts": [
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-clone-join-20261004/verify.py"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 155903,
+              "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "PASS complete original8251 clone native/source-tree/joint/referent join from1448 source roots, with exact whole record/source/caller/primitive-kind/parent/slot identity and full9283-call native conservation. Identical-record native permutation and genuine alias provider reject. Whole dated source-tree/native ordinary/RED proofs retain; only structured clone product parent closes before strict identity/payload/core/helper/consumer/cause assurance.\n",
+          "programs": {
+            "docs/audits/record-value-clone-join-20261004/verify.py": {
+              "bytes": 10703,
+              "sha256": "6d8bb653e348c21dd07cf7bf36f1752a64ef74ac9d6ea1d312471e2e8ead019f"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 0,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-clone-join-20261004/verify.py",
+            "--omit-call"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 155903,
+              "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 90, in <module>\n    assert [row['index'] for row in rows] == indices, 'complete original clone joined membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original clone joined membership\n",
+          "programs": {
+            "docs/audits/record-value-clone-join-20261004/verify.py": {
+              "bytes": 10703,
+              "sha256": "6d8bb653e348c21dd07cf7bf36f1752a64ef74ac9d6ea1d312471e2e8ead019f"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-clone-join-20261004/verify.py",
+            "--same-native"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 155903,
+              "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 115, in <module>\n    assert row['source_index'] == row['native_index'] == row['legacy_index'] == index, 'exact own original native/source slot despite identical full records'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own original native/source slot despite identical full records\n",
+          "programs": {
+            "docs/audits/record-value-clone-join-20261004/verify.py": {
+              "bytes": 10703,
+              "sha256": "6d8bb653e348c21dd07cf7bf36f1752a64ef74ac9d6ea1d312471e2e8ead019f"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-clone-join-20261004/verify.py",
+            "--wrong-root"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 155903,
+              "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 117, in <module>\n    assert row['root_index'] == model['root_index'] and exact(row['whole_source_root'], digest(root)), 'exact own complete source root and parent allocation'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own complete source root and parent allocation\n",
+          "programs": {
+            "docs/audits/record-value-clone-join-20261004/verify.py": {
+              "bytes": 10703,
+              "sha256": "6d8bb653e348c21dd07cf7bf36f1752a64ef74ac9d6ea1d312471e2e8ead019f"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-clone-join-20261004/verify.py",
+            "--numeric-kind"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 155903,
+              "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 119, in <module>\n    assert exact(row['source_product'], model['record']), 'whole joined source product primitive kinds and every field'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole joined source product primitive kinds and every field\n",
+          "programs": {
+            "docs/audits/record-value-clone-join-20261004/verify.py": {
+              "bytes": 10703,
+              "sha256": "6d8bb653e348c21dd07cf7bf36f1752a64ef74ac9d6ea1d312471e2e8ead019f"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-clone-join-20261004/verify.py",
+            "--alias-result"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 155903,
+              "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 121, in <module>\n    reached = {'index': index, **native_graph.check_joint(actual)}\n                                 ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"${REPO_ROOT}/docs/audits/record-value-clones-20261004/native.py\", line 127, in check_joint\n    assert not inputs & results, 'actual complete structured clone input/result referents must be detached'\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual complete structured clone input/result referents must be detached\n",
+          "programs": {
+            "docs/audits/record-value-clone-join-20261004/verify.py": {
+              "bytes": 10703,
+              "sha256": "6d8bb653e348c21dd07cf7bf36f1752a64ef74ac9d6ea1d312471e2e8ead019f"
+            },
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/clone-join"
+        }
+      ],
+      "source_revision": "5429120ed9a22bce069562dd4f35e749c4d3383f"
+    },
+    {
+      "family": "identities",
+      "receipts": [
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-identities-20261004/verify.py"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/identities"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 157035,
+              "sha256": "5db1a230755dfef3804ec7a40e0d6f0b32d476d4b51d2ac5cd771fb7ffe85fc3"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "b4799112c90e312394d82561d48661780118788d557480be184d9c8531bba59c"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "PASS every original14 strict identity/four payload whole source/private/caller/primitive-kind/context product:five equal/nine conflicting complete types and four narrower payload accepts. Independent full property/path and ordered shape witnesses retain; eight genuine same-width public payload controls accept sign/state/unit-kind but refuse wrong member/order/nested/list shape. Complete original arguments stay unchanged; helper/consumer/native causes remain open.\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-identities-20261004/verify.py": {
+              "bytes": 14318,
+              "sha256": "6d985535a4ef242b4bce4a39d5d49233c75bec3a970740f83b17b1bef4c22438"
+            }
+          },
+          "status": 0,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/identities"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-identities-20261004/verify.py",
+            "--omit-call"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/identities"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 157035,
+              "sha256": "5db1a230755dfef3804ec7a40e0d6f0b32d476d4b51d2ac5cd771fb7ffe85fc3"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "b4799112c90e312394d82561d48661780118788d557480be184d9c8531bba59c"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-identities-20261004/verify.py\", line 140, in <module>\n    assert [row['index'] for row in rows] == indices, 'all original strict identity/payload membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: all original strict identity/payload membership\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-identities-20261004/verify.py": {
+              "bytes": 14318,
+              "sha256": "6d985535a4ef242b4bce4a39d5d49233c75bec3a970740f83b17b1bef4c22438"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/identities"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-identities-20261004/verify.py",
+            "--trust-width"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/identities"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 157035,
+              "sha256": "5db1a230755dfef3804ec7a40e0d6f0b32d476d4b51d2ac5cd771fb7ffe85fc3"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "b4799112c90e312394d82561d48661780118788d557480be184d9c8531bba59c"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-identities-20261004/verify.py\", line 189, in <module>\n    assert exact(row['expected_result'], source['expected_result']), 'independent complete type identity versus narrower payload product'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent complete type identity versus narrower payload product\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-identities-20261004/verify.py": {
+              "bytes": 14318,
+              "sha256": "6d985535a4ef242b4bce4a39d5d49233c75bec3a970740f83b17b1bef4c22438"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/identities"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-identities-20261004/verify.py",
+            "--strict-payload"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/identities"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 157035,
+              "sha256": "5db1a230755dfef3804ec7a40e0d6f0b32d476d4b51d2ac5cd771fb7ffe85fc3"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "b4799112c90e312394d82561d48661780118788d557480be184d9c8531bba59c"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-identities-20261004/verify.py\", line 189, in <module>\n    assert exact(row['expected_result'], source['expected_result']), 'independent complete type identity versus narrower payload product'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent complete type identity versus narrower payload product\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-identities-20261004/verify.py": {
+              "bytes": 14318,
+              "sha256": "6d985535a4ef242b4bce4a39d5d49233c75bec3a970740f83b17b1bef4c22438"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/identities"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-identities-20261004/verify.py",
+            "--same-source"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/identities"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 157035,
+              "sha256": "5db1a230755dfef3804ec7a40e0d6f0b32d476d4b51d2ac5cd771fb7ffe85fc3"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "b4799112c90e312394d82561d48661780118788d557480be184d9c8531bba59c"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-identities-20261004/verify.py\", line 188, in <module>\n    assert row['source_parent_index'] == source['source_parent_index'] and exact(row['whole_source_parent'], source['whole_source_parent']) and exact(row['source_recipe'], source['source_recipe']), 'exact own source/copy parent despite identical type arguments'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own source/copy parent despite identical type arguments\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-identities-20261004/verify.py": {
+              "bytes": 14318,
+              "sha256": "6d985535a4ef242b4bce4a39d5d49233c75bec3a970740f83b17b1bef4c22438"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/identities"
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/audits/record-value-identities-20261004/verify.py",
+            "--numeric-kind"
+          ],
+          "git_context": {
+            "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+            "operations": "read-only child queries",
+            "work_tree": ".artifacts/record-value-core-join-replay-20261004/identities"
+          },
+          "inputs": {
+            "docs/book/src/13j-type-enum-aggregate.md": {
+              "bytes": 51300,
+              "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+            },
+            "docs/book/src/13k-isf-feature-support-matrix.md": {
+              "bytes": 157035,
+              "sha256": "5db1a230755dfef3804ec7a40e0d6f0b32d476d4b51d2ac5cd771fb7ffe85fc3"
+            },
+            "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+              "bytes": 32771,
+              "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+            },
+            "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+              "bytes": 32171,
+              "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+            },
+            "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+              "bytes": 3337,
+              "sha256": "b4799112c90e312394d82561d48661780118788d557480be184d9c8531bba59c"
+            },
+            "docs/knowledge/isf-record-output-source-admission.md": {
+              "bytes": 3972,
+              "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+            },
+            "perl/FSM/Adapter/ISF.pm": {
+              "bytes": 3268,
+              "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+            },
+            "perl/FSM/Adapter/ISF/Parser.pm": {
+              "bytes": 463805,
+              "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+            },
+            "perl/FSM/Composition/InterfacePortBuilder.pm": {
+              "bytes": 11253,
+              "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+            },
+            "perl/FSM/Package/AggregatePathSupport.pm": {
+              "bytes": 17228,
+              "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+            },
+            "perl/FSM/Package/ImportResolver.pm": {
+              "bytes": 5738,
+              "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+            },
+            "perl/FSM/Package/Parser.pm": {
+              "bytes": 27375,
+              "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+            },
+            "perl/FSM/Package/PayloadTypeSupport.pm": {
+              "bytes": 7865,
+              "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+            },
+            "perl/FSM/Pipeline/SourceFrontend.pm": {
+              "bytes": 35424,
+              "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+            },
+            "perl/FSM/ProjectDataLocality.pm": {
+              "bytes": 6017,
+              "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+            },
+            "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+              "bytes": 11506,
+              "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+            },
+            "perl/FSM/Support/ISFRecordPortContexts.pm": {
+              "bytes": 14414,
+              "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+            },
+            "perl/FSM/Support/ISFRecordPortScopes.pm": {
+              "bytes": 8722,
+              "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+            },
+            "perl/FSM/Support/ISFRecordPortValues.pm": {
+              "bytes": 9858,
+              "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+            },
+            "t/1986-isf-record-port-value-gates.t": {
+              "bytes": 16809,
+              "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+            },
+            "t/lib/FSM/Test/ProjectDataLocality.pm": {
+              "bytes": 198,
+              "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+            }
+          },
+          "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-identities-20261004/verify.py\", line 190, in <module>\n    assert exact(row['expected_arguments'], source['expected_arguments']), 'whole original source/private argument primitive kinds'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole original source/private argument primitive kinds\n",
+          "programs": {
+            "docs/audits/record-value-clones-20261004/native.py": {
+              "bytes": 8681,
+              "sha256": "99a926ad207dc17d85d91a1625da9b3ad0e2925ab671a8a523b230c1c4410bcb"
+            },
+            "docs/audits/record-value-identities-20261004/verify.py": {
+              "bytes": 14318,
+              "sha256": "6d985535a4ef242b4bce4a39d5d49233c75bec3a970740f83b17b1bef4c22438"
+            }
+          },
+          "status": 1,
+          "working_directory": ".artifacts/record-value-core-join-replay-20261004/identities"
+        }
+      ],
+      "source_revision": "cd7d0a951d9bd792ef82bf6f171c59481d62c264"
+    }
+  ],
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]"
+}

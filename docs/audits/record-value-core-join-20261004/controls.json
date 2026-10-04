@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-core-join-20261004/verify.py",
+      "--omit-call"
+    ],
+    "expected_failure": "complete original core joined membership",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-core-join-20261004/verify.py\", line 92, in <module>\n    assert [row['index'] for row in rows] == indices, 'complete original core joined membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original core joined membership\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-core-join-20261004/verify.py",
+      "--same-model"
+    ],
+    "expected_failure": "exact own core source model despite identical whole native values",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-core-join-20261004/verify.py\", line 121, in <module>\n    assert row['child_index'] == index and row['whole_child_model'] == digest(model), 'exact own core source model despite identical whole native values'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own core source model despite identical whole native values\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-core-join-20261004/verify.py",
+      "--wrong-family"
+    ],
+    "expected_failure": "exact native core role/completed source model family",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-core-join-20261004/verify.py\", line 119, in <module>\n    assert row['kind'] == actual['kind'] and row['family'] == family, 'exact native core role/completed source model family'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact native core role/completed source model family\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-core-join-20261004/verify.py",
+      "--numeric-product"
+    ],
+    "expected_failure": "complete core source-modeled product primitive kinds",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-core-join-20261004/verify.py\", line 133, in <module>\n    assert exact(row['expected_product'], expected_product) and exact(expected_product, actual['result']), 'complete core source-modeled product primitive kinds'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete core source-modeled product primitive kinds\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-core-join-20261004/verify.py",
+      "--omit-private"
+    ],
+    "expected_failure": "all own core source/private/field/handoff/stage links retain",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-core-join-20261004/verify.py\", line 161, in <module>\n    assert exact(row['links'], expected_links), 'all own core source/private/field/handoff/stage links retain'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: all own core source/private/field/handoff/stage links retain\n",
+    "status": 1,
+    "working_directory": "."
+  }
+]

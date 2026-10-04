@@ -418,6 +418,18 @@ for those properties and false for same-width renamed/reordered/flattened/list-
 reordered shapes, with complete caller arguments unchanged. The original whole
 input/output/caller/kind/context records and dated clone/native proofs retain.
 The whole core/API join, permanent consumers and native full causes stay owned.
+The [complete core join](../../../docs/audits/record-value-core-join-20261004/scope.txt)
+binds every original capture, snapshot, range, recursive clone, strict identity
+and payload call to its own completed source model and whole native record.
+Each metadata private clone and field record, source capture handoff and final
+range type stage retains its exact caller, input/output graph and primitive
+kinds. A different source model with an actually identical native record still
+rejects; missing calls/private links, wrong API families and numeric promotion
+also reject. Every completed core proof and its rejecting controls reexecute
+in its dated source/document context, including the full inherited native and
+source proofs. This closes only the core product lane. The whole actor/API
+join, permanent original consumers and full native diagnostic assurance remain
+separately owned.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

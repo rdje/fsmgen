@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-core-join-20261004/verify.py",
+    "--omit-private"
+  ],
+  "expected_failure": "all own core source/private/field/handoff/stage links retain",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-core-join-20261004/verify.py\", line 161, in <module>\n    assert exact(row['links'], expected_links), 'all own core source/private/field/handoff/stage links retain'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: all own core source/private/field/handoff/stage links retain\n",
+  "status": 1,
+  "working_directory": "."
+}

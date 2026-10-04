@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-core-join-20261004/verify.py", line 161, in <module>
+    assert exact(row['links'], expected_links), 'all own core source/private/field/handoff/stage links retain'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: all own core source/private/field/handoff/stage links retain

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-core-join-20261004/verify.py", line 121, in <module>
+    assert row['child_index'] == index and row['whole_child_model'] == digest(model), 'exact own core source model despite identical whole native values'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact own core source model despite identical whole native values

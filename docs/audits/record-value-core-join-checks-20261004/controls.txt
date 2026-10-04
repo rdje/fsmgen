@@ -1,0 +1,1 @@
+PASS all five core join controls reject reached omission/identical-native model allocation/family/primitive/private defects at intended assertions.

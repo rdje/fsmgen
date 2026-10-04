@@ -1,0 +1,11 @@
+{
+  "after": "row.get('surface_id')",
+  "before": "row['surface_id']",
+  "cause": "inline selector treated registry metadata header as a surface record",
+  "claim_census": "initial inventory taken before successful final containment is superseded by final-surface census",
+  "corrected_status": 0,
+  "first_output": "Traceback (most recent call last):\n  File \"<stdin>\", line 10, in <module>\nKeyError: 'surface_id'\n",
+  "first_status": 1,
+  "result": "containment.json; exact task/book measurement and existing hard ceilings retain",
+  "scope": "same current core join metadata adapter"
+}
