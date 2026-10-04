@@ -4183,11 +4183,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify every original T1986 value scope/reference/copy API product.`
   Acceptance: `Independently model all accepted/refused scope, reference and copy outputs from complete original arguments/source/type/layout/root-role and nearest lexical/formal masks. Whole caller graphs and first-touch kinds, scalar ranges and intentional private preparation spelling preserve; final numeric facts are exact. Genuine product omission/role/kind/private-authority controls reject before assurance repair.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete child scope/reference/copy products and exact whole value join SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.4 qualify all original source/model/native products and value-private graph/field memberships. Canonical reverify and distinct legs: docs/audits/record-value-api-join-20261004/scope.txt. Core API/native assurance remains separately owned.`
+  Commit: `this whole-value-join work-unit commit (derive exact SHA with git log --grep)`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.4`
 
@@ -4213,11 +4213,11 @@ For FSMGen, the analogs are:
   Commit: `this copy-product work-unit commit (derive exact SHA with git log --grep)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Join complete original T1986 value scope/reference/copy products.`
   Acceptance: `Join completed three value API owners, complete source/field/actor authority, every native caller/argument/product/refusal and typed preparation/final fact. Reexecute semantic readers and controls with exact source/document boundaries and portable process coordinates; close only value API products before core API/native assurance.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete docs/audits/record-value-api-join-20261004/scope.txt binds current21 Git7c2f1f40 sources, three exact completed value owners and their full ledgers/manifests. Every original130 scope40/reference68/copy22 API joins complete arguments, callers, models, products/refusals and raw primitive kinds. Every233 value-private clone joins own source-stage model, whole native graphs/role/helper/parse/API and complete copied-field record:127 scope/65 reference/41 conditional copy stages. Separate complete reader authenticates whole memberships/properties and exact source/native/field/model allocation; actual omitted API/clone, incomplete owner and wrong adjacent field allocation reject RED1 at intended assertions. Complete copy ordinary/all6 RED controls reexecute exact21 source/document/owner/interpreter/input/full output contexts; nested reference/scope/field/actor semantic proofs retain. Only actual bound Python process filename coordinate qualifies; no native error/source/argument/kind normalization. Selfmanifest/current-source/docs/owners/all prior archive watcher passes after seal. Public book All tests successful Files=2 Tests=308/build PASS; shrinking card, exact fresh task/KM/containment/final claim census and staged doctrine/hooks precede commit. Only value API parent closes; core APIs/all-product join/native copy/cause assurance and finite helper outcome remain owned.`
+  Commit: `this whole-value-join work-unit commit (derive exact SHA with git log --grep)`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3`
@@ -6884,3 +6884,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub validate_record_port_copy' -- perl/FSM/Support/ISFRecordPortValues.pm locates original reference/whole-port/role/strict resolved identity contract at 02827d840254d6cdbfa4020be7910bb7ae9ac4cb. Complete source/reference/copy fields show equal widths and narrower payload compatibility cannot establish whole record identity; scalar/storage/literal zero returns retain existing owners. Actual payload2971 accepts signed_data while strict copy1724 refuses the same resolved type pair, binding the competing authority with full native arguments/products.
 - [x] **ADDRESSED (verified)** — Source-only22 whole call/reference/type/context recipes and independent closed reference/role/obligation/identity model match5 record successes/3 existing-contract zeros/14 refusals. Separate source outcome partition and exact whole source/caller/kind/private41-stage/native product reader pass; actual product/stage omission, input-target success, wrong storage zero, genuine payload truth promotion and first-touch width-kind corruption reject RED1 at intended assertions. Full aliases/imports, scalar signed/state/bit/ordering/nesting/list mismatch and malformed width9 descriptor retain. Providers/test/public admission unchanged; no intended native-cause or copier-safety signoff.
 - [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308 and rendered build PASS. Current21 source/docs/completed scope/reference owner/native/prior archive/instrument watcher passes after seal; all caller first-touch kinds preserve. Reference ordinary/all6 RED controls reexecute with exact complete inputs, historical documents, watched Python profile and full outputs beyond qualified process filename only; nested scope/field/actor proofs retain. Fixed shrinking card, final task/KM/exact containment/claim census and staged doctrines/hooks precede commit. Complete value product join follows.
+
+## Acceptance Checklist — complete original T1986 value API product join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub record_value_scope' -- perl/FSM/Support/ISFRecordPortValues.pm locates original value/root/role/merge and preparation contract at 02827d840254d6cdbfa4020be7910bb7ae9ac4cb. Separate completed scope/reference/copy proofs require an exact whole-membership and model/native/field allocation join before the value API parent can close; category counts alone cannot qualify missing or misallocated records.
+- [x] **ADDRESSED (verified)** — Complete current21 sources and three exact completed owners join every original130 value API/model/product and all233 value-private clone/source-stage/native/full-field records. Separate reader passes complete arguments/callers/kinds/graphs/roles/products; omitted API, omitted clone, incomplete owner and wrong copied-field allocation reject RED1 at intended assertions. Complete copy ordinary/six RED proofs and nested reference/scope/field/actor semantic controls reexecute exact historical input/document contexts and process coordinates. Only value API product parent closes; providers/tests/public admission/core APIs/native assurance remain separately owned.
+- [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308 and rendered build PASS. Sealed self/current source/docs/three owner/native/field/model/all prior archive/instrument watcher passes. Full inherited semantic readers and genuine controls reexecute with complete source/profile/input/status/output identities beyond exact bound process filenames only. Fixed shrinking card, fresh task/KM/exact containment/final claim census and staged doctrine/hooks precede commit. Next core products are pending and safely subdivided only after this committed slice.

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-api-join-20261004/verify.py", line 65, in <module>
+    assert task[start:end] == child['node'] and 'Status: `done`' in child['node'], 'exact completed whole value semantic owner'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact completed whole value semantic owner

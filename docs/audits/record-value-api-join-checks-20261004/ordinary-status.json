@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-api-join-20261004/verify.py"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

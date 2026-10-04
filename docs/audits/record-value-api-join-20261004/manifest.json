@@ -1,0 +1,38 @@
+{
+  "binding.json": {
+    "bytes": 938562,
+    "sha256": "b956bc3815e3ed0667a621649f20c2cd9f8028c37ca0cd0291d478721869586d"
+  },
+  "copy-replays.json": {
+    "bytes": 31871,
+    "sha256": "0072a850e75b72619ea3e7921a82eb000012f276e6c3f06c711f9894a27f546d"
+  },
+  "doc-updates.json": {
+    "bytes": 308415,
+    "sha256": "0c82a8100b85d4c51607a9358c37093e530e5227ce8cf6ec99a6d5be419a770a"
+  },
+  "join.json": {
+    "bytes": 299093,
+    "sha256": "869d545f167965abaee34f39d8286c8a5512eb1846aede11b00e21168afeff85"
+  },
+  "plan.txt": {
+    "bytes": 838,
+    "sha256": "ef3b52ed5309942a30fab17e527cfa8b70f59f796e55bc140996b44a9eb8d785"
+  },
+  "produce.py": {
+    "bytes": 4276,
+    "sha256": "76af051689d14320400b2b90d6bedebc8ea4372764580f83378477d8f62b89b5"
+  },
+  "replay_copy.py": {
+    "bytes": 4008,
+    "sha256": "9d3b3bc8e1b86cb6d9be2a0389f2821cd5a4cf660959448ae1a29db25108fbd8"
+  },
+  "scope.txt": {
+    "bytes": 3495,
+    "sha256": "2f0cf785928f01e74d01b61c71cce33fc4ae6a2280f9b5f320af0fafc9570c75"
+  },
+  "verify.py": {
+    "bytes": 8517,
+    "sha256": "6e912bcb5d87636101317d8d83583e68b7dea924421add7b46bce3186a88d413"
+  }
+}

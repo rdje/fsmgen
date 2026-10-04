@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-api-join-20261004/verify.py", line 98, in <module>
+    assert [row['index'] for row in copies] == [i for i, row in enumerate(native['copies']) if row['kind'] == 'value-private'], 'every whole original value-private clone/field membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: every whole original value-private clone/field membership

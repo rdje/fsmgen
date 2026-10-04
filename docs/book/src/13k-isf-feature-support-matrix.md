@@ -301,8 +301,13 @@ retain. Whole source reference/type/role models independently distinguish
 same-width member/order/signed/state/bit/list identity differences, input
 targets and the contradictory width descriptor. A genuine narrower payload
 operation accepts a signed-type difference that strict record-copy identity
-refuses. Metadata/core API products remain under review; the complete value
-product join is next. The
+refuses. The [complete value join](../../../docs/audits/record-value-api-join-20261004/scope.txt)
+now binds the three completed owners to all one-hundred-thirty whole original
+scope/reference/copy call, source model and product records. All two-hundred-
+thirty-three value-private clones join their full native graphs and copied-field
+records; membership, source roles and primitive kinds retain. Each complete
+child proof and its rejecting controls reexecute in its exact source/document
+context. Metadata/core API products and native assurance remain open. The
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

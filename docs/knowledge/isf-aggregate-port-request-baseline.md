@@ -10,7 +10,7 @@ date: 2026-10-04
 status: current
 tags: [isf, aggregate, record, ports, types, specforge]
 evidence: docs/audits/specforge-aggregate-intake-20260930/manifest.json; docs/audits/specforge-aggregate-intake-20260930/capture.t; docs/audits/specforge-aggregate-intake-20260930/verify.py; perl/FSM/Adapter/ISF/Parser.pm; t/1259-isf-aggregate-storage-type-aliases.t; t/2014-isf-record-input-public-sources.t; t/2016-isf-record-input-public-refusals.t; t/2017-isf-record-input-frontend-closure.t; docs/book/src/13j-type-enum-aggregate.md
-reverify: python3 -B docs/audits/record-value-copies-20261004/verify.py && scripts/run_with_ram_guard.sh -- prove -Iperl t/2017-isf-record-input-frontend-closure.t
+reverify: python3 -B docs/audits/record-value-api-join-20261004/verify.py && scripts/run_with_ram_guard.sh -- prove -Iperl t/2017-isf-record-input-frontend-closure.t
 ---
 
 The `sf-isf-aggregate-interface-ports` packet requests local/imported
@@ -44,5 +44,5 @@ Generated typed handoffs are qualified by
 `isf-generated-child-aggregate-reads.md` and
 `isf-generated-child-whole-aggregate-writes.md`. Internal carriers do not establish authored-port support. Output writer/overlap admission needs separate dependency proof; this packet implies no transaction-local ports/banks. Future delivery may invalidate historical refusal expectations.
 
-T1986 [values](../audits/record-value-copies-20261004/scope.txt) binds source/products.
+T1986 [values](../audits/record-value-api-join-20261004/scope.txt) joins products.
 Core/native assurance remains open.
