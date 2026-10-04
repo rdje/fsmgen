@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-10-04`
+- Last updated: `2026-10-05`
 - Owner: repo-local workflow
 
 ## Goal
@@ -4438,11 +4438,35 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Independently qualify complete original candidate copy and consumer products.`
   Acceptance: `Bind exact observation/source owners and every original17 input to its own completed authored/type/product/field/caller model. Independently verify complete typed joint graphs, readonly/sharing/isolation, genuine Storable/alias rejection, all original consumer outcomes and complete non-target API/parser/private products; expose and own any actual differences rather than stripping causes/kinds/coordinates or assuming value equality.`
+  Verification: `Capture is committed at100f540f5. Independent copy graph/kind/topology/readonly and unchanged-input trial qualification is separated from complete API/parser/consumer field products and full alias downstream causality. Both must join before original replay .4; no graph-only signoff closes complete candidate semantics.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.3`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.1`
+  Status: `done`
+  Goal: `Independently qualify every unchanged-original candidate copy graph and real provider trial.`
+  Acceptance: `Bind complete committed capture/input/finite-reader owners and source bodies. Rebuild independently qualified original17 input graphs as typed models without candidate copy/snapshot/reference helpers; verify complete joint edge/identity bijections, reachable populations, readonly, kind preservation and detachment for ordinary copies and every unchanged-input Storable/alias trial. Actual legacy-kind, wrong sharing, omission, false-green and incomplete-recursion controls must reject. Retain full native data and raw receipts; API/parser/consumer and full alias downstream semantic qualification remains .2.`
+  Verification: `Independent docs/audits/record-value-original-copy-reader-20261004/scope.txt binds complete original capture/input/finite-reader archives and three done source owners atGit100f540f5. Whole source-derived typed models qualify every17 original unchanged test-copy input across ordinary/Storable/control returns and34 genuine unchanged-input Storable/alias trials. All85 standalone/joint before/after/result graphs have exact typed edge/identity bijections, reachable populations, readonly inputs, actual recursive candidate-call counts and full assertion operands/outcomes. Genuine Storable kind failures and alias sharing failures reach their intended operands; eleven omission/kind/edge/reference/identity/false-green/recursion/trial corruptions reject. Two guard refusals remain exact unqualified observations; the completed unchanged-cutoff run passes at initial77.2%. Saved proofs are independently regenerated and compared, then the complete immutable manifest watcher reruns. Earlier recovery prose incorrectly asserted no proofs file existed; only missing completed receipt was established, and current re-derivation authenticates the saved proof. Public-book All tests successful Files2 Tests308/build PASS; first acceptance-signature omission is retained and corrected with actual book evidence. Task/KM/containment/claim/staged doctrines and normal hooks accompany commit. This closes copy graph qualification only; whole API/parser/helper/consumer and full alias downstream cause .2, semantic join .3, cold replay .4 and permanent repairs remain open.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2`
+  Status: `pending`
+  Goal: `Qualify whole current original-candidate API/parser/consumer and alias-cause products.`
+  Acceptance: `Reconstruct every candidate/Storable/unchanged-input-control original API/parser/helper/consumer/copy/field/caller/source allocation against its own independently established source model. Attribute all actual kind changes from test-copy interventions without erasing raw error/class/coordinate bytes. Independently derive full alias downstream source mutations, changed inputs, actual consumer failures, omitted later operations and precise raw abort boundary. Preserve complete non-target semantics and genuine source/model/product/cause corruptions; a graph-only helper proof cannot close this leaf.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.3`
+  Status: `pending`
+  Goal: `Join complete original candidate copy and API/consumer semantic qualification.`
+  Acceptance: `Join exact completed .1/.2 owners and all sealed original inputs/source fields/current candidate native graphs/API/parser/helper/consumer/caller/cause products and genuine controls. Prove no member/semantic/role/kind/source/control loss or borrowed authority. Close only independent original candidate semantics before full cold/native replay .4, candidate-parent and permanent hot/cause repairs.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.4`
   Status: `pending`
@@ -5778,3 +5802,10 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostic `Failed test 'original copy 80 copy preserves kinds and sharing'` at `docs/audits/record-value-original-candidate-20261004/observe.pl line 274` reproduces the original Storable kind gap; original T1986's value-only consumers remain green. The actual clone-then-alias provider fails isolation and later mutates shared original types, retaining its real malformed-type abort. `scope.txt` distinguishes observation re-derivation from the missing independent semantic leg owned by sibling .3.
 - [x] **ADDRESSED (verified)** — `check_capture.py` authenticates the exact original source/runtime/support/owner and candidate transformation, complete native records, raw streams, portable final fixture coordinates and full source afterimages. `controls.py` observes rejection of omission, status-kind/host promotion, hidden abort, producer substitution and absolute fixture coordinates. Separate bad-provider trials reach every original unchanged input. The immutable member manifest retains every initial draft/native failure. This addresses capture only; semantic qualification and permanent repair stay open.
 - [x] **NO REGRESSION** — All tests successful, Files=3, Tests=318 for unchanged T1986 and both public-book audits; `mdbook build docs/book` passes. Production/test/provider and all prior immutable proof members are authenticated unchanged. Final sealed capture/controls, Knowledge Map, task integrity, exact book aggregate authority, claim inventory and staged doctrine/hook gates complete before commit. Original qualification and broader startup/full-CI/push gates are unchanged.
+
+
+## Acceptance Checklist — independent original copy graph qualification
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'original native copy capture is complete' -- docs/TASK_TREE.md` identifies `100f540f5` as the observation boundary. Value-only T1986 consumers accept actual Storable scalar-kind losses; native trial operands and independently derived typed models expose that gap. Complete graph/identity qualification is separated from API/consumer and full alias downstream semantics before implementation. Two exact guard refusals establish no successful receipt; earlier recovery prose overstated the absence of saved proofs, which the completed independent re-derivation now authenticates.
+- [x] **ADDRESSED (verified)** — The guarded independent `verify.py` completes status0 and re-derives all original copy/joint graph and genuine provider-trial proofs from separately qualified original source models and typed graph interpretation. Complete current Git/archive/owner authority authenticates; exact edge/kind/identity/population/readonly/isolation/recursion and assertion operands/outcomes qualify. Eleven deliberate corruptions reject at the intended graph or assertion boundary. The complete saved proof regenerates identically. Scope names the API/consumer/alias semantic and cold replay legs still missing; no permanent product/test repair is claimed.
+- [x] **NO REGRESSION** — All tests successful, Files=2, Tests=308 for current public-book audits; `mdbook build docs/book` passes. Production/T1986 and every prior immutable capture/model member remain unchanged. Final sealed reader, task integrity, Knowledge Map, exact book aggregate authority, claim inventory and staged doctrine/normal-hook checks run before commit. The first checkpoint gate's missing evidence signature is retained and corrected using these actual focused tests. Full API/consumer/alias semantics, cold replay, historical native causality and full-CI/push gates remain open.

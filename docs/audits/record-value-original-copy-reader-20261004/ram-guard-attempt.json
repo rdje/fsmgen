@@ -1,0 +1,14 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-copy-reader-20261004/verify.py"
+  ],
+  "result": "unqualified; no proofs.json produced; do not classify as a graph failure or pass",
+  "status": 137,
+  "stderr": "ram-guard: PID 38754; host 88.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nram-guard: host memory 88.3% reached cutoff 88%\nram-guard: terminating PID tree: 38754 \n",
+  "stdout": "",
+  "working_directory": "."
+}

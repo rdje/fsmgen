@@ -1,13 +1,14 @@
 # Knowledge Map: `record-value`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **4** uniquely owned question entries.
+> **1** facts · **5** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="are original T1986 candidate copy inputs captured?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="are the T1986 finite copy probes independently qualified?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="how can the finite copy probes be replayed without changing sealed evidence?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
+- q="what qualifies original T1986 candidate copy graphs?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what validates plain copy helper sharing and detachment?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 
 ## Facts
@@ -16,5 +17,5 @@
 
 _Finite record-value copy probes have independent typed graph qualification_
 
-- **date:** 2026-10-04 · **status:** current
+- **date:** 2026-10-05 · **status:** current
 - **source and verification:** [`docs/knowledge/record-value-finite-copy-probe-reader.md`](../../docs/knowledge/record-value-finite-copy-probe-reader.md)

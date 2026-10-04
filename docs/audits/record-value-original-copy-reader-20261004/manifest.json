@@ -1,0 +1,50 @@
+{
+  "binding.json": {
+    "bytes": 1091157,
+    "sha256": "20f45b6c46cf6a8a309d188f10a2597277880fd54aaa32c115fcf67db111cf8a"
+  },
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "089e8e3d3b2b6b0071151d3c13f05f3f2278ed6ad0f50cbea1d0d7e24868c5a0"
+  },
+  "book-transform.json": {
+    "bytes": 329224,
+    "sha256": "48edc0342bfca501fbaabd88ecc4e723b7c76ed59b7fc9836186e03c4214d973"
+  },
+  "checkpoint-book-tests.json": {
+    "bytes": 423,
+    "sha256": "13f3320afdbe3a1e46ed179bad6caa917ff3738f87d45269d2697a38c7ba5bb5"
+  },
+  "checkpoint-doctrines.json": {
+    "bytes": 60649,
+    "sha256": "4058f0dc3632cddc0aeef48bc327067fb6ef90f5bc750c6e92c03a6ee1353574"
+  },
+  "first-doc-update-failure.json": {
+    "bytes": 366,
+    "sha256": "b39441530386d094e474800bb5a3e6b0ea456c1f192cf208b31086b4a65f8bec"
+  },
+  "proofs.json": {
+    "bytes": 27094,
+    "sha256": "bea03a2b3a106a0df94118003394a185db1f08553c03c4fa1b09795c71e6cb1f"
+  },
+  "ram-guard-attempt.json": {
+    "bytes": 521,
+    "sha256": "0f8d5e4636348f1c3d2df0ac6e222e6f03595097320d4870bc7a8314febc537b"
+  },
+  "ram-guard-retry.json": {
+    "bytes": 641,
+    "sha256": "1eb7a57b1a732748ebcf1dd7035cf430c333032b51d11287179a406b0259f06c"
+  },
+  "reader-completed.json": {
+    "bytes": 1647,
+    "sha256": "ee14bfd202b30a6b2d2c47a3105a64d541e7c9285e2d83ea2072298cd11bc632"
+  },
+  "scope.txt": {
+    "bytes": 2946,
+    "sha256": "bfbf441262a4c346906d380f9b822d8fe76604fb1bce516b048d0956285e0c35"
+  },
+  "verify.py": {
+    "bytes": 11539,
+    "sha256": "b0aa8b9131e0359740c70e3db2adc6d8e87893e674b1d17a3bcadbe5cb901376"
+  }
+}

@@ -1,0 +1,1090 @@
+{
+  "controls": [
+    {
+      "control": "omit-copy",
+      "error": "complete original test-copy membership",
+      "status": 1
+    },
+    {
+      "control": "legacy-copy-as-candidate",
+      "error": "primitive value/kind disagrees with authored source model",
+      "status": 1
+    },
+    {
+      "control": "borrow-alias-joint",
+      "error": "graph sharing/cycle/identity differs from source model",
+      "status": 1
+    },
+    {
+      "control": "unresolved-joint-target",
+      "error": "unresolved or forward graph reference",
+      "status": 1
+    },
+    {
+      "control": "kind-only-input",
+      "error": "primitive value/kind disagrees with authored source model",
+      "status": 1
+    },
+    {
+      "control": "missing-result-edge",
+      "error": "container kind/complete edge set differs from source model",
+      "status": 1
+    },
+    {
+      "control": "false-green-storable",
+      "error": "actual false-green assertion outcome",
+      "status": 1
+    },
+    {
+      "control": "false-green-alias",
+      "error": "actual false-green assertion outcome",
+      "status": 1
+    },
+    {
+      "control": "incomplete-recursion",
+      "error": "complete actual recursive candidate execution",
+      "status": 1
+    },
+    {
+      "control": "status-kind-promotion",
+      "error": "actual false-green assertion outcome",
+      "status": 1
+    },
+    {
+      "control": "omit-trial",
+      "error": "complete unchanged-input trial membership",
+      "status": 1
+    }
+  ],
+  "proofs": [
+    {
+      "candidate_calls": 21,
+      "failures": [],
+      "input_referents": 6,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 8,
+      "provider": "ordinary",
+      "result_referents": 6,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 988,
+      "failures": [],
+      "input_referents": 339,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 80,
+      "provider": "ordinary",
+      "result_referents": 339,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 39,
+      "failures": [],
+      "input_referents": 12,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 273,
+      "provider": "ordinary",
+      "result_referents": 12,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 434,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 13,
+      "failures": [],
+      "input_referents": 4,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 477,
+      "provider": "ordinary",
+      "result_referents": 4,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 519,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 529,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 538,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 547,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 557,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 567,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 577,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 586,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 595,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 4,
+      "failures": [],
+      "input_referents": 1,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 596,
+      "provider": "ordinary",
+      "result_referents": 1,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 605,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "ordinary",
+      "original_index": 614,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 21,
+      "failures": [],
+      "input_referents": 6,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 8,
+      "provider": "storable",
+      "result_referents": 6,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 988,
+      "failures": [
+        "original copy 80 copy preserves kinds and sharing"
+      ],
+      "input_referents": 339,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 80,
+      "provider": "storable",
+      "result_referents": 339,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 39,
+      "failures": [
+        "original copy 273 copy preserves kinds and sharing"
+      ],
+      "input_referents": 12,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 273,
+      "provider": "storable",
+      "result_referents": 12,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 434 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 434,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 13,
+      "failures": [
+        "original copy 477 copy preserves kinds and sharing"
+      ],
+      "input_referents": 4,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 477,
+      "provider": "storable",
+      "result_referents": 4,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 519 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 519,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 529 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 529,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 538 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 538,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 547 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 547,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 557 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 557,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 567 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 567,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 577 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 577,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 586 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 586,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 595 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 595,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 4,
+      "failures": [],
+      "input_referents": 1,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 596,
+      "provider": "storable",
+      "result_referents": 1,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 605 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 605,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 614 copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "storable",
+      "original_index": 614,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 21,
+      "failures": [],
+      "input_referents": 6,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 8,
+      "provider": "ordinary",
+      "result_referents": 6,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 988,
+      "failures": [],
+      "input_referents": 339,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 80,
+      "provider": "ordinary",
+      "result_referents": 339,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 39,
+      "failures": [],
+      "input_referents": 12,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 273,
+      "provider": "ordinary",
+      "result_referents": 12,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 434,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 13,
+      "failures": [],
+      "input_referents": 4,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 477,
+      "provider": "ordinary",
+      "result_referents": 4,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 519,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 529,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 538,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 547,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 557,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 567,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 577,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 586,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 595,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 4,
+      "failures": [],
+      "input_referents": 1,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 596,
+      "provider": "ordinary",
+      "result_referents": 1,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 605,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [],
+      "input_referents": 5,
+      "kind": "returned",
+      "mode": "controls",
+      "original_index": 614,
+      "provider": "ordinary",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 21,
+      "failures": [],
+      "input_referents": 6,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 8,
+      "provider": "storable",
+      "result_referents": 6,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 21,
+      "failures": [
+        "original copy 8 alias control copy is isolated from source"
+      ],
+      "input_referents": 6,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 8,
+      "provider": "alias",
+      "result_referents": 6,
+      "shared_referents": 6
+    },
+    {
+      "candidate_calls": 988,
+      "failures": [
+        "original copy 80 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 339,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 80,
+      "provider": "storable",
+      "result_referents": 339,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 988,
+      "failures": [
+        "original copy 80 alias control copy is isolated from source"
+      ],
+      "input_referents": 339,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 80,
+      "provider": "alias",
+      "result_referents": 339,
+      "shared_referents": 339
+    },
+    {
+      "candidate_calls": 39,
+      "failures": [
+        "original copy 273 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 12,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 273,
+      "provider": "storable",
+      "result_referents": 12,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 39,
+      "failures": [
+        "original copy 273 alias control copy is isolated from source"
+      ],
+      "input_referents": 12,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 273,
+      "provider": "alias",
+      "result_referents": 12,
+      "shared_referents": 12
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 434 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 434,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 434 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 434,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 13,
+      "failures": [
+        "original copy 477 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 4,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 477,
+      "provider": "storable",
+      "result_referents": 4,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 13,
+      "failures": [
+        "original copy 477 alias control copy is isolated from source"
+      ],
+      "input_referents": 4,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 477,
+      "provider": "alias",
+      "result_referents": 4,
+      "shared_referents": 4
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 519 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 519,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 519 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 519,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 529 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 529,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 529 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 529,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 538 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 538,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 538 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 538,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 547 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 547,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 547 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 547,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 557 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 557,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 557 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 557,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 567 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 567,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 567 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 567,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 577 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 577,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 577 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 577,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 586 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 586,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 586 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 586,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 595 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 595,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 595 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 595,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 4,
+      "failures": [],
+      "input_referents": 1,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 596,
+      "provider": "storable",
+      "result_referents": 1,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 4,
+      "failures": [
+        "original copy 596 alias control copy is isolated from source"
+      ],
+      "input_referents": 1,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 596,
+      "provider": "alias",
+      "result_referents": 1,
+      "shared_referents": 1
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 605 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 605,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 605 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 605,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 614 storable control copy preserves kinds and sharing"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 614,
+      "provider": "storable",
+      "result_referents": 5,
+      "shared_referents": 0
+    },
+    {
+      "candidate_calls": 16,
+      "failures": [
+        "original copy 614 alias control copy is isolated from source"
+      ],
+      "input_referents": 5,
+      "kind": "trial",
+      "mode": "controls",
+      "original_index": 614,
+      "provider": "alias",
+      "result_referents": 5,
+      "shared_referents": 5
+    }
+  ]
+}

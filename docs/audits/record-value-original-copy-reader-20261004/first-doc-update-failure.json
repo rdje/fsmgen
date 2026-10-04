@@ -1,0 +1,8 @@
+{
+  "cause": "schema header row was accessed as a surface record",
+  "correction": "preserve schema row and select row.get(surface_id)",
+  "effect": "task/book updates preceded failure; containment/card/scope completed by explicit continuation",
+  "error": "KeyError: 'surface_id'",
+  "locus": "one-off documentation/aggregate update script line34",
+  "status": 1
+}

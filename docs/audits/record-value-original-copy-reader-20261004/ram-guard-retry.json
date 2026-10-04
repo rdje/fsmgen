@@ -1,0 +1,18 @@
+{
+  "child_command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-copy-reader-20261004/verify.py"
+  ],
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "-"
+  ],
+  "result": "unqualified; no native reader receipt/proofs produced; a preceding guarded task-integrity check observed82.5% but pressure rose again before reader execution",
+  "status": 137,
+  "stderr": "ram-guard: PID 42973; host 89.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nram-guard: host memory 89.4% reached cutoff 88%\nram-guard: terminating PID tree: 42973 \n",
+  "working_directory": "."
+}
