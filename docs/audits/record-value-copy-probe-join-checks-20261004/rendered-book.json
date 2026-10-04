@@ -1,0 +1,10 @@
+{
+  "expected_text": [
+    "finite qualification join",
+    "closes this probe lane with exact completed owners and whole reexecuted products.",
+    "Actual original copy inputs, the candidate-parent join, and permanent test-copy"
+  ],
+  "path": "docs/book/book/13k-isf-feature-support-matrix.html",
+  "text_check": "PASS",
+  "visual_qa": "pending existing owner"
+}

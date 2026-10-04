@@ -9,13 +9,15 @@ date: 2026-10-04
 status: current
 tags: [isf, record, copy, native, graph, qualification]
 evidence: >-
+  docs/audits/record-value-copy-probe-join-20261004/scope.txt;
+  docs/audits/record-value-copy-probe-join-20261004/verify.py;
   docs/audits/record-value-copy-reader-20261004/scope.txt;
   docs/audits/record-value-copy-reader-20261004/verify.py;
   docs/audits/record-value-copy-reader-20261004/replay.py;
   docs/audits/record-value-copy-probes-20261004/manifest.json;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
-  python3 -B docs/audits/record-value-copy-reader-20261004/verify.py &&
+  python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-copy-reader-20261004/replay.py
 ---
@@ -35,5 +37,6 @@ Graph/cause/identity mutations and changed whole program authority reject.
 Replay creates a fresh same-volume fixture with exact pinned sources. Whole
 native records and both output streams remain retained; addresses keep their
 actual per-capture lifetimes. Sealed producers never run in their own archive.
-The finite join, actual original inputs, hot baseline/consumer repairs and
-host-native refusal qualification remain separately owned successors.
+The finite join now authenticates exact completed owners and complete fresh
+products. Actual original inputs, the candidate-parent join, hot baseline/consumer
+repairs and host-native refusal qualification remain separately owned successors.

@@ -1,0 +1,18 @@
+{
+  "after": {
+    "bytes": 161430,
+    "sha256": "f0af7df4a56f9ed1c2b49e83aedb4278266954fd416f3e673eba839b6a5a9003"
+  },
+  "before": {
+    "bytes": 161246,
+    "sha256": "79796ac2b1508c8c12295bb4719006fe44cc4df733b827cd79b4f2bca52af39f"
+  },
+  "path": "docs/book/src/13k-isf-feature-support-matrix.md",
+  "replacements": [
+    {
+      "after": "controls reject. This qualifies the recorded plain-helper profile only. The [finite qualification join](../../../docs/audits/record-value-copy-probe-join-20261004/scope.txt)\nnow closes this probe lane with exact completed owners and whole reexecuted products.\nActual original copy inputs, the candidate-parent join, and permanent test-copy\nand consumer repairs remain open.\n",
+      "before": "controls reject. This qualifies the recorded plain-helper profile only. The finite\nqualification join, actual original copy inputs, and permanent test-copy and\nconsumer repairs remain open.\n"
+    }
+  ],
+  "revision": "a9815fcae2e6d439878e0dddf85d00158dd969ae"
+}

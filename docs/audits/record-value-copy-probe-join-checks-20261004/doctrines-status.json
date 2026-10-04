@@ -1,0 +1,7 @@
+{
+  "command": [
+    "scripts/check_doctrines.sh"
+  ],
+  "status": 0,
+  "working_directory": "."
+}

@@ -467,9 +467,10 @@ failures, including kind loss, aliasing and readonly violations. The [independen
 now qualifies the complete typed graphs, sharing, cycles, readonly inputs and
 detachment against separate source models. Fresh exact-source replay preserves
 every native mode and intended failure; altered graph, cause and source authority
-controls reject. This qualifies the recorded plain-helper profile only. The finite
-qualification join, actual original copy inputs, and permanent test-copy and
-consumer repairs remain open.
+controls reject. This qualifies the recorded plain-helper profile only. The [finite qualification join](../../../docs/audits/record-value-copy-probe-join-20261004/scope.txt)
+now closes this probe lane with exact completed owners and whole reexecuted products.
+Actual original copy inputs, the candidate-parent join, and permanent test-copy
+and consumer repairs remain open.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

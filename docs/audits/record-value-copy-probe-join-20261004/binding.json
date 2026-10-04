@@ -1,0 +1,116 @@
+{
+  "archives": {
+    "record-value-copy-probes-20261004": {
+      "alias.json": {
+        "bytes": 8533,
+        "sha256": "116682cd4f7d0fb392f97c086f65b64fc37bcd8c8daee5e7315518634d8dbc9c"
+      },
+      "book-afterimage.json": {
+        "bytes": 325912,
+        "sha256": "30b776d825fbcf9e1a1fa5691fbc13678f9b5288238b44f787d07127244a8a18"
+      },
+      "candidate.pl": {
+        "bytes": 2749,
+        "sha256": "e10ef526c01fc88fedbaaa8bd7053dbc9cbd5ae10317c753924386d0608eae16"
+      },
+      "check_capture.py": {
+        "bytes": 3867,
+        "sha256": "06ef71a32e084ccbcfeec1c9a6a213ea3d29c6af7173714c43619ec94edadcd7"
+      },
+      "cycle-alias.json": {
+        "bytes": 8679,
+        "sha256": "09365cbfd6bef1bc07e0492f536370be120db607c0756e9f1153aec84a201df9"
+      },
+      "mutate-input.json": {
+        "bytes": 8615,
+        "sha256": "855bf44f67bde8b049f3104fff6fd2879470704889cb755a1a5e82b414407a01"
+      },
+      "native-receipts.json": {
+        "bytes": 20597,
+        "sha256": "c6cbe45c5156ff95e9a7dea0501f0d7811e36f5408f6649911a3f365d7d939b8"
+      },
+      "numeric-result.json": {
+        "bytes": 8617,
+        "sha256": "90d9604b30aae5496ed02835076e56f4f12ff16bd64bbfb85733bc5c91f63252"
+      },
+      "ordinary.json": {
+        "bytes": 8603,
+        "sha256": "acf9943d7d9403a2992b6cc846e8ca0e6c6010d12b31b5139090865e1ad5e599"
+      },
+      "probe.pl": {
+        "bytes": 5316,
+        "sha256": "317e02bd5fab02905dc169120630eff058ba3fa451262f836a465fcd08ba6660"
+      },
+      "recipe-transform.json": {
+        "bytes": 6703,
+        "sha256": "c5290940c28a281221e5f6b49dbc3ad20a27aad2cc5ea9b5741eb4b517c0770f"
+      },
+      "run_modes.py": {
+        "bytes": 1407,
+        "sha256": "a4d5487d98aeaa7054e6c1f3caae23eb03acb7a8d3783037fec5eb4b69e95e21"
+      },
+      "scope.txt": {
+        "bytes": 3065,
+        "sha256": "da508ce559ebe5c54acb274d26b08cb8c54a0bd61f4e08c1411ef059de73aaeb"
+      },
+      "split-sharing.json": {
+        "bytes": 8644,
+        "sha256": "67d619e938564a26c8c48aefdd149dc2151fd5e50532189918de661713bb100a"
+      },
+      "storable.json": {
+        "bytes": 8611,
+        "sha256": "566b1ac015fdf663ac658b485a1a94111bd865db443993d76770556a5869866f"
+      }
+    },
+    "record-value-copy-reader-20261004": {
+      "book-transform.json": {
+        "bytes": 1273,
+        "sha256": "2e753b2445a4b7a065cd7c0d6803962bd2e723b06cdd8bb5d1223d473dbd58bd"
+      },
+      "replay-first-failure.json": {
+        "bytes": 166930,
+        "sha256": "644551e2791b0900f6919223098c27b711163697af9478d30aabbeaf119840b3"
+      },
+      "replay-initial-pass.json": {
+        "bytes": 362771,
+        "sha256": "8eeab4e4c40dc94784e1748e4fa1c1ffe920588dd187a1d1dc223af6c42f265a"
+      },
+      "replay.json": {
+        "bytes": 388042,
+        "sha256": "41b4def99756ac8e966c1e822b69541ced67896516fcf0ea9f8a80269735f0c7"
+      },
+      "replay.py": {
+        "bytes": 4135,
+        "sha256": "19533d23ac97db2bc19ea3bf5b044d72a8f2f1f9dde7b0b956d7c7a7b5899a45"
+      },
+      "scope.txt": {
+        "bytes": 4136,
+        "sha256": "f5718c57cfa574a641a0cd211686b3162bfb0ff6ba34208d88f5992abe448d5e"
+      },
+      "source-contract.json": {
+        "bytes": 11809,
+        "sha256": "d5441b8a5019893fd0cec47d2844bb29bc59cec87f563a8c4f1c288d2f8605f6"
+      },
+      "startup-policy-review.json": {
+        "bytes": 487,
+        "sha256": "2b66e067bf04ca682208664d98d9a1cf3a87282951ffe1c753dd2a3d98ab48ef"
+      },
+      "verify.py": {
+        "bytes": 20409,
+        "sha256": "45ac74886ca0062275a44eecf1dfbdd370a865a6ee08284fb4591d495a7387d1"
+      }
+    }
+  },
+  "owners": [
+    {
+      "body": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.1`\n  Status: `done`\n  Goal: `Capture finite candidate native probes and genuine bad-provider outcomes.`\n  Acceptance: `Capture exact five authenticated recipe bodies and strict plain snapshot transformation; all eight finite primitive/tree/share/cycle probes and four native-boundary assertions must execute. Actual Storable/correct-clone-then-alias/broken-sharing/cycle/input-kind/result-kind modes must reach declared permanent helper assertions with full native graphs/TAP/status/program identities. Commit observations only; independent topology/kind/readonly/detachment reader and final qualification remain .2/.3.`\n  Verification: `Observations only: docs/audits/record-value-copy-probes-20261004/scope.txt authenticates exact five recipe bodies and strict plain snapshot transformation; eight native primitive/tree/shared/hash-cycle/array-cycle cases plus four unsupported native assertions execute. Ordinary36 PASS. Genuine Storable kind loss, correct-clone-then-alias, broken sharing, cycle alias, input NUM-to-STRING and result NUM-to-STRING modes fail intended helper assertions at statuses1/1/2/3/1/1. Full native before/after/result/joint graphs, actual assertion operands, class/shape/identity/full raw errors/host and TAP/command/status/program records retain. Final15-member sealed capture checker PASS; public book Files2 Tests308/build PASS. Independent joint/source/model/topology/kind/readonly/detachment falsification and fresh durability replay remain missing and owned .2; full finite join .3. Unit grew beyond safe single slice; commit observations and resume independent reader from clean source boundary. No candidate/hot/production/native-universal/structured-cycle signoff.`\n  Commit: `this slice`\n",
+      "id": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.1"
+    },
+    {
+      "body": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.2`\n  Status: `done`\n  Goal: `Independently qualify complete finite candidate native probe graphs and controls.`\n  Acceptance: `Authenticate whole capture/source/recipe/host/command/status/TAP and raw native errors; independently reconstruct every joint graph/declared edge/target/reachable set and exact primitive/source expectations. Prove readonly, kinds, sharing, reference population and actual detachment for ordinary; prove exact genuine failures and full non-target conservation for six bad modes. Native class/shape/identity must retain per actual capture. Reexecute into fresh same-volume outputs without rerunning sealed producers in place or normalizing raw native causes/IDs.`\n  Verification: `Complete docs/audits/record-value-copy-reader-20261004/scope.txt binds exact Git0f7616a8 programs and immutable original manifests to independent authored object models and complete typed edge/target bijections for all eight cases in every seven-mode native capture. Reachable sets independently prove readonly/kinds/sharing/populations and actual joint isolation; genuine providers reach exact statuses0/1/1/2/3/1/1 and non-target records conserve. Four native boundary records per mode retain full class/HASH shape/actual within-capture identity/raw primary cause. Ten actual whole graph/cause/identity/false-green mutations and both changed complete program authorities reject. Fresh exact-source same-volume fixture reruns all modes, raw streams/receipts and independent RED controls without touching sealed producers; full old/fresh records retain addresses in their own lifetimes. First failed absolute-coordinate receipt stays historical; corrected relative runner and new fixture pass. Self-sealed watcher and new fresh reexecution PASS. Public book All tests successful Files2 Tests308/build/rendered text PASS; current claim template equals retained review and cleanup current. Only independent finite reader leaf closes; finite join .3, actual original inputs, candidate-parent and permanent hot/cause repairs remain open.`\n  Commit: `this slice`\n",
+      "id": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.2"
+    }
+  ],
+  "revision": "a9815fcae2e6d439878e0dddf85d00158dd969ae",
+  "task_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+}

@@ -4386,11 +4386,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify finite copy and graph helpers with genuine topology and native controls.`
   Acceptance: `Run authenticated scalar-preserving helper bodies on complete declared plain HASH/ARRAY/primitive/share/cycle probes; independent full native joint graphs and source expectations must prove kinds, readonly, sharing, reference population and detachment. Genuine Storable/alias/sharing/cycle/source-mutation/native unsupported controls reject at intended helper assertions; preserve full raw outputs/errors. Do not infer structured clone cycle or universal native class support.`
-  Verification: `Active before candidate/probe/source/artifact changes. Complete original input/contract slice is committed at0ea51c8d. Authenticate exact stricter plain snapshot adaptation; execute finite primitive/tree/sharing/cycle/native and genuine bad-provider controls with complete joint native/source graphs and independent topology/kind/readonly/detachment readers. Actual original17 inputs and hot repair remain later owners.`
-  Commit: `pending`
+  Verification: `Complete docs/audits/record-value-copy-probe-join-20261004/scope.txt pins both exact done owner bodies and every immutable original capture/reader member to Gita9815fcae. Full independent typed graph/source/reachable-set/native/cause/TAP/host models rerun, all genuine providers retain intended outcomes, ten whole reader and two full-source RED controls rerun, and both incomplete-owner/omitted-complete-replay join controls reject. New same-volume exact-source fixture retains full native products/streams/command/status/program identities and every actual control; saved join authenticates the complete reexecution and original roles. Source/manifest/native raw identity/cause bytes remain exact and no sealed producer runs in place. Sealed join watcher PASS; public book Files2 Tests308/build/rendered text PASS. Close only finite topology/native helper lane; actual original17 candidate inputs, candidate-parent and permanent hot/consumer/intended-host-cause owners remain pending.`
+  Commit: `this slice`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.1`
@@ -4408,11 +4408,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Join complete finite native helper probe qualification.`
   Acceptance: `Join exact capture and independent reader owners with full ordinary/control/native/source/recipe records and actual reexecuted outcomes. Close only topology/native candidate lane after all finite checks and genuine authority controls pass; actual original17 inputs, candidate-parent join and hot repairs remain open. No unobserved/native-universal/structured-cycle support.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete docs/audits/record-value-copy-probe-join-20261004/scope.txt pins both exact done owner bodies and every immutable original capture/reader member to Gita9815fcae. Full independent typed graph/source/reachable-set/native/cause/TAP/host models rerun, all genuine providers retain intended outcomes, ten whole reader and two full-source RED controls rerun, and both incomplete-owner/omitted-complete-replay join controls reject. New same-volume exact-source fixture retains full native products/streams/command/status/program identities and every actual control; saved join authenticates the complete reexecution and original roles. Source/manifest/native raw identity/cause bytes remain exact and no sealed producer runs in place. Sealed join watcher PASS; public book Files2 Tests308/build/rendered text PASS. Close only finite topology/native helper lane; actual original17 candidate inputs, candidate-parent and permanent hot/consumer/intended-host-cause owners remain pending.`
+  Commit: `this slice`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3`
@@ -7180,3 +7180,10 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S OBSERVATIONS ONLY -- docs/audits/record-value-copy-probes-20261004/scope.txt` identifies 0f7616a8 as observations-only authority. Complete prior scope explicitly lacks independent whole joint/source models and fresh replay; check_capture.py alone cannot establish topology, kinds or detachment. Whole pinned sources and actual native ordinary/bad observations authenticate. First relative-fixture failure is retained and repaired in this same owner.
 - [x] **ADDRESSED (verified)** — Independent verify.py resolves all full edges and typed model bijections, derives actual reachable sets and joint intersections, validates every own assertion operand/native class/shape/identity/full raw cause/TAP/status and non-target role. New exact-source fixture reexecutes all seven modes, ten whole-record RED controls and two complete-source authority RED controls. Complete original and fresh records retain actual identities with within-capture lifetime contracts; no cause normalization. Saved replay, source identities, raw streams and immutable member manifest are tracked.
 - [x] **NO REGRESSION** — All tests successful, Files=2, Tests=308 in focused public-book checks; mdBook build and rendered qualification text PASS. Source/capture afterimages and every original member conserve. Saved independent reader and another fresh exact-source reexecution PASS. Knowledge Map, task integrity, measured containment, claim inventory and staged doctrines run before normal hooks. Book/card preserve finite profile and pending actual-original/candidate/hot/native-cause successors; no production or public admission change.
+
+
+## Acceptance Checklist — complete finite native helper join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S OBSERVATIONS ONLY -- docs/audits/record-value-copy-probes-20261004/scope.txt` identifies the observations-only prerequisite, while exact Gita9815fcae captures the separately completed independent reader. Their source/capture/reader roles need one exact finite closure before actual-original execution; manifest agreement alone cannot establish graph semantics.
+- [x] **ADDRESSED (verified)** — The join pins both full done owner bodies and every committed original member, reruns the independent typed source/graph/native/cause models and every actual rejection control, and reexecutes all native modes into a new same-volume fixture. Both incomplete-owner authorities and omitted full replay reject. Complete original/fresh records, raw streams, errors, commands/statuses and source identities retain. Only the finite helper lane closes.
+- [x] **NO REGRESSION** — All tests successful, Files=2, Tests=308 in public-book checks; mdBook builds and rendered boundary text passes. Sealed ordinary join and all actual authority controls PASS with complete source/manifest/member afterimages; current production/test inputs are unchanged. Knowledge Map, task integrity, exact measured containment, claim inventory and staged doctrines precede normal hooks. Original-input/candidate-parent and permanent hot/host-native assurance remain open.

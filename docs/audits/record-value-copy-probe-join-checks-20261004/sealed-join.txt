@@ -1,0 +1,2 @@
+PASS independent complete source/typed graph/native/TAP models and reader RED controls; finite profile only.
+PASS complete finite source/capture/reader/native/control/reexecution join; original copies and hot repairs remain open.

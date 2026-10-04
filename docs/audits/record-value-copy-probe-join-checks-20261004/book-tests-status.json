@@ -1,0 +1,10 @@
+{
+  "command": [
+    "prove",
+    "-Iperl",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t"
+  ],
+  "status": 0,
+  "working_directory": "."
+}
