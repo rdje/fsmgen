@@ -1,0 +1,6 @@
+[task-acceptance] FAIL: no staged task file independently satisfies the current-slice checklist
+  configured implementation paths:
+    - doctrine/claim_verification/inventory.jsonl
+    - doctrine/live_document_size/surfaces.jsonl
+  candidate task files:
+    - docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: fresh checked ROOT CAUSE box with box-scoped root_cause signature

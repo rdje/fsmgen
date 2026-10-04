@@ -1,0 +1,7 @@
+{
+  "command": [
+    "scripts/check_claim_verification_inventory.pl"
+  ],
+  "status": 0,
+  "working_directory": "."
+}

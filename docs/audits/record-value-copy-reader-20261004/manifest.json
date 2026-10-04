@@ -1,0 +1,38 @@
+{
+  "book-transform.json": {
+    "bytes": 1273,
+    "sha256": "2e753b2445a4b7a065cd7c0d6803962bd2e723b06cdd8bb5d1223d473dbd58bd"
+  },
+  "replay-first-failure.json": {
+    "bytes": 166930,
+    "sha256": "644551e2791b0900f6919223098c27b711163697af9478d30aabbeaf119840b3"
+  },
+  "replay-initial-pass.json": {
+    "bytes": 362771,
+    "sha256": "8eeab4e4c40dc94784e1748e4fa1c1ffe920588dd187a1d1dc223af6c42f265a"
+  },
+  "replay.json": {
+    "bytes": 388042,
+    "sha256": "41b4def99756ac8e966c1e822b69541ced67896516fcf0ea9f8a80269735f0c7"
+  },
+  "replay.py": {
+    "bytes": 4135,
+    "sha256": "19533d23ac97db2bc19ea3bf5b044d72a8f2f1f9dde7b0b956d7c7a7b5899a45"
+  },
+  "scope.txt": {
+    "bytes": 4136,
+    "sha256": "f5718c57cfa574a641a0cd211686b3162bfb0ff6ba34208d88f5992abe448d5e"
+  },
+  "source-contract.json": {
+    "bytes": 11809,
+    "sha256": "d5441b8a5019893fd0cec47d2844bb29bc59cec87f563a8c4f1c288d2f8605f6"
+  },
+  "startup-policy-review.json": {
+    "bytes": 487,
+    "sha256": "2b66e067bf04ca682208664d98d9a1cf3a87282951ffe1c753dd2a3d98ab48ef"
+  },
+  "verify.py": {
+    "bytes": 20409,
+    "sha256": "45ac74886ca0062275a44eecf1dfbdd370a865a6ee08284fb4591d495a7387d1"
+  }
+}

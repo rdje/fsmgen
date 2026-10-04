@@ -1,0 +1,1 @@
+[task-acceptance] OK: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md carries fresh evidence-backed acceptance (root=git_history, no-regression=prove_summary)

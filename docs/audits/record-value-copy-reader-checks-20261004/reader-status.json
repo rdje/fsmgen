@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-copy-reader-20261004/verify.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS independent complete source/typed graph/native/TAP models and reader RED controls; finite profile only.\n",
+  "working_directory": "."
+}

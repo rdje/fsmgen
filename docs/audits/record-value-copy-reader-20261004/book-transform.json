@@ -1,0 +1,18 @@
+{
+  "after": {
+    "bytes": 161246,
+    "sha256": "79796ac2b1508c8c12295bb4719006fe44cc4df733b827cd79b4f2bca52af39f"
+  },
+  "before": {
+    "bytes": 160880,
+    "sha256": "7e42241e9f32feb0fd5a824bccb5e20c3eb67237075ab3185347849b76cec8c8"
+  },
+  "path": "docs/book/src/13k-isf-feature-support-matrix.md",
+  "replacements": [
+    {
+      "after": "failures, including kind loss, aliasing and readonly violations. The [independent finite reader](../../../docs/audits/record-value-copy-reader-20261004/scope.txt)\nnow qualifies the complete typed graphs, sharing, cycles, readonly inputs and\ndetachment against separate source models. Fresh exact-source replay preserves\nevery native mode and intended failure; altered graph, cause and source authority\ncontrols reject. This qualifies the recorded plain-helper profile only. The finite\nqualification join, actual original copy inputs, and permanent test-copy and\nconsumer repairs remain open.\n",
+      "before": "failures, including kind loss, aliasing and readonly violations. These captures remain\nunqualified until the independent joint-graph/source reader and fresh replay finish;\npermanent test-copy and consumer repairs remain open.\n"
+    }
+  ],
+  "source_revision": "0f7616a87698bb88bfead2d08d0561488024cb44"
+}

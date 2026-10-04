@@ -1,0 +1,19 @@
+# Knowledge Map: `record-value`
+
+> **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
+> **1** facts · **3** uniquely owned question entries.
+
+## Questions → facts
+
+- q="are the T1986 finite copy probes independently qualified?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
+- q="how can the finite copy probes be replayed without changing sealed evidence?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
+- q="what validates plain copy helper sharing and detachment?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
+
+## Facts
+
+### record-value-finite-copy-probe-reader
+
+_Finite record-value copy probes have independent typed graph qualification_
+
+- **date:** 2026-10-04 · **status:** current
+- **source and verification:** [`docs/knowledge/record-value-finite-copy-probe-reader.md`](../../docs/knowledge/record-value-finite-copy-probe-reader.md)

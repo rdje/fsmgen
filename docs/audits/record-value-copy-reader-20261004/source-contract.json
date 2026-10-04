@@ -1,0 +1,108 @@
+{
+  "capture_manifest": {
+    "alias.json": {
+      "bytes": 8533,
+      "sha256": "116682cd4f7d0fb392f97c086f65b64fc37bcd8c8daee5e7315518634d8dbc9c"
+    },
+    "book-afterimage.json": {
+      "bytes": 325912,
+      "sha256": "30b776d825fbcf9e1a1fa5691fbc13678f9b5288238b44f787d07127244a8a18"
+    },
+    "candidate.pl": {
+      "bytes": 2749,
+      "sha256": "e10ef526c01fc88fedbaaa8bd7053dbc9cbd5ae10317c753924386d0608eae16"
+    },
+    "check_capture.py": {
+      "bytes": 3867,
+      "sha256": "06ef71a32e084ccbcfeec1c9a6a213ea3d29c6af7173714c43619ec94edadcd7"
+    },
+    "cycle-alias.json": {
+      "bytes": 8679,
+      "sha256": "09365cbfd6bef1bc07e0492f536370be120db607c0756e9f1153aec84a201df9"
+    },
+    "mutate-input.json": {
+      "bytes": 8615,
+      "sha256": "855bf44f67bde8b049f3104fff6fd2879470704889cb755a1a5e82b414407a01"
+    },
+    "native-receipts.json": {
+      "bytes": 20597,
+      "sha256": "c6cbe45c5156ff95e9a7dea0501f0d7811e36f5408f6649911a3f365d7d939b8"
+    },
+    "numeric-result.json": {
+      "bytes": 8617,
+      "sha256": "90d9604b30aae5496ed02835076e56f4f12ff16bd64bbfb85733bc5c91f63252"
+    },
+    "ordinary.json": {
+      "bytes": 8603,
+      "sha256": "acf9943d7d9403a2992b6cc846e8ca0e6c6010d12b31b5139090865e1ad5e599"
+    },
+    "probe.pl": {
+      "bytes": 5316,
+      "sha256": "317e02bd5fab02905dc169120630eff058ba3fa451262f836a465fcd08ba6660"
+    },
+    "recipe-transform.json": {
+      "bytes": 6703,
+      "sha256": "c5290940c28a281221e5f6b49dbc3ad20a27aad2cc5ea9b5741eb4b517c0770f"
+    },
+    "run_modes.py": {
+      "bytes": 1407,
+      "sha256": "a4d5487d98aeaa7054e6c1f3caae23eb03acb7a8d3783037fec5eb4b69e95e21"
+    },
+    "scope.txt": {
+      "bytes": 3065,
+      "sha256": "da508ce559ebe5c54acb274d26b08cb8c54a0bd61f4e08c1411ef059de73aaeb"
+    },
+    "split-sharing.json": {
+      "bytes": 8644,
+      "sha256": "67d619e938564a26c8c48aefdd149dc2151fd5e50532189918de661713bb100a"
+    },
+    "storable.json": {
+      "bytes": 8611,
+      "sha256": "566b1ac015fdf663ac658b485a1a94111bd865db443993d76770556a5869866f"
+    }
+  },
+  "copy_input_manifest": {
+    "binding.json": {
+      "bytes": 1035856,
+      "sha256": "fdfd1acf303247163b9b6e31d41d7e1e6e2bd753023e9abb26dd8c13ac6cc51e"
+    },
+    "check_controls.py": {
+      "bytes": 1503,
+      "sha256": "b40bca3603b696391caffdd9bf4c44e67aee7939f291ff810da2584fe06c8c01"
+    },
+    "controls.json": {
+      "bytes": 3119,
+      "sha256": "b4d18be237edd17225c8b89268dc7877e2cc13dc945ea72604107a56c954d164"
+    },
+    "doc-updates.json": {
+      "bytes": 325689,
+      "sha256": "c6e6e6a83491c67f98269b928b8225ed8ed9b80a30d71dc0dad3d9daa6206f56"
+    },
+    "inputs.json": {
+      "bytes": 1482499,
+      "sha256": "d62fa3517e522d76cf47fa424cd6a85837fecb946de3493011b1880e89ee73d0"
+    },
+    "produce.py": {
+      "bytes": 2857,
+      "sha256": "f1d895ed1275a9433b59b1e672568fd573ee8bcb32f80b582a5fb809ea120726"
+    },
+    "recipes.json": {
+      "bytes": 4365,
+      "sha256": "7049ed4ae3a7e8613878d9273c475867eca19bbe89333723ba61902dd7bf68f3"
+    },
+    "scope.txt": {
+      "bytes": 3679,
+      "sha256": "c75e1794e015d0c49dfea5053e9ba7e6378fa5b0b76f632265626c513e620bd8"
+    },
+    "verify.py": {
+      "bytes": 7201,
+      "sha256": "f1c8ef1151cbb1a075d6963f50404cdd1eafdc8a153f71dad9a23f065b02e09b"
+    }
+  },
+  "programs": {
+    "candidate.pl": "use strict;\nuse warnings;\nuse JSON::PP;\nuse Scalar::Util qw(refaddr blessed reftype);\nuse Test::More;\n\nsub source_value_copy {\n    my ($value, $copies) = @_;\n    return $value unless ref($value);\n    die 'unexpected source reference' if blessed($value)\n        || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');\n    $copies ||= {};\n    my $address = refaddr($value);\n    return $copies->{$address} if exists $copies->{$address};\n    my $copy = ref($value) eq 'HASH' ? {} : [];\n    $copies->{$address} = $copy;\n    if (ref($value) eq 'HASH') {\n        $copy->{$_} = source_value_copy($value->{$_}, $copies) for keys %$value;\n    } else {\n        push @$copy, source_value_copy($_, $copies) for @$value;\n    }\n    return $copy;\n}\n\nsub snapshot_graph {\n    my ($value, $seen, $path) = @_;\n    return $value unless ref($value);\n    $seen ||= {}; $path //= '';\n    my $address = refaddr($value);\n    return ['reference', $seen->{$address}] if exists $seen->{$address};\n    $seen->{$address} = $path;\n    die 'unexpected native snapshot reference' if blessed($value);\n    if (ref($value) eq 'HASH') {\n        my %copy;\n        for my $key (sort keys %$value) {\n            my $escaped = $key; $escaped =~ s/~/~0/g; $escaped =~ s{/}{~1}g;\n            $copy{$key} = snapshot_graph($value->{$key}, $seen, \"$path/$escaped\");\n        }\n        return ['hash', \\%copy];\n    }\n    return ['array', [map {snapshot_graph($value->[$_], $seen, \"$path/$_\")} 0..$#$value]]\n        if ref($value) eq 'ARRAY';\n    die 'unexpected snapshot reference';\n}\n\nsub input_snapshot {JSON::PP->new->canonical->encode(snapshot_graph($_[0]))}\n\nsub source_references {\n    my @pending = ($_[0]);\n    my %seen;\n    while (@pending) {\n        my $value = pop @pending;\n        next unless ref($value);\n        die 'unexpected source reference' if blessed($value)\n            || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');\n        my $address = refaddr($value);\n        next if exists $seen{$address};\n        $seen{$address} = 1;\n        push @pending, ref($value) eq 'HASH' ? values(%$value) : @$value;\n    }\n    return \\%seen;\n}\n\nsub source_copy {\n    my ($value, $label) = @_;\n    my $before = input_snapshot($value);\n    my $original = source_references($value);\n    my $copy = source_value_copy($value);\n    my $copied = source_references($copy);\n    my $shared = grep {exists $original->{$_}} keys %$copied;\n    is(input_snapshot($value), $before, \"$label copy preserves original kinds and sharing\");\n    is(input_snapshot($copy), $before, \"$label copy preserves kinds and sharing\");\n    is(scalar(keys %$copied), scalar(keys %$original), \"$label copy preserves reference population\");\n    is($shared, 0, \"$label copy is isolated from source\");\n    return $copy;\n}\n\n1;\n",
+    "probe.pl": "use strict;\nuse warnings;\nuse lib 'perl', 't/lib';\nuse Test::More;\nuse JSON::PP;\nuse Scalar::Util qw(refaddr blessed reftype);\nuse Storable ();\nrequire './docs/audits/record-value-copy-probes-20261004/candidate.pl';\n\nmy ($mode, $destination) = @ARGV;\nmy %allowed = map {$_ => 1} qw(ordinary storable alias split-sharing cycle-alias mutate-input numeric-result);\ndie 'mode and repository-relative destination required' unless defined $mode\n    && $allowed{$mode} && defined $destination && $destination =~ m{\\Adocs/audits/record-value-copy-probes-20261004/};\nmy $json = JSON::PP->new->canonical;\nmy $pure = \\&source_value_copy;\nmy $assert_is = Test::More->can('is');\nmy (@cases, @assertions, @native);\nmy $active;\n\nsub observed_graph {\n    my ($value, $seen, $path) = @_;\n    return $value unless ref($value);\n    die 'unsupported observation reference' if blessed($value)\n        || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');\n    $seen ||= {}; $path //= '';\n    my $address = refaddr($value);\n    return ['reference', $seen->{$address}] if exists $seen->{$address};\n    $seen->{$address} = $path;\n    if (ref($value) eq 'HASH') {\n        my %result;\n        for my $key (sort keys %$value) {\n            my $escaped = $key; $escaped =~ s/~/~0/g; $escaped =~ s{/}{~1}g;\n            $result{$key} = observed_graph($value->{$key}, $seen, \"$path/$escaped\");\n        }\n        return ['hash', \\%result];\n    }\n    return ['array', [map {observed_graph($value->[$_], $seen, \"$path/$_\")} 0..$#$value]];\n}\n\nsub specimen {\n    my ($name) = @_;\n    return undef if $name eq 'null';\n    return 1 if $name eq 'number';\n    return '1' if $name eq 'string';\n    return [] if $name eq 'empty-array';\n    if ($name eq 'tree') {\n        my $number = 1;\n        $number =~ /\\A\\d+\\z/; # Actual numeric validation also supplies a string flag.\n        return {number => $number, string => '1', children => [undef, {width => 7}]};\n    }\n    if ($name eq 'shared') {\n        my $child = {number => 1, string => '1'};\n        return {left => $child, right => $child};\n    }\n    if ($name eq 'hash-cycle') {\n        my $root = {number => 1}; $root->{self} = $root; return $root;\n    }\n    if ($name eq 'array-cycle') {\n        my $root = [1, '1']; push @$root, $root; return $root;\n    }\n    die 'unknown specimen';\n}\n\n{\n    no warnings 'redefine';\n    local *main::is = sub ($$;$) {\n        my ($actual, $expected, $label) = @_;\n        my $passed = $assert_is->(@_);\n        push @assertions, {case => $active, label => $label,\n            actual => $actual, expected => $expected, passed => $passed ? 1 : 0};\n        return $passed;\n    };\n    local *main::source_value_copy = sub {\n        my ($value, $memo) = @_;\n        return $pure->(@_) if defined $memo;\n        my $copy = $pure->(@_); # Bad providers execute the complete correct copy first.\n        return Storable::dclone($value) if $mode eq 'storable' && $active eq 'tree';\n        return $value if $mode eq 'alias' && $active eq 'shared';\n        if ($mode eq 'split-sharing' && $active eq 'shared') {\n            $copy->{right} = $pure->($value->{right});\n        }\n        if ($mode eq 'cycle-alias' && $active eq 'hash-cycle') {\n            $copy->{self} = $value;\n        }\n        if ($mode eq 'mutate-input' && $active eq 'tree') {\n            $value->{number} = '1';\n        }\n        if ($mode eq 'numeric-result' && $active eq 'tree') {\n            $copy->{number} = '1';\n        }\n        return $copy;\n    };\n    for my $name (qw(null number string empty-array tree shared hash-cycle array-cycle)) {\n        $active = $name;\n        my $input = specimen($name);\n        my $before = $json->decode($json->encode(observed_graph($input)));\n        my $start = scalar @assertions;\n        my $copy = source_copy($input, $name);\n        push @cases, {name => $name, before => $before, after => observed_graph($input),\n            result => observed_graph($copy), joint => observed_graph({input => $input, result => $copy}),\n            assertion_start => $start, assertion_end => scalar @assertions};\n    }\n}\n\n# Both copying and snapshots reject the old finite native exception in this\n# stricter T1986 plain profile. Preserve actual class/shape/identity and errors.\nfor my $class (qw(CoverageCauseSentinel CopyProbeNativeSentinel)) {\n    my $value = bless {}, $class;\n    my $before = {class => ref($value), reftype => reftype($value),\n        identity => refaddr($value), keys => [sort keys %$value]};\n    for my $operation (qw(copy snapshot)) {\n        my $ok = eval {\n            $operation eq 'copy' ? $pure->($value) : input_snapshot($value);\n            1;\n        };\n        my $error = $@;\n        ok(!$ok, \"$class $operation refuses unsupported native reference\");\n        push @native, {operation => $operation, before => $before,\n            after => {class => ref($value), reftype => reftype($value),\n                identity => refaddr($value), keys => [sort keys %$value]},\n            accepted => $ok ? 1 : 0, error => $error};\n    }\n}\nopen my $out, '>:raw', $destination or die $!;\nprint {$out} $json->encode({mode => $mode, cases => \\@cases,\n    assertions => \\@assertions, native => \\@native, host => {perl => \"$^V\",\n        json_pp => $JSON::PP::VERSION, storable => $Storable::VERSION}}), \"\\n\" or die $!;\nclose $out or die $!;\ndone_testing;\n"
+  },
+  "revision": "0f7616a87698bb88bfead2d08d0561488024cb44",
+  "source_directory": "docs/audits/record-value-copy-probes-20261004"
+}

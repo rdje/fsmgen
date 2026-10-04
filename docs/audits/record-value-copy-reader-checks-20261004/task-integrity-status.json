@@ -1,0 +1,7 @@
+{
+  "command": [
+    "scripts/check_task_tree_integrity.pl"
+  ],
+  "status": 0,
+  "working_directory": "."
+}

@@ -1,0 +1,10 @@
+{
+  "claim_template_sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd",
+  "cleanup_current_at_startup": true,
+  "cleanup_record": "docs/ARTIFACT_CLEANUP.md",
+  "containment_adoption_guide": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md",
+  "containment_authority": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+  "local_claim_authority": "CLAIM_VERIFICATION.md",
+  "read_only_source_equals_retained_review": true,
+  "readme_policy_adopted": "README_POLICY.md"
+}

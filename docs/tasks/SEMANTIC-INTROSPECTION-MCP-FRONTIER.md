@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-10-03`
+- Last updated: `2026-10-04`
 - Owner: repo-local workflow
 
 ## Goal
@@ -4401,11 +4401,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Independently qualify complete finite candidate native probe graphs and controls.`
   Acceptance: `Authenticate whole capture/source/recipe/host/command/status/TAP and raw native errors; independently reconstruct every joint graph/declared edge/target/reachable set and exact primitive/source expectations. Prove readonly, kinds, sharing, reference population and actual detachment for ordinary; prove exact genuine failures and full non-target conservation for six bad modes. Native class/shape/identity must retain per actual capture. Reexecute into fresh same-volume outputs without rerunning sealed producers in place or normalizing raw native causes/IDs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete docs/audits/record-value-copy-reader-20261004/scope.txt binds exact Git0f7616a8 programs and immutable original manifests to independent authored object models and complete typed edge/target bijections for all eight cases in every seven-mode native capture. Reachable sets independently prove readonly/kinds/sharing/populations and actual joint isolation; genuine providers reach exact statuses0/1/1/2/3/1/1 and non-target records conserve. Four native boundary records per mode retain full class/HASH shape/actual within-capture identity/raw primary cause. Ten actual whole graph/cause/identity/false-green mutations and both changed complete program authorities reject. Fresh exact-source same-volume fixture reruns all modes, raw streams/receipts and independent RED controls without touching sealed producers; full old/fresh records retain addresses in their own lifetimes. First failed absolute-coordinate receipt stays historical; corrected relative runner and new fixture pass. Self-sealed watcher and new fresh reexecution PASS. Public book All tests successful Files2 Tests308/build/rendered text PASS; current claim template equals retained review and cleanup current. Only independent finite reader leaf closes; finite join .3, actual original inputs, candidate-parent and permanent hot/cause repairs remain open.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.2.3`
   Status: `pending`
@@ -7173,3 +7173,10 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub source_value_copy' -- t/1960-isf-formal-reservation-coverage.t binds the authenticated plain-copy recipe source. Complete original test-copy inputs are trees and actual legacy copies change kinds, so sharing/cycle/native and bad-provider applicability must be executed rather than inferred. Exact old snapshot native exception is removed only for the stricter T1986 plain profile. Candidate helper and joint-graph truth remain unqualified until independent source/graph validation and fresh replay.
 - [x] **ADDRESSED (native observations captured)** — Actual ordinary36 assertions PASS across eight primitive/tree/share/cycle cases and four unsupported-native assertions. Six genuine Storable/correct-clone-then-alias/broken-sharing/cycle/source-kind/result-kind providers fail exact declared helper assertions with statuses1/1/2/3/1/1. Full native graphs, operands, class/shape/identity/raw errors and whole TAP/command/status/program records authenticate under final15-member sealed capture checker. Independent re-derivation/falsification of graph/source expectations and fresh durability reexecution explicitly remain missing, owned by .2 and final join .3; no helper qualification or permanent repair closure.
 - [x] **NO REGRESSION** — All tests successful; actual public book Files=2 Tests=308 and mdBook build PASS. Live production/T1986/guard sources and all prior source/native/field/model/product/control archives remain unchanged. Exact source transformation tightens only finite candidate snapshot profile; all raw native data and messages remain unnormalized. Fresh task/KM/containment/final claim census and staged doctrines/hooks precede observations-only commit. No actual-original17 candidate execution, hot consumer, native-universal, structured-cycle, HDL/full-CI/push signoff.
+
+
+## Acceptance Checklist — independent finite native probe reader
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S OBSERVATIONS ONLY -- docs/audits/record-value-copy-probes-20261004/scope.txt` identifies 0f7616a8 as observations-only authority. Complete prior scope explicitly lacks independent whole joint/source models and fresh replay; check_capture.py alone cannot establish topology, kinds or detachment. Whole pinned sources and actual native ordinary/bad observations authenticate. First relative-fixture failure is retained and repaired in this same owner.
+- [x] **ADDRESSED (verified)** — Independent verify.py resolves all full edges and typed model bijections, derives actual reachable sets and joint intersections, validates every own assertion operand/native class/shape/identity/full raw cause/TAP/status and non-target role. New exact-source fixture reexecutes all seven modes, ten whole-record RED controls and two complete-source authority RED controls. Complete original and fresh records retain actual identities with within-capture lifetime contracts; no cause normalization. Saved replay, source identities, raw streams and immutable member manifest are tracked.
+- [x] **NO REGRESSION** — All tests successful, Files=2, Tests=308 in focused public-book checks; mdBook build and rendered qualification text PASS. Source/capture afterimages and every original member conserve. Saved independent reader and another fresh exact-source reexecution PASS. Knowledge Map, task integrity, measured containment, claim inventory and staged doctrines run before normal hooks. Book/card preserve finite profile and pending actual-original/candidate/hot/native-cause successors; no production or public admission change.

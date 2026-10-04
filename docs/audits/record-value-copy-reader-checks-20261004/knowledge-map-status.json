@@ -1,0 +1,7 @@
+{
+  "command": [
+    "knowledge-map/scripts/check_knowledge_map.sh"
+  ],
+  "status": 0,
+  "working_directory": "."
+}

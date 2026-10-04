@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-copy-reader-20261004/replay.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS fresh exact-source seven-mode native replay and independent complete graph/cause/TAP controls: .artifacts/record-value-copy-reader-20261004/replay-ght0k7u4/replay-receipt.json\n",
+  "working_directory": "."
+}

@@ -1,0 +1,7 @@
+{
+  "command": [
+    "scripts/check_task_acceptance.sh"
+  ],
+  "status": 1,
+  "working_directory": "."
+}

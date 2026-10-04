@@ -1,0 +1,12 @@
+{
+  "expected_text": [
+    "independent finite reader",
+    "complete typed graphs, sharing, cycles, readonly inputs and",
+    "detachment against separate source models.",
+    "finite",
+    "permanent test-copy and"
+  ],
+  "path": "docs/book/book/13k-isf-feature-support-matrix.html",
+  "text_check": "PASS",
+  "visual_qa": "pending existing owner"
+}
