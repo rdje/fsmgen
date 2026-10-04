@@ -203,9 +203,14 @@ complete numeric metadata results. Private validation copies may hold decimal
 strings before numeric rebuilding. The [actual copy controls](../../../docs/audits/interface-metadata-copy-controls-20261004/scope.txt)
 show that scalar-preserving copies conserve ordinary products. The old test
 still passes a caller number-to-string mutation, an aliased fixture copy and a
-real numeric-rebuilding bypass. Those three test-assurance gaps have bounded
-repair ownership; the live provider remains correct. The candidate copier also
-preserves the actual rejected cyclic type without sharing caller references.
+real numeric-rebuilding bypass. The [copy-assurance repair](../../../docs/audits/interface-metadata-copy-repair-20261004/scope.txt)
+now checks complete fixture kinds, sharing, reference counts and isolation.
+Typed graph baselines check caller immutability, and complete metadata products
+retain numeric widths, signed flags and packed ranges. The genuine kind,
+alias, Storable-restoration and numeric-bypass controls now fail the intended
+assertions; ordinary products and primary causes remain the same. The actual
+rejected cyclic type also copies without sharing caller references. Contextual
+diagnostic repairs remain separately owned.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

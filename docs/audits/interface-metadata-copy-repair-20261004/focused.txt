@@ -1,0 +1,5 @@
+ram-guard: PID 94901; host 73.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1983-isf-interface-port-metadata.t .. ok
+All tests successful.
+Files=1, Tests=7,  3 wallclock secs ( 0.01 usr  0.00 sys +  0.61 cusr  0.79 csys =  1.41 CPU)
+Result: PASS

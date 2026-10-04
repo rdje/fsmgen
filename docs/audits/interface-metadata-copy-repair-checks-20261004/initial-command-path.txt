@@ -1,0 +1,15 @@
+ram-guard: PID 32848; host 73.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1983-isf-interface-port-metadata.t ....... ok
+Cannot detect source of 't/1986-isf-record-input-read.t'! at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 256.
+	TAP::Parser::IteratorFactory::detect_source(TAP::Parser::IteratorFactory=HASH(0x79801cc768), TAP::Parser::Source=HASH(0x797fb08d20)) called at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 211
+	TAP::Parser::IteratorFactory::make_iterator(TAP::Parser::IteratorFactory=HASH(0x79801cc768), TAP::Parser::Source=HASH(0x797fb08d20)) called at /System/Library/Perl/5.34/TAP/Parser.pm line 472
+	TAP::Parser::_initialize(TAP::Parser=HASH(0x79801cc618), HASH(0x79801abb10)) called at /System/Library/Perl/5.34/TAP/Object.pm line 55
+	TAP::Object::new("TAP::Parser", HASH(0x79801abb10)) called at /System/Library/Perl/5.34/TAP/Object.pm line 130
+	TAP::Object::_construct(TAP::Harness=HASH(0x797f361c90), "TAP::Parser", HASH(0x79801abb10)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 856
+	TAP::Harness::make_parser(TAP::Harness=HASH(0x797f361c90), TAP::Parser::Scheduler::Job=HASH(0x79801abfd8)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 655
+	TAP::Harness::_aggregate_single(TAP::Harness=HASH(0x797f361c90), TAP::Parser::Aggregator=HASH(0x797f360588), TAP::Parser::Scheduler=HASH(0x79801abea0)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 747
+	TAP::Harness::aggregate_tests(TAP::Harness=HASH(0x797f361c90), TAP::Parser::Aggregator=HASH(0x797f360588), "t/1983-isf-interface-port-metadata.t", "t/1986-isf-record-input-read.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1305-isf-book-feature-matrix-audit.t") called at /System/Library/Perl/5.34/TAP/Harness.pm line 558
+	TAP::Harness::__ANON__() called at /System/Library/Perl/5.34/TAP/Harness.pm line 571
+	TAP::Harness::runtests(TAP::Harness=HASH(0x797f361c90), "t/1983-isf-interface-port-metadata.t", "t/1986-isf-record-input-read.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1305-isf-book-feature-matrix-audit.t") called at /System/Library/Perl/5.34/App/Prove.pm line 548
+	App::Prove::_runtests(App::Prove=HASH(0x100aecb98), HASH(0x797f307030), "t/1983-isf-interface-port-metadata.t", "t/1986-isf-record-input-read.t", "t/1303-isf-public-live-book-paths-audit.t", "t/1305-isf-book-feature-matrix-audit.t") called at /System/Library/Perl/5.34/App/Prove.pm line 506
+	App::Prove::run(App::Prove=HASH(0x100aecb98)) called at /usr/bin/prove line 13

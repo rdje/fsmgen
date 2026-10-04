@@ -1,0 +1,12 @@
+ram-guard: PID 33398; host 73.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+t/1983-isf-interface-port-metadata.t ....... ok
+t/1986-isf-record-port-value-gates.t ....... ok
+t/1303-isf-public-live-book-paths-audit.t .. ok
+t/1305-isf-book-feature-matrix-audit.t ..... ok
+All tests successful.
+Files=4, Tests=325,  4 wallclock secs ( 0.02 usr  0.01 sys +  2.31 cusr  0.80 csys =  3.14 CPU)
+Result: PASS
+ INFO Book building has started
+ INFO Running the html backend
+ WARN search index is very large (15054637 bytes)
+ INFO HTML book written to `${REPO_ROOT}/docs/book/book`

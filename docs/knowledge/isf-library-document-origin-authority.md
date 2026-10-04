@@ -20,7 +20,7 @@ evidence: >-
   docs/audits/interface-metadata-runtime-20261004/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
-  python3 -B docs/audits/interface-metadata-copy-controls-20261004/verify.py;
+  python3 -B docs/audits/interface-metadata-copy-repair-20261004/verify.py;
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/2046-isf-library-document-origin-authority.t
   t/2045-isf-same-source-library-origins.t
@@ -50,8 +50,8 @@ Constructors, library/file helpers and ten validator/finalizer sites bind comple
 plan](../audits/aggregate-record-helper-plan-20261003/scope.txt) splits sources. Widths bind numeric
 products. [Native probes](../audits/interface-metadata-runtime-20261004/scope.txt) expose Storable
 location and parser filename false positives;
-[Copies](../audits/interface-metadata-copy-controls-20261004/scope.txt) preserve ordinary products;
-kind/alias/projection controls expose owned assurance gaps. Context repair stays open. [ASCII
+[Repair](../audits/interface-metadata-copy-repair-20261004/scope.txt) preserves ordinary products;
+kind/alias/lossy/projection controls fail strengthened assertions. Context repair open. [ASCII
 census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt) overlaps text; its [kind
 reader](../audits/current-diagnostic-lexical-kinds-20261002/verify.py) qualifies numeric forms. Cold
 review stays open.

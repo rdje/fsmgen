@@ -1,0 +1,73 @@
+Owner SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3.2.
+
+Re-derivation: exact original/pure/control diagnosis and full source/field models
+reverify first. Complete original12 source bodies bind Git262b; only T1983
+changes. Its complete after-body and exact before->after transformation bind
+all qualified helper/fixture/provider roles. Every native run saves all twelve
+actual source bodies before/after and they agree with the complete binding.
+Provider, parser, facade, path/frontend/public locality, T1959/T1960 and all
+other source bodies remain unchanged. Old diagnostic-context defects remain
+separately owned .5; this slice repairs only three evidenced P2 assurance gaps.
+
+The whole qualified plain copier, original graph observer and reviewed strong
+copy wrapper replace lossy Storable test copies. Unsupported blessed/other
+referents refuse; no native class capability is inferred. Each actual41 fixture
+copy permanently checks complete source/copy primitive kinds and sharing,
+unchanged source, reference population and no original overlap. Two readonly
+baselines use graph snapshots instead of Storable clones. Numeric metadata
+products and their existing JSON roundtrip use canonical typed whole-graph
+comparisons against the independently authored expected layout/alias facts.
+The actual ordinary test remains seven subtests and now330 permanent leaf
+checks:166 existing consumers plus164 strong-copy checks. No scope/cause/public
+behavior is added. Intentional private validation spellings/rebuilding stay.
+
+Five complete native ordinary/kind/alias/lossy/projection runs retain all105 API,
+102 private copies,41 test copies,44 helpers and3 parses. One additional actual
+cyclic-refusal input copy adds a cycle row and four strong checks in each audit
+run:144 total copies and334 leaf consumers. Its real seven-reference back-edge,
+primitive kinds/sharing and isolation pass; candidate back-edge cleanup occurs
+only after proof, and the unchanged real provider still emits the complete
+cyclic-type refusal. Original fixtures, full parser/API products/causes/warnings
+and complete graphs conserve against the qualified original pure variant;
+original numeric bad-input seed kinds are restored, not coerced by the oracle.
+The two removed value-only baseline copies become typed snapshots; every other
+original copy joins its exact source/API identity and complete graph/reference
+population. All original166 consumer labels/ordinary observations join, with
+only the qualified typed metadata/readonly comparisons strengthened.
+
+Genuine post-call width8 number->string control now fails exactly the readonly
+consumer (native exit1). Actual domain fixture alias with8 source overlaps now
+fails exactly isolation (exit1). Restoring Storable to all41 actual normal test
+copies loses48 widths in12 qualified copies and fails those12 kind assertions
+across two subtests (exit2); baseline16 earlier losses disappear with snapshots.
+Actual complete provider numeric bypass removes exactly two casts, changes the
+same79 equal-value final primitive kinds and fails seven product comparisons
+across four subtests (exit4). All other whole input/copy/result properties and
+complete primary causes join qualified original or pure controls; projection
+private snapshot clone coordinates bind original line142 to eval47 line5.
+These native failures are expected counterfactual RED outcomes, not regressions.
+The ordinary run exits0 and all334 native audit checks pass; focused prove is
+Files=1, Tests=7, All tests successful.
+
+Falsification: omission of one real copy is RED1 at complete membership. Unsafe
+promotion of any native kind/alias/lossy/projection fault to passing assurance
+is independently RED1 at its actual failure predicate. Full saved comparison
+operands additionally join each of the168 strong native checks to actual copy
+graphs/refcounts/overlap, preventing a count-only or label-only proof.
+
+Durability: exact before/after/helper/observer bodies, full native source/API/
+copy/parser/consumer/cycle/document streams, original field models, complete
+TAP/statuses/errors, independent reader and control receipts, manifest/task/
+card/book/Git. Only actual repository-root coordinate prefixes normalize;
+file parser inputs allow solely the exact random same-volume imported.isf
+coordinate. The expanded source_copy frame binds exact source site and named
+helper, including only the duplicate-entry push site's list context; other
+copy sites are scalar. Full remaining native frame/trace details stay saved
+without incidental-byte identity claims. Initial unnormalized-coordinate and
+expanded/push-context reader failures are retained unqualified, then corrected
+by source-owned exact coordinate/frame assertions. The preceding canonical
+reader passes repaired3951 and original93ff historical source contexts after
+this hot edit, preserving complete earlier evidence rather than weakening it.
+No HDL/compiler/simulator, macro/proxy/native class/public admission expansion
+is established. Outer complete joins, diagnostic repair and remaining cold
+reviews remain owned; native-access/full CI/startup/visual QA stay open.

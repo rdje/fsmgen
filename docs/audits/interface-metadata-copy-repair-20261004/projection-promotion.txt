@@ -1,0 +1,8 @@
+PASS complete native helper/adjacent/API/private/test-copy/assertion populations and independent ordinary causes bind immutable source; actual Storable location and parser primary-filename echoes expose two owned contextual false positives. Field/copy semantics remain .3-owned before .5 repairs and .4 join.
+PASS complete original94 width fields/32 changed copies/113 unchanged controls independently bind authored local/imported/validator source meanings. All59 accepted whole metadata products match typed numeric/source/leaf-range/alias/domain/null/empty models; actual fixture bytes conserve. Private validation copies are not final product or test-copy kind authority; actual candidate/assurance controls remain successor-owned.
+PASS complete original/pure/kind/alias/projection streams and actual seven-reference cycle qualification; scalar-preserving test copies conserve whole ordinary products/primary causes while genuine caller-kind/alias/numeric-projection controls expose owned test-assurance false GREENS. Private numeric rebuilding stays intentional; live test repair is successor-owned.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/interface-metadata-copy-repair-20261004/verify.py", line 220, in <module>
+    assert failed, 'genuine fault cannot be promoted to passing repaired assurance: ' + name
+           ^^^^^^
+AssertionError: genuine fault cannot be promoted to passing repaired assurance: projection

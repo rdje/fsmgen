@@ -3,7 +3,7 @@ use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
 use JSON::PP;
-use Storable qw(dclone);
+use Scalar::Util qw(refaddr blessed);
 use File::Temp qw(tempdir);
 use FSM::Test::ProjectDataLocality;
 use FSM::Adapter::ISF;
@@ -11,6 +11,83 @@ use FSM::Support::ISFInterfacePortMetadata qw(
     capture_interface_port_metadata snapshot_interface_port_metadata
     interface_port_metadata_contract
 );
+
+sub source_value_copy {
+    my ($value, $copies) = @_;
+    return $value unless ref($value);
+    die 'unexpected source reference' if blessed($value)
+        || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');
+    $copies ||= {};
+    my $address = refaddr($value);
+    return $copies->{$address} if exists $copies->{$address};
+    my $copy = ref($value) eq 'HASH' ? {} : [];
+    $copies->{$address} = $copy;
+    if (ref($value) eq 'HASH') {
+        $copy->{$_} = source_value_copy($value->{$_}, $copies) for keys %$value;
+    } else {
+        push @$copy, source_value_copy($_, $copies) for @$value;
+    }
+    return $copy;
+}
+
+sub snapshot_graph {
+    my ($value, $seen, $path) = @_;
+    return $value unless ref($value);
+    die 'unqualified native graph reference' if blessed($value);
+    $seen ||= {}; $path //= '';
+    my $address = refaddr($value);
+    return ['reference', $seen->{$address}] if exists $seen->{$address};
+    $seen->{$address} = $path;
+    if (ref($value) eq 'HASH') {
+        my %out;
+        for my $key (sort keys %$value) {
+            my $escaped = $key; $escaped =~ s/~/~0/g; $escaped =~ s{/}{~1}g;
+            $out{$key} = snapshot_graph($value->{$key}, $seen, "$path/$escaped");
+        }
+        return ['hash', \%out];
+    }
+    return ['array', [map {snapshot_graph($value->[$_], $seen, "$path/$_")} 0..$#$value]]
+        if ref($value) eq 'ARRAY';
+    die 'unqualified native graph reference';
+}
+
+sub input_snapshot {JSON::PP->new->canonical->encode(snapshot_graph($_[0]))}
+
+sub source_references {
+    my @pending = ($_[0]);
+    my %seen;
+    while (@pending) {
+        my $value = pop @pending;
+        next unless ref($value);
+        die 'unexpected source reference' if blessed($value)
+            || (ref($value) ne 'HASH' && ref($value) ne 'ARRAY');
+        my $address = refaddr($value);
+        next if exists $seen{$address};
+        $seen{$address} = 1;
+        push @pending, ref($value) eq 'HASH' ? values(%$value) : @$value;
+    }
+    return \%seen;
+}
+
+sub source_copy {
+    my ($value, $label) = @_;
+    my $before = input_snapshot($value);
+    my $original = source_references($value);
+    my $copy = source_value_copy($value);
+    my $copied = source_references($copy);
+    my $shared = grep {exists $original->{$_}} keys %$copied;
+    is(input_snapshot($value), $before, "$label copy preserves original kinds and sharing");
+    is(input_snapshot($copy), $before, "$label copy preserves kinds and sharing");
+    is(scalar(keys %$copied), scalar(keys %$original), "$label copy preserves reference population");
+    is($shared, 0, "$label copy is isolated from source");
+    return $copy;
+}
+
+# Compare complete primitive kinds as well as values in finite public products.
+sub is_metadata {
+    my ($actual, $expected, $label) = @_;
+    is(input_snapshot($actual), input_snapshot($expected), $label);
+}
 
 my $parser = FSM::Adapter::ISF->new;
 my $json = JSON::PP->new->canonical;
@@ -38,18 +115,18 @@ subtest 'declared scalar ports retain ordering and alias facts' => sub {
         {name => 'unused', direction => 'output', width => 2},
         {name => 'done', direction => 'output', width => 1},
     ];
-    my $before = dclone($actor);
+    my $before = input_snapshot($actor);
     my $actual = capture_interface_port_metadata($actor->{interface});
-    is_deeply($actual, $expected, 'input order followed by output order, including unused declarations');
-    is_deeply($json->decode($json->encode($actual)), $expected, 'closed result is JSON-safe');
+    is_metadata($actual, $expected, 'input order followed by output order, including unused declarations');
+    is_metadata($json->decode($json->encode($actual)), $expected, 'closed result is JSON-safe');
     $actual->[1]{width} = 99;
-    is_deeply($actor, $before, 'projection does not share parser objects');
-    my $domain_interface = dclone($actor->{interface});
+    is(input_snapshot($actor), $before, 'projection does not share parser objects');
+    my $domain_interface = source_copy($actor->{interface}, 'domain interface');
     $domain_interface->{inputs}[1]{domain} = 'aux';
     my $scoped = capture_interface_port_metadata($domain_interface, 'core');
     is_deeply([map { $_->{domain} } @$scoped], [qw(core aux core core)],
         'explicit domains override the declared default');
-    is_deeply(capture_interface_port_metadata({inputs => [{name => 'data-lane', width => 2}], outputs => []}),
+    is_metadata(capture_interface_port_metadata({inputs => [{name => 'data-lane', width => 2}], outputs => []}),
         [{name => 'data-lane', direction => 'input', width => 2}],
         'metadata preserves nonempty opaque port names without inventing source restrictions');
 };
@@ -88,15 +165,15 @@ subtest 'capture and snapshot detach before first numeric read on valid and refu
         ['snapshot',\&snapshot_interface_port_metadata,$record],
     ) {
         my ($name,$produce,$template) = @$case;
-        my $value=dclone($template);
+        my $value=source_copy($template, "$name numeric seed");
         stringify_numeric_properties($value);
         my $before=$json->encode($value);
         my $actual=$produce->($value);
         is($json->encode($value),$before,"$name preserves original scalar kinds on its first read");
-        is_deeply($actual,$record,"$name still returns the same independently expected numeric layout");
+        is_metadata($actual,$record,"$name still returns the same independently expected numeric layout");
         $actual->[0]{fields}[0]{width}=99;
         is($json->encode($value),$before,"$name output mutation cannot reach source facts");
-        $value=dclone($template);
+        $value=source_copy($template, "$name refused numeric seed");
         stringify_numeric_properties($value);
         if ($name eq 'capture') {
             push @{$value->{outputs}}, {name=>'invalid',width=>'bad'};
@@ -113,11 +190,11 @@ subtest 'capture and snapshot detach before first numeric read on valid and refu
 };
 
 subtest 'resolved record preparation preserves independently expected leaf ranges' => sub {
-    my $before = dclone($record_interface);
+    my $before = input_snapshot($record_interface);
     my $actual = capture_interface_port_metadata($record_interface);
-    is_deeply($actual, $record, 'nested record/list leaves have authored order and exact packed ranges');
+    is_metadata($actual, $record, 'nested record/list leaves have authored order and exact packed ranges');
     $actual->[0]{fields}[0]{lsb} = 0;
-    is_deeply($record_interface, $before, 'nested type objects remain detached');
+    is(input_snapshot($record_interface), $before, 'nested type objects remain detached');
     my $copy = snapshot_interface_port_metadata($record);
     $copy->[0]{fields}[1]{state_model} = 'two_state';
     is($record->[0]{fields}[1]{state_model}, 'four_state', 'snapshot does not share nested fields');
@@ -140,12 +217,12 @@ subtest 'imported scalar and record aliases retain qualified identity' => sub {
         . ' (storage (var packet (type shared.packet_t))) (transaction main (complete done)))');
     my $parsed = $parser->parse_file($path);
     my $ports = capture_interface_port_metadata($parsed->{interface});
-    is_deeply($ports->[0], {name => 'data', direction => 'input', width => 8,
+    is_metadata($ports->[0], {name => 'data', direction => 'input', width => 8,
         type => 'shared.byte', type_kind => 'bits'}, 'imported scalar alias is not flattened to an anonymous width');
     my $prepared = capture_interface_port_metadata({inputs => [{name => 'packet', width => 3,
         type => 'shared.packet_t', type_spec => $parsed->{storage}[0]{type_spec}}], outputs => []});
     is($prepared->[0]{type}, 'shared.packet_t', 'record producer retains imported alias');
-    is_deeply($prepared->[0]{fields}, [
+    is_metadata($prepared->[0]{fields}, [
         {path => 'code', width => 2, lsb => 1, msb => 2, signed => 0},
         {path => 'flag', width => 1, lsb => 0, msb => 0, signed => 0},
     ], 'independent imported layout oracle');
@@ -181,9 +258,9 @@ subtest 'closed snapshots reject malformed and contradictory metadata' => sub {
         sub { $_[0][0]{fields}[0]{lsb} = 'bad' }, sub { $_[0][0]{fields}[0]{width} = 'bad' },
         sub { $_[0][0]{fields}[-1]{lsb} = 1; $_[0][0]{fields}[-1]{width} = 1 },
         sub { $_[0][0]{fields}[0]{signed} = 2 }, sub { $_[0][0]{fields}[0]{state_model} = 'unknown' },
-        sub { push @{$_[0]}, dclone($_[0][0]) },
+        sub { push @{$_[0]}, source_copy($_[0][0], 'duplicate metadata entry') },
     ) {
-        my $value = dclone($record);
+        my $value = source_copy($record, 'malformed snapshot seed');
         $change->($value);
         push @bad, $value;
     }
@@ -209,7 +286,7 @@ subtest 'producer rejects inconsistent resolved declarations without warnings' =
         sub { delete $_[0]{inputs}[0]{type} },
         sub { $_[0]{inputs}[0]{type_spec} = {kind => 'list', width => 1, items => [{kind => 'bit', width => 1}]} },
     ) {
-        my $value = dclone($record_interface);
+        my $value = source_copy($record_interface, 'invalid producer seed');
         $change->($value);
         push @bad, $value;
     }
