@@ -337,8 +337,21 @@ value gate's scalar-leaf refusal. One private list-offset calculation promotes
 a sibling width from string to number; its whole source/copy/caller relation is
 retained, while the original reference caller stays unchanged. Missing calls or
 type stages, wrong same-width ranges/failure truths, coercing a prepared type width and
-concealing that private change reject. Recursive clone/identity products and
-native assurance remain open. The
+concealing that private change reject. The
+[original clone referent proof](../../../docs/audits/record-value-clones-20261004/scope.txt)
+adds joint input/result graphs to every eight-thousand-two-hundred-fifty-one
+original recursive clone call. Independent reachable-node sets show detached
+results for every two-thousand-six-hundred-twenty-eight container call; all
+five-thousand-six-hundred-twenty-three scalar calls carry no referents. A genuine
+bad provider executes the complete recursive operation then returns the input
+container. Every separate recorded clone value still agrees, and all original
+one-hundred-twenty-five assertions pass, while every container result shares its
+input referents. Joint evidence rejects this real false green; value snapshots
+and original consumers alone cannot establish detachment. Both complete native
+runs reexecute from unchanged sources. Raw process error streams, the synthetic
+trace and generated import nonce remain separately captured. Full clone source/
+tree semantics, permanent consumer assurance and intended native causes remain
+owned follow-up work. The
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

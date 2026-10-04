@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py", line 126, in <module>
+    check_joint(row)
+    ~~~~~~~~~~~^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/native.py", line 119, in check_joint
+    assert all(type(n) is int for n in observed) and actual_counts == observed, 'independent reachable referents match actual input/result/shared census'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: independent reachable referents match actual input/result/shared census

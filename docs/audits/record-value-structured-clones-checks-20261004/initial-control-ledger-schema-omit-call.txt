@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py", line 107, in <module>
+    assert receipt['output'].rstrip().endswith('AssertionError: ' + receipt['expected_failure'])
+           ~~~~~~~^^^^^^^^^^
+KeyError: 'output'

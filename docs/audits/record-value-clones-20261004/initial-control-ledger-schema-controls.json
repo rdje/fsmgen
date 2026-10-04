@@ -1,0 +1,57 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py",
+      "--omit-call"
+    ],
+    "expected_failure": "every whole original structured clone call membership",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py",
+      "--alias-result"
+    ],
+    "expected_failure": "actual complete structured clone input/result referents must be detached",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py",
+      "--false-zero"
+    ],
+    "expected_failure": "independent reachable referents match actual input/result/shared census",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py",
+      "--joint-swap"
+    ],
+    "expected_failure": "independent reachable referents match actual input/result/shared census",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py",
+      "--wrong-kind"
+    ],
+    "expected_failure": "whole joint input ties original before arguments",
+    "status": 1,
+    "working_directory": "."
+  }
+]

@@ -1,0 +1,22 @@
+[
+  [
+    "my $base = 'docs/audits/record-value-runtime-20261004';\n",
+    "my $base = 'docs/audits/record-value-structured-clones-20261004';\nmy $alias_result = grep {$_ eq '--alias-result'} @ARGV;\nmy $output;\nfor my $i (0..$#ARGV) { $output = $ARGV[$i + 1] if $ARGV[$i] eq '--output'; }\n$output //= \"$base/\" . ($alias_result ? 'alias-result.json' : 'ordinary.json');\n"
+  ],
+  [
+    "            $ok ? graph($result) : undef);\n",
+    "            $ok ? graph($result) : undef);\n    if ($kind eq 'structured-clone' && $ok) {\n        my $input_refs = refs($args[1]);\n        my $result_refs = refs($result);\n        $api[$active_api]{joint_input_result} = graph({input => $args[1], result => $result});\n        $api[$active_api]{input_reference_count} = scalar(keys %$input_refs);\n        $api[$active_api]{result_reference_count} = scalar(keys %$result_refs);\n        $api[$active_api]{shared_with_input} = scalar(grep {exists $input_refs->{$_}} keys %$result_refs);\n    }\n"
+  ],
+  [
+    "    };\n",
+    "    };\n    my $structured_provider = $alias_result ? sub {\n        # Execute the actual complete public recursive operation, then return\n        # the actual caller's container. This is a native shared-result\n        # provider; no graph, count, error or assertion receipt is forged.\n        my $result = $structured->(@_);\n        return $_[1] if ref($_[1]) eq 'HASH' || ref($_[1]) eq 'ARRAY';\n        return $result;\n    } : $structured;\n"
+  ],
+  [
+    "        return call_api('structured-clone', $structured, [caller], @_);\n",
+    "        return call_api('structured-clone', $structured_provider, [caller], @_);\n"
+  ],
+  [
+    "open my $out, '>:raw', \"$base/ordinary.json\" or die $!;\n",
+    "open my $out, '>:raw', $output or die $!;\n"
+  ]
+]

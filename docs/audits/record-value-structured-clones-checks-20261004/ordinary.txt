@@ -1,0 +1,2 @@
+ram-guard: PID 69260; host 77.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS all8251 complete original native clone values/callers/kinds plus independent joint referent graphs:2628 containers detached,5623 scalars. Genuine shared-result provider preserves all8251 separate records and125 original passing consumers yet all2628 containers alias. Joint controls reject; full native reexecution retains. Source/tree semantic models and permanent consumer assurance remain open.

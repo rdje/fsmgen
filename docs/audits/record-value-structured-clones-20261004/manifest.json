@@ -1,0 +1,38 @@
+{
+  "alias-initial-census.json": {
+    "bytes": 26117,
+    "sha256": "938bb6d9e2bd40eaf6133a636ae1f7b3039ad52b575fac68ad82d515493c3bd2"
+  },
+  "alias-result.json": {
+    "bytes": 7116289,
+    "sha256": "3ad2a6b50cb354fc5c1c49188255d99101c2981786b969b3d7a7733505a69ad8"
+  },
+  "binding.json": {
+    "bytes": 941519,
+    "sha256": "440d00e9da2676b2e933393b1a4a0f77e6f05b5994069cf3294620198e79350b"
+  },
+  "detachment-gap.txt": {
+    "bytes": 1141,
+    "sha256": "699dc975c1cd20b3ea8b45eb6125c809fe628b1652957a8a28d4d3caf28de064"
+  },
+  "initial-conservation-census.json": {
+    "bytes": 110,
+    "sha256": "0ccab0d5f60cd2858a66ea9e7dfc8259310b18428f98d81d1f71ddadd94e7e97"
+  },
+  "observe.pl": {
+    "bytes": 12668,
+    "sha256": "ac0c9f3dacc19f9b3b04d6b32c30e6ebd497ed5c3e26882dec6ef75547c82fe8"
+  },
+  "ordinary.json": {
+    "bytes": 7238555,
+    "sha256": "90a083138facc7480cabace22a77b7fd049f20229a6b09e3151f1e1691dcfc40"
+  },
+  "owners.json": {
+    "bytes": 8191,
+    "sha256": "999543dd3b5b8052e222165e74c08c858b89bb828565d599c28851dea7debc25"
+  },
+  "plan.txt": {
+    "bytes": 666,
+    "sha256": "aa1cfc96f2b15435734f89e357e18c74e0bd0f57058300a4ca3689fe89553086"
+  }
+}

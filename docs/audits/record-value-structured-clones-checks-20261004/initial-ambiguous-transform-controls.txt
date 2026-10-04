@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/check_controls.py", line 23, in <module>
+    assert run.returncode == 1 and output.rstrip().endswith('AssertionError: ' + expected), 'requested control must reach intended native referent/value assertion: ' + flag
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: requested control must reach intended native referent/value assertion: omit-call

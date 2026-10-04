@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py", line 67, in <module>
+    assert original.count(before) == 1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

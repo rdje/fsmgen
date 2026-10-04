@@ -1,0 +1,10 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "perl",
+    "docs/audits/record-value-structured-clones-20261004/observe.pl"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

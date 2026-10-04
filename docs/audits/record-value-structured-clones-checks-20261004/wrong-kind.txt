@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py", line 126, in <module>
+    check_joint(row)
+    ~~~~~~~~~~~^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/native.py", line 122, in check_joint
+    assert exact(graph(arguments[1]), graph(decoded['input'])), 'whole joint input ties original before arguments'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: whole joint input ties original before arguments

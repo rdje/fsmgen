@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py",
+    "--joint-swap"
+  ],
+  "expected_failure": "independent reachable referents match actual input/result/shared census",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/verify.py\", line 126, in <module>\n    check_joint(row)\n    ~~~~~~~~~~~^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/native.py\", line 119, in check_joint\n    assert all(type(n) is int for n in observed) and actual_counts == observed, 'independent reachable referents match actual input/result/shared census'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent reachable referents match actual input/result/shared census\n",
+  "status": 1,
+  "working_directory": "."
+}
