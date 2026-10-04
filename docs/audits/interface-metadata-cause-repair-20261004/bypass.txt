@@ -1,0 +1,379 @@
+Name "main::rejects" used only once: possible typo at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 224.
+Name "FSM::Adapter::ISF::parse_source" used only once: possible typo at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 198.
+Name "FSM::Adapter::ISF::parse_file" used only once: possible typo at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 201.
+Name "main::source_value_copy" used only once: possible typo at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 220.
+Name "main::diagnostic_cause_matches" used only once: possible typo at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 213.
+Prototype mismatch: sub main::is_deeply: none vs ($$;$) at /System/Library/Perl/5.34/Exporter.pm line 63.
+ at ./t/1983-isf-interface-port-metadata.t line 4.
+# Subtest: declared scalar ports retain ordering and alias facts
+    ok 1 - input order followed by output order, including unused declarations
+    ok 2 - closed result is JSON-safe
+    ok 3 - projection does not share parser objects
+    ok 4 - domain interface copy preserves original kinds and sharing
+    ok 5 - domain interface copy preserves kinds and sharing
+    ok 6 - domain interface copy preserves reference population
+    ok 7 - domain interface copy is isolated from source
+    ok 8 - explicit domains override the declared default
+    ok 9 - metadata preserves nonempty opaque port names without inventing source restrictions
+    1..9
+ok 1 - declared scalar ports retain ordering and alias facts
+# Subtest: capture and snapshot detach before first numeric read on valid and refused facts
+    ok 1 - capture numeric seed copy preserves original kinds and sharing
+    ok 2 - capture numeric seed copy preserves kinds and sharing
+    ok 3 - capture numeric seed copy preserves reference population
+    ok 4 - capture numeric seed copy is isolated from source
+    ok 5 - capture preserves original scalar kinds on its first read
+    ok 6 - capture still returns the same independently expected numeric layout
+    ok 7 - capture output mutation cannot reach source facts
+    ok 8 - capture refused numeric seed copy preserves original kinds and sharing
+    ok 9 - capture refused numeric seed copy preserves kinds and sharing
+    ok 10 - capture refused numeric seed copy preserves reference population
+    ok 11 - capture refused numeric seed copy is isolated from source
+    ok 12 - capture rejects a malformed suffix after valid numeric facts
+    ok 13 - capture retains a classified first diagnostic
+    ok 14 - capture refused first read cannot mutate valid prefix facts
+    ok 15 - snapshot numeric seed copy preserves original kinds and sharing
+    ok 16 - snapshot numeric seed copy preserves kinds and sharing
+    ok 17 - snapshot numeric seed copy preserves reference population
+    ok 18 - snapshot numeric seed copy is isolated from source
+    ok 19 - snapshot preserves original scalar kinds on its first read
+    ok 20 - snapshot still returns the same independently expected numeric layout
+    ok 21 - snapshot output mutation cannot reach source facts
+    ok 22 - snapshot refused numeric seed copy preserves original kinds and sharing
+    ok 23 - snapshot refused numeric seed copy preserves kinds and sharing
+    ok 24 - snapshot refused numeric seed copy preserves reference population
+    ok 25 - snapshot refused numeric seed copy is isolated from source
+    ok 26 - snapshot rejects a malformed suffix after valid numeric facts
+    ok 27 - snapshot retains a classified first diagnostic
+    ok 28 - snapshot refused first read cannot mutate valid prefix facts
+    1..28
+ok 2 - capture and snapshot detach before first numeric read on valid and refused facts
+# Subtest: resolved record preparation preserves independently expected leaf ranges
+    ok 1 - nested record/list leaves have authored order and exact packed ranges
+    ok 2 - nested type objects remain detached
+    ok 3 - snapshot does not share nested fields
+    ok 4 - record output field writer remains deferred
+    ok 5 - existing authored-field refusal remains precise
+    1..5
+ok 3 - resolved record preparation preserves independently expected leaf ranges
+# Subtest: imported scalar and record aliases retain qualified identity
+    ok 1 - imported scalar alias is not flattened to an anonymous width
+    ok 2 - record producer retains imported alias
+    ok 3 - independent imported layout oracle
+    1..3
+ok 4 - imported scalar and record aliases retain qualified identity
+# Subtest: unknown and known empty metadata stay distinct
+    ok 1 - absent declarations are unknown
+    ok 2 - unknown snapshot remains null
+    ok 3 - known empty declarations remain empty
+    ok 4 - known empty snapshot remains empty
+    ok 5 - required entry keys match decision 0113
+    ok 6 - optional entry keys match the selected schema
+    ok 7 - scalar field key family is explicit
+    ok 8 - list roots remain outside the selected contract
+    ok 9 - discovery values are detached
+    1..9
+ok 5 - unknown and known empty metadata stay distinct
+# Subtest: closed snapshots reject malformed and contradictory metadata
+    ok 1 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 2 - malformed snapshot seed copy preserves kinds and sharing
+    ok 3 - malformed snapshot seed copy preserves reference population
+    ok 4 - malformed snapshot seed copy is isolated from source
+    ok 5 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 6 - malformed snapshot seed copy preserves kinds and sharing
+    ok 7 - malformed snapshot seed copy preserves reference population
+    ok 8 - malformed snapshot seed copy is isolated from source
+    ok 9 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 10 - malformed snapshot seed copy preserves kinds and sharing
+    ok 11 - malformed snapshot seed copy preserves reference population
+    ok 12 - malformed snapshot seed copy is isolated from source
+    ok 13 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 14 - malformed snapshot seed copy preserves kinds and sharing
+    ok 15 - malformed snapshot seed copy preserves reference population
+    ok 16 - malformed snapshot seed copy is isolated from source
+    ok 17 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 18 - malformed snapshot seed copy preserves kinds and sharing
+    ok 19 - malformed snapshot seed copy preserves reference population
+    ok 20 - malformed snapshot seed copy is isolated from source
+    ok 21 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 22 - malformed snapshot seed copy preserves kinds and sharing
+    ok 23 - malformed snapshot seed copy preserves reference population
+    ok 24 - malformed snapshot seed copy is isolated from source
+    ok 25 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 26 - malformed snapshot seed copy preserves kinds and sharing
+    ok 27 - malformed snapshot seed copy preserves reference population
+    ok 28 - malformed snapshot seed copy is isolated from source
+    ok 29 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 30 - malformed snapshot seed copy preserves kinds and sharing
+    ok 31 - malformed snapshot seed copy preserves reference population
+    ok 32 - malformed snapshot seed copy is isolated from source
+    ok 33 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 34 - malformed snapshot seed copy preserves kinds and sharing
+    ok 35 - malformed snapshot seed copy preserves reference population
+    ok 36 - malformed snapshot seed copy is isolated from source
+    ok 37 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 38 - malformed snapshot seed copy preserves kinds and sharing
+    ok 39 - malformed snapshot seed copy preserves reference population
+    ok 40 - malformed snapshot seed copy is isolated from source
+    ok 41 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 42 - malformed snapshot seed copy preserves kinds and sharing
+    ok 43 - malformed snapshot seed copy preserves reference population
+    ok 44 - malformed snapshot seed copy is isolated from source
+    ok 45 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 46 - malformed snapshot seed copy preserves kinds and sharing
+    ok 47 - malformed snapshot seed copy preserves reference population
+    ok 48 - malformed snapshot seed copy is isolated from source
+    ok 49 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 50 - malformed snapshot seed copy preserves kinds and sharing
+    ok 51 - malformed snapshot seed copy preserves reference population
+    ok 52 - malformed snapshot seed copy is isolated from source
+    ok 53 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 54 - malformed snapshot seed copy preserves kinds and sharing
+    ok 55 - malformed snapshot seed copy preserves reference population
+    ok 56 - malformed snapshot seed copy is isolated from source
+    ok 57 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 58 - malformed snapshot seed copy preserves kinds and sharing
+    ok 59 - malformed snapshot seed copy preserves reference population
+    ok 60 - malformed snapshot seed copy is isolated from source
+    ok 61 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 62 - malformed snapshot seed copy preserves kinds and sharing
+    ok 63 - malformed snapshot seed copy preserves reference population
+    ok 64 - malformed snapshot seed copy is isolated from source
+    ok 65 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 66 - malformed snapshot seed copy preserves kinds and sharing
+    ok 67 - malformed snapshot seed copy preserves reference population
+    ok 68 - malformed snapshot seed copy is isolated from source
+    ok 69 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 70 - malformed snapshot seed copy preserves kinds and sharing
+    ok 71 - malformed snapshot seed copy preserves reference population
+    ok 72 - malformed snapshot seed copy is isolated from source
+    ok 73 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 74 - malformed snapshot seed copy preserves kinds and sharing
+    ok 75 - malformed snapshot seed copy preserves reference population
+    ok 76 - malformed snapshot seed copy is isolated from source
+    ok 77 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 78 - malformed snapshot seed copy preserves kinds and sharing
+    ok 79 - malformed snapshot seed copy preserves reference population
+    ok 80 - malformed snapshot seed copy is isolated from source
+    ok 81 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 82 - malformed snapshot seed copy preserves kinds and sharing
+    ok 83 - malformed snapshot seed copy preserves reference population
+    ok 84 - malformed snapshot seed copy is isolated from source
+    ok 85 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 86 - malformed snapshot seed copy preserves kinds and sharing
+    ok 87 - malformed snapshot seed copy preserves reference population
+    ok 88 - malformed snapshot seed copy is isolated from source
+    ok 89 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 90 - malformed snapshot seed copy preserves kinds and sharing
+    ok 91 - malformed snapshot seed copy preserves reference population
+    ok 92 - malformed snapshot seed copy is isolated from source
+    ok 93 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 94 - malformed snapshot seed copy preserves kinds and sharing
+    ok 95 - malformed snapshot seed copy preserves reference population
+    ok 96 - malformed snapshot seed copy is isolated from source
+    ok 97 - malformed snapshot seed copy preserves original kinds and sharing
+    ok 98 - malformed snapshot seed copy preserves kinds and sharing
+    ok 99 - malformed snapshot seed copy preserves reference population
+    ok 100 - malformed snapshot seed copy is isolated from source
+    ok 101 - duplicate metadata entry copy preserves original kinds and sharing
+    ok 102 - duplicate metadata entry copy preserves kinds and sharing
+    ok 103 - duplicate metadata entry copy preserves reference population
+    ok 104 - duplicate metadata entry copy is isolated from source
+    ok 105 - every malformed snapshot declares its complete intended cause
+    ok 106 - malformed snapshot 0 fails closed
+    ok 107 - contextual bounded diagnostic
+    ok 108 - invalid metadata does not emit incidental Perl warnings
+    ok 109 - malformed snapshot 1 fails closed
+    ok 110 - contextual bounded diagnostic
+    ok 111 - invalid metadata does not emit incidental Perl warnings
+    ok 112 - malformed snapshot 2 fails closed
+    ok 113 - contextual bounded diagnostic
+    ok 114 - invalid metadata does not emit incidental Perl warnings
+    ok 115 - malformed snapshot 3 fails closed
+    ok 116 - contextual bounded diagnostic
+    ok 117 - invalid metadata does not emit incidental Perl warnings
+    ok 118 - malformed snapshot 4 fails closed
+    ok 119 - contextual bounded diagnostic
+    ok 120 - invalid metadata does not emit incidental Perl warnings
+    # [{"direction":"input","fields":[{"lsb":6,"msb":9,"path":"subtype","signed":0,"width":4},{"lsb":3,"msb":5,"path":"payload.count","signed":1,"state_model":"four_state","width":3},{"lsb":2,"msb":2,"path":"payload.lanes[0]","signed":0,"state_model":"two_state","width":1},{"lsb":0,"msb":1,"path":"payload.lanes[1]","signed":0,"width":2}],"name":"","type":"frame_t","type_kind":"record","width":10}]
+    not ok 121 - malformed snapshot 5 fails closed
+    #   Failed test 'malformed snapshot 5 fails closed'
+    #   at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 241.
+    not ok 122 - contextual bounded diagnostic
+    #   Failed test 'contextual bounded diagnostic'
+    #   at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 241.
+    ok 123 - invalid metadata does not emit incidental Perl warnings
+    ok 124 - malformed snapshot 6 fails closed
+    ok 125 - contextual bounded diagnostic
+    ok 126 - invalid metadata does not emit incidental Perl warnings
+    ok 127 - malformed snapshot 7 fails closed
+    ok 128 - contextual bounded diagnostic
+    ok 129 - invalid metadata does not emit incidental Perl warnings
+    ok 130 - malformed snapshot 8 fails closed
+    ok 131 - contextual bounded diagnostic
+    ok 132 - invalid metadata does not emit incidental Perl warnings
+    ok 133 - malformed snapshot 9 fails closed
+    ok 134 - contextual bounded diagnostic
+    ok 135 - invalid metadata does not emit incidental Perl warnings
+    ok 136 - malformed snapshot 10 fails closed
+    ok 137 - contextual bounded diagnostic
+    ok 138 - invalid metadata does not emit incidental Perl warnings
+    ok 139 - malformed snapshot 11 fails closed
+    ok 140 - contextual bounded diagnostic
+    ok 141 - invalid metadata does not emit incidental Perl warnings
+    ok 142 - malformed snapshot 12 fails closed
+    ok 143 - contextual bounded diagnostic
+    ok 144 - invalid metadata does not emit incidental Perl warnings
+    ok 145 - malformed snapshot 13 fails closed
+    ok 146 - contextual bounded diagnostic
+    ok 147 - invalid metadata does not emit incidental Perl warnings
+    ok 148 - malformed snapshot 14 fails closed
+    ok 149 - contextual bounded diagnostic
+    ok 150 - invalid metadata does not emit incidental Perl warnings
+    ok 151 - malformed snapshot 15 fails closed
+    ok 152 - contextual bounded diagnostic
+    ok 153 - invalid metadata does not emit incidental Perl warnings
+    ok 154 - malformed snapshot 16 fails closed
+    ok 155 - contextual bounded diagnostic
+    ok 156 - invalid metadata does not emit incidental Perl warnings
+    ok 157 - malformed snapshot 17 fails closed
+    ok 158 - contextual bounded diagnostic
+    ok 159 - invalid metadata does not emit incidental Perl warnings
+    ok 160 - malformed snapshot 18 fails closed
+    ok 161 - contextual bounded diagnostic
+    ok 162 - invalid metadata does not emit incidental Perl warnings
+    ok 163 - malformed snapshot 19 fails closed
+    ok 164 - contextual bounded diagnostic
+    ok 165 - invalid metadata does not emit incidental Perl warnings
+    ok 166 - malformed snapshot 20 fails closed
+    ok 167 - contextual bounded diagnostic
+    ok 168 - invalid metadata does not emit incidental Perl warnings
+    ok 169 - malformed snapshot 21 fails closed
+    ok 170 - contextual bounded diagnostic
+    ok 171 - invalid metadata does not emit incidental Perl warnings
+    ok 172 - malformed snapshot 22 fails closed
+    ok 173 - contextual bounded diagnostic
+    ok 174 - invalid metadata does not emit incidental Perl warnings
+    ok 175 - malformed snapshot 23 fails closed
+    ok 176 - contextual bounded diagnostic
+    ok 177 - invalid metadata does not emit incidental Perl warnings
+    ok 178 - malformed snapshot 24 fails closed
+    ok 179 - contextual bounded diagnostic
+    ok 180 - invalid metadata does not emit incidental Perl warnings
+    ok 181 - malformed snapshot 25 fails closed
+    ok 182 - contextual bounded diagnostic
+    ok 183 - invalid metadata does not emit incidental Perl warnings
+    ok 184 - malformed snapshot 26 fails closed
+    ok 185 - contextual bounded diagnostic
+    ok 186 - invalid metadata does not emit incidental Perl warnings
+    # [{"direction":"input","fields":[{"lsb":6,"msb":9,"path":"subtype","signed":0,"width":4},{"lsb":3,"msb":5,"path":"payload.count","signed":1,"state_model":"four_state","width":3},{"lsb":2,"msb":2,"path":"payload.lanes[0]","signed":0,"state_model":"two_state","width":1},{"lsb":0,"msb":1,"path":"payload.lanes[1]","signed":0,"width":2}],"name":"packet","type":"frame_t","type_kind":"record","width":10},{"direction":"input","fields":[{"lsb":6,"msb":9,"path":"subtype","signed":0,"width":4},{"lsb":3,"msb":5,"path":"payload.count","signed":1,"state_model":"four_state","width":3},{"lsb":2,"msb":2,"path":"payload.lanes[0]","signed":0,"state_model":"two_state","width":1},{"lsb":0,"msb":1,"path":"payload.lanes[1]","signed":0,"width":2}],"name":"packet","type":"frame_t","type_kind":"record","width":10}]
+    not ok 187 - malformed snapshot 27 fails closed
+    #   Failed test 'malformed snapshot 27 fails closed'
+    #   at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 241.
+    not ok 188 - contextual bounded diagnostic
+    #   Failed test 'contextual bounded diagnostic'
+    #   at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 241.
+    ok 189 - invalid metadata does not emit incidental Perl warnings
+    ok 190 - malformed snapshot 28 fails closed
+    ok 191 - contextual bounded diagnostic
+    ok 192 - invalid metadata does not emit incidental Perl warnings
+    ok 193 - malformed snapshot 29 fails closed
+    ok 194 - contextual bounded diagnostic
+    ok 195 - invalid metadata does not emit incidental Perl warnings
+    ok 196 - malformed snapshot 30 fails closed
+    ok 197 - contextual bounded diagnostic
+    ok 198 - invalid metadata does not emit incidental Perl warnings
+    1..198
+    # Looks like you failed 4 tests of 198.
+not ok 6 - closed snapshots reject malformed and contradictory metadata
+#   Failed test 'closed snapshots reject malformed and contradictory metadata'
+#   at docs/audits/interface-metadata-cause-repair-20261004/observe.pl line 236.
+# Subtest: producer rejects inconsistent resolved declarations without warnings
+    ok 1 - invalid producer seed copy preserves original kinds and sharing
+    ok 2 - invalid producer seed copy preserves kinds and sharing
+    ok 3 - invalid producer seed copy preserves reference population
+    ok 4 - invalid producer seed copy is isolated from source
+    ok 5 - invalid producer seed copy preserves original kinds and sharing
+    ok 6 - invalid producer seed copy preserves kinds and sharing
+    ok 7 - invalid producer seed copy preserves reference population
+    ok 8 - invalid producer seed copy is isolated from source
+    ok 9 - invalid producer seed copy preserves original kinds and sharing
+    ok 10 - invalid producer seed copy preserves kinds and sharing
+    ok 11 - invalid producer seed copy preserves reference population
+    ok 12 - invalid producer seed copy is isolated from source
+    ok 13 - invalid producer seed copy preserves original kinds and sharing
+    ok 14 - invalid producer seed copy preserves kinds and sharing
+    ok 15 - invalid producer seed copy preserves reference population
+    ok 16 - invalid producer seed copy is isolated from source
+    ok 17 - invalid producer seed copy preserves original kinds and sharing
+    ok 18 - invalid producer seed copy preserves kinds and sharing
+    ok 19 - invalid producer seed copy preserves reference population
+    ok 20 - invalid producer seed copy is isolated from source
+    ok 21 - invalid producer seed copy preserves original kinds and sharing
+    ok 22 - invalid producer seed copy preserves kinds and sharing
+    ok 23 - invalid producer seed copy preserves reference population
+    ok 24 - invalid producer seed copy is isolated from source
+    ok 25 - invalid producer seed copy preserves original kinds and sharing
+    ok 26 - invalid producer seed copy preserves kinds and sharing
+    ok 27 - invalid producer seed copy preserves reference population
+    ok 28 - invalid producer seed copy is isolated from source
+    ok 29 - invalid producer seed copy preserves original kinds and sharing
+    ok 30 - invalid producer seed copy preserves kinds and sharing
+    ok 31 - invalid producer seed copy preserves reference population
+    ok 32 - invalid producer seed copy is isolated from source
+    ok 33 - invalid producer seed copy preserves original kinds and sharing
+    ok 34 - invalid producer seed copy preserves kinds and sharing
+    ok 35 - invalid producer seed copy preserves reference population
+    ok 36 - invalid producer seed copy is isolated from source
+    ok 37 - invalid producer seed copy preserves original kinds and sharing
+    ok 38 - invalid producer seed copy preserves kinds and sharing
+    ok 39 - invalid producer seed copy preserves reference population
+    ok 40 - invalid producer seed copy is isolated from source
+    ok 41 - every invalid producer input declares its complete intended cause
+    ok 42 - invalid producer input fails closed
+    ok 43 - contextual bounded diagnostic
+    ok 44 - invalid metadata does not emit incidental Perl warnings
+    ok 45 - invalid producer input fails closed
+    ok 46 - contextual bounded diagnostic
+    ok 47 - invalid metadata does not emit incidental Perl warnings
+    ok 48 - invalid producer input fails closed
+    ok 49 - contextual bounded diagnostic
+    ok 50 - invalid metadata does not emit incidental Perl warnings
+    ok 51 - invalid producer input fails closed
+    ok 52 - contextual bounded diagnostic
+    ok 53 - invalid metadata does not emit incidental Perl warnings
+    ok 54 - invalid producer input fails closed
+    ok 55 - contextual bounded diagnostic
+    ok 56 - invalid metadata does not emit incidental Perl warnings
+    ok 57 - invalid producer input fails closed
+    ok 58 - contextual bounded diagnostic
+    ok 59 - invalid metadata does not emit incidental Perl warnings
+    ok 60 - invalid producer input fails closed
+    ok 61 - contextual bounded diagnostic
+    ok 62 - invalid metadata does not emit incidental Perl warnings
+    ok 63 - invalid producer input fails closed
+    ok 64 - contextual bounded diagnostic
+    ok 65 - invalid metadata does not emit incidental Perl warnings
+    ok 66 - invalid producer input fails closed
+    ok 67 - contextual bounded diagnostic
+    ok 68 - invalid metadata does not emit incidental Perl warnings
+    ok 69 - invalid producer input fails closed
+    ok 70 - contextual bounded diagnostic
+    ok 71 - invalid metadata does not emit incidental Perl warnings
+    ok 72 - invalid producer input fails closed
+    ok 73 - contextual bounded diagnostic
+    ok 74 - invalid metadata does not emit incidental Perl warnings
+    ok 75 - invalid producer input fails closed
+    ok 76 - contextual bounded diagnostic
+    ok 77 - invalid metadata does not emit incidental Perl warnings
+    ok 78 - actual cyclic input copy preserves original kinds and sharing
+    ok 79 - actual cyclic input copy preserves kinds and sharing
+    ok 80 - actual cyclic input copy preserves reference population
+    ok 81 - actual cyclic input copy is isolated from source
+    ok 82 - invalid producer input fails closed
+    ok 83 - contextual bounded diagnostic
+    ok 84 - invalid metadata does not emit incidental Perl warnings
+    1..84
+ok 7 - producer rejects inconsistent resolved declarations without warnings
+1..7
+# Looks like you failed 1 test of 7.

@@ -193,9 +193,8 @@ binds its callback sites and adjacent assertions. Its [native profile](../../../
 records complete API, copy, error, warning and assertion streams. A real Storable
 error passes the generic context check when the module path contains the wanted
 prefix. An adjacent output-writer assertion accepts a different parser error when
-the source filename contains its wanted phrase. Both test-assurance defects are
-owned for repair after the copied-field review and preceding source-context
-qualification. Existing public metadata qualification retains its finite scope;
+the source filename contains its wanted phrase. The helper cause repair below closes the first defect; the writer assertion
+remains separately owned. Existing public metadata qualification retains its finite scope;
 provider behavior and public admission are unchanged.
 The [field qualification](../../../docs/audits/interface-metadata-fields-20261004/scope.txt)
 binds every observed width change to declared local/imported types and checks
@@ -209,8 +208,7 @@ Typed graph baselines check caller immutability, and complete metadata products
 retain numeric widths, signed flags and packed ranges. The genuine kind,
 alias, Storable-restoration and numeric-bypass controls now fail the intended
 assertions; ordinary products and primary causes remain the same. The actual
-rejected cyclic type also copies without sharing caller references. Contextual
-diagnostic repairs remain separately owned.
+rejected cyclic type also copies without sharing caller references.
 The [complete copy join](../../../docs/audits/interface-metadata-copy-join-20261004/scope.txt)
 binds original and repaired copy populations to their source fields and final
 products. Preserving numeric test seeds makes some private clones stringify
@@ -218,8 +216,16 @@ additional numeric leaves; final numeric metadata and caller graphs remain
 the same. Private validation copies remain distinct from product authority.
 The [source/product closure](../../../docs/audits/interface-metadata-source-product-join-20261004/scope.txt)
 joins those proofs to the complete authored-field models and preceding pinned
-source context. It closes source and copy assurance; the two contextual
-diagnostic false positives remain owned before final metadata-helper review.
+source context. It closes source and copy assurance.
+The [metadata cause repair](../../../docs/audits/interface-metadata-cause-repair-20261004/scope.txt)
+now saves native errors immediately and checks complete intended primary causes
+for every malformed capture/snapshot case and both malformed-width first reads.
+A permanent native probe loads the unchanged provider from a path containing the
+wanted prefix: the old helper accepts its earlier Storable error, while the
+repaired helper rejects it. Caller/argument echoes retain their real errors;
+a genuine name-validation bypass fails both refusal and cause checks.
+Complete ordinary products, caller kinds, copies and primary causes conserve.
+The adjacent output-writer cause and final metadata review remain owned.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

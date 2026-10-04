@@ -20,7 +20,7 @@ evidence: >-
   docs/audits/interface-metadata-runtime-20261004/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
-  python3 -B docs/audits/interface-metadata-source-product-join-20261004/verify.py;
+  python3 -B docs/audits/interface-metadata-cause-repair-20261004/verify.py;
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/2046-isf-library-document-origin-authority.t
   t/2045-isf-same-source-library-origins.t
@@ -47,9 +47,8 @@ admission or HDL/macro runtime is proved.
 Constructors, library/file helpers and ten validator/finalizer sites bind complete causes and mutations. Caller/argument/source/label echoes reject; prior consumers RED. Guarded readers: [origin](../audits/origin-helper-cause-repair-20261002/verify.py), [validator](../audits/validator-finalizer-cause-repair-20261003/verify.py).
 [Names](../audits/named-helper-membership-20261003/scope.txt) owns lexical units;
 [cohorts](../audits/residual-named-helper-cohorts-20261003/scope.txt) own review. [Record
-plan](../audits/aggregate-record-helper-plan-20261003/scope.txt) splits sources. Private widths may stringify; final numeric facts stay numeric. [Native probes](../audits/interface-metadata-runtime-20261004/scope.txt) expose Storable
-location and parser filename false positives;
-[Repair](../audits/interface-metadata-copy-repair-20261004/scope.txt) preserves ordinary products;
-kind/alias/lossy/projection controls fail strengthened assertions. Context repair open. [ASCII
+plan](../audits/aggregate-record-helper-plan-20261003/scope.txt) splits sources. Private widths may stringify; final numeric facts stay numeric. [ASCII
 census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt) overlaps text; its [kind
 reader](../audits/current-diagnostic-lexical-kinds-20261002/verify.py) qualifies numeric forms. Cold review open.
+
+T1983 [copy repair](../audits/interface-metadata-copy-repair-20261004/scope.txt) rejects kind/alias/lossy/projection faults; products conserve. Complete causes now reject actual wanted-path Storable and caller/argument echoes; guard bypass fails. Writer filename false positive remains owned.

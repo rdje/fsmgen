@@ -1,0 +1,1 @@
+7d56bf85736f75d0ff12a52cec0b1639ae668a5c SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.1: qualify detached port metadata producer

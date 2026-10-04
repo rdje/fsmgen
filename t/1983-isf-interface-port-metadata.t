@@ -6,6 +6,7 @@ use JSON::PP;
 use Scalar::Util qw(refaddr blessed);
 use File::Temp qw(tempdir);
 use FSM::Test::ProjectDataLocality;
+use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use FSM::Adapter::ISF;
 use FSM::Support::ISFInterfacePortMetadata qw(
     capture_interface_port_metadata snapshot_interface_port_metadata
@@ -182,9 +183,11 @@ subtest 'capture and snapshot detach before first numeric read on valid and refu
         }
         $before=$json->encode($value);
         my $ok=eval {$produce->($value);1};
-        my ($line)=split /\n/,$@;
+        my $error = $@;
+        my $reason = $name eq 'capture' ? 'invalid declared port width' : 'expected port metadata entry';
         ok(!$ok,"$name rejects a malformed suffix after valid numeric facts");
-        like($line // '',qr/\AInvalid ISF interface port metadata:/,"$name retains a classified first diagnostic");
+        ok(diagnostic_cause_matches($error, "Invalid ISF interface port metadata: $reason"),
+            "$name retains a classified first diagnostic");
         is($json->encode($value),$before,"$name refused first read cannot mutate valid prefix facts");
     }
 };
@@ -268,9 +271,43 @@ subtest 'closed snapshots reject malformed and contradictory metadata' => sub {
         {name => 'in', direction => 'input', width => 1}];
     push @bad, [{name => 'scalar', direction => 'input', width => 'bad'}],
         [{name => 'scalar', direction => 'input', width => 8, type => 'byte', type_kind => 'unknown'}];
+    my @reasons = (
+        'expected port metadata array',
+        'expected port metadata entry',
+        'missing metadata key',
+        'missing metadata key',
+        'unknown metadata key',
+        'invalid or duplicate port name',
+        'invalid direction',
+        'invalid port width',
+        'invalid port width',
+        'invalid domain',
+        'invalid domain',
+        'invalid type alias',
+        'invalid type alias',
+        'invalid resolved type kind',
+        'type facts require an alias',
+        'record requires scalar field metadata',
+        'record requires scalar field metadata',
+        'unknown metadata key',
+        'invalid or duplicate field path',
+        'invalid or duplicate field path',
+        'field ranges do not form ordered packed layout',
+        'field ranges do not form ordered packed layout',
+        'field ranges do not form ordered packed layout',
+        'field ranges do not form ordered packed layout',
+        'record field layout does not cover the port',
+        'invalid scalar field signed property',
+        'invalid scalar field state model',
+        'invalid or duplicate port name',
+        'inputs must precede outputs',
+        'invalid port width',
+        'invalid resolved type kind',
+    );
+    is(scalar @bad, scalar @reasons, 'every malformed snapshot declares its complete intended cause');
     for my $index (0 .. $#bad) {
         my $bad = $bad[$index];
-        rejects(sub { snapshot_interface_port_metadata($bad) }, "malformed snapshot $index", $bad);
+        rejects(sub { snapshot_interface_port_metadata($bad) }, "malformed snapshot $index", $bad, $reasons[$index]);
     }
 };
 
@@ -293,20 +330,42 @@ subtest 'producer rejects inconsistent resolved declarations without warnings' =
     my $cycle = {kind => 'record', width => 1, member_order => ['loop'], members => {}};
     $cycle->{members}{loop} = $cycle;
     push @bad, {inputs => [{name => 'cycle', width => 1, type => 'cycle_t', type_spec => $cycle}], outputs => []};
-    for my $bad (@bad) { rejects(sub { capture_interface_port_metadata($bad) }, 'invalid producer input'); }
+    my @reasons = (
+        'expected inputs array',
+        'expected declared port',
+        'invalid declared port name',
+        'invalid declared port width',
+        "port 'packet' type width disagrees",
+        "port 'packet' lacks resolved type",
+        'resolved aggregate width disagrees with members',
+        'invalid or duplicate record member',
+        'invalid resolved state model',
+        'invalid resolved signed property',
+        "port 'packet' has type facts without an alias",
+        'list-root interface metadata remains unsupported',
+        'cyclic resolved type',
+    );
+    is(scalar @bad, scalar @reasons, 'every invalid producer input declares its complete intended cause');
+    for my $index (0 .. $#bad) {
+        my $bad = $bad[$index];
+        rejects(sub { capture_interface_port_metadata($bad) }, 'invalid producer input', undef, $reasons[$index]);
+    }
     delete $cycle->{members}{loop};
 };
 
 done_testing();
 
 sub rejects {
-    my ($operation, $label, $value) = @_;
+    my ($operation, $label, $value, $reason) = @_;
+    die 'expected metadata cause is required' unless defined($reason) && !ref($reason) && length($reason);
     my @warnings;
     local $SIG{__WARN__} = sub { push @warnings, @_ };
     my $ok = eval { $operation->(); 1 };
+    my $error = $@;
     diag($json->encode($value)) if $ok && defined $value;
     ok(!$ok, "$label fails closed");
-    like($@, qr/Invalid ISF interface port metadata:/, 'contextual bounded diagnostic');
+    ok(diagnostic_cause_matches($error, "Invalid ISF interface port metadata: $reason"),
+        'contextual bounded diagnostic');
     is_deeply(\@warnings, [], 'invalid metadata does not emit incidental Perl warnings');
 }
 

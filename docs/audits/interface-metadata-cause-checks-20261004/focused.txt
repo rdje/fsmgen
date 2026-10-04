@@ -1,0 +1,8 @@
+t/1983-isf-interface-port-metadata.t ................ ok
+t/2064-isf-interface-metadata-diagnostic-context.t .. ok
+t/1986-isf-record-port-value-gates.t ................ ok
+t/1303-isf-public-live-book-paths-audit.t ........... ok
+t/1305-isf-book-feature-matrix-audit.t .............. ok
+All tests successful.
+Files=5, Tests=398,  6 wallclock secs ( 0.02 usr  0.01 sys +  2.67 cusr  1.22 csys =  3.92 CPU)
+Result: PASS

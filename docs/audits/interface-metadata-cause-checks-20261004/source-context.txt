@@ -1,0 +1,3 @@
+PASS pinned historical repaired coverage context
+PASS pinned historical cold context
+PASS exact repaired coverage proof and original full cause/copy qualification replay at separate pinned revisions; later hot-source changes require their own validation; sealed evidence preserved.
