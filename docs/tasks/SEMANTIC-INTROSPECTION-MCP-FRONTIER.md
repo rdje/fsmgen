@@ -4167,11 +4167,52 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete original T1986 source/parser/API products and private stages.`
   Acceptance: `After authored field roles close, independently declare complete source-local/imported actor and every accepted/refused value/path/type/metadata/identity/payload product. Join whole typed original/native/copy graphs, scalar roles/ranges/local/formal masks and numerical final facts to source field models; original private staged strings cannot become final product authority. Genuine private-stage product controls and omission controls must fail; preserve all intended source semantics before hot repair.`
   Verification: `pending`
   Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.1`
+  Status: `done`
+  Goal: `Qualify complete original T1986 local/imported source actor products.`
+  Acceptance: `Build whole authored local/imported actor models from full original source and published project parser/type contracts before native-result comparison; bind all original parse outcomes, complete typed actor/source products, numeric kinds and exact package/source coordinates. Independent whole-property/membership/private-product controls reject, complete source/copy fields retain; no actual cause or copy safety signoff.`
+  Verification: `Complete docs/audits/record-value-actors-20261004/scope.txt binds Gitf315d584 full20 selected sources and every original four parse outcome/full caller/input/product graph. Whole local/imported actors are source-first models of defaults/empty families, reset provenance, string watchdog/raw DSL tokens, storage/signals/numeric types, symbolic alias/package roles, transactions and metadata. Separate recursive source/whole-property/kind reader passes; actual product omission, imported-to-local role corruption, DSL string-to-number promotion, missing default family and genuine private actor-copy product-authority controls RED1. Initial missing heredoc terminal newline retained and corrected by source-language semantics; initial whole products have no differences. Prior full field join reverified here. P2 absolute-root full-output replay comparator discovered, rooted control population/locus tracked in .5, scheduled immediately next before APIs; no field semantic invalidation or unproved cross-root durability claim. Public book All tests successful Files=2 Tests=308; build PASS; exact source/doc/archive/input/instrument watcher and fixed card capacity preserve.`
+  Commit: `this actor-product work-unit commit (derive exact SHA with git log --grep)`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Qualify every original T1986 value scope/reference/copy API product.`
+  Acceptance: `Independently model all accepted/refused scope, reference and copy outputs from complete original arguments/source/type/layout/root-role and nearest lexical/formal masks. Whole caller graphs and first-touch kinds, scalar ranges and intentional private preparation spelling preserve; final numeric facts are exact. Genuine product omission/role/kind/private-authority controls reject before assurance repair.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3`
+  Status: `pending`
+  Goal: `Qualify every original T1986 metadata/range/clone/identity/payload product.`
+  Acceptance: `Bind every original capture, snapshot, range, recursive structured-clone, strict identity and payload-compatibility product and caller graph to independent complete source/layout/field and published operation contracts. Preserve all recursive member/list/state/signed/source kinds and actual private numerical rebuilding/cycle boundaries. Whole product/control membership and competing private/final authority controls reject.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.4`
+  Status: `pending`
+  Goal: `Join all original T1986 actor/API product semantics.`
+  Acceptance: `Join exact completed whole actor, value/path/copy, metadata/core API and field/source owners and complete original native graph/outcome/caller/product membership. Reexecute independent ordinary/readers/controls with exact document boundaries and current source; close only semantic product parent before native assurance and intended-cause repair.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.5`
+  Status: `pending`
+  Goal: `Repair P2 absolute-root dependency in sealed reader replay comparisons before further API qualification.`
+  Acceptance: `Record-value field join stores Python control traceback filenames rooted at the capture repository, then replay_children.py compares full output bytes. Moving the repository changes only that process filename coordinate and falsely rejects identical semantic controls/input hashes. Reproduce using exact sealed program/complete selected input bodies at a distinct repository-local replay-root coordinate. Preserve old sealed bytes; create a superseding portable join/replay instrument that qualifies only the actual runtime repository-root prefix and exact process filename coordinate, never arbitrary output/error/kind normalization. Reexecute all ordinary/RED controls and complete source/owner/field/native roles; add genuine coordinate-drift and semantic-output-corruption controls. Fix immediately after current actor slice, before value/core APIs; field meaning closure remains dated, cross-root replay durability is P2-open until this repair.`
+  Verification: `Initial locus and exact rooted output population: docs/audits/record-value-actors-checks-20261004/replay-portability-finding.txt. Actual moved-coordinate reproduction/repair/control legs remain required under this owner; current actor changes must commit before this scheduled slice.`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.3`
   Status: `pending`
@@ -6783,3 +6824,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub refuses {' -- t/1986-isf-record-port-value-gates.t binds original source. Kind-changing copies and compatible physical identities cannot establish complete recursive/source/private-field semantics from widths or totals. Separate authored-layout and all-copy-field proofs require exact owner/source/native identities and genuine semantic-control replay before parent closure.
 - [x] **ADDRESSED (verified)** — Complete separate source/owner/graph/field/model join reader passes. Both immutable semantic children pass and all seven child controls reexecute RED1 in root-derived isolated replay contexts using exact historical documents and unchanged current implementation inputs. Outer actual-copy omission, same-width signed identity corruption and incomplete-owner promotion RED1. Raw kinds/property/order/carrier/stage/cycle authority and intentional invalid descriptor preserve; only field parent closes, before whole actor/API products and copy/cause assurance.
 - [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308; final updated rendered build PASS. Both full sealed source/model/field/native authorities authenticate and independent readers/controls reexecute; current20 source/doc/owner/instrument watcher passes. Initial no-write document budget and closure-status failures retain; unchanged-doc checks remain separate. Fixed card capacity shrinks without ceiling changes; fresh task/KM/claim/capacity and staged doctrine/hooks precede product modeling.
+
+## Acceptance Checklist — whole original T1986 source actor products
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub refuses {' -- t/1986-isf-record-port-value-gates.t binds the original source/profile. Resolved field widths alone do not establish full actor products, default/optional families, symbolic source aliases or DSL token kinds. Complete source-first models match whole native actors; initial exact-input reader reveals its omitted heredoc terminal newline. Full sealed replay receipt/source inspection also exposes absolute capture-root traceback filenames compared verbatim; P2 .5 owns immediate repair after this slice.
+- [x] **ADDRESSED (verified)** — Independent complete authored-source/actor/property/kind/default/family/caller/coordinate reader passes for all four original parse outcomes, including two complete accepted actors and no products on both refusals. Product omission, same-width imported/local role corruption, numeric DSL-token promotion, missing default family and genuine private kind-changing actor-copy authority controls RED1. Full initial author/model/reader/input failure retain, then restore language-defined terminal newline; no actual source/provider/product values change. P2 replay portability has exact locus, impact and immediate owner; its repair proof remains open.
+- [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308; rendered build PASS. Complete prior field join reverified before this precise document supersession; all prior immutable source/native/model/field bytes authenticate. Current selected20 source/doc/model/native input/instrument watcher passes; fixed card capacity shrinks. Fresh task/KM/claim/capacity and staged doctrine/hooks precede the owned portability repair, then remaining value/core API products.

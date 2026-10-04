@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/record-value-actors-20261004/verify.py", line 193, in <module>
+    assert exact(actual, graph(actors['local' if index == 0 else 'imported'])), 'whole numeric source actor product, not private kind-changing copy'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: whole numeric source actor product, not private kind-changing copy

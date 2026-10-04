@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/record-value-actors-20261004/verify.py", line 113, in <module>
+    assert set(actors) == {'local', 'imported'}, 'complete authored whole actor product membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete authored whole actor product membership

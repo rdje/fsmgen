@@ -276,6 +276,15 @@ original copied graph and whole field record to the completed source-model
 owners. Field qualification is complete; whole actor/API products and native
 copy/cause assurance remain separate.
 
+The [whole record-value actors](../../../docs/audits/record-value-actors-20261004/scope.txt)
+match independent source-first local/imported models, including defaults, empty
+optional families, transaction clauses, raw type tokens, storage signals, package
+roots and metadata. Both original public-source refusals publish no actor product.
+Complete value/path and metadata/core API products remain under review. A separate
+owned repair addresses absolute repository roots in captured Python replay
+traceback comparisons; field semantics are retained, while cross-root replay
+durability remains unqualified.
+
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
 primary messages containing wanted codes, reject. The

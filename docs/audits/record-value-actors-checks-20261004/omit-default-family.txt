@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/record-value-actors-20261004/verify.py", line 127, in <module>
+    assert set(actor) == default_keys, 'complete default/optional actor product families'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete default/optional actor product families

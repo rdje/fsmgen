@@ -1,0 +1,1509 @@
+{
+  "actors": {
+    "imported": {
+      "actor_name": "imported",
+      "actor_network": null,
+      "clock": "clk",
+      "clock_domains": null,
+      "constant_symbols": {
+        "packages": {
+          "shared": {}
+        }
+      },
+      "constants": [],
+      "crossings": [],
+      "drives": {},
+      "enum_declarations": [],
+      "enum_symbols": {
+        "local": {},
+        "packages": {
+          "shared": {}
+        }
+      },
+      "handshakes": {},
+      "imports": [],
+      "interface": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "done",
+            "width": 1
+          }
+        ]
+      },
+      "interface_port_metadata": [
+        {
+          "direction": "output",
+          "name": "done",
+          "width": 1
+        }
+      ],
+      "library_uses": [],
+      "package_imports": [
+        "shared"
+      ],
+      "package_roots": [
+        [
+          "?pkg:shared",
+          [
+            "+types",
+            [
+              "type",
+              "frame",
+              [
+                "record",
+                [
+                  "flag",
+                  "bit"
+                ],
+                [
+                  "data",
+                  [
+                    "bits",
+                    "7"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "params": [],
+      "phases": [],
+      "priorities": [],
+      "procs": {},
+      "reset": {
+        "kind": "async",
+        "name": "rst_n",
+        "polarity": "active_low"
+      },
+      "reset_provenance": [
+        {
+          "domain": null,
+          "origin": "legacy_default"
+        }
+      ],
+      "resources": [],
+      "rules": [],
+      "stages": [],
+      "storage": [
+        {
+          "kind": "var",
+          "name": "value",
+          "signals": [
+            {
+              "name": "value",
+              "type": "shared.frame",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "flag",
+                  "data"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  },
+                  "flag": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "shared.frame",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        }
+      ],
+      "transactions": [
+        {
+          "clauses": [
+            [
+              "complete",
+              "done"
+            ]
+          ],
+          "name": "main",
+          "ports": {
+            "inputs": [],
+            "outputs": []
+          }
+        }
+      ],
+      "type_declarations": [],
+      "type_symbols": {
+        "local": {},
+        "packages": {
+          "shared": {
+            "frame": {
+              "kind": "record",
+              "member_order": [
+                "flag",
+                "data"
+              ],
+              "members": {
+                "data": {
+                  "kind": "bits",
+                  "signed": 0,
+                  "width": 7
+                },
+                "flag": {
+                  "kind": "bit",
+                  "signed": 0,
+                  "width": 1
+                }
+              },
+              "signed": 0,
+              "width": 8
+            }
+          }
+        }
+      },
+      "uses": [],
+      "verification_bridge": null,
+      "verification_observations": [],
+      "watchdog": "65535"
+    },
+    "local": {
+      "actor_name": "controls",
+      "actor_network": null,
+      "clock": "clk",
+      "clock_domains": null,
+      "constant_symbols": {
+        "packages": {}
+      },
+      "constants": [],
+      "crossings": [],
+      "drives": {},
+      "enum_declarations": [],
+      "enum_symbols": {
+        "local": {},
+        "packages": {}
+      },
+      "handshakes": {},
+      "imports": [],
+      "interface": {
+        "inputs": [
+          {
+            "name": "start",
+            "width": 1
+          }
+        ],
+        "outputs": [
+          {
+            "name": "done",
+            "width": 1
+          }
+        ]
+      },
+      "interface_port_metadata": [
+        {
+          "direction": "input",
+          "name": "start",
+          "width": 1
+        },
+        {
+          "direction": "output",
+          "name": "done",
+          "width": 1
+        }
+      ],
+      "library_uses": [],
+      "package_imports": [],
+      "package_roots": [],
+      "params": [],
+      "phases": [],
+      "priorities": [],
+      "procs": {},
+      "reset": {
+        "kind": "async",
+        "name": "rst_n",
+        "polarity": "active_low"
+      },
+      "reset_provenance": [
+        {
+          "domain": null,
+          "origin": "legacy_default"
+        }
+      ],
+      "resources": [],
+      "rules": [],
+      "stages": [],
+      "storage": [
+        {
+          "kind": "var",
+          "name": "a",
+          "signals": [
+            {
+              "name": "a",
+              "type": "frame",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "flag",
+                  "data"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  },
+                  "flag": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "frame",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "b",
+          "signals": [
+            {
+              "name": "b",
+              "type": "alias",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "flag",
+                  "data"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  },
+                  "flag": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "alias",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "c",
+          "signals": [
+            {
+              "name": "c",
+              "type": "renamed",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "tag",
+                  "data"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  },
+                  "tag": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "renamed",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "tag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "tag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "d",
+          "signals": [
+            {
+              "name": "d",
+              "type": "reordered",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "data",
+                  "flag"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  },
+                  "flag": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "reordered",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "data",
+              "flag"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "e",
+          "signals": [
+            {
+              "name": "e",
+              "type": "signed_data",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "flag",
+                  "data"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 1,
+                    "width": 7
+                  },
+                  "flag": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "signed_data",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 1,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "f",
+          "signals": [
+            {
+              "name": "f",
+              "type": "four",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "flag",
+                  "data"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "state_model": "four_state",
+                    "width": 7
+                  },
+                  "flag": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "four",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "state_model": "four_state",
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "g",
+          "signals": [
+            {
+              "name": "g",
+              "type": "two",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "flag",
+                  "data"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "state_model": "two_state",
+                    "width": 7
+                  },
+                  "flag": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "two",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "state_model": "two_state",
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "h",
+          "signals": [
+            {
+              "name": "h",
+              "type": "bit_kind",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "flag",
+                  "data"
+                ],
+                "members": {
+                  "data": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  },
+                  "flag": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 1
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "bit_kind",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "i",
+          "signals": [
+            {
+              "name": "i",
+              "type": "nested",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "header",
+                  "body"
+                ],
+                "members": {
+                  "body": {
+                    "kind": "record",
+                    "member_order": [
+                      "count",
+                      "lanes"
+                    ],
+                    "members": {
+                      "count": {
+                        "kind": "bits",
+                        "signed": 1,
+                        "state_model": "four_state",
+                        "width": 3
+                      },
+                      "lanes": {
+                        "items": [
+                          {
+                            "kind": "bit",
+                            "signed": 0,
+                            "state_model": "two_state",
+                            "width": 1
+                          },
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": 2
+                          }
+                        ],
+                        "kind": "list",
+                        "signed": 0,
+                        "width": 3
+                      }
+                    },
+                    "signed": 0,
+                    "width": 6
+                  },
+                  "header": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 2
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "nested",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "header",
+              "body"
+            ],
+            "members": {
+              "body": {
+                "kind": "record",
+                "member_order": [
+                  "count",
+                  "lanes"
+                ],
+                "members": {
+                  "count": {
+                    "kind": "bits",
+                    "signed": 1,
+                    "state_model": "four_state",
+                    "width": 3
+                  },
+                  "lanes": {
+                    "items": [
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "state_model": "two_state",
+                        "width": 1
+                      },
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 2
+                      }
+                    ],
+                    "kind": "list",
+                    "signed": 0,
+                    "width": 3
+                  }
+                },
+                "signed": 0,
+                "width": 6
+              },
+              "header": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 2
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "j",
+          "signals": [
+            {
+              "name": "j",
+              "type": "flat",
+              "type_spec": {
+                "kind": "record",
+                "member_order": [
+                  "header",
+                  "count",
+                  "lane0",
+                  "lane1"
+                ],
+                "members": {
+                  "count": {
+                    "kind": "bits",
+                    "signed": 1,
+                    "state_model": "four_state",
+                    "width": 3
+                  },
+                  "header": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 2
+                  },
+                  "lane0": {
+                    "kind": "bit",
+                    "signed": 0,
+                    "state_model": "two_state",
+                    "width": 1
+                  },
+                  "lane1": {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 2
+                  }
+                },
+                "signed": 0,
+                "width": 8
+              },
+              "width": 8
+            }
+          ],
+          "type": "flat",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "header",
+              "count",
+              "lane0",
+              "lane1"
+            ],
+            "members": {
+              "count": {
+                "kind": "bits",
+                "signed": 1,
+                "state_model": "four_state",
+                "width": 3
+              },
+              "header": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 2
+              },
+              "lane0": {
+                "kind": "bit",
+                "signed": 0,
+                "state_model": "two_state",
+                "width": 1
+              },
+              "lane1": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 2
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "width": 8
+        },
+        {
+          "kind": "var",
+          "name": "k",
+          "signals": [
+            {
+              "name": "k",
+              "type": "lanes",
+              "type_spec": {
+                "items": [
+                  {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  },
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 2
+                  }
+                ],
+                "kind": "list",
+                "signed": 0,
+                "width": 3
+              },
+              "width": 3
+            }
+          ],
+          "type": "lanes",
+          "type_spec": {
+            "items": [
+              {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              },
+              {
+                "kind": "bits",
+                "signed": 0,
+                "width": 2
+              }
+            ],
+            "kind": "list",
+            "signed": 0,
+            "width": 3
+          },
+          "width": 3
+        }
+      ],
+      "transactions": [
+        {
+          "clauses": [
+            [
+              "on",
+              "start"
+            ],
+            [
+              "complete",
+              "done"
+            ]
+          ],
+          "name": "main",
+          "ports": {
+            "inputs": [],
+            "outputs": []
+          }
+        }
+      ],
+      "type_declarations": [
+        [
+          "type",
+          "frame",
+          [
+            "record",
+            [
+              "flag",
+              "bit"
+            ],
+            [
+              "data",
+              [
+                "bits",
+                "7"
+              ]
+            ]
+          ]
+        ],
+        [
+          "type",
+          "alias",
+          "frame"
+        ],
+        [
+          "type",
+          "renamed",
+          [
+            "record",
+            [
+              "tag",
+              "bit"
+            ],
+            [
+              "data",
+              [
+                "bits",
+                "7"
+              ]
+            ]
+          ]
+        ],
+        [
+          "type",
+          "reordered",
+          [
+            "record",
+            [
+              "data",
+              [
+                "bits",
+                "7"
+              ]
+            ],
+            [
+              "flag",
+              "bit"
+            ]
+          ]
+        ],
+        [
+          "type",
+          "signed_data",
+          [
+            "record",
+            [
+              "flag",
+              "bit"
+            ],
+            [
+              "data",
+              [
+                "signed",
+                [
+                  "bits",
+                  "7"
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          "type",
+          "four",
+          [
+            "record",
+            [
+              "flag",
+              "bit"
+            ],
+            [
+              "data",
+              [
+                "four_state",
+                [
+                  "bits",
+                  "7"
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          "type",
+          "two",
+          [
+            "record",
+            [
+              "flag",
+              "bit"
+            ],
+            [
+              "data",
+              [
+                "two_state",
+                [
+                  "bits",
+                  "7"
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          "type",
+          "bit_kind",
+          [
+            "record",
+            [
+              "flag",
+              [
+                "bits",
+                "1"
+              ]
+            ],
+            [
+              "data",
+              [
+                "bits",
+                "7"
+              ]
+            ]
+          ]
+        ],
+        [
+          "type",
+          "nested",
+          [
+            "record",
+            [
+              "header",
+              [
+                "bits",
+                "2"
+              ]
+            ],
+            [
+              "body",
+              [
+                "record",
+                [
+                  "count",
+                  [
+                    "signed",
+                    [
+                      "four_state",
+                      [
+                        "bits",
+                        "3"
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "lanes",
+                  [
+                    "list",
+                    [
+                      "two_state",
+                      "bit"
+                    ],
+                    [
+                      "bits",
+                      "2"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          "type",
+          "flat",
+          [
+            "record",
+            [
+              "header",
+              [
+                "bits",
+                "2"
+              ]
+            ],
+            [
+              "count",
+              [
+                "signed",
+                [
+                  "four_state",
+                  [
+                    "bits",
+                    "3"
+                  ]
+                ]
+              ]
+            ],
+            [
+              "lane0",
+              [
+                "two_state",
+                "bit"
+              ]
+            ],
+            [
+              "lane1",
+              [
+                "bits",
+                "2"
+              ]
+            ]
+          ]
+        ],
+        [
+          "type",
+          "lanes",
+          [
+            "list",
+            "bit",
+            [
+              "bits",
+              "2"
+            ]
+          ]
+        ]
+      ],
+      "type_symbols": {
+        "local": {
+          "alias": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "bit_kind": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "flat": {
+            "kind": "record",
+            "member_order": [
+              "header",
+              "count",
+              "lane0",
+              "lane1"
+            ],
+            "members": {
+              "count": {
+                "kind": "bits",
+                "signed": 1,
+                "state_model": "four_state",
+                "width": 3
+              },
+              "header": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 2
+              },
+              "lane0": {
+                "kind": "bit",
+                "signed": 0,
+                "state_model": "two_state",
+                "width": 1
+              },
+              "lane1": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 2
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "four": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "state_model": "four_state",
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "frame": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "lanes": {
+            "items": [
+              {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              },
+              {
+                "kind": "bits",
+                "signed": 0,
+                "width": 2
+              }
+            ],
+            "kind": "list",
+            "signed": 0,
+            "width": 3
+          },
+          "nested": {
+            "kind": "record",
+            "member_order": [
+              "header",
+              "body"
+            ],
+            "members": {
+              "body": {
+                "kind": "record",
+                "member_order": [
+                  "count",
+                  "lanes"
+                ],
+                "members": {
+                  "count": {
+                    "kind": "bits",
+                    "signed": 1,
+                    "state_model": "four_state",
+                    "width": 3
+                  },
+                  "lanes": {
+                    "items": [
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "state_model": "two_state",
+                        "width": 1
+                      },
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 2
+                      }
+                    ],
+                    "kind": "list",
+                    "signed": 0,
+                    "width": 3
+                  }
+                },
+                "signed": 0,
+                "width": 6
+              },
+              "header": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 2
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "renamed": {
+            "kind": "record",
+            "member_order": [
+              "tag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "tag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "reordered": {
+            "kind": "record",
+            "member_order": [
+              "data",
+              "flag"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "signed_data": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 1,
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          },
+          "two": {
+            "kind": "record",
+            "member_order": [
+              "flag",
+              "data"
+            ],
+            "members": {
+              "data": {
+                "kind": "bits",
+                "signed": 0,
+                "state_model": "two_state",
+                "width": 7
+              },
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 8
+          }
+        },
+        "packages": {}
+      },
+      "uses": [],
+      "verification_bridge": null,
+      "verification_observations": [],
+      "watchdog": "65535"
+    }
+  },
+  "authority": "Complete original authored controls/imported/shared package sources and published project actor parser/type/timing contracts; expected values are built before reading any native actor product.",
+  "refused_sources": [
+    "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))",
+    "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+  ],
+  "sources": {
+    "imported": "(actor imported (imports (package shared)) (interface (output done)) (storage (var value (type shared.frame))) (transaction main (complete done)))",
+    "local": "(actor controls\n  (types\n    (type frame (record (flag bit) (data (bits 7))))\n    (type alias frame)\n    (type renamed (record (tag bit) (data (bits 7))))\n    (type reordered (record (data (bits 7)) (flag bit)))\n    (type signed_data (record (flag bit) (data (signed (bits 7)))))\n    (type four (record (flag bit) (data (four_state (bits 7)))))\n    (type two (record (flag bit) (data (two_state (bits 7)))))\n    (type bit_kind (record (flag (bits 1)) (data (bits 7))))\n    (type nested (record (header (bits 2))\n      (body (record (count (signed (four_state (bits 3))))\n        (lanes (list (two_state bit) (bits 2)))))))\n    (type flat (record (header (bits 2)) (count (signed (four_state (bits 3))))\n      (lane0 (two_state bit)) (lane1 (bits 2))))\n    (type lanes (list bit (bits 2))))\n  (interface (input start) (output done))\n  (storage (var a (type frame)) (var b (type alias)) (var c (type renamed))\n    (var d (type reordered)) (var e (type signed_data)) (var f (type four))\n    (var g (type two)) (var h (type bit_kind)) (var i (type nested))\n    (var j (type flat)) (var k (type lanes)))\n  (transaction main (on start) (complete done)))",
+    "shared": "(?pkg:shared (+types (type frame (record (flag bit) (data (bits 7))))))"
+  }
+}

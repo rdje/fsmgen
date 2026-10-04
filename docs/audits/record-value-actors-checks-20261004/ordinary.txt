@@ -1,0 +1,1 @@
+PASS all four original source parse outcomes, exact caller inputs/coordinates and complete source-authored local/imported actor products with strict primitive kinds, defaults, raw DSL tokens, storage/signals/types/packages/metadata/transactions. Refusals publish no product. Value/path/core API semantics and actual cause/copy assurance remain separately owned.

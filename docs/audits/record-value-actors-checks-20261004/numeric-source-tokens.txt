@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/record-value-actors-20261004/verify.py", line 133, in <module>
+    assert exact(actor['type_declarations'], clauses.get('types', ['types'])[1:]), 'complete authored DSL type tokens/order/kinds'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete authored DSL type tokens/order/kinds

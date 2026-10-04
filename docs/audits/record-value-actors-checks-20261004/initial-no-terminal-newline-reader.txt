@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-actors-20261004/verify.py", line 167, in <module>
+    assert row['before'][1][0] == expected_sources[index], 'whole exact authored source parse input'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: whole exact authored source parse input

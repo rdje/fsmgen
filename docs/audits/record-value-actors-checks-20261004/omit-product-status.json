@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-actors-20261004/verify.py",
+    "--omit-product"
+  ],
+  "status": 1,
+  "process_filename_policy": "only exact runtime repository prefix becomes ${REPO_ROOT}; native product/error/kind values untouched"
+}
