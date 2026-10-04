@@ -231,7 +231,11 @@ reject even when the filename contains the wanted phrase; the genuine writer
 cause succeeds at that filename. An actual writer-guard bypass fails both
 refusal and cause assertions. Complete ordinary metadata/parser products and
 copy kinds conserve; the controlled admitted actor binds its authored record.
-The complete diagnostic join and final metadata review remain owned.
+The [complete diagnostic join](../../../docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt)
+binds both committed repairs to their full source, native context and ordinary
+product/copy/kind/caller proofs. Both contextual assurance defects close;
+source echoes, private-copy promotion and actual guard bypasses cannot qualify
+refusal causes. Final metadata-helper review remains owned.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
