@@ -1,0 +1,6 @@
+PASS complete native helper/adjacent/API/private/test-copy/assertion populations and independent ordinary causes bind immutable source; actual Storable location and parser primary-filename echoes expose two owned contextual false positives. Field/copy semantics remain .3-owned before .5 repairs and .4 join.
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/interface-metadata-fields-20261004/verify.py", line 111, in <module>
+    assert typed_equal(layout(frame), expected_fields), 'authored packed leaf order and ranges'
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: authored packed leaf order and ranges

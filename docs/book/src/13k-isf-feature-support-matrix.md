@@ -197,6 +197,11 @@ the source filename contains its wanted phrase. Both test-assurance defects are
 owned for repair after the copied-field review and preceding source-context
 qualification. Existing public metadata qualification retains its finite scope;
 provider behavior and public admission are unchanged.
+The [field qualification](../../../docs/audits/interface-metadata-fields-20261004/scope.txt)
+binds every observed width change to declared local/imported types and checks
+complete numeric metadata results. Private validation copies may hold decimal
+strings before numeric rebuilding. Actual test-copy and assertion assurance
+remains open before the owned repairs.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

@@ -1,0 +1,67 @@
+Owner SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.2.
+
+This source/field qualification separates width meanings and current product
+semantics from actual copier/assertion strength, which remains successor .3.
+The complete earlier native source/callback/cause/copy qualification re-verifies
+before this independent reader. No current test/provider/public source changes
+occur; preceding complete coverage proof is already pinned before later edits.
+
+Re-derivation: the complete original native streams reproduce, with only a
+read-only public parse-file fixture-byte observer added. All105 API inputs,
+outputs, original caller kinds and warnings and all145 whole copy streams agree
+with the original; primary causes agree, while full native traces remain saved
+without claiming incidental addresses identical. Actual imported .isf and
+shared .fsm complete bytes agree with independently authored literals and remain
+unchanged across public parsing before temporary fixture cleanup. Source files
+are repository-local plain same-volume data; runtime coordinate root prefixes
+alone become ${REPO_ROOT}. No submodule implementation or foreign repo is read
+or written; Lispish is invoked through its published parse interface.
+
+A producer flattens typed graph fields; a separate recursive reader traverses
+the complete graph encoding and independently projects original value paths.
+All94 changed pairs in32 copies are numeric width -> equal decimal string;
+all113 unchanged copy ordinals remain mandatory controls. Test-source/baseline
+copies account for64 pairs and private validation copies for30. These are width
+facts, not text tokens or evidence that value-only snapshots preserve kinds.
+The actor baseline's local frame type, storage root and signal mirror four
+authored leaves: subtype4, signed four-state count3, two-state lane1 and lane2.
+Record-interface templates and every producer mutation seed refer to those same
+resolved leaves before the declared mutation. Prefix controls intentionally
+stringify numeric properties after copying; their actual first-read caller
+snapshots retain string kinds. Unchanged seed meanings and complete source,
+callback/error membership remain bound to the original profile.
+
+Private capture copies detach resolved local/imported leaves before numeric
+validation; private snapshot copies can contain decimal strings. They are
+accepted width spellings, and the producer intentionally rebuilds numeric final
+metadata. The source model owns complete local frame/byte, imported packet/byte
+and one-flag writer-fixture types, plus internal width-one resolved validator
+wrappers. These internal metadata calls do not admit new source ports. Authored
+order and suffix-sum packed intervals independently yield subtype9:6, count5:3,
+lane2:2 and lane1:0, with exact signed/state facts and absent properties absent.
+The imported record's code2 and flag1 yield2:1 and0:0 with its qualified alias.
+Complete original actor declaration/type/storage mirrors bind those authored
+sources and typed original facts, including the explicitly authored unused
+width's string spelling. Whole59 accepted metadata results match independently
+modeled numeric width/range/signed properties, role/order/alias/domain identity,
+closed fields and unknown-null/known-empty distinctions; two results are null
+and three empty. Nested private snapshots join original declaration models.
+No product value/kind is repaired or coerced by the comparison oracle.
+
+Falsification: omitting an actual original width field fails complete field/
+unchanged-control membership. A counterfactual authored-order model fails exact
+source leaf/range identity. Promoting the genuine first private clone as the
+final metadata product fails typed numeric whole-product identity, even though
+all width values agree. Each independent control is RED1. This establishes
+finite source/product role separation, not actual copy/consumer assurance; .3
+owns genuine pure-copy/kind/alias/projection and native cycle controls before
+any separately owned test repair. Intentional private numeric projection stays.
+
+Durability: complete original sources, native/source-file/copy/API/consumer
+graphs and status/TAP, complete changed-field and unchanged-control roster,
+producer/independent source/type/packed-layout model, actual native private-stage
+authority control and other counterfactual receipts, manifest/task/card/book/Git.
+Field qualification supplies no HDL/compiler/simulator, macro/proxy/controller
+runtime, arbitrary native-class capability, source admission expansion or
+uninspected broader actor/record-value behavior. Existing diagnostic defects
+remain parent .5-owned; startup/native-access/visual QA boundaries stay open.

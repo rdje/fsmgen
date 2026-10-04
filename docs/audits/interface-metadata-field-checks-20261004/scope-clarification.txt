@@ -1,0 +1,1 @@
+The sealed scope compact lane notation names bit intervals. Exact authored paths are payload.lanes[0] width1 range2:2 and payload.lanes[1] width2 range1:0, as the complete independent source model and expected_fields table prove. No second/third lane or reordered field is asserted.
