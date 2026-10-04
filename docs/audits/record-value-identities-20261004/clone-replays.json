@@ -1,0 +1,635 @@
+{
+  "payload": {
+    "command": [
+      "perl",
+      "-Iperl",
+      "docs/audits/record-value-identities-20261004/payload_controls.pl",
+      "docs/audits/record-value-identities-20261004/payload-control-inputs.json",
+      ".artifacts/record-value-identities-clone-replay-20261004/payload-control-native.json"
+    ],
+    "input": {
+      "bytes": 10702,
+      "sha256": "a8fcc45fd362b662e1b81089078a6c67e47c46d9e3a5905a966860a3dafb2fc1"
+    },
+    "output": "",
+    "perl": "v5.34.1\ndarwin\n",
+    "result": "[{\"accepted\":1,\"after\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"before\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"error\":\"\",\"label\":\"frame:signed_data\",\"result\":1,\"warnings\":[]},{\"accepted\":1,\"after\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"before\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"error\":\"\",\"label\":\"frame:four\",\"result\":1,\"warnings\":[]},{\"accepted\":1,\"after\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"before\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"error\":\"\",\"label\":\"frame:two\",\"result\":1,\"warnings\":[]},{\"accepted\":1,\"after\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"before\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"error\":\"\",\"label\":\"frame:bit_kind\",\"result\":1,\"warnings\":[]},{\"accepted\":1,\"after\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"tag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"tag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"before\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"tag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"tag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"error\":\"\",\"label\":\"frame:renamed\",\"result\":0,\"warnings\":[]},{\"accepted\":1,\"after\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"data\\\",\\\"flag\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"before\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"flag\\\",\\\"data\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"data\\\",\\\"flag\\\"],\\\"members\\\":{\\\"data\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":7},\\\"flag\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"width\\\":1}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"error\":\"\",\"label\":\"frame:reordered\",\"result\":0,\"warnings\":[]},{\"accepted\":1,\"after\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"header\\\",\\\"body\\\"],\\\"members\\\":{\\\"body\\\":{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"count\\\",\\\"lanes\\\"],\\\"members\\\":{\\\"count\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":3},\\\"lanes\\\":{\\\"items\\\":[{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":1},{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}],\\\"kind\\\":\\\"list\\\",\\\"signed\\\":0,\\\"width\\\":3}},\\\"signed\\\":0,\\\"width\\\":6},\\\"header\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"header\\\",\\\"count\\\",\\\"lane0\\\",\\\"lane1\\\"],\\\"members\\\":{\\\"count\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":3},\\\"header\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2},\\\"lane0\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":1},\\\"lane1\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"before\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"header\\\",\\\"body\\\"],\\\"members\\\":{\\\"body\\\":{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"count\\\",\\\"lanes\\\"],\\\"members\\\":{\\\"count\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":3},\\\"lanes\\\":{\\\"items\\\":[{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":1},{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}],\\\"kind\\\":\\\"list\\\",\\\"signed\\\":0,\\\"width\\\":3}},\\\"signed\\\":0,\\\"width\\\":6},\\\"header\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"header\\\",\\\"count\\\",\\\"lane0\\\",\\\"lane1\\\"],\\\"members\\\":{\\\"count\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":3},\\\"header\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2},\\\"lane0\\\":{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":1},\\\"lane1\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"error\":\"\",\"label\":\"nested:flat\",\"result\":0,\"warnings\":[]},{\"accepted\":1,\"after\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"header\\\",\\\"body\\\"],\\\"members\\\":{\\\"body\\\":{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"count\\\",\\\"lanes\\\"],\\\"members\\\":{\\\"count\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":3},\\\"lanes\\\":{\\\"items\\\":[{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":1},{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}],\\\"kind\\\":\\\"list\\\",\\\"signed\\\":0,\\\"width\\\":3}},\\\"signed\\\":0,\\\"width\\\":6},\\\"header\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"header\\\",\\\"body\\\"],\\\"members\\\":{\\\"body\\\":{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"count\\\",\\\"lanes\\\"],\\\"members\\\":{\\\"count\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":3},\\\"lanes\\\":{\\\"items\\\":[{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2},{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":1}],\\\"kind\\\":\\\"list\\\",\\\"signed\\\":0,\\\"width\\\":3}},\\\"signed\\\":0,\\\"width\\\":6},\\\"header\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"before\":\"[\\\"FSM::Package::PayloadTypeSupport\\\",{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"header\\\",\\\"body\\\"],\\\"members\\\":{\\\"body\\\":{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"count\\\",\\\"lanes\\\"],\\\"members\\\":{\\\"count\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":3},\\\"lanes\\\":{\\\"items\\\":[{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":1},{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}],\\\"kind\\\":\\\"list\\\",\\\"signed\\\":0,\\\"width\\\":3}},\\\"signed\\\":0,\\\"width\\\":6},\\\"header\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}},\\\"signed\\\":0,\\\"width\\\":8},{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"header\\\",\\\"body\\\"],\\\"members\\\":{\\\"body\\\":{\\\"kind\\\":\\\"record\\\",\\\"member_order\\\":[\\\"count\\\",\\\"lanes\\\"],\\\"members\\\":{\\\"count\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":1,\\\"state_model\\\":\\\"four_state\\\",\\\"width\\\":3},\\\"lanes\\\":{\\\"items\\\":[{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2},{\\\"kind\\\":\\\"bit\\\",\\\"signed\\\":0,\\\"state_model\\\":\\\"two_state\\\",\\\"width\\\":1}],\\\"kind\\\":\\\"list\\\",\\\"signed\\\":0,\\\"width\\\":3}},\\\"signed\\\":0,\\\"width\\\":6},\\\"header\\\":{\\\"kind\\\":\\\"bits\\\",\\\"signed\\\":0,\\\"width\\\":2}},\\\"signed\\\":0,\\\"width\\\":8}]\",\"error\":\"\",\"label\":\"nested:swapped-list\",\"result\":0,\"warnings\":[]}]\n",
+    "status": 0,
+    "working_directory": "."
+  },
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "receipts": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-clone-join-20261004/verify.py"
+      ],
+      "git_context": {
+        "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+        "operations": "read-only child queries",
+        "work_tree": ".artifacts/record-value-identities-clone-replay-20261004"
+      },
+      "inputs": {
+        "docs/book/src/13j-type-enum-aggregate.md": {
+          "bytes": 51300,
+          "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+        },
+        "docs/book/src/13k-isf-feature-support-matrix.md": {
+          "bytes": 155903,
+          "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+        },
+        "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+          "bytes": 32771,
+          "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+        },
+        "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+          "bytes": 32171,
+          "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+        },
+        "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+          "bytes": 3337,
+          "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+        },
+        "docs/knowledge/isf-record-output-source-admission.md": {
+          "bytes": 3972,
+          "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+        },
+        "perl/FSM/Adapter/ISF.pm": {
+          "bytes": 3268,
+          "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+        },
+        "perl/FSM/Adapter/ISF/Parser.pm": {
+          "bytes": 463805,
+          "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+        },
+        "perl/FSM/Composition/InterfacePortBuilder.pm": {
+          "bytes": 11253,
+          "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+        },
+        "perl/FSM/Package/AggregatePathSupport.pm": {
+          "bytes": 17228,
+          "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+        },
+        "perl/FSM/Package/ImportResolver.pm": {
+          "bytes": 5738,
+          "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+        },
+        "perl/FSM/Package/Parser.pm": {
+          "bytes": 27375,
+          "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+        },
+        "perl/FSM/Package/PayloadTypeSupport.pm": {
+          "bytes": 7865,
+          "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+        },
+        "perl/FSM/Pipeline/SourceFrontend.pm": {
+          "bytes": 35424,
+          "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+        },
+        "perl/FSM/ProjectDataLocality.pm": {
+          "bytes": 6017,
+          "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+        },
+        "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+          "bytes": 11506,
+          "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+        },
+        "perl/FSM/Support/ISFRecordPortContexts.pm": {
+          "bytes": 14414,
+          "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+        },
+        "perl/FSM/Support/ISFRecordPortScopes.pm": {
+          "bytes": 8722,
+          "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+        },
+        "perl/FSM/Support/ISFRecordPortValues.pm": {
+          "bytes": 9858,
+          "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+        },
+        "t/1986-isf-record-port-value-gates.t": {
+          "bytes": 16809,
+          "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+        },
+        "t/lib/FSM/Test/ProjectDataLocality.pm": {
+          "bytes": 198,
+          "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+        }
+      },
+      "output": "PASS complete original8251 clone native/source-tree/joint/referent join from1448 source roots, with exact whole record/source/caller/primitive-kind/parent/slot identity and full9283-call native conservation. Identical-record native permutation and genuine alias provider reject. Whole dated source-tree/native ordinary/RED proofs retain; only structured clone product parent closes before strict identity/payload/core/helper/consumer/cause assurance.\n",
+      "status": 0,
+      "working_directory": ".artifacts/record-value-identities-clone-replay-20261004"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-clone-join-20261004/verify.py",
+        "--omit-call"
+      ],
+      "git_context": {
+        "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+        "operations": "read-only child queries",
+        "work_tree": ".artifacts/record-value-identities-clone-replay-20261004"
+      },
+      "inputs": {
+        "docs/book/src/13j-type-enum-aggregate.md": {
+          "bytes": 51300,
+          "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+        },
+        "docs/book/src/13k-isf-feature-support-matrix.md": {
+          "bytes": 155903,
+          "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+        },
+        "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+          "bytes": 32771,
+          "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+        },
+        "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+          "bytes": 32171,
+          "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+        },
+        "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+          "bytes": 3337,
+          "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+        },
+        "docs/knowledge/isf-record-output-source-admission.md": {
+          "bytes": 3972,
+          "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+        },
+        "perl/FSM/Adapter/ISF.pm": {
+          "bytes": 3268,
+          "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+        },
+        "perl/FSM/Adapter/ISF/Parser.pm": {
+          "bytes": 463805,
+          "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+        },
+        "perl/FSM/Composition/InterfacePortBuilder.pm": {
+          "bytes": 11253,
+          "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+        },
+        "perl/FSM/Package/AggregatePathSupport.pm": {
+          "bytes": 17228,
+          "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+        },
+        "perl/FSM/Package/ImportResolver.pm": {
+          "bytes": 5738,
+          "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+        },
+        "perl/FSM/Package/Parser.pm": {
+          "bytes": 27375,
+          "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+        },
+        "perl/FSM/Package/PayloadTypeSupport.pm": {
+          "bytes": 7865,
+          "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+        },
+        "perl/FSM/Pipeline/SourceFrontend.pm": {
+          "bytes": 35424,
+          "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+        },
+        "perl/FSM/ProjectDataLocality.pm": {
+          "bytes": 6017,
+          "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+        },
+        "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+          "bytes": 11506,
+          "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+        },
+        "perl/FSM/Support/ISFRecordPortContexts.pm": {
+          "bytes": 14414,
+          "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+        },
+        "perl/FSM/Support/ISFRecordPortScopes.pm": {
+          "bytes": 8722,
+          "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+        },
+        "perl/FSM/Support/ISFRecordPortValues.pm": {
+          "bytes": 9858,
+          "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+        },
+        "t/1986-isf-record-port-value-gates.t": {
+          "bytes": 16809,
+          "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+        },
+        "t/lib/FSM/Test/ProjectDataLocality.pm": {
+          "bytes": 198,
+          "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+        }
+      },
+      "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 90, in <module>\n    assert [row['index'] for row in rows] == indices, 'complete original clone joined membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original clone joined membership\n",
+      "status": 1,
+      "working_directory": ".artifacts/record-value-identities-clone-replay-20261004"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-clone-join-20261004/verify.py",
+        "--same-native"
+      ],
+      "git_context": {
+        "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+        "operations": "read-only child queries",
+        "work_tree": ".artifacts/record-value-identities-clone-replay-20261004"
+      },
+      "inputs": {
+        "docs/book/src/13j-type-enum-aggregate.md": {
+          "bytes": 51300,
+          "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+        },
+        "docs/book/src/13k-isf-feature-support-matrix.md": {
+          "bytes": 155903,
+          "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+        },
+        "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+          "bytes": 32771,
+          "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+        },
+        "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+          "bytes": 32171,
+          "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+        },
+        "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+          "bytes": 3337,
+          "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+        },
+        "docs/knowledge/isf-record-output-source-admission.md": {
+          "bytes": 3972,
+          "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+        },
+        "perl/FSM/Adapter/ISF.pm": {
+          "bytes": 3268,
+          "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+        },
+        "perl/FSM/Adapter/ISF/Parser.pm": {
+          "bytes": 463805,
+          "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+        },
+        "perl/FSM/Composition/InterfacePortBuilder.pm": {
+          "bytes": 11253,
+          "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+        },
+        "perl/FSM/Package/AggregatePathSupport.pm": {
+          "bytes": 17228,
+          "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+        },
+        "perl/FSM/Package/ImportResolver.pm": {
+          "bytes": 5738,
+          "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+        },
+        "perl/FSM/Package/Parser.pm": {
+          "bytes": 27375,
+          "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+        },
+        "perl/FSM/Package/PayloadTypeSupport.pm": {
+          "bytes": 7865,
+          "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+        },
+        "perl/FSM/Pipeline/SourceFrontend.pm": {
+          "bytes": 35424,
+          "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+        },
+        "perl/FSM/ProjectDataLocality.pm": {
+          "bytes": 6017,
+          "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+        },
+        "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+          "bytes": 11506,
+          "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+        },
+        "perl/FSM/Support/ISFRecordPortContexts.pm": {
+          "bytes": 14414,
+          "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+        },
+        "perl/FSM/Support/ISFRecordPortScopes.pm": {
+          "bytes": 8722,
+          "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+        },
+        "perl/FSM/Support/ISFRecordPortValues.pm": {
+          "bytes": 9858,
+          "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+        },
+        "t/1986-isf-record-port-value-gates.t": {
+          "bytes": 16809,
+          "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+        },
+        "t/lib/FSM/Test/ProjectDataLocality.pm": {
+          "bytes": 198,
+          "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+        }
+      },
+      "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 115, in <module>\n    assert row['source_index'] == row['native_index'] == row['legacy_index'] == index, 'exact own original native/source slot despite identical full records'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own original native/source slot despite identical full records\n",
+      "status": 1,
+      "working_directory": ".artifacts/record-value-identities-clone-replay-20261004"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-clone-join-20261004/verify.py",
+        "--wrong-root"
+      ],
+      "git_context": {
+        "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+        "operations": "read-only child queries",
+        "work_tree": ".artifacts/record-value-identities-clone-replay-20261004"
+      },
+      "inputs": {
+        "docs/book/src/13j-type-enum-aggregate.md": {
+          "bytes": 51300,
+          "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+        },
+        "docs/book/src/13k-isf-feature-support-matrix.md": {
+          "bytes": 155903,
+          "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+        },
+        "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+          "bytes": 32771,
+          "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+        },
+        "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+          "bytes": 32171,
+          "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+        },
+        "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+          "bytes": 3337,
+          "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+        },
+        "docs/knowledge/isf-record-output-source-admission.md": {
+          "bytes": 3972,
+          "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+        },
+        "perl/FSM/Adapter/ISF.pm": {
+          "bytes": 3268,
+          "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+        },
+        "perl/FSM/Adapter/ISF/Parser.pm": {
+          "bytes": 463805,
+          "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+        },
+        "perl/FSM/Composition/InterfacePortBuilder.pm": {
+          "bytes": 11253,
+          "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+        },
+        "perl/FSM/Package/AggregatePathSupport.pm": {
+          "bytes": 17228,
+          "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+        },
+        "perl/FSM/Package/ImportResolver.pm": {
+          "bytes": 5738,
+          "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+        },
+        "perl/FSM/Package/Parser.pm": {
+          "bytes": 27375,
+          "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+        },
+        "perl/FSM/Package/PayloadTypeSupport.pm": {
+          "bytes": 7865,
+          "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+        },
+        "perl/FSM/Pipeline/SourceFrontend.pm": {
+          "bytes": 35424,
+          "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+        },
+        "perl/FSM/ProjectDataLocality.pm": {
+          "bytes": 6017,
+          "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+        },
+        "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+          "bytes": 11506,
+          "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+        },
+        "perl/FSM/Support/ISFRecordPortContexts.pm": {
+          "bytes": 14414,
+          "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+        },
+        "perl/FSM/Support/ISFRecordPortScopes.pm": {
+          "bytes": 8722,
+          "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+        },
+        "perl/FSM/Support/ISFRecordPortValues.pm": {
+          "bytes": 9858,
+          "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+        },
+        "t/1986-isf-record-port-value-gates.t": {
+          "bytes": 16809,
+          "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+        },
+        "t/lib/FSM/Test/ProjectDataLocality.pm": {
+          "bytes": 198,
+          "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+        }
+      },
+      "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 117, in <module>\n    assert row['root_index'] == model['root_index'] and exact(row['whole_source_root'], digest(root)), 'exact own complete source root and parent allocation'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own complete source root and parent allocation\n",
+      "status": 1,
+      "working_directory": ".artifacts/record-value-identities-clone-replay-20261004"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-clone-join-20261004/verify.py",
+        "--numeric-kind"
+      ],
+      "git_context": {
+        "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+        "operations": "read-only child queries",
+        "work_tree": ".artifacts/record-value-identities-clone-replay-20261004"
+      },
+      "inputs": {
+        "docs/book/src/13j-type-enum-aggregate.md": {
+          "bytes": 51300,
+          "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+        },
+        "docs/book/src/13k-isf-feature-support-matrix.md": {
+          "bytes": 155903,
+          "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+        },
+        "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+          "bytes": 32771,
+          "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+        },
+        "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+          "bytes": 32171,
+          "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+        },
+        "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+          "bytes": 3337,
+          "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+        },
+        "docs/knowledge/isf-record-output-source-admission.md": {
+          "bytes": 3972,
+          "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+        },
+        "perl/FSM/Adapter/ISF.pm": {
+          "bytes": 3268,
+          "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+        },
+        "perl/FSM/Adapter/ISF/Parser.pm": {
+          "bytes": 463805,
+          "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+        },
+        "perl/FSM/Composition/InterfacePortBuilder.pm": {
+          "bytes": 11253,
+          "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+        },
+        "perl/FSM/Package/AggregatePathSupport.pm": {
+          "bytes": 17228,
+          "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+        },
+        "perl/FSM/Package/ImportResolver.pm": {
+          "bytes": 5738,
+          "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+        },
+        "perl/FSM/Package/Parser.pm": {
+          "bytes": 27375,
+          "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+        },
+        "perl/FSM/Package/PayloadTypeSupport.pm": {
+          "bytes": 7865,
+          "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+        },
+        "perl/FSM/Pipeline/SourceFrontend.pm": {
+          "bytes": 35424,
+          "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+        },
+        "perl/FSM/ProjectDataLocality.pm": {
+          "bytes": 6017,
+          "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+        },
+        "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+          "bytes": 11506,
+          "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+        },
+        "perl/FSM/Support/ISFRecordPortContexts.pm": {
+          "bytes": 14414,
+          "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+        },
+        "perl/FSM/Support/ISFRecordPortScopes.pm": {
+          "bytes": 8722,
+          "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+        },
+        "perl/FSM/Support/ISFRecordPortValues.pm": {
+          "bytes": 9858,
+          "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+        },
+        "t/1986-isf-record-port-value-gates.t": {
+          "bytes": 16809,
+          "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+        },
+        "t/lib/FSM/Test/ProjectDataLocality.pm": {
+          "bytes": 198,
+          "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+        }
+      },
+      "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 119, in <module>\n    assert exact(row['source_product'], model['record']), 'whole joined source product primitive kinds and every field'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole joined source product primitive kinds and every field\n",
+      "status": 1,
+      "working_directory": ".artifacts/record-value-identities-clone-replay-20261004"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-clone-join-20261004/verify.py",
+        "--alias-result"
+      ],
+      "git_context": {
+        "metadata": "current repository metadata derived by git rev-parse --absolute-git-dir",
+        "operations": "read-only child queries",
+        "work_tree": ".artifacts/record-value-identities-clone-replay-20261004"
+      },
+      "inputs": {
+        "docs/book/src/13j-type-enum-aggregate.md": {
+          "bytes": 51300,
+          "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+        },
+        "docs/book/src/13k-isf-feature-support-matrix.md": {
+          "bytes": 155903,
+          "sha256": "13082cc8ba09a8edd8a57bca486b831fb5e7fc780ab8ea252a441c4fef50eac2"
+        },
+        "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+          "bytes": 32771,
+          "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+        },
+        "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+          "bytes": 32171,
+          "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+        },
+        "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+          "bytes": 3337,
+          "sha256": "6b7b1e06a4a7d2ee9eb5a1c3f7293e71a654a0321b1228fea88228e5c2432788"
+        },
+        "docs/knowledge/isf-record-output-source-admission.md": {
+          "bytes": 3972,
+          "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+        },
+        "perl/FSM/Adapter/ISF.pm": {
+          "bytes": 3268,
+          "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+        },
+        "perl/FSM/Adapter/ISF/Parser.pm": {
+          "bytes": 463805,
+          "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+        },
+        "perl/FSM/Composition/InterfacePortBuilder.pm": {
+          "bytes": 11253,
+          "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+        },
+        "perl/FSM/Package/AggregatePathSupport.pm": {
+          "bytes": 17228,
+          "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+        },
+        "perl/FSM/Package/ImportResolver.pm": {
+          "bytes": 5738,
+          "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+        },
+        "perl/FSM/Package/Parser.pm": {
+          "bytes": 27375,
+          "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+        },
+        "perl/FSM/Package/PayloadTypeSupport.pm": {
+          "bytes": 7865,
+          "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+        },
+        "perl/FSM/Pipeline/SourceFrontend.pm": {
+          "bytes": 35424,
+          "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+        },
+        "perl/FSM/ProjectDataLocality.pm": {
+          "bytes": 6017,
+          "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+        },
+        "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+          "bytes": 11506,
+          "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+        },
+        "perl/FSM/Support/ISFRecordPortContexts.pm": {
+          "bytes": 14414,
+          "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+        },
+        "perl/FSM/Support/ISFRecordPortScopes.pm": {
+          "bytes": 8722,
+          "sha256": "b0445fa708f6ee163f0ec07b0f13744fa02ca8cf7f7559cac81c7019f8506286"
+        },
+        "perl/FSM/Support/ISFRecordPortValues.pm": {
+          "bytes": 9858,
+          "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+        },
+        "t/1986-isf-record-port-value-gates.t": {
+          "bytes": 16809,
+          "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+        },
+        "t/lib/FSM/Test/ProjectDataLocality.pm": {
+          "bytes": 198,
+          "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+        }
+      },
+      "output": "Traceback (most recent call last):\n  File \"${REPO_ROOT}/docs/audits/record-value-clone-join-20261004/verify.py\", line 121, in <module>\n    reached = {'index': index, **native_graph.check_joint(actual)}\n                                 ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"${REPO_ROOT}/docs/audits/record-value-clones-20261004/native.py\", line 127, in check_joint\n    assert not inputs & results, 'actual complete structured clone input/result referents must be detached'\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual complete structured clone input/result referents must be detached\n",
+      "status": 1,
+      "working_directory": ".artifacts/record-value-identities-clone-replay-20261004"
+    }
+  ],
+  "source_revision": "5429120ed9a22bce069562dd4f35e749c4d3383f"
+}

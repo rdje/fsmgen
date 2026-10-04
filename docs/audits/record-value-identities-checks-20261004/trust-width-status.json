@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-identities-20261004/verify.py",
+    "--trust-width"
+  ],
+  "expected_failure": "independent complete type identity versus narrower payload product",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-identities-20261004/verify.py\", line 189, in <module>\n    assert exact(row['expected_result'], source['expected_result']), 'independent complete type identity versus narrower payload product'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent complete type identity versus narrower payload product\n",
+  "status": 1,
+  "working_directory": "."
+}

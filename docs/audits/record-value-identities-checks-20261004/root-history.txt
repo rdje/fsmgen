@@ -1,0 +1,1 @@
+45023cd3a4e6bbbc408cb3ad610edd7e25a5d37e R11: type-check same-name declared contracts

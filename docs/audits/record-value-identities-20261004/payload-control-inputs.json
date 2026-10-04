@@ -1,0 +1,508 @@
+[
+  {
+    "arguments": [
+      "FSM::Package::PayloadTypeSupport",
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      },
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 1,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      }
+    ],
+    "label": "frame:signed_data",
+    "source": "authored:frame",
+    "target": "authored:signed_data"
+  },
+  {
+    "arguments": [
+      "FSM::Package::PayloadTypeSupport",
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      },
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "state_model": "four_state",
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      }
+    ],
+    "label": "frame:four",
+    "source": "authored:frame",
+    "target": "authored:four"
+  },
+  {
+    "arguments": [
+      "FSM::Package::PayloadTypeSupport",
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      },
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "state_model": "two_state",
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      }
+    ],
+    "label": "frame:two",
+    "source": "authored:frame",
+    "target": "authored:two"
+  },
+  {
+    "arguments": [
+      "FSM::Package::PayloadTypeSupport",
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      },
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      }
+    ],
+    "label": "frame:bit_kind",
+    "source": "authored:frame",
+    "target": "authored:bit_kind"
+  },
+  {
+    "arguments": [
+      "FSM::Package::PayloadTypeSupport",
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      },
+      {
+        "kind": "record",
+        "member_order": [
+          "tag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "tag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      }
+    ],
+    "label": "frame:renamed",
+    "source": "authored:frame",
+    "target": "authored:renamed"
+  },
+  {
+    "arguments": [
+      "FSM::Package::PayloadTypeSupport",
+      {
+        "kind": "record",
+        "member_order": [
+          "flag",
+          "data"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      },
+      {
+        "kind": "record",
+        "member_order": [
+          "data",
+          "flag"
+        ],
+        "members": {
+          "data": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 7
+          },
+          "flag": {
+            "kind": "bit",
+            "signed": 0,
+            "width": 1
+          }
+        },
+        "signed": 0,
+        "width": 8
+      }
+    ],
+    "label": "frame:reordered",
+    "source": "authored:frame",
+    "target": "authored:reordered"
+  },
+  {
+    "arguments": [
+      "FSM::Package::PayloadTypeSupport",
+      {
+        "kind": "record",
+        "member_order": [
+          "header",
+          "body"
+        ],
+        "members": {
+          "body": {
+            "kind": "record",
+            "member_order": [
+              "count",
+              "lanes"
+            ],
+            "members": {
+              "count": {
+                "kind": "bits",
+                "signed": 1,
+                "state_model": "four_state",
+                "width": 3
+              },
+              "lanes": {
+                "items": [
+                  {
+                    "kind": "bit",
+                    "signed": 0,
+                    "state_model": "two_state",
+                    "width": 1
+                  },
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 2
+                  }
+                ],
+                "kind": "list",
+                "signed": 0,
+                "width": 3
+              }
+            },
+            "signed": 0,
+            "width": 6
+          },
+          "header": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 2
+          }
+        },
+        "signed": 0,
+        "width": 8
+      },
+      {
+        "kind": "record",
+        "member_order": [
+          "header",
+          "count",
+          "lane0",
+          "lane1"
+        ],
+        "members": {
+          "count": {
+            "kind": "bits",
+            "signed": 1,
+            "state_model": "four_state",
+            "width": 3
+          },
+          "header": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 2
+          },
+          "lane0": {
+            "kind": "bit",
+            "signed": 0,
+            "state_model": "two_state",
+            "width": 1
+          },
+          "lane1": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 2
+          }
+        },
+        "signed": 0,
+        "width": 8
+      }
+    ],
+    "label": "nested:flat",
+    "source": "authored:nested",
+    "target": "authored:flat"
+  },
+  {
+    "arguments": [
+      "FSM::Package::PayloadTypeSupport",
+      {
+        "kind": "record",
+        "member_order": [
+          "header",
+          "body"
+        ],
+        "members": {
+          "body": {
+            "kind": "record",
+            "member_order": [
+              "count",
+              "lanes"
+            ],
+            "members": {
+              "count": {
+                "kind": "bits",
+                "signed": 1,
+                "state_model": "four_state",
+                "width": 3
+              },
+              "lanes": {
+                "items": [
+                  {
+                    "kind": "bit",
+                    "signed": 0,
+                    "state_model": "two_state",
+                    "width": 1
+                  },
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 2
+                  }
+                ],
+                "kind": "list",
+                "signed": 0,
+                "width": 3
+              }
+            },
+            "signed": 0,
+            "width": 6
+          },
+          "header": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 2
+          }
+        },
+        "signed": 0,
+        "width": 8
+      },
+      {
+        "kind": "record",
+        "member_order": [
+          "header",
+          "body"
+        ],
+        "members": {
+          "body": {
+            "kind": "record",
+            "member_order": [
+              "count",
+              "lanes"
+            ],
+            "members": {
+              "count": {
+                "kind": "bits",
+                "signed": 1,
+                "state_model": "four_state",
+                "width": 3
+              },
+              "lanes": {
+                "items": [
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 2
+                  },
+                  {
+                    "kind": "bit",
+                    "signed": 0,
+                    "state_model": "two_state",
+                    "width": 1
+                  }
+                ],
+                "kind": "list",
+                "signed": 0,
+                "width": 3
+              }
+            },
+            "signed": 0,
+            "width": 6
+          },
+          "header": {
+            "kind": "bits",
+            "signed": 0,
+            "width": 2
+          }
+        },
+        "signed": 0,
+        "width": 8
+      }
+    ],
+    "label": "nested:swapped-list",
+    "source": "authored:nested",
+    "target": "source:swapped-nested-list"
+  }
+]

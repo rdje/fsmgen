@@ -404,6 +404,20 @@ reject. The complete tree proof and its eight controls reexecute in exact dated
 contexts, including all prior root/native proofs. This closes the structured
 clone product lane. Strict identity and payload helpers, the whole core/API join,
 permanent original consumer assurance and native full causes remain separate.
+The [complete identity/payload proof](../../../docs/audits/record-value-identities-20261004/scope.txt)
+now qualifies fourteen original strict comparisons and four original payload
+comparisons from full source types and their own private preparations. Five
+strict pairs are equivalent; nine conflict despite the same packed width. Full
+member names/order, nesting/list positions, signedness, state-model presence and
+bit-versus-bits kinds retain. The narrower payload relation accepts the four
+sign/state/unit-kind differences. Independent complete property/path and ordered
+shape witnesses distinguish those contracts; missing calls, width-only identity,
+strict payload checking, identical-argument source substitution and raw width
+promotion reject. Eight genuine public payload controls additionally return true
+for those properties and false for same-width renamed/reordered/flattened/list-
+reordered shapes, with complete caller arguments unchanged. The original whole
+input/output/caller/kind/context records and dated clone/native proofs retain.
+The whole core/API join, permanent consumers and native full causes stay owned.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

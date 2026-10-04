@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-identities-20261004/verify.py", line 188, in <module>
+    assert row['source_parent_index'] == source['source_parent_index'] and exact(row['whole_source_parent'], source['whole_source_parent']) and exact(row['source_recipe'], source['source_recipe']), 'exact own source/copy parent despite identical type arguments'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact own source/copy parent despite identical type arguments

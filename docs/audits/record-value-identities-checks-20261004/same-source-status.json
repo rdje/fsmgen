@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-identities-20261004/verify.py",
+    "--same-source"
+  ],
+  "expected_failure": "exact own source/copy parent despite identical type arguments",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-identities-20261004/verify.py\", line 188, in <module>\n    assert row['source_parent_index'] == source['source_parent_index'] and exact(row['whole_source_parent'], source['whole_source_parent']) and exact(row['source_recipe'], source['source_recipe']), 'exact own source/copy parent despite identical type arguments'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own source/copy parent despite identical type arguments\n",
+  "status": 1,
+  "working_directory": "."
+}

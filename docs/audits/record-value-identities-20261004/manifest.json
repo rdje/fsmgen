@@ -1,0 +1,74 @@
+{
+  "binding.json": {
+    "bytes": 946700,
+    "sha256": "8092b2abb867bfce6f19d5a7f21ee5fa4fc6ce7dbe0c1b0dfd95bd558a8c9548"
+  },
+  "check_controls.py": {
+    "bytes": 1657,
+    "sha256": "14d122a8f3677ef020d854ff6a2569c805018d57dc9309836cda38c56e9d4ac0"
+  },
+  "clone-replays.json": {
+    "bytes": 43655,
+    "sha256": "63fbfb1784932d056e3c1cade15d2ab76c01f5fee4d873a03e0d189066db0da8"
+  },
+  "controls.json": {
+    "bytes": 3942,
+    "sha256": "1e71d94d61e99aa599f2aca1b5cdd0a910b01d23e4f3b6499f6c7c2fb38e28c0"
+  },
+  "doc-updates.json": {
+    "bytes": 325901,
+    "sha256": "008fdbbb94707e5e838ea55720ceceb40f3dd210562cf3c544c5a548e234321b"
+  },
+  "identity-products.json": {
+    "bytes": 176337,
+    "sha256": "e64cbb5da50219403df257fd51cd4f38f033b7a1223f1dd9526966e569538859"
+  },
+  "model.py": {
+    "bytes": 3743,
+    "sha256": "855bb4732b0776181bcdaa8890e9ac821992a7d8f44a59cc29ed22a22f7dbead"
+  },
+  "owners.json": {
+    "bytes": 30332,
+    "sha256": "e688aa8a50738b52a7cd9c622d817785945d56adec83ebca8708eb36d3795b24"
+  },
+  "payload-control-inputs.json": {
+    "bytes": 10702,
+    "sha256": "a8fcc45fd362b662e1b81089078a6c67e47c46d9e3a5905a966860a3dafb2fc1"
+  },
+  "payload-control-native.json": {
+    "bytes": 10464,
+    "sha256": "f70c21b9deb310ea362fab77e79ef06171bf04efb335575b296a4a5d3b7e9346"
+  },
+  "payload_controls.pl": {
+    "bytes": 1131,
+    "sha256": "ad037045e41cc165a6f01b23b02be85b10a7ba21ac12b3004bc9c2270a2f6953"
+  },
+  "plan.txt": {
+    "bytes": 1051,
+    "sha256": "425cac5552dfaa423f6141b0fe918584b7b5467444406ee4262eed4a26d3a468"
+  },
+  "produce.py": {
+    "bytes": 1324,
+    "sha256": "4b67e0d904000ad0df8a3fee31bfb55973fcba22c664c0857862e04b60024fbd"
+  },
+  "reader-prefix.json": {
+    "bytes": 6908,
+    "sha256": "1022ef811500dc6c05011b55bba621bc18cb2126964350c3ab6db4accfdc2250"
+  },
+  "replay_clones.py": {
+    "bytes": 6112,
+    "sha256": "b0cc1a52a08b3518fdaec9d2fabd139a2beae855d22e8a84f22db09b4db95817"
+  },
+  "scope.txt": {
+    "bytes": 5358,
+    "sha256": "274c04943212f5c3035744688a248a5b6bc7948520751b6458eb0bced2b4da34"
+  },
+  "source_roots.py": {
+    "bytes": 7655,
+    "sha256": "ab5dd3a8c8224ac13fdb61c54ec2c7390cf459ede245f2462a9ee6974c3ecaa1"
+  },
+  "verify.py": {
+    "bytes": 14318,
+    "sha256": "6d985535a4ef242b4bce4a39d5d49233c75bec3a970740f83b17b1bef4c22438"
+  }
+}

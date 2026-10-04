@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-identities-20261004/verify.py", line 140, in <module>
+    assert [row['index'] for row in rows] == indices, 'all original strict identity/payload membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: all original strict identity/payload membership
