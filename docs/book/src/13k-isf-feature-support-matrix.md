@@ -235,7 +235,11 @@ The [complete diagnostic join](../../../docs/audits/interface-metadata-diagnosti
 binds both committed repairs to their full source, native context and ordinary
 product/copy/kind/caller proofs. Both contextual assurance defects close;
 source echoes, private-copy promotion and actual guard bypasses cannot qualify
-refusal causes. Final metadata-helper review remains owned.
+refusal causes. The [final metadata-helper review](../../../docs/audits/interface-metadata-helper-outcome-20261004/scope.txt)
+now reconciles the original source contracts with complete actual native roles
+and all source, field, copy, product and diagnostic repairs. This finite T1983
+review closes; public metadata behavior and admission stay unchanged. Other
+aggregate helpers and wider cold/backend/native consumers remain under review.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

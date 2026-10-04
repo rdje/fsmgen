@@ -20,7 +20,7 @@ evidence: >-
   docs/audits/interface-metadata-runtime-20261004/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
-  python3 -B docs/audits/interface-metadata-diagnostic-join-20261004/verify.py;
+  python3 -B docs/audits/interface-metadata-helper-outcome-20261004/verify.py;
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/2046-isf-library-document-origin-authority.t
   t/2045-isf-same-source-library-origins.t
@@ -51,4 +51,4 @@ plan](../audits/aggregate-record-helper-plan-20261003/scope.txt) splits sources.
 census](../audits/current-diagnostic-lexical-inventory-20261002/scope.txt) overlaps text; its [kind
 reader](../audits/current-diagnostic-lexical-kinds-20261002/verify.py) qualifies numeric forms. Cold review open.
 
-T1983 [copy repair](../audits/interface-metadata-copy-repair-20261004/scope.txt) rejects kind/alias/lossy/projection faults. Complete causes reject wanted-path Storable, caller/argument and parser filename echoes; real bypasses fail. Products/kinds conserve; both diagnostic defects close, final outcome open.
+T1983 [copy repair](../audits/interface-metadata-copy-repair-20261004/scope.txt) rejects kind/alias/lossy/projection faults. Complete causes reject wanted-path Storable, caller/argument and parser filename echoes; real bypasses fail. Products/kinds conserve; T1983 review closes; broader cold review open.

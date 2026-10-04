@@ -1,0 +1,74 @@
+{
+  "binding.json": {
+    "bytes": 11721,
+    "sha256": "3e216bcb2091f1b3dad87cbeaa779c082d64e5c88b4d056102fc6932f804a6a0"
+  },
+  "original-omit-copy.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "original-omit-copy.txt": {
+    "bytes": 372,
+    "sha256": "f9989d0e17cbfef2303f415bdad3a2ce126728e71c0c8670bea18ed29b1c5950"
+  },
+  "original-trust-label-calls.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "original-trust-label-calls.txt": {
+    "bytes": 442,
+    "sha256": "4475165f14391cdfbb80e98a9d16895098632bf610ef30a6d8731cc232a20329"
+  },
+  "outcome.json": {
+    "bytes": 10309961,
+    "sha256": "c98cf1a615a6fdac19af9f4fa806bbe782e601a788f0ebfe87f5f04e4046b7aa"
+  },
+  "plan.txt": {
+    "bytes": 767,
+    "sha256": "0dae1e7a87a80f3ad45898b6e13d65adcbb7d2bdabed322e65d61d5758430177"
+  },
+  "produce.py": {
+    "bytes": 415,
+    "sha256": "0e59b6d5c71068b1789286a9ded6576094f68e4df76be7a91e4ecacc2c9c0a1c"
+  },
+  "reader-omit-copy.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "reader-omit-copy.txt": {
+    "bytes": 8025,
+    "sha256": "433757b4f4eba85173f66f29752a9696da9ef39cf3db14deb09711e69ecba158"
+  },
+  "reader-omit-owner.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "reader-omit-owner.txt": {
+    "bytes": 8075,
+    "sha256": "75f467ac51b7c32daacf10b9912bdd33775ba3781f57d7ff443e4e172ee5b05d"
+  },
+  "reader-ordinary.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "reader-ordinary.txt": {
+    "bytes": 8157,
+    "sha256": "5c837f4d8c53b22e215886c264bdd743e23d14f872c2202b910fcf172ef25f82"
+  },
+  "reader-trust-label-calls.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "reader-trust-label-calls.txt": {
+    "bytes": 8199,
+    "sha256": "f0b133d6f5a1a909991d14025065158b5d5da27fb6d1b519e93384040e578d5b"
+  },
+  "scope.txt": {
+    "bytes": 3181,
+    "sha256": "3840665f51f8174760bbd1d8fca1d0e8f2e29c3cb8c1e454eff5aa8ddc373706"
+  },
+  "verify.py": {
+    "bytes": 4474,
+    "sha256": "1b3f717866f50ea2596bf24a5cdcd386c00aa0fd944300153b1d1a04dd6c1bf1"
+  }
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "${REPO_ROOT}/docs/audits/interface-metadata-helper-contract-20261003/verify.py", line 47, in <module>
+    assert [r['line'] for r in tokens if r['role'].endswith('_helper_call')] == [196, 219], 'label tokens cannot establish helper call sites'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: label tokens cannot establish helper call sites
