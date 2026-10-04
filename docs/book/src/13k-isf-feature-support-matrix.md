@@ -316,7 +316,17 @@ signed defaults and explicit state models. A genuine private width string
 cannot become final numeric metadata. Metadata accepts a missing scalar signed
 property with its existing unsigned default; the stricter value gate refuses
 that same source. Complete caller kinds and prior value semantics retain.
-Snapshot/range/clone/identity products and native assurance remain open. The
+The [complete snapshot proof](../../../docs/audits/record-value-snapshots-20261004/scope.txt)
+binds every two-hundred-twenty original snapshot to its own completed source-built
+capture, full handoff and detached stage/field record. All complete ordered
+port/field properties and contiguous packed ranges reconstruct independently;
+port widths and field widths/ranges/signed facts are numeric in the products.
+Capture handoffs keep their raw width spelling, and caller graphs retain.
+Genuine missing products/stages, wrong source roles, private width-string
+promotion and capture misallocation reject. This profile's snapshots all
+succeed; broader snapshot refusals and unknown/empty inputs are covered by their
+separate metadata contracts. Range/clone/identity products and native assurance
+remain open. The
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

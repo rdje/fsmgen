@@ -1,0 +1,1 @@
+PASS all original220 snapshot source-capture/handoff/private-stage/full-field models retained. Separate closed schema/layout/kind/native reader remains required.

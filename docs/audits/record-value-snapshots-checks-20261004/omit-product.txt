@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-snapshots-20261004/verify.py", line 138, in <module>
+    assert [row['index'] for row in rows] == [i for i, row in enumerate(native['api']) if row['kind'] == 'snapshot'], 'every original whole snapshot product membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: every original whole snapshot product membership

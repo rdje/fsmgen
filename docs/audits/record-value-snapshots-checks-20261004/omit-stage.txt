@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-snapshots-20261004/verify.py", line 170, in <module>
+    assert len(stages) == 1 and exact(stages[0], row['private']), 'every own whole original snapshot-private stage membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: every own whole original snapshot-private stage membership

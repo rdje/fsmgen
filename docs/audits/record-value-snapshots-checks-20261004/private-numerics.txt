@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-snapshots-20261004/verify.py", line 188, in <module>
+    assert exact(graph(model), parent['expected_product']) and exact(row['expected_product'], parent['expected_product']), 'independent whole schema/source/private/final numeric snapshot product'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: independent whole schema/source/private/final numeric snapshot product

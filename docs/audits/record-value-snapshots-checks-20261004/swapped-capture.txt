@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-snapshots-20261004/verify.py", line 153, in <module>
+    assert row['whole_capture_model'] == identity(parent), 'complete independently source-built capture model allocation'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete independently source-built capture model allocation

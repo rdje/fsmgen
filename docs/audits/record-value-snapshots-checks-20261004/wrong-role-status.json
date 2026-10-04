@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-snapshots-20261004/verify.py",
+    "--wrong-role"
+  ],
+  "working_directory": ".",
+  "status": 1
+}

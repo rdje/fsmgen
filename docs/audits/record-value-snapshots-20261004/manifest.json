@@ -1,0 +1,50 @@
+{
+  "binding.json": {
+    "bytes": 939759,
+    "sha256": "fe61a4fefbe682f67a8403a38903f7d39bd396ba357fd8b44d9f81add3d0bcb6"
+  },
+  "capture-owner.json": {
+    "bytes": 2653,
+    "sha256": "d61d13720006143fcdec92229aafc5bf90e0050ced5347120dad20f844213ab3"
+  },
+  "capture-replays.json": {
+    "bytes": 27333,
+    "sha256": "24e63b6a8a979b31543c5770292aeb685927abff5ecf250fd9136f4663ba9ae8"
+  },
+  "doc-updates.json": {
+    "bytes": 311297,
+    "sha256": "20e0ccf1c5a012b4b68570b19073f711c5fb53379d5c7ef2188a302c278d4076"
+  },
+  "initial-guessed-snapshot-stage-verify.py": {
+    "bytes": 12354,
+    "sha256": "415e532faaca30f676d0bc9329ec79a004f7a30de0883c261c02872c9e50dc18"
+  },
+  "initial-reader-disposition.txt": {
+    "bytes": 527,
+    "sha256": "aabf086fabde5bae2d1a1fde48678b234ecfd9a7173d9ec853bca3483e725e26"
+  },
+  "plan.txt": {
+    "bytes": 498,
+    "sha256": "5886398168dd35f322633a08d40fa444fd8d577c7bb308cf38a6605449e36a13"
+  },
+  "produce.py": {
+    "bytes": 2644,
+    "sha256": "6eb3649e2c8a59e07f0af9514ce91b264ebe4d781157c30c082c3c0c83a24c89"
+  },
+  "replay_captures.py": {
+    "bytes": 3974,
+    "sha256": "7107267aef8c82a6be80bfa30a93c96c49ce593b685d2a1c8c767ccd26bcfcd4"
+  },
+  "scope.txt": {
+    "bytes": 3577,
+    "sha256": "f6fdf660ffb23ad133b6fb778a9bef090af703357a5ae21d417fa6039aa6f37e"
+  },
+  "snapshot-products.json": {
+    "bytes": 4016887,
+    "sha256": "9c231630776344626afa03e3a60b6c84fbd7c75421bb026bfdc307aa264d556e"
+  },
+  "verify.py": {
+    "bytes": 12262,
+    "sha256": "0cc6559b732b26a4e9163aa300725865610c1472b4551f53e839256f44528256"
+  }
+}
