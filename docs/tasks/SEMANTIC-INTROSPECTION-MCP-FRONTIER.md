@@ -3999,10 +3999,10 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete T1983 metadata source/product/copy field meanings and assurance.`
   Acceptance: `Join complete .2 observations to original resolved scalar/record/list/member/type/domain sources, packed paths/ranges/order/signed/state-model facts, intentional numeric output projection and unchanged-source isolation. Copies and value-only comparisons are not kind authority. Split bounded semantic cohorts/native referent/topology/counterfactual controls before execution when needed; qualify every changed field and mandatory unchanged control. Freeze preceding coverage qualification before any new hot public-source changes, without rewriting sealed evidence.`
-  Verification: `pending`
+  Verification: `docs/audits/interface-metadata-source-product-join-20261004/verify.py joins all completed source-context/field/copy/native/repair owners,94 original fields,62 intentional current private conversions,59 whole numeric products,105 caller/cause rows and334 consumers. Complete source models, original/current topology/kinds/isolation, products/primary causes and actual controls remain required; field/product omission and genuine private authority controls RED1. All sealed archives preserved, current public behavior unchanged. Public-book2/308/build/readback/staged gates close source/product/copy qualification; separately owned parent .5 contextual diagnostic repairs precede .4 final T1983 outcome.`
   Commit: `children below`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.4`
@@ -4052,11 +4052,11 @@ For FSMGen, the analogs are:
   Commit: `this slice (Git subject identifies leaf)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.3.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Join complete metadata source/product/copy assurance and owned repairs.`
   Acceptance: `Close all original field/native/plain/cycle/copy identities and actual candidate controls with independent complete membership/semantic readback and any completed repair owners. Public/source/primitive kind conservation and intentional private projection must remain explicit; no generic observer pass can stand in for semantics. Sync book/fact/frontier and commit cleanly before parent .5 diagnostic repair, then .4 outcome join.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `docs/audits/interface-metadata-source-product-join-20261004/verify.py joins all completed source-context/field/copy/native/repair owners,94 original fields,62 intentional current private conversions,59 whole numeric products,105 caller/cause rows and334 consumers. Complete source models, original/current topology/kinds/isolation, products/primary causes and actual controls remain required; field/product omission and genuine private authority controls RED1. All sealed archives preserved, current public behavior unchanged. Public-book2/308/build/readback/staged gates close source/product/copy qualification; separately owned parent .5 contextual diagnostic repairs precede .4 final T1983 outcome.`
+  Commit: `this slice (Git subject identifies leaf)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.2.4`
   Status: `pending`
@@ -6601,3 +6601,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone($actor)' -- t/1983-isf-interface-port-metadata.t binds original lossy baselines and the qualified repair. Full current graphs show source-kind recovery moves32 original declared leaves into private numeric-copy conversions; counts alone could incorrectly treat intentional private spellings as product or copy-assurance failure.
 - [x] **ADDRESSED (verified)** — Separate producer/independent recursive reader join all original/current copies, field paths, source roles, API/products/primary causes, original/strong consumers and actual native/control outcomes. Every current62 private width conversion has original source authority;41 test copies and cyclic topology preserve kinds/sharing/isolation. Correspondence/field omission and private-stage authority controls RED1; original field/order/private controls remain RED1. Bounded repair children close; diagnostic defects remain separately owned.
 - [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and complete sealed original/current/source-model/native readers pass. No further current code/provider/test edits; all ordinary products/caller kinds/primary causes conserve, private numeric rebuilding retained. Fresh claim/task/KM/fixed capacity and staged doctrine/hooks close before outer join.
+
+## Acceptance Checklist — interface-metadata complete source/product/copy closure
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'my $before = dclone($actor)' -- t/1983-isf-interface-port-metadata.t binds the original lossy/value-only consumers and qualified repair. Complete authored-field/private-stage/current-native source roles plus preceding full-context source enforcement require independent semantic closure; a generic PASS or totals cannot establish final product or cause authority.
+- [x] **ADDRESSED (verified)** — Separate producer/independent full source/field/product/caller/consumer/owner join passes; original field/product omission and genuine private product-authority controls RED1. Every completed source-context/field/copy/native/repair child binds its complete proof; original/current kinds, sharing/isolation, all final numeric products/primary causes and actual cycle/control roles conserve. Source/product/copy parent closes; two contextual defects remain .5-owned before final .4 review.
+- [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308, rendered build and complete historical-context/metadata-model/native/repair/join readers pass. No additional current code/provider/test edits or public admission changes; sealed source/native evidence remains intact. Fresh claim/task/KM/fixed capacity and staged doctrine/hooks close before separately owned diagnostic repair.

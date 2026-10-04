@@ -216,6 +216,10 @@ binds original and repaired copy populations to their source fields and final
 products. Preserving numeric test seeds makes some private clones stringify
 additional numeric leaves; final numeric metadata and caller graphs remain
 the same. Private validation copies remain distinct from product authority.
+The [source/product closure](../../../docs/audits/interface-metadata-source-product-join-20261004/scope.txt)
+joins those proofs to the complete authored-field models and preceding pinned
+source context. It closes source and copy assurance; the two contextual
+diagnostic false positives remain owned before final metadata-helper review.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

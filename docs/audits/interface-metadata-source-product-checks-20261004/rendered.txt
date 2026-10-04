@@ -1,0 +1,1 @@
+PASS rebuilt chapter contains complete metadata source/product/copy qualification with explicit separately owned contextual diagnostic false positives. Visual QA stays open.

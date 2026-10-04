@@ -1,0 +1,7 @@
+{
+  "assurance_reader": "docs/audits/interface-metadata-copy-join-20261004/verify.py",
+  "historical_reader": "docs/audits/coverage-repair-historical-context-20261004/verify.py",
+  "revision": "4f986b5a4bc6a039e0718a42a8127a0f960727e8",
+  "source_revision": "eabc0bb2d2edbdc9d6f54790746e484e1d228879",
+  "task": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+}

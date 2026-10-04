@@ -20,7 +20,7 @@ evidence: >-
   docs/audits/interface-metadata-runtime-20261004/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
-  python3 -B docs/audits/interface-metadata-copy-join-20261004/verify.py;
+  python3 -B docs/audits/interface-metadata-source-product-join-20261004/verify.py;
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/2046-isf-library-document-origin-authority.t
   t/2045-isf-same-source-library-origins.t
@@ -33,11 +33,11 @@ FSMLIB; [files](isf-file-document-origin-authority.md)
 own portable runtime coordinates.
 
 Actors/exports/resolutions/clones/ledgers bind documents.
-Missing/unused/changed documents/forms, forged products and late mutations refuse.
+Missing/unused/changed documents/forms, forged products/late mutations refuse.
 Finalization rechecks uses/targets/identities/parameter kinds. Stale clones repair at finalization; initial seal is intermediate.
-Views detach; bypass fails with canonical producers.
+Views detach; bypass fails on canonical products.
 
-Reused exports retain distinct uses; external aliases separate constructors. Equal bodies retain constructor/operation identities. Catalogs/hashes cannot replace bytes. Original tokens partition sources; undefined tails cannot serialize them.
+Reused exports retain distinct uses; external aliases separate constructors. Equal bodies keep constructor/operation identities. Catalogs/hashes cannot replace bytes. Original tokens partition sources; undefined tails cannot serialize them.
 
 Parser/scheduler stay intact; local authority closes imports, this provider packages/ATL.
 [ATL](isf-atl-document-origin-authority.md) binds resolved static clones.
