@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-references-20261004/verify.py", line 94, in <module>
+    assert sum(len(row['private_root_copies']) for row in rows) == 65, 'every own original reference root-copy stage; no empty-site classification'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: every own original reference root-copy stage; no empty-site classification

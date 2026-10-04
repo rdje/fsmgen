@@ -1,3 +1,3 @@
 # Latest artifact cleanup
 
-2026-10-03T22:22:49.632221+00:00 — Removed only two authenticated duplicate historical source/index caches; exact residue and protected-byte checks pass. Current book, logs, native/compiler/audit evidence retained; Rust log/bin census preserved.
+2026-10-04T07:08:38+00:00 — Removed only two proved project-generated Python bytecode caches from sealed scope evidence after exact compiled-source/header/byte/hash recovery; cache residue absent and every original sealed member unchanged.

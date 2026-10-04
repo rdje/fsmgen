@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-references-20261004/verify.py",
+    "--swap-range"
+  ],
+  "working_directory": ".",
+  "status": 1
+}

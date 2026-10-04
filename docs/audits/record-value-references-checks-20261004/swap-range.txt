@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-references-20261004/verify.py", line 198, in <module>
+    assert exact(actual, row['expected_product']), 'whole source/layout reference product and exact preparation versus final numeric kinds'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: whole source/layout reference product and exact preparation versus final numeric kinds

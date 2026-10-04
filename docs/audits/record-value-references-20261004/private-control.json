@@ -1,0 +1,101 @@
+{
+  "candidate": [
+    "hash",
+    {
+      "high": 5,
+      "low": 3,
+      "path_text": ".body.count",
+      "role": "input",
+      "root": "packet",
+      "type_spec": [
+        "hash",
+        {
+          "kind": "bits",
+          "signed": "1",
+          "state_model": "four_state",
+          "width": "3"
+        }
+      ],
+      "width": "3"
+    }
+  ],
+  "destination": "/width",
+  "expected": [
+    "hash",
+    {
+      "high": 5,
+      "low": 3,
+      "path_text": ".body.count",
+      "role": "input",
+      "root": "packet",
+      "type_spec": [
+        "hash",
+        {
+          "kind": "bits",
+          "signed": "1",
+          "state_model": "four_state",
+          "width": "3"
+        }
+      ],
+      "width": 3
+    }
+  ],
+  "reference_index": 4659,
+  "source_input_stage": {
+    "index": 4746,
+    "record": {
+      "accepted": 1,
+      "after": [
+        "array",
+        [
+          "FSM::Package::AggregatePathSupport",
+          [
+            "hash",
+            {
+              "kind": "bits",
+              "signed": "1",
+              "state_model": "four_state",
+              "width": "3"
+            }
+          ]
+        ]
+      ],
+      "before": [
+        "array",
+        [
+          "FSM::Package::AggregatePathSupport",
+          [
+            "hash",
+            {
+              "kind": "bits",
+              "signed": "1",
+              "state_model": "four_state",
+              "width": "3"
+            }
+          ]
+        ]
+      ],
+      "caller": [
+        "FSM::Package::AggregatePathSupport",
+        "perl/FSM/Package/AggregatePathSupport.pm",
+        295
+      ],
+      "error": "",
+      "helper": null,
+      "kind": "structured-clone",
+      "parse": null,
+      "primary": "",
+      "result": [
+        "hash",
+        {
+          "kind": "bits",
+          "signed": "1",
+          "state_model": "four_state",
+          "width": "3"
+        }
+      ],
+      "warnings": []
+    }
+  },
+  "source_type_width_path": "/1/width"
+}

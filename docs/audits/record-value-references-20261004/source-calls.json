@@ -1,0 +1,818 @@
+[
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      55
+    ],
+    "context": "first touch",
+    "helper": null,
+    "token": "packet.data"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "held"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "output"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "output"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 1,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 2,
+    "token": "packet.data"
+  },
+  {
+    "access": "write",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "output.data"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 3,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 3,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 4,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 4,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 5,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 5,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 6,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 6,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 7,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 7,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 8,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 8,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 9,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 9,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 10,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 10,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 11,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 11,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet.body.count"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet.body.lanes[0]"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet.body.count"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet.body.count"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 12,
+    "token": "packet"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 13,
+    "token": "packet.body"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 14,
+    "token": "packet.body.lanes"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 15,
+    "token": "packet.unknown"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 16,
+    "token": "packet.body.lanes[2]"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 17,
+    "token": "packet.body.count[3]"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 18,
+    "token": "packet..count"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 19,
+    "token": "held.body"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet.data"
+  },
+  {
+    "access": "write",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet.body.count"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 20,
+    "token": "packet.data"
+  },
+  {
+    "access": "write",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 21,
+    "token": "packet.data"
+  },
+  {
+    "access": "write",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet[5:3]"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet[0]"
+  },
+  {
+    "access": "write",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 22,
+    "token": "packet"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "mode.BUSY"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "shared.CONSTANT"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "old"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "scalar"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "scalar"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 23,
+    "token": "scalar"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 23,
+    "token": "output"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 24,
+    "token": "output"
+  },
+  {
+    "access": "read",
+    "allow_whole": 0,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "lanes[1]"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 25,
+    "token": "lanes"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 25,
+    "token": "output"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "held"
+  },
+  {
+    "access": "read",
+    "allow_whole": 2,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      274
+    ],
+    "context": "permission",
+    "helper": 39,
+    "token": "packet"
+  },
+  {
+    "access": "read",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": null,
+    "token": "packet"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      77
+    ],
+    "context": "control",
+    "helper": 40,
+    "token": "held"
+  },
+  {
+    "access": "write",
+    "allow_whole": 1,
+    "caller": [
+      "FSM::Support::ISFRecordPortContexts",
+      "perl/FSM/Support/ISFRecordPortContexts.pm",
+      255
+    ],
+    "context": "transaction 'main' set target",
+    "helper": 41,
+    "token": "value.flag"
+  }
+]
