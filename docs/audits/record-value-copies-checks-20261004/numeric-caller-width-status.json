@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-copies-20261004/verify.py",
+    "--numeric-caller-width"
+  ],
+  "working_directory": ".",
+  "status": 1
+}

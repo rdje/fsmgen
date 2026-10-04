@@ -293,8 +293,16 @@ calls delegated or left unresolved, and fourteen refusals. An independent
 packed leaf inventory and scalar index/slice witnesses conserve exact source
 properties, nearest roles and numeric widths/ranges. All sixty-five private
 root copies and the whole caller graphs retain; returned type facts keep their
-recorded preparation spellings. Copy and metadata/core API products remain
-under review. The
+recorded preparation spellings. The [complete copy proof](../../../docs/audits/record-value-copies-20261004/scope.txt)
+binds all twenty-two original calls: five successful record copies, three
+scalar/storage/literal cases with no record-copy obligation, and fourteen
+refusals. All forty-one conditional source/target clone stages and caller kinds
+retain. Whole source reference/type/role models independently distinguish
+same-width member/order/signed/state/bit/list identity differences, input
+targets and the contradictory width descriptor. A genuine narrower payload
+operation accepts a signed-type difference that strict record-copy identity
+refuses. Metadata/core API products remain under review; the complete value
+product join is next. The
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

@@ -1,0 +1,2332 @@
+[
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "first touch"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      62
+    ],
+    "helper": null,
+    "label": "first-touch"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": null,
+    "label": "input-storage-alias"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "output",
+            "root": "output",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": null,
+    "label": "storage-output-alias"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "output",
+            "root": "output",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": null,
+    "label": "input-output-alias"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "forged write"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      114
+    ],
+    "helper": 0,
+    "label": "input-target"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "tag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "tag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 3,
+    "label": "identity:renamed"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "data",
+                    "flag"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 4,
+    "label": "identity:reordered"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 1,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 5,
+    "label": "identity:signed_data"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "state_model": "four_state",
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 6,
+    "label": "identity:four"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "state_model": "two_state",
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 7,
+    "label": "identity:two"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 8,
+    "label": "identity:bit_kind"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "state_model": "four_state",
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "state_model": "two_state",
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 9,
+    "label": "explicit-state"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "header",
+                    "body"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "body": [
+                      "hash",
+                      {
+                        "kind": "record",
+                        "member_order": [
+                          "array",
+                          [
+                            "count",
+                            "lanes"
+                          ]
+                        ],
+                        "members": [
+                          "hash",
+                          {
+                            "count": [
+                              "hash",
+                              {
+                                "kind": "bits",
+                                "signed": 1,
+                                "state_model": "four_state",
+                                "width": 3
+                              }
+                            ],
+                            "lanes": [
+                              "hash",
+                              {
+                                "items": [
+                                  "array",
+                                  [
+                                    [
+                                      "hash",
+                                      {
+                                        "kind": "bit",
+                                        "signed": 0,
+                                        "state_model": "two_state",
+                                        "width": 1
+                                      }
+                                    ],
+                                    [
+                                      "hash",
+                                      {
+                                        "kind": "bits",
+                                        "signed": 0,
+                                        "width": 2
+                                      }
+                                    ]
+                                  ]
+                                ],
+                                "kind": "list",
+                                "signed": 0,
+                                "width": 3
+                              }
+                            ]
+                          }
+                        ],
+                        "signed": 0,
+                        "width": 6
+                      }
+                    ],
+                    "header": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 2
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "header",
+                    "count",
+                    "lane0",
+                    "lane1"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "count": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 1,
+                        "state_model": "four_state",
+                        "width": 3
+                      }
+                    ],
+                    "header": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 2
+                      }
+                    ],
+                    "lane0": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "state_model": "two_state",
+                        "width": 1
+                      }
+                    ],
+                    "lane1": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 2
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 10,
+    "label": "nested-flat"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "header",
+                    "body"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "body": [
+                      "hash",
+                      {
+                        "kind": "record",
+                        "member_order": [
+                          "array",
+                          [
+                            "count",
+                            "lanes"
+                          ]
+                        ],
+                        "members": [
+                          "hash",
+                          {
+                            "count": [
+                              "hash",
+                              {
+                                "kind": "bits",
+                                "signed": 1,
+                                "state_model": "four_state",
+                                "width": 3
+                              }
+                            ],
+                            "lanes": [
+                              "hash",
+                              {
+                                "items": [
+                                  "array",
+                                  [
+                                    [
+                                      "hash",
+                                      {
+                                        "kind": "bit",
+                                        "signed": 0,
+                                        "state_model": "two_state",
+                                        "width": 1
+                                      }
+                                    ],
+                                    [
+                                      "hash",
+                                      {
+                                        "kind": "bits",
+                                        "signed": 0,
+                                        "width": 2
+                                      }
+                                    ]
+                                  ]
+                                ],
+                                "kind": "list",
+                                "signed": 0,
+                                "width": 3
+                              }
+                            ]
+                          }
+                        ],
+                        "signed": 0,
+                        "width": 6
+                      }
+                    ],
+                    "header": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 2
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "header",
+                    "body"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "body": [
+                      "hash",
+                      {
+                        "kind": "record",
+                        "member_order": [
+                          "array",
+                          [
+                            "count",
+                            "lanes"
+                          ]
+                        ],
+                        "members": [
+                          "hash",
+                          {
+                            "count": [
+                              "hash",
+                              {
+                                "kind": "bits",
+                                "signed": 1,
+                                "state_model": "four_state",
+                                "width": 3
+                              }
+                            ],
+                            "lanes": [
+                              "hash",
+                              {
+                                "items": [
+                                  "array",
+                                  [
+                                    [
+                                      "hash",
+                                      {
+                                        "kind": "bits",
+                                        "signed": 0,
+                                        "width": 2
+                                      }
+                                    ],
+                                    [
+                                      "hash",
+                                      {
+                                        "kind": "bit",
+                                        "signed": 0,
+                                        "state_model": "two_state",
+                                        "width": 1
+                                      }
+                                    ]
+                                  ]
+                                ],
+                                "kind": "list",
+                                "signed": 0,
+                                "width": 3
+                              }
+                            ]
+                          }
+                        ],
+                        "signed": 0,
+                        "width": 6
+                      }
+                    ],
+                    "header": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 2
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 11,
+    "label": "nested-list-order"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "old",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 1,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": null,
+    "label": "storage-prior-contract"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "output",
+            "root": "scalar",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              }
+            ],
+            "width": 7
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "output",
+            "root": "scalar",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              }
+            ],
+            "width": 7
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": null,
+    "label": "scalar-prior-contract"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        null,
+        "target",
+        null,
+        "context",
+        "literal"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      226
+    ],
+    "helper": null,
+    "label": "literal-prior-contract"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "output",
+            "root": "scalar",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "bits",
+                "signed": 0,
+                "width": 7
+              }
+            ],
+            "width": 7
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "output",
+            "root": "output",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 1,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 23,
+    "label": "scalar-record"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        null,
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "output",
+            "root": "output",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 1,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "expression"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      230
+    ],
+    "helper": 24,
+    "label": "expression-record"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "lanes",
+            "type_spec": [
+              "hash",
+              {
+                "items": [
+                  "array",
+                  [
+                    [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ],
+                    [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 2
+                      }
+                    ]
+                  ]
+                ],
+                "kind": "list",
+                "signed": 0,
+                "width": 3
+              }
+            ],
+            "width": 3
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "output",
+            "root": "output",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 1,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": 25,
+    "label": "list-record"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "copy control"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      82
+    ],
+    "helper": null,
+    "label": "imported-local"
+  },
+  {
+    "arguments": [
+      "array",
+      [
+        "source",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "input",
+            "root": "packet",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 9
+          }
+        ],
+        "target",
+        [
+          "hash",
+          {
+            "path_text": "",
+            "role": "storage",
+            "root": "held",
+            "type_spec": [
+              "hash",
+              {
+                "kind": "record",
+                "member_order": [
+                  "array",
+                  [
+                    "flag",
+                    "data"
+                  ]
+                ],
+                "members": [
+                  "hash",
+                  {
+                    "data": [
+                      "hash",
+                      {
+                        "kind": "bits",
+                        "signed": 0,
+                        "width": 7
+                      }
+                    ],
+                    "flag": [
+                      "hash",
+                      {
+                        "kind": "bit",
+                        "signed": 0,
+                        "width": 1
+                      }
+                    ]
+                  }
+                ],
+                "signed": 0,
+                "width": 8
+              }
+            ],
+            "width": 8
+          }
+        ],
+        "context",
+        "hostile"
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      279
+    ],
+    "helper": 40,
+    "label": "contradictory-width"
+  }
+]

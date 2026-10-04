@@ -1,0 +1,256 @@
+{
+  "candidate": {
+    "accepted": 1,
+    "product": 1
+  },
+  "copy_index": 1724,
+  "payload_index": 2971,
+  "required_copy": {
+    "accepted": 0,
+    "product": null,
+    "reason": "resolved-recursive-identity"
+  },
+  "source_type": [
+    "hash",
+    {
+      "kind": "record",
+      "member_order": [
+        "array",
+        [
+          "flag",
+          "data"
+        ]
+      ],
+      "members": [
+        "hash",
+        {
+          "data": [
+            "hash",
+            {
+              "kind": "bits",
+              "signed": 0,
+              "width": 7
+            }
+          ],
+          "flag": [
+            "hash",
+            {
+              "kind": "bit",
+              "signed": 0,
+              "width": 1
+            }
+          ]
+        }
+      ],
+      "signed": 0,
+      "width": 8
+    }
+  ],
+  "target_type": [
+    "hash",
+    {
+      "kind": "record",
+      "member_order": [
+        "array",
+        [
+          "flag",
+          "data"
+        ]
+      ],
+      "members": [
+        "hash",
+        {
+          "data": [
+            "hash",
+            {
+              "kind": "bits",
+              "signed": 1,
+              "width": 7
+            }
+          ],
+          "flag": [
+            "hash",
+            {
+              "kind": "bit",
+              "signed": 0,
+              "width": 1
+            }
+          ]
+        }
+      ],
+      "signed": 0,
+      "width": 8
+    }
+  ],
+  "whole_original_payload": {
+    "accepted": 1,
+    "after": [
+      "array",
+      [
+        "FSM::Package::PayloadTypeSupport",
+        [
+          "hash",
+          {
+            "kind": "record",
+            "member_order": [
+              "array",
+              [
+                "flag",
+                "data"
+              ]
+            ],
+            "members": [
+              "hash",
+              {
+                "data": [
+                  "hash",
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  }
+                ],
+                "flag": [
+                  "hash",
+                  {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                ]
+              }
+            ],
+            "signed": 0,
+            "width": 8
+          }
+        ],
+        [
+          "hash",
+          {
+            "kind": "record",
+            "member_order": [
+              "array",
+              [
+                "flag",
+                "data"
+              ]
+            ],
+            "members": [
+              "hash",
+              {
+                "data": [
+                  "hash",
+                  {
+                    "kind": "bits",
+                    "signed": 1,
+                    "width": 7
+                  }
+                ],
+                "flag": [
+                  "hash",
+                  {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                ]
+              }
+            ],
+            "signed": 0,
+            "width": 8
+          }
+        ]
+      ]
+    ],
+    "before": [
+      "array",
+      [
+        "FSM::Package::PayloadTypeSupport",
+        [
+          "hash",
+          {
+            "kind": "record",
+            "member_order": [
+              "array",
+              [
+                "flag",
+                "data"
+              ]
+            ],
+            "members": [
+              "hash",
+              {
+                "data": [
+                  "hash",
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  }
+                ],
+                "flag": [
+                  "hash",
+                  {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                ]
+              }
+            ],
+            "signed": 0,
+            "width": 8
+          }
+        ],
+        [
+          "hash",
+          {
+            "kind": "record",
+            "member_order": [
+              "array",
+              [
+                "flag",
+                "data"
+              ]
+            ],
+            "members": [
+              "hash",
+              {
+                "data": [
+                  "hash",
+                  {
+                    "kind": "bits",
+                    "signed": 1,
+                    "width": 7
+                  }
+                ],
+                "flag": [
+                  "hash",
+                  {
+                    "kind": "bit",
+                    "signed": 0,
+                    "width": 1
+                  }
+                ]
+              }
+            ],
+            "signed": 0,
+            "width": 8
+          }
+        ]
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      138
+    ],
+    "error": "",
+    "helper": null,
+    "kind": "payload",
+    "parse": null,
+    "primary": "",
+    "result": 1,
+    "warnings": []
+  }
+}

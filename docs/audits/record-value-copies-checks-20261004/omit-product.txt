@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-copies-20261004/verify.py", line 88, in <module>
+    assert len(rows) == len(selected) == len(recipes()) == 22, 'whole original copy call/product/source membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: whole original copy call/product/source membership
