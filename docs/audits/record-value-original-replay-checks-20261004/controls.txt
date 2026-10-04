@@ -1,0 +1,1 @@
+PASS all three actual pinned input/source/owner authority controls reach their intended RED1 assertions.

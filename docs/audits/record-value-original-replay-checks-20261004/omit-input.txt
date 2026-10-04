@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-replay-20261004/verify.py", line 66, in <module>
+    assert set(packet['inputs']) == set(expected), 'complete pinned original source/task input membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete pinned original source/task input membership

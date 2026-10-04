@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-replay-20261004/verify.py",
+    "--omit-input"
+  ],
+  "expected_failure": "complete pinned original source/task input membership",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-replay-20261004/verify.py\", line 66, in <module>\n    assert set(packet['inputs']) == set(expected), 'complete pinned original source/task input membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete pinned original source/task input membership\n",
+  "status": 1,
+  "working_directory": "."
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--quiet",
+    "--",
+    "perl",
+    "t",
+    "scripts"
+  ],
+  "working_directory": ".",
+  "status": 0,
+  "meaning": "No live production/test/guard changes in this original-context slice."
+}

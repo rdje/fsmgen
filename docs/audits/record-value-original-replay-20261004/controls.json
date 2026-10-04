@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-original-replay-20261004/verify.py",
+      "--omit-input"
+    ],
+    "expected_failure": "complete pinned original source/task input membership",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-replay-20261004/verify.py\", line 66, in <module>\n    assert set(packet['inputs']) == set(expected), 'complete pinned original source/task input membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete pinned original source/task input membership\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-original-replay-20261004/verify.py",
+      "--trust-decoy"
+    ],
+    "expected_failure": "whole original source bodies cannot borrow actual decoy authority",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-replay-20261004/verify.py\", line 68, in <module>\n    assert {path: packet['sources'][path] for path in binding['sources']} == {path: row['body'] for path, row in binding['sources'].items()}, 'whole original source bodies cannot borrow actual decoy authority'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole original source bodies cannot borrow actual decoy authority\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-original-replay-20261004/verify.py",
+      "--wrong-owner"
+    ],
+    "expected_failure": "whole pinned task bodies retain exact completed owner authority",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-replay-20261004/verify.py\", line 69, in <module>\n    assert packet['sources'][binding['task_path']] == binding['task_context']['body'], 'whole pinned task bodies retain exact completed owner authority'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole pinned task bodies retain exact completed owner authority\n",
+    "status": 1,
+    "working_directory": "."
+  }
+]

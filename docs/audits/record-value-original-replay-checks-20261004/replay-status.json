@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-replay-20261004/replay.py",
+    "--record"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

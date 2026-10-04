@@ -451,6 +451,11 @@ pass but fails the full joint-graph allocation check. Dated field/source and
 product proofs reexecute with their controls and inherited native proofs. This
 closes field/source/product semantics; permanent consumer/baseline-kind repair
 and complete intended host-native causes remain open.
+The [original semantic replay](../../../docs/audits/record-value-original-replay-20261004/scope.txt)
+now pins complete original source and task authority before permanent test changes.
+The original proof and every rejecting control run in that exact dated context;
+changed source or completed-owner authority rejects. This preserves the original
+comparison boundary while current copy and consumer repairs remain separately owned.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

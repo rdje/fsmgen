@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-original-replay-20261004/verify.py",
+      "--trust-decoy"
+    ],
+    "working_directory": ".",
+    "status": 1,
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-replay-20261004/verify.py\", line 59, in <module>\n    assert {path: packet['sources'][path] for path in binding['sources']} == {path: row['body'] for path, row in binding['sources'].items()}, 'whole original source bodies cannot borrow actual decoy authority'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole original source bodies cannot borrow actual decoy authority\n",
+    "expected_failure": "whole original source bodies cannot borrow actual decoy authority"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-original-replay-20261004/verify.py",
+      "--wrong-owner"
+    ],
+    "working_directory": ".",
+    "status": 1,
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-replay-20261004/verify.py\", line 60, in <module>\n    assert packet['sources'][binding['task_path']] == binding['task_context']['body'], 'whole pinned task bodies retain exact completed owner authority'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole pinned task bodies retain exact completed owner authority\n",
+    "expected_failure": "whole pinned task bodies retain exact completed owner authority"
+  }
+]

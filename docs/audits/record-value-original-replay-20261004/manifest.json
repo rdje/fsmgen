@@ -1,0 +1,46 @@
+{
+  "binding.json": {
+    "bytes": 2443676,
+    "sha256": "96c9f8c2653ecb00c4e3e5cedc22d231387e3ee8ca8c603182ea054a0883657e"
+  },
+  "check_controls.py": {
+    "bytes": 1386,
+    "sha256": "ae094235db4d9d62f5f2ba6c685f559af37c48bcc38ec19c77db4acb76640efe"
+  },
+  "controls.json": {
+    "bytes": 2407,
+    "sha256": "5f26cc34a172924ac7088d85610ce511a94cc12e6bb1aeea9c8a669b63091477"
+  },
+  "doc-updates.json": {
+    "bytes": 332087,
+    "sha256": "4e7ee6d2c3c2c3b83ce08a8fff1849b3222f83ab369a944d776ba44703e988e2"
+  },
+  "ordinary.json": {
+    "bytes": 2388595,
+    "sha256": "ad06644f7918b3757a8253a1e5c821241e7e5bc7627988b27ab7336cd920e475"
+  },
+  "owner-decoy.json": {
+    "bytes": 2377933,
+    "sha256": "db0c4ba2cc767b4b9e58b39ab1545a5cd9d8508cfe7680afc3b19b747f2600cf"
+  },
+  "produce.py": {
+    "bytes": 1805,
+    "sha256": "4ef93e648da361b7b913cfde2ce8a1f5b224ad850a150a9c40284dea2da24e08"
+  },
+  "replay.py": {
+    "bytes": 6768,
+    "sha256": "fae3cad47cf446ce3a59d6e414eac99c87fb8c00333dfcb1bae52e7031d69429"
+  },
+  "scope.txt": {
+    "bytes": 3310,
+    "sha256": "dd30d310ef8d443ff3875865b11c4d622eafdee57dd54fe58d7d7cddb01c4b82"
+  },
+  "source-decoy.json": {
+    "bytes": 2377956,
+    "sha256": "83d77bb6b5d7f018f34dad5e4ede40e0b14e62c7e5e3b97780eef28d083b2fb1"
+  },
+  "verify.py": {
+    "bytes": 7414,
+    "sha256": "c246175f5ebb8a55ab20f94073f79300479b920141ddc2fee953ee987fafd4c6"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-replay-20261004/verify.py",
+    "--trust-decoy"
+  ],
+  "expected_failure": "whole original source bodies cannot borrow actual decoy authority",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-original-replay-20261004/verify.py\", line 68, in <module>\n    assert {path: packet['sources'][path] for path in binding['sources']} == {path: row['body'] for path, row in binding['sources'].items()}, 'whole original source bodies cannot borrow actual decoy authority'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole original source bodies cannot borrow actual decoy authority\n",
+  "status": 1,
+  "working_directory": "."
+}
