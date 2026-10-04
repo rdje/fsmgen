@@ -1,0 +1,70 @@
+{
+  "binding.json": {
+    "bytes": 939025,
+    "sha256": "28fd999b74f2197b132cc6925d52daf3d6be5bad4a6461386eb56897155e28c9"
+  },
+  "capture-products.json": {
+    "bytes": 7122628,
+    "sha256": "e7eb04c70b48096bbff6f76c7b145cd46e9cf885918147aa77f9a8069289aa7d"
+  },
+  "detected-unexercised-control-verify.py": {
+    "bytes": 13761,
+    "sha256": "8821b222942a5fd9cb55e7088dfa73c4b11a2fcb68363859ae4dbd7785b2753e"
+  },
+  "doc-updates.json": {
+    "bytes": 309815,
+    "sha256": "5713eaf62fda2a36de3cc1ccd41a31967c5069fee0d89650f606f0301b57c8f4"
+  },
+  "initial-card-no-growth.txt": {
+    "bytes": 270,
+    "sha256": "ab715bd06d2b73bc00d6206c6a995fde956b057a705618b9c70e4a3f7ad6d0ff"
+  },
+  "initial-control-disposition.txt": {
+    "bytes": 1117,
+    "sha256": "2cbbd0e8d5a73e8e11241b4220dc4e1ff76dd76316817ab77679b18ccfa14644"
+  },
+  "initial-explicit-default-produce.py": {
+    "bytes": 4369,
+    "sha256": "f248ad9cade2cf709c6b3c49fe6b8fced4ba2b1a8ca31894729a037ad32d2c40"
+  },
+  "initial-helper-only-authority-verify.py": {
+    "bytes": 14022,
+    "sha256": "8e28d7c61c2430bc663ea70f1facb0038f919072c1aedb902c3f012fec66e823"
+  },
+  "model.py": {
+    "bytes": 6826,
+    "sha256": "934a70c4fb618a3b961ff49f08077b0ca8210847ad971d579f34b503b4458562"
+  },
+  "plan.txt": {
+    "bytes": 513,
+    "sha256": "a4c5da07a6ed4b894571d47ae36cdd5652fd3a0081324b6f64042416eff5a90e"
+  },
+  "produce.py": {
+    "bytes": 4485,
+    "sha256": "31930cde0fab5479c804fb292ea3e0a8dd7993e7d29260e8935a632edfdc11cc"
+  },
+  "replay_values.py": {
+    "bytes": 3935,
+    "sha256": "388533459c5189511dbf6b98303a4a2d745a401898c7a287fbbe1ba819bb4420"
+  },
+  "scope.txt": {
+    "bytes": 3818,
+    "sha256": "d3cebc35c78cd24c90c4da3bf19be7d5462e1eed258c9ed29fe48a57786daa6c"
+  },
+  "strict-value-counterexample.json": {
+    "bytes": 19167,
+    "sha256": "80271f82ff089cc1b1edce9f21298e080378df13bb6b04fe31063835068aef0a"
+  },
+  "value-owner.json": {
+    "bytes": 1649,
+    "sha256": "ef50063919db9f98c706d675dd950bab74a2aa13f5676df1c093ee4af4136122"
+  },
+  "value-replays.json": {
+    "bytes": 23038,
+    "sha256": "12afa896062367211d362e2a860826f6ec752d0b849c02a2cc4b446f99f21d35"
+  },
+  "verify.py": {
+    "bytes": 14552,
+    "sha256": "2d423be181915c70d017bf3f6c1647391584c9ba231a28b831ac496ea65ef945"
+  }
+}

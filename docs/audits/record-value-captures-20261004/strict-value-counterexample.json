@@ -1,0 +1,631 @@
+{
+  "capture": {
+    "accepted": 1,
+    "after": [
+      "array",
+      [
+        [
+          "hash",
+          {
+            "inputs": [
+              "array",
+              [
+                [
+                  "hash",
+                  {
+                    "name": "value",
+                    "type": "resolved_value",
+                    "type_spec": [
+                      "hash",
+                      {
+                        "kind": "record",
+                        "member_order": [
+                          "array",
+                          [
+                            "flag",
+                            "data"
+                          ]
+                        ],
+                        "members": [
+                          "hash",
+                          {
+                            "data": [
+                              "hash",
+                              {
+                                "kind": "bits",
+                                "width": "7"
+                              }
+                            ],
+                            "flag": [
+                              "hash",
+                              {
+                                "kind": "bit",
+                                "signed": 0,
+                                "width": "1"
+                              }
+                            ]
+                          }
+                        ],
+                        "signed": 0,
+                        "width": 8
+                      }
+                    ],
+                    "width": 8
+                  }
+                ]
+              ]
+            ],
+            "outputs": [
+              "array",
+              []
+            ]
+          }
+        ]
+      ]
+    ],
+    "before": [
+      "array",
+      [
+        [
+          "hash",
+          {
+            "inputs": [
+              "array",
+              [
+                [
+                  "hash",
+                  {
+                    "name": "value",
+                    "type": "resolved_value",
+                    "type_spec": [
+                      "hash",
+                      {
+                        "kind": "record",
+                        "member_order": [
+                          "array",
+                          [
+                            "flag",
+                            "data"
+                          ]
+                        ],
+                        "members": [
+                          "hash",
+                          {
+                            "data": [
+                              "hash",
+                              {
+                                "kind": "bits",
+                                "width": "7"
+                              }
+                            ],
+                            "flag": [
+                              "hash",
+                              {
+                                "kind": "bit",
+                                "signed": 0,
+                                "width": "1"
+                              }
+                            ]
+                          }
+                        ],
+                        "signed": 0,
+                        "width": 8
+                      }
+                    ],
+                    "width": 8
+                  }
+                ]
+              ]
+            ],
+            "outputs": [
+              "array",
+              []
+            ]
+          }
+        ]
+      ]
+    ],
+    "caller": [
+      "FSM::Support::ISFRecordPortValues",
+      "perl/FSM/Support/ISFRecordPortValues.pm",
+      147
+    ],
+    "error": "",
+    "helper": 29,
+    "kind": "capture",
+    "parse": null,
+    "primary": "",
+    "result": [
+      "array",
+      [
+        [
+          "hash",
+          {
+            "direction": "input",
+            "fields": [
+              "array",
+              [
+                [
+                  "hash",
+                  {
+                    "lsb": 7,
+                    "msb": 7,
+                    "path": "flag",
+                    "signed": 0,
+                    "width": 1
+                  }
+                ],
+                [
+                  "hash",
+                  {
+                    "lsb": 0,
+                    "msb": 6,
+                    "path": "data",
+                    "signed": 0,
+                    "width": 7
+                  }
+                ]
+              ]
+            ],
+            "name": "value",
+            "type": "resolved_value",
+            "type_kind": "record",
+            "width": 8
+          }
+        ]
+      ]
+    ],
+    "warnings": []
+  },
+  "capture_index": 8019,
+  "capture_private": {
+    "accepted": 1,
+    "after": [
+      "hash",
+      {
+        "inputs": [
+          "array",
+          [
+            [
+              "hash",
+              {
+                "name": "value",
+                "type": "resolved_value",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "flag",
+                        "data"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "data": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "width": "7"
+                          }
+                        ],
+                        "flag": [
+                          "hash",
+                          {
+                            "kind": "bit",
+                            "signed": 0,
+                            "width": "1"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ],
+                "width": 8
+              }
+            ]
+          ]
+        ],
+        "outputs": [
+          "array",
+          []
+        ]
+      }
+    ],
+    "api": 8019,
+    "before": [
+      "hash",
+      {
+        "inputs": [
+          "array",
+          [
+            [
+              "hash",
+              {
+                "name": "value",
+                "type": "resolved_value",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "flag",
+                        "data"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "data": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "width": "7"
+                          }
+                        ],
+                        "flag": [
+                          "hash",
+                          {
+                            "kind": "bit",
+                            "signed": 0,
+                            "width": "1"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ],
+                "width": 8
+              }
+            ]
+          ]
+        ],
+        "outputs": [
+          "array",
+          []
+        ]
+      }
+    ],
+    "caller": [
+      "FSM::Support::ISFInterfacePortMetadata",
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm",
+      40
+    ],
+    "copy": [
+      "hash",
+      {
+        "inputs": [
+          "array",
+          [
+            [
+              "hash",
+              {
+                "name": "value",
+                "type": "resolved_value",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "flag",
+                        "data"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "data": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "width": "7"
+                          }
+                        ],
+                        "flag": [
+                          "hash",
+                          {
+                            "kind": "bit",
+                            "signed": 0,
+                            "width": "1"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ],
+                "width": 8
+              }
+            ]
+          ]
+        ],
+        "outputs": [
+          "array",
+          []
+        ]
+      }
+    ],
+    "copy_reference_count": 9,
+    "error": "",
+    "helper": 29,
+    "index": 555,
+    "kind": "metadata-private",
+    "original_reference_count": 9,
+    "parse": null,
+    "shared_with_original": 0
+  },
+  "strict_outer_scope": {
+    "accepted": 0,
+    "after": [
+      "array",
+      [
+        "outer",
+        [
+          "hash",
+          {
+            "held": [
+              "hash",
+              {
+                "role": "storage",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "flag",
+                        "data"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "data": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": 7
+                          }
+                        ],
+                        "flag": [
+                          "hash",
+                          {
+                            "kind": "bit",
+                            "signed": 0,
+                            "width": 1
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "output": [
+              "hash",
+              {
+                "role": "output",
+                "type_spec": [
+                  "reference",
+                  "/1/held/type_spec"
+                ]
+              }
+            ],
+            "packet": [
+              "hash",
+              {
+                "role": "input",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "flag",
+                        "data"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "data": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "width": "7"
+                          }
+                        ],
+                        "flag": [
+                          "hash",
+                          {
+                            "kind": "bit",
+                            "signed": 0,
+                            "width": "1"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "scalar": [
+              "hash",
+              {
+                "role": "output",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "local",
+        [
+          "hash",
+          {}
+        ]
+      ]
+    ],
+    "before": [
+      "array",
+      [
+        "outer",
+        [
+          "hash",
+          {
+            "held": [
+              "hash",
+              {
+                "role": "storage",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "flag",
+                        "data"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "data": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "signed": 0,
+                            "width": 7
+                          }
+                        ],
+                        "flag": [
+                          "hash",
+                          {
+                            "kind": "bit",
+                            "signed": 0,
+                            "width": 1
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "output": [
+              "hash",
+              {
+                "role": "output",
+                "type_spec": [
+                  "reference",
+                  "/1/held/type_spec"
+                ]
+              }
+            ],
+            "packet": [
+              "hash",
+              {
+                "role": "input",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "record",
+                    "member_order": [
+                      "array",
+                      [
+                        "flag",
+                        "data"
+                      ]
+                    ],
+                    "members": [
+                      "hash",
+                      {
+                        "data": [
+                          "hash",
+                          {
+                            "kind": "bits",
+                            "width": "7"
+                          }
+                        ],
+                        "flag": [
+                          "hash",
+                          {
+                            "kind": "bit",
+                            "signed": 0,
+                            "width": "1"
+                          }
+                        ]
+                      }
+                    ],
+                    "signed": 0,
+                    "width": 8
+                  }
+                ]
+              }
+            ],
+            "scalar": [
+              "hash",
+              {
+                "role": "output",
+                "type_spec": [
+                  "hash",
+                  {
+                    "kind": "bits",
+                    "signed": 0,
+                    "width": 7
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "local",
+        [
+          "hash",
+          {}
+        ]
+      ]
+    ],
+    "caller": [
+      "main",
+      "./t/1986-isf-record-port-value-gates.t",
+      68
+    ],
+    "error": "Invalid ISF record value: root 'packet' resolved type lacks required facts\n at perl/FSM/Support/ISFRecordPortValues.pm line 202.\n\tFSM::Support::ISFRecordPortValues::_require(\"\", \"root 'packet' resolved type lacks required facts\") called at perl/FSM/Support/ISFRecordPortValues.pm line 197\n\tFSM::Support::ISFRecordPortValues::_keys(HASH(0x7cbac91d38), ARRAY(0x7cbac89b58), ARRAY(0x7cbac60cc0), \"root 'packet' resolved type\") called at perl/FSM/Support/ISFRecordPortValues.pm line 159\n\tFSM::Support::ISFRecordPortValues::_closed_type(HASH(0x7cbac91d38), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 167\n\tFSM::Support::ISFRecordPortValues::_closed_type(HASH(0x7cbac91be8), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 152\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7cbac91be8), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7cbac32d80), \"local\", HASH(0x7cbac32e10)) called at docs/audits/record-value-runtime-20261004/observe.pl line 69\n\teval {...} called at docs/audits/record-value-runtime-20261004/observe.pl line 69\n\tmain::call_api(\"scope\", CODE(0x7cb6976c18), ARRAY(0x7cbac32e70), \"outer\", HASH(0x7cbac32d80), \"local\", HASH(0x7cbac32e10)) called at docs/audits/record-value-runtime-20261004/observe.pl line 134\n\tmain::__ANON__(\"outer\", HASH(0x7cbac32d80), \"local\", HASH(0x7cbac32e10)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7cbac30d68), HASH(0x7cb7d71048)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7cbac30ae0), qr(lacks required facts), \"missing signed\") called at docs/audits/record-value-runtime-20261004/observe.pl line 185\n\tmain::__ANON__(CODE(0x7cbac30ae0), qr(lacks required facts), \"missing signed\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-runtime-20261004/observe.pl line 190\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x7cb503f7e0), \"closed malformed facts fail before comparison or path traversal\", CODE(0x7cb7f1e228)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7cb7f1e228)) called at docs/audits/record-value-runtime-20261004/observe.pl line 191\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7cb7cf20c0)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-runtime-20261004/observe.pl line 241\n",
+    "helper": 29,
+    "index": 7930,
+    "kind": "scope",
+    "parse": null,
+    "primary": "Invalid ISF record value: root 'packet' resolved type lacks required facts",
+    "result": null,
+    "warnings": []
+  }
+}

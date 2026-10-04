@@ -307,7 +307,16 @@ scope/reference/copy call, source model and product records. All two-hundred-
 thirty-three value-private clones join their full native graphs and copied-field
 records; membership, source roles and primitive kinds retain. Each complete
 child proof and its rejecting controls reexecute in its exact source/document
-context. Metadata/core API products and native assurance remain open. The
+context. The [complete metadata capture proof](../../../docs/audits/record-value-captures-20261004/scope.txt)
+now qualifies all two-hundred-twenty-seven original captures: two-hundred-twenty
+complete numeric products and seven source-owned refusals. Every own detached
+stage joins its full copied-field record and declared interface/type source.
+Independent reverse packed layouts verify all member/list paths, ranges,
+signed defaults and explicit state models. A genuine private width string
+cannot become final numeric metadata. Metadata accepts a missing scalar signed
+property with its existing unsigned default; the stricter value gate refuses
+that same source. Complete caller kinds and prior value semantics retain.
+Snapshot/range/clone/identity products and native assurance remain open. The
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

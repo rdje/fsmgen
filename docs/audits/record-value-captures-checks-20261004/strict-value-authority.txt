@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-captures-20261004/verify.py", line 226, in <module>
+    assert error == row['expected_refusal'], 'independent metadata versus strict-value source refusal relation'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: independent metadata versus strict-value source refusal relation

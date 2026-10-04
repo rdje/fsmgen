@@ -4221,9 +4221,54 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify every original T1986 metadata/range/clone/identity/payload product.`
   Acceptance: `Bind every original capture, snapshot, range, recursive structured-clone, strict identity and payload-compatibility product and caller graph to independent complete source/layout/field and published operation contracts. Preserve all recursive member/list/state/signed/source kinds and actual private numerical rebuilding/cycle boundaries. Whole product/control membership and competing private/final authority controls reject.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.6`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.1`
+  Status: `done`
+  Goal: `Qualify all original T1986 metadata capture products.`
+  Acceptance: `Model every original capture from full source-declared interface/type inputs and actual detached private preparation stage. Independent ordered scalar leaf/layout projection builds complete output; caller kinds, unknown/refused products and strict metadata-versus-value boundaries retain. Genuine omission, source/role/layout/kind/private-authority controls reject.`
+  Verification: `Complete docs/audits/record-value-captures-20261004/scope.txt binds current21 Git8ad89be8 bodies and exact completed value parent. Source-first canonical type/wrapper/malformed models and two complete actor interfaces rebuild every227 original capture input/private-stage/source/field and product/refusal without native result authority:220 whole numeric metadata products/7 source-owned refusals. Complete caller argument count/kinds/before/after/helper/parse/error/result and every227 own clone/full field record retain. Separate reverse low-first packed layout/source/property/kind reader passes; actual omitted product/stage, typed capture3 wrong ranges, genuine private copy3 widthSTRING8 promotion and capture8019 missing-signed strict-value refusal promotion reject RED1 at intended assertions. Complete capture8019/private555 success and same-helper outer scope refusal bind competing contract authority. Initial explicit-default decoder source/failure, API2 inert layout GREEN0/detection reader and helper-only early valid-stage RED remain unqualified and retain exact receipts/disposition; optional argument/exact actual targets/mutation-reached guards repair them. Complete value join ordinary/all4 RED and all nested semantic/control proofs reexecute exact21 historical source/docs/owner/input/Python/full output contexts with bound process filename only. Self/current source/docs/completed owner/native/all prior archives/instrument watcher passes after seal; public book All tests successful Files=2 Tests=308/build PASS. Initial no-growth card candidate rejected before writes; shorter full proof route retains facts without ceiling widening. Fresh task/KM/exact containment/final claim census and staged doctrines/hooks precede commit. Capture leaf alone closes; later core products/native copy/cause/helper closure remain owned.`
+  Commit: `this whole-capture product work-unit commit (derive exact SHA with git log --grep)`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Qualify all original T1986 metadata snapshot products.`
+  Acceptance: `Model every original snapshot from complete independently qualified capture projection and actual private preparation stage. Closed entry/field inventories, source ordering, signed/state/ranges and final numeric kinds retain. Whole product/input/caller/private/source allocations and genuine controls qualify.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.3`
+  Status: `pending`
+  Goal: `Qualify all original T1986 packed range products.`
+  Acceptance: `Bind complete source/type/path arguments and every original range to independent recursive ordered layout/member/list/index/slice products, exact kinds, private preparation and sole actual caller kind-change boundary. Whole result/caller/range controls reject.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.4`
+  Status: `pending`
+  Goal: `Qualify all original T1986 recursive structured clone products.`
+  Acceptance: `Model every recursive clone from full bound scalar/hash/array input and detached tree contract; exact native source roles, caller kinds, ordered values and raw result kinds retain. Every recursive operation is enumerated; omission, sharing and numeric preparation corruption reject.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.5`
+  Status: `pending`
+  Goal: `Qualify all original T1986 strict identity and payload compatibility products.`
+  Acceptance: `Independently model every identity/payload call from full source-declared recursive kinds/member order/width/sign/state and published narrower payload relation. Whole native arguments, caller kinds and genuine strict-versus-payload and same-width controls reject.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2.3.6`
+  Status: `pending`
+  Goal: `Join complete original T1986 core API product semantics.`
+  Acceptance: `Join exact completed capture/snapshot/range/clone/identity-payload owners, every original whole core API/native/source/model/private-stage and field record. Reexecute ordinary semantic proofs and rejecting controls in exact document/source contexts; close only core product parent before all-product join/native assurance.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6890,3 +6935,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub record_value_scope' -- perl/FSM/Support/ISFRecordPortValues.pm locates original value/root/role/merge and preparation contract at 02827d840254d6cdbfa4020be7910bb7ae9ac4cb. Separate completed scope/reference/copy proofs require an exact whole-membership and model/native/field allocation join before the value API parent can close; category counts alone cannot qualify missing or misallocated records.
 - [x] **ADDRESSED (verified)** — Complete current21 sources and three exact completed owners join every original130 value API/model/product and all233 value-private clone/source-stage/native/full-field records. Separate reader passes complete arguments/callers/kinds/graphs/roles/products; omitted API, omitted clone, incomplete owner and wrong copied-field allocation reject RED1 at intended assertions. Complete copy ordinary/six RED proofs and nested reference/scope/field/actor semantic controls reexecute exact historical input/document contexts and process coordinates. Only value API product parent closes; providers/tests/public admission/core APIs/native assurance remain separately owned.
 - [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308 and rendered build PASS. Sealed self/current source/docs/three owner/native/field/model/all prior archive/instrument watcher passes. Full inherited semantic readers and genuine controls reexecute with complete source/profile/input/status/output identities beyond exact bound process filenames only. Fixed shrinking card, fresh task/KM/exact containment/final claim census and staged doctrine/hooks precede commit. Next core products are pending and safely subdivided only after this committed slice.
+
+## Acceptance Checklist — complete original T1986 metadata capture products
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub capture_interface_port_metadata' -- perl/FSM/Support/ISFInterfacePortMetadata.pm locates complete detached interface/source-ordered recursive projection at 7d56bf85736f75d0ff12a52cec0b1639ae668a5c. Actual capture3/private copy3 supplies widthSTRING8 while the final metadata width is NUM8; actual capture8019/private555 accepts missing signed with unsigned default while its outer value scope refuses. Copy spelling and stricter value schema cannot establish metadata products.
+- [x] **ADDRESSED (verified)** — Full source/type/actor interfaces independently rebuild all227 capture products/refusals and each own227 private stage/full field relation. Separate reverse layout/native/source/kind reader matches220 complete numeric products/7 refusals; omitted product/stage, actual wrong range/private width string and exact missing-signed strict-value authority promotion reject RED1. Initial argument-arity failure, inert guessed API2 GREEN0 and helper-only early-stage RED are preserved as unqualified; actual target and mutation-reached repair produces intended controls. Full inherited value ordinary/four RED and nested semantic proofs reexecute exact source/document/input contexts. No provider/test/public admission or native assurance repair.
+- [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308 and mdBook build PASS. Sealed self/current21 source/docs/exact completed value parent/native/field/source/actor/all prior archive/instrument watcher passes. Every caller raw kind and whole graph retains; only exact process filenames qualify inherited control output. Fixed shrinking card, fresh task/KM/exact containment/final claim census and staged doctrines/hooks precede commit. Snapshot products follow from committed clean state.

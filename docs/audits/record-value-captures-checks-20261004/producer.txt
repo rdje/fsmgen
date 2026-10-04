@@ -1,0 +1,1 @@
+PASS complete source-directed capture models; every original call, whole private stage and source/field relation retained. Native output comparison remains the separate reader obligation.

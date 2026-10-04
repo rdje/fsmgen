@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-captures-20261004/verify.py", line 233, in <module>
+    assert exact(graph(product), model_product), 'independent complete source packed-field/numeric metadata projection'
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: independent complete source packed-field/numeric metadata projection

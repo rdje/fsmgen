@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-captures-20261004/verify.py", line 158, in <module>
+    assert len(stages) == 1 and exact(row['private'], stages[0]), 'own complete original capture-private stage membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: own complete original capture-private stage membership
