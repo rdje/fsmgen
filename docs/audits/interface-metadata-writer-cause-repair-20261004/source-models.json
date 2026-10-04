@@ -1,0 +1,422 @@
+{
+  "actor": {
+    "actor_name": "refused",
+    "actor_network": null,
+    "clock": "clk",
+    "clock_domains": null,
+    "constant_symbols": {
+      "packages": {}
+    },
+    "constants": [],
+    "crossings": [],
+    "drives": {},
+    "enum_declarations": [],
+    "enum_symbols": {
+      "local": {},
+      "packages": {}
+    },
+    "handshakes": {},
+    "imports": [],
+    "interface": {
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "packet",
+          "type": "packet_t",
+          "type_spec": {
+            "kind": "record",
+            "member_order": [
+              "flag"
+            ],
+            "members": {
+              "flag": {
+                "kind": "bit",
+                "signed": 0,
+                "width": 1
+              }
+            },
+            "signed": 0,
+            "width": 1
+          },
+          "width": 1
+        },
+        {
+          "name": "done",
+          "width": 1
+        }
+      ]
+    },
+    "interface_port_metadata": [
+      {
+        "direction": "output",
+        "fields": [
+          {
+            "lsb": 0,
+            "msb": 0,
+            "path": "flag",
+            "signed": 0,
+            "width": 1
+          }
+        ],
+        "name": "packet",
+        "type": "packet_t",
+        "type_kind": "record",
+        "width": 1
+      },
+      {
+        "direction": "output",
+        "name": "done",
+        "width": 1
+      }
+    ],
+    "library_uses": [],
+    "package_imports": [],
+    "package_roots": [],
+    "params": [],
+    "phases": [],
+    "priorities": [],
+    "procs": {},
+    "reset": {
+      "kind": "async",
+      "name": "rst_n",
+      "polarity": "active_low"
+    },
+    "reset_provenance": [
+      {
+        "domain": null,
+        "origin": "legacy_default"
+      }
+    ],
+    "resources": [],
+    "rules": [],
+    "stages": [],
+    "storage": [],
+    "transactions": [
+      {
+        "clauses": [
+          [
+            "set",
+            "packet.flag",
+            "1"
+          ],
+          [
+            "complete",
+            "done"
+          ]
+        ],
+        "name": "main",
+        "ports": {
+          "inputs": [],
+          "outputs": []
+        }
+      }
+    ],
+    "type_declarations": [
+      [
+        "type",
+        "packet_t",
+        [
+          "record",
+          [
+            "flag",
+            "bit"
+          ]
+        ]
+      ]
+    ],
+    "type_symbols": {
+      "local": {
+        "packet_t": {
+          "kind": "record",
+          "member_order": [
+            "flag"
+          ],
+          "members": {
+            "flag": {
+              "kind": "bit",
+              "signed": 0,
+              "width": 1
+            }
+          },
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "packages": {}
+    },
+    "uses": [],
+    "verification_bridge": null,
+    "verification_observations": [],
+    "watchdog": "65535"
+  },
+  "authority": "Complete authored writer source, existing F2 resolved bit/record meaning, Parser constructor/defaults/transaction contracts and public metadata numeric rebuilding; hand-declared independently of captured streams. Controlled writer admission is only guard omission, not shipped capability.",
+  "capture_inputs": [
+    [
+      {
+        "inputs": [
+          {
+            "name": "value",
+            "type": "resolved_value",
+            "type_spec": {
+              "kind": "record",
+              "member_order": [
+                "flag"
+              ],
+              "members": {
+                "flag": {
+                  "kind": "bit",
+                  "signed": 0,
+                  "width": "1"
+                }
+              },
+              "signed": 0,
+              "width": "1"
+            },
+            "width": "1"
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    [
+      {
+        "inputs": [
+          {
+            "name": "value",
+            "type": "resolved_value",
+            "type_spec": {
+              "kind": "record",
+              "member_order": [
+                "flag"
+              ],
+              "members": {
+                "flag": {
+                  "kind": "bit",
+                  "signed": "0",
+                  "width": "1"
+                }
+              },
+              "signed": "0",
+              "width": "1"
+            },
+            "width": "1"
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    [
+      {
+        "inputs": [
+          {
+            "name": "value",
+            "type": "resolved_value",
+            "type_spec": {
+              "kind": "bits",
+              "signed": 0,
+              "width": 1
+            },
+            "width": 1
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    [
+      {
+        "inputs": [
+          {
+            "name": "value",
+            "type": "resolved_value",
+            "type_spec": {
+              "kind": "bits",
+              "signed": "0",
+              "width": 1
+            },
+            "width": 1
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    [
+      {
+        "inputs": [
+          {
+            "name": "value",
+            "type": "resolved_value",
+            "type_spec": {
+              "kind": "bit",
+              "signed": "0",
+              "width": "1"
+            },
+            "width": "1"
+          }
+        ],
+        "outputs": []
+      }
+    ],
+    [
+      {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "packet",
+            "type": "packet_t",
+            "type_spec": {
+              "kind": "record",
+              "member_order": [
+                "flag"
+              ],
+              "members": {
+                "flag": {
+                  "kind": "bit",
+                  "signed": 0,
+                  "width": 1
+                }
+              },
+              "signed": 0,
+              "width": 1
+            },
+            "width": 1
+          },
+          {
+            "name": "done",
+            "width": 1
+          }
+        ]
+      },
+      null
+    ]
+  ],
+  "products": [
+    [
+      {
+        "direction": "input",
+        "fields": [
+          {
+            "lsb": 0,
+            "msb": 0,
+            "path": "flag",
+            "signed": 0,
+            "width": 1
+          }
+        ],
+        "name": "value",
+        "type": "resolved_value",
+        "type_kind": "record",
+        "width": 1
+      }
+    ],
+    [
+      {
+        "direction": "input",
+        "name": "value",
+        "type": "resolved_value",
+        "type_kind": "bits",
+        "width": 1
+      }
+    ],
+    [
+      {
+        "direction": "input",
+        "name": "value",
+        "type": "resolved_value",
+        "type_kind": "bit",
+        "width": 1
+      }
+    ],
+    [
+      {
+        "direction": "output",
+        "fields": [
+          {
+            "lsb": 0,
+            "msb": 0,
+            "path": "flag",
+            "signed": 0,
+            "width": 1
+          }
+        ],
+        "name": "packet",
+        "type": "packet_t",
+        "type_kind": "record",
+        "width": 1
+      },
+      {
+        "direction": "output",
+        "name": "done",
+        "width": 1
+      }
+    ]
+  ],
+  "snapshot_inputs": [
+    [
+      [
+        {
+          "direction": "input",
+          "fields": [
+            {
+              "lsb": 0,
+              "msb": 0,
+              "path": "flag",
+              "signed": 0,
+              "width": 1
+            }
+          ],
+          "name": "value",
+          "type": "resolved_value",
+          "type_kind": "record",
+          "width": "1"
+        }
+      ]
+    ],
+    [
+      [
+        {
+          "direction": "input",
+          "name": "value",
+          "type": "resolved_value",
+          "type_kind": "bits",
+          "width": 1
+        }
+      ]
+    ],
+    [
+      [
+        {
+          "direction": "input",
+          "name": "value",
+          "type": "resolved_value",
+          "type_kind": "bit",
+          "width": "1"
+        }
+      ]
+    ],
+    [
+      [
+        {
+          "direction": "output",
+          "fields": [
+            {
+              "lsb": 0,
+              "msb": 0,
+              "path": "flag",
+              "signed": 0,
+              "width": 1
+            }
+          ],
+          "name": "packet",
+          "type": "packet_t",
+          "type_kind": "record",
+          "width": 1
+        },
+        {
+          "direction": "output",
+          "name": "done",
+          "width": 1
+        }
+      ]
+    ]
+  ]
+}

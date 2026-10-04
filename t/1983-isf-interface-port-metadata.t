@@ -205,8 +205,11 @@ subtest 'resolved record preparation preserves independently expected leaf range
         '(actor refused (types (type packet_t (record (flag bit))))'
         . ' (interface (output packet (type packet_t)) (output done))'
         . ' (transaction main (set packet.flag 1) (complete done)))', 'field-refused.isf'); 1 };
+    my $error = $@;
     ok(!$ok, 'record output field writer remains deferred');
-    like($@, qr/record output field writes are not yet admitted/,
+    ok(diagnostic_cause_matches($error,
+        "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; "
+        . "target 'packet.flag' requires output-field writer qualification"),
         'existing authored-field refusal remains precise');
 };
 

@@ -1,0 +1,7 @@
+t/1983-isf-interface-port-metadata.t ................ ok
+t/1986-isf-record-port-value-gates.t ................ ok
+t/2064-isf-interface-metadata-diagnostic-context.t .. ok
+t/2065-isf-record-writer-diagnostic-context.t ....... ok
+All tests successful.
+Files=4, Tests=118,  4 wallclock secs ( 0.01 usr  0.01 sys +  2.08 cusr  1.27 csys =  3.37 CPU)
+Result: PASS

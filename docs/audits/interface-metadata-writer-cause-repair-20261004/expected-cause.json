@@ -1,0 +1,6 @@
+{
+  "primary": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'packet.flag' requires output-field writer qualification",
+  "source_context": "transaction main / set packet.flag / output packet record(flag bit)",
+  "guard": "whole_output_writes_only + write access + output role + nonempty member path + record port root",
+  "provider": "perl/FSM/Support/ISFRecordPortContexts.pm"
+}

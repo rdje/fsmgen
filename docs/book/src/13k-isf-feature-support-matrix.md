@@ -193,8 +193,7 @@ binds its callback sites and adjacent assertions. Its [native profile](../../../
 records complete API, copy, error, warning and assertion streams. A real Storable
 error passes the generic context check when the module path contains the wanted
 prefix. An adjacent output-writer assertion accepts a different parser error when
-the source filename contains its wanted phrase. The helper cause repair below closes the first defect; the writer assertion
-remains separately owned. Existing public metadata qualification retains its finite scope;
+the source filename contains its wanted phrase. Both complete-cause repairs below now close these test-assurance defects. Existing public metadata qualification retains its finite scope;
 provider behavior and public admission are unchanged.
 The [field qualification](../../../docs/audits/interface-metadata-fields-20261004/scope.txt)
 binds every observed width change to declared local/imported types and checks
@@ -225,7 +224,14 @@ wanted prefix: the old helper accepts its earlier Storable error, while the
 repaired helper rejects it. Caller/argument echoes retain their real errors;
 a genuine name-validation bypass fails both refusal and cause checks.
 Complete ordinary products, caller kinds, copies and primary causes conserve.
-The adjacent output-writer cause and final metadata review remain owned.
+The [writer cause repair](../../../docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt)
+saves the parser error immediately and checks the complete record context,
+transaction, field target and qualification reason. Real earlier root errors
+reject even when the filename contains the wanted phrase; the genuine writer
+cause succeeds at that filename. An actual writer-guard bypass fails both
+refusal and cause assertions. Complete ordinary metadata/parser products and
+copy kinds conserve; the controlled admitted actor binds its authored record.
+The complete diagnostic join and final metadata review remain owned.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

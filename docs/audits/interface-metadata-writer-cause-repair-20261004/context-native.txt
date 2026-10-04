@@ -1,0 +1,4 @@
+t/2065-isf-record-writer-diagnostic-context.t .. ok
+All tests successful.
+Files=1, Tests=28,  2 wallclock secs ( 0.00 usr  0.01 sys +  0.55 cusr  0.48 csys =  1.04 CPU)
+Result: PASS

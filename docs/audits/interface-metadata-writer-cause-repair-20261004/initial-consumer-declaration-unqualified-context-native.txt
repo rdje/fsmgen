@@ -1,0 +1,14 @@
+Variable "$ok" is not imported at (eval 49) line 1.
+	(Did you mean &ok instead?)
+Global symbol "$ok" requires explicit package name (did you forget to declare "my $ok"?) at (eval 49) line 1.
+t/2065-isf-record-writer-diagnostic-context.t .. 
+Dubious, test returned 255 (wstat 65280, 0xff00)
+No subtests run 
+
+Test Summary Report
+-------------------
+t/2065-isf-record-writer-diagnostic-context.t (Wstat: 65280 Tests: 0 Failed: 0)
+  Non-zero exit status: 255
+  Parse errors: No plan found in TAP output
+Files=1, Tests=0,  0 wallclock secs ( 0.00 usr  0.00 sys +  0.08 cusr  0.01 csys =  0.09 CPU)
+Result: FAIL

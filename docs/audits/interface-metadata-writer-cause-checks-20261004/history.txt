@@ -1,0 +1,1 @@
+008e629ced1b7d1bd2ff1f56e39ff7e793721179 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.3: admit guarded whole record outputs
