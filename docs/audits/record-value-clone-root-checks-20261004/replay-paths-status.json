@@ -1,0 +1,11 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-root-20261004/replay_paths.py"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

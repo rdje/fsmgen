@@ -1,0 +1,11 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "mdbook",
+    "build",
+    "docs/book"
+  ],
+  "working_directory": ".",
+  "status": 0
+}

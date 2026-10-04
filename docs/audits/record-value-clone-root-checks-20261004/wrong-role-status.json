@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-root-20261004/verify.py",
+    "--wrong-role"
+  ],
+  "expected_failure": "independent complete root source role",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py\", line 165, in <module>\n    assert row['source_role'] == role and row['source_parent_kind'] == parent_kind, 'independent complete root source role'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent complete root source role\n",
+  "status": 1,
+  "working_directory": "."
+}

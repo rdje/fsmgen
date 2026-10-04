@@ -1,0 +1,1 @@
+PASS all four root controls reject complete source membership/role/identical-type source-parent/raw preparation kind at intended assertions.

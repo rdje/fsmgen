@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-root-20261004/verify.py"
+  ],
+  "working_directory": ".",
+  "status": 1,
+  "qualification": "Unqualified verification launch: source assertions pass, then inherited guarded native replay lacks process-inspection rights under default sandbox. Re-run the same source under the already-authorized escalated repository RAM guard."
+}

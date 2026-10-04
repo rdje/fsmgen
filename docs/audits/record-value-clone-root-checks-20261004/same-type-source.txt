@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py", line 166, in <module>
+    assert row['source_parent_index'] == parent['index'] and row['whole_source_parent'] == digest(parent), 'exact own source parent despite identical type values'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact own source parent despite identical type values

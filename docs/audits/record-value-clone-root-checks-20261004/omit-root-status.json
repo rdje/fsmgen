@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-root-20261004/verify.py",
+    "--omit-root"
+  ],
+  "expected_failure": "every complete original root membership",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py\", line 114, in <module>\n    assert [row['index'] for row in rows] == root_indices, 'every complete original root membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every complete original root membership\n",
+  "status": 1,
+  "working_directory": "."
+}

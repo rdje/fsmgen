@@ -1,0 +1,11 @@
+ram-guard: PID 96413; host 82.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/replay_paths.py", line 53, in <module>
+    assert run.returncode == (1 if flag else 0), run.stdout + run.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-clone-root-path-replay-20261004/docs/audits/record-value-clone-paths-20261004/portability.py", line 20, in <module>
+    assert set(runtime_paths) == set(runtime), 'complete current own public Perl/test-support/guard runtime membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete current own public Perl/test-support/guard runtime membership
+

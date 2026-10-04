@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-root-20261004/verify.py",
+      "--omit-root"
+    ],
+    "expected_failure": "every complete original root membership",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py\", line 114, in <module>\n    assert [row['index'] for row in rows] == root_indices, 'every complete original root membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: every complete original root membership\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-root-20261004/verify.py",
+      "--wrong-role"
+    ],
+    "expected_failure": "independent complete root source role",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py\", line 165, in <module>\n    assert row['source_role'] == role and row['source_parent_kind'] == parent_kind, 'independent complete root source role'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: independent complete root source role\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-root-20261004/verify.py",
+      "--same-type-source"
+    ],
+    "expected_failure": "exact own source parent despite identical type values",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py\", line 166, in <module>\n    assert row['source_parent_index'] == parent['index'] and row['whole_source_parent'] == digest(parent), 'exact own source parent despite identical type values'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own source parent despite identical type values\n",
+    "status": 1,
+    "working_directory": "."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-clone-root-20261004/verify.py",
+      "--numeric-preparation"
+    ],
+    "expected_failure": "whole source root raw preparation primitive kinds",
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py\", line 168, in <module>\n    assert exact(row['expected_input'], graph(source)), 'whole source root raw preparation primitive kinds'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole source root raw preparation primitive kinds\n",
+    "status": 1,
+    "working_directory": "."
+  }
+]

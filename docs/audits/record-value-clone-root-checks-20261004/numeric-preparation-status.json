@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-root-20261004/verify.py",
+    "--numeric-preparation"
+  ],
+  "expected_failure": "whole source root raw preparation primitive kinds",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py\", line 168, in <module>\n    assert exact(row['expected_input'], graph(source)), 'whole source root raw preparation primitive kinds'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole source root raw preparation primitive kinds\n",
+  "status": 1,
+  "working_directory": "."
+}

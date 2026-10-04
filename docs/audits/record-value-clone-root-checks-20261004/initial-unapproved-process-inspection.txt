@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/verify.py", line 171, in <module>
+    assert run.returncode == 0, run.stdout + run.stderr
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-root-20261004/replay_paths.py", line 59, in <module>
+    assert run.returncode == (1 if flag else 0), run.stdout + run.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-clone-root-path-replay-20261004/docs/audits/record-value-clone-paths-20261004/portability.py", line 99, in <module>
+    assert run.returncode == (1 if flag else 0), raw
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-clone-root-path-replay-20261004/.artifacts/record-value-clone-paths-replay-20261004/first/docs/audits/record-value-clone-paths-20261004/verify.py", line 128, in <module>
+    assert run.returncode == 0, run.stdout + run.stderr
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-clone-root-path-replay-20261004/.artifacts/record-value-clone-paths-replay-20261004/first/docs/audits/record-value-clone-paths-20261004/replay_native.py", line 35, in <module>
+    assert run.returncode == 0, run.stdout + run.stderr
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval
+
+
+
+
+

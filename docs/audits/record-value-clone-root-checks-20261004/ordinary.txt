@@ -1,0 +1,2 @@
+ram-guard: PID 69746; host 77.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+PASS all1448 whole original source/private-preparation roots:115 scope types including two nulls,40 whole references,431 paths each with segments/leaf/final type. Independent subtree inventory and exact own source/context/primitive kind allocation retain; identical-type wrong-source controls reject. Full8251 recursive tree modeling remains open.

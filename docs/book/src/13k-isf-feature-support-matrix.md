@@ -364,6 +364,18 @@ the exact main/imported-module traceback filename coordinates qualify; all
 messages, arguments and other root-bearing semantic text remain exact. Complete
 project-owned Perl/test-support runtime membership and bytes are watched. Original
 evidence and the first missing-dependency fixture failure remain preserved.
+The [complete root-source proof](../../../docs/audits/record-value-clone-root-20261004/scope.txt)
+binds every one-thousand-four-hundred-forty-eight original root clone input:
+one-hundred-fifteen scope types, forty whole references, and three roots for
+each of four-hundred-thirty-one successful paths. Those path roots hold segments,
+the selected leaf type and the final range type. Two scope types are unresolved
+nulls; failed paths produce no roots. Whole source declarations, masks, properties,
+raw preparation kinds and exact private/parent/caller context reconstruct without
+actual clone result authority. A separate declared subtree inventory and literal
+scalar index/slice witnesses verify source allocation. Missing roots, wrong roles,
+an identical type borrowed from a different source call, and promotion of a raw
+width string reject. The full repaired native proof and its controls reexecute in
+their exact dated context. Recursive tree/output products remain the next step.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

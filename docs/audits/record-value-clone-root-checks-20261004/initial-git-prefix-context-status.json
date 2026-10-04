@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-root-20261004/replay_paths.py"
+  ],
+  "working_directory": ".",
+  "status": 1,
+  "qualification": "Unqualified replay setup: git ls-files pathspecs use ancestor repository subdirectory prefix, yielding zero fixture-local tracked runtime files. Bind same repository Git metadata and fixture work tree explicitly for read-only child Git queries."
+}
