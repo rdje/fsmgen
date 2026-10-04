@@ -269,6 +269,13 @@ ranges. A compatible private-stage spelling does not establish final numeric
 product kinds or safe, isolated copying. Whole actor/API products, copy assurance
 and native cause controls remain owned.
 
+The [record-value field join](../../../docs/audits/record-value-field-join-20261004/scope.txt)
+reexecutes both complete source/layout and copied-field readers with their
+recorded document boundaries, including their rejecting controls. It joins every
+original copied graph and whole field record to the completed source-model
+owners. Field qualification is complete; whole actor/API products and native
+copy/cause assurance remain separate.
+
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
 primary messages containing wanted codes, reject. The

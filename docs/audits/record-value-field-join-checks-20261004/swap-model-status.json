@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-field-join-20261004/verify.py",
+    "--swap-model"
+  ],
+  "status": 1
+}

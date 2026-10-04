@@ -1,0 +1,42 @@
+{
+  "child-replays.json": {
+    "bytes": 47906,
+    "sha256": "419ca3075a35abe95ab0a5b0282117d3404bed6f892adca78e909583d41da1e7"
+  },
+  "doc-updates.json": {
+    "bytes": 302091,
+    "sha256": "c5ed2acfc9a8dd6a5ae7316e7710fb5df3f6d1e03c511c41daf6dd2162993c38"
+  },
+  "initial-document-budget-failure.txt": {
+    "bytes": 435,
+    "sha256": "cc4857816e34045b70cfc4754969aaf49ff60192eabf057fbcc5501c362b135c"
+  },
+  "initial-document-proposal.txt": {
+    "bytes": 324,
+    "sha256": "cbc5932d651b43407aa9b49cd7961b592f7f8c7c1d061f95cea0880ffdd659bf"
+  },
+  "join.json": {
+    "bytes": 1644947,
+    "sha256": "9691c6b4761bb7343b24d10c23bc6b5ab63199cf2add4fd5e618499725060d68"
+  },
+  "plan.txt": {
+    "bytes": 917,
+    "sha256": "736546357ee456d992e62fa84b959c58bc82a359dc1c0a96c961509f755e511a"
+  },
+  "produce.py": {
+    "bytes": 3032,
+    "sha256": "698a75235e308ac0e97b7ee2cd4175f689b058abd60165f980b711a668e581f4"
+  },
+  "replay_children.py": {
+    "bytes": 3386,
+    "sha256": "5545703938d331dcdb7513b7f60358868d1700ca136d24aa7cc6fbc42f05fafc"
+  },
+  "scope.txt": {
+    "bytes": 3179,
+    "sha256": "993661a19b26229aaafb69c001995b30b7482c738a090f23ae77c928468811f0"
+  },
+  "verify.py": {
+    "bytes": 7355,
+    "sha256": "8704ae3a8f58bd5122563b846d78152e8f2baa40d6aeb7f4357fce90e93f1c9f"
+  }
+}

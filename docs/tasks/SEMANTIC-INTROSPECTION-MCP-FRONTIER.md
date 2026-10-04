@@ -4137,11 +4137,11 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1`
-  Status: `active`
+  Status: `done`
   Goal: `Bind original T1986 authored recursive fields and copied width/source roles.`
   Acceptance: `Before stronger copy or cause controls, independently hand-model every local/imported record/list/scalar resolved type, alias/state/signed/member/list order and packed field offsets from complete authored sources. Bind every actual original copy width/type field to original caller source and intentional private validation stage; capture whole actors/type fixtures and all deltas. Demonstrate field/order/private-stage omission or authority controls RED, preserve numeric caller/property versus source AST literal roles, and keep whole product/caller semantic qualification successor-owned.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete committed authored-layout and copied-field children join under .3 full source/owner/native/typed/model/control evidence. Original697 copies and2540 width occurrences per boundary retain complete raw source/property/carrier/private-role qualification, not unique alias provenance or whole-product/copy/cause assurance. Independent children and rejecting controls reexecute at exact document boundaries; full join is docs/audits/record-value-field-join-20261004/scope.txt.`
+  Commit: `field-join work-unit commit (derive exact SHA with git log --grep)`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.1`
@@ -4159,11 +4159,11 @@ For FSMGen, the analogs are:
   Commit: `this work-unit commit (derive exact SHA with git log --grep for this ID)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Join original T1986 authored fields and copied-source roles.`
   Acceptance: `Join exact completed recursive-type/layout and copy/source-field owners and complete native source/body/kind/typed-delta memberships. Reexecute independent children/controls and bind exact current source; close only field parent before complete product models and assurance repair.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete docs/audits/record-value-field-join-20261004/scope.txt binds Gite6fa1550 full20 current source bodies, two exact completed model/field owners and every original697 graph/field identity. Whole authored/local/imported/scalar roots, raw width paths/kinds/properties/order/carriers/private stages and cycle authority join both complete sealed children. Immutable child readers reexecute with exact historical doc after-images and unchanged full current implementation inputs; both ordinary and all seven child RED controls match full retained receipts. Outer actual-copy omission, same-width signed-model corruption and uncompleted-authority promotion RED1. Public book All tests successful Files=2 Tests=308; build PASS. Initial no-write card-budget and closure-status failures retained; fixed capacity shrinks. Only field qualification closes; whole actor/API products and native copy/cause assurance remain owned.`
+  Commit: `field-join work-unit commit (derive exact SHA with git log --grep)`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2`
@@ -6777,3 +6777,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub refuses {' -- t/1986-isf-record-port-value-gates.t binds the complete original source. Original native copies retain width-kind changes and value-only baselines; compatible widths or copied counts cannot establish full source/property/stage allocation. Initial storage kind=var misclassification produced eleven apparent gaps; exact source carrier/type_spec contracts resolve those instrument gaps with the original scanner retained.
 - [x] **ADDRESSED (verified)** — Complete independent every-copy field reader passes, reconstructs all source/malformed/generated/wrapper models and compares every whole raw width/type/property/ancestor/metadata/carrier role record on both boundaries. Actual field omission, default-to-authored allocation, signed2 candidate corruption and original private kind-loss product promotion reject RED1. Full source/graph/cycle kinds and intentional descriptor contradiction preserve; whole actor/API products, copy safety and real cause controls remain explicitly owned.
 - [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308 and rendered build PASS. Prior complete authored reader passes before exact current-card supersession; both complete sealed authored/native archives authenticate. Current source/doc/instrument/all-field watcher passes; fixed card capacity shrinks without ceiling widening. Fresh task/KM/claim/capacity records and staged doctrine/hooks accompany this finite slice before the field join.
+
+## Acceptance Checklist — complete original T1986 field join
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub refuses {' -- t/1986-isf-record-port-value-gates.t binds original source. Kind-changing copies and compatible physical identities cannot establish complete recursive/source/private-field semantics from widths or totals. Separate authored-layout and all-copy-field proofs require exact owner/source/native identities and genuine semantic-control replay before parent closure.
+- [x] **ADDRESSED (verified)** — Complete separate source/owner/graph/field/model join reader passes. Both immutable semantic children pass and all seven child controls reexecute RED1 in root-derived isolated replay contexts using exact historical documents and unchanged current implementation inputs. Outer actual-copy omission, same-width signed identity corruption and incomplete-owner promotion RED1. Raw kinds/property/order/carrier/stage/cycle authority and intentional invalid descriptor preserve; only field parent closes, before whole actor/API products and copy/cause assurance.
+- [x] **NO REGRESSION** — All tests successful; public book Files=2, Tests=308; final updated rendered build PASS. Both full sealed source/model/field/native authorities authenticate and independent readers/controls reexecute; current20 source/doc/owner/instrument watcher passes. Initial no-write document budget and closure-status failures retain; unchanged-doc checks remain separate. Fixed card capacity shrinks without ceiling changes; fresh task/KM/claim/capacity and staged doctrine/hooks precede product modeling.

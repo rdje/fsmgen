@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-field-join-20261004/verify.py", line 55, in <module>
+    assert child['node'] == task[start:end] and 'Status: `done`' in child['node'], 'exact completed child authority'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact completed child authority

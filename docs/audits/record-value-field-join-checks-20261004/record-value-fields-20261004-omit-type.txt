@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-field-join-replay-20261004/record-value-fields-20261004/docs/audits/record-value-fields-20261004/verify.py", line 96, in <module>
+    assert set(types) == {'frame', 'alias', 'renamed', 'reordered', 'signed_data', 'four',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'two', 'bit_kind', 'nested', 'flat', 'lanes'}, 'complete authored local type membership'
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete authored local type membership

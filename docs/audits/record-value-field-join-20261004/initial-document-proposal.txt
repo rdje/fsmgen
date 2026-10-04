@@ -1,0 +1,3 @@
+T1986 [field join](../audits/record-value-field-join-20261004/scope.txt) binds source/layouts,
+complete copied graphs and private roles. Product/copy/cause assurance is open.
+Rejected before writes by explicit card no-growth assertion; Traceback (most recent call last): File "<stdin>", line 7, in <module>; AssertionError.

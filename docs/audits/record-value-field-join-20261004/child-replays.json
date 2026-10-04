@@ -1,0 +1,1035 @@
+[
+  {
+    "archive": "record-value-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-fields-20261004/verify.py"
+    ],
+    "expected_status": 0,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "current committed source",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3394,
+        "sha256": "b3818630146054b8f2fd393f35d97eef7e1ea100ad1ec9a04c57a475db74581e"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "PASS complete authored local11/imported frame/scalar recursive type identities, member/list order, signed/state presence and independently packed leaf layouts match whole original parser type/storage products with strict primitive kinds. Whole actor/API products and all-copy source/private-field joins remain separately owned.\n",
+    "status": 0,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-fields-20261004"
+  },
+  {
+    "archive": "record-value-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-fields-20261004/verify.py",
+      "--omit-type"
+    ],
+    "expected_status": 1,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "current committed source",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3394,
+        "sha256": "b3818630146054b8f2fd393f35d97eef7e1ea100ad1ec9a04c57a475db74581e"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-field-join-replay-20261004/record-value-fields-20261004/docs/audits/record-value-fields-20261004/verify.py\", line 96, in <module>\n    assert set(types) == {'frame', 'alias', 'renamed', 'reordered', 'signed_data', 'four',\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        'two', 'bit_kind', 'nested', 'flat', 'lanes'}, 'complete authored local type membership'\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete authored local type membership\n",
+    "status": 1,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-fields-20261004"
+  },
+  {
+    "archive": "record-value-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-fields-20261004/verify.py",
+      "--swap-order"
+    ],
+    "expected_status": 1,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "current committed source",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3394,
+        "sha256": "b3818630146054b8f2fd393f35d97eef7e1ea100ad1ec9a04c57a475db74581e"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-field-join-replay-20261004/record-value-fields-20261004/docs/audits/record-value-fields-20261004/verify.py\", line 101, in <module>\n    assert equal(local['type_symbols'], {'local': types, 'packages': {}}), 'complete original authored recursive identities/kinds'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original authored recursive identities/kinds\n",
+    "status": 1,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-fields-20261004"
+  },
+  {
+    "archive": "record-value-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-fields-20261004/verify.py",
+      "--trust-private-product"
+    ],
+    "expected_status": 1,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "current committed source",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3394,
+        "sha256": "b3818630146054b8f2fd393f35d97eef7e1ea100ad1ec9a04c57a475db74581e"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-field-join-replay-20261004/record-value-fields-20261004/docs/audits/record-value-fields-20261004/verify.py\", line 123, in <module>\n    assert equal(plain(private['copy']), types['nested']), 'actual kind-changing fixture copy cannot be final numeric type authority'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual kind-changing fixture copy cannot be final numeric type authority\n",
+    "status": 1,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-fields-20261004"
+  },
+  {
+    "archive": "record-value-copy-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-copy-fields-20261004/verify.py"
+    ],
+    "expected_status": 0,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3388,
+        "sha256": "8eef727635f61ce3e77237e2d5276a67b0b0382e3017bc034ff66f3c1e8f1ff3"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "PASS every original697 copied graph joins all2540 before/after width facts and complete recursive type/property/packed/default/carrier source-stage roles. Compatible physical identities retain origin sets; actual storage/default carriers remain distinct. Raw kinds and the one source-forged descriptor width remain intact; stage meaning is not final product or copy safety. Whole product/native assurance remains successor-owned.\n",
+    "status": 0,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004"
+  },
+  {
+    "archive": "record-value-copy-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-copy-fields-20261004/verify.py",
+      "--omit-field"
+    ],
+    "expected_status": 1,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3388,
+        "sha256": "8eef727635f61ce3e77237e2d5276a67b0b0382e3017bc034ff66f3c1e8f1ff3"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004/docs/audits/record-value-copy-fields-20261004/verify.py\", line 244, in <module>\n    assert [fact['path'] for fact in candidate] == [node[0] for node in actual_nodes], 'complete original copied width membership'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete original copied width membership\n",
+    "status": 1,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004"
+  },
+  {
+    "archive": "record-value-copy-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-copy-fields-20261004/verify.py",
+      "--swap-source-role"
+    ],
+    "expected_status": 1,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3388,
+        "sha256": "8eef727635f61ce3e77237e2d5276a67b0b0382e3017bc034ff66f3c1e8f1ff3"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004/docs/audits/record-value-copy-fields-20261004/verify.py\", line 293, in <module>\n    assert exact(expected, fact['default_port'])\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+    "status": 1,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004"
+  },
+  {
+    "archive": "record-value-copy-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-copy-fields-20261004/verify.py",
+      "--trust-private-product"
+    ],
+    "expected_status": 1,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3388,
+        "sha256": "8eef727635f61ce3e77237e2d5276a67b0b0382e3017bc034ff66f3c1e8f1ff3"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004/docs/audits/record-value-copy-fields-20261004/verify.py\", line 336, in <module>\n    assert exact(actual['before'], actual['copy']), 'actual original actor baseline copy loses numeric width kinds'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual original actor baseline copy loses numeric width kinds\n",
+    "status": 1,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004"
+  },
+  {
+    "archive": "record-value-copy-fields-20261004",
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-copy-fields-20261004/verify.py",
+      "--swap-malformed-model"
+    ],
+    "expected_status": 1,
+    "inputs": {
+      "docs/book/src/13j-type-enum-aggregate.md": {
+        "boundary": "current committed source",
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "docs/book/src/13k-isf-feature-support-matrix.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 144658,
+        "sha256": "ecce79c5ea53faeb732a7225106c8c39ef6497b33a161fcc0f53a29ffaef47bd"
+      },
+      "docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md": {
+        "boundary": "current committed source",
+        "bytes": 32771,
+        "sha256": "3911b20c324a78724e04a1e7b11db682c1e9d9894c0b67bdcc57443c8c7fefac"
+      },
+      "docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md": {
+        "boundary": "current committed source",
+        "bytes": 32171,
+        "sha256": "b2d2ac67165b8cb1a5d477209a7a8fbc85194d875b057f15f014328378b55080"
+      },
+      "docs/knowledge/isf-aggregate-port-request-baseline.md": {
+        "boundary": "sealed document after-image",
+        "bytes": 3388,
+        "sha256": "8eef727635f61ce3e77237e2d5276a67b0b0382e3017bc034ff66f3c1e8f1ff3"
+      },
+      "docs/knowledge/isf-record-output-source-admission.md": {
+        "boundary": "current committed source",
+        "bytes": 3972,
+        "sha256": "6747fcbe4cf315713ee6eac2004c30f4a5e34714bccdfec0365b056bf6d98203"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "boundary": "current committed source",
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Composition/InterfacePortBuilder.pm": {
+        "boundary": "current committed source",
+        "bytes": 11253,
+        "sha256": "cb9b587870c8e99eb2f78021512e701e0c484e2251d63433321ce77d007e45e5"
+      },
+      "perl/FSM/Package/AggregatePathSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 17228,
+        "sha256": "19ec3cacebcaf500182715a5af60a0dc65d8860e049725fd7dedf3eb7aea7dec"
+      },
+      "perl/FSM/Package/ImportResolver.pm": {
+        "boundary": "current committed source",
+        "bytes": 5738,
+        "sha256": "cba7c9f5cae03c165fb233f7966de6c327cdece5e8b2b236280a455574f32e8b"
+      },
+      "perl/FSM/Package/Parser.pm": {
+        "boundary": "current committed source",
+        "bytes": 27375,
+        "sha256": "6c6481a002e7d2bf698f4b2e7fefcb7f3c7384c10e9836bdd38eec52ffbeddb8"
+      },
+      "perl/FSM/Package/PayloadTypeSupport.pm": {
+        "boundary": "current committed source",
+        "bytes": 7865,
+        "sha256": "30abef344263a99dd578ab1d6c4aaa1fc70c3903b5d15676103ebf6137a55dd4"
+      },
+      "perl/FSM/Pipeline/SourceFrontend.pm": {
+        "boundary": "current committed source",
+        "bytes": 35424,
+        "sha256": "20870a8dc33b48dad01245a8393b70d113bfe6dfaa8e21ce7a3a841495409512"
+      },
+      "perl/FSM/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 6017,
+        "sha256": "14aece4a50b35956bc2585099aa8d26753942288663c641922da9d36ad4bc893"
+      },
+      "perl/FSM/Support/ISFInterfacePortMetadata.pm": {
+        "boundary": "current committed source",
+        "bytes": 11506,
+        "sha256": "d18e19550e2cf800ca816cccab4c94f6bc10ce4198e618acbb01442395443602"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "boundary": "current committed source",
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      },
+      "perl/FSM/Support/ISFRecordPortValues.pm": {
+        "boundary": "current committed source",
+        "bytes": 9858,
+        "sha256": "e172d804563597d1cf5a52695d73e11a90a73386428d4de3228f498b2ed24997"
+      },
+      "t/1986-isf-record-port-value-gates.t": {
+        "boundary": "current committed source",
+        "bytes": 16809,
+        "sha256": "233b8ef3fdce3599e9b2f39d1d31a927711c846eaed96236d73fab7bb0178103"
+      },
+      "t/lib/FSM/Test/ProjectDataLocality.pm": {
+        "boundary": "current committed source",
+        "bytes": 198,
+        "sha256": "8fe6472c61717d8619554ede193c05a16ea4d15706379712585a6cc3f49273c6"
+      }
+    },
+    "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/.artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004/docs/audits/record-value-copy-fields-20261004/verify.py\", line 117, in <module>\n    assert exact(models['roots'], expected_roots), 'complete source-declared candidate domain, including signed2 mutation'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete source-declared candidate domain, including signed2 mutation\n",
+    "status": 1,
+    "working_directory": ".artifacts/record-value-field-join-replay-20261004/record-value-copy-fields-20261004"
+  }
+]
