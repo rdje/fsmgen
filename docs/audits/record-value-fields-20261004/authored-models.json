@@ -1,0 +1,564 @@
+{
+  "authority": "Whole original authored controls fixture/shared.fsm package and existing public packed type/range contracts. Hand-authored recursive identities/layouts; no native result or provider is called to build expected types.",
+  "imported": {
+    "shared.frame": {
+      "kind": "record",
+      "member_order": [
+        "flag",
+        "data"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 7
+        },
+        "flag": {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    }
+  },
+  "layouts": {
+    "alias": [
+      [
+        "flag",
+        1,
+        7,
+        7,
+        0,
+        null,
+        "bit"
+      ],
+      [
+        "data",
+        7,
+        0,
+        6,
+        0,
+        null,
+        "bits"
+      ]
+    ],
+    "bit_kind": [
+      [
+        "flag",
+        1,
+        7,
+        7,
+        0,
+        null,
+        "bits"
+      ],
+      [
+        "data",
+        7,
+        0,
+        6,
+        0,
+        null,
+        "bits"
+      ]
+    ],
+    "flat": [
+      [
+        "header",
+        2,
+        6,
+        7,
+        0,
+        null,
+        "bits"
+      ],
+      [
+        "count",
+        3,
+        3,
+        5,
+        1,
+        "four_state",
+        "bits"
+      ],
+      [
+        "lane0",
+        1,
+        2,
+        2,
+        0,
+        "two_state",
+        "bit"
+      ],
+      [
+        "lane1",
+        2,
+        0,
+        1,
+        0,
+        null,
+        "bits"
+      ]
+    ],
+    "four": [
+      [
+        "flag",
+        1,
+        7,
+        7,
+        0,
+        null,
+        "bit"
+      ],
+      [
+        "data",
+        7,
+        0,
+        6,
+        0,
+        "four_state",
+        "bits"
+      ]
+    ],
+    "frame": [
+      [
+        "flag",
+        1,
+        7,
+        7,
+        0,
+        null,
+        "bit"
+      ],
+      [
+        "data",
+        7,
+        0,
+        6,
+        0,
+        null,
+        "bits"
+      ]
+    ],
+    "lanes": [
+      [
+        "[0]",
+        1,
+        2,
+        2,
+        0,
+        null,
+        "bit"
+      ],
+      [
+        "[1]",
+        2,
+        0,
+        1,
+        0,
+        null,
+        "bits"
+      ]
+    ],
+    "nested": [
+      [
+        "header",
+        2,
+        6,
+        7,
+        0,
+        null,
+        "bits"
+      ],
+      [
+        "body.count",
+        3,
+        3,
+        5,
+        1,
+        "four_state",
+        "bits"
+      ],
+      [
+        "body.lanes[0]",
+        1,
+        2,
+        2,
+        0,
+        "two_state",
+        "bit"
+      ],
+      [
+        "body.lanes[1]",
+        2,
+        0,
+        1,
+        0,
+        null,
+        "bits"
+      ]
+    ],
+    "renamed": [
+      [
+        "tag",
+        1,
+        7,
+        7,
+        0,
+        null,
+        "bit"
+      ],
+      [
+        "data",
+        7,
+        0,
+        6,
+        0,
+        null,
+        "bits"
+      ]
+    ],
+    "reordered": [
+      [
+        "data",
+        7,
+        1,
+        7,
+        0,
+        null,
+        "bits"
+      ],
+      [
+        "flag",
+        1,
+        0,
+        0,
+        0,
+        null,
+        "bit"
+      ]
+    ],
+    "signed_data": [
+      [
+        "flag",
+        1,
+        7,
+        7,
+        0,
+        null,
+        "bit"
+      ],
+      [
+        "data",
+        7,
+        0,
+        6,
+        1,
+        null,
+        "bits"
+      ]
+    ],
+    "two": [
+      [
+        "flag",
+        1,
+        7,
+        7,
+        0,
+        null,
+        "bit"
+      ],
+      [
+        "data",
+        7,
+        0,
+        6,
+        0,
+        "two_state",
+        "bits"
+      ]
+    ]
+  },
+  "scalar": {
+    "kind": "bits",
+    "signed": 0,
+    "width": 7
+  },
+  "types": {
+    "alias": {
+      "kind": "record",
+      "member_order": [
+        "flag",
+        "data"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 7
+        },
+        "flag": {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "bit_kind": {
+      "kind": "record",
+      "member_order": [
+        "flag",
+        "data"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 7
+        },
+        "flag": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "flat": {
+      "kind": "record",
+      "member_order": [
+        "header",
+        "count",
+        "lane0",
+        "lane1"
+      ],
+      "members": {
+        "count": {
+          "kind": "bits",
+          "signed": 1,
+          "state_model": "four_state",
+          "width": 3
+        },
+        "header": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 2
+        },
+        "lane0": {
+          "kind": "bit",
+          "signed": 0,
+          "state_model": "two_state",
+          "width": 1
+        },
+        "lane1": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 2
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "four": {
+      "kind": "record",
+      "member_order": [
+        "flag",
+        "data"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 0,
+          "state_model": "four_state",
+          "width": 7
+        },
+        "flag": {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "frame": {
+      "kind": "record",
+      "member_order": [
+        "flag",
+        "data"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 7
+        },
+        "flag": {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "lanes": {
+      "items": [
+        {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        },
+        {
+          "kind": "bits",
+          "signed": 0,
+          "width": 2
+        }
+      ],
+      "kind": "list",
+      "signed": 0,
+      "width": 3
+    },
+    "nested": {
+      "kind": "record",
+      "member_order": [
+        "header",
+        "body"
+      ],
+      "members": {
+        "body": {
+          "kind": "record",
+          "member_order": [
+            "count",
+            "lanes"
+          ],
+          "members": {
+            "count": {
+              "kind": "bits",
+              "signed": 1,
+              "state_model": "four_state",
+              "width": 3
+            },
+            "lanes": {
+              "items": [
+                {
+                  "kind": "bit",
+                  "signed": 0,
+                  "state_model": "two_state",
+                  "width": 1
+                },
+                {
+                  "kind": "bits",
+                  "signed": 0,
+                  "width": 2
+                }
+              ],
+              "kind": "list",
+              "signed": 0,
+              "width": 3
+            }
+          },
+          "signed": 0,
+          "width": 6
+        },
+        "header": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 2
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "renamed": {
+      "kind": "record",
+      "member_order": [
+        "tag",
+        "data"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 7
+        },
+        "tag": {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "reordered": {
+      "kind": "record",
+      "member_order": [
+        "data",
+        "flag"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 0,
+          "width": 7
+        },
+        "flag": {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "signed_data": {
+      "kind": "record",
+      "member_order": [
+        "flag",
+        "data"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 1,
+          "width": 7
+        },
+        "flag": {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    },
+    "two": {
+      "kind": "record",
+      "member_order": [
+        "flag",
+        "data"
+      ],
+      "members": {
+        "data": {
+          "kind": "bits",
+          "signed": 0,
+          "state_model": "two_state",
+          "width": 7
+        },
+        "flag": {
+          "kind": "bit",
+          "signed": 0,
+          "width": 1
+        }
+      },
+      "signed": 0,
+      "width": 8
+    }
+  }
+}

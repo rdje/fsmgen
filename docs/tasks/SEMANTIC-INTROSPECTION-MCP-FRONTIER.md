@@ -4129,11 +4129,57 @@ For FSMGen, the analogs are:
   Commit: `this commit (complete original native profile; work-unit subject)`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify original T1986 authored fields, source products and private type semantics.`
   Acceptance: `Independently model complete source-local/imported actors and resolved recursive scalar/record/list fields, roles/ranges, intentional private numeric spellings and final numeric outputs. Bind all actual calls/copies/kinds/consumers to source authority and rederive/falsify/durability controls; preserve exact recursive identity versus payload compatibility and established first-touch requirements.`
   Verification: `pending`
   Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1`
+  Status: `active`
+  Goal: `Bind original T1986 authored recursive fields and copied width/source roles.`
+  Acceptance: `Before stronger copy or cause controls, independently hand-model every local/imported record/list/scalar resolved type, alias/state/signed/member/list order and packed field offsets from complete authored sources. Bind every actual original copy width/type field to original caller source and intentional private validation stage; capture whole actors/type fixtures and all deltas. Demonstrate field/order/private-stage omission or authority controls RED, preserve numeric caller/property versus source AST literal roles, and keep whole product/caller semantic qualification successor-owned.`
+  Verification: `pending`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.1`
+  Status: `done`
+  Goal: `Qualify complete authored T1986 local/imported recursive type and layout models.`
+  Acceptance: `Complete current authored-model artifact started under parent belongs here. Independently hand-declare all recursive local/imported resolved types, alias/bit-versus-bits/signed/state/member/list identities and exact packed leaf layouts from whole source DSL/public contracts. Bind whole original parser type products and complete source type fixtures with strict kinds/order and source omission/layout controls; do not claim whole actor/API/copy field semantics until successors.`
+  Verification: `Complete docs/audits/record-value-fields-20261004/{author_models.py,verify.py,authored-models.json,binding.json,scope.txt,manifest.json} hand-declares original local11/imported shared.frame/scalar recursive identities and all packed leaf layouts, independent of native/provider results. Git90e196e8 full19 source bodies bind current contracts; original whole local/imported native type-symbol/storage/signal type products match strict numeric/property/kind/order models. Independent ordered MSB-first packing walker verifies every expected range/state/signed/member/list fact; alias/package spelling preserves frame identity while bit_kind retains bits1. Actual type omission, nested member-order reversal and original nested-copy numeric-product promotion RED1. Complete prior native archive authenticates unchanged source/call/fragment/synthetic/cyclic boundaries; current card watcher supersedes only the prior dated document capture. Every-copy width/private/source fields and whole actor/API products remain bounded successor-owned before stronger assurance. Book2/308/rendered build and sealed reader PASS in sibling checks; fixed card capacity/fresh task/KM/claim/staged doctrine/hooks close before .2 copied-field roles.`
+  Commit: `this commit (authored recursive type/layout models; work-unit subject)`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.2`
+  Status: `pending`
+  Goal: `Qualify every original T1986 copied width and source/private-stage role.`
+  Acceptance: `Use completed authored recursive models and complete original697 copy graphs/deltas to bind every width/type/property field to original source/local-imported/malformed/swapped fixture or actual metadata/value private stage. Distinguish original caller/numeric product meanings from intentional stage strings; all full graphs and native cycle preserve. Independently read complete membership/roles and private authority/field omission controls before stronger copy or numeric-product assertions.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.1.3`
+  Status: `pending`
+  Goal: `Join original T1986 authored fields and copied-source roles.`
+  Acceptance: `Join exact completed recursive-type/layout and copy/source-field owners and complete native source/body/kind/typed-delta memberships. Reexecute independent children/controls and bind exact current source; close only field parent before complete product models and assurance repair.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.2`
+  Status: `pending`
+  Goal: `Qualify complete original T1986 source/parser/API products and private stages.`
+  Acceptance: `After authored field roles close, independently declare complete source-local/imported actor and every accepted/refused value/path/type/metadata/identity/payload product. Join whole typed original/native/copy graphs, scalar roles/ranges/local/formal masks and numerical final facts to source field models; original private staged strings cannot become final product authority. Genuine private-stage product controls and omission controls must fail; preserve all intended source semantics before hot repair.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.2.3`
+  Status: `pending`
+  Goal: `Join complete original T1986 field/source/product semantics.`
+  Acceptance: `Join exact completed field/product owners and complete immutable ordinary source/API/copy/consumer models. Reexecute independent semantic readers and actual omission/authority controls, preserve readonly/native cycle/caller/type/product roles and current source identity; close only semantic parent before copy/cause assurance repairs.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3`
   Status: `pending`
@@ -6719,3 +6765,9 @@ CAUSE; refresh claims and rerun all staged gates with fixed limits unchanged.
 - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub refuses {' -- t/1986-isf-record-port-value-gates.t binds the original helper and exact source calls. Full actual native source-bound API/copy/consumer graphs expose kind-changing Storable fixtures and value-only baseline/deep comparisons; lexical/synthetic roles do not establish real cause/copy semantics. Initial observer root export, prototype and guessed-cycle-count failures are instrument defects, retained and corrected from full public source/interface contracts.
 - [x] **ADDRESSED (observation verified; semantic repair owned)** — Complete independent source/native/helper/copy/site/consumer/TAP/kind/reference/error/primary reader passes. Actual helper/copy omission, original kind-loss promotion and synthetic-native controls RED1. Actual ancestor cycle is preserved in two isolated native copies and the unchanged guard refuses; original APIs preserve caller first-touch kinds. P2 copy/consumer gap has explicit .3 ownership, with .2 source-product models and .4 intended native-cause controls before any hot repair. Card/current-source watcher and full historical evidence retain precise scope.
 - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=318, complete unwrapped125 leaf labels/pass outcomes match observed original TAP. Updated public book All tests successful; Files=2, Tests=308 and rendered build PASS. No T1986/provider/public admission edits; full immutable source/native/typed/control reader passes. Fresh bounded card/KM/task/claim/unchanged ceilings and staged doctrine/hooks precede semantic successor.
+
+## Acceptance Checklist — independent authored T1986 type/layout models
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'sub refuses {' -- t/1986-isf-record-port-value-gates.t binds original source fixtures and callbacks; complete native/type/copy evidence exposes equal widths and private numeric spellings that cannot establish recursive authored identity or final kinds. Source-local/imported aliases, bit versus bits, ordered nesting/list items and signed/state properties require independent whole source authority before copy or product repair.
+- [x] **ADDRESSED (verified)** — Hand-authored full recursive type and leaf-layout models match original local/imported parser type/storage/signal products with strict primitive kinds. A separate most-significant-first recursive layout walker verifies every range/property and member/list order. Actual type omission, body-order reversal and genuine nested private-copy product-authority controls RED1. Full source/card/native archive identities and precise ownership of copied-field/whole-product/cause/copy legs conserve; no hot provider/test repair.
+- [x] **NO REGRESSION** — Public-book All tests successful; Files=2, Tests=308 and rendered build PASS. Complete independent authored-source/type/layout/private-authority reader and sealed original native archive authenticate; selected current19 source bodies conserve. Fixed card capacity, fresh task/card/KM/claim and staged doctrine/hooks accompany this bounded model slice before all-copy field roles.

@@ -255,6 +255,13 @@ refusal, and exposes numeric width kinds becoming strings in original test
 copies. Source/product models and genuine copy/cause controls remain owned
 before assurance repair; observing a passing test does not close those legs.
 
+The [authored record-value layouts](../../../docs/audits/record-value-fields-20261004/scope.txt)
+independently bind local/imported resolved types, aliases, member/list order,
+signed/state presence and packed scalar ranges. Original parser type/storage
+products match complete numeric models; a private copied fixture cannot stand
+in for that authority. Every copied-field role and complete actor/API product
+remain separate qualification steps before assurance repair.
+
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
 primary messages containing wanted codes, reject. The

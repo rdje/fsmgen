@@ -1,0 +1,74 @@
+{
+  "author-models.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "author-models.txt": {
+    "bytes": 152,
+    "sha256": "959a422a461ac90a87d51c03aeacf86092d63aa133f5370fa163ff0f88f42716"
+  },
+  "author_models.py": {
+    "bytes": 3805,
+    "sha256": "770e5975c2634bcb2632c898a0b0f035ec14f7d479fcb567f124c532bd6b5eda"
+  },
+  "authored-models.json": {
+    "bytes": 8950,
+    "sha256": "564f9e80f80307911ea0228e3dc27e216dd06243f630f223f5393d5c7194e0ff"
+  },
+  "binding.json": {
+    "bytes": 779379,
+    "sha256": "a31ef4ebdcfdc7e4a0a8a573e76f473dc259a33150ace4435ec0ea4f4f0280a8"
+  },
+  "card-after.txt": {
+    "bytes": 3394,
+    "sha256": "b3818630146054b8f2fd393f35d97eef7e1ea100ad1ec9a04c57a475db74581e"
+  },
+  "card-changes.json": {
+    "bytes": 525,
+    "sha256": "a54f533b3d051d1354df21dbd8babcc60d8db2ffb1c2dc7ce5b3696b57124a14"
+  },
+  "plan.txt": {
+    "bytes": 651,
+    "sha256": "b8ddd835ac142806a423c13014d9d04610ddc033722411a5422ddaa5495726f6"
+  },
+  "reader-omit-type.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "reader-omit-type.txt": {
+    "bytes": 543,
+    "sha256": "d956c01ccf976a48336251751fb18060b82366df762f0d040df9c214967ebf7f"
+  },
+  "reader-ordinary.status": {
+    "bytes": 2,
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "reader-ordinary.txt": {
+    "bytes": 328,
+    "sha256": "d10197709462d291205948ac2c2cc92d55c596162b4e2ab465ae21a5e8cd6841"
+  },
+  "reader-swap-order.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "reader-swap-order.txt": {
+    "bytes": 430,
+    "sha256": "e680de7e472301275e2ff45ce1c41eed19a10a5b848c3de84be1df1dc293a64d"
+  },
+  "reader-trust-private-product.status": {
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "reader-trust-private-product.txt": {
+    "bytes": 436,
+    "sha256": "20dcaf078cf58e336a732d80e05ca2778e064b0906f22ef3cffc10aeda9793e6"
+  },
+  "scope.txt": {
+    "bytes": 3375,
+    "sha256": "ee559a4d0a4328de64e173e43e7e5c5d73eff8761d512c8c59d776aed93680ad"
+  },
+  "verify.py": {
+    "bytes": 7303,
+    "sha256": "f759d230e052e63553591e823a5c80b147e1245a4257c0b1087e343ba5894e32"
+  }
+}

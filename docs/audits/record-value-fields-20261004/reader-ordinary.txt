@@ -1,0 +1,1 @@
+PASS complete authored local11/imported frame/scalar recursive type identities, member/list order, signed/state presence and independently packed leaf layouts match whole original parser type/storage products with strict primitive kinds. Whole actor/API products and all-copy source/private-field joins remain separately owned.

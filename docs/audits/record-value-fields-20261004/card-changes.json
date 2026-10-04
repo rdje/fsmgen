@@ -1,0 +1,10 @@
+[
+  [
+    "python3 -B docs/audits/record-value-runtime-20261004/verify.py",
+    "python3 -B docs/audits/record-value-fields-20261004/verify.py"
+  ],
+  [
+    "T1986 [profile](../audits/record-value-runtime-20261004/scope.txt) binds calls, first-line fragments,\nsynthetic checks and typed graphs; copy/cause/product proof stays open.",
+    "T1986 [fields](../audits/record-value-fields-20261004/scope.txt) binds calls, first-line fragments,\nsynthetic checks and typed graphs/layouts; copy/cause/product proof is open."
+  ]
+]
