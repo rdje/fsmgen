@@ -1,0 +1,6 @@
+t/2017-isf-record-input-frontend-closure.t .. ok
+t/1303-isf-public-live-book-paths-audit.t ... ok
+t/1305-isf-book-feature-matrix-audit.t ...... ok
+All tests successful.
+Files=3, Tests=313, 41 wallclock secs ( 0.02 usr  0.01 sys + 27.78 cusr 11.32 csys = 39.13 CPU)
+Result: PASS

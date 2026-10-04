@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-helper-contract-20261004/verify.py", line 64, in <module>
+    assert candidate_copies == copies and [r['line'] for r in copies] == [59, 122, 146, 223, 233, 261, 265], \
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete Storable source-expression inventory

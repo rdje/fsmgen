@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-helper-contract-20261004/verify.py", line 60, in <module>
+    assert [r['line'] for r in candidate_tokens if r['role'] == 'operation_call_expression'] == call_lines, \
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual assertion-label string cannot establish an operation expression

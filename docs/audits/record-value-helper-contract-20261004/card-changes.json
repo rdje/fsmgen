@@ -1,0 +1,102 @@
+[
+  [
+    "  - \"does internal generated aggregate handoff support authored record ports?\"",
+    "  - \"does internal generated aggregate handoff support authored record ports?\"\n  - \"what does T1986 record-value helper check?\""
+  ],
+  [
+    "date: 2026-10-01",
+    "date: 2026-10-04"
+  ],
+  [
+    "reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2017-isf-record-input-frontend-closure.t",
+    "reverify: python3 -B docs/audits/record-value-helper-contract-20261004/verify.py; scripts/run_with_ram_guard.sh -- prove -Iperl t/2017-isf-record-input-frontend-closure.t"
+  ],
+  [
+    "The preserved `sf-isf-aggregate-interface-ports` packet requests",
+    "The `sf-isf-aggregate-interface-ports` packet requests"
+  ],
+  [
+    "These are historical receipt facts, not current admission claims.",
+    "These receipts are historical."
+  ],
+  [
+    "Record outputs,\nroot-list ports and transaction-local aggregate ports remain deferred.",
+    "[Record outputs](isf-record-output-source-admission.md) now admit declarations/whole copies;\nfields, root-list and transaction aggregate ports stay closed."
+  ],
+  [
+    "The captured control's complete strict-check report matches the supplied report\nafter exact source relocation and the separately shipped reset-provenance\naddition. Complete native/API/newline reports, source identities and actual\ncarrier are retained. Offline hostile controls corrupt matching reports,\nmember order and the actual target to distinguish parity from semantic proof.\nThe reverify command authenticates the immutable intake receipt and its hostile\ncontrols, then independently exercises current supplied sources, exact baseline\nproducts, strict carriers and full public discovery. No new native runtime or\nexternal corpus count is claimed.",
+    "The captured control's strict-check report matches the supplied report after\nexact source relocation and the shipped reset-provenance addition. Complete\nnative/API/newline reports, identities/carrier are retained. Offline hostile\ncontrols corrupt matching reports, member order and the actual target to\ndistinguish parity from semantic proof. Reverify authenticates intake/controls\nand exercises current supplied sources, exact baseline products, strict carriers\nand full public discovery. No native runtime or external corpus count is claimed."
+  ],
+  [
+    "Future feature delivery may intentionally\ninvalidate the historical capture's refusal expectations.",
+    "Future delivery may invalidate historical refusal expectations.\n\nT1986 [source contracts](../audits/record-value-helper-contract-20261004/scope.txt)\nseparate real calls, first-line fragments and synthetic stack checks; native proof is open."
+  ],
+  [
+    "At the captured intake revision, `_finalize_actor_type_references` permitted",
+    "At intake, `_finalize_actor_type_references` permitted"
+  ],
+  [
+    "The supplied whole-copy and\nfield-guard forms failed at that boundary.",
+    "Supplied whole-copy/field-guard forms failed there."
+  ],
+  [
+    "The scalar-input/record-storage\ncontrol succeeded, preserving member order, typed width and its leaf assignment.",
+    "The scalar-input/record-storage control accepted with member order, typed width\nand its leaf assignment preserved."
+  ],
+  [
+    "Record-kind actor inputs were subsequently admitted by",
+    "Record-kind actor inputs were admitted by"
+  ],
+  [
+    "have current public source\nqualification in T2014/T2016 and the record-input book section.",
+    "are public-source qualified\nin T2014/T2016 and the record-input book."
+  ],
+  [
+    "Frontend closure is qualified under",
+    "Frontend closure:"
+  ],
+  [
+    "Generated internal typed handoffs are qualified by",
+    "Generated typed handoffs are qualified by"
+  ],
+  [
+    "Those internal carriers do not\nestablish authored-port support.",
+    "Internal carriers do not establish authored-port support."
+  ],
+  [
+    "Output writer/overlap admission\nneeds its separate demonstrated dependencies;",
+    "Output writer/overlap admission needs separate dependency proof;"
+  ],
+  [
+    "transaction-local ports and banks\nare not implied by this packet.",
+    "this packet does not imply transaction-local ports/banks."
+  ],
+  [
+    "The captured control's strict-check report matches the supplied report after",
+    "The captured control's full strict-check matches the supplied report after"
+  ],
+  [
+    "Complete\nnative/API/newline reports, identities/carrier are retained.",
+    "Full native/API/newline reports, identities/carrier are retained."
+  ],
+  [
+    "external consumer qualification remain separate work.",
+    "external consumer qualification stays separate."
+  ],
+  [
+    "Reverify authenticates intake/controls\nand exercises current supplied sources,",
+    "Reverify authenticates intake/controls;\nchecks current supplied sources,"
+  ],
+  [
+    "separate real calls, first-line fragments and synthetic stack checks; native proof is open.",
+    "bind real calls, first-line fragments and synthetic stack checks; native proof is open."
+  ],
+  [
+    "The captured control's full strict-check matches",
+    "Captured control's full strict-check matches"
+  ],
+  [
+    "this packet does not imply",
+    "this packet implies no"
+  ]
+]

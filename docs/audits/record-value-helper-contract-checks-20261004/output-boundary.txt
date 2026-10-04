@@ -1,0 +1,6 @@
+t/2033-isf-record-output-source-admission.t .. ok
+t/2030-isf-record-output-writer-admission.t .. ok
+t/2029-isf-record-output-writer-inventory.t .. ok
+All tests successful.
+Files=3, Tests=18, 23 wallclock secs ( 0.02 usr  0.01 sys + 14.86 cusr  6.87 csys = 21.76 CPU)
+Result: PASS

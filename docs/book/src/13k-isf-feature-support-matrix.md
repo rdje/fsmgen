@@ -240,6 +240,13 @@ now reconciles the original source contracts with complete actual native roles
 and all source, field, copy, product and diagnostic repairs. This finite T1983
 review closes; public metadata behavior and admission stay unchanged. Other
 aggregate helpers and wider cold/backend/native consumers remain under review.
+The [record-value helper source plan](../../../docs/audits/record-value-helper-contract-20261004/scope.txt)
+binds T1986's first-line fragment predicate, real operation expressions,
+Storable copy expressions and separate artificial stack self-test to its complete
+source. Exact recursive record identity remains distinct from payload
+compatibility; unresolved/local/formal shadows retain their declared roles.
+Actual native causes, copied-field meanings and assurance controls remain owned
+before any further test repair.
 
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including

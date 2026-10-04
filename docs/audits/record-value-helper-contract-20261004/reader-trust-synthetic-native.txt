@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-helper-contract-20261004/verify.py", line 78, in <module>
+    assert not candidate_native, 'artificial Carp self-test is not a genuine provider cause/control'
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: artificial Carp self-test is not a genuine provider cause/control

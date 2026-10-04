@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-aggregate`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **3** facts · **34** uniquely owned question entries.
+> **3** facts · **35** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -25,6 +25,7 @@
 - q="how is first-touch record declaration mutation reproduced and repaired?" · facts=[isf-aggregate-record-context-and-first-touch-validation](../../docs/decisions/current/language-api/0114-record-value-validation-detaches-facts-before-reading.md)
 - q="how is foreign-domain scalar slice and input-index refusal repaired and qualified?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="what contract is selected for ISF record interface ports?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
+- q="what does T1986 record-value helper check?" · facts=[isf-aggregate-port-request-baseline](../../docs/knowledge/isf-aggregate-port-request-baseline.md)
 - q="what is the packed record port field order?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="where are declared ISF interface ports exposed in reports?" · facts=[isf-aggregate-port-contract-selection](../../docs/decisions/current/language-api/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md)
 - q="where is the SPECFORGE aggregate interface request preserved?" · facts=[isf-aggregate-port-request-baseline](../../docs/knowledge/isf-aggregate-port-request-baseline.md)
@@ -53,7 +54,7 @@ _Selected record ports reuse packed types and qualified writers_
 
 _Preserved aggregate-port intake precedes qualified record-input admission_
 
-- **date:** 2026-10-01 · **status:** current
+- **date:** 2026-10-04 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-aggregate-port-request-baseline.md`](../../docs/knowledge/isf-aggregate-port-request-baseline.md)
 
 ### isf-aggregate-record-context-and-first-touch-validation

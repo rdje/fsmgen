@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-helper-contract-20261004/verify.py", line 118, in <module>
+    assert '[Record outputs](isf-record-output-source-admission.md) now admit declarations/whole copies;' in candidate_card, \
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: historical intake must not override current admitted record-output declarations/whole copies

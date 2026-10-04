@@ -1,0 +1,1 @@
+PASS complete T1986 Git source contracts captured; lexical expressions and synthetic stack checks remain distinct from native operation or semantic assurance.

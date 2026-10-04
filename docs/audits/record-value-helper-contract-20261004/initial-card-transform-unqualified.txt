@@ -1,0 +1,2 @@
+Initial unqualified transformation failed before writing any file: ValueError for invented 'The `sf-isf-aggregate-interface-ports` preserved packet requests local/imported' literal. Re-read exact Git body; corrected word order and physical newline matches. No native command or fact repair ran in that failed attempt.
+A later ephemeral aggregate-print command had unmatched closing parenthesis and failed at Python parse time before any write; exact final transformation rerun passed. Focused test command ran independently and its own result is retained separately.
