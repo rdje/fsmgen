@@ -1,0 +1,53 @@
+{
+  "manifest_path": "docs/tasks/history/SEMANTIC-INTROSPECTION-MCP-FRONTIER/acceptance-history.jsonl",
+  "original_input_indices": [
+    8,
+    80,
+    273,
+    434,
+    477,
+    519,
+    529,
+    538,
+    547,
+    557,
+    567,
+    577,
+    586,
+    595,
+    596,
+    605,
+    614
+  ],
+  "previous_manifest": "{\"max_bytes\":4096,\"max_record_bytes\":2048,\"max_records\":1,\"record_type\":\"registry\",\"schema_version\":1,\"tree_id\":\"SEMANTIC-INTROSPECTION-MCP-FRONTIER\"}\n{\"history_bytes\":367474,\"history_id\":\"through_b2669c3fafe3\",\"history_lines\":3323,\"history_sections\":127,\"history_sha256\":\"82446fd0fb304521e6c6ebe4e59dec26718835a5b045d3e8e4a0215ff0996685\",\"live_heading\":\"Version-Retrievable Historical Views\",\"record_type\":\"acceptance_history\",\"retention_contract\":\"fsmgen_required_history\",\"schema_version\":1,\"source_bytes\":937609,\"source_lines\":7154,\"source_path\":\"docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md\",\"source_revision\":\"b2669c3fafe36b40f8f1897f48a954dcbf94a9bb\",\"source_sha256\":\"eb5a57f6ef57c7c3245dc37ebc764332cabd1b17bf6daec4034ec5478f4043b5\",\"start_heading\":\"Completed Acceptance History\"}\n",
+  "prior": {
+    "history_bytes": 367474,
+    "history_id": "through_b2669c3fafe3",
+    "history_lines": 3323,
+    "history_sections": 127,
+    "history_sha256": "82446fd0fb304521e6c6ebe4e59dec26718835a5b045d3e8e4a0215ff0996685",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 937609,
+    "source_lines": 7154,
+    "source_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+    "source_revision": "b2669c3fafe36b40f8f1897f48a954dcbf94a9bb",
+    "source_sha256": "eb5a57f6ef57c7c3245dc37ebc764332cabd1b17bf6daec4034ec5478f4043b5",
+    "start_heading": "Completed Acceptance History"
+  },
+  "revision": "3576dee88c7e447cc853dfcb9106acdfad0717b6",
+  "source": {
+    "bytes": 1365470,
+    "lines": 7189,
+    "sha256": "8886c8b701759d4f058f3278705e483291d790f98acc76aa2afc252342b542ea"
+  },
+  "suffix": {
+    "bytes": 305450,
+    "lines": 1467,
+    "sha256": "a04fada04c365baf935387f18974c1519b7dc507cb550e1ff14c95b56b75f807",
+    "start_heading": "Version-Retrievable Historical Views"
+  },
+  "task_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+}

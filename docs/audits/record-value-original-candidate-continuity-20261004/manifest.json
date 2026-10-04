@@ -1,0 +1,26 @@
+{
+  "afterimages.json": {
+    "bytes": 720,
+    "sha256": "7014d6169bca95ce525be79f747bb24c3131357f230e3118ece9cbc060c1fbc8"
+  },
+  "binding.json": {
+    "bytes": 2392,
+    "sha256": "f2e0b57749070f4bf70ebb7d47e8c0b5830384cc4e0b2f0c946eb904e0dec225"
+  },
+  "book-transform.json": {
+    "bytes": 671,
+    "sha256": "4c32e30df9142f5fe2cadd89905a88ca14d2f0da2bccc23593e2405cf7c775ae"
+  },
+  "controls.json": {
+    "bytes": 1803,
+    "sha256": "4022cdd8bf65863c4f6251eac580d56f1e608cb207be3843f892b90233acd0ef"
+  },
+  "scope.txt": {
+    "bytes": 2834,
+    "sha256": "924425d179e535c5d935612117b6c989c579da3adc89466dab8c917ed0d20f3c"
+  },
+  "verify.py": {
+    "bytes": 5753,
+    "sha256": "5279b8ee8e14cc2a70d267cd13179aedb82543753a5e16762037e573fede26e7"
+  }
+}

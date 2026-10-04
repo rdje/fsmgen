@@ -77,7 +77,7 @@ _Active task-tree live-node structure is mechanically enforced_
 
 _Long-running task trees use exact-provenance sealed segments or compact terminals_
 
-- **date:** 2026-09-27 · **status:** current
+- **date:** 2026-10-04 · **status:** current
 - **source and verification:** [`docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md`](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 
 ### task-tree-stale-status-drift-repair

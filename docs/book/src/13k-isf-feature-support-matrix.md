@@ -469,8 +469,9 @@ detachment against separate source models. Fresh exact-source replay preserves
 every native mode and intended failure; altered graph, cause and source authority
 controls reject. This qualifies the recorded plain-helper profile only. The [finite qualification join](../../../docs/audits/record-value-copy-probe-join-20261004/scope.txt)
 now closes this probe lane with exact completed owners and whole reexecuted products.
-Actual original copy inputs, the candidate-parent join, and permanent test-copy
-and consumer repairs remain open.
+Original copy input observations, independent source/caller/product checks and
+replay remain open, along with the candidate-parent join and permanent test-copy
+and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

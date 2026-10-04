@@ -1,0 +1,22 @@
+{
+  "manifest": {
+    "identity": {
+      "bytes": 803,
+      "lines": 2,
+      "sha256": "bfacbed99b3aa788618143c92a8822c61a8f4da3466fe20e9577cb7bd1b9e623"
+    },
+    "object": "f89c971eaac341a1c162c186903e672341341660",
+    "path": "docs/tasks/history/SEMANTIC-INTROSPECTION-MCP-FRONTIER/acceptance-history.jsonl",
+    "retention_contract": "fsmgen_required_history"
+  },
+  "task": {
+    "identity": {
+      "bytes": 1067119,
+      "lines": 5773,
+      "sha256": "f3686e3c84f36d5724790a5e7adb3f61f19f306f23834c7267e13b2751f41fb3"
+    },
+    "object": "fe31eaff54dd7f9a9e0221a74db1f24a95648cf0",
+    "path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+    "retention_contract": "fsmgen_required_history"
+  }
+}

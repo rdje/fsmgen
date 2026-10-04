@@ -1,0 +1,12 @@
+{
+  "after_sha256": "22dd994708ac2a1e4eaa1d73ff1075f42a52f4e1b16b83a71847aa9cb0e1c18b",
+  "before_sha256": "f0af7df4a56f9ed1c2b49e83aedb4278266954fd416f3e673eba839b6a5a9003",
+  "path": "docs/book/src/13k-isf-feature-support-matrix.md",
+  "replacements": [
+    {
+      "after": "Original copy input observations, independent source/caller/product checks and\nreplay remain open, along with the candidate-parent join and permanent test-copy\nand consumer repairs.\n",
+      "before": "Actual original copy inputs, the candidate-parent join, and permanent test-copy\nand consumer repairs remain open.\n"
+    }
+  ],
+  "revision": "3576dee88c7e447cc853dfcb9106acdfad0717b6"
+}

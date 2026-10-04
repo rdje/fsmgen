@@ -1,0 +1,9 @@
+{
+  "expected_text": [
+    "Original copy input observations, independent source/caller/product checks and",
+    "replay remain open, along with the candidate-parent join and permanent test-copy"
+  ],
+  "path": "docs/book/book/13k-isf-feature-support-matrix.html",
+  "text_check": "PASS",
+  "visual_qa": "pending existing owner"
+}

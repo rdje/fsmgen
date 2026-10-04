@@ -1,0 +1,30 @@
+{
+  "book": {
+    "after": {
+      "bytes_total": 3766372,
+      "files": 64,
+      "lines_total": 67877
+    },
+    "before": {
+      "bytes_total": 3766304,
+      "files": 64,
+      "lines_total": 67876
+    }
+  },
+  "knowledge_cards": {
+    "bytes_each": 31755,
+    "bytes_total": 3875868,
+    "files": 1259,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 52996
+  },
+  "task_evidence": {
+    "bytes_each": 2366453,
+    "bytes_total": 12443704,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 6882,
+    "lines_total": 116902
+  }
+}

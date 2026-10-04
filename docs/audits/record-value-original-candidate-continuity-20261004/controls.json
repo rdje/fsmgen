@@ -1,0 +1,46 @@
+[
+  {
+    "control": "source_sha256",
+    "error": "complete historical source identity",
+    "record": {
+      "history_bytes": 305450,
+      "history_id": "through_3576dee88c7e",
+      "history_lines": 1467,
+      "history_sections": 147,
+      "history_sha256": "a04fada04c365baf935387f18974c1519b7dc507cb550e1ff14c95b56b75f807",
+      "live_heading": "Version-Retrievable Historical Views",
+      "record_type": "acceptance_history",
+      "retention_contract": "fsmgen_required_history",
+      "schema_version": 1,
+      "source_bytes": 1365470,
+      "source_lines": 7189,
+      "source_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+      "source_revision": "3576dee88c7e447cc853dfcb9106acdfad0717b6",
+      "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "start_heading": "Version-Retrievable Historical Views"
+    },
+    "status": 1
+  },
+  {
+    "control": "history_sha256",
+    "error": "exact historical suffix identity",
+    "record": {
+      "history_bytes": 305450,
+      "history_id": "through_3576dee88c7e",
+      "history_lines": 1467,
+      "history_sections": 147,
+      "history_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "live_heading": "Version-Retrievable Historical Views",
+      "record_type": "acceptance_history",
+      "retention_contract": "fsmgen_required_history",
+      "schema_version": 1,
+      "source_bytes": 1365470,
+      "source_lines": 7189,
+      "source_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+      "source_revision": "3576dee88c7e447cc853dfcb9106acdfad0717b6",
+      "source_sha256": "8886c8b701759d4f058f3278705e483291d790f98acc76aa2afc252342b542ea",
+      "start_heading": "Version-Retrievable Historical Views"
+    },
+    "status": 1
+  }
+]
