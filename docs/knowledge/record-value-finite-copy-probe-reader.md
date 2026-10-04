@@ -10,6 +10,7 @@ answers:
   - "do original T1986 candidate API results match their source models?"
   - "what qualifies original T1986 candidate input and private graphs?"
   - "why does the private packed range sibling width change JSON kind?"
+  - "what qualifies current original T1986 copied fields and source candidates?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -29,10 +30,12 @@ evidence: >-
   docs/audits/record-value-original-input-graphs-20261005/scope.txt;
   docs/audits/record-value-original-input-graphs-20261005/verify.py;
   docs/audits/record-value-ranges-20261004/scope.txt;
+  docs/audits/record-value-original-fields-20261005/scope.txt;
+  docs/audits/record-value-original-fields-20261005/verify.py;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-input-graphs-20261005/verify.py &&
+  docs/audits/record-value-original-fields-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-original-products-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
@@ -67,7 +70,9 @@ API/parser results now qualify against their own source models; private-source
 allocations conserve. Source-copy interventions now independently rebuild
 complete input/private typed graphs, readonly copies and detachment. The known
 private range sibling changes string width2 to number2; its outer value caller
-stays unchanged through a detached private copy. Complete copied-field/source
-records, consumer/cause truth, full alias downstream semantics, their join and
-cold replay remain open. The candidate-parent join, hot baseline/consumer repairs and
-host-native refusal qualification remain separately owned successors.
+stays unchanged through a detached private copy. Every current copied width
+now joins its whole raw type, ancestor/carrier/default/metadata roles and
+compatible source-candidate set. The graph/field join, consumer/cause truth,
+full alias downstream semantics, their join and cold replay remain open.
+The candidate-parent join, hot baseline/consumer repairs and host-native
+refusal qualification remain separately owned successors.

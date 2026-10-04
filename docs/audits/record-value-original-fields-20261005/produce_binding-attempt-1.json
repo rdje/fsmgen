@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-fields-20261005/produce_binding.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "Captured complete committed original field/source/intervention graph owners and archives.\n"
+}

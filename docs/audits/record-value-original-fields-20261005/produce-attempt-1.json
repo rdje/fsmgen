@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-fields-20261005/produce.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "Complete actual copy width/source candidates enumerated; unmapped before-type nodes: 0\nComplete actual copy width/source candidates enumerated; unmapped before-type nodes: 0\nComplete actual copy width/source candidates enumerated; unmapped before-type nodes: 0\nCaptured all three complete current field observations and exact whole producer transformations.\n"
+}

@@ -1,0 +1,118 @@
+{
+  "binding.json": {
+    "bytes": 1218236,
+    "sha256": "3a6b3323555c92488b48948cbdfe4d4a962e5391a0eee877ecf16561b1f85569"
+  },
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "7b823b965e37199edb34ee1b669e4b60596d4cbfe059d71f67bd90d80caf4e4a"
+  },
+  "book-transform.json": {
+    "bytes": 331018,
+    "sha256": "35ff92427e7f2137959708911b84787382dd0389b192de803a10c381066ae2ec"
+  },
+  "controls-fields.json": {
+    "bytes": 8569675,
+    "sha256": "55ef449ca501321f6de780f449ed03fecfe1644e746d40573bec45a57a2d8de8"
+  },
+  "controls-source-node-gaps.json": {
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "initial-default-carrier-control-verify.py": {
+    "bytes": 12141,
+    "sha256": "bb4d7ee75a40a2158aaa90e50b2d9aed6812ff5fadb4c4e0f54b82c7ddd9739b"
+  },
+  "initial-positive-before-row-domain-proof.json": {
+    "bytes": 274660,
+    "sha256": "374e3e6cb3c5fe79208b74d0e400c978a89942fa877ad63fa5ae9d932f246702"
+  },
+  "initial-positive-before-row-domain-verify.py": {
+    "bytes": 12269,
+    "sha256": "ae04d510aa25c10fa05a55d495e9fab0f539c4854e114e3cdec116411238d193"
+  },
+  "initial-raw-byte-intake-verify.py": {
+    "bytes": 12184,
+    "sha256": "064b6707a38b8a369317e00a566107ce71c6b3dba8bac402ae5079e77d4816d8"
+  },
+  "initial-reader-transform.json": {
+    "bytes": 22971,
+    "sha256": "f75043bc8ff60a2ea96265901c0d40ab6dfabef0cc24ad210f31eeaba36f99bc"
+  },
+  "initial-saved-json-domain-verify.py": {
+    "bytes": 14378,
+    "sha256": "4a58798e3a6a29c6fa196e4d418b047910b019122c6770ca8ed2518236f936d2"
+  },
+  "observer-transforms.json": {
+    "bytes": 28167,
+    "sha256": "98b2742a9d52277d9a3d362ee11438a8b3230d35a90a7d8c7a0a797d77b2ba72"
+  },
+  "ordinary-fields.json": {
+    "bytes": 8569675,
+    "sha256": "cbd3c98a5fdeac849fa69ed82f52a70c4fe7792c06397faf7b766d694a3afebc"
+  },
+  "ordinary-source-node-gaps.json": {
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "produce-attempt-1.json": {
+    "bytes": 521,
+    "sha256": "32c11055b9d017041e01b6ac294caa83559d69f97f2e0d23c0de694a53b7b91a"
+  },
+  "produce.py": {
+    "bytes": 2010,
+    "sha256": "a88d19be87c396bb43a8866a1be3f954ada5646e78cf06f6dcc65e232256b8c4"
+  },
+  "produce_binding-attempt-1.json": {
+    "bytes": 258,
+    "sha256": "c5350b71ca64bd5643173936eb3cc5972ecf48af87ce676a75c97fe768d6330e"
+  },
+  "produce_binding.py": {
+    "bytes": 1496,
+    "sha256": "6d5734b84be529df336b31fec1803e42862ac8bad3359174fadc6f3c74274e50"
+  },
+  "proofs.json": {
+    "bytes": 275197,
+    "sha256": "1edc2a9687dc883db3636ff94a88867bdd2e180d2fe124b20a1bfde2678bda02"
+  },
+  "reader-transform.json": {
+    "bytes": 23171,
+    "sha256": "e3a8ad626095664c9c56be307607fc31304a62091054666bcebfc134a87c7297"
+  },
+  "scope.txt": {
+    "bytes": 3882,
+    "sha256": "fdc2bb44aaff6f9ab7b21d2c4279ac1c6e98c82dca66e6afdbaa8e1bc79df073"
+  },
+  "storable-fields.json": {
+    "bytes": 8570697,
+    "sha256": "e172da57513eaeb8c788cb14fb81b77373ed9e9255a3ec66ac72f86bf4083ecd"
+  },
+  "storable-source-node-gaps.json": {
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "verify-attempt-1.json": {
+    "bytes": 2884,
+    "sha256": "a7efe5f910097f3182c13739e5b86449f1671421641e25f055e201d4ffb17656"
+  },
+  "verify-attempt-2.json": {
+    "bytes": 3516,
+    "sha256": "5e11a36b2d76d492a245155fe4d40a931a6d8307c56195e6f054530f80b200ce"
+  },
+  "verify-attempt-3.json": {
+    "bytes": 1477,
+    "sha256": "3fa5b882b24e50b43cebe2ae4444b9df2b2931b3eb47901f8a690e6edf9a4ad3"
+  },
+  "verify-attempt-4.json": {
+    "bytes": 1928,
+    "sha256": "d0d57e33e74ef7cab863a357510a17a8d179605c68548d5a1406cc2ad84efbdf"
+  },
+  "verify-attempt-5.json": {
+    "bytes": 1477,
+    "sha256": "3fa5b882b24e50b43cebe2ae4444b9df2b2931b3eb47901f8a690e6edf9a4ad3"
+  },
+  "verify.py": {
+    "bytes": 14480,
+    "sha256": "5bf437303920673e26b76224dd58fe16811153eff4787fa2046afa132444dc69"
+  }
+}

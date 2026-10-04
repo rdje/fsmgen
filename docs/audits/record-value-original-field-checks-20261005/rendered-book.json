@@ -1,0 +1,14 @@
+{
+  "markers": [
+    "copied-field source reader",
+    "every copied width",
+    "preserving raw kinds",
+    "compatible-source candidate sets",
+    "graph/field join",
+    "downstream causes remain open",
+    "permanent test-copy and consumer repairs"
+  ],
+  "path": "docs/book/book/13k-isf-feature-support-matrix.html",
+  "result": "PASS rendered complete copied-field/source roles and raw kinds with graph/field/consumer/cause/alias/cold boundaries open; browser visual QA remains pending",
+  "status": 0
+}
