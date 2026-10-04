@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-join-20261004/verify.py",
+    "--same-native"
+  ],
+  "expected_failure": "exact own original native/source slot despite identical full records",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-join-20261004/verify.py\", line 115, in <module>\n    assert row['source_index'] == row['native_index'] == row['legacy_index'] == index, 'exact own original native/source slot despite identical full records'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own original native/source slot despite identical full records\n",
+  "status": 1,
+  "working_directory": "."
+}

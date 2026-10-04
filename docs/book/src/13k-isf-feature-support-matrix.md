@@ -351,9 +351,9 @@ and original consumers alone cannot establish detachment. Both complete native
 runs reexecute from unchanged sources. Complete encoded process errors, the
 synthetic trace and generated import nonce remain separately captured. The
 observer keeps its original repository-root placeholder encoding; byte-exact
-host-native cause equality remains unqualified. Full clone source/
-tree semantics, permanent consumer assurance and intended native causes remain
-owned follow-up work. The
+host-native cause equality remains unqualified. At that proof boundary,
+clone source/tree semantics still needed the qualifications below. Permanent
+consumer assurance and intended native causes remain owned follow-up work. The
 [native command repair](../../../docs/audits/record-value-clone-paths-20261004/scope.txt)
 supersedes a command-binding flaw in that proof: Python supplied absolute
 reader paths, so replay at another working root refused before semantics. Stored
@@ -391,7 +391,19 @@ raw numeric promotion and the genuine alias-returning provider reject. Complete
 source-root and native proofs reexecute with all their controls in dated contexts.
 This finite observed population has no cyclic clone inputs; cyclic support is
 not inferred. Permanent original consumer assurance and full native causes
-remain owned follow-ups.
+remain owned follow-ups. The
+[complete clone join](../../../docs/audits/record-value-clone-join-20261004/scope.txt)
+now binds the completed native and source/tree owners to every whole original
+operation, source path, caller, primitive kind, joint graph and reachable set.
+The complete original native profile retains, with its full encoded error and
+import-nonce differences explicitly preserved. A permutation of two actually
+identical full native records still rejects when their source slots are wrong;
+equal values and conserved membership cannot establish allocation. Missing joins,
+wrong source roots, raw width promotion and the genuine alias provider also
+reject. The complete tree proof and its eight controls reexecute in exact dated
+contexts, including all prior root/native proofs. This closes the structured
+clone product lane. Strict identity and payload helpers, the whole core/API join,
+permanent original consumer assurance and native full causes remain separate.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

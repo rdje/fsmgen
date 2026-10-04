@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-join-20261004/verify.py",
+    "--wrong-root"
+  ],
+  "expected_failure": "exact own complete source root and parent allocation",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-join-20261004/verify.py\", line 117, in <module>\n    assert row['root_index'] == model['root_index'] and exact(row['whole_source_root'], digest(root)), 'exact own complete source root and parent allocation'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: exact own complete source root and parent allocation\n",
+  "status": 1,
+  "working_directory": "."
+}

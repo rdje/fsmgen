@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-join-20261004/verify.py", line 115, in <module>
+    assert row['source_index'] == row['native_index'] == row['legacy_index'] == index, 'exact own original native/source slot despite identical full records'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact own original native/source slot despite identical full records

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-join-20261004/verify.py", line 90, in <module>
+    assert [row['index'] for row in rows] == indices, 'complete original clone joined membership'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete original clone joined membership

@@ -1,0 +1,62 @@
+{
+  "binding.json": {
+    "bytes": 945675,
+    "sha256": "98e86c65fcf6a2bb31e33abbfe9cab7af6f9979c21c5a278ec2ccc23c67cc866"
+  },
+  "check_controls.py": {
+    "bytes": 1664,
+    "sha256": "d4e55bbbe5c1282d98a104f6217c6bb051a5651ea115ed6f6551f8216f709014"
+  },
+  "controls.json": {
+    "bytes": 3933,
+    "sha256": "2fdb2071af191696e35cd52d36e55db1defa8c4695e5753e5e6127a333bc15eb"
+  },
+  "doc-updates.json": {
+    "bytes": 324045,
+    "sha256": "189157bf2fd447dc19148e8b305a625c1dffe62ed7219e7d478097336206fe1d"
+  },
+  "join-products.json": {
+    "bytes": 17731888,
+    "sha256": "2bfd528a9e6f96b213ebf4188a8ca5a5583bebffd710927d54ee8fccbc381d8d"
+  },
+  "native-conservation.json": {
+    "bytes": 334876,
+    "sha256": "40e7cd74302c369df99c9dcb4eaef2992306b556832448b573bd572566f2f1b7"
+  },
+  "owners.json": {
+    "bytes": 23069,
+    "sha256": "0ac1b43fc6d7f98734abc69981264f33e0be882a1845e29692403d168466e8ee"
+  },
+  "plan.txt": {
+    "bytes": 823,
+    "sha256": "fb2ce7e65cedceb00f0eb9c66263e5570d687a1a0586ab379cbec85c7a87c5c4"
+  },
+  "produce.py": {
+    "bytes": 2041,
+    "sha256": "5e19b1c8b150361f8553bbe9c325c35357b22946aa75a452b8d3a894183ff68f"
+  },
+  "reader-prefix.json": {
+    "bytes": 6918,
+    "sha256": "d4904905ecf4bc7ac75b28b8d77a15d2047ba1c49c63fbc2457f3f7e5b878185"
+  },
+  "replay_trees.py": {
+    "bytes": 5179,
+    "sha256": "b3124bcf9824f5f9a62e7373fc2239075aecdfa8c6afb57bce30f32460841b29"
+  },
+  "scope.txt": {
+    "bytes": 5035,
+    "sha256": "ca882130267b26c3c3b0cf2fe84a7cac47eff5a50ee13ea46d05f3b9e36993f3"
+  },
+  "source_roots.py": {
+    "bytes": 7655,
+    "sha256": "ab5dd3a8c8224ac13fdb61c54ec2c7390cf459ede245f2462a9ee6974c3ecaa1"
+  },
+  "tree-replays.json": {
+    "bytes": 43679,
+    "sha256": "0597c7090b9f74d7c5c99f20919a3db1e92b559bbf6b8c79b361527a31d0bd98"
+  },
+  "verify.py": {
+    "bytes": 10703,
+    "sha256": "6d8bb653e348c21dd07cf7bf36f1752a64ef74ac9d6ea1d312471e2e8ead019f"
+  }
+}

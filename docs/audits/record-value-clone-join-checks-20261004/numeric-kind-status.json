@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-join-20261004/verify.py",
+    "--numeric-kind"
+  ],
+  "expected_failure": "whole joined source product primitive kinds and every field",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-join-20261004/verify.py\", line 119, in <module>\n    assert exact(row['source_product'], model['record']), 'whole joined source product primitive kinds and every field'\n           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole joined source product primitive kinds and every field\n",
+  "status": 1,
+  "working_directory": "."
+}

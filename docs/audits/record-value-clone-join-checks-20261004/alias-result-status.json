@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-clone-join-20261004/verify.py",
+    "--alias-result"
+  ],
+  "expected_failure": "actual complete structured clone input/result referents must be detached",
+  "output": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clone-join-20261004/verify.py\", line 121, in <module>\n    reached = {'index': index, **native_graph.check_joint(actual)}\n                                 ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-clones-20261004/native.py\", line 127, in check_joint\n    assert not inputs & results, 'actual complete structured clone input/result referents must be detached'\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual complete structured clone input/result referents must be detached\n",
+  "status": 1,
+  "working_directory": "."
+}
