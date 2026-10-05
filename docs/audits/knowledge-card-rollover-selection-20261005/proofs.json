@@ -1,0 +1,612 @@
+{
+  "authorized": {
+    "bytes_each": 32768,
+    "bytes_total": 3879686,
+    "files": 1260,
+    "line_bytes_each": 883,
+    "lines_each": 432,
+    "lines_total": 53069
+  },
+  "before": {
+    "bytes_each": 31755,
+    "bytes_total": 3879683,
+    "files": 1259,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 53050
+  },
+  "controls": [
+    {
+      "control": "lost-source-tail",
+      "refusal": "complete source identity"
+    },
+    {
+      "control": "gapped-source-coverage",
+      "refusal": "zero unretained source residue"
+    },
+    {
+      "control": "lost-question-owner",
+      "refusal": "complete unchanged ordered question ownership"
+    },
+    {
+      "control": "false-normal-state",
+      "refusal": "existing collection debt retained"
+    },
+    {
+      "control": "lost-rollover-rule",
+      "refusal": "later allowance authority preserved"
+    }
+  ],
+  "proposed": {
+    "bytes_each": 31755,
+    "bytes_total": 3868828,
+    "files": 1259,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 52904
+  },
+  "question_routes": [
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "how big may one knowledge fact card be?"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "what are the per-card line byte and length limits for a fact card?"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "card line width exceeds 819"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "when should I split a knowledge fact card?"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "how do I partition an oversized fact card?"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "how do I prove a fact card split lost no answer?"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "why is the knowledge_cards surface reported at 80.0% but still normal?"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "what pins the knowledge_cards line_bytes_each dimension?"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "does splitting a fact card break links to its id?"
+    },
+    {
+      "current": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "id": "knowledge-card-sizing-and-partition",
+      "question": "surface knowledge_cards is at 80.0% and must declare warning_debt"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how are live-document sizes contained project-wide?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "what happens when a live document reaches its size warning?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "where does old changelog or task-tree history go?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "does sharding alone contain documentation growth?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how is archived document content proved retrievable?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "is the live-document doctrine project neutral?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "is the live-document doctrine harness neutral?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "where are FSMGen live-document measurements recorded?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "what format does the live-document registry use?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "why does the live-document registry use JSONL instead of TSV?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "does the project-wide checker cover README.md itself?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "where is the external review packet for live-document containment?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "should an obsolete live document be partitioned or retired?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "which FSMGen live documents are retirement candidates?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "are the common JSONL control-plane registries independently bounded?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "does hard_pct currently enforce the hard pressure threshold?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "what did PGEN and ANVIL find in the live-document review?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "were 15727 IAL2 task lines lost during task-tree sealing?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "does tracked-document coverage prove that documents are healthy?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "is neutral live-document checker identity mechanically tested?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how are health targets different from transition ceilings?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how is an enforcement ceiling increase authorized?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "which live-document families are migrated versus pinned or deferred?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "are declared live-document freshness verifiers actually executed?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how are adapter live-document verifiers proved reachable from CI?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "does live-document size compliance prove that a document is current?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how are live-document currency contracts declared?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "does FSMGen use a global newest-date or distinct-date staleness check?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "are author overflow routes different from reader navigation routes?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how are live-document collection indexes checked for completeness?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "are external review evidence-map paths mechanically checked?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "does the live-document doctrine inspect the staged resulting tree?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how does a live-document migration prove that no content was lost?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "why are migration products not added as disjoint line counts?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "what retention contract is required for a version object?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "where is the bounded live-document architecture review front door?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how is the Knowledge Map kept bounded?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how do I query the Knowledge Map?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "where does the Knowledge Map query cache live?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "does a generated projection support deterministic shard collections?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "where is the complete focused and ancillary document index?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how is the ISF reference partitioned?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "why did T1569 fail after a maintained ISF reference edit?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how are mechanically exact current-state fields contained?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "when must a live-document value be derived on read?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how is a deliberately retained derived-state copy verified?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "is immutable task evidence the same as mutable current derived state?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "what is the main downstream entry point for containment doctrine updates?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "how are repeated task-tree acceptance checklists contained?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "should integration tests hard-code the live-document surface count?"
+    },
+    {
+      "current": "docs/knowledge/live-document-size-containment.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "id": "live-document-size-containment",
+      "question": "why can T1554 hang in a core verifier before startup?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "how do I add a new knowledge fact card?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "adding a fact card fails the live document size check, what do I do?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "how do I grow a live-document surface that is at its declared allowance?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "what does transition max_growth mean and who may change it?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "how is a live-document enforcement ceiling increased?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "what is doctrine/live_document_size/ceiling_increase_authorities.jsonl for?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "surface knowledge_cards transition debt exceeded its owned allowance"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "unauthorized enforcement-ceiling increase requires exactly one new authority record"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "surface is at 80.0% and must declare warning_debt"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "may I delete knowledge cards or prose to fit a live-document budget?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "how do I add a knowledge map card or write a fact card?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "what is the knowledge card ceiling and how do I raise a fact card ceiling?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "what is a ceiling increase authority record and when do I need one?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "what does max_growth mean in doctrine/live_document_size/surfaces.jsonl?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "why must a surface declare warning_debt at 80 percent?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "surface knowledge_cards transition debt exceeded its owned allowance: files"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "does adding a fact card need a decision record?"
+    },
+    {
+      "current": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "id": "live-document-surface-growth-procedure",
+      "question": "live document size check failed on a knowledge card edit"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "why does adding one file under docs/ fail the live-document checker?"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "surface focused_documents transition debt exceeded its owned allowance"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "how much headroom does a live-document debt surface actually have?"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "how do I raise transition.max_growth without a ceiling increase?"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "why did raising the allowance to the actual not unblock the next write?"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "who owns a live-document transition allowance?"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "can I widen the allowance on a rollover_debt surface?"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "how long can a fact card line be?"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "card line width exceeds 819"
+    },
+    {
+      "current": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "historical": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "id": "live-document-transition-allowance-headroom",
+      "question": "why does a long reverify line fail even though knowledge_cards is normal?"
+    }
+  ],
+  "remaining_after_selection": {
+    "bytes_each": 1013,
+    "bytes_total": 10858,
+    "files": 1,
+    "line_bytes_each": 64,
+    "lines_each": 10,
+    "lines_total": 165
+  },
+  "revision": "436a207c5a80f2324dbcd2e4f8ac8aea1efea527",
+  "scope": "Projected selection only. Complete original source bytes and ordered query ownership retain; current semantic homes reviewed against canonical doctrine and later decisions. Existing rollover debt remains and no aggregate allowance changes."
+}

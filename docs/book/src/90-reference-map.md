@@ -66,6 +66,13 @@ configuration and actual accepted and refused boundary cases. See
 [the Knowledge Map architecture](#knowledge-map-architecture)
 and its public checker, `knowledge-map/scripts/check_knowledge_map.sh`.
 
+
+A collection rollover keeps each reader question at a bounded current card and
+provides authenticated retrieval of its complete dated predecessor. Current
+rules use canonical doctrine and registries; historical measurements keep their
+capture boundary. Preserving counts alone cannot prove that question ownership
+or unique information survived a move.
+
 `CLAIM_VERIFICATION.md` defines what earns an actionable quantitative claim:
 re-derive it from its source, attempt to falsify it with a separating oracle,
 and keep a tracked producer plus a watcher that detects staleness. A missing

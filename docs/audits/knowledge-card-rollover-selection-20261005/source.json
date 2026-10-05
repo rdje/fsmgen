@@ -1,0 +1,33 @@
+{
+  "revision": "436a207c5a80f2324dbcd2e4f8ac8aea1efea527",
+  "sources": {
+    "knowledge-card-sizing-and-partition": {
+      "bytes": 3011,
+      "lines": 57,
+      "locator": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+      "path": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+      "sha256": "fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba"
+    },
+    "live-document-size-containment": {
+      "bytes": 24761,
+      "lines": 361,
+      "locator": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+      "path": "docs/knowledge/live-document-size-containment.md",
+      "sha256": "491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432"
+    },
+    "live-document-surface-growth-procedure": {
+      "bytes": 3537,
+      "lines": 63,
+      "locator": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+      "path": "docs/knowledge/live-document-surface-growth-procedure.md",
+      "sha256": "c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c"
+    },
+    "live-document-transition-allowance-headroom": {
+      "bytes": 3658,
+      "lines": 60,
+      "locator": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+      "path": "docs/knowledge/live-document-transition-allowance-headroom.md",
+      "sha256": "e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff"
+    }
+  }
+}

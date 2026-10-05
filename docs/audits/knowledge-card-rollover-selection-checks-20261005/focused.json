@@ -1,0 +1,11 @@
+{
+  "command": [
+    "prove",
+    "-Iperl",
+    "t/1414-docs-relative-paths-audit.t",
+    "t/1567-knowledge-map-shards.t"
+  ],
+  "status": 0,
+  "stdout": "t/1414-docs-relative-paths-audit.t .. ok\nt/1567-knowledge-map-shards.t ....... ok\nAll tests successful.\nFiles=2, Tests=7,  3 wallclock secs ( 0.01 usr  0.00 sys +  1.28 cusr  0.80 csys =  2.09 CPU)\nResult: PASS\n",
+  "stderr": "ram-guard: PID 53449; host 85.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

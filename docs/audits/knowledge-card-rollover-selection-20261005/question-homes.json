@@ -1,0 +1,434 @@
+[
+  {
+    "index": 0,
+    "question": "how are live-document sizes contained project-wide?",
+    "card_marker": "Bounded live views",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 1,
+    "question": "what happens when a live document reaches its size warning?",
+    "card_marker": "Health targets",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current milestones and ceilings supersede legacy hard_pct",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 2,
+    "question": "where does old changelog or task-tree history go?",
+    "card_marker": "Decisions 0046-0049",
+    "authority_home": "COMMIT.md",
+    "role": "current authority and retained chronology",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 3,
+    "question": "does sharding alone contain documentation growth?",
+    "card_marker": "Bounded live views",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 4,
+    "question": "how is archived document content proved retrievable?",
+    "card_marker": "Migration evidence",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 5,
+    "question": "is the live-document doctrine project neutral?",
+    "card_marker": "project- and harness-neutral",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 6,
+    "question": "is the live-document doctrine harness neutral?",
+    "card_marker": "project- and harness-neutral",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 7,
+    "question": "where are FSMGen live-document measurements recorded?",
+    "card_marker": "The bounded JSONL control plane",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 8,
+    "question": "what format does the live-document registry use?",
+    "card_marker": "The bounded JSONL control plane",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 9,
+    "question": "why does the live-document registry use JSONL instead of TSV?",
+    "card_marker": "Detailed adoption outcomes",
+    "authority_home": "docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md",
+    "role": "dated outcome or design rationale retained complete",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 10,
+    "question": "does the project-wide checker cover README.md itself?",
+    "card_marker": "The bounded JSONL control plane",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 11,
+    "question": "which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?",
+    "card_marker": "Current task",
+    "authority_home": "docs/TASK_TREE.md",
+    "role": "derive current ownership and lifecycle; retain prior observations",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 12,
+    "question": "where is the external review packet for live-document containment?",
+    "card_marker": "Detailed adoption outcomes",
+    "authority_home": "docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md",
+    "role": "dated outcome or design rationale retained complete",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 13,
+    "question": "should an obsolete live document be partitioned or retired?",
+    "card_marker": "Utility review precedes",
+    "authority_home": "docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md",
+    "role": "current utility procedure and dated retirement candidates",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 14,
+    "question": "which FSMGen live documents are retirement candidates?",
+    "card_marker": "Utility review precedes",
+    "authority_home": "docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md",
+    "role": "current utility procedure and dated retirement candidates",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 15,
+    "question": "are the common JSONL control-plane registries independently bounded?",
+    "card_marker": "The bounded JSONL control plane",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 16,
+    "question": "does hard_pct currently enforce the hard pressure threshold?",
+    "card_marker": "Health targets",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current milestones and ceilings supersede legacy hard_pct",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 17,
+    "question": "what did PGEN and ANVIL find in the live-document review?",
+    "card_marker": "Detailed adoption outcomes",
+    "authority_home": "docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md",
+    "role": "dated outcome or design rationale retained complete",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 18,
+    "question": "were 15727 IAL2 task lines lost during task-tree sealing?",
+    "card_marker": "Detailed adoption outcomes",
+    "authority_home": "docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md",
+    "role": "dated outcome or design rationale retained complete",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 19,
+    "question": "does tracked-document coverage prove that documents are healthy?",
+    "card_marker": "The bounded JSONL control plane",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 20,
+    "question": "is neutral live-document checker identity mechanically tested?",
+    "card_marker": "Detailed adoption outcomes",
+    "authority_home": "docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md",
+    "role": "dated outcome or design rationale retained complete",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 21,
+    "question": "how are health targets different from transition ceilings?",
+    "card_marker": "Health targets",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current milestones and ceilings supersede legacy hard_pct",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 22,
+    "question": "how is an enforcement ceiling increase authorized?",
+    "card_marker": "[[live-document-surface-growth-procedure]]",
+    "authority_home": "docs/knowledge/live-document-surface-growth-procedure.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 23,
+    "question": "which live-document families are migrated versus pinned or deferred?",
+    "card_marker": "Current task",
+    "authority_home": "docs/TASK_TREE.md",
+    "role": "derive current ownership and lifecycle; retain prior observations",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 24,
+    "question": "are declared live-document freshness verifiers actually executed?",
+    "card_marker": "Declared `core:`",
+    "authority_home": "scripts/run_live_document_adapter_verifiers.pl",
+    "role": "current executed-verifier contract and doctrine-driver reachability",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 25,
+    "question": "how are adapter live-document verifiers proved reachable from CI?",
+    "card_marker": "Declared `core:`",
+    "authority_home": "scripts/run_live_document_adapter_verifiers.pl",
+    "role": "current executed-verifier contract and doctrine-driver reachability",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 26,
+    "question": "does live-document size compliance prove that a document is current?",
+    "card_marker": "Currency is",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 27,
+    "question": "how are live-document currency contracts declared?",
+    "card_marker": "Currency is",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 28,
+    "question": "does FSMGen use a global newest-date or distinct-date staleness check?",
+    "card_marker": "Currency is",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 29,
+    "question": "are author overflow routes different from reader navigation routes?",
+    "card_marker": "Author-overflow",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 30,
+    "question": "how are live-document collection indexes checked for completeness?",
+    "card_marker": "Author-overflow",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 31,
+    "question": "are external review evidence-map paths mechanically checked?",
+    "card_marker": "Author-overflow",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 32,
+    "question": "does the live-document doctrine inspect the staged resulting tree?",
+    "card_marker": "Author-overflow",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 33,
+    "question": "how does a live-document migration prove that no content was lost?",
+    "card_marker": "Migration evidence",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 34,
+    "question": "why are migration products not added as disjoint line counts?",
+    "card_marker": "Migration evidence",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 35,
+    "question": "what retention contract is required for a version object?",
+    "card_marker": "Migration evidence",
+    "authority_home": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 36,
+    "question": "where is the bounded live-document architecture review front door?",
+    "card_marker": "bounded review front door",
+    "authority_home": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md",
+    "role": "current front door and retained full packet",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 37,
+    "question": "how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?",
+    "card_marker": "`maintained_reference`",
+    "authority_home": "docs/decisions/0045-maintained-reference-bounds-the-read-path-not-product-scope.md",
+    "role": "current decision authority through public record reader",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 38,
+    "question": "how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?",
+    "card_marker": "Rolling ledgers",
+    "authority_home": "doctrine/live_document_size/ledger_manifests.jsonl",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 39,
+    "question": "how is the Knowledge Map kept bounded?",
+    "card_marker": "The Knowledge Map keeps",
+    "authority_home": "knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 40,
+    "question": "how do I query the Knowledge Map?",
+    "card_marker": "The Knowledge Map keeps",
+    "authority_home": "knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 41,
+    "question": "where does the Knowledge Map query cache live?",
+    "card_marker": "The Knowledge Map keeps",
+    "authority_home": "knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 42,
+    "question": "does a generated projection support deterministic shard collections?",
+    "card_marker": "The Knowledge Map keeps",
+    "authority_home": "knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 43,
+    "question": "where is the complete focused and ancillary document index?",
+    "card_marker": "`docs/index/FOCUSED_DOCUMENTS.md`",
+    "authority_home": "docs/index/FOCUSED_DOCUMENTS.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 44,
+    "question": "how is the ISF reference partitioned?",
+    "card_marker": "T1569 checks current structure",
+    "authority_home": "doctrine/live_document_size/isf_reference_partitions.jsonl",
+    "role": "current structure and separately retained activation/failure",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 45,
+    "question": "why did T1569 fail after a maintained ISF reference edit?",
+    "card_marker": "T1569 checks current structure",
+    "authority_home": "doctrine/live_document_size/isf_reference_partitions.jsonl",
+    "role": "current structure and separately retained activation/failure",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 46,
+    "question": "how are mechanically exact current-state fields contained?",
+    "card_marker": "Decision `0054`",
+    "authority_home": "doctrine/live_document_size/derived_state_contracts.jsonl",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 47,
+    "question": "when must a live-document value be derived on read?",
+    "card_marker": "Decision `0054`",
+    "authority_home": "doctrine/live_document_size/derived_state_contracts.jsonl",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 48,
+    "question": "how is a deliberately retained derived-state copy verified?",
+    "card_marker": "Decision `0054`",
+    "authority_home": "doctrine/live_document_size/derived_state_contracts.jsonl",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 49,
+    "question": "is immutable task evidence the same as mutable current derived state?",
+    "card_marker": "Decision `0054`",
+    "authority_home": "doctrine/live_document_size/derived_state_contracts.jsonl",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 50,
+    "question": "what is the main downstream entry point for containment doctrine updates?",
+    "card_marker": "downstream",
+    "authority_home": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 51,
+    "question": "how are repeated task-tree acceptance checklists contained?",
+    "card_marker": "Repeated task acceptance narration",
+    "authority_home": "scripts/check_task_tree_integrity.pl",
+    "role": "current",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 52,
+    "question": "should integration tests hard-code the live-document surface count?",
+    "card_marker": "common checker alone owns",
+    "authority_home": "t/1554-live-document-size-doctrine.t",
+    "role": "current public assertion contract; gated native test is not replayed",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  },
+  {
+    "index": 53,
+    "question": "why can T1554 hang in a core verifier before startup?",
+    "card_marker": "predecessor's T1554",
+    "authority_home": "docs/tasks/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.md",
+    "role": "historical observations; current explicit native qualification gate",
+    "historical_home": "read_source.py live-document-size-containment (complete authenticated source)"
+  }
+]

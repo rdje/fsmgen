@@ -1,0 +1,334 @@
+{
+  "knowledge-card-sizing-and-partition": [
+    {
+      "end": 1297,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "6f742a2f31492e8f0166529f57559a9a21f740b633a13254c42db19a3f9e286b",
+      "start": 0
+    },
+    {
+      "end": 1638,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "ca2b605204aa4cd2baec2cf1bc495fd361743e90f5dc020e386c57f6bde75b64",
+      "start": 1297
+    },
+    {
+      "end": 2023,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "f8a5a22640cc44cf6a132a4c973e67c97f9af9afd404742455ae0b0bea38b623",
+      "start": 1638
+    },
+    {
+      "end": 2314,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "34261603bca720b7cbfc59d004e8e9e56c647934dfe3d258808e890c99ce9047",
+      "start": 2023
+    },
+    {
+      "end": 2922,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "eb4dc154187a27652cde5aa843799199e7ec2f47a658dd5f04385b1ef25e09e3",
+      "start": 2314
+    },
+    {
+      "end": 3011,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "4dc251010385c9de91e4c014739b158817eae33d90c30a755c974b001a64fd74",
+      "start": 2922
+    }
+  ],
+  "live-document-size-containment": [
+    {
+      "end": 6088,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "68967e4be8e55fc49526ebac6e570468c25b5e4a24e4540b2b09440d4616e541",
+      "start": 0
+    },
+    {
+      "end": 6346,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "210e154f1725471de8c58eeb9c21d2d705c4c2ffe5db54ea1c7550de5678c9d5",
+      "start": 6088
+    },
+    {
+      "end": 6663,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "b207f0c4cbc6418e02a0cc4eab2ea2e1d4c7167047b4c5db958cbb4c16da07b9",
+      "start": 6346
+    },
+    {
+      "end": 6886,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "402845a2029d23319551e31b92b14bf87f711334c35601de6286a7d0d66a700e",
+      "start": 6663
+    },
+    {
+      "end": 7298,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "5e9c211bff8dc422a9a59dcf57b284c8b46a77d26eecabac7c94dafafaf332d9",
+      "start": 6886
+    },
+    {
+      "end": 7607,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "ab0b67ffc72c99365f1ac64a6e951d063aa053d5ec3fae9e2853d4435c8ea870",
+      "start": 7298
+    },
+    {
+      "end": 7884,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "fa3649a9ed34f08b7a8c0d06cc01d582953e964d9fa01ecccdd01fc84ff4a9ec",
+      "start": 7607
+    },
+    {
+      "end": 8239,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "613ba2b889eca854c544d306c11e57a75710164b8c19a7ad9abc3915d261b90a",
+      "start": 7884
+    },
+    {
+      "end": 9205,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "e5724775f6a5f3dd3acf4edb62d62139beefd3e56e351639626e5ff7ad42b81f",
+      "start": 8239
+    },
+    {
+      "end": 9720,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "260f6dbfd665d384a62470c27eabde8c47409e7844d5d79d6cbf8a1c2ba43b7c",
+      "start": 9205
+    },
+    {
+      "end": 10374,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "0ae3b50ae9468e6498095f7c5a5775d535dca68020a8f0a6513738a6d051eb6c",
+      "start": 9720
+    },
+    {
+      "end": 10771,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "0721fd803f322d13d43df2c1e56cc27c24d513b9b48cac60d010d30d4ae03792",
+      "start": 10374
+    },
+    {
+      "end": 11029,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "e9dc8ff600b85a20189c23bc2256d9f8539d82f492ecb8d408cc9e41e25b4ab8",
+      "start": 10771
+    },
+    {
+      "end": 11846,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "7eb14dc59f7e4287eb236787d4acb9d5cdbdd22dfe2c9e6b3130cf06d70fba20",
+      "start": 11029
+    },
+    {
+      "end": 12689,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "d85789f7b86eb571af16398b1f11e942c93d673db7e81f6bc2a32a6efc177395",
+      "start": 11846
+    },
+    {
+      "end": 13296,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "1e434f46e06038a6e75bef9fe7611ca4d997484e237f092d5dd87cc1449ce31a",
+      "start": 12689
+    },
+    {
+      "end": 13949,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "6c49eb7e051845f623fc28f47363836c58ea02d972bb9e770b25ca314b1460bd",
+      "start": 13296
+    },
+    {
+      "end": 14183,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "eaf43ccb478e42c214b4e153bd853954113ba80df0d7ae119f3d41d3034fb2d4",
+      "start": 13949
+    },
+    {
+      "end": 14804,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "fb8434a6c27a3d51fe92940e42b430bbc8050413c3c362b0ce77a6ce9a6cc589",
+      "start": 14183
+    },
+    {
+      "end": 15468,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "9272dcf509886c60e0be9650a30fe0a73d8b8a42d63db538057b2ea99a207b83",
+      "start": 14804
+    },
+    {
+      "end": 16077,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "3d25cdcbd11464366885dbb65070a038a83aade25c501d6f6001f236503bb3a1",
+      "start": 15468
+    },
+    {
+      "end": 16661,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "bc00a1126d9a81816071f292a15de010c11e8320618b3bda731ce29430866aca",
+      "start": 16077
+    },
+    {
+      "end": 17292,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "aeb851ce72893f07811fe77d235e00b5f78c9e82a2dfe77acec9c3d00d035465",
+      "start": 16661
+    },
+    {
+      "end": 17538,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "6358dcf3c6f92ec27798c02ed09ff801a2abb0f4ea6999d794fd5f493c9870aa",
+      "start": 17292
+    },
+    {
+      "end": 18174,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "748a78bdb45634c91949bc1b835294dc30fefde8c56a538e4ffe46492f81655c",
+      "start": 17538
+    },
+    {
+      "end": 18614,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "525af9ee778f0c75e0220b54fd24bfb7f2767f36a58d79e5ef0cb4f88fb24c70",
+      "start": 18174
+    },
+    {
+      "end": 19065,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "a53084a42cffbdf3046ad03467e7ffe0b37ea10f690ecb4aad6144298b76b298",
+      "start": 18614
+    },
+    {
+      "end": 20778,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "e88dbe0ace0ed51c7e538347565fbb3eca7e01fe4d05f0a67d288d429706951c",
+      "start": 19065
+    },
+    {
+      "end": 21554,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "1c871ae858518be5b210844a14c6c85cf68dd018afc537e12523090c1ca81a79",
+      "start": 20778
+    },
+    {
+      "end": 21923,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "bc43929e26d8c3a6b596abac4eae51766748fc52911e5f3d6bc1015c3ab2a106",
+      "start": 21554
+    },
+    {
+      "end": 22353,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "e4d1fa845ec8bbd5c1198f36feb874dd64b8cdb63e5fe7a9635854cc80094851",
+      "start": 21923
+    },
+    {
+      "end": 22939,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "77f2da3a93dc71dafaf1de6ec00e7579cdb201d1cd2d7019c09e2e507cb2f9ff",
+      "start": 22353
+    },
+    {
+      "end": 23854,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "228faeef5cde5248e5d496681ab1b684c505085b6385196f8c251076ff7c7bd8",
+      "start": 22939
+    },
+    {
+      "end": 24447,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "eea5c61acd8ebb05b9bff54fe99b4796b91881067b1fd79d410f8536c0f36d6b",
+      "start": 23854
+    },
+    {
+      "end": 24761,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "31bcedafe4780c9e2483bbaebc96dfddcd94a58c7b7f730ce9d1e51eee79c0bc",
+      "start": 24447
+    }
+  ],
+  "live-document-surface-growth-procedure": [
+    {
+      "end": 1950,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "e5ebf1e293176593e00c2b40f385f98c3a8bf2a66df62d0c405dfde076d4bf1d",
+      "start": 0
+    },
+    {
+      "end": 2180,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "49611724763ab9e9d2c2018a6c96ab958ff3db438538e763cb8edab28714e2df",
+      "start": 1950
+    },
+    {
+      "end": 2652,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "7bc9114e04e1cac115b1a5fc3ea22e4508b76db53fd803ce76185b4fd987b5ac",
+      "start": 2180
+    },
+    {
+      "end": 2775,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "f81deda94bc3c6271fe4e6601ffb42ee0c84bcc8dcfd980c32f4dd082ed6753c",
+      "start": 2652
+    },
+    {
+      "end": 3084,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "0a4bc188e0e8c4fb6fba8bbbe28ddc0e9bdbd609bc51f82a951e75d5406a8087",
+      "start": 2775
+    },
+    {
+      "end": 3332,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "47b66e7674f544c02f160bdf5bca3d58f9fc4a4fab8df79791a46b06593c98e2",
+      "start": 3084
+    },
+    {
+      "end": 3537,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "9fc0843981a469657b250ab78eceaf5baee9e6a57463d15c402c07daf2808ee6",
+      "start": 3332
+    }
+  ],
+  "live-document-transition-allowance-headroom": [
+    {
+      "end": 1403,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "c6f90192a1b2d4b1b2f61ed6bc13aa93fbd097a290db2b222b1ce6b915b537a7",
+      "start": 0
+    },
+    {
+      "end": 1744,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "01d2c518ad4448171d3a8caa30ccb5d8b81f818a92da88a9ff59aca61e994a91",
+      "start": 1403
+    },
+    {
+      "end": 1781,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "1e1b035a1953ba90a2071f7fff229af4d12166f308bc4635a5db7bf720924f58",
+      "start": 1744
+    },
+    {
+      "end": 2730,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "c55761c2659b85c94f0220a9586e0506b375fd662bbf50526c870de26d3bfe49",
+      "start": 1781
+    },
+    {
+      "end": 3085,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "249fa096f8041ef107ef8c19ac175f26f5c076c7ef25f63cb6884f658657224e",
+      "start": 2730
+    },
+    {
+      "end": 3658,
+      "role": "exact dated predecessor; current authority remains in doctrine/registries and the proposed card",
+      "sha256": "fc928ce47b87d89bffbffd06a23192f99c41b4494fad952b7b80ddd341cb397c",
+      "start": 3085
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %s",
+      "-S",
+      "healthy resting reading",
+      "--",
+      "docs/knowledge/knowledge-card-sizing-and-partition.md"
+    ],
+    "status": 0,
+    "stdout": "155775e125c8394e5f429c175344ba47e7429c65 KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.4: partition the surface-pinning fact card\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %s",
+      "-S",
+      "new measured actual",
+      "--",
+      "docs/knowledge/live-document-surface-growth-procedure.md"
+    ],
+    "status": 0,
+    "stdout": "4bfdb99adf6f2391438917d157ef6d4146d4fa35 KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.3: make fact cards cheap to add and retrievable\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %s",
+      "-S",
+      "canonical knowledge-card file ceiling is exactly occupied",
+      "--",
+      "docs/knowledge/live-document-size-containment.md"
+    ],
+    "status": 0,
+    "stdout": "3b71cb0b11db5dddc1e5a97340f05751c8589b36 LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10: bound cards and shard knowledge discovery\n",
+    "stderr": ""
+  }
+]
