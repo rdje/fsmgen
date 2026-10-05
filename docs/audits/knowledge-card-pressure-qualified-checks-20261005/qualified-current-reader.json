@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-card-pressure-qualified-20261005/verify.py",
+    "--current",
+    "--reexecute"
+  ],
+  "status": 0,
+  "stdout": "PASS complete revision-bound own fact/card census, independent whole question allocation and actual accepted6192/default byte/line/width refusal controls; semantic rollover selection remains open.\nPASS independent complete physical/fact domains, original-byte/LF pressure and actual default/public question/control proof; snapshot scope and remaining rollover are explicit.\n",
+  "stderr": "ram-guard: PID 43721; host 63.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

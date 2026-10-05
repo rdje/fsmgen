@@ -1,0 +1,6 @@
+{
+  "source": "docs/book/src/90-reference-map.md",
+  "rendered": "docs/book/book/90-reference-map.html",
+  "checked_text": "An authoring script's local precondition does not establish an enforcement limit: use the checker, configuration and actual accepted and refused boundary cases.",
+  "scope": "Built HTML text, smart apostrophe and whitespace only; visual QA remains pending."
+}

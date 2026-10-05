@@ -1,0 +1,8 @@
+{
+  "command": [
+    "knowledge-map/scripts/check_knowledge_map.sh"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "ram-guard: PID 18603; host 73.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: OK (1265 facts, 6962 unique questions, 7139 answer occurrences, 184 bounded topic shards; query parity verified)\n"
+}

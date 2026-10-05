@@ -1,0 +1,38 @@
+{
+  "authorized_transition": {
+    "bytes_each": 32768,
+    "bytes_total": 3879686,
+    "files": 1260,
+    "line_bytes_each": 883,
+    "lines_each": 432,
+    "lines_total": 53069
+  },
+  "declared_card_defaults": {
+    "card_bytes": 32768,
+    "card_line_bytes": 819,
+    "card_lines": 512
+  },
+  "fact_population": {
+    "answer_occurrences": 7139,
+    "facts": 1265,
+    "unique_questions": 6962
+  },
+  "physical_collection": {
+    "bytes_each": 31755,
+    "bytes_total": 3879683,
+    "files": 1259,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 53050
+  },
+  "remaining_transition": {
+    "bytes_each": 1013,
+    "bytes_total": 3,
+    "files": 1,
+    "line_bytes_each": 64,
+    "lines_each": 10,
+    "lines_total": 19
+  },
+  "revision": "82b1e964595e92a8f29fffb108fadedba61ee0ae",
+  "scope": "Exact dated physical cohort and completed-newline metrics; native fact population and logical lines are separate. Existing rollover_debt remains; no semantic duplicate, healthy-state, removal count or new allowance is inferred."
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "control": "omitted-physical-readme",
+    "refusal": "physical collection includes retained non-fact members"
+  },
+  {
+    "control": "logical-lines-borrowed-as-containment",
+    "refusal": "registered completed-newline metric"
+  },
+  {
+    "control": "lost-question-row",
+    "refusal": "complete actual public question/path allocation"
+  },
+  {
+    "control": "wrong-public-byte-refusal",
+    "refusal": "real public intended refusal"
+  },
+  {
+    "control": "private-cap-promoted-to-profile",
+    "refusal": "observed effective default profile"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-card-pressure-qualified-20261005/produce.py"
+  ],
+  "status": 0,
+  "stdout": "PASS complete revision-bound own fact/card census, independent whole question allocation and actual accepted6192/default byte/line/width refusal controls; semantic rollover selection remains open.\n",
+  "stderr": "ram-guard: PID 14598; host 80.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -60,7 +60,9 @@ UTF-8 bytes; a non-ASCII character can occupy several bytes. Invalid UTF-8 is
 rejected. Query-cache fingerprints include the complete generated shard bytes,
 so a byte change invalidates a cached projection even when its questions stay
 the same. The collection's containment allowance is a separate gate; passing
-one card's bounds does not authorize collection growth. See
+one card's bounds does not authorize collection growth. An authoring script's
+local precondition does not establish an enforcement limit: use the checker,
+configuration and actual accepted and refused boundary cases. See
 [the Knowledge Map architecture](../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md)
 and its public checker, `knowledge-map/scripts/check_knowledge_map.sh`.
 

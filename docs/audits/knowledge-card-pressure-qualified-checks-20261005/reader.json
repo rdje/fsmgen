@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-card-pressure-qualified-20261005/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS independent complete physical/fact domains, original-byte/LF pressure and actual default/public question/control proof; snapshot scope and remaining rollover are explicit.\n",
+  "stderr": "ram-guard: PID 57038; host 74.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
