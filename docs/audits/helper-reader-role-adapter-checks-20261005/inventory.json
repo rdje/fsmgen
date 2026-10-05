@@ -1,0 +1,10 @@
+{
+  "command": [
+    "perl",
+    "scripts/check_claim_verification_inventory.pl",
+    "--write"
+  ],
+  "status": 0,
+  "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13335, candidates=1977, quantified=964, conservative=1013, constants=2918, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1977)\n",
+  "stderr": "ram-guard: PID 28866; host 74.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

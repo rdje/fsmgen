@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-helper-reader-role-adapter-20261005/probe_coupling.py"
+  ],
+  "status": 0,
+  "stdout": "CONFIRMED sealed source-plane default couples historical replay to the old whole live helper card; source-qualified progress refuses. Exact live bytes restored; all prior programmes unchanged.\n",
+  "stderr": "ram-guard: PID 50795; host 78.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

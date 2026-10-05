@@ -1,0 +1,55 @@
+{
+  "controls": [
+    {
+      "cause": "exact historical adapter revision",
+      "control": "borrowed-history-revision",
+      "status": 1
+    },
+    {
+      "cause": "complete historical adapter archive domain",
+      "control": "lost-history-archive",
+      "status": 1
+    },
+    {
+      "cause": "whole historical adapter archive membership",
+      "control": "lost-programme-member",
+      "status": 1
+    },
+    {
+      "cause": "whole historical adapter archive identity",
+      "control": "borrowed-programme-pin",
+      "status": 1
+    },
+    {
+      "cause": "whole independently source-qualified coupling input",
+      "control": "coordinated-borrowed-current-fact",
+      "status": 1
+    },
+    {
+      "cause": "actual original current-card coupling failure and restoration",
+      "control": "Boolean-original-failure",
+      "status": 1
+    },
+    {
+      "cause": "actual original current-card coupling failure and restoration",
+      "control": "unfinished-live-restoration",
+      "status": 1
+    },
+    {
+      "cause": "complete single historical helper role adaptation",
+      "control": "missing-helper-role",
+      "status": 1
+    },
+    {
+      "cause": "exact single original historical helper invocation",
+      "control": "wrong-original-role",
+      "status": 1
+    },
+    {
+      "cause": "successful actual historical helper snapshot",
+      "control": "Boolean-snapshot-status",
+      "status": 1
+    }
+  ],
+  "scope": "Original whole-current-card predicate reproduces the actual source-qualified progress failure. Historical adaptation conserves the old programme domain and cannot establish current currency."
+}

@@ -561,6 +561,22 @@ qualification is in docs/audits/record-value-own-subtest-boundaries-20261005;
 publication to the semantic fact topic is the separately owned next slice.
 Public framework/display, source-coordinate and native identity gaps remain open.
 
+The original source-plane reader's historical replay also invoked the older
+live helper reader. An actual source-qualified card extension exposed that
+coupling: a new live fact obstructed replay of unchanged historical evidence.
+The qualified adapter preserves the original plane predicates and products,
+changing only that call to the helper's existing snapshot mode:
+
+```bash
+python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot
+```
+
+This command authenticates historical evidence. It does not qualify current
+cards, queries, source assets or advertised reader guidance, and it rejects a
+current-role flag. Current semantic/fact publication is the separately owned
+next slice; the existing live reader remains required for its current epoch.
+Original historical programmes and seals remain unchanged.
+
 The finite-copy core keeps its original fact ID and direct path. Its observer and
 helper questions now route to a separate bounded semantic topic, with a return
 route to the core. This separates copy-graph qualification from the original

@@ -1,0 +1,22 @@
+{
+  "boundary.json": {
+    "bytes": 361045,
+    "sha256": "2c16b59eb097f3f873613843b6a3d7ca952244e94aa51b709a013cce27ad1f8f"
+  },
+  "initial-rendered-chapter.html": {
+    "bytes": 209606,
+    "sha256": "21da23ec688be0ade0e1e0753e58281886101601a8a46739eb2d986df88b2625"
+  },
+  "proofs.json": {
+    "bytes": 1948,
+    "sha256": "a25075a9ccdc4b715d2958e4d5fea70142ca281b95b3ce6b78f4fd2b2981dcdb"
+  },
+  "scope.txt": {
+    "bytes": 1721,
+    "sha256": "47d3193f6c5463f29b0b8b450626692f23087fb9b44cde289c79bc74fbe583a4"
+  },
+  "verify.py": {
+    "bytes": 6864,
+    "sha256": "bfc3008bece1c5bfc94812e5bed9f0a19f0232797ec7f980fbc01ad14398f5fa"
+  }
+}

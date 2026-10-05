@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H%n%s",
+    "-S",
+    "record-value-current-helper-reader",
+    "--",
+    "docs/audits/book-source-plane-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "7b67fa41e7961ea74f51c42680aaf6e610c5ba76\nSEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.2: publish bounded native source assets\n",
+  "stderr": "ram-guard: PID 35747; host 78.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

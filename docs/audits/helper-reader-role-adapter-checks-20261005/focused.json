@@ -1,0 +1,13 @@
+{
+  "command": [
+    "prove",
+    "-Iperl",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t",
+    "t/1414-docs-relative-paths-audit.t",
+    "t/1567-knowledge-map-shards.t"
+  ],
+  "status": 0,
+  "stdout": "t/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nt/1414-docs-relative-paths-audit.t ......... ok\nt/1567-knowledge-map-shards.t .............. ok\nAll tests successful.\nFiles=4, Tests=315,  6 wallclock secs ( 0.03 usr  0.01 sys +  2.79 cusr  1.00 csys =  3.83 CPU)\nResult: PASS\n",
+  "stderr": "ram-guard: PID 35503; host 78.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

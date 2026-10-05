@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/helper-reader-role-adapter-checks-20261005/verify_receipt.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual fresh sealed historical adapter identity; actual older successful source-reader identity rejects.\n",
+  "stderr": "ram-guard: PID 86809; host 73.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

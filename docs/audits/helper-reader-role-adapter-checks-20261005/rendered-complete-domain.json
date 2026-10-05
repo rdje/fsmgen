@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/helper-reader-role-rendered-20261005/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS exact source/aggregate/rendered historical-role guidance and command with declared native smart apostrophes; original failure/seal retained, visual QA pending.\n",
+  "stderr": "ram-guard: PID 88689; host 73.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

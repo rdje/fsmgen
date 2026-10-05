@@ -1,0 +1,54 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py",
+    "--snapshot"
+  ],
+  "status": 0,
+  "stdout": "PASS complete native source population/refresh, genuine plane/native controls, original locality meaning and scoped current source roles.\nPASS unchanged historical source-plane predicates with exact helper snapshot role; current semantic/source currency remains separately required.\n",
+  "stderr": "ram-guard: PID 5740; host 63.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "programme_and_product_identity": {
+    "adapter.py": {
+      "bytes": 5174,
+      "sha256": "cbe719e1b1b77df1d4cb5234e37f3727c50932db606fcf9d126fc740ce5c936c"
+    },
+    "verify.py": {
+      "bytes": 8987,
+      "sha256": "ffa640f8d785c1a5b1ca139d5c8271282bbef0b24aff13ffd414b2c5d6f76bd7"
+    },
+    "proofs.json": {
+      "bytes": 876,
+      "sha256": "11f54fbddb980af064218c6399dad6c72ac3cf78e21481954f9b37752ce76bcd"
+    },
+    "control-proofs.json": {
+      "bytes": 2190,
+      "sha256": "1d277cd99039af64990e1ddff0fa3af4ab4ae70ea4fc4abc38e1308bd17e2ba9"
+    },
+    "manifest.json": {
+      "bytes": 1926,
+      "sha256": "48e1540f31425ca2ce5b3d4e9f17fbb88c82449e9793f5953caf2e655acb0e36"
+    },
+    "binding.json": {
+      "bytes": 10757,
+      "sha256": "c59a4aeed23a16537ffd114d43e5db5fa72b2bebc6f464a106c30b77e5ceb75a"
+    },
+    "coupling.json": {
+      "bytes": 13335,
+      "sha256": "6146a1a6de374653c64212ae68125a098a29314e77ac9323606cd254ce98cd5a"
+    },
+    "candidate-adapter.json": {
+      "bytes": 5121,
+      "sha256": "04f165becaae404f97da443e7f2e71517cd2ffcdecceffac19f4e9654031bdf7"
+    },
+    "verify_book.py": {
+      "bytes": 2868,
+      "sha256": "c3d40a5dad702c78f605b2f44f5271faedf4470cf3f8048f61efdbe6e9c2210a"
+    },
+    "book-transform.json": {
+      "bytes": 359747,
+      "sha256": "5063381a36a58b99cddbe923424684012f51c8806f266e51ef1a0cf5210149bd"
+    }
+  },
+  "identity_unchanged_after_execution": true
+}

@@ -1,0 +1,22 @@
+{
+  "calls": [
+    {
+      "adapted": [
+        "runtime-python",
+        "-B",
+        "docs/audits/record-value-current-helper-reader-20261005/verify.py",
+        "--snapshot"
+      ],
+      "original": [
+        "runtime-python",
+        "-B",
+        "docs/audits/record-value-current-helper-reader-20261005/verify.py",
+        "--current"
+      ],
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS retained complete native helper reader delivery; genuine command/meaning/kind/stale/shutdown controls reject.\nPASS immutable original publication and scoped live helper source/role/question/route qualification; genuine relevant-input controls reject.\n"
+    }
+  ],
+  "scope": "Exact original source-plane predicates and products at their historical boundary; one old helper call uses its existing snapshot mode. Current semantic currency is not established."
+}

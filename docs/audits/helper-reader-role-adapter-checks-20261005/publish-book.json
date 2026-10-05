@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-helper-reader-role-adapter-20261005/publish_book.py"
+  ],
+  "status": 0,
+  "stdout": "PASS complete own-source book insertion, unchanged SUMMARY and measured aggregate authority.\n",
+  "stderr": "ram-guard: PID 25771; host 69.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
