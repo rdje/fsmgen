@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **19** facts · **71** uniquely owned question entries.
+> **19** facts · **73** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -33,6 +33,7 @@
 - q="does successful output schedule preview prove connected child ports?" · facts=[isf-record-output-generated-ingress](../../docs/knowledge/isf-record-output-generated-ingress.md)
 - q="does the binding identity repair admit record field actuals?" · facts=[isf-record-binding-identity-roles](../../docs/knowledge/isf-record-binding-identity-roles.md)
 - q="does the generic record port profile guard preserve input diagnostics?" · facts=[isf-record-output-hdl-profiles](../../docs/knowledge/isf-record-output-hdl-profiles.md)
+- q="does the original parser source inventory qualify active native paths?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 - q="does the physical write collector accept imported type tokens?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="does the prepared direct record-input bench establish native behavior?" · facts=[isf-record-input-direct-witness-preparation](../../docs/knowledge/isf-record-input-direct-witness-preparation.md)
 - q="does the record output catalog claim generated mappings or simulation?" · facts=[isf-record-output-corpus-closure](../../docs/knowledge/isf-record-output-corpus-closure.md)
@@ -50,6 +51,7 @@
 - q="is selected packed record input delivery complete?" · facts=[isf-record-input-delivery](../../docs/knowledge/isf-record-input-delivery.md)
 - q="what blocks record output whole-copy admission?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="what does a failed record output schedule query publish?" · facts=[isf-record-output-public-sources](../../docs/knowledge/isf-record-output-public-sources.md)
+- q="what inventories original parser refusal source bodies?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 - q="where are detached record output writers inventoried?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="where do generated-top semantic reports retain authored record declarations?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where does a generated record-input copy store and reset its target?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)

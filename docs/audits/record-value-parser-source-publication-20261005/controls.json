@@ -1,0 +1,47 @@
+[
+  {
+    "cause": "whole old/new source-context meaning/question/reader epoch",
+    "control": "lost-old-context",
+    "status": 1
+  },
+  {
+    "cause": "whole old/new source-context meaning/question/reader epoch",
+    "control": "lost-new-provenance",
+    "status": 1
+  },
+  {
+    "cause": "complete old/new question ownership without withdrawn ID",
+    "control": "borrowed-withdrawn-ID",
+    "status": 1
+  },
+  {
+    "cause": "actual superseding query integer status",
+    "control": "Boolean-status",
+    "status": 1
+  },
+  {
+    "cause": "unadmitted new-card proposal is absent from live collection",
+    "control": "new-card-still-live",
+    "status": 1
+  },
+  {
+    "cause": "current physical card allowance/kind: files",
+    "control": "too-many-files",
+    "status": 1
+  },
+  {
+    "cause": "current physical card allowance/kind: files",
+    "control": "Boolean-file-count",
+    "status": 1
+  },
+  {
+    "cause": "whole knowledge-card authority unchanged",
+    "control": "widened-allowance",
+    "status": 1
+  },
+  {
+    "cause": "unique complete superseding source/current/capacity reader guidance",
+    "control": "wrong-current-guide",
+    "status": 1
+  }
+]

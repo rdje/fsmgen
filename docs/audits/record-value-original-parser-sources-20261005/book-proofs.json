@@ -1,0 +1,20 @@
+{
+  "controls": [
+    {
+      "cause": "complete exact rendered parser inventory scope/command",
+      "control": "wrong-current-command",
+      "status": 1
+    },
+    {
+      "cause": "complete exact rendered parser inventory scope/command",
+      "control": "lost-open-boundary",
+      "status": 1
+    }
+  ],
+  "paragraphs": [
+    "The original parser source inventory now binds complete own facade, parser and record-context source units, their lexical declarations, selected function bodies, parameter roles and ordered call/guard statements. Output-field source admission and aggregate actor-port admission have distinct source boundaries. This inventory does not establish active failure paths or native argument meanings; independent path models and complete API/helper/frame joins remain subsequent work.",
+    "python3 -B docs/audits/record-value-original-parser-sources-20261005/verify.py --current",
+    "The default reader authenticates the original source inventory and its historical publication. The current flag additionally checks its live fact, question ownership and this reader guidance. Framework/display, coordinates, native reference identity and broader consumer/alias/cold meanings remain separately owned. Visual QA is pending."
+  ],
+  "scope": "Whole source/aggregate and scoped exact native rendered text; visual QA remains pending."
+}

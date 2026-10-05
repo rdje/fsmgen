@@ -1,0 +1,22 @@
+[
+  {
+    "cause": "whole current parser inventory fact/source/question/reader",
+    "control": "lost-source-scope",
+    "status": 1
+  },
+  {
+    "cause": "unique complete current parser source reader guidance",
+    "control": "lost-reader-scope",
+    "status": 1
+  },
+  {
+    "cause": "complete unique parser inventory question ownership",
+    "control": "borrowed-question",
+    "status": 1
+  },
+  {
+    "cause": "parser inventory actual query integer status",
+    "control": "Boolean-query-status",
+    "status": 1
+  }
+]

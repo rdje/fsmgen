@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "-S",
+    "aggregate type aliases only on actor-owned storage variables",
+    "--",
+    "perl/FSM/Adapter/ISF/Parser.pm"
+  ],
+  "status": 0,
+  "stdout": "commit 9c6fda6961ca1c40e1de547e39c58cec10c2ed69\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Sat May 16 06:49:28 2026 +0200\n\n    ISF-TYPE-AGGREGATE-PARITY.5: ship aggregate storage carriers\n    \n    Accept local and package aggregate type aliases on actor-owned ISF storage\n    variables while keeping interface ports, transaction ports, storage banks,\n    member paths, and partial aggregate updates fail-closed.\n    Preserve aggregate aliases in scheduled FSM +size review artifacts and expose\n    bounded storage type/type_kind report metadata without leaking raw type specs.\n    Add focused aggregate-storage coverage and sync the ISF docs, book, handoff,\n    public contract, task tree, and live roadmap state.\n",
+  "stderr": "ram-guard: PID 95523; host 79.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

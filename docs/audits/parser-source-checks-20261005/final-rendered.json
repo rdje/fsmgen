@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import importlib.util; from pathlib import Path; p=Path(\"docs/audits/record-value-original-parser-sources-20261005/publication.py\"); s=importlib.util.spec_from_file_location(\"final_inventory_book\",p); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); m.verify(current=True,build=\".artifacts/parser-source-inventory/final-book\")"
+  ],
+  "status": 0,
+  "stdout": "PASS historical parser source publication; explicit current role qualifies live fact/query/reader scope.\n",
+  "stderr": "ram-guard: PID 55619; host 61.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

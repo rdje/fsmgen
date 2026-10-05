@@ -1,0 +1,9 @@
+{
+  "command": [
+    "perl",
+    "scripts/check_task_tree_integrity.pl"
+  ],
+  "status": 0,
+  "stdout": "[task-tree-integrity] all active task-tree invariants hold (trees=8, nodes=2281, segments=3, compact_terminals=46, index_archives=1, migrations=1, acceptance_histories=2)\n",
+  "stderr": "ram-guard: PID 59820; host 80.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

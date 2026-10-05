@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/parser-source-checks-20261005/verify_receipt.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual fresh sealed current parser source inventory identity; actual earlier semantic successful identity rejects.\n",
+  "stderr": "ram-guard: PID 14889; host 68.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-source-publication-20261005/verify.py",
+    "--publish"
+  ],
+  "status": 0,
+  "stdout": "PASS source-faithful existing topic publication after independent unchanged-capacity preflight.\n",
+  "stderr": "ram-guard: PID 38916; host 77.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

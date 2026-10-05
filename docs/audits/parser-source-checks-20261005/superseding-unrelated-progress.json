@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-source-publication-20261005/probe_unrelated.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual unrelated chapter/measured aggregate progress under current reader; complete live bytes restored.\n",
+  "stderr": "ram-guard: PID 81560; host 69.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

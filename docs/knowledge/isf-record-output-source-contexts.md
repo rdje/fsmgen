@@ -6,10 +6,14 @@ answers:
   - "do output record scalar samples preserve signed and state traits?"
   - "why do record output field reads cross clock-domain boundaries?"
   - "can scalar formals borrow an outer record output layout?"
+  - "what inventories original parser refusal source bodies?"
+  - "does the original parser source inventory qualify active native paths?"
 date: 2026-10-01
 status: current
 tags: [isf, record, output, contexts, samples, domains, shadows]
 evidence: >-
+  docs/audits/record-value-original-parser-sources-20261005/scope.txt;
+  docs/audits/record-value-parser-source-publication-20261005/scope.txt;
   docs/audits/record-output-source-contexts-20261001/manifest.json;
   t/2031-isf-record-output-source-contexts.t;
   perl/FSM/Support/ISFRecordPortSamples.pm;
@@ -21,7 +25,9 @@ reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
   t/2031-isf-record-output-source-contexts.t
   t/2030-isf-record-output-writer-admission.t
-  t/1991-isf-record-port-sample-contexts.t
+  t/1991-isf-record-port-sample-contexts.t &&
+  scripts/run_with_ram_guard.sh -- python3 -B
+  docs/audits/record-value-parser-source-publication-20261005/verify.py --current
 ---
 
 At baseline 8f31768d, prepared output-only actors bypassed source context/sample
@@ -61,3 +67,26 @@ checks. SEM .60.4.3.3.4.3 now integrates authored output declarations and whole
 copies; see [source admission](isf-record-output-source-admission.md). Complete
 public/generated/execution and output field qualification remain .3.4.4-.5
 and .60.4.3.4. The original preparation evidence is immutable.
+
+## Original parser source inventory
+
+The finite original source inventory binds whole own facade, parser and
+record-context texts. Their lexical declarations, selected complete function
+bodies, supplied parameter roles and ordered source call/guard statements
+are independently regenerated. Exact committed prerequisites qualify source
+inputs, primary causes, API/parser boundaries and helper context separately.
+
+Output-field source writes and aggregate actor-port type admission have distinct
+source guards. Source order records provenance; it does not establish which
+branches ran or whether a returned call remained active. No native trace supplies
+the intended source selection. Missing or borrowed source bodies, statements,
+parameters, declaration membership and JSON kinds reject.
+
+The default replay authenticates original source and historical publication.
+Explicit current replay also checks this whole fact, actual direct/cache question
+ownership and the scoped book command and guidance. Independent active path and
+argument models, complete native/API/helper joins, framework/display contracts,
+raw coordinates, reference/address lifetimes, consumer/alias/cold meanings and
+permanent/native repairs remain separate owners. Visual mdBook QA is pending.
+
+Related: [[record-value-original-observer-helper-paths]].

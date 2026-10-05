@@ -1,0 +1,15 @@
+{
+  "command": [
+    "prove",
+    "-Iperl",
+    "-It/lib",
+    "t/2031-isf-record-output-source-contexts.t",
+    "t/2030-isf-record-output-writer-admission.t",
+    "t/1991-isf-record-port-sample-contexts.t",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t"
+  ],
+  "status": 0,
+  "stdout": "t/2031-isf-record-output-source-contexts.t ... ok\nt/2030-isf-record-output-writer-admission.t .. ok\nt/1991-isf-record-port-sample-contexts.t ..... ok\nt/1303-isf-public-live-book-paths-audit.t .... ok\nt/1305-isf-book-feature-matrix-audit.t ....... ok\nAll tests successful.\nFiles=5, Tests=326, 15 wallclock secs ( 0.04 usr  0.02 sys +  6.48 cusr  4.74 csys = 11.28 CPU)\nResult: PASS\n",
+  "stderr": "ram-guard: PID 18317; host 80.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-source-publication-20261005/verify.py",
+    "--publish"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 42558; host 72.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-parser-source-publication-20261005/verify.py\", line 338, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-parser-source-publication-20261005/verify.py\", line 304, in main\n    require(not args.current and args.build is None, 'publisher and reader roles are separate'); publish(); return\n                                                                                                 ~~~~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-parser-source-publication-20261005/verify.py\", line 274, in publish\n    require(not (BASE / 'manifest.json').exists(), 'sealed superseding publisher cannot mutate live publication')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-own-boundary-publication-20261005/verify.py\", line 24, in require\n    raise ValueError(cause)\nValueError: sealed superseding publisher cannot mutate live publication\n"
+}

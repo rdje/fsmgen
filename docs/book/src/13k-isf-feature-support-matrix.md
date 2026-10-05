@@ -608,6 +608,29 @@ endpoints, bytes, ignore policy, budget and complete staged membership. Snapshot
 success does not supply current semantic currency. The original destination
 locality replay and explicit native copied-byte check remain required.
 
+The original parser source inventory binds complete own facade, parser and
+record-context source units, lexical declarations, selected whole function bodies,
+parameter roles and ordered call/guard statements. Output-field source admission
+and aggregate actor-port admission have distinct source boundaries. This inventory
+does not establish active failure paths or native argument meanings; independent
+path models and complete API/helper/frame joins remain subsequent work.
+
+The initial new-card proposal exceeded the collection file allowance and was
+withdrawn. Its complete source proof and candidate publication remain immutable.
+The qualified provenance now extends the existing source-context topic while
+preserving its prior body, identity, questions and verification command. The
+current reader additionally checks all physical collection dimensions:
+
+```bash
+python3 -B docs/audits/record-value-parser-source-publication-20261005/verify.py --current
+```
+
+The original source reader defaults to historical replay; its withdrawn live
+proposal is not current authority. This publication reader separates that source
+proof from live fact, query, capacity and guide checks. Framework/display,
+coordinates, native identity and broader consumer/alias/cold meanings remain
+separately owned. Visual QA is pending.
+
 [portable replay repair](reference-source/docs/audits/record-value-replay-portability-20261004/scope.txt.source.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the

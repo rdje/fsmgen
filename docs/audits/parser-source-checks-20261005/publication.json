@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-parser-sources-20261005/publication.py",
+    "--publish"
+  ],
+  "status": 0,
+  "stdout": "PASS exact new source fact and whole book transform published under unchanged collection limits.\n",
+  "stderr": "ram-guard: PID 97313; host 74.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
