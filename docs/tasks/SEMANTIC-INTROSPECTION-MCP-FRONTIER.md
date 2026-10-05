@@ -5219,10 +5219,33 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.69`
-  Status: `pending`
+  Status: `active`
   Goal: `Resolve the accumulated-commit push checkpoint against existing HIAL qualification gates.`
   Acceptance: `After the current primary-cause slice is committed and clean, derive the actual ahead count and authenticate COMMIT.md cadence plus the complete active HIAL startup-cause gate. Preserve all local commits and historical failed evidence; do not run a forbidden full-CI retry or push without its required qualification. Record exact policy/task/Git authority and ask the director only for the genuine checkpoint conflict, with independent non-runtime continuation versus prerequisite priority clearly separated from any waiver of correctness or host-security changes.`
   Verification: `Registered before the next accumulated-commit checkpoint. The current count is derived on read; full CI and push remain explicitly gated by HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2. No override, push or full CI is claimed. Current primary slice commits first; .69 owns any resulting unresolved checkpoint.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.1`
+  Status: `done`
+  Goal: `Authenticate the clean push checkpoint and exact conflicting gate.`
+  Acceptance: `Capture exact Git boundary, independently enumerated accumulated commits, complete COMMIT.md and active HIAL gate/source identity. Preserve all commits and existing failures; qualify source/count/owner intake without invoking full CI, network, push or host changes. Commit the documentary preflight before any request for direction.`
+  Verification: `Complete docs/audits/push-checkpoint-preflight-20261005 authenticates clean dedee81cc, exact upstream/full commit member domain and complete COMMIT/HIAL Git authority. git rev-list reports500, independently enumerated unique git-log members agree and refs conserve; wrong count/omission/duplicate controls reject; fresh executable sealed reader repeats all three and rejects a fabricated gate waiver at its complete committed owner body. The complete active HIAL .19.2.3.1.2.2.5.5.2.3.1.2.2.3.2 node explicitly gates full CI and push. All local work remains committed; no full CI, transport, original retry, probe, security change or policy exception executes. This documentary preflight closes only source/checkpoint capture; .2 awaits director cadence-deferral versus prerequisite-priority resolution, .3 owns eventual qualified push. Book/task/resume/claim/staged doctrine/normal-hook checks accompany commit.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.2`
+  Status: `active`
+  Goal: `Resolve push cadence versus gated qualification with the director.`
+  Acceptance: `Present the concrete committed preflight: COMMIT.md requires the cadence push, while the active HIAL source explicitly gates full CI and push. Ask whether to defer cadence while continuing independent PNT or prioritize HIAL qualification. No waived correctness, invented success, probe admission or host-security change is implied.`
+  Verification: `Genuine policy conflict captured under completed .1. Director direction is required to defer the ordinary cadence while preserving full-CI/HIAL gates or prioritize the existing HIAL prerequisites. No override is inferred; independent raw coordinate/address source leaf remains pending and all earlier verified slices are committed.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.3`
+  Status: `pending`
+  Goal: `Consume the eventual authorized qualified push.`
+  Acceptance: `After the required HIAL/full-CI prerequisites or an explicit director-approved policy resolution allow the applicable action, follow COMMIT.md push and exact-SHA hosted qualification. Preserve missing/failing workflows and actual remote state; transport success alone cannot close this leaf.`
+  Verification: `pending`
   Commit: `pending`
 
 
@@ -5974,3 +5997,10 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Close allocation/source identity only' -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` identifiesf0143ca33f29897f381f5ef74928784c08b8d015: source contexts and spans qualify while complete first-cause and acceptance semantics remain open. Full API capture distinguishes outer record-value errors from nested metadata errors; matching a later trace phrase would borrow the wrong cause. Own source arguments, validation precedence and complete parser admission declarations supply intended authority, not native passed flags or error fragments.
 - [x] **ADDRESSED (verified)** — `docs/audits/record-value-original-primary-20261005/scope.txt` names independent SOURCE-PRIMARY RE-DERIVATION, fourteen actual intended-cause FALSIFICATION controls and whole immutable-member DURABILITY. The authored finite validation model reconstructs each original API primary/acceptance, all helper cause families and both source parser refusals in all three unchanged-input modes. Whole raw errors retain; nested cause precedence, exact source context and refused null products agree. Initial complete proof before explicit allocation control remains unqualified; fresh full sealed reader0 in `docs/audits/record-value-original-primary-checks-20261005/sealed-reader.json` rederives identical strengthened proof. Full raw coordinate/address semantics, consumer truth, alias/semantic/cold/permanent/host-native meanings remain owned.
 - [x] **NO REGRESSION** — evidence-family: prove_summary. `docs/audits/record-value-original-primary-checks-20261005/original-book.json` reports `All tests successful`, `Files=3, Tests=318`, `Result: PASS`. Book build/rendered primary/open-boundary text, task integrity, regenerated Knowledge Map, exact aggregate authority and fresh claim inventory qualify; staged doctrines and normal hooks run before commit. Browser visual QA stays pending. First staged gate correctly rejects knowledge-card aggregate growth by four bytes. Remove only duplicate direct context/input-join reverify commands because the highest primary reader reexecutes both complete prerequisites; retain all facts/evidence and unchanged ceilings, regenerate KM/claims and rerun staged gate. Required push cadence will be derived after this commit; .69 owns its conflict with the active HIAL full-CI/push gate without bypass or host change.
+
+
+### Push-checkpoint preflight acceptance — .69.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S '500 accumulated local' -- COMMIT.md` identifies0c8dd4b82465cf72a57da2fbed366d7266408ca8 as the standing cadence. Exact committed dedee81cc HIAL startup-cause owner .19.2.3.1.2.2.5.5.2.3.1.2.2.3.2 explicitly states that historical failures, full CI and push remain gated. The branch has reached the checkpoint through completed verified source-primary work, creating a genuine ordering conflict; no later green focused test can establish native causality or waive the gate.
+- [x] **ADDRESSED (verified)** — Complete `docs/audits/push-checkpoint-preflight-20261005/preflight.json` retains exact Git/upstream/member/count/source/whole-gate authority and actual changed-count/member-omission/duplicate and fabricated gate-waiver rejections. Fresh sealed executable readback passes in docs/audits/push-checkpoint-checks-20261005/final-sealed-reader.json; initial documentary-only seal/readback retain. Distinct re-derivation/falsification/durability legs are in scope.txt. No full CI, push, retry, probes or host changes execute. Book/task/Memory show .69.2 awaiting director direction; only the documentary .69.1 capture closes. Historical causes and eventual qualified push remain owned.
+- [x] **NO REGRESSION** — evidence-family: prove_summary. Current public-book cohort reports `All tests successful`, `Files=2, Tests=308`, `Result: PASS` in `docs/audits/push-checkpoint-checks-20261005/book-tests.json`. Current book build/rendered checkpoint/gate text, complete source transform/aggregate authority, task integrity and fresh claim census pass; staged doctrines and normal hooks run before commit. User-visible compiler/admission behavior and all immutable evidence remain unchanged.

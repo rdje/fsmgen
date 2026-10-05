@@ -1,0 +1,9 @@
+{
+  "status": 0,
+  "revision": "dedee81cc1c359404411fa79d607e550a8618823",
+  "observed_count": 500,
+  "membership": "complete independent Git enumeration equal",
+  "source": "whole policy/source/gate committed identities equal",
+  "seal": "all complete members/bytes/SHA256 equal",
+  "scope": "Dated documentary preflight; no full-CI/push or exception qualification."
+}

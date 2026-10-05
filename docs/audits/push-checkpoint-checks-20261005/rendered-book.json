@@ -1,0 +1,28 @@
+{
+  "status": 0,
+  "page": "docs/book/book/16dc-vial-portable-verilator-runtime-measurement.html",
+  "required_text": [
+    "accumulated-commit checkpoint",
+    "push-cadence conflict with the active startup qualification gate",
+    "Director resolution is pending; full CI and push have not run."
+  ],
+  "transform": "whole committed source/exact replacement/current after equal",
+  "aggregate": {
+    "after": {
+      "bytes_total": 3768721,
+      "files": 64,
+      "lines_total": 67901
+    },
+    "before": {
+      "bytes_total": 3768473,
+      "files": 64,
+      "lines_total": 67898
+    },
+    "delta": {
+      "bytes_total": 248,
+      "files": 0,
+      "lines_total": 3
+    }
+  },
+  "scope": "Rendered text only; browser visual QA pending."
+}

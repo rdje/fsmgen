@@ -4186,6 +4186,9 @@ checks the selected root coordinator's nested cleanup before the startup
 capture that depends on it. That ordering does not establish cleanup support:
 the fixed capture driver, original failure evidence, existing process limits
 and full-CI/push gates retain their separate acceptance requirements.
+The [accumulated-commit checkpoint](../../../docs/audits/push-checkpoint-preflight-20261005/scope.txt)
+now records the push-cadence conflict with the active startup qualification gate.
+Director resolution is pending; full CI and push have not run.
 
 The [private process handoff reference](16dk-inactive-proxy-lifetimes.md#private-process-handoff)
 describes the reservation, gated command, qualification boundaries and runnable

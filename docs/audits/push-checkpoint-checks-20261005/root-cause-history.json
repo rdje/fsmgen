@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "--no-pager",
+    "log",
+    "-S",
+    "500 accumulated local",
+    "--format=%H %s",
+    "--",
+    "COMMIT.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "0c8dd4b82465cf72a57da2fbed366d7266408ca8 PUSH-CADENCE-500-ADOPTION.1: adopt 500-commit cadence\n"
+}

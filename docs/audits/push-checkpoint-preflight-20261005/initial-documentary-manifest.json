@@ -1,0 +1,18 @@
+{
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "e205494e74a9c3e72973607afc315406b8511ba1e593eaee4ebaa7ae60b7ef35"
+  },
+  "book-transform.json": {
+    "bytes": 575699,
+    "sha256": "4ed5b75a7e8fe0a90c58251680e98cc4d8e8821640524dfdcae70ef575f9d425"
+  },
+  "preflight.json": {
+    "bytes": 1360971,
+    "sha256": "2c89628599dcb6a88be06f2813b09a6fbc8e0e9b7502c01e1e939265ba93b8eb"
+  },
+  "scope.txt": {
+    "bytes": 1498,
+    "sha256": "4764356bd088afbb0981431ee78e4ddda8f603f11848dd29b8cb376d10718a10"
+  }
+}

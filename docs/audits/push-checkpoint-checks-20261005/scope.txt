@@ -1,0 +1,2 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.1
+Documentary push-cadence/HIAL-gate preflight only; no full CI/push or native repair.

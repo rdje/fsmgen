@@ -1,0 +1,26 @@
+{
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "e205494e74a9c3e72973607afc315406b8511ba1e593eaee4ebaa7ae60b7ef35"
+  },
+  "book-transform.json": {
+    "bytes": 575699,
+    "sha256": "4ed5b75a7e8fe0a90c58251680e98cc4d8e8821640524dfdcae70ef575f9d425"
+  },
+  "initial-documentary-manifest.json": {
+    "bytes": 520,
+    "sha256": "c1d42bba68f546665f7ee37e4d9d5d9878136cf346be2290f4bef649e897b5da"
+  },
+  "preflight.json": {
+    "bytes": 1360971,
+    "sha256": "2c89628599dcb6a88be06f2813b09a6fbc8e0e9b7502c01e1e939265ba93b8eb"
+  },
+  "scope.txt": {
+    "bytes": 1850,
+    "sha256": "f1b8b1dbcb0a0e1bd2f47c932df8d7a0308acafbff017f943c5c5d94a4b70a56"
+  },
+  "verify.py": {
+    "bytes": 4621,
+    "sha256": "ca9188e015b541b926fa628e32d4ddf538a45466720210b9b509d53a564f8dfd"
+  }
+}
