@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-disposition-order-20261005/order.py"
+  ],
+  "status": 0,
+  "stdout": "PASS raw registry header and every complete row retained; refreshed candidate moved into canonical order.\n",
+  "stderr": "ram-guard: PID 25128; host 68.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

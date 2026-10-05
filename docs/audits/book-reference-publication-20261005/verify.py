@@ -1,0 +1,271 @@
+"""Qualify full scoped native click delivery without freezing unrelated future prose."""
+import argparse
+import collections
+import copy
+import functools
+import hashlib
+import html
+import importlib.util
+import json
+import re
+import subprocess
+import sys
+import urllib.parse
+from pathlib import Path
+
+BASE = Path('docs/audits/book-reference-publication-20261005')
+SELECTION = Path('docs/audits/book-reference-selection-20261005/selected-routes.json')
+CLASSIFICATION = Path('docs/audits/book-reference-classification-20261005/classification.json')
+spec = importlib.util.spec_from_file_location('publication_transform', BASE / 'publish.py')
+publisher = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(publisher)
+
+
+def exact(a, b):
+    return json.dumps(a, sort_keys=True, allow_nan=False) == json.dumps(b, sort_keys=True, allow_nan=False)
+
+
+@functools.lru_cache(maxsize=1)
+def canonical_truth():
+    rows = json.loads(SELECTION.read_text())['routes']
+    truth = {row['source']: subprocess.check_output(['git', 'show', publisher.REVISION + ':' + row['source']]).decode('utf-8')
+             for row in rows}
+    memory = truth['MEMORY.md']
+    memory = memory.replace('.73.2.3.3` (pending)', '.73.2.3.3` (active)', 1)
+    old_action = 'Activate .73.2.3.3 from the committed source-plane state; publish and verify every classified book reference through its selected native source view.'
+    new_action = 'Publish the classified book links, qualify all actual rendered href/source bytes and unchanged native routes, then commit .73.2.3.3 before the next helper join.'
+    assert memory.count(old_action) == 1
+    truth['MEMORY.md'] = memory.replace(old_action, new_action)
+    return truth
+
+
+def raw_links(body):
+    mains = re.findall(r'<main\b[^>]*>(.*?)</main>', body, re.S)
+    assert len(mains) == 1, 'unique actual rendered chapter body'
+    return [html.unescape(href) for href in re.findall(r'<a\b[^>]*\bhref="([^"]*)"', mains[0])]
+
+
+def qualify_fact(record, text, identity, path):
+    assert record['text'] == text, 'whole actually published fact text'
+    questions = re.findall(r'^  - "(.*)"$', text.split('---', 2)[1], re.M)
+    expected = sorted(question + '\t' + identity + '\t' + path for question in questions)
+    assert set(record['queries']) == {'direct', 'cached'}
+    for result in record['queries'].values():
+        assert type(result['status']) is int and result['status'] == 0
+        actual = sorted(line for line in result['stdout'].splitlines() if identity in line.split('\t')[1].split(','))
+        assert actual == expected, 'whole actual original and added fact question allocation'
+
+
+def qualify(record, rows, old):
+    assert record['version'].strip() == 'mdbook v0.5.4'
+    assert type(record['build']['status']) is int and record['build']['status'] == 0
+    assert type(record['server_status']) is int and record['server_status'] in (0, -15)
+    assert type(record['missing']['status']) is int and record['missing']['status'] == 404
+    assert set(record['source_boundary']) == set(record['built_assets']) == {row['source'] for row in rows}
+    assert record['source_boundary'] == canonical_truth(), 'complete independent Git source authority and exact active Memory transform'
+    assert set(record['built_chapters']) == {'13k-isf-feature-support-matrix', '90-reference-map'}
+    anchors = []
+    for chapter, built in record['built_chapters'].items():
+        path = '/' + chapter + '.html'
+        assert record['responses'][path]['body'] == built, 'whole native and built chapter parity'
+        for href in raw_links(built):
+            resolved = urllib.parse.urlsplit(urllib.parse.urljoin('http://capture.local' + path, href))
+            assert resolved.netloc == 'capture.local'
+            anchors.append({'chapter': chapter, 'href': href, 'path': resolved.path,
+                            'fragment': urllib.parse.unquote(resolved.fragment)})
+    assert collections.Counter(map(lambda row: json.dumps(row, sort_keys=True), anchors)) == collections.Counter(
+        map(lambda row: json.dumps(row, sort_keys=True), record['anchors'])), 'independent whole raw-anchor conservation'
+    selected = [{'chapter': row['chapter'], 'href': row['asset'], 'path': '/' + row['asset'], 'fragment': ''} for row in rows]
+    healthy = old['native_controls'] + [{'chapter': '90-reference-map', 'href': '#canonical-source-views',
+                                        'path': '/90-reference-map.html', 'fragment': 'canonical-source-views'}]
+    key = lambda row: json.dumps(row, sort_keys=True)
+    assert collections.Counter(map(key, anchors)) == collections.Counter(map(key, selected + healthy)), 'complete selected clicks and unchanged native anchors'
+    paths = {row['path'] for row in anchors}
+    assert set(record['responses']) == paths, 'complete actual destination population'
+    for path, response in record['responses'].items():
+        assert type(response['status']) is int and response['status'] == 200
+        raw = response['body'].encode('utf-8')
+        assert type(response['bytes']) is int and response['bytes'] == len(raw)
+        assert response['sha256'] == hashlib.sha256(raw).hexdigest(), 'complete native response byte identity'
+    for anchor in anchors:
+        if anchor['fragment']:
+            ids = {html.unescape(value) for value in re.findall(r'\bid="([^"]*)"', record['responses'][anchor['path']]['body'])}
+            assert anchor['fragment'] in ids, 'actual preserved native anchor'
+    for row in rows:
+        body = record['source_boundary'][row['source']]
+        response = record['responses']['/' + row['asset']]
+        assert response['body'] == record['built_assets'][row['source']] == body, 'complete canonical built and actual-click bytes'
+        assert response['content_type'] == 'text/plain', 'literal raw-source reader role'
+    manifest = b'\n'.join(json.dumps({key: row[key] for key in ('chapter', 'source', 'asset', 'role')},
+                                    sort_keys=True, separators=(',', ':')).encode()
+                           for row in sorted(rows, key=lambda row: row['source'])) + b'\n'
+    assert type(record['manifest']['status']) is int and record['manifest']['status'] == 200
+    assert record['manifest']['body'].encode() == manifest, 'native exact source role and member manifest'
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--current', action='store_true')
+    args = parser.parse_args()
+    rows = json.loads(SELECTION.read_text())['routes']
+    old = json.loads(CLASSIFICATION.read_text())
+    boundary = json.loads((BASE / 'source-boundary.json').read_text())
+    for path, body in boundary['before'].items():
+        assert subprocess.check_output(['git', 'show', boundary['revision'] + ':' + path]).decode() == body
+    assert boundary['revision'] == publisher.REVISION
+    assert boundary['after'] == publisher.transformed(boundary['before'], rows, old['classified_links'])
+    assert boundary['summary'] == subprocess.check_output(['git', 'show', boundary['revision'] + ':docs/book/src/SUMMARY.md']).decode()
+    paths = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', boundary['revision'], '--', 'docs/book/src'], text=True).splitlines()
+    before = {path: subprocess.check_output(['git', 'show', boundary['revision'] + ':' + path])
+              for path in paths if Path(path).parent == Path('docs/book/src') and path.endswith('.md')}
+    after = dict(before)
+    after.update({path: body.encode() for path, body in boundary['after'].items()})
+    assert exact(boundary['authority']['before'], publisher.metrics(before))
+    assert exact(boundary['authority']['after'], publisher.metrics(after))
+    assert exact(boundary['authority']['delta'], {key: boundary['authority']['after'][key] - boundary['authority']['before'][key]
+                                                for key in boundary['authority']['before']})
+    publication = BASE / 'publication-sources.json'
+    if not publication.exists():
+        assert not (BASE / 'manifest.json').exists(), 'never regenerate sealed evidence'
+        actual = {str(path): path.read_bytes() for path in Path('docs/book/src').glob('*.md')}
+        assert actual == after, 'whole actual publication sources and unchanged navigation'
+        publication.write_text(json.dumps({
+            'summary': actual['docs/book/src/SUMMARY.md'].decode(),
+            'chapters': {path: actual[path].decode() for path in boundary['after']},
+            'census': {path: {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} for path, raw in actual.items()}},
+            sort_keys=True, indent=2) + '\n')
+    observed = json.loads(publication.read_text())
+    assert observed['summary'] == boundary['summary'] and observed['chapters'] == boundary['after']
+    assert exact(observed['census'], {path: {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} for path, raw in after.items()})
+    native = json.loads((BASE / 'native.json').read_text())
+    qualify(native, rows, old)
+    closure = [{'chapter': row['chapter'], 'source': row['source'], 'role': row['role'],
+                'failed_href': row['old_href'], 'qualified_href': row['asset'],
+                'status': native['responses']['/' + row['asset']]['status'],
+                'sha256': native['responses']['/' + row['asset']]['sha256'],
+                'owner': 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.3'} for row in rows]
+    target = BASE / 'closure.json'
+    if target.exists():
+        assert exact(json.loads(target.read_text()), closure)
+    else:
+        target.write_text(json.dumps(closure, sort_keys=True, indent=2) + '\n')
+    fact = json.loads((BASE / 'fact-transform.json').read_text())
+    fact_before = (BASE / 'fact-before.txt').read_text()
+    fact_after = (BASE / 'fact-after.txt').read_text()
+    assert subprocess.check_output(['git', 'show', boundary['revision'] + ':' + fact['path']]).decode() == fact_before
+    expected = fact_before.replace('date: 2026-10-02', 'date: 2026-10-05', 1).replace(
+        'answers:\n', 'answers:\n  - "' + fact['added_question'] + '"\n', 1)
+    lines = expected.splitlines()
+    for index, line in enumerate(lines):
+        if line.startswith('evidence:'):
+            lines[index] += '; docs/audits/book-reference-publication-20261005/manifest.json'
+        elif line.startswith('reverify:'):
+            lines[index] += ' && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/book-reference-publication-20261005/verify.py --current'
+    assert fact_after == '\n'.join(lines) + '\n' + fact['body_append'], 'whole original fact and declared metadata/append conservation'
+    fact_target = BASE / 'fact-publication.json'
+    if not fact_target.exists():
+        published = {'text': Path(fact['path']).read_text(), 'queries': {}}
+        for kind, options in (('direct', ['--all', '--no-cache']), ('cached', ['--all'])):
+            result = subprocess.run(['knowledge-map/scripts/query_knowledge_map.sh', *options], capture_output=True, text=True)
+            published['queries'][kind] = {'status': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr}
+        fact_target.write_text(json.dumps(published, sort_keys=True, indent=2) + '\n')
+    published = json.loads(fact_target.read_text())
+    qualify_fact(published, fact_after, fact['id'], fact['path'])
+    fact_controls = []
+    for name in ('lost-original-prose', 'lost-added-query', 'wrong-question-owner', 'Boolean-query-status'):
+        candidate = copy.deepcopy(published)
+        if name == 'lost-original-prose':
+            candidate['text'] = candidate['text'].replace('drift is a project bug.', '')
+        elif name == 'lost-added-query':
+            candidate['queries']['direct']['stdout'] = '\n'.join(line for line in candidate['queries']['direct']['stdout'].splitlines()
+                                                                 if not line.startswith(fact['added_question'] + '\t')) + '\n'
+        elif name == 'wrong-question-owner':
+            candidate['queries']['cached']['stdout'] = candidate['queries']['cached']['stdout'].replace(
+                fact['added_question'] + '\t' + fact['id'], fact['added_question'] + '\twrong-owner')
+        else:
+            candidate['queries']['direct']['status'] = False
+        try:
+            qualify_fact(candidate, fact_after, fact['id'], fact['path'])
+        except AssertionError as error:
+            fact_controls.append({'control': name, 'refusal': str(error)})
+        else:
+            raise AssertionError('false-green whole published fact: ' + name)
+    fact_proofs = BASE / 'fact-proofs.json'
+    if fact_proofs.exists():
+        assert exact(json.loads(fact_proofs.read_text()), fact_controls)
+    else:
+        fact_proofs.write_text(json.dumps(fact_controls, sort_keys=True, indent=2) + '\n')
+    controls = []
+    for name in ('lost-anchor', 'wrong-href', 'wrong-canonical-body', 'shared-canonical-corruption', 'wrong-source-role', 'wrong-reader-role',
+                 'Boolean-status', 'float-status', 'missing-native-anchor', 'unfinished-server'):
+        candidate, routes = copy.deepcopy(native), copy.deepcopy(rows)
+        target = '/' + routes[0]['asset']
+        if name == 'lost-anchor':
+            candidate['anchors'].pop()
+        elif name == 'wrong-href':
+            candidate['anchors'][0]['href'] = 'reference-source/wrong.source.txt'
+        elif name == 'wrong-canonical-body':
+            response = candidate['responses'][target]
+            response['body'] += 'wrong canonical source\n'
+            raw = response['body'].encode()
+            response.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+            candidate['built_assets'][routes[0]['source']] = response['body']
+        elif name == 'shared-canonical-corruption':
+            candidate = json.loads((BASE / 'initial-shared-source-candidate.json').read_text())
+        elif name == 'wrong-source-role':
+            routes[0]['role'] = 'decision-reference'
+        elif name == 'wrong-reader-role':
+            candidate['responses'][target]['content_type'] = 'text/html'
+        elif name in ('Boolean-status', 'float-status'):
+            candidate['responses'][target]['status'] = True if name == 'Boolean-status' else 200.0
+        elif name == 'missing-native-anchor':
+            path = '/90-reference-map.html'
+            body = candidate['responses'][path]['body'].replace('id="knowledge-map-architecture"', 'id="missing-architecture"')
+            candidate['responses'][path].update(body=body, bytes=len(body.encode()), sha256=hashlib.sha256(body.encode()).hexdigest())
+            candidate['built_chapters']['90-reference-map'] = body
+        else:
+            candidate['server_status'] = None
+        try:
+            qualify(candidate, routes, old)
+        except AssertionError as error:
+            controls.append({'control': name, 'refusal': str(error)})
+        else:
+            raise AssertionError('false-green native click closure: ' + name)
+    proof = {'controls': controls, 'classified_clicks': len(rows), 'preserved_native_anchors': len(old['native_controls']),
+             'scope': 'Complete admitted chapter90/13k body clicks, selected canonical raw source bytes and preserved native anchors; no whole-book or visual guarantee.'}
+    target = BASE / 'proofs.json'
+    if target.exists():
+        assert exact(json.loads(target.read_text()), proof)
+    else:
+        target.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    subprocess.run([sys.executable, '-B', 'docs/audits/book-reference-classification-20261005/verify.py'], check=True)
+    if args.current:
+        for row in rows:
+            path = Path('docs/book/src/' + row['chapter'] + '.md')
+            assert path.read_text().count('](' + row['asset'] + ')') == 1, 'unique current classified source destination'
+        assert Path('docs/book/src/90-reference-map.md').read_text().count(publisher.NEW_GUIDANCE) == 1
+        current_fact = Path(fact['path']).read_text()
+        assert current_fact.count(fact['body_append'].strip()) == 1, 'unique current source-view delivery facts'
+        old_questions = re.findall(r'^  - "(.*)"$', fact_before.split('---', 2)[1], re.M)
+        current_questions = re.findall(r'^  - "(.*)"$', current_fact.split('---', 2)[1], re.M)
+        assert current_questions.count(fact['added_question']) == 1
+        assert all(current_questions.count(question) == 1 for question in old_questions)
+        expected = sorted(question + '\t' + fact['id'] + '\t' + fact['path'] for question in current_questions)
+        for options in (['--all', '--no-cache'], ['--all']):
+            result = subprocess.run(['knowledge-map/scripts/query_knowledge_map.sh', *options], capture_output=True, text=True, check=True)
+            actual = sorted(line for line in result.stdout.splitlines() if fact['id'] in line.split('\t')[1].split(','))
+            assert actual == expected, 'complete direct/cache current fact allocation'
+        subprocess.run([sys.executable, '-B', 'scripts/check_book_source_index.py'], check=True)
+        subprocess.run([sys.executable, '-B', 'docs/audits/book-source-index-closure-20261005/verify.py', '--current'], check=True)
+    seal = BASE / 'manifest.json'
+    if seal.exists():
+        pins = json.loads(seal.read_text())
+        assert set(pins) == {str(path) for path in BASE.iterdir() if path.is_file() and path.name != 'manifest.json'}
+        for path, pin in pins.items():
+            raw = Path(path).read_bytes()
+            assert exact(pin, {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()})
+    print('PASS all classified actual source clicks, exact canonical bytes, preserved native anchors and rejecting closure controls.')
+
+
+if __name__ == '__main__':
+    main()

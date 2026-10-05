@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-disposition-refresh-20261005/refresh.py"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 92384; host 60.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/book-reference-disposition-refresh-20261005/refresh.py\", line 42, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/book-reference-disposition-refresh-20261005/refresh.py\", line 24, in main\n    assert candidate_id(before) == OLD_ID\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

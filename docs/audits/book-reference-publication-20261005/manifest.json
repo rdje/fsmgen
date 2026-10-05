@@ -1,0 +1,82 @@
+{
+  "docs/audits/book-reference-publication-20261005/closure.json": {
+    "bytes": 67469,
+    "sha256": "ec6a46f6224b6754c3eb9bc4f02377010ea80caf295d54cf06f9424a93564548"
+  },
+  "docs/audits/book-reference-publication-20261005/fact-after.txt": {
+    "bytes": 6622,
+    "sha256": "5c7e99f1a0cdf7c9e0e2040ea70215a77e8975bd83ed41d007292cb6993b44c1"
+  },
+  "docs/audits/book-reference-publication-20261005/fact-before.txt": {
+    "bytes": 5585,
+    "sha256": "9f23018a364bfed2748ee4a8ed39e2f673f258de5c125edaf380bfb4d4cc4c64"
+  },
+  "docs/audits/book-reference-publication-20261005/fact-proofs.json": {
+    "bytes": 408,
+    "sha256": "7c374f2601bcccd538f40f8b3c7585fafd44a44dbc908a47435cb4f47c93d816"
+  },
+  "docs/audits/book-reference-publication-20261005/fact-publication.json": {
+    "bytes": 2601407,
+    "sha256": "6bec933663bef74fd8f060598ddf921519650d7b4f09e189a11f682d81c13bbb"
+  },
+  "docs/audits/book-reference-publication-20261005/fact-transform.json": {
+    "bytes": 1031,
+    "sha256": "ec88e8043da4c543faf1770dd611573d15a35fce79df5c65601fe99ef4516eb4"
+  },
+  "docs/audits/book-reference-publication-20261005/initial-proofs.json": {
+    "bytes": 1103,
+    "sha256": "7c4da17186aac07f7d64b2f007947e8e3c9295e61945168582e33283a1b2dd0c"
+  },
+  "docs/audits/book-reference-publication-20261005/initial-shared-source-candidate.json": {
+    "bytes": 5731853,
+    "sha256": "432c0e72e527f225ff24f90d77ee50fbc5db84eecdf58ba43ec8d3c5ed913acb"
+  },
+  "docs/audits/book-reference-publication-20261005/initial-shared-source-result.json": {
+    "bytes": 248,
+    "sha256": "867455c64283c7a88e3865b0f3dd912d2c4d4c5e799cdc682d42ddc35a15ba5b"
+  },
+  "docs/audits/book-reference-publication-20261005/initial-verifier.txt": {
+    "bytes": 15364,
+    "sha256": "bd257ab0a781fd696f14e6bc87061c4487ccc4591ffa62c43d8731cf4700f9eb"
+  },
+  "docs/audits/book-reference-publication-20261005/native.json": {
+    "bytes": 5731745,
+    "sha256": "13f500eae4f68cf393b87ec99f34070466d1730cc1e2674fb492853b847d67c6"
+  },
+  "docs/audits/book-reference-publication-20261005/probe_native.py": {
+    "bytes": 5768,
+    "sha256": "979456f1ef6a5fd093b55f445ef8969e9e5448f391456451bdaa8ec7f97a3459"
+  },
+  "docs/audits/book-reference-publication-20261005/probe_shared_source.py": {
+    "bytes": 1517,
+    "sha256": "29f75e0a62382b6cf0e3df430758f8a54f3e407e5be3c17de2009e6ca5aa8a6d"
+  },
+  "docs/audits/book-reference-publication-20261005/proofs.json": {
+    "bytes": 1259,
+    "sha256": "67f3292709dd076c105ee97360fedeb254a0bc4856981c04c3120458bd1abb4c"
+  },
+  "docs/audits/book-reference-publication-20261005/publication-sources.json": {
+    "bytes": 231644,
+    "sha256": "dbd5fe95822453c2f11a652d8f4c2d6d05d0b32770d37b489c48cfea60d97030"
+  },
+  "docs/audits/book-reference-publication-20261005/publish.py": {
+    "bytes": 4508,
+    "sha256": "0c78247d9bbf9890fc9708484db264ae1c1ced1a8359eb8310d7e2046dea41b7"
+  },
+  "docs/audits/book-reference-publication-20261005/replay_initial_qualifier.py": {
+    "bytes": 868,
+    "sha256": "0d7322fef45e0a5d8ff766155419638fc52eec1952b261e4f928cd7a6ba6b45b"
+  },
+  "docs/audits/book-reference-publication-20261005/scope.txt": {
+    "bytes": 3426,
+    "sha256": "9eb25a3fd22ce797e357bea40134d533c1c2b186e156a28cb083bcb37bf00807"
+  },
+  "docs/audits/book-reference-publication-20261005/source-boundary.json": {
+    "bytes": 435581,
+    "sha256": "10767dc49134621c4968b6081107652f1b84dd0c46ad28170b9f668ae8c93aa6"
+  },
+  "docs/audits/book-reference-publication-20261005/verify.py": {
+    "bytes": 17782,
+    "sha256": "0e04154871d1afb79bfdfba12c6f2a71990350b7324e042a93c4e223f339ee3c"
+  }
+}

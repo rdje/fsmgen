@@ -1,0 +1,22 @@
+{
+  "docs/audits/book-reference-disposition-order-20261005/after.jsonl": {
+    "bytes": 2092795,
+    "sha256": "e313b4ad519a548530aa38bd354fecfa96756855bf1c33290c84e7f498efec35"
+  },
+  "docs/audits/book-reference-disposition-order-20261005/before.jsonl": {
+    "bytes": 2092795,
+    "sha256": "be33025d1d17fd177fbe634dea390927f177c5b1bdb6676e982c71f987ed7047"
+  },
+  "docs/audits/book-reference-disposition-order-20261005/order.py": {
+    "bytes": 889,
+    "sha256": "6f90d49f05f10bd0352167aad2d138e621160f0251accda578e8d279f9054570"
+  },
+  "docs/audits/book-reference-disposition-order-20261005/scope.txt": {
+    "bytes": 1010,
+    "sha256": "5cdff9b7d7ae8955653a4d5f16ce9818eb90d16ef087f4b17ba9a5d270617591"
+  },
+  "docs/audits/book-reference-disposition-order-20261005/verify.py": {
+    "bytes": 1646,
+    "sha256": "06dcf991372a05c4b25a5578d38170a3efd371f6ff266e2eb7fe45bc754f285c"
+  }
+}

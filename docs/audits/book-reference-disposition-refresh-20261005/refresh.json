@@ -1,0 +1,26 @@
+{
+  "after_line": "0102](reference-source/docs/decisions/0102-push-cadence-is-500-commits.markdown.source.txt) records the rationale",
+  "before_line": "0102](../../decisions/0102-push-cadence-is-500-commits.md) records the rationale",
+  "new": {
+    "candidate_id": "published-9bf6c2ca8a397c2825c5688e",
+    "disposition": "reviewed_incidental",
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.3",
+    "reason": "The numeral identifies decision 0102 in a navigation link; it is not an empirical claim.",
+    "reason_code": "identifier_or_navigation",
+    "record_type": "disposition",
+    "schema_version": 1
+  },
+  "old": {
+    "candidate_id": "published-c655990b63be614622a437dd",
+    "disposition": "reviewed_incidental",
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.3",
+    "reason": "The numeral identifies decision 0102 in a navigation link; it is not an empirical claim.",
+    "reason_code": "identifier_or_navigation",
+    "record_type": "disposition",
+    "schema_version": 1
+  },
+  "path": "docs/book/src/90-reference-map.md",
+  "review": "Decision 0102 and its rationale are unchanged. Only its link destination becomes the native-safe raw source view. The numeral still identifies a decision/navigation reference and asserts no empirical measurement."
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-publication-20261005/probe_shared_source.py"
+  ],
+  "status": 0,
+  "stdout": "REPRODUCED first qualifier false green for coordinated source/built/served corruption.\n",
+  "stderr": "ram-guard: PID 20240; host 60.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

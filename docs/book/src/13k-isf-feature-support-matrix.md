@@ -40,7 +40,7 @@ presence or reset semantics.
 The earlier derived-width request depends on genuine generic-width support;
 it is distinct from it. Exact request scopes, repair order, current
 reproductions and bounded owners are recorded in
-[SPECFORGE feedback response](../../SPECFORGE_FEEDBACK_RESPONSE.md), including
+[SPECFORGE feedback response](reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt), including
 its current delivery status and complete unstated-reset answer. Reset omission
 selects the documented legacy default; a clock-only domain means no reset,
 without guaranteed initialization. No current form defers reset policy to
@@ -119,7 +119,7 @@ and primitive kinds agree; missing associations and forged reloads refuse.
 The local formal reload helper and residual constructor assertion compare the
 complete declared first cause. Permanent real-producer controls reject unrelated
 parser errors that quote a source label and JSON encoding errors that quote an
-object's class name. The [complete-cause repair](../../../docs/audits/local-formal-helper-cause-repair-20261003/scope.txt)
+object's class name. The [complete-cause repair](reference-source/docs/audits/local-formal-helper-cause-repair-20261003/scope.txt.source.txt)
 qualifies these boundaries with whole ordinary products and primitive kinds,
 the exact prior helper, and an actual source-authentication bypass. Intentional
 stack evidence remains separate: Perl stacks can echo caller patterns.
@@ -167,7 +167,7 @@ binding control uses the documented static parameters and reaches the intended
 port check; the earlier static-parameter restriction has a separate exact
 refusal. Real parser/source-comment controls, the exact prior consumer and a
 genuine binding-validation bypass qualify the
-[source-context repair](../../../docs/audits/formal-source-context-cause-repair-20261003/scope.txt).
+[source-context repair](reference-source/docs/audits/formal-source-context-cause-repair-20261003/scope.txt.source.txt).
 Whole ordinary products and primitive kinds are conserved within the prior
 source-bound scope; wider internal product semantics remain under cold review.
 The caller-formal-binding helper now compares complete declared causes for
@@ -175,48 +175,48 @@ caller width precedence, actor restrictions, callee ports and roles, timing,
 duplicates and live endpoints. Real earlier binding-shape errors and labels
 containing wanted text fail its predicate. The exact prior helper reproduces
 false stack matches, and a genuine validation bypass makes the repaired test
-fail. The [binding-helper repair](../../../docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt)
+fail. The [binding-helper repair](reference-source/docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt.source.txt)
 conserves whole ordinary products and primitive kinds within the declared
 source and binding-report scope; wider internal semantics remain under cold review.
-A [cohort handoff](../../../docs/audits/residual-named-helper-cohorts-20261003/scope.txt)
+A [cohort handoff](reference-source/docs/audits/residual-named-helper-cohorts-20261003/scope.txt.source.txt)
 assigns review owners for formal/resource, aggregate-record, public-query,
 process/governance, producer-role and backend/native review. Formal resource,
 reusable and reservation review now closes with the repairs below. The
-[aggregate-record review plan](../../../docs/audits/aggregate-record-helper-plan-20261003/scope.txt)
+[aggregate-record review plan](reference-source/docs/audits/aggregate-record-helper-plan-20261003/scope.txt.source.txt)
 assigns a bounded source-contract review to every selected record helper before
 native probes; actual causes, products, copy kinds and native applicability remain
 open. Names do not establish
 actual refusal-consumer roles or native applicability.
 
-The [interface-metadata helper contract](../../../docs/audits/interface-metadata-helper-contract-20261003/scope.txt)
-binds its callback sites and adjacent assertions. Its [native profile](../../../docs/audits/interface-metadata-runtime-20261004/scope.txt)
+The [interface-metadata helper contract](reference-source/docs/audits/interface-metadata-helper-contract-20261003/scope.txt.source.txt)
+binds its callback sites and adjacent assertions. Its [native profile](reference-source/docs/audits/interface-metadata-runtime-20261004/scope.txt.source.txt)
 records complete API, copy, error, warning and assertion streams. A real Storable
 error passes the generic context check when the module path contains the wanted
 prefix. An adjacent output-writer assertion accepts a different parser error when
 the source filename contains its wanted phrase. Both complete-cause repairs below now close these test-assurance defects. Existing public metadata qualification retains its finite scope;
 provider behavior and public admission are unchanged.
-The [field qualification](../../../docs/audits/interface-metadata-fields-20261004/scope.txt)
+The [field qualification](reference-source/docs/audits/interface-metadata-fields-20261004/scope.txt.source.txt)
 binds every observed width change to declared local/imported types and checks
 complete numeric metadata results. Private validation copies may hold decimal
-strings before numeric rebuilding. The [actual copy controls](../../../docs/audits/interface-metadata-copy-controls-20261004/scope.txt)
+strings before numeric rebuilding. The [actual copy controls](reference-source/docs/audits/interface-metadata-copy-controls-20261004/scope.txt.source.txt)
 show that scalar-preserving copies conserve ordinary products. The old test
 still passes a caller number-to-string mutation, an aliased fixture copy and a
-real numeric-rebuilding bypass. The [copy-assurance repair](../../../docs/audits/interface-metadata-copy-repair-20261004/scope.txt)
+real numeric-rebuilding bypass. The [copy-assurance repair](reference-source/docs/audits/interface-metadata-copy-repair-20261004/scope.txt.source.txt)
 now checks complete fixture kinds, sharing, reference counts and isolation.
 Typed graph baselines check caller immutability, and complete metadata products
 retain numeric widths, signed flags and packed ranges. The genuine kind,
 alias, Storable-restoration and numeric-bypass controls now fail the intended
 assertions; ordinary products and primary causes remain the same. The actual
 rejected cyclic type also copies without sharing caller references.
-The [complete copy join](../../../docs/audits/interface-metadata-copy-join-20261004/scope.txt)
+The [complete copy join](reference-source/docs/audits/interface-metadata-copy-join-20261004/scope.txt.source.txt)
 binds original and repaired copy populations to their source fields and final
 products. Preserving numeric test seeds makes some private clones stringify
 additional numeric leaves; final numeric metadata and caller graphs remain
 the same. Private validation copies remain distinct from product authority.
-The [source/product closure](../../../docs/audits/interface-metadata-source-product-join-20261004/scope.txt)
+The [source/product closure](reference-source/docs/audits/interface-metadata-source-product-join-20261004/scope.txt.source.txt)
 joins those proofs to the complete authored-field models and preceding pinned
 source context. It closes source and copy assurance.
-The [metadata cause repair](../../../docs/audits/interface-metadata-cause-repair-20261004/scope.txt)
+The [metadata cause repair](reference-source/docs/audits/interface-metadata-cause-repair-20261004/scope.txt.source.txt)
 now saves native errors immediately and checks complete intended primary causes
 for every malformed capture/snapshot case and both malformed-width first reads.
 A permanent native probe loads the unchanged provider from a path containing the
@@ -224,23 +224,23 @@ wanted prefix: the old helper accepts its earlier Storable error, while the
 repaired helper rejects it. Caller/argument echoes retain their real errors;
 a genuine name-validation bypass fails both refusal and cause checks.
 Complete ordinary products, caller kinds, copies and primary causes conserve.
-The [writer cause repair](../../../docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt)
+The [writer cause repair](reference-source/docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt.source.txt)
 saves the parser error immediately and checks the complete record context,
 transaction, field target and qualification reason. Real earlier root errors
 reject even when the filename contains the wanted phrase; the genuine writer
 cause succeeds at that filename. An actual writer-guard bypass fails both
 refusal and cause assertions. Complete ordinary metadata/parser products and
 copy kinds conserve; the controlled admitted actor binds its authored record.
-The [complete diagnostic join](../../../docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt)
+The [complete diagnostic join](reference-source/docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt.source.txt)
 binds both committed repairs to their full source, native context and ordinary
 product/copy/kind/caller proofs. Both contextual assurance defects close;
 source echoes, private-copy promotion and actual guard bypasses cannot qualify
-refusal causes. The [final metadata-helper review](../../../docs/audits/interface-metadata-helper-outcome-20261004/scope.txt)
+refusal causes. The [final metadata-helper review](reference-source/docs/audits/interface-metadata-helper-outcome-20261004/scope.txt.source.txt)
 now reconciles the original source contracts with complete actual native roles
 and all source, field, copy, product and diagnostic repairs. This finite T1983
 review closes; public metadata behavior and admission stay unchanged. Other
 aggregate helpers and wider cold/backend/native consumers remain under review.
-The [record-value helper source plan](../../../docs/audits/record-value-helper-contract-20261004/scope.txt)
+The [record-value helper source plan](reference-source/docs/audits/record-value-helper-contract-20261004/scope.txt.source.txt)
 binds T1986's first-line fragment predicate, real operation expressions,
 Storable copy expressions and separate artificial stack self-test to its complete
 source. Exact recursive record identity remains distinct from payload
@@ -248,20 +248,20 @@ compatibility; unresolved/local/formal shadows retain their declared roles.
 Actual native causes, copied-field meanings and assurance controls remain owned
 before any further test repair.
 
-The [native record-value profile](../../../docs/audits/record-value-runtime-20261004/scope.txt)
+The [native record-value profile](reference-source/docs/audits/record-value-runtime-20261004/scope.txt.source.txt)
 records actual selected APIs, helpers, copies, leaf consumers and complete
 local/imported parser products. It retains cyclic input and its unchanged
 refusal, and exposes numeric width kinds becoming strings in original test
 copies. Source/product models and genuine copy/cause controls remain owned
 before assurance repair; observing a passing test does not close those legs.
 
-The [authored record-value layouts](../../../docs/audits/record-value-fields-20261004/scope.txt)
+The [authored record-value layouts](reference-source/docs/audits/record-value-fields-20261004/scope.txt.source.txt)
 independently bind local/imported resolved types, aliases, member/list order,
 signed/state presence and packed scalar ranges. Original parser type/storage
 products match complete numeric models; a private copied fixture cannot stand
 in for that authority. Whole actor/API products remain separately owned.
 
-The [copied-field qualification](../../../docs/audits/record-value-copy-fields-20261004/scope.txt)
+The [copied-field qualification](reference-source/docs/audits/record-value-copy-fields-20261004/scope.txt.source.txt)
 covers the complete original copy population and keeps raw numeric/string kinds.
 Full types and scalar properties match source-declared candidates; storage and
 default-port carriers keep distinct roles. Metadata layouts follow authored
@@ -269,31 +269,31 @@ ranges. A compatible private-stage spelling does not establish final numeric
 product kinds or safe, isolated copying. Whole actor/API products, copy assurance
 and native cause controls remain owned.
 
-The [record-value field join](../../../docs/audits/record-value-field-join-20261004/scope.txt)
+The [record-value field join](reference-source/docs/audits/record-value-field-join-20261004/scope.txt.source.txt)
 reexecutes both complete source/layout and copied-field readers with their
 recorded document boundaries, including their rejecting controls. It joins every
 original copied graph and whole field record to the completed source-model
 owners. Field qualification is complete; whole actor/API products and native
 copy/cause assurance remain separate.
 
-The [whole record-value actors](../../../docs/audits/record-value-actors-20261004/scope.txt)
+The [whole record-value actors](reference-source/docs/audits/record-value-actors-20261004/scope.txt.source.txt)
 match independent source-first local/imported models, including defaults, empty
 optional families, transaction clauses, raw type tokens, storage signals, package
 roots and metadata. Both original public-source refusals publish no actor product.
-The [complete scope proof](../../../docs/audits/record-value-scopes-20261004/scope.txt)
+The [complete scope proof](reference-source/docs/audits/record-value-scopes-20261004/scope.txt.source.txt)
 binds all forty original calls: twenty-seven preparations and thirteen refusals.
 Source-only root recipes cover local/formal masks, imported/local aliases, all
 malformed facts and the refused output actor's preparatory scopes. Whole inputs,
 caller kinds and detached scope products retain. Preparation type facts keep
 their exact recorded width/signed spellings; aggregate signed validation is
 numeric. A genuine equal-meaning private metadata type has different primitive
-kinds and cannot supply the scope product. The [complete reference proof](../../../docs/audits/record-value-references-20261004/scope.txt)
+kinds and cannot supply the scope product. The [complete reference proof](reference-source/docs/audits/record-value-references-20261004/scope.txt.source.txt)
 binds all sixty-eight original calls: fifty-one returned values, three accepted
 calls delegated or left unresolved, and fourteen refusals. An independent
 packed leaf inventory and scalar index/slice witnesses conserve exact source
 properties, nearest roles and numeric widths/ranges. All sixty-five private
 root copies and the whole caller graphs retain; returned type facts keep their
-recorded preparation spellings. The [complete copy proof](../../../docs/audits/record-value-copies-20261004/scope.txt)
+recorded preparation spellings. The [complete copy proof](reference-source/docs/audits/record-value-copies-20261004/scope.txt.source.txt)
 binds all twenty-two original calls: five successful record copies, three
 scalar/storage/literal cases with no record-copy obligation, and fourteen
 refusals. All forty-one conditional source/target clone stages and caller kinds
@@ -301,13 +301,13 @@ retain. Whole source reference/type/role models independently distinguish
 same-width member/order/signed/state/bit/list identity differences, input
 targets and the contradictory width descriptor. A genuine narrower payload
 operation accepts a signed-type difference that strict record-copy identity
-refuses. The [complete value join](../../../docs/audits/record-value-api-join-20261004/scope.txt)
+refuses. The [complete value join](reference-source/docs/audits/record-value-api-join-20261004/scope.txt.source.txt)
 now binds the three completed owners to all one-hundred-thirty whole original
 scope/reference/copy call, source model and product records. All two-hundred-
 thirty-three value-private clones join their full native graphs and copied-field
 records; membership, source roles and primitive kinds retain. Each complete
 child proof and its rejecting controls reexecute in its exact source/document
-context. The [complete metadata capture proof](../../../docs/audits/record-value-captures-20261004/scope.txt)
+context. The [complete metadata capture proof](reference-source/docs/audits/record-value-captures-20261004/scope.txt.source.txt)
 now qualifies all two-hundred-twenty-seven original captures: two-hundred-twenty
 complete numeric products and seven source-owned refusals. Every own detached
 stage joins its full copied-field record and declared interface/type source.
@@ -316,7 +316,7 @@ signed defaults and explicit state models. A genuine private width string
 cannot become final numeric metadata. Metadata accepts a missing scalar signed
 property with its existing unsigned default; the stricter value gate refuses
 that same source. Complete caller kinds and prior value semantics retain.
-The [complete snapshot proof](../../../docs/audits/record-value-snapshots-20261004/scope.txt)
+The [complete snapshot proof](reference-source/docs/audits/record-value-snapshots-20261004/scope.txt.source.txt)
 binds every two-hundred-twenty original snapshot to its own completed source-built
 capture, full handoff and detached stage/field record. All complete ordered
 port/field properties and contiguous packed ranges reconstruct independently;
@@ -325,7 +325,7 @@ Capture handoffs keep their raw width spelling, and caller graphs retain.
 Genuine missing products/stages, wrong source roles, private width-string
 promotion and capture misallocation reject. This profile's snapshots all
 succeed; broader snapshot refusals and unknown/empty inputs are covered by their
-separate metadata contracts. The [complete range proof](../../../docs/audits/record-value-ranges-20261004/scope.txt)
+separate metadata contracts. The [complete range proof](reference-source/docs/audits/record-value-ranges-20261004/scope.txt.source.txt)
 binds every four-hundred-thirty-seven original call: four-hundred-seventeen
 source-declared metadata leaf paths and twenty source/reference paths. Independent
 reverse packed intervals verify four-hundred-thirty-one whole successful products
@@ -338,7 +338,7 @@ a sibling width from string to number; its whole source/copy/caller relation is
 retained, while the original reference caller stays unchanged. Missing calls or
 type stages, wrong same-width ranges/failure truths, coercing a prepared type width and
 concealing that private change reject. The
-[original clone referent proof](../../../docs/audits/record-value-clones-20261004/scope.txt)
+[original clone referent proof](reference-source/docs/audits/record-value-clones-20261004/scope.txt.source.txt)
 adds joint input/result graphs to every eight-thousand-two-hundred-fifty-one
 original recursive clone call. Independent reachable-node sets show detached
 results for every two-thousand-six-hundred-twenty-eight container call; all
@@ -354,7 +354,7 @@ observer keeps its original repository-root placeholder encoding; byte-exact
 host-native cause equality remains unqualified. At that proof boundary,
 clone source/tree semantics still needed the qualifications below. Permanent
 consumer assurance and intended native causes remain owned follow-up work. The
-[native command repair](../../../docs/audits/record-value-clone-paths-20261004/scope.txt)
+[native command repair](reference-source/docs/audits/record-value-clone-paths-20261004/scope.txt.source.txt)
 supersedes a command-binding flaw in that proof: Python supplied absolute
 reader paths, so replay at another working root refused before semantics. Stored
 commands now name the exact reader with repository-relative paths. The complete
@@ -364,7 +364,7 @@ the exact main/imported-module traceback filename coordinates qualify; all
 messages, arguments and other root-bearing semantic text remain exact. Complete
 project-owned Perl/test-support runtime membership and bytes are watched. Original
 evidence and the first missing-dependency fixture failure remain preserved.
-The [complete root-source proof](../../../docs/audits/record-value-clone-root-20261004/scope.txt)
+The [complete root-source proof](reference-source/docs/audits/record-value-clone-root-20261004/scope.txt.source.txt)
 binds every one-thousand-four-hundred-forty-eight original root clone input:
 one-hundred-fifteen scope types, forty whole references, and three roots for
 each of four-hundred-thirty-one successful paths. Those path roots hold segments,
@@ -376,7 +376,7 @@ scalar index/slice witnesses verify source allocation. Missing roots, wrong role
 an identical type borrowed from a different source call, and promotion of a raw
 width string reject. The full repaired native proof and its controls reexecute in
 their exact dated context. The
-[complete recursive tree proof](../../../docs/audits/record-value-clone-tree-20261004/scope.txt)
+[complete recursive tree proof](reference-source/docs/audits/record-value-clone-tree-20261004/scope.txt.source.txt)
 now expands those source-owned roots into every original recursive operation.
 All eight-thousand-two-hundred-fifty-one whole input/output products retain:
 six-thousand-eight-hundred-three children, with five-thousand-nine-hundred-eleven
@@ -392,7 +392,7 @@ source-root and native proofs reexecute with all their controls in dated context
 This finite observed population has no cyclic clone inputs; cyclic support is
 not inferred. Permanent original consumer assurance and full native causes
 remain owned follow-ups. The
-[complete clone join](../../../docs/audits/record-value-clone-join-20261004/scope.txt)
+[complete clone join](reference-source/docs/audits/record-value-clone-join-20261004/scope.txt.source.txt)
 now binds the completed native and source/tree owners to every whole original
 operation, source path, caller, primitive kind, joint graph and reachable set.
 The complete original native profile retains, with its full encoded error and
@@ -404,7 +404,7 @@ reject. The complete tree proof and its eight controls reexecute in exact dated
 contexts, including all prior root/native proofs. This closes the structured
 clone product lane. Strict identity and payload helpers, the whole core/API join,
 permanent original consumer assurance and native full causes remain separate.
-The [complete identity/payload proof](../../../docs/audits/record-value-identities-20261004/scope.txt)
+The [complete identity/payload proof](reference-source/docs/audits/record-value-identities-20261004/scope.txt.source.txt)
 now qualifies fourteen original strict comparisons and four original payload
 comparisons from full source types and their own private preparations. Five
 strict pairs are equivalent; nine conflict despite the same packed width. Full
@@ -418,7 +418,7 @@ for those properties and false for same-width renamed/reordered/flattened/list-
 reordered shapes, with complete caller arguments unchanged. The original whole
 input/output/caller/kind/context records and dated clone/native proofs retain.
 The whole core/API join, permanent consumers and native full causes stay owned.
-The [complete core join](../../../docs/audits/record-value-core-join-20261004/scope.txt)
+The [complete core join](reference-source/docs/audits/record-value-core-join-20261004/scope.txt.source.txt)
 binds every original capture, snapshot, range, recursive clone, strict identity
 and payload call to its own completed source model and whole native record.
 Each metadata private clone and field record, source capture handoff and final
@@ -430,7 +430,7 @@ in its dated source/document context, including the full inherited native and
 source proofs. This closes only the core product lane. The whole actor/API
 join, permanent original consumers and full native diagnostic assurance remain
 separately owned.
-The [complete actor/API product join](../../../docs/audits/record-value-products-20261004/scope.txt)
+The [complete actor/API product join](reference-source/docs/audits/record-value-products-20261004/scope.txt.source.txt)
 now binds all four original actor outcomes and every value/core call to its own
 completed source model and full native product. All private preparation clones
 and field records retain their API owners; nested calls retain their exact
@@ -440,7 +440,7 @@ promotion and genuine kind-changing private actor copies reject. Complete actor,
 value and core proofs reexecute in dated contexts with every inherited native
 and source proof. This closes product semantics only; whole semantic/helper
 closure, permanent original consumer assurance and full native causes follow.
-The [complete semantic join](../../../docs/audits/record-value-semantic-join-20261004/scope.txt)
+The [complete semantic join](reference-source/docs/audits/record-value-semantic-join-20261004/scope.txt.source.txt)
 now binds the full authored/source field domain, every original copied field and
 actor/API product, and all helper/consumer source and callback relationships.
 Each raw caller, primitive kind, model and allocation remains exact, including
@@ -451,91 +451,91 @@ pass but fails the full joint-graph allocation check. Dated field/source and
 product proofs reexecute with their controls and inherited native proofs. This
 closes field/source/product semantics; permanent consumer/baseline-kind repair
 and complete intended host-native causes remain open.
-The [original semantic replay](../../../docs/audits/record-value-original-replay-20261004/scope.txt)
+The [original semantic replay](reference-source/docs/audits/record-value-original-replay-20261004/scope.txt.source.txt)
 now pins complete original source and task authority before permanent test changes.
 The original proof and every rejecting control run in that exact dated context;
 changed source or completed-owner authority rejects. This preserves the original
 comparison boundary while current copy and consumer repairs remain separately owned.
-The [complete original copy-input contract](../../../docs/audits/record-value-copy-inputs-20261004/scope.txt)
+The [complete original copy-input contract](reference-source/docs/audits/record-value-copy-inputs-20261004/scope.txt.source.txt)
 now binds every test-copy graph and field to its source and completed semantic owner.
 Actual Storable outputs lose primitive-kind information and reject as baseline authority.
 These original inputs are trees; sharing, cycles and native-reference boundaries need
 separate candidate probes before any permanent copy or consumer repair.
-The [finite native probe captures](../../../docs/audits/record-value-copy-probes-20261004/scope.txt)
+The [finite native probe captures](reference-source/docs/audits/record-value-copy-probes-20261004/scope.txt.source.txt)
 now retain ordinary primitive/tree/sharing/cycle observations and genuine bad-provider
-failures, including kind loss, aliasing and readonly violations. The [independent finite reader](../../../docs/audits/record-value-copy-reader-20261004/scope.txt)
+failures, including kind loss, aliasing and readonly violations. The [independent finite reader](reference-source/docs/audits/record-value-copy-reader-20261004/scope.txt.source.txt)
 now qualifies the complete typed graphs, sharing, cycles, readonly inputs and
 detachment against separate source models. Fresh exact-source replay preserves
 every native mode and intended failure; altered graph, cause and source authority
-controls reject. This qualifies the recorded plain-helper profile only. The [finite qualification join](../../../docs/audits/record-value-copy-probe-join-20261004/scope.txt)
+controls reject. This qualifies the recorded plain-helper profile only. The [finite qualification join](reference-source/docs/audits/record-value-copy-probe-join-20261004/scope.txt.source.txt)
 now closes this probe lane with exact completed owners and whole reexecuted products.
-The [original candidate captures](../../../docs/audits/record-value-original-candidate-20261004/scope.txt)
+The [original candidate captures](reference-source/docs/audits/record-value-original-candidate-20261004/scope.txt.source.txt)
 now retain unchanged-input copy graphs, actual Storable kind failures and alias
 isolation failures. The full alias run also preserves downstream mutations and
 its real abort; separate bad-provider trials keep every original input intact.
-The [independent original copy reader](../../../docs/audits/record-value-original-copy-reader-20261004/scope.txt)
+The [independent original copy reader](reference-source/docs/audits/record-value-original-copy-reader-20261004/scope.txt.source.txt)
 now qualifies unchanged-input copy kinds, complete graph identity, readonly
 inputs and detachment, including the actual bad-provider trials. The
-[original source-product reader](../../../docs/audits/record-value-original-products-20261005/scope.txt)
+[original source-product reader](reference-source/docs/audits/record-value-original-products-20261005/scope.txt.source.txt)
 now qualifies complete API/parser results against their own source models and
-conserves private-source allocations. The [source-intervention graph reader](../../../docs/audits/record-value-original-input-graphs-20261005/scope.txt)
+conserves private-source allocations. The [source-intervention graph reader](reference-source/docs/audits/record-value-original-input-graphs-20261005/scope.txt.source.txt)
 now qualifies complete input/private graphs, typed edges, readonly copies and
 detachment. It retains the known private range sibling kind transition while
-the outer value caller stays unchanged. The [copied-field source reader](../../../docs/audits/record-value-original-fields-20261005/scope.txt)
+the outer value caller stays unchanged. The [copied-field source reader](reference-source/docs/audits/record-value-original-fields-20261005/scope.txt.source.txt)
 now joins every copied width to its complete source type, carrier role and
 ancestor context, preserving raw kinds and compatible-source candidate sets.
-The [input/private semantic join](../../../docs/audits/record-value-original-input-join-20261005/scope.txt)
+The [input/private semantic join](reference-source/docs/audits/record-value-original-input-join-20261005/scope.txt.source.txt)
 now binds every own graph and field to the same source/caller context, raw
-kinds and detached copy boundary. The [source-context reader](../../../docs/audits/record-value-original-contexts-20261005/scope.txt)
+kinds and detached copy boundary. The [source-context reader](reference-source/docs/audits/record-value-original-contexts-20261005/scope.txt.source.txt)
 now qualifies exact helper, consumer and parser source locations, input texts
-and operation spans for the recorded finite profile. The [primary-cause reader](../../../docs/audits/record-value-original-primary-20261005/scope.txt)
+and operation spans for the recorded finite profile. The [primary-cause reader](reference-source/docs/audits/record-value-original-primary-20261005/scope.txt.source.txt)
 now derives API, helper and parser first causes and acceptance from their own
-source inputs. The [raw-error inventory](../../../docs/audits/record-value-original-raw-20261005/scope.txt)
+source inputs. The [raw-error inventory](reference-source/docs/audits/record-value-original-raw-20261005/scope.txt.source.txt)
 now preserves the complete empty/nonempty population, serialized string bodies,
 physical frame annotations and opaque address lexeme spans. This qualifies
-lossless capture grammar only. The [source exception contracts](../../../docs/audits/record-value-original-class-20261005/scope.txt)
+lossless capture grammar only. The [source exception contracts](reference-source/docs/audits/record-value-original-class-20261005/scope.txt.source.txt)
 now infer unblessed scalar exceptions from the finite literal guards and original
 publisher policy. Genuine object exceptions with the same printable message
 retain their class and fail that publisher. This is a source/contract inference;
 the original capture did not measure class before serialization. The provider
 version comes from its runtime accessor because the historical POD label is stale.
-The [direct value paths](../../../docs/audits/record-value-original-value-frames-20261005/scope.txt)
+The [direct value paths](reference-source/docs/audits/record-value-original-value-frames-20261005/scope.txt.source.txt)
 now derive active value-validation function order and source argument roles
 from qualified inputs. Captured visible argument footprints agree; exact trace
 formatting, unprinted arguments and live reference identity remain open.
-The [metadata paths](../../../docs/audits/record-value-original-metadata-frames-20261005/scope.txt)
+The [metadata paths](reference-source/docs/audits/record-value-original-metadata-frames-20261005/scope.txt.source.txt)
 now qualify the finite metadata guard and record-member recursion projection from
 type inputs, including cyclic traversal. Visible path and argument footprints
-agree. The [nested input join](../../../docs/audits/record-value-original-nested-inputs-20261005/scope.txt)
+agree. The [nested input join](reference-source/docs/audits/record-value-original-nested-inputs-20261005/scope.txt.source.txt)
 now links each finite failing Scope/capture pair to its private root and complete
 source-constructed typed interface input, preserving kinds, sharing and cycles.
-The [nested forwarding reader](../../../docs/audits/record-value-original-forwarding-20261005/scope.txt)
+The [nested forwarding reader](reference-source/docs/audits/record-value-original-forwarding-20261005/scope.txt.source.txt)
 now binds the capture eval, explicit whole-string rethrow, Value catch and new
 outer throw. The entire inner error, including its trace text, is conserved in
 the outer message prefix. This proves forwarding of the source variable; full
 inner and outer trace interpretation remains open. Current public Perl probes
 distinguish explicit rethrow from implicit propagation and show that a die hook
 can replace an exception. Original hook state and provider bytes were not captured.
-The [inherited API paths](../../../docs/audits/record-value-original-inherited-frames-20261005/scope.txt)
+The [inherited API paths](reference-source/docs/audits/record-value-original-inherited-frames-20261005/scope.txt.source.txt)
 now join the active Value validation and capture/Scope observer eval, delegate
 and wrapper frames in both the inner failure and new outer throw. Source argument
-roles agree with visible scalar and reference-kind footprints. The [own API path join](../../../docs/audits/record-value-original-api-paths-20261005/scope.txt)
+roles agree with visible scalar and reference-kind footprints. The [own API path join](reference-source/docs/audits/record-value-original-api-paths-20261005/scope.txt.source.txt)
 now covers every recorded API refusal through a complete partition of direct
 Value and nested metadata paths, including both nested throw phases. Complete own
-function order and visible argument roles agree with source models. The [observer source inventory](../../../docs/audits/record-value-original-observer-sources-20261005/scope.txt)
+function order and visible argument roles agree with source models. The [observer source inventory](reference-source/docs/audits/record-value-original-observer-sources-20261005/scope.txt.source.txt)
 now pins whole own observer/test sources, wrapper and helper roles, subtest markers
-and every original callback allocation. The [observer operation boundaries](../../../docs/audits/record-value-original-observer-boundaries-20261005/scope.txt)
+and every original callback allocation. The [observer operation boundaries](reference-source/docs/audits/record-value-original-observer-boundaries-20261005/scope.txt.source.txt)
 now join original API/parser operations, observer evals and installed wrappers,
 including both nested throw phases. Complete source argument roles agree with
 visible scalar and reference-kind footprints. The parser receiver has a declared
-facade role; its original object identity was not captured. The [named helper paths](../../../docs/audits/record-value-original-named-helpers-20261005/scope.txt)
+facade role; its original object identity was not captured. The [named helper paths](reference-source/docs/audits/record-value-original-named-helpers-20261005/scope.txt.source.txt)
 now preserve supplied versus default scope/reference/copy arguments and complete
 source input graphs. Calls that returned while constructing copy arguments remain
 separate from the helper active at the throw. Named helper paths and visible
-argument roles agree through both nested throw phases. The [compiled callback paths](../../../docs/audits/record-value-original-callback-paths-20261005/scope.txt)
+argument roles agree through both nested throw phases. The [compiled callback paths](reference-source/docs/audits/record-value-original-callback-paths-20261005/scope.txt.source.txt)
 now bind the parameterless original callback, refuses eval, compiled helper and
 installed helper wrapper. Visible operation-kind, regex-body and label displays
-agree with independently authored source roles through both throw phases. The [complete helper join](../../../docs/audits/record-value-original-helper-join-20261005/scope.txt)
+agree with independently authored source roles through both throw phases. The [complete helper join](reference-source/docs/audits/record-value-original-helper-join-20261005/scope.txt.source.txt)
 now binds every source helper allocation, supplied/default input and returned
 argument-building operation to its compiled callback/refusal path. Complete active
 paths and visible argument roles agree through both nested throw phases; returned
@@ -568,7 +568,7 @@ whole-book authority remain snapshot evidence; an unrelated chapter edit does
 not change the helper source meanings or require a new helper capture. Relevant
 source, role, question and route changes still require qualification.
 
-[portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
+[portable replay repair](reference-source/docs/audits/record-value-replay-portability-20261004/scope.txt.source.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the
 superseding complete field/actor join passes there while preserving all other
@@ -580,42 +580,42 @@ remains separate.
 The resource helper and adjacent preparation assertion now compare complete
 resource context and reasons. Real earlier unsupported statements, including
 primary messages containing wanted codes, reject. The
-[resource cause repair](../../../docs/audits/formal-resource-cause-repair-20261003/scope.txt)
+[resource cause repair](reference-source/docs/audits/formal-resource-cause-repair-20261003/scope.txt.source.txt)
 retains exact prior failures and a genuine resource-validation bypass that makes
 the repaired test fail. Compiled observer controls keep expectations out of
 active eval-source frames. Complete ordinary products are conserved; pointer
 records and update rosters have finite independent models, while wider internal
 semantics remain under cold review. Aggregate-record and other
 named/framework cohorts stay open.
-The [reusable-product diagnosis](../../../docs/audits/reusable-product-helper-causes-20261003/scope.txt)
+The [reusable-product diagnosis](reference-source/docs/audits/reusable-product-helper-causes-20261003/scope.txt.source.txt)
 finds the same cause gap in library/ATL admission helpers and one adjacent
-parent-width assertion. The [complete-cause repair](../../../docs/audits/reusable-cause-repair-20261003/scope.txt)
+parent-width assertion. The [complete-cause repair](reference-source/docs/audits/reusable-cause-repair-20261003/scope.txt.source.txt)
 now rejects real earlier unknown-child causes and primary echoes, while retaining
 the full library/ATL and parent-width reasons. Exact prior checks and a genuine
 library collision bypass fail; ordinary products are conserved. Its ordinary
 products also expose two distinct primitive-kind gaps: the test projection's
 Storable copy lost numeric JSON kinds in FIFO indexes/bindings and ATL movement
-widths. The [projection-copy repair](../../../docs/audits/reusable-projection-kind-repair-20261003/scope.txt)
+widths. The [projection-copy repair](reference-source/docs/audits/reusable-projection-kind-repair-20261003/scope.txt.source.txt)
 uses a scalar-preserving source copy and first-touch JSON snapshots. Whole
 source metadata and reusable-product checks now distinguish strings from numbers;
 restoring the exact old copier makes the strengthened checks fail. The private ATL output-width
 check now compares a detached scalar, preserving the complete caller on both
-accepted and refused routes. The [width-kind repair](../../../docs/audits/atl-source-width-kind-repair-20261003/scope.txt)
+accepted and refused routes. The [width-kind repair](reference-source/docs/audits/atl-source-width-kind-repair-20261003/scope.txt.source.txt)
 retains identical preparation/module outputs and exact prior failure controls.
 The formal resource, reusable and reservation cause/copy repairs are complete;
 aggregate-record and remaining cohorts still require review. These repairs
 add no composition or HDL runtime support. Whole constructor and child-internal semantic qualification remains open.
-The [prepared-reservation diagnosis](../../../docs/audits/prepared-reservation-helper-causes-20261003/scope.txt)
+The [prepared-reservation diagnosis](reference-source/docs/audits/prepared-reservation-helper-causes-20261003/scope.txt.source.txt)
 finds unrelated unsupported-reference causes accepted by the test helper and an
 adjacent cycle assertion. Primary paths containing the expected phrase also fool
 fragment checks. The production collector rejects those inputs correctly;
-the [complete-cause repair](../../../docs/audits/prepared-reservation-cause-repair-20261003/scope.txt)
+the [complete-cause repair](reference-source/docs/audits/prepared-reservation-cause-repair-20261003/scope.txt.source.txt)
 now rejects those unrelated causes. Exact old checks and a genuine preparation
 membership bypass fail. Ordinary scope products conserve. The
-[snapshot diagnosis](../../../docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt)
+[snapshot diagnosis](reference-source/docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt.source.txt)
 found that the former test clones changed generated child assignment numbers to
 strings, while value-only assertions missed a deliberately injected kind-only
-input mutation. The [snapshot repair](../../../docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt)
+input mutation. The [snapshot repair](reference-source/docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt.source.txt)
 preserves those numeric source values in detached fixture copies. For example,
 an assignment value `1` stays numeric instead of becoming the string `"1"`.
 First-touch comparisons retain complete scalar kinds and plain reference sharing,
@@ -626,53 +626,53 @@ The empty native marker control has only an identity/empty-shape contract;
 arbitrary unsupported referents remain unqualified. Whole ordinary scope/token
 inventories have independent finite models, while wider constructor semantics
 and moved-root qualification remain open.
-The [bounded coverage profile](../../../docs/audits/reservation-coverage-helper-causes-20261003/scope.txt)
+The [bounded coverage profile](reference-source/docs/audits/reservation-coverage-helper-causes-20261003/scope.txt.source.txt)
 preserves the actual final-coverage calls and refusal consumers. The verifier
 preserves its actual inputs; some test Storable copies change numeric scalars
 into strings. For example, a numeric assignment value can become `"1"` in a
-detached test copy. The [actor-copy qualification](../../../docs/audits/reservation-coverage-source-copies-20261003/scope.txt)
+detached test copy. The [actor-copy qualification](reference-source/docs/audits/reservation-coverage-source-copies-20261003/scope.txt.source.txt)
 binds changed FIFO bank indexes/binding widths and vector ATL route width to
 source declarations. Scalar-preserving actor copies retain complete source
 kinds and sharing; complete ordinary lowering results, emitted carriers and
-coverage scope records agree with the original test. The [module capture](../../../docs/audits/reservation-coverage-module-capture-20261003/scope.txt)
+coverage scope records agree with the original test. The [module capture](reference-source/docs/audits/reservation-coverage-module-capture-20261003/scope.txt.source.txt)
 binds complete module originals and deeply isolated pure copies to the source
 and original coverage profile. Ordinary lowering/carrier/scope results agree.
-The [generated-field qualification](../../../docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt)
+The [generated-field qualification](reference-source/docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt.source.txt)
 checks readiness/request/completion RHS, monitor set/clear/reset constants,
 provenance and declared widths. Unused worker width metadata stays separate
-from emitted port declarations. The [reusable-field qualification](../../../docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt)
+from emitted port declarations. The [reusable-field qualification](reference-source/docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt.source.txt)
 checks storage RHS/widths and FIFO slot indexes, binding widths, selection guards
-and provenance carried through preparation. The [ATL-field qualification](../../../docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt)
+and provenance carried through preparation. The [ATL-field qualification](reference-source/docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt.source.txt)
 checks trigger/completion/timeout constants, copied fan-in source RHS and vector
 endpoint widths through child ports, top links and prepared wiring. The
-[module join](../../../docs/audits/reservation-coverage-module-join-20261003/scope.txt)
+[module join](reference-source/docs/audits/reservation-coverage-module-join-20261003/scope.txt.source.txt)
 reconciles every captured module field and actor-only preparation difference
-with those models. The [snapshot capture](../../../docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt)
+with those models. The [snapshot capture](reference-source/docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt.source.txt)
 binds every successful/refused snapshot and module/allocation mutation seed to
-actual original and pure-copy graphs. [Ordinary snapshot fields](../../../docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt)
+actual original and pure-copy graphs. [Ordinary snapshot fields](reference-source/docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt.source.txt)
 qualify child pulse/provenance, inherited and vector endpoint widths, and private
 formal mutation-seed widths against source and actual carriers. The
-[producer-removal fields](../../../docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt)
+[producer-removal fields](reference-source/docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt.source.txt)
 qualify the rebuilt input: widths, assignment ordinals, declaration membership,
 handshake/wait metadata and numeric producers retain distinct meanings. String
-completion constants stay strings. The [snapshot field join](../../../docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt)
+completion constants stay strings. The [snapshot field join](reference-source/docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt.source.txt)
 reconciles every changed field and unchanged-copy control with the completed
-models. [Real value-only controls](../../../docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt)
+models. [Real value-only controls](reference-source/docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt.source.txt)
 change numeric `1` to string `"1"` in a caller provenance field after an actual
 successful or refused call. The pre-repair test stays green in both cases, so its
 value comparison does not prove caller-kind preservation. The prospective
-[plain/native helper boundary](../../../docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt)
+[plain/native helper boundary](reference-source/docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt.source.txt)
 preserves captured primitive kinds, aliases, cycles and deep copy isolation.
 Actual broken-sharing controls reject. Its snapshot distinguishes a replaced
 empty native marker by identity and refuses undeclared native classes or shapes.
-The [actual native snapshot join](../../../docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt)
+The [actual native snapshot join](reference-source/docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt.source.txt)
 replays all intended and wrong-cause cases with their original marker identities,
 classes and empty shapes. Replacing one marker after a real refusal fails the
 existing identity assertion while complete causes and value graphs stay unchanged.
-The [complete coverage qualification](../../../docs/audits/reservation-coverage-qualification-join-20261003/scope.txt)
+The [complete coverage qualification](reference-source/docs/audits/reservation-coverage-qualification-join-20261003/scope.txt.source.txt)
 now joins every initial/current copy site and observed field with its actor,
 module or snapshot semantic owner. Unchanged seeds remain required controls.
-The [live coverage copy repair](../../../docs/audits/reservation-coverage-copy-repair-20261003/scope.txt)
+The [live coverage copy repair](reference-source/docs/audits/reservation-coverage-copy-repair-20261003/scope.txt.source.txt)
 now uses scalar-preserving copies and snapshots. For example, numeric `1` remains
 numeric in a copied provenance field, and replacing it with string `"1"` after a
 real call fails the read-only assertion. Each copy checks complete kinds/sharing,
@@ -681,28 +681,28 @@ fails isolation; restoring the lossy copier fails kind preservation. Replacing
 an empty native marker fails the helper snapshot and identity assertions while
 the intended complete cause stays unchanged. Complete preparations, lowerings,
 exported carriers, scope results and refusal causes are conserved against the
-qualified prior recipe. The [historical replay context](../../../docs/audits/reservation-coverage-historical-context-20261003/scope.txt)
+qualified prior recipe. The [historical replay context](reference-source/docs/audits/reservation-coverage-historical-context-20261003/scope.txt.source.txt)
 keeps this complete qualification bound to its original sources when later test
 helpers change; separate native checks qualify the repaired behavior. The
-[repaired-source context](../../../docs/audits/coverage-repair-historical-context-20261004/scope.txt)
+[repaired-source context](reference-source/docs/audits/coverage-repair-historical-context-20261004/scope.txt.source.txt)
 also pins the complete repaired coverage proof before unrelated metadata test
 edits. A sole projected metadata-test comment fails the original source identity
 check. Both complete contexts replay through the primary canonical reader;
 future hot changes keep their own validation obligation.
 These controls do not establish a production defect.
-The [coverage cause diagnosis](../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt)
+The [coverage cause diagnosis](reference-source/docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt.source.txt)
 finds that the test helper accepts unrelated unsupported-reference failures when
 the wanted phrase appears in its caller stack or an unrelated failure path. For
 example, a path containing `incomplete parent/domain modules` fools the fragment
 check even though the actual cause is an unsupported reference. The verifier
-rejects those inputs correctly. The [coverage cause repair](../../../docs/audits/reservation-coverage-cause-repair-20261003/scope.txt)
+rejects those inputs correctly. The [coverage cause repair](reference-source/docs/audits/reservation-coverage-cause-repair-20261003/scope.txt.source.txt)
 now saves native errors immediately and compares independently declared complete
 causes. Permanent native controls reject both unrelated failure forms. Exact prior
 checks still fail the desired safety controls, and the actual declaration guard
 bypass fails the repaired test. Complete ordinary inputs/results conserve; the
 original test-copy kind drift remains owned. Copy-field and wider constructor
 qualification remains separate.
-See the [bounded membership record](../../../docs/audits/named-helper-membership-20261003/scope.txt)
+See the [bounded membership record](reference-source/docs/audits/named-helper-membership-20261003/scope.txt.source.txt)
 for exact units, source boundaries and remaining review ownership.
 
 This observer preserves the existing first-clause behavior, including current

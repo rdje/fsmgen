@@ -1,0 +1,24 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.3
+
+Re-derivation: the authoritative inventory rejects the old decision0102
+navigation candidate after the destination changes. Complete publication
+before/after lines show the same decision numeral, label and rationale, with
+only its native-safe destination changed. The refreshed producer-derived
+identity must join the authoritative regenerated current candidate and full
+source-line hash, not merely a guessed ID.
+
+Falsification: the retained first authoritative stale-ID refusal distinguishes
+the old projection. An initial private helper accidentally uses octal escape
+01 instead of NUL plus ordinal1; its baseline old-ID assertion rejects before
+any registry mutation. Exact initial source and separately repeated actual
+refusal are retained. Explicit NUL-joined fields reproduce the old producer
+identity, and the current primary inventory accepts the corrected new one.
+Whole registry reconstruction preserves every other byte and all reviewed
+meaning/owner fields; candidate/source identity and cardinality must agree.
+
+Durability: complete Git-bound original and updated registries, refresh
+programme, source lines, review, current checker and immutable seal remain
+tracked here. Sibling checks retain the original stale inventory rejection,
+initial escape rejection and final primary inventory/gate receipts. The sealed
+native publication audit is unchanged. Decision0102 remains a navigation
+identifier rather than an empirical quantitative assertion.

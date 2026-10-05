@@ -1,0 +1,30 @@
+{
+  "docs/audits/book-reference-disposition-refresh-20261005/initial-refresh.txt": {
+    "bytes": 2338,
+    "sha256": "938e0197cef214f614c77cfaca7788ea95d227665bdf7ce5c0884cea07a6f50c"
+  },
+  "docs/audits/book-reference-disposition-refresh-20261005/refresh.json": {
+    "bytes": 1398,
+    "sha256": "9cff4f4f1554d4fa6bf281287167b24ee7ea25d4c6ce522a558139009dd84f29"
+  },
+  "docs/audits/book-reference-disposition-refresh-20261005/refresh.py": {
+    "bytes": 2338,
+    "sha256": "bf6aa92afcda29adf7627fdb3c1a41a7961743d27da415d0af4289e316ed8d9a"
+  },
+  "docs/audits/book-reference-disposition-refresh-20261005/registry-after.jsonl": {
+    "bytes": 2092795,
+    "sha256": "be33025d1d17fd177fbe634dea390927f177c5b1bdb6676e982c71f987ed7047"
+  },
+  "docs/audits/book-reference-disposition-refresh-20261005/registry-before.jsonl": {
+    "bytes": 2092795,
+    "sha256": "2018622c49536e749e1474a0e5e1dc18a7d65a346cf28fa818bb6ed7c45d618a"
+  },
+  "docs/audits/book-reference-disposition-refresh-20261005/scope.txt": {
+    "bytes": 1514,
+    "sha256": "30933e33a8a5e648ebff963e76f8bcd920af4d7ead8bd303b86ba2ad71a0c93e"
+  },
+  "docs/audits/book-reference-disposition-refresh-20261005/verify.py": {
+    "bytes": 2481,
+    "sha256": "0fccad3901110eae65eab2d4c919c1bbf19aec3af4f41778cab3e7cace61b500"
+  }
+}

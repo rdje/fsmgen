@@ -1,0 +1,47 @@
+{
+  "classified_clicks": 127,
+  "controls": [
+    {
+      "control": "lost-anchor",
+      "refusal": "independent whole raw-anchor conservation"
+    },
+    {
+      "control": "wrong-href",
+      "refusal": "independent whole raw-anchor conservation"
+    },
+    {
+      "control": "wrong-canonical-body",
+      "refusal": "complete canonical built and actual-click bytes"
+    },
+    {
+      "control": "shared-canonical-corruption",
+      "refusal": "complete independent Git source authority and exact active Memory transform"
+    },
+    {
+      "control": "wrong-source-role",
+      "refusal": "native exact source role and member manifest"
+    },
+    {
+      "control": "wrong-reader-role",
+      "refusal": "literal raw-source reader role"
+    },
+    {
+      "control": "Boolean-status",
+      "refusal": ""
+    },
+    {
+      "control": "float-status",
+      "refusal": ""
+    },
+    {
+      "control": "missing-native-anchor",
+      "refusal": "actual preserved native anchor"
+    },
+    {
+      "control": "unfinished-server",
+      "refusal": ""
+    }
+  ],
+  "preserved_native_anchors": 61,
+  "scope": "Complete admitted chapter90/13k body clicks, selected canonical raw source bytes and preserved native anchors; no whole-book or visual guarantee."
+}

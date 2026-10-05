@@ -28,43 +28,44 @@ book chapters for rendered narrative and navigation. Source views also keep
 focused guidance, policy, operational state and retained engineering evidence
 distinct from shipped behavior.
 
-The asset plane is available; this chapter's reference-link transition remains
-pending. The next publication will point its selected references to those
-views. Native source refresh requires the source and its endpoint to be
-admitted by the ignore policy; build success alone does not establish that.
+The selected references in this chapter and the feature-support matrix open
+these source views. Their labels identify the canonical repository documents;
+the served text reflects the latest book build. Native source refresh requires
+the source and its endpoint to be admitted by the ignore policy; build success
+alone does not establish that. Links inside a raw source view remain text.
 
 ## What Still Lives Outside The Book
 
 Some docs are intentionally still focused references:
 
-- [../../COMPOSITION_SCOPE.md](../../COMPOSITION_SCOPE.md)
-- [../../EXTENSION_MODEL.md](../../EXTENSION_MODEL.md)
-- [../../REGRESSION_CORPUS.md](../../REGRESSION_CORPUS.md)
-- [../../FEATURE_BACKLOG.md](../../FEATURE_BACKLOG.md)
-- [../../INTENT_CAPTURE_AXI_CASE_STUDY.md](../../INTENT_CAPTURE_AXI_CASE_STUDY.md)
-- [../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md](../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
-- [../../ISF_SPEC.md](../../ISF_SPEC.md)
-- [../../ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md)
-- [../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md](../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md)
-- [../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md)
-- [../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md)
-- [../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md](../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md)
-- [../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md](../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md)
-- [../../BIN_FSMGEN_IMPORT_TREE.md](../../BIN_FSMGEN_IMPORT_TREE.md)
-- [../../TASK_TREE.md](../../TASK_TREE.md)
-- [../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md](../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
-- [../../COMPOSITION_LEGACY_MAPPING.md](../../COMPOSITION_LEGACY_MAPPING.md)
-- [../../../MEMORY.md](../../../MEMORY.md)
-- [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
-- [../../../README_POLICY.md](../../../README_POLICY.md)
-- [../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md](../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md)
-- [../../../CLAIM_VERIFICATION.md](../../../CLAIM_VERIFICATION.md)
+- [../../COMPOSITION_SCOPE.md](reference-source/docs/COMPOSITION_SCOPE.markdown.source.txt)
+- [../../EXTENSION_MODEL.md](reference-source/docs/EXTENSION_MODEL.markdown.source.txt)
+- [../../REGRESSION_CORPUS.md](reference-source/docs/REGRESSION_CORPUS.markdown.source.txt)
+- [../../FEATURE_BACKLOG.md](reference-source/docs/FEATURE_BACKLOG.markdown.source.txt)
+- [../../INTENT_CAPTURE_AXI_CASE_STUDY.md](reference-source/docs/INTENT_CAPTURE_AXI_CASE_STUDY.markdown.source.txt)
+- [../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md](reference-source/docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.markdown.source.txt)
+- [../../ISF_SPEC.md](reference-source/docs/ISF_SPEC.markdown.source.txt)
+- [../../ISF_PUBLIC_INTERFACE_CONTRACT.md](reference-source/docs/ISF_PUBLIC_INTERFACE_CONTRACT.markdown.source.txt)
+- [../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md](reference-source/docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.markdown.source.txt)
+- [../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md](reference-source/docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.markdown.source.txt)
+- [../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md](reference-source/docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.markdown.source.txt)
+- [../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md](reference-source/docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.markdown.source.txt)
+- [../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md](reference-source/docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.markdown.source.txt)
+- [../../BIN_FSMGEN_IMPORT_TREE.md](reference-source/docs/BIN_FSMGEN_IMPORT_TREE.markdown.source.txt)
+- [../../TASK_TREE.md](reference-source/docs/TASK_TREE.markdown.source.txt)
+- [../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md](reference-source/docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.markdown.source.txt)
+- [../../COMPOSITION_LEGACY_MAPPING.md](reference-source/docs/COMPOSITION_LEGACY_MAPPING.markdown.source.txt)
+- [../../../MEMORY.md](reference-source/MEMORY.markdown.source.txt)
+- [../../../ROADMAP_V2.md](reference-source/ROADMAP_V2.markdown.source.txt)
+- [../../../README_POLICY.md](reference-source/README_POLICY.markdown.source.txt)
+- [../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md](reference-source/LIVE_DOCUMENT_SIZE_CONTAINMENT.markdown.source.txt)
+- [../../../CLAIM_VERIFICATION.md](reference-source/CLAIM_VERIFICATION.markdown.source.txt)
 - [Live-Document Containment Adoption](91-live-document-containment-adoption.md)
-- [../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md)
-- [../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md](../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md)
-- [../../audits/ROADMAP_STATUS_VALUE_AUDIT.md](../../audits/ROADMAP_STATUS_VALUE_AUDIT.md)
-- [../../../TASK_ACCEPTANCE.md](../../../TASK_ACCEPTANCE.md)
-- [../../../COMMIT.md](../../../COMMIT.md)
+- [../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md](reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.markdown.source.txt)
+- [../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md](reference-source/docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.markdown.source.txt)
+- [../../audits/ROADMAP_STATUS_VALUE_AUDIT.md](reference-source/docs/audits/ROADMAP_STATUS_VALUE_AUDIT.markdown.source.txt)
+- [../../../TASK_ACCEPTANCE.md](reference-source/TASK_ACCEPTANCE.markdown.source.txt)
+- [../../../COMMIT.md](reference-source/COMMIT.markdown.source.txt)
 
 These should stay precise and sometimes narrower than the book.
 
@@ -376,7 +377,7 @@ immediately, an explicitly directed early push resets the interval without
 changing its standing length, and every successful transport remains open
 until exact hosted qualification is consumed. This separates local recovery
 from less frequent remote publication without shadow state. [Decision
-0102](../../decisions/0102-push-cadence-is-500-commits.md) records the rationale
+0102](reference-source/docs/decisions/0102-push-cadence-is-500-commits.markdown.source.txt) records the rationale
 and supersedes the former 300-commit interval.
 
 Tracked raw standards PDFs under `docs/vendor/` are local reference artifacts
@@ -417,10 +418,10 @@ registration. Completed semantic reset-question, reset-grammar and historical
 view records now retain their original contracts in that authoritative graph;
 optional historical views keep decision 0019’s separate historical role.
 
-The bounded [review front door](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md)
+The bounded [review front door](reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.markdown.source.txt)
 summarizes the current architecture and routes forensic readers to the
 content-identified
-[external review packet](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md).
+[external review packet](reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.markdown.source.txt).
 That detailed packet explains the doctrine, schemas, pressure model, route and
 archive checks, task-history migration, measured results, limitations, and 31
 review questions. It is now immutable retained evidence rather than an
@@ -428,7 +429,7 @@ append-only review page. New review rounds receive new task-tree-owned
 artifacts and dispositions.
 
 PGEN and ANVIL returned independent reviews. The tracked
-[disposition](../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md)
+[disposition](reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.markdown.source.txt)
 checks every finding against exact FSMGen evidence. It corrects two easy-to-
 misread claims: `2,780 / 2,780` path coverage proves classification, not healthy
 size or currency, and the IAL2 live root plus task segment are overlapping views

@@ -1,0 +1,17 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.3
+
+Re-derive: actual staged CLAIM-DISPOSITIONS rejects the refreshed candidate at
+its former position. The authoritative registry contract sorts by candidate_id.
+Complete before is the exact sealed refresh output; after is its raw intact
+header plus the exact same raw rows in canonical order.
+
+Falsify: the retained first staged gate is the actual unordered refusal.
+Independent raw-row Counter, exact sorted-byte comparison and unique current
+candidate/meaning checks refuse loss, mutation, duplication or wrong order.
+The primary inventory/disposition gate must pass after regeneration.
+
+Durability: whole rejected and corrected registries, programme/checker and seal
+are tracked here. The original refresh and native-publication seals remain
+unchanged, and sibling checks preserve the original failed gate and final
+authoritative outcomes. Only placement changes; no numeral classification,
+review/owner/evidence content, registry header or bound changes.

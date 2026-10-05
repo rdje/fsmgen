@@ -1,0 +1,6 @@
+{
+  "added_question": "where are canonical reference-map and feature-matrix source views qualified?",
+  "body_append": "\n## Canonical reference views\n\nThe qualified chapter90 reference map and chapter13k feature matrix deliver\ntheir selected repository references through native plain-text source views.\nEach view contains complete canonical UTF8 bytes from its latest book build;\nnested Markdown links remain text. Native narrative chapters and anchors stay\nthe rendered reading surface. The admitted delivery capture and rejecting\nsource/member/role/status/kind controls are retained under\n`docs/audits/book-reference-publication-20261005/`; its scoped current reader\nchecks the selected destinations and source-view roles without freezing\nunrelated future chapter prose. This closes the classified routes in those\ntwo chapters, with visual review and unrelated book routes outside that scope.\n",
+  "id": "downstream-consumer-contract-lockstep",
+  "path": "docs/knowledge/downstream-consumer-contract-lockstep.md"
+}

@@ -2,6 +2,7 @@
 id: downstream-consumer-contract-lockstep
 title: Downstream codebase, handoff, contracts, manifest, support accounting, and book stay lockstep
 answers:
+  - "where are canonical reference-map and feature-matrix source views qualified?"
   - "must downstream handoff docs stay in sync with the codebase?"
   - "must the mdBook stay in sync with downstream contracts?"
   - "what surfaces must change together for downstream-visible behavior?"
@@ -9,11 +10,11 @@ answers:
   - "where is the downstream consumer lockstep doctrine recorded?"
   - "must public source.resolved_path be repository relative?"
   - "where is current packed record port behavior documented for downstream consumers?"
-date: 2026-10-02
+date: 2026-10-05
 status: current
 tags: [downstream, contracts, mdbook, handoff, integration, manifest, support-accounting]
-evidence: docs/audits/record-output-predecessors-20261002/manifest.json; docs/isf-spec/11-downstream-actor-transactions.md; docs/isf-spec/12-downstream-rules-artifacts-reports.md; docs/isf-spec/22-public-interface-reports-evolution.md; README.md; ROADMAP_V2.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/ReportSourceContract.pm; docs/book/src/11-extensions-and-embedding.md; docs/book/src/13i-downstream-integration.md; docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md
-reverify: rg -n 'downstream consumer|downstream-visible|lockstep|language_surface\\.file_surfaces|source\\.resolved_path|GITHUB-PUSH-OUTCOME-ASSURANCE\\.6\\.2\\.1' README.md ROADMAP_V2.md docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md perl/FSM/Support/LanguageSurfaceSection.pm perl/FSM/Support/ReportSourceContract.pm docs/book/src/11-extensions-and-embedding.md docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md docs/TASK_TREE.md
+evidence: docs/audits/record-output-predecessors-20261002/manifest.json; docs/isf-spec/11-downstream-actor-transactions.md; docs/isf-spec/12-downstream-rules-artifacts-reports.md; docs/isf-spec/22-public-interface-reports-evolution.md; README.md; ROADMAP_V2.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md; docs/ISF_PUBLIC_INTERFACE_CONTRACT.md; perl/FSM/Support/LanguageSurfaceSection.pm; perl/FSM/Support/ReportSourceContract.pm; docs/book/src/11-extensions-and-embedding.md; docs/book/src/13i-downstream-integration.md; docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md; docs/audits/book-reference-publication-20261005/manifest.json
+reverify: rg -n 'downstream consumer|downstream-visible|lockstep|language_surface\\.file_surfaces|source\\.resolved_path|GITHUB-PUSH-OUTCOME-ASSURANCE\\.6\\.2\\.1' README.md ROADMAP_V2.md docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md docs/ISF_PUBLIC_INTERFACE_CONTRACT.md perl/FSM/Support/LanguageSurfaceSection.pm perl/FSM/Support/ReportSourceContract.pm docs/book/src/11-extensions-and-embedding.md docs/tasks/GITHUB-PUSH-OUTCOME-ASSURANCE.md docs/TASK_TREE.md && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/book-reference-publication-20261005/verify.py --current
 ---
 
 Any downstream-visible change must keep the codebase, downstream
@@ -77,3 +78,16 @@ phases/nonclaims and complete discovery/cohort applicability are documented;
 residual old output deferrals are repaired against current source/public facts.
 See [corpus closure](isf-record-output-corpus-closure.md). Generated output
 handoff, field writes and runtime remain separately owned.
+
+## Canonical reference views
+
+The qualified chapter90 reference map and chapter13k feature matrix deliver
+their selected repository references through native plain-text source views.
+Each view contains complete canonical UTF8 bytes from its latest book build;
+nested Markdown links remain text. Native narrative chapters and anchors stay
+the rendered reading surface. The admitted delivery capture and rejecting
+source/member/role/status/kind controls are retained under
+`docs/audits/book-reference-publication-20261005/`; its scoped current reader
+checks the selected destinations and source-view roles without freezing
+unrelated future chapter prose. This closes the classified routes in those
+two chapters, with visual review and unrelated book routes outside that scope.

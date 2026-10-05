@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-publication-20261005/replay_initial_qualifier.py"
+  ],
+  "status": 0,
+  "stdout": "REPRODUCED immutable first predicate accepts baseline and the original whole coordinated corruption.\n",
+  "stderr": "ram-guard: PID 22100; host 60.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

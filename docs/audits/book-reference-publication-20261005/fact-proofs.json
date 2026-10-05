@@ -1,0 +1,18 @@
+[
+  {
+    "control": "lost-original-prose",
+    "refusal": "whole actually published fact text"
+  },
+  {
+    "control": "lost-added-query",
+    "refusal": "whole actual original and added fact question allocation"
+  },
+  {
+    "control": "wrong-question-owner",
+    "refusal": "whole actual original and added fact question allocation"
+  },
+  {
+    "control": "Boolean-query-status",
+    "refusal": ""
+  }
+]

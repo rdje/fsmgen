@@ -1,0 +1,9 @@
+{
+  "command": [
+    "perl",
+    "scripts/check_claim_verification_dispositions.pl"
+  ],
+  "status": 0,
+  "stdout": "claim-dispositions: bounded disposition join holds (candidates=1977, disposed=1977, claim_records=316, gates=1036, reviewed=625, gaps=0, open=0, groups=6)\n",
+  "stderr": "ram-guard: PID 26483; host 76.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

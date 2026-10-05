@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-disposition-order-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS lossless exact raw-row ordering and unique current navigation disposition.\n",
+  "stderr": "ram-guard: PID 25996; host 74.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
