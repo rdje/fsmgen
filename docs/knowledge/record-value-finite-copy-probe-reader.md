@@ -14,6 +14,7 @@ answers:
   - "are original T1986 candidate input graphs and copied fields joined?"
   - "what qualifies original T1986 helper consumer and parser source contexts?"
   - "what qualifies original T1986 candidate primary causes and acceptance?"
+  - "are complete original T1986 raw error bodies inventoried?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -41,10 +42,11 @@ evidence: >-
   docs/audits/record-value-original-contexts-20261005/verify.py;
   docs/audits/record-value-original-primary-20261005/scope.txt;
   docs/audits/record-value-original-primary-20261005/verify.py;
+  docs/audits/record-value-original-raw-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-primary-20261005/verify.py &&
+  docs/audits/record-value-original-raw-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-original-products-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
@@ -88,8 +90,6 @@ helper/consumer/parser locations, complete parser texts and own operation
 spans. Source context does not establish primary cause or consumer operand
 truth. The independent finite primary model now derives every original
 API/helper/parser first cause and acceptance from qualified own source inputs.
-Full raw coordinate/address meanings and consumer operand truth, full alias
-downstream semantics,
-the complete semantic join and cold replay remain open.
-The candidate-parent join, hot baseline/consumer repairs and host-native
-refusal qualification remain separately owned successors.
+Raw inventory qualifies complete serialized bodies and reversible grammar only.
+Class/frame/coordinate/address meaning, consumer truth, alias/semantic/cold/
+candidate-parent joins, hot repairs and host-native refusal remain open.

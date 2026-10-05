@@ -4531,9 +4531,46 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete original raw stacks, source coordinates and address lifetimes.`
   Acceptance: `Bind completed primary/source/context owners and entire immutable native bodies. Independently qualify every full error class/message/frame/source coordinate and per-capture address role without broad normalization; first-cause/full-stack/wrong-caller/borrowed-address controls reject. Wider host-native cause qualification remains owned.`
+  Verification: `Split the full obligation before implementation: complete raw inventory is observation only; frame/class/source meaning, coordinate recipes, live address roles and final raw join each retain explicit children. Primary/source/context owners and all native evidence remain immutable. No broad normalization, replay or full-CI/push waiver is authorized.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1`
+  Status: `done`
+  Goal: `Authenticate the complete original raw-error population and lossless trace inventory.`
+  Acceptance: `Bind the entire completed primary owner/task and committed prerequisite archives, then reexecute primary meanings. Independently enumerate every raw API/copy/parser error field and run-level exception in unchanged-input ordinary/Storable/control modes; preserve string/null wire kinds and every byte. Parse whole trace physical lines, exact frame call-site suffixes and opaque address lexeme spans with reversible assembly and full empty/nonempty membership. Exact byte/member/frame/coordinate/address changes reject. This closes capture/grammar only; semantic class/frame/source/coordinate/address authority remains in siblings.`
+  Verification: `Sealed docs/audits/record-value-original-raw-20261005 binds whole done primary owner/task and every committed prerequisite archive at clean7812abb76; reexecutes all completed source/context/graph/field/product/copy/primary meanings and controls. Complete API/copy/parser/run-level error field populations preserve every empty and nonempty member, whole serialized string/body/context identity, reversible physical line/byte allocation, exact literal frame/origin suffixes and opaque address-looking lexeme spans. No lexeme supplies object type, identity or lifetime. Nine actual omission/wire-kind/body/context/frame/coordinate/borrowed-address/span corruptions reject at intended conservation/grammar contracts. Exact whole saved proof independently rederives after sealing; fresh sealed-reader0 retains. All original modes have9283 API/697copy/4parser/1run error fields;48 API and2parser nonempty bodies per mode. All raw bodies retain without normalization. Only capture/grammar closes; class/frame/source/coordinate/address semantics and final raw join remain explicit siblings. Original/book Files3 Tests318, build/exact whole source/aggregate/rendered text pass; task/KM/claim/staged doctrines/hooks run before commit. Browser visual QA and historical native/full-CI/push gates remain pending.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Qualify complete raw exception class and source-derived frame paths.`
+  Acceptance: `Derive every expected own source/observer/callback/wrapper/eval/nested-parser and public test-framework frame from completed source/context/primary inputs and the pinned host contract. Wire strings alone are not proof of native exception class. Preserve nested cause precedence, order and truncation/quoting; wider host-native causality remains owned.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3`
+  Status: `pending`
+  Goal: `Qualify complete raw frame coordinate recipes.`
+  Acceptance: `Join every frame and origin to exact own source statements, observer generation and pinned external public toolchain contract. Bind only legitimate invocation-root recipes, preserve all argument/error text and raw coordinates, and reject wrong caller/line/borrowed source without broad normalization.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4`
+  Status: `pending`
+  Goal: `Qualify raw address roles and per-capture lifetimes.`
+  Acceptance: `Model each opaque address argument role and simultaneous-live equality/distinction from independently qualified source graphs and call lifetimes. Do not infer object identity from numerical reuse across calls/captures. Borrowed or aliased addresses and wrong reference kinds must reject at intended role/lifetime contracts.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5`
+  Status: `pending`
+  Goal: `Join all complete raw-stack meanings and hostile controls.`
+  Acceptance: `Reexecute all completed inventory/class/frame/coordinate/address readers and complete primary/source/context prerequisites. Join every whole own body without byte normalization; exact full-stack/first-cause/wrong-caller/borrowed-address controls must reject before closing the parent. Cause/consumer/alias/cold/permanent and host-native successors remain separately open.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6026,3 +6063,10 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S '2026-10-04T07:08:38+00:00' -- docs/ARTIFACT_CLEANUP.md` identifies347de70015a8e65fead9b5a16d0acc4e4e766a8f as the prior successful cleanup record. Independent UTC interval against the whole9c409829f record proves the daily sweep due. The fixed census owns repository regular log/bin/bytecode nodes and conventional Rust locations, with primary/nested Git and symlink/foreign-volume boundaries excluded. Initial host guard receipt137 establishes no successful census; prior record remains unchanged until the successful guarded retry.
 - [x] **ADDRESSED (verified)** — Full sealed docs/audits/artifact-sweep-20261005 census retains independent rg/os.walk membership and dated node/Rust products. No candidate has complete disposal authority; all artifacts remain and the producer has no deletion function. Independent saved reader0 and actual omission/escaped-path/fabricated-deletion/non-due controls establish the saved contract. Complete scope names distinct re-derivation, falsification and durability; artifact metadata is not a byte-hash, future absence or native qualification claim. Latest-only date/summary and maintenance book reflect the retention-only sweep.
 - [x] **NO REGRESSION** — evidence-family: prove_summary. Current public-book receipt reports `All tests successful`, `Files=2, Tests=308`, `Result: PASS` in docs/audits/artifact-sweep-checks-20261005/book-tests.json. Book build plus complete Git/source transform, aggregate and rendered retention guidance pass; browser visual QA remains pending. Task integrity, Knowledge Map, fresh claim inventory, staged doctrines and normal hooks run before commit. Initial task-integrity/staged gates reject the missing root .70 child reference and the stopped inventory refresh; exact failures retain. Add the owned child reference, regenerate current claims and rerun all staged doctrines. The guard remains88% host/4096MiB descendants; native/compiler/audit/production evidence and full-CI/push gates retain.
+
+
+### Complete original raw inventory acceptance — .60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Close finite primary/acceptance only' -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` identifiesdedee81cc1c359404411fa79d607e550a8618823: intended primary/acceptance qualifies, while full raw frame/source/coordinate/address meanings remain open. Source observer captures every complete raw API/copy/parser/run exception; authenticating a first line or body hash cannot close its intended stack meaning. Split the owned raw parent before implementation so complete reversible capture grammar closes independently of missing semantic legs. Whole Git/source/archive authority is bound in docs/audits/record-value-original-raw-20261005/binding.json.
+- [x] **ADDRESSED (verified)** — Complete scope names independent raw-population/physical-grammar RE-DERIVATION, nine intended-cause capture-corruption FALSIFICATION controls and immutable whole-member DURABILITY, with missing class/frame/source/coordinate/address legs explicit. Reexecute all primary prerequisites, preserve every own empty/nonempty field, whole raw body and source context, and reversibly annotate each line/call-site suffix/opaque lexeme byte span. Fresh whole sealed readback0 in docs/audits/record-value-original-raw-checks-20261005/sealed-reader.json rederives the exact saved proof and actual controls. This is serialized-string and capture integrity only; parsed coordinates and address-looking lexemes confer no intended frame/object/lifetime authority. .1 closes; .2/.3/.4/.5 and cause/consumer/alias/cold/permanent/host-native successors remain open.
+- [x] **NO REGRESSION** — evidence-family: prove_summary. Current original/public-book cohort reports `All tests successful`, `Files=3, Tests=318`, `Result: PASS` in docs/audits/record-value-original-raw-checks-20261005/original-book.json. Book build plus whole source transform/aggregate and rendered capture-only/open-boundary text pass. Task integrity, regenerated Knowledge Map, fresh claim inventory, staged doctrines and normal hooks run before commit. Every production/T1986/provider/predecessor byte remains unchanged; browser visual QA and historical native/startup/full-CI/push qualification remain open. Director-directed cadence deferral continues.

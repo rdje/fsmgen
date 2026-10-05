@@ -490,7 +490,11 @@ kinds and detached copy boundary. The [source-context reader](../../../docs/audi
 now qualifies exact helper, consumer and parser source locations, input texts
 and operation spans for the recorded finite profile. The [primary-cause reader](../../../docs/audits/record-value-original-primary-20261005/scope.txt)
 now derives API, helper and parser first causes and acceptance from their own
-source inputs. Full raw coordinates and native address meanings, consumer
+source inputs. The [raw-error inventory](../../../docs/audits/record-value-original-raw-20261005/scope.txt)
+now preserves the complete empty/nonempty population, serialized string bodies,
+physical frame annotations and opaque address lexeme spans. This qualifies
+lossless capture grammar only. Native class, frame meaning, full raw coordinates
+and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

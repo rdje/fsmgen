@@ -1,0 +1,10 @@
+{
+  "command": [
+    "mdbook",
+    "build",
+    "docs/book"
+  ],
+  "status": 0,
+  "stderr": " INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15106234 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/docs/book/book`\n",
+  "stdout": ""
+}

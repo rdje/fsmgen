@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Close finite primary/acceptance only",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "commit dedee81cc1c359404411fa79d607e550a8618823\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 02:57:00 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.1: qualify original primary causes and acceptance\n    \n    Derive finite API/helper/parser first causes and acceptance from own qualified source arguments and validation/admission precedence. Preserve complete raw native traces.\n    \n    Fourteen intended-cause controls and full sealed readback pass; original/public-book cohort passes 3 files and 318 assertions. Full raw coordinates, address meanings and consumer truth remain owned. Register the push checkpoint conflict before its clean post-commit evaluation.\n"
+}

@@ -1,0 +1,30 @@
+{
+  "binding.json": {
+    "bytes": 1192786,
+    "sha256": "48b2281740162f773836df2008164368cd82190d940406d84b3ba252ffb9d33a"
+  },
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "8ee1ac150600c380626c927eb986b14421ecf1f53455bb97c1d31777fee2927a"
+  },
+  "book-transform.json": {
+    "bytes": 332655,
+    "sha256": "55ef01f676470b6b71d28767e2ed03ad26a487862b470283b20438f249bd976f"
+  },
+  "proofs.json": {
+    "bytes": 3431319,
+    "sha256": "aa2f83a9dda50bf556b550bf486fcdcdc30f27683ef5325348b41b36f00707a9"
+  },
+  "scope.txt": {
+    "bytes": 2737,
+    "sha256": "7f868dfae9666da95bd7b3a6720b61a6e00e9e73590a9801d9a034338c71b0a1"
+  },
+  "trace_inventory.py": {
+    "bytes": 1475,
+    "sha256": "e9a3e1ace18c468bd093cefa0241aa379bf0b7d66178b404e7b851041f9ec72e"
+  },
+  "verify.py": {
+    "bytes": 8109,
+    "sha256": "9eda39f96bc12f97f663598fc59d810a66bbec2c5d0a4c6600c297c34bc71653"
+  }
+}

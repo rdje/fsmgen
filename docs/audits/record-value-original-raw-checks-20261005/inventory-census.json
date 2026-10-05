@@ -1,0 +1,179 @@
+{
+  "basis": "Complete sealed proof census; not independent frame semantics. Independent native membership and exact changed-member/grammar controls are in the sealed reader.",
+  "controls": [
+    {
+      "cause": "complete raw empty/nonempty member allocation",
+      "control": "omit-nonempty-member",
+      "status": 1
+    },
+    {
+      "cause": "complete raw empty/nonempty member allocation",
+      "control": "omit-empty-member",
+      "status": 1
+    },
+    {
+      "cause": "raw serialized error kind",
+      "control": "alter-wire-kind",
+      "status": 1
+    },
+    {
+      "cause": "whole raw capture body identity",
+      "control": "alter-body-byte",
+      "status": 1
+    },
+    {
+      "cause": "own complete raw source context",
+      "control": "borrow-context",
+      "status": 1
+    },
+    {
+      "cause": "complete frame and physical line segmentation",
+      "control": "omit-frame",
+      "status": 1
+    },
+    {
+      "cause": "complete frame and physical line segmentation",
+      "control": "wrong-coordinate",
+      "status": 1
+    },
+    {
+      "cause": "complete opaque address lexeme inventory",
+      "control": "borrow-address-lexeme",
+      "status": 1
+    },
+    {
+      "cause": "complete opaque address lexeme inventory",
+      "control": "address-span",
+      "status": 1
+    }
+  ],
+  "modes": [
+    {
+      "domains": {
+        "api": {
+          "empty_strings": 9235,
+          "nonempty": 48,
+          "opaque_lexemes": 972,
+          "physical_segments": {
+            "blank": 7,
+            "frame": 1054,
+            "message": 48,
+            "origin": 55
+          },
+          "population": 9283
+        },
+        "copies": {
+          "empty_strings": 697,
+          "nonempty": 0,
+          "opaque_lexemes": 0,
+          "physical_segments": {},
+          "population": 697
+        },
+        "parses": {
+          "empty_strings": 2,
+          "nonempty": 2,
+          "opaque_lexemes": 39,
+          "physical_segments": {
+            "frame": 41,
+            "message": 2,
+            "origin": 2
+          },
+          "population": 4
+        },
+        "test_run": {
+          "empty_strings": 1,
+          "nonempty": 0,
+          "opaque_lexemes": 0,
+          "physical_segments": {},
+          "population": 1
+        }
+      },
+      "mode": "ordinary"
+    },
+    {
+      "domains": {
+        "api": {
+          "empty_strings": 9235,
+          "nonempty": 48,
+          "opaque_lexemes": 972,
+          "physical_segments": {
+            "blank": 7,
+            "frame": 1054,
+            "message": 48,
+            "origin": 55
+          },
+          "population": 9283
+        },
+        "copies": {
+          "empty_strings": 697,
+          "nonempty": 0,
+          "opaque_lexemes": 0,
+          "physical_segments": {},
+          "population": 697
+        },
+        "parses": {
+          "empty_strings": 2,
+          "nonempty": 2,
+          "opaque_lexemes": 39,
+          "physical_segments": {
+            "frame": 41,
+            "message": 2,
+            "origin": 2
+          },
+          "population": 4
+        },
+        "test_run": {
+          "empty_strings": 1,
+          "nonempty": 0,
+          "opaque_lexemes": 0,
+          "physical_segments": {},
+          "population": 1
+        }
+      },
+      "mode": "storable"
+    },
+    {
+      "domains": {
+        "api": {
+          "empty_strings": 9235,
+          "nonempty": 48,
+          "opaque_lexemes": 972,
+          "physical_segments": {
+            "blank": 7,
+            "frame": 1054,
+            "message": 48,
+            "origin": 55
+          },
+          "population": 9283
+        },
+        "copies": {
+          "empty_strings": 697,
+          "nonempty": 0,
+          "opaque_lexemes": 0,
+          "physical_segments": {},
+          "population": 697
+        },
+        "parses": {
+          "empty_strings": 2,
+          "nonempty": 2,
+          "opaque_lexemes": 39,
+          "physical_segments": {
+            "frame": 41,
+            "message": 2,
+            "origin": 2
+          },
+          "population": 4
+        },
+        "test_run": {
+          "empty_strings": 1,
+          "nonempty": 0,
+          "opaque_lexemes": 0,
+          "physical_segments": {},
+          "population": 1
+        }
+      },
+      "mode": "controls"
+    }
+  ],
+  "status": 0
+}
