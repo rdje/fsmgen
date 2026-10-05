@@ -4499,11 +4499,42 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify original candidate consumer/helper/parser cause and coordinate semantics.`
   Acceptance: `Independently derive all original consumer operands/outcomes and helper source/API/parse/consumer/copy spans, whole parser inputs/source coordinates and intended primary cause boundaries. Preserve full raw native class/message/coordinate bytes and explicitly separate per-capture addresses from causes without broad normalization. Actual first-cause/full-stack/wrong-caller/false-green/omission/source-model controls reject; host-native wider causal assurance remains owned.`
+  Verification: `Separate exact source/helper/consumer/parser operation-context and span reconstruction from primary/raw native causes/coordinates and independently source-derived consumer operands/truth. Whole models/causes/outcomes must join before this parent closes; observation equality, old helper patterns and all-green consumer flags are insufficient.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.1`
+  Status: `done`
+  Goal: `Qualify exact original candidate helper/consumer/parser source contexts and spans.`
+  Acceptance: `Bind exact completed graph/field/result/source owners and entire immutable native/source products. Independently reconstruct source-authored helper labels/patterns/callers, all consumer/helper/API/copy/parse memberships and complete parser source/filename/operation contexts across ordinary/Storable/unchanged-input-control. Retain complete raw helper/consumer/parser bodies; intended wrong source/label/caller/span/allocation/omission controls reject. This qualifies allocation/source context only; consumer operand truth and raw cause/coordinate semantics stay siblings.`
+  Verification: `Sealed docs/audits/record-value-original-contexts-20261005/scope.txt binds exact complete done input/private join/task/source prerequisites atGit6d2210f97 and reexecutes all graph/field/source meanings. Independent finite source catalog reconstructs43 helper and125 consumer own label/kind/pattern/caller/helper contexts; full4 parser source texts, fixture filename roles, readonly graphs and qualified own API/copy/consumer/parser memberships/spans match all three unchanged-input modes. Thirteen intended-cause source/context/allocation/omission controls reject. Initial catalog failures retain whole programmes and diagnosis; corrected coordinate rule is limited to pinned statements/recorded Perl profile. Saved sealed proof rederives identically; original/book Files3 Tests318/build/rendered/task/KM/claim checks and staged doctrines/hooks accompany commit. Close allocation/source identity only; primary/raw coordinates, consumer operands/truth, full alias/product/semantic/cold/permanent/host-native successors stay open.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2`
+  Status: `pending`
+  Goal: `Qualify exact primary causes and complete raw original native coordinates.`
+  Acceptance: `Derive own intended API/helper/parser primary causes from complete source models/contracts, preserve exact full class/message/stack/source coordinate bytes and per-capture address lifetimes, and reject actual first-cause/full-stack/borrowed-context/false-green controls. No broad normalization or pattern-only/full-trace success can substitute for primary truth; wider host-native qualification remains separately owned.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3`
+  Status: `pending`
+  Goal: `Independently qualify every original consumer operand and outcome.`
+  Acceptance: `Reconstruct all original consumer operands/truth from own authored actor/type/path/API/helper/cause models and exact source assertions, preserving primitive kinds and structural properties. Qualify every ordinary/Storable/unchanged-input-control original assertion rather than accepting native passed flags; actual false-green/wrong operand/source/helper/primary/omission controls reject. Full alias downstream consumers remain sibling .4 of the product parent.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4`
+  Status: `pending`
+  Goal: `Join complete original source context, cause, coordinate and consumer semantics.`
+  Acceptance: `Bind all three exact completed source/context/cause/consumer children, complete native/source/model products and genuine rejecting controls. Reexecute each complete meaning and prove every own source/caller/helper/parser/API/consumer/coordinate relationship before closing this consumer/cause parent. Full alias downstream, product/semantic/cold/native/permanent successors remain owned.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.4`
   Status: `pending`
@@ -5897,3 +5928,10 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Close copied-field child only' -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` identifies053d8930d37409972794a52506e285eba6a51471: complete field/source-role and graph meanings remain separate prerequisites and cannot independently close the explicit input/private semantic join. The whole archived field proof preserves ambiguous physical candidate sets; complete own source/caller context, raw graph kinds, reachable identity and every before/result field must join without borrowing another source or legacy boundary. Exact Git evidence is `docs/audits/record-value-original-input-join-checks-20261005/root-cause-history.json`; whole ownership/source/archive/check locus is the new join binding.
 - [x] **ADDRESSED (verified)** — `docs/audits/record-value-original-input-join-20261005/scope.txt` names separate complete SOURCE/GRAPH/FIELD RE-DERIVATION, eleven intended-cause FALSIFICATION controls and exact whole immutable-member DURABILITY. Reexecute all prerequisite meanings and genuine controls, then join every own source/caller/API/helper/parser/nullable copied context, every complete graph/typed-width boundary, source intervention and reachable detached joint population to the complete source-role field proof. Source properties/orders/cycles/raw kinds retain; physical integer compatibility and unique provenance are never substituted. Saved whole proof independently regenerates after sealing with status0 in `docs/audits/record-value-original-input-join-checks-20261005/sealed-reader.json`. Close only input/private .3.2.2 and its graph/field join; consumer/cause/full-alias/product/semantic/cold/permanent/host-native successors stay open.
 - [x] **NO REGRESSION** — evidence-family: prove_summary. Current `docs/audits/record-value-original-input-join-checks-20261005/original-book.json` reports `All tests successful`, `Files=3, Tests=318`, `Result: PASS`. Book build, rendered joined-source/raw-kind/detachment/open-boundary text, task integrity, regenerated Knowledge Map and independent claim inventory pass in the same checks directory. Browser visual QA remains pending; full-CI/push and historical native/startup gates remain unchanged. Required staged doctrine driver and normal hooks run before commit.
+
+
+### Original candidate source-context/span acceptance — .60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Close complete input/private graph-field-source join only' -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` identifies6d2210f978a74630cacb9daa6a4486ce29727cbd: input/private graph/field meanings qualify while source helper/consumer/parser contexts, primary causes and operand truth remain separate. Whole source catalog replaces the unqualified label-line coordinate assumption; recorded helper0 is callback completion115 rather than label116, and multiline consumers use assertion call starts. Complete initial programmes and diagnostic observation retain. Operation spans inherit qualified source allocations; no native passed flag or operand/error body supplies intended truth.
+- [x] **ADDRESSED (verified)** — Complete `docs/audits/record-value-original-contexts-20261005/scope.txt` names distinct finite SOURCE-CONTEXT RE-DERIVATION, thirteen intended-cause FALSIFICATION controls and whole-member/byte/SHA256 DURABILITY. Reexecute complete prerequisite meanings, reconstruct every source helper/consumer context, and match full parser text/fixture roles/readonly/API membership plus all helper API/copy/consumer/parser spans across the three unchanged-input modes. Full raw observations retain. A fresh saved reader after sealing qualifies identical complete proofs in `docs/audits/record-value-original-context-checks-20261005/sealed-reader.json`. Only allocation/source identity closes; cause/coordinate/operand/alias/product/semantic/cold/permanent/host-native successors remain open.
+- [x] **NO REGRESSION** — evidence-family: prove_summary. Current original/public-book cohort reports `All tests successful`, `Files=3, Tests=318`, `Result: PASS` in `docs/audits/record-value-original-context-checks-20261005/original-book.json`. Book build, rendered source-context/open-boundary text, task integrity, regenerated Knowledge Map, exact aggregate authority and claim inventory pass; staged doctrine driver and normal hooks run before commit. Browser visual QA and historical native/startup/full-CI/push gates remain pending.

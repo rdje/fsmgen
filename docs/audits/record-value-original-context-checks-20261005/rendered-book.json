@@ -1,0 +1,28 @@
+{
+  "status": 0,
+  "page": "docs/book/book/13k-isf-feature-support-matrix.html",
+  "required_text": [
+    "source-context reader",
+    "exact helper, consumer and parser source locations, input texts and operation spans",
+    "Primary diagnostic causes, raw coordinate semantics, consumer operand truth"
+  ],
+  "source_transform": "complete committed before/exact replacements/current after equal",
+  "aggregate": {
+    "after": {
+      "bytes_total": 3768285,
+      "files": 64,
+      "lines_total": 67897
+    },
+    "before": {
+      "bytes_total": 3767993,
+      "files": 64,
+      "lines_total": 67894
+    },
+    "delta": {
+      "bytes_total": 292,
+      "files": 0,
+      "lines_total": 3
+    }
+  },
+  "scope": "Rendered text only; browser visual QA pending."
+}

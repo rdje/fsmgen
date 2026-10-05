@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "--no-pager",
+    "log",
+    "-S",
+    "Close complete input/private graph-field-source join only",
+    "--format=%H %s",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "6d2210f978a74630cacb9daa6a4486ce29727cbd SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.2.3: join complete current source graph and field semantics\n"
+}

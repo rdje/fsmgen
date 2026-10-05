@@ -1,0 +1,1897 @@
+{
+  "consumers": [
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        52
+      ],
+      "helper": null,
+      "index": 0,
+      "kind": "is",
+      "label": "scope validation retains original typed JSON"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        56
+      ],
+      "helper": null,
+      "index": 1,
+      "kind": "is",
+      "label": "reference validation retains original typed JSON"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        63
+      ],
+      "helper": null,
+      "index": 2,
+      "kind": "is",
+      "label": "copy validation retains original typed JSON"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        101
+      ],
+      "helper": null,
+      "index": 3,
+      "kind": "like",
+      "label": "known bad full trace contains the caller pattern"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        102
+      ],
+      "helper": null,
+      "index": 4,
+      "kind": "is",
+      "label": "oracle selects the actual message"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        103
+      ],
+      "helper": null,
+      "index": 5,
+      "kind": "unlike",
+      "label": "the same false cause cannot satisfy the diagnostic oracle"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        109
+      ],
+      "helper": null,
+      "index": 6,
+      "kind": "ok",
+      "label": "input to owner storage accepts resolved alias equivalence"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        110
+      ],
+      "helper": null,
+      "index": 7,
+      "kind": "ok",
+      "label": "prepared storage to output contract accepts identity"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        111
+      ],
+      "helper": null,
+      "index": 8,
+      "kind": "ok",
+      "label": "prepared input to output contract accepts identity"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 0,
+      "index": 9,
+      "kind": "ok",
+      "label": "copy independently enforces target role refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 0,
+      "index": 10,
+      "kind": "like",
+      "label": "copy independently enforces target role names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 1,
+      "index": 11,
+      "kind": "ok",
+      "label": "whole input target refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 1,
+      "index": 12,
+      "kind": "like",
+      "label": "whole input target names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 2,
+      "index": 13,
+      "kind": "ok",
+      "label": "scalar input target refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 2,
+      "index": 14,
+      "kind": "like",
+      "label": "scalar input target names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        121
+      ],
+      "helper": null,
+      "index": 15,
+      "kind": "ok",
+      "label": "prepared scalar output target retains allowed role"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        124
+      ],
+      "helper": null,
+      "index": 16,
+      "kind": "is_deeply",
+      "label": "prepared scope does not share parser types"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        129
+      ],
+      "helper": null,
+      "index": 17,
+      "kind": "is",
+      "label": "renamed has independently expected equal packed width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 3,
+      "index": 18,
+      "kind": "ok",
+      "label": "renamed copy identity refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 3,
+      "index": 19,
+      "kind": "like",
+      "label": "renamed copy identity names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        129
+      ],
+      "helper": null,
+      "index": 20,
+      "kind": "is",
+      "label": "reordered has independently expected equal packed width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 4,
+      "index": 21,
+      "kind": "ok",
+      "label": "reordered copy identity refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 4,
+      "index": 22,
+      "kind": "like",
+      "label": "reordered copy identity names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        129
+      ],
+      "helper": null,
+      "index": 23,
+      "kind": "is",
+      "label": "signed_data has independently expected equal packed width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 5,
+      "index": 24,
+      "kind": "ok",
+      "label": "signed_data copy identity refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 5,
+      "index": 25,
+      "kind": "like",
+      "label": "signed_data copy identity names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        129
+      ],
+      "helper": null,
+      "index": 26,
+      "kind": "is",
+      "label": "four has independently expected equal packed width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 6,
+      "index": 27,
+      "kind": "ok",
+      "label": "four copy identity refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 6,
+      "index": 28,
+      "kind": "like",
+      "label": "four copy identity names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        129
+      ],
+      "helper": null,
+      "index": 29,
+      "kind": "is",
+      "label": "two has independently expected equal packed width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 7,
+      "index": 30,
+      "kind": "ok",
+      "label": "two copy identity refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 7,
+      "index": 31,
+      "kind": "like",
+      "label": "two copy identity names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        129
+      ],
+      "helper": null,
+      "index": 32,
+      "kind": "is",
+      "label": "bit_kind has independently expected equal packed width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 8,
+      "index": 33,
+      "kind": "ok",
+      "label": "bit_kind copy identity refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 8,
+      "index": 34,
+      "kind": "like",
+      "label": "bit_kind copy identity names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 9,
+      "index": 35,
+      "kind": "ok",
+      "label": "explicit state-model difference refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 9,
+      "index": 36,
+      "kind": "like",
+      "label": "explicit state-model difference names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        138
+      ],
+      "helper": null,
+      "index": 37,
+      "kind": "ok",
+      "label": "signed_data retains the established payload compatibility contract"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        138
+      ],
+      "helper": null,
+      "index": 38,
+      "kind": "ok",
+      "label": "four retains the established payload compatibility contract"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        138
+      ],
+      "helper": null,
+      "index": 39,
+      "kind": "ok",
+      "label": "two retains the established payload compatibility contract"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        138
+      ],
+      "helper": null,
+      "index": 40,
+      "kind": "ok",
+      "label": "bit_kind retains the established payload compatibility contract"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        142
+      ],
+      "helper": null,
+      "index": 41,
+      "kind": "is",
+      "label": "independent nested packed width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        143
+      ],
+      "helper": null,
+      "index": 42,
+      "kind": "is",
+      "label": "independent flattened packed width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 10,
+      "index": 43,
+      "kind": "ok",
+      "label": "nested shape cannot be flattened for copy identity refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 10,
+      "index": 44,
+      "kind": "like",
+      "label": "nested shape cannot be flattened for copy identity names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 11,
+      "index": 45,
+      "kind": "ok",
+      "label": "nested list item order retains type identity refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 11,
+      "index": 46,
+      "kind": "like",
+      "label": "nested list item order retains type identity names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        156
+      ],
+      "helper": null,
+      "index": 47,
+      "kind": "is_deeply",
+      "label": "independent nested signed/four-state leaf range"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        161
+      ],
+      "helper": null,
+      "index": 48,
+      "kind": "is_deeply",
+      "label": "independent nested list-item leaf range"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        168
+      ],
+      "helper": null,
+      "index": 49,
+      "kind": "is",
+      "label": "leaf results do not share scope facts"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 12,
+      "index": 50,
+      "kind": "ok",
+      "label": "packet refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 12,
+      "index": 51,
+      "kind": "like",
+      "label": "packet names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 13,
+      "index": 52,
+      "kind": "ok",
+      "label": "packet.body refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 13,
+      "index": 53,
+      "kind": "like",
+      "label": "packet.body names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 14,
+      "index": 54,
+      "kind": "ok",
+      "label": "packet.body.lanes refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 14,
+      "index": 55,
+      "kind": "like",
+      "label": "packet.body.lanes names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 15,
+      "index": 56,
+      "kind": "ok",
+      "label": "packet.unknown refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 15,
+      "index": 57,
+      "kind": "like",
+      "label": "packet.unknown names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 16,
+      "index": 58,
+      "kind": "ok",
+      "label": "packet.body.lanes[2] refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 16,
+      "index": 59,
+      "kind": "like",
+      "label": "packet.body.lanes[2] names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 17,
+      "index": 60,
+      "kind": "ok",
+      "label": "packet.body.count[3] refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 17,
+      "index": 61,
+      "kind": "like",
+      "label": "packet.body.count[3] names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 18,
+      "index": 62,
+      "kind": "ok",
+      "label": "packet..count refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 18,
+      "index": 63,
+      "kind": "like",
+      "label": "packet..count names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 19,
+      "index": 64,
+      "kind": "ok",
+      "label": "whole-value permission does not allow subaggregate writes refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 19,
+      "index": 65,
+      "kind": "like",
+      "label": "whole-value permission does not allow subaggregate writes names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        189
+      ],
+      "helper": null,
+      "index": 66,
+      "kind": "is",
+      "label": "unresolved local masks the outer record type"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        194
+      ],
+      "helper": null,
+      "index": 67,
+      "kind": "is",
+      "label": "nearest formal output is writable despite outer input name"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        195
+      ],
+      "helper": null,
+      "index": 68,
+      "kind": "is",
+      "label": "formal type owns local path width"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 20,
+      "index": 69,
+      "kind": "ok",
+      "label": "formal does not borrow an outer member refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 20,
+      "index": 70,
+      "kind": "like",
+      "label": "formal does not borrow an outer member names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        201
+      ],
+      "helper": null,
+      "index": 71,
+      "kind": "is",
+      "label": "scalar local retains its width and writable role"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 21,
+      "index": 72,
+      "kind": "ok",
+      "label": "scalar local cannot borrow an outer record refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 21,
+      "index": 73,
+      "kind": "like",
+      "label": "scalar local cannot borrow an outer record names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        205
+      ],
+      "helper": null,
+      "index": 74,
+      "kind": "is_deeply",
+      "label": "scalar local slice retains core range and writable local role"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        210
+      ],
+      "helper": null,
+      "index": 75,
+      "kind": "is",
+      "label": "scalar local bit index stays scalar"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 22,
+      "index": 76,
+      "kind": "ok",
+      "label": "an unresolved type cannot erase a known input role refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 22,
+      "index": 77,
+      "kind": "like",
+      "label": "an unresolved type cannot erase a known input role names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        217
+      ],
+      "helper": null,
+      "index": 78,
+      "kind": "is",
+      "label": "unrelated enum roots stay with existing enum validation"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        218
+      ],
+      "helper": null,
+      "index": 79,
+      "kind": "is",
+      "label": "unrelated package roots stay with package validation"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        224
+      ],
+      "helper": null,
+      "index": 80,
+      "kind": "is",
+      "label": "different storage-only types use the prior assignment contract"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        225
+      ],
+      "helper": null,
+      "index": 81,
+      "kind": "is",
+      "label": "scalar ports introduce no record copy obligation"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        226
+      ],
+      "helper": null,
+      "index": 82,
+      "kind": "is",
+      "label": "unrelated literal/expression handling remains with caller"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 23,
+      "index": 83,
+      "kind": "ok",
+      "label": "equal/unequal scalar carrier is not a record copy refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 23,
+      "index": 84,
+      "kind": "like",
+      "label": "equal/unequal scalar carrier is not a record copy names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 24,
+      "index": 85,
+      "kind": "ok",
+      "label": "record target cannot treat an expression as a same-type root refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 24,
+      "index": 86,
+      "kind": "like",
+      "label": "record target cannot treat an expression as a same-type root names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        234
+      ],
+      "helper": null,
+      "index": 87,
+      "kind": "is",
+      "label": "existing list storage scalar leaves remain resolvable"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 25,
+      "index": 88,
+      "kind": "ok",
+      "label": "root list is not a same-type record copy refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 25,
+      "index": 89,
+      "kind": "like",
+      "label": "root list is not a same-type record copy names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        248
+      ],
+      "helper": null,
+      "index": 90,
+      "kind": "ok",
+      "label": "package spelling does not affect resolved identity"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 26,
+      "index": 91,
+      "kind": "ok",
+      "label": "unknown key refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 26,
+      "index": 92,
+      "kind": "like",
+      "label": "unknown key names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 27,
+      "index": 93,
+      "kind": "ok",
+      "label": "bad root width refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 27,
+      "index": 94,
+      "kind": "like",
+      "label": "bad root width names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 28,
+      "index": 95,
+      "kind": "ok",
+      "label": "bad scalar signed refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 28,
+      "index": 96,
+      "kind": "like",
+      "label": "bad scalar signed names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 29,
+      "index": 97,
+      "kind": "ok",
+      "label": "missing signed refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 29,
+      "index": 98,
+      "kind": "like",
+      "label": "missing signed names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 30,
+      "index": 99,
+      "kind": "ok",
+      "label": "aggregate signed refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 30,
+      "index": 100,
+      "kind": "like",
+      "label": "aggregate signed names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 31,
+      "index": 101,
+      "kind": "ok",
+      "label": "aggregate state refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 31,
+      "index": 102,
+      "kind": "like",
+      "label": "aggregate state names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 32,
+      "index": 103,
+      "kind": "ok",
+      "label": "bad state refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 32,
+      "index": 104,
+      "kind": "like",
+      "label": "bad state names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 33,
+      "index": 105,
+      "kind": "ok",
+      "label": "duplicate order refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 33,
+      "index": 106,
+      "kind": "like",
+      "label": "duplicate order names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 34,
+      "index": 107,
+      "kind": "ok",
+      "label": "unlisted member refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 34,
+      "index": 108,
+      "kind": "like",
+      "label": "unlisted member names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 35,
+      "index": 109,
+      "kind": "ok",
+      "label": "cyclic member refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 35,
+      "index": 110,
+      "kind": "like",
+      "label": "cyclic member names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 36,
+      "index": 111,
+      "kind": "ok",
+      "label": "deferred kind refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 36,
+      "index": 112,
+      "kind": "like",
+      "label": "deferred kind names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 37,
+      "index": 113,
+      "kind": "ok",
+      "label": "unknown role refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 37,
+      "index": 114,
+      "kind": "like",
+      "label": "unknown role names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 38,
+      "index": 115,
+      "kind": "ok",
+      "label": "unknown scope argument refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 38,
+      "index": 116,
+      "kind": "like",
+      "label": "unknown scope argument names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 39,
+      "index": 117,
+      "kind": "ok",
+      "label": "nonbinary whole-value permission refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 39,
+      "index": 118,
+      "kind": "like",
+      "label": "nonbinary whole-value permission names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 40,
+      "index": 119,
+      "kind": "ok",
+      "label": "contradictory copy descriptor refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 40,
+      "index": 120,
+      "kind": "like",
+      "label": "contradictory copy descriptor names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 41,
+      "index": 121,
+      "kind": "ok",
+      "label": "output frame source refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 41,
+      "index": 122,
+      "kind": "like",
+      "label": "output frame source names the cause in its diagnostic line"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        89
+      ],
+      "helper": 42,
+      "index": 123,
+      "kind": "ok",
+      "label": "input lanes source refuses"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        90
+      ],
+      "helper": 42,
+      "index": 124,
+      "kind": "like",
+      "label": "input lanes source names the cause in its diagnostic line"
+    }
+  ],
+  "helpers": [
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        115
+      ],
+      "index": 0,
+      "label": "copy independently enforces target role",
+      "pattern": "(?^:forged write cannot write declared input 'packet')",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { validate_record_port_copy(source => $source, target => $target,\n        context => 'forged write') }, qr/forged write cannot write declared input 'packet'/,\n        'copy independently enforces target role');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        117
+      ],
+      "index": 1,
+      "label": "whole input target",
+      "pattern": "(?^:cannot write declared input 'packet')",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { reference($scope, 'packet', 'write', 1) }, qr/cannot write declared input 'packet'/,\n        'whole input target');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        119
+      ],
+      "index": 2,
+      "label": "scalar input target",
+      "pattern": "(?^:cannot write declared input 'packet.data')",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { reference($scope, 'packet.data', 'write') }, qr/cannot write declared input 'packet.data'/,\n        'scalar input target');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        131
+      ],
+      "index": 3,
+      "label": "renamed copy identity",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");",
+      "source_statement": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        131
+      ],
+      "index": 4,
+      "label": "reordered copy identity",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");",
+      "source_statement": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        131
+      ],
+      "index": 5,
+      "label": "signed_data copy identity",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");",
+      "source_statement": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        131
+      ],
+      "index": 6,
+      "label": "four copy identity",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");",
+      "source_statement": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        131
+      ],
+      "index": 7,
+      "label": "two copy identity",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");",
+      "source_statement": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        131
+      ],
+      "index": 8,
+      "label": "bit_kind copy identity",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");",
+      "source_statement": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n            \"$name copy identity\");"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        135
+      ],
+      "index": 9,
+      "label": "explicit state-model difference",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { copy($scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n        'explicit state-model difference');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        144
+      ],
+      "index": 10,
+      "label": "nested shape cannot be flattened for copy identity",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { copy($nested_scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n        'nested shape cannot be flattened for copy identity');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        150
+      ],
+      "index": 11,
+      "label": "nested list item order retains type identity",
+      "pattern": "(?^:requires the same resolved record type)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { copy($list_scope, 'packet', 'held') }, qr/requires the same resolved record type/,\n        'nested list item order retains type identity');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        179
+      ],
+      "index": 12,
+      "label": "packet",
+      "pattern": "(?^:requires a scalar value)",
+      "source_declaration": "['packet', qr/requires a scalar value/]",
+      "source_statement": "refuses(sub { reference($scope, $pair->[0]) }, $pair->[1], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        179
+      ],
+      "index": 13,
+      "label": "packet.body",
+      "pattern": "(?^:requires a scalar leaf)",
+      "source_declaration": "['packet.body', qr/requires a scalar leaf/]",
+      "source_statement": "refuses(sub { reference($scope, $pair->[0]) }, $pair->[1], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        179
+      ],
+      "index": 14,
+      "label": "packet.body.lanes",
+      "pattern": "(?^:requires a scalar leaf)",
+      "source_declaration": "['packet.body.lanes', qr/requires a scalar leaf/]",
+      "source_statement": "refuses(sub { reference($scope, $pair->[0]) }, $pair->[1], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        179
+      ],
+      "index": 15,
+      "label": "packet.unknown",
+      "pattern": "(?^:invalid declared path.*unknown_member)",
+      "source_declaration": "['packet.unknown', qr/invalid declared path.*unknown_member/]",
+      "source_statement": "refuses(sub { reference($scope, $pair->[0]) }, $pair->[1], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        179
+      ],
+      "index": 16,
+      "label": "packet.body.lanes[2]",
+      "pattern": "(?^:invalid declared path.*list_index_out_of_range)",
+      "source_declaration": "['packet.body.lanes[2]', qr/invalid declared path.*list_index_out_of_range/]",
+      "source_statement": "refuses(sub { reference($scope, $pair->[0]) }, $pair->[1], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        179
+      ],
+      "index": 17,
+      "label": "packet.body.count[3]",
+      "pattern": "(?^:invalid declared path.*scalar_index_out_of_range)",
+      "source_declaration": "['packet.body.count[3]', qr/invalid declared path.*scalar_index_out_of_range/]",
+      "source_statement": "refuses(sub { reference($scope, $pair->[0]) }, $pair->[1], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        179
+      ],
+      "index": 18,
+      "label": "packet..count",
+      "pattern": "(?^:invalid declared path.*parse_error)",
+      "source_declaration": "['packet..count', qr/invalid declared path.*parse_error/]",
+      "source_statement": "refuses(sub { reference($scope, $pair->[0]) }, $pair->[1], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        181
+      ],
+      "index": 19,
+      "label": "whole-value permission does not allow subaggregate writes",
+      "pattern": "(?^:requires a scalar leaf)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { reference($scope, 'held.body', 'write', 1) }, qr/requires a scalar leaf/,\n        'whole-value permission does not allow subaggregate writes');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        196
+      ],
+      "index": 20,
+      "label": "formal does not borrow an outer member",
+      "pattern": "(?^:unknown_member)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { reference($formal, 'packet.data') }, qr/unknown_member/,\n        'formal does not borrow an outer member');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        203
+      ],
+      "index": 21,
+      "label": "scalar local cannot borrow an outer record",
+      "pattern": "(?^:member_on_non_record)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { reference($scalar_shadow, 'packet.data') }, qr/member_on_non_record/,\n        'scalar local cannot borrow an outer record');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        215
+      ],
+      "index": 22,
+      "label": "an unresolved type cannot erase a known input role",
+      "pattern": "(?^:cannot write declared input)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { reference($unresolved_input, 'packet', 'write') }, qr/cannot write declared input/,\n        'an unresolved type cannot erase a known input role');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        228
+      ],
+      "index": 23,
+      "label": "equal/unequal scalar carrier is not a record copy",
+      "pattern": "(?^:requires declared record roots)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { copy($scope, 'scalar', 'output') }, qr/requires declared record roots/,\n        'equal/unequal scalar carrier is not a record copy');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        232
+      ],
+      "index": 24,
+      "label": "record target cannot treat an expression as a same-type root",
+      "pattern": "(?^:requires declared record roots)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { validate_record_port_copy(source => undef,\n        target => reference($scope, 'output', 'write', 1), context => 'expression') },\n        qr/requires declared record roots/, 'record target cannot treat an expression as a same-type root');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        235
+      ],
+      "index": 25,
+      "label": "root list is not a same-type record copy",
+      "pattern": "(?^:requires declared record roots)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { copy($scope, 'lanes', 'output') }, qr/requires declared record roots/,\n        'root list is not a same-type record copy');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 26,
+      "label": "unknown key",
+      "pattern": "(?^:unknown facts)",
+      "source_declaration": "['unknown key', sub { $_[0]{extra} = 1 }, qr/unknown facts/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 27,
+      "label": "bad root width",
+      "pattern": "(?^:width disagrees)",
+      "source_declaration": "['bad root width', sub { $_[0]{width} = 9 }, qr/width disagrees/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 28,
+      "label": "bad scalar signed",
+      "pattern": "(?^:signed property)",
+      "source_declaration": "['bad scalar signed', sub { $_[0]{members}{data}{signed} = 2 }, qr/signed property/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 29,
+      "label": "missing signed",
+      "pattern": "(?^:lacks required facts)",
+      "source_declaration": "['missing signed', sub { delete $_[0]{members}{data}{signed} }, qr/lacks required facts/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 30,
+      "label": "aggregate signed",
+      "pattern": "(?^:scalar signed overlay)",
+      "source_declaration": "['aggregate signed', sub { $_[0]{signed} = 1 }, qr/scalar signed overlay/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 31,
+      "label": "aggregate state",
+      "pattern": "(?^:unknown facts)",
+      "source_declaration": "['aggregate state', sub { $_[0]{state_model} = 'two_state' }, qr/unknown facts/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 32,
+      "label": "bad state",
+      "pattern": "(?^:state model)",
+      "source_declaration": "['bad state', sub { $_[0]{members}{data}{state_model} = 'unknown' }, qr/state model/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 33,
+      "label": "duplicate order",
+      "pattern": "(?^:duplicate record member)",
+      "source_declaration": "['duplicate order', sub { $_[0]{member_order} = [qw(flag flag)] }, qr/duplicate record member/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 34,
+      "label": "unlisted member",
+      "pattern": "(?^:inventory disagrees)",
+      "source_declaration": "['unlisted member', sub { $_[0]{members}{extra} = dclone($scalar) }, qr/inventory disagrees/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 35,
+      "label": "cyclic member",
+      "pattern": "(?^:cyclic resolved type)",
+      "source_declaration": "['cyclic member', sub { $_[0]{members}{data} = $_[0] }, qr/cyclic resolved type/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        267
+      ],
+      "index": 36,
+      "label": "deferred kind",
+      "pattern": "(?^:unsupported resolved type kind)",
+      "source_declaration": "['deferred kind', sub { $_[0]{kind} = 'deferred_imported_alias' }, qr/unsupported resolved type kind/]",
+      "source_statement": "refuses(sub { scope_for($spec, $types{frame}) }, $pair->[2], $pair->[0]);"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        270
+      ],
+      "index": 37,
+      "label": "unknown role",
+      "pattern": "(?^:invalid role)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { record_value_scope(outer => {packet => {role => 'inout', type_spec => $types{frame}}},\n        local => {}) }, qr/invalid role/, 'unknown role');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        271
+      ],
+      "index": 38,
+      "label": "unknown scope argument",
+      "pattern": "(?^:unknown facts)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { record_value_scope(outer => {}, local => {}, surprise => 1) }, qr/unknown facts/,\n        'unknown scope argument');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        275
+      ],
+      "index": 39,
+      "label": "nonbinary whole-value permission",
+      "pattern": "(?^:whole-value permission)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { record_value_reference(scope => $scope, token => 'packet', access => 'read',\n        context => 'permission', allow_whole => 2) }, qr/whole-value permission/,\n        'nonbinary whole-value permission');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        280
+      ],
+      "index": 40,
+      "label": "contradictory copy descriptor",
+      "pattern": "(?^:width disagrees)",
+      "source_declaration": null,
+      "source_statement": "refuses(sub { validate_record_port_copy(source => $value,\n        target => reference($scope, 'held', 'write', 1), context => 'hostile') }, qr/width disagrees/,\n        'contradictory copy descriptor');"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        293
+      ],
+      "index": 41,
+      "label": "output frame source",
+      "pattern": "(?^:record output field writes are not yet admitted)",
+      "source_declaration": "['output', 'frame', '(set value.flag 1)', qr/record output field writes are not yet admitted/]",
+      "source_statement": "refuses(sub { $parser->parse_source($source, 'still-refused.isf') }, $pattern,\n            \"$direction $type source\");"
+    },
+    {
+      "caller": [
+        "main",
+        "./t/1986-isf-record-port-value-gates.t",
+        293
+      ],
+      "index": 42,
+      "label": "input lanes source",
+      "pattern": "(?^:interface port 'value' references aggregate type)",
+      "source_declaration": "['input', 'lanes', '(complete done)', qr/interface port 'value' references aggregate type/]",
+      "source_statement": "refuses(sub { $parser->parse_source($source, 'still-refused.isf') }, $pattern,\n            \"$direction $type source\");"
+    }
+  ]
+}

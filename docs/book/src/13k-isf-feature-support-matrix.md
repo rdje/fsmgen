@@ -486,7 +486,10 @@ now joins every copied width to its complete source type, carrier role and
 ancestor context, preserving raw kinds and compatible-source candidate sets.
 The [input/private semantic join](../../../docs/audits/record-value-original-input-join-20261005/scope.txt)
 now binds every own graph and field to the same source/caller context, raw
-kinds and detached copy boundary. Consumer truth and the full alias run’s
+kinds and detached copy boundary. The [source-context reader](../../../docs/audits/record-value-original-contexts-20261005/scope.txt)
+now qualifies exact helper, consumer and parser source locations, input texts
+and operation spans for the recorded finite profile. Primary diagnostic causes,
+raw coordinate semantics, consumer operand truth and the full alias run’s
 downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

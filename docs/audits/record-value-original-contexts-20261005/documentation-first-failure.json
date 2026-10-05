@@ -1,0 +1,20 @@
+{
+  "status": 1,
+  "error": "KeyError: 'surface_id'",
+  "locus": "documentation registry loop direct row key",
+  "completed": [
+    "scope.txt",
+    "checks scope",
+    "book transform",
+    "book authority"
+  ],
+  "remaining": [
+    "registry",
+    "card",
+    "task",
+    "Memory",
+    "index",
+    "seal"
+  ],
+  "cause": "Registry has a schema record without surface_id; require get for selecting the existing shipped_behavior row."
+}
