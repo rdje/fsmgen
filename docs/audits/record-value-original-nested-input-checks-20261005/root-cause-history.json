@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "This is the Metadata projection",
+    "--",
+    "docs/audits/record-value-original-metadata-frames-20261005/scope.txt"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": ""
+}

@@ -1,0 +1,294 @@
+{
+  "joins": [
+    {
+      "mode": "ordinary",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "5c627da5ce3202bd5ef996f43c5ecf8016b089479b90e0a8a2abb045431e3d2e"
+          },
+          "private_copy": 536,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "3587448b34f50414da1dd541f96ac028f7a1057fff9a3e9b0be8a947f8aa7b7d"
+          },
+          "scope_api": 7750
+        },
+        {
+          "capture_api": 7929,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "6c49f1cd6e7e4a63ad3a294dc044ba6205e2658901385e8a198c8c322edf49e0"
+          },
+          "private_copy": 545,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "f195f924a685820fdbf91744c560e5fe8f5d0560467c55067e0d1a3eb57955fe"
+          },
+          "scope_api": 7840
+        },
+        {
+          "capture_api": 8368,
+          "capture_input": {
+            "bytes": 381,
+            "sha256": "5bf42754c5a93c421e8d350d149c636897776ebeccad9165ce7b8f7ee5b77adc"
+          },
+          "private_copy": 584,
+          "private_result": {
+            "bytes": 280,
+            "sha256": "20d8337b46440b3b4a75e7597d19212e66cc1616a3b59328dc702d127ed0dcae"
+          },
+          "scope_api": 8279
+        },
+        {
+          "capture_api": 8458,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "827bee476da4a5edbc795225e1005a7b0d2f6e7a9bd3452324986a4d04687292"
+          },
+          "private_copy": 593,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "b67ac98764218b9745d7633d016615a2bdbd461e4e4588d011aed1d799b436ba"
+          },
+          "scope_api": 8369
+        },
+        {
+          "capture_api": 8548,
+          "capture_input": {
+            "bytes": 411,
+            "sha256": "9b4cc6a8aa36c52b2c697235d435ce02650c2a051589927b5bccb093e8d6f189"
+          },
+          "private_copy": 603,
+          "private_result": {
+            "bytes": 310,
+            "sha256": "af41e10c96dc17ebf4b7279c76fb31e99d2f19cda499085d7b5b6dd0a88910d5"
+          },
+          "scope_api": 8459
+        },
+        {
+          "capture_api": 8638,
+          "capture_input": {
+            "bytes": 347,
+            "sha256": "b6be94ca386e381b198081f7cf7a7b43ca2d7abbe4f906929feae163344dfbae"
+          },
+          "private_copy": 612,
+          "private_result": {
+            "bytes": 235,
+            "sha256": "fea9eb8e9531f6681076206a4d6773ffff6370be590cb00c0bbb955ae537d2e8"
+          },
+          "scope_api": 8549
+        },
+        {
+          "capture_api": 8728,
+          "capture_input": {
+            "bytes": 374,
+            "sha256": "331e3aef63e606b7362834316bd6ef385e11b6506b399b0a707c7846dd8168e9"
+          },
+          "private_copy": 621,
+          "private_result": {
+            "bytes": 273,
+            "sha256": "3f96bd0ab7cc2fe076cde091a8390f8288773147c038875d1845b76fbf424718"
+          },
+          "scope_api": 8639
+        }
+      ]
+    },
+    {
+      "mode": "storable",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "5c627da5ce3202bd5ef996f43c5ecf8016b089479b90e0a8a2abb045431e3d2e"
+          },
+          "private_copy": 536,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "3587448b34f50414da1dd541f96ac028f7a1057fff9a3e9b0be8a947f8aa7b7d"
+          },
+          "scope_api": 7750
+        },
+        {
+          "capture_api": 7929,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "6c49f1cd6e7e4a63ad3a294dc044ba6205e2658901385e8a198c8c322edf49e0"
+          },
+          "private_copy": 545,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "f195f924a685820fdbf91744c560e5fe8f5d0560467c55067e0d1a3eb57955fe"
+          },
+          "scope_api": 7840
+        },
+        {
+          "capture_api": 8368,
+          "capture_input": {
+            "bytes": 381,
+            "sha256": "5bf42754c5a93c421e8d350d149c636897776ebeccad9165ce7b8f7ee5b77adc"
+          },
+          "private_copy": 584,
+          "private_result": {
+            "bytes": 280,
+            "sha256": "20d8337b46440b3b4a75e7597d19212e66cc1616a3b59328dc702d127ed0dcae"
+          },
+          "scope_api": 8279
+        },
+        {
+          "capture_api": 8458,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "827bee476da4a5edbc795225e1005a7b0d2f6e7a9bd3452324986a4d04687292"
+          },
+          "private_copy": 593,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "b67ac98764218b9745d7633d016615a2bdbd461e4e4588d011aed1d799b436ba"
+          },
+          "scope_api": 8369
+        },
+        {
+          "capture_api": 8548,
+          "capture_input": {
+            "bytes": 411,
+            "sha256": "9b4cc6a8aa36c52b2c697235d435ce02650c2a051589927b5bccb093e8d6f189"
+          },
+          "private_copy": 603,
+          "private_result": {
+            "bytes": 310,
+            "sha256": "af41e10c96dc17ebf4b7279c76fb31e99d2f19cda499085d7b5b6dd0a88910d5"
+          },
+          "scope_api": 8459
+        },
+        {
+          "capture_api": 8638,
+          "capture_input": {
+            "bytes": 347,
+            "sha256": "b6be94ca386e381b198081f7cf7a7b43ca2d7abbe4f906929feae163344dfbae"
+          },
+          "private_copy": 612,
+          "private_result": {
+            "bytes": 235,
+            "sha256": "fea9eb8e9531f6681076206a4d6773ffff6370be590cb00c0bbb955ae537d2e8"
+          },
+          "scope_api": 8549
+        },
+        {
+          "capture_api": 8728,
+          "capture_input": {
+            "bytes": 374,
+            "sha256": "331e3aef63e606b7362834316bd6ef385e11b6506b399b0a707c7846dd8168e9"
+          },
+          "private_copy": 621,
+          "private_result": {
+            "bytes": 273,
+            "sha256": "3f96bd0ab7cc2fe076cde091a8390f8288773147c038875d1845b76fbf424718"
+          },
+          "scope_api": 8639
+        }
+      ]
+    },
+    {
+      "mode": "controls",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "5c627da5ce3202bd5ef996f43c5ecf8016b089479b90e0a8a2abb045431e3d2e"
+          },
+          "private_copy": 536,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "3587448b34f50414da1dd541f96ac028f7a1057fff9a3e9b0be8a947f8aa7b7d"
+          },
+          "scope_api": 7750
+        },
+        {
+          "capture_api": 7929,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "6c49f1cd6e7e4a63ad3a294dc044ba6205e2658901385e8a198c8c322edf49e0"
+          },
+          "private_copy": 545,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "f195f924a685820fdbf91744c560e5fe8f5d0560467c55067e0d1a3eb57955fe"
+          },
+          "scope_api": 7840
+        },
+        {
+          "capture_api": 8368,
+          "capture_input": {
+            "bytes": 381,
+            "sha256": "5bf42754c5a93c421e8d350d149c636897776ebeccad9165ce7b8f7ee5b77adc"
+          },
+          "private_copy": 584,
+          "private_result": {
+            "bytes": 280,
+            "sha256": "20d8337b46440b3b4a75e7597d19212e66cc1616a3b59328dc702d127ed0dcae"
+          },
+          "scope_api": 8279
+        },
+        {
+          "capture_api": 8458,
+          "capture_input": {
+            "bytes": 357,
+            "sha256": "827bee476da4a5edbc795225e1005a7b0d2f6e7a9bd3452324986a4d04687292"
+          },
+          "private_copy": 593,
+          "private_result": {
+            "bytes": 256,
+            "sha256": "b67ac98764218b9745d7633d016615a2bdbd461e4e4588d011aed1d799b436ba"
+          },
+          "scope_api": 8369
+        },
+        {
+          "capture_api": 8548,
+          "capture_input": {
+            "bytes": 411,
+            "sha256": "9b4cc6a8aa36c52b2c697235d435ce02650c2a051589927b5bccb093e8d6f189"
+          },
+          "private_copy": 603,
+          "private_result": {
+            "bytes": 310,
+            "sha256": "af41e10c96dc17ebf4b7279c76fb31e99d2f19cda499085d7b5b6dd0a88910d5"
+          },
+          "scope_api": 8459
+        },
+        {
+          "capture_api": 8638,
+          "capture_input": {
+            "bytes": 347,
+            "sha256": "b6be94ca386e381b198081f7cf7a7b43ca2d7abbe4f906929feae163344dfbae"
+          },
+          "private_copy": 612,
+          "private_result": {
+            "bytes": 235,
+            "sha256": "fea9eb8e9531f6681076206a4d6773ffff6370be590cb00c0bbb955ae537d2e8"
+          },
+          "scope_api": 8549
+        },
+        {
+          "capture_api": 8728,
+          "capture_input": {
+            "bytes": 374,
+            "sha256": "331e3aef63e606b7362834316bd6ef385e11b6506b399b0a707c7846dd8168e9"
+          },
+          "private_copy": 621,
+          "private_result": {
+            "bytes": 273,
+            "sha256": "3f96bd0ab7cc2fe076cde091a8390f8288773147c038875d1845b76fbf424718"
+          },
+          "scope_api": 8639
+        }
+      ]
+    }
+  ],
+  "scope": "Local source input/model join only; full prerequisite/control execution follows.",
+  "status": 0
+}

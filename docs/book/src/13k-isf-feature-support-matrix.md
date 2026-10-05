@@ -506,8 +506,11 @@ formatting, unprinted arguments and live reference identity remain open.
 The [metadata paths](../../../docs/audits/record-value-original-metadata-frames-20261005/scope.txt)
 now qualify the finite metadata guard and record-member recursion projection from
 type inputs, including cyclic traversal. Visible path and argument footprints
-agree. Inherited API catches/rethrows, full outer frame meaning, exact display,
-raw coordinates and native address meanings, consumer
+agree. The [nested input join](../../../docs/audits/record-value-original-nested-inputs-20261005/scope.txt)
+now links each finite failing Scope/capture pair to its private root and complete
+source-constructed typed interface input, preserving kinds, sharing and cycles.
+Inherited API catches/rethrows, full outer frame meaning, exact display, raw
+coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

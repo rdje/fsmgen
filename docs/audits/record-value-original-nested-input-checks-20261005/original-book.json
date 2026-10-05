@@ -1,0 +1,12 @@
+{
+  "command": [
+    "prove",
+    "-Iperl",
+    "t/1986-isf-record-port-value-gates.t",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t"
+  ],
+  "status": 0,
+  "stdout": "t/1986-isf-record-port-value-gates.t ....... ok\nt/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nAll tests successful.\nFiles=3, Tests=318,  5 wallclock secs ( 0.01 usr  0.01 sys +  1.83 cusr  1.38 csys =  3.23 CPU)\nResult: PASS\n",
+  "stderr": ""
+}

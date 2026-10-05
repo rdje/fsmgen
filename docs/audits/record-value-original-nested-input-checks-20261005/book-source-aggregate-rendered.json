@@ -1,0 +1,27 @@
+{
+  "rendered_markers": [
+    "now links each finite failing Scope/capture pair to its private root and complete source-constructed typed interface input, preserving kinds, sharing and cycles.",
+    "Inherited API catches/rethrows, full outer frame meaning, exact display"
+  ],
+  "revision": "822103048448f36c1e5b8cd98f2926c13d0f7118",
+  "status": 0,
+  "visual_QA": "pending",
+  "whole_aggregate": {
+    "after": {
+      "bytes_total": 3770676,
+      "files": 64,
+      "lines_total": 67924
+    },
+    "before": {
+      "bytes_total": 3770413,
+      "files": 64,
+      "lines_total": 67921
+    },
+    "delta": {
+      "bytes_total": 263,
+      "files": 0,
+      "lines_total": 3
+    }
+  },
+  "whole_source_transform": true
+}

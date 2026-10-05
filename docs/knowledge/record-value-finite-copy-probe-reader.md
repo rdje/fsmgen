@@ -19,6 +19,7 @@ answers:
   - "why does JSON PP documentation say version 4.05?"
   - "what qualifies direct original Value failure frames?"
   - "what qualifies original metadata failure recursion frames?"
+  - "what joins nested original Scope and capture inputs?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -34,23 +35,19 @@ evidence: >-
   docs/audits/record-value-original-copy-reader-20261004/scope.txt;
   docs/audits/record-value-original-copy-reader-20261004/verify.py;
   docs/audits/record-value-original-products-20261005/scope.txt;
-  docs/audits/record-value-original-products-20261005/verify.py;
   docs/audits/record-value-original-input-graphs-20261005/scope.txt;
-  docs/audits/record-value-original-input-graphs-20261005/verify.py;
   docs/audits/record-value-ranges-20261004/scope.txt;
   docs/audits/record-value-original-fields-20261005/scope.txt;
-  docs/audits/record-value-original-fields-20261005/verify.py;
   docs/audits/record-value-original-input-join-20261005/scope.txt;
   docs/audits/record-value-original-input-join-20261005/verify.py;
   docs/audits/record-value-original-contexts-20261005/scope.txt;
-  docs/audits/record-value-original-contexts-20261005/verify.py;
   docs/audits/record-value-original-primary-20261005/scope.txt;
   docs/audits/record-value-original-primary-20261005/verify.py;
-  docs/audits/record-value-original-metadata-frames-20261005/scope.txt;
+  docs/audits/record-value-original-nested-inputs-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-metadata-frames-20261005/verify.py &&
+  docs/audits/record-value-original-nested-inputs-20261005/verify.py &&
   python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-copy-reader-20261004/replay.py
@@ -89,9 +86,11 @@ were not measured. The old POD4.05 label is stale; runtime JSON::PP4.06 owns
 version identity. Direct Value paths now derive active function order and
 source argument roles; captured visible type/scalar footprints agree. Metadata
 models now qualify finite guard/record-recursion paths, including cycles. List
-recursion is bound but unexercised by these refusal frames. Inherited API, full
-display/frame/coordinate/address, consumer, alias/semantic/cold/candidate-parent,
-hot and host-native meanings remain open.
+recursion is bound but unexercised by these refusal frames. The nested input
+join now binds each failing Scope/capture pair and private root to the entire
+source-constructed interface graph, preserving kinds, sharing and cycles.
+Catch/rethrow, inherited/full display/frame/coordinate/address, consumer,
+alias/semantic/cold/candidate-parent, hot and host-native meanings remain open.
 
 The current reader reexecutes original capture, copy-graph and product readers;
 the reverify route avoids duplicate runs while retaining separate probe replay.
