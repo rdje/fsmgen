@@ -21,6 +21,7 @@ answers:
   - "what qualifies original metadata failure recursion frames?"
   - "what joins nested original Scope and capture inputs?"
   - "what qualifies whole nested original error forwarding?"
+  - "what qualifies inherited original nested API frames?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -38,14 +39,11 @@ evidence: >-
   docs/audits/record-value-original-input-graphs-20261005/scope.txt;
   docs/audits/record-value-ranges-20261004/scope.txt;
   docs/audits/record-value-original-fields-20261005/scope.txt;
-  docs/audits/record-value-original-input-join-20261005/scope.txt;
-  docs/audits/record-value-original-contexts-20261005/scope.txt;
-  docs/audits/record-value-original-primary-20261005/scope.txt;
-  docs/audits/record-value-original-forwarding-20261005/scope.txt;
+  docs/audits/record-value-original-inherited-frames-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-forwarding-20261005/verify.py &&
+  docs/audits/record-value-original-inherited-frames-20261005/verify.py &&
   python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-copy-reader-20261004/replay.py
@@ -89,7 +87,9 @@ join now binds each failing Scope/capture pair and private root to the entire
 source-constructed interface graph, preserving kinds, sharing and cycles.
 Whole inner scalar forwarding now conserves the new outer prefix. Public die
 controls distinguish explicit rethrow, propagation and hook replacement. Original
-hook state/provider bytes stay unmeasured. Inherited/full display/frame/coordinate/address, consumer,
+hook state/provider bytes stay unmeasured. Source models join nested Value and
+capture/Scope eval/wrapper paths and visible operand roles. Full observer/display/
+frame/coordinate/address, consumer,
 alias/semantic/cold/candidate-parent, hot and host-native meanings remain open.
 
 The current reader reexecutes original capture, copy-graph and product readers;

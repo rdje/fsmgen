@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Whole nested error-variable conservation",
+    "--",
+    "docs/audits/record-value-original-forwarding-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "commit 2d2bac938684e0580a5c77da266928b669ed4923\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 12:33:19 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2.3.2: qualify whole nested error forwarding\n    \n    Bind capture eval/raw publish/explicit rethrow and Value catch/interpolation/new confess. Whole inner operands and outer prefixes conserve for every finite nested pair; twelve corruptions reject.\n    \n    Current public Perl probes distinguish propagation and hook replacement; original hook/provider and full trace gaps remain explicit. Focused original/book 3 files/318 assertions, full sealed reader, book and knowledge checks pass. Push stays deferred.\n",
+  "stderr": ""
+}

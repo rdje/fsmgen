@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-inherited-frames-20261005/verify_receipt.py"
+  ],
+  "status": 0,
+  "stdout": "{\"controls\": [{\"cause\": \"exact current programme/proof/manifest receipt identity\", \"control\": \"actual-initial-successful-receipt\", \"status\": 1}, {\"cause\": \"exact current programme/proof/manifest receipt identity\", \"control\": \"borrowed-initial-programme-pin\", \"status\": 1}], \"current_identity\": {\"frame_model.py\": {\"bytes\": 3276, \"sha256\": \"bf9776779da38a30cd11215901c3e33f85446db500344f0a5dc4824059874530\"}, \"manifest.json\": {\"bytes\": 1416, \"sha256\": \"70572fc71d65dbdf9656cd9b6f7a19c7a2629fa199b2b8ccf7bbfe2b30f5eca4\"}, \"proofs.json\": {\"bytes\": 412789, \"sha256\": \"39611b0aff33ecfc873aabc63a235fddcfd0e1bd4cc8120f15e439c85600ec5b\"}, \"verify.py\": {\"bytes\": 16574, \"sha256\": \"9fd4e4e9613f91892d5f1481630ce836b73897a5b38dc6af1e4a17167802bde3\"}}, \"scope\": \"Fresh executed sealed reader pins; identical legacy successful stdout is insufficient.\", \"status\": 0}\n",
+  "stderr": ""
+}

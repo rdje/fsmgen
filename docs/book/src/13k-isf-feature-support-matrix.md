@@ -516,8 +516,11 @@ the outer message prefix. This proves forwarding of the source variable; full
 inner and outer trace interpretation remains open. Current public Perl probes
 distinguish explicit rethrow from implicit propagation and show that a die hook
 can replace an exception. Original hook state and provider bytes were not captured.
-Inherited frame paths, full outer frame meaning, exact display, raw
-coordinates and native address meanings, consumer
+The [inherited API paths](../../../docs/audits/record-value-original-inherited-frames-20261005/scope.txt)
+now join the active Value validation and capture/Scope observer eval, delegate
+and wrapper frames in both the inner failure and new outer throw. Source argument
+roles agree with visible scalar and reference-kind footprints. Full outer observer
+and framework meaning, exact display, raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
