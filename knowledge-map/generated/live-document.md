@@ -116,14 +116,14 @@ _Decision identity rollover preserves finite compatibility paths and current can
 
 _Live documents use bounded views over durable stores_
 
-- **date:** 2026-09-06 · **status:** current
+- **date:** 2026-10-05 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-size-containment.md`](../../docs/knowledge/live-document-size-containment.md)
 
 ### live-document-surface-growth-procedure
 
 _Live-document growth is a declared measurement; ceiling increases are reviewed_
 
-- **date:** 2026-08-19 · **status:** current
+- **date:** 2026-10-05 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-surface-growth-procedure.md`](../../docs/knowledge/live-document-surface-growth-procedure.md)
 
 ### live-document-target-pair-calibration
@@ -137,5 +137,5 @@ _A live-document surface's lines_each and bytes_each must imply the bytes per li
 
 _A transition allowance is re-declared to the measured actual plus one ratchet step, and its owner must be live_
 
-- **date:** 2026-08-19 · **status:** current
+- **date:** 2026-10-05 · **status:** current
 - **source and verification:** [`docs/knowledge/live-document-transition-allowance-headroom.md`](../../docs/knowledge/live-document-transition-allowance-headroom.md)

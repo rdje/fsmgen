@@ -1,0 +1,116 @@
+[
+  {
+    "descriptors": [
+      {
+        "max_bytes": 8192,
+        "max_record_bytes": 2048,
+        "max_records": 8,
+        "record_type": "registry",
+        "schema_version": 1
+      },
+      {
+        "bytes": 3011,
+        "current_pointer": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+        "descriptor_id": "knowledge-rollover-knowledge-card-sizing-and-partition-20261005",
+        "former_path": "docs/knowledge/knowledge-card-sizing-and-partition.md",
+        "lines": 57,
+        "range_id": "complete-source-before-role-based-rollover",
+        "record_type": "descriptor",
+        "retrieval_kind": "file",
+        "retrieval_locator": "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt",
+        "revision": "436a207c5a80f2324dbcd2e4f8ac8aea1efea527",
+        "schema_version": 1,
+        "sealed_on": "2026-10-05",
+        "sha256": "fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba",
+        "surface_id": "exact_history",
+        "verifier": "builtin:file"
+      },
+      {
+        "bytes": 24761,
+        "current_pointer": "docs/knowledge/live-document-size-containment.md",
+        "descriptor_id": "knowledge-rollover-live-document-size-containment-20261005",
+        "former_path": "docs/knowledge/live-document-size-containment.md",
+        "lines": 361,
+        "range_id": "complete-source-before-role-based-rollover",
+        "record_type": "descriptor",
+        "retrieval_kind": "file",
+        "retrieval_locator": "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt",
+        "revision": "436a207c5a80f2324dbcd2e4f8ac8aea1efea527",
+        "schema_version": 1,
+        "sealed_on": "2026-10-05",
+        "sha256": "491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432",
+        "surface_id": "exact_history",
+        "verifier": "builtin:file"
+      },
+      {
+        "bytes": 3537,
+        "current_pointer": "docs/knowledge/live-document-surface-growth-procedure.md",
+        "descriptor_id": "knowledge-rollover-live-document-surface-growth-procedure-20261005",
+        "former_path": "docs/knowledge/live-document-surface-growth-procedure.md",
+        "lines": 63,
+        "range_id": "complete-source-before-role-based-rollover",
+        "record_type": "descriptor",
+        "retrieval_kind": "file",
+        "retrieval_locator": "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt",
+        "revision": "436a207c5a80f2324dbcd2e4f8ac8aea1efea527",
+        "schema_version": 1,
+        "sealed_on": "2026-10-05",
+        "sha256": "c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c",
+        "surface_id": "exact_history",
+        "verifier": "builtin:file"
+      },
+      {
+        "bytes": 3658,
+        "current_pointer": "docs/knowledge/live-document-transition-allowance-headroom.md",
+        "descriptor_id": "knowledge-rollover-live-document-transition-allowance-headroom-20261005",
+        "former_path": "docs/knowledge/live-document-transition-allowance-headroom.md",
+        "lines": 60,
+        "range_id": "complete-source-before-role-based-rollover",
+        "record_type": "descriptor",
+        "retrieval_kind": "file",
+        "retrieval_locator": "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt",
+        "revision": "436a207c5a80f2324dbcd2e4f8ac8aea1efea527",
+        "schema_version": 1,
+        "sealed_on": "2026-10-05",
+        "sha256": "e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff",
+        "surface_id": "exact_history",
+        "verifier": "builtin:file"
+      }
+    ],
+    "fixture": "valid",
+    "result": {
+      "command": [
+        "perl",
+        "live-document-size/scripts/check_live_document_size.pl",
+        "--root",
+        ".artifacts/knowledge-card-rollover/archive-fixtures/valid",
+        "--registry",
+        "surfaces.jsonl",
+        "--archives",
+        "archives.jsonl"
+      ],
+      "status": 2,
+      "stderr": "Usage: check_live_document_size.pl --root DIR --registry FILE --routes FILE\n       --archives FILE --ledgers FILE --evidence-maps FILE\n       --retention-contracts FILE --derived-state FILE\n       [--coverage-stdin]\n",
+      "stdout": ""
+    },
+    "surface": {
+      "baseline": null,
+      "canonical_inputs": [],
+      "containment_status": "not_applicable",
+      "enforcement_ceilings": null,
+      "health_targets": null,
+      "index": null,
+      "lifecycle": "archive_terminal",
+      "locator": "archive",
+      "milestones": null,
+      "owner": "version-control-audit-trail",
+      "routes_to": [],
+      "state": "terminal",
+      "surface_id": "exact_history",
+      "targets": [
+        "archive"
+      ],
+      "verifier": "archive:archive"
+    }
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "after": {
+    "bytes_each": 31755,
+    "bytes_total": 3868828,
+    "files": 1259,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 52904
+  },
+  "allocation": {
+    "answer_occurrences": 7139,
+    "facts": 1265,
+    "unique_questions": 6962
+  },
+  "before": {
+    "bytes_each": 31755,
+    "bytes_total": 3879683,
+    "files": 1259,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 53050
+  },
+  "controls": [
+    {
+      "control": "lost-current-rule",
+      "refusal": "exact committed semantic proposal published"
+    },
+    {
+      "control": "swapped-question",
+      "refusal": "exact committed semantic proposal published"
+    },
+    {
+      "control": "wrong-archive-locator",
+      "refusal": "only admitted complete-source descriptors append"
+    },
+    {
+      "control": "widened-rollover-allowance",
+      "refusal": "whole card authority unchanged; rollover allowance cannot widen"
+    }
+  ],
+  "scope": "Complete source/ordered questions/current-rule homes/retrieval and physical rollover closure, with unchanged card authorities. Existing rollover debt remains; no semantic duplicate count or global healthy-state claim.",
+  "source_revision": "7b51322848e386aa2af453fdd7e1c6e498e907e4"
+}

@@ -12,7 +12,7 @@ answers:
   - "what pins the knowledge_cards line_bytes_each dimension?"
   - "does splitting a fact card break links to its id?"
   - "surface knowledge_cards is at 80.0% and must declare warning_debt"
-date: 2026-08-19
+date: 2026-10-05
 status: current
 tags: [knowledge-map, live-document-size, doctrine, containment, retrieval]
 evidence: >-
@@ -23,35 +23,38 @@ evidence: >-
   live-document-size/scripts/check_live_document_size.pl;
   docs/tasks/KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.md
 reverify: >-
-  knowledge-map/scripts/check_knowledge_map.sh &&
-  scripts/check_live_document_size.sh 2>&1 | grep 'surface knowledge_cards:'
+  python3 -B docs/audits/knowledge-card-rollover-20261005/verify.py --current
 ---
 
-Each card is bounded on its own, not only in aggregate. The Knowledge Map
-enforces `card_lines` 512, `card_bytes` 32,768, and `card_line_bytes` 819; the
-`knowledge_cards` surface enforces `lines_each` 512, `bytes_each` 32,768, and
-`line_bytes_each` 1,024. So the per-file byte bound, not the collection, is
-what a large card actually hits.
+Each card has independent line, original encoded-byte and content-line-byte
+limits. The default Knowledge Map profile is 512 logical lines, 32,768 bytes
+and 819 content-line bytes. The containment surface separately declares
+per-file limits and file-count/aggregate bounds. Its line measurement counts
+completed LF bytes; a final unterminated line still counts in the card checker.
+Read configuration and both public checkers before assigning a failure cause.
 
-Because the Knowledge Map rejects any card line wider than 819 bytes while the
-surface target is 1,024, `line_bytes_each` is structurally pinned at 79.98% and
-can never reach the surface's 80% warning milestone. That dimension is
-therefore the standing reported peak — `target peak 80.0%` with state `normal`
-is the healthy resting reading for this surface, not an imminent breach.
+The default card-width limit is below containment's 80% line-width warning
+boundary. That says nothing about the other pressure axes or the surface's
+health. Maximum-file bytes, aggregate bytes, lines, file count and the owned
+transition allowance can bind independently. Splitting a large card can reduce
+per-file pressure while increasing aggregate overhead and file count. Do not
+infer aggregate growth permission from one card's remaining bytes.
 
-A card that accretes many topics is the failure mode. It becomes the surface's
-binding `bytes_each` value and can drive the whole collection into
-`rollover_debt` by itself, after which every unrelated edit must fit inside one
-file's remaining bytes. Partition by topic before that happens.
-
-To partition safely: keep the original `id` and path as the core card so
-existing links and `[[id]]` references stay valid, move each topic to its own
-card with only the evidence and `reverify` it needs, and cross-link both ways.
-Prove closure mechanically rather than by reading — the Knowledge Map's
-`unique questions` and `answer occurrences` totals must be **unchanged** while
-`facts` rises by the number of new cards; a set diff of the `answers:` lists
-before and after must be empty. Splitting is not an archive event, so no
-archive descriptor is needed while the bytes stay in the live collection.
+Partition by semantic topic while preserving the original ID/path, all unique
+facts, questions and cross-links. Compare complete question-to-ID/path rows,
+not only totals: totals alone cannot expose swapped ownership or replaced
+questions. A redistribution-only split preserves unique questions and answer
+occurrences, and adds only the declared new fact members. New question routes
+need their own explicit expected delta. Inspect current authority before
+demoting a duplicate; dated history remains exactly retrievable. Live topic
+partitioning needs no archive descriptor, but moving bytes out of the live
+collection does require one. Aggregate rollover and retrieval must land atomically.
 
 Related: [[live-document-surface-growth-procedure]],
 [[live-document-size-containment]].
+
+Retrieve the complete dated predecessor from the repository root:
+
+```sh
+python3 -B docs/audits/knowledge-card-rollover-selection-20261005/read_source.py knowledge-card-sizing-and-partition
+```

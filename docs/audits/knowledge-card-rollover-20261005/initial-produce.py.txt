@@ -1,0 +1,89 @@
+"""Publish the committed selection and capture its real public reader boundaries."""
+import hashlib
+import json
+import shutil
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/knowledge-card-rollover-20261005')
+SELECT = Path('docs/audits/knowledge-card-rollover-selection-20261005')
+SCRATCH = Path('.artifacts/knowledge-card-rollover')
+
+
+def run(command):
+    result = subprocess.run(command, capture_output=True, text=True)
+    return {'command': command, 'status': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr}
+
+
+def write(path, data):
+    path.write_text(json.dumps(data, sort_keys=True, indent=2) + '\n')
+
+
+def prepare():
+    subprocess.run(['python3', '-B', str(SELECT / 'verify.py'), '--current-source'], check=True)
+    catalog = json.loads((SELECT / 'source.json').read_text())
+    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+    paths = [r['path'] for r in catalog['sources'].values()] + ['doctrine/live_document_size/archive_descriptors.jsonl', 'doctrine/live_document_size/surfaces.jsonl', 'docs/book/src/90-reference-map.md']
+    before = {p: Path(p).read_text() for p in paths}
+    assert all(subprocess.check_output(['git', 'show', revision + ':' + p]) == body.encode() for p, body in before.items()), 'whole committed publication predecessor'
+    query = run(['knowledge-map/scripts/query_knowledge_map.sh', '--all', '--no-cache'])
+    assert query['status'] == 0, 'actual complete original query rows'
+    write(BASE / 'before-query.json', query)
+    write(BASE / 'source.json', {'revision': revision, 'catalog': catalog, 'before': before})
+
+
+def publish():
+    source = json.loads((BASE / 'source.json').read_text())
+    descriptors = []
+    for name, row in source['catalog']['sources'].items():
+        assert Path(row['path']).read_text() == source['before'][row['path']], 'unmodified admitted source before publication'
+        Path(row['path']).write_bytes((SELECT / (name + '.proposed.txt')).read_bytes())
+        descriptors.append({'record_type': 'descriptor', 'schema_version': 1,
+                            'descriptor_id': 'knowledge-rollover-' + name + '-20261005',
+                            'surface_id': 'exact_history', 'former_path': row['path'],
+                            'range_id': 'complete-source-before-role-based-rollover',
+                            'revision': source['catalog']['revision'], 'lines': row['lines'],
+                            'bytes': row['bytes'], 'sha256': row['sha256'],
+                            'retrieval_kind': 'file', 'retrieval_locator': row['locator'],
+                            'current_pointer': row['path'], 'sealed_on': '2026-10-05',
+                            'verifier': 'builtin:file'})
+    path = Path('doctrine/live_document_size/archive_descriptors.jsonl')
+    assert path.read_text() == source['before'][str(path)], 'whole unchanged descriptor predecessor'
+    original = path.read_text()
+    path.write_text(original + ''.join(json.dumps(row, sort_keys=True, separators=(',', ':')) + '\n' for row in descriptors))
+    write(BASE / 'descriptors.json', descriptors)
+
+
+def fixtures():
+    descriptors = json.loads((BASE / 'descriptors.json').read_text())
+    actual_surface = next(r for r in map(json.loads, Path('doctrine/live_document_size/surfaces.jsonl').read_text().splitlines()) if r.get('surface_id') == 'exact_history')
+    actual_surface.update(targets=['archive'], verifier='archive:archive')
+    results = []
+    for name in ('valid', 'missing-source', 'changed-source-byte', 'wrong-digest'):
+        root = SCRATCH / 'archive-fixtures' / name
+        assert not root.exists(), 'fresh own public fixture: ' + name
+        root.mkdir(parents=True); (root / 'archive').mkdir()
+        registry = [{'record_type': 'registry', 'schema_version': 1, 'max_records': 8, 'max_bytes': 8192, 'max_record_bytes': 2048}, actual_surface]
+        (root / 'surfaces.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in registry))
+        archive_rows = [{'record_type': 'registry', 'schema_version': 1, 'max_records': 8, 'max_bytes': 8192, 'max_record_bytes': 2048}, *json.loads(json.dumps(descriptors))]
+        for row in descriptors:
+            for key in ('retrieval_locator', 'current_pointer'):
+                target = root / row[key]; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(row[key], target)
+        first = archive_rows[1]
+        if name == 'missing-source':
+            (root / first['retrieval_locator']).unlink()
+        elif name == 'changed-source-byte':
+            path = root / first['retrieval_locator']; raw = path.read_bytes(); path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+        elif name == 'wrong-digest':
+            first['sha256'] = '0' * 64
+        (root / 'archives.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in archive_rows))
+        result = run(['perl', 'live-document-size/scripts/check_live_document_size.pl', '--root', str(root), '--registry', 'surfaces.jsonl', '--archives', 'archives.jsonl'])
+        results.append({'fixture': name, 'surface': actual_surface, 'descriptors': archive_rows, 'result': result})
+        write(BASE / 'native-archive-controls.json', results)
+        assert (result['status'] == 0) == (name == 'valid'), 'actual archive separating outcome: ' + name
+
+
+if __name__ == '__main__':
+    import sys
+    {'prepare': prepare, 'publish': publish, 'fixtures': fixtures}[sys.argv[1]]()

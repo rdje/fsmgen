@@ -73,6 +73,27 @@ rules use canonical doctrine and registries; historical measurements keep their
 capture boundary. Preserving counts alone cannot prove that question ownership
 or unique information survived a move.
 
+For eligible transition debt, the declared allowance covers measured actual plus
+one declared step, clamped at the enforcement ceiling, with a live owner. At
+rollover debt, perform the declared rollover; widening its allowance is forbidden.
+Card limits, aggregate limits and the transition allowance are independent.
+A compliant line width or an unchanged question count does not establish whole
+surface health or preserved question ownership.
+
+The containment cards now separate current rules from complete dated sources.
+Retrieve a predecessor by its existing card ID from the repository root:
+
+```sh
+python3 -B docs/audits/knowledge-card-rollover-selection-20261005/read_source.py live-document-size-containment
+```
+
+The same reader accepts `live-document-surface-growth-procedure`,
+`knowledge-card-sizing-and-partition` and
+`live-document-transition-allowance-headroom`. It checks the complete retained
+file digest before returning the original bytes. The doctrine gate also checks
+these file archives. Earlier measurements and superseded instructions keep their
+capture boundary; current writing follows the canonical doctrine and registries.
+
 `CLAIM_VERIFICATION.md` defines what earns an actionable quantitative claim:
 re-derive it from its source, attempt to falsify it with a separating oracle,
 and keep a tracked producer plus a watcher that detects staleness. A missing

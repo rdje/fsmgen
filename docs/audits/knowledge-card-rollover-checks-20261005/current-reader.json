@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-card-rollover-20261005/verify.py",
+    "--current",
+    "--reexecute"
+  ],
+  "status": 0,
+  "stdout": "PASS selected exact-source rollover, complete ordered question routes and independent aggregate projection; genuine source/coverage/question/debt/rule controls refuse.\nPASS atomic source-preserving four-card rollover, complete public query conservation, unchanged collection authority and authenticated archive retrieval; genuine source/rule/question/route/allowance controls refuse.\n",
+  "stderr": "ram-guard: PID 38054; host 57.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

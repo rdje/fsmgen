@@ -20,7 +20,7 @@ answers:
   - "surface knowledge_cards transition debt exceeded its owned allowance: files"
   - "does adding a fact card need a decision record?"
   - "live document size check failed on a knowledge card edit"
-date: 2026-08-19
+date: 2026-10-05
 status: current
 tags: [live-document-size, knowledge-map, doctrine, containment, ceilings]
 evidence: >-
@@ -31,16 +31,19 @@ evidence: >-
   scripts/check_live_document_size.sh;
   scripts/check_live_document_ceiling_authority.pl
 reverify: >-
-  scripts/check_live_document_size.sh 2>&1 | grep 'surface knowledge_cards:'
+  python3 -B docs/audits/knowledge-card-rollover-20261005/verify.py --current
 ---
 
 Adding an ordinary fact card is a normal write. Decision `0064` raised the
 `knowledge_cards` collection ceilings to the surface's own reviewed health
 targets, so a card needs no decision record, authority row, or ceiling change.
 
-Two mechanisms are separate. Raising a surface's `transition.max_growth` to the
-new measured actual, inside an unchanged ceiling, is a **declared measurement**
-and needs no authority record. Raising an `enforcement_ceilings` value is a
+Two mechanisms are separate. For eligible transition debt, decision `0070`
+re-declares `transition.max_growth` to cover measured actual plus one declared
+`ratchet_step`, clamped at the unchanged ceiling, with a live remediation owner.
+That is a **declared measurement**, needing no ceiling authority. A
+`rollover_debt` surface is never widened: perform its declared rollover.
+Raising an `enforcement_ceilings` value is a
 **reviewed increase**: it needs one `ceiling_increase_authority` row whose
 `decision` names a `docs/decisions/NNNN-*.md` record added in the same commit,
 which `check_live_document_ceiling_authority.pl` enforces via `--diff-filter=A`.
@@ -50,8 +53,9 @@ Read current pressure rather than a copied number with
 
 Never delete or thin a recorded fact to fit a budget; compaction removes only
 duplicated or superseded narration. Some surfaces sit just under their 80%
-warning milestone, so one added line trips `must declare warning_debt` — rewrite
-a line in place or route the content to the surface whose role owns it.
+warning milestone, so one added line can require owned warning remediation.
+Classify the information and its proper home; an arbitrary wording trim does
+not establish containment or authorize growth.
 
 A collection ceiling cannot relieve a per-file bound. When one member is at its
 own `lines_each` / `bytes_each` / `line_bytes_each` limit, partition that member
@@ -61,3 +65,9 @@ by topic instead of growing anything — see
 For the enforced rule, read the registries and the two guards;
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` carries the same rule as rationale plus the
 local procedure. Related: [[live-document-size-containment]].
+
+Retrieve the complete dated predecessor from the repository root:
+
+```sh
+python3 -B docs/audits/knowledge-card-rollover-selection-20261005/read_source.py live-document-surface-growth-procedure
+```

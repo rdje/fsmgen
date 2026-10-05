@@ -12,10 +12,11 @@ answers:
   - "how long can a fact card line be?"
   - "card line width exceeds 819"
   - "why does a long reverify line fail even though knowledge_cards is normal?"
-date: 2026-08-19
+date: 2026-10-05
 status: current
 evidence: docs/decisions/0070-transition-allowances-carry-one-declared-step-and-a-live-owner.md; docs/decisions/0064-live-document-growth-is-declared-measurement-with-paired-decisions.md; doctrine/live_document_size/surfaces.jsonl; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md
-reverify: scripts/check_live_document_size.sh 2>&1 | grep -E 'surface (focused_documents|ancillary_documents|readme_entrypoint|shipped_behavior):'
+reverify: >-
+  python3 -B docs/audits/knowledge-card-rollover-20261005/verify.py --current
 tags: [live-document-size, containment, doctrine, transition-debt, task-trees]
 ---
 
@@ -30,12 +31,12 @@ Decision `0070` sets the procedure:
 - **Re-declare to the measured actual plus one `transition.ratchet_step`**, not
   to the actual. Raising only to the actual leaves zero headroom, so the next
   write fails the same gate.
-- **Clamp at the enforcement ceiling.** If `baseline + step` would exceed the
+- **Clamp at the enforcement ceiling.** If `measured actual + step` would exceed the
   ceiling, the allowance stops there and the ceiling is the finding. An
   allowance may never reach past a quarantine boundary.
 - **Never widen a `rollover_debt` surface.** At rollover the remedy is the
-  declared rollover. `ancillary_documents` sits at 100% of its `files` target
-  and is left alone for that reason.
+  declared rollover. Decision `0070`'s ancillary occupancy is a dated
+  adoption observation; derive current pressure from the registry and checker.
 - **The `transition.owner` must be a live node** — an active tree, or a leaf
   that is not yet `done`. Two allowances named completed leaves in a tree that
   is not in the active index; a completed leaf satisfies the string and not the
@@ -50,11 +51,16 @@ the reviewed act that does need both — see
 [[live-document-surface-growth-procedure]] and
 [[live-document-target-pair-calibration]].
 
-A related bound lives outside containment entirely. Fact-card line width is
-capped at **819 bytes** by `KM_CARD_MAX_LINE_BYTES` in
-`knowledge-map/scripts/knowledge_map.pl`, which is why 107 of 1,122 cards sit
-between 800 and 819 bytes and none exceed it. The `knowledge_cards`
-`line_bytes_each` target of 1,024 exists to put containment's 80% warning at
-819.2 — on that owner's cap rather than tighter or looser than it. A long
-`reverify:` line therefore fails `check_knowledge_map.sh`, not the containment
-checker, and raising the containment target would not admit it.
+A related bound lives outside containment: the default fact-card content-line
+width is 819 bytes. Containment's line-width target and the card checker's bound
+are distinct authorities; a compliant line does not establish whole-surface
+health. The predecessor's line-width census is historical, not a current count.
+A long `reverify:` line fails the card checker, and increasing a containment
+target cannot admit it. Query [[knowledge-card-sizing-and-partition]] and derive
+current collection pressure with the public checkers.
+
+Retrieve the complete dated predecessor from the repository root:
+
+```sh
+python3 -B docs/audits/knowledge-card-rollover-selection-20261005/read_source.py live-document-transition-allowance-headroom
+```

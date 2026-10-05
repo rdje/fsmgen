@@ -1,0 +1,26 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.72.3.1
+
+Publish exactly the committed .72.2 four-card proposals. Keep all original paths,
+IDs, ordered questions and source bytes. Complete content-addressed file archives
+and four builtin:file descriptors close retrieval independently of Git history.
+Current rules remain in canonical doctrine and registries, and dated adoption
+accounts keep their boundary. No live fact or card member is removed; collection
+rollover debt remains and its allowance/ceiling declarations are unchanged.
+
+RE-DERIVATION: exact Git-bound predecessor and committed selection; whole selected
+production bodies; complete source retrieval and explicit reviewed question homes;
+independent raw-LF physical collection metrics; complete public direct/cache query
+rows and independently reselected original metadata. The source-coverage proof
+checks every original byte; the semantic review is not replaced by totals.
+FALSIFICATION: actual public builtin:file fixtures accept exact sources and reject
+missing files, changed bytes and wrong digests; whole reader controls reject source
+loss, question replacement, incorrect current rules and widened rollover allowance.
+DURABILITY: sealed tracked source/descriptor/capture/proof/producer/watcher and
+immutable complete predecessor stores; unconditional doctrine archive checks
+authenticate file identity. Card reverify executes current closure without
+replaying gated original native/provider captures. Future ordinary topic growth
+must separately fit both card and collection contracts.
+
+Book: expose the concrete authenticated predecessor command and current-rule/history
+distinction, with exact fresh aggregate authority. No new architecture, target,
+milestone, host diagnosis, performance measurement, full-CI or push is asserted.

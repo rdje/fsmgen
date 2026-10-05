@@ -22,5 +22,5 @@
 
 _One fact card is bounded per file; a multi-topic card becomes the surface's binding constraint_
 
-- **date:** 2026-08-19 · **status:** current
+- **date:** 2026-10-05 · **status:** current
 - **source and verification:** [`docs/knowledge/knowledge-card-sizing-and-partition.md`](../../docs/knowledge/knowledge-card-sizing-and-partition.md)

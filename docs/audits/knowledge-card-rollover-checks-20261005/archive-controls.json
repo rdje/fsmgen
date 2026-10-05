@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-card-rollover-20261005/produce.py",
+    "fixtures"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "ram-guard: PID 5349; host 80.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

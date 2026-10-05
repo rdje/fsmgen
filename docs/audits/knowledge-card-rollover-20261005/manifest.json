@@ -1,0 +1,54 @@
+{
+  "docs/audits/knowledge-card-rollover-20261005/after-query.json": {
+    "bytes": 2593381,
+    "sha256": "454440825d479e44a5abd6c3f5539e4430c1ba84d76e015e3519da6604bd379f"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/after.json": {
+    "bytes": 117142,
+    "sha256": "90ac6bfa5974eefa10c3aa36a327bc03389cd1f8984e5872d6cc70b612284523"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/before-query.json": {
+    "bytes": 1296668,
+    "sha256": "f4587ba7e932e44955260c7a605f491028f5f00f1893137f6d3eda90accd18f1"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/book-authority.json": {
+    "bytes": 157686,
+    "sha256": "672625e8b39d13292b343417c71463b741da85215bc6e8b598fd4d2d2bf685da"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/descriptors.json": {
+    "bytes": 3331,
+    "sha256": "5e6d3c4ad47a6a7c5bf877bfa74b394625942a3c96357b426c3b9892ff057d86"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/initial-archive-fixture-refusal.json": {
+    "bytes": 4941,
+    "sha256": "06b0de5e1984ea4e6461894c674bad814477fd007a399eb1e963b21a6e838afb"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/initial-produce.py.txt": {
+    "bytes": 5468,
+    "sha256": "30db312b1e00fe206d22e58c0ec1bcb3ab1b7adcb39efd82e573267fe2c23d75"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/native-archive-controls.json": {
+    "bytes": 21106,
+    "sha256": "32bce66d8f5db8d1ffafd9b2daee5503b5f5af73063f1e32fba76990e0a27923"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/produce.py": {
+    "bytes": 6781,
+    "sha256": "6079ed0ad05b0baf71d995546a7233e08271cf27fe2cee73581028bfc4003198"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/proofs.json": {
+    "bytes": 1249,
+    "sha256": "73483bd38acb1dc7c752b5efd2f636413346a25428b50b05ba6205421dd59120"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/scope.txt": {
+    "bytes": 1800,
+    "sha256": "f89d50f4704ab61cbb5191f5d05e11541381384766a88400a41b510a1d0890fd"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/source.json": {
+    "bytes": 125592,
+    "sha256": "4156621d9c4b611ba876407486bbb0c58e7d546b43f8ed98e6a46ed3f9a6cba6"
+  },
+  "docs/audits/knowledge-card-rollover-20261005/verify.py": {
+    "bytes": 15366,
+    "sha256": "0ad4e5e5b1329a6dd968d99fb7346477ac8b2a579ce153956bf4fea354af14c3"
+  }
+}
