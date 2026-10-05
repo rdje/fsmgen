@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-current-helper-reader-20261005/qualify_delivery.py"
+  ],
+  "status": 0,
+  "stdout": "PASS retained complete native helper reader delivery; genuine command/meaning/kind/stale/shutdown controls reject.\n",
+  "stderr": "ram-guard: PID 59502; host 65.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

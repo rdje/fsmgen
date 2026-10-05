@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "-S",
+    "authority['surface_after']",
+    "--format=%H %s",
+    "--",
+    "docs/audits/record-value-helper-topic-publication-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "5215d451f1db24c8d50fe644d00e91ab2b7e0d6a SEMANTIC-INTROSPECTION-MCP-FRONTIER.72.3.2: publish conserved helper topic\n",
+  "stderr": ""
+}

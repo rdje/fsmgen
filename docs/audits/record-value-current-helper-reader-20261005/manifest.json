@@ -1,0 +1,70 @@
+{
+  "docs/audits/record-value-current-helper-reader-20261005/delivery-proofs.json": {
+    "bytes": 2389,
+    "sha256": "8646ebf334e2863cf4c2c7399a1ad31a49de5ee14a6a1e4466a0fe4689a965c8"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/initial-book-context-probe.json": {
+    "bytes": 344402,
+    "sha256": "409587ad9a97fa345d032f2a69424987d8134499d3aa1de0b99e03afd25d2985"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/initial-proofs.json": {
+    "bytes": 5442,
+    "sha256": "e85aedbebb820b571591992a4d041d6f1a4c09d8afd254523fcd4bfe7ff0fe0a"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/initial-transform.json": {
+    "bytes": 437772,
+    "sha256": "f9a2b61dc588f5ded5054f0d4dd7c5e1b78749e4e60f86ed89317c5880567a9e"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/initial-verify.txt": {
+    "bytes": 8291,
+    "sha256": "03f8cc4dcd611e06b0e88ffb3db2ee1b77c0cdfb2f9d8027894f73337cd22d5f"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/native-delivery.json": {
+    "bytes": 598252,
+    "sha256": "2fe2be21f625ab37b6d3177e2c589efa06bcf528254738a6397ca0fc582eac88"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/probe_delivery.py": {
+    "bytes": 3597,
+    "sha256": "474a753a901b90f65a1334e42ac1a7d7aa364800efba2c501c14176d69b02424"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/probe_scope.py": {
+    "bytes": 3556,
+    "sha256": "ebc747105456b13977c9edeafb345e17a60fa337fb45dcb2af9f26d4fe8a2f88"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/produce.py": {
+    "bytes": 4056,
+    "sha256": "5d35de1ab1372c7495793df21fd5cf54eedaec529cbd0c791f6bc563647ae1c9"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/proofs.json": {
+    "bytes": 5602,
+    "sha256": "dc5504eab7f27d4990ae4add171b7935f31f8357f808068eb604ef616d79c95b"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/qualify_delivery.py": {
+    "bytes": 3666,
+    "sha256": "8ac60e10ce0a54a33cfd948e639d7a22725bc1aa62a42025a225778226b4cccd"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/root-cause.json": {
+    "bytes": 370,
+    "sha256": "51d87ecde18beb5a134237a431a486603c594daefcbf04da0a991ff05a3ba820"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/scope.txt": {
+    "bytes": 2892,
+    "sha256": "dfbd32b52f6d7b0ee351ebc4e6e4ff4ffee88db0fcdc5e32cc01841a45c5142d"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/source.json": {
+    "bytes": 219553,
+    "sha256": "6920959d98847396ec9cfbba6e404a941bae2fe1666cd07cb6ab549efef1e85e"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/transform.json": {
+    "bytes": 439322,
+    "sha256": "2ffed13d4c583376acc05eac300c360cced377328d385c3944b84cbf032e8154"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/unrelated-publication-probe.json": {
+    "bytes": 503376,
+    "sha256": "6636719d23f0bb026dd09606ee998ffaf9aa0b850da0d5f82dc50637d3eb81a2"
+  },
+  "docs/audits/record-value-current-helper-reader-20261005/verify.py": {
+    "bytes": 9501,
+    "sha256": "75922dab27b41785901134f6cc26194760410dc5c1e79b71fcb839caa7d6f697"
+  }
+}

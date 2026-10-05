@@ -1,0 +1,39 @@
+{
+  "controls": [
+    {
+      "control": "lost-source-role",
+      "refusal": "whole current helper/core source, roles, questions and reader routes"
+    },
+    {
+      "control": "lost-question",
+      "refusal": "whole current helper/core source, roles, questions and reader routes"
+    },
+    {
+      "control": "wrong-core-route",
+      "refusal": "whole current helper/core source, roles, questions and reader routes"
+    },
+    {
+      "control": "wrong-query-owner",
+      "refusal": "complete current target question/ID/path allocation"
+    },
+    {
+      "control": "Boolean-query-status",
+      "refusal": "actual successful query retains producer integer kind"
+    },
+    {
+      "control": "float-query-status",
+      "refusal": "actual successful query retains producer integer kind"
+    },
+    {
+      "control": "lost-reader-guidance",
+      "refusal": "complete unique advertised helper reader command/context/source meaning"
+    },
+    {
+      "control": "relocated-reader-command",
+      "refusal": "complete unique advertised helper reader command/context/source meaning"
+    }
+  ],
+  "revision": "3e8bf1b2c0e2d05317e1ed1703ad96c63d44342c",
+  "scope": "Whole relevant current core/helper source, role/question/route and unique book reader block. Complete original publication remains authenticated at its snapshot. Unrelated book/registry/card state is not a helper semantic prerequisite.",
+  "target_rows": "are all original helper input and callback paths joined?\trecord-value-original-observer-helper-paths\tdocs/knowledge/record-value-original-observer-helper-paths.md\nare all original own API refusal paths joined?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nare complete original T1986 raw error bodies inventoried?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nare original T1986 candidate copy inputs captured?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nare original T1986 candidate input graphs and copied fields joined?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nare the T1986 finite copy probes independently qualified?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\ndo original T1986 candidate API results match their source models?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nhow can the finite copy probes be replayed without changing sealed evidence?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat inventories original observer and callback source roles?\trecord-value-original-observer-helper-paths\tdocs/knowledge/record-value-original-observer-helper-paths.md\nwhat joins nested original Scope and capture inputs?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies current original T1986 copied fields and source candidates?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies direct original Value failure frames?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies finite original exception classes?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies inherited original nested API frames?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies original T1986 candidate copy graphs?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies original T1986 candidate input and private graphs?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies original T1986 candidate primary causes and acceptance?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies original T1986 helper consumer and parser source contexts?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies original compiled callback and refusal wrapper paths?\trecord-value-original-observer-helper-paths\tdocs/knowledge/record-value-original-observer-helper-paths.md\nwhat qualifies original metadata failure recursion frames?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat qualifies original named helper inputs defaults and active paths?\trecord-value-original-observer-helper-paths\tdocs/knowledge/record-value-original-observer-helper-paths.md\nwhat qualifies original observer API and parser operation boundaries?\trecord-value-original-observer-helper-paths\tdocs/knowledge/record-value-original-observer-helper-paths.md\nwhat qualifies whole nested original error forwarding?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhat validates plain copy helper sharing and detachment?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhy does JSON PP documentation say version 4.05?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\nwhy does the private packed range sibling width change JSON kind?\trecord-value-finite-copy-probe-reader\tdocs/knowledge/record-value-finite-copy-probe-reader.md\n"
+}

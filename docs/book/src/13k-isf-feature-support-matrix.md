@@ -553,13 +553,20 @@ meaning and question ownership, checks actual direct and cached queries, and
 rejects lost source roles, wrong routes and invented parser identity:
 
 ```bash
-python3 -B docs/audits/record-value-helper-topic-publication-20261005/verify.py --current
+python3 -B docs/audits/record-value-current-helper-reader-20261005/verify.py --current
 ```
 
 This topic uses the capacity recovered by the admitted collection rollover.
 Existing collection bounds remain in force; rollover debt remains open. The
 separately owned subtest/require, framework/display, raw-coordinate and native
 address/object-identity gaps remain explicit in both semantic topics.
+
+The live helper reader checks the current core and topic, their complete question
+ownership and source routes, and this reader guidance. It also authenticates the
+original sealed publication at its recorded boundary. That historical census and
+whole-book authority remain snapshot evidence; an unrelated chapter edit does
+not change the helper source meanings or require a new helper capture. Relevant
+source, role, question and route changes still require qualification.
 
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original

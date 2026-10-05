@@ -1,0 +1,43 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.1
+Boundary: committed 3e8bf1b2c0e2d05317e1ed1703ad96c63d44342c.
+
+Re-derivation: complete Git source.json inputs, independently delimited whole
+reader section, ordered topic metadata, full relevant direct/cache question
+allocation, exact declared metadata/book transform, independently measured
+whole-book baseline/delta and unchanged collection authority. verify.py also
+authenticates every original publication file and executes its frozen qualifier.
+The live prerequisite is the complete protected source/role/question/route and
+reader section; unrelated current registry and book chapters are not frozen.
+
+Falsification: genuine lost role/question/core route, wrong question owner,
+Boolean/float query outcomes, lost reader prose and relocated reader command
+reject. The actual initial qualifier accepted the relocated-command fixture;
+initial-verify.txt, initial-transform.json, initial-proofs.json and the complete
+initial-book-context-probe.json retain that private P2 gap before publication.
+The corrected qualifier binds the unique contiguous advertised section. The
+real scoped programme admits independently measured meaningful unrelated
+chapter and helper-chapter-tail changes plus their fresh whole-book authority
+in unrelated-publication-probe.json; no production/snapshot input is changed.
+
+Native delivery: original native-delivery.json retains full built/served body,
+independent main text, actual chapter200/missing404, complete log and consumed
+terminated server. The first capture checker refused because it removed a sh
+fence while the source uses bash. Its programme and nonzero receipt remain
+unchanged. qualify_delivery.py strips complete fence lines and independently
+checks the original complete response; command/meaning/HTTP-kind/stale/shutdown
+controls reject. This is source and native delivery assurance, not visual QA.
+
+Durability: tracked complete programmes, first inputs/results, transform,
+proofs, HTTP responses, exact source/publication identities and manifest.json.
+--snapshot authenticates frozen transition evidence; --current (default) adds
+actual relevant current source/query/reader qualification. The original census
+and whole-book aggregate are historical snapshot claims, not future ambient
+helper conditions. Manifest seals this audit; checks receipts remain a separate
+append-only directory. No old sealed file is rewritten.
+
+Focused relative-path and Knowledge Map regressions pass. Current generated
+metadata and claim inventory are refreshed, with exact meaningful book authority
+and no allowance or ceiling increase. Staged doctrine and normal hooks gate the
+commit. Source assets and the classified route repair remain owned by .3.2/.3;
+no source-plane or link publication, original native/provider capture, host
+probe, full CI, push, external write or universal visual claim occurs here.

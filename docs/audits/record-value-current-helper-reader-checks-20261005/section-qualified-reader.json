@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-current-helper-reader-20261005/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS immutable original publication and scoped live helper source/role/question/route qualification; genuine relevant-input controls reject.\n",
+  "stderr": "ram-guard: PID 17953; host 58.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

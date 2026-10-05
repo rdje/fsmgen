@@ -15,7 +15,7 @@ evidence: >-
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-helper-topic-publication-20261005/verify.py --current
+  docs/audits/record-value-current-helper-reader-20261005/verify.py --current
 ---
 
 Own observer/callback source roles, bodies and operation allocations now inventory.

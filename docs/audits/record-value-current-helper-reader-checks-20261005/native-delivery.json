@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-current-helper-reader-20261005/probe_delivery.py"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 23472; host 63.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-current-helper-reader-20261005/probe_delivery.py\", line 66, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-current-helper-reader-20261005/probe_delivery.py\", line 60, in main\n    assert expected in ' '.join(record['main_text'].split()), 'complete advertised helper section in actual native main'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete advertised helper section in actual native main\n"
+}
