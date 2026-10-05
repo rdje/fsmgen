@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-subtest-boundaries-20261005/publish_book.py"
+  ],
+  "status": 0,
+  "stdout": "PASS complete own-source book insertion, unchanged SUMMARY and measured aggregate authority.\n",
+  "stderr": "ram-guard: PID 6393; host 69.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

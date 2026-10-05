@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-subtest-boundaries-20261005/verify_public.py"
+  ],
+  "status": 0,
+  "stdout": "PASS whole public POD/current metadata interfaces and genuine controls; original framework version remains unmeasured.\n",
+  "stderr": "ram-guard: PID 1411; host 70.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

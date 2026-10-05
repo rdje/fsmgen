@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-subtest-boundaries-20261005/capture_public.py"
+  ],
+  "status": 0,
+  "stdout": "PASS necessary read-only public do/require/subtest POD and current metadata captured; original framework version remains unmeasured.\n",
+  "stderr": "ram-guard: PID 29728; host 72.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

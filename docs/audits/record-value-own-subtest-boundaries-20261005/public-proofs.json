@@ -1,0 +1,30 @@
+{
+  "controls": [
+    {
+      "cause": "complete public interface capture membership",
+      "control": "missing-public-member",
+      "status": 1
+    },
+    {
+      "cause": "whole public capture byte identity",
+      "control": "changed-public-body",
+      "status": 1
+    },
+    {
+      "cause": "public capture status kind/value",
+      "control": "Boolean-public-status",
+      "status": 1
+    },
+    {
+      "cause": "whole public capture byte identity",
+      "control": "borrowed-current-version",
+      "status": 1
+    },
+    {
+      "cause": "current-public versus original-identity scope",
+      "control": "invented-original-version",
+      "status": 1
+    }
+  ],
+  "scope": "Read-only installed OS/toolchain public POD and version metadata are necessary to interpret authored call/load interfaces. No external implementation is inspected or copied. Current metadata does not establish the unmeasured original Test::More version, framework internals, universal trace display or native identity. Project outputs are repository-local."
+}

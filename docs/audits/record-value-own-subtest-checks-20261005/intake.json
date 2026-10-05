@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-subtest-boundaries-20261005/prepare.py"
+  ],
+  "status": 0,
+  "stdout": "PASS whole completed helper-join task, archive domain and inherited receipt intake bound.\n",
+  "stderr": "ram-guard: PID 79136; host 77.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

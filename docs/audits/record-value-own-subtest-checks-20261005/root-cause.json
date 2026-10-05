@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H%n%s",
+    "-S",
+    "subtest",
+    "--",
+    "t/1986-isf-record-port-value-gates.t"
+  ],
+  "status": 0,
+  "stdout": "48da7b698141e13a6c57eddca810a641e0baae9c\nSEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.2: prepare record value contexts\n",
+  "stderr": "ram-guard: PID 5339; host 66.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

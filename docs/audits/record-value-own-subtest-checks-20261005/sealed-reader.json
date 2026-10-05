@@ -1,0 +1,45 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-subtest-boundaries-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS full original-source capture membership/program/source/fixture/host/TAP/status and genuine provider observations. Alias downstream mutation/abort is retained; independent graph/source/product qualification and replay remain pending.\nPASS independently qualified original17 unchanged-input copy/joint/kind/readonly/identity/isolation graphs and genuine Storable/alias trials; full API/consumer and alias downstream semantics remain open.\nPASS all original9283 API/four authored parser whole results and680 private source allocations across candidate/Storable/unchanged-input-control modes. Input/private graphs, consumers/helpers/raw causes and full alias downstream semantics remain open.\nPASS complete current original API before/after and private/test before/after/result/joint graphs, source-derived copy interventions, primitive kinds, private/test readonly and actual detachment. Exact known private range sibling kind change retains; outer caller is unchanged. Copied-field and consumer/cause/full-alias semantics remain open.\nPASS complete current copied fields, raw kinds, whole source properties/orders/cycles, source-candidate sets and ancestor/carrier/default/metadata roles in all three unchanged-input modes. Graph/field join, consumer/cause/full-alias and cold/permanent repairs remain open.\nPASS complete current original source/input/private graph/field/context/kind/readonly/detachment join. Consumer/cause/full-alias/product/semantic/cold and permanent/host-native repairs remain open.\nPASS complete finite source-authored helper/consumer/parser contexts and qualified own operation spans. Raw operands/errors retain; primary/raw-coordinate and consumer-operand truth remain open.\nPASS complete finite source-derived API/helper/parser primary causes and acceptance; full raw coordinates/address and consumer operand truth remain open.\nPASS complete lossless original raw-error inventory and intended controls; frame/class/coordinate/address meanings remain open.\nPASS finite source/publisher class contracts and genuine native object refusals; full frames/coordinates/address meanings stay open.\nPASS direct finite Value source paths and visible argument footprints; metadata/inherited/display/coordinate/address meanings remain open.\nPASS finite metadata guard/recursion paths and visible argument footprints; inherited API and full display/trace meanings remain open.\nPASS whole finite nested Scope/private-root/capture input joins; catch/rethrow and inherited/full frame meanings remain open.\nPASS whole finite nested catch/explicit-rethrow/interpolation/new-throw prefix conservation; inherited/full trace meanings remain open.\nPASS finite inherited Value/capture/eval source path roles and visible footprints; full observer/display/coordinate/address meaning stays open.\n{\"controls\": [{\"cause\": \"exact current programme/proof/manifest receipt identity\", \"control\": \"actual-initial-successful-receipt\", \"status\": 1}, {\"cause\": \"exact current programme/proof/manifest receipt identity\", \"control\": \"borrowed-initial-programme-pin\", \"status\": 1}], \"current_identity\": {\"frame_model.py\": {\"bytes\": 3276, \"sha256\": \"bf9776779da38a30cd11215901c3e33f85446db500344f0a5dc4824059874530\"}, \"manifest.json\": {\"bytes\": 1416, \"sha256\": \"70572fc71d65dbdf9656cd9b6f7a19c7a2629fa199b2b8ccf7bbfe2b30f5eca4\"}, \"proofs.json\": {\"bytes\": 412789, \"sha256\": \"39611b0aff33ecfc873aabc63a235fddcfd0e1bd4cc8120f15e439c85600ec5b\"}, \"verify.py\": {\"bytes\": 16574, \"sha256\": \"9fd4e4e9613f91892d5f1481630ce836b73897a5b38dc6af1e4a17167802bde3\"}}, \"scope\": \"Fresh executed sealed reader pins; identical legacy successful stdout is insufficient.\", \"status\": 0}\nPASS complete finite own API refusal source-frame/guard/visible-role partition and join; full observer/parser/framework/display/coordinate/address meaning stays open.\nPASS complete own observer/callback source recipes and rejecting controls; native frame/header/framework/display meanings remain open.\nPASS complete finite observer API/parser operation boundaries and visible roles; full callback/framework/display/native identity stays open.\nPASS complete own named-helper supplied/default inputs and active source paths; compiled callback/framework/display/native identity remains open.\nPASS complete finite compiled callback/refusal/helper-wrapper paths and visible source roles; full framework/display/native identity remains open.\nPASS complete finite source helper allocation/input/default/return/throw-phase and callback/refusal path join; full framework/display/native identity remains open.\nPASS whole public POD/current metadata interfaces and genuine controls; original framework version remains unmeasured.\nPASS whole book source transform/aggregate; current mode also checks rendered text. Visual QA remains pending.\nPASS complete finite own subtest/body/delegate/do-load roles and rejecting controls; framework/display/native identity remain open.\n",
+  "stderr": "ram-guard: PID 20302; host 65.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "programme_and_product_identity": {
+    "verify.py": {
+      "bytes": 11130,
+      "sha256": "e722b2bb29dfa3d42a6fd01a4831a7862bb6a249ac09708a1f23c3c9aa6507a5"
+    },
+    "model.py": {
+      "bytes": 3325,
+      "sha256": "ceaf8ea72faa7cdd86aa3bbeebb4a53cab23449250a10b189228c71be21f5fe7"
+    },
+    "proofs.json": {
+      "bytes": 1133265,
+      "sha256": "b4ffee9372564e04439f67f4e779eaf4bbd30afa348b995e3e2e5b7bac265f4b"
+    },
+    "manifest.json": {
+      "bytes": 2072,
+      "sha256": "3a46038b2d13c949e345666719c4d3f204d64a4a680170b60ecea6be477f2bb2"
+    },
+    "verify_public.py": {
+      "bytes": 3687,
+      "sha256": "dd30e046f2304b892f8be95dc68ebe84f4597c20a0f34eda7f2d593c66200f36"
+    },
+    "public-interface.json": {
+      "bytes": 17725,
+      "sha256": "312e68abeeec0ef996b3d9174e2c313b726ff4cafdb953cc11ff7502cd8fd489"
+    },
+    "verify_book.py": {
+      "bytes": 2805,
+      "sha256": "ced88889538b9f63c04410e5877f1cf71eba945941ba37220f4f1c90f7986da0"
+    },
+    "book-transform.json": {
+      "bytes": 358026,
+      "sha256": "194a29e5f0855d3f6353c6fa77bc24903d86b61389ecdac5faca4db6ff36f4f6"
+    }
+  },
+  "identity_unchanged_after_execution": true
+}

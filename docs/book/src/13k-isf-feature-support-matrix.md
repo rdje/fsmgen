@@ -544,6 +544,23 @@ raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 
+The own subtest source model now assigns original refusals to their complete
+authored named bodies. The observer saves the public subtest delegate, wraps the
+callback with its helper observer and forwards callback and extra arguments.
+The original authored bodies supply no extra arguments. Recorded headers agree
+with empty visible body/callback arguments, the authored subtest name and a CODE
+reference kind at the public delegate and own entry. Framework frames between
+these own roles remain opaque; a CODE kind does not establish callback identity.
+
+The original observer loads the test with do and captures its return/error state.
+The recorded require marker agrees with the exact test file identifier; it does
+not change the source operator or establish trace formatting. Captured installed
+public POD supports the call/load interfaces for the current toolchain. The
+original framework version remains unmeasured. Complete source and recorded-role
+qualification is in docs/audits/record-value-own-subtest-boundaries-20261005;
+publication to the semantic fact topic is the separately owned next slice.
+Public framework/display, source-coordinate and native identity gaps remain open.
+
 The finite-copy core keeps its original fact ID and direct path. Its observer and
 helper questions now route to a separate bounded semantic topic, with a return
 route to the core. This separates copy-graph qualification from the original

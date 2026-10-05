@@ -1,0 +1,33 @@
+"""Capture necessary installed public documentation, never implementation."""
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-own-subtest-boundaries-20261005')
+target = BASE / 'public-interface.json'
+assert not target.exists()
+commands = {
+    'do': ['perldoc', '-T', '-f', 'do'],
+    'require': ['perldoc', '-T', '-f', 'require'],
+    'subtest': ['perldoc', '-T', 'Test::More'],
+    'versions': ['perl', '-MTest::More', '-e', 'print "$^V $Test::More::VERSION", chr(10);'],
+    'documentation_path': ['perldoc', '-l', 'Test::More'],
+}
+record = {}
+for name, command in commands.items():
+    result = subprocess.run(command, capture_output=True, text=True)
+    assert result.returncode == 0
+    body = result.stdout
+    if name == 'subtest':
+        lines = body.splitlines()
+        start = next(index for index, line in enumerate(lines) if line.strip() == 'subtest')
+        end = next(index for index in range(start + 1, len(lines)) if lines[index].strip() == 'pass')
+        body = '\n'.join(lines[start:end]) + '\n'
+    record[name] = {'command': command, 'status': result.returncode, 'stdout': body, 'stderr': result.stderr,
+                    'bytes': len(body.encode()), 'sha256': hashlib.sha256(body.encode()).hexdigest()}
+record['scope'] = ('Read-only installed OS/toolchain public POD and version metadata are necessary to interpret authored call/load interfaces. '
+                   'No external implementation is inspected or copied. Current metadata does not establish the unmeasured original Test::More version, '
+                   'framework internals, universal trace display or native identity. Project outputs are repository-local.')
+target.write_text(json.dumps(record, sort_keys=True, indent=2) + '\n')
+print('PASS necessary read-only public do/require/subtest POD and current metadata captured; original framework version remains unmeasured.')
