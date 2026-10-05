@@ -1,0 +1,22 @@
+[
+  {
+    "control": "lost-byte-preservation",
+    "refusal": "only byte-preserving decode repair"
+  },
+  {
+    "control": "false-native-refusal",
+    "refusal": "actual original public acceptance"
+  },
+  {
+    "control": "borrowed-red-success",
+    "refusal": "real original red regression"
+  },
+  {
+    "control": "omitted-green-cache-property",
+    "refusal": "named separating public property: whole projection-byte change invalidates fingerprint"
+  },
+  {
+    "control": "lost-decision-body",
+    "refusal": "only redundant decision self-citation removed"
+  }
+]

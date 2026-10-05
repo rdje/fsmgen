@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "my $text = eval { decode('UTF-8', $bytes, FB_CROAK) }",
+    "--",
+    "knowledge-map/scripts/knowledge_map.pl"
+  ],
+  "status": 0,
+  "stdout": "3b71cb0b11db5dddc1e5a97340f05751c8589b36 LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.10: bound cards and shard knowledge discovery\n",
+  "stderr": ""
+}

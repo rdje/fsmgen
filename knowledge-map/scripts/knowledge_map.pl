@@ -5,7 +5,7 @@ use utf8;
 
 use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
-use Encode qw(decode encode FB_CROAK);
+use Encode qw(decode encode FB_CROAK LEAVE_SRC);
 use File::Basename qw(dirname);
 use File::Find qw(find);
 use File::Path qw(make_path);
@@ -180,7 +180,7 @@ sub read_utf8 {
     local $/;
     my $bytes = <$fh> // '';
     close $fh or die "knowledge-map: cannot close $relative: $!\n";
-    my $text = eval { decode('UTF-8', $bytes, FB_CROAK) };
+    my $text = eval { decode('UTF-8', $bytes, FB_CROAK | LEAVE_SRC) };
     die "knowledge-map: $relative is not valid UTF-8\n" if !defined $text;
     return ($text, $bytes);
 }
@@ -567,7 +567,7 @@ sub read_absolute_utf8 {
     local $/;
     my $bytes = <$fh> // '';
     close $fh;
-    return (decode('UTF-8', $bytes, FB_CROAK), $bytes);
+    return (decode('UTF-8', $bytes, FB_CROAK | LEAVE_SRC), $bytes);
 }
 
 sub dimensions {

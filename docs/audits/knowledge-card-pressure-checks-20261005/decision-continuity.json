@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "scripts/decision_records.py",
+    "check-continuity",
+    "--prior-snapshot",
+    "HEAD",
+    "--snapshot",
+    "worktree"
+  ],
+  "status": 0,
+  "stdout": "{\"catalog\": true, \"fresh_ids\": [], \"resolved\": []}\n",
+  "stderr": "ram-guard: PID 69744; host 79.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

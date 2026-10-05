@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-map-raw-bytes-publication-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS complete exact book authority, unchanged card limits/allowance and real encoding-identifier disposition; separating controls reject.\n",
+  "stderr": "ram-guard: PID 16553; host 85.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

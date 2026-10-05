@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-map-raw-bytes-repair-20261005/verify.py"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 50817; host 79.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/knowledge-map-raw-bytes-repair-20261005/verify.py\", line 94, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/knowledge-map-raw-bytes-repair-20261005/verify.py\", line 82, in main\n    assert json.loads(proof.read_text()) == controls, 'whole separating control proof'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: whole separating control proof\n"
+}

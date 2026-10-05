@@ -1,0 +1,7 @@
+{
+  "source": "docs/book/src/90-reference-map.md",
+  "rendered": "docs/book/book/90-reference-map.html",
+  "paragraph": "The Knowledge Map checks each fact card against its configured line, encoded\nbyte and line-width bounds. Both generation and validation count the original\nUTF-8 bytes; a non-ASCII character can occupy several bytes. Invalid UTF-8 is\nrejected. Query-cache fingerprints include the complete generated shard bytes,\nso a byte change invalidates a cached projection even when its questions stay\nthe same. The collection\u2019s containment allowance is a separate gate; passing\none card\u2019s bounds does not authorize collection growth. See\nthe Knowledge Map architecture\nand its public checker, knowledge-map/scripts/check_knowledge_map.sh.",
+  "normalization": "HTML text concatenation, mdBook smart apostrophe conversion and whitespace only.",
+  "scope": "Exact current raw-byte/collection-gate paragraph text from built HTML; visual layout QA remains pending."
+}

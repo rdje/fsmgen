@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "scripts/decision_records.py",
+    "check"
+  ],
+  "status": 0,
+  "stdout": "decision-records: authenticated originals, current records, compatibility and indexes verified\n",
+  "stderr": "ram-guard: PID 69557; host 80.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

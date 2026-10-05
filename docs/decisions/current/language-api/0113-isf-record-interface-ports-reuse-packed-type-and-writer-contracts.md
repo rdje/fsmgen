@@ -20,7 +20,7 @@ answers:
 date: 2026-09-30
 status: current
 tags: [isf, record, ports, types, layout, writers, specforge]
-evidence: t/1998-isf-record-input-source-admission.t; t/1997-isf-record-port-gate-integration.t; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Support/ISFInterfacePortMetadata.pm; perl/FSM/Support/ISFRecordPortValues.pm; perl/FSM/Support/ISFRecordPortScopes.pm; t/1987-isf-record-port-declaration-scopes.t; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/1986-isf-record-port-value-gates.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/decisions/0113-isf-record-interface-ports-reuse-packed-type-and-writer-contracts.md; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+evidence: t/1998-isf-record-input-source-admission.t; t/1997-isf-record-port-gate-integration.t; perl/FSM/Adapter/ISF/Parser.pm; perl/FSM/Scheduler/ISF/LoweringIR.pm; perl/FSM/Support/ISFInterfacePortMetadata.pm; perl/FSM/Support/ISFRecordPortValues.pm; perl/FSM/Support/ISFRecordPortScopes.pm; t/1987-isf-record-port-declaration-scopes.t; t/1983-isf-interface-port-metadata.t; t/1984-isf-interface-port-report-integration.t; t/1985-isf-interface-port-public-qualification.t; t/1986-isf-record-port-value-gates.t; t/lib/FSM/Test/SourceQueryCoverage.pm; docs/audits/specforge-aggregate-intake-20260930/packet.json; perl/FSM/Package/AggregatePathSupport.pm; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 ---
 # 0113 — ISF record interface ports reuse packed type and writer contracts
 

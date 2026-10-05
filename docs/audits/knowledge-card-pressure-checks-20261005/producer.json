@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-card-pressure-preflight-20261005/produce.py"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 8202; host 75.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/knowledge-card-pressure-preflight-20261005/produce.py\", line 138, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/knowledge-card-pressure-preflight-20261005/produce.py\", line 127, in main\n    proof = {'census': measure(saved), 'public_fixtures': fixtures(saved),\n                                                          ~~~~~~~~^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/knowledge-card-pressure-preflight-20261005/produce.py\", line 103, in fixtures\n    assert (completed.returncode == 0 if status == 0 else completed.returncode != 0), 'intended actual public fixture status: ' + name\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: intended actual public fixture status: actual-byte-overflow\n"
+}

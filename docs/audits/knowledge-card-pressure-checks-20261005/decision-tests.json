@@ -1,0 +1,13 @@
+{
+  "command": [
+    "prove",
+    "-Iperl",
+    "t/1923-decision-record-archive.t",
+    "t/2000-decision-catalog-preparation.t",
+    "t/2001-decision-store-navigation.t",
+    "t/2003-decision-store-git-continuity.t"
+  ],
+  "status": 0,
+  "stdout": "t/1923-decision-record-archive.t ........ ok\nt/2000-decision-catalog-preparation.t ... ok\nt/2001-decision-store-navigation.t ...... ok\nt/2003-decision-store-git-continuity.t .. ok\nAll tests successful.\nFiles=4, Tests=8, 16 wallclock secs ( 0.01 usr  0.01 sys +  8.22 cusr  9.48 csys = 17.72 CPU)\nResult: PASS\n",
+  "stderr": "ram-guard: PID 80456; host 80.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

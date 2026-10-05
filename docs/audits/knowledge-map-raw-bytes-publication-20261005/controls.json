@@ -1,0 +1,14 @@
+[
+  {
+    "control": "wrong-delta",
+    "refusal": "only fresh exact book aggregate authority changes"
+  },
+  {
+    "control": "unrelated-card-allowance-growth",
+    "refusal": "only fresh exact book aggregate authority changes"
+  },
+  {
+    "control": "encoding-treated-as-fixed-byte-width",
+    "refusal": "encoding identifier retains its real semantics"
+  }
+]

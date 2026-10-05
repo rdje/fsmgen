@@ -166,6 +166,58 @@ subtest 'field, card, shard, and locality bounds fail closed' => sub {
         'symlink breakout failure names the configured path');
 };
 
+subtest 'raw UTF-8 byte boundaries and cache fingerprints are retained' => sub {
+    for my $kind ('ASCII', 'multibyte UTF-8') {
+        my $root = make_fixture();
+        my $card = read_file($root, 'docs/knowledge/alpha-one-fact.md');
+        # Raw UTF-8 bytes: one non-ASCII scalar distinguishes bytes from characters.
+        $card .= "\xc3\xa9\n" if $kind ne 'ASCII';
+        my $remaining = 32768 - length($card);
+        $card .= (('x' x 99) . "\n") x int($remaining / 100);
+        $card .= ('x' x ($remaining % 100 - 1)) . "\n" if $remaining % 100;
+        is(length($card), 32768, "$kind fixture is exactly at the byte cap");
+        write_file($root, 'docs/knowledge/alpha-one-fact.md', $card);
+        my ($generated, $output) = run_core($root, 'generate');
+        ok($generated, "$kind exact cap generates") or diag($output);
+        my ($checked, $check_output) = run_core($root, 'check');
+        ok($checked, "$kind exact cap checks") or diag($check_output);
+
+        write_file($root, 'docs/knowledge/alpha-one-fact.md', $card . "\n");
+        for my $command ('generate', 'check') {
+            my ($accepted, $overflow) = run_core($root, $command);
+            ok(!$accepted, "$kind byte overflow refuses $command");
+            like($overflow, qr/card bytes 32769 exceed 32768/,
+                "$kind $command measures original encoded bytes");
+            unlike($overflow, qr/card (?:lines|line width) .* exceed/,
+                "$kind byte refusal is independent of line dimensions");
+        }
+    }
+
+    my $invalid = make_fixture();
+    append_file($invalid, 'docs/knowledge/alpha-one-fact.md', "\xff\n");
+    my ($invalid_ok, $invalid_output) = run_core($invalid, 'generate');
+    ok(!$invalid_ok, 'invalid UTF-8 still refuses');
+    like($invalid_output, qr/is not valid UTF-8/, 'invalid encoding cause remains explicit');
+
+    my $root = make_fixture();
+    run_core($root, 'generate');
+    run_core($root, 'query', 'shared retrieval');
+    my $cache_path = '.artifacts/knowledge-map/query/questions.jsonl';
+    my $before = read_file($root, $cache_path);
+    append_file($root, 'knowledge-map/generated/alpha-one.md', "\n");
+    my ($query_ok, $query_output) = run_core($root, 'query', 'shared retrieval');
+    ok($query_ok, 'query after projection-byte mutation executes') or diag($query_output);
+    my $after = read_file($root, $cache_path);
+    my ($before_fingerprint) = $before =~ /"fingerprint":"([a-f0-9]+)"/;
+    my ($after_fingerprint) = $after =~ /"fingerprint":"([a-f0-9]+)"/;
+    ok(defined($before_fingerprint) && defined($after_fingerprint), 'both cache fingerprints are present');
+    isnt($after_fingerprint, $before_fingerprint,
+        'whole projection-byte change invalidates fingerprint despite unchanged questions');
+    my ($direct_ok, $direct_output) = run_core($root, 'query', '--no-cache', 'shared retrieval');
+    ok($direct_ok, 'independent direct query executes');
+    is($query_output, $direct_output, 'byte-sensitive cache retains direct-query parity');
+};
+
 subtest 'folded metadata preserves scalar meaning and becomes bounded' => sub {
     my $root = make_fixture();
     my $long = join(' ', ('evidence-token') x 80);

@@ -54,6 +54,16 @@ Some docs are intentionally still focused references:
 
 These should stay precise and sometimes narrower than the book.
 
+The Knowledge Map checks each fact card against its configured line, encoded
+byte and line-width bounds. Both generation and validation count the original
+UTF-8 bytes; a non-ASCII character can occupy several bytes. Invalid UTF-8 is
+rejected. Query-cache fingerprints include the complete generated shard bytes,
+so a byte change invalidates a cached projection even when its questions stay
+the same. The collection's containment allowance is a separate gate; passing
+one card's bounds does not authorize collection growth. See
+[the Knowledge Map architecture](../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md)
+and its public checker, `knowledge-map/scripts/check_knowledge_map.sh`.
+
 `CLAIM_VERIFICATION.md` defines what earns an actionable quantitative claim:
 re-derive it from its source, attempt to falsify it with a separating oracle,
 and keep a tracked producer plus a watcher that detects staleness. A missing

@@ -1,0 +1,110 @@
+{
+  "docs/audits/knowledge-card-pressure-checks-20261005/book-build.json": {
+    "bytes": 403,
+    "sha256": "69f89a1fd25ec4daf306eff16053fedd35320e755f0806291ed0a8232fddac55"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/decision-check.json": {
+    "bytes": 330,
+    "sha256": "cba06772392ef6acea8e2db7c391e0cf0a3dbd193262ae6ebdeeb8c2719d744d"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/decision-continuity.json": {
+    "bytes": 373,
+    "sha256": "50666b47f2645a504fd640e09e183ece743c4d925953d1c37487440746c9e5d1"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/decision-tests.json": {
+    "bytes": 677,
+    "sha256": "6b2c885ab2b798a2d6ab7d70ab35c4364004c81d0cef66341c78c47c1ed2d287"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/generation.json": {
+    "bytes": 333,
+    "sha256": "efacf8318f9910458464503bcdbd0576ee0dd30ab668fbad4c7b19a9ec399a66"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/green.json": {
+    "bytes": 8820,
+    "sha256": "d14e6822a25aa4b2c57e49bd67d6b9409f312766801dbaacd74b3319c302ed19"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/initial-exact-failure-status-refusal.json": {
+    "bytes": 1092,
+    "sha256": "8b3231d5d14aa3bfb24723247532fb884420802e3ba64590cfe52e65fdaab748"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/initial-extended-control-product-refusal.json": {
+    "bytes": 767,
+    "sha256": "45c297eeaa2cc972425bf35a13e4db55149ba8c345c834deab560d2c8d4af97d"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/initial-knowledge-map-decision-byte-refusal.json": {
+    "bytes": 370,
+    "sha256": "ad6f4f33840318bcc07c535b635acb17febe7dc400b78efaab2741d0d49e02cd"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/initial-nonzero-status-refusal.json": {
+    "bytes": 1177,
+    "sha256": "96160b970de404a342a97ad2cc32e8241ef8c93814440cc2535e43da45457b6e"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/knowledge-map.json": {
+    "bytes": 342,
+    "sha256": "01c95641d6017a517393e44cec3176a4f51ad23869de652d06eaec63fe23e08e"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/producer.json": {
+    "bytes": 1177,
+    "sha256": "96160b970de404a342a97ad2cc32e8241ef8c93814440cc2535e43da45457b6e"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/reader-final.json": {
+    "bytes": 435,
+    "sha256": "f87450964b95ffb30987bbf22566b5ec6498b99474d18b45caebdf9c9d013719"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/reader.json": {
+    "bytes": 767,
+    "sha256": "45c297eeaa2cc972425bf35a13e4db55149ba8c345c834deab560d2c8d4af97d"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/red.json": {
+    "bytes": 7497,
+    "sha256": "2fcf285265580571ded4d1eb304a4e8f9693b203e5911fa5e71776a302ad74b2"
+  },
+  "docs/audits/knowledge-card-pressure-preflight-20261005/capture.json": {
+    "bytes": 4485683,
+    "sha256": "ac952fb9d9feff3ebb4be8b02610dbf582ca1e18aed60294b14e61b73b09e51a"
+  },
+  "docs/audits/knowledge-card-pressure-preflight-20261005/initial-exact-failure-status-produce.py": {
+    "bytes": 8046,
+    "sha256": "e6b5b0f42edbeac8fcc3d6488ede74d4a9d05e23a03444d7908d179bb5419261"
+  },
+  "docs/audits/knowledge-card-pressure-preflight-20261005/initial-nonzero-status-produce.py": {
+    "bytes": 8375,
+    "sha256": "fc4c52e4b922255e5dc7ad881a59542f7f38d16b6d5d1e3f12399548ca741051"
+  },
+  "docs/audits/knowledge-card-pressure-preflight-20261005/native-byte-overflow-accepted.json": {
+    "bytes": 322,
+    "sha256": "d924b66ecc02755a2dc4e89b321e586fabe5da46fe9de30221d2ce3d751507b7"
+  },
+  "docs/audits/knowledge-card-pressure-preflight-20261005/produce.py": {
+    "bytes": 8375,
+    "sha256": "fc4c52e4b922255e5dc7ad881a59542f7f38d16b6d5d1e3f12399548ca741051"
+  },
+  "docs/audits/knowledge-card-pressure-preflight-20261005/root-cause-git-history.json": {
+    "bytes": 378,
+    "sha256": "77afe622db4a035a446fe33cb00c48b5b672f02f9d2374b821bd13d336de8f27"
+  },
+  "docs/audits/knowledge-map-raw-bytes-repair-20261005/book-rendered.json": {
+    "bytes": 992,
+    "sha256": "1776605d0c082fe4852bef1331f29144fe134acb991b095bd4f1b9425f09462d"
+  },
+  "docs/audits/knowledge-map-raw-bytes-repair-20261005/controls.json": {
+    "bytes": 567,
+    "sha256": "a4155c39ae74a45cacb08c0d9fcaf0b390545d032a996d0f012367c519d84156"
+  },
+  "docs/audits/knowledge-map-raw-bytes-repair-20261005/initial-controls-before-decision-boundary.json": {
+    "bytes": 458,
+    "sha256": "5c5756cf22f541917fcb2c2e0f59a1d69f47509c524f519cfb037af24bd90233"
+  },
+  "docs/audits/knowledge-map-raw-bytes-repair-20261005/scope.txt": {
+    "bytes": 2449,
+    "sha256": "80953396bee92fb1bca5768afcbc6d54656d1a9954a83304779e0dd7dabe0818"
+  },
+  "docs/audits/knowledge-map-raw-bytes-repair-20261005/source.json": {
+    "bytes": 1695569,
+    "sha256": "353e044c6991d255c0c92c2b07600169e6cf3071be02f107138a412d28c0c896"
+  },
+  "docs/audits/knowledge-map-raw-bytes-repair-20261005/verify.py": {
+    "bytes": 6393,
+    "sha256": "12a4b8781db668311f7aa685c38eb5275ddd77f6cb009a72bfe5c487de3d516b"
+  }
+}

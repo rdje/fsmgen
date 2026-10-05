@@ -1,0 +1,34 @@
+{
+  "docs/audits/knowledge-card-pressure-checks-20261005/initial-staged-book-authority-identifier-refusal.json": {
+    "bytes": 61916,
+    "sha256": "377968231066b2159ec259d62b2de76eacff53cccaddb901da546da4812335c7"
+  },
+  "docs/audits/knowledge-card-pressure-checks-20261005/publication-reader.json": {
+    "bytes": 399,
+    "sha256": "d5857f05ee1f68a690eafc4889e7da5f5b047591302fb4f7a5925303521a4c1a"
+  },
+  "docs/audits/knowledge-map-raw-bytes-publication-20261005/book-authority.json": {
+    "bytes": 76515,
+    "sha256": "6f9836244bd0b02790e9117c959b3887fc4b0d1fccd32cdb0097fcf9dbdb0d81"
+  },
+  "docs/audits/knowledge-map-raw-bytes-publication-20261005/controls.json": {
+    "bytes": 363,
+    "sha256": "a9624c50ca488beb9338613c58ef949f0f4e4c62e929506085cb61ffae844c50"
+  },
+  "docs/audits/knowledge-map-raw-bytes-publication-20261005/disposition.json": {
+    "bytes": 791,
+    "sha256": "f581b7e061aba870b191a9531aa4c4e874315756e5a61fcd38fb54b82d1e7a01"
+  },
+  "docs/audits/knowledge-map-raw-bytes-publication-20261005/scope.txt": {
+    "bytes": 649,
+    "sha256": "97d1a4680ac1c0d94e43e03a32c0be4765e5c31c83d9e8980ecb5c6cdb3d8569"
+  },
+  "docs/audits/knowledge-map-raw-bytes-publication-20261005/verify.py": {
+    "bytes": 4562,
+    "sha256": "a45eb04e6cec9f5f6a845fbb0593792ff7b6789fbd18a9c1d91844f350548c99"
+  },
+  "docs/audits/knowledge-map-raw-bytes-repair-20261005/manifest.json": {
+    "bytes": 5066,
+    "sha256": "b4b7931c50a0e8f0a7343db127183557c253fbf6d8e44e2b5bc36f245635d4ea"
+  }
+}

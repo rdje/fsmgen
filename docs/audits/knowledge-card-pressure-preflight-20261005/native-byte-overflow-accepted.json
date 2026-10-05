@@ -1,0 +1,11 @@
+{
+  "fixture": "actual-byte-overflow",
+  "command": [
+    "perl",
+    ".artifacts/knowledge-card-pressure/public-fixtures/knowledge_map.pl",
+    "generate"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "knowledge-map: wrote KNOWLEDGE_MAP.md plus 1 topic shards (1 facts, 25 unique questions, 25 answer occurrences)\n"
+}

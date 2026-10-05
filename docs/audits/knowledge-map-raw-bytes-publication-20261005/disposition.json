@@ -1,0 +1,10 @@
+{
+  "candidate_id": "published-b59e19081f94659ef80363cd",
+  "disposition": "reviewed_incidental",
+  "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+  "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.3",
+  "reason": "UTF-8 is the encoding identifier, not an assertion that a card or character occupies eight bytes. The prose distinguishes original encoded bytes from characters and makes no fixed character-width or population-size measurement. Implementation/evidence ownership is SEMANTIC-INTROSPECTION-MCP-FRONTIER.72.1.1; the actual ASCII/multibyte public boundaries and invalid-encoding/cache controls are in t/1567-knowledge-map-shards.t and the sealed raw-byte source audit.",
+  "reason_code": "identifier_or_navigation",
+  "record_type": "disposition",
+  "schema_version": 1
+}

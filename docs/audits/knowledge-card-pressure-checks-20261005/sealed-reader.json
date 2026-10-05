@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-map-raw-bytes-repair-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS whole original/repaired raw-byte source and real RED/GREEN/public-cache/encoding evidence; genuine source and receipt controls refuse; collection qualification remains open.\n",
+  "stderr": "ram-guard: PID 3225; host 73.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
