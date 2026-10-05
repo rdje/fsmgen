@@ -1,0 +1,18 @@
+{
+  "controls": [
+    {
+      "control": "false-rendered-debt-closure",
+      "refusal": "whole rendered helper topic guidance"
+    },
+    {
+      "control": "same-count-wrong-question-owner",
+      "refusal": "whole source-derived question-to-ID/path allocations"
+    },
+    {
+      "control": "Boolean-query-status",
+      "refusal": "exact executed successful query status"
+    }
+  ],
+  "rendered_bytes": 205196,
+  "rendered_sha256": "e2d2e81ea9ff182f1b83f679d64f731da6fb014a6b501cae73f087b12e76b279"
+}

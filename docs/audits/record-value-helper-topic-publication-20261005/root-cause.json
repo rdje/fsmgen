@@ -1,0 +1,36 @@
+{
+  "receipts": [
+    {
+      "command": [
+        "git",
+        "log",
+        "-3",
+        "--format=%H %s",
+        "-S",
+        "Paths now join.",
+        "--",
+        "docs/knowledge/record-value-finite-copy-probe-reader.md"
+      ],
+      "status": 0,
+      "stdout": "d54e02c85e7275fd43f2d782ad0d575c630aa078 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3.3: join complete original helper paths\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "log",
+        "-2",
+        "--format=%H %s",
+        "-S",
+        "docs/knowledge/record-value-original-observer-helper-paths.md",
+        "--",
+        "docs/audits/record-value-original-helper-join-20261005/knowledge-transform.json"
+      ],
+      "status": 0,
+      "stdout": "d54e02c85e7275fd43f2d782ad0d575c630aa078 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3.3: join complete original helper paths\n",
+      "stderr": ""
+    }
+  ],
+  "mechanism": "The complete helper topic was retained as a historically aggregate-refused proposal; the current core acquired only its bounded signpost. Collection rollover now admits the owned semantic partition without altering its card allowance.",
+  "original_refusal": "docs/audits/record-value-original-helper-join-checks-20261005/initial-staged-doctrines-aggregate-refusal.json"
+}

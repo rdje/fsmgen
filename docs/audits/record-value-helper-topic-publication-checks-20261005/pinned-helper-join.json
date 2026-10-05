@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-helper-topic-publication-20261005/qualify_helper.py"
+  ],
+  "status": 0,
+  "stdout": " \"exact current programme/proof/manifest receipt identity\", \"control\": \"borrowed-initial-programme-pin\", \"status\": 1}], \"current_identity\": {\"frame_model.py\": {\"bytes\": 3276, \"sha256\": \"bf9776779da38a30cd11215901c3e33f85446db500344f0a5dc4824059874530\"}, \"manifest.json\": {\"bytes\": 1416, \"sha256\": \"70572fc71d65dbdf9656cd9b6f7a19c7a2629fa199b2b8ccf7bbfe2b30f5eca4\"}, \"proofs.json\": {\"bytes\": 412789, \"sha256\": \"39611b0aff33ecfc873aabc63a235fddcfd0e1bd4cc8120f15e439c85600ec5b\"}, \"verify.py\": {\"bytes\": 16574, \"sha256\": \"9fd4e4e9613f91892d5f1481630ce836b73897a5b38dc6af1e4a17167802bde3\"}}, \"scope\": \"Fresh executed sealed reader pins; identical legacy successful stdout is insufficient.\", \"status\": 0}\nPASS complete finite own API refusal source-frame/guard/visible-role partition and join; full observer/parser/framework/display/coordinate/address meaning stays open.\nPASS complete own observer/callback source recipes and rejecting controls; native frame/header/framework/display meanings remain open.\nPASS complete finite observer API/parser operation boundaries and visible roles; full callback/framework/display/native identity stays open.\nPASS complete own named-helper supplied/default inputs and active source paths; compiled callback/framework/display/native identity remains open.\nPASS complete finite compiled callback/refusal/helper-wrapper paths and visible source roles; full framework/display/native identity remains open.\nPASS complete finite source helper allocation/input/default/return/throw-phase and callback/refusal path join; full framework/display/native identity remains open.\n\n",
+  "stderr": "ram-guard: PID 14752; host 57.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n\n"
+}

@@ -1,0 +1,65 @@
+{
+  "added_questions": [
+    "are all original helper input and callback paths joined?"
+  ],
+  "after": {
+    "bytes_each": 31755,
+    "bytes_total": 3870651,
+    "files": 1260,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 52940
+  },
+  "before": {
+    "bytes_each": 31755,
+    "bytes_total": 3868852,
+    "files": 1259,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 52904
+  },
+  "controls": [
+    {
+      "control": "lost-question",
+      "refusal": "whole exact semantic partition"
+    },
+    {
+      "control": "lost-source-meaning",
+      "refusal": "whole exact semantic partition"
+    },
+    {
+      "control": "wrong-route",
+      "refusal": "whole exact semantic partition"
+    },
+    {
+      "control": "invented-parser-identity",
+      "refusal": "whole exact semantic partition"
+    },
+    {
+      "control": "lost-open-boundary",
+      "refusal": "whole exact semantic partition"
+    },
+    {
+      "control": "extra-allocation",
+      "refusal": "whole exact semantic partition"
+    }
+  ],
+  "moved_questions": [
+    "what inventories original observer and callback source roles?",
+    "what qualifies original observer API and parser operation boundaries?",
+    "what qualifies original named helper inputs defaults and active paths?",
+    "what qualifies original compiled callback and refusal wrapper paths?"
+  ],
+  "new_allocation": {
+    "answer_occurrences": 7140,
+    "facts": 1266,
+    "unique_questions": 6963
+  },
+  "old_allocation": {
+    "answer_occurrences": 7139,
+    "facts": 1265,
+    "unique_questions": 6962
+  },
+  "revision": "49e46516b963057cae4f3e073a45ff794646cad3",
+  "scope": "Exact owned semantic topic partition and allocation delta; whole helper models already qualify source paths. Full framework/display/coordinate/address/native identity and collection rollover debt remain open."
+}

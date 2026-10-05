@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-helper-topic-publication-20261005/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS complete finite-copy/helper source conservation, declared question allocation delta and actual query parity within unchanged card bounds; genuine source/route/identity/open-leg controls refuse.\n",
+  "stderr": "ram-guard: PID 45840; host 51.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

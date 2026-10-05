@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-helper-topic-publication-20261005/produce.py",
+    "prepare"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "ram-guard: PID 76650; host 61.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

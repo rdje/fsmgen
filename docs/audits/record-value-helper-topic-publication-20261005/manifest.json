@@ -1,0 +1,62 @@
+{
+  "docs/audits/record-value-helper-topic-publication-20261005/after-query.json": {
+    "bytes": 2593809,
+    "sha256": "ea4217bc6e87cb2d3a0b49104d05eb6356ea4819882c267088dc59d67458749f"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/before-query.json": {
+    "bytes": 1296668,
+    "sha256": "f4587ba7e932e44955260c7a605f491028f5f00f1893137f6d3eda90accd18f1"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/book-authority.json": {
+    "bytes": 419701,
+    "sha256": "8e76909b1cfad39db014e974d1ed484da7ffb170184a3ba1aeae37dbfe58f1e9"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/delivery-proof.json": {
+    "bytes": 506,
+    "sha256": "320f232035b95ffdbdb9985fda3fe1821187e4f2f67e5249618de8108fd45769"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/helper-receipt.json": {
+    "bytes": 6005,
+    "sha256": "46cd8c930952d477ef0a90b6ffeade3db1e39c21a69572b7aab4ef384633465d"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/produce.py": {
+    "bytes": 7834,
+    "sha256": "a280b671b0f888f04a4929123c621fdd4e80f1bb2e470a90613706c998c66bf4"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/proofs.json": {
+    "bytes": 1874,
+    "sha256": "93a69dff2eb0fa05c46aaff52b3f9f8650def4884d053e68cf47ff670f0db0b8"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/qualify_helper.py": {
+    "bytes": 1209,
+    "sha256": "8c07577f815db99928fcb194bb910804002885a41282153dbaf48a702e0db3c5"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/rendered-chapter.txt": {
+    "bytes": 205196,
+    "sha256": "e2d2e81ea9ff182f1b83f679d64f731da6fb014a6b501cae73f087b12e76b279"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/root-cause.json": {
+    "bytes": 1437,
+    "sha256": "bd20d7c4db98453ef583df4d19014708c11c86766662e4c18fd1baa36b710ab9"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/scope.txt": {
+    "bytes": 2314,
+    "sha256": "e1411d98c7951c08eca4d29e0781d9395533ddc1e5d540d46f7e08b43fb91bef"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/seal.py": {
+    "bytes": 535,
+    "sha256": "502d79df6214374f6cff8ef6eb74efabc19fb8c991bbf29d2f6decb4b5c07d8c"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/transform.json": {
+    "bytes": 36256,
+    "sha256": "94fb7a160bed4f18b4b0ae3369cf44dccaae453d39b43a7df7d36bb4e8b849dd"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/verify.py": {
+    "bytes": 13698,
+    "sha256": "bab5b25ca9bfbf920c019b6e0d0f2462c33a41caf9868e69c9163152a19df795"
+  },
+  "docs/audits/record-value-helper-topic-publication-20261005/verify_delivery.py": {
+    "bytes": 3911,
+    "sha256": "1054fd0162bbd941a79b7e02e91be9937bdf653d24233ee6a187fc0040602ec4"
+  }
+}

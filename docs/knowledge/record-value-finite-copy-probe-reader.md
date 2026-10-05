@@ -23,10 +23,6 @@ answers:
   - "what qualifies whole nested original error forwarding?"
   - "what qualifies inherited original nested API frames?"
   - "are all original own API refusal paths joined?"
-  - "what inventories original observer and callback source roles?"
-  - "what qualifies original observer API and parser operation boundaries?"
-  - "what qualifies original named helper inputs defaults and active paths?"
-  - "what qualifies original compiled callback and refusal wrapper paths?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -82,14 +78,8 @@ Whole inner scalar forwarding now conserves the new outer prefix. Public die
 controls distinguish explicit rethrow, propagation and hook replacement. Original
 hook state/provider bytes stay unmeasured. Source models join nested Value and
 capture/Scope eval/wrapper paths and visible operand roles. The complete own API
-join partitions every refusal into source guard/function/visible-role models. Own
-observer/callback source roles, bodies and operation allocations now inventory.
-Observer models join every API/parser operation, eval and installed wrapper with
-source argument roles. The parser receiver role is declared; identity is unmeasured.
-Named helper models preserve supplied/default inputs, complete source graphs,
-returned argument-building calls and active paths through both throw phases.
-Compiled callback/refuses/helper-wrapper paths bind parameterless operation,
-source regex-body and label displays; identity and full formatting remain open. Paths now join.
+join partitions every refusal into source guard/function/visible-role models. Own observer and helper source meanings are canonical in the
+[observer/helper path card](record-value-original-observer-helper-paths.md).
 Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/
 candidate-parent, hot and host-native meanings remain open.
 

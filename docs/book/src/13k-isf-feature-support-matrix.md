@@ -543,6 +543,24 @@ helpers are excluded from active paths. Public framework meaning, exact display,
 raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
+
+The finite-copy core keeps its original fact ID and direct path. Its observer and
+helper questions now route to a separate bounded semantic topic, with a return
+route to the core. This separates copy-graph qualification from the original
+helper allocation, supplied/default inputs, returned argument construction and
+callback/refusal paths. The publication reader preserves the complete source
+meaning and question ownership, checks actual direct and cached queries, and
+rejects lost source roles, wrong routes and invented parser identity:
+
+```bash
+python3 -B docs/audits/record-value-helper-topic-publication-20261005/verify.py --current
+```
+
+This topic uses the capacity recovered by the admitted collection rollover.
+Existing collection bounds remain in force; rollover debt remains open. The
+separately owned subtest/require, framework/display, raw-coordinate and native
+address/object-identity gaps remain explicit in both semantic topics.
+
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original
 comparison rejects identical semantic controls at a second working root; the
