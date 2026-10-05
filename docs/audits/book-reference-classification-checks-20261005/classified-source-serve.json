@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-classification-20261005/classify.py"
+  ],
+  "status": 0,
+  "stdout": "{\"confirmed_failed_clicks\": 127, \"distinct_canonical_sources\": 127, \"distinct_failed_urls\": 127, \"scope\": \"Only the complete actual body-anchor populations of encountered chapters90/13k; no whole-book or remote-destination defect claim.\"}\n",
+  "stderr": "ram-guard: PID 8559; host 84.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -1,0 +1,2409 @@
+{
+  "classified_links": [
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../SPECFORGE_FEEDBACK_RESPONSE.html",
+      "resolved_path": "/SPECFORGE_FEEDBACK_RESPONSE.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/SPECFORGE_FEEDBACK_RESPONSE.md",
+        "href": "../../SPECFORGE_FEEDBACK_RESPONSE.md",
+        "line": 43,
+        "rendered_href": "../../SPECFORGE_FEEDBACK_RESPONSE.html",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/local-formal-helper-cause-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/local-formal-helper-cause-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/local-formal-helper-cause-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/local-formal-helper-cause-repair-20261003/scope.txt",
+        "line": 122,
+        "rendered_href": "../../../docs/audits/local-formal-helper-cause-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/formal-source-context-cause-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/formal-source-context-cause-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/formal-source-context-cause-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/formal-source-context-cause-repair-20261003/scope.txt",
+        "line": 170,
+        "rendered_href": "../../../docs/audits/formal-source-context-cause-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt",
+        "line": 178,
+        "rendered_href": "../../../docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/residual-named-helper-cohorts-20261003/scope.txt",
+      "resolved_path": "/docs/audits/residual-named-helper-cohorts-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/residual-named-helper-cohorts-20261003/scope.txt",
+        "href": "../../../docs/audits/residual-named-helper-cohorts-20261003/scope.txt",
+        "line": 181,
+        "rendered_href": "../../../docs/audits/residual-named-helper-cohorts-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/aggregate-record-helper-plan-20261003/scope.txt",
+      "resolved_path": "/docs/audits/aggregate-record-helper-plan-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/aggregate-record-helper-plan-20261003/scope.txt",
+        "href": "../../../docs/audits/aggregate-record-helper-plan-20261003/scope.txt",
+        "line": 185,
+        "rendered_href": "../../../docs/audits/aggregate-record-helper-plan-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-helper-contract-20261003/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-helper-contract-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-helper-contract-20261003/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-helper-contract-20261003/scope.txt",
+        "line": 191,
+        "rendered_href": "../../../docs/audits/interface-metadata-helper-contract-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-runtime-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-runtime-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-runtime-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-runtime-20261004/scope.txt",
+        "line": 192,
+        "rendered_href": "../../../docs/audits/interface-metadata-runtime-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-fields-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-fields-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-fields-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-fields-20261004/scope.txt",
+        "line": 198,
+        "rendered_href": "../../../docs/audits/interface-metadata-fields-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-copy-controls-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-copy-controls-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-copy-controls-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-copy-controls-20261004/scope.txt",
+        "line": 201,
+        "rendered_href": "../../../docs/audits/interface-metadata-copy-controls-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-copy-repair-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-copy-repair-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-copy-repair-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-copy-repair-20261004/scope.txt",
+        "line": 204,
+        "rendered_href": "../../../docs/audits/interface-metadata-copy-repair-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-copy-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-copy-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-copy-join-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-copy-join-20261004/scope.txt",
+        "line": 211,
+        "rendered_href": "../../../docs/audits/interface-metadata-copy-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-source-product-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-source-product-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-source-product-join-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-source-product-join-20261004/scope.txt",
+        "line": 216,
+        "rendered_href": "../../../docs/audits/interface-metadata-source-product-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-cause-repair-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-cause-repair-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-cause-repair-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-cause-repair-20261004/scope.txt",
+        "line": 219,
+        "rendered_href": "../../../docs/audits/interface-metadata-cause-repair-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt",
+        "line": 227,
+        "rendered_href": "../../../docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt",
+        "line": 234,
+        "rendered_href": "../../../docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/interface-metadata-helper-outcome-20261004/scope.txt",
+      "resolved_path": "/docs/audits/interface-metadata-helper-outcome-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/interface-metadata-helper-outcome-20261004/scope.txt",
+        "href": "../../../docs/audits/interface-metadata-helper-outcome-20261004/scope.txt",
+        "line": 238,
+        "rendered_href": "../../../docs/audits/interface-metadata-helper-outcome-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-helper-contract-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-helper-contract-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-helper-contract-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-helper-contract-20261004/scope.txt",
+        "line": 243,
+        "rendered_href": "../../../docs/audits/record-value-helper-contract-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-runtime-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-runtime-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-runtime-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-runtime-20261004/scope.txt",
+        "line": 251,
+        "rendered_href": "../../../docs/audits/record-value-runtime-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-fields-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-fields-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-fields-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-fields-20261004/scope.txt",
+        "line": 258,
+        "rendered_href": "../../../docs/audits/record-value-fields-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-copy-fields-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-copy-fields-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-copy-fields-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-copy-fields-20261004/scope.txt",
+        "line": 264,
+        "rendered_href": "../../../docs/audits/record-value-copy-fields-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-field-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-field-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-field-join-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-field-join-20261004/scope.txt",
+        "line": 272,
+        "rendered_href": "../../../docs/audits/record-value-field-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-actors-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-actors-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-actors-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-actors-20261004/scope.txt",
+        "line": 279,
+        "rendered_href": "../../../docs/audits/record-value-actors-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-scopes-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-scopes-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-scopes-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-scopes-20261004/scope.txt",
+        "line": 283,
+        "rendered_href": "../../../docs/audits/record-value-scopes-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-references-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-references-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-references-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-references-20261004/scope.txt",
+        "line": 290,
+        "rendered_href": "../../../docs/audits/record-value-references-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-copies-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-copies-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-copies-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-copies-20261004/scope.txt",
+        "line": 296,
+        "rendered_href": "../../../docs/audits/record-value-copies-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-api-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-api-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-api-join-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-api-join-20261004/scope.txt",
+        "line": 304,
+        "rendered_href": "../../../docs/audits/record-value-api-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-captures-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-captures-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-captures-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-captures-20261004/scope.txt",
+        "line": 310,
+        "rendered_href": "../../../docs/audits/record-value-captures-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-snapshots-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-snapshots-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-snapshots-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-snapshots-20261004/scope.txt",
+        "line": 319,
+        "rendered_href": "../../../docs/audits/record-value-snapshots-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-ranges-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-ranges-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-ranges-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-ranges-20261004/scope.txt",
+        "line": 328,
+        "rendered_href": "../../../docs/audits/record-value-ranges-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-clones-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-clones-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-clones-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-clones-20261004/scope.txt",
+        "line": 341,
+        "rendered_href": "../../../docs/audits/record-value-clones-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-clone-paths-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-clone-paths-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-clone-paths-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-clone-paths-20261004/scope.txt",
+        "line": 357,
+        "rendered_href": "../../../docs/audits/record-value-clone-paths-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-clone-root-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-clone-root-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-clone-root-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-clone-root-20261004/scope.txt",
+        "line": 367,
+        "rendered_href": "../../../docs/audits/record-value-clone-root-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-clone-tree-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-clone-tree-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-clone-tree-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-clone-tree-20261004/scope.txt",
+        "line": 379,
+        "rendered_href": "../../../docs/audits/record-value-clone-tree-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-clone-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-clone-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-clone-join-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-clone-join-20261004/scope.txt",
+        "line": 395,
+        "rendered_href": "../../../docs/audits/record-value-clone-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-identities-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-identities-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-identities-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-identities-20261004/scope.txt",
+        "line": 407,
+        "rendered_href": "../../../docs/audits/record-value-identities-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-core-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-core-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-core-join-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-core-join-20261004/scope.txt",
+        "line": 421,
+        "rendered_href": "../../../docs/audits/record-value-core-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-products-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-products-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-products-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-products-20261004/scope.txt",
+        "line": 433,
+        "rendered_href": "../../../docs/audits/record-value-products-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-semantic-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-semantic-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-semantic-join-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-semantic-join-20261004/scope.txt",
+        "line": 443,
+        "rendered_href": "../../../docs/audits/record-value-semantic-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-replay-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-replay-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-replay-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-original-replay-20261004/scope.txt",
+        "line": 454,
+        "rendered_href": "../../../docs/audits/record-value-original-replay-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-copy-inputs-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-copy-inputs-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-copy-inputs-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-copy-inputs-20261004/scope.txt",
+        "line": 459,
+        "rendered_href": "../../../docs/audits/record-value-copy-inputs-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-copy-probes-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-copy-probes-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-copy-probes-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-copy-probes-20261004/scope.txt",
+        "line": 464,
+        "rendered_href": "../../../docs/audits/record-value-copy-probes-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-copy-reader-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-copy-reader-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-copy-reader-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-copy-reader-20261004/scope.txt",
+        "line": 466,
+        "rendered_href": "../../../docs/audits/record-value-copy-reader-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-copy-probe-join-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-copy-probe-join-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-copy-probe-join-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-copy-probe-join-20261004/scope.txt",
+        "line": 470,
+        "rendered_href": "../../../docs/audits/record-value-copy-probe-join-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-candidate-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-candidate-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-candidate-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-original-candidate-20261004/scope.txt",
+        "line": 472,
+        "rendered_href": "../../../docs/audits/record-value-original-candidate-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-copy-reader-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-copy-reader-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-copy-reader-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-original-copy-reader-20261004/scope.txt",
+        "line": 476,
+        "rendered_href": "../../../docs/audits/record-value-original-copy-reader-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-products-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-products-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-products-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-products-20261005/scope.txt",
+        "line": 479,
+        "rendered_href": "../../../docs/audits/record-value-original-products-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-input-graphs-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-input-graphs-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-input-graphs-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-input-graphs-20261005/scope.txt",
+        "line": 481,
+        "rendered_href": "../../../docs/audits/record-value-original-input-graphs-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-fields-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-fields-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-fields-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-fields-20261005/scope.txt",
+        "line": 484,
+        "rendered_href": "../../../docs/audits/record-value-original-fields-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-input-join-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-input-join-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-input-join-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-input-join-20261005/scope.txt",
+        "line": 487,
+        "rendered_href": "../../../docs/audits/record-value-original-input-join-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-contexts-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-contexts-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-contexts-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-contexts-20261005/scope.txt",
+        "line": 489,
+        "rendered_href": "../../../docs/audits/record-value-original-contexts-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-primary-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-primary-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-primary-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-primary-20261005/scope.txt",
+        "line": 491,
+        "rendered_href": "../../../docs/audits/record-value-original-primary-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-raw-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-raw-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-raw-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-raw-20261005/scope.txt",
+        "line": 493,
+        "rendered_href": "../../../docs/audits/record-value-original-raw-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-class-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-class-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-class-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-class-20261005/scope.txt",
+        "line": 496,
+        "rendered_href": "../../../docs/audits/record-value-original-class-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-value-frames-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-value-frames-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-value-frames-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-value-frames-20261005/scope.txt",
+        "line": 502,
+        "rendered_href": "../../../docs/audits/record-value-original-value-frames-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-metadata-frames-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-metadata-frames-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-metadata-frames-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-metadata-frames-20261005/scope.txt",
+        "line": 506,
+        "rendered_href": "../../../docs/audits/record-value-original-metadata-frames-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-nested-inputs-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-nested-inputs-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-nested-inputs-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-nested-inputs-20261005/scope.txt",
+        "line": 509,
+        "rendered_href": "../../../docs/audits/record-value-original-nested-inputs-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-forwarding-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-forwarding-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-forwarding-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-forwarding-20261005/scope.txt",
+        "line": 512,
+        "rendered_href": "../../../docs/audits/record-value-original-forwarding-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-inherited-frames-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-inherited-frames-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-inherited-frames-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-inherited-frames-20261005/scope.txt",
+        "line": 519,
+        "rendered_href": "../../../docs/audits/record-value-original-inherited-frames-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-api-paths-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-api-paths-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-api-paths-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-api-paths-20261005/scope.txt",
+        "line": 522,
+        "rendered_href": "../../../docs/audits/record-value-original-api-paths-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-observer-sources-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-observer-sources-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-observer-sources-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-observer-sources-20261005/scope.txt",
+        "line": 525,
+        "rendered_href": "../../../docs/audits/record-value-original-observer-sources-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-observer-boundaries-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-observer-boundaries-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-observer-boundaries-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-observer-boundaries-20261005/scope.txt",
+        "line": 527,
+        "rendered_href": "../../../docs/audits/record-value-original-observer-boundaries-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-named-helpers-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-named-helpers-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-named-helpers-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-named-helpers-20261005/scope.txt",
+        "line": 531,
+        "rendered_href": "../../../docs/audits/record-value-original-named-helpers-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-callback-paths-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-callback-paths-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-callback-paths-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-callback-paths-20261005/scope.txt",
+        "line": 535,
+        "rendered_href": "../../../docs/audits/record-value-original-callback-paths-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-original-helper-join-20261005/scope.txt",
+      "resolved_path": "/docs/audits/record-value-original-helper-join-20261005/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-original-helper-join-20261005/scope.txt",
+        "href": "../../../docs/audits/record-value-original-helper-join-20261005/scope.txt",
+        "line": 538,
+        "rendered_href": "../../../docs/audits/record-value-original-helper-join-20261005/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/record-value-replay-portability-20261004/scope.txt",
+      "resolved_path": "/docs/audits/record-value-replay-portability-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/record-value-replay-portability-20261004/scope.txt",
+        "href": "../../../docs/audits/record-value-replay-portability-20261004/scope.txt",
+        "line": 564,
+        "rendered_href": "../../../docs/audits/record-value-replay-portability-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/formal-resource-cause-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/formal-resource-cause-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/formal-resource-cause-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/formal-resource-cause-repair-20261003/scope.txt",
+        "line": 576,
+        "rendered_href": "../../../docs/audits/formal-resource-cause-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reusable-product-helper-causes-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reusable-product-helper-causes-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reusable-product-helper-causes-20261003/scope.txt",
+        "href": "../../../docs/audits/reusable-product-helper-causes-20261003/scope.txt",
+        "line": 583,
+        "rendered_href": "../../../docs/audits/reusable-product-helper-causes-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reusable-cause-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reusable-cause-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reusable-cause-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/reusable-cause-repair-20261003/scope.txt",
+        "line": 585,
+        "rendered_href": "../../../docs/audits/reusable-cause-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reusable-projection-kind-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reusable-projection-kind-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reusable-projection-kind-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/reusable-projection-kind-repair-20261003/scope.txt",
+        "line": 591,
+        "rendered_href": "../../../docs/audits/reusable-projection-kind-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/atl-source-width-kind-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/atl-source-width-kind-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/atl-source-width-kind-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/atl-source-width-kind-repair-20261003/scope.txt",
+        "line": 596,
+        "rendered_href": "../../../docs/audits/atl-source-width-kind-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/prepared-reservation-helper-causes-20261003/scope.txt",
+      "resolved_path": "/docs/audits/prepared-reservation-helper-causes-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/prepared-reservation-helper-causes-20261003/scope.txt",
+        "href": "../../../docs/audits/prepared-reservation-helper-causes-20261003/scope.txt",
+        "line": 601,
+        "rendered_href": "../../../docs/audits/prepared-reservation-helper-causes-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/prepared-reservation-cause-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/prepared-reservation-cause-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/prepared-reservation-cause-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/prepared-reservation-cause-repair-20261003/scope.txt",
+        "line": 605,
+        "rendered_href": "../../../docs/audits/prepared-reservation-cause-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt",
+      "resolved_path": "/docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt",
+        "href": "../../../docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt",
+        "line": 608,
+        "rendered_href": "../../../docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt",
+        "line": 611,
+        "rendered_href": "../../../docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-helper-causes-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-helper-causes-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-helper-causes-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-helper-causes-20261003/scope.txt",
+        "line": 622,
+        "rendered_href": "../../../docs/audits/reservation-coverage-helper-causes-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-source-copies-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-source-copies-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-source-copies-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-source-copies-20261003/scope.txt",
+        "line": 626,
+        "rendered_href": "../../../docs/audits/reservation-coverage-source-copies-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-module-capture-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-module-capture-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-module-capture-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-module-capture-20261003/scope.txt",
+        "line": 630,
+        "rendered_href": "../../../docs/audits/reservation-coverage-module-capture-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt",
+        "line": 633,
+        "rendered_href": "../../../docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt",
+        "line": 636,
+        "rendered_href": "../../../docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt",
+        "line": 638,
+        "rendered_href": "../../../docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-module-join-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-module-join-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-module-join-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-module-join-20261003/scope.txt",
+        "line": 641,
+        "rendered_href": "../../../docs/audits/reservation-coverage-module-join-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt",
+        "line": 643,
+        "rendered_href": "../../../docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt",
+        "line": 645,
+        "rendered_href": "../../../docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt",
+        "line": 648,
+        "rendered_href": "../../../docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt",
+        "line": 651,
+        "rendered_href": "../../../docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt",
+        "line": 653,
+        "rendered_href": "../../../docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt",
+        "line": 657,
+        "rendered_href": "../../../docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt",
+        "line": 661,
+        "rendered_href": "../../../docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-qualification-join-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-qualification-join-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-qualification-join-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-qualification-join-20261003/scope.txt",
+        "line": 665,
+        "rendered_href": "../../../docs/audits/reservation-coverage-qualification-join-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-copy-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-copy-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-copy-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-copy-repair-20261003/scope.txt",
+        "line": 668,
+        "rendered_href": "../../../docs/audits/reservation-coverage-copy-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-historical-context-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-historical-context-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-historical-context-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-historical-context-20261003/scope.txt",
+        "line": 677,
+        "rendered_href": "../../../docs/audits/reservation-coverage-historical-context-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/coverage-repair-historical-context-20261004/scope.txt",
+      "resolved_path": "/docs/audits/coverage-repair-historical-context-20261004/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/coverage-repair-historical-context-20261004/scope.txt",
+        "href": "../../../docs/audits/coverage-repair-historical-context-20261004/scope.txt",
+        "line": 680,
+        "rendered_href": "../../../docs/audits/coverage-repair-historical-context-20261004/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt",
+        "line": 686,
+        "rendered_href": "../../../docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/reservation-coverage-cause-repair-20261003/scope.txt",
+      "resolved_path": "/docs/audits/reservation-coverage-cause-repair-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/reservation-coverage-cause-repair-20261003/scope.txt",
+        "href": "../../../docs/audits/reservation-coverage-cause-repair-20261003/scope.txt",
+        "line": 691,
+        "rendered_href": "../../../docs/audits/reservation-coverage-cause-repair-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../docs/audits/named-helper-membership-20261003/scope.txt",
+      "resolved_path": "/docs/audits/named-helper-membership-20261003/scope.txt",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/named-helper-membership-20261003/scope.txt",
+        "href": "../../../docs/audits/named-helper-membership-20261003/scope.txt",
+        "line": 698,
+        "rendered_href": "../../../docs/audits/named-helper-membership-20261003/scope.txt",
+        "source": "docs/book/src/13k-isf-feature-support-matrix.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../COMPOSITION_SCOPE.html",
+      "resolved_path": "/COMPOSITION_SCOPE.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/COMPOSITION_SCOPE.md",
+        "href": "../../COMPOSITION_SCOPE.md",
+        "line": 26,
+        "rendered_href": "../../COMPOSITION_SCOPE.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../EXTENSION_MODEL.html",
+      "resolved_path": "/EXTENSION_MODEL.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/EXTENSION_MODEL.md",
+        "href": "../../EXTENSION_MODEL.md",
+        "line": 27,
+        "rendered_href": "../../EXTENSION_MODEL.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../REGRESSION_CORPUS.html",
+      "resolved_path": "/REGRESSION_CORPUS.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/REGRESSION_CORPUS.md",
+        "href": "../../REGRESSION_CORPUS.md",
+        "line": 28,
+        "rendered_href": "../../REGRESSION_CORPUS.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../FEATURE_BACKLOG.html",
+      "resolved_path": "/FEATURE_BACKLOG.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/FEATURE_BACKLOG.md",
+        "href": "../../FEATURE_BACKLOG.md",
+        "line": 29,
+        "rendered_href": "../../FEATURE_BACKLOG.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../INTENT_CAPTURE_AXI_CASE_STUDY.html",
+      "resolved_path": "/INTENT_CAPTURE_AXI_CASE_STUDY.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/INTENT_CAPTURE_AXI_CASE_STUDY.md",
+        "href": "../../INTENT_CAPTURE_AXI_CASE_STUDY.md",
+        "line": 30,
+        "rendered_href": "../../INTENT_CAPTURE_AXI_CASE_STUDY.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../ISF_DOWNSTREAM_INTEGRATION_SPEC.html",
+      "resolved_path": "/ISF_DOWNSTREAM_INTEGRATION_SPEC.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md",
+        "href": "../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md",
+        "line": 31,
+        "rendered_href": "../../ISF_DOWNSTREAM_INTEGRATION_SPEC.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../ISF_SPEC.html",
+      "resolved_path": "/ISF_SPEC.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/ISF_SPEC.md",
+        "href": "../../ISF_SPEC.md",
+        "line": 32,
+        "rendered_href": "../../ISF_SPEC.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../ISF_PUBLIC_INTERFACE_CONTRACT.html",
+      "resolved_path": "/ISF_PUBLIC_INTERFACE_CONTRACT.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/ISF_PUBLIC_INTERFACE_CONTRACT.md",
+        "href": "../../ISF_PUBLIC_INTERFACE_CONTRACT.md",
+        "line": 33,
+        "rendered_href": "../../ISF_PUBLIC_INTERFACE_CONTRACT.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.html",
+      "resolved_path": "/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md",
+        "href": "../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md",
+        "line": 34,
+        "rendered_href": "../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.html",
+      "resolved_path": "/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md",
+        "href": "../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md",
+        "line": 35,
+        "rendered_href": "../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.html",
+      "resolved_path": "/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md",
+        "href": "../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md",
+        "line": 36,
+        "rendered_href": "../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.html",
+      "resolved_path": "/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md",
+        "href": "../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md",
+        "line": 37,
+        "rendered_href": "../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.html",
+      "resolved_path": "/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md",
+        "href": "../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md",
+        "line": 38,
+        "rendered_href": "../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../BIN_FSMGEN_IMPORT_TREE.html",
+      "resolved_path": "/BIN_FSMGEN_IMPORT_TREE.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/BIN_FSMGEN_IMPORT_TREE.md",
+        "href": "../../BIN_FSMGEN_IMPORT_TREE.md",
+        "line": 39,
+        "rendered_href": "../../BIN_FSMGEN_IMPORT_TREE.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../TASK_TREE.html",
+      "resolved_path": "/TASK_TREE.html",
+      "role": "operational-state-or-direction",
+      "source": {
+        "canonical": "docs/TASK_TREE.md",
+        "href": "../../TASK_TREE.md",
+        "line": 40,
+        "rendered_href": "../../TASK_TREE.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../tasks/ISF-PUBLIC-CONTRACT-SYNC.html",
+      "resolved_path": "/tasks/ISF-PUBLIC-CONTRACT-SYNC.html",
+      "role": "operational-state-or-direction",
+      "source": {
+        "canonical": "docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md",
+        "href": "../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md",
+        "line": 41,
+        "rendered_href": "../../tasks/ISF-PUBLIC-CONTRACT-SYNC.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../COMPOSITION_LEGACY_MAPPING.html",
+      "resolved_path": "/COMPOSITION_LEGACY_MAPPING.html",
+      "role": "focused-product-or-maintainer-reference",
+      "source": {
+        "canonical": "docs/COMPOSITION_LEGACY_MAPPING.md",
+        "href": "../../COMPOSITION_LEGACY_MAPPING.md",
+        "line": 42,
+        "rendered_href": "../../COMPOSITION_LEGACY_MAPPING.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../MEMORY.html",
+      "resolved_path": "/MEMORY.html",
+      "role": "operational-state-or-direction",
+      "source": {
+        "canonical": "MEMORY.md",
+        "href": "../../../MEMORY.md",
+        "line": 43,
+        "rendered_href": "../../../MEMORY.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../ROADMAP_V2.html",
+      "resolved_path": "/ROADMAP_V2.html",
+      "role": "operational-state-or-direction",
+      "source": {
+        "canonical": "ROADMAP_V2.md",
+        "href": "../../../ROADMAP_V2.md",
+        "line": 44,
+        "rendered_href": "../../../ROADMAP_V2.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../README_POLICY.html",
+      "resolved_path": "/README_POLICY.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "README_POLICY.md",
+        "href": "../../../README_POLICY.md",
+        "line": 45,
+        "rendered_href": "../../../README_POLICY.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.html",
+      "resolved_path": "/LIVE_DOCUMENT_SIZE_CONTAINMENT.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+        "href": "../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+        "line": 46,
+        "rendered_href": "../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../CLAIM_VERIFICATION.html",
+      "resolved_path": "/CLAIM_VERIFICATION.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "CLAIM_VERIFICATION.md",
+        "href": "../../../CLAIM_VERIFICATION.md",
+        "line": 47,
+        "rendered_href": "../../../CLAIM_VERIFICATION.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.html",
+      "resolved_path": "/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md",
+        "href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md",
+        "line": 49,
+        "rendered_href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.html",
+      "resolved_path": "/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.html",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md",
+        "href": "../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md",
+        "line": 50,
+        "rendered_href": "../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../audits/ROADMAP_STATUS_VALUE_AUDIT.html",
+      "resolved_path": "/audits/ROADMAP_STATUS_VALUE_AUDIT.html",
+      "role": "retained-engineering-evidence",
+      "source": {
+        "canonical": "docs/audits/ROADMAP_STATUS_VALUE_AUDIT.md",
+        "href": "../../audits/ROADMAP_STATUS_VALUE_AUDIT.md",
+        "line": 51,
+        "rendered_href": "../../audits/ROADMAP_STATUS_VALUE_AUDIT.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../TASK_ACCEPTANCE.html",
+      "resolved_path": "/TASK_ACCEPTANCE.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "TASK_ACCEPTANCE.md",
+        "href": "../../../TASK_ACCEPTANCE.md",
+        "line": 52,
+        "rendered_href": "../../../TASK_ACCEPTANCE.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../../COMMIT.html",
+      "resolved_path": "/COMMIT.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "COMMIT.md",
+        "href": "../../../COMMIT.md",
+        "line": 53,
+        "rendered_href": "../../../COMMIT.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../decisions/0102-push-cadence-is-500-commits.html",
+      "resolved_path": "/decisions/0102-push-cadence-is-500-commits.html",
+      "role": "decision-reference",
+      "source": {
+        "canonical": "docs/decisions/0102-push-cadence-is-500-commits.md",
+        "href": "../../decisions/0102-push-cadence-is-500-commits.md",
+        "line": 364,
+        "rendered_href": "../../decisions/0102-push-cadence-is-500-commits.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.html",
+      "resolved_path": "/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md",
+        "href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.md",
+        "line": 406,
+        "rendered_href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.html",
+      "resolved_path": "/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md",
+        "href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.md",
+        "line": 409,
+        "rendered_href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    },
+    {
+      "chapter": "90-reference-map",
+      "failure": "advertised canonical reference returns404 from native book",
+      "fragment": "",
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3",
+      "rendered_href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.html",
+      "resolved_path": "/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.html",
+      "role": "maintainer-policy-or-review",
+      "source": {
+        "canonical": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md",
+        "href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.md",
+        "line": 417,
+        "rendered_href": "../../LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.html",
+        "source": "docs/book/src/90-reference-map.md"
+      }
+    }
+  ],
+  "confirmed_failed_clicks": 127,
+  "distinct_canonical_sources": 127,
+  "distinct_failed_urls": 127,
+  "native_controls": [
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "isf-shipped-feature-matrix",
+      "href": "#isf-shipped-feature-matrix",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "requested-extensions-and-current-gaps",
+      "href": "#requested-extensions-and-current-gaps",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "status-vocabulary",
+      "href": "#status-vocabulary",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "",
+      "href": "13i-downstream-integration.html",
+      "path": "/13i-downstream-integration.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "",
+      "href": "13j-type-enum-aggregate.html",
+      "path": "/13j-type-enum-aggregate.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "",
+      "href": "14-feature-backlog.html",
+      "path": "/14-feature-backlog.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "matrix",
+      "href": "#matrix",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "",
+      "href": "13j-type-enum-aggregate.html",
+      "path": "/13j-type-enum-aggregate.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "examples-by-family",
+      "href": "#examples-by-family",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "cli-entrypoints",
+      "href": "#cli-entrypoints",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "actor-interface-storage-and-timing",
+      "href": "#actor-interface-storage-and-timing",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "acknowledged-event-cdc",
+      "href": "#acknowledged-event-cdc",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "transaction-body",
+      "href": "#transaction-body",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "transaction-ports-and-bindings",
+      "href": "#transaction-ports-and-bindings",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "stage-and-bounded-eventually-monitor",
+      "href": "#stage-and-bounded-eventually-monitor",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "waits-and-repeat-bodies",
+      "href": "#waits-and-repeat-bodies",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "",
+      "href": "13b-transactions.html",
+      "path": "/13b-transactions.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "",
+      "href": "13d-control-flow.html",
+      "path": "/13d-control-flow.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "types-enums-and-aggregate-leaves",
+      "href": "#types-enums-and-aggregate-leaves",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "bank-store-and-load",
+      "href": "#bank-store-and-load",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "rules-priority-and-resources",
+      "href": "#rules-priority-and-resources",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "generated-children",
+      "href": "#generated-children",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "reusable-library-use",
+      "href": "#reusable-library-use",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "schedule-json-and-manifest-discovery",
+      "href": "#schedule-json-and-manifest-discovery",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "downstream-issue-bundles",
+      "href": "#downstream-issue-bundles",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "13k-isf-feature-support-matrix",
+      "fragment": "explicit-non-claims",
+      "href": "#explicit-non-claims",
+      "path": "/13k-isf-feature-support-matrix.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "reference-map",
+      "href": "#reference-map",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "what-the-book-is-for",
+      "href": "#what-the-book-is-for",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "00-introduction.html",
+      "path": "/00-introduction.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "01-first-fsm.html",
+      "path": "/01-first-fsm.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "12-cookbook.html",
+      "path": "/12-cookbook.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "15-implementation-blueprint.html",
+      "path": "/15-implementation-blueprint.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "what-still-lives-outside-the-book",
+      "href": "#what-still-lives-outside-the-book",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "91-live-document-containment-adoption.html",
+      "path": "/91-live-document-containment-adoption.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "knowledge-map-architecture",
+      "href": "#knowledge-map-architecture",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "completed-guide-migration",
+      "href": "#completed-guide-migration",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "old-guide-to-book-map",
+      "href": "#old-guide-to-book-map",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "00-introduction.html",
+      "path": "/00-introduction.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "02-language-basics.html",
+      "path": "/02-language-basics.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "01-first-fsm.html",
+      "path": "/01-first-fsm.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "09-generated-hdl-debugging-and-inspection.html",
+      "path": "/09-generated-hdl-debugging-and-inspection.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "09-generated-hdl-debugging-and-inspection.html",
+      "path": "/09-generated-hdl-debugging-and-inspection.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "07-packages-and-sharing.html",
+      "path": "/07-packages-and-sharing.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "09-generated-hdl-debugging-and-inspection.html",
+      "path": "/09-generated-hdl-debugging-and-inspection.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "11-extensions-and-embedding.html",
+      "path": "/11-extensions-and-embedding.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "11-extensions-and-embedding.html",
+      "path": "/11-extensions-and-embedding.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "10-errors-strict-mode-and-troubleshooting.html",
+      "path": "/10-errors-strict-mode-and-troubleshooting.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "",
+      "href": "12-cookbook.html",
+      "path": "/12-cookbook.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "migration-status",
+      "href": "#migration-status",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "reading-sealed-decision-records",
+      "href": "#reading-sealed-decision-records",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "knowledge-map-km--a-derived-question-keyed-retrieval-layer",
+      "href": "#knowledge-map-km--a-derived-question-keyed-retrieval-layer",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "0-the-problem-this-solves-and-the-one-it-does-not",
+      "href": "#0-the-problem-this-solves-and-the-one-it-does-not",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "1-why-a-derived-index-and-not-a-hand-curated-one",
+      "href": "#1-why-a-derived-index-and-not-a-hand-curated-one",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "2-what-a-fact-is",
+      "href": "#2-what-a-fact-is",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "3-the-six-properties-llms-need-why-the-format-is-shaped-this-way",
+      "href": "#3-the-six-properties-llms-need-why-the-format-is-shaped-this-way",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "4-what-to-index--and-what-never-to-convert",
+      "href": "#4-what-to-index--and-what-never-to-convert",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "5-the-scripts-and-bounded-projection",
+      "href": "#5-the-scripts-and-bounded-projection",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "6-enforcement--so-the-map-cannot-rot",
+      "href": "#6-enforcement--so-the-map-cannot-rot",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "7-read-path--how-a-future-agent-uses-it-no-archaeology",
+      "href": "#7-read-path--how-a-future-agent-uses-it-no-archaeology",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "8-adoption-checklist-any-repo-already-using-task-trees--memory_architecture",
+      "href": "#8-adoption-checklist-any-repo-already-using-task-trees--memory_architecture",
+      "path": "/90-reference-map.html"
+    },
+    {
+      "chapter": "90-reference-map",
+      "fragment": "9-anti-patterns-quick-reference",
+      "href": "#9-anti-patterns-quick-reference",
+      "path": "/90-reference-map.html"
+    }
+  ],
+  "revision": "5215d451f1db24c8d50fe644d00e91ab2b7e0d6a",
+  "scope": "Only the complete actual body-anchor populations of encountered chapters90/13k; no whole-book or remote-destination defect claim."
+}

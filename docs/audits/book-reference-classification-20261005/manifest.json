@@ -1,0 +1,54 @@
+{
+  "docs/audits/book-reference-classification-20261005/capture.py": {
+    "bytes": 6570,
+    "sha256": "7765572cf553ffe86cf25b00ac1254162907873c02fcf68a1644951100c88272"
+  },
+  "docs/audits/book-reference-classification-20261005/classification.json": {
+    "bytes": 114803,
+    "sha256": "591408c854b99131c7266d6f4e6d93d127fd7ad459ac08df07006fcf5c1b9b4f"
+  },
+  "docs/audits/book-reference-classification-20261005/classify.py": {
+    "bytes": 6816,
+    "sha256": "c98473022ac61cefea1d8eb01eceeb2f87d3aae0f3a08b38a200586653a28af7"
+  },
+  "docs/audits/book-reference-classification-20261005/controls.json": {
+    "bytes": 1313,
+    "sha256": "2e37628f35f03514c81ec64b4ae6706b7706e10d5727c17d49c0a09f581171c0"
+  },
+  "docs/audits/book-reference-classification-20261005/findings.txt": {
+    "bytes": 28950,
+    "sha256": "4e0e7fca8a958a9e4debd726edb76d52d60919da2b55463adce871268066d02b"
+  },
+  "docs/audits/book-reference-classification-20261005/native-served.json": {
+    "bytes": 4076959,
+    "sha256": "03a3887cba0eca5e34a5c08ecf1f3465cec12d4e0b69e264b508a4a98cf8a641"
+  },
+  "docs/audits/book-reference-classification-20261005/native_serve.py": {
+    "bytes": 2854,
+    "sha256": "ab802368c107aec29c2442e574e6a17dd8c9946dceae46a74f612665368fb7f8"
+  },
+  "docs/audits/book-reference-classification-20261005/provenance-supplement.json": {
+    "bytes": 819,
+    "sha256": "79c431d1f6dc9a76d505060729c6734cc35311558ebf98ba9a8d4e1e57448919"
+  },
+  "docs/audits/book-reference-classification-20261005/root-cause.json": {
+    "bytes": 2029,
+    "sha256": "de5d079f135298a107df38960400d7dd67d71ec068494ea5ccaeb98982b76ac9"
+  },
+  "docs/audits/book-reference-classification-20261005/scope.txt": {
+    "bytes": 1643,
+    "sha256": "fbcfd2b5f9ebd97f0463875c0bf293cd8028cb3c4aa001326eb5dbbcba19d91d"
+  },
+  "docs/audits/book-reference-classification-20261005/served.json": {
+    "bytes": 2154306,
+    "sha256": "d03e0f830a4626b074bdf0e4c88fa2a2c334e2ae3cece0edf6b40a1aef00c469"
+  },
+  "docs/audits/book-reference-classification-20261005/source.json": {
+    "bytes": 1550219,
+    "sha256": "c8df6f1ffab5a22316ba21cf8b3dc3fe598d31cb8518e90a4b0a9b936c1f3cae"
+  },
+  "docs/audits/book-reference-classification-20261005/verify.py": {
+    "bytes": 4941,
+    "sha256": "40ed13108ad7152f1a8876931c86e167c3415c24c6513863dd53953d3212ef7e"
+  }
+}

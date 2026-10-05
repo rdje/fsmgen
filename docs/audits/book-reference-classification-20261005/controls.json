@@ -1,0 +1,35 @@
+{
+  "controls": [
+    {
+      "control": "lost-rendered-member",
+      "refusal": "complete independent raw HTML/native/export body-anchor closure"
+    },
+    {
+      "control": "false-outside-success",
+      "refusal": "actual advertised canonical reference is absent from served book"
+    },
+    {
+      "control": "lost-canonical-source",
+      "refusal": "exact original canonical source identity"
+    },
+    {
+      "control": "lost-native-anchor",
+      "refusal": "exact native anchor target exists"
+    },
+    {
+      "control": "Boolean-native-outcome",
+      "refusal": "actual own server outcomes consumed"
+    },
+    {
+      "control": "float-native-status",
+      "refusal": "native HTTP status retains producer integer kind"
+    },
+    {
+      "control": "live-export-server",
+      "refusal": "actual own server outcomes consumed"
+    }
+  ],
+  "prior_adjudication": "docs/knowledge/downstream-consumer-contract-lockstep.md already records the same outside-book delivery mechanism for a different downstream chapter; this scoped native capture does not contradict its completed include repair.",
+  "revision": "5215d451f1db24c8d50fe644d00e91ab2b7e0d6a",
+  "scope": "Only the complete actual body-anchor populations of encountered chapters90/13k; no whole-book or remote-destination defect claim."
+}

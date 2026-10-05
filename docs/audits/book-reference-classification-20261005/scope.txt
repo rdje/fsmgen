@@ -1,0 +1,26 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.1
+
+Population: every actual rendered chapter-body anchor in the two encountered
+chapters90/13k at5215d451f. Sidebar/theme/search anchors, other chapters and
+remote destinations are outside this initial admitted census. Local links
+associate with complete chapter or included canonical source expressions;
+unattributed links remain explicit gaps until classified. Text-only code paths
+are not clickable members. A raw Markdown search is provenance, not a failure
+count. The actual HTML anchor population and actual served status/body are
+separate instruments. Public reference source presence does not establish
+delivery inside the built book.
+
+RE-DERIVE: whole committed source/canonical identities, fresh native build,
+every actual body anchor and distinct local served destination with full body.
+FALSIFY: native chapter/architecture anchors and genuine missing endpoint;
+wrong classification, source association, status and content controls must
+separate known alternatives. A count is earned only after semantic target
+classification, not from candidate enumeration.
+DURABILITY: tracked capture/classifier/readers, complete original responses,
+source revision/pins and immutable seal; exact current-input watcher detects
+staleness. Own HTTP server shutdown/thread termination is consumed.
+
+This slice diagnoses and schedules repairs; it selects no implementation
+topology and adds no public page or allowance. All confirmed defects remain
+owned by .73.2, with selection .2 and admitted implementation .3 next. No
+original native/provider capture, host-security probe or external write runs.

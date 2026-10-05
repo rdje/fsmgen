@@ -1,0 +1,47 @@
+{
+  "receipts": [
+    {
+      "command": [
+        "git",
+        "log",
+        "-1",
+        "--format=%H %s",
+        "-S",
+        "../../COMPOSITION_SCOPE.md",
+        "--",
+        "docs/book/src/90-reference-map.md"
+      ],
+      "status": 0,
+      "stdout": "b8a083726e08496de765ea8c47de3003c61e382b Docs: land mdBook scaffold and first chapters\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "log",
+        "-1",
+        "--format=%H %s",
+        "-S",
+        "record-value-original-helper-join-20261005/scope.txt",
+        "--",
+        "docs/book/src/13k-isf-feature-support-matrix.md"
+      ],
+      "status": 0,
+      "stdout": "d54e02c85e7275fd43f2d782ad0d575c630aa078 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3.3: join complete original helper paths\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "mdbook",
+        "--version"
+      ],
+      "status": 0,
+      "stdout": "mdbook v0.5.4\n",
+      "stderr": ""
+    }
+  ],
+  "mechanism": "Canonical sources exist in the repository outside book src; the exported and native-served body hyperlinks resolve to absent output-root assets. Source existence and successful Markdown compilation did not establish public delivery. Source/include chapter controls remain healthy.",
+  "scope": "Complete actual body anchors in only the two admitted encountered chapters90/13k; no whole-book count.",
+  "prior_adjudication": "docs/knowledge/downstream-consumer-contract-lockstep.md; public chapter13i already includes its canonical downstream parts. The newly captured source-reference population is distinct; no previously repaired chapter regression is inferred.",
+  "initial_provenance_gap": "The first export programme excludes LF in link labels and leaves the multiline Decision0102 anchor unattributed. Complete source is preserved; superseding classifier binds that actual anchor and retains its whole exact canonical source in provenance-supplement.json."
+}

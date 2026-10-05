@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-classification-20261005/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS complete scoped canonical-source/rendered/native-export classification; genuine source/member/status/anchor/kind/shutdown controls reject.\n",
+  "stderr": "ram-guard: PID 11754; host 70.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

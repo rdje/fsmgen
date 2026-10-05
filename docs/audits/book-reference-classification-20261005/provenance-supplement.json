@@ -1,0 +1,7 @@
+{
+  "docs/decisions/0102-push-cadence-is-500-commits.md": {
+    "bytes": 613,
+    "sha256": "15ec6db1451e6530374ee53c376fbb8dda736e4e351b5164900877adf2a2be5c",
+    "text": "# 0102 \u2014 Push cadence is 500 commits\n\nThis compatibility path is fixed; storage does not change decision authority.\n[Read the complete record](current/continuity/0102-push-cadence-is-500-commits.md).\n\nRetrieve exact captured original text from the repository root:\n\n```sh\nscripts/decision_records.py read 0102\n```\n\n## Context\n\n[Read the complete record](current/continuity/0102-push-cadence-is-500-commits.md).\n\n## Decision\n\n[Read the complete record](current/continuity/0102-push-cadence-is-500-commits.md).\n\n## Consequences\n\n[Read the complete record](current/continuity/0102-push-cadence-is-500-commits.md).\n"
+  }
+}
