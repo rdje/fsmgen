@@ -528,8 +528,12 @@ and every original callback allocation. The [observer operation boundaries](../.
 now join original API/parser operations, observer evals and installed wrappers,
 including both nested throw phases. Complete source argument roles agree with
 visible scalar and reference-kind footprints. The parser receiver has a declared
-facade role; its original object identity was not captured. Callback/helper paths,
-public framework meaning, exact display, raw coordinates and native address meanings, consumer
+facade role; its original object identity was not captured. The [named helper paths](../../../docs/audits/record-value-original-named-helpers-20261005/scope.txt)
+now preserve supplied versus default scope/reference/copy arguments and complete
+source input graphs. Calls that returned while constructing copy arguments remain
+separate from the helper active at the throw. Named helper paths and visible
+argument roles agree through both nested throw phases. Compiled callback/refusal
+paths, public framework meaning, exact display, raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

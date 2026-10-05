@@ -25,6 +25,7 @@ answers:
   - "are all original own API refusal paths joined?"
   - "what inventories original observer and callback source roles?"
   - "what qualifies original observer API and parser operation boundaries?"
+  - "what qualifies original named helper inputs defaults and active paths?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -32,12 +33,11 @@ evidence: >-
   docs/audits/record-value-copy-probe-join-20261004/scope.txt;
   docs/audits/record-value-copy-reader-20261004/scope.txt;
   docs/audits/record-value-copy-reader-20261004/replay.py;
-  docs/audits/record-value-copy-probes-20261004/manifest.json;
-  docs/audits/record-value-original-observer-boundaries-20261005/scope.txt;
+  docs/audits/record-value-original-named-helpers-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-observer-boundaries-20261005/verify.py &&
+  docs/audits/record-value-original-named-helpers-20261005/verify.py &&
   python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-copy-reader-20261004/replay.py
@@ -87,9 +87,10 @@ join partitions every refusal into source guard/function/visible-role models. Ow
 observer/callback source roles, bodies and operation allocations now inventory.
 Observer models join every API/parser operation, eval and installed wrapper with
 source argument roles. The parser receiver role is declared; identity is unmeasured.
+Named helper models preserve supplied/default inputs, complete source graphs,
+returned argument-building calls and active paths through both throw phases.
 Full observer/display/
 frame/coordinate/address, consumer,
 alias/semantic/cold/candidate-parent, hot and host-native meanings remain open.
 
-The current reader reexecutes original capture, copy-graph and product readers;
-the reverify route avoids duplicate runs while retaining separate probe replay.
+Reverify runs the complete source chain and separate probe replay.

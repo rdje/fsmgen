@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-named-helpers-20261005/verify_book.py"
+  ],
+  "status": 0,
+  "stdout": "PASS whole book source/replacement/aggregate and rendered named-helper/open-callback guidance; visual QA remains pending.\n",
+  "stderr": ""
+}

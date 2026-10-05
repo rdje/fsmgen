@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path\np=Path('docs/audits/record-value-original-named-helpers-20261005/verify.py');v={'__name__':'focused_named_helper'};exec(compile(p.read_bytes(),str(p),'exec'),v)\ns=v['sources']();m=v['expected_models'](s);n=v['load'](v['direct']['classes']['RAW']/'proofs.json')['inventories'];v['check'](m,m,n,s)\nprint([(x['mode'],len(x['helpers']),len(x['cases']),sum(len(c['frames']) for c in x['cases'])) for x in m])\nprint('PASS focused complete named-helper input/default/phase/path and native footprint comparison; full authenticated reexecution remains required')\n"
+  ],
+  "status": 0,
+  "stdout": "[('ordinary', 43, 50, 49), ('storable', 43, 50, 49), ('controls', 43, 50, 49)]\nPASS focused complete named-helper input/default/phase/path and native footprint comparison; full authenticated reexecution remains required\n",
+  "stderr": ""
+}

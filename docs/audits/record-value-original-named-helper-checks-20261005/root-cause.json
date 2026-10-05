@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Own observer API/parser boundary paths",
+    "--",
+    "docs/audits/record-value-original-observer-boundaries-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "commit d9583a614bedc312b25ff4d652a1a1d868503f7c\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 14:31:29 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.2: qualify observer operation boundaries\n    \n    Derive complete finite original API/parser operation, eval, observer and\n    installed wrapper roles from pinned source and qualified own API paths.\n    Preserve distinct nested interface role names with their whole graph\n    authority. Keep parser receiver identity and full display/framework open.\n    \n    Full current and sealed readers pass with fourteen rejecting controls and\n    exact programme/proof/manifest pins. Original/book318 tests, book source/\n    aggregate/rendered checks and Knowledge Map pass. Push remains deferred.\n",
+  "stderr": ""
+}
