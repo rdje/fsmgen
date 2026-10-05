@@ -1,0 +1,26 @@
+{
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "a1e0574c87f0159d3f0389db7bb6eca50dc2d4a5029aefe5fe7a85eea80c0416"
+  },
+  "reader-census.json": {
+    "bytes": 499,
+    "sha256": "e902f231326af62671271ed6d9e2e1319bda98d598f9ac91459c3c60b29a8fe7"
+  },
+  "scope.txt": {
+    "bytes": 2539,
+    "sha256": "6c5132cac87b854bef1186aed3ceacfda7a7dd011918bfc0dc95cd9309f4e025"
+  },
+  "supersedes.json": {
+    "bytes": 1265,
+    "sha256": "6533684b843ba4feea88a667b1c7984c9c6ecc093ba49379e2ff733bcc860ab4"
+  },
+  "transform.json": {
+    "bytes": 128570,
+    "sha256": "38074519eff6176ca2b21cb0eb4d425a50463530dd1a30a72d1396a233e93510"
+  },
+  "verify.py": {
+    "bytes": 6416,
+    "sha256": "a00359ec35ac9f280ad8d4eefc3cc263ee9ee15de371bd5c3942a15090fe36ae"
+  }
+}

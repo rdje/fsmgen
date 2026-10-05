@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.71` (pending)
-- next_action: Repair the required ISF synchronization checklist retired-journal directives; then .72 owns Knowledge Map rollover before new source/fact publication.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.72` (pending)
+- next_action: Select and own the Knowledge Map collection rollover before new source/fact publication, preserving all recorded facts and existing ceilings.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

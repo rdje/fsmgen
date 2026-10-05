@@ -307,25 +307,35 @@ intentionally unchanged.
 
 ### 5. Update Live Docs
 
-- Update the owning `docs/tasks/*.md` leaf status, verification, commit
-  subject, decisions, blockers, and changelog.
-- Update `docs/TASK_TREE.md` when the active frontier, proposed tree set, or
-  completed tree set changes.
-- Update `ROADMAP_STATUS.md`, `MEMORY.md`, `CHANGES.md`,
-  `DEVELOPMENT_NOTES.md`, and `LIVE_ACHIEVEMENT_STATUS.md` after every
-  completed slice.
-- Update `README.md` when the startup document index, active/completed tree
-  list, public owner list, or mandatory workflow entry points change.
+- Update the owning task's authoritative live node status, verification,
+  commit reference, decisions and blockers. Optional frontier, verification,
+  commit and changelog views retain historical evidence; they need no per-slice
+  backfill (decision `0019`).
+- Update `docs/TASK_TREE.md` when the active frontier, proposed tree set or
+  completed tree set changes. `ROADMAP_V2.md` owns high-level direction; task
+  nodes and Git own work state, change history and completion evidence
+  (decisions `0047`–`0049`).
+- Overwrite `MEMORY.md` when resumable state changes. Keep only the selected
+  work unit, next action, in-flight work and blockers; derive the current
+  repository revision from Git rather than storing a shadow value.
+- Route reusable decisions and facts to their canonical records. Update
+  `DEVELOPMENT_NOTES.md` only for useful engineering rationale, constraints or
+  working decisions without a better canonical home; add no placeholder
+  (decision `0025`, with its journal clauses superseded by `0047`–`0049`).
+- Update `README.md` only when the project objective, first-use path,
+  top-level architecture or canonical navigation changes. Feature detail and
+  evidence belong in the book and owning task, under `README_POLICY.md`.
 - Refresh `docs/BIN_FSMGEN_IMPORT_TREE.md` only when startup import-tree
   analysis detects changed reachability or ownership worth recording.
 
 ### 6. Commit And Recovery Hygiene
 
-- Commit exactly one completed leaf before selecting another PNT leaf.
-- Use a commit subject that names the completed leaf ID.
-- Write the commit message through `git_message_brief.txt`, run the commit,
-  clear the file to zero bytes, and verify the post-commit status before
-  continuing.
+- Follow `COMMIT.md`, the sole commit-policy authority, after each completed
+  leaf and before selecting the next PNT leaf. Its current doctrine, staged
+  acceptance, message-file, commit and push-qualification rules apply.
+- Keep the work-unit ID in the commit subject or first body line. Write the
+  message through `git_message_brief.txt`, clear it after commit and verify
+  the post-commit state before continuing.
 
 ## Checklist Application References
 

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/isf-sync-checklist-qualified-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS current live checklist routing, entire historical task/source preservation, actual stale/contrary/history-loss controls, scoped reader census and whole source/aggregate/rendered book guidance.\n",
+  "stderr": "ram-guard: PID 66272; host 71.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

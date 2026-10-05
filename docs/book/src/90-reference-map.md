@@ -326,7 +326,9 @@ standard extraction, parser, lowering, scheduler, or HDL behavior.
 work, it points to the reusable synchronization checklist in
 `docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md` so public specs, book chapters,
 contracts, manifests, tests, live docs, and commit hygiene stay aligned without
-duplicating the checklist in every feature tree. Long-running task trees may
+duplicating the checklist in every feature tree. Its live-doc routing follows
+`COMMIT.md`: task nodes and Git own history, Memory holds the resume pointer,
+engineering rationale is conditional, and README stays a stable landing page. Long-running task trees may
 keep only metadata, the root, and the nonterminal ancestor/frontier graph in
 their live file while decision 0042's bounded JSONL manifest addresses
 content-digested completed subtree segments copied from an exact source

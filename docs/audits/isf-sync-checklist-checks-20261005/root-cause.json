@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "-S",
+    "Update `ROADMAP_STATUS.md`, `MEMORY.md`, `CHANGES.md`",
+    "--",
+    "docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md"
+  ],
+  "status": 0,
+  "stdout": "commit 95d0db9c188ac4b08e6c7ffdb3a5132dd3b61273\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Fri May 15 21:04:32 2026 +0200\n\n    ISF-PUBLIC-CONTRACT.2: define sync checklist\n    \n    Define the reusable ISF feature-slice synchronization checklist for public\n    surface classification, spec/book sync, code-contract alignment, verification\n    gate selection, live-doc updates, and commit recovery hygiene.\n    \n    Advance the active public-contract tree frontier to the checklist application\n    slice.\n",
+  "stderr": "ram-guard: PID 70229; host 79.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

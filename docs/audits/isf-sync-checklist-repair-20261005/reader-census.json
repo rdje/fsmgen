@@ -1,0 +1,19 @@
+{
+  "command": [
+    "git",
+    "grep",
+    "-l",
+    "-F",
+    "ISF-PUBLIC-CONTRACT-SYNC.md",
+    "--",
+    ":!docs/tasks/**",
+    ":!docs/audits/**",
+    ":!knowledge-map/**",
+    ":!doctrine/**",
+    ":!docs/decisions/**"
+  ],
+  "status": 0,
+  "stdout": "docs/TASK_TREE.md\ndocs/book/src/90-reference-map.md\n",
+  "stderr": "",
+  "exclusions": "Historical task/audit/decision evidence and control/generated stores are outside current-reader selection; only own tracked Git files are searched."
+}
