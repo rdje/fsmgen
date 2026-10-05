@@ -1,0 +1,1 @@
+Initial same-slice book producer wrote the whole book transformation and aggregate but stopped before surface/card writes: KeyError 'surface_id' on a metadata registry row. Resumed only the dependent surface/card step using row.get('surface_id'); whole source/aggregate/rendered verifier then passed. No policy ceiling changed.

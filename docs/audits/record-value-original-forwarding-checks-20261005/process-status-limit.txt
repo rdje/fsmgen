@@ -1,0 +1,1 @@
+A read-only progress inspection, ps -o pid,ppid,etime,%cpu,rss,comm -p 83127, returned /bin/ps: Operation not permitted in the sandbox. No escalation or retry performed. Running tool session and its final receipt remain the completion authority; no historical EPERM inference or repair claim.

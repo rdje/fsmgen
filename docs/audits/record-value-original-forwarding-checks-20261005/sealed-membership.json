@@ -1,0 +1,9 @@
+{
+  "status": 0,
+  "members": 10,
+  "manifest_identity": {
+    "bytes": 1290,
+    "sha256": "6a758e9eff87d0eaee07d9373dbaea34252f53c5f531590f2983b1ad232b94d3"
+  },
+  "result": "Complete membership and every whole byte/hash identity match; no sealed member changed."
+}

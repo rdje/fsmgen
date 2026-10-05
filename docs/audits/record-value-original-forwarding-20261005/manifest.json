@@ -1,0 +1,42 @@
+{
+  "binding.json": {
+    "bytes": 1235343,
+    "sha256": "f499985c310f94c616ab9d814b3a13b96bcd2d2194889ebd4b722e57c792ce1e"
+  },
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "2b4ddce84ed8d900a06ea3cba9100679be89d4cc14dc25dc32c08387def65d7b"
+  },
+  "book-transform.json": {
+    "bytes": 336757,
+    "sha256": "35ab0eff44440c2701320e36ba1b9c462244e8b1953cedaa40c9fcbabdcc20f9"
+  },
+  "native-public-probe.json": {
+    "bytes": 2322,
+    "sha256": "97a8e0c037aad9ca800322432b15a1b86007fe3c0d92516a57fc93f9fc2cc3ea"
+  },
+  "proofs.json": {
+    "bytes": 184925,
+    "sha256": "753233a4734db1ad0fc3b73e88d0fdbcab2cfe67b3824f09328d31a5e914b214"
+  },
+  "public-contract.json": {
+    "bytes": 966,
+    "sha256": "23e994a0d8966787a788e2fddeffbc7905631a4ca1800c7f02159afc3af5e85c"
+  },
+  "public_probe.pl": {
+    "bytes": 974,
+    "sha256": "10ac5eb62bbe896c1ca837da724bab13253fee1bf66564ffe210ecd9e5df3c9b"
+  },
+  "scope.txt": {
+    "bytes": 4225,
+    "sha256": "9a49f3ca97fb6d50261d62f8cb22c728514fffd0a10db66f55419a0f914a2bd5"
+  },
+  "verify.py": {
+    "bytes": 13335,
+    "sha256": "367db8772b4256aacd4ffbc476f69617de6241dcc302bf0545ea872230396609"
+  },
+  "verify_book.py": {
+    "bytes": 2545,
+    "sha256": "f4489fd047ab200e66cb75c0c26a7723172c2f2beddf3bb8b3dadfe3dd69dc3f"
+  }
+}

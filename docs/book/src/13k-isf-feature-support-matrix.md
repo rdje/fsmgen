@@ -509,7 +509,14 @@ type inputs, including cyclic traversal. Visible path and argument footprints
 agree. The [nested input join](../../../docs/audits/record-value-original-nested-inputs-20261005/scope.txt)
 now links each finite failing Scope/capture pair to its private root and complete
 source-constructed typed interface input, preserving kinds, sharing and cycles.
-Inherited API catches/rethrows, full outer frame meaning, exact display, raw
+The [nested forwarding reader](../../../docs/audits/record-value-original-forwarding-20261005/scope.txt)
+now binds the capture eval, explicit whole-string rethrow, Value catch and new
+outer throw. The entire inner error, including its trace text, is conserved in
+the outer message prefix. This proves forwarding of the source variable; full
+inner and outer trace interpretation remains open. Current public Perl probes
+distinguish explicit rethrow from implicit propagation and show that a die hook
+can replace an exception. Original hook state and provider bytes were not captured.
+Inherited frame paths, full outer frame meaning, exact display, raw
 coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.

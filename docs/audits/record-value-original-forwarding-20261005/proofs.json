@@ -1,0 +1,1041 @@
+{
+  "controls": [
+    {
+      "cause": "exact source catch/forward/new-throw contract",
+      "control": "implicit-source-rethrow",
+      "status": 1
+    },
+    {
+      "cause": "exact source catch/forward/new-throw contract",
+      "control": "changed-Value-forward",
+      "status": 1
+    },
+    {
+      "cause": "exact source catch/forward/new-throw contract",
+      "control": "changed-new-throw",
+      "status": 1
+    },
+    {
+      "cause": "complete source forwarding pair/context/value/phase models",
+      "control": "borrowed-pair-value",
+      "status": 1
+    },
+    {
+      "cause": "complete source forwarding pair/context/value/phase models",
+      "control": "wrong-context-model",
+      "status": 1
+    },
+    {
+      "cause": "complete source forwarding pair/context/value/phase models",
+      "control": "omitted-pair",
+      "status": 1
+    },
+    {
+      "cause": "complete source forwarding pair/context/value/phase models",
+      "control": "wrong-phase-order",
+      "status": 1
+    },
+    {
+      "cause": "whole actual inner error-variable conservation",
+      "control": "changed-inner-body",
+      "status": 1
+    },
+    {
+      "cause": "entire source inner operand/context conserved in new outer prefix",
+      "control": "borrowed-outer-body",
+      "status": 1
+    },
+    {
+      "cause": "entire source inner operand/context conserved in new outer prefix",
+      "control": "omitted-inner-tail",
+      "status": 1
+    },
+    {
+      "cause": "entire source inner operand/context conserved in new outer prefix",
+      "control": "wrong-outer-context",
+      "status": 1
+    },
+    {
+      "cause": "new outer throw has separate nonempty trace suffix",
+      "control": "missing-new-throw-suffix",
+      "status": 1
+    }
+  ],
+  "forwarding": [
+    {
+      "mode": "ordinary",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "inner": {
+            "bytes": 3371,
+            "sha256": "2b41b6f69e2045b2cf609245fa8d2ac80a4a561dc69bc3063992be1d5804045d"
+          },
+          "outer": {
+            "bytes": 5933,
+            "sha256": "f5e8bd26bd19af43cc822d10c5f466d69e9f7e12d42461ba6d447655fe995e9d"
+          },
+          "prefix": {
+            "bytes": 3439,
+            "sha256": "1f9cf16799ab255370c240de34f64f833a70f685469ce3d63af477a5aa96db8c"
+          },
+          "scope_api": 7750,
+          "unqualified_outer_suffix": {
+            "bytes": 2494,
+            "sha256": "a3a56794b5c51a007385fef32e31f7ebc7037c3e4f93c3b8be4db78004fc9153"
+          }
+        },
+        {
+          "capture_api": 7929,
+          "inner": {
+            "bytes": 3542,
+            "sha256": "5e33ccf14eacad72c71f6f0f8dd376c8880b677b0f7bc0b99fc91193dbae3472"
+          },
+          "outer": {
+            "bytes": 6110,
+            "sha256": "bdfa4b7a8260448823bb9e5f1cb461376ddcd70b2d1fc4a8e840e01e9389e8b7"
+          },
+          "prefix": {
+            "bytes": 3610,
+            "sha256": "494ab046cc7b6aa2bec5d515971a193e09c3cd046347c7766371e83593c6b1c8"
+          },
+          "scope_api": 7840,
+          "unqualified_outer_suffix": {
+            "bytes": 2500,
+            "sha256": "9da012a443f93d7d4fef213d78e7f15fe2b85686c12d8b38696cae8106119975"
+          }
+        },
+        {
+          "capture_api": 8368,
+          "inner": {
+            "bytes": 3510,
+            "sha256": "d7c9e6c62cbc9c008b1d707bbc7b8ff118482c8ad47f860611b969042461f032"
+          },
+          "outer": {
+            "bytes": 6054,
+            "sha256": "9c03563ca2923845b8a101bf151912fcee8a600452319e1ea87bbfedfe385fd8"
+          },
+          "prefix": {
+            "bytes": 3578,
+            "sha256": "cff663919c6ff4b560d4aa73b9190be9ca0ca539259a62755a33c9a15f84d250"
+          },
+          "scope_api": 8279,
+          "unqualified_outer_suffix": {
+            "bytes": 2476,
+            "sha256": "7db8d39d69833cdf40472112c6e45225fc5726efd2b9ca1f411f0edec0d6ce7f"
+          }
+        },
+        {
+          "capture_api": 8458,
+          "inner": {
+            "bytes": 3363,
+            "sha256": "cff22ba785001c35b6ca248605e80237972ed27420e4cd6a66cb216287c6e10f"
+          },
+          "outer": {
+            "bytes": 5943,
+            "sha256": "44154f66eee71f93e21f98eda487ac4304a9f54e04a5b53eefd384df556b54b6"
+          },
+          "prefix": {
+            "bytes": 3431,
+            "sha256": "857b72d5a8e4a113ac8736b38cfe70396ead7e9b2538302e6eff08eaa9c3accf"
+          },
+          "scope_api": 8369,
+          "unqualified_outer_suffix": {
+            "bytes": 2512,
+            "sha256": "3b7e5714f7e71068543765ae3fc85bd1522d5067042548bf4bf8d66072af64a7"
+          }
+        },
+        {
+          "capture_api": 8548,
+          "inner": {
+            "bytes": 3352,
+            "sha256": "d03c6e84ec4f2cc2f3d44420339c7f0aa7497eb0b20984793d9f6ca6c3f17081"
+          },
+          "outer": {
+            "bytes": 5924,
+            "sha256": "e037fe9830f00421a580e6ab7ddd1916021cec25d970432936011e0802af3651"
+          },
+          "prefix": {
+            "bytes": 3420,
+            "sha256": "12124698d0b94e2868ec920b998ed4f6b86d7f3193c5657e615a8d9e7da57658"
+          },
+          "scope_api": 8459,
+          "unqualified_outer_suffix": {
+            "bytes": 2504,
+            "sha256": "eb1902518f5ad272213e524c4286ac9797a507a11c5b74c95d029192714af259"
+          }
+        },
+        {
+          "capture_api": 8638,
+          "inner": {
+            "bytes": 3521,
+            "sha256": "49676e0fcfcac0d12d81b9bfe13023347bd6eb7c306b6e123a0aad3998959e0d"
+          },
+          "outer": {
+            "bytes": 6091,
+            "sha256": "31b64fdbcac5a1f3a4c4f90e959e1de76832f7866049ad2fa6a59e10d5bc2a65"
+          },
+          "prefix": {
+            "bytes": 3589,
+            "sha256": "f2c64fa801142eccebf0672d0785ee5b1abbda7405115f9e70c0f4612f9c92bf"
+          },
+          "scope_api": 8549,
+          "unqualified_outer_suffix": {
+            "bytes": 2502,
+            "sha256": "c1dd8abe2ae05e86a57683da14c95ad4a4d614d070f98b9e80e9b85f634d011f"
+          }
+        },
+        {
+          "capture_api": 8728,
+          "inner": {
+            "bytes": 3364,
+            "sha256": "2bfea65f329342f146abb4e225bb9cf5db5d99899581f64d9ba9405a0dc1d7c9"
+          },
+          "outer": {
+            "bytes": 5954,
+            "sha256": "660c8578502bd5a6c08d05880d149eda8c69cd43ca9ca8ff0f9b4d28d2345320"
+          },
+          "prefix": {
+            "bytes": 3432,
+            "sha256": "8c69de7e3994b6a30e36dd48d7d5b0155790df1ceff164e04d5e1599b6e0e554"
+          },
+          "scope_api": 8639,
+          "unqualified_outer_suffix": {
+            "bytes": 2522,
+            "sha256": "40045bf418294bea661d66f14b5432e2d22317c2230e6d8ec593e436f5cc6dbb"
+          }
+        }
+      ]
+    },
+    {
+      "mode": "storable",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "inner": {
+            "bytes": 3371,
+            "sha256": "ae4ff0cf10119c3ab3cb16443325eab739e0a2250c33304d1a7cce63333864cc"
+          },
+          "outer": {
+            "bytes": 5933,
+            "sha256": "fae9d0eb5a693a8f519174b1aa3574ebdef6bf580ca5fefcc3f617cdbe7d4bfb"
+          },
+          "prefix": {
+            "bytes": 3439,
+            "sha256": "4b10c30ac5c62987473adc92ee171099afd682e3c132f16f593af27b8922e606"
+          },
+          "scope_api": 7750,
+          "unqualified_outer_suffix": {
+            "bytes": 2494,
+            "sha256": "5c4beba6422fff9580040234bc868800cc2d7a30ec7f44af98b4cdb8870bfcf0"
+          }
+        },
+        {
+          "capture_api": 7929,
+          "inner": {
+            "bytes": 3542,
+            "sha256": "0a9e8b977f38f769d51af6aebdf866dfe85186419230e4276ba7c28215056a08"
+          },
+          "outer": {
+            "bytes": 6110,
+            "sha256": "c63c743fa7485709d7c2167f8675bc4da3a8d4eaff5bb5d77a8b7d532b1c209f"
+          },
+          "prefix": {
+            "bytes": 3610,
+            "sha256": "940ee7eac90d437a2eb05eaf184e4f1c8ea8ead6ee987faec3a4829558f79054"
+          },
+          "scope_api": 7840,
+          "unqualified_outer_suffix": {
+            "bytes": 2500,
+            "sha256": "7faeef432c121692b0f3f8f5ad9db82d6c9aed9b1ba64e0fcfc55daf8c08f547"
+          }
+        },
+        {
+          "capture_api": 8368,
+          "inner": {
+            "bytes": 3510,
+            "sha256": "c97b1c2067c8ddda86901597c2e98d4b8334e94f2ef43b38f2b1b6d70e13fa61"
+          },
+          "outer": {
+            "bytes": 6054,
+            "sha256": "9c27c20bf6ee120274a5e9167e3c7ec8e67421bd2194ae99298569f271632e88"
+          },
+          "prefix": {
+            "bytes": 3578,
+            "sha256": "9c1eee2785ac3c6d85436a233a6c6b86fe8f9eb37861f430ba95185754f2cd60"
+          },
+          "scope_api": 8279,
+          "unqualified_outer_suffix": {
+            "bytes": 2476,
+            "sha256": "10cec169a93884f8e5b57ce3d28d47a14e71ca884605ed505a55f33a2fa31a33"
+          }
+        },
+        {
+          "capture_api": 8458,
+          "inner": {
+            "bytes": 3363,
+            "sha256": "ab3252c0f4a2948a00c66a02e55be38d019303075044575e2bed08e5537b444a"
+          },
+          "outer": {
+            "bytes": 5943,
+            "sha256": "19493fe9853ced1e32d571a3b2f9bd4b80ce916b6c94917cea2fb98abc67cc21"
+          },
+          "prefix": {
+            "bytes": 3431,
+            "sha256": "5072c88ca4b3c9b1999666ac4721942f9444f346568c3cf2e441660ab1f5b072"
+          },
+          "scope_api": 8369,
+          "unqualified_outer_suffix": {
+            "bytes": 2512,
+            "sha256": "24e12c6cf7274d152be30f231bec0fec9c2d156097f72063111782292be6e685"
+          }
+        },
+        {
+          "capture_api": 8548,
+          "inner": {
+            "bytes": 3352,
+            "sha256": "442780eb5bff4a0bb3b4d55bce0ca1419e4cf9b71d1e14c3646c7949324cc464"
+          },
+          "outer": {
+            "bytes": 5924,
+            "sha256": "11f48574f6e83e47fcdd8061f821fd7260ade1f5a8ae9e64d94b4b932673cd23"
+          },
+          "prefix": {
+            "bytes": 3420,
+            "sha256": "0d110e1c5fd45701eb52230a15f2f418f79013defa075efe9e81d6da031423e2"
+          },
+          "scope_api": 8459,
+          "unqualified_outer_suffix": {
+            "bytes": 2504,
+            "sha256": "feaf8795ab42784c2374d5940b5ddf78f30ef263c53898259bb76681d8c5fec1"
+          }
+        },
+        {
+          "capture_api": 8638,
+          "inner": {
+            "bytes": 3521,
+            "sha256": "b4374b38b51ca9ac2ebb4b0b5bed0aef5beafd3c7d8b44acf2f0598edb654ba5"
+          },
+          "outer": {
+            "bytes": 6091,
+            "sha256": "ab21a5b208080b7e23a8b92c3afc8017a95c57b99219cb67139f88e90f28a52a"
+          },
+          "prefix": {
+            "bytes": 3589,
+            "sha256": "881e4666c1b26e09099ad6f1314518b0eb23995109381ebb7429d781242375a8"
+          },
+          "scope_api": 8549,
+          "unqualified_outer_suffix": {
+            "bytes": 2502,
+            "sha256": "fd40709bb1f8ab4e4541f6cef4c917c99008a438a9bfc4e476a6babd579dd10c"
+          }
+        },
+        {
+          "capture_api": 8728,
+          "inner": {
+            "bytes": 3364,
+            "sha256": "69cf24f34257ecad2e4c21945058b24de02b73d59584ae940d6e0d78035881d5"
+          },
+          "outer": {
+            "bytes": 5954,
+            "sha256": "5fae8bc24c2cbf7c6d36b3312ccb9f7763ec40872a13f772bf2c835d907e5601"
+          },
+          "prefix": {
+            "bytes": 3432,
+            "sha256": "64a6428ddb2c3efcad2c0d41fc29d7fd684799556acd8e1a8d18db3a24b5649d"
+          },
+          "scope_api": 8639,
+          "unqualified_outer_suffix": {
+            "bytes": 2522,
+            "sha256": "43b6e9b2e8beb843b226eeed60a4233955545a416a47769bb0c97bc10a01a85d"
+          }
+        }
+      ]
+    },
+    {
+      "mode": "controls",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "inner": {
+            "bytes": 3371,
+            "sha256": "2decee02a18719b89f07c7e1ba32185cf3adb8465a37c77ee3edd7ee23b44c45"
+          },
+          "outer": {
+            "bytes": 5933,
+            "sha256": "ae20a81a9090bd8824f0f26ebcd69880611f1171e928b1102e602e2bcd2c9d70"
+          },
+          "prefix": {
+            "bytes": 3439,
+            "sha256": "ea6f742ca5b398e4ca20d6e8139da6b4a7f5483d32627800ddff42eee767f128"
+          },
+          "scope_api": 7750,
+          "unqualified_outer_suffix": {
+            "bytes": 2494,
+            "sha256": "441fd8e44a531a2f364a0b86384b1714aa62e198a290d593ead1c906fc6e129a"
+          }
+        },
+        {
+          "capture_api": 7929,
+          "inner": {
+            "bytes": 3542,
+            "sha256": "956f8832da123fe108af7192ffe95a108a0bd466ab5507599b9aa07a788b36bf"
+          },
+          "outer": {
+            "bytes": 6110,
+            "sha256": "6186b5b7271096a5e67375bb50cf874d071abcc670eb6eb7f53441fe9e9ad17d"
+          },
+          "prefix": {
+            "bytes": 3610,
+            "sha256": "bb1c4a56d5de4e3de2b38a3d2233fde60ddc19f4753f86739da33e86528964b5"
+          },
+          "scope_api": 7840,
+          "unqualified_outer_suffix": {
+            "bytes": 2500,
+            "sha256": "825ce118f71813633265a7161ea3e282370c369d1a22b145280a25df4cfba7a6"
+          }
+        },
+        {
+          "capture_api": 8368,
+          "inner": {
+            "bytes": 3510,
+            "sha256": "5192b6bbe926be71d6190f0327e35758e99192a2c9650ef7cdf4037fa626eef6"
+          },
+          "outer": {
+            "bytes": 6054,
+            "sha256": "dfd28d08711c65c7d09e475289e229d8ffb9247052e7e5b50161c460667c490e"
+          },
+          "prefix": {
+            "bytes": 3578,
+            "sha256": "9ac2e243bebea179757e80bcc8014bf731022aad0e8ce44d28e4dbc978cd47db"
+          },
+          "scope_api": 8279,
+          "unqualified_outer_suffix": {
+            "bytes": 2476,
+            "sha256": "889b8e1cc860bf199197d725e98cd01c58587941a27ea7dc534dc50b99e2fbd8"
+          }
+        },
+        {
+          "capture_api": 8458,
+          "inner": {
+            "bytes": 3363,
+            "sha256": "28c768fd7792f7a06fbd8dc0fe00b476e179313c608e8691741ddafa6fa8df9e"
+          },
+          "outer": {
+            "bytes": 5943,
+            "sha256": "b88578c0482541f4d24c4dc50405e259e3e8d3d6a56ad6d2be262f8fa69fec09"
+          },
+          "prefix": {
+            "bytes": 3431,
+            "sha256": "bb095c534a56c0da000e8d0555d36df1a97a70058fe6e1ca1fb213c4c3ab70eb"
+          },
+          "scope_api": 8369,
+          "unqualified_outer_suffix": {
+            "bytes": 2512,
+            "sha256": "1a97bf705b54947f84a243525f01c817dd0f00be9500b57994648656f086a04b"
+          }
+        },
+        {
+          "capture_api": 8548,
+          "inner": {
+            "bytes": 3352,
+            "sha256": "390f8d742363a89f49942068bba981f5c20e6ccc20693bba18700cd91ec29ec8"
+          },
+          "outer": {
+            "bytes": 5924,
+            "sha256": "ff861dcc95b449e7234a164a3e4cdeeb2266ff2ecdf3af6841f22215365d1dbc"
+          },
+          "prefix": {
+            "bytes": 3420,
+            "sha256": "194be925ccbcf926f389894bd021e787494bdc5eec4b0939bf814c3854293e01"
+          },
+          "scope_api": 8459,
+          "unqualified_outer_suffix": {
+            "bytes": 2504,
+            "sha256": "79ac141bc8e304fe95e0f35121bac0e402eb0225cbfa3148a706c2c160812fa0"
+          }
+        },
+        {
+          "capture_api": 8638,
+          "inner": {
+            "bytes": 3521,
+            "sha256": "15afe14e070ea987bbd1830756e41a762a7261514e4d212d351b2c275641dfc6"
+          },
+          "outer": {
+            "bytes": 6091,
+            "sha256": "63bb1cfb4c9d478f3f052680137c87ff8b425a54f758213f610e01297291174d"
+          },
+          "prefix": {
+            "bytes": 3589,
+            "sha256": "6d817cfb74665242cdead121a9b3e38ff899a643180b7a90d3b4d291fa9c30a0"
+          },
+          "scope_api": 8549,
+          "unqualified_outer_suffix": {
+            "bytes": 2502,
+            "sha256": "7a5562085f5162b28f51cf4179371fb68e06c3c682129dafc184c5a851133601"
+          }
+        },
+        {
+          "capture_api": 8728,
+          "inner": {
+            "bytes": 3364,
+            "sha256": "d874d51956a302ae2cc70579e52bc186c4b13fd7c4d3024c3f9e14fa0a29c0cb"
+          },
+          "outer": {
+            "bytes": 5954,
+            "sha256": "e8ac75943c72a599caf654e5609450c550d60d24008fb692dda646e73305a32a"
+          },
+          "prefix": {
+            "bytes": 3432,
+            "sha256": "9abdeafa8dfbf86c3f879c669dd0f7007a54921387b51b7044715ab7d35514c9"
+          },
+          "scope_api": 8639,
+          "unqualified_outer_suffix": {
+            "bytes": 2522,
+            "sha256": "955358fbfa554fc0870cde743b71319cac42d67a00e4e6f2cdceddaa781113c3"
+          }
+        }
+      ]
+    }
+  ],
+  "models": [
+    {
+      "mode": "ordinary",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "context": "root 'packet'",
+          "helper": 27,
+          "inner_identity": {
+            "bytes": 3371,
+            "sha256": "2b41b6f69e2045b2cf609245fa8d2ac80a4a561dc69bc3063992be1d5804045d"
+          },
+          "inner_value": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"resolved aggregate width disagrees with members\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 116\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562676cd8), \"\", ARRAY(0x755e2aa048), HASH(0x7562676f48)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7562670978)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x7562670960), HASH(0x7562670978)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7562670978)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7562670990), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x756261b168), \"local\", HASH(0x756261b1f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x756261b258), \"outer\", HASH(0x756261b168), \"local\", HASH(0x756261b1f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x756261b168), \"local\", HASH(0x756261b1f8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x75625b01c8), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7562616a20), qr(width disagrees), \"bad root width\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7562616a20), qr(width disagrees), \"bad root width\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"resolved aggregate width disagrees with members\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 116\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562676cd8), \"\", ARRAY(0x755e2aa048), HASH(0x7562676f48)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7562670978)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x7562670960), HASH(0x7562670978)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7562670978)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7562670990), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x756261b168), \"local\", HASH(0x756261b1f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x756261b258), \"outer\", HASH(0x756261b168), \"local\", HASH(0x756261b1f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x756261b168), \"local\", HASH(0x756261b1f8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x75625b01c8), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7562616a20), qr(width disagrees), \"bad root width\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7562616a20), qr(width disagrees), \"bad root width\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3439,
+            "sha256": "1f9cf16799ab255370c240de34f64f833a70f685469ce3d63af477a5aa96db8c"
+          },
+          "scope_api": 7750
+        },
+        {
+          "capture_api": 7929,
+          "context": "root 'packet'",
+          "helper": 28,
+          "inner_identity": {
+            "bytes": 3542,
+            "sha256": "5e33ccf14eacad72c71f6f0f8dd376c8880b677b0f7bc0b99fc91193dbae3472"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid resolved signed property\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved signed property\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 87\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75626e7270), \".data\", ARRAY(0x7562676a20), HASH(0x75626e3c48)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75626e7150), \"\", ARRAY(0x7562676a20), HASH(0x75626e3c48)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x75626e1e10)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x75626e1fa8), HASH(0x75626e1e10)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x75626e1e10)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x75626a7a50), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x75626a4600), \"local\", HASH(0x75626a4690)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x75626a46f0), \"outer\", HASH(0x75626a4600), \"local\", HASH(0x75626a4690)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x75626a4600), \"local\", HASH(0x75626a4690)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x75626a0618), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x75626a2ea0), qr(signed property), \"bad scalar signed\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x75626a2ea0), qr(signed property), \"bad scalar signed\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved signed property\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 87\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75626e7270), \".data\", ARRAY(0x7562676a20), HASH(0x75626e3c48)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75626e7150), \"\", ARRAY(0x7562676a20), HASH(0x75626e3c48)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x75626e1e10)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x75626e1fa8), HASH(0x75626e1e10)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x75626e1e10)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x75626a7a50), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x75626a4600), \"local\", HASH(0x75626a4690)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x75626a46f0), \"outer\", HASH(0x75626a4600), \"local\", HASH(0x75626a4690)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x75626a4600), \"local\", HASH(0x75626a4690)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x75626a0618), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x75626a2ea0), qr(signed property), \"bad scalar signed\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x75626a2ea0), qr(signed property), \"bad scalar signed\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3610,
+            "sha256": "494ab046cc7b6aa2bec5d515971a193e09c3cd046347c7766371e83593c6b1c8"
+          },
+          "scope_api": 7840
+        },
+        {
+          "capture_api": 8368,
+          "context": "root 'packet'",
+          "helper": 32,
+          "inner_identity": {
+            "bytes": 3510,
+            "sha256": "d7c9e6c62cbc9c008b1d707bbc7b8ff118482c8ad47f860611b969042461f032"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid resolved state model\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved state model\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 88\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75627c8990), \".data\", ARRAY(0x75626e6eb8), HASH(0x75627c8618)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75627c6e70), \"\", ARRAY(0x75626e6eb8), HASH(0x75627c8618)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x75627b7558)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x75627c36c0), HASH(0x75627b7558)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x75627b7558)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x75627c3528), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7562983cc0), \"local\", HASH(0x7562983d50)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x7562983db0), \"outer\", HASH(0x7562983cc0), \"local\", HASH(0x7562983d50)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7562983cc0), \"local\", HASH(0x7562983d50)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7562900c30), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x756273c108), qr(state model), \"bad state\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x756273c108), qr(state model), \"bad state\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved state model\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 88\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75627c8990), \".data\", ARRAY(0x75626e6eb8), HASH(0x75627c8618)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75627c6e70), \"\", ARRAY(0x75626e6eb8), HASH(0x75627c8618)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x75627b7558)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x75627c36c0), HASH(0x75627b7558)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x75627b7558)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x75627c3528), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7562983cc0), \"local\", HASH(0x7562983d50)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x7562983db0), \"outer\", HASH(0x7562983cc0), \"local\", HASH(0x7562983d50)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7562983cc0), \"local\", HASH(0x7562983d50)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7562900c30), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x756273c108), qr(state model), \"bad state\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x756273c108), qr(state model), \"bad state\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3578,
+            "sha256": "cff663919c6ff4b560d4aa73b9190be9ca0ca539259a62755a33c9a15f84d250"
+          },
+          "scope_api": 8279
+        },
+        {
+          "capture_api": 8458,
+          "context": "root 'packet'",
+          "helper": 33,
+          "inner_identity": {
+            "bytes": 3363,
+            "sha256": "cff22ba785001c35b6ca248605e80237972ed27420e4cd6a66cb216287c6e10f"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid or duplicate record member\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"invalid or duplicate record member\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 100\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562c2ce28), \"\", ARRAY(0x75627c8660), HASH(0x7562c2cb40)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7562c26ac8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x7562c26b88), HASH(0x7562c26ac8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7562c26ac8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7562c26ae0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x75627d52b8), \"local\", HASH(0x75627d5348)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x75627d53a8), \"outer\", HASH(0x75627d52b8), \"local\", HASH(0x75627d5348)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x75627d52b8), \"local\", HASH(0x75627d5348)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x75629802d0), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x75628f6078), qr(duplicate record member), \"duplicate order\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x75628f6078), qr(duplicate record member), \"duplicate order\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"invalid or duplicate record member\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 100\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562c2ce28), \"\", ARRAY(0x75627c8660), HASH(0x7562c2cb40)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7562c26ac8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x7562c26b88), HASH(0x7562c26ac8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7562c26ac8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7562c26ae0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x75627d52b8), \"local\", HASH(0x75627d5348)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x75627d53a8), \"outer\", HASH(0x75627d52b8), \"local\", HASH(0x75627d5348)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x75627d52b8), \"local\", HASH(0x75627d5348)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x75629802d0), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x75628f6078), qr(duplicate record member), \"duplicate order\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x75628f6078), qr(duplicate record member), \"duplicate order\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3431,
+            "sha256": "857b72d5a8e4a113ac8736b38cfe70396ead7e9b2538302e6eff08eaa9c3accf"
+          },
+          "scope_api": 8369
+        },
+        {
+          "capture_api": 8548,
+          "context": "root 'packet'",
+          "helper": 34,
+          "inner_identity": {
+            "bytes": 3352,
+            "sha256": "d03c6e84ec4f2cc2f3d44420339c7f0aa7497eb0b20984793d9f6ca6c3f17081"
+          },
+          "inner_value": "Invalid ISF interface port metadata: record member inventory disagrees\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"record member inventory disagrees\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 97\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562ca26c0), \"\", ARRAY(0x7562c2cb70), HASH(0x7562ca2a50)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7562c754f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x7562c9d108), HASH(0x7562c754f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7562c754f8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7562c85018), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7562c3d558), \"local\", HASH(0x7562c3d5e8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x7562c3d648), \"outer\", HASH(0x7562c3d558), \"local\", HASH(0x7562c3d5e8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7562c3d558), \"local\", HASH(0x7562c3d5e8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x75628f6078), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7562c39720), qr(inventory disagrees), \"unlisted member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7562c39720), qr(inventory disagrees), \"unlisted member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"record member inventory disagrees\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 97\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562ca26c0), \"\", ARRAY(0x7562c2cb70), HASH(0x7562ca2a50)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7562c754f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x7562c9d108), HASH(0x7562c754f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7562c754f8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7562c85018), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7562c3d558), \"local\", HASH(0x7562c3d5e8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x7562c3d648), \"outer\", HASH(0x7562c3d558), \"local\", HASH(0x7562c3d5e8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7562c3d558), \"local\", HASH(0x7562c3d5e8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x75628f6078), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7562c39720), qr(inventory disagrees), \"unlisted member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7562c39720), qr(inventory disagrees), \"unlisted member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3420,
+            "sha256": "12124698d0b94e2868ec920b998ed4f6b86d7f3193c5657e615a8d9e7da57658"
+          },
+          "scope_api": 8459
+        },
+        {
+          "capture_api": 8638,
+          "context": "root 'packet'",
+          "helper": 35,
+          "inner_identity": {
+            "bytes": 3521,
+            "sha256": "49676e0fcfcac0d12d81b9bfe13023347bd6eb7c306b6e123a0aad3998959e0d"
+          },
+          "inner_value": "Invalid ISF interface port metadata: cyclic resolved type\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"cyclic resolved type\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 81\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562d01c48), \".data\", ARRAY(0x7562c9df60), HASH(0x7562d018e8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562d01c48), \"\", ARRAY(0x7562c9df60), HASH(0x7562d018e8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7562cfd858)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x7562cff708), HASH(0x7562cfd858)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7562cfd858)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7562ccd150), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7562caf3c0), \"local\", HASH(0x7562caf450)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x7562caf4b0), \"outer\", HASH(0x7562caf3c0), \"local\", HASH(0x7562caf450)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7562caf3c0), \"local\", HASH(0x7562caf450)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7562c33e40), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7562ca84e0), qr(cyclic resolved type), \"cyclic member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7562ca84e0), qr(cyclic resolved type), \"cyclic member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"cyclic resolved type\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 81\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562d01c48), \".data\", ARRAY(0x7562c9df60), HASH(0x7562d018e8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7562d01c48), \"\", ARRAY(0x7562c9df60), HASH(0x7562d018e8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7562cfd858)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x7562cff708), HASH(0x7562cfd858)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7562cfd858)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7562ccd150), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7562caf3c0), \"local\", HASH(0x7562caf450)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x7562caf4b0), \"outer\", HASH(0x7562caf3c0), \"local\", HASH(0x7562caf450)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7562caf3c0), \"local\", HASH(0x7562caf450)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7562c33e40), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7562ca84e0), qr(cyclic resolved type), \"cyclic member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7562ca84e0), qr(cyclic resolved type), \"cyclic member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3589,
+            "sha256": "f2c64fa801142eccebf0672d0785ee5b1abbda7405115f9e70c0f4612f9c92bf"
+          },
+          "scope_api": 8549
+        },
+        {
+          "capture_api": 8728,
+          "context": "root 'packet'",
+          "helper": 36,
+          "inner_identity": {
+            "bytes": 3364,
+            "sha256": "2bfea65f329342f146abb4e225bb9cf5db5d99899581f64d9ba9405a0dc1d7c9"
+          },
+          "inner_value": "Invalid ISF interface port metadata: unsupported resolved type kind\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"unsupported resolved type kind\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 114\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75629d0300), \"\", ARRAY(0x7562d01e28), HASH(0x75629d0690)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x75629ca030)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x75629ca258), HASH(0x75629ca030)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x75629ca030)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x75629ca048), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7562d0d7f8), \"local\", HASH(0x7562d0d888)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x7562d0d8e8), \"outer\", HASH(0x7562d0d7f8), \"local\", HASH(0x7562d0d888)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7562d0d7f8), \"local\", HASH(0x7562d0d888)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7562d08cc0), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7562d0c0c0), qr(unsupported resolved type kind), \"deferred kind\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7562d0c0c0), qr(unsupported resolved type kind), \"deferred kind\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"unsupported resolved type kind\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 114\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x75629d0300), \"\", ARRAY(0x7562d01e28), HASH(0x75629d0690)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x75629ca030)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x755e283f90), ARRAY(0x75629ca258), HASH(0x75629ca030)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x75629ca030)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x75629ca048), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7562d0d7f8), \"local\", HASH(0x7562d0d888)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x755e33b588), ARRAY(0x7562d0d8e8), \"outer\", HASH(0x7562d0d7f8), \"local\", HASH(0x7562d0d888)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7562d0d7f8), \"local\", HASH(0x7562d0d888)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7562d08cc0), HASH(0x7560100180)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7562d0c0c0), qr(unsupported resolved type kind), \"deferred kind\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7562d0c0c0), qr(unsupported resolved type kind), \"deferred kind\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755ffed8b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3432,
+            "sha256": "8c69de7e3994b6a30e36dd48d7d5b0155790df1ceff164e04d5e1599b6e0e554"
+          },
+          "scope_api": 8639
+        }
+      ]
+    },
+    {
+      "mode": "storable",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "context": "root 'packet'",
+          "helper": 27,
+          "inner_identity": {
+            "bytes": 3371,
+            "sha256": "ae4ff0cf10119c3ab3cb16443325eab739e0a2250c33304d1a7cce63333864cc"
+          },
+          "inner_value": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"resolved aggregate width disagrees with members\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 116\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x76238d8720), \"\", ARRAY(0x761fe6fc60), HASH(0x76238d8af8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x76238d26c0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x76238d2198), HASH(0x76238d26c0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x76238d26c0)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x76238d25d0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7622edac78), \"local\", HASH(0x7622edad08)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7622edad68), \"outer\", HASH(0x7622edac78), \"local\", HASH(0x7622edad08)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7622edac78), \"local\", HASH(0x7622edad08)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623884d08), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7622ed92a0), qr(width disagrees), \"bad root width\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7622ed92a0), qr(width disagrees), \"bad root width\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"resolved aggregate width disagrees with members\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 116\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x76238d8720), \"\", ARRAY(0x761fe6fc60), HASH(0x76238d8af8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x76238d26c0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x76238d2198), HASH(0x76238d26c0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x76238d26c0)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x76238d25d0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7622edac78), \"local\", HASH(0x7622edad08)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7622edad68), \"outer\", HASH(0x7622edac78), \"local\", HASH(0x7622edad08)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7622edac78), \"local\", HASH(0x7622edad08)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623884d08), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7622ed92a0), qr(width disagrees), \"bad root width\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7622ed92a0), qr(width disagrees), \"bad root width\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3439,
+            "sha256": "4b10c30ac5c62987473adc92ee171099afd682e3c132f16f593af27b8922e606"
+          },
+          "scope_api": 7750
+        },
+        {
+          "capture_api": 7929,
+          "context": "root 'packet'",
+          "helper": 28,
+          "inner_identity": {
+            "bytes": 3542,
+            "sha256": "0a9e8b977f38f769d51af6aebdf866dfe85186419230e4276ba7c28215056a08"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid resolved signed property\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved signed property\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 87\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x762394afa8), \".data\", ARRAY(0x76238d8558), HASH(0x762394aea0)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x762394c3d8), \"\", ARRAY(0x76238d8558), HASH(0x762394aea0)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x762391a0a8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x76238e6af8), HASH(0x762391a0a8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x762391a0a8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623942f48), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x76238e3618), \"local\", HASH(0x76238e36a8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x76238e3708), \"outer\", HASH(0x76238e3618), \"local\", HASH(0x76238e36a8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x76238e3618), \"local\", HASH(0x76238e36a8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x76238de6a8), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x76238dfc00), qr(signed property), \"bad scalar signed\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x76238dfc00), qr(signed property), \"bad scalar signed\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved signed property\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 87\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x762394afa8), \".data\", ARRAY(0x76238d8558), HASH(0x762394aea0)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x762394c3d8), \"\", ARRAY(0x76238d8558), HASH(0x762394aea0)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x762391a0a8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x76238e6af8), HASH(0x762391a0a8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x762391a0a8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623942f48), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x76238e3618), \"local\", HASH(0x76238e36a8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x76238e3708), \"outer\", HASH(0x76238e3618), \"local\", HASH(0x76238e36a8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x76238e3618), \"local\", HASH(0x76238e36a8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x76238de6a8), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x76238dfc00), qr(signed property), \"bad scalar signed\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x76238dfc00), qr(signed property), \"bad scalar signed\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3610,
+            "sha256": "940ee7eac90d437a2eb05eaf184e4f1c8ea8ead6ee987faec3a4829558f79054"
+          },
+          "scope_api": 7840
+        },
+        {
+          "capture_api": 8368,
+          "context": "root 'packet'",
+          "helper": 32,
+          "inner_identity": {
+            "bytes": 3510,
+            "sha256": "c97b1c2067c8ddda86901597c2e98d4b8334e94f2ef43b38f2b1b6d70e13fa61"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid resolved state model\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved state model\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 88\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623b07d50), \".data\", ARRAY(0x762394aed0), HASH(0x7623b05768)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623b07c78), \"\", ARRAY(0x762394aed0), HASH(0x7623b05768)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623b03af8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623aaab10), HASH(0x7623b03af8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623b03af8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623b03a08), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7623aa90a8), \"local\", HASH(0x7623aa9138)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7623aa9198), \"outer\", HASH(0x7623aa90a8), \"local\", HASH(0x7623aa9138)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7623aa90a8), \"local\", HASH(0x7623aa9138)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623aa2120), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7623a5c510), qr(state model), \"bad state\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7623a5c510), qr(state model), \"bad state\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved state model\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 88\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623b07d50), \".data\", ARRAY(0x762394aed0), HASH(0x7623b05768)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623b07c78), \"\", ARRAY(0x762394aed0), HASH(0x7623b05768)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623b03af8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623aaab10), HASH(0x7623b03af8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623b03af8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623b03a08), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7623aa90a8), \"local\", HASH(0x7623aa9138)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7623aa9198), \"outer\", HASH(0x7623aa90a8), \"local\", HASH(0x7623aa9138)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7623aa90a8), \"local\", HASH(0x7623aa9138)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623aa2120), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7623a5c510), qr(state model), \"bad state\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7623a5c510), qr(state model), \"bad state\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3578,
+            "sha256": "9c1eee2785ac3c6d85436a233a6c6b86fe8f9eb37861f430ba95185754f2cd60"
+          },
+          "scope_api": 8279
+        },
+        {
+          "capture_api": 8458,
+          "context": "root 'packet'",
+          "helper": 33,
+          "inner_identity": {
+            "bytes": 3363,
+            "sha256": "ab3252c0f4a2948a00c66a02e55be38d019303075044575e2bed08e5537b444a"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid or duplicate record member\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"invalid or duplicate record member\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 100\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623b78888), \"\", ARRAY(0x7623b07a20), HASH(0x7623b78978)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623b465e8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623b6f3a8), HASH(0x7623b465e8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623b465e8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623b6f4b0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7623b13b58), \"local\", HASH(0x7623b13be8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7623b13c48), \"outer\", HASH(0x7623b13b58), \"local\", HASH(0x7623b13be8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7623b13b58), \"local\", HASH(0x7623b13be8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623b0ebe8), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7623b0c108), qr(duplicate record member), \"duplicate order\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7623b0c108), qr(duplicate record member), \"duplicate order\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"invalid or duplicate record member\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 100\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623b78888), \"\", ARRAY(0x7623b07a20), HASH(0x7623b78978)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623b465e8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623b6f3a8), HASH(0x7623b465e8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623b465e8)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623b6f4b0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7623b13b58), \"local\", HASH(0x7623b13be8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7623b13c48), \"outer\", HASH(0x7623b13b58), \"local\", HASH(0x7623b13be8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7623b13b58), \"local\", HASH(0x7623b13be8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623b0ebe8), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7623b0c108), qr(duplicate record member), \"duplicate order\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7623b0c108), qr(duplicate record member), \"duplicate order\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3431,
+            "sha256": "5072c88ca4b3c9b1999666ac4721942f9444f346568c3cf2e441660ab1f5b072"
+          },
+          "scope_api": 8369
+        },
+        {
+          "capture_api": 8548,
+          "context": "root 'packet'",
+          "helper": 34,
+          "inner_identity": {
+            "bytes": 3352,
+            "sha256": "442780eb5bff4a0bb3b4d55bce0ca1419e4cf9b71d1e14c3646c7949324cc464"
+          },
+          "inner_value": "Invalid ISF interface port metadata: record member inventory disagrees\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"record member inventory disagrees\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 97\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623bd13f0), \"\", ARRAY(0x7623b788e8), HASH(0x7623bd1810)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623b9f288)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623bc7eb8), HASH(0x7623b9f288)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623b9f288)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623bc7de0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7622f35300), \"local\", HASH(0x7622f35390)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7622f353f0), \"outer\", HASH(0x7622f35300), \"local\", HASH(0x7622f35390)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7622f35300), \"local\", HASH(0x7622f35390)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623b7e588), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7622f304c8), qr(inventory disagrees), \"unlisted member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7622f304c8), qr(inventory disagrees), \"unlisted member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"record member inventory disagrees\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 97\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623bd13f0), \"\", ARRAY(0x7623b788e8), HASH(0x7623bd1810)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623b9f288)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623bc7eb8), HASH(0x7623b9f288)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623b9f288)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623bc7de0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7622f35300), \"local\", HASH(0x7622f35390)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7622f353f0), \"outer\", HASH(0x7622f35300), \"local\", HASH(0x7622f35390)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7622f35300), \"local\", HASH(0x7622f35390)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623b7e588), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7622f304c8), qr(inventory disagrees), \"unlisted member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7622f304c8), qr(inventory disagrees), \"unlisted member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3420,
+            "sha256": "0d110e1c5fd45701eb52230a15f2f418f79013defa075efe9e81d6da031423e2"
+          },
+          "scope_api": 8459
+        },
+        {
+          "capture_api": 8638,
+          "context": "root 'packet'",
+          "helper": 35,
+          "inner_identity": {
+            "bytes": 3521,
+            "sha256": "b4374b38b51ca9ac2ebb4b0b5bed0aef5beafd3c7d8b44acf2f0598edb654ba5"
+          },
+          "inner_value": "Invalid ISF interface port metadata: cyclic resolved type\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"cyclic resolved type\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 81\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623c1c660), \".data\", ARRAY(0x7623bd1798), HASH(0x7623c1aa68)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623c1c660), \"\", ARRAY(0x7623bd1798), HASH(0x7623c1aa68)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623c0fe40)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623c1a990), HASH(0x7623c0fe40)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623c0fe40)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623c18ea0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7623bde648), \"local\", HASH(0x7623bde6d8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7623bde738), \"outer\", HASH(0x7623bde648), \"local\", HASH(0x7623bde6d8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7623bde648), \"local\", HASH(0x7623bde6d8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623bd87c8), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x76239d3fd8), qr(cyclic resolved type), \"cyclic member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x76239d3fd8), qr(cyclic resolved type), \"cyclic member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"cyclic resolved type\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 81\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623c1c660), \".data\", ARRAY(0x7623bd1798), HASH(0x7623c1aa68)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623c1c660), \"\", ARRAY(0x7623bd1798), HASH(0x7623c1aa68)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623c0fe40)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623c1a990), HASH(0x7623c0fe40)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623c0fe40)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623c18ea0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7623bde648), \"local\", HASH(0x7623bde6d8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7623bde738), \"outer\", HASH(0x7623bde648), \"local\", HASH(0x7623bde6d8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7623bde648), \"local\", HASH(0x7623bde6d8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623bd87c8), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x76239d3fd8), qr(cyclic resolved type), \"cyclic member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x76239d3fd8), qr(cyclic resolved type), \"cyclic member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3589,
+            "sha256": "881e4666c1b26e09099ad6f1314518b0eb23995109381ebb7429d781242375a8"
+          },
+          "scope_api": 8549
+        },
+        {
+          "capture_api": 8728,
+          "context": "root 'packet'",
+          "helper": 36,
+          "inner_identity": {
+            "bytes": 3364,
+            "sha256": "69cf24f34257ecad2e4c21945058b24de02b73d59584ae940d6e0d78035881d5"
+          },
+          "inner_value": "Invalid ISF interface port metadata: unsupported resolved type kind\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"unsupported resolved type kind\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 114\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623c87a98), \"\", ARRAY(0x7623c1af48), HASH(0x7623c87df8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623c619f0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623c36450), HASH(0x7623c619f0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623c619f0)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623c828d0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7623c32f60), \"local\", HASH(0x7623c34018)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7623c34078), \"outer\", HASH(0x7623c32f60), \"local\", HASH(0x7623c34018)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7623c32f60), \"local\", HASH(0x7623c34018)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623c2a090), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7623c2ba20), qr(unsupported resolved type kind), \"deferred kind\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7623c2ba20), qr(unsupported resolved type kind), \"deferred kind\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"unsupported resolved type kind\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 114\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7623c87a98), \"\", ARRAY(0x7623c1af48), HASH(0x7623c87df8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7623c619f0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x761fe6cf90), ARRAY(0x7623c36450), HASH(0x7623c619f0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7623c619f0)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7623c828d0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7623c32f60), \"local\", HASH(0x7623c34018)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x761fec5498), ARRAY(0x7623c34078), \"outer\", HASH(0x7623c32f60), \"local\", HASH(0x7623c34018)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7623c32f60), \"local\", HASH(0x7623c34018)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7623c2a090), HASH(0x76214bb420)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7623c2ba20), qr(unsupported resolved type kind), \"deferred kind\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7623c2ba20), qr(unsupported resolved type kind), \"deferred kind\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x76214e6300)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3432,
+            "sha256": "64a6428ddb2c3efcad2c0d41fc29d7fd684799556acd8e1a8d18db3a24b5649d"
+          },
+          "scope_api": 8639
+        }
+      ]
+    },
+    {
+      "mode": "controls",
+      "pairs": [
+        {
+          "capture_api": 7839,
+          "context": "root 'packet'",
+          "helper": 27,
+          "inner_identity": {
+            "bytes": 3371,
+            "sha256": "2decee02a18719b89f07c7e1ba32185cf3adb8465a37c77ee3edd7ee23b44c45"
+          },
+          "inner_value": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"resolved aggregate width disagrees with members\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 116\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a0177f2e8), \"\", ARRAY(0x79fe34d8d0), HASH(0x7a0177dd98)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a011d3d38)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a011d3e88), HASH(0x7a011d3d38)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a011d3d38)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a01759930), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01755528), \"local\", HASH(0x7a017555b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01755618), \"outer\", HASH(0x7a01755528), \"local\", HASH(0x7a017555b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01755528), \"local\", HASH(0x7a017555b8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a0174d468), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a017516c0), qr(width disagrees), \"bad root width\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a017516c0), qr(width disagrees), \"bad root width\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"resolved aggregate width disagrees with members\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 116\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a0177f2e8), \"\", ARRAY(0x79fe34d8d0), HASH(0x7a0177dd98)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a011d3d38)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a011d3e88), HASH(0x7a011d3d38)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a011d3d38)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a01759930), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01755528), \"local\", HASH(0x7a017555b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01755618), \"outer\", HASH(0x7a01755528), \"local\", HASH(0x7a017555b8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01755528), \"local\", HASH(0x7a017555b8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a0174d468), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a017516c0), qr(width disagrees), \"bad root width\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a017516c0), qr(width disagrees), \"bad root width\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3439,
+            "sha256": "ea6f742ca5b398e4ca20d6e8139da6b4a7f5483d32627800ddff42eee767f128"
+          },
+          "scope_api": 7750
+        },
+        {
+          "capture_api": 7929,
+          "context": "root 'packet'",
+          "helper": 28,
+          "inner_identity": {
+            "bytes": 3542,
+            "sha256": "956f8832da123fe108af7192ffe95a108a0bd466ab5507599b9aa07a788b36bf"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid resolved signed property\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved signed property\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 87\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a011ea0f0), \".data\", ARRAY(0x7a0177dee8), HASH(0x7a011e9e88)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a011e9f18), \"\", ARRAY(0x7a0177dee8), HASH(0x7a011e9e88)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a011e4c30)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a011e4d98), HASH(0x7a011e4c30)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a011e4c30)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a011e4c48), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a017ba420), \"local\", HASH(0x7a017ba4b0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a017ba510), \"outer\", HASH(0x7a017ba420), \"local\", HASH(0x7a017ba4b0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a017ba420), \"local\", HASH(0x7a017ba4b0)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a017b2f60), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a017b65b8), qr(signed property), \"bad scalar signed\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a017b65b8), qr(signed property), \"bad scalar signed\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved signed property\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 87\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a011ea0f0), \".data\", ARRAY(0x7a0177dee8), HASH(0x7a011e9e88)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a011e9f18), \"\", ARRAY(0x7a0177dee8), HASH(0x7a011e9e88)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a011e4c30)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a011e4d98), HASH(0x7a011e4c30)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a011e4c30)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a011e4c48), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a017ba420), \"local\", HASH(0x7a017ba4b0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a017ba510), \"outer\", HASH(0x7a017ba420), \"local\", HASH(0x7a017ba4b0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a017ba420), \"local\", HASH(0x7a017ba4b0)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a017b2f60), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a017b65b8), qr(signed property), \"bad scalar signed\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a017b65b8), qr(signed property), \"bad scalar signed\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3610,
+            "sha256": "bb1c4a56d5de4e3de2b38a3d2233fde60ddc19f4753f86739da33e86528964b5"
+          },
+          "scope_api": 7840
+        },
+        {
+          "capture_api": 8368,
+          "context": "root 'packet'",
+          "helper": 32,
+          "inner_identity": {
+            "bytes": 3510,
+            "sha256": "5192b6bbe926be71d6190f0327e35758e99192a2c9650ef7cdf4037fa626eef6"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid resolved state model\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved state model\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 88\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a0196d798), \".data\", ARRAY(0x7a011e9de0), HASH(0x7a0196e330)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a0196e0c0), \"\", ARRAY(0x7a011e9de0), HASH(0x7a0196e330)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a01969c60)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a01969de0), HASH(0x7a01969c60)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a01969c60)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a0193ec60), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01916438), \"local\", HASH(0x7a019164c8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01916528), \"outer\", HASH(0x7a01916438), \"local\", HASH(0x7a019164c8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01916438), \"local\", HASH(0x7a019164c8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a0190e360), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a018a13d8), qr(state model), \"bad state\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a018a13d8), qr(state model), \"bad state\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"invalid resolved state model\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 88\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a0196d798), \".data\", ARRAY(0x7a011e9de0), HASH(0x7a0196e330)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a0196e0c0), \"\", ARRAY(0x7a011e9de0), HASH(0x7a0196e330)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a01969c60)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a01969de0), HASH(0x7a01969c60)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a01969c60)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a0193ec60), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01916438), \"local\", HASH(0x7a019164c8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01916528), \"outer\", HASH(0x7a01916438), \"local\", HASH(0x7a019164c8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01916438), \"local\", HASH(0x7a019164c8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a0190e360), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a018a13d8), qr(state model), \"bad state\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a018a13d8), qr(state model), \"bad state\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3578,
+            "sha256": "9ac2e243bebea179757e80bcc8014bf731022aad0e8ce44d28e4dbc978cd47db"
+          },
+          "scope_api": 8279
+        },
+        {
+          "capture_api": 8458,
+          "context": "root 'packet'",
+          "helper": 33,
+          "inner_identity": {
+            "bytes": 3363,
+            "sha256": "28c768fd7792f7a06fbd8dc0fe00b476e179313c608e8691741ddafa6fa8df9e"
+          },
+          "inner_value": "Invalid ISF interface port metadata: invalid or duplicate record member\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"invalid or duplicate record member\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 100\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a019d5f90), \"\", ARRAY(0x7a0196de70), HASH(0x7a019d3ab0)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a019d1c78)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a019d1de0), HASH(0x7a019d1c78)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a019d1c78)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a019d1c90), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01984468), \"local\", HASH(0x7a019844f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01984558), \"outer\", HASH(0x7a01984468), \"local\", HASH(0x7a019844f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01984468), \"local\", HASH(0x7a019844f8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a0197bfa8), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a018fd120), qr(duplicate record member), \"duplicate order\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a018fd120), qr(duplicate record member), \"duplicate order\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"invalid or duplicate record member\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 100\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a019d5f90), \"\", ARRAY(0x7a0196de70), HASH(0x7a019d3ab0)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a019d1c78)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a019d1de0), HASH(0x7a019d1c78)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a019d1c78)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a019d1c90), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01984468), \"local\", HASH(0x7a019844f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01984558), \"outer\", HASH(0x7a01984468), \"local\", HASH(0x7a019844f8)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01984468), \"local\", HASH(0x7a019844f8)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a0197bfa8), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a018fd120), qr(duplicate record member), \"duplicate order\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a018fd120), qr(duplicate record member), \"duplicate order\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3431,
+            "sha256": "bb095c534a56c0da000e8d0555d36df1a97a70058fe6e1ca1fb213c4c3ab70eb"
+          },
+          "scope_api": 8369
+        },
+        {
+          "capture_api": 8548,
+          "context": "root 'packet'",
+          "helper": 34,
+          "inner_identity": {
+            "bytes": 3352,
+            "sha256": "390f8d742363a89f49942068bba981f5c20e6ccc20693bba18700cd91ec29ec8"
+          },
+          "inner_value": "Invalid ISF interface port metadata: record member inventory disagrees\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"record member inventory disagrees\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 97\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a01a52f90), \"\", ARRAY(0x7a019d5de0), HASH(0x7a01a53390)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a019fec18)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a01a4ca38), HASH(0x7a019fec18)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a019fec18)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a01a40510), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a019f8ed0), \"local\", HASH(0x7a019f8f60)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a019f8fc0), \"outer\", HASH(0x7a019f8ed0), \"local\", HASH(0x7a019f8f60)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a019f8ed0), \"local\", HASH(0x7a019f8f60)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a019e90d8), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a019f4978), qr(inventory disagrees), \"unlisted member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a019f4978), qr(inventory disagrees), \"unlisted member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"record member inventory disagrees\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 97\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a01a52f90), \"\", ARRAY(0x7a019d5de0), HASH(0x7a01a53390)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a019fec18)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a01a4ca38), HASH(0x7a019fec18)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a019fec18)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a01a40510), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a019f8ed0), \"local\", HASH(0x7a019f8f60)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a019f8fc0), \"outer\", HASH(0x7a019f8ed0), \"local\", HASH(0x7a019f8f60)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a019f8ed0), \"local\", HASH(0x7a019f8f60)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a019e90d8), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a019f4978), qr(inventory disagrees), \"unlisted member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a019f4978), qr(inventory disagrees), \"unlisted member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3420,
+            "sha256": "194be925ccbcf926f389894bd021e787494bdc5eec4b0939bf814c3854293e01"
+          },
+          "scope_api": 8459
+        },
+        {
+          "capture_api": 8638,
+          "context": "root 'packet'",
+          "helper": 35,
+          "inner_identity": {
+            "bytes": 3521,
+            "sha256": "15afe14e070ea987bbd1830756e41a762a7261514e4d212d351b2c275641dfc6"
+          },
+          "inner_value": "Invalid ISF interface port metadata: cyclic resolved type\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"cyclic resolved type\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 81\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a012e1fc0), \".data\", ARRAY(0x7a01a4d900), HASH(0x7a012e1d08)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a012e1fc0), \"\", ARRAY(0x7a01a4d900), HASH(0x7a012e1d08)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a012dec30)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a012e0ae0), HASH(0x7a012dec30)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a012dec30)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a01287ac8), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01285798), \"local\", HASH(0x7a01285828)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01285888), \"outer\", HASH(0x7a01285798), \"local\", HASH(0x7a01285828)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01285798), \"local\", HASH(0x7a01285828)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a01a64360), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a01a64c78), qr(cyclic resolved type), \"cyclic member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a01a64c78), qr(cyclic resolved type), \"cyclic member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(\"\", \"cyclic resolved type\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 81\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a012e1fc0), \".data\", ARRAY(0x7a01a4d900), HASH(0x7a012e1d08)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 102\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a012e1fc0), \"\", ARRAY(0x7a01a4d900), HASH(0x7a012e1d08)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a012dec30)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a012e0ae0), HASH(0x7a012dec30)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a012dec30)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a01287ac8), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01285798), \"local\", HASH(0x7a01285828)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01285888), \"outer\", HASH(0x7a01285798), \"local\", HASH(0x7a01285828)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01285798), \"local\", HASH(0x7a01285828)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a01a64360), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a01a64c78), qr(cyclic resolved type), \"cyclic member\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a01a64c78), qr(cyclic resolved type), \"cyclic member\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3589,
+            "sha256": "6d817cfb74665242cdead121a9b3e38ff899a643180b7a90d3b4d291fa9c30a0"
+          },
+          "scope_api": 8549
+        },
+        {
+          "capture_api": 8728,
+          "context": "root 'packet'",
+          "helper": 36,
+          "inner_identity": {
+            "bytes": 3364,
+            "sha256": "d874d51956a302ae2cc70579e52bc186c4b13fd7c4d3024c3f9e14fa0a29c0cb"
+          },
+          "inner_value": "Invalid ISF interface port metadata: unsupported resolved type kind\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"unsupported resolved type kind\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 114\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a01aa7408), \"\", ARRAY(0x7a012e41c8), HASH(0x7a01aa51f8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a01aa0e40)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a01aa2030), HASH(0x7a01aa0e40)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a01aa0e40)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a013049c0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01302630), \"local\", HASH(0x7a013026c0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01302720), \"outer\", HASH(0x7a01302630), \"local\", HASH(0x7a013026c0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01302630), \"local\", HASH(0x7a013026c0)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a012f8198), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a012fa7c8), qr(unsupported resolved type kind), \"deferred kind\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a012fa7c8), qr(unsupported resolved type kind), \"deferred kind\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "outer_prefix": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind\n at perl/FSM/Support/ISFInterfacePortMetadata.pm line 225.\n\tFSM::Support::ISFInterfacePortMetadata::_require(0, \"unsupported resolved type kind\") called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 114\n\tFSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths(HASH(0x7a01aa7408), \"\", ARRAY(0x7a012e41c8), HASH(0x7a01aa51f8)) called at perl/FSM/Support/ISFInterfacePortMetadata.pm line 58\n\tFSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata(HASH(0x7a01aa0e40)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"capture\", CODE(0x79fe347f90), ARRAY(0x7a01aa2030), HASH(0x7a01aa0e40)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 172\n\tmain::__ANON__(HASH(0x7a01aa0e40)) called at perl/FSM/Support/ISFRecordPortValues.pm line 147\n\teval {...} called at perl/FSM/Support/ISFRecordPortValues.pm line 145\n\tFSM::Support::ISFRecordPortValues::_validate_type(HASH(0x7a013049c0), \"root 'packet'\") called at perl/FSM/Support/ISFRecordPortValues.pm line 32\n\tFSM::Support::ISFRecordPortValues::record_value_scope(\"outer\", HASH(0x7a01302630), \"local\", HASH(0x7a013026c0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 79\n\tmain::call_api(\"scope\", CODE(0x79fe393498), ARRAY(0x7a01302720), \"outer\", HASH(0x7a01302630), \"local\", HASH(0x7a013026c0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 184\n\tmain::__ANON__(\"outer\", HASH(0x7a01302630), \"local\", HASH(0x7a013026c0)) called at ./t/1986-isf-record-port-value-gates.t line 68\n\tmain::scope_for(HASH(0x7a012f8198), HASH(0x79ff2231c8)) called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a012fa7c8), qr(unsupported resolved type kind), \"deferred kind\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a012fa7c8), qr(unsupported resolved type kind), \"deferred kind\") called at ./t/1986-isf-record-port-value-gates.t line 267\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff284648)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"closed malformed facts fail before comparison or path traversal\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 282\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n\n",
+          "phases": [
+            "capture failed eval/raw publish",
+            "explicit whole-string rethrow",
+            "Value failed eval/catch",
+            "context interpolation",
+            "new literal Value confess"
+          ],
+          "prefix_identity": {
+            "bytes": 3432,
+            "sha256": "9abdeafa8dfbf86c3f879c669dd0f7007a54921387b51b7044715ab7d35514c9"
+          },
+          "scope_api": 8639
+        }
+      ]
+    }
+  ],
+  "public_contract": {
+    "cases": [
+      "newline-string",
+      "no-newline-string",
+      "explicit-rethrow",
+      "implicit-rethrow",
+      "interpolated-outer",
+      "altering-die-hook"
+    ],
+    "countercases": [
+      "missing newline adds location",
+      "implicit rethrow adds propagation",
+      "die hook replaces operand"
+    ],
+    "explicit_rethrow": "whole operand equal",
+    "new_throw": "whole interpolated operand prefix",
+    "scope": "Current public interpreter behavior; original hook state/provider bytes were not measured."
+  },
+  "scope": "Entire inner scalar is a source-variable operand, not intended authority for its full stack meaning. New outer trace remains unqualified."
+}

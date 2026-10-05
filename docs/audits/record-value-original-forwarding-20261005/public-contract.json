@@ -1,0 +1,19 @@
+{
+  "command": [
+    "perldoc",
+    "-T",
+    "-f",
+    "die"
+  ],
+  "historical_url_fetch": "https://perldoc.perl.org/5.34.1/functions/die cache miss; installed matching public documentation used.",
+  "official_corroboration": "https://perldoc.perl.org/functions/die",
+  "official_revision_scope": "Current public documentation corroborates semantics; not an original provider version or byte pin.",
+  "paraphrase": "A nonreference string lacking a terminal newline gains location text; an explicit nonempty newline-terminated operand is distinct from implicit propagation. Failed eval returns undef and stores the exception in $@. A __DIE__ hook can replace the error even inside eval.",
+  "public_source": "installed public Perl5.34.1 die documentation",
+  "quote": "If the string exception does not end in a newline",
+  "status": 0,
+  "stdout_identity": {
+    "bytes": 6621,
+    "sha256": "0587b818fee93c7445414c7b036d65abda3f78952391c52ba619d32920959c33"
+  }
+}
