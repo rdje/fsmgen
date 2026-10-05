@@ -1,0 +1,6 @@
+{
+  "rendered_bytes": 81297,
+  "rendered_sha256": "1ceb6be7fcd5500e67e86a812ae0b1ef0d76ea23ec334a3cb6fa11bf833585c0",
+  "source_block": "Captured metadata must retain its declared field kind and the recorded producer\nform. A Boolean does not become an integer field because a host language compares\nthem equal. A public schema may admit equivalent integral numeric forms, while an\nexact capture reader must still preserve the original producer representation.\nCheck these boundaries separately; a private comparison defect does not make\ncorrectly captured source values wrong. Rollover records now use a superseding\nreader that pins original source, programme, proof and receipt bytes to their\npublication revision before checking their recorded metadata kinds.\n\n",
+  "whole_block_match": true
+}

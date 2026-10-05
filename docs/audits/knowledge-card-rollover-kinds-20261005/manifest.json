@@ -1,0 +1,70 @@
+{
+  "docs/audits/knowledge-card-rollover-kinds-20261005/book-authority.json": {
+    "bytes": 158958,
+    "sha256": "bf7d9f02529f785ac6ca89a83880e33fec484b680b0c884910102d350eff60c5"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/capture.py": {
+    "bytes": 2558,
+    "sha256": "d138134f7e67d5ca2c227c2fb1431f2ba46a54783cdd338772dc2181652f79f6"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/current-transform.json": {
+    "bytes": 50064,
+    "sha256": "4250de6a3be9a35dd9b86eca8bc0ac2fb08ad521d8ac0478a02684d4c3cc571b"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/first-private-probe-source-reconstruction.txt": {
+    "bytes": 1985,
+    "sha256": "f2e873c32975dd3c0ff6e0f5b1b1d654d79029231926e28185419e49ff51438e"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/first-private-probe.json": {
+    "bytes": 379,
+    "sha256": "9db7f7bb36fa43dc1af9638aff0e5d1e508f841abca73db3f70dbc9f57db4001"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/original-pins.json": {
+    "bytes": 10432,
+    "sha256": "a4a7463f4e76d95299327593203a4b41126c02dd6f274affef344c13608d8ba4"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/private-probe-writer-transform.json": {
+    "bytes": 707,
+    "sha256": "e0da70465192f5e7b62de3fc5dcb9fdff73c6868b26bc138d0226a5c24008d3e"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/probe.py": {
+    "bytes": 2174,
+    "sha256": "2b8df87d7503d741aba54b82e7741ba598b33afecb55a66d680e76efe0d9c6c7"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/proofs.json": {
+    "bytes": 4580,
+    "sha256": "98db39bba0b5a3114bc31429f7b1419c22045e9302f8fb87c8add0419013cb7f"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/public-probe.json": {
+    "bytes": 15523,
+    "sha256": "900aedb1882a0276112abdfb064b47e26f38e03c0c2c65730075b712f399dac8"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/public_probe.py": {
+    "bytes": 2385,
+    "sha256": "76e7994c0360524e4ff2fac8735c098ea6c0d1e4babe9a8a58403959098034d9"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/rendered.html.txt": {
+    "bytes": 81297,
+    "sha256": "1ceb6be7fcd5500e67e86a812ae0b1ef0d76ea23ec334a3cb6fa11bf833585c0"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/rendered.json": {
+    "bytes": 805,
+    "sha256": "034fa6c7c1a2a668760c02012d27bf1825fa389ffea590779b3d2f8de0ad3178"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/root-cause.json": {
+    "bytes": 365,
+    "sha256": "2204062ab5ce1ca749c3473281ad3800f6fb43d27edf79e590bef9b789b0cb76"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/scope.txt": {
+    "bytes": 2604,
+    "sha256": "13240852800efed8868269ca369f499dd0c2458069f172fe0cb0c559b95b219f"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/source-kind-census.json": {
+    "bytes": 283,
+    "sha256": "d9ceb239df8daff11d56870e51b66dc84983e94c12fc1bc80553374971e19d44"
+  },
+  "docs/audits/knowledge-card-rollover-kinds-20261005/verify.py": {
+    "bytes": 11851,
+    "sha256": "bab16f254d87e3f78b5cd3f0914541f0ffdd41398911345a74e7b2c612ebd167"
+  }
+}

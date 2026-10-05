@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-card-rollover-kinds-20261005/public_probe.py"
+  ],
+  "status": 0,
+  "stdout": "integer 0 \nboolean 1 live-doc-size: archive descriptor registry line 2 must contain scalar values\nintegral-float 0 \n",
+  "stderr": "ram-guard: PID 5833; host 83.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

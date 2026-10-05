@@ -1,0 +1,216 @@
+{
+  "pins": {
+    "docs/audits/knowledge-card-rollover-20261005/after-query.json": {
+      "bytes": 2593381,
+      "sha256": "454440825d479e44a5abd6c3f5539e4430c1ba84d76e015e3519da6604bd379f"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/after.json": {
+      "bytes": 117142,
+      "sha256": "90ac6bfa5974eefa10c3aa36a327bc03389cd1f8984e5872d6cc70b612284523"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/before-query.json": {
+      "bytes": 1296668,
+      "sha256": "f4587ba7e932e44955260c7a605f491028f5f00f1893137f6d3eda90accd18f1"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/book-authority.json": {
+      "bytes": 157686,
+      "sha256": "672625e8b39d13292b343417c71463b741da85215bc6e8b598fd4d2d2bf685da"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/descriptors.json": {
+      "bytes": 3331,
+      "sha256": "5e6d3c4ad47a6a7c5bf877bfa74b394625942a3c96357b426c3b9892ff057d86"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/initial-archive-fixture-refusal.json": {
+      "bytes": 4941,
+      "sha256": "06b0de5e1984ea4e6461894c674bad814477fd007a399eb1e963b21a6e838afb"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/initial-produce.py.txt": {
+      "bytes": 5468,
+      "sha256": "30db312b1e00fe206d22e58c0ec1bcb3ab1b7adcb39efd82e573267fe2c23d75"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/manifest.json": {
+      "bytes": 2285,
+      "sha256": "28fdacc44da3887d0be75093b9ac4bed663fa385389d630e2110af6edf062af1"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/native-archive-controls.json": {
+      "bytes": 21106,
+      "sha256": "32bce66d8f5db8d1ffafd9b2daee5503b5f5af73063f1e32fba76990e0a27923"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/produce.py": {
+      "bytes": 6781,
+      "sha256": "6079ed0ad05b0baf71d995546a7233e08271cf27fe2cee73581028bfc4003198"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/proofs.json": {
+      "bytes": 1249,
+      "sha256": "73483bd38acb1dc7c752b5efd2f636413346a25428b50b05ba6205421dd59120"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/scope.txt": {
+      "bytes": 1800,
+      "sha256": "f89d50f4704ab61cbb5191f5d05e11541381384766a88400a41b510a1d0890fd"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/source.json": {
+      "bytes": 125592,
+      "sha256": "4156621d9c4b611ba876407486bbb0c58e7d546b43f8ed98e6a46ed3f9a6cba6"
+    },
+    "docs/audits/knowledge-card-rollover-20261005/verify.py": {
+      "bytes": 15366,
+      "sha256": "0ad4e5e5b1329a6dd968d99fb7346477ac8b2a579ce153956bf4fea354af14c3"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/archive-controls.json": {
+      "bytes": 264,
+      "sha256": "006717266fd967c51fd1953c276febe9e9149e0a51b7825959fbe96c3a6f5a5c"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/book.json": {
+      "bytes": 403,
+      "sha256": "478c8aa39197db6b76ccc107f4ca093bd7097aed46520bf81bea000813266743"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/current-reader.json": {
+      "bytes": 670,
+      "sha256": "e6e9eaf25ab1b3e81a202d1516b3644f43f9f111d53dfc8fbcc3214f80648a67"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/focused.json": {
+      "bytes": 565,
+      "sha256": "5a6d6129dc926450a7c9af00007be7081887de2b9feb4036a5e1c2db1a2f156d"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/initial-archive-fixture-refusal.json": {
+      "bytes": 939,
+      "sha256": "45a2d79a57a68e7da2ae156dc404eae4c1a0b49ea0fbf2aac1f41a02474eeb4b"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/inventory.json": {
+      "bytes": 556,
+      "sha256": "8225ecc2be108ef410a06b672825df6b5361518468573957ca72e8a84e897a0e"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/knowledge-map.json": {
+      "bytes": 333,
+      "sha256": "56745277aa2d0f98d56030f5a9ef0897cb4cc59a9c8e9bb5d326a06295e8e6c7"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/prepare.json": {
+      "bytes": 433,
+      "sha256": "22555c134254803420668047d08bf0a6e49f0fd0deaaa3a3abc55a82340d923c"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/query-publication.json": {
+      "bytes": 270,
+      "sha256": "d31681672388703bda433c6ef82af6c19614cad3cb0f164f4eb3e742e6d2d751"
+    },
+    "docs/audits/knowledge-card-rollover-checks-20261005/staged-doctrines.json": {
+      "bytes": 60394,
+      "sha256": "286e5d0801f3d8351cd69dcac6bd050f1ebe809bd471856005299a4d4e450bf6"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/authority.json": {
+      "bytes": 77859,
+      "sha256": "806939ba1383f3019385892655803d8c5acacda5678fede9fd9f0b933ddc4015"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/book-authority.json": {
+      "bytes": 155381,
+      "sha256": "f71fd0def96b553526b64c4a3ee03b4448ac87ab1b8816603884d77a1f0f0945"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/coverage.json": {
+      "bytes": 13680,
+      "sha256": "70888200b7166e36c9c930f22758214922e840ae107503fdc9ce9a932152126d"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/knowledge-card-sizing-and-partition.proposed.txt": {
+      "bytes": 3137,
+      "sha256": "afe8d15c46e3b3b67d7e4969884f29fe27a55e76c2ae151b61795d0ac954b0b4"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/live-document-size-containment.proposed.txt": {
+      "bytes": 13209,
+      "sha256": "cb04882823175e851bcb2e0dd08b17571ab0fec2b3b7ebe8fa3e47f317082585"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/live-document-surface-growth-procedure.proposed.txt": {
+      "bytes": 3966,
+      "sha256": "82e56bb0a28f6a71a85580f779e8b7dc3f0c998a658ab800c0907ef603c3e11d"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/live-document-transition-allowance-headroom.proposed.txt": {
+      "bytes": 3800,
+      "sha256": "ef0f67d883a149f3f2147bdf9e3cd34fa262f4e1c1de3bccb5679647a1700b68"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/manifest.json": {
+      "bytes": 3990,
+      "sha256": "5f6de59a14fa120c09fc074cd26b35b0a602b7cd9fc84ac0aa6f39f846a6b0f1"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/produce.py": {
+      "bytes": 13313,
+      "sha256": "8d8ef2c7052b57ba550c3b14f8b44e840d60de4fcc5457deb05c76b124afcbad"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/proofs.json": {
+      "bytes": 34652,
+      "sha256": "27d37e30f5cc361c445e5f33d941eb4982f1905a88dd280ff399441fc9e73cc7"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/question-homes.json": {
+      "bytes": 19610,
+      "sha256": "3f53f9d02435fc3e6a60023025878af4e4cb13854bfde4efccf44739b3ddc7cf"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/read_source.py": {
+      "bytes": 1043,
+      "sha256": "288e4a57b142e67b0f328d849072970cb5a3cf64f596a97fe1e6125760adbc20"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/root-cause.json": {
+      "bytes": 1220,
+      "sha256": "9e6ecc5e3988f7daba4f5d28994703bf4e06586db67606a563cbe4ccf9981e13"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/scope.txt": {
+      "bytes": 3639,
+      "sha256": "80451cc184066fd02c4c916c4ebd31fefd0d05fc0f63a61b051bc3e2244b0b82"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/select_homes.py": {
+      "bytes": 3940,
+      "sha256": "5123ba6122486be61294f7eaab6501f0af298ac213d9fa2d802173dff8b13d0a"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/source.json": {
+      "bytes": 1642,
+      "sha256": "087fa34b6d8e95eefdce0f7191537921e35aa22df122efafb0d5e8a8bc3594f8"
+    },
+    "docs/audits/knowledge-card-rollover-selection-20261005/verify.py": {
+      "bytes": 12889,
+      "sha256": "da3d91144a213543faaa8fa07b6ec1e0fd857404b44012cda90cbce5f62ac54a"
+    },
+    "docs/audits/knowledge-card-rollover-selection-checks-20261005/book.json": {
+      "bytes": 403,
+      "sha256": "f1318bd3eabbf97a539a9ea48d03eb576b913f504ceef7a110b195e8071346f0"
+    },
+    "docs/audits/knowledge-card-rollover-selection-checks-20261005/focused.json": {
+      "bytes": 483,
+      "sha256": "b4156bccfafe3e790d45eadd0b5d2a11d43bdabb0d093c03cf9fcac215d2c31e"
+    },
+    "docs/audits/knowledge-card-rollover-selection-checks-20261005/initial-focused-invalid-path.json": {
+      "bytes": 2458,
+      "sha256": "3c0d9201256d9122ecf8ffe374f7d5687d6da704f804db42178559c75eb32a08"
+    },
+    "docs/audits/knowledge-card-rollover-selection-checks-20261005/initial-staged-container-status-refusal.json": {
+      "bytes": 60458,
+      "sha256": "89d0be38f02ab285ce893a3875670ffcac0030cd2a70110b98150a49c3a06303"
+    },
+    "docs/audits/knowledge-card-rollover-selection-checks-20261005/inventory.json": {
+      "bytes": 556,
+      "sha256": "75244d44b395681cc52b75e7f661611e3e4b47869e69e7f66b86ce9d88b355e0"
+    },
+    "docs/audits/knowledge-card-rollover-selection-checks-20261005/staged-doctrines.json": {
+      "bytes": 60414,
+      "sha256": "655fc8b26a678ec02f41e5f57d243afcbc26dddb4a5517dae9bba4aef76ef736"
+    },
+    "docs/audits/knowledge-card-rollover-source-20261005/491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432.txt": {
+      "bytes": 24761,
+      "sha256": "491e8f4f3ecf2bf1d04ea30828f33f3745dac4bb99cd88ffdb9b23c97fa91432"
+    },
+    "docs/audits/knowledge-card-rollover-source-20261005/c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c.txt": {
+      "bytes": 3537,
+      "sha256": "c39d8e8a9d5644b54e8917135b1f9eb18670b84b21e4278f53843dc6727efd0c"
+    },
+    "docs/audits/knowledge-card-rollover-source-20261005/e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff.txt": {
+      "bytes": 3658,
+      "sha256": "e72d1659ef1e07fa14598085eb620061231667e0fb294aec43ef98ed2535adff"
+    },
+    "docs/audits/knowledge-card-rollover-source-20261005/fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba.txt": {
+      "bytes": 3011,
+      "sha256": "fb3cce2324086e0ef63c2085a932e780aed38055fea1c71e2b424806395b6bba"
+    }
+  },
+  "revision": "193fb44f80c9ea78f55ecc5086c5d1e40405f67e",
+  "roots": [
+    "docs/audits/knowledge-card-rollover-selection-20261005",
+    "docs/audits/knowledge-card-rollover-selection-checks-20261005",
+    "docs/audits/knowledge-card-rollover-source-20261005",
+    "docs/audits/knowledge-card-rollover-20261005",
+    "docs/audits/knowledge-card-rollover-checks-20261005"
+  ]
+}

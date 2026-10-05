@@ -1,0 +1,14 @@
+{
+  "roots": [
+    "docs/audits/knowledge-card-rollover-selection-20261005",
+    "docs/audits/knowledge-card-rollover-20261005"
+  ],
+  "primitive_counts": {
+    "dict": 329,
+    "str": 1459,
+    "int": 371,
+    "list": 45,
+    "NoneType": 25
+  },
+  "boolean_or_float_metadata": []
+}

@@ -94,6 +94,15 @@ file digest before returning the original bytes. The doctrine gate also checks
 these file archives. Earlier measurements and superseded instructions keep their
 capture boundary; current writing follows the canonical doctrine and registries.
 
+Captured metadata must retain its declared field kind and the recorded producer
+form. A Boolean does not become an integer field because a host language compares
+them equal. A public schema may admit equivalent integral numeric forms, while an
+exact capture reader must still preserve the original producer representation.
+Check these boundaries separately; a private comparison defect does not make
+correctly captured source values wrong. Rollover records now use a superseding
+reader that pins original source, programme, proof and receipt bytes to their
+publication revision before checking their recorded metadata kinds.
+
 `CLAIM_VERIFICATION.md` defines what earns an actionable quantitative claim:
 re-derive it from its source, attempt to falsify it with a separating oracle,
 and keep a tracked producer plus a watcher that detects staleness. A missing

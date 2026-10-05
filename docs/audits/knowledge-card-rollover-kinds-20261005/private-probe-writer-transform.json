@@ -1,0 +1,5 @@
+{
+  "scope": "Exact reconstruction of the first wrapper from the single later output-write guard edit; the underlying compared programme is independently pinned to actual Git193fb44f8. The revised guard freshly reproduces the whole original result without overwriting it.",
+  "old": "    (BASE / 'first-private-probe.json').write_text(json.dumps(output, sort_keys=True, indent=2) + '\\n')\n",
+  "new": "    recorded = json.dumps(output, sort_keys=True, indent=2) + '\\n'\n    path = BASE / 'first-private-probe.json'\n    if path.exists():\n        assert path.read_text() == recorded, 'whole original private probe freshly reproduces without overwriting'\n    else:\n        path.write_text(recorded)\n"
+}

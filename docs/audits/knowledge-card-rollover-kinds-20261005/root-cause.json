@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "whole card authority unchanged",
+    "--",
+    "docs/audits/knowledge-card-rollover-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "193fb44f80c9ea78f55ecc5086c5d1e40405f67e SEMANTIC-INTROSPECTION-MCP-FRONTIER.72.3.1: publish authenticated card rollover\n",
+  "stderr": ""
+}

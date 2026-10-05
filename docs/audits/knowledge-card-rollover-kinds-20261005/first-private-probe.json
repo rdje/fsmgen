@@ -1,0 +1,20 @@
+{
+  "baseline": "accepted",
+  "controls": [
+    {
+      "primitive": "bool",
+      "result": {
+        "accepted": true
+      },
+      "value": true
+    },
+    {
+      "primitive": "float",
+      "result": {
+        "accepted": true
+      },
+      "value": 1.0
+    }
+  ],
+  "scope": "Private parameterized comparison only; published source data and production gate unchanged."
+}

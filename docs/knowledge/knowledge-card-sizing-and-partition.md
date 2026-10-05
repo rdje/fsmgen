@@ -23,7 +23,7 @@ evidence: >-
   live-document-size/scripts/check_live_document_size.pl;
   docs/tasks/KNOWLEDGE-CARD-SURFACE-ALLOWANCE-EXHAUSTION.md
 reverify: >-
-  python3 -B docs/audits/knowledge-card-rollover-20261005/verify.py --current
+  python3 -B docs/audits/knowledge-card-rollover-kinds-20261005/verify.py --current
 ---
 
 Each card has independent line, original encoded-byte and content-line-byte

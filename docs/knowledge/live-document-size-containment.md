@@ -66,7 +66,7 @@ evidence: >-
   docs/decisions/0046-project-documents-use-two-bounded-ledgers-and-canonical-live-views.md; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md; docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl; scripts/check_task_tree_integrity.pl; knowledge-map/scripts/knowledge_map.pl; knowledge-map/scripts/query_knowledge_map.sh; scripts/check_knowledge_card_history.pl; t/1549-task-tree-integrity-doctrine.t; t/1554-live-document-size-doctrine.t; t/1567-knowledge-map-shards.t; t/1568-knowledge-card-history.t
   doctrine/live_document_size/isf_reference_partitions.jsonl; scripts/check_isf_reference_partitions.pl; scripts/focused_document_index.pl; docs/index/FOCUSED_DOCUMENTS.md; t/1569-focused-document-containment.t
 reverify: >-
-  python3 -B docs/audits/knowledge-card-rollover-20261005/verify.py --current
+  python3 -B docs/audits/knowledge-card-rollover-kinds-20261005/verify.py --current
 ---
 
 `LIVE_DOCUMENT_SIZE_CONTAINMENT.md` owns the doctrine. Its reusable body is

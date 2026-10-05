@@ -1,0 +1,35 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.74
+
+Confirmed P2 private comparison weakness: complete descriptor equality in the
+parameterized rollover reader accepts JSON true where the captured producer wrote
+integer schema_version. Actual old comparison also accepts the integral-float form.
+The public checker refuses the Boolean but accepts an equivalent integral float.
+Do not infer that all numeric encodings the private reader accepts are publicly
+invalid. The new audit boundary preserves exact recorded producer forms; it does
+not change the public checker schema, accepted inputs, limits or implementation.
+
+All original published metadata remains integer-valued, correct and unchanged.
+Production gating succeeded. A private input-comparison defect does not retroactively
+invalidate correctly source-derived counts or claim that invalid data was published.
+Keep every old programme, proof, source, receipt, manifest and source archive byte
+exact. The superseding reader independently pins all those files to their actual
+publication Git revision, not a mutable self-declared seal. Its finite record domain
+admits the existing object/list/string/null/integer metadata and rejects borrowed
+Boolean or float representations where exact recorded discrete metadata is claimed.
+This domain applies only to the enumerated historical audit records; JSON strings
+containing original source, stdout or configuration remain opaque exact byte content.
+
+RE-DERIVATION: complete original Git/capture pins, independently reselected metadata
+primitive census and integer-only recorded domain, full original closure readers,
+exact current reverify-only transforms, and actual paired private/public probes.
+FALSIFICATION: genuine Boolean and equal-valued float mutations in descriptor,
+collection headroom, book delta and actual receipt status families; a changed
+original seal/programme/source byte; independently diagnosed public Boolean schema
+refusal and explicitly admitted integral float. Preserve field paths and exact
+intended refusal boundaries. Every original graph/query/source/closure control still runs.
+DURABILITY: tracked full pins, scope, probes, current transforms, superseding kind
+reader and whole proof/seal; original audits remain immutable. Current cards route
+through the new reader while retaining all body/question/history meanings. Book
+explains captured metadata provenance separately from public numeric input validity.
+No new original runtime/provider capture, native host-security probe, full CI, push,
+submodule or external repository write; pending helper publication resumes next.

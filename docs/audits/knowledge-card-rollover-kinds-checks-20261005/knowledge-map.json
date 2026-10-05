@@ -1,0 +1,8 @@
+{
+  "command": [
+    "knowledge-map/scripts/gen_knowledge_map.sh"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "ram-guard: PID 51614; host 76.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: wrote KNOWLEDGE_MAP.md plus 184 topic shards (1265 facts, 6962 unique questions, 7139 answer occurrences)\n"
+}

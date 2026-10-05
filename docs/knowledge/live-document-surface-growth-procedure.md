@@ -31,7 +31,7 @@ evidence: >-
   scripts/check_live_document_size.sh;
   scripts/check_live_document_ceiling_authority.pl
 reverify: >-
-  python3 -B docs/audits/knowledge-card-rollover-20261005/verify.py --current
+  python3 -B docs/audits/knowledge-card-rollover-kinds-20261005/verify.py --current
 ---
 
 Adding an ordinary fact card is a normal write. Decision `0064` raised the

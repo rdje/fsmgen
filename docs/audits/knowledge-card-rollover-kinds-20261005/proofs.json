@@ -1,0 +1,108 @@
+{
+  "census": {
+    "NoneType": 25,
+    "dict": 329,
+    "int": 371,
+    "list": 45,
+    "str": 1459
+  },
+  "census_paths": [
+    "docs/audits/knowledge-card-rollover-20261005/after-query.json",
+    "docs/audits/knowledge-card-rollover-20261005/after.json",
+    "docs/audits/knowledge-card-rollover-20261005/before-query.json",
+    "docs/audits/knowledge-card-rollover-20261005/book-authority.json",
+    "docs/audits/knowledge-card-rollover-20261005/descriptors.json",
+    "docs/audits/knowledge-card-rollover-20261005/initial-archive-fixture-refusal.json",
+    "docs/audits/knowledge-card-rollover-20261005/manifest.json",
+    "docs/audits/knowledge-card-rollover-20261005/native-archive-controls.json",
+    "docs/audits/knowledge-card-rollover-20261005/proofs.json",
+    "docs/audits/knowledge-card-rollover-20261005/source.json",
+    "docs/audits/knowledge-card-rollover-selection-20261005/authority.json",
+    "docs/audits/knowledge-card-rollover-selection-20261005/book-authority.json",
+    "docs/audits/knowledge-card-rollover-selection-20261005/coverage.json",
+    "docs/audits/knowledge-card-rollover-selection-20261005/manifest.json",
+    "docs/audits/knowledge-card-rollover-selection-20261005/proofs.json",
+    "docs/audits/knowledge-card-rollover-selection-20261005/question-homes.json",
+    "docs/audits/knowledge-card-rollover-selection-20261005/root-cause.json",
+    "docs/audits/knowledge-card-rollover-selection-20261005/source.json"
+  ],
+  "controls": [
+    {
+      "kind": "Boolean",
+      "refusal": "recorded discrete metadata kind at docs/audits/knowledge-card-rollover-20261005/descriptors.json/0/schema_version: bool",
+      "route": [
+        0,
+        "schema_version"
+      ],
+      "source": "docs/audits/knowledge-card-rollover-20261005/descriptors.json"
+    },
+    {
+      "kind": "float",
+      "refusal": "recorded discrete metadata kind at docs/audits/knowledge-card-rollover-20261005/descriptors.json/0/schema_version: float",
+      "route": [
+        0,
+        "schema_version"
+      ],
+      "source": "docs/audits/knowledge-card-rollover-20261005/descriptors.json"
+    },
+    {
+      "kind": "Boolean",
+      "refusal": "recorded discrete metadata kind at docs/audits/knowledge-card-rollover-selection-20261005/proofs.json/remaining_after_selection/files: bool",
+      "route": [
+        "remaining_after_selection",
+        "files"
+      ],
+      "source": "docs/audits/knowledge-card-rollover-selection-20261005/proofs.json"
+    },
+    {
+      "kind": "float",
+      "refusal": "recorded discrete metadata kind at docs/audits/knowledge-card-rollover-selection-20261005/proofs.json/remaining_after_selection/files: float",
+      "route": [
+        "remaining_after_selection",
+        "files"
+      ],
+      "source": "docs/audits/knowledge-card-rollover-selection-20261005/proofs.json"
+    },
+    {
+      "kind": "Boolean",
+      "refusal": "recorded discrete metadata kind at docs/audits/knowledge-card-rollover-20261005/book-authority.json/delta/files: bool",
+      "route": [
+        "delta",
+        "files"
+      ],
+      "source": "docs/audits/knowledge-card-rollover-20261005/book-authority.json"
+    },
+    {
+      "kind": "float",
+      "refusal": "recorded discrete metadata kind at docs/audits/knowledge-card-rollover-20261005/book-authority.json/delta/files: float",
+      "route": [
+        "delta",
+        "files"
+      ],
+      "source": "docs/audits/knowledge-card-rollover-20261005/book-authority.json"
+    },
+    {
+      "kind": "Boolean",
+      "refusal": "recorded discrete metadata kind at docs/audits/knowledge-card-rollover-checks-20261005/focused.json/status: bool",
+      "route": [
+        "status"
+      ],
+      "source": "docs/audits/knowledge-card-rollover-checks-20261005/focused.json"
+    },
+    {
+      "kind": "float",
+      "refusal": "recorded discrete metadata kind at docs/audits/knowledge-card-rollover-checks-20261005/focused.json/status: float",
+      "route": [
+        "status"
+      ],
+      "source": "docs/audits/knowledge-card-rollover-checks-20261005/focused.json"
+    },
+    {
+      "kind": "changed programme byte",
+      "refusal": "whole Git-bound original audit: docs/audits/knowledge-card-rollover-20261005/verify.py",
+      "source": "docs/audits/knowledge-card-rollover-20261005/verify.py"
+    }
+  ],
+  "original_revision": "193fb44f80c9ea78f55ecc5086c5d1e40405f67e",
+  "scope": "Private discrete capture kinds and complete original Git-bound identities; published values remain correct. Public integral float stays valid; exact recorded producer forms are a different boundary."
+}

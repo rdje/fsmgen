@@ -16,7 +16,7 @@ date: 2026-10-05
 status: current
 evidence: docs/decisions/0070-transition-allowances-carry-one-declared-step-and-a-live-owner.md; docs/decisions/0064-live-document-growth-is-declared-measurement-with-paired-decisions.md; doctrine/live_document_size/surfaces.jsonl; LIVE_DOCUMENT_SIZE_CONTAINMENT.md; docs/tasks/LIVE-DOCUMENT-LINE-TARGET-CALIBRATION.md
 reverify: >-
-  python3 -B docs/audits/knowledge-card-rollover-20261005/verify.py --current
+  python3 -B docs/audits/knowledge-card-rollover-kinds-20261005/verify.py --current
 tags: [live-document-size, containment, doctrine, transition-debt, task-trees]
 ---
 
