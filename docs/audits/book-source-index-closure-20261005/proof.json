@@ -1,0 +1,67 @@
+{
+  "baseline": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "scripts/check_book_source_index.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "book-source-index: complete indexed directory and checked source projection agree\n"
+  },
+  "complete": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "scripts/check_book_source_index.py"
+    ],
+    "status": 1,
+    "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/check_book_source_index.py\", line 26, in <module>\n    if __name__ == '__main__': check()\n                               ~~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/check_book_source_index.py\", line 22, in check\n    plane.require(actual == expected, 'complete directory-wide Git source-plane membership')\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 32, in require\n    if not condition: raise ValueError(message)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: complete directory-wide Git source-plane membership\n",
+    "stdout": ""
+  },
+  "original": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "scripts/book_source_references.py",
+      "--check"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+  },
+  "remove": {
+    "command": [
+      "git",
+      "rm",
+      "--cached",
+      "--",
+      "docs/book/src/reference-source/owned-hidden-index-control.source.txt"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "rm 'docs/book/src/reference-source/owned-hidden-index-control.source.txt'\n"
+  },
+  "restored": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "scripts/check_book_source_index.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "book-source-index: complete indexed directory and checked source projection agree\n"
+  },
+  "scope": "One newly created owned path in the real project index, then absent from the worktree. Only that path is restored/removed; no separate Git repository or production source modification.",
+  "stage": {
+    "command": [
+      "git",
+      "add",
+      "--",
+      "docs/book/src/reference-source/owned-hidden-index-control.source.txt"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": ""
+  }
+}

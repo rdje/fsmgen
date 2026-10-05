@@ -19,6 +19,20 @@ Start here:
 - [Cookbook](12-cookbook.md)
 - [Implementation Blueprint](15-implementation-blueprint.md)
 
+## Canonical Source Views
+
+The build carries bounded raw source views for the selected repository
+references. Each view contains the complete canonical source text at the latest
+book build. Markdown links within a source view remain text; use the native
+book chapters for rendered narrative and navigation. Source views also keep
+focused guidance, policy, operational state and retained engineering evidence
+distinct from shipped behavior.
+
+The asset plane is available; this chapter's reference-link transition remains
+pending. The next publication will point its selected references to those
+views. Native source refresh requires the source and its endpoint to be
+admitted by the ignore policy; build success alone does not establish that.
+
 ## What Still Lives Outside The Book
 
 Some docs are intentionally still focused references:

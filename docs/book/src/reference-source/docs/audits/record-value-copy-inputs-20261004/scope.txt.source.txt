@@ -1,0 +1,1 @@
+../../../../../../audits/record-value-copy-inputs-20261004/scope.txt

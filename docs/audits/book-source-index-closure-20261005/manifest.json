@@ -1,0 +1,42 @@
+{
+  "docs/audits/book-source-index-closure-20261005/final-proof.json": {
+    "bytes": 2551,
+    "sha256": "0ecb967bb69fd212753d5b971d5d968bce82e2fe117849e86472f92077b72c06"
+  },
+  "docs/audits/book-source-index-closure-20261005/initial-probe.txt": {
+    "bytes": 1921,
+    "sha256": "dc96eee9cfe94b70a02da15d7d7dcdc84d57d0dbba31350e103ad7a55ab3f62c"
+  },
+  "docs/audits/book-source-index-closure-20261005/initial-result.json": {
+    "bytes": 743,
+    "sha256": "c0fcbdad98aef0e19ef476c08eff05af97067b4a1d649379ef6694faff039942"
+  },
+  "docs/audits/book-source-index-closure-20261005/probe.py": {
+    "bytes": 2162,
+    "sha256": "0f22921deb157c59bc344490ad5181893b44ccfde16001522d529edeb4ec85fc"
+  },
+  "docs/audits/book-source-index-closure-20261005/proof.json": {
+    "bytes": 2605,
+    "sha256": "ba907a667b1c0c7cc08135c1a01f599f21c79b6bdb8b5519fbb56465a6a6ba85"
+  },
+  "docs/audits/book-source-index-closure-20261005/ram-halt.json": {
+    "bytes": 354,
+    "sha256": "bf10f33a16813b5ee21028d41b1dc07bed93c1a19eb0a805435d998716595785"
+  },
+  "docs/audits/book-source-index-closure-20261005/replay_probe.py": {
+    "bytes": 2168,
+    "sha256": "30d0e53042f92249935a0cead337c721ac65bff4067e1d3def4eee9b3bc9b035"
+  },
+  "docs/audits/book-source-index-closure-20261005/scope.txt": {
+    "bytes": 2618,
+    "sha256": "18328efe9e324a963a87d9b16f284150514c76907bcb4b67f604678bbc77c3bb"
+  },
+  "docs/audits/book-source-index-closure-20261005/verify.py": {
+    "bytes": 3722,
+    "sha256": "0e68d4b27a564d4196c3f0f6876abf91777b90df504081511263d75b5bcb6a3a"
+  },
+  "scripts/check_book_source_index.py": {
+    "bytes": 1278,
+    "sha256": "1311f277544ca01c067eb311fc93ae99751a003117b93b3fe501dd19a413893f"
+  }
+}

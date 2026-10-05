@@ -1,0 +1,146 @@
+{
+  "docs/audits/book-source-plane-20261005/book-authority.json": {
+    "bytes": 4354,
+    "sha256": "b1b88641aae4515a5c38369f05321b5b352727b51e0742dd016e85ad35dde60c"
+  },
+  "docs/audits/book-source-plane-20261005/bounds.txt": {
+    "bytes": 3883,
+    "sha256": "0d11f9a8824a420584c7478c000f283747eb06f961c424d017fa51ebaaeec671"
+  },
+  "docs/audits/book-source-plane-20261005/chapter-after.txt": {
+    "bytes": 41286,
+    "sha256": "2a25ced4b1a4d84f0de6c5ec98b1a6c731b609a92a3933d3dc8b7a34d558c1a7"
+  },
+  "docs/audits/book-source-plane-20261005/chapter-before.txt": {
+    "bytes": 40543,
+    "sha256": "0bd95f84b58e8affbf1a3e10243e1d991bfea15c0a461fb8ce3b7021df54204f"
+  },
+  "docs/audits/book-source-plane-20261005/final-plane-control-proofs.json": {
+    "bytes": 2701,
+    "sha256": "f8068c5cdd158b9069c16c60a89b62ed3b3b2717fbf742d8aa238aa6a3d95ec7"
+  },
+  "docs/audits/book-source-plane-20261005/final-portability-proofs.json": {
+    "bytes": 1323,
+    "sha256": "64803bb90e8ca4fcdfa743e6176af4de5061e9dfba0a5ed27583bdee3dc5f090"
+  },
+  "docs/audits/book-source-plane-20261005/final-raw-line-proofs.json": {
+    "bytes": 91110,
+    "sha256": "885292c5571d74ae33c59fc9d594a36f255154975c5bf0da667da481a3dbf02a"
+  },
+  "docs/audits/book-source-plane-20261005/index-proofs.json": {
+    "bytes": 34494,
+    "sha256": "b33d1e3f2be899789f080d9f65b8fa407030749b012cfecd98ff9899d1251075"
+  },
+  "docs/audits/book-source-plane-20261005/initial-incomplete-fixture.json": {
+    "bytes": 26203,
+    "sha256": "fe1657c9db477bf445dceee992a71a5036ff23dad03e78fa1538b523db180429"
+  },
+  "docs/audits/book-source-plane-20261005/initial-probe-native.txt": {
+    "bytes": 7432,
+    "sha256": "845fbd45a4cd4e203058ff521300bf92c831d761a399376a71abbd1cf71c50f5"
+  },
+  "docs/audits/book-source-plane-20261005/initial-raw-line-probe.json": {
+    "bytes": 12698,
+    "sha256": "0877c483ed8913c6879a090d9ba2a6dcbb7ac32f539519ebbba49ad248b712f6"
+  },
+  "docs/audits/book-source-plane-20261005/initial-source-reader.txt": {
+    "bytes": 8702,
+    "sha256": "cd4f5edf881716d77ce004e22f2ff21c23e289714fdd1d47dac799b1ea751d14"
+  },
+  "docs/audits/book-source-plane-20261005/links-default-prototype.json": {
+    "bytes": 3849396,
+    "sha256": "c63f3f8a0616610081754b9f0526cd2ac082ca33b8e630c3128c09986959a1cf"
+  },
+  "docs/audits/book-source-plane-20261005/measure-before.json": {
+    "bytes": 318,
+    "sha256": "92a3ba302f323d2c52c8a6e35af108f8d3dc1596a27247a4ab4655c0f5fcdba4"
+  },
+  "docs/audits/book-source-plane-20261005/plane-control-proofs.json": {
+    "bytes": 2701,
+    "sha256": "f8068c5cdd158b9069c16c60a89b62ed3b3b2717fbf742d8aa238aa6a3d95ec7"
+  },
+  "docs/audits/book-source-plane-20261005/portability-proofs.json": {
+    "bytes": 1323,
+    "sha256": "64803bb90e8ca4fcdfa743e6176af4de5061e9dfba0a5ed27583bdee3dc5f090"
+  },
+  "docs/audits/book-source-plane-20261005/probe_controls.py": {
+    "bytes": 4885,
+    "sha256": "e15495c507a70f73034e287e5395264ba584d2bc56bc00fc5c1df7be92abdffb"
+  },
+  "docs/audits/book-source-plane-20261005/probe_index.py": {
+    "bytes": 3050,
+    "sha256": "eefd4c3abd3d39b3c33d308988874d56990788027cfe354fd22cc350849a3113"
+  },
+  "docs/audits/book-source-plane-20261005/probe_native.py": {
+    "bytes": 7456,
+    "sha256": "db478ef34200991ff118b45739646c4bef60591dd6996cf8f99b174006287108"
+  },
+  "docs/audits/book-source-plane-20261005/probe_portability.py": {
+    "bytes": 2166,
+    "sha256": "9b5273b22f33318f7f031a0bf40bb0b68e8dfd7c29e8d4daa78d6a4b345a5459"
+  },
+  "docs/audits/book-source-plane-20261005/probe_production.py": {
+    "bytes": 3996,
+    "sha256": "e216dd99d92ce30a5f630f9c028ea75e7e10d776003bfc5ddc93231963ac27f8"
+  },
+  "docs/audits/book-source-plane-20261005/probe_raw_lines.py": {
+    "bytes": 2033,
+    "sha256": "656aa3def54ee5075b109070940a80ed7dc0fa511bce61a9148ef444c3ed9be2"
+  },
+  "docs/audits/book-source-plane-20261005/production-native.json": {
+    "bytes": 3921633,
+    "sha256": "2d008d6f4e37d9b2239ae6ff2bc7c5a4486b37fdbb48b286779f77256eab47d5"
+  },
+  "docs/audits/book-source-plane-20261005/production-proofs.json": {
+    "bytes": 559,
+    "sha256": "4940af32032e942549b71ec64f0e26f9cf0a60a2c0b4612f1d5b389d7ddc6703"
+  },
+  "docs/audits/book-source-plane-20261005/proofs.json": {
+    "bytes": 849,
+    "sha256": "be7aeb69a7764a4d80169c130a3942205163cca2c6635a6bf54d1662b6f3d714"
+  },
+  "docs/audits/book-source-plane-20261005/raw-line-proofs.json": {
+    "bytes": 91110,
+    "sha256": "885292c5571d74ae33c59fc9d594a36f255154975c5bf0da667da481a3dbf02a"
+  },
+  "docs/audits/book-source-plane-20261005/replay_controls.py": {
+    "bytes": 4891,
+    "sha256": "d8a392495a553f97c0d67c2efc5da8b616cdf418473f298f3ff670acf38e6522"
+  },
+  "docs/audits/book-source-plane-20261005/replay_portability.py": {
+    "bytes": 2172,
+    "sha256": "35869449eb41ab1d45f043e585548f75b2711fee51e0ae9f08dc11005db41d24"
+  },
+  "docs/audits/book-source-plane-20261005/replay_raw_lines.py": {
+    "bytes": 2039,
+    "sha256": "6c9aed5c677343911dbb99822f6686edc8c3fd217759ce2412b19d6c7337e560"
+  },
+  "docs/audits/book-source-plane-20261005/root-cause.json": {
+    "bytes": 573,
+    "sha256": "09434f0fb07a4076a553e96ea413c815a48e1b60d6c5569b586ccf0b330e3880"
+  },
+  "docs/audits/book-source-plane-20261005/scope.txt": {
+    "bytes": 3742,
+    "sha256": "0690b1087966ff6912def79174dd23f8e709be850aeb401d62a7e27ef19d44f0"
+  },
+  "docs/audits/book-source-plane-20261005/source-boundary.json": {
+    "bytes": 2450140,
+    "sha256": "0d24108b8711eec6f4dc193462ee5bf4562deb7b485d8a44d543c834c91f9342"
+  },
+  "docs/audits/book-source-plane-20261005/tooling-topic-after.txt": {
+    "bytes": 3981,
+    "sha256": "8e3ad5b3e78788e3436015643416121852c31f18c8fd87334d5d45ea48acb817"
+  },
+  "docs/audits/book-source-plane-20261005/tooling-topic-before.txt": {
+    "bytes": 2150,
+    "sha256": "5a8f58ed9c9066625f0fc2f431394cc85299da0e76bc1e2e8e2df5c4ba51e6a8"
+  },
+  "docs/audits/book-source-plane-20261005/verify.py": {
+    "bytes": 13009,
+    "sha256": "4d94ad85e312d0fd1c69b713e21276846ba93e0cc88c8f0e39df702f6091ecad"
+  },
+  "scripts/book_source_references.py": {
+    "bytes": 11033,
+    "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+  }
+}

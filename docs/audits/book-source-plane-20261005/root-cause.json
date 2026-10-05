@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "../../COMPOSITION_SCOPE.md",
+    "--",
+    "docs/book/src/90-reference-map.md"
+  ],
+  "scope": "Source navigation introduced outside native assets; actual first native/export failures and admitted current assets remain separately captured. First raw-width programme/control retains its private false green; final delimiter/EOF/UTF8 controls reject.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "b8a083726e08496de765ea8c47de3003c61e382b Docs: land mdBook scaffold and first chapters\n"
+}

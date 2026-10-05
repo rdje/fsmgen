@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-source-plane-20261005/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS complete native source population/refresh, genuine plane/native controls, original locality meaning and scoped current source roles.\n",
+  "stderr": "ram-guard: PID 49871; host 79.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

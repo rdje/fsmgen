@@ -1,0 +1,78 @@
+{
+  "baseline_rows": [
+    {
+      "asset": "reference-source/canonical/one.txt.source.txt",
+      "chapter": "90-reference-map",
+      "role": "retained-engineering-evidence",
+      "source": "canonical/one.txt"
+    },
+    {
+      "asset": "reference-source/canonical/two.txt.source.txt",
+      "chapter": "90-reference-map",
+      "role": "retained-engineering-evidence",
+      "source": "canonical/two.txt"
+    }
+  ],
+  "baseline_sources": {
+    "canonical/one.txt": "first canonical source\n",
+    "canonical/two.txt": "other canonical source\n"
+  },
+  "controls": [
+    {
+      "control": "lost-member",
+      "refusal": "complete current generated route manifest"
+    },
+    {
+      "control": "wrong-source-role",
+      "refusal": "complete current generated route manifest"
+    },
+    {
+      "control": "wrong-source",
+      "refusal": "complete current generated route manifest"
+    },
+    {
+      "control": "wrong-endpoint",
+      "refusal": "exact relative generated asset endpoint"
+    },
+    {
+      "control": "extra-member",
+      "refusal": "complete source-plane membership"
+    },
+    {
+      "control": "absolute-source",
+      "refusal": "repository-relative contained path"
+    },
+    {
+      "control": "escaping-source",
+      "refusal": "repository-relative contained path"
+    },
+    {
+      "control": "Boolean-source",
+      "refusal": "bounded scalar path"
+    },
+    {
+      "control": "colliding-address",
+      "refusal": "native-safe source address"
+    },
+    {
+      "control": "foreign-repository-parent",
+      "refusal": "no foreign repository endpoint"
+    },
+    {
+      "control": "symlink-output-parent-before-write",
+      "refusal": "refuse symlink output parent before creation"
+    },
+    {
+      "control": "ignored-source",
+      "refusal": "all canonical inputs and assets admitted by native ignore policy: canonical/one.txt\ncanonical/two.txt"
+    },
+    {
+      "control": "stale-native-copy",
+      "refusal": "fresh whole native copied source bytes"
+    }
+  ],
+  "manifest": "{\"asset\":\"reference-source/canonical/one.txt.source.txt\",\"chapter\":\"90-reference-map\",\"role\":\"retained-engineering-evidence\",\"source\":\"canonical/one.txt\"}\n{\"asset\":\"reference-source/canonical/two.txt.source.txt\",\"chapter\":\"90-reference-map\",\"role\":\"retained-engineering-evidence\",\"source\":\"canonical/two.txt\"}\n",
+  "positive": "Current source endpoint survives meaningful source update; old native copied bytes reject, updated copied bytes pass.",
+  "scope": "Actual real filesystem fixture within the owning repository, no separate Git repository or production source/asset mutation.",
+  "source_change": "changed canonical source\n"
+}

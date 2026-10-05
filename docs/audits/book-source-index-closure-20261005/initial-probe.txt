@@ -1,0 +1,36 @@
+"""Reproduce a staged extra hidden from the worktree using this repository only."""
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+BASE=Path('docs/audits/book-source-index-closure-20261005')
+EXTRA=Path('docs/book/src/reference-source/owned-hidden-index-control.source.txt')
+
+
+def run(command):
+    r=subprocess.run(command,capture_output=True,text=True)
+    return {'command':command,'status':r.returncode,'stdout':r.stdout,'stderr':r.stderr}
+
+
+def main():
+    assert not EXTRA.exists()
+    EXTRA.write_text('Owned staged membership control; remove exactly this path.\n')
+    try:
+        stage=run(['git','add','--',str(EXTRA)]);assert stage['status']==0
+        EXTRA.unlink()
+        original=run([sys.executable,'-B','scripts/book_source_references.py','--check'])
+        complete=run([sys.executable,'-B','scripts/check_book_source_index.py'])
+        assert original['status']==0 and complete['status']!=0
+        assert 'complete directory-wide Git source-plane membership' in complete['stderr']
+    finally:
+        if EXTRA.exists(): EXTRA.unlink()
+        remove=run(['git','rm','--cached','--',str(EXTRA)]);assert remove['status']==0
+    restored=run([sys.executable,'-B','scripts/check_book_source_index.py']);assert restored['status']==0
+    record={'stage':stage,'original':original,'complete':complete,'remove':remove,'restored':restored,
+            'scope':'One newly created owned path in the real project index, then absent from the worktree. Only that path is restored/removed; no separate Git repository, other index mutation or production source modification.'}
+    target=BASE/'proof.json';assert not target.exists();target.write_text(json.dumps(record,sort_keys=True,indent=2)+'\n')
+    print('PASS original admitted-path index check accepts hidden staged extra; complete indexed-directory currency rejects and restored actual index passes.')
+
+
+if __name__=='__main__':main()

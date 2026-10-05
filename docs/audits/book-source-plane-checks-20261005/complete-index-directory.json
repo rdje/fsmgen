@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-source-index-closure-20261005/probe.py"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 53732; host 85.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/book-source-index-closure-20261005/probe.py\", line 36, in <module>\n    if __name__=='__main__':main()\n                            ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/book-source-index-closure-20261005/probe.py\", line 24, in main\n    assert original['status']==0 and complete['status']!=0\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

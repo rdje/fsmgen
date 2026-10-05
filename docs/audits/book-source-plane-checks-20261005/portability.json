@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-source-plane-20261005/probe_portability.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual same-volume fixture-root move preserves every source hash and relative endpoint; scoped source checks pass at the new root.\n",
+  "stderr": "ram-guard: PID 89124; host 79.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

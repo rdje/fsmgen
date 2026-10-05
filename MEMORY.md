@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.2` (pending)
-- next_action: Activate the selected bounded native canonical-source asset plane; qualify source identities, watcher admission and copied/served freshness before changing the classified book routes.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.3` (pending)
+- next_action: Activate .73.2.3.3 from the committed source-plane state; publish and verify every classified book reference through its selected native source view.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

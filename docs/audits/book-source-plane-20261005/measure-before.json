@@ -1,0 +1,17 @@
+{
+  "route_records": 127,
+  "manifest": {
+    "lines": 127,
+    "bytes": 31020,
+    "max_line_bytes": 284
+  },
+  "source_axes": {
+    "files": 127,
+    "bytes_total": 1201106,
+    "bytes_each": 172995,
+    "lines_each": 1765,
+    "line_bytes_each": 1593,
+    "source_path_bytes": 75,
+    "asset_path_bytes": 103
+  }
+}

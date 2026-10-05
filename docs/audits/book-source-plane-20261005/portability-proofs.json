@@ -1,0 +1,33 @@
+{
+  "after": {
+    "canonical/source.md": {
+      "bytes": 59,
+      "sha256": "3ff5196a5d5e1e49d8d0a39089ea3ec818f6d657a72700441b1378ee910142ee"
+    },
+    "docs/book/src/reference-source/canonical/source.markdown.source.txt": {
+      "link": "../../../../../canonical/source.md"
+    },
+    "docs/book/src/reference-source/routes.jsonl": {
+      "bytes": 165,
+      "sha256": "ff57d687c2ee738c239dbc656b4fb7409294eff83a0d5dfa925a9a0bf5eba0fd"
+    }
+  },
+  "before": {
+    "canonical/source.md": {
+      "bytes": 59,
+      "sha256": "3ff5196a5d5e1e49d8d0a39089ea3ec818f6d657a72700441b1378ee910142ee"
+    },
+    "docs/book/src/reference-source/canonical/source.markdown.source.txt": {
+      "link": "../../../../../canonical/source.md"
+    },
+    "docs/book/src/reference-source/routes.jsonl": {
+      "bytes": 165,
+      "sha256": "ff57d687c2ee738c239dbc656b4fb7409294eff83a0d5dfa925a9a0bf5eba0fd"
+    }
+  },
+  "relative_root_after": "docs/audits/book-source-plane-20261005/portability-moved",
+  "relative_root_before": "docs/audits/book-source-plane-20261005/portability-first",
+  "same_volume": true,
+  "scope": "Actual move of an owned fixture inside this repository; no second Git repository, foreign write or production source mutation.",
+  "source": "# Complete source\n\nRelative endpoints survive a root move.\n"
+}

@@ -1,0 +1,58 @@
+Review before registry publication — owner SEM .73.2.3.2.
+
+measure-before.json records the complete selected source population before
+source-plane publication: 127 manifest rows, 31,020 encoded bytes, maximum row
+284 bytes; 127 source files, 1,201,106 bytes, maximum source 172,995 bytes,
+1765 LF lines and 1593 bytes per content line. This is a captured measurement,
+not a current-state shadow or a future aggregate allowance.
+
+The manifest is one generated regular file. Intentional native static symlinks
+are checked by its executed local verifier; they are not misdeclared as regular
+targets of the neutral size checker. The manifest has closed chapter/source/
+asset/role records and no copied prose or stored current byte/hash counter.
+Its canonical inputs are the exact immutable qualified selection and factory.
+
+Independent format limits: two admitted chapter domains, at most 128 routes in
+each (the portable metadata-array cardinality reviewed by the neutral package),
+give 256 route records. A 1024-byte encoded-record boundary gives 262400 whole
+bytes including one LF per record. Source paths are ASCII, root-relative and
+at most 256 bytes; derived asset paths are at most 512. Roles and chapters are
+closed enums. Exact current membership is separately conserved from the sealed
+selection, so unused format capacity does not authorize new routes.
+
+Raw-source boundaries: 262144 bytes and 5000 LF lines retain the largest admitted
+focused-reference canonical budget. A separately reviewed 8192-byte raw line
+boundary preserves existing wide policy/evidence lines without admitting an
+unbounded scalar; UTF8 decoding is strict. Every source retains its own tighter
+canonical doctrine. The fixed admitted selection and per-source byte boundary
+also bound the endpoint graph and source-byte aggregate; no maintained prose
+copy is stored in that graph. Endpoints are derived relative to their current
+asset directory, while logical identities remain repository-root-relative.
+
+Locality/freshness: source and output ancestors must be non-symlink directories
+on the repository volume without a foreign .git boundary. Source files are
+regular, bounded and current; each generated relative link joins its exact
+canonical file. Unexpected/missing members, wrong endpoints and ignored paths
+fail closed. Native build verification separately compares every copied file
+with current whole canonical bytes. Build/serve snapshots are not perpetually
+live source promises. The default checker additionally binds all published or staged asset modes and
+Git object identities to checked endpoints/manifest. During a staged result,
+every canonical source and producer must also agree with its indexed bytes.
+A wholly unpublished factory may qualify its filesystem before staging; the
+staged doctrine gate admits no missing asset. This local check is necessary
+because the neutral regular-file surface cannot inventory intentional symlinks.
+No existing ceiling or transition allowance is raised.
+
+Native profile: original selected all-target prototype serves actual advertised
+hrefs with full exact source bytes. Its visible source change outside the book
+directory refreshes under default 0.5.4 native serve; no broad extra watcher is
+added. Earlier retained ignored/parent-ignore controls remain stale and cannot
+be classified as admitted refresh. This observation is not a universal timing
+or cross-platform guarantee. Local and tracked CI profiles both name 0.5.4;
+full CI remains gated separately.
+
+Three legs: rederive manifest membership/format dimensions from whole immutable
+selection and first whole source/native captures; falsify source/member/role/
+endpoint/escape/ignored/stale/kind contracts; retain complete programmes,
+first incomplete prototype source/fixture/refusal, corrected original native
+responses/log/source states, current input pins and immutable audit seal.

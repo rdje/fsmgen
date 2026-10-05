@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-source-plane-20261005/probe_controls.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual source-plane member/source/role/path/endpoint/ignore/write-locality/stale controls reject; updated current native bytes pass.\n",
+  "stderr": "ram-guard: PID 55004; host 81.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

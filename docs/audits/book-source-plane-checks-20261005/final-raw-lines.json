@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-source-plane-20261005/replay_raw_lines.py"
+  ],
+  "status": 0,
+  "stdout": "PASS original raw-LF false green now rejects; exact EOF/LF/CRLF boundaries pass, bare EOF CR overflow and invalid UTF8 reject.\n",
+  "stderr": "ram-guard: PID 82098; host 64.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -5,11 +5,13 @@ answers:
   - "where does mdbook build resolve a relative dest-dir?"
   - "how do book verification scripts keep output inside the repository?"
   - "what caused the reset-slice book output locality recovery?"
-date: 2026-09-25
+  - "do canonical source symlinks outside the book refresh under native serve?"
+  - "why do native book source-view addresses encode terminal markdown extensions?"
+date: 2026-10-05
 status: current
 tags: [mdbook, documentation, artifacts, locality, verification]
 evidence: docs/audits/specforge-rule-admission-20260924/book-output-recovery.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/book-source-plane-20261005/verify.py --current
 ---
 
 `mdbook build docs/book --dest-dir DEST` resolves relative `DEST` against the
@@ -32,3 +34,29 @@ The tracked probe builds a miniature book from another source directory,
 checks relative and absolute destinations against the invocation directory,
 requires fresh marker-bearing HTML and same-volume local paths, then removes
 its owned temporary workspace. The manifest retains the actual recovery.
+
+
+## Native canonical source views
+
+The selected source-view plane uses relative filesystem links to canonical
+repository files and native-safe `.source.txt` addresses. A terminal `.md` in
+the address is encoded as `.markdown`: the initial `.md.source.txt` recipe
+served a directly requested asset but native rendered clicks were rewritten
+to `.html`. Actual href checks qualify the encoded recipe. Views preserve
+complete UTF8 source text; Markdown links inside them remain literal text.
+
+The admitted mdBook0.5.4 prototype serves every selected source and refreshes
+a controlled visible source outside the book directory under default native
+serve. Ignored scratch and deliberately parent-ignored visible inputs remain
+stale, including with extra-watch enabled. Source presence and successful
+build do not prove watcher admission. The executed factory checks complete
+selection, current source endpoints/bytes and ignore policy; native output
+verification additionally checks every copied source. Published views reflect
+their latest book build, without a universal refresh-time or platform promise.
+
+`python3 -B scripts/book_source_references.py --write` regenerates the finite
+manifest and relative endpoints. `--check` qualifies current sources;
+`--verify-build .artifacts/BOOK_OUTPUT` also checks copied native bytes. The
+original destination-locality replay remains required, alongside the recorded
+source-plane qualifier. Source and asset paths must remain on the repository
+volume and within this repository. No extra chapter or copied prose is added.

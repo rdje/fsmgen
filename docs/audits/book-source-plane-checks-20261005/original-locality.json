@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py"
+  ],
+  "status": 0,
+  "stdout": "{\"mdbook_version\": \"mdbook v0.5.4\", \"probes\": [{\"exit_code\": 0, \"fresh_render_contains_marker\": true, \"mode\": \"relative\", \"repository_local_same_volume\": true, \"resolved_against_invocation_cwd\": true}, {\"exit_code\": 0, \"fresh_render_contains_marker\": true, \"mode\": \"absolute\", \"repository_local_same_volume\": true, \"resolved_against_invocation_cwd\": true}], \"temporary_workspace_removed\": true}\n",
+  "stderr": "ram-guard: PID 89539; host 78.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

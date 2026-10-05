@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-source-index-closure-20261005/replay_probe.py"
+  ],
+  "status": 0,
+  "stdout": "PASS original admitted-path index check accepts hidden staged extra; complete indexed-directory currency rejects and restored actual index passes.\n",
+  "stderr": "ram-guard: PID 66326; host 86.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

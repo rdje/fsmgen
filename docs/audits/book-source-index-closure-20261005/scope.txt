@@ -1,0 +1,41 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.2
+
+Re-derivation: the sealed primary factory checks exactly its admitted paths in
+Git. A complete filesystem check cannot see an extra staged path removed from
+the worktree. The real single-repository index control admits its baseline,
+stages only a newly owned control file, removes its filesystem copy, and shows
+the original check succeeding while directory-wide Git membership refuses it.
+Only that owned index path is then removed; the restored actual check passes.
+
+Falsification: the retained first and final actual index controls distinguish
+the specific complete-membership refusal from unrelated failures. The verifier
+also rejects missing proof members, Boolean/float status substitutions, unrelated
+refusals and failed restoration. The original complete mode/object/canonical
+source checks remain executed before the supplementary membership equality.
+
+Durability: whole programmes, results and checker are sealed here. The generated
+manifest surface declares the supplementary Git-result currency; --current
+executes it and the unchanged original source-plane audit. Existing bounds,
+selected routes and the primary factory seal remain unchanged. This does not
+close the separately owned publication of the classified chapter clicks.
+
+The first setup attempt failed before the intended assertion: MEMORY.md and
+docs/TASK_TREE.md were changed after staging, so canonical/index agreement was
+not an admitted baseline. Its exact programme and wrapper receipt are retained.
+That programme did not retain child stdout/stderr before asserting; those bytes
+are unavailable and no stronger child-outcome claim is made. The corrected
+programme retains every outcome before assertions and admits its baseline
+before any control mutation. Final replay uses the final readable checker.
+
+The first staged doctrine gate separately refused the duplicated task-index
+status row at 911 bytes against its existing 862-byte allowance. Only repeated
+completion narration is shortened; complete evidence remains in the task tree.
+The final staged gate must pass before commit. No allowance was increased.
+
+The first final-instrument replay stops at host 88.0% with guard status 137,
+before its proof/control file is created. Its wrapper receipt remains under
+book-source-plane-checks-20261005/complete-index-directory-final.json. The actual
+index has no owned control residue. The guard threshold remains unchanged.
+
+After minimal execution is admitted by the unchanged guard, final replay passes
+with the final checker. Whole final outcomes are retained in final-proof.json.

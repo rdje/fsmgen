@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-source-plane-20261005/probe_production.py"
+  ],
+  "status": 0,
+  "stdout": "PASS complete production native source assets match current canonical bytes; missing404, consumed server and pending click-publication boundary retained.\n",
+  "stderr": "ram-guard: PID 41746; host 78.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

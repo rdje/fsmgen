@@ -1,0 +1,54 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.2.
+Boundary: bef42f2fb3cca26bf2710a548fe2a8a92e7e6a87 plus the explicit owned
+source/topic/book/manifest/factory transition retained in this audit.
+
+RE-DERIVE: complete selected chapter/source/asset/role membership; whole Git
+and original prototype source boundaries; independently measured manifest and
+source axes before reviewed format limits; actual native href/source/build/
+serve/visible-outside-book source refresh; complete production copied and served
+assets; meaningful book aggregate and unchanged original tooling body/questions.
+The factory regenerates only relative endpoints and a finite role map, without
+copying maintained prose or storing ambient counters. Its default checker binds
+the generated graph to current sources/ignore policy and the published/staged
+Git result; staged canonical source/producer bytes must agree as well.
+
+FALSIFY: actual lost/extra member, source/role corruption, wrong endpoint,
+absolute/escaping/Boolean path, colliding address, foreign .git marker,
+symlink-output parent before creation, ignored source and stale native copy
+controls reject; current source changes and newly copied bytes pass. Exact native
+source/target/member/kind/shutdown and production source/reader/kind controls
+reject. Ignored/parent-ignore refusal remains separately retained by the sealed
+selection; it cannot be reclassified as an admitted source refresh. Actual
+same-volume fixture-root movement preserves the full source/endpoint census.
+Staged-entry/source/producer corruption is tested without mutating real indexes.
+
+Initial gaps remain visible: the first all-target prototype stopped before
+build because the control-asset parent used the old namespace; its full initial
+programme, incomplete fixture and nonzero receipt survive. The corrected first
+native capture is the full admitted default prototype. The initial raw source
+checker accepted an oversized LF-delimited line because bytes.splitlines also
+split CR. Complete initial programme and actual source/result remain. The final
+LF-only rule excludes CR only immediately before LF: exact EOF/LF/CRLF bounds
+pass; the original false green, bare EOF CR overflow and invalid UTF8 reject.
+Final bounded-read/endpoint controls and moved-root replay are recorded apart
+from every first result. Source/manifest/copied file reads use bounded local
+regular reads, and the intentional source alias read is separately bounded.
+
+DURABILITY: complete tracked original programmes/inputs/source snapshots,
+control data, native responses/logs/source states, projections, declared bounds,
+fresh replay receipts, whole instrument/audit seals and current topic reverify.
+Original locality replay still runs and the full source-role meaning survives
+in the existing mdBook tooling topic. Current direct/cache allocation includes
+its original questions and only the declared new questions. The current watcher
+protects this topic and permanent book source/build roles, without freezing
+unrelated book chapters or later aggregate-change authority. Native responses
+retain their build/invocation boundary; no universal freshness-time or visual
+layout guarantee is inferred. All owned fixtures are removed after capture and
+all native servers are terminated/waited before commit.
+
+This publishes the source plane. It does not close the classified failed book
+clicks: their actual href replacement and full served-link qualification remain
+owned by .73.2.3.3. Visual QA, original native/provider capture, full CI/push and
+the historical HIAL SIP/EPERM blocker remain separate. No source-card file,
+SUMMARY chapter, ceiling, transition allowance, broad extra watcher, external
+repository write or submodule change is introduced.

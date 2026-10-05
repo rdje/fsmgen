@@ -1,0 +1,33 @@
+{
+  "current_scope": "Exact admitted selection/current endpoints/bytes/ignore policy and tooling question/reader role; historical build and aggregate evidence retain their capture boundary.",
+  "native_controls": [
+    {
+      "control": "lost-member",
+      "refusal": ""
+    },
+    {
+      "control": "wrong-whole-source",
+      "refusal": ""
+    },
+    {
+      "control": "wrong-advertised-target",
+      "refusal": "complete actual native advertised source population"
+    },
+    {
+      "control": "Boolean-HTTP",
+      "refusal": ""
+    },
+    {
+      "control": "float-source-bytes",
+      "refusal": ""
+    },
+    {
+      "control": "unfinished-server",
+      "refusal": "genuine missing and consumed terminated server"
+    },
+    {
+      "control": "stale-refresh",
+      "refusal": "actual outside-book visible source refresh"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "control": "lost-production-member",
+    "refusal": "complete production canonical population"
+  },
+  {
+    "control": "wrong-production-source",
+    "refusal": "complete production native source bytes"
+  },
+  {
+    "control": "wrong-production-reader",
+    "refusal": "complete production native reader parity"
+  },
+  {
+    "control": "Boolean-production-status",
+    "refusal": "complete production native source bytes"
+  },
+  {
+    "control": "unfinished-production-server",
+    "refusal": "production missing and consumed-server controls"
+  }
+]
