@@ -1,0 +1,27 @@
+{
+  "rendered_markers": [
+    "now qualify the finite metadata guard and record-member recursion projection from type inputs, including cyclic traversal.",
+    "Inherited API catches/rethrows, full outer frame meaning, exact display"
+  ],
+  "revision": "d7358d27c3fd89f8debcc378ede785d7c8946276",
+  "status": 0,
+  "visual_QA": "pending",
+  "whole_aggregate": {
+    "after": {
+      "bytes_total": 3770413,
+      "files": 64,
+      "lines_total": 67921
+    },
+    "before": {
+      "bytes_total": 3770143,
+      "files": 64,
+      "lines_total": 67918
+    },
+    "delta": {
+      "bytes_total": 270,
+      "files": 0,
+      "lines_total": 3
+    }
+  },
+  "whole_source_transform": true
+}

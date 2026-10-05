@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "This closes direct path/visible-footprint scope only",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "status": 0,
+  "stdout": "commit d7358d27c3fd89f8debcc378ede785d7c8946276\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 11:02:29 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2.1: qualify direct Value failure paths\n    \n    Derive active function order and complete source argument roles from qualified inputs and predicate events. Join captured visible footprints and reject eight intended-cause corruptions.\n    \n    Original/book tests pass 3 files/318 assertions; fresh whole sealed proof, source/aggregate/rendered checks pass. Metadata/inherited/display/coordinate/address and broader repair legs remain owned. Push stays deferred.\n",
+  "stderr": ""
+}

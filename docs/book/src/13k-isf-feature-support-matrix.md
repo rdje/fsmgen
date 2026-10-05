@@ -503,8 +503,11 @@ The [direct value paths](../../../docs/audits/record-value-original-value-frames
 now derive active value-validation function order and source argument roles
 from qualified inputs. Captured visible argument footprints agree; exact trace
 formatting, unprinted arguments and live reference identity remain open.
-Recursive metadata and inherited API paths, full outer frame meaning, raw
-coordinates and native address meanings, consumer
+The [metadata paths](../../../docs/audits/record-value-original-metadata-frames-20261005/scope.txt)
+now qualify the finite metadata guard and record-member recursion projection from
+type inputs, including cyclic traversal. Visible path and argument footprints
+agree. Inherited API catches/rethrows, full outer frame meaning, exact display,
+raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

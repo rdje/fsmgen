@@ -1,0 +1,5383 @@
+{
+  "controls": [
+    {
+      "cause": "exact metadata source guard statement",
+      "control": "wrong-metadata-guard",
+      "status": 1
+    },
+    {
+      "cause": "exact metadata source recursion statement",
+      "control": "wrong-member-recursion",
+      "status": 1
+    },
+    {
+      "cause": "complete metadata source path models",
+      "control": "changed-intended-path-role",
+      "status": 1
+    },
+    {
+      "cause": "complete metadata source path models",
+      "control": "omitted-metadata-case",
+      "status": 1
+    },
+    {
+      "cause": "source-derived metadata active frame order",
+      "control": "wrong-active-metadata-function",
+      "status": 1
+    },
+    {
+      "cause": "source-derived metadata active frame order",
+      "control": "omitted-recursive-frame",
+      "status": 1
+    },
+    {
+      "cause": "direct Value source scalar argument footprint",
+      "control": "wrong-recursive-path",
+      "status": 1
+    },
+    {
+      "cause": "direct Value reference argument footprint",
+      "control": "wrong-path-sink-kind",
+      "status": 1
+    }
+  ],
+  "footprints": [
+    {
+      "cases": [
+        {
+          "index": 7750,
+          "raw_error": {
+            "bytes": 5933,
+            "sha256": "f5e8bd26bd19af43cc822d10c5f466d69e9f7e12d42461ba6d447655fe995e9d"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7839,
+          "raw_error": {
+            "bytes": 3371,
+            "sha256": "2b41b6f69e2045b2cf609245fa8d2ac80a4a561dc69bc3063992be1d5804045d"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7840,
+          "raw_error": {
+            "bytes": 6110,
+            "sha256": "bdfa4b7a8260448823bb9e5f1cb461376ddcd70b2d1fc4a8e840e01e9389e8b7"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved signed property"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7929,
+          "raw_error": {
+            "bytes": 3542,
+            "sha256": "5e33ccf14eacad72c71f6f0f8dd376c8880b677b0f7bc0b99fc91193dbae3472"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved signed property"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8279,
+          "raw_error": {
+            "bytes": 6054,
+            "sha256": "9c03563ca2923845b8a101bf151912fcee8a600452319e1ea87bbfedfe385fd8"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved state model"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8368,
+          "raw_error": {
+            "bytes": 3510,
+            "sha256": "d7c9e6c62cbc9c008b1d707bbc7b8ff118482c8ad47f860611b969042461f032"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved state model"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8369,
+          "raw_error": {
+            "bytes": 5943,
+            "sha256": "44154f66eee71f93e21f98eda487ac4304a9f54e04a5b53eefd384df556b54b6"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8458,
+          "raw_error": {
+            "bytes": 3363,
+            "sha256": "cff22ba785001c35b6ca248605e80237972ed27420e4cd6a66cb216287c6e10f"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8459,
+          "raw_error": {
+            "bytes": 5924,
+            "sha256": "e037fe9830f00421a580e6ab7ddd1916021cec25d970432936011e0802af3651"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "record member inventory disagrees"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8548,
+          "raw_error": {
+            "bytes": 3352,
+            "sha256": "d03c6e84ec4f2cc2f3d44420339c7f0aa7497eb0b20984793d9f6ca6c3f17081"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "record member inventory disagrees"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8549,
+          "raw_error": {
+            "bytes": 6091,
+            "sha256": "31b64fdbcac5a1f3a4c4f90e959e1de76832f7866049ad2fa6a59e10d5bc2a65"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "cyclic resolved type"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8638,
+          "raw_error": {
+            "bytes": 3521,
+            "sha256": "49676e0fcfcac0d12d81b9bfe13023347bd6eb7c306b6e123a0aad3998959e0d"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "cyclic resolved type"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8639,
+          "raw_error": {
+            "bytes": 5954,
+            "sha256": "660c8578502bd5a6c08d05880d149eda8c69cd43ca9ca8ff0f9b4d28d2345320"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8728,
+          "raw_error": {
+            "bytes": 3364,
+            "sha256": "2bfea65f329342f146abb4e225bb9cf5db5d99899581f64d9ba9405a0dc1d7c9"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        }
+      ],
+      "mode": "ordinary"
+    },
+    {
+      "cases": [
+        {
+          "index": 7750,
+          "raw_error": {
+            "bytes": 5933,
+            "sha256": "fae9d0eb5a693a8f519174b1aa3574ebdef6bf580ca5fefcc3f617cdbe7d4bfb"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7839,
+          "raw_error": {
+            "bytes": 3371,
+            "sha256": "ae4ff0cf10119c3ab3cb16443325eab739e0a2250c33304d1a7cce63333864cc"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7840,
+          "raw_error": {
+            "bytes": 6110,
+            "sha256": "c63c743fa7485709d7c2167f8675bc4da3a8d4eaff5bb5d77a8b7d532b1c209f"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved signed property"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7929,
+          "raw_error": {
+            "bytes": 3542,
+            "sha256": "0a9e8b977f38f769d51af6aebdf866dfe85186419230e4276ba7c28215056a08"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved signed property"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8279,
+          "raw_error": {
+            "bytes": 6054,
+            "sha256": "9c27c20bf6ee120274a5e9167e3c7ec8e67421bd2194ae99298569f271632e88"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved state model"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8368,
+          "raw_error": {
+            "bytes": 3510,
+            "sha256": "c97b1c2067c8ddda86901597c2e98d4b8334e94f2ef43b38f2b1b6d70e13fa61"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved state model"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8369,
+          "raw_error": {
+            "bytes": 5943,
+            "sha256": "19493fe9853ced1e32d571a3b2f9bd4b80ce916b6c94917cea2fb98abc67cc21"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8458,
+          "raw_error": {
+            "bytes": 3363,
+            "sha256": "ab3252c0f4a2948a00c66a02e55be38d019303075044575e2bed08e5537b444a"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8459,
+          "raw_error": {
+            "bytes": 5924,
+            "sha256": "11f48574f6e83e47fcdd8061f821fd7260ade1f5a8ae9e64d94b4b932673cd23"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "record member inventory disagrees"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8548,
+          "raw_error": {
+            "bytes": 3352,
+            "sha256": "442780eb5bff4a0bb3b4d55bce0ca1419e4cf9b71d1e14c3646c7949324cc464"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "record member inventory disagrees"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8549,
+          "raw_error": {
+            "bytes": 6091,
+            "sha256": "ab21a5b208080b7e23a8b92c3afc8017a95c57b99219cb67139f88e90f28a52a"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "cyclic resolved type"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8638,
+          "raw_error": {
+            "bytes": 3521,
+            "sha256": "b4374b38b51ca9ac2ebb4b0b5bed0aef5beafd3c7d8b44acf2f0598edb654ba5"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "cyclic resolved type"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8639,
+          "raw_error": {
+            "bytes": 5954,
+            "sha256": "5fae8bc24c2cbf7c6d36b3312ccb9f7763ec40872a13f772bf2c835d907e5601"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8728,
+          "raw_error": {
+            "bytes": 3364,
+            "sha256": "69cf24f34257ecad2e4c21945058b24de02b73d59584ae940d6e0d78035881d5"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        }
+      ],
+      "mode": "storable"
+    },
+    {
+      "cases": [
+        {
+          "index": 7750,
+          "raw_error": {
+            "bytes": 5933,
+            "sha256": "ae20a81a9090bd8824f0f26ebcd69880611f1171e928b1102e602e2bcd2c9d70"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7839,
+          "raw_error": {
+            "bytes": 3371,
+            "sha256": "2decee02a18719b89f07c7e1ba32185cf3adb8465a37c77ee3edd7ee23b44c45"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7840,
+          "raw_error": {
+            "bytes": 6110,
+            "sha256": "6186b5b7271096a5e67375bb50cf874d071abcc670eb6eb7f53441fe9e9ad17d"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved signed property"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 7929,
+          "raw_error": {
+            "bytes": 3542,
+            "sha256": "956f8832da123fe108af7192ffe95a108a0bd466ab5507599b9aa07a788b36bf"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved signed property"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8279,
+          "raw_error": {
+            "bytes": 6054,
+            "sha256": "dfd28d08711c65c7d09e475289e229d8ffb9247052e7e5b50161c460667c490e"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved state model"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8368,
+          "raw_error": {
+            "bytes": 3510,
+            "sha256": "5192b6bbe926be71d6190f0327e35758e99192a2c9650ef7cdf4037fa626eef6"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid resolved state model"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8369,
+          "raw_error": {
+            "bytes": 5943,
+            "sha256": "b88578c0482541f4d24c4dc50405e259e3e8d3d6a56ad6d2be262f8fa69fec09"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8458,
+          "raw_error": {
+            "bytes": 3363,
+            "sha256": "28c768fd7792f7a06fbd8dc0fe00b476e179313c608e8691741ddafa6fa8df9e"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8459,
+          "raw_error": {
+            "bytes": 5924,
+            "sha256": "ff861dcc95b449e7234a164a3e4cdeeb2266ff2ecdf3af6841f22215365d1dbc"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "record member inventory disagrees"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8548,
+          "raw_error": {
+            "bytes": 3352,
+            "sha256": "390f8d742363a89f49942068bba981f5c20e6ccc20693bba18700cd91ec29ec8"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "record member inventory disagrees"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8549,
+          "raw_error": {
+            "bytes": 6091,
+            "sha256": "63bb1cfb4c9d478f3f052680137c87ff8b425a54f758213f610e01297291174d"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "cyclic resolved type"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8638,
+          "raw_error": {
+            "bytes": 3521,
+            "sha256": "15afe14e070ea987bbd1830756e41a762a7261514e4d212d351b2c275641dfc6"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "cyclic resolved type"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8639,
+          "raw_error": {
+            "bytes": 5954,
+            "sha256": "e8ac75943c72a599caf654e5609450c550d60d24008fb692dda646e73305a32a"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        },
+        {
+          "index": 8728,
+          "raw_error": {
+            "bytes": 3364,
+            "sha256": "d874d51956a302ae2cc70579e52bc186c4b13fd7c4d3024c3f9e14fa0a29c0cb"
+          },
+          "visible_argument_footprints": [
+            [
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "0"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              },
+              {
+                "kind": "scalar",
+                "truncated": false,
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ],
+            [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH"
+              }
+            ]
+          ]
+        }
+      ],
+      "mode": "controls"
+    }
+  ],
+  "models": [
+    {
+      "cases": [
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "resolved aggregate width disagrees with members"
+                }
+              ],
+              "call_site": "metadata_type.12",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.12",
+          "index": 7750,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "resolved aggregate width disagrees with members"
+                }
+              ],
+              "call_site": "metadata_type.12",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.12",
+          "index": 7839,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved signed property"
+                }
+              ],
+              "call_site": "metadata_type.5",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.5",
+          "index": 7840,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved signed property"
+                }
+              ],
+              "call_site": "metadata_type.5",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.5",
+          "index": 7929,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "primary": "Invalid ISF interface port metadata: invalid resolved signed property"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved state model"
+                }
+              ],
+              "call_site": "metadata_type.6",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.6",
+          "index": 8279,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved state model"
+                }
+              ],
+              "call_site": "metadata_type.6",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.6",
+          "index": 8368,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "primary": "Invalid ISF interface port metadata: invalid resolved state model"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid or duplicate record member"
+                }
+              ],
+              "call_site": "metadata_type.9",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.9",
+          "index": 8369,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid or duplicate record member"
+                }
+              ],
+              "call_site": "metadata_type.9",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.9",
+          "index": 8458,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "primary": "Invalid ISF interface port metadata: invalid or duplicate record member"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "record member inventory disagrees"
+                }
+              ],
+              "call_site": "metadata_type.8",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.8",
+          "index": 8459,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "record member inventory disagrees"
+                }
+              ],
+              "call_site": "metadata_type.8",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.8",
+          "index": 8548,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "primary": "Invalid ISF interface port metadata: record member inventory disagrees"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "cyclic resolved type"
+                }
+              ],
+              "call_site": "metadata_type.2",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.2",
+          "index": 8549,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "cyclic resolved type"
+                }
+              ],
+              "call_site": "metadata_type.2",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.2",
+          "index": 8638,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "primary": "Invalid ISF interface port metadata: cyclic resolved type"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "unsupported resolved type kind"
+                }
+              ],
+              "call_site": "metadata_type.unsupported",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.unsupported",
+          "index": 8639,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "unsupported resolved type kind"
+                }
+              ],
+              "call_site": "metadata_type.unsupported",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.unsupported",
+          "index": 8728,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "primary": "Invalid ISF interface port metadata: unsupported resolved type kind"
+        }
+      ],
+      "mode": "ordinary"
+    },
+    {
+      "cases": [
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "resolved aggregate width disagrees with members"
+                }
+              ],
+              "call_site": "metadata_type.12",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.12",
+          "index": 7750,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "resolved aggregate width disagrees with members"
+                }
+              ],
+              "call_site": "metadata_type.12",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.12",
+          "index": 7839,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved signed property"
+                }
+              ],
+              "call_site": "metadata_type.5",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.5",
+          "index": 7840,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved signed property"
+                }
+              ],
+              "call_site": "metadata_type.5",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.5",
+          "index": 7929,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "primary": "Invalid ISF interface port metadata: invalid resolved signed property"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved state model"
+                }
+              ],
+              "call_site": "metadata_type.6",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.6",
+          "index": 8279,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved state model"
+                }
+              ],
+              "call_site": "metadata_type.6",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.6",
+          "index": 8368,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "primary": "Invalid ISF interface port metadata: invalid resolved state model"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid or duplicate record member"
+                }
+              ],
+              "call_site": "metadata_type.9",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.9",
+          "index": 8369,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid or duplicate record member"
+                }
+              ],
+              "call_site": "metadata_type.9",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.9",
+          "index": 8458,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "primary": "Invalid ISF interface port metadata: invalid or duplicate record member"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "record member inventory disagrees"
+                }
+              ],
+              "call_site": "metadata_type.8",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.8",
+          "index": 8459,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "record member inventory disagrees"
+                }
+              ],
+              "call_site": "metadata_type.8",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.8",
+          "index": 8548,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "primary": "Invalid ISF interface port metadata: record member inventory disagrees"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "cyclic resolved type"
+                }
+              ],
+              "call_site": "metadata_type.2",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.2",
+          "index": 8549,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "cyclic resolved type"
+                }
+              ],
+              "call_site": "metadata_type.2",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.2",
+          "index": 8638,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "primary": "Invalid ISF interface port metadata: cyclic resolved type"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "unsupported resolved type kind"
+                }
+              ],
+              "call_site": "metadata_type.unsupported",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.unsupported",
+          "index": 8639,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "unsupported resolved type kind"
+                }
+              ],
+              "call_site": "metadata_type.unsupported",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.unsupported",
+          "index": 8728,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "primary": "Invalid ISF interface port metadata: unsupported resolved type kind"
+        }
+      ],
+      "mode": "storable"
+    },
+    {
+      "cases": [
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "resolved aggregate width disagrees with members"
+                }
+              ],
+              "call_site": "metadata_type.12",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.12",
+          "index": 7750,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "resolved aggregate width disagrees with members"
+                }
+              ],
+              "call_site": "metadata_type.12",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.12",
+          "index": 7839,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved signed property"
+                }
+              ],
+              "call_site": "metadata_type.5",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.5",
+          "index": 7840,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved signed property"
+                }
+              ],
+              "call_site": "metadata_type.5",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.5",
+          "index": 7929,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "primary": "Invalid ISF interface port metadata: invalid resolved signed property"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved state model"
+                }
+              ],
+              "call_site": "metadata_type.6",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.6",
+          "index": 8279,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid resolved state model"
+                }
+              ],
+              "call_site": "metadata_type.6",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.6",
+          "index": 8368,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "primary": "Invalid ISF interface port metadata: invalid resolved state model"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid or duplicate record member"
+                }
+              ],
+              "call_site": "metadata_type.9",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.9",
+          "index": 8369,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "invalid or duplicate record member"
+                }
+              ],
+              "call_site": "metadata_type.9",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.9",
+          "index": 8458,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "primary": "Invalid ISF interface port metadata: invalid or duplicate record member"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "record member inventory disagrees"
+                }
+              ],
+              "call_site": "metadata_type.8",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.8",
+          "index": 8459,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "record member inventory disagrees"
+                }
+              ],
+              "call_site": "metadata_type.8",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.8",
+          "index": 8548,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "primary": "Invalid ISF interface port metadata: record member inventory disagrees"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "cyclic resolved type"
+                }
+              ],
+              "call_site": "metadata_type.2",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.2",
+          "index": 8549,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "cyclic resolved type"
+                }
+              ],
+              "call_site": "metadata_type.2",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:.data"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ".data"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "member_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.2",
+          "index": 8638,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "primary": "Invalid ISF interface port metadata: cyclic resolved type"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "unsupported resolved type kind"
+                }
+              ],
+              "call_site": "metadata_type.unsupported",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.unsupported",
+          "index": 8639,
+          "kind": "scope",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind"
+        },
+        {
+          "frames": [
+            {
+              "arguments": [
+                {
+                  "kind": "false_predicate",
+                  "role": "failed_predicate"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "diagnostic_message",
+                  "value": "unsupported resolved type kind"
+                }
+              ],
+              "call_site": "metadata_type.unsupported",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "resolved_type_at:"
+                },
+                {
+                  "kind": "scalar",
+                  "role": "member_path",
+                  "value": ""
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "ARRAY",
+                  "role": "scalar_path_sink"
+                },
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "active_type_path"
+                }
+              ],
+              "call_site": "capture_paths",
+              "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+            },
+            {
+              "arguments": [
+                {
+                  "kind": "reference",
+                  "reference_kind": "HASH",
+                  "role": "declared_interface"
+                }
+              ],
+              "call_site": "observer_operation",
+              "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+            }
+          ],
+          "guard": "metadata_type.unsupported",
+          "index": 8728,
+          "kind": "capture",
+          "metadata_primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "primary": "Invalid ISF interface port metadata: unsupported resolved type kind"
+        }
+      ],
+      "mode": "controls"
+    }
+  ],
+  "scope": "Finite metadata frame projection and visible footprints; inherited API, actual reference identity and full display/trace meanings remain open."
+}

@@ -1,0 +1,45 @@
+{
+  "status": 0,
+  "scope": "Local source model and footprint check only; complete prerequisite and controls reexecution follows.",
+  "summary": [
+    {
+      "mode": "ordinary",
+      "cases": 14,
+      "guards": [
+        "metadata_type.12",
+        "metadata_type.2",
+        "metadata_type.5",
+        "metadata_type.6",
+        "metadata_type.8",
+        "metadata_type.9",
+        "metadata_type.unsupported"
+      ]
+    },
+    {
+      "mode": "storable",
+      "cases": 14,
+      "guards": [
+        "metadata_type.12",
+        "metadata_type.2",
+        "metadata_type.5",
+        "metadata_type.6",
+        "metadata_type.8",
+        "metadata_type.9",
+        "metadata_type.unsupported"
+      ]
+    },
+    {
+      "mode": "controls",
+      "cases": 14,
+      "guards": [
+        "metadata_type.12",
+        "metadata_type.2",
+        "metadata_type.5",
+        "metadata_type.6",
+        "metadata_type.8",
+        "metadata_type.9",
+        "metadata_type.unsupported"
+      ]
+    }
+  ]
+}
