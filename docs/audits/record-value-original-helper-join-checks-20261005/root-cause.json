@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "-S",
+    "Compiled original callback/refusal roles",
+    "--",
+    "docs/audits/record-value-original-callback-paths-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "commit de279ec5dbae65e8193fe700e4a217f17a968e90\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 15:40:24 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3.2: qualify compiled callback refusal paths\n    \n    Derive complete source callback/eval/refuses/helper-wrapper roles and\n    visible CODE/regex-body/label displays through both nested throw phases.\n    Keep full helper join, framework/formatting and native identity open.\n    \n    Full current and sealed readers pass with fourteen rejecting controls and\n    exact programme/model/proof/manifest pins. Original/book318 tests, source/\n    aggregate/rendered checks and Knowledge Map pass. Record initial resource\n    stop and unchanged-limit successful retry; repair doc authoring preconditions\n    without changing facts or limits. Push remains deferred.\n",
+  "stderr": "ram-guard: PID 12539; host 71.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

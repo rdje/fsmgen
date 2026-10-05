@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-helper-join-checks-20261005/verify_receipt.py"
+  ],
+  "status": 0,
+  "stdout": "PASS exact fresh invoked helper-join programme/proof/manifest receipt; actual older successful programme identity rejects.\n",
+  "stderr": "ram-guard: PID 11776; host 64.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

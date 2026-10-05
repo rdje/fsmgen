@@ -1,0 +1,42 @@
+{
+  "binding.json": {
+    "bytes": 1290699,
+    "sha256": "a3c464f371f28aee170e50e2739042a8476788de5a61bb6c7d28eaa300ab8df0"
+  },
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "d313422c03313163072d0a7ecfaa321a0886c56fccec74515d6166c939dde79d"
+  },
+  "book-transform.json": {
+    "bytes": 341759,
+    "sha256": "2acd5af385ac2f92761642a426925bc91a93f488e53b24c5770acdabbe7bc1be"
+  },
+  "initial-overbound-fact.txt": {
+    "bytes": 6192,
+    "sha256": "744901a939f1f1402d9ba25956750d49b5177bb989ed198063f8dd598832babd"
+  },
+  "knowledge-transform.json": {
+    "bytes": 16757,
+    "sha256": "5597411dcc0fbd32fb9cefe10b2ed2730d98ac3538594b92bcd3113aa3764d59"
+  },
+  "proofs.json": {
+    "bytes": 4139187,
+    "sha256": "04301a6c3c33807e1e52830e0dc601b0c0642ac2539828c111fab86960743566"
+  },
+  "scope.txt": {
+    "bytes": 4384,
+    "sha256": "80e16f8b3cf622ed2ee6ac2d2b7ba329e15fd560ad02909c0d4854af5cddf437"
+  },
+  "verify.py": {
+    "bytes": 12913,
+    "sha256": "0191cddf0b41cbb30118423601ce71f64ca6af8b4376fd1d2e7185021d79cab6"
+  },
+  "verify_book.py": {
+    "bytes": 2555,
+    "sha256": "aff5fade029da4e6478b65e45d88959c38b80008898d6ba04c9914043ea5ccd9"
+  },
+  "verify_knowledge.py": {
+    "bytes": 2918,
+    "sha256": "76dc0a72539b0ccc4c063668a1f1c30c4c767c2452bb98b982e104ac83cb3e39"
+  }
+}

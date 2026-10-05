@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-helper-join-20261005/verify_knowledge.py"
+  ],
+  "status": 0,
+  "stdout": "PASS complete original fact/question preservation and exact semantic partition; actual source/member/identity corruptions reject.\n",
+  "stderr": "ram-guard: PID 12237; host 71.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

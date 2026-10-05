@@ -34,11 +34,11 @@ evidence: >-
   docs/audits/record-value-copy-probe-join-20261004/scope.txt;
   docs/audits/record-value-copy-reader-20261004/scope.txt;
   docs/audits/record-value-copy-reader-20261004/replay.py;
-  docs/audits/record-value-original-callback-paths-20261005/scope.txt;
+  docs/audits/record-value-original-helper-join-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-callback-paths-20261005/verify.py &&
+  docs/audits/record-value-original-helper-join-20261005/verify.py &&
   python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-copy-reader-20261004/replay.py
@@ -89,7 +89,7 @@ source argument roles. The parser receiver role is declared; identity is unmeasu
 Named helper models preserve supplied/default inputs, complete source graphs,
 returned argument-building calls and active paths through both throw phases.
 Compiled callback/refuses/helper-wrapper paths bind parameterless operation,
-source regex-body and label displays; identity and full formatting remain open.
+source regex-body and label displays; identity and full formatting remain open. Paths now join.
 Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/
 candidate-parent, hot and host-native meanings remain open.
 

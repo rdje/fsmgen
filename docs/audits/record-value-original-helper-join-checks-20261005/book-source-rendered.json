@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-helper-join-20261005/verify_book.py"
+  ],
+  "status": 0,
+  "stdout": "PASS whole book source/replacement/aggregate and rendered complete-helper/open-framework guidance; visual QA remains pending.\n",
+  "stderr": "ram-guard: PID 39740; host 63.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -1,0 +1,6 @@
+{
+  "status": 1,
+  "stderr": "AssertionError: ('fact must partition before growth', 6192)",
+  "proposed_card": "docs/audits/record-value-original-helper-join-20261005/initial-overbound-fact.txt",
+  "outcome": "Authoring precondition refused the overbound write; atomic semantic partition preserves all prior observer/helper facts and questions."
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "-S",
+    "Compiled original callback/refusal roles",
+    "--",
+    "docs/audits/record-value-original-callback-paths-20261005/verify.py"
+  ],
+  "status": 2,
+  "stdout": "",
+  "stderr": "ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval\n"
+}

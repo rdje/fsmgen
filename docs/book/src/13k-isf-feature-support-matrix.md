@@ -535,8 +535,12 @@ separate from the helper active at the throw. Named helper paths and visible
 argument roles agree through both nested throw phases. The [compiled callback paths](../../../docs/audits/record-value-original-callback-paths-20261005/scope.txt)
 now bind the parameterless original callback, refuses eval, compiled helper and
 installed helper wrapper. Visible operation-kind, regex-body and label displays
-agree with independently authored source roles through both throw phases. Full
-helper/callback join, public framework meaning, exact display, raw coordinates and native address meanings, consumer
+agree with independently authored source roles through both throw phases. The [complete helper join](../../../docs/audits/record-value-original-helper-join-20261005/scope.txt)
+now binds every source helper allocation, supplied/default input and returned
+argument-building operation to its compiled callback/refusal path. Complete active
+paths and visible argument roles agree through both nested throw phases; returned
+helpers are excluded from active paths. Public framework meaning, exact display,
+raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

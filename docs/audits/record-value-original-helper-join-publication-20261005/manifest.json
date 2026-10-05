@@ -1,0 +1,10 @@
+{
+  "knowledge-publication.json": {
+    "bytes": 21369,
+    "sha256": "27557936fc95946cf40a690721f02ac8becffac112f28652397ab3b2340d6c5c"
+  },
+  "verify.py": {
+    "bytes": 3068,
+    "sha256": "fdd48eb56d6e431c8896ee27055a0a03d079dbb5f230f5a01447aa56ae50028e"
+  }
+}

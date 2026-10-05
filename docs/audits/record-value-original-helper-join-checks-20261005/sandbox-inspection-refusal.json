@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-helper-join-20261005/verify.py"
+  ],
+  "status": 2,
+  "stdout": "",
+  "stderr": "ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval\n"
+}

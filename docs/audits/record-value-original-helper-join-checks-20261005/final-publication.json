@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-helper-join-publication-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS whole original facts/questions and bounded helper-join signpost; attempted topic partition retains exactly as historical evidence, owned collection rollover remains open.\n",
+  "stderr": "ram-guard: PID 36652; host 66.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
