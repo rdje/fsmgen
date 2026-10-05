@@ -499,7 +499,12 @@ publisher policy. Genuine object exceptions with the same printable message
 retain their class and fail that publisher. This is a source/contract inference;
 the original capture did not measure class before serialization. The provider
 version comes from its runtime accessor because the historical POD label is stale.
-Full frame meaning, raw coordinates and native address meanings, consumer
+The [direct value paths](../../../docs/audits/record-value-original-value-frames-20261005/scope.txt)
+now derive active value-validation function order and source argument roles
+from qualified inputs. Captured visible argument footprints agree; exact trace
+formatting, unprinted arguments and live reference identity remain open.
+Recursive metadata and inherited API paths, full outer frame meaning, raw
+coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

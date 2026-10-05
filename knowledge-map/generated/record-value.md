@@ -1,7 +1,7 @@
 # Knowledge Map: `record-value`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **15** uniquely owned question entries.
+> **1** facts · **16** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,6 +12,7 @@
 - q="do original T1986 candidate API results match their source models?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="how can the finite copy probes be replayed without changing sealed evidence?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies current original T1986 copied fields and source candidates?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
+- q="what qualifies direct original Value failure frames?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies finite original exception classes?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original T1986 candidate copy graphs?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original T1986 candidate input and private graphs?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)

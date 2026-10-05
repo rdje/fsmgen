@@ -1,0 +1,28 @@
+{
+  "rendered_markers": [
+    "now derive active value-validation function order and source argument roles from qualified inputs.",
+    "Captured visible argument footprints agree; exact trace formatting, unprinted arguments and live reference identity remain open.",
+    "Recursive metadata and inherited API paths"
+  ],
+  "revision": "b1d00a72c8e4e8ae2685434cfa9a33b2b6c07f72",
+  "source_whole_transform": true,
+  "status": 0,
+  "visual_QA": "pending",
+  "whole_aggregate": {
+    "after": {
+      "bytes_total": 3770143,
+      "files": 64,
+      "lines_total": 67918
+    },
+    "before": {
+      "bytes_total": 3769764,
+      "files": 64,
+      "lines_total": 67913
+    },
+    "delta": {
+      "bytes_total": 379,
+      "files": 0,
+      "lines_total": 5
+    }
+  }
+}

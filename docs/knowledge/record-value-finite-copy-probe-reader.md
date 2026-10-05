@@ -17,6 +17,7 @@ answers:
   - "are complete original T1986 raw error bodies inventoried?"
   - "what qualifies finite original exception classes?"
   - "why does JSON PP documentation say version 4.05?"
+  - "what qualifies direct original Value failure frames?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -44,11 +45,11 @@ evidence: >-
   docs/audits/record-value-original-contexts-20261005/verify.py;
   docs/audits/record-value-original-primary-20261005/scope.txt;
   docs/audits/record-value-original-primary-20261005/verify.py;
-  docs/audits/record-value-original-class-20261005/scope.txt;
+  docs/audits/record-value-original-value-frames-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-class-20261005/verify.py &&
+  docs/audits/record-value-original-value-frames-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-original-products-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
@@ -69,29 +70,27 @@ within-capture identity for the two observed empty blessed classes. This is
 refusal evidence, not native-class copying or structured-clone cycle support.
 Graph/cause/identity mutations and changed whole program authority reject.
 
-Replay creates a fresh same-volume fixture with exact pinned sources. Whole
-native records and both output streams remain retained; addresses keep their
-actual per-capture lifetimes. Sealed producers never run in their own archive.
-The finite join now authenticates exact completed owners and complete fresh
-products. Original candidate captures now retain complete unchanged-input
-Storable/alias trials and the full alias run's downstream mutation and abort.
-Independent typed source models now qualify the unchanged-original copy
-graphs and genuine provider trials, including readonly and detachment. Whole
-API/parser results now qualify against their own source models; private-source
-allocations conserve. Source-copy interventions now independently rebuild
-complete input/private typed graphs, readonly copies and detachment. The known
-private range sibling changes string width2 to number2; its outer value caller
-stays unchanged through a detached private copy. Every current copied width
-now joins its whole raw type, ancestor/carrier/default/metadata roles and
-compatible source-candidate set. The input/private join now closes complete
-graph/field/source/context/raw-kind/detachment semantics for the captured
-unchanged-input modes. The finite source-context reader now qualifies exact
-helper/consumer/parser locations, complete parser texts and own operation
-spans. Source context does not establish primary cause or consumer operand
-truth. The independent finite primary model now derives every original
-API/helper/parser first cause and acceptance from qualified own source inputs.
+Fresh same-volume replay uses pinned sources and retains all native records
+and both streams. Addresses have per-capture lifetimes; sealed producers run
+elsewhere. The finite join authenticates completed owners and fresh products.
+Original captures retain unchanged-input Storable/alias trials and the full
+alias run’s downstream mutation/abort. Independent typed models qualify
+original copy graphs, genuine trials, readonly and detachment. Whole API/parser
+results match source models; private-source allocations conserve. Independently
+modeled copy interventions rebuild full input/private typed graphs, readonly
+copies and detached outputs. The known private range sibling changes string
+width2 to number2; its outer caller stays unchanged through a detached private copy.
+Every copied width joins the full raw type, carrier/default/metadata roles,
+ancestor context and compatible-source set. The input/private join qualifies
+whole graph/field/source/context/raw-kind/detachment meanings for the captured
+modes. Finite source-context models qualify helper/consumer/parser locations,
+complete parser texts and operation spans, separately from cause/operand truth.
+Independent primary models derive each API/helper/parser first cause and
+acceptance from qualified source inputs.
 Raw inventory qualifies complete bodies and lossless grammar. Source/publisher
 contracts infer unblessed scalar errors for this finite capture; original classes
 were not measured. The old POD4.05 label is stale; runtime JSON::PP4.06 owns
-version identity. Frame/coordinate/address, consumer, alias/semantic/cold/
-candidate-parent, hot repair and host-native refusal meanings remain open.
+version identity. Direct Value paths now derive active function order and
+source argument roles; captured visible type/scalar footprints agree. Recursive
+metadata/inherited API paths, full display/frame/coordinate/address, consumer,
+alias/semantic/cold/candidate-parent, hot and host-native meanings remain open.
