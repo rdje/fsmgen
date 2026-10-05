@@ -1,0 +1,34 @@
+{
+  "binding.json": {
+    "bytes": 1285018,
+    "sha256": "52d7c3af79490592b175d7ce8e746b9a5cea719f6c10104455f6657d209b9064"
+  },
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "81c1bce9e2cd6876dd99aebc07e63a6eedd8315a38325b286a0cacfa6b58e4fe"
+  },
+  "book-transform.json": {
+    "bytes": 341009,
+    "sha256": "95213c93a80aa7b7c59dafb3ec183a850727a7ff6a8038ae679d4af7cec8fa3f"
+  },
+  "frame_model.py": {
+    "bytes": 1906,
+    "sha256": "976f02b0c56d7f2cfa8816351d031186cb5db29f9177b8c64006598b3eeee20f"
+  },
+  "proofs.json": {
+    "bytes": 724433,
+    "sha256": "437d33384fb6146c6418956ec95d6777d24f8f6c11862655816d0251bdc5b9d5"
+  },
+  "scope.txt": {
+    "bytes": 3750,
+    "sha256": "8be0c2936f9aa0ba5e740465126b9755e7371e1365c6e5ae2bff2e55bbba6130"
+  },
+  "verify.py": {
+    "bytes": 14365,
+    "sha256": "eb0d42c4e464048b2f82d61ac94054770572daf492e7e96205af741c649f76a2"
+  },
+  "verify_book.py": {
+    "bytes": 2555,
+    "sha256": "ce31cd3a5441cef1a182f0db34cbcdb94ffd350f622e4b1315a84575d73d51cb"
+  }
+}

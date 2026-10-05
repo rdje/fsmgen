@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path\np=Path('docs/audits/record-value-original-callback-paths-20261005/verify.py');v={'__name__':'focused_callback_paths'};exec(compile(p.read_bytes(),str(p),'exec'),v)\ns=v['sources']();m=v['expected_models'](s);n=v['load'](v['direct']['classes']['RAW']/'proofs.json')['inventories'];v['check'](m,m,n,s)\nprint([(x['mode'],len(x['cases']),sum(len(c['paths']) for c in x['cases'])) for x in m])\nprint('PASS focused complete callback/refusal/helper-wrapper source paths and visible footprint comparison; full authenticated reexecution remains required')\n"
+  ],
+  "status": 0,
+  "stdout": "[('ordinary', 50, 57), ('storable', 50, 57), ('controls', 50, 57)]\nPASS focused complete callback/refusal/helper-wrapper source paths and visible footprint comparison; full authenticated reexecution remains required\n",
+  "stderr": ""
+}

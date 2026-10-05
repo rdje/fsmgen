@@ -26,6 +26,7 @@ answers:
   - "what inventories original observer and callback source roles?"
   - "what qualifies original observer API and parser operation boundaries?"
   - "what qualifies original named helper inputs defaults and active paths?"
+  - "what qualifies original compiled callback and refusal wrapper paths?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -33,25 +34,25 @@ evidence: >-
   docs/audits/record-value-copy-probe-join-20261004/scope.txt;
   docs/audits/record-value-copy-reader-20261004/scope.txt;
   docs/audits/record-value-copy-reader-20261004/replay.py;
-  docs/audits/record-value-original-named-helpers-20261005/scope.txt;
+  docs/audits/record-value-original-callback-paths-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-named-helpers-20261005/verify.py &&
+  docs/audits/record-value-original-callback-paths-20261005/verify.py &&
   python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-copy-reader-20261004/replay.py
 ---
 
-Separate models qualify full typed graph bijections, reachable reference counts,
-input/result sharing, readonly, kinds, cycles and detachment for this plain profile.
-Actual Storable, alias, split-sharing, cycle-alias, input-kind and result-kind
-providers reach their own expected assertions; non-target records conserve.
+Separate models qualify whole typed graph bijections, reachable reference counts,
+input/result sharing, readonly, kinds, cycles and detachment for the plain profile.
+Genuine Storable/alias/split-sharing/cycle-alias/input-kind/result-kind providers
+reach intended assertions; non-target records conserve.
 
-Native boundary records preserve complete raw causes, class, HASH shape and
-within-capture identity for the two observed empty blessed classes. This is
-refusal evidence, not native-class copying or structured-clone cycle support.
-Graph/cause/identity mutations and changed whole program authority reject.
+Native refusal records preserve whole causes, class, HASH shape and within-capture
+identity for both observed empty blessed classes. Native-class copying and
+structured-clone cycle support remain unqualified. Graph/cause/identity and whole
+programme mutations reject.
 
 Fresh same-volume replay uses pinned sources and retains all native records
 and both streams. Addresses have per-capture lifetimes; sealed producers run
@@ -70,14 +71,12 @@ modes. Finite source-context models qualify helper/consumer/parser locations,
 complete parser texts and operation spans, separately from cause/operand truth.
 Independent primary models derive each API/helper/parser first cause and
 acceptance from qualified source inputs.
-Raw inventory qualifies complete bodies and lossless grammar. Source/publisher
-contracts infer unblessed scalar errors for this finite capture; original classes
-were not measured. The old POD4.05 label is stale; runtime JSON::PP4.06 owns
-version identity. Direct Value paths now derive active function order and
-source argument roles; captured visible type/scalar footprints agree. Metadata
-models now qualify finite guard/record-recursion paths, including cycles. List
-recursion is bound but unexercised by these refusal frames. The nested input
-join now binds each failing Scope/capture pair and private root to the entire
+Raw bodies and lossless grammar qualify. Source/publisher contracts infer
+unblessed scalar errors for this finite capture; original classes were unmeasured.
+POD4.05 is stale; runtime JSON::PP4.06 owns version identity. Direct Value models
+bind active order and source roles to visible type/scalar footprints. Metadata
+guard/record-recursion paths qualify, including cycles; list recursion is bound
+but unexercised. Nested Scope/capture/private-root inputs bind the entire
 source-constructed interface graph, preserving kinds, sharing and cycles.
 Whole inner scalar forwarding now conserves the new outer prefix. Public die
 controls distinguish explicit rethrow, propagation and hook replacement. Original
@@ -89,8 +88,9 @@ Observer models join every API/parser operation, eval and installed wrapper with
 source argument roles. The parser receiver role is declared; identity is unmeasured.
 Named helper models preserve supplied/default inputs, complete source graphs,
 returned argument-building calls and active paths through both throw phases.
-Full observer/display/
-frame/coordinate/address, consumer,
-alias/semantic/cold/candidate-parent, hot and host-native meanings remain open.
+Compiled callback/refuses/helper-wrapper paths bind parameterless operation,
+source regex-body and label displays; identity and full formatting remain open.
+Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/
+candidate-parent, hot and host-native meanings remain open.
 
 Reverify runs the complete source chain and separate probe replay.

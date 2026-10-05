@@ -1,7 +1,7 @@
 # Knowledge Map: `record-value`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **24** uniquely owned question entries.
+> **1** facts · **25** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -22,6 +22,7 @@
 - q="what qualifies original T1986 candidate input and private graphs?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original T1986 candidate primary causes and acceptance?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original T1986 helper consumer and parser source contexts?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
+- q="what qualifies original compiled callback and refusal wrapper paths?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original metadata failure recursion frames?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original named helper inputs defaults and active paths?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original observer API and parser operation boundaries?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)

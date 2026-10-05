@@ -1,0 +1,17 @@
+{
+  "after": {
+    "bytes_total": 3773301,
+    "files": 64,
+    "lines_total": 67950
+  },
+  "before": {
+    "bytes_total": 3772965,
+    "files": 64,
+    "lines_total": 67947
+  },
+  "delta": {
+    "bytes_total": 336,
+    "files": 0,
+    "lines_total": 3
+  }
+}

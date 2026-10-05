@@ -1,0 +1,5 @@
+Fresh full sealed callback reader stopped137 under unchanged88% host/4096MiB descendant limits.
+Initial host83.3%; stop host88.5% reached cutoff88%.
+Guard terminated only its owned PID tree:23447 23498 42406.
+Source current-reader0/control proof14 and focused/book/KM0 retain, but fresh entire saved-proof reexecution remains required. Archive stays sealed and immutable. Wait for host capacity, then retry the identical reader under identical limits; no bypass or threshold change.
+Identical88%/4096MiB guarded retry started at host59.9% and completed0. Fresh sealed programme/model/proof/manifest pins verify; no archive change or guard bypass.
