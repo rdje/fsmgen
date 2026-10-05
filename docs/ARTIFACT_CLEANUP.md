@@ -1,3 +1,3 @@
 # Latest artifact cleanup
 
-2026-10-04T07:08:38+00:00 — Removed only two proved project-generated Python bytecode caches from sealed scope evidence after exact compiled-source/header/byte/hash recovery; cache residue absent and every original sealed member unchanged.
+2026-10-05T07:25:20.637128+00:00 — Removed nothing: own log/bin/bytecode and Rust locations censused; all artifacts retained because exact safe-disposal authority is unproved. Native/compiler/audit evidence and current book preserved.

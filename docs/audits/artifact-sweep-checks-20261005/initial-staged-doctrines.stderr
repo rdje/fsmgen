@@ -1,0 +1,58 @@
+knowledge-map: OK (1265 facts, 6949 unique questions, 7126 answer occurrences, 184 bounded topic shards; query parity verified)
+decision-records: authenticated originals, current records, compatibility and indexes verified
+decision-records: authenticated originals, current records, compatibility and indexes verified
+retired-changes-history: exact 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md recovery and zero live consumers verified
+retired-achievement-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md recovery and zero live consumers verified
+retired-roadmap-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md recovery and zero live consumers verified
+roadmap-history: exact activation source recovery and bounded live direction verified
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER omits direct children SEMANTIC-INTROSPECTION-MCP-FRONTIER.70
+[task-tree-integrity] active task-tree invariants failed
+live-doc-size: derived-state contract active_task_index_frontier core verifier failed (exit 1): scripts/check_task_tree_integrity.pl
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER omits direct children SEMANTIC-INTROSPECTION-MCP-FRONTIER.70
+[task-tree-integrity] active task-tree invariants failed
+live-doc-size: surface active_index currency active_task_tree_alignment core verifier failed (exit 1): scripts/check_task_tree_integrity.pl
+knowledge-map: OK (1265 facts, 6949 unique questions, 7126 answer occurrences, 184 bounded topic shards; query parity verified)
+knowledge-map: OK (1265 facts, 6949 unique questions, 7126 answer occurrences, 184 bounded topic shards; query parity verified)
+[doctrine] FAIL: LIVE-DOCUMENT-SIZE
+decision-records: authenticated originals, current records, compatibility and indexes verified
+decision-records: authenticated originals, current records, compatibility and indexes verified
+retired-changes-history: exact 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md recovery and zero live consumers verified
+retired-achievement-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md recovery and zero live consumers verified
+retired-roadmap-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md recovery and zero live consumers verified
+roadmap-history: exact activation source recovery and bounded live direction verified
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+knowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+isf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts
+engineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER omits direct children SEMANTIC-INTROSPECTION-MCP-FRONTIER.70
+[task-tree-integrity] active task-tree invariants failed
+live-doc-size: derived-state contract active_task_index_frontier core verifier failed (exit 1): scripts/check_task_tree_integrity.pl
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER omits direct children SEMANTIC-INTROSPECTION-MCP-FRONTIER.70
+[task-tree-integrity] active task-tree invariants failed
+live-doc-size: surface active_index currency active_task_tree_alignment core verifier failed (exit 1): scripts/check_task_tree_integrity.pl
+knowledge-map: OK (1265 facts, 6949 unique questions, 7126 answer occurrences, 184 bounded topic shards; query parity verified)
+knowledge-map: OK (1265 facts, 6949 unique questions, 7126 answer occurrences, 184 bounded topic shards; query parity verified)
+readme-entrypoint: common live-document size-containment check failed
+[doctrine] FAIL: README-ENTRYPOINT
+[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER omits direct children SEMANTIC-INTROSPECTION-MCP-FRONTIER.70
+[task-tree-integrity] active task-tree invariants failed
+[doctrine] FAIL: TASK-TREE-INTEGRITY
+claim-inventory: inventory drift; run scripts/check_claim_verification_inventory.pl --write
+[doctrine] FAIL: CLAIM-INVENTORY
+[doctrine] one or more doctrine checks failed

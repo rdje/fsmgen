@@ -1,0 +1,8 @@
+{
+  "command": [
+    "scripts/check_task_tree_integrity.pl"
+  ],
+  "status": 1,
+  "stderr": "[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER omits direct children SEMANTIC-INTROSPECTION-MCP-FRONTIER.70\n[task-tree-integrity] active task-tree invariants failed\n",
+  "stdout": ""
+}

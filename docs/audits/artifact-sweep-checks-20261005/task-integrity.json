@@ -1,0 +1,8 @@
+{
+  "command": [
+    "scripts/check_task_tree_integrity.pl"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "[task-tree-integrity] all active task-tree invariants hold (trees=8, nodes=2228, segments=3, compact_terminals=46, index_archives=1, migrations=1, acceptance_histories=2)\n"
+}

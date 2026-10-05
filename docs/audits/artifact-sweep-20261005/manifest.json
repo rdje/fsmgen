@@ -1,0 +1,26 @@
+{
+  "book-authority.json": {
+    "bytes": 258,
+    "sha256": "21c95246cef3a80e5af04ded501c47b2921d474fe7a3ff93be3125dddc044ef0"
+  },
+  "book-transform.json": {
+    "bytes": 92384,
+    "sha256": "e8de2af415bf50ab98af4f58ce850498fb47b31b11e279b9cff4ff549099e4fe"
+  },
+  "census.json": {
+    "bytes": 1957827,
+    "sha256": "b222e54c4b36837f92b207b0ec9de7f268170a668aca41ab96be30f34d0070d4"
+  },
+  "census.py": {
+    "bytes": 4641,
+    "sha256": "2eb188817d89aefeb88b533479deb5e61ada3dc627870a8c27d828982e018604"
+  },
+  "scope.txt": {
+    "bytes": 1319,
+    "sha256": "16f93505d9381831a79dcc35142ba0965bf2202e364e4db5ba0b324c116ca7b7"
+  },
+  "verify.py": {
+    "bytes": 4227,
+    "sha256": "4a827ff9fdfe8fbaae4b030cd4ce577e2572159b44f67f8a1c164e9dd945b631"
+  }
+}

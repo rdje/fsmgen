@@ -1,0 +1,6 @@
+{
+  "command": "scripts/run_with_ram_guard.sh -- bash -c (fixed read-only artifact census with repository-local receipts)",
+  "status": 137,
+  "stdout": "ram-guard: PID 82265; host 88.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nram-guard: host memory 88.2% reached cutoff 88%\nram-guard: terminating PID tree: 82265 82274\n",
+  "result": "No census.json or status receipt was produced; prior cleanup record remains unchanged. This failed invocation establishes no successful sweep."
+}

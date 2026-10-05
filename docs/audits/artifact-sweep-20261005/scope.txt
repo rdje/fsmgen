@@ -1,0 +1,19 @@
+Daily read-only artifact sweep — SEMANTIC-INTROSPECTION-MCP-FRONTIER.70
+
+Own repository regular same-volume .bin/.log/.pyc nodes are inventoried. Primary
+and nested Git metadata, symlink and foreign-volume boundaries are excluded.
+Conventional target and rust/target release/incremental/deps locations are
+inspected. The sweep retains every candidate because exact safe-disposal
+authority has not been established; the producer has no deletion operation.
+Native/compiler/audit evidence, current book and all censused artifacts remain.
+
+RE-DERIVATION: independent rg/os.walk complete filtered membership, dated node
+metadata and Rust populations; saved reader independently derives allocation,
+scope exclusions, Rust members and due interval from the retained capture and
+whole committed prior cleanup record. No artifact byte/hash claim follows.
+FALSIFICATION: saved-reader member omission, escaped path, fabricated deletion
+and non-due timestamp must reject at their own contracts. The initial guard
+trip is failed evidence; it does not establish a sweep or authorize relaxation.
+DURABILITY: full census, command/raw receipts, producer/reader/manifest, latest-
+only record, task/book and Git. A saved reader never re-executes the sealed
+producer or deletes files. Dated metadata is not future membership or absence.

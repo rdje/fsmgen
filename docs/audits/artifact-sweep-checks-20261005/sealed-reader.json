@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/artifact-sweep-20261005/verify.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "{\"controls\": [{\"cause\": \"independent complete rg/os.walk membership\", \"control\": \"member-omission\", \"status\": 1}, {\"cause\": \"repository-relative artifact scope\", \"control\": \"escaped-path\", \"status\": 1}, {\"cause\": \"read-only sweep cannot claim deletion\", \"control\": \"fabricated-deletion\", \"status\": 1}, {\"cause\": \"daily due interval\", \"control\": \"non-due-time\", \"status\": 1}], \"scope\": \"Dated read-only census; no artifact deletion or byte-hash claim.\", \"status\": 0}\n"
+}
