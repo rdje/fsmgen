@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-map-book-route-20261005/serve_probe.py",
+    "before"
+  ],
+  "status": 0,
+  "stdout": "PASS actual public before route: entry200, target404, missing404; own server stopped.\n",
+  "stderr": "ram-guard: PID 15303; host 72.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

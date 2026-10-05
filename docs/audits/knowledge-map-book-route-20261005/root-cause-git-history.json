@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md",
+    "--",
+    "docs/book/src/90-reference-map.md"
+  ],
+  "status": 0,
+  "stdout": "82b1e964595e92a8f29fffb108fadedba61ee0ae SEMANTIC-INTROSPECTION-MCP-FRONTIER.72.1.1: preserve Knowledge Map source bytes\n",
+  "stderr": ""
+}

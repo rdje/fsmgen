@@ -63,7 +63,7 @@ the same. The collection's containment allowance is a separate gate; passing
 one card's bounds does not authorize collection growth. An authoring script's
 local precondition does not establish an enforcement limit: use the checker,
 configuration and actual accepted and refused boundary cases. See
-[the Knowledge Map architecture](../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md)
+[the Knowledge Map architecture](#knowledge-map-architecture)
 and its public checker, `knowledge-map/scripts/check_knowledge_map.sh`.
 
 `CLAIM_VERIFICATION.md` defines what earns an actionable quantitative claim:
@@ -613,3 +613,7 @@ returns the original bytes. The check rejects altered originals, stale views,
 missing forwarding/index links and obsolete Knowledge Map body searches.
 These checks run through the live-document doctrine's projection verifier.
 The archive is read on demand, not loaded as part of every session bootstrap.
+
+<div id="knowledge-map-architecture"></div>
+
+{{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}

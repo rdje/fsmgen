@@ -1,0 +1,94 @@
+{
+  "docs/audits/knowledge-map-book-route-20261005/after-serve.json": {
+    "bytes": 183990,
+    "sha256": "3a466c4e378efe64d5d856e32a6cf64f1290f85df06dc2f7ba9e62c5199524fd"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/before-serve.json": {
+    "bytes": 103896,
+    "sha256": "9c95430bd866944abc48944265c01f4cb37177656805cd2cf5a5678c6e947ff0"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/book-authority.json": {
+    "bytes": 76528,
+    "sha256": "93c6a405d54456780bbc979b54757fae0a85499b7a4f11e4a67224be799ff366"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/canonical-rendered.json": {
+    "bytes": 48808,
+    "sha256": "2beea50547173c3cb4bbd161374907e2f985a2c0150af9b6b2f2ef528df13c64"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/controls.json": {
+    "bytes": 703,
+    "sha256": "179c40762ee327af4fbc78caa05378c0df074379655cd49b035ffd34126b5209"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/initial-chapter-after-serve.json": {
+    "bytes": 122358,
+    "sha256": "a017aad697f7bc2717b1cdedb542e3de57ec202b57edce3bde06f9e9f885f95c"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/initial-chapter-navigation-refusal.json": {
+    "bytes": 349,
+    "sha256": "4b4f58a961042aba322f3bd708935fb18e61c8d296aa4013464822555523b82b"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/initial-chapter-serve-probe.py": {
+    "bytes": 4456,
+    "sha256": "61c8de037bfa69275a0096681cb5ea1d0e5ad359a07b21e8e946e9b149c5e465"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/initial-chapter-source.json": {
+    "bytes": 113488,
+    "sha256": "31ad601517c11600c2f4f75ba244f98ce9ce2a4ee24ce5dcd994fae3867a26bc"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/initial-chapter.txt": {
+    "bytes": 66,
+    "sha256": "b741f5a5807e97db5888c81f1874f10388245d798f573cda0d7c39aa48f2d208"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/root-cause-git-history.json": {
+    "bytes": 366,
+    "sha256": "fd28f55bc367b16571c4d293369149c51d5ebfff926977cf8ece552ec7908710"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/scope.txt": {
+    "bytes": 1321,
+    "sha256": "6c29a5b55067a75c6510a8aa46fa85511ee2307c979c2d4127b0d199fce00dfc"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/serve_probe.py": {
+    "bytes": 4512,
+    "sha256": "db56dd93a4a7a78992cc7b06c5277b62c55ebbae60a0574091df68db6d9f8543"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/source.json": {
+    "bytes": 113579,
+    "sha256": "1462960cfeafbbb22c1f143ef711f370eb5ae46e32c961d34300e9947637653c"
+  },
+  "docs/audits/knowledge-map-book-route-20261005/verify.py": {
+    "bytes": 10312,
+    "sha256": "2c1349809d2a8eb57085a065bfd941052c92c3daaf8310a27eae3fbf018bc1ac"
+  },
+  "docs/audits/knowledge-map-book-route-checks-20261005/after-final.json": {
+    "bytes": 353,
+    "sha256": "5913029794ddae269e7f13a2188a248a988739d8e93f3e0a1bc75023e4620d6c"
+  },
+  "docs/audits/knowledge-map-book-route-checks-20261005/after.json": {
+    "bytes": 353,
+    "sha256": "b6e05ab4cb4537c75030f78018ca46735496e31a1f8cac09710a02ae8963d89d"
+  },
+  "docs/audits/knowledge-map-book-route-checks-20261005/before.json": {
+    "bytes": 355,
+    "sha256": "f508b0f5928223aaa0814d6baffbfc5f89da343c113b2ffc0a9f5326b4540601"
+  },
+  "docs/audits/knowledge-map-book-route-checks-20261005/book-build.json": {
+    "bytes": 403,
+    "sha256": "7398df910a13e6b4572bc0958a9a0768e35d85d841b8b2d7061787fb29e53abc"
+  },
+  "docs/audits/knowledge-map-book-route-checks-20261005/canonical-build.json": {
+    "bytes": 424,
+    "sha256": "26b8b992117beb3ec86e218f4524001b1f71861d07104eec07b9e86b60a399ba"
+  },
+  "docs/audits/knowledge-map-book-route-checks-20261005/final-reader.json": {
+    "bytes": 455,
+    "sha256": "c4e7a018ed2e67e8aed4f90fd3f65ff8c2e699dbc02382815f8027888f3a1272"
+  },
+  "docs/audits/knowledge-map-book-route-checks-20261005/focused.json": {
+    "bytes": 483,
+    "sha256": "a53cba89ea8bec3c5d86672ccba557434a9eecaf6e827c06c70fb4360352e32b"
+  },
+  "docs/audits/knowledge-map-book-route-checks-20261005/reader.json": {
+    "bytes": 455,
+    "sha256": "d031a0799c3a3d45c1f047b2754cf206088770f59cbd4daccafe781952304d56"
+  }
+}

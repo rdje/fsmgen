@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.72.2` (pending)
-- next_action: Activate the lossless collection-rollover selection from qualified full source/pressure, preserving unique facts, questions and canonical authority.
+- next_action: Activate .72.2 lossless collection-rollover selection from qualified source/pressure; broader book reference candidates remain scheduled after .72.3.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

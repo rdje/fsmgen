@@ -1,0 +1,11 @@
+{
+  "bytes": 4027,
+  "lines": 65,
+  "mandatory_read": {
+    "bytes_ceiling": 4096,
+    "lines_ceiling": 64,
+    "path": "docs/book/src/SUMMARY.md"
+  },
+  "outcome": "The proposed independent chapter exceeds the unchanged mandatory-read line bound; actual target200 alone does not qualify book publication.",
+  "source": "docs/book/src/SUMMARY.md"
+}

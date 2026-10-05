@@ -46,7 +46,7 @@ splits the two costs and keeps only the cheap one:
 - **Curation cost** — a human/agent deciding what to index and phrasing the keys. This is
   the expensive, rot-prone part. The KM **eliminates** it: the keys live *inside* each
   fact file, authored once, when you write the fact you were recording anyway.
-- **Generation cost** — a script scanning files and emitting the map. Milliseconds. The
+- **Generation cost** — a script scanning files and emitting the map. The
   **machine** pays it (in the pre-commit hook), never the workflow, never the agent.
 
 The map is a **build artifact**, never hand-edited, **deterministic** (sorted, no

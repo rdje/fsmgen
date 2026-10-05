@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/knowledge-map-book-route-20261005/serve_probe.py",
+    "after"
+  ],
+  "status": 0,
+  "stdout": "PASS actual public after route: entry200, target200, missing404; own server stopped.\n",
+  "stderr": "ram-guard: PID 39984; host 65.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

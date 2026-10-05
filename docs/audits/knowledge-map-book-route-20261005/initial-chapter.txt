@@ -1,0 +1,1 @@
+{{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}
