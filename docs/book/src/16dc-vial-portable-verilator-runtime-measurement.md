@@ -4188,7 +4188,9 @@ the fixed capture driver, original failure evidence, existing process limits
 and full-CI/push gates retain their separate acceptance requirements.
 The [accumulated-commit checkpoint](../../../docs/audits/push-checkpoint-preflight-20261005/scope.txt)
 now records the push-cadence conflict with the active startup qualification gate.
-Director resolution is pending; full CI and push have not run.
+The director [deferred the push](../../../docs/audits/push-checkpoint-resolution-20261005/scope.txt)
+and resumed independent PNT. The HIAL and full-CI qualification gates remain
+in force; full CI and push have not run.
 
 The [private process handoff reference](16dk-inactive-proxy-lifetimes.md#private-process-handoff)
 describes the reservation, gated command, qualification boundaries and runnable

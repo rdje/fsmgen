@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/push-checkpoint-resolution-20261005/verify.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "{\"controls\": [{\"cause\": \"verbatim director direction\", \"control\": \"changed-director-text\", \"status\": 1}, {\"cause\": \"cadence deferral preserves qualification\", \"control\": \"fabricated-CI-authorization\", \"status\": 1}, {\"cause\": \"complete directed book transformation\", \"control\": \"changed-book\", \"status\": 1}, {\"cause\": \"complete resolution seal membership\", \"control\": \"missing-member\", \"status\": 1}], \"scope\": \"Saved direct instruction and interpretation; no external authenticity, CI or push proof.\", \"status\": 0}\n"
+}

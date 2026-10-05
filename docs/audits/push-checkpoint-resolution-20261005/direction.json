@@ -1,0 +1,18 @@
+{
+  "checkpoint_revision": "3a744e8cf3b8e2f5866b9b3b636fa6db13e8302c",
+  "director_instruction": "defer the push and continue PNT as you recommended it.",
+  "interpretation": "Defer the cadence push and resume independent PNT. Preserve the existing HIAL/full-CI qualification gates and eventual exact-SHA hosted qualification. No full CI, push, probes or host-security change is authorized by this direction.",
+  "not_run": [
+    "full CI",
+    "push",
+    "native recurrence",
+    "host probes",
+    "host-security changes"
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.69.2",
+  "preflight_manifest": {
+    "bytes": 787,
+    "sha256": "b29be757db35b41f62f9ee6d3971e62c765e2ad5c6da56343d7f1b6013093d8e"
+  },
+  "source": "Direct user instruction in this session; retained verbatim, not an independently authenticated external message."
+}

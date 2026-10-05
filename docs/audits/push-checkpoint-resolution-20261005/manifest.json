@@ -1,0 +1,22 @@
+{
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "8baf34283c7fd6cc3cdf725581a2e4f660eb5f8e59f86f444e227a0f04ebcb1d"
+  },
+  "book-transform.json": {
+    "bytes": 576001,
+    "sha256": "23b1809cf28bc33936a7a8c6ff27249bf3f93436b7960fe48b0e3f6d5266d608"
+  },
+  "direction.json": {
+    "bytes": 844,
+    "sha256": "eb195b66068fe6e81232af8b627673f7ff5c89a2f86f44d9c8028879c83edffa"
+  },
+  "scope.txt": {
+    "bytes": 1370,
+    "sha256": "1c3227a757ed584b57a51f5467b6d87c52fae9501f9c7ff982786ad5b10ef55d"
+  },
+  "verify.py": {
+    "bytes": 5188,
+    "sha256": "f210e7ac5e5662a5679b0ac8f3aa3e30bf804dd4bc0e02399809d946e096523f"
+  }
+}
