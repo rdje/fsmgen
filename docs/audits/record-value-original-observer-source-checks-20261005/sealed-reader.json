@@ -1,0 +1,28 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-observer-sources-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS full original-source capture membership/program/source/fixture/host/TAP/status and genuine provider observations. Alias downstream mutation/abort is retained; independent graph/source/product qualification and replay remain pending.\nPASS independently qualified original17 unchanged-input copy/joint/kind/readonly/identity/isolation graphs and genuine Storable/alias trials; full API/consumer and alias downstream semantics remain open.\nPASS all original9283 API/four authored parser whole results and680 private source allocations across candidate/Storable/unchanged-input-control modes. Input/private graphs, consumers/helpers/raw causes and full alias downstream semantics remain open.\nPASS complete current original API before/after and private/test before/after/result/joint graphs, source-derived copy interventions, primitive kinds, private/test readonly and actual detachment. Exact known private range sibling kind change retains; outer caller is unchanged. Copied-field and consumer/cause/full-alias semantics remain open.\nPASS complete current copied fields, raw kinds, whole source properties/orders/cycles, source-candidate sets and ancestor/carrier/default/metadata roles in all three unchanged-input modes. Graph/field join, consumer/cause/full-alias and cold/permanent repairs remain open.\nPASS complete current original source/input/private graph/field/context/kind/readonly/detachment join. Consumer/cause/full-alias/product/semantic/cold and permanent/host-native repairs remain open.\nPASS complete finite source-authored helper/consumer/parser contexts and qualified own operation spans. Raw operands/errors retain; primary/raw-coordinate and consumer-operand truth remain open.\nPASS complete finite source-derived API/helper/parser primary causes and acceptance; full raw coordinates/address and consumer operand truth remain open.\nPASS complete lossless original raw-error inventory and intended controls; frame/class/coordinate/address meanings remain open.\nPASS finite source/publisher class contracts and genuine native object refusals; full frames/coordinates/address meanings stay open.\nPASS direct finite Value source paths and visible argument footprints; metadata/inherited/display/coordinate/address meanings remain open.\nPASS finite metadata guard/recursion paths and visible argument footprints; inherited API and full display/trace meanings remain open.\nPASS whole finite nested Scope/private-root/capture input joins; catch/rethrow and inherited/full frame meanings remain open.\nPASS whole finite nested catch/explicit-rethrow/interpolation/new-throw prefix conservation; inherited/full trace meanings remain open.\nPASS finite inherited Value/capture/eval source path roles and visible footprints; full observer/display/coordinate/address meaning stays open.\n{\"controls\": [{\"cause\": \"exact current programme/proof/manifest receipt identity\", \"control\": \"actual-initial-successful-receipt\", \"status\": 1}, {\"cause\": \"exact current programme/proof/manifest receipt identity\", \"control\": \"borrowed-initial-programme-pin\", \"status\": 1}], \"current_identity\": {\"frame_model.py\": {\"bytes\": 3276, \"sha256\": \"bf9776779da38a30cd11215901c3e33f85446db500344f0a5dc4824059874530\"}, \"manifest.json\": {\"bytes\": 1416, \"sha256\": \"70572fc71d65dbdf9656cd9b6f7a19c7a2629fa199b2b8ccf7bbfe2b30f5eca4\"}, \"proofs.json\": {\"bytes\": 412789, \"sha256\": \"39611b0aff33ecfc873aabc63a235fddcfd0e1bd4cc8120f15e439c85600ec5b\"}, \"verify.py\": {\"bytes\": 16574, \"sha256\": \"9fd4e4e9613f91892d5f1481630ce836b73897a5b38dc6af1e4a17167802bde3\"}}, \"scope\": \"Fresh executed sealed reader pins; identical legacy successful stdout is insufficient.\", \"status\": 0}\nPASS complete finite own API refusal source-frame/guard/visible-role partition and join; full observer/parser/framework/display/coordinate/address meaning stays open.\nPASS complete own observer/callback source recipes and rejecting controls; native frame/header/framework/display meanings remain open.\n",
+  "stderr": "",
+  "programme_and_product_identity": {
+    "verify.py": {
+      "bytes": 10126,
+      "sha256": "beae11dcf2477a91f406d8a9be9e378f9078d45bc8fbdf15bdb18b81409b4d96"
+    },
+    "recipes.py": {
+      "bytes": 4031,
+      "sha256": "719c4168b2dc23d43993b7578a13a8219eacfec0707a83521a4238725ede8eea"
+    },
+    "proofs.json": {
+      "bytes": 160238,
+      "sha256": "12e21cd793f15a75e0ac969400731b637be70a202bdc0a4832835137e3ec8522"
+    },
+    "manifest.json": {
+      "bytes": 1017,
+      "sha256": "513018ddf6a2ef08ff5de967f2dbf0ec28e2ba7689487d99de07fbca2792f65b"
+    }
+  }
+}

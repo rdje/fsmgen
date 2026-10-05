@@ -4625,9 +4625,46 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify original observer and callback frame paths.`
   Acceptance: `Derive every wrapper/eval/compiled original callback/refuses/subtest/require frame and argument header from pinned observer transformation and source catalog. Validate exact source call membership/order and quoting/truncation contract; native trace grammar alone cannot supply intended authority.`
+  Verification: `Split complete source recipe inventory, observer API/parser boundaries, own helper/refusal/callback paths, own subtest/require boundaries and final observer join before artifacts. Exact public quoting/truncation/framework dependencies remain under the separately owned .5 and must complete before final observer signoff; no historical identity invented.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.1`
+  Status: `done`
+  Goal: `Inventory pinned observer and callback source recipes.`
+  Acceptance: `Authenticate completed own API join and all committed prerequisites. Derive complete own observer source-function/wrapper/eval/helper/subtest/require recipes and original callback/helper source allocations from pinned transformation/source catalog. Inventory role/provenance and every expected source boundary without promoting raw trace strings to intended authority. Actual source/role/member/order corruptions reject; frame/header/format/native meaning remains separately owned.`
+  Verification: `Whole committed API owner/task/prerequisite and receipt-control authority authenticate and reexecute. Complete pinned source inventory independently derives five observer/six test functions, twenty-one wrappers plus compiled helper wrapper, ten subtests and forty-three callback source allocations. Seven actual declaration/wrapper/eval/title/role/member/allocation corruptions reject. Current-reader0 and fresh whole sealed-reader0 regenerate identical complete proofs; exact programme/proof/manifest receipt pins verify. Focused original/book318 tests, book source/aggregate/rendered boundary and Knowledge Map pass; task/claim/staged doctrine and normal hooks run before commit. Native observer paths/headers/framework/display remain successor owners. Initial inspection guard137 at host89.3% above unchanged88%; retry0 at86.5%, source reader0 at84.8%; no bypass or threshold change.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Qualify observer API and parser boundary paths.`
+  Acceptance: `Derive complete observed API/parser wrapper, eval, original operation and argument roles from pinned own observer and qualified source calls. Join own API paths; compare source membership/order and visible finite footprints. Wrong wrapper/eval/API/parser/caller/argument/member controls reject; full helper/framework/display/native meaning remains separate.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3`
+  Status: `pending`
+  Goal: `Qualify own callback and refusal helper paths.`
+  Acceptance: `Derive compiled original operation callbacks and refuses/scope_for paths from the complete source catalog and qualified helper/API/parser allocations. Bind source parameters, entry and return/throw ordering and argument roles; genuine wrong callback/helper/order/role controls reject. Full public framework/display and native coordinate/address meanings remain separate.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4`
+  Status: `pending`
+  Goal: `Qualify own subtest and require boundaries.`
+  Acceptance: `Derive own Test::More subtest wrapper, original compiled body/helper wrapper and final do/require boundaries from exact own sources and published interface. Preserve inherited callback/helper ownership without inspecting external implementation. Wrong source/body/member/require controls reject; external subtest implementation and exact display depend on separately owned .5.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5`
+  Status: `pending`
+  Goal: `Join complete observer and callback meanings.`
+  Acceptance: `Reexecute completed source inventory/API-parser/helper/subtest-require children and the separately owned public framework/display contract .5. Join every complete finite observer/callback/refuses/subtest/require frame and full argument header with exact source membership/order and qualifying quoting/truncation contract. Actual borrowed/omitted/reordered/wrong-role/format controls reject; parser/full class-frame/coordinate/address successors remain owned.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6218,3 +6255,10 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Nested inherited API path roles/order' -- docs/audits/record-value-original-inherited-frames-20261005/verify.py` identifies70ad725a35b96a09e92305970363fcd862bfdb85 as the completed inherited-path boundary. Direct Value, recursive Metadata and nested source/forward/inherited frames are separately qualified but every API refusal still needs their complete disjoint source partition and own-function/argument-role join. Current verify.py derives that intended partition from independently qualified source-primary inputs, not from captured function lists.
 - [x] **ADDRESSED (verified)** — Whole done inherited owner/task and every committed prerequisite authenticate; exact committed receipt-control inputs bind and their independent old-successful-receipt controls reexecute. Fresh direct Value, recursive metadata and inherited models assemble every intended own path and guard before native comparison. All48 source refusals per mode partition disjointly into direct34/nested14; complete source/nonempty allocation, every actual API family, full own function order and visible argument roles agree. Ten actual source/model/guard/role/member/nested allocation/population/family/function/order/operand controls reject at intended boundaries. RE-DERIVATION, FALSIFICATION and whole-member DURABILITY remain distinct in docs/audits/record-value-original-api-paths-20261005/scope.txt. Current-reader0 and fresh full sealed-reader0 independently regenerate the entire saved model/footprint/control proof. Member/hash authentication conserves; fresh receipt pins exact programme/proof/manifest. Observer/parser/framework/display/coordinates/live identity and broader successors remain owned.
 - [x] **NO REGRESSION** — evidence-family: prove_summary. Focused original/book cohort reports `All tests successful`, `Files=3, Tests=318`, `Result: PASS` in docs/audits/record-value-original-api-path-checks-20261005/original-book.json. Book build/whole source/aggregate/rendered guidance and Knowledge Map pass; task integrity, fresh claim inventory, staged doctrines and normal hooks run before commit. Bounded card routes previous products/input/field scope evidence through the complete authenticated/reexecuted current chain while preserving every prior fact and separate probe replay; no ceiling change. Production/T1986/predecessor/provider/external/submodule bytes conserve. Visual QA, historical native/startup/full-CI/push qualification and director push deferral remain open.
+
+
+### Observer source inventory acceptance — 60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Complete finite own API frame-path join' -- docs/audits/record-value-original-api-paths-20261005/verify.py` identifiese19f5893a581a03afdaf39b99d3254bc83a2fc25 as the completed own API boundary. Observer/callback/frame/header/public-framework meanings remain open. Safely split source inventory, API-parser paths, callback/refusal paths, own subtest/require boundaries and final observer join; separately owned public framework/display .5 is a prerequisite of final observer signoff. Exact own sources and independent source catalog supply provenance; native trace text cannot supply intended recipes.
+- [x] **ADDRESSED (verified)** — Whole done API owner/task, all committed prerequisites and inherited receipt controls authenticate/reexecute. Independently authored finite inventories bind the complete own source units, five observer/six test functions and parameter roles, twenty-one wrappers plus compiled helper wrapper, ten authored subtest markers and forty-three callback/helper source allocations. Seven actual source declaration/wrapper/eval/title/role/member/allocation corruptions reject at intended boundaries. Current-reader0 and fresh sealed-reader0 independently regenerate the complete saved proof; exact current programme/proof/manifest receipt pins verify. Complete scope.txt separates RE-DERIVATION, FALSIFICATION and DURABILITY. Native observer paths/headers, quoting/truncation/public framework and broader successors remain owned. First inspection guard137 at host89.3%/88%; unchanged-limit retry0 at86.5%, source reader0 at84.8%; no bypass or threshold change.
+- [x] **NO REGRESSION** — evidence-family: prove_summary. Focused original/book cohort reports `All tests successful`, `Files=3, Tests=318`, `Result: PASS` in docs/audits/record-value-original-observer-source-checks-20261005/original-book.json. Book build, complete source transformation/aggregate/rendered source-only boundary and Knowledge Map pass. Task integrity, fresh claim inventory, staged doctrines and normal hooks run before commit. Bounded card routes range-source evidence through the authenticated/reexecuted complete prerequisite chain without changing prior facts, separate probe replay or ceilings. Production/T1986/predecessor/provider/external/submodule bytes conserve. Visual QA, historical native/startup/full-CI/push qualification and director deferral remain open.

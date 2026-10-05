@@ -1,0 +1,1 @@
+Guarded read-only source inspection session58485 stopped with exit137: host89.3% exceeded unchanged88% cutoff; guard terminated its own PID8040 tree. No source signoff or guard bypass. Same inspection retry session76832 began at host86.5% under identical88%/4096MiB defaults and completed0 with own function/wrapper/subtest/helper source data.

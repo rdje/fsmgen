@@ -1,0 +1,8 @@
+{
+  "command": [
+    "knowledge-map/scripts/check_knowledge_map.sh"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "knowledge-map: OK (1265 facts, 6959 unique questions, 7136 answer occurrences, 184 bounded topic shards; query parity verified)\n"
+}
