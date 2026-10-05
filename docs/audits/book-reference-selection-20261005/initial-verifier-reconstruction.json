@@ -1,0 +1,29 @@
+{
+  "scope": "Explicit reconstruction by reversing the single later link-recipe correction; original first qualifier source was not captured separately. First result is preserved unchanged; this does not relabel reconstruction as a stored first capture.",
+  "transforms": [
+    {
+      "current": "def check(record, refreshed, advertised=False):",
+      "original": "def check(record, refreshed):"
+    },
+    {
+      "current": "        encoded = source[:-3] + '.markdown' if advertised and source.endswith('.md') else source\n        assert row['asset'] == 'references/' + encoded + '.source.txt'\n        if advertised:\n            assert record['advertised_targets'][source] == row['asset'] and row['asset'] in record['entry']['body'], 'actual native advertised asset'",
+      "original": "        assert row['asset'] == 'references/' + source + '.source.txt'\n        assert row['asset'] in record['entry']['body'], 'actual native advertised asset'"
+    },
+    {
+      "current": "    admitted = json.loads((BASE / 'links-default-prototype.json').read_text())\n    check(admitted, True, True)\n    assert same(admitted['old_markdown_recipe_control']['status'], 404), 'genuine old rewritten Markdown asset URL refuses'\n",
+      "original": ""
+    },
+    {
+      "current": "'asset': 'reference-source/' + (r['source']['canonical'][:-3] + '.markdown' if r['source']['canonical'].endswith('.md') else r['source']['canonical']) + '.source.txt'",
+      "original": "'asset': 'reference-source/' + r['source']['canonical'] + '.source.txt'"
+    },
+    {
+      "current": "    positive = admitted",
+      "original": "    positive = records['visible-default']"
+    },
+    {
+      "current": "check(altered, True, True)",
+      "original": "check(altered, True)"
+    }
+  ]
+}

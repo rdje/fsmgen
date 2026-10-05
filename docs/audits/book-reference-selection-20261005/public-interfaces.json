@@ -1,0 +1,15 @@
+{
+  "scope": "Official public documentation; native installed version, symlink behavior, actual delivered bytes and refresh remain independently observed by the prototype.",
+  "sources": [
+    {
+      "contract": "Files other than Markdown chapter sources under src are carried into HTML output. Canonical source assets can therefore use the public static-file interface without adding chapters.",
+      "reviewed": "2026-10-05",
+      "url": "https://rust-lang.github.io/mdBook/guide/creating.html"
+    },
+    {
+      "contract": "Relative configuration paths resolve from the book root. extra-watch-dirs names additional source directories for watch/serve rebuild triggers.",
+      "reviewed": "2026-10-05",
+      "url": "https://rust-lang.github.io/mdBook/format/configuration/general.html"
+    }
+  ]
+}

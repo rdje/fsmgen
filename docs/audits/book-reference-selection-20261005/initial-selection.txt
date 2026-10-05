@@ -1,0 +1,68 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.2
+
+Selected topology: bounded native static source views for the exact classified
+chapter90/13k references, with a root-relative source-to-public-asset manifest.
+Each public address preserves the canonical path and appends .source.txt under
+reference-source/. Relative filesystem links are computed from the repository
+root to the asset's parent, checked to resolve to the declared source inside
+this repository/volume, and copied by the public native mdBook static-file
+interface. They contain no maintained second prose copy or machine-local path.
+Source views serve the complete original UTF-8 bytes as plain text; original
+Markdown syntax and nested source paths remain text, not advertised HTML links.
+Book labels/guidance identify source views and their build boundary. Existing
+native narrative chapters remain the product reading surface.
+
+The complete admitted destination set is exactly the127 classified source paths,
+not arbitrary repository export. The map is injective; no original path/role or
+unique text is discarded. Mandatory SUMMARY/navigation remains unchanged. No
+new Markdown chapter or source-card collection allowance is required. The
+public source plane needs explicit bounded generated-projection ownership,
+complete source/asset membership, resulting-tree endpoint checks and freshness.
+Its limits must be reviewed from this finite semantic population and measured
+source dimensions; these representative probes do not authorize guessed caps.
+
+Actual installed public profile is mdBook0.5.4. Native build and served source
+bytes agree for focused Markdown, operational state and retained evidence.
+Default and extra-watch visible fixtures both observe a controlled changed
+source through relative asset links. Initial ignored .artifacts fixtures stay
+stale even after readiness/mtime qualification; the parent-ignore visible
+control also stays stale. Extra-watch alone is not a remedy for excluded input.
+The ignore policy, not source presence or successful compilation, must be part
+of watcher admission. This is scoped observed behavior, not a timing guarantee,
+whole-platform promise or adjudication of every upstream documentation version.
+Original failed programmes/outputs remain complete. Every own server stops.
+
+Separate historical publication from current helper semantics before book
+publication. The original sealed reader correctly authenticates its exact
+publication, but its --current whole-registry identity refuses a concrete
+unrelated book authority change while helper/card/source/query inputs stay
+unchanged. Keep every original archive/programme/proof untouched; add a scoped
+live source/role/question/route watcher and exact reverify-only transform.
+
+Admitted implementation order (commit each before successor):
+1. .73.2.3.1: scoped current helper reader, sealed-history conservation and book
+   command/meaning qualification. Current-role checks must survive unrelated
+   book authority changes while refusing relevant source/route/question drift.
+2. .73.2.3.2: finite root-relative source manifest, native static asset factory,
+   bounded projection/freshness/endpoint contract and complete public fixture
+   controls. Qualify current generation, source update admission and genuine
+   missing/wrong-source/escape/stale/member controls. Extend the existing mdBook
+   tooling fact topic with the new admitted-watch fact, preserving its existing
+   body/questions/locality replay and all collection bounds. Review/derive
+   projection limits before registry writes. Links remain pending until .3.
+3. .73.2.3.3: switch only the127 classified clicks to complete source views;
+   label source/build roles, preserve native chapters/anchors and SUMMARY,
+   rederive exact book authority and inventory, and qualify all actual served
+   source bytes plus rejecting controls and unchanged native routes. Close each
+   classified defect only after this actual complete publication qualifies.
+
+RE-DERIVE: whole original classified population; exact representative source,
+symlink recipe, native built/served bytes, controlled source mutation and
+observed refresh; concrete source/registry separation probe.
+FALSIFY: missing native asset, wrong member bytes, default/qualified ignored
+scratch and deliberately ignored visible input versus admitted visible input;
+genuine source/refresh/kind/status/recipe controls. Representative evidence
+does not establish complete production delivery; that leg belongs to .3.2/.3.
+DURABILITY: complete tracked programmes/configurations/sources/native bodies/
+logs and immutable seal; current-input watcher and explicit future complete
+source-plane/reader publication owners. Visual/browser layout remains pending.

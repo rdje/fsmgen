@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-selection-20261005/initial-verify-reconstructed.txt",
+    "--current"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 55659; host 54.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/book-reference-selection-20261005/initial-verify-reconstructed.txt\", line 88, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/book-reference-selection-20261005/initial-verify-reconstructed.txt\", line 45, in main\n    for name, refreshed in names.items(): check(records[name], refreshed)\n                                          ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/book-reference-selection-20261005/initial-verify-reconstructed.txt\", line 28, in check\n    assert row['asset'] in record['entry']['body'], 'actual native advertised asset'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual native advertised asset\n"
+}

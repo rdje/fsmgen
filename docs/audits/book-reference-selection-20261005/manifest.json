@@ -1,0 +1,98 @@
+{
+  "docs/audits/book-reference-selection-20261005/default-prototype.json": {
+    "bytes": 287652,
+    "sha256": "7a82cf4719dc3d5d5c1cfb5e38b2292c5f4397fc9002c64f5190c93d0e5938bf"
+  },
+  "docs/audits/book-reference-selection-20261005/excluded-visible-extra-watch-prototype.json": {
+    "bytes": 288591,
+    "sha256": "25e47e25287fb1e2f732d42ef8cf7e8cdf08626a2dc16ddfbda3043c977414f4"
+  },
+  "docs/audits/book-reference-selection-20261005/extra-watch-prototype.json": {
+    "bytes": 287714,
+    "sha256": "85f4db4a4452d730e83b60be01b7e87c60241cc911d6e1c938bf9a09dd9f5535"
+  },
+  "docs/audits/book-reference-selection-20261005/initial-selected-routes.json": {
+    "bytes": 47162,
+    "sha256": "1b40e4a8821e55e8b2813943b384c16036995f01b73665a2570c7e71de4fdcb8"
+  },
+  "docs/audits/book-reference-selection-20261005/initial-selection.txt": {
+    "bytes": 4738,
+    "sha256": "a17cbd74b5dd9c222ef0cc5bb9146fac128aa6744a19088fd300178ff2a31b63"
+  },
+  "docs/audits/book-reference-selection-20261005/initial-verifier-reconstruction.json": {
+    "bytes": 1772,
+    "sha256": "565f8b261e0a13aaeda8e8a105adb8518e4a00e55f82f2392664066bba5bc10c"
+  },
+  "docs/audits/book-reference-selection-20261005/initial-verify-reconstructed.txt": {
+    "bytes": 6888,
+    "sha256": "93c06b9272fa3ad1dcd5c648adb62c92acb31a5f2eaca9fa50ea7bf4404be6ae"
+  },
+  "docs/audits/book-reference-selection-20261005/links-default-prototype.json": {
+    "bytes": 303043,
+    "sha256": "8e51804ed334ae96097ec66e9ba4c46d71c6886bf08228d2acf0283cd3ce8341"
+  },
+  "docs/audits/book-reference-selection-20261005/probe.py": {
+    "bytes": 5451,
+    "sha256": "076e20cf996aafdb4637daec2aff876784e7ff814bc1b7d0b3684642b03d982b"
+  },
+  "docs/audits/book-reference-selection-20261005/probe_excluded.py": {
+    "bytes": 6551,
+    "sha256": "4f55694da0cd1a7871bce38372d4c1519544803e35b2ec192edb894a6d00ea3e"
+  },
+  "docs/audits/book-reference-selection-20261005/probe_links.py": {
+    "bytes": 7352,
+    "sha256": "7ee92e09845c5d250c6fa3c4a8f31f46c68f55a0023011272c6b2cb2433e647d"
+  },
+  "docs/audits/book-reference-selection-20261005/probe_qualified.py": {
+    "bytes": 6046,
+    "sha256": "b066b286d5ba550ba335cef70910f7747cd5965efc61d3739ef4bcb7afb03320"
+  },
+  "docs/audits/book-reference-selection-20261005/probe_reader_scope.py": {
+    "bytes": 3236,
+    "sha256": "893e6f2576576e0eb8b8e8de16120b025fd85b5e6f91fbcc22901cf5317d9cb5"
+  },
+  "docs/audits/book-reference-selection-20261005/probe_visible.py": {
+    "bytes": 6193,
+    "sha256": "d49f212540e8806103eeb1521879692597b610b433df1d42e1761bc69ae2999b"
+  },
+  "docs/audits/book-reference-selection-20261005/proofs.json": {
+    "bytes": 824,
+    "sha256": "37f52af631c3f68e058ed66a0c8821932dfff7cc209a963df622d9fe396e5e2c"
+  },
+  "docs/audits/book-reference-selection-20261005/public-interfaces.json": {
+    "bytes": 806,
+    "sha256": "3323ebd6eb2bb09103b17ee60841df93665e59bab7f5639575cc5df7376b1c21"
+  },
+  "docs/audits/book-reference-selection-20261005/qualified-extra-watch-prototype.json": {
+    "bytes": 288277,
+    "sha256": "c3d39c8bade932d89ce5e3656e47b9784251051310a17f3b48e8998a63800d74"
+  },
+  "docs/audits/book-reference-selection-20261005/reader-scope-probe.json": {
+    "bytes": 157055,
+    "sha256": "fc2fb65161d03163a522eabe90e3ae9bc5df18ae6b27641e5c9411bfae50c5a5"
+  },
+  "docs/audits/book-reference-selection-20261005/root-cause.json": {
+    "bytes": 2061,
+    "sha256": "84748be4ec8afe217a2c0bba15a4814acc82f0957672065be420541d0a172b71"
+  },
+  "docs/audits/book-reference-selection-20261005/selected-routes.json": {
+    "bytes": 47354,
+    "sha256": "a06c81b4bcec1a3a6140dd909de194351545efe64fca92331ecb402597cefb54"
+  },
+  "docs/audits/book-reference-selection-20261005/selection.txt": {
+    "bytes": 5015,
+    "sha256": "38ed47b2556e665044b227af860efbad20a984d8950a66d20db61a7632f359a7"
+  },
+  "docs/audits/book-reference-selection-20261005/verify.py": {
+    "bytes": 7406,
+    "sha256": "058ab7ea920d8f73d43a480bfcf4d8fc39c171a8181c56787d7bc3b6881a90a6"
+  },
+  "docs/audits/book-reference-selection-20261005/visible-default-prototype.json": {
+    "bytes": 283664,
+    "sha256": "7cd57ae44ecfc33a9342e64bf12d3354b902c9c119a009fdc2e5eb71ccd73556"
+  },
+  "docs/audits/book-reference-selection-20261005/visible-extra-watch-prototype.json": {
+    "bytes": 283882,
+    "sha256": "63b3f8ac5fc7444b0f6ab0aea1473211e538e1f66fe35be6d249c97dbbf41b4c"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-selection-20261005/probe_reader_scope.py"
+  ],
+  "status": 0,
+  "stdout": "PASS frozen publication remains qualified; unrelated whole-book authority control trips the current whole-registry identity. Separate live semantic watcher scope before publication.\n",
+  "stderr": "ram-guard: PID 41315; host 84.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

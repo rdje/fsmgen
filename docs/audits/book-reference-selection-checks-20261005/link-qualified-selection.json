@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-selection-20261005/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS bounded native source-view selection, exact byte/member/role conservation and separating admitted/ignored refresh; complete production and visual legs remain explicitly owned.\n",
+  "stderr": "ram-guard: PID 55558; host 54.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

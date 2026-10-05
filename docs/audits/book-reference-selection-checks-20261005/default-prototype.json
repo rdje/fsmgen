@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/book-reference-selection-20261005/probe.py",
+    "default"
+  ],
+  "status": 0,
+  "stdout": "{\"build\": 0, \"missing\": 404, \"mode\": \"default\", \"refresh\": \"first canonical state\\n\", \"source_assets\": {\"MEMORY.md\": 200, \"docs/COMPOSITION_SCOPE.md\": 200, \"docs/audits/record-value-original-helper-join-20261005/scope.txt\": 200}}\n",
+  "stderr": "ram-guard: PID 15118; host 78.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -1,0 +1,24 @@
+{
+  "git_log_receipt": {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %s",
+      "-S",
+      "Path('doctrine/live_document_size/surfaces.jsonl').read_text() == authority['surface_after']",
+      "--",
+      "docs/audits/record-value-helper-topic-publication-20261005/verify.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "5215d451f1db24c8d50fe644d00e91ab2b7e0d6a SEMANTIC-INTROSPECTION-MCP-FRONTIER.72.3.2: publish conserved helper topic\n"
+  },
+  "mechanisms": [
+    "Default and extra-watch ignored scratch prototypes serve exact requested static bytes but do not observe source changes. Readiness/mtime-qualified ignored control stays stale; visible admitted controls refresh, while a parent ignore-policy visible control stays stale. The observed installed profile requires admitted source/asset paths; no universal timing or upstream documentation adjudication is claimed.",
+    "Native rendered Markdown URLs containing .md were rewritten despite directly addressable .md.source.txt assets. Independent actual-href check rejects that first recipe; terminal .md encoding as .markdown produces actual advertised200 URLs with whole canonical text and refresh.",
+    "Current helper semantics are coupled to the historical publication whole-registry identity. A concrete virtual unrelated book authority change trips that identity while the frozen publication/source/helper/card/query evidence remains correct; scoped live qualification must precede actual book publication."
+  ],
+  "missing_production_legs": "Complete source plane, bounded endpoint/generation/freshness contract, all actual native source bytes and book links remain pending under .73.2.3.2/.3. Visual/browser layout remains separately owned.",
+  "source_gap": "Original first qualifier programme was not separately captured; initial-verify-reconstructed.txt reverses the single later declared link-recipe patch. Its independently reexecuted retained-data refusal matches the original failure. This is reconstruction, not a stored first capture."
+}

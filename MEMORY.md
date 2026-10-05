@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.2` (pending)
-- next_action: Select bounded canonical delivery for the classified source-reference failures, preserving public build/read contracts and qualifying relevant reader watcher scope before implementation.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.73.2.3.1` (pending)
+- next_action: Publish scoped current helper source/role/question/route qualification while retaining immutable original publication, then qualify the selected canonical source-asset plane before changing book routes.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
