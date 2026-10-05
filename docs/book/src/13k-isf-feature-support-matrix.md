@@ -524,8 +524,12 @@ now covers every recorded API refusal through a complete partition of direct
 Value and nested metadata paths, including both nested throw phases. Complete own
 function order and visible argument roles agree with source models. The [observer source inventory](../../../docs/audits/record-value-original-observer-sources-20261005/scope.txt)
 now pins whole own observer/test sources, wrapper and helper roles, subtest markers
-and every original callback allocation. Actual observer paths and headers, public
-framework meaning, exact display, raw coordinates and native address meanings, consumer
+and every original callback allocation. The [observer operation boundaries](../../../docs/audits/record-value-original-observer-boundaries-20261005/scope.txt)
+now join original API/parser operations, observer evals and installed wrappers,
+including both nested throw phases. Complete source argument roles agree with
+visible scalar and reference-kind footprints. The parser receiver has a declared
+facade role; its original object identity was not captured. Callback/helper paths,
+public framework meaning, exact display, raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

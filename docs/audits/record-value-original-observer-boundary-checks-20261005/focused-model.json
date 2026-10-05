@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path\np=Path('docs/audits/record-value-original-observer-boundaries-20261005/verify.py')\nv={'__name__':'focused_observer_model'};exec(compile(p.read_bytes(),str(p),'exec'),v)\nsource=v['sources']();expected=v['expected_models'](source)\ninventories=v['load'](v['direct']['classes']['RAW']/'proofs.json')['inventories']\nv['check'](expected,expected,inventories,source)\nprint([(m['mode'],len(m['api']),len(m['parses']),sum(len(x['boundaries']) for x in m['api'])) for m in expected])\nprint('PASS focused complete observer operation boundary derivation and actual visible footprint comparison; full authenticated reexecution still required')\n"
+  ],
+  "status": 0,
+  "stdout": "[('ordinary', 48, 2, 69), ('storable', 48, 2, 69), ('controls', 48, 2, 69)]\nPASS focused complete observer operation boundary derivation and actual visible footprint comparison; full authenticated reexecution still required\n",
+  "stderr": ""
+}

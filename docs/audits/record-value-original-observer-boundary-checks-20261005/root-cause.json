@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Own observer/callback source recipes",
+    "--",
+    "docs/audits/record-value-original-observer-sources-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "commit d0db4ee6c79789875d96d0f648922f698ffe06ca\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 14:05:23 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.1: inventory observer callback source recipes\n    \n    Bind complete original observer/test sources, function and wrapper roles,\n    subtest markers and callback allocations to independently authored inventories.\n    Reexecute all prerequisites and seven rejecting controls; retain native\n    frame/header/framework/display joins as separately owned successors.\n    \n    Focused original/book cohort: 318 tests pass. Book build, source/aggregate/\n    rendered guidance and Knowledge Map pass; sealed full reader passes with\n    exact programme/proof/manifest pins. Initial host guard stop retained;\n    unchanged-limit retry passes. Push remains director-deferred.\n",
+  "stderr": ""
+}
