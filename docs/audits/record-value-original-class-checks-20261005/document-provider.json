@@ -1,0 +1,10 @@
+{
+  "command": [
+    "perldoc",
+    "-l",
+    "JSON::PP"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "/System/Library/Perl/5.34/JSON/PP.pm\n"
+}

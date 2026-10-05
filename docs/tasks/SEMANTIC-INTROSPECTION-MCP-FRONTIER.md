@@ -4547,9 +4547,53 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete raw exception class and source-derived frame paths.`
   Acceptance: `Derive every expected own source/observer/callback/wrapper/eval/nested-parser and public test-framework frame from completed source/context/primary inputs and the pinned host contract. Wire strings alone are not proof of native exception class. Preserve nested cause precedence, order and truncation/quoting; wider host-native causality remains owned.`
+  Verification: `Divide source-derived class/frame qualification into literal exception contracts, own API frames, observer/callback frames, parser frames, pinned public framework contracts and final join. Raw serialized inventory remains done; no native class or intended call graph is inferred from grammar alone.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.1`
+  Status: `done`
+  Goal: `Qualify the finite source literal exception class contracts.`
+  Acceptance: `Bind whole done raw inventory/source-primary prerequisites. Independently map every intended finite refusal to the exact own literal-string confess guard, metadata catch/interpolation and observer eval/rethrow contracts. Check the required system Perl Carp/die public contracts read-only, retaining scoped contract excerpts/versions and same-volume native public-interface string/object/rethrow controls. Distinguish source-derived plain exception class from wire kind and from missing exact native addresses/frames; source guard/class/publisher and whole member corruptions must reject. No external repository/submodule writes or implementation reads.`
+  Verification: `Sealed docs/audits/record-value-original-class-20261005 binds whole done raw owner/task and all committed source-primary/raw prerequisites at506b80e7c; reexecutes every complete meaning/control. Independent literal guard/metadata interpolation/observer direct forwarding and unchanged JSON::PP4.06 publisher policy infer unblessed nonreference scalar exceptions for every recorded finite refusal. This is source/serialization-contract inference, not an original pre-serialization measurement. Required read-only system public interfaces retain current Perl5.34.1/Carp1.52/JSONPP4.06/ScalarUtil1.55 and false raw/effective conversion flags. Eight actual public native string/object/rethrow/interpolation/reference cases and four genuine object/reference-as-scalar rejections distinguish identical printable text from class; five source guard/publisher/class/member/POD-version corruptions reject. Initial native programme/output before identical-printable-text strengthening retain. Source doc mismatch is rooted in stale embedded POD4.05 in the same installed provider whose runtime accessor reports4.06; public current upstream4.18 POD removes VERSION. Project evidence now pins the runtime accessor and effective policy; precise upstream removal revision and original Carp/framework identities are not invented. Fresh whole sealed reader0 independently regenerates the saved proof. Only finite source class contracts close; all API/observer/parser/framework frames, coordinates/address and raw joins stay open. Original/book Files3 Tests318, build/whole source/aggregate/rendered text pass; bounded fact wording preserves prior facts and adds version routing. Task/KM/claim/staged doctrines/hooks run before commit. No production/T1986/provider/submodule/external-repository writes, host probes, full CI or push.`
+  Commit: `this slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Qualify own source API failure frame paths.`
+  Acceptance: `Model each primary guard and recursive metadata/type/reference/copy path from independent own source inputs. Every intended own API frame/order/argument role must agree without treating the captured trace as its semantic oracle. Address values and source coordinate recipes remain their own siblings.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3`
+  Status: `pending`
+  Goal: `Qualify original observer and callback frame paths.`
+  Acceptance: `Derive every wrapper/eval/compiled original callback/refuses/subtest/require frame and argument header from pinned observer transformation and source catalog. Validate exact source call membership/order and quoting/truncation contract; native trace grammar alone cannot supply intended authority.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4`
+  Status: `pending`
+  Goal: `Qualify complete original parser failure frame paths.`
+  Acceptance: `Derive both source-refusal parser/admission/context paths from complete original source texts, the published parse boundary and source guard model. Join nested API failures and original helper context before acceptance.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5`
+  Status: `pending`
+  Goal: `Bind the pinned public test-framework trace contract.`
+  Acceptance: `Use only required installed toolchain public documentation/interfaces and source-independent native controls to qualify the original outer subtest/eval boundaries. Explicitly document strictly necessary read-only cross-volume toolchain access; do not inspect external Git/submodule implementation or invent historical identity unavailable in retained evidence.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6`
+  Status: `pending`
+  Goal: `Join complete finite exception class and source frame meanings.`
+  Acceptance: `Reexecute all completed class/API/observer/parser/framework meanings and raw inventory/primary prerequisites. Join every complete own original raw body and frame role, with genuine source/class/order/argument corruptions. Coordinate/address and final raw parent successors remain separate.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6070,3 +6114,10 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Close finite primary/acceptance only' -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` identifiesdedee81cc1c359404411fa79d607e550a8618823: intended primary/acceptance qualifies, while full raw frame/source/coordinate/address meanings remain open. Source observer captures every complete raw API/copy/parser/run exception; authenticating a first line or body hash cannot close its intended stack meaning. Split the owned raw parent before implementation so complete reversible capture grammar closes independently of missing semantic legs. Whole Git/source/archive authority is bound in docs/audits/record-value-original-raw-20261005/binding.json.
 - [x] **ADDRESSED (verified)** — Complete scope names independent raw-population/physical-grammar RE-DERIVATION, nine intended-cause capture-corruption FALSIFICATION controls and immutable whole-member DURABILITY, with missing class/frame/source/coordinate/address legs explicit. Reexecute all primary prerequisites, preserve every own empty/nonempty field, whole raw body and source context, and reversibly annotate each line/call-site suffix/opaque lexeme byte span. Fresh whole sealed readback0 in docs/audits/record-value-original-raw-checks-20261005/sealed-reader.json rederives the exact saved proof and actual controls. This is serialized-string and capture integrity only; parsed coordinates and address-looking lexemes confer no intended frame/object/lifetime authority. .1 closes; .2/.3/.4/.5 and cause/consumer/alias/cold/permanent/host-native successors remain open.
 - [x] **NO REGRESSION** — evidence-family: prove_summary. Current original/public-book cohort reports `All tests successful`, `Files=3, Tests=318`, `Result: PASS` in docs/audits/record-value-original-raw-checks-20261005/original-book.json. Book build plus whole source transform/aggregate and rendered capture-only/open-boundary text pass. Task integrity, regenerated Knowledge Map, fresh claim inventory, staged doctrines and normal hooks run before commit. Every production/T1986/provider/predecessor byte remains unchanged; browser visual QA and historical native/startup/full-CI/push qualification remain open. Director-directed cadence deferral continues.
+
+
+### Finite source/publisher exception class acceptance — .60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Only capture/grammar closes' -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` identifies506b80e7c59be4f5b13556c5e234b94e6c804fee as the whole raw inventory boundary. A string wire body alone cannot supply class or frame authority. Whole own literal confess guards, metadata catch/interpolation, observer direct forwarding and its exact publisher configuration must join separately qualified primary/source meaning. Public JSONPP4.06 runtime versus embedded POD4.05 is a genuine provider-documentation mismatch; same public loaded/document-discovery path localizes the stale POD label, and current upstream public POD removes that section. No foreign implementation read or write is used to manufacture historical identity.
+- [x] **ADDRESSED (verified)** — Complete docs/audits/record-value-original-class-20261005/scope.txt names distinct source/publisher RE-DERIVATION, actual object/reference and source/guard/policy/class/member/POD-version FALSIFICATION, and whole immutable member DURABILITY. All source-modeled refusals join their literal-string guard and original publisher under independently checked public contracts. Genuine object exceptions can print the same text yet retain their class and fail publication; unblessed reference publication has distinct hash wire kind. Actual inferred class remains bounded to this finite capture and original source/publisher contract; no original class measurement or old Carp/framework byte/version pin is claimed. Initial native programme/output retain before stronger same-printable-text controls. Fresh full sealed reader0 rederives identical proof. Project provider-version authority uses runtime metadata and encoding policy, closing the local stale-POD promotion risk while preserving historical documentation. All full-frame/coordinate/address/raw/consumer/alias/cold/permanent/host-native successors stay owned.
+- [x] **NO REGRESSION** — evidence-family: prove_summary. Current original/public-book cohort reports `All tests successful`, `Files=3, Tests=318`, `Result: PASS` in docs/audits/record-value-original-class-checks-20261005/original-book.json. Book build, whole exact source/aggregate and rendered inference/missing-measurement/open-boundary text pass. Task integrity, regenerated Knowledge Map, fresh claim inventory, staged doctrines and normal hooks run before commit. Bounded card wording preserves prior graph/identity/readonly facts and routes the class/version finding. Initial staged containment rejects card collection growth47bytes over the owned allowance; retain the receipt and compact redundant card wording while conserving those facts, then regenerate and recheck without changing limits. Production/T1986/all predecessor bytes remain unchanged; browser visual QA, historical startup/full-CI/push gates and director cadence deferral remain in force.

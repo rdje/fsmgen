@@ -15,6 +15,8 @@ answers:
   - "what qualifies original T1986 helper consumer and parser source contexts?"
   - "what qualifies original T1986 candidate primary causes and acceptance?"
   - "are complete original T1986 raw error bodies inventoried?"
+  - "what qualifies finite original exception classes?"
+  - "why does JSON PP documentation say version 4.05?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -42,11 +44,11 @@ evidence: >-
   docs/audits/record-value-original-contexts-20261005/verify.py;
   docs/audits/record-value-original-primary-20261005/scope.txt;
   docs/audits/record-value-original-primary-20261005/verify.py;
-  docs/audits/record-value-original-raw-20261005/scope.txt;
+  docs/audits/record-value-original-class-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-raw-20261005/verify.py &&
+  docs/audits/record-value-original-class-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-original-products-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
@@ -57,10 +59,8 @@ reverify: >-
   docs/audits/record-value-copy-reader-20261004/replay.py
 ---
 
-The independent reader resolves complete serialized graph edges and checks a
-typed bijection against separate authored object models. Reachable sets derive
-reference populations and input/result sharing. Ordinary readonly, kinds,
-sharing, cycles and detached copies qualify for the recorded plain profile.
+Separate models qualify full typed graph bijections, reachable reference counts,
+input/result sharing, readonly, kinds, cycles and detachment for this plain profile.
 Actual Storable, alias, split-sharing, cycle-alias, input-kind and result-kind
 providers reach their own expected assertions; non-target records conserve.
 
@@ -90,6 +90,8 @@ helper/consumer/parser locations, complete parser texts and own operation
 spans. Source context does not establish primary cause or consumer operand
 truth. The independent finite primary model now derives every original
 API/helper/parser first cause and acceptance from qualified own source inputs.
-Raw inventory qualifies complete serialized bodies and reversible grammar only.
-Class/frame/coordinate/address meaning, consumer truth, alias/semantic/cold/
-candidate-parent joins, hot repairs and host-native refusal remain open.
+Raw inventory qualifies complete bodies and lossless grammar. Source/publisher
+contracts infer unblessed scalar errors for this finite capture; original classes
+were not measured. The old POD4.05 label is stale; runtime JSON::PP4.06 owns
+version identity. Frame/coordinate/address, consumer, alias/semantic/cold/
+candidate-parent, hot repair and host-native refusal meanings remain open.

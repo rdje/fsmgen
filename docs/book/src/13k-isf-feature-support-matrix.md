@@ -493,8 +493,13 @@ now derives API, helper and parser first causes and acceptance from their own
 source inputs. The [raw-error inventory](../../../docs/audits/record-value-original-raw-20261005/scope.txt)
 now preserves the complete empty/nonempty population, serialized string bodies,
 physical frame annotations and opaque address lexeme spans. This qualifies
-lossless capture grammar only. Native class, frame meaning, full raw coordinates
-and native address meanings, consumer
+lossless capture grammar only. The [source exception contracts](../../../docs/audits/record-value-original-class-20261005/scope.txt)
+now infer unblessed scalar exceptions from the finite literal guards and original
+publisher policy. Genuine object exceptions with the same printable message
+retain their class and fail that publisher. This is a source/contract inference;
+the original capture did not measure class before serialization. The provider
+version comes from its runtime accessor because the historical POD label is stale.
+Full frame meaning, raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)

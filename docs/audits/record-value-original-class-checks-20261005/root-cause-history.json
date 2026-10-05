@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Only capture/grammar closes",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "commit 506b80e7c59be4f5b13556c5e234b94e6c804fee\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 09:53:57 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1: qualify lossless original raw-error inventory\n    \n    Bind completed primary/source/context authority and every raw API/copy/parser/run error field. Preserve complete bodies, reversible physical lines, exact call-site suffixes and opaque address lexeme spans with nine rejecting corruption controls.\n    \n    Close serialized capture grammar only; intended class/frame/source/coordinate/address meanings remain owned siblings. Original and book tests pass 3 files/318 assertions; fresh sealed reader, book source/aggregate/rendered checks pass. Push remains deferred under existing HIAL/full-CI gates.\n"
+}

@@ -1,0 +1,1123 @@
+{
+  "genuine_native_class_controls": [
+    {
+      "cause": "original scalar exception boundary",
+      "control": "object-die",
+      "status": 1
+    },
+    {
+      "cause": "original scalar exception boundary",
+      "control": "object-confess",
+      "status": 1
+    },
+    {
+      "cause": "original scalar exception boundary",
+      "control": "object-rethrow",
+      "status": 1
+    },
+    {
+      "cause": "original scalar exception boundary",
+      "control": "unblessed-reference",
+      "status": 1
+    }
+  ],
+  "models": [
+    {
+      "cases": [
+        {
+          "domain": "api",
+          "index": 820,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: forged write cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 877,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 878,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet.data'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1150,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1437,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1724,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2020,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2318,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2607,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2909,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 3466,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 4168,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5030,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar value; 'packet' is a whole record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5104,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'packet.body' resolves to record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5237,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'packet.body.lanes' resolves to list",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5347,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.unknown': unknown_member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5422,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.body.lanes[2]': list_index_out_of_range",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5497,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.body.count[3]': scalar_index_out_of_range",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5572,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet..count': parse_error",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5647,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'held.body' resolves to record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6264,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.data': unknown_member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6491,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.data': member_on_non_record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6674,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7035,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7111,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: expression whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7281,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7633,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7750,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7839,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 7840,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7929,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 7930,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type lacks required facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8045,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' aggregate has a scalar signed overlay",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8162,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8279,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8368,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8369,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8458,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8459,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8548,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8549,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8638,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8639,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8728,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8729,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid role",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8730,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: scope has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8870,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: permission has invalid whole-value permission",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8961,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: hostile value width disagrees with resolved type",
+          "source_family": "value"
+        },
+        {
+          "domain": "parses",
+          "index": 2,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification",
+          "source_family": "context"
+        },
+        {
+          "domain": "parses",
+          "index": 3,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports",
+          "source_family": "parser"
+        }
+      ],
+      "mode": "ordinary"
+    },
+    {
+      "cases": [
+        {
+          "domain": "api",
+          "index": 820,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: forged write cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 877,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 878,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet.data'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1150,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1437,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1724,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2020,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2318,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2607,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2909,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 3466,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 4168,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5030,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar value; 'packet' is a whole record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5104,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'packet.body' resolves to record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5237,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'packet.body.lanes' resolves to list",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5347,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.unknown': unknown_member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5422,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.body.lanes[2]': list_index_out_of_range",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5497,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.body.count[3]': scalar_index_out_of_range",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5572,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet..count': parse_error",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5647,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'held.body' resolves to record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6264,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.data': unknown_member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6491,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.data': member_on_non_record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6674,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7035,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7111,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: expression whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7281,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7633,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7750,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7839,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 7840,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7929,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 7930,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type lacks required facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8045,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' aggregate has a scalar signed overlay",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8162,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8279,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8368,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8369,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8458,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8459,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8548,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8549,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8638,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8639,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8728,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8729,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid role",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8730,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: scope has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8870,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: permission has invalid whole-value permission",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8961,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: hostile value width disagrees with resolved type",
+          "source_family": "value"
+        },
+        {
+          "domain": "parses",
+          "index": 2,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification",
+          "source_family": "context"
+        },
+        {
+          "domain": "parses",
+          "index": 3,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports",
+          "source_family": "parser"
+        }
+      ],
+      "mode": "storable"
+    },
+    {
+      "cases": [
+        {
+          "domain": "api",
+          "index": 820,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: forged write cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 877,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 878,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet.data'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1150,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1437,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 1724,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2020,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2318,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2607,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 2909,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 3466,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 4168,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control record port copy from 'packet' to 'held' requires the same resolved record type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5030,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar value; 'packet' is a whole record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5104,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'packet.body' resolves to record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5237,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'packet.body.lanes' resolves to list",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5347,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.unknown': unknown_member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5422,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.body.lanes[2]': list_index_out_of_range",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5497,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.body.count[3]': scalar_index_out_of_range",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5572,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet..count': parse_error",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 5647,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control requires a scalar leaf; 'held.body' resolves to record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6264,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.data': unknown_member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6491,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control has invalid declared path 'packet.data': member_on_non_record",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 6674,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: control cannot write declared input 'packet'",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7035,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7111,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: expression whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7281,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: copy control whole record port copy requires declared record roots",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7633,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7750,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7839,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: resolved aggregate width disagrees with members",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 7840,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved signed property",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 7929,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid resolved signed property",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 7930,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type lacks required facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8045,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' aggregate has a scalar signed overlay",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8162,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' resolved type has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8279,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid resolved state model",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8368,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid resolved state model",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8369,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: invalid or duplicate record member",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8458,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: invalid or duplicate record member",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8459,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: record member inventory disagrees",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8548,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: record member inventory disagrees",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8549,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: cyclic resolved type",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8638,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: cyclic resolved type",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8639,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid resolved type: Invalid ISF interface port metadata: unsupported resolved type kind",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8728,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF interface port metadata: unsupported resolved type kind",
+          "source_family": "metadata"
+        },
+        {
+          "domain": "api",
+          "index": 8729,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: root 'packet' has invalid role",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8730,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: scope has unknown facts",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8870,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: permission has invalid whole-value permission",
+          "source_family": "value"
+        },
+        {
+          "domain": "api",
+          "index": 8961,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record value: hostile value width disagrees with resolved type",
+          "source_family": "value"
+        },
+        {
+          "domain": "parses",
+          "index": 2,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification",
+          "source_family": "context"
+        },
+        {
+          "domain": "parses",
+          "index": 3,
+          "inferred_class": "unblessed_nonreference_scalar",
+          "primary": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports",
+          "source_family": "parser"
+        }
+      ],
+      "mode": "controls"
+    }
+  ],
+  "scope": "Finite class inference from source and original publisher; no original pre-serialization measurement or historical Carp/frame identity.",
+  "source_contract_identity": {
+    "bytes": 529513,
+    "sha256": "507c7ad4549c7af795fcb22a72c0b65be2430c41dda1aa0975193ed354a97966"
+  },
+  "source_controls": [
+    {
+      "cause": "exact own literal-string confess guard",
+      "control": "changed-literal-guard",
+      "status": 1
+    },
+    {
+      "cause": "original publisher default object policy",
+      "control": "changed-publisher-policy",
+      "status": 1
+    },
+    {
+      "cause": "intended source scalar exception class",
+      "control": "promoted-native-class",
+      "status": 1
+    },
+    {
+      "cause": "complete source exception class allocation",
+      "control": "omitted-class-member",
+      "status": 1
+    },
+    {
+      "cause": "public runtime version authority, not stale POD label",
+      "control": "POD-version-as-runtime",
+      "status": 1
+    }
+  ]
+}

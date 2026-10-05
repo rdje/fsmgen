@@ -1,0 +1,7 @@
+{
+  "command": [
+    "knowledge-map/scripts/generate_knowledge_map.pl"
+  ],
+  "status": 1,
+  "cause": "FileNotFoundError: incorrect generator command; no generator executed; use tracked gen_knowledge_map.sh"
+}

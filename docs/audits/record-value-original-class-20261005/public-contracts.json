@@ -1,0 +1,41 @@
+{
+  "cross_volume": "Strictly necessary read-only system Perl public documentation/interfaces; no external implementation read or write.",
+  "embedded_pod_version": "4.05",
+  "json_runtime_version": "4.06",
+  "public_sources": [
+    {
+      "embedded_VERSION": "4.05",
+      "observed_header": "4.06",
+      "sections": [
+        "new",
+        "allow_blessed",
+        "convert_blessed",
+        "OBJECT SERIALISATION",
+        "VERSION"
+      ],
+      "summary": "Default object-conversion flags are disabled. Nonconvertible blessed objects raise an encoding exception. The historical embedded POD version is stale.",
+      "url": "https://perldoc.perl.org/5.34.1/JSON::PP"
+    },
+    {
+      "observed_contents": "No embedded VERSION section in current public POD.",
+      "observed_module_version": "4.18",
+      "role": "Upstream status only; not this fixture provider authority.",
+      "url": "https://metacpan.org/pod/JSON::PP"
+    },
+    {
+      "release": "4.06 2021-01-24",
+      "summary": "The published release history records boolean_values compatibility repair; it does not establish the precise later VERSION-section removal revision.",
+      "url": "https://metacpan.org/dist/JSON-PP/changes"
+    },
+    {
+      "summary": "A single reference exception remains a reference in eval; nonreference string exceptions are distinct. Observer rethrow uses an explicit nonempty exception operand.",
+      "url": "https://perldoc.pl/5.34.1/perlfunc#die"
+    },
+    {
+      "source": "installed public perldoc Carp1.52",
+      "summary": "confess supplies a backtrace for scalar messages; a reference first argument delegates to die. Current provider policy only, not historical Carp identity."
+    }
+  ],
+  "same_loaded_document_provider": true,
+  "version_source": "public runtime VERSION accessor; embedded POD label is stale"
+}

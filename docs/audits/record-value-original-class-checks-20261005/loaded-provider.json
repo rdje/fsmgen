@@ -1,0 +1,11 @@
+{
+  "command": [
+    "perl",
+    "-MJSON::PP",
+    "-e",
+    "print $INC{\"JSON/PP.pm\"},qq(\\n)"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "/System/Library/Perl/5.34/JSON/PP.pm\n"
+}
