@@ -1,0 +1,23 @@
+{
+  "controls": [
+    {
+      "cause": "independent qualified source literal/token fidelity",
+      "control": "changed-do-operator",
+      "status": 1
+    },
+    {
+      "cause": "independent qualified source literal/token fidelity",
+      "control": "changed-callback-identity",
+      "status": 1
+    },
+    {
+      "cause": "actual current query integer status kind/value",
+      "control": "Boolean-kind-reaches-current-oracle",
+      "status": 1
+    }
+  ],
+  "independent_original_refusal": "independent qualified source literal/token fidelity",
+  "original_actual_predicate_status": 0,
+  "repaired_literal": "./t/1986-isf-record-port-value-gates.t",
+  "scope": "Exact initial historical/current predicates accept the actual broken atomic identifier; independent committed source rejects it. Typed JSON distinguishes the genuine Boolean mutation masked by the initial precheck."
+}

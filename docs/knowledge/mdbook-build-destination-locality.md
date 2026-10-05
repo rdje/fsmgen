@@ -7,11 +7,12 @@ answers:
   - "what caused the reset-slice book output locality recovery?"
   - "do canonical source symlinks outside the book refresh under native serve?"
   - "why do native book source-view addresses encode terminal markdown extensions?"
+  - "why must historical source-plane replay use the helper snapshot role?"
 date: 2026-10-05
 status: current
 tags: [mdbook, documentation, artifacts, locality, verification]
-evidence: docs/audits/specforge-rule-admission-20260924/book-output-recovery.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/book-source-plane-20261005/verify.py --current
+evidence: docs/audits/specforge-rule-admission-20260924/book-output-recovery.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/audits/record-value-own-boundary-publication-20261005/scope.txt
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-own-boundary-publication-20261005/verify.py --current
 ---
 
 `mdbook build docs/book --dest-dir DEST` resolves relative `DEST` against the
@@ -60,3 +61,20 @@ manifest and relative endpoints. `--check` qualifies current sources;
 original destination-locality replay remains required, alongside the recorded
 source-plane qualifier. Source and asset paths must remain on the repository
 volume and within this repository. No extra chapter or copied prose is added.
+
+## Historical and current reader roles
+
+An actual source-qualified helper-card extension obstructed the original
+source-plane default replay because it invoked the old whole-current helper
+reader. The qualified historical adapter changes only that call to the helper
+reader's existing snapshot mode, conserving every other original predicate,
+programme and product. Its command is:
+
+`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`
+
+Historical success does not establish current card, query, reader or source
+currency. The current publication reader checks complete core/helper/tooling
+meanings and question ownership, unique book guidance, canonical source-view
+selection/endpoints/bytes/ignore policy, exact current budget and indexed members.
+The original destination-locality replay remains required. Native copied bytes
+still need the factory's explicit output check; visual QA remains pending.

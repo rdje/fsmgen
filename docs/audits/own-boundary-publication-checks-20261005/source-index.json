@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "scripts/check_book_source_index.py"
+  ],
+  "status": 0,
+  "stdout": "book-source-index: complete indexed directory and checked source projection agree\n",
+  "stderr": "ram-guard: PID 64369; host 69.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

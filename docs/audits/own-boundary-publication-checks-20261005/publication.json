@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-boundary-publication-20261005/publish.py"
+  ],
+  "status": 0,
+  "stdout": "PASS exact core conservation, source-qualified helper/tooling extension, explicit current reader and measured book aggregate.\n",
+  "stderr": "ram-guard: PID 91435; host 79.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

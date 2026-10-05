@@ -1,0 +1,67 @@
+"""Falsify complete live source/question/reader/plane epoch admission."""
+import copy
+import importlib.util
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-own-boundary-publication-20261005')
+spec = importlib.util.spec_from_file_location('current_own_boundary_reader', BASE / 'verify.py')
+reader = importlib.util.module_from_spec(spec); spec.loader.exec_module(reader)
+publisher = reader.publisher
+
+
+def main():
+    reader.authenticate()
+    publication = json.loads((BASE / 'publication.json').read_text())
+    actual = json.loads((BASE / 'current-queries.json').read_text())
+
+    def check(record):
+        reader.check_live(publication, record['cards'], record['queries'], record['chapter'], record['tooling_chapter'], record['declaration'])
+
+    check(actual)
+    controls = []
+    missing = reader.target_rows(actual['queries']['cached']['stdout']).splitlines()[0] + '\n'
+    cases = [
+        ('lost-old-helper-meaning', lambda r: r['cards'].update({publisher.HELPER: r['cards'][publisher.HELPER].replace('Returned helpers remain separate from active frames.', 'Returned helpers are active frames.')}), 'whole current source/role/question/reader epoch'),
+        ('invented-callback-identity', lambda r: r['cards'].update({publisher.HELPER: r['cards'][publisher.HELPER].replace('does not establish actual callback identity', 'establishes actual callback identity')}), 'whole current source/role/question/reader epoch'),
+        ('borrowed-before-epoch', lambda r: r['cards'].update({publisher.HELPER: publication['before'][publisher.HELPER]}), 'whole current source/role/question/reader epoch'),
+        ('missing-tooling-card', lambda r: r['cards'].pop(publisher.TOOLING), 'whole current source/role/question/reader epoch'),
+        ('lost-qualified-question', lambda r: r['cards'].update({publisher.HELPER: r['cards'][publisher.HELPER].replace('  - "'+publisher.HELPER_QUESTIONS[0]+'"\n', '')}), 'whole current source/role/question/reader epoch'),
+        ('wrong-direct-owner', lambda r: r['queries']['direct'].update(stdout=r['queries']['direct']['stdout'].replace('\trecord-value-original-observer-helper-paths\t', '\trecord-value-finite-copy-probe-reader\t', 1)), 'complete current target question ownership'),
+        ('lost-cached-answer', lambda r: r['queries']['cached'].update(stdout=r['queries']['cached']['stdout'].replace(missing, '', 1)), 'complete current target question ownership'),
+        ('Boolean-query-status', lambda r: r['queries']['direct'].update(status=False), 'actual current query integer status kind/value'),
+        ('float-query-status', lambda r: r['queries']['cached'].update(status=0.0), 'actual current query integer status kind/value'),
+        ('missing-query-role', lambda r: r['queries'].pop('cached'), 'complete actual current query receipt roles'),
+        ('wrong-current-reader', lambda r: r.update(chapter=r['chapter'].replace(publisher.READER, 'missing-reader.py --current', 1)), 'complete unique current book reader/source context'),
+        ('relocated-current-reader', lambda r: r.update(chapter=r['chapter'].replace(publisher.READER, 'missing-reader.py --current', 1)+'\n'+publisher.READER+'\n'), 'complete unique current book reader/source context'),
+        ('lost-plane-reader-meaning', lambda r: r.update(tooling_chapter=r['tooling_chapter'].replace('## Canonical Source Views', '## Borrowed Source Views')), 'complete unique current raw-source/build roles'),
+        ('float-plane-budget', lambda r: r['declaration']['health_targets'].update(lines_each=float(r['declaration']['health_targets']['lines_each'])), 'exact current source-manifest budget/role'),
+        ('wrong-plane-role', lambda r: r['declaration'].update(verifier='core:missing.py'), 'exact current source-manifest budget/role'),
+    ]
+    for name, mutate, cause in cases:
+        changed = copy.deepcopy(actual); mutate(changed)
+        reader.require(changed != actual, 'genuine current-role control changed input: ' + name)
+        try:
+            check(changed)
+        except ValueError as error:
+            reader.require(str(error) == cause, 'intended complete current-role control cause: ' + name)
+            controls.append({'control': name, 'status': 1, 'cause': str(error)})
+        else:
+            raise ValueError('false-green complete current admission: ' + name)
+    unrelated = copy.deepcopy(actual)
+    unrelated['chapter'] += '\nUnrelated reader prose may advance outside the qualified current section.\n'
+    unrelated['tooling_chapter'] += '\nUnrelated reference prose retains the existing source-view semantics.\n'
+    check(unrelated)
+    proof = {'controls': controls, 'scoped_unrelated_input': {'status': 0, 'chapter': unrelated['chapter'], 'tooling_chapter': unrelated['tooling_chapter']},
+             'scope': 'Complete relevant current source/question/reader/source-plane epoch refuses genuine loss, borrowed identity and kind/role defects; unrelated prose is not historical or current semantic authority.'}
+    target = BASE / 'control-proofs.json'
+    if target.exists():
+        reader.require(reader.same(json.loads(target.read_text()), proof), 'whole saved current-role control product')
+    else:
+        reader.require(not (BASE / 'manifest.json').exists(), 'sealed current controls cannot publish')
+        target.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    print('PASS complete current source/question/reader/plane controls and scoped unrelated prose; historical success never replaces current admission.')
+
+
+if __name__ == '__main__':
+    main()

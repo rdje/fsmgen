@@ -1,0 +1,24 @@
+{
+  "controls": [
+    {
+      "cause": "complete unique rendered source/current/historical guidance",
+      "control": "wrong-current-command",
+      "status": 1
+    },
+    {
+      "cause": "complete unique rendered source/current/historical guidance",
+      "control": "lost-historical-scope",
+      "status": 1
+    }
+  ],
+  "paragraphs": [
+    "The finite-copy core keeps its original fact ID and direct path. Its observer and helper questions now route to a separate bounded semantic topic, with a return route to the core. This separates copy-graph qualification from the original helper allocation, supplied/default inputs, returned argument construction and callback/refusal paths. The publication reader preserves the complete source meaning and question ownership, checks actual direct and cached queries, and rejects lost source roles, wrong routes and invented parser identity:",
+    "python3 -B docs/audits/record-value-own-boundary-publication-20261005/verify.py --current",
+    "This topic uses the capacity recovered by the admitted collection rollover. Existing collection bounds remain in force; rollover debt remains open. The separately owned subtest/require, framework/display, raw-coordinate and native address/object-identity gaps remain explicit in both semantic topics.",
+    "The live helper reader checks the current core and topic, their complete question ownership and source routes, and this reader guidance. It also authenticates the original sealed publication at its recorded boundary. That historical census and whole-book authority remain snapshot evidence; an unrelated chapter edit does not change the helper source meanings or require a new helper capture. Relevant source, role, question and route changes still require qualification.",
+    "The current publication reader also qualifies the own subtest/do-load source facts and tooling question routes. It authenticates the historical source-plane adapter separately, then checks current canonical source-view selection, endpoints, bytes, ignore policy, budget and complete staged membership. Snapshot success does not supply current semantic currency. The original destination locality replay and explicit native copied-byte check remain required.",
+    "the semantic fact topic now publishes these qualified own source boundaries.",
+    "current-role flag. Current semantic/fact/source qualification uses the publication reader below; its historical leg remains separate."
+  ],
+  "scope": "Whole current source/SUMMARY/aggregate and exact rendered reader scope/commands; visual QA remains pending."
+}

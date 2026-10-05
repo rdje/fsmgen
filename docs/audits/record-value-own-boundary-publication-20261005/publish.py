@@ -1,0 +1,128 @@
+"""Publish source-qualified own boundaries and explicit current reader routes."""
+import json
+import subprocess
+import textwrap
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-own-boundary-publication-20261005')
+REVISION = '73f87035c69ea3fd7d53b64ab88501e049da2af8'
+OWNER = 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4.2.2'
+CORE = 'docs/knowledge/record-value-finite-copy-probe-reader.md'
+HELPER = 'docs/knowledge/record-value-original-observer-helper-paths.md'
+TOOLING = 'docs/knowledge/mdbook-build-destination-locality.md'
+CHAPTER = 'docs/book/src/13k-isf-feature-support-matrix.md'
+READER = 'docs/audits/record-value-own-boundary-publication-20261005/verify.py --current'
+HELPER_QUESTIONS = ['what qualifies original own subtest body and delegate source roles?',
+                    'what qualifies the original do-load source and recorded file marker?']
+TOOLING_QUESTION = 'why must historical source-plane replay use the helper snapshot role?'
+ANCHOR = 'source, role, question and route changes still require qualification.\n'
+TOOLING_BLOCK = '''
+## Historical and current reader roles
+
+An actual source-qualified helper-card extension obstructed the original
+source-plane default replay because it invoked the old whole-current helper
+reader. The qualified historical adapter changes only that call to the helper
+reader's existing snapshot mode, conserving every other original predicate,
+programme and product. Its command is:
+
+`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`
+
+Historical success does not establish current card, query, reader or source
+currency. The current publication reader checks complete core/helper/tooling
+meanings and question ownership, unique book guidance, canonical source-view
+selection/endpoints/bytes/ignore policy, exact current budget and indexed members.
+The original destination-locality replay remains required. Native copied bytes
+still need the factory's explicit output check; visual QA remains pending.
+'''
+READER_BLOCK = '''
+The current publication reader also qualifies the own subtest/do-load source
+facts and tooling question routes. It authenticates the historical source-plane
+adapter separately, then checks current canonical source-view selection,
+endpoints, bytes, ignore policy, budget and complete staged membership. Snapshot
+success does not supply current semantic currency. The original destination
+locality replay and explicit native copied-byte check remain required.
+'''
+
+
+def git(path):
+    return subprocess.check_output(['git', 'show', REVISION + ':' + path]).decode()
+
+
+def replace_once(body, old, new):
+    assert body.count(old) == 1, 'unique declared publication replacement'
+    return body.replace(old, new)
+
+
+def metrics(blobs):
+    return {'files': len(blobs), 'lines_total': sum(raw.count(b'\n') for raw in blobs.values()),
+            'bytes_total': sum(map(len, blobs.values()))}
+
+
+def transform(before):
+    after = dict(before)
+    source = git('docs/audits/record-value-own-subtest-boundaries-20261005/pending-fact.txt')
+    paragraphs = source.split('\n\n', 1)[1].strip().split('\n\n')[:2]
+    own_block = '\n## Qualified own subtest and do-load source boundaries\n\n'
+    own_block += '\n\n'.join(textwrap.fill(paragraph, width=80, break_long_words=False, break_on_hyphens=False)
+                             for paragraph in paragraphs) + '\n'
+    own_block += '\nThese own source roles refine the earlier broad subtest/require gap; full\nframework/display and actual callback/native identity remain unqualified.\n'
+    helper = before[HELPER]
+    for question in HELPER_QUESTIONS:
+        helper = replace_once(helper, 'date: 2026-10-05', '  - "' + question + '"\ndate: 2026-10-05')
+    helper = replace_once(helper, 'docs/audits/record-value-current-helper-reader-20261005/verify.py --current', READER)
+    helper = replace_once(helper, '  docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md',
+                          '  docs/audits/record-value-own-subtest-boundaries-20261005/scope.txt;\n  docs/audits/record-value-own-boundary-publication-20261005/scope.txt;\n  docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md')
+    after[HELPER] = helper + own_block
+    tooling = replace_once(before[TOOLING], 'date: 2026-10-05', '  - "' + TOOLING_QUESTION + '"\ndate: 2026-10-05')
+    tooling = replace_once(tooling, 'docs/audits/book-source-plane-20261005/verify.py --current', READER)
+    tooling = replace_once(tooling, 'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md\nreverify:',
+                           'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/audits/record-value-own-boundary-publication-20261005/scope.txt\nreverify:')
+    after[TOOLING] = tooling + TOOLING_BLOCK
+    chapter = replace_once(before[CHAPTER], 'publication to the semantic fact topic is the separately owned next slice.',
+                           'the semantic fact topic now publishes these qualified own source boundaries.')
+    chapter = replace_once(chapter,
+                           'current-role flag. Current semantic/fact publication is the separately owned\nnext slice; the existing live reader remains required for its current epoch.',
+                           'current-role flag. Current semantic/fact/source qualification uses the\npublication reader below; its historical leg remains separate.')
+    chapter = replace_once(chapter, 'docs/audits/record-value-current-helper-reader-20261005/verify.py --current', READER)
+    chapter = replace_once(chapter, ANCHOR, ANCHOR + READER_BLOCK)
+    after[CHAPTER] = chapter
+    return after, own_block
+
+
+def main():
+    target = BASE / 'publication.json'
+    assert not target.exists()
+    paths = (CORE, HELPER, TOOLING, CHAPTER)
+    before = {path: git(path) for path in paths}
+    assert all(Path(path).read_text() == body for path, body in before.items())
+    after, own_block = transform(before)
+    book_paths = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', REVISION, '--', 'docs/book/src'], text=True).splitlines()
+    book_paths = [path for path in book_paths if path.endswith('.md') and Path(path).parent == Path('docs/book/src')]
+    old_book = {path: git(path).encode() for path in book_paths}
+    new_book = {**old_book, CHAPTER: after[CHAPTER].encode()}
+    authority = {'before': metrics(old_book), 'after': metrics(new_book)}
+    authority['delta'] = {key: authority['after'][key] - authority['before'][key] for key in authority['before']}
+    marker = 'The finite-copy core keeps its original fact ID and direct path.'
+    end = after[CHAPTER].index(ANCHOR + READER_BLOCK) + len(ANCHOR + READER_BLOCK)
+    record = {'revision': REVISION, 'before': before, 'after': after, 'own_block': own_block,
+              'reader_marker': marker, 'reader_section': after[CHAPTER][after[CHAPTER].index(marker):end],
+              'book_paths': book_paths, 'book_authority': authority, 'summary': old_book['docs/book/src/SUMMARY.md'].decode()}
+    target.write_text(json.dumps(record, sort_keys=True, indent=2) + '\n')
+    for path, body in after.items():
+        Path(path).write_bytes(body.encode())
+    registry = Path('doctrine/live_document_size/surfaces.jsonl')
+    lines = registry.read_text().splitlines()
+    for index, line in enumerate(lines):
+        row = json.loads(line)
+        if row.get('surface_id') == 'shipped_behavior':
+            row['reference_contract']['aggregate_change'] = {
+                'authority_id': 'OWN-BOUNDARY-PUBLICATION-20261005-SHIPPED-BEHAVIOR',
+                'baseline': authority['before'], 'delta': authority['delta'], 'owner': OWNER,
+                'rationale': 'Publish qualified own-boundary facts with separate historical and current semantic/source reader roles.'}
+            lines[index] = json.dumps(row, sort_keys=True)
+    registry.write_text('\n'.join(lines) + '\n')
+    print('PASS exact core conservation, source-qualified helper/tooling extension, explicit current reader and measured book aggregate.')
+
+
+if __name__ == '__main__':
+    main()

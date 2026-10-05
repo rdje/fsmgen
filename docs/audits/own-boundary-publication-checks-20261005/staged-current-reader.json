@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-boundary-publication-20261005/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "book-source-index: complete indexed directory and checked source projection agree\nPASS authenticated historical snapshots plus independent complete current source/question/book/source-plane roles; formatter/native identity remain open.\n",
+  "stderr": "ram-guard: PID 3056; host 83.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

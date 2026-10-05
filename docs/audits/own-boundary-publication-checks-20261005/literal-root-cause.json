@@ -1,0 +1,9 @@
+{
+  "command": [
+    "perl",
+    "docs/audits/record-value-own-boundary-publication-20261005/verify_literal.pl"
+  ],
+  "status": 255,
+  "stdout": "",
+  "stderr": "ram-guard: PID 30330; host 78.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\noriginal test filename was split inside the source-qualified literal at docs/audits/record-value-own-boundary-publication-20261005/verify_literal.pl line 12.\n"
+}

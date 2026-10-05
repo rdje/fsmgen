@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-boundary-publication-20261005/repair_fidelity.py"
+  ],
+  "status": 0,
+  "stdout": "PASS first programme/products retained; repaired atomic source prose preserves exact file identifier and every other source word. Only helper body changes; current inputs require fresh capture.\n",
+  "stderr": "ram-guard: PID 21398; host 75.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

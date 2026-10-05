@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-boundary-publication-20261005/qualify_controls.py"
+  ],
+  "status": 0,
+  "stdout": "PASS complete current source/question/reader/plane controls and scoped unrelated prose; historical success never replaces current admission.\n",
+  "stderr": "ram-guard: PID 39972; host 66.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

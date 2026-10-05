@@ -558,7 +558,7 @@ not change the source operator or establish trace formatting. Captured installed
 public POD supports the call/load interfaces for the current toolchain. The
 original framework version remains unmeasured. Complete source and recorded-role
 qualification is in docs/audits/record-value-own-subtest-boundaries-20261005;
-publication to the semantic fact topic is the separately owned next slice.
+the semantic fact topic now publishes these qualified own source boundaries.
 Public framework/display, source-coordinate and native identity gaps remain open.
 
 The original source-plane reader's historical replay also invoked the older
@@ -573,8 +573,8 @@ python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.
 
 This command authenticates historical evidence. It does not qualify current
 cards, queries, source assets or advertised reader guidance, and it rejects a
-current-role flag. Current semantic/fact publication is the separately owned
-next slice; the existing live reader remains required for its current epoch.
+current-role flag. Current semantic/fact/source qualification uses the
+publication reader below; its historical leg remains separate.
 Original historical programmes and seals remain unchanged.
 
 The finite-copy core keeps its original fact ID and direct path. Its observer and
@@ -586,7 +586,7 @@ meaning and question ownership, checks actual direct and cached queries, and
 rejects lost source roles, wrong routes and invented parser identity:
 
 ```bash
-python3 -B docs/audits/record-value-current-helper-reader-20261005/verify.py --current
+python3 -B docs/audits/record-value-own-boundary-publication-20261005/verify.py --current
 ```
 
 This topic uses the capacity recovered by the admitted collection rollover.
@@ -600,6 +600,13 @@ original sealed publication at its recorded boundary. That historical census and
 whole-book authority remain snapshot evidence; an unrelated chapter edit does
 not change the helper source meanings or require a new helper capture. Relevant
 source, role, question and route changes still require qualification.
+
+The current publication reader also qualifies the own subtest/do-load source
+facts and tooling question routes. It authenticates the historical source-plane
+adapter separately, then checks current canonical source-view selection,
+endpoints, bytes, ignore policy, budget and complete staged membership. Snapshot
+success does not supply current semantic currency. The original destination
+locality replay and explicit native copied-byte check remain required.
 
 [portable replay repair](reference-source/docs/audits/record-value-replay-portability-20261004/scope.txt.source.txt)
 now binds each Python process filename to its exact invoked reader. The original

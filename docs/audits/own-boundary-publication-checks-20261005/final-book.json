@@ -1,0 +1,12 @@
+{
+  "command": [
+    "mdbook",
+    "build",
+    "docs/book",
+    "--dest-dir",
+    ".artifacts/own-boundary-publication/final-book"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "ram-guard: PID 63219; host 78.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15204845 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/own-boundary-publication/final-book`\n"
+}

@@ -1,0 +1,52 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-boundary-publication-20261005/verify.py",
+    "--current",
+    "--build",
+    ".artifacts/own-boundary-publication/book"
+  ],
+  "status": 0,
+  "stdout": "book-source-index: complete indexed directory and checked source projection agree\nPASS authenticated historical snapshots plus independent complete current source/question/book/source-plane roles; formatter/native identity remain open.\n",
+  "stderr": "ram-guard: PID 57108; host 66.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "programme_and_product_identity": {
+    "verify.py": {
+      "bytes": 13943,
+      "sha256": "0870c9727de42f38aa1647c8397e5f457031dc3679c1d9b26baa8df8c019d59a"
+    },
+    "publish.py": {
+      "bytes": 8086,
+      "sha256": "c860a7264bdb4ad32b3fc2af373fe64777e5dfd473a366cd287595063c591f16"
+    },
+    "publication.json": {
+      "bytes": 391615,
+      "sha256": "fd9553286db6c3b2220399673cbdafb53a91c3f9fca95d1363027f99f36fa3a4"
+    },
+    "binding.json": {
+      "bytes": 14853,
+      "sha256": "07b099e4d492bf208a3f9834e08d75b8b929ad097b2b8a75e2a00915a18ecef6"
+    },
+    "current-queries.json": {
+      "bytes": 2831814,
+      "sha256": "b3390242c1fda48ebd04f45cb56e04adb735a2785270a902d193f902d285c42f"
+    },
+    "control-proofs.json": {
+      "bytes": 221951,
+      "sha256": "0c034d4be67f4fbed047cbb2a9bb5fe6a20628e1071a5258ab9424915abfaf7c"
+    },
+    "fidelity-proofs.json": {
+      "bytes": 886,
+      "sha256": "eafa8440662395a0280b5ed4f5f9de15ff5747f079696ba8f9c58d0e0f704634"
+    },
+    "book-proofs.json": {
+      "bytes": 2591,
+      "sha256": "1768b380f5b023af9f6fd60a6c149824f91fffefa7ced93a8130306b923dbd2a"
+    },
+    "manifest.json": {
+      "bytes": 3039,
+      "sha256": "11d4fb344271507526c7d0339ac1ae6f7909973cffce0bea0a64f5cb9ab09264"
+    }
+  },
+  "identity_unchanged_after_execution": true
+}

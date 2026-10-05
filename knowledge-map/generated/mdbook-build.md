@@ -1,7 +1,7 @@
 # Knowledge Map: `mdbook-build`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **5** uniquely owned question entries.
+> **1** facts · **6** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="what caused the reset-slice book output locality recovery?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
 - q="where does mdbook build resolve a relative dest-dir?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
 - q="why do native book source-view addresses encode terminal markdown extensions?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
+- q="why must historical source-plane replay use the helper snapshot role?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
 
 ## Facts
 

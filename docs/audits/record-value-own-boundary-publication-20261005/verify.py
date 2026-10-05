@@ -1,0 +1,201 @@
+"""Authenticate historical publication separately from scoped current currency."""
+import argparse
+import hashlib
+import importlib.util
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-own-boundary-publication-20261005')
+ROLE = Path('docs/audits/record-value-helper-reader-role-adapter-20261005')
+
+
+def module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    result = importlib.util.module_from_spec(spec); spec.loader.exec_module(result)
+    return result
+
+
+publisher = module('own_boundary_publisher', BASE / 'publish.py')
+
+
+def require(condition, cause):
+    if not condition:
+        raise ValueError(cause)
+
+
+def same(a, b):
+    return json.dumps(a, sort_keys=True, allow_nan=False) == json.dumps(b, sort_keys=True, allow_nan=False)
+
+
+def identity(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def authenticate():
+    binding = json.loads((BASE / 'binding.json').read_text())
+    require(binding['revision'] == publisher.REVISION, 'exact own-boundary publication intake revision')
+    domains = {'docs/audits/record-value-current-helper-reader-20261005', 'docs/audits/book-source-plane-20261005',
+               'docs/audits/record-value-own-subtest-boundaries-20261005', 'docs/audits/record-value-helper-reader-role-adapter-20261005',
+               'docs/audits/helper-reader-role-rendered-20261005'}
+    require(set(binding['archives']) == domains, 'complete own-boundary publication dependency domain')
+    for directory, members in binding['archives'].items():
+        require(set(members) == {path.name for path in Path(directory).iterdir()}, 'whole publication dependency membership')
+        for name, pin in members.items():
+            path = Path(directory) / name; raw = path.read_bytes()
+            require(same(identity(raw), pin) and raw == subprocess.check_output(['git', 'show', publisher.REVISION + ':' + str(path)]),
+                    'whole committed publication dependency identity')
+    expected_receipts = {'docs/audits/record-value-own-subtest-checks-20261005/sealed-reader.json',
+                        'docs/audits/record-value-own-subtest-checks-20261005/verify_receipt.py',
+                        'docs/audits/helper-reader-role-adapter-checks-20261005/sealed-reader.json',
+                        'docs/audits/helper-reader-role-adapter-checks-20261005/verify_receipt.py'}
+    require(set(binding['receipts']) == expected_receipts, 'complete actual publication receipt domain')
+    for path, pin in binding['receipts'].items():
+        raw = Path(path).read_bytes()
+        require(same(identity(raw), pin) and raw == subprocess.check_output(['git', 'show', publisher.REVISION + ':' + path]),
+                'whole committed actual publication receipt identity')
+    for path in ('scripts/book_source_references.py', 'scripts/check_book_source_index.py',
+                 'docs/audits/knowledge-card-rollover-20261005/verify.py'):
+        require(Path(path).read_bytes() == subprocess.check_output(['git', 'show', publisher.REVISION + ':' + path]),
+                'whole committed current source/metadata programme')
+    if (BASE / 'manifest.json').exists():
+        pins = json.loads((BASE / 'manifest.json').read_text())
+        require(set(pins) == {path.name for path in BASE.iterdir()} - {'manifest.json'}, 'whole publication seal membership')
+        for name, pin in pins.items():
+            require(same(identity((BASE / name).read_bytes()), pin), 'whole publication seal identity')
+
+
+def metadata():
+    return module('qualified_publication_metadata', Path('docs/audits/knowledge-card-rollover-20261005/verify.py'))
+
+
+def target_rows(text):
+    ids = {'record-value-finite-copy-probe-reader', 'record-value-original-observer-helper-paths', 'mdbook-build-destination-locality'}
+    rows = []
+    for row in text.splitlines():
+        fields = row.split('\t')
+        require(len(fields) == 3, 'actual complete query row grammar')
+        if ids.intersection(fields[1].split(',')):
+            rows.append(row)
+    return '\n'.join(sorted(rows)) + '\n'
+
+
+def check_live(publication, cards, queries, chapter, tooling_chapter, declaration):
+    paths = (publisher.CORE, publisher.HELPER, publisher.TOOLING)
+    require(cards == {path: publication['after'][path] for path in paths}, 'whole current source/role/question/reader epoch')
+    expected = metadata().allocation({path: cards[path].encode() for path in paths})['rows']
+    require(set(queries) == {'direct', 'cached'}, 'complete actual current query receipt roles')
+    for result in queries.values():
+        require(type(result['status']) is int and result['status'] == 0, 'actual current query integer status kind/value')
+        require(target_rows(result['stdout']) == expected, 'complete current target question ownership')
+    marker = publication['reader_marker']
+    require(chapter.count(marker) == 1 and chapter[chapter.index(marker):].startswith(publication['reader_section']),
+            'complete unique current book reader/source context')
+    plane = module('qualified_current_source_plane', Path('scripts/book_source_references.py'))
+    routes = plane.expected_rows()
+    authority = json.loads(Path('docs/audits/book-source-plane-20261005/book-authority.json').read_text())
+    permanent = authority['block'].split('\nThe asset plane is available;', 1)[0]
+    require(tooling_chapter.count(permanent) == 1, 'complete unique current raw-source/build roles')
+    budget = {'files': 1, 'lines_each': plane.ROW_LIMIT, 'bytes_each': plane.MANIFEST_BYTES,
+              'line_bytes_each': plane.ROW_BYTES, 'lines_total': plane.ROW_LIMIT, 'bytes_total': plane.MANIFEST_BYTES}
+    require(same(declaration['health_targets'], budget) and same(declaration['enforcement_ceilings'], budget) and
+            declaration['verifier'] == 'core:scripts/book_source_references.py' and declaration['targets'] == [plane.MANIFEST],
+            'exact current source-manifest budget/role')
+    for row in routes:
+        body = chapter if row['chapter'] == '13k-isf-feature-support-matrix' else tooling_chapter
+        require(body.count('](' + row['asset'] + ')') == 1, 'unique complete current native source destination')
+
+
+def historical(publication):
+    require(publication['revision'] == publisher.REVISION and set(publication['before']) ==
+            {publisher.CORE, publisher.HELPER, publisher.TOOLING, publisher.CHAPTER}, 'exact complete publication source epoch/domain')
+    check_source_fidelity(publication)
+    before = {path: publisher.git(path) for path in publication['before']}
+    require(before == publication['before'], 'whole committed publication source boundary')
+    after, own_block = publisher.transform(before)
+    require(after == publication['after'] and own_block == publication['own_block'], 'whole independent source-qualified publication transform')
+    require(after[publisher.CORE] == before[publisher.CORE], 'whole original copy core unchanged')
+    marker = 'The finite-copy core keeps its original fact ID and direct path.'
+    end = after[publisher.CHAPTER].index(publisher.ANCHOR + publisher.READER_BLOCK) + len(publisher.ANCHOR + publisher.READER_BLOCK)
+    require(publication['reader_marker'] == marker and publication['reader_section'] ==
+            after[publisher.CHAPTER][after[publisher.CHAPTER].index(marker):end], 'whole independently delimited current reader context')
+    for path in (publisher.HELPER, publisher.TOOLING):
+        old_id, old_questions = metadata().metadata(before[path].encode())
+        new_id, new_questions = metadata().metadata(after[path].encode())
+        require(old_id == new_id and new_questions[:len(old_questions)] == old_questions, 'stable original ordered questions and fact ID')
+        require(before[path].split('\n---\n', 1)[1] in after[path], 'whole original fact body preserved')
+    result = subprocess.run(['python3', '-B', str(ROLE / 'adapter.py'), '--snapshot'], capture_output=True, text=True)
+    require(type(result.returncode) is int and result.returncode == 0, 'actual independent historical snapshot replay')
+    for path in ('docs/audits/record-value-own-subtest-checks-20261005/verify_receipt.py',
+                 'docs/audits/helper-reader-role-adapter-checks-20261005/verify_receipt.py'):
+        result = subprocess.run(['python3', '-B', path], capture_output=True, text=True)
+        require(type(result.returncode) is int and result.returncode == 0, 'actual committed source/historical receipt pin qualification')
+    paths = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', publisher.REVISION, '--', 'docs/book/src'], text=True).splitlines()
+    paths = [path for path in paths if path.endswith('.md') and Path(path).parent == Path('docs/book/src')]
+    require(paths == publication['book_paths'], 'complete historical book source population')
+    blobs = {path: publisher.git(path).encode() for path in paths}
+    require(publisher.metrics(blobs) == publication['book_authority']['before'], 'whole historical book baseline')
+    blobs[publisher.CHAPTER] = after[publisher.CHAPTER].encode()
+    require(publisher.metrics(blobs) == publication['book_authority']['after'], 'whole historical book transform aggregate')
+    require(same(publication['book_authority']['delta'], {key: publication['book_authority']['after'][key] -
+                 publication['book_authority']['before'][key] for key in publication['book_authority']['before']}), 'exact historical book aggregate delta')
+    require(publication['summary'] == publisher.git('docs/book/src/SUMMARY.md'), 'whole unchanged publication SUMMARY')
+
+
+def check_source_fidelity(publication):
+    source = publisher.git('docs/audits/record-value-own-subtest-boundaries-20261005/pending-fact.txt')
+    expected = source.split('\n\n', 1)[1].strip().split('\n\n')[:2]
+    actual = publication['own_block'].split('\n\n')[1:3]
+    require([' '.join(paragraph.split()) for paragraph in actual] ==
+            [' '.join(paragraph.split()) for paragraph in expected], 'independent qualified source literal/token fidelity')
+    require(publication['after'][publisher.HELPER].count(publication['own_block']) == 1,
+            'complete unique actual source-qualified fact addition')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--current', action='store_true')
+    parser.add_argument('--build', help='also qualify current copied native bytes in this repository-relative build')
+    args = parser.parse_args()
+    require(args.current or args.build is None, 'native current build requires explicit current role')
+    authenticate()
+    publication = json.loads((BASE / 'publication.json').read_text())
+    historical(publication)
+    for programme in ('qualify_controls.py', 'qualify_fidelity.py'):
+        result = subprocess.run(['python3', '-B', str(BASE / programme)], capture_output=True, text=True)
+        require(type(result.returncode) is int and result.returncode == 0, 'complete saved publication controls/source fidelity: ' + programme)
+    unrelated = json.loads((BASE / 'unrelated-progress.json').read_text())
+    require(type(unrelated['status']) is int and unrelated['status'] == 0 and unrelated['restored'] is True and
+            unrelated['command'] == ['python3', '-B', str(BASE / 'verify.py'), '--current'], 'actual scoped unrelated current-reader progress')
+    if args.current:
+        queries = {}
+        for role, options in (('direct', ['--all', '--no-cache']), ('cached', ['--all'])):
+            result = subprocess.run(['knowledge-map/scripts/query_knowledge_map.sh', *options], capture_output=True, text=True)
+            queries[role] = {'status': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr}
+        declaration = next(row for row in map(json.loads, Path('doctrine/live_document_size/surfaces.jsonl').read_text().splitlines())
+                           if row.get('surface_id') == 'book_source_manifest')
+        check_live(publication, {path: Path(path).read_text() for path in (publisher.CORE, publisher.HELPER, publisher.TOOLING)},
+                   queries, Path(publisher.CHAPTER).read_text(), Path('docs/book/src/90-reference-map.md').read_text(), declaration)
+        plane = module('current_native_source_checks', Path('scripts/book_source_references.py'))
+        routes = plane.expected_rows(); plane.check(routes); plane.check_index(routes)
+        require(subprocess.check_output(['mdbook', '--version'], text=True).strip() == 'mdbook v0.5.4', 'current pinned native source-view profile')
+        subprocess.run(['python3', '-B', 'scripts/check_book_source_index.py'], check=True)
+        if args.build:
+            plane.check(routes, args.build)
+        target = BASE / 'current-queries.json'
+        if target.exists():
+            saved = json.loads(target.read_text())
+            check_live(publication, saved['cards'], saved['queries'], saved['chapter'], saved['tooling_chapter'], saved['declaration'])
+        else:
+            require(not (BASE / 'manifest.json').exists(), 'sealed current reader cannot publish missing receipts')
+            record = {'cards': {path: Path(path).read_text() for path in (publisher.CORE, publisher.HELPER, publisher.TOOLING)},
+                      'queries': queries, 'chapter': Path(publisher.CHAPTER).read_text(),
+                      'tooling_chapter': Path('docs/book/src/90-reference-map.md').read_text(), 'declaration': declaration}
+            target.write_text(json.dumps(record, sort_keys=True, indent=2) + '\n')
+        print('PASS authenticated historical snapshots plus independent complete current source/question/book/source-plane roles; formatter/native identity remain open.')
+    else:
+        print('PASS immutable own-boundary source publication and historical replay; current semantic/source currency is not established by this mode.')
+
+
+if __name__ == '__main__':
+    main()

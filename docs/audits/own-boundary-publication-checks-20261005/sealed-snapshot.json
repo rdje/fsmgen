@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-boundary-publication-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS immutable own-boundary source publication and historical replay; current semantic/source currency is not established by this mode.\n",
+  "stderr": "ram-guard: PID 57655; host 68.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "git",
+    "add",
+    "MEMORY.md",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+    "docs/knowledge/record-value-original-observer-helper-paths.md",
+    "docs/knowledge/mdbook-build-destination-locality.md",
+    "docs/book/src/13k-isf-feature-support-matrix.md",
+    "doctrine/live_document_size/surfaces.jsonl",
+    "KNOWLEDGE_MAP.md",
+    "docs/knowledge-map-topics",
+    "docs/audits/record-value-own-boundary-publication-20261005",
+    "docs/audits/own-boundary-publication-checks-20261005"
+  ],
+  "status": 128,
+  "stdout": "",
+  "stderr": "fatal: pathspec 'docs/knowledge-map-topics' did not match any files\n",
+  "scope": "Actual failed staging setup; current generated shards are knowledge-map/generated. No index write completed."
+}

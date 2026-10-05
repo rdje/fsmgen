@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-own-boundary-publication-20261005/verify_book.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS whole book source/SUMMARY/aggregate and scoped rendered publication guidance; visual QA remains pending.\n",
+  "stderr": "ram-guard: PID 29711; host 73.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
