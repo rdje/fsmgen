@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "--no-pager",
+    "log",
+    "-S",
+    "Close allocation/source identity only",
+    "--format=%H %s",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "f0143ca33f29897f381f5ef74928784c08b8d015 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.1: qualify original source contexts and spans\n"
+}

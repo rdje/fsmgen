@@ -1,0 +1,54 @@
+{
+  "binding.json": {
+    "bytes": 1172024,
+    "sha256": "0afa9af1f8266d23509af7567b73698562a9fac0285c45b2748e37c5a30062e3"
+  },
+  "book-authority.json": {
+    "bytes": 259,
+    "sha256": "00d4bdebb2ea137005ac3ff8089f80c9085ffd2777e65e5dcc78b913abc7df85"
+  },
+  "book-transform.json": {
+    "bytes": 332267,
+    "sha256": "189e86a4eeb3b5867904216de7480bd4a955512303a98caba259d8bd1fbd5721"
+  },
+  "cause_model.py": {
+    "bytes": 11115,
+    "sha256": "b430bae52bed26f48c5d6f7d5b45b3d563e62fc2a993b72b7689bb3521a87095"
+  },
+  "initial-without-allocation-control-proofs.json": {
+    "bytes": 9006774,
+    "sha256": "3fcad7e0e09a59261089388627a1eaa430f8f5befa1ed99753498d5637479637"
+  },
+  "initial-without-allocation-control-verify.py": {
+    "bytes": 11063,
+    "sha256": "dd48038a2c872608b8155df3cc85abc65b5c427b2c7f6c8c182839d6a7af40e3"
+  },
+  "model-generation-after-allocation-control.json": {
+    "bytes": 712,
+    "sha256": "9480a6cd793286a093975e560a80739d37202ff30da024cfd6b43a8fad0940a2"
+  },
+  "produce_binding-attempt-1.json": {
+    "bytes": 245,
+    "sha256": "dd52cbec1bd8b99b57bbe9660ab6980c7307577286aaa2fb772ce64366207fdc"
+  },
+  "produce_binding.py": {
+    "bytes": 1248,
+    "sha256": "554035dd557e4da8822c6a00acfdd4b0ab3949e1815e5a27af8814eb90178681"
+  },
+  "proofs.json": {
+    "bytes": 13378310,
+    "sha256": "70b95beab625761c354b6ccc36dd403fe9de3d54e36fd281f863e989b907cdf4"
+  },
+  "scope.txt": {
+    "bytes": 3495,
+    "sha256": "86b5bae2a56abcde2147c77058117f40c29679b7cd97b5404b00fa57c56531c7"
+  },
+  "verify-attempt-1.json": {
+    "bytes": 2028,
+    "sha256": "dbe95b27e48b3b4b743f76543fd7235266084be9446884de64408370556f9fd6"
+  },
+  "verify.py": {
+    "bytes": 11441,
+    "sha256": "9451cb58ed8055c528bbdc9fe39328be12074547ea1053053d5dc7ecd4ebccc2"
+  }
+}

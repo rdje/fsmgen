@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-primary-20261005/produce_binding.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "Captured entire committed primary/source/context prerequisite authority.\n"
+}

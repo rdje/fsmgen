@@ -488,9 +488,10 @@ The [input/private semantic join](../../../docs/audits/record-value-original-inp
 now binds every own graph and field to the same source/caller context, raw
 kinds and detached copy boundary. The [source-context reader](../../../docs/audits/record-value-original-contexts-20261005/scope.txt)
 now qualifies exact helper, consumer and parser source locations, input texts
-and operation spans for the recorded finite profile. Primary diagnostic causes,
-raw coordinate semantics, consumer operand truth and the full alias run’s
-downstream causes remain open. The complete semantic join and cold replay
+and operation spans for the recorded finite profile. The [primary-cause reader](../../../docs/audits/record-value-original-primary-20261005/scope.txt)
+now derives API, helper and parser first causes and acceptance from their own
+source inputs. Full raw coordinates and native address meanings, consumer
+operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 [portable replay repair](../../../docs/audits/record-value-replay-portability-20261004/scope.txt)
 now binds each Python process filename to its exact invoked reader. The original

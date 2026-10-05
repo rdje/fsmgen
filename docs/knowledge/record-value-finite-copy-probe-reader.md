@@ -13,6 +13,7 @@ answers:
   - "what qualifies current original T1986 copied fields and source candidates?"
   - "are original T1986 candidate input graphs and copied fields joined?"
   - "what qualifies original T1986 helper consumer and parser source contexts?"
+  - "what qualifies original T1986 candidate primary causes and acceptance?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -38,12 +39,12 @@ evidence: >-
   docs/audits/record-value-original-input-join-20261005/verify.py;
   docs/audits/record-value-original-contexts-20261005/scope.txt;
   docs/audits/record-value-original-contexts-20261005/verify.py;
+  docs/audits/record-value-original-primary-20261005/scope.txt;
+  docs/audits/record-value-original-primary-20261005/verify.py;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-contexts-20261005/verify.py &&
-  scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-input-join-20261005/verify.py &&
+  docs/audits/record-value-original-primary-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-original-products-20261005/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
@@ -85,7 +86,10 @@ graph/field/source/context/raw-kind/detachment semantics for the captured
 unchanged-input modes. The finite source-context reader now qualifies exact
 helper/consumer/parser locations, complete parser texts and own operation
 spans. Source context does not establish primary cause or consumer operand
-truth. Consumer/cause truth, full alias downstream semantics,
+truth. The independent finite primary model now derives every original
+API/helper/parser first cause and acceptance from qualified own source inputs.
+Full raw coordinate/address meanings and consumer operand truth, full alias
+downstream semantics,
 the complete semantic join and cold replay remain open.
 The candidate-parent join, hot baseline/consumer repairs and host-native
 refusal qualification remain separately owned successors.

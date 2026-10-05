@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path; n={'__name__':'primary_model_generation'}; exec(compile(Path('docs/audits/record-value-original-primary-20261005/verify.py').read_bytes(),'primary reader','exec'),n); e,p,h,_=n['models'](); records={m:n['load'](n['result_reader']['CAPTURE']/(m+'.json')) for m in e}; proof=dict(proofs=n['check'](records,e,p,h),controls=n['controls'](records,e,p,h)); (n['BASE']/'proofs.json').write_text(n['json'].dumps(proof,sort_keys=True,indent=2)+'\\n'); print('PASS model generation only; full sealed reexecution required')"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS model generation only; full sealed reexecution required\n"
+}

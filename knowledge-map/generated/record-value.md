@@ -1,7 +1,7 @@
 # Knowledge Map: `record-value`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **11** uniquely owned question entries.
+> **1** facts · **12** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -13,6 +13,7 @@
 - q="what qualifies current original T1986 copied fields and source candidates?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original T1986 candidate copy graphs?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original T1986 candidate input and private graphs?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
+- q="what qualifies original T1986 candidate primary causes and acceptance?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original T1986 helper consumer and parser source contexts?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what validates plain copy helper sharing and detachment?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="why does the private packed range sibling width change JSON kind?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)

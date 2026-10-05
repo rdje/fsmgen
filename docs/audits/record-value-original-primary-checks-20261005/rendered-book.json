@@ -1,0 +1,28 @@
+{
+  "status": 0,
+  "page": "docs/book/book/13k-isf-feature-support-matrix.html",
+  "required_text": [
+    "primary-cause reader",
+    "derives API, helper and parser first causes and acceptance from their own source inputs",
+    "Full raw coordinates and native address meanings, consumer operand truth"
+  ],
+  "source_transform": "complete Git before/exact replacement/current after equal",
+  "aggregate": {
+    "after": {
+      "bytes_total": 3768473,
+      "files": 64,
+      "lines_total": 67898
+    },
+    "before": {
+      "bytes_total": 3768285,
+      "files": 64,
+      "lines_total": 67897
+    },
+    "delta": {
+      "bytes_total": 188,
+      "files": 0,
+      "lines_total": 1
+    }
+  },
+  "scope": "Rendered text only; browser visual QA pending."
+}
