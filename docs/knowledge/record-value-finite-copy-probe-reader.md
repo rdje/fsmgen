@@ -22,6 +22,7 @@ answers:
   - "what joins nested original Scope and capture inputs?"
   - "what qualifies whole nested original error forwarding?"
   - "what qualifies inherited original nested API frames?"
+  - "are all original own API refusal paths joined?"
 date: 2026-10-05
 status: current
 tags: [isf, record, copy, native, graph, qualification]
@@ -35,15 +36,12 @@ evidence: >-
   docs/audits/record-value-original-candidate-20261004/scope.txt;
   docs/audits/record-value-original-copy-reader-20261004/scope.txt;
   docs/audits/record-value-original-copy-reader-20261004/verify.py;
-  docs/audits/record-value-original-products-20261005/scope.txt;
-  docs/audits/record-value-original-input-graphs-20261005/scope.txt;
   docs/audits/record-value-ranges-20261004/scope.txt;
-  docs/audits/record-value-original-fields-20261005/scope.txt;
-  docs/audits/record-value-original-inherited-frames-20261005/scope.txt;
+  docs/audits/record-value-original-api-paths-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-inherited-frames-20261005/verify.py &&
+  docs/audits/record-value-original-api-paths-20261005/verify.py &&
   python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
   scripts/run_with_ram_guard.sh -- python3 -B
   docs/audits/record-value-copy-reader-20261004/replay.py
@@ -88,7 +86,8 @@ source-constructed interface graph, preserving kinds, sharing and cycles.
 Whole inner scalar forwarding now conserves the new outer prefix. Public die
 controls distinguish explicit rethrow, propagation and hook replacement. Original
 hook state/provider bytes stay unmeasured. Source models join nested Value and
-capture/Scope eval/wrapper paths and visible operand roles. Full observer/display/
+capture/Scope eval/wrapper paths and visible operand roles. The complete own API
+join partitions every refusal into source guard/function/visible-role models. Full observer/display/
 frame/coordinate/address, consumer,
 alias/semantic/cold/candidate-parent, hot and host-native meanings remain open.
 

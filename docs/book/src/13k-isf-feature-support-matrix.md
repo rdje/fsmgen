@@ -519,7 +519,10 @@ can replace an exception. Original hook state and provider bytes were not captur
 The [inherited API paths](../../../docs/audits/record-value-original-inherited-frames-20261005/scope.txt)
 now join the active Value validation and capture/Scope observer eval, delegate
 and wrapper frames in both the inner failure and new outer throw. Source argument
-roles agree with visible scalar and reference-kind footprints. Full outer observer
+roles agree with visible scalar and reference-kind footprints. The [own API path join](../../../docs/audits/record-value-original-api-paths-20261005/scope.txt)
+now covers every recorded API refusal through a complete partition of direct
+Value and nested metadata paths, including both nested throw phases. Complete own
+function order and visible argument roles agree with source models. Full observer
 and framework meaning, exact display, raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.

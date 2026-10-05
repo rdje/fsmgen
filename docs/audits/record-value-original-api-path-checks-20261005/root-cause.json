@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Nested inherited API path roles/order",
+    "--",
+    "docs/audits/record-value-original-inherited-frames-20261005/verify.py"
+  ],
+  "status": 0,
+  "stdout": "commit 70ad725a35b96a09e92305970363fcd862bfdb85\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 13:04:20 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2.3.3: join inherited nested API paths\n    \n    Derive source capture/Scope eval, delegate, wrapper and own Value paths for inner and new outer throws. Visible argument roles match and nineteen source/frame/order/population/operand controls reject.\n    \n    Repair same-slice receipt alias handling: pin exact executed programme/proof/manifest and reject genuine older successes. Full sealed reader, original/book 3 files/318 assertions, book and knowledge checks pass. Close the three-part inherited parent; complete API join is next. Push remains deferred.\n",
+  "stderr": ""
+}

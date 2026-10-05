@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-api-paths-20261005/verify_book.py"
+  ],
+  "status": 0,
+  "stdout": "PASS whole book source/replacement/aggregate and rendered own-API/open-trace guidance; visual QA remains pending.\n",
+  "stderr": ""
+}

@@ -1,10 +1,11 @@
 # Knowledge Map: `record-value`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **20** uniquely owned question entries.
+> **1** facts · **21** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="are all original own API refusal paths joined?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="are complete original T1986 raw error bodies inventoried?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="are original T1986 candidate copy inputs captured?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="are original T1986 candidate input graphs and copied fields joined?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
