@@ -1,0 +1,42 @@
+{
+  "book_build_status": 0,
+  "build_stderr": " INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15211633 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/parser-function-order-book`\n",
+  "build_stdout": "",
+  "command": [
+    "python3",
+    "-B",
+    "scripts/book_source_references.py",
+    "--check",
+    "--verify-build",
+    ".artifacts/parser-function-order-book"
+  ],
+  "native": {
+    "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-function-order-20261006/verify.py",
+    "controls": [
+      {
+        "cause": "native exact function-order replay command",
+        "control": "extra-command-argument",
+        "status": 1
+      },
+      {
+        "cause": "native complete own-order guidance and missing legs",
+        "control": "broadened-scope",
+        "status": 1
+      },
+      {
+        "cause": "native complete own-order guidance and missing legs",
+        "control": "lost-identity-gap",
+        "status": 1
+      }
+    ],
+    "native_identity": {
+      "bytes": 213341,
+      "sha256": "37cf47c6a2c1f5d2f505e50535390c33ff38b4a6d48bee96e0cd0691db5a4c35"
+    },
+    "visual_QA": "not performed; separately owned"
+  },
+  "scope": "Final current copied-byte and scoped native guide qualification after task/index/pointer refresh; earlier sealed rendering remains immutable.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+}

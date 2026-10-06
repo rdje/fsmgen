@@ -1,0 +1,98 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/parser-function-order-checks-20261006/verify_seal.py"
+  ],
+  "programme_identity": {
+    "bytes": 3759,
+    "sha256": "de9c13fa9609a9866775b450a2916d5b0684332091d447329bbdaa0baf039f6a"
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 31404; host 67.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS actual sealed replay, complete file pins, source/order/control regeneration and typed receipt refusals.\n",
+  "whole_sealed_members": {
+    "binding.json": {
+      "bytes": 15814,
+      "sha256": "158c44c500deac53d9d635280d0b9526a878d12862faa33082ad897ba02f20b3"
+    },
+    "book-change.json": {
+      "bytes": 359169,
+      "sha256": "f3df2c6656c79cf8a395b275880d0d9d7cc35afe541e7d072814e2529b6af590"
+    },
+    "book-checks.json": {
+      "bytes": 622,
+      "sha256": "562894a15bdd170a07ce11f4562df3198e6adbcf5b67fb4dfc1aacb2c67672b9"
+    },
+    "book-focused.json": {
+      "bytes": 577,
+      "sha256": "c8a4d3add8113cb1c495406ebcb5d7f4e6ca72b802ddd0d2639d31a107bbbdb7"
+    },
+    "book-input.html": {
+      "bytes": 213341,
+      "sha256": "37cf47c6a2c1f5d2f505e50535390c33ff38b4a6d48bee96e0cd0691db5a4c35"
+    },
+    "book-native-proof.json": {
+      "bytes": 740,
+      "sha256": "49e457dc9894735336fd8c8366a0b56b3aad4a717b7e8e2e24f2e051ca5a95bc"
+    },
+    "book.py": {
+      "bytes": 3027,
+      "sha256": "6740f50bd6d6371519154d4f1eded4da9d269ed4a7de94f5935730206c910d6f"
+    },
+    "current-source.json": {
+      "bytes": 500,
+      "sha256": "a220a944270192a9b599d34cd945f920a5479aa1e6c640243e36c50945b56b31"
+    },
+    "focused-control-review.json": {
+      "bytes": 2352,
+      "sha256": "03b8a7ed3b9b9acfe5115a06721aa3fe2b2d8519f0cc88e7787ec9a19498393a"
+    },
+    "focused.json": {
+      "bytes": 780,
+      "sha256": "f533c5e107ef7d7ec1f1a1e7abb6813a0b2b05086bf1ea4bf4b3e5177d323d57"
+    },
+    "initial-proof.json": {
+      "bytes": 110624,
+      "sha256": "1770989ca41cc769006d82718de9a8066c022a4535604874c2cc2911b2d83ffb"
+    },
+    "initial-reader.py.txt": {
+      "bytes": 14635,
+      "sha256": "f9e467a48f9f66160eaefeb884a8c58f70680fd21fc8f989d493b73a6559859c"
+    },
+    "initial-replay.json": {
+      "bytes": 643,
+      "sha256": "45174f9cbc3fa83630976dd8a48c443209e5eb302e6ecf5ce52e746d4650b1eb"
+    },
+    "manifest.json": {
+      "bytes": 2455,
+      "sha256": "e10357af2556656fab5219af0fb8092f33c31ecbe738dcdc2bf51bce68fe692a"
+    },
+    "prepare.py": {
+      "bytes": 1193,
+      "sha256": "63001a2221b61f25ee0d7573961d5cb327de63f61968ae93e24efe0c242e837d"
+    },
+    "prerequisite-replays.json": {
+      "bytes": 6933,
+      "sha256": "b716a8976abe90a656ba3cc46ca194dcc1b1a62379125071d1e5e44f9ec0bdd1"
+    },
+    "proofs.json": {
+      "bytes": 110756,
+      "sha256": "95c58728d23ddbef9b91e84661ffd28d1f776a56cb899af6fbbdcbea43aea6c3"
+    },
+    "root-cause.json": {
+      "bytes": 1564,
+      "sha256": "a2a7ba55c1882078605ab757c9313938ca54d53c21b0eacc49ddbc7e0ee1c24b"
+    },
+    "scope.txt": {
+      "bytes": 2073,
+      "sha256": "bddf0471d3289e1ccfe86e7bc56c48e7b7b7ea1a944eb6f2eae3f3a6e0d9e3fd"
+    },
+    "verify.py": {
+      "bytes": 15090,
+      "sha256": "782ce7fd60a48a83b3250b7b8a1a3adcba57b42482027de2e1839a85f35568c2"
+    }
+  }
+}

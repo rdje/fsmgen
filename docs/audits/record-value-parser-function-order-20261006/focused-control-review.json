@@ -1,0 +1,97 @@
+[
+  {
+    "cause": "complete source-selected function-order models",
+    "control": "missing-source-path",
+    "status": 1
+  },
+  {
+    "cause": "complete source-selected function-order models",
+    "control": "borrowed-source-path",
+    "status": 1
+  },
+  {
+    "cause": "complete native parser mode identity",
+    "control": "missing-native-mode",
+    "status": 1
+  },
+  {
+    "cause": "complete native parser mode identity",
+    "control": "borrowed-native-mode",
+    "status": 1
+  },
+  {
+    "cause": "complete native parser member and kind population",
+    "control": "missing-native-member",
+    "status": 1
+  },
+  {
+    "cause": "complete native parser member and kind population",
+    "control": "duplicate-native-member",
+    "status": 1
+  },
+  {
+    "cause": "complete native parser member and kind population",
+    "control": "wrong-native-member",
+    "status": 1
+  },
+  {
+    "cause": "complete native parser member and kind population",
+    "control": "float-member-kind",
+    "status": 1
+  },
+  {
+    "cause": "complete native parser member and kind population",
+    "control": "Boolean-population-kind",
+    "status": 1
+  },
+  {
+    "cause": "source parser member context identity",
+    "control": "wrong-native-context",
+    "status": 1
+  },
+  {
+    "cause": "complete contiguous own parser interval",
+    "control": "lost-raw-frame",
+    "status": 1
+  },
+  {
+    "cause": "source-derived native parser function order",
+    "control": "reordered-raw-frames",
+    "status": 1
+  },
+  {
+    "cause": "source-derived native parser function order",
+    "control": "wrong-raw-function",
+    "status": 1
+  },
+  {
+    "cause": "complete contiguous own parser interval",
+    "control": "borrowed-raw-path",
+    "status": 1
+  },
+  {
+    "cause": "complete own parser frame population",
+    "control": "extra-own-raw-frame",
+    "status": 1
+  },
+  {
+    "cause": "complete source-derived parser throw phases",
+    "control": "duplicate-raw-phase",
+    "status": 1
+  },
+  {
+    "cause": "complete raw parser body and lossless grammar",
+    "control": "annotation-kind-corruption",
+    "status": 1
+  },
+  {
+    "cause": "whole original parser body conservation",
+    "control": "opaque-raw-body-change",
+    "status": 1
+  },
+  {
+    "cause": "complete raw parser body and lossless grammar",
+    "control": "opaque-byte-loss",
+    "status": 1
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-function-order-20261006/verify.py",
+  "controls": [
+    {
+      "cause": "native exact function-order replay command",
+      "control": "extra-command-argument",
+      "status": 1
+    },
+    {
+      "cause": "native complete own-order guidance and missing legs",
+      "control": "broadened-scope",
+      "status": 1
+    },
+    {
+      "cause": "native complete own-order guidance and missing legs",
+      "control": "lost-identity-gap",
+      "status": 1
+    }
+  ],
+  "native_identity": {
+    "bytes": 213341,
+    "sha256": "37cf47c6a2c1f5d2f505e50535390c33ff38b4a6d48bee96e0cd0691db5a4c35"
+  },
+  "visual_QA": "not performed; separately owned"
+}

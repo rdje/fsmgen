@@ -1,0 +1,15 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-function-order-20261006/verify.py"
+  ],
+  "product": "initial-proof.json",
+  "scope": "Actual first qualified source/raw/function-order join, before adding an explicit whole-body conservation control.",
+  "source": "initial-reader.py.txt",
+  "status": 0,
+  "stderr": "ram-guard: PID 65659; host 71.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete source-selected original parser function order in every retained mode/member/phase; argument and wider joins remain open.\n"
+}

@@ -1,0 +1,14 @@
+{
+  "cause": "Final task/index/pointer writes changed copied source assets after the earlier native build. Rebuild the same generated book before final copied-byte qualification; sealed earlier HTML and source evidence remain snapshot evidence.",
+  "command": [
+    "python3",
+    "-B",
+    "scripts/book_source_references.py",
+    "--check",
+    "--verify-build",
+    ".artifacts/parser-function-order-book"
+  ],
+  "status": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 213, in <module>\n    if __name__ == '__main__': main()\n                               ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 208, in main\n    check(rows, args.verify_build)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 164, in check\n    require(local_read(target,SOURCE_BYTES) == source_bytes(row['source']), 'fresh whole native copied source bytes')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 32, in require\n    if not condition: raise ValueError(message)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: fresh whole native copied source bytes\n",
+  "stdout": ""
+}

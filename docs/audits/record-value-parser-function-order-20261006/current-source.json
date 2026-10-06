@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-path-models-20261006/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 50935; host 61.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS finite original source guard/ancestry/argument roles and dated nested source allocations; native joins remain open.\nPASS current scoped source meanings/query/guide/capacity\n"
+}

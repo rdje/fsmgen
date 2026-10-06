@@ -1,0 +1,9 @@
+{
+  "cause": "The proposed updater looked for id rather than the declared surface_id, leaving the old authority unchanged while book text grew. Exact current aggregate guard rejects; no ceiling change.",
+  "command": [
+    "scripts/check_live_document_reference_authority.pl"
+  ],
+  "status": 1,
+  "stderr": "live-doc-reference-authority: surface shipped_behavior authorized aggregate lines_total is 68143, expected 68130\nlive-doc-reference-authority: surface shipped_behavior authorized aggregate bytes_total is 3787605, expected 3786837\nlive-doc-reference-authority: surface shipped_behavior aggregate baseline lines_total is 68130, expected 68112\nlive-doc-reference-authority: surface shipped_behavior aggregate baseline bytes_total is 3786837, expected 3785756\nlive-doc-reference-authority: surface shipped_behavior aggregate delta lines_total is 13, expected 18\nlive-doc-reference-authority: surface shipped_behavior aggregate delta bytes_total is 768, expected 1081\nlive-doc-reference-authority: surface shipped_behavior aggregate change reuses authority_id PARSER-PATH-MODELS-20261006-SHIPPED-BEHAVIOR\n",
+  "stdout": ""
+}

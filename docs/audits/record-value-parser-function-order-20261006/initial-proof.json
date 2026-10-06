@@ -1,0 +1,1716 @@
+{
+  "controls": [
+    {
+      "cause": "complete source-selected function-order models",
+      "control": "missing-source-path",
+      "status": 1
+    },
+    {
+      "cause": "complete source-selected function-order models",
+      "control": "borrowed-source-path",
+      "status": 1
+    },
+    {
+      "cause": "complete native parser mode identity",
+      "control": "missing-native-mode",
+      "status": 1
+    },
+    {
+      "cause": "complete native parser mode identity",
+      "control": "borrowed-native-mode",
+      "status": 1
+    },
+    {
+      "cause": "complete native parser member and kind population",
+      "control": "missing-native-member",
+      "status": 1
+    },
+    {
+      "cause": "complete native parser member and kind population",
+      "control": "duplicate-native-member",
+      "status": 1
+    },
+    {
+      "cause": "complete native parser member and kind population",
+      "control": "wrong-native-member",
+      "status": 1
+    },
+    {
+      "cause": "complete native parser member and kind population",
+      "control": "float-member-kind",
+      "status": 1
+    },
+    {
+      "cause": "complete native parser member and kind population",
+      "control": "Boolean-population-kind",
+      "status": 1
+    },
+    {
+      "cause": "source parser member context identity",
+      "control": "wrong-native-context",
+      "status": 1
+    },
+    {
+      "cause": "complete contiguous own parser interval",
+      "control": "lost-raw-frame",
+      "status": 1
+    },
+    {
+      "cause": "source-derived native parser function order",
+      "control": "reordered-raw-frames",
+      "status": 1
+    },
+    {
+      "cause": "source-derived native parser function order",
+      "control": "wrong-raw-function",
+      "status": 1
+    },
+    {
+      "cause": "complete contiguous own parser interval",
+      "control": "borrowed-raw-path",
+      "status": 1
+    },
+    {
+      "cause": "complete own parser frame population",
+      "control": "extra-own-raw-frame",
+      "status": 1
+    },
+    {
+      "cause": "complete source-derived parser throw phases",
+      "control": "duplicate-raw-phase",
+      "status": 1
+    },
+    {
+      "cause": "complete raw parser body and lossless grammar",
+      "control": "annotation-kind-corruption",
+      "status": 1
+    },
+    {
+      "cause": "complete raw parser body and lossless grammar",
+      "control": "opaque-byte-loss",
+      "status": 1
+    }
+  ],
+  "models": [
+    {
+      "cases": [
+        {
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 41,
+            "kind": "source"
+          },
+          "functions_inner_to_outer": [
+            "FSM::Support::ISFRecordPortContexts::_require",
+            "FSM::Support::ISFRecordPortContexts::_reference",
+            "FSM::Support::ISFRecordPortContexts::_assignment",
+            "FSM::Support::ISFRecordPortContexts::_clauses",
+            "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+            "FSM::Adapter::ISF::Parser::_build_actor",
+            "FSM::Adapter::ISF::Parser::parse_source",
+            "FSM::Adapter::ISF::parse_source"
+          ],
+          "index": 2,
+          "phases": 1,
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 42,
+            "kind": "source"
+          },
+          "functions_inner_to_outer": [
+            "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+            "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+            "FSM::Adapter::ISF::Parser::_build_actor",
+            "FSM::Adapter::ISF::Parser::parse_source",
+            "FSM::Adapter::ISF::parse_source"
+          ],
+          "index": 3,
+          "phases": 1,
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "ordinary"
+    },
+    {
+      "cases": [
+        {
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 41,
+            "kind": "source"
+          },
+          "functions_inner_to_outer": [
+            "FSM::Support::ISFRecordPortContexts::_require",
+            "FSM::Support::ISFRecordPortContexts::_reference",
+            "FSM::Support::ISFRecordPortContexts::_assignment",
+            "FSM::Support::ISFRecordPortContexts::_clauses",
+            "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+            "FSM::Adapter::ISF::Parser::_build_actor",
+            "FSM::Adapter::ISF::Parser::parse_source",
+            "FSM::Adapter::ISF::parse_source"
+          ],
+          "index": 2,
+          "phases": 1,
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 42,
+            "kind": "source"
+          },
+          "functions_inner_to_outer": [
+            "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+            "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+            "FSM::Adapter::ISF::Parser::_build_actor",
+            "FSM::Adapter::ISF::Parser::parse_source",
+            "FSM::Adapter::ISF::parse_source"
+          ],
+          "index": 3,
+          "phases": 1,
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "storable"
+    },
+    {
+      "cases": [
+        {
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 41,
+            "kind": "source"
+          },
+          "functions_inner_to_outer": [
+            "FSM::Support::ISFRecordPortContexts::_require",
+            "FSM::Support::ISFRecordPortContexts::_reference",
+            "FSM::Support::ISFRecordPortContexts::_assignment",
+            "FSM::Support::ISFRecordPortContexts::_clauses",
+            "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+            "FSM::Adapter::ISF::Parser::_build_actor",
+            "FSM::Adapter::ISF::Parser::parse_source",
+            "FSM::Adapter::ISF::parse_source"
+          ],
+          "index": 2,
+          "phases": 1,
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 42,
+            "kind": "source"
+          },
+          "functions_inner_to_outer": [
+            "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+            "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+            "FSM::Adapter::ISF::Parser::_build_actor",
+            "FSM::Adapter::ISF::Parser::parse_source",
+            "FSM::Adapter::ISF::parse_source"
+          ],
+          "index": 3,
+          "phases": 1,
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "controls"
+    }
+  ],
+  "observations": [
+    {
+      "cases": [
+        {
+          "body": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification\n at perl/FSM/Support/ISFRecordPortContexts.pm line 281.\n\tFSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...) called at perl/FSM/Support/ISFRecordPortContexts.pm line 261\n\tFSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7562ad5030), \"write\", \"transaction 'main' set target\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 178\n\tFSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7562ad5030), \"transaction 'main' set\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 70\n\tFSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x75600dae58), HASH(0x7562ad5030), HASH(0x7562614db0), \"transaction 'main'\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 34\n\tFSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7562614db0), \"whole_output_writes_only\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 395\n\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), ARRAY(0x7562863858), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\tmain::parse(\"source\", CODE(0x755ea960c0), ARRAY(0x75617941c8), FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x755ea5d6d8), qr(record output field writes are not yet admitted), \"output frame source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x755ea5d6d8), qr(record output field writes are not yet admitted), \"output frame source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "body_identity": {
+            "bytes": 3794,
+            "sha256": "64d8501916dfa502f99600a12010182a998f7792e98824f6e0ea4be678b73963"
+          },
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 41,
+            "kind": "source"
+          },
+          "index": 2,
+          "phases": [
+            {
+              "opaque_after": [
+                {
+                  "bytes": 95,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1774,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                },
+                {
+                  "bytes": 274,
+                  "call": "main::parse(\"source\", CODE(0x755ea960c0), ARRAY(0x75617941c8), FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 213,
+                  "offset_bytes": 1869,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::parse(\"source\", CODE(0x755ea960c0), ARRAY(0x75617941c8), FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n"
+                },
+                {
+                  "bytes": 201,
+                  "call": "main::__ANON__(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2143,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 75,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 2344,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 69,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 2419,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 194,
+                  "call": "main::refuses(CODE(0x755ea5d6d8), qr(record output field writes are not yet admitted), \"output frame source\")",
+                  "kind": "frame",
+                  "line": 235,
+                  "offset_bytes": 2488,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::refuses(CODE(0x755ea5d6d8), qr(record output field writes are not yet admitted), \"output frame source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n"
+                },
+                {
+                  "bytes": 170,
+                  "call": "main::__ANON__(CODE(0x755ea5d6d8), qr(record output field writes are not yet admitted), \"output frame source\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2682,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(CODE(0x755ea5d6d8), qr(record output field writes are not yet admitted), \"output frame source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 101,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 240,
+                  "offset_bytes": 2852,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n"
+                },
+                {
+                  "bytes": 79,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2953,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 73,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 3032,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 204,
+                  "call": "Test::Builder::subtest(Test::Builder=HASH(0x755d048780), \"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0))",
+                  "kind": "frame",
+                  "line": 809,
+                  "offset_bytes": 3105,
+                  "path": "/System/Library/Perl/5.34/Test/More.pm",
+                  "raw": "\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n"
+                },
+                {
+                  "bytes": 192,
+                  "call": "Test::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0))",
+                  "kind": "frame",
+                  "line": 241,
+                  "offset_bytes": 3309,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n"
+                },
+                {
+                  "bytes": 162,
+                  "call": "main::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x755fed2408))",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3501,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n"
+                },
+                {
+                  "bytes": 131,
+                  "call": "require ./t/1986-isf-record-port-value-gates.t",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3663,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n"
+                }
+              ],
+              "opaque_before": [
+                {
+                  "bytes": 170,
+                  "kind": "message",
+                  "offset_bytes": 0,
+                  "raw": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification\n"
+                },
+                {
+                  "bytes": 56,
+                  "kind": "origin",
+                  "line": 281,
+                  "offset_bytes": 170,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": " at perl/FSM/Support/ISFRecordPortContexts.pm line 281.\n"
+                }
+              ],
+              "phase": 0,
+              "segment_positions": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "whole_own_segments": [
+                {
+                  "bytes": 180,
+                  "call": "FSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...)",
+                  "kind": "frame",
+                  "line": 261,
+                  "offset_bytes": 226,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...) called at perl/FSM/Support/ISFRecordPortContexts.pm line 261\n"
+                },
+                {
+                  "bytes": 186,
+                  "call": "FSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7562ad5030), \"write\", \"transaction 'main' set target\")",
+                  "kind": "frame",
+                  "line": 178,
+                  "offset_bytes": 406,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7562ad5030), \"write\", \"transaction 'main' set target\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 178\n"
+                },
+                {
+                  "bytes": 173,
+                  "call": "FSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7562ad5030), \"transaction 'main' set\")",
+                  "kind": "frame",
+                  "line": 70,
+                  "offset_bytes": 592,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7562ad5030), \"transaction 'main' set\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 70\n"
+                },
+                {
+                  "bytes": 190,
+                  "call": "FSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x75600dae58), HASH(0x7562ad5030), HASH(0x7562614db0), \"transaction 'main'\")",
+                  "kind": "frame",
+                  "line": 34,
+                  "offset_bytes": 765,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x75600dae58), HASH(0x7562ad5030), HASH(0x7562614db0), \"transaction 'main'\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 34\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7562614db0), \"whole_output_writes_only\", 1)",
+                  "kind": "frame",
+                  "line": 395,
+                  "offset_bytes": 955,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7562614db0), \"whole_output_writes_only\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 395\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), ARRAY(0x7562863858), \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 134,
+                  "offset_bytes": 1134,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), ARRAY(0x7562863858), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n"
+                },
+                {
+                  "bytes": 218,
+                  "call": "FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 72,
+                  "offset_bytes": 1313,
+                  "path": "perl/FSM/Adapter/ISF.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n"
+                },
+                {
+                  "bytes": 243,
+                  "call": "FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1531,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "body": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports\n at perl/FSM/Adapter/ISF/Parser.pm line 2879.\n\tFSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), HASH(0x75626ecd38), HASH(0x7562614600), \"actor 'refused' interface port 'value'\", \"allow_record\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 2820\n\tFSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), HASH(0x75626ecd38)) called at perl/FSM/Adapter/ISF/Parser.pm line 390\n\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), ARRAY(0x75600dbdc8), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\tmain::parse(\"source\", CODE(0x755ea960c0), ARRAY(0x7562866db0), FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x755ea5d6d8), qr(interface port 'value' references aggregate type), \"input lanes source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x755ea5d6d8), qr(interface port 'value' references aggregate type), \"input lanes source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "body_identity": {
+            "bytes": 3330,
+            "sha256": "fe2d09b1c15062013b356063825ce4f8a16c8ee4dfcca1ea5f08ca5e5230ba61"
+          },
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 42,
+            "kind": "source"
+          },
+          "index": 3,
+          "phases": [
+            {
+              "opaque_after": [
+                {
+                  "bytes": 95,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1310,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                },
+                {
+                  "bytes": 274,
+                  "call": "main::parse(\"source\", CODE(0x755ea960c0), ARRAY(0x7562866db0), FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 213,
+                  "offset_bytes": 1405,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::parse(\"source\", CODE(0x755ea960c0), ARRAY(0x7562866db0), FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n"
+                },
+                {
+                  "bytes": 201,
+                  "call": "main::__ANON__(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 1679,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 75,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 1880,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 69,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 1955,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 194,
+                  "call": "main::refuses(CODE(0x755ea5d6d8), qr(interface port 'value' references aggregate type), \"input lanes source\")",
+                  "kind": "frame",
+                  "line": 235,
+                  "offset_bytes": 2024,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::refuses(CODE(0x755ea5d6d8), qr(interface port 'value' references aggregate type), \"input lanes source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n"
+                },
+                {
+                  "bytes": 170,
+                  "call": "main::__ANON__(CODE(0x755ea5d6d8), qr(interface port 'value' references aggregate type), \"input lanes source\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2218,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(CODE(0x755ea5d6d8), qr(interface port 'value' references aggregate type), \"input lanes source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 101,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 240,
+                  "offset_bytes": 2388,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n"
+                },
+                {
+                  "bytes": 79,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2489,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 73,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2568,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 204,
+                  "call": "Test::Builder::subtest(Test::Builder=HASH(0x755d048780), \"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0))",
+                  "kind": "frame",
+                  "line": 809,
+                  "offset_bytes": 2641,
+                  "path": "/System/Library/Perl/5.34/Test/More.pm",
+                  "raw": "\tTest::Builder::subtest(Test::Builder=HASH(0x755d048780), \"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n"
+                },
+                {
+                  "bytes": 192,
+                  "call": "Test::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0))",
+                  "kind": "frame",
+                  "line": 241,
+                  "offset_bytes": 2845,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x75618b92a0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n"
+                },
+                {
+                  "bytes": 162,
+                  "call": "main::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x755fed2408))",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3037,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x755fed2408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n"
+                },
+                {
+                  "bytes": 131,
+                  "call": "require ./t/1986-isf-record-port-value-gates.t",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3199,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n"
+                }
+              ],
+              "opaque_before": [
+                {
+                  "bytes": 195,
+                  "kind": "message",
+                  "offset_bytes": 0,
+                  "raw": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports\n"
+                },
+                {
+                  "bytes": 46,
+                  "kind": "origin",
+                  "line": 2879,
+                  "offset_bytes": 195,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": " at perl/FSM/Adapter/ISF/Parser.pm line 2879.\n"
+                }
+              ],
+              "phase": 0,
+              "segment_positions": [
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "whole_own_segments": [
+                {
+                  "bytes": 253,
+                  "call": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), HASH(0x75626ecd38), HASH(0x7562614600), \"actor 'refused' interface port 'value'\", \"allow_record\", 1)",
+                  "kind": "frame",
+                  "line": 2820,
+                  "offset_bytes": 241,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), HASH(0x75626ecd38), HASH(0x7562614600), \"actor 'refused' interface port 'value'\", \"allow_record\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 2820\n"
+                },
+                {
+                  "bytes": 176,
+                  "call": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), HASH(0x75626ecd38))",
+                  "kind": "frame",
+                  "line": 390,
+                  "offset_bytes": 494,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), HASH(0x75626ecd38)) called at perl/FSM/Adapter/ISF/Parser.pm line 390\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), ARRAY(0x75600dbdc8), \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 134,
+                  "offset_bytes": 670,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), ARRAY(0x75600dbdc8), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n"
+                },
+                {
+                  "bytes": 218,
+                  "call": "FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 72,
+                  "offset_bytes": 849,
+                  "path": "perl/FSM/Adapter/ISF.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x755fed2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n"
+                },
+                {
+                  "bytes": 243,
+                  "call": "FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1067,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x755fedc1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "ordinary"
+    },
+    {
+      "cases": [
+        {
+          "body": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification\n at perl/FSM/Support/ISFRecordPortContexts.pm line 281.\n\tFSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...) called at perl/FSM/Support/ISFRecordPortContexts.pm line 261\n\tFSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7624012180), \"write\", \"transaction 'main' set target\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 178\n\tFSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7624012180), \"transaction 'main' set\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 70\n\tFSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x7621490e70), HASH(0x7624012180), HASH(0x7623bd85e8), \"transaction 'main'\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 34\n\tFSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7623bd85e8), \"whole_output_writes_only\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 395\n\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), ARRAY(0x7623a53228), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\tmain::parse(\"source\", CODE(0x7620d721f8), ARRAY(0x76239d90c0), FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x76239d6ca8), qr(record output field writes are not yet admitted), \"output frame source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x76239d6ca8), qr(record output field writes are not yet admitted), \"output frame source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "body_identity": {
+            "bytes": 3794,
+            "sha256": "e02529c1a58021e0ea2cd7135670c027f59c3189d365029558229524f7cab1fb"
+          },
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 41,
+            "kind": "source"
+          },
+          "index": 2,
+          "phases": [
+            {
+              "opaque_after": [
+                {
+                  "bytes": 95,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1774,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                },
+                {
+                  "bytes": 274,
+                  "call": "main::parse(\"source\", CODE(0x7620d721f8), ARRAY(0x76239d90c0), FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 213,
+                  "offset_bytes": 1869,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::parse(\"source\", CODE(0x7620d721f8), ARRAY(0x76239d90c0), FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n"
+                },
+                {
+                  "bytes": 201,
+                  "call": "main::__ANON__(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2143,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 75,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 2344,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 69,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 2419,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 194,
+                  "call": "main::refuses(CODE(0x76239d6ca8), qr(record output field writes are not yet admitted), \"output frame source\")",
+                  "kind": "frame",
+                  "line": 235,
+                  "offset_bytes": 2488,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::refuses(CODE(0x76239d6ca8), qr(record output field writes are not yet admitted), \"output frame source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n"
+                },
+                {
+                  "bytes": 170,
+                  "call": "main::__ANON__(CODE(0x76239d6ca8), qr(record output field writes are not yet admitted), \"output frame source\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2682,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(CODE(0x76239d6ca8), qr(record output field writes are not yet admitted), \"output frame source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 101,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 240,
+                  "offset_bytes": 2852,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n"
+                },
+                {
+                  "bytes": 79,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2953,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 73,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 3032,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 204,
+                  "call": "Test::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0))",
+                  "kind": "frame",
+                  "line": 809,
+                  "offset_bytes": 3105,
+                  "path": "/System/Library/Perl/5.34/Test/More.pm",
+                  "raw": "\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n"
+                },
+                {
+                  "bytes": 192,
+                  "call": "Test::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0))",
+                  "kind": "frame",
+                  "line": 241,
+                  "offset_bytes": 3309,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n"
+                },
+                {
+                  "bytes": 162,
+                  "call": "main::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x7620f10408))",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3501,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n"
+                },
+                {
+                  "bytes": 131,
+                  "call": "require ./t/1986-isf-record-port-value-gates.t",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3663,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n"
+                }
+              ],
+              "opaque_before": [
+                {
+                  "bytes": 170,
+                  "kind": "message",
+                  "offset_bytes": 0,
+                  "raw": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification\n"
+                },
+                {
+                  "bytes": 56,
+                  "kind": "origin",
+                  "line": 281,
+                  "offset_bytes": 170,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": " at perl/FSM/Support/ISFRecordPortContexts.pm line 281.\n"
+                }
+              ],
+              "phase": 0,
+              "segment_positions": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "whole_own_segments": [
+                {
+                  "bytes": 180,
+                  "call": "FSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...)",
+                  "kind": "frame",
+                  "line": 261,
+                  "offset_bytes": 226,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...) called at perl/FSM/Support/ISFRecordPortContexts.pm line 261\n"
+                },
+                {
+                  "bytes": 186,
+                  "call": "FSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7624012180), \"write\", \"transaction 'main' set target\")",
+                  "kind": "frame",
+                  "line": 178,
+                  "offset_bytes": 406,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7624012180), \"write\", \"transaction 'main' set target\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 178\n"
+                },
+                {
+                  "bytes": 173,
+                  "call": "FSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7624012180), \"transaction 'main' set\")",
+                  "kind": "frame",
+                  "line": 70,
+                  "offset_bytes": 592,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7624012180), \"transaction 'main' set\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 70\n"
+                },
+                {
+                  "bytes": 190,
+                  "call": "FSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x7621490e70), HASH(0x7624012180), HASH(0x7623bd85e8), \"transaction 'main'\")",
+                  "kind": "frame",
+                  "line": 34,
+                  "offset_bytes": 765,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x7621490e70), HASH(0x7624012180), HASH(0x7623bd85e8), \"transaction 'main'\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 34\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7623bd85e8), \"whole_output_writes_only\", 1)",
+                  "kind": "frame",
+                  "line": 395,
+                  "offset_bytes": 955,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7623bd85e8), \"whole_output_writes_only\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 395\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), ARRAY(0x7623a53228), \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 134,
+                  "offset_bytes": 1134,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), ARRAY(0x7623a53228), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n"
+                },
+                {
+                  "bytes": 218,
+                  "call": "FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 72,
+                  "offset_bytes": 1313,
+                  "path": "perl/FSM/Adapter/ISF.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n"
+                },
+                {
+                  "bytes": 243,
+                  "call": "FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1531,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "body": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports\n at perl/FSM/Adapter/ISF/Parser.pm line 2879.\n\tFSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), HASH(0x7623956ea0), HASH(0x7622f30600), \"actor 'refused' interface port 'value'\", \"allow_record\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 2820\n\tFSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), HASH(0x7623956ea0)) called at perl/FSM/Adapter/ISF/Parser.pm line 390\n\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), ARRAY(0x7623b0ea38), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\tmain::parse(\"source\", CODE(0x7620d721f8), ARRAY(0x7623b0e9d8), FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x76239d6ca8), qr(interface port 'value' references aggregate type), \"input lanes source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x76239d6ca8), qr(interface port 'value' references aggregate type), \"input lanes source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "body_identity": {
+            "bytes": 3330,
+            "sha256": "baf06212ffaf631db65e3eeed815d854fb750bd999410b9527881bcb40aebbb4"
+          },
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 42,
+            "kind": "source"
+          },
+          "index": 3,
+          "phases": [
+            {
+              "opaque_after": [
+                {
+                  "bytes": 95,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1310,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                },
+                {
+                  "bytes": 274,
+                  "call": "main::parse(\"source\", CODE(0x7620d721f8), ARRAY(0x7623b0e9d8), FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 213,
+                  "offset_bytes": 1405,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::parse(\"source\", CODE(0x7620d721f8), ARRAY(0x7623b0e9d8), FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n"
+                },
+                {
+                  "bytes": 201,
+                  "call": "main::__ANON__(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 1679,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 75,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 1880,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 69,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 1955,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 194,
+                  "call": "main::refuses(CODE(0x76239d6ca8), qr(interface port 'value' references aggregate type), \"input lanes source\")",
+                  "kind": "frame",
+                  "line": 235,
+                  "offset_bytes": 2024,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::refuses(CODE(0x76239d6ca8), qr(interface port 'value' references aggregate type), \"input lanes source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n"
+                },
+                {
+                  "bytes": 170,
+                  "call": "main::__ANON__(CODE(0x76239d6ca8), qr(interface port 'value' references aggregate type), \"input lanes source\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2218,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(CODE(0x76239d6ca8), qr(interface port 'value' references aggregate type), \"input lanes source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 101,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 240,
+                  "offset_bytes": 2388,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n"
+                },
+                {
+                  "bytes": 79,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2489,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 73,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2568,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 204,
+                  "call": "Test::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0))",
+                  "kind": "frame",
+                  "line": 809,
+                  "offset_bytes": 2641,
+                  "path": "/System/Library/Perl/5.34/Test/More.pm",
+                  "raw": "\tTest::Builder::subtest(Test::Builder=HASH(0x761f06c750), \"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n"
+                },
+                {
+                  "bytes": 192,
+                  "call": "Test::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0))",
+                  "kind": "frame",
+                  "line": 241,
+                  "offset_bytes": 2845,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x76215597b0)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n"
+                },
+                {
+                  "bytes": 162,
+                  "call": "main::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x7620f10408))",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3037,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x7620f10408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n"
+                },
+                {
+                  "bytes": 131,
+                  "call": "require ./t/1986-isf-record-port-value-gates.t",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3199,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n"
+                }
+              ],
+              "opaque_before": [
+                {
+                  "bytes": 195,
+                  "kind": "message",
+                  "offset_bytes": 0,
+                  "raw": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports\n"
+                },
+                {
+                  "bytes": 46,
+                  "kind": "origin",
+                  "line": 2879,
+                  "offset_bytes": 195,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": " at perl/FSM/Adapter/ISF/Parser.pm line 2879.\n"
+                }
+              ],
+              "phase": 0,
+              "segment_positions": [
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "whole_own_segments": [
+                {
+                  "bytes": 253,
+                  "call": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), HASH(0x7623956ea0), HASH(0x7622f30600), \"actor 'refused' interface port 'value'\", \"allow_record\", 1)",
+                  "kind": "frame",
+                  "line": 2820,
+                  "offset_bytes": 241,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), HASH(0x7623956ea0), HASH(0x7622f30600), \"actor 'refused' interface port 'value'\", \"allow_record\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 2820\n"
+                },
+                {
+                  "bytes": 176,
+                  "call": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), HASH(0x7623956ea0))",
+                  "kind": "frame",
+                  "line": 390,
+                  "offset_bytes": 494,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), HASH(0x7623956ea0)) called at perl/FSM/Adapter/ISF/Parser.pm line 390\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), ARRAY(0x7623b0ea38), \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 134,
+                  "offset_bytes": 670,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), ARRAY(0x7623b0ea38), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n"
+                },
+                {
+                  "bytes": 218,
+                  "call": "FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 72,
+                  "offset_bytes": 849,
+                  "path": "perl/FSM/Adapter/ISF.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x7620f10648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n"
+                },
+                {
+                  "bytes": 243,
+                  "call": "FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1067,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x7620f121b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "storable"
+    },
+    {
+      "cases": [
+        {
+          "body": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification\n at perl/FSM/Support/ISFRecordPortContexts.pm line 281.\n\tFSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...) called at perl/FSM/Support/ISFRecordPortContexts.pm line 261\n\tFSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7a012e7c90), \"write\", \"transaction 'main' set target\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 178\n\tFSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7a012e7c90), \"transaction 'main' set\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 70\n\tFSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x79ff234390), HASH(0x7a012e7c90), HASH(0x7a016c9438), \"transaction 'main'\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 34\n\tFSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7a016c9438), \"whole_output_writes_only\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 395\n\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), ARRAY(0x7a01416780), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\tmain::parse(\"source\", CODE(0x79fefaa030), ARRAY(0x7a016c56c0), FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a0161fd50), qr(record output field writes are not yet admitted), \"output frame source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a0161fd50), qr(record output field writes are not yet admitted), \"output frame source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "body_identity": {
+            "bytes": 3794,
+            "sha256": "791e2a72aa74f394432fbc6caae22820c51af72d3e0ffb793d295e6cbf39f646"
+          },
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 41,
+            "kind": "source"
+          },
+          "index": 2,
+          "phases": [
+            {
+              "opaque_after": [
+                {
+                  "bytes": 95,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1774,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                },
+                {
+                  "bytes": 274,
+                  "call": "main::parse(\"source\", CODE(0x79fefaa030), ARRAY(0x7a016c56c0), FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 213,
+                  "offset_bytes": 1869,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::parse(\"source\", CODE(0x79fefaa030), ARRAY(0x7a016c56c0), FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n"
+                },
+                {
+                  "bytes": 201,
+                  "call": "main::__ANON__(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2143,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 75,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 2344,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 69,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 2419,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 194,
+                  "call": "main::refuses(CODE(0x7a0161fd50), qr(record output field writes are not yet admitted), \"output frame source\")",
+                  "kind": "frame",
+                  "line": 235,
+                  "offset_bytes": 2488,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::refuses(CODE(0x7a0161fd50), qr(record output field writes are not yet admitted), \"output frame source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n"
+                },
+                {
+                  "bytes": 170,
+                  "call": "main::__ANON__(CODE(0x7a0161fd50), qr(record output field writes are not yet admitted), \"output frame source\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2682,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(CODE(0x7a0161fd50), qr(record output field writes are not yet admitted), \"output frame source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 101,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 240,
+                  "offset_bytes": 2852,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n"
+                },
+                {
+                  "bytes": 79,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2953,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 73,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 3032,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 204,
+                  "call": "Test::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150))",
+                  "kind": "frame",
+                  "line": 809,
+                  "offset_bytes": 3105,
+                  "path": "/System/Library/Perl/5.34/Test/More.pm",
+                  "raw": "\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n"
+                },
+                {
+                  "bytes": 192,
+                  "call": "Test::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150))",
+                  "kind": "frame",
+                  "line": 241,
+                  "offset_bytes": 3309,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n"
+                },
+                {
+                  "bytes": 162,
+                  "call": "main::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff0e2408))",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3501,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n"
+                },
+                {
+                  "bytes": 131,
+                  "call": "require ./t/1986-isf-record-port-value-gates.t",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3663,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n"
+                }
+              ],
+              "opaque_before": [
+                {
+                  "bytes": 170,
+                  "kind": "message",
+                  "offset_bytes": 0,
+                  "raw": "Invalid ISF record context: transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification\n"
+                },
+                {
+                  "bytes": 56,
+                  "kind": "origin",
+                  "line": 281,
+                  "offset_bytes": 170,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": " at perl/FSM/Support/ISFRecordPortContexts.pm line 281.\n"
+                }
+              ],
+              "phase": 0,
+              "segment_positions": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ],
+              "whole_own_segments": [
+                {
+                  "bytes": 180,
+                  "call": "FSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...)",
+                  "kind": "frame",
+                  "line": 261,
+                  "offset_bytes": 226,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_require(\"\", \"transaction 'main' set target record output field writes are \"...) called at perl/FSM/Support/ISFRecordPortContexts.pm line 261\n"
+                },
+                {
+                  "bytes": 186,
+                  "call": "FSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7a012e7c90), \"write\", \"transaction 'main' set target\")",
+                  "kind": "frame",
+                  "line": 178,
+                  "offset_bytes": 406,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_reference(\"value.flag\", HASH(0x7a012e7c90), \"write\", \"transaction 'main' set target\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 178\n"
+                },
+                {
+                  "bytes": 173,
+                  "call": "FSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7a012e7c90), \"transaction 'main' set\")",
+                  "kind": "frame",
+                  "line": 70,
+                  "offset_bytes": 592,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_assignment(\"value.flag\", 1, HASH(0x7a012e7c90), \"transaction 'main' set\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 70\n"
+                },
+                {
+                  "bytes": 190,
+                  "call": "FSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x79ff234390), HASH(0x7a012e7c90), HASH(0x7a016c9438), \"transaction 'main'\")",
+                  "kind": "frame",
+                  "line": 34,
+                  "offset_bytes": 765,
+                  "path": "perl/FSM/Support/ISFRecordPortContexts.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::_clauses(ARRAY(0x79ff234390), HASH(0x7a012e7c90), HASH(0x7a016c9438), \"transaction 'main'\") called at perl/FSM/Support/ISFRecordPortContexts.pm line 34\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7a016c9438), \"whole_output_writes_only\", 1)",
+                  "kind": "frame",
+                  "line": 395,
+                  "offset_bytes": 955,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Support::ISFRecordPortContexts::validate_actor_record_contexts(\"actor\", HASH(0x7a016c9438), \"whole_output_writes_only\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 395\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), ARRAY(0x7a01416780), \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 134,
+                  "offset_bytes": 1134,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), ARRAY(0x7a01416780), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n"
+                },
+                {
+                  "bytes": 218,
+                  "call": "FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 72,
+                  "offset_bytes": 1313,
+                  "path": "perl/FSM/Adapter/ISF.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n"
+                },
+                {
+                  "bytes": 243,
+                  "call": "FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1531,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "body": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports\n at perl/FSM/Adapter/ISF/Parser.pm line 2879.\n\tFSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), HASH(0x7a01745a80), HASH(0x7a017474b0), \"actor 'refused' interface port 'value'\", \"allow_record\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 2820\n\tFSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), HASH(0x7a01745a80)) called at perl/FSM/Adapter/ISF/Parser.pm line 390\n\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), ARRAY(0x7a01745a08), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n\tmain::parse(\"source\", CODE(0x79fefaa030), ARRAY(0x7a011769d8), FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n\tmain::refuses(CODE(0x7a0161fd50), qr(interface port 'value' references aggregate type), \"input lanes source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n\tmain::__ANON__(CODE(0x7a0161fd50), qr(interface port 'value' references aggregate type), \"input lanes source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n",
+          "body_identity": {
+            "bytes": 3330,
+            "sha256": "202fb47f133c114b06a2307530468fa0e0bbd5a3e3eda7ca3ae4b0692328128c"
+          },
+          "context": {
+            "caller": [
+              "main",
+              "./t/1986-isf-record-port-value-gates.t",
+              293
+            ],
+            "helper": 42,
+            "kind": "source"
+          },
+          "index": 3,
+          "phases": [
+            {
+              "opaque_after": [
+                {
+                  "bytes": 95,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1310,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\teval {...} called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                },
+                {
+                  "bytes": 274,
+                  "call": "main::parse(\"source\", CODE(0x79fefaa030), ARRAY(0x7a011769d8), FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 213,
+                  "offset_bytes": 1405,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::parse(\"source\", CODE(0x79fefaa030), ARRAY(0x7a011769d8), FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 213\n"
+                },
+                {
+                  "bytes": 201,
+                  "call": "main::__ANON__(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 1679,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 75,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 1880,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__() called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 69,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 87,
+                  "offset_bytes": 1955,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\teval {...} called at ./t/1986-isf-record-port-value-gates.t line 87\n"
+                },
+                {
+                  "bytes": 194,
+                  "call": "main::refuses(CODE(0x7a0161fd50), qr(interface port 'value' references aggregate type), \"input lanes source\")",
+                  "kind": "frame",
+                  "line": 235,
+                  "offset_bytes": 2024,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::refuses(CODE(0x7a0161fd50), qr(interface port 'value' references aggregate type), \"input lanes source\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 235\n"
+                },
+                {
+                  "bytes": 170,
+                  "call": "main::__ANON__(CODE(0x7a0161fd50), qr(interface port 'value' references aggregate type), \"input lanes source\")",
+                  "kind": "frame",
+                  "line": 293,
+                  "offset_bytes": 2218,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(CODE(0x7a0161fd50), qr(interface port 'value' references aggregate type), \"input lanes source\") called at ./t/1986-isf-record-port-value-gates.t line 293\n"
+                },
+                {
+                  "bytes": 101,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 240,
+                  "offset_bytes": 2388,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tmain::__ANON__() called at docs/audits/record-value-original-candidate-20261004/observe.pl line 240\n"
+                },
+                {
+                  "bytes": 79,
+                  "call": "main::__ANON__()",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2489,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 73,
+                  "call": "eval {...}",
+                  "kind": "frame",
+                  "line": 374,
+                  "offset_bytes": 2568,
+                  "path": "/System/Library/Perl/5.34/Test/Builder.pm",
+                  "raw": "\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n"
+                },
+                {
+                  "bytes": 204,
+                  "call": "Test::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150))",
+                  "kind": "frame",
+                  "line": 809,
+                  "offset_bytes": 2641,
+                  "path": "/System/Library/Perl/5.34/Test/More.pm",
+                  "raw": "\tTest::Builder::subtest(Test::Builder=HASH(0x79fd048750), \"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n"
+                },
+                {
+                  "bytes": 192,
+                  "call": "Test::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150))",
+                  "kind": "frame",
+                  "line": 241,
+                  "offset_bytes": 2845,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tTest::More::subtest(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff2e7150)) called at docs/audits/record-value-original-candidate-20261004/observe.pl line 241\n"
+                },
+                {
+                  "bytes": 162,
+                  "call": "main::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff0e2408))",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3037,
+                  "path": "./t/1986-isf-record-port-value-gates.t",
+                  "raw": "\tmain::__ANON__(\"output member writes and list-root source carriers remain closed\", CODE(0x79ff0e2408)) called at ./t/1986-isf-record-port-value-gates.t line 296\n"
+                },
+                {
+                  "bytes": 131,
+                  "call": "require ./t/1986-isf-record-port-value-gates.t",
+                  "kind": "frame",
+                  "line": 296,
+                  "offset_bytes": 3199,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\trequire ./t/1986-isf-record-port-value-gates.t called at docs/audits/record-value-original-candidate-20261004/observe.pl line 296\n"
+                }
+              ],
+              "opaque_before": [
+                {
+                  "bytes": 195,
+                  "kind": "message",
+                  "offset_bytes": 0,
+                  "raw": "Error: actor 'refused' interface port 'value' references aggregate type 'lanes'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables and packed record actor ports\n"
+                },
+                {
+                  "bytes": 46,
+                  "kind": "origin",
+                  "line": 2879,
+                  "offset_bytes": 195,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": " at perl/FSM/Adapter/ISF/Parser.pm line 2879.\n"
+                }
+              ],
+              "phase": 0,
+              "segment_positions": [
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "whole_own_segments": [
+                {
+                  "bytes": 253,
+                  "call": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), HASH(0x7a01745a80), HASH(0x7a017474b0), \"actor 'refused' interface port 'value'\", \"allow_record\", 1)",
+                  "kind": "frame",
+                  "line": 2820,
+                  "offset_bytes": 241,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_resolve_typed_width_entry(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), HASH(0x7a01745a80), HASH(0x7a017474b0), \"actor 'refused' interface port 'value'\", \"allow_record\", 1) called at perl/FSM/Adapter/ISF/Parser.pm line 2820\n"
+                },
+                {
+                  "bytes": 176,
+                  "call": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), HASH(0x7a01745a80))",
+                  "kind": "frame",
+                  "line": 390,
+                  "offset_bytes": 494,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_finalize_actor_type_references(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), HASH(0x7a01745a80)) called at perl/FSM/Adapter/ISF/Parser.pm line 390\n"
+                },
+                {
+                  "bytes": 179,
+                  "call": "FSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), ARRAY(0x7a01745a08), \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 134,
+                  "offset_bytes": 670,
+                  "path": "perl/FSM/Adapter/ISF/Parser.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::_build_actor(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), ARRAY(0x7a01745a08), \"still-refused.isf\") called at perl/FSM/Adapter/ISF/Parser.pm line 134\n"
+                },
+                {
+                  "bytes": 218,
+                  "call": "FSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 72,
+                  "offset_bytes": 849,
+                  "path": "perl/FSM/Adapter/ISF.pm",
+                  "raw": "\tFSM::Adapter::ISF::Parser::parse_source(FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at perl/FSM/Adapter/ISF.pm line 72\n"
+                },
+                {
+                  "bytes": 243,
+                  "call": "FSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\")",
+                  "kind": "frame",
+                  "line": 147,
+                  "offset_bytes": 1067,
+                  "path": "docs/audits/record-value-original-candidate-20261004/observe.pl",
+                  "raw": "\tFSM::Adapter::ISF::parse_source(FSM::Adapter::ISF=HASH(0x79ff0ec1b0), \"(actor refused (types (type frame (record (flag bit))) (type \"..., \"still-refused.isf\") called at docs/audits/record-value-original-candidate-20261004/observe.pl line 147\n"
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "controls"
+    }
+  ],
+  "scope": "Complete finite own parser function order only; visible arguments, outer framework, coordinates, identity and nested API/helper joins remain open."
+}

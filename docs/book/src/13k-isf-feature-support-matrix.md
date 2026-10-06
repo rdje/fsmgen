@@ -608,6 +608,19 @@ endpoints, bytes, ignore policy, budget and complete staged membership. Snapshot
 success does not supply current semantic currency. The original destination
 locality replay and explicit native copied-byte check remain required.
 
+The separate [parser function-order replay](reference-source/docs/audits/record-value-parser-function-order-20261006/scope.txt.source.txt)
+now binds independently selected own parser/context ancestry to every retained
+parser refusal and throw phase. It preserves complete raw bodies and opaque
+outer intervals and excludes returned delegates from active own frames.
+Genuine raw function/order and complete mode/member/kind controls reject.
+This qualifies own function order only. Visible arguments, complete nested
+API/helper context, formatter, coordinates and reference identity retain their
+separate owners. Replay from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-function-order-20261006/verify.py
+```
+
 The original parser source inventory binds complete own facade, parser and
 record-context source units, lexical declarations, selected whole function bodies,
 parameter roles and ordered call/guard statements. Output-field source admission
