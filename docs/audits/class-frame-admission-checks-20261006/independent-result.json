@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-admission-checks-20261006/verify_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/class-frame-admission-checks-20261006/verify_seal.py": {
+      "bytes": 8907,
+      "sha256": "ac0449b1990f1179708055877f1d3d3b84bea009b0946bc36d4d0d4f8b91ad2f"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 5906; host 75.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS actual nested same-basename insertion separates old false-green and repaired full-path seal; flat manifest bytes retain.\nstatus-True: refused at actual admission integer process success\nstatus-0.0: refused at actual admission integer process success\nstatus-1: refused at actual admission integer process success\nmember-count-True: refused at actual admission discrete member byte-count kinds\nmember-count-0.0: refused at actual admission discrete member byte-count kinds\nlost-sealed-member: refused at complete actual admission sealed member conservation\nwidened-guard: refused at actual admission default guard diagnostics\nborrowed-public-success: refused at exact actual admission command and complete output role\nborrowed-preparation-success: refused at exact actual admission command and complete output role\nPASS independently consumed whole actual admission and fresh scoped executions, regenerated products and typed/member/borrowed-result refusals.\n"
+}

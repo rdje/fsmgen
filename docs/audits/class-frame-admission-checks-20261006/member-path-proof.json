@@ -1,0 +1,69 @@
+{
+  "after": {
+    "current": {
+      "member.txt": {
+        "bytes": 23,
+        "sha256": "5c9f30573d5acc85d8b82d1357b106c394f3a6dcfc2fd4552da1614b3204aac0"
+      },
+      "nested/member.txt": {
+        "bytes": 23,
+        "sha256": "5c9f30573d5acc85d8b82d1357b106c394f3a6dcfc2fd4552da1614b3204aac0"
+      }
+    },
+    "legacy": {
+      "member.txt": {
+        "bytes": 23,
+        "sha256": "5c9f30573d5acc85d8b82d1357b106c394f3a6dcfc2fd4552da1614b3204aac0"
+      }
+    }
+  },
+  "before": {
+    "current": {
+      "member.txt": {
+        "bytes": 23,
+        "sha256": "5c9f30573d5acc85d8b82d1357b106c394f3a6dcfc2fd4552da1614b3204aac0"
+      }
+    },
+    "legacy": {
+      "member.txt": {
+        "bytes": 23,
+        "sha256": "5c9f30573d5acc85d8b82d1357b106c394f3a6dcfc2fd4552da1614b3204aac0"
+      }
+    }
+  },
+  "legacy_status": 0,
+  "legs": {
+    "durability": "both whole invocation programmes, actual fixture/member pins, producer and actual process result",
+    "falsify": "real same-basename exact-byte insertion passes legacy manifest but fails repaired seal",
+    "rederive": "independently stated full physical nested address domain and whole actual input bytes"
+  },
+  "physical_inputs": {
+    ".artifacts/class-frame-admission-member-controls/baseline/member.txt": {
+      "bytes": 23,
+      "sha256": "5c9f30573d5acc85d8b82d1357b106c394f3a6dcfc2fd4552da1614b3204aac0"
+    },
+    ".artifacts/class-frame-admission-member-controls/mutated/member.txt": {
+      "bytes": 23,
+      "sha256": "5c9f30573d5acc85d8b82d1357b106c394f3a6dcfc2fd4552da1614b3204aac0"
+    },
+    ".artifacts/class-frame-admission-member-controls/mutated/nested/member.txt": {
+      "bytes": 23,
+      "sha256": "5c9f30573d5acc85d8b82d1357b106c394f3a6dcfc2fd4552da1614b3204aac0"
+    }
+  },
+  "repaired_refusal": {
+    "cause": "whole immutable admission manifest",
+    "status": 1
+  },
+  "sources": {
+    "docs/audits/class-frame-admission-checks-20261006/fresh-reader.py.txt": {
+      "bytes": 20898,
+      "sha256": "df770a42d4f4fa8d158c4ad07e893987b5969bce593e9bda4e1d7221f4c960e4"
+    },
+    "docs/audits/record-value-class-frame-admission-20261006/verify.py": {
+      "bytes": 20918,
+      "sha256": "df1b8b6266b43fc46b944657ddb84647bc44bbdea1232417df901f73c8552640"
+    }
+  },
+  "workspace": ".artifacts/class-frame-admission-member-controls"
+}

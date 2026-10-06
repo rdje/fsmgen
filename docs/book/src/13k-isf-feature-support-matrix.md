@@ -737,6 +737,43 @@ No old programme or seal changes. Visual QA and original/private/formatter,
 class/frame/coordinate/address, host-native and broader CI/push gaps remain
 separately owned.
 
+Class/frame prerequisite admission now authenticates the complete declared
+source-reader and publication audit closure against committed abdf385d. Every
+regular member, completed source owner and immutable original capture belongs
+to that custody check. Whole empty/nonempty error populations and serialized
+bodies regenerate without normalization.
+
+The admission also retains actual fresh class/primary/raw, API and complete
+parser/observer/helper/subtest reader executions with their controls. Public
+documentation/accessors and authored public fixtures, including native source
+mutants, ran again through installed public interfaces. The original capture
+and earlier native probes remain retained evidence. The public-header replay
+explicitly uses saved transitive prerequisite executions at af4999e7 while
+regenerating its source/header/control products. The latest publication and
+tooling actual-result reader also reexecuted; its saved native captures remain
+saved. Invocation-time source identities, complete commands, statuses and both
+streams preserve these distinct roles.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-admission-20261006/verify.py
+```
+
+This default command authenticates the committed input domain, regenerates the
+whole raw inventory and admission controls, and checks the saved actual replay
+results and native guide. It does not rerun those readers or establish live
+currency. The sealed admission refuses recapture. Independent result checking
+rejects typed status/count substitutions, source/member/owner loss, invented
+scope and genuinely borrowed successes.
+
+Admission is not a class/frame semantic join. That independent join remains
+the next task, followed by qualified publication. Original native class,
+provider/version, hooks, private framework meaning, complete formatter/settings,
+hidden arguments, reference identity, coordinates and address/lifetimes remain
+unmeasured or separately owned. Current facts, query routes, collection authority
+and prior seals remain unchanged. All project output and scratch stay local;
+installed public toolchain access is necessary and read-only. Visual QA, HIAL
+host-native repair and full CI/push remain separately owned.
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

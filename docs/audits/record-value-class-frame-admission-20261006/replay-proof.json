@@ -1,0 +1,109 @@
+{
+  "api": {
+    "actual": {
+      "bytes": 80142,
+      "sha256": "3243ca7849de9af4ee11f8232b5c5c6cab057d23c3d44c8480c0d30c7af8535b"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-original-api-paths-20261005/verify.py"
+    ],
+    "role": "Fresh complete direct/metadata/nested/API source and control execution; original capture retained.",
+    "status": 0
+  },
+  "class": {
+    "actual": {
+      "bytes": 78390,
+      "sha256": "f1d6e7e5678b05a00f92e45a0ee3015d32787b8ec8b3f0f3e8fd55b129e5f7bb"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-original-class-20261005/verify.py"
+    ],
+    "role": "Fresh complete primary/raw/class source and control execution; original capture and class public native probes retained.",
+    "status": 0
+  },
+  "context": {
+    "actual": {
+      "bytes": 76409,
+      "sha256": "7d67c51fb70014ae1ce385e10066faffec01a6046f2a1e4d145c19fbbfcc3895"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-parser-context-join-20261006/verify.py"
+    ],
+    "role": "Fresh complete parser/observer/helper/subtest/context source and control execution; historical native captures retained.",
+    "status": 0
+  },
+  "fixture": {
+    "actual": {
+      "bytes": 76414,
+      "sha256": "8bc799159175be225d6b5484048d1a2600eff83ef118cf8d01cef6ea80b1c2fb"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-public-native-fixtures-20261006/verify.py",
+      "--current"
+    ],
+    "role": "Fresh own public fixtures and genuine native source mutants plus public profile; original capture retained.",
+    "status": 0
+  },
+  "profile": {
+    "actual": {
+      "bytes": 76398,
+      "sha256": "8dba5586903507b3d8d48f4ac2d9f86a1f34994c6449e89f3c1cda3fe9734401"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-public-framework-profile-20261006/verify.py",
+      "--current"
+    ],
+    "role": "Fresh dated installed public documentation/accessor commands and controls; original identities unmeasured.",
+    "status": 0
+  },
+  "public": {
+    "actual": {
+      "bytes": 76570,
+      "sha256": "dcc66e852bcefaf3d10259b42c012f386237be20dac653c5c29934add219e1ca"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-public-boundary-join-20261006/verify.py",
+      "--checkpoint-prerequisites"
+    ],
+    "role": "Fresh whole finite original public header models and controls; transitive native execution receipts explicitly retained at af4999e7.",
+    "status": 0
+  },
+  "public_result": {
+    "actual": {
+      "bytes": 77060,
+      "sha256": "f37e4e65d067da2ffce7831e09963ce4e5f69145938c4d1451881ede870142a9"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/public-boundary-join-checks-20261006/verify_seal.py"
+    ],
+    "role": "Fresh independent public actual-result/source/model/control/guide durability execution; native checkpoint retained.",
+    "status": 0
+  },
+  "tooling_result": {
+    "actual": {
+      "bytes": 77003,
+      "sha256": "411cf507347e6a13e99c34036f145d8dc72ebbbfe6956cfbd1a1ac3fecb69097"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/tooling-current-reader-checks-20261006/verify_seal.py"
+    ],
+    "role": "Fresh complete latest publication/source/semantic-retention/snapshot/result controls; saved native captures retained.",
+    "status": 0
+  }
+}

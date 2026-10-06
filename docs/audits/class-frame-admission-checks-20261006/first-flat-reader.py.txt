@@ -1,0 +1,337 @@
+"""Admit complete prerequisite custody and actual replay; do not claim a join."""
+import argparse
+import ast
+import copy
+import hashlib
+import json
+import re
+import subprocess
+import tarfile
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-class-frame-admission-20261006')
+CHECKS = Path('docs/audits/class-frame-admission-checks-20261006')
+REVISION = 'abdf385db72e9491e891b470814ccf1e54d3d249'
+TASK = Path('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md')
+OWNER = 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.1'
+PUBLIC = Path('docs/audits/record-value-public-boundary-join-20261006')
+TOOLING = Path('docs/audits/record-value-tooling-current-reader-20261006')
+PUBLICATION = Path('docs/audits/record-value-public-boundary-publication-20261006')
+CLASS = Path('docs/audits/record-value-original-class-20261005')
+API = Path('docs/audits/record-value-original-api-paths-20261005')
+CONTEXT = Path('docs/audits/record-value-parser-context-join-20261006')
+PROFILE = Path('docs/audits/record-value-public-framework-profile-20261006')
+FIXTURE = Path('docs/audits/record-value-public-native-fixtures-20261006')
+ROLE = 'Complete prerequisite custody and scoped actual replay only; independent class/frame semantics remain unjoined.'
+SUCCESS = 'PASS complete class/frame prerequisite admission and scoped saved actual executions; independent class/frame join remains pending.\n'
+REPLAY_SUCCESS = 'PASS complete class/frame prerequisite admission with fresh declared reader executions; retained native captures/checkpoint roles remain explicit and the join remains pending.\n'
+
+
+def require(condition, cause):
+    if not condition:
+        raise ValueError(cause)
+
+
+def same(left, right):
+    return json.dumps(left, sort_keys=True, allow_nan=False) == json.dumps(right, sort_keys=True, allow_nan=False)
+
+
+def identity(raw):
+    return dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+
+
+def load(path):
+    return json.loads(path.read_bytes())
+
+
+def module(path):
+    ns = {'__name__': 'class_frame_admission_dependency', '__file__': str(path)}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+def whole(root):
+    paths = sorted(root.iterdir())
+    require(all(p.is_file() and not p.is_symlink() and p.stat().st_dev == Path.cwd().stat().st_dev for p in paths),
+            'complete regular same-volume admission input population')
+    return {str(p): identity(p.read_bytes()) for p in paths}
+
+
+def members():
+    return {Path(p).name: pin for p, pin in whole(BASE).items() if Path(p).name != 'manifest.json'}
+
+
+def save(name, value):
+    path = BASE / name
+    if path.exists():
+        require(same(load(path), value), 'whole immutable admission product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(), 'sealed admission cannot add products')
+        path.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+
+
+def domain():
+    """Complete declared namespace roots plus source-literal audit closure.
+
+    Include whole roots, not just selected products. Namespace traversal covers
+    computed product/capture paths. Static closure includes dormant controls and
+    publication helpers without executing historical producers or recapturing.
+    """
+    checkpoint = module(PUBLIC / 'checkpoint.py')
+    roots = {PUBLIC, TOOLING, PUBLICATION,
+             Path('docs/audits/public-boundary-join-checks-20261006'),
+             Path('docs/audits/tooling-current-reader-checks-20261006'),
+             Path('docs/audits/public-boundary-publication-checks-20261006')}
+    for root in (PUBLIC, TOOLING, PUBLICATION):
+        roots.update(checkpoint['directories'](module(root / 'verify.py')))
+    pending, scanned = list(roots), set()
+    while pending:
+        root = pending.pop()
+        if root in scanned:
+            continue
+        scanned.add(root)
+        for path in sorted(root.glob('*.py')):
+            for node in ast.walk(ast.parse(path.read_text())):
+                if not isinstance(node, ast.Constant) or not isinstance(node.value, str):
+                    continue
+                if not node.value.startswith('docs/audits/'):
+                    continue
+                parts = Path(node.value).parts
+                if len(parts) < 3:
+                    continue
+                dependency = Path(*parts[:3])
+                if dependency.is_dir() and dependency not in roots:
+                    require(dependency not in (BASE, CHECKS), 'admission source domain cannot include its own outputs')
+                    roots.add(dependency)
+                    pending.append(dependency)
+    return sorted(roots, key=str)
+
+
+def committed_inputs(roots):
+    """Stream the archive so custody does not allocate the full raw corpus."""
+    actual = {str(root): whole(root) for root in roots}
+    process = subprocess.Popen(['git', 'archive', REVISION, *map(str, roots)], stdout=subprocess.PIPE)
+    archived = {}
+    with tarfile.open(fileobj=process.stdout, mode='r|') as archive:
+        for entry in archive:
+            if entry.isdir():
+                continue
+            require(entry.isfile(), 'committed admission inputs are regular files')
+            raw = archive.extractfile(entry).read()
+            require(Path(entry.name).read_bytes() == raw, 'whole committed admission input byte identity: ' + entry.name)
+            root = str(Path(entry.name).parent)
+            archived.setdefault(root, {})[entry.name] = identity(raw)
+    require(process.wait() == 0, 'actual complete fixed-Git input archive success')
+    require(same(actual, archived), 'whole committed direct/transitive member population')
+    return actual
+
+
+def owner_rows(roots, task):
+    rows = {}
+    for root in roots:
+        scope = root / 'scope.txt'
+        if not scope.exists():
+            continue
+        match = re.search(r'^Owner: (\S+)', scope.read_text(), re.MULTILINE)
+        if not match:
+            continue
+        owner = match[1]
+        # A retained prose scope terminates its owner sentence with a period.
+        if '- ID: `' + owner + '`' not in task and owner.endswith('.'):
+            owner = owner[:-1]
+        marker = '- ID: `' + owner + '`'
+        require(task.count(marker) == 1, 'unique committed prerequisite owner: ' + owner)
+        start = task.index(marker)
+        end = task.find('\n- ID:', start + len(marker))
+        body = task[start:] if end < 0 else task[start:end]
+        require('\n  Status: `done`\n' in body, 'complete committed prerequisite owner is done: ' + owner)
+        rows[str(root)] = dict(owner=owner, body=body, scope_identity=identity(scope.read_bytes()))
+    # This reader uses an explicitly named owner, rather than an Owner: header.
+    tooling_owner = module(TOOLING / 'verify.py')['OWNER']
+    marker = '- ID: `' + tooling_owner + '`'
+    start = task.index(marker); end = task.index('\n- ID:', start + len(marker))
+    body = task[start:end]
+    require('\n  Status: `done`\n' in body, 'complete committed tooling prerequisite owner is done')
+    rows[str(TOOLING)] = dict(owner=tooling_owner, body=body, scope_identity=identity((TOOLING / 'scope.txt').read_bytes()))
+    return rows
+
+
+def derive_binding():
+    roots = domain()
+    inputs = committed_inputs(roots)
+    task = subprocess.check_output(['git', 'show', REVISION + ':' + str(TASK)])
+    raw = module(Path('docs/audits/record-value-original-raw-20261005/verify.py'))
+    capture = raw['CAPTURE']
+    require(str(capture) in inputs, 'complete original capture root belongs to admission')
+    return dict(revision=REVISION, task_path=str(TASK), task_identity=identity(task),
+        owners=owner_rows(roots, task.decode()), inputs=inputs, role=ROLE,
+        original_capture=dict(root=str(capture), modes=list(raw['MODES']),
+                              members=inputs[str(capture)]))
+
+
+def check_binding(candidate, expected):
+    require(candidate['role'] == ROLE, 'admission cannot promote prerequisite custody to class/frame semantics')
+    require(candidate['revision'] == REVISION and candidate['task_path'] == str(TASK), 'fixed admission revision and task role')
+    require(same(candidate['task_identity'], expected['task_identity']), 'whole committed admission task identity')
+    require(same(candidate['owners'], expected['owners']), 'whole completed prerequisite owner population and bodies')
+    require(all(type(pin['bytes']) is int and pin['bytes'] >= 0 for rows in candidate['inputs'].values() for pin in rows.values()),
+            'discrete complete prerequisite member byte-count kinds')
+    require(same(candidate['inputs'], expected['inputs']), 'whole direct/transitive prerequisite source and member population')
+    require(same(candidate['original_capture'], expected['original_capture']), 'complete immutable original capture intake')
+    require(same(candidate, expected), 'closed complete admission binding')
+
+
+def raw_product():
+    raw = module(Path('docs/audits/record-value-original-raw-20261005/verify.py'))
+    records = {mode: load(raw['CAPTURE'] / (mode + '.json')) for mode in raw['MODES']}
+    inventories = raw['model'](records)
+    require(same(inventories, load(raw['BASE'] / 'proofs.json')['inventories']), 'complete independently regenerated original raw inventory')
+    raw['check'](inventories, records)
+    return dict(inventories=inventories, controls=raw['controls'](inventories, records),
+        role='Lossless entire empty/nonempty capture allocation, contexts and whole serialized bodies; no added class/frame meanings.')
+
+
+def replay_specs():
+    return [
+        dict(name='class', path=str(CLASS / 'verify.py'), flags=[],
+             terminal='PASS finite source/publisher class contracts and genuine native object refusals; full frames/coordinates/address meanings stay open.\n',
+             role='Fresh complete primary/raw/class source and control execution; original capture and class public native probes retained.'),
+        dict(name='api', path=str(API / 'verify.py'), flags=[],
+             terminal='PASS complete finite own API refusal source-frame/guard/visible-role partition and join; full observer/parser/framework/display/coordinate/address meaning stays open.\n',
+             role='Fresh complete direct/metadata/nested/API source and control execution; original capture retained.'),
+        dict(name='context', path=str(CONTEXT / 'verify.py'), flags=[],
+             terminal='PASS complete finite own parser/API/observer/helper/subtest context join and completed nested allocations; opaque native meanings remain open.\n',
+             role='Fresh complete parser/observer/helper/subtest/context source and control execution; historical native captures retained.'),
+        dict(name='profile', path=str(PROFILE / 'verify.py'), flags=['--current'],
+             terminal='PASS complete dated public framework/profile clauses and raw-output replay; original framework/native meanings remain open.\n',
+             role='Fresh dated installed public documentation/accessor commands and controls; original identities unmeasured.'),
+        dict(name='fixture', path=str(FIXTURE / 'verify.py'), flags=['--current'],
+             terminal='PASS finite independent public callback/eval/load/trace roles and genuine source/native controls; historical/private identities remain open.\n',
+             role='Fresh own public fixtures and genuine native source mutants plus public profile; original capture retained.'),
+        dict(name='public', path=str(PUBLIC / 'verify.py'), flags=['--checkpoint-prerequisites'],
+             terminal='Prerequisites: authenticated saved full executions at af4999e7; current source/header/control/guide checks rerun.\nPASS complete finite original public boundary/header compatibility and separating controls; historical/private/identity meanings remain open.\n',
+             role='Fresh whole finite original public header models and controls; transitive native execution receipts explicitly retained at af4999e7.'),
+        dict(name='public_result', path='docs/audits/public-boundary-join-checks-20261006/verify_seal.py', flags=[],
+             terminal='borrowed-public-fixture-success: refused at exact actual checkpoint public boundary seal command/result\n',
+             role='Fresh independent public actual-result/source/model/control/guide durability execution; native checkpoint retained.'),
+        dict(name='tooling_result', path='docs/audits/tooling-current-reader-checks-20261006/verify_seal.py', flags=[],
+             terminal='PASS independently consumed actual tooling current seal, complete products and typed/member/borrowed-result refusals.\n',
+             role='Fresh complete latest publication/source/semantic-retention/snapshot/result controls; saved native captures retained.')]
+
+
+def instruments(binding):
+    sources = {p: pin for rows in binding['inputs'].values() for p, pin in rows.items() if p.endswith(('.py', '.pl', '.pm'))}
+    sources['scripts/run_with_ram_guard.sh'] = identity(Path('scripts/run_with_ram_guard.sh').read_bytes())
+    return sources
+
+
+def check_replay(record, spec, binding):
+    require(type(record['status']) is int and record['status'] == 0, 'actual prerequisite integer process success')
+    require(record['command'] == ['python3', '-B', spec['path'], *spec['flags']], 'exact prerequisite programme command role')
+    require(record['role'] == spec['role'], 'actual prerequisite fresh versus retained execution scope')
+    require(record['stdout'].endswith(spec['terminal']) and record['stderr'] == '', 'whole prerequisite declared successful terminal and diagnostics')
+    for stream in ('stdout', 'stderr'):
+        require(type(record[stream + '_identity']['bytes']) is int and same(record[stream + '_identity'], identity(record[stream].encode())),
+                'whole actual prerequisite stream byte identity and kind')
+    require(same(record['instruments'], instruments(binding)) and same(record['input_identity'], identity((BASE / 'binding.json').read_bytes())),
+            'complete invocation-time prerequisite instruments and input identity')
+    require(set(record) == {'command', 'status', 'stdout', 'stderr', 'stdout_identity', 'stderr_identity', 'role', 'instruments', 'input_identity'},
+            'closed actual prerequisite result domain')
+
+
+def replays(binding, fresh):
+    output = {}
+    for spec in replay_specs():
+        name = 'replay-' + spec['name'] + '.json'
+        if fresh:
+            require(not (BASE / name).exists(), 'fresh prerequisite replay cannot overwrite an actual result')
+            # The outer command supplies one continuously active default RAM
+            # monitor over every descendant. All project work remains local.
+            command = ['python3', '-B', spec['path'], *spec['flags']]
+            source = instruments(binding)
+            before = {str(root): whole(root) for root in domain()}
+            require(same(before, binding['inputs']), 'complete invocation-time original prerequisite inputs')
+            p = subprocess.run(command, capture_output=True)
+            record = dict(command=command, status=p.returncode, stdout=p.stdout.decode(), stderr=p.stderr.decode(),
+                stdout_identity=identity(p.stdout), stderr_identity=identity(p.stderr), role=spec['role'],
+                instruments=source, input_identity=identity((BASE / 'binding.json').read_bytes()))
+            save(name, record)
+            require(same({str(root): whole(root) for root in domain()}, before), 'every original prerequisite byte conserved after actual replay')
+        else:
+            record = load(BASE / name)
+        check_replay(record, spec, binding)
+        output[spec['name']] = dict(actual=identity((BASE / name).read_bytes()), role=spec['role'],
+                                  command=record['command'], status=record['status'])
+        if fresh:
+            print('Admitted actual prerequisite: ' + spec['name'], flush=True)
+    return output
+
+
+def controls(binding):
+    output = []
+    def refuse(name, candidate, check, cause):
+        try:
+            check(candidate)
+        except ValueError as error:
+            require(str(error) == cause, 'intended admission refusal: ' + name)
+            output.append(dict(control=name, status=1, cause=cause))
+        else:
+            raise ValueError('false-green admission: ' + name)
+    binding_check = lambda candidate: check_binding(candidate, binding)
+    mutations = [
+        ('scope-promotion', lambda r: r.update(role='Complete class/frame semantic join qualified.'), 'admission cannot promote prerequisite custody to class/frame semantics'),
+        ('wrong-revision', lambda r: r.update(revision='borrowed'), 'fixed admission revision and task role'),
+        ('lost-owner', lambda r: r['owners'].pop(next(iter(r['owners']))), 'whole completed prerequisite owner population and bodies'),
+        ('changed-owner', lambda r: next(iter(r['owners'].values())).update(body='borrowed done'), 'whole completed prerequisite owner population and bodies'),
+        ('lost-source-member', lambda r: next(iter(r['inputs'].values())).pop(next(iter(next(iter(r['inputs'].values()))))), 'whole direct/transitive prerequisite source and member population'),
+        ('changed-source', lambda r: next(iter(next(iter(r['inputs'].values())).values())).update(sha256='borrowed'), 'whole direct/transitive prerequisite source and member population'),
+        ('Boolean-source-count', lambda r: next(iter(next(iter(r['inputs'].values())).values())).update(bytes=True), 'discrete complete prerequisite member byte-count kinds'),
+        ('float-source-count', lambda r: next(iter(next(iter(r['inputs'].values())).values())).update(bytes=0.0), 'discrete complete prerequisite member byte-count kinds'),
+        ('lost-raw-mode', lambda r: r['original_capture']['modes'].pop(), 'complete immutable original capture intake')]
+    for name, mutate, cause in mutations:
+        changed = copy.deepcopy(binding); mutate(changed)
+        require(not same(changed, binding), 'genuine admission intervention: ' + name)
+        refuse(name, changed, binding_check, cause)
+    spec = replay_specs()[0]; actual = load(BASE / 'replay-class.json')
+    replay_check = lambda r: check_replay(r, spec, binding)
+    for status in (True, 0.0, 1):
+        refuse('replay-status-' + repr(status), {**actual, 'status': status}, replay_check, 'actual prerequisite integer process success')
+    changed = copy.deepcopy(actual); changed['role'] = 'Original native class measured again.'
+    refuse('invented-native-recapture', changed, replay_check, 'actual prerequisite fresh versus retained execution scope')
+    changed = copy.deepcopy(actual); changed['instruments'].pop(next(iter(changed['instruments'])))
+    refuse('lost-invocation-source', changed, replay_check, 'complete invocation-time prerequisite instruments and input identity')
+    borrowed = load(BASE / 'replay-public.json')
+    require(type(borrowed['status']) is int and borrowed['status'] == 0, 'genuine public-only actual success')
+    refuse('borrowed-public-only-success', borrowed, replay_check, 'exact prerequisite programme command role')
+    return output
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--prepare', action='store_true')
+    parser.add_argument('--replay', action='store_true')
+    parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    require(not (args.prepare and (args.replay or args.seal)), 'preparation cannot stand in for actual replay or seal')
+    if (BASE / 'manifest.json').exists():
+        require(not args.prepare and not args.replay, 'immutable sealed admission cannot recapture')
+        require(same(load(BASE / 'manifest.json'), members()), 'whole immutable admission manifest')
+    expected = derive_binding()
+    if args.prepare:
+        save('binding.json', expected)
+        save('raw-product.json', raw_product())
+        print('PASS whole fixed-Git prerequisite preparation and complete raw inventory; actual reader executions remain required.')
+        return
+    check_binding(load(BASE / 'binding.json'), expected)
+    save('raw-product.json', raw_product())
+    save('replay-proof.json', replays(expected, args.replay))
+    save('controls.json', controls(expected))
+    book = module(BASE / 'book.py')
+    save('book-proof.json', book['proof']((BASE / 'book-input.html').read_text()))
+    if args.seal:
+        save('manifest.json', members())
+    print(REPLAY_SUCCESS if args.replay else SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

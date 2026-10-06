@@ -1,0 +1,78 @@
+{
+  "binding.json": {
+    "bytes": 669090,
+    "sha256": "69cac79ea8dbc5c7b11cae09d21442b8600e3ad8398d0ec6ed96b9babaf3a646"
+  },
+  "book-change.json": {
+    "bytes": 407808,
+    "sha256": "472d511ec003fd9622e5f1e51f10ec0b96de4bbc919f15a714ea3790601ce7b8"
+  },
+  "book-input.html": {
+    "bytes": 230592,
+    "sha256": "beb04be682c2eb9627810490fd2240c1dcf481556508ee0b115412a0757a00b6"
+  },
+  "book-proof.json": {
+    "bytes": 709,
+    "sha256": "0de517c0bc430b06f7a635dccd9d854074cc8cccd0b83e9cfb71a9afd7459022"
+  },
+  "book.py": {
+    "bytes": 4826,
+    "sha256": "581d3220fcdf644c6a3a392685a013bf240a1a93b0732291bcbc54c4186f83eb"
+  },
+  "controls.json": {
+    "bytes": 1973,
+    "sha256": "c329f08ae7eee5a77738bca49e6457bbe46928964ea00ec8358fae81d085ee7c"
+  },
+  "publish_book.py": {
+    "bytes": 2937,
+    "sha256": "4b8d5f43be25512be2c94bbb9f359b49796fe60f6bde84794bef8370eb6ffdce"
+  },
+  "raw-product.json": {
+    "bytes": 3431274,
+    "sha256": "4546b181f99dc17201dbd0a42235f1de324407a3232dd0cb786c6f3b505ad935"
+  },
+  "replay-api.json": {
+    "bytes": 80142,
+    "sha256": "3243ca7849de9af4ee11f8232b5c5c6cab057d23c3d44c8480c0d30c7af8535b"
+  },
+  "replay-class.json": {
+    "bytes": 78390,
+    "sha256": "f1d6e7e5678b05a00f92e45a0ee3015d32787b8ec8b3f0f3e8fd55b129e5f7bb"
+  },
+  "replay-context.json": {
+    "bytes": 76409,
+    "sha256": "7d67c51fb70014ae1ce385e10066faffec01a6046f2a1e4d145c19fbbfcc3895"
+  },
+  "replay-fixture.json": {
+    "bytes": 76414,
+    "sha256": "8bc799159175be225d6b5484048d1a2600eff83ef118cf8d01cef6ea80b1c2fb"
+  },
+  "replay-profile.json": {
+    "bytes": 76398,
+    "sha256": "8dba5586903507b3d8d48f4ac2d9f86a1f34994c6449e89f3c1cda3fe9734401"
+  },
+  "replay-proof.json": {
+    "bytes": 3443,
+    "sha256": "b274753472f4bfa7cce799465e71995670263192216bcbab72cc6e65b59fe3b0"
+  },
+  "replay-public.json": {
+    "bytes": 76570,
+    "sha256": "dcc66e852bcefaf3d10259b42c012f386237be20dac653c5c29934add219e1ca"
+  },
+  "replay-public_result.json": {
+    "bytes": 77060,
+    "sha256": "f37e4e65d067da2ffce7831e09963ce4e5f69145938c4d1451881ede870142a9"
+  },
+  "replay-tooling_result.json": {
+    "bytes": 77003,
+    "sha256": "411cf507347e6a13e99c34036f145d8dc72ebbbfe6956cfbd1a1ac3fecb69097"
+  },
+  "scope.txt": {
+    "bytes": 4126,
+    "sha256": "67e15c8b367a67db5f1ea0838f7a297feb7ab5f464ce954141b1d8a61a0d873c"
+  },
+  "verify.py": {
+    "bytes": 20918,
+    "sha256": "df1b8b6266b43fc46b944657ddb84647bc44bbdea1232417df901f73c8552640"
+  }
+}

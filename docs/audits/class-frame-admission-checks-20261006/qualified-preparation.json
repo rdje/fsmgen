@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-admission-20261006/verify.py",
+    "--prepare"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-admission-20261006/verify.py": {
+      "bytes": 20583,
+      "sha256": "9aa9345bdbf103af454b8193166aa5918c0a3f39d9257c83de093dc102b64116"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 34798; host 61.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 337, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 319, in main\n    expected = derive_binding()\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 161, in derive_binding\n    inputs = committed_inputs(roots)\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 112, in committed_inputs\n    actual = {str(root): whole(root) for root in roots}\n                         ~~~~~^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 55, in whole\n    require(all(p.is_file() and not p.is_symlink() and p.stat().st_dev == Path.cwd().stat().st_dev for p in paths),\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'complete regular same-volume admission input population')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 32, in require\n    raise ValueError(cause)\nValueError: complete regular same-volume admission input population\n",
+  "stdout": ""
+}

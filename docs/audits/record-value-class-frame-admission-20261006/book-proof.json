@@ -1,0 +1,29 @@
+{
+  "controls": [
+    {
+      "cause": "native exact admission command",
+      "control": "wrong-command",
+      "status": 1
+    },
+    {
+      "cause": "native complete admission scope and retained gaps",
+      "control": "invented-join",
+      "status": 1
+    },
+    {
+      "cause": "native complete admission scope and retained gaps",
+      "control": "invented-recapture",
+      "status": 1
+    },
+    {
+      "cause": "native complete admission scope and retained gaps",
+      "control": "lost-gap",
+      "status": 1
+    }
+  ],
+  "input_identity": {
+    "bytes": 230592,
+    "sha256": "beb04be682c2eb9627810490fd2240c1dcf481556508ee0b115412a0757a00b6"
+  },
+  "visual_QA": "pending; separately owned"
+}

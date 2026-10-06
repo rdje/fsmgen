@@ -1,0 +1,21 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "scripts/check_claim_verification_inventory.pl",
+    "--write"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 1137; host 74.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13353, candidates=1977, quantified=964, conservative=1013, constants=2918, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1977)\n"
+}

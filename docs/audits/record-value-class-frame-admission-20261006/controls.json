@@ -1,0 +1,77 @@
+[
+  {
+    "cause": "admission cannot promote prerequisite custody to class/frame semantics",
+    "control": "scope-promotion",
+    "status": 1
+  },
+  {
+    "cause": "fixed admission revision and task role",
+    "control": "wrong-revision",
+    "status": 1
+  },
+  {
+    "cause": "whole completed prerequisite owner population and bodies",
+    "control": "lost-owner",
+    "status": 1
+  },
+  {
+    "cause": "whole completed prerequisite owner population and bodies",
+    "control": "changed-owner",
+    "status": 1
+  },
+  {
+    "cause": "whole direct/transitive prerequisite source and member population",
+    "control": "lost-source-member",
+    "status": 1
+  },
+  {
+    "cause": "whole direct/transitive prerequisite source and member population",
+    "control": "changed-source",
+    "status": 1
+  },
+  {
+    "cause": "discrete complete prerequisite member byte-count kinds",
+    "control": "Boolean-source-count",
+    "status": 1
+  },
+  {
+    "cause": "discrete complete prerequisite member byte-count kinds",
+    "control": "float-source-count",
+    "status": 1
+  },
+  {
+    "cause": "complete immutable original capture intake",
+    "control": "lost-raw-mode",
+    "status": 1
+  },
+  {
+    "cause": "actual prerequisite integer process success",
+    "control": "replay-status-True",
+    "status": 1
+  },
+  {
+    "cause": "actual prerequisite integer process success",
+    "control": "replay-status-0.0",
+    "status": 1
+  },
+  {
+    "cause": "actual prerequisite integer process success",
+    "control": "replay-status-1",
+    "status": 1
+  },
+  {
+    "cause": "actual prerequisite fresh versus retained execution scope",
+    "control": "invented-native-recapture",
+    "status": 1
+  },
+  {
+    "cause": "complete invocation-time prerequisite instruments and input identity",
+    "control": "lost-invocation-source",
+    "status": 1
+  },
+  {
+    "cause": "exact prerequisite programme command role",
+    "control": "borrowed-public-only-success",
+    "status": 1
+  }
+]

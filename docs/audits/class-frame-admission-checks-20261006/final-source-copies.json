@@ -1,0 +1,23 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "scripts/book_source_references.py",
+    "--check",
+    "--verify-build",
+    ".artifacts/class-frame-admission-book"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/book_source_references.py": {
+      "bytes": 11033,
+      "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+}

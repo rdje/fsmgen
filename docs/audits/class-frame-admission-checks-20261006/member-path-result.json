@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-admission-checks-20261006/qualify_member_paths.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-admission-checks-20261006/qualify_member_paths.py": {
+      "bytes": 3944,
+      "sha256": "7e856d598733070175bc72448c569662e7ce3ab3d8a8a4e46c01d4719d2ff956"
+    },
+    "docs/audits/class-frame-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS actual nested same-basename insertion separates old false-green and repaired full-path seal; flat manifest bytes retain.\n"
+}
