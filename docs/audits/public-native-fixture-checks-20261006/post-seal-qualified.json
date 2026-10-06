@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/public-native-fixture-checks-20261006/verify_seal.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual public fixture seal, complete source/native/first/guide regeneration and typed/borrowed-result refusals.\n",
+  "stderr": "ram-guard: PID 13393; host 71.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

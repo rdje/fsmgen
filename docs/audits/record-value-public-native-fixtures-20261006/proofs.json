@@ -1,0 +1,279 @@
+{
+  "first_refusal": {
+    "cache": "finite actual public observation; no universal do/cache rule",
+    "cause": "source-selected public load body",
+    "status": 1,
+    "trace_name_hypothesis": "refused"
+  },
+  "native_controls": {
+    "native-callback-body": {
+      "cause": "source-selected public callback body",
+      "status": 1
+    },
+    "native-forwarded-argument": {
+      "cause": "source-selected public callback forwarded arguments",
+      "status": 1
+    },
+    "native-own-caller": {
+      "cause": "source-selected own public caller order",
+      "status": 1
+    },
+    "native-string-eval": {
+      "cause": "source-selected block-eval public fields",
+      "status": 1
+    },
+    "native-trace-policy": {
+      "cause": "source-selected public trace argument policy",
+      "status": 1
+    }
+  },
+  "observation_controls": [
+    {
+      "cause": "public fixture integer process success",
+      "control": "Boolean-process-status",
+      "status": 1
+    },
+    {
+      "cause": "public fixture integer process success",
+      "control": "float-process-status",
+      "status": 1
+    },
+    {
+      "cause": "complete public fixture stream byte/kind identity",
+      "control": "Boolean-stream-count",
+      "status": 1
+    },
+    {
+      "cause": "complete ordered public fixture role population",
+      "control": "lost-role",
+      "status": 1
+    },
+    {
+      "cause": "source-selected public callback body",
+      "control": "wrong-callback-body",
+      "status": 1
+    },
+    {
+      "cause": "source-selected public callback forwarded arguments",
+      "control": "wrong-forwarded-arguments",
+      "status": 1
+    },
+    {
+      "cause": "source-selected own public caller order",
+      "control": "wrong-own-caller",
+      "status": 1
+    },
+    {
+      "cause": "source-selected public eval return/error roles",
+      "control": "wrong-eval-result",
+      "status": 1
+    },
+    {
+      "cause": "source-selected block-eval public fields",
+      "control": "string-eval-fields",
+      "status": 1
+    },
+    {
+      "cause": "source-selected public load body",
+      "control": "lost-load-body",
+      "status": 1
+    },
+    {
+      "cause": "published require positive frame flag",
+      "control": "wrong-require-flag",
+      "status": 1
+    },
+    {
+      "cause": "public trace body and own call roles",
+      "control": "lost-trace-body",
+      "status": 1
+    },
+    {
+      "cause": "source-selected public trace argument policy",
+      "control": "wrong-trace-policy",
+      "status": 1
+    },
+    {
+      "cause": "current public fixture versus historical/private scope",
+      "control": "invented-historical-scope",
+      "status": 1
+    }
+  ],
+  "prior": {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-public-framework-profile-20261006/verify.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "PASS complete dated public framework/profile clauses and raw-output replay; original framework/native meanings remain open.\n"
+  },
+  "scope": "Finite own current public fixtures only. Original/private/formatter/coordinate/address identities remain unmeasured.",
+  "source_controls": [
+    {
+      "cause": "fixed public fixture prior revision/task role",
+      "control": "borrowed-prior-revision",
+      "status": 1
+    },
+    {
+      "cause": "complete fixed own fixture source population",
+      "control": "lost-own-source",
+      "status": 1
+    },
+    {
+      "cause": "independent fixed source-selected public expectations",
+      "control": "invented-expected-source-role",
+      "status": 1
+    }
+  ],
+  "source_model": {
+    "builder-extra": {
+      "coordinates": "retained raw; source recipes and historical identity unmeasured",
+      "external_frames": "opaque complete observations retained; no private-name interpretation",
+      "own_prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "PublicFixture::builder_extra"
+      ],
+      "source_roles": {
+        "arguments": [
+          "public-builder-A"
+        ],
+        "body": "builder_extra",
+        "prefix": [
+          "PublicFixture::frames",
+          "PublicFixture::leaf",
+          "PublicFixture::builder_extra"
+        ]
+      }
+    },
+    "do-load": {
+      "coordinates": "retained raw; source recipes and historical identity unmeasured",
+      "external_frames": "opaque complete observations retained; no private-name interpretation",
+      "own_prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf"
+      ],
+      "source_roles": {
+        "body": "public-load-body",
+        "enclosing": "PublicFixture::do_load",
+        "error": "",
+        "prefix": [
+          "PublicFixture::frames",
+          "PublicFixture::leaf"
+        ]
+      }
+    },
+    "eval-failure": {
+      "coordinates": "retained raw; source recipes and historical identity unmeasured",
+      "external_frames": "opaque complete observations retained; no private-name interpretation",
+      "own_prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "(eval)",
+        "PublicFixture::eval_failure"
+      ],
+      "source_roles": {
+        "error": "public-eval-failure\n",
+        "prefix": [
+          "PublicFixture::frames",
+          "PublicFixture::leaf",
+          "(eval)",
+          "PublicFixture::eval_failure"
+        ],
+        "value": null
+      }
+    },
+    "eval-success": {
+      "coordinates": "retained raw; source recipes and historical identity unmeasured",
+      "external_frames": "opaque complete observations retained; no private-name interpretation",
+      "own_prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "(eval)",
+        "PublicFixture::eval_success"
+      ],
+      "source_roles": {
+        "error": "",
+        "prefix": [
+          "PublicFixture::frames",
+          "PublicFixture::leaf",
+          "(eval)",
+          "PublicFixture::eval_success"
+        ],
+        "value": "public-eval-result"
+      }
+    },
+    "more-empty": {
+      "coordinates": "retained raw; source recipes and historical identity unmeasured",
+      "external_frames": "opaque complete observations retained; no private-name interpretation",
+      "own_prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "PublicFixture::more_empty"
+      ],
+      "source_roles": {
+        "arguments": [],
+        "body": "more_empty",
+        "prefix": [
+          "PublicFixture::frames",
+          "PublicFixture::leaf",
+          "PublicFixture::more_empty"
+        ]
+      }
+    },
+    "more-extra": {
+      "coordinates": "retained raw; source recipes and historical identity unmeasured",
+      "external_frames": "opaque complete observations retained; no private-name interpretation",
+      "own_prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "PublicFixture::more_extra"
+      ],
+      "source_roles": {
+        "arguments": [
+          "public-argument-A",
+          "public-argument-B"
+        ],
+        "body": "more_extra",
+        "prefix": [
+          "PublicFixture::frames",
+          "PublicFixture::leaf",
+          "PublicFixture::more_extra"
+        ]
+      }
+    },
+    "require-load": {
+      "coordinates": "retained raw; source recipes and historical identity unmeasured",
+      "external_frames": "opaque complete observations retained; no private-name interpretation",
+      "own_prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf"
+      ],
+      "source_roles": {
+        "body": "public-load-body",
+        "enclosing": "PublicFixture::require_load",
+        "error": "",
+        "prefix": [
+          "PublicFixture::frames",
+          "PublicFixture::leaf"
+        ]
+      }
+    },
+    "trace-full": {
+      "argument_policy": "trace-full",
+      "full_formatter": "unmeasured; complete raw trace retained",
+      "own_calls": [
+        "PublicFixture::trace_outer"
+      ]
+    },
+    "trace-suppressed": {
+      "argument_policy": "trace-suppressed",
+      "full_formatter": "unmeasured; complete raw trace retained",
+      "own_calls": [
+        "PublicFixture::trace_outer"
+      ]
+    }
+  }
+}

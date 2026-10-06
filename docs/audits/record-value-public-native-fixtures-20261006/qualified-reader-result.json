@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-native-fixtures-20261006/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stdout": "PASS finite independent public callback/eval/load/trace roles and genuine source/native controls; historical/private identities remain open.\n",
+  "stderr": "ram-guard: PID 48946; host 69.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

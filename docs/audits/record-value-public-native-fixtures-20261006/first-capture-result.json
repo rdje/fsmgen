@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-native-fixtures-20261006/capture.py"
+  ],
+  "status": 0,
+  "stdout": "Captured complete public fixture streams; semantic qualification remains separate.\n",
+  "stderr": "ram-guard: PID 98410; host 73.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

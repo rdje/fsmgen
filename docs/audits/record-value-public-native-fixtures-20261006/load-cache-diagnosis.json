@@ -1,0 +1,89 @@
+{
+  "actual": {
+    "command": [
+      "perl",
+      ".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl"
+    ],
+    "pre_native": {
+      "bytes": 10105,
+      "sha256": "1646266b5899c9520a79eb149485945e593db560283645cc82e93e14f650e330"
+    },
+    "role": "Own current installed public fixtures only; historical/original/private identities remain unmeasured.",
+    "status": 0,
+    "stderr": "1..3\n# Subtest: public empty\n    ok 1 - public callback executed\n    1..1\nok 1 - public empty\n# Subtest: public extra\n    ok 1 - public callback executed\n    1..1\nok 2 - public extra\n# Subtest: public builder\n    ok 1 - public callback executed\n    1..1\nok 3 - public builder\n",
+    "stderr_identity": {
+      "bytes": 276,
+      "sha256": "ef0915ec8aa72bd5d8cf9bdce2e33a249f10521fa3b151a4533102cf0e14ed27"
+    },
+    "stdout": "{\"observations\":[{\"arguments\":[],\"body\":\"more_empty\",\"frames\":[[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",20,\"PublicFixture::frames\",1,1,null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",22,\"PublicFixture::leaf\",1,1,null,null],[\"Test::Builder\",\"/System/Library/Perl/5.34/Test/Builder.pm\",374,\"PublicFixture::more_empty\",1,null,null,null],[\"Test::Builder\",\"/System/Library/Perl/5.34/Test/Builder.pm\",374,\"(eval)\",0,\"\",null,null],[\"Test::More\",\"/System/Library/Perl/5.34/Test/More.pm\",809,\"Test::Builder::subtest\",1,null,null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",69,\"Test::More::subtest\",1,null,null,null]],\"role\":\"more-empty\"},{\"arguments\":[\"public-argument-A\",\"public-argument-B\"],\"body\":\"more_extra\",\"frames\":[[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",20,\"PublicFixture::frames\",1,1,null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",27,\"PublicFixture::leaf\",1,1,null,null],[\"Test::Builder\",\"/System/Library/Perl/5.34/Test/Builder.pm\",374,\"PublicFixture::more_extra\",1,null,null,null],[\"Test::Builder\",\"/System/Library/Perl/5.34/Test/Builder.pm\",374,\"(eval)\",0,\"\",null,null],[\"Test::More\",\"/System/Library/Perl/5.34/Test/More.pm\",809,\"Test::Builder::subtest\",1,null,null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",70,\"Test::More::subtest\",1,null,null,null]],\"role\":\"more-extra\"},{\"arguments\":[\"public-builder-A\"],\"body\":\"builder_extra\",\"frames\":[[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",20,\"PublicFixture::frames\",1,1,null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",32,\"PublicFixture::leaf\",1,1,null,null],[\"Test::Builder\",\"/System/Library/Perl/5.34/Test/Builder.pm\",374,\"PublicFixture::builder_extra\",1,null,null,null],[\"Test::Builder\",\"/System/Library/Perl/5.34/Test/Builder.pm\",374,\"(eval)\",0,\"\",null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",71,\"Test::Builder::subtest\",1,null,null,null]],\"role\":\"builder-extra\"},{\"error\":\"\",\"frames\":[[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",20,\"PublicFixture::frames\",1,\"\",null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",38,\"PublicFixture::leaf\",1,\"\",null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",38,\"(eval)\",0,\"\",null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",72,\"PublicFixture::eval_success\",1,1,null,null]],\"role\":\"eval-success\",\"value\":\"public-eval-result\"},{\"error\":\"public-eval-failure\\n\",\"frames\":[[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",20,\"PublicFixture::frames\",1,\"\",null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",45,\"PublicFixture::leaf\",1,\"\",null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",45,\"(eval)\",0,\"\",null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",72,\"PublicFixture::eval_failure\",1,1,null,null]],\"role\":\"eval-failure\",\"value\":null},{\"after\":\"./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl\",\"before\":null,\"error\":\"\",\"loaded\":{\"body\":\"public-load-body\",\"frames\":[[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",20,\"PublicFixture::frames\",1,1,null,null],[\"PublicFixture\",\"./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl\",1,\"PublicFixture::leaf\",1,1,null,null],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",53,\"(eval)\",0,\"\",\"./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl\",1],[\"PublicFixture\",\".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl\",72,\"PublicFixture::do_load\",1,1,null,null]]},\"role\":\"do-load\",\"value\":1},{\"after\":\"./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl\",\"before\":\"./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl\",\"error\":\"\",\"loaded\":null,\"role\":\"require-load\",\"value\":1},{\"role\":\"trace-full\",\"text\":\"public-trace-message\\n at .artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl line 64.\\n\\tPublicFixture::trace_outer(\\\"public-trace-A\\\", \\\"public-trace-B\\\") called at .artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl line 76\\n\"},{\"role\":\"trace-suppressed\",\"text\":\"public-trace-message\\n at .artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl line 64.\\n\\tPublicFixture::trace_outer(...) called at .artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl line 76\\n\"}]}\n",
+    "stdout_identity": {
+      "bytes": 4841,
+      "sha256": "8e39fed2c7de64376f7db3c0ece52825ca40191fa7683a0d7f0163518a0905da"
+    },
+    "workspace": ".artifacts/public-native-fixtures/work"
+  },
+  "cause": "Finite public %INC observation: this do invocation registers the same identifier before require; documented require skips already-included identifiers. Independent load fixtures must use distinct filenames. No implementation is inspected and no universal do/cache rule is inferred.",
+  "selected": [
+    {
+      "after": "./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl",
+      "before": null,
+      "error": "",
+      "loaded": {
+        "body": "public-load-body",
+        "frames": [
+          [
+            "PublicFixture",
+            ".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl",
+            20,
+            "PublicFixture::frames",
+            1,
+            1,
+            null,
+            null
+          ],
+          [
+            "PublicFixture",
+            "./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl",
+            1,
+            "PublicFixture::leaf",
+            1,
+            1,
+            null,
+            null
+          ],
+          [
+            "PublicFixture",
+            ".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl",
+            53,
+            "(eval)",
+            0,
+            "",
+            "./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl",
+            1
+          ],
+          [
+            "PublicFixture",
+            ".artifacts/public-native-fixtures/diagnosis/cache-diagnosis.pl",
+            72,
+            "PublicFixture::do_load",
+            1,
+            1,
+            null,
+            null
+          ]
+        ]
+      },
+      "role": "do-load",
+      "value": 1
+    },
+    {
+      "after": "./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl",
+      "before": "./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl",
+      "error": "",
+      "loaded": null,
+      "role": "require-load",
+      "value": 1
+    }
+  ],
+  "source": "use strict;\nuse warnings;\nuse JSON::PP;\nuse Carp ();\n\npackage PublicFixture;\nuse Test::More;\n\nour @observations;\nour $loaded;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub leaf { return frames() }\nsub more_empty {\n    push @observations, { role => 'more-empty', body => 'more_empty',\n        arguments => [@_], frames => leaf() };\n    pass('public callback executed');\n}\nsub more_extra {\n    push @observations, { role => 'more-extra', body => 'more_extra',\n        arguments => [@_], frames => leaf() };\n    pass('public callback executed');\n}\nsub builder_extra {\n    push @observations, { role => 'builder-extra', body => 'builder_extra',\n        arguments => [@_], frames => leaf() };\n    pass('public callback executed');\n}\nsub eval_success {\n    my $frames;\n    my $value = eval { $frames = leaf(); 'public-eval-result' };\n    my $error = $@;\n    return { role => 'eval-success', value => $value, error => $error,\n        frames => $frames };\n}\nsub eval_failure {\n    my $frames;\n    my $value = eval { $frames = leaf(); die \"public-eval-failure\\n\" };\n    my $error = $@;\n    return { role => 'eval-failure', value => $value, error => $error,\n        frames => $frames };\n}\nsub do_load {\n    local $loaded;\n    my $before = $INC{'./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl'};\n    my $value = do './docs/audits/record-value-public-native-fixtures-20261006/load-body.pl';\n    my $error = $@;\n    return { role => 'do-load', value => $value, error => $error, loaded => $loaded, before => $before, after => $INC{'./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl'} };\n}\nsub require_load {\n    local $loaded;\n    my $before = $INC{'./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl'};\n    my $value = require './docs/audits/record-value-public-native-fixtures-20261006/load-body.pl';\n    return { role => 'require-load', value => $value, error => $@, loaded => $loaded, before => $before, after => $INC{'./docs/audits/record-value-public-native-fixtures-20261006/load-body.pl'} };\n}\nsub trace_inner { return Carp::longmess(\"public-trace-message\\n\") }\nsub trace_outer { return trace_inner(@_) }\n\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 3;\nsubtest 'public empty' => \\&more_empty;\nsubtest 'public extra' => \\&more_extra, 'public-argument-A', 'public-argument-B';\n$builder->subtest('public builder', \\&builder_extra, 'public-builder-A');\npush @observations, eval_success(), eval_failure(), do_load(), require_load();\nfor my $mode ('full', 'suppressed') {\n    local $Carp::MaxArgLen = 0;\n    local $Carp::MaxArgNums = $mode eq 'full' ? 0 : -1;\n    push @observations, { role => 'trace-' . $mode,\n        text => trace_outer('public-trace-A', 'public-trace-B') };\n}\nprint JSON::PP->new->canonical->encode({ observations => \\@observations }), \"\\n\";\n"
+}

@@ -551,8 +551,9 @@ argument forwarding, block-eval/error roles and trace interfaces. Debugger
 argument snapshots are best effort and may reflect aliases or later changes;
 they do not establish original argument or reference identity.
 
-This qualifies the installed public documentation/profile only. Independent
-public native controls and the original outer-boundary join remain next steps.
+This dated evidence qualifies the installed public documentation/profile.
+The independent public fixtures below now refine current interface roles; the
+original outer-boundary join remains the next step.
 The original framework/provider version and private implementation, full trace
 display, scalar encoding, hidden suffixes, coordinates and addresses remain
 unmeasured. Necessary installed toolchain documentation is read-only; all
@@ -564,6 +565,34 @@ reexecutes the pinned public commands and compares every raw output byte:
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-framework-profile-20261006/verify.py --current
 ```
+
+Independent current public fixtures now qualify authored Test::More and
+Test::Builder callback bodies and forwarded scalar arguments, own caller edges,
+block-eval success/failure roles, isolated do/require loads and configurable
+Carp trace argument visibility. Expected roles come from separate own source and
+published contracts before native outputs are consumed. Successful mutated
+fixture processes separate wrong body, argument, eval, call and trace policies.
+
+The first shared-file fixture exposed a load-cache interaction: this do
+invocation registered the identifier before require, so require skipped its
+body. Separate own filenames isolate both operators. The first trace also
+retained the direct emitting helper as a location rather than a named call;
+only the authored outer call and argument-policy difference are qualified.
+These are finite current observations, with the complete first refusal retained.
+
+Default replay verifies saved source/native evidence. Explicit current replay
+also compares complete raw current fixture output and reruns behavioral controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-native-fixtures-20261006/verify.py --current
+```
+
+External framework names stay opaque. These fixtures do not measure original
+framework/provider versions, private operations, full formatter or hidden
+arguments, reference identity, direct-emitter/source coordinates or addresses.
+The finite original public-boundary join and full current fact publication
+remain the next owned steps. All project outputs and scratch stay local;
+installed public toolchain access is necessary and read-only.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the

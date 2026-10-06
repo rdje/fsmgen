@@ -1,0 +1,88 @@
+[
+  {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "mdbook",
+      "build",
+      "docs/book",
+      "--dest-dir",
+      ".artifacts/public-native-fixtures-book"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": "ram-guard: PID 46076; host 83.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15225858 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/public-native-fixtures-book`\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "scripts/book_source_references.py",
+      "--check",
+      "--verify-build",
+      ".artifacts/public-native-fixtures-book"
+    ],
+    "status": 0,
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "scripts/check_live_document_reference_authority.pl"
+    ],
+    "status": 0,
+    "stdout": "live-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode staged)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "scripts/check_live_document_ceiling_authority.pl"
+    ],
+    "status": 0,
+    "stdout": "live-doc-ceiling-authority: all ceiling-change invariants hold (0 increase(s), mode staged)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-parser-path-publication-20261006/current_role.py"
+    ],
+    "status": 0,
+    "stdout": "PASS actual scoped current fact/query/guide/physical authority; source replay remains separately authenticated.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "native_guide": {
+      "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-native-fixtures-20261006/verify.py --current",
+      "controls": [
+        {
+          "control": "extra-fixture-argument",
+          "status": 1,
+          "cause": "native exact public fixture current command"
+        },
+        {
+          "control": "invented-historical-version",
+          "status": 1,
+          "cause": "native complete public fixture scope and historical gaps"
+        },
+        {
+          "control": "invented-private-meaning",
+          "status": 1,
+          "cause": "native complete public fixture scope and historical gaps"
+        }
+      ],
+      "visual_QA": "pending; separately owned"
+    }
+  }
+]

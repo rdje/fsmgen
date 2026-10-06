@@ -1,0 +1,21 @@
+{
+  "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-native-fixtures-20261006/verify.py --current",
+  "controls": [
+    {
+      "cause": "native exact public fixture current command",
+      "control": "extra-fixture-argument",
+      "status": 1
+    },
+    {
+      "cause": "native complete public fixture scope and historical gaps",
+      "control": "invented-historical-version",
+      "status": 1
+    },
+    {
+      "cause": "native complete public fixture scope and historical gaps",
+      "control": "invented-private-meaning",
+      "status": 1
+    }
+  ],
+  "visual_QA": "pending; separately owned"
+}

@@ -1,0 +1,149 @@
+{
+  "builder-extra": {
+    "coordinates": "retained raw; source recipes and historical identity unmeasured",
+    "external_frames": "opaque complete observations retained; no private-name interpretation",
+    "own_prefix": [
+      "PublicFixture::frames",
+      "PublicFixture::leaf",
+      "PublicFixture::builder_extra"
+    ],
+    "source_roles": {
+      "arguments": [
+        "public-builder-A"
+      ],
+      "body": "builder_extra",
+      "prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "PublicFixture::builder_extra"
+      ]
+    }
+  },
+  "do-load": {
+    "coordinates": "retained raw; source recipes and historical identity unmeasured",
+    "external_frames": "opaque complete observations retained; no private-name interpretation",
+    "own_prefix": [
+      "PublicFixture::frames",
+      "PublicFixture::leaf"
+    ],
+    "source_roles": {
+      "body": "public-load-body",
+      "enclosing": "PublicFixture::do_load",
+      "error": "",
+      "prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf"
+      ]
+    }
+  },
+  "eval-failure": {
+    "coordinates": "retained raw; source recipes and historical identity unmeasured",
+    "external_frames": "opaque complete observations retained; no private-name interpretation",
+    "own_prefix": [
+      "PublicFixture::frames",
+      "PublicFixture::leaf",
+      "(eval)",
+      "PublicFixture::eval_failure"
+    ],
+    "source_roles": {
+      "error": "public-eval-failure\n",
+      "prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "(eval)",
+        "PublicFixture::eval_failure"
+      ],
+      "value": null
+    }
+  },
+  "eval-success": {
+    "coordinates": "retained raw; source recipes and historical identity unmeasured",
+    "external_frames": "opaque complete observations retained; no private-name interpretation",
+    "own_prefix": [
+      "PublicFixture::frames",
+      "PublicFixture::leaf",
+      "(eval)",
+      "PublicFixture::eval_success"
+    ],
+    "source_roles": {
+      "error": "",
+      "prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "(eval)",
+        "PublicFixture::eval_success"
+      ],
+      "value": "public-eval-result"
+    }
+  },
+  "more-empty": {
+    "coordinates": "retained raw; source recipes and historical identity unmeasured",
+    "external_frames": "opaque complete observations retained; no private-name interpretation",
+    "own_prefix": [
+      "PublicFixture::frames",
+      "PublicFixture::leaf",
+      "PublicFixture::more_empty"
+    ],
+    "source_roles": {
+      "arguments": [],
+      "body": "more_empty",
+      "prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "PublicFixture::more_empty"
+      ]
+    }
+  },
+  "more-extra": {
+    "coordinates": "retained raw; source recipes and historical identity unmeasured",
+    "external_frames": "opaque complete observations retained; no private-name interpretation",
+    "own_prefix": [
+      "PublicFixture::frames",
+      "PublicFixture::leaf",
+      "PublicFixture::more_extra"
+    ],
+    "source_roles": {
+      "arguments": [
+        "public-argument-A",
+        "public-argument-B"
+      ],
+      "body": "more_extra",
+      "prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf",
+        "PublicFixture::more_extra"
+      ]
+    }
+  },
+  "require-load": {
+    "coordinates": "retained raw; source recipes and historical identity unmeasured",
+    "external_frames": "opaque complete observations retained; no private-name interpretation",
+    "own_prefix": [
+      "PublicFixture::frames",
+      "PublicFixture::leaf"
+    ],
+    "source_roles": {
+      "body": "public-load-body",
+      "enclosing": "PublicFixture::require_load",
+      "error": "",
+      "prefix": [
+        "PublicFixture::frames",
+        "PublicFixture::leaf"
+      ]
+    }
+  },
+  "trace-full": {
+    "argument_policy": "trace-full",
+    "full_formatter": "unmeasured; complete raw trace retained",
+    "own_calls": [
+      "PublicFixture::trace_outer"
+    ]
+  },
+  "trace-suppressed": {
+    "argument_policy": "trace-suppressed",
+    "full_formatter": "unmeasured; complete raw trace retained",
+    "own_calls": [
+      "PublicFixture::trace_outer"
+    ]
+  }
+}

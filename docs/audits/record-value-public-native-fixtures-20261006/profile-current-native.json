@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-framework-profile-20261006/verify.py",
+    "--current"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS complete dated public framework/profile clauses and raw-output replay; original framework/native meanings remain open.\n"
+}

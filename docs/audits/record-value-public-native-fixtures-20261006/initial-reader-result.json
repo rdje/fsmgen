@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-native-fixtures-20261006/verify.py",
+    "--current"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 40977; host 70.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-public-native-fixtures-20261006/verify.py\", line 100, in first_refusal\n    original_model['check'](first, initial_pre['expectations'], require)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-public-native-fixtures-20261006/initial-model.py.txt\", line 19, in check\n    require([r['role'] for r in rows] == list(expected), 'complete ordered public fixture role population')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-public-native-fixtures-20261006/verify.py\", line 27, in require\n    raise ValueError(cause)\nValueError: complete ordered public fixture role population\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-public-native-fixtures-20261006/verify.py\", line 240, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-public-native-fixtures-20261006/verify.py\", line 229, in main\n    proof = dict(prior=prior, source_model=qualified, first_refusal=first_refusal(),\n                                                                    ~~~~~~~~~~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-public-native-fixtures-20261006/verify.py\", line 102, in first_refusal\n    require(str(error) == 'source-selected public load body', 'intended complete first fixture model refusal')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-public-native-fixtures-20261006/verify.py\", line 27, in require\n    raise ValueError(cause)\nValueError: intended complete first fixture model refusal\n"
+}
