@@ -1,0 +1,29 @@
+{
+  "controls": [
+    {
+      "cause": "native exact class/frame command",
+      "control": "wrong-command",
+      "status": 1
+    },
+    {
+      "cause": "native complete class/frame scope and retained gaps",
+      "control": "native-class-promotion",
+      "status": 1
+    },
+    {
+      "cause": "native complete class/frame scope and retained gaps",
+      "control": "invented-recapture",
+      "status": 1
+    },
+    {
+      "cause": "native complete class/frame scope and retained gaps",
+      "control": "lost-formatter-gap",
+      "status": 1
+    }
+  ],
+  "input_identity": {
+    "bytes": 233097,
+    "sha256": "35831defe4dd5971841b86505ce8b9ef28a017ef7dc9e11b6031e71af85d29dc"
+  },
+  "visual_QA": "pending; separately owned"
+}

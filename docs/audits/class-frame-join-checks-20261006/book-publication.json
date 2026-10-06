@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-join-20261006/publish_book.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-join-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/publish_book.py": {
+      "bytes": 2958,
+      "sha256": "7d14526732d10550ce6c9935df23a3549be8fad288a6db41dcdc0a8c80a381a9"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 20010; host 76.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS scoped finite class/frame guide and exact measured book aggregate; current fact publication remains pending.\n"
+}

@@ -1,0 +1,267 @@
+"""Join finite source-inferred classes to complete own/public trace roles."""
+import argparse
+import copy
+import json
+import re
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-class-frame-join-20261006')
+CHECKS = Path('docs/audits/class-frame-join-checks-20261006')
+PRIOR = Path('docs/audits/record-value-class-frame-admission-20261006')
+PRIOR_CHECKS = Path('docs/audits/class-frame-admission-checks-20261006')
+REVISION = '0373153be5fc564797d75f07928d1df4b0bd6be2'
+TASK = Path('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md')
+OWNER = 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.2'
+SUCCESS = 'PASS complete finite source-inferred class/frame associations, whole original body/phase/operand joins and genuine separating controls; native/private/formatter/coordinate/address meanings remain open.\n'
+
+
+def module(path):
+    ns = {'__name__': 'class_frame_join_dependency', '__file__': str(path)}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+admission = module(PRIOR / 'verify.py')
+classes = module(Path('docs/audits/record-value-original-class-20261005/verify.py'))
+public = module(Path('docs/audits/record-value-public-boundary-join-20261006/verify.py'))
+model = module(BASE / 'model.py')
+require, same, identity, load, whole = (admission[k] for k in ('require', 'same', 'identity', 'load', 'whole'))
+
+
+def save(name, value):
+    path = BASE / name
+    if path.exists():
+        require(same(load(path), value), 'whole immutable class/frame join product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(), 'sealed class/frame join cannot add products')
+        path.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+
+
+def members():
+    return {str(Path(p).relative_to(BASE)): pin for p, pin in whole(BASE).items() if Path(p) != BASE / 'manifest.json'}
+
+
+def binding():
+    roots = sorted({Path(p) for p in load(PRIOR / 'binding.json')['inputs']} | {PRIOR, PRIOR_CHECKS}, key=str)
+    # Reuse the qualified streaming regular-member census at this slice's
+    # committed prerequisite revision. This namespace is private to this load.
+    admission['REVISION'] = REVISION
+    inputs = admission['committed_inputs'](roots)
+    task = subprocess.check_output(['git', 'show', REVISION + ':' + str(TASK)])
+    return dict(revision=REVISION, inputs=inputs, task_identity=identity(task),
+        owners=admission['owner_rows'](roots, task.decode()),
+        original_capture=load(PRIOR / 'binding.json')['original_capture'],
+        scope='Whole completed admission, original raw domain and every admitted source/programme/result member; no original recapture.')
+
+
+def source_models():
+    wanted = model['derive'](classes, public, require, same)
+    require(same(wanted, load(BASE / 'source-models.json')), 'whole independently retained source associations before new original intake')
+    actual = load(CHECKS / 'source-derivation.json')
+    require(type(actual['status']) is int and actual['status'] == 0
+        and actual['command'] == ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', str(CHECKS / 'derive_source.py')]
+        and actual['stdout'].endswith('PASS qualified source associations retained before new original intake; predecessor serialized operands are opaque evidence and the initial terminal has no invented receipt.\n')
+        and re.fullmatch(r'ram-guard: PID [0-9]+; host [0-9]+\.[0-9]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n', actual['stderr']) is not None
+        and set(actual['instruments']) == {str(CHECKS / 'run.py'), str(CHECKS / 'derive_source.py'), 'scripts/run_with_ram_guard.sh'}
+        and all(same(pin, identity(Path(p).read_bytes())) for p, pin in actual['instruments'].items()),
+        'actual pre-intake qualified source derivation and invocation instruments')
+    return wanted
+
+
+def row(inventory, domain, index):
+    return next(r for r in inventory['domains'][domain]['nonempty'] if r['index'] == index)
+
+
+def prior_predicates(contract, native, nested):
+    """Independent predecessor meanings; no new bridge association is used."""
+    classes['check_models'](contract['class_modes'], contract['class_sources'])
+    for wanted, observed in zip(contract['class_modes'], native, strict=True):
+        require(wanted['mode'] == observed['mode'], 'prior class native mode')
+        for case in wanted['cases']:
+            require(row(observed, case['domain'], case['index'])['body'].splitlines()[0] == case['primary'],
+                    'prior source/native primary class predicate')
+    return public['check'](contract['frame_model'], contract['frame_model'], native, native, nested)
+
+
+def check_contract(actual, expected):
+    require(same(actual['class_sources'], expected['class_sources'])
+        and same(actual['class_modes'], expected['class_modes'])
+        and same(actual['frame_model'], expected['frame_model']), 'whole independently qualified class and frame source products')
+    require([m['mode'] for m in actual['modes']] == [m['mode'] for m in expected['modes']], 'complete joint class/frame mode population')
+    for candidate, wanted in zip(actual['modes'], expected['modes'], strict=True):
+        require([(r['domain'], r['index']) for r in candidate['cases']] == [(r['domain'], r['index']) for r in wanted['cases']],
+                'complete joint class/frame refusal population')
+        for case, oracle in zip(candidate['cases'], wanted['cases'], strict=True):
+            require(type(case['index']) is int and type(case['helper']) is int, 'joint discrete source allocation kinds')
+            require(same(case['exception'], oracle['exception']), 'source exception class/primary/family to frame-case association')
+            require([p['phase'] for p in case['phases']] == [p['phase'] for p in oracle['phases']]
+                and all(type(p['phase']) is int for p in case['phases']), 'ordered complete source class/frame throw phases')
+            for phase, source in zip(case['phases'], oracle['phases'], strict=True):
+                require(phase['family'] == model['family'](phase['own']['core'][0]['function'], require)
+                    == source['family'] and same(phase['guard_source'], source['guard_source']),
+                    'source guard family to active throw-phase association')
+                require(phase['inferred_class'] == case['exception']['inferred_class'] == classes['CLASS']
+                    and phase['native_class'] == source['native_class'], 'source-inferred scalar class without native promotion')
+                require([f['function'] for f in phase['own']['core']] == [f['function'] for f in source['own']['core']],
+                    'complete source class/frame phase function order')
+                require([f['arguments'] for f in phase['own']['core']] == [f['arguments'] for f in source['own']['core']],
+                    'complete source class/frame phase argument roles')
+                require(same(phase['own'], source['own']) and same(phase['public'], source['public']),
+                    'whole source class/frame operation helper body public entry and load roles')
+            require(case['exception']['source_family'] == case['phases'][-1]['family'],
+                    'final source exception class belongs to final own throw phase')
+    require(same(actual, expected), 'whole independent class/frame source contract and explicit evidence scope')
+
+
+def check(actual, expected, native, original, nested):
+    check_contract(actual, expected)
+    prior = prior_predicates(expected, native, nested)
+    result = []
+    for wanted, observed, joined in zip(expected['modes'], native, prior['own_join']['contexts'], strict=True):
+        keys = {(domain, r['index']) for domain, values in observed['domains'].items() for r in values['nonempty']}
+        require(keys == {(r['domain'], r['index']) for r in wanted['cases']}, 'every complete original refusal has a source class/frame association')
+        api_models = next(m for m in expected['frame_model']['own']['api'] if m['mode'] == wanted['mode'])
+        cases = []
+        for case, path in zip(wanted['cases'], joined['cases'], strict=True):
+            require((case['domain'], case['index']) == (path['domain'], path['index']), 'complete source/native class/frame case linkage')
+            record = row(observed, case['domain'], case['index'])
+            require(type(record['body']) is str and record['wire_kind'] == 'string', 'source class and original serialized body wire kind')
+            require(record['body'].startswith(case['exception']['primary'] + '\n'), 'complete source-primary to original body header association')
+            require(len(path['phases']) == len(case['phases']), 'whole original class/frame throw-phase population')
+            frames = [s for s in record['segments'] if s['kind'] == 'frame']
+            phases = []
+            for source, positions in zip(case['phases'], path['phases'], strict=True):
+                first = positions['core_positions'][0]
+                require(model['family'](public['context']['function'](frames[first]), require) == source['family'],
+                        'whole original active frame and inferred throw-family linkage')
+                phases.append(dict(phase=source['phase'], family=source['family'], inferred_class=source['inferred_class'],
+                    guard_source=source['guard_source'], complete_own_positions=positions,
+                    native_class='not measured; qualified source/publisher inference only'))
+            forwarded = None
+            if len(case['phases']) == 2:
+                require(case['domain'] == 'api' and [p['family'] for p in case['phases']] == ['metadata', 'value'],
+                        'source nested Metadata catch and new Value throw roles')
+                operation = next(r for r in api_models['cases'] if r['index'] == case['index'])
+                allocation = operation['nested_allocation']
+                require(allocation is not None and allocation['scope_api'] == case['index'], 'complete source nested class/frame allocation')
+                child = row(observed, 'api', allocation['capture_api'])
+                child_case = next(r for r in wanted['cases'] if r['domain'] == 'api' and r['index'] == allocation['capture_api'])
+                # The model's explicit root-context role is in the inherited
+                # _validate_type frame, not necessarily core[-2]. Select it
+                # by its source-declared semantic role, never a trace address.
+                contexts = [a['value'] for f in case['phases'][0]['own']['core'] for a in f['arguments'] if a.get('role') == 'root_context']
+                require(len(contexts) == 1, 'unique source nested root-context role')
+                context = contexts[0]
+                prefix = classes['GUARDS']['value'][1] + context + ' has invalid resolved type: ' + child['body'] + '\n'
+                require(child_case['exception']['source_family'] == 'metadata'
+                    and child['body'].startswith(child_case['exception']['primary'] + '\n')
+                    and record['body'].startswith(prefix), 'whole serialized inner operand joins Metadata class/frame to outer Value body')
+                require(bool(record['body'][len(prefix):]), 'separate nonempty new Value throw trace')
+                forwarded = dict(capture_api=allocation['capture_api'], scope_api=allocation['scope_api'], context=context,
+                    inner_body=child['body_identity'], entire_outer_prefix=identity(prefix.encode()),
+                    new_outer_trace=identity(record['body'][len(prefix):].encode()),
+                    meaning='whole operand conservation and source catch/interpolation/new-throw relation; original formatter and hook identities are not inferred')
+            cases.append(dict(domain=case['domain'], index=case['index'], helper=case['helper'], kind=case['kind'],
+                exception=case['exception'], original_whole_body=record['body_identity'], phases=phases, forwarded=forwarded,
+                public=next(r for r in next(m for m in prior['modes'] if m['mode'] == wanted['mode'])['cases']
+                    if (r['domain'], r['index']) == (case['domain'], case['index'])),
+                opaque_frames=path['opaque_frames']))
+        result.append(dict(mode=wanted['mode'], cases=cases))
+    require(same(native, original), 'every canonical original raw body allocation context and opaque byte conserves')
+    return dict(modes=result, full_prior_public_join=prior,
+        scope='Complete finite own class/frame/source/body/phase/argument associations and public compatibility; original native class/provider/hooks/private framework/formatter/hidden arguments/coordinates/address lifetimes remain unmeasured.')
+
+
+def controls(expected, original, nested):
+    output = []
+    def refuse(name, candidate, native, cause, prior=True):
+        require(not (same(candidate, expected) and same(native, original)), 'genuine class/frame join intervention: ' + name)
+        if prior:
+            prior_predicates(candidate, native, nested)
+        try:
+            check(candidate, expected, native, original, nested)
+        except ValueError as error:
+            require(str(error) == cause, 'intended class/frame join refusal: ' + name + ': ' + str(error))
+            output.append(dict(control=name, status=1, cause=cause,
+                prior_predicates='complete independent class and public frame predicates passed in intervention epoch' if prior else 'not asserted',
+                intervention='new source-association bridge; predecessor products intact' if native is original else 'whole raw operand relation; predecessor own/public meanings intact'))
+        else:
+            raise ValueError('false-green independent class/frame join: ' + name)
+    def altered(name, mutate, cause):
+        candidate = copy.deepcopy(expected); mutate(candidate)
+        refuse(name, candidate, original, cause)
+    first = expected['modes'][0]['cases'][0]
+    other = next(c for c in expected['modes'][0]['cases'] if c['exception']['source_family'] != first['exception']['source_family'])
+    altered('cross-family-class-frame-association', lambda m:m['modes'][0]['cases'][0].update(exception=copy.deepcopy(other['exception'])),
+            'source exception class/primary/family to frame-case association')
+    nested_case = next(i for i,c in enumerate(expected['modes'][0]['cases']) if len(c['phases']) == 2)
+    altered('reversed-source-throw-phases', lambda m:m['modes'][0]['cases'][nested_case]['phases'].reverse(),
+            'ordered complete source class/frame throw phases')
+    altered('wrong-phase-guard-family', lambda m:m['modes'][0]['cases'][0]['phases'][0].update(family='metadata'),
+            'source guard family to active throw-phase association')
+    altered('reordered-source-core-functions', lambda m:m['modes'][0]['cases'][0]['phases'][0]['own']['core'].reverse(),
+            'complete source class/frame phase function order')
+    altered('wrong-source-core-argument', lambda m:m['modes'][0]['cases'][0]['phases'][0]['own']['core'][0]['arguments'][1].update(value='borrowed'),
+            'complete source class/frame phase argument roles')
+    altered('lost-class-frame-refusal', lambda m:m['modes'][0]['cases'].pop(), 'complete joint class/frame refusal population')
+    altered('native-class-promotion', lambda m:m['modes'][0]['cases'][0]['phases'][0].update(inferred_class='blessed_HASH'),
+            'source-inferred scalar class without native promotion')
+    candidate = copy.deepcopy(original)
+    operation = next(c for c in expected['frame_model']['own']['api'][0]['cases'] if c['index'] == expected['modes'][0]['cases'][nested_case]['index'])
+    child = row(candidate[0], 'api', operation['nested_allocation']['capture_api'])
+    parts = [s['raw'] for s in child['segments']]
+    i = next(i for i,s in enumerate(child['segments']) if s['kind'] == 'frame' and s['call'] == 'eval {...}' and '/Test/Builder.pm' in s['path'])
+    parts[i] = parts[i].replace('eval {...}', 'eval {OPAQUE}', 1)
+    body = ''.join(parts); require(body != child['body'], 'genuine opaque inner operand byte mutation')
+    trace = public['context']['module'](public['context']['RAW'] / 'trace_inventory.py')['inventory']
+    child.update(body=body, body_identity=identity(body.encode()), **trace(body))
+    refuse('inner-operand-no-longer-forwarded-whole', expected, candidate,
+           'whole serialized inner operand joins Metadata class/frame to outer Value body')
+    return output
+
+
+def prerequisite_replay(fresh):
+    name = 'admission-replay.json'; command = ['python3', '-B', str(PRIOR / 'verify.py')]
+    if fresh:
+        require(not (CHECKS / name).exists(), 'actual prerequisite replay cannot overwrite')
+        instruments = {p:identity(Path(p).read_bytes()) for p in (str(PRIOR / 'verify.py'), 'scripts/run_with_ram_guard.sh')}
+        p = subprocess.run(command, capture_output=True)
+        (CHECKS / name).write_text(json.dumps(dict(command=command, status=p.returncode, stdout=p.stdout.decode(), stderr=p.stderr.decode(), instruments=instruments), sort_keys=True, indent=2) + '\n')
+    actual = load(CHECKS / name)
+    require(type(actual['status']) is int and actual['status'] == 0 and actual['command'] == command
+        and actual['stdout'] == admission['SUCCESS'] and actual['stderr'] == ''
+        and set(actual['instruments']) == {str(PRIOR / 'verify.py'), 'scripts/run_with_ram_guard.sh'}
+        and all(same(pin, identity(Path(p).read_bytes())) for p,pin in actual['instruments'].items()),
+        'actual complete admission replay; saved transitive native roles remain explicit')
+    return dict(actual=identity((CHECKS / name).read_bytes()), role='Fresh full admission/custody/raw/control/saved-result execution; eight prior reader processes and original native captures retained, not recaptured.')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--prepare', action='store_true')
+    parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    require(not (args.prepare and args.seal), 'source/admission preparation is not a semantic seal')
+    if (BASE / 'manifest.json').exists():
+        require(not args.prepare, 'sealed join cannot prepare or recapture')
+        require(same(load(BASE / 'manifest.json'), members()), 'whole immutable class/frame join seal')
+    expected = source_models()
+    before = binding(); save('binding.json', before)
+    save('prerequisite-proof.json', prerequisite_replay(args.prepare and not (CHECKS / 'admission-replay.json').exists()))
+    raw = admission['raw_product'](); save('raw-product.json', raw)
+    native = raw['inventories']
+    nested = public['context']['nested_records'](expected['frame_model']['own'])
+    save('proofs.json', check(expected, expected, native, native, nested))
+    save('controls.json', controls(expected, native, nested))
+    require(same(binding(), before), 'every complete committed prerequisite byte conserves after semantic join')
+    if not args.prepare:
+        book = module(BASE / 'book.py')
+        save('book-proof.json', book['proof']((BASE / 'book-input.html').read_text()))
+    if args.seal:
+        save('manifest.json', members())
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

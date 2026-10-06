@@ -1,0 +1,58 @@
+[
+  {
+    "cause": "source exception class/primary/family to frame-case association",
+    "control": "cross-family-class-frame-association",
+    "intervention": "new source-association bridge; predecessor products intact",
+    "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+    "status": 1
+  },
+  {
+    "cause": "ordered complete source class/frame throw phases",
+    "control": "reversed-source-throw-phases",
+    "intervention": "new source-association bridge; predecessor products intact",
+    "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+    "status": 1
+  },
+  {
+    "cause": "source guard family to active throw-phase association",
+    "control": "wrong-phase-guard-family",
+    "intervention": "new source-association bridge; predecessor products intact",
+    "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+    "status": 1
+  },
+  {
+    "cause": "complete source class/frame phase function order",
+    "control": "reordered-source-core-functions",
+    "intervention": "new source-association bridge; predecessor products intact",
+    "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+    "status": 1
+  },
+  {
+    "cause": "complete source class/frame phase argument roles",
+    "control": "wrong-source-core-argument",
+    "intervention": "new source-association bridge; predecessor products intact",
+    "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+    "status": 1
+  },
+  {
+    "cause": "complete joint class/frame refusal population",
+    "control": "lost-class-frame-refusal",
+    "intervention": "new source-association bridge; predecessor products intact",
+    "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+    "status": 1
+  },
+  {
+    "cause": "source-inferred scalar class without native promotion",
+    "control": "native-class-promotion",
+    "intervention": "new source-association bridge; predecessor products intact",
+    "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+    "status": 1
+  },
+  {
+    "cause": "whole serialized inner operand joins Metadata class/frame to outer Value body",
+    "control": "inner-operand-no-longer-forwarded-whole",
+    "intervention": "whole raw operand relation; predecessor own/public meanings intact",
+    "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+    "status": 1
+  }
+]

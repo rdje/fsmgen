@@ -765,14 +765,53 @@ currency. The sealed admission refuses recapture. Independent result checking
 rejects typed status/count substitutions, source/member/owner loss, invented
 scope and genuinely borrowed successes.
 
-Admission is not a class/frame semantic join. That independent join remains
-the next task, followed by qualified publication. Original native class,
+Admission itself supplies no class/frame semantic join. The independent join
+is a separate successor checkpoint, followed by qualified publication. Original native class,
 provider/version, hooks, private framework meaning, complete formatter/settings,
 hidden arguments, reference identity, coordinates and address/lifetimes remain
 unmeasured or separately owned. Current facts, query routes, collection authority
 and prior seals remain unchanged. All project output and scratch stay local;
 installed public toolchain access is necessary and read-only. Visual QA, HIAL
 host-native repair and full CI/push remain separately owned.
+
+The independent class/frame successor joins every original nonempty error to
+its qualified source-inferred exception class and complete own throw phases,
+functions, visible argument roles, observer operations, helper, authored body,
+subtest entry and load boundary. Public framework headers retain their finite
+compatibility scope. Every empty allocation, raw body and opaque byte also
+remains conserved. Original source, completed owners and whole prerequisite
+programmes/results are bound to committed 0373153b.
+
+Nested Metadata refusal and the new outer Value refusal have separate class
+and phase roles. The join checks that the outer body preserves the entire
+serialized inner operand through the source catch/interpolation/new-throw
+sequence. The predecessor model's captured operand is declared opaque retained
+evidence; its formatter, addresses and coordinates are not a new source oracle.
+The source association contract was qualified before new original intake.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-join-20261006/verify.py
+```
+
+The default authenticates complete committed inputs and saved actual admission
+execution, regenerates source associations, all original raw/body/phase joins
+and genuine separating controls, and checks the saved native guide. It does
+not recapture the original run, reexecute the eight prerequisite processes or
+establish live currency. Source-association controls corrupt class/family,
+phase, function order, argument and case links while the separate predecessor
+products pass. A genuine opaque inner-body change passes predecessor own/public
+predicates but breaks whole forwarding. Independent actual-result checking
+rejects typed status/counts, lost members, widened guard and borrowed successes.
+
+This is source/publisher class inference and finite own/public compatibility.
+Original pre-serialization class, provider/version/hooks, private framework
+purpose, full formatter/settings, scalar encoding, hidden arguments, reference
+identity, coordinates and address/lifetimes remain unmeasured or separately
+owned. Final current fact publication is the next slice. Existing facts,
+questions, query routes and collection authority remain unchanged. Project
+outputs and scratch stay repository-local; public toolchain reads remain
+necessary and read-only. Visual QA, HIAL host repair and full CI/push retain
+their separate owners.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the

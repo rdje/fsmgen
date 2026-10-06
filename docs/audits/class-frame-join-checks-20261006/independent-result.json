@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-join-checks-20261006/verify_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-join-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/class-frame-join-checks-20261006/verify_seal.py": {
+      "bytes": 10829,
+      "sha256": "9b8a79e0b067e7a3675b095fb7cba41b8cd8133048a9e96f4a74b3a3dcea3772"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 94124; host 62.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "status-True: refused at actual class/frame integer process success\nstatus-0.0: refused at actual class/frame integer process success\nstatus-1: refused at actual class/frame integer process success\nmember-count-True: refused at actual class/frame discrete sealed byte-count kinds\nmember-count-0.0: refused at actual class/frame discrete sealed byte-count kinds\nlost-sealed-member: refused at every actual class/frame sealed member conserves\nwidened-guard: refused at actual class/frame default guard diagnostics\nborrowed-admission-success: refused at exact actual class/frame semantic command and complete output role\nborrowed-preparation-success: refused at exact actual class/frame semantic command and complete output role\nPASS independently consumed complete actual class/frame semantic join, regenerated every product and qualified typed/member/guard/real borrowed-result refusals.\n"
+}

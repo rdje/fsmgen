@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-join-20261006/verify.py",
+    "--prepare"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-join-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/verify.py": {
+      "bytes": 19021,
+      "sha256": "31f5e4c2a7d5e92d94acdbb0cfd9386bd8036cdd5f84dfc41c809982441cfd08"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 84988; host 70.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete finite source-inferred class/frame associations, whole original body/phase/operand joins and genuine separating controls; native/private/formatter/coordinate/address meanings remain open.\n"
+}

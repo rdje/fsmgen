@@ -1,0 +1,38 @@
+{
+  "binding_revision": "0373153be5fc564797d75f07928d1df4b0bd6be2",
+  "candidate": {
+    "candidate_id": "published-54b8c8d2f481754234fb3d50",
+    "classification": "actionable_review_debt",
+    "excerpt": "programmes/results are bound to committed 0373153b.",
+    "line": 783,
+    "migration_owner": "CLAIM-VERIFICATION-ADOPTION.5",
+    "path": "docs/book/src/13k-isf-feature-support-matrix.md",
+    "producer_paths": [],
+    "producer_status": "missing",
+    "reason": "numeric_prose_requires_review",
+    "record_type": "published_candidate",
+    "schema_version": 1,
+    "source_line_sha256": "82c7e49ab9fe6f687e43e5158d7397764573662e67793d466f83a2484c4d103d",
+    "tokens": [],
+    "untracked_paths": [],
+    "verification_legs": {
+      "durability": "missing",
+      "falsify": "missing",
+      "rederive": "missing"
+    },
+    "watcher_paths": [],
+    "watcher_status": "missing"
+  },
+  "current_owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.2",
+  "disposition": {
+    "candidate_id": "published-54b8c8d2f481754234fb3d50",
+    "disposition": "reviewed_incidental",
+    "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+    "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.3",
+    "reason": "0373153b is the immutable prerequisite Git identity, not a numerical behavior or capacity claim. The full revision, whole committed source/member/task-owner archive comparison and actual class/frame results are retained under docs/audits/record-value-class-frame-join-20261006; the current slice owns this mechanical existing-group review.",
+    "reason_code": "structural_reference",
+    "record_type": "disposition",
+    "schema_version": 1
+  },
+  "scope": "Existing general-book group authority unchanged; current leaf owns new identifier review only."
+}

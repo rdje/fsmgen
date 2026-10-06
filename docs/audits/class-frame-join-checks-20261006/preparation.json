@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-join-20261006/verify.py",
+    "--prepare"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-join-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/verify.py": {
+      "bytes": 18969,
+      "sha256": "c61e59d63c572893a2bd7c687744b87871c4d7d2935281c0bad6ca32c1ea8bb3"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 32355; host 67.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-join-20261006/verify.py\", line 263, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-join-20261006/verify.py\", line 252, in main\n    save('controls.json', controls(expected, native, nested))\n                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-join-20261006/verify.py\", line 200, in controls\n    altered('reordered-source-core-functions', lambda m:m['modes'][0]['cases'][0]['phases'][0]['own']['core'].reverse(),\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'complete source class/frame phase function order')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-join-20261006/verify.py\", line 190, in altered\n    refuse(name, candidate, original, cause)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-join-20261006/verify.py\", line 178, in refuse\n    prior_predicates(candidate, native, nested)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-join-20261006/verify.py\", line 81, in prior_predicates\n    return public['check'](contract['frame_model'], contract['frame_model'], native, native, nested)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-public-boundary-join-20261006/verify.py\", line 104, in check\n    own_join = context['check'](own, own, native, native, nested, nested)\n  File \"docs/audits/record-value-parser-context-join-20261006/verify.py\", line 136, in check\n    helper_modes, subtest_modes = local_checks(expected, native)\n                                  ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-parser-context-join-20261006/verify.py\", line 111, in local_checks\n    api['check'](expected['api'], expected['api'], native, expected['sources']['api'])\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-original-api-paths-20261005/verify.py\", line 123, in check\n    require([frame['call'].split('(', 1)[0] for frame in actual] == [frame['function'] for frame in case['frames']],\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'complete source-derived own API frame order')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-original-products-20261005/verify.py\", line 31, in require\n    raise ValueError(message)\nValueError: complete source-derived own API frame order\n",
+  "stdout": ""
+}

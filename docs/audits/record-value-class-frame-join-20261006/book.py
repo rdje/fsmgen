@@ -1,0 +1,110 @@
+"""Qualify the native finite class/frame guide and genuine scope refusals."""
+from html.parser import HTMLParser
+import hashlib
+
+COMMAND = 'scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-join-20261006/verify.py'
+MARKER = 'The own subtest source model now assigns original refusals'
+REPLACEMENTS = [('Admission is not a class/frame semantic join. That independent join remains\nthe next task, followed by qualified publication.',
+                 'Admission itself supplies no class/frame semantic join. The independent join\nis a separate successor checkpoint, followed by qualified publication.')]
+GUIDE = '''The independent class/frame successor joins every original nonempty error to
+its qualified source-inferred exception class and complete own throw phases,
+functions, visible argument roles, observer operations, helper, authored body,
+subtest entry and load boundary. Public framework headers retain their finite
+compatibility scope. Every empty allocation, raw body and opaque byte also
+remains conserved. Original source, completed owners and whole prerequisite
+programmes/results are bound to committed 0373153b.
+
+Nested Metadata refusal and the new outer Value refusal have separate class
+and phase roles. The join checks that the outer body preserves the entire
+serialized inner operand through the source catch/interpolation/new-throw
+sequence. The predecessor model's captured operand is declared opaque retained
+evidence; its formatter, addresses and coordinates are not a new source oracle.
+The source association contract was qualified before new original intake.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-join-20261006/verify.py
+```
+
+The default authenticates complete committed inputs and saved actual admission
+execution, regenerates source associations, all original raw/body/phase joins
+and genuine separating controls, and checks the saved native guide. It does
+not recapture the original run, reexecute the eight prerequisite processes or
+establish live currency. Source-association controls corrupt class/family,
+phase, function order, argument and case links while the separate predecessor
+products pass. A genuine opaque inner-body change passes predecessor own/public
+predicates but breaks whole forwarding. Independent actual-result checking
+rejects typed status/counts, lost members, widened guard and borrowed successes.
+
+This is source/publisher class inference and finite own/public compatibility.
+Original pre-serialization class, provider/version/hooks, private framework
+purpose, full formatter/settings, scalar encoding, hidden arguments, reference
+identity, coordinates and address/lifetimes remain unmeasured or separately
+owned. Final current fact publication is the next slice. Existing facts,
+questions, query routes and collection authority remain unchanged. Project
+outputs and scratch stay repository-local; public toolchain reads remain
+necessary and read-only. Visual QA, HIAL host repair and full CI/push retain
+their separate owners.
+
+'''
+
+
+def transform(before):
+    for old, new in REPLACEMENTS:
+        if before.count(old) != 1:
+            raise ValueError('unique prior admission checkpoint scope')
+        before = before.replace(old, new, 1)
+    if before.count(MARKER) != 1 or COMMAND in before:
+        raise ValueError('unique class/frame successor guide insertion')
+    return before.replace(MARKER, GUIDE + MARKER, 1)
+
+
+class Visible(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts, self.codes, self.code = [], [], None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'code':
+            self.code = []
+
+    def handle_data(self, data):
+        self.parts.append(data)
+        if self.code is not None:
+            self.code.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == 'code' and self.code is not None:
+            self.codes.append(''.join(self.code).strip())
+            self.code = None
+
+
+def check(html):
+    parsed = Visible(); parsed.feed(html)
+    if parsed.codes.count(COMMAND) != 1:
+        raise ValueError('native exact class/frame command')
+    expected = GUIDE.replace('```bash\n', '').replace('```\n', '').replace("model's", 'model’s')
+    if ' '.join(expected.split()) not in ' '.join(' '.join(parsed.parts).split()):
+        raise ValueError('native complete class/frame scope and retained gaps')
+
+
+def proof(html):
+    check(html)
+    result = []
+    for name, old, new, cause in (
+        ('wrong-command', COMMAND, COMMAND + ' --borrowed', 'native exact class/frame command'),
+        ('native-class-promotion', 'This is source/publisher class inference', 'This is measured original native class', 'native complete class/frame scope and retained gaps'),
+        ('invented-recapture', 'does\nnot recapture the original run', 'does\nrecapture the original run', 'native complete class/frame scope and retained gaps'),
+        ('lost-formatter-gap', 'full formatter/settings', 'fully qualified formatter/settings', 'native complete class/frame scope and retained gaps')):
+        changed = html.replace(old, new)
+        if changed == html:
+            raise ValueError('nongenuine native class/frame guide intervention: ' + name)
+        try:
+            check(changed)
+        except ValueError as error:
+            if str(error) != cause:
+                raise ValueError('wrong native class/frame guide refusal: ' + name) from error
+            result.append(dict(control=name, status=1, cause=cause))
+        else:
+            raise ValueError('false-green native class/frame guide: ' + name)
+    return dict(input_identity=dict(bytes=len(html.encode()), sha256=hashlib.sha256(html.encode()).hexdigest()),
+                controls=result, visual_QA='pending; separately owned')

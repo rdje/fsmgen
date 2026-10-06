@@ -1,0 +1,23 @@
+"""Retain the independent whole source model before original observation intake."""
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-class-frame-join-20261006')
+
+
+def module(path):
+    ns = {'__name__': 'class_frame_source_derivation', '__file__': str(path)}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+classes = module(Path('docs/audits/record-value-original-class-20261005/verify.py'))
+public = module(Path('docs/audits/record-value-public-boundary-join-20261006/verify.py'))
+model = module(BASE / 'model.py')
+expected = model['derive'](classes, public, classes['require'], classes['same'])
+destination = BASE / 'pre-original-models.json'; assert not destination.exists()
+destination.write_text(json.dumps(expected, sort_keys=True, indent=2) + '\n')
+for mode in expected['modes']:
+    signatures = sorted({(r['domain'], r['exception']['source_family'], tuple(p['family'] for p in r['phases'])) for r in mode['cases']})
+    print(mode['mode'], 'complete source cases', len(mode['cases']), 'class/phase signatures', signatures)
+print('PASS whole independent source contract retained before original raw body/frame intake.')
