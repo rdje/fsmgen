@@ -1,0 +1,110 @@
+{
+  "complete": {
+    "actual": {
+      "bytes": 802,
+      "sha256": "61b0b41850759715085da96b8fdf8ded2312811868304dc71ba03bce02c7c889"
+    },
+    "derived": {
+      "before": {
+        "LF": 240,
+        "bytes": 14898,
+        "files": 3
+      },
+      "delta": {
+        "LF": -10,
+        "bytes": -27,
+        "files": 0
+      },
+      "proposal": {
+        "LF": 230,
+        "bytes": 14871,
+        "files": 3
+      }
+    },
+    "producer": {
+      "bytes": 25596,
+      "sha256": "93d2e937494eb7068179b86bda52364f5fb51354646a4e9ae4ad0060a3bb9397"
+    },
+    "proposal": {
+      "bytes": 31209,
+      "sha256": "6646efd345f7d4937b9afee0279c61912e478b50a09934eb3247f3eceeaf45ca"
+    },
+    "review": {
+      "bytes": 79291,
+      "sha256": "8cdf064ac0992e584f2ada5239bcd66a67f401e24ac28ae671afee769f1e3618"
+    },
+    "role": "Retained actual preparation/budget independently reconstructed from its whole historical producer; no new capture or source mutation."
+  },
+  "first": {
+    "actual": {
+      "bytes": 1209,
+      "sha256": "bb4acb62d9d4eafa3bce6a0c1edb87c6c28e584bffcfe4c4ba4f735589e68fc5"
+    },
+    "derived": {
+      "before": {
+        "LF": 240,
+        "bytes": 14898,
+        "files": 3
+      },
+      "delta": {
+        "LF": 18,
+        "bytes": 892,
+        "files": 0
+      },
+      "proposal": {
+        "LF": 258,
+        "bytes": 15790,
+        "files": 3
+      }
+    },
+    "producer": {
+      "bytes": 26515,
+      "sha256": "de7054c9a6df1cd646a0ea84f83b3bd202c9eacb3460cc346151c744666ef3a0"
+    },
+    "proposal": {
+      "bytes": 32144,
+      "sha256": "08edb68fee8ede2ee8944dacea6d5f65d271065c5e60dbabef57cf5ca3ea9966"
+    },
+    "review": {
+      "bytes": 80198,
+      "sha256": "b99da185adfc2185393065262819b0c89bd6675a2bbef682660c9a6b0c885b5d"
+    },
+    "role": "Retained actual preparation/budget independently reconstructed from its whole historical producer; no new capture or source mutation."
+  },
+  "second": {
+    "actual": {
+      "bytes": 1208,
+      "sha256": "80b2bc31219fc51ae1e01ea06e702cf20da12435db5099363cdffe417e5689a1"
+    },
+    "derived": {
+      "before": {
+        "LF": 240,
+        "bytes": 14898,
+        "files": 3
+      },
+      "delta": {
+        "LF": 7,
+        "bytes": -27,
+        "files": 0
+      },
+      "proposal": {
+        "LF": 247,
+        "bytes": 14871,
+        "files": 3
+      }
+    },
+    "producer": {
+      "bytes": 25596,
+      "sha256": "16bad59122d7c629e503ec926a0b11ae584918bd7a485094f606654a46c920fc"
+    },
+    "proposal": {
+      "bytes": 31226,
+      "sha256": "06610fe3d64640a730856d9705efc8abc8e724b53cd8f8f5c5757f68f83353de"
+    },
+    "review": {
+      "bytes": 79291,
+      "sha256": "8cdf064ac0992e584f2ada5239bcd66a67f401e24ac28ae671afee769f1e3618"
+    },
+    "role": "Retained actual preparation/budget independently reconstructed from its whole historical producer; no new capture or source mutation."
+  }
+}

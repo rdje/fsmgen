@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-retention-checks-20261006/check_budget.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/check_budget.py": {
+      "bytes": 1114,
+      "sha256": "f35a9a5e95ffe288072fe73be1e4d585e398a09f2120f5ec7a8c430cac6e1830"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "{\"before\": {\"LF\": 240, \"bytes\": 14898, \"files\": 3}, \"delta\": {\"LF\": -10, \"bytes\": -27, \"files\": 0}, \"proposal\": {\"LF\": 230, \"bytes\": 14871, \"files\": 3}}\nPASS complete unchanged-source non-growing retention proposal budget.\n"
+}

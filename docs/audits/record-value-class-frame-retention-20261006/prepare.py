@@ -1,0 +1,181 @@
+"""Construct a fully reviewed sentence-level retention proposal, not live cards."""
+import json
+import subprocess
+import textwrap
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-class-frame-retention-20261006')
+REVISION = 'd6ff9248c452ae55ed7379d411128606c96e4f51'
+ROOT = Path('docs/knowledge')
+ROLE = 'Reviewed complete semantic retention proposal; atomic current publication remains separate.'
+
+# Each pair is a reviewed source proposition and its survivor. Every clause in
+# each source unit is included in the review, including negative boundaries.
+# Paragraph separators and prose wrapping are editorial; literals stay exact.
+ROWS = {
+ 'record-value-finite-copy-probe-reader.md': [
+  [
+   ('Separate models qualify whole typed graph bijections, reachable reference counts, input/result sharing, readonly, kinds, cycles and detachment for the plain profile.', 'Separate plain-profile models qualify whole typed graph bijections, reachable reference counts, input/result sharing, readonly, kinds, cycles and detachment.'),
+   ('Genuine Storable/alias/split-sharing/cycle-alias/input-kind/result-kind providers reach intended assertions; non-target records conserve.', 'Genuine Storable/alias/split-sharing/cycle-alias/input-kind/result-kind providers reach intended assertions; non-target records conserve.')],
+  [
+   ('Native refusal records preserve whole causes, class, HASH shape and within-capture identity for both observed empty blessed classes.', 'Native refusals preserve whole causes, class, HASH shape and within-capture identity for both observed empty blessed classes.'),
+   ('Native-class copying and structured-clone cycle support remain unqualified.', 'Native-class copying and structured-clone cycle support remain unqualified.'),
+   ('Graph/cause/identity and whole programme mutations reject.', 'Graph/cause/identity and whole programme mutations reject.')],
+  [
+   ('Fresh same-volume replay uses pinned sources and retains all native records and both streams.', 'Fresh same-volume replay pins sources and retains all native records and both streams.'),
+   ('Addresses have per-capture lifetimes; sealed producers run elsewhere.', 'Addresses have per-capture lifetimes; sealed producers run elsewhere.'),
+   ('The finite join authenticates completed owners and fresh products.', 'The finite join authenticates completed owners and fresh products.'),
+   ('Original captures retain unchanged-input Storable/alias trials and the full alias run’s downstream mutation/abort.', 'Original Storable/alias trials retain unchanged inputs and the full alias run’s downstream mutation/abort.'),
+   ('Independent typed models qualify original copy graphs, genuine trials, readonly and detachment.', 'Independent typed models qualify original copy graphs, genuine trials, readonly and detachment.'),
+   ('Whole API/parser results match source models; private-source allocations conserve.', 'Whole API/parser results match source models; private-source allocations conserve.'),
+   ('Independently modeled copy interventions rebuild full input/private typed graphs, readonly copies and detached outputs.', 'Copy-intervention models independently rebuild full input/private typed graphs, readonly copies and detached outputs.'),
+   ('The known private range sibling changes string width2 to number2; its outer caller stays unchanged through a detached private copy.', 'The private range sibling changes string width2 to number2; its outer caller stays unchanged through a detached private copy.'),
+   ('Every copied width joins the full raw type, carrier/default/metadata roles, ancestor context and compatible-source set.', 'Every copied width joins full raw type, carrier/default/metadata roles, ancestor context and compatible sources.'),
+   ('The input/private join qualifies whole graph/field/source/context/raw-kind/detachment meanings for the captured modes.', 'Input/private joins qualify captured modes’ whole graph/field/source/context/raw-kind/detachment meanings.'),
+   ('Finite source-context models qualify helper/consumer/parser locations, complete parser texts and operation spans, separately from cause/operand truth.', 'Finite context models qualify helper/consumer/parser locations, complete parser texts and operation spans separately from cause/operand truth.'),
+   ('Independent primary models derive each API/helper/parser first cause and acceptance from qualified source inputs.', 'Each API/helper/parser first cause and acceptance derives independently from qualified source inputs.'),
+   ('Raw bodies and lossless grammar qualify.', 'Raw bodies and lossless grammar qualify.'),
+   ('Source/publisher contracts infer unblessed scalar errors for this finite capture; original classes were unmeasured.', 'Source/publisher contracts infer unblessed scalar errors for this finite capture; original classes were unmeasured.'),
+   ('POD4.05 is stale; runtime JSON::PP4.06 owns version identity.', 'POD4.05 is stale; runtime JSON::PP4.06 owns version identity.'),
+   ('Direct Value models bind active order and source roles to visible type/scalar footprints.', 'Direct Value active-order/source-role models bind visible type/scalar footprints.'),
+   ('Metadata guard/record-recursion paths qualify, including cycles; list recursion is bound but unexercised.', 'Metadata guards/record recursion, including cycles, qualify; list recursion is bound, unexercised.'),
+   ('Nested Scope/capture/private-root inputs bind the entire source-constructed interface graph, preserving kinds, sharing and cycles.', 'Nested Scope/capture/private-root inputs bind the whole source-built interface graph’s kinds/sharing/cycles.'),
+   ('Whole inner scalar forwarding now conserves the new outer prefix.', 'Whole inner scalar forwarding conserves the new outer prefix.'),
+   ('Public die controls distinguish explicit rethrow, propagation and hook replacement.', 'Public die controls distinguish explicit rethrow, propagation and hook replacement.'),
+   ('Original hook state/provider bytes stay unmeasured.', 'Original hook state/provider bytes stay unmeasured.'),
+   ('Source models join nested Value and capture/Scope eval/wrapper paths and visible operand roles.', 'Source models join nested Value/capture/Scope eval/wrapper paths and visible operand roles.'),
+   ('The complete own API join partitions every refusal into source guard/function/visible-role models.', 'Every own API refusal partitions into source guard/function/visible-role models.'),
+   ('Own observer and helper source meanings are canonical in the [observer/helper path card](record-value-original-observer-helper-paths.md).', '[Observer/helper source meanings](record-value-original-observer-helper-paths.md) are canonical.'),
+   ('Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/candidate-parent, hot and host-native meanings remain open.', 'Full observer/display/private-frame/coordinate/address, consumer, alias/semantic/cold/candidate-parent, hot/host-native meanings stay open.')],
+  [('Reverify runs the complete source chain and separate probe replay.', 'Complete source-chain and separate probe replay remain required.')]],
+ 'record-value-original-observer-helper-paths.md': [
+  [
+   ('Own observer/callback source roles/bodies/allocations inventory.', 'Own observer/callback source roles/bodies/allocations inventory.'),
+   ('Observer models join every API/parser operation, eval and installed wrapper with source argument roles.', 'Observer models join every API/parser operation/eval/installed wrapper and source argument roles.'),
+   ('The parser receiver role is declared; identity is unmeasured.', 'The parser receiver role is declared; identity is unmeasured.'),
+   ('Named helpers preserve complete source graphs and active paths.', 'Named helpers preserve complete source graphs/active paths.'),
+   ('Compiled callback/refuses/helper-wrapper paths bind parameterless operation, source regex-body and label displays; identity and full formatting remain open.', 'Compiled callback/refuses/helper-wrapper paths bind parameterless operation and source regex-body/label displays; identity/full formatting stay open.'),
+   ('Source join binds every helper allocation, full supplied/default inputs, returned argument-building operations and compiled callback/refusal paths through both nested throw phases.', 'Every helper allocation’s full supplied/default inputs, returned argument-building operations and compiled callback/refusal paths join through both nested throw phases.'),
+   ('Source models construct the intended join before comparing recorded contiguous function order and visible argument roles.', 'Source derivation precedes comparison of recorded contiguous function order and visible argument roles.'),
+   ('Returned helpers are separate from active frames.', 'Returned helpers are separate from active frames.'),
+   ('Complete model/allocation/phase/member/order/operand corruptions reject.', 'Complete model/allocation/phase/member/order/operand corruptions reject.')],
+  [
+   ('Full observer/display/frame/class-frame/raw-coordinate/address, subtest/load, framework/quoting/truncation and parser-internal meanings stay open.', 'Full observer/display/private-frame/native-class/raw-coordinate/address, subtest/load/framework/quoting/truncation and parser-internal meanings stay open.'),
+   ('Original provider/hook/class measurements and callback/regex/object/native identity stay unmeasured.', 'Original provider/hook/class measurements and callback/regex/object/native identity stay unmeasured.'),
+   ('Consumer, alias, complete semantic/cold/candidate-parent and permanent/hot/host-native repairs stay open; visual mdBook QA is pending.', 'Consumer, alias, complete semantic/cold/candidate-parent and permanent/hot/host-native repairs stay open; visual mdBook QA is pending.')],
+  [('Related: [[record-value-finite-copy-probe-reader]].', 'Related: [[record-value-finite-copy-probe-reader]].')],
+  [('## Qualified own subtest and do-load source boundaries', '## Qualified own subtest and do-load source boundaries')],
+  [
+   ('The complete own source model assigns every original refusal to its authored named subtest body.', 'Complete own source models assign every original refusal to its authored named subtest body.'),
+   ('The observer saves the public Test::More subtest delegate, receives the name/body/extra arguments, wraps the callback with the compiled-helper observer, forwards the callback arguments to the original body and forwards extra arguments to the saved delegate.', 'The observer saves the public Test::More subtest delegate, receives name/body/extras, wraps the callback with the compiled-helper observer, then forwards callback arguments to the original body and extras to the saved delegate.'),
+   ('Authored original subtests supply no extra arguments.', 'Authored original subtests supply no extras.'),
+   ("Recorded throw-phase headers agree with the modeled body and own observer callback's empty visible argument lists and with the public delegate/own entry's authored name and CODE reference kind.", 'Every recorded throw-phase header agrees with empty visible body/own-observer-callback arguments and authored name/CODE reference kind at public delegate/own entry.'),
+   ('The reference kind does not establish actual callback identity.', 'Reference kind does not prove actual callback identity.'),
+   ('External framework frames between those own roles are retained as opaque observations.', 'External frames between own roles stay opaque observations.')],
+  [
+   ("The observer's original test load is an explicit do './t/1986-isf-record-port-value-gates.t', followed by captures of $@, $! and defined($ok).", "The original observer explicitly loads with do './t/1986-isf-record-port-value-gates.t', then captures $@, $! and defined($ok)."),
+   ('Recorded diagnostic frames contain a require marker with that exact file identifier.', 'Recorded diagnostic frames display a require marker for that exact file identifier.'),
+   ('This marker agrees with the file role; it does not change the source operator to require or establish the formatter.', 'The file marker neither changes the source do operator to require nor proves the formatter.'),
+   ("Necessary installed public POD documents named subtest callbacks and extra arguments, do-file return/error semantics and require's do-file loading mechanism.", "Installed public POD documents named subtest callbacks/extras, do-file returns/errors and require's do-file loading mechanism."),
+   ('The captured current Perl/Test::More profile is current public-interface evidence; the original framework version remains unmeasured.', 'Captured current Perl/Test::More profile is public-interface evidence; original framework version stays unmeasured.')],
+  [
+   ('Original Test::Builder/Test::More headers match authored-name prefixes/CODE kinds and body/delegate/entry/do-load order at every throw phase.', 'Every original Test::Builder/Test::More throw-phase header matches authored-name prefixes/CODE kinds and body/delegate/entry/do-load order.'),
+   ('Independent dated public fixtures select them.', 'Independent dated public fixtures select them.'),
+   ('Receiver tokens/private eval intervals stay opaque.', 'Receiver tokens/private eval intervals stay opaque.'),
+   ('Wrong name/kind/population/order rejects.', 'Wrong name/kind/population/order rejects.')]],
+ 'mdbook-build-destination-locality.md': [
+  [
+   ('`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` against the invocation working directory, not `docs/book`.', '`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` from the invocation working directory, not `docs/book`.'),
+   ('Therefore `../../.artifacts/` from the repository root escapes the repository.', '`../../.artifacts/` from the repository root therefore escapes it.'),
+   ('The reset-slice publisher exposed that mistaken assumption when it could not find fresh local HTML.', 'The reset publisher exposed this mistaken assumption by failing to find fresh local HTML.')],
+  [
+   ('Custom-output automation must derive an absolute destination from the current repository root at runtime, check it remains inside the root and on its volume, and start with a fresh destination.', 'Custom builds derive a fresh absolute destination from the current root at runtime and check containment/same-volume locality.'),
+   ('Persist its repository-relative identity; never change the actual tool argument merely to avoid recording an absolute path.', 'Persist repository-relative identity; never change the actual argument to avoid recording an absolute path.'),
+   ('Build success alone does not identify the output consumed by validation.', 'Build success alone does not identify the validated output.')],
+  [
+   ('The owning reset slice copied and hash-verified both exact misplaced books, consumed their recovered HTML, deleted only those old roots, and recorded the residue census.', 'The reset slice copied and hash-verified both exact misplaced books, consumed recovered HTML, deleted only those old roots and recorded a residue census.'),
+   ('The first carrier build had been valid and local; the later relative-destination check reused that earlier render.', 'The first carrier build was valid/local; the later relative-destination check reused its render.'),
+   ('Its historical receipt now explicitly records the correction.', 'Its historical receipt explicitly records this correction.'),
+   ('No compiler or HDL test result changes.', 'No compiler or HDL test result changes.'),
+   ('The tracked probe builds a miniature book from another source directory, checks relative and absolute destinations against the invocation directory, requires fresh marker-bearing HTML and same-volume local paths, then removes its owned temporary workspace.', 'The tracked miniature-book probe uses another source directory, checks relative/absolute destinations against the invocation directory, requires fresh marker-bearing HTML and same-volume local paths, then removes its owned workspace.'),
+   ('The manifest retains the actual recovery.', 'The manifest retains the actual recovery.')],
+  [('## Native canonical source views', '## Native canonical source views')],
+  [
+   ('The selected source-view plane uses relative filesystem links to canonical repository files and native-safe `.source.txt` addresses.', 'Relative filesystem links connect canonical repository files to native-safe `.source.txt` views.'),
+   ('A terminal `.md` in the address is encoded as `.markdown`: the initial `.md.source.txt` recipe served a directly requested asset but native rendered clicks were rewritten to `.html`.', 'Native clicks rewrote `.md.source.txt` to `.html` despite valid direct requests; encode terminal `.md` as `.markdown`.'),
+   ('Actual href checks qualify the encoded recipe.', 'Actual href checks qualify encoding.'),
+   ('Views preserve complete UTF8 source text; Markdown links inside them remain literal text.', 'Views preserve complete UTF8 source with literal Markdown links.')],
+  [
+   ('The admitted mdBook0.5.4 prototype serves every selected source and refreshes a controlled visible source outside the book directory under default native serve.', 'Admitted mdBook0.5.4 serves every selected source; default native serve refreshes a controlled visible source outside the book directory.'),
+   ('Ignored scratch and deliberately parent-ignored visible inputs remain stale, including with extra-watch enabled.', 'Ignored scratch/parent-ignored visible inputs stay stale, even with extra-watch enabled.'),
+   ('Source presence and successful build do not prove watcher admission.', 'Presence/build success do not prove watcher admission.'),
+   ('The executed factory checks complete selection, current source endpoints/bytes and ignore policy; native output verification additionally checks every copied source.', 'Executed factory checks complete selection, current endpoints/bytes/ignore policy; native verification checks every copied source.'),
+   ('Published views reflect their latest book build, without a universal refresh-time or platform promise.', 'Views reflect their latest book build; no universal refresh-time/platform promise applies.')],
+  [
+   ('`python3 -B scripts/book_source_references.py --write` regenerates the finite manifest and relative endpoints.', '`python3 -B scripts/book_source_references.py --write` regenerates finite manifest/relative endpoints.'),
+   ('`--check` qualifies current sources; `--verify-build .artifacts/BOOK_OUTPUT` also checks copied native bytes.', '`--check` qualifies current sources; `--verify-build .artifacts/BOOK_OUTPUT` also checks copied native bytes.'),
+   ('The original destination-locality replay remains required, alongside the recorded source-plane qualifier.', 'Original destination-locality replay and recorded source-plane qualification remain required.'),
+   ('Source and asset paths must remain on the repository volume and within this repository.', 'Source/asset paths must stay inside this repository on its volume.'),
+   ('No extra chapter or copied prose is added.', 'No extra chapter/copied prose is added.')],
+  [('## Historical and current reader roles', '## Historical and current reader roles')],
+  [
+   ('An actual source-qualified helper-card extension obstructed the original source-plane default replay because it invoked the old whole-current helper reader.', 'A source-qualified helper-card extension obstructed original source-plane default’s old whole-current helper call.'),
+   ("The qualified historical adapter changes only that call to the helper reader's existing snapshot mode, conserving every other original predicate, programme and product.", 'The qualified historical adapter changes only that call to existing helper snapshot mode; every other original predicate/programme/product conserves.'),
+   ('Its command is:', 'Its command is:')],
+  [('`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`', '`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`')],
+  [
+   ('Historical success does not establish current card, query, reader or source currency.', 'Historical success does not establish current card/query/reader/source currency.'),
+   ('The current publication reader checks complete core/helper/tooling meanings and question ownership, unique book guidance, canonical source-view selection/endpoints/bytes/ignore policy, exact current budget and indexed members.', 'Current publication checks complete core/helper/tooling meanings/question ownership, unique book guidance, canonical selection/endpoints/bytes/ignore policy, exact current budget and indexed members.'),
+   ('The original destination-locality replay remains required.', 'Original destination-locality replay remains required.'),
+   ("Native copied bytes still need the factory's explicit output check; visual QA remains pending.", 'Explicit factory output checks remain required for native copied bytes; visual QA stays pending.')]]}
+
+ADDITIONS = {
+ 'record-value-finite-copy-probe-reader.md': 'Every original nonempty error joins source-inferred class/guard family to complete own/public phase/function/visible-argument roles; empty allocations, contexts and opaque raw bytes conserve. Nested Metadata and new outer Value keep separate class/phase roles, conserving the entire inner operand through catch/interpolation/new throw. Source associations precede new raw intake. Native/private/formatter/encoding/hidden-argument/identity/coordinate/address meanings stay unmeasured or separately owned.',
+ 'record-value-original-observer-helper-paths.md': 'This finite source-class/frame join binds every operation/helper/authored-body/public/entry/load and visible operand role at each original throw phase. Inherited inner operands stay opaque retained evidence, not formatter/coordinate/address oracles. Class/family/phase/order/argument/population/native-promotion controls preserve predecessor meanings; opaque inner-frame byte changes pass prior own/public predicates but break whole forwarding.'}
+
+
+def normalized(text):
+    return ' '.join(text.split()).replace('/ ', '/')
+
+
+def save(name,value):
+    path = BASE / name; raw = json.dumps(value,sort_keys=True,indent=2) + '\n'
+    if path.exists():
+        assert path.read_text() == raw, 'immutable prepared retention product: ' + name
+    else:
+        assert not (BASE / 'manifest.json').exists(), 'sealed retention cannot prepare'
+        path.write_text(raw)
+
+
+def main(quiet=False):
+    proposal, review = {}, {}
+    for filename, paragraphs in ROWS.items():
+        path = str(ROOT / filename)
+        original = subprocess.check_output(['git','show',REVISION + ':' + path]).decode()
+        header, body = original.rsplit('---\n',1)
+        blocks = body.strip().split('\n\n')
+        assert len(blocks) == len(paragraphs), 'complete independent paragraph population: ' + filename
+        facts, after_blocks = [], []
+        for block, pairs in enumerate(paragraphs):
+            assert normalized(blocks[block]) == ' '.join(source for source,target in pairs), 'whole reviewed source proposition coverage: ' + filename + ':' + str(block)
+            after_blocks.append(textwrap.fill(' '.join(target for source,target in pairs),width=90,break_long_words=False,break_on_hyphens=False)
+                if not blocks[block].startswith(('## ', '`python3')) else ' '.join(target for source,target in pairs))
+            for unit,(source,target) in enumerate(pairs):
+                facts.append(dict(id=filename.removesuffix('.md') + ':' + str(block) + ':' + str(unit),block=block,source=source,target=target,
+                    review='Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.',
+                    refinement='Finite own/public source class/frame association refines only the corresponding prior open scope; original native/private/display/formatter/coordinate/address and broader owners remain open.' if source.startswith(('Full observer/display/frame/', 'Full observer/display/frame/class-frame/')) else 'None; source proposition retained.'))
+        if filename in ADDITIONS:
+            after_blocks.append(textwrap.fill(ADDITIONS[filename],width=90,break_long_words=False,break_on_hyphens=False))
+        after = header + '---\n\n' + '\n\n'.join(after_blocks) + '\n'
+        proposal[path] = dict(before=original,after=after,revision=REVISION,role=ROLE)
+        review[path] = dict(blocks=[dict(index=i,source=s,ids=[f['id'] for f in facts if f['block']==i]) for i,s in enumerate(blocks)],
+            facts=facts,addition=ADDITIONS.get(filename),addition_authority='docs/audits/record-value-class-frame-join-20261006/scope.txt',
+            metadata='Complete original front matter, ordered questions, identities, dates, tags, evidence and reverify commands remain exact; routes/date/evidence additions belong to atomic publication.',
+            semantic_review='This complete sentence/clause map records engineer equivalence judgments. Mechanical source coverage and target/loss checks do not decide unrestricted natural-language equivalence.')
+    save('proposal.json',proposal); save('retention-map.json',review)
+    if not quiet:
+        print('Prepared complete reviewed source proposition/qualifier and unchanged metadata retention proposal; no live card changed.')
+
+
+if __name__ == '__main__':
+    main()

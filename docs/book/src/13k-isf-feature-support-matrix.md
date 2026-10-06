@@ -845,6 +845,36 @@ frames, formatter, scalar encoding, identity, coordinates and address/lifetimes
 remain unmeasured or separately owned. Visual QA, HIAL repair and full CI/push
 retain their separate owners. Project outputs and scratch remain repository-local.
 
+The semantic-retention checkpoint prepares the complete core, observer and
+tooling fact proposal before changing live cards or reader routes. Every original
+sentence or clause maps to reviewed survivor text, with its qualifiers, examples,
+identity, ordered questions, evidence and replay obligations retained. Exact code
+literals and original front matter stay unchanged. This is engineer-reviewed
+prose equivalence; mechanical coverage is not unrestricted natural-language proof.
+
+The additions bind the complete qualified source-class/frame/body/phase/operand
+join and its separating controls. Full original physical and logical membership,
+global question allocation and every collection-capacity dimension are checked.
+Compaction does not grow the complete proposed byte or line-feed population or
+widen its collection authority. Actual loss controls cover propositions,
+qualifiers, questions, source members, completed owners, kinds and native scope.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-retention-20261006/verify.py
+```
+
+The default regenerates the complete frozen proposal and semantic authority,
+checks the saved fresh admission execution, retained first failed budgets,
+controls and native guide. It does not claim live current fact publication.
+The additional `--live-unchanged` check requires the old complete fact epoch;
+atomic publication and updated current routes remain a separate successor.
+The preparation and fresh replay roles qualify this unchanged pre-publication
+epoch; original native captures and transitive native executions are retained,
+never recaptured. Private frames, native class/provider/hooks, formatter,
+encoding, hidden arguments, identity, coordinates and address/lifetime meanings
+remain unmeasured or separately owned. Visual QA, HIAL repair and full CI/push
+retain their owners. Project outputs and scratch remain repository-local.
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

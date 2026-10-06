@@ -1,0 +1,37 @@
+{
+  "first_budget": {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/class-frame-retention-checks-20261006/check_budget.py"
+    ],
+    "instruments": {
+      "docs/audits/class-frame-retention-checks-20261006/check_budget.py": {
+        "bytes": 1114,
+        "sha256": "f35a9a5e95ffe288072fe73be1e4d585e398a09f2120f5ec7a8c430cac6e1830"
+      },
+      "docs/audits/class-frame-retention-checks-20261006/run.py": {
+        "bytes": 1122,
+        "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+      }
+    },
+    "status": 1,
+    "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/class-frame-retention-checks-20261006/check_budget.py\", line 17, in <module>\n    assert b['files'] == a['files'] and b['bytes'] <= a['bytes'] and b['LF'] <= a['LF'], 'complete retention proposal must not grow bytes or LF'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete retention proposal must not grow bytes or LF\n",
+    "stdout": "{\"before\": {\"LF\": 240, \"bytes\": 14898, \"files\": 3}, \"delta\": {\"LF\": 18, \"bytes\": 892, \"files\": 0}, \"proposal\": {\"LF\": 258, \"bytes\": 15790, \"files\": 3}}\n"
+  },
+  "members": {
+    "docs/audits/class-frame-retention-checks-20261006/first-prepare.py.txt": {
+      "bytes": 26515,
+      "sha256": "de7054c9a6df1cd646a0ea84f83b3bd202c9eacb3460cc346151c744666ef3a0"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/first-proposal.json": {
+      "bytes": 32144,
+      "sha256": "08edb68fee8ede2ee8944dacea6d5f65d271065c5e60dbabef57cf5ca3ea9966"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/first-retention-map.json": {
+      "bytes": 80198,
+      "sha256": "b99da185adfc2185393065262819b0c89bd6675a2bbef682660c9a6b0c885b5d"
+    }
+  },
+  "role": "Exact first unsealed draft and invocation programme retained before supersession; no original/live source is altered."
+}

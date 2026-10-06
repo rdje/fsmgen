@@ -1,0 +1,12 @@
+{
+  "actual": {
+    "bytes": 13176,
+    "sha256": "4ad55c4a266deca377db8d131ba89441c2773505cb4f572ffd55fe0e80210f34"
+  },
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-admission-checks-20261006/verify_seal.py"
+  ],
+  "role": "Fresh complete actual publication-admission reader; original captures and transitive native runs retained, not recaptured."
+}

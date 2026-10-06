@@ -1,0 +1,25 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t",
+    "t/1549-task-tree-integrity-doctrine.t",
+    "t/1567-knowledge-map-shards.t"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 58640; host 72.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "t/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nt/1549-task-tree-integrity-doctrine.t ...... ok\nt/1567-knowledge-map-shards.t .............. ok\nAll tests successful.\nFiles=4, Tests=361, 15 wallclock secs ( 0.04 usr  0.01 sys + 10.30 cusr  3.13 csys = 13.48 CPU)\nResult: PASS\n"
+}

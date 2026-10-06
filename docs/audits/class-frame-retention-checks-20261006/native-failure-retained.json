@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-retention-checks-20261006/retain_native_failure.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/retain_native_failure.py": {
+      "bytes": 2806,
+      "sha256": "ccdd1667e07876af33940bc161a7ac0a0b469716ee0398e53b8f1e45dc4c9f4e"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS retained actual first native failure; sole -- to en-dash rendering mismatch independently identified before repair.\n"
+}

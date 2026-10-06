@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-retention-20261006/verify.py",
+    "--prepare"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-retention-20261006/verify.py": {
+      "bytes": 21712,
+      "sha256": "0d7d3de348f78523bec5e7374a7e68fa8c76765b6b07cef56eda0648d37e12a8"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 84919; host 72.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete reviewed source proposal, corpus and qualified semantic authority preparation; fresh actual admission and native/result qualification remain required.\n"
+}

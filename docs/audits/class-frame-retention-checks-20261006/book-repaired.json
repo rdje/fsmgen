@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-retention-checks-20261006/repair_book.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/repair_book.py": {
+      "bytes": 2501,
+      "sha256": "3fa2561d7368fd424f34ec96326c6e293e521b1bed193df1ab2f56635d585259"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 68320; host 79.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS exact inline-code option repair; complete first publication and failed native render retained, all other source meanings and ceilings unchanged.\n"
+}

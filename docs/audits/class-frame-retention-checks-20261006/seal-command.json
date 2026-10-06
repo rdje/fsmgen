@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-retention-20261006/verify.py",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-retention-20261006/verify.py": {
+      "bytes": 21795,
+      "sha256": "231b3d8ef2c80cdfeb61892b8c0ff249853a1c7f552512f83ddc40134cf52b27"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 89710; host 77.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete reviewed class/frame source-proposition qualifier question route and non-growing collection retention; atomic current publication remains pending.\n"
+}

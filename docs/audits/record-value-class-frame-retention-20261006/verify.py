@@ -1,0 +1,302 @@
+"""Qualify every source proposition and the complete finite publication proposal."""
+import argparse
+import copy
+import json
+import re
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-class-frame-retention-20261006')
+CHECKS = Path('docs/audits/class-frame-retention-checks-20261006')
+ADMISSION = Path('docs/audits/record-value-class-frame-publication-admission-20261006')
+ADMISSION_CHECKS = Path('docs/audits/class-frame-publication-admission-checks-20261006')
+REVISION = 'd6ff9248c452ae55ed7379d411128606c96e4f51'
+OWNER = 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.3.2'
+SUCCESS = 'PASS complete reviewed class/frame source-proposition qualifier question route and non-growing collection retention; atomic current publication remains pending.\n'
+
+
+def module(path):
+    ns = {'__name__':'class_frame_semantic_retention','__file__':str(path)}
+    exec(compile(path.read_bytes(),str(path),'exec'),ns)
+    return ns
+
+
+intake = module(ADMISSION / 'verify.py')
+require,same,identity,load,whole = (intake[k] for k in ('require','same','identity','load','whole'))
+metadata,public = intake['metadata'],intake['public']
+
+
+def save(name,value):
+    path = BASE / name
+    if path.exists():
+        require(same(load(path),value),'whole immutable retention product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(),'sealed retention cannot add products')
+        path.write_text(json.dumps(value,sort_keys=True,indent=2) + '\n')
+
+
+def members():
+    return {str(Path(p).relative_to(BASE)):pin for p,pin in whole(BASE).items() if Path(p) != BASE / 'manifest.json'}
+
+
+def binding():
+    roots = sorted({Path(p) for p in load(ADMISSION / 'binding.json')['inputs']} | {ADMISSION,ADMISSION_CHECKS},key=str)
+    authority = intake['admission']; before = authority['REVISION']
+    try:
+        authority['REVISION'] = REVISION
+        inputs = authority['committed_inputs'](roots)
+        task = subprocess.check_output(['git','show',REVISION + ':' + str(intake['TASK'])])
+        owners = authority['owner_rows'](roots,task.decode())
+    finally:
+        authority['REVISION'] = before
+    return dict(revision=REVISION,owner=OWNER,inputs=inputs,owners=owners,task=identity(task),
+        scope='Complete committed class/frame publication admission and every transitive semantic/source/result member; original native captures and all historical/private gaps stay retained, never recaptured.')
+
+
+def check_binding(candidate,expected):
+    require(candidate['revision'] == REVISION and candidate['owner'] == OWNER and candidate['scope'] == expected['scope'],'complete retention custody revision owner and native scope')
+    require(all(type(p['bytes']) is int and p['bytes'] >= 0 for rows in candidate['inputs'].values() for p in rows.values()),'retention source member discrete byte-count kinds')
+    require(same(candidate['inputs'],expected['inputs']),'whole committed retention model source and actual-result member population')
+    require(same(candidate['owners'],expected['owners']) and same(candidate['task'],expected['task']),'whole retention completed-owner and task authority')
+    require(same(candidate,expected),'closed complete retention custody')
+
+
+def original_sources():
+    paths = subprocess.check_output(['git','ls-tree','-r','--name-only',REVISION,'docs/knowledge','docs/decisions'],text=True).splitlines()
+    return metadata['git_blobs'](REVISION,sorted(p for p in paths if p.endswith('.md')))
+
+
+def construct():
+    prepare = module(BASE / 'prepare.py'); prepare['main'](quiet=True)
+    # The first input model is retained independently. Target-only revision
+    # authority must conserve every original source unit and producer operation.
+    revised = module(CHECKS / 'revise_targets.py')
+    require((BASE / 'prepare.py').read_bytes() == revised['expected_programme'](),'whole independently declared target-only and editorial producer revision')
+    original = module(CHECKS / 'first-prepare.py.txt')
+    for filename,blocks in prepare['ROWS'].items():
+        prior = original['ROWS'][filename]
+        require([[s for s,t in b] for b in blocks] == [[s for s,t in b] for b in prior],
+                'every independently retained original sentence and clause: ' + filename)
+    return prepare
+
+
+def semantics(proposal,review,sources):
+    prepare = module(BASE / 'prepare.py')
+    paths = {str(prepare['ROOT'] / name) for name in prepare['ROWS']}
+    require(set(proposal) == paths and set(review) == paths,'complete core observer tooling proposal and review population')
+    proof = {}
+    for filename,blocks in prepare['ROWS'].items():
+        path = str(prepare['ROOT'] / filename); row,model = proposal[path],review[path]
+        require(set(row) == {'before','after','revision','role'} and all(type(v) is str for v in row.values()),'closed typed source proposal grammar: ' + path)
+        require(row['before'].encode() == sources[path] and row['revision'] == REVISION,'whole original source card: ' + path)
+        require(row['role'] == prepare['ROLE'],'retention-only current publication boundary: ' + path)
+        header,body = row['before'].rsplit('---\n',1); source_blocks = body.strip().split('\n\n')
+        require(row['after'].rsplit('---\n',1)[0] == header,'whole exact identity date tags evidence ordered questions and reverify obligations: ' + path)
+        expected_ids = [filename.removesuffix('.md') + ':' + str(i) + ':' + str(j) for i,b in enumerate(blocks) for j,p in enumerate(b)]
+        require([f['id'] for f in model['facts']] == expected_ids,'complete independently declared source proposition and qualifier census: ' + path)
+        require(all(type(b['index']) is int for b in model['blocks']) and [b['index'] for b in model['blocks']] == list(range(len(source_blocks)))
+            and [b['source'] for b in model['blocks']] == source_blocks,'complete ordered original prose and heading coverage: ' + path)
+        actual_ids = []
+        normalized = prepare['normalized']
+        for i,pairs in enumerate(blocks):
+            require(normalized(source_blocks[i]) == ' '.join(s for s,t in pairs),'whole independent original clause coverage: ' + path)
+            facts = [f for f in model['facts'] if f['block'] == i]
+            require(model['blocks'][i]['ids'] == [f['id'] for f in facts],'complete original block proposition allocation: ' + path)
+            require([(f['source'],f['target']) for f in facts] == pairs,'whole reviewed source to survivor relation: ' + path)
+            for fact in facts:
+                require(type(fact['block']) is int and fact['block'] == i and bool(fact['review']) and bool(fact['refinement']),
+                        'reviewed proposition qualifier and explicit refinement: ' + fact['id'])
+                require(normalized(fact['target']) in normalized(row['after']),'retained source proposition and qualifier: ' + fact['id'])
+                actual_ids.append(fact['id'])
+        for literal in re.findall(r'`[^`]*`',body):
+            require(literal in row['after'],'whole exact original code literal and replay example: ' + path)
+        addition = prepare['ADDITIONS'].get(filename)
+        require(model['addition'] == addition and model['addition_authority'] == str(intake['JOIN'] / 'scope.txt'),'complete finite addition and source authority: ' + path)
+        if addition:
+            require(normalized(row['after']).count(addition) == 1,'complete finite class frame body phase operand addition: ' + path)
+        require(model['metadata'] == load(BASE / 'retention-map.json')[path]['metadata'] and bool(model['semantic_review']),'declared exact metadata and human semantic equivalence boundary: ' + path)
+        require(row == load(BASE / 'proposal.json')[path] and same(model,load(BASE / 'retention-map.json')[path]),'whole admitted reviewed proposal: ' + path)
+        proof[path] = dict(before=identity(row['before'].encode()),after=identity(row['after'].encode()),proposition_ids=actual_ids,
+            ordered_questions=metadata['metadata'](sources[path])[1],addition=addition,semantic_review=model['semantic_review'])
+    return proof
+
+
+def collection(proposal,sources,physical=None,surface=None):
+    expected_physical = {p:r for p,r in sources.items() if Path(p).parent == Path('docs/knowledge')}
+    if physical is None:
+        physical = expected_physical
+    require(physical == expected_physical,'whole original physical collection member and source population')
+    proposed = {p:row['after'].encode() for p,row in proposal.items()}
+    after = {**physical,**proposed}
+    before_metrics,after_metrics = public['metrics'](physical),public['metrics'](after)
+    require(after_metrics['files'] == before_metrics['files'] and after_metrics['bytes_total'] <= before_metrics['bytes_total']
+        and after_metrics['lines_total'] <= before_metrics['lines_total'],'complete unchanged-member non-growing physical proposal bytes and LF')
+    registry = subprocess.check_output(['git','show',REVISION + ':' + str(intake['REGISTRY'])])
+    original_surface = public['authority'](registry)
+    if surface is None:
+        surface = original_surface
+    require(same(surface,original_surface),'whole unchanged proposal collection authority')
+    public['within'](after_metrics,surface)
+    allocation_before = metadata['allocation'](sources)
+    allocation_after = metadata['allocation']({**sources,**proposed})
+    require(same(allocation_before,allocation_after),'whole global retained question identity path and occurrence allocation')
+    return dict(before=before_metrics,after=after_metrics,authority=surface,
+        physical_members={p:identity(r) for p,r in physical.items()},proposed_members={p:identity(r) for p,r in after.items()},
+        logical_members={p:identity(r) for p,r in sources.items()},allocation=allocation_before,
+        legs=dict(rederive='whole fixed-Git physical/logical source population, complete proposed UTF8 bytes/LF/max-line census and source-derived global question allocation',
+            falsify='genuine proposition/qualifier/question/kind/source/member/scope/authority and full allocation losses refuse',
+            durability='tracked reviewed producer/map/complete source and actual semantic result, scoped native guide, immutable seal and independent actual-result checker'))
+
+
+def live_unchanged(sources):
+    require(all(Path(p).is_file() and not Path(p).is_symlink() and Path(p).stat().st_dev == Path.cwd().stat().st_dev and Path(p).read_bytes() == raw for p,raw in sources.items()),
+            'whole unchanged live original source facts and decisions')
+    require(public['cards']() == {p:r for p,r in sources.items() if Path(p).parent == Path('docs/knowledge')},'complete unchanged live physical source member population')
+    registry = subprocess.check_output(['git','show',REVISION + ':' + str(intake['REGISTRY'])])
+    require(same(public['authority'](registry),public['authority'](intake['REGISTRY'].read_bytes())),'whole unchanged live collection authority')
+
+
+def authority():
+    intake['check_binding'](load(ADMISSION / 'binding.json'),intake['binding']())
+    products = intake['semantic_products']()
+    require(same(products,load(ADMISSION / 'semantic-proof.json')),'whole regenerated complete addition source class frame body phase operand and separating control authority')
+    return dict(semantic_products=products,source_scope=(intake['JOIN'] / 'scope.txt').read_text(),
+        scope='Complete qualified source association and finite current public compatibility, never original native class, formatter, private framework, coordinates or identity measurement.')
+
+
+def fresh_admission(fresh):
+    command = ['python3','-B',str(ADMISSION_CHECKS / 'verify_seal.py')]
+    source = load(ADMISSION_CHECKS / 'independent-result.json')
+    path = BASE / 'admission-replay.json'
+    if fresh:
+        require(not path.exists(),'fresh retention admission cannot overwrite an actual execution')
+        instruments = {p:identity(Path(p).read_bytes()) for p in (str(BASE / 'verify.py'),str(ADMISSION_CHECKS / 'verify_seal.py'))}
+        inputs = {p:pin for root in (ADMISSION,ADMISSION_CHECKS) for p,pin in whole(root).items()}
+        result = subprocess.run(command,capture_output=True)
+        save('admission-replay.json',dict(command=command,status=result.returncode,stdout=result.stdout.decode(),stderr=result.stderr.decode(),
+            instruments=instruments,inputs=inputs,role='Fresh complete actual publication-admission reader; original captures and transitive native runs retained, not recaptured.'))
+    actual = load(path)
+    require(type(actual['status']) is int and actual['status'] == 0 and actual['command'] == command and actual['stdout'] == source['stdout'] and actual['stderr'] == '',
+            'whole actual fresh retention prerequisite command status streams and scope')
+    require(actual['role'] == 'Fresh complete actual publication-admission reader; original captures and transitive native runs retained, not recaptured.',
+            'actual retention fresh versus retained native roles')
+    require(same(actual['instruments'],{p:identity(Path(p).read_bytes()) for p in (str(BASE / 'verify.py'),str(ADMISSION_CHECKS / 'verify_seal.py'))})
+        and same(actual['inputs'],{p:pin for root in (ADMISSION,ADMISSION_CHECKS) for p,pin in whole(root).items()}),'whole invocation-time retention prerequisite sources and members')
+    return dict(actual=identity(path.read_bytes()),role=actual['role'],command=command)
+
+
+def controls(proposal,review,sources,bound):
+    results = []
+    def refuse(name,candidate,mapping,expected=None):
+        require(not same(candidate,proposal) or not same(mapping,review),'genuine retention intervention: ' + name)
+        try:
+            semantics(candidate,mapping,sources)
+        except ValueError as error:
+            if expected is not None:
+                require(str(error) == expected,'intended retention refusal: ' + name + ': ' + str(error))
+            else:
+                require(str(error).startswith('retained source proposition and qualifier:') or str(error).startswith('complete finite class frame body phase operand addition:'),
+                        'semantic retention primary loss refusal: ' + name + ': ' + str(error))
+            results.append(dict(control=name,status=1,cause=str(error)))
+        else:
+            raise ValueError('false-green retention loss: ' + name)
+    for path,model in review.items():
+        for fact in model['facts']:
+            candidate = copy.deepcopy(proposal)
+            pattern = re.escape(fact['target']).replace(r'\ ',r'\s+')
+            match = re.search(pattern,candidate[path]['after'])
+            require(match is not None,'genuine source target byte interval: ' + fact['id'])
+            candidate[path]['after'] = candidate[path]['after'][:match.start()] + '[lost source meaning]' + candidate[path]['after'][match.end():]
+            refuse('lost-' + fact['id'],candidate,review)
+        candidate = copy.deepcopy(proposal); question = metadata['metadata'](sources[path])[1][0]
+        candidate[path]['after'] = candidate[path]['after'].replace('  - ' + json.dumps(question) + '\n','',1)
+        refuse('lost-question-' + path,candidate,review,'whole exact identity date tags evidence ordered questions and reverify obligations: ' + path)
+        mapping = copy.deepcopy(review); mapping[path]['facts'].pop()
+        refuse('lost-proposition-row-' + path,proposal,mapping,'complete independently declared source proposition and qualifier census: ' + path)
+        candidate = copy.deepcopy(proposal); candidate[path]['role'] = 'Current publication is complete.'
+        refuse('borrowed-current-scope-' + path,candidate,review,'retention-only current publication boundary: ' + path)
+        if model['addition']:
+            candidate = copy.deepcopy(proposal)
+            phrase = 'source-inferred' if 'source-inferred' in candidate[path]['after'] else 'opaque retained evidence'
+            candidate[path]['after'] = candidate[path]['after'].replace(phrase,'measured native identity',1)
+            refuse('native-promotion-' + path,candidate,review)
+        for qualifier in ('unmeasured','opaque','within-capture','not identity','unchanged','default','not the','same-volume'):
+            header,body = proposal[path]['after'].rsplit('---\n',1)
+            if qualifier not in body:
+                continue
+            candidate = copy.deepcopy(proposal)
+            candidate[path]['after'] = header + '---\n' + body.replace(qualifier,'[lost qualifier]',1)
+            refuse('lost-qualifier-' + qualifier + '-' + path,candidate,review)
+
+    def predicate_refusal(name,candidate,predicate,cause):
+        try:
+            predicate(candidate)
+        except ValueError as error:
+            require(str(error) == cause,'intended complete retention control: ' + name + ': ' + str(error))
+            results.append(dict(control=name,status=1,cause=str(error)))
+        else:
+            raise ValueError('false-green complete retention control: ' + name)
+    for name,mutate,cause in (
+        ('native-custody-promotion',lambda r:r.update(scope='Original native identity measured.'),'complete retention custody revision owner and native scope'),
+        ('lost-completed-owner',lambda r:r['owners'].pop(next(iter(r['owners']))),'whole retention completed-owner and task authority'),
+        ('lost-source-result-member',lambda r:next(iter(r['inputs'].values())).pop(next(iter(next(iter(r['inputs'].values()))))),'whole committed retention model source and actual-result member population'),
+        ('Boolean-source-count',lambda r:next(iter(next(iter(r['inputs'].values())).values())).update(bytes=True),'retention source member discrete byte-count kinds')):
+        changed = copy.deepcopy(bound); mutate(changed)
+        require(not same(changed,bound),'genuine complete retention custody intervention: ' + name)
+        predicate_refusal(name,changed,lambda r:check_binding(r,bound),cause)
+    physical = {p:r for p,r in sources.items() if Path(p).parent == Path('docs/knowledge')}
+    changed = dict(physical); changed.pop(next(iter(changed)))
+    predicate_refusal('lost-physical-source',changed,lambda r:collection(proposal,sources,physical=r),
+                      'whole original physical collection member and source population')
+    changed = dict(physical); path = next(iter(changed)); changed[path] += b'borrowed source\n'
+    predicate_refusal('borrowed-physical-source',changed,lambda r:collection(proposal,sources,physical=r),
+                      'whole original physical collection member and source population')
+    proof = collection(proposal,sources)
+    changed = copy.deepcopy(proof['authority']); changed['transition']['max_growth']['files'] += 1
+    predicate_refusal('widened-collection-allowance',changed,lambda r:collection(proposal,sources,surface=r),
+                      'whole unchanged proposal collection authority')
+    changed = copy.deepcopy(proof['after']); changed['files'] = True
+    predicate_refusal('Boolean-collection-count',changed,lambda r:public['within'](r,proof['authority']),
+                      'physical capacity kind/allowance: files')
+    changed = copy.deepcopy(proof['after']); changed.pop('bytes_total')
+    predicate_refusal('lost-capacity-dimension',changed,lambda r:public['within'](r,proof['authority']),
+                      'complete physical capacity dimensions')
+    candidate = copy.deepcopy(proposal); path = next(iter(candidate)); question = metadata['metadata'](sources[path])[1][0]
+    candidate[path]['after'] = candidate[path]['after'].replace('  - ' + json.dumps(question) + '\n','',1)
+    predicate_refusal('lost-global-question-allocation',candidate,lambda r:collection(r,sources),
+                      'whole global retained question identity path and occurrence allocation')
+    return results
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--prepare',action='store_true'); parser.add_argument('--replay',action='store_true')
+    parser.add_argument('--seal',action='store_true'); parser.add_argument('--live-unchanged',action='store_true')
+    args = parser.parse_args()
+    require(not(args.prepare and (args.replay or args.seal)),'source retention preparation cannot supply actual result or seal')
+    if (BASE / 'manifest.json').exists():
+        require(not args.prepare and not args.replay,'sealed retention cannot recapture')
+        require(same(load(BASE / 'manifest.json'),members()),'whole immutable complete retention manifest')
+    bound = binding(); check_binding(bound,bound); save('binding.json',bound)
+    prepare = construct(); proposal,review = load(BASE / 'proposal.json'),load(BASE / 'retention-map.json')
+    sources = original_sources()
+    save('semantic-proof.json',semantics(proposal,review,sources))
+    save('collection-proof.json',collection(proposal,sources))
+    save('source-authority.json',authority())
+    save('controls.json',controls(proposal,review,sources,bound))
+    save('recovery-proof.json',module(BASE / 'recoveries.py')['check'](globals()))
+    if args.live_unchanged or args.prepare or args.replay:
+        live_unchanged(sources)
+    if args.prepare:
+        print('PASS complete reviewed source proposal, corpus and qualified semantic authority preparation; fresh actual admission and native/result qualification remain required.')
+        return
+    save('admission-proof.json',fresh_admission(args.replay))
+    if not args.replay:
+        book = module(BASE / 'book.py'); save('book-proof.json',book['proof']((BASE / 'book-input.html').read_text()))
+    if args.seal:
+        save('manifest.json',members())
+    print(SUCCESS,end='')
+
+
+if __name__ == '__main__':
+    main()

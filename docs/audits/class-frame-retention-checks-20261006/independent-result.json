@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-retention-checks-20261006/verify_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/verify_seal.py": {
+      "bytes": 9979,
+      "sha256": "e27c6dd197001e0f843c7d6b7a28da97734c9a1bf3d7569e66e59d343c0594f0"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 14858; host 72.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "status-True: refused at actual semantic-retention integer process success\nstatus-0.0: refused at actual semantic-retention integer process success\nstatus-1: refused at actual semantic-retention integer process success\nmember-count-True: refused at actual semantic-retention discrete sealed byte-count kinds\nmember-count-0.0: refused at actual semantic-retention discrete sealed byte-count kinds\nlost-sealed-member: refused at every actual semantic-retention sealed member conserves\nwidened-guard: refused at actual semantic-retention default guard diagnostics\nborrowed-admission-success: refused at exact actual semantic-retention command and complete output role\nborrowed-constructor-success: refused at exact actual semantic-retention command and complete output role\nborrowed-budget-success: refused at exact actual semantic-retention command and complete output role\nPASS independently consumed complete actual semantic retention, regenerated all source/semantic/collection/recovery/native products and qualified typed/member/guard/real borrowed-result refusals.\n"
+}

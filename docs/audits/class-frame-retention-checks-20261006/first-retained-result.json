@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-retention-checks-20261006/retain_first.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/retain_first.py": {
+      "bytes": 1697,
+      "sha256": "3e96ed8562da41d2218a541ec924305d29ae74cbe71ea9b4ce80d7440886aeae"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS exact first programme/proposal/map retained and verified before superseding unsealed products.\n"
+}

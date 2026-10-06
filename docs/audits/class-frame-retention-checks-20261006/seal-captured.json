@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-retention-checks-20261006/capture_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/capture_seal.py": {
+      "bytes": 1239,
+      "sha256": "c2e7b8aaaff9e020f7efcf41dbc17c03128b3d2fae2482016769b958fffdc15d"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS actual complete retention seal bound to every whole root-relative member and original process result.\n"
+}

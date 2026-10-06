@@ -1,0 +1,1028 @@
+{
+  "docs/knowledge/mdbook-build-destination-locality.md": {
+    "addition": null,
+    "addition_authority": "docs/audits/record-value-class-frame-join-20261006/scope.txt",
+    "blocks": [
+      {
+        "ids": [
+          "mdbook-build-destination-locality:0:0",
+          "mdbook-build-destination-locality:0:1",
+          "mdbook-build-destination-locality:0:2"
+        ],
+        "index": 0,
+        "source": "`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` against the\ninvocation working directory, not `docs/book`. Therefore `../../.artifacts/`\nfrom the repository root escapes the repository. The reset-slice publisher\nexposed that mistaken assumption when it could not find fresh local HTML."
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:1:0",
+          "mdbook-build-destination-locality:1:1",
+          "mdbook-build-destination-locality:1:2"
+        ],
+        "index": 1,
+        "source": "Custom-output automation must derive an absolute destination from the current\nrepository root at runtime, check it remains inside the root and on its volume,\nand start with a fresh destination. Persist its repository-relative identity;\nnever change the actual tool argument merely to avoid recording an absolute\npath. Build success alone does not identify the output consumed by validation."
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:2:0",
+          "mdbook-build-destination-locality:2:1",
+          "mdbook-build-destination-locality:2:2",
+          "mdbook-build-destination-locality:2:3",
+          "mdbook-build-destination-locality:2:4",
+          "mdbook-build-destination-locality:2:5"
+        ],
+        "index": 2,
+        "source": "The owning reset slice copied and hash-verified both exact misplaced books,\nconsumed their recovered HTML, deleted only those old roots, and recorded the\nresidue census. The first carrier build had been valid and local; the later\nrelative-destination check reused that earlier render. Its historical receipt\nnow explicitly records the correction. No compiler or HDL test result changes.\nThe tracked probe builds a miniature book from another source directory,\nchecks relative and absolute destinations against the invocation directory,\nrequires fresh marker-bearing HTML and same-volume local paths, then removes\nits owned temporary workspace. The manifest retains the actual recovery."
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:3:0"
+        ],
+        "index": 3,
+        "source": "\n## Native canonical source views"
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:4:0",
+          "mdbook-build-destination-locality:4:1",
+          "mdbook-build-destination-locality:4:2",
+          "mdbook-build-destination-locality:4:3"
+        ],
+        "index": 4,
+        "source": "The selected source-view plane uses relative filesystem links to canonical\nrepository files and native-safe `.source.txt` addresses. A terminal `.md` in\nthe address is encoded as `.markdown`: the initial `.md.source.txt` recipe\nserved a directly requested asset but native rendered clicks were rewritten\nto `.html`. Actual href checks qualify the encoded recipe. Views preserve\ncomplete UTF8 source text; Markdown links inside them remain literal text."
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:5:0",
+          "mdbook-build-destination-locality:5:1",
+          "mdbook-build-destination-locality:5:2",
+          "mdbook-build-destination-locality:5:3",
+          "mdbook-build-destination-locality:5:4"
+        ],
+        "index": 5,
+        "source": "The admitted mdBook0.5.4 prototype serves every selected source and refreshes\na controlled visible source outside the book directory under default native\nserve. Ignored scratch and deliberately parent-ignored visible inputs remain\nstale, including with extra-watch enabled. Source presence and successful\nbuild do not prove watcher admission. The executed factory checks complete\nselection, current source endpoints/bytes and ignore policy; native output\nverification additionally checks every copied source. Published views reflect\ntheir latest book build, without a universal refresh-time or platform promise."
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:6:0",
+          "mdbook-build-destination-locality:6:1",
+          "mdbook-build-destination-locality:6:2",
+          "mdbook-build-destination-locality:6:3",
+          "mdbook-build-destination-locality:6:4"
+        ],
+        "index": 6,
+        "source": "`python3 -B scripts/book_source_references.py --write` regenerates the finite\nmanifest and relative endpoints. `--check` qualifies current sources;\n`--verify-build .artifacts/BOOK_OUTPUT` also checks copied native bytes. The\noriginal destination-locality replay remains required, alongside the recorded\nsource-plane qualifier. Source and asset paths must remain on the repository\nvolume and within this repository. No extra chapter or copied prose is added."
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:7:0"
+        ],
+        "index": 7,
+        "source": "## Historical and current reader roles"
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:8:0",
+          "mdbook-build-destination-locality:8:1",
+          "mdbook-build-destination-locality:8:2"
+        ],
+        "index": 8,
+        "source": "An actual source-qualified helper-card extension obstructed the original\nsource-plane default replay because it invoked the old whole-current helper\nreader. The qualified historical adapter changes only that call to the helper\nreader's existing snapshot mode, conserving every other original predicate,\nprogramme and product. Its command is:"
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:9:0"
+        ],
+        "index": 9,
+        "source": "`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`"
+      },
+      {
+        "ids": [
+          "mdbook-build-destination-locality:10:0",
+          "mdbook-build-destination-locality:10:1",
+          "mdbook-build-destination-locality:10:2",
+          "mdbook-build-destination-locality:10:3"
+        ],
+        "index": 10,
+        "source": "Historical success does not establish current card, query, reader or source\ncurrency. The current publication reader checks complete core/helper/tooling\nmeanings and question ownership, unique book guidance, canonical source-view\nselection/endpoints/bytes/ignore policy, exact current budget and indexed members.\nThe original destination-locality replay remains required. Native copied bytes\nstill need the factory's explicit output check; visual QA remains pending."
+      }
+    ],
+    "facts": [
+      {
+        "block": 0,
+        "id": "mdbook-build-destination-locality:0:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` against the invocation working directory, not `docs/book`.",
+        "target": "`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` from the invocation working directory, not `docs/book`."
+      },
+      {
+        "block": 0,
+        "id": "mdbook-build-destination-locality:0:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Therefore `../../.artifacts/` from the repository root escapes the repository.",
+        "target": "`../../.artifacts/` from the repository root therefore escapes it."
+      },
+      {
+        "block": 0,
+        "id": "mdbook-build-destination-locality:0:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The reset-slice publisher exposed that mistaken assumption when it could not find fresh local HTML.",
+        "target": "The reset publisher exposed this mistaken assumption by failing to find fresh local HTML."
+      },
+      {
+        "block": 1,
+        "id": "mdbook-build-destination-locality:1:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Custom-output automation must derive an absolute destination from the current repository root at runtime, check it remains inside the root and on its volume, and start with a fresh destination.",
+        "target": "Custom builds derive a fresh absolute destination from the current root at runtime and check containment/same-volume locality."
+      },
+      {
+        "block": 1,
+        "id": "mdbook-build-destination-locality:1:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Persist its repository-relative identity; never change the actual tool argument merely to avoid recording an absolute path.",
+        "target": "Persist repository-relative identity; never change the actual argument to avoid recording an absolute path."
+      },
+      {
+        "block": 1,
+        "id": "mdbook-build-destination-locality:1:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Build success alone does not identify the output consumed by validation.",
+        "target": "Build success alone does not identify the validated output."
+      },
+      {
+        "block": 2,
+        "id": "mdbook-build-destination-locality:2:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The owning reset slice copied and hash-verified both exact misplaced books, consumed their recovered HTML, deleted only those old roots, and recorded the residue census.",
+        "target": "The reset slice copied and hash-verified both exact misplaced books, consumed recovered HTML, deleted only those old roots and recorded a residue census."
+      },
+      {
+        "block": 2,
+        "id": "mdbook-build-destination-locality:2:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The first carrier build had been valid and local; the later relative-destination check reused that earlier render.",
+        "target": "The first carrier build was valid/local; the later relative-destination check reused its render."
+      },
+      {
+        "block": 2,
+        "id": "mdbook-build-destination-locality:2:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Its historical receipt now explicitly records the correction.",
+        "target": "Its historical receipt explicitly records this correction."
+      },
+      {
+        "block": 2,
+        "id": "mdbook-build-destination-locality:2:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "No compiler or HDL test result changes.",
+        "target": "No compiler or HDL test result changes."
+      },
+      {
+        "block": 2,
+        "id": "mdbook-build-destination-locality:2:4",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The tracked probe builds a miniature book from another source directory, checks relative and absolute destinations against the invocation directory, requires fresh marker-bearing HTML and same-volume local paths, then removes its owned temporary workspace.",
+        "target": "The tracked miniature-book probe uses another source directory, checks relative/absolute destinations against the invocation directory, requires fresh marker-bearing HTML and same-volume local paths, then removes its owned workspace."
+      },
+      {
+        "block": 2,
+        "id": "mdbook-build-destination-locality:2:5",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The manifest retains the actual recovery.",
+        "target": "The manifest retains the actual recovery."
+      },
+      {
+        "block": 3,
+        "id": "mdbook-build-destination-locality:3:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "## Native canonical source views",
+        "target": "## Native canonical source views"
+      },
+      {
+        "block": 4,
+        "id": "mdbook-build-destination-locality:4:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The selected source-view plane uses relative filesystem links to canonical repository files and native-safe `.source.txt` addresses.",
+        "target": "Relative filesystem links connect canonical repository files to native-safe `.source.txt` views."
+      },
+      {
+        "block": 4,
+        "id": "mdbook-build-destination-locality:4:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "A terminal `.md` in the address is encoded as `.markdown`: the initial `.md.source.txt` recipe served a directly requested asset but native rendered clicks were rewritten to `.html`.",
+        "target": "Native clicks rewrote `.md.source.txt` to `.html` despite valid direct requests; encode terminal `.md` as `.markdown`."
+      },
+      {
+        "block": 4,
+        "id": "mdbook-build-destination-locality:4:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Actual href checks qualify the encoded recipe.",
+        "target": "Actual href checks qualify encoding."
+      },
+      {
+        "block": 4,
+        "id": "mdbook-build-destination-locality:4:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Views preserve complete UTF8 source text; Markdown links inside them remain literal text.",
+        "target": "Views preserve complete UTF8 source with literal Markdown links."
+      },
+      {
+        "block": 5,
+        "id": "mdbook-build-destination-locality:5:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The admitted mdBook0.5.4 prototype serves every selected source and refreshes a controlled visible source outside the book directory under default native serve.",
+        "target": "Admitted mdBook0.5.4 serves every selected source; default native serve refreshes a controlled visible source outside the book directory."
+      },
+      {
+        "block": 5,
+        "id": "mdbook-build-destination-locality:5:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Ignored scratch and deliberately parent-ignored visible inputs remain stale, including with extra-watch enabled.",
+        "target": "Ignored scratch/parent-ignored visible inputs stay stale, even with extra-watch enabled."
+      },
+      {
+        "block": 5,
+        "id": "mdbook-build-destination-locality:5:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Source presence and successful build do not prove watcher admission.",
+        "target": "Presence/build success do not prove watcher admission."
+      },
+      {
+        "block": 5,
+        "id": "mdbook-build-destination-locality:5:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The executed factory checks complete selection, current source endpoints/bytes and ignore policy; native output verification additionally checks every copied source.",
+        "target": "Executed factory checks complete selection, current endpoints/bytes/ignore policy; native verification checks every copied source."
+      },
+      {
+        "block": 5,
+        "id": "mdbook-build-destination-locality:5:4",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Published views reflect their latest book build, without a universal refresh-time or platform promise.",
+        "target": "Views reflect their latest book build; no universal refresh-time/platform promise applies."
+      },
+      {
+        "block": 6,
+        "id": "mdbook-build-destination-locality:6:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "`python3 -B scripts/book_source_references.py --write` regenerates the finite manifest and relative endpoints.",
+        "target": "`python3 -B scripts/book_source_references.py --write` regenerates finite manifest/relative endpoints."
+      },
+      {
+        "block": 6,
+        "id": "mdbook-build-destination-locality:6:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "`--check` qualifies current sources; `--verify-build .artifacts/BOOK_OUTPUT` also checks copied native bytes.",
+        "target": "`--check` qualifies current sources; `--verify-build .artifacts/BOOK_OUTPUT` also checks copied native bytes."
+      },
+      {
+        "block": 6,
+        "id": "mdbook-build-destination-locality:6:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The original destination-locality replay remains required, alongside the recorded source-plane qualifier.",
+        "target": "Original destination-locality replay and recorded source-plane qualification remain required."
+      },
+      {
+        "block": 6,
+        "id": "mdbook-build-destination-locality:6:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Source and asset paths must remain on the repository volume and within this repository.",
+        "target": "Source/asset paths must stay inside this repository on its volume."
+      },
+      {
+        "block": 6,
+        "id": "mdbook-build-destination-locality:6:4",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "No extra chapter or copied prose is added.",
+        "target": "No extra chapter/copied prose is added."
+      },
+      {
+        "block": 7,
+        "id": "mdbook-build-destination-locality:7:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "## Historical and current reader roles",
+        "target": "## Historical and current reader roles"
+      },
+      {
+        "block": 8,
+        "id": "mdbook-build-destination-locality:8:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "An actual source-qualified helper-card extension obstructed the original source-plane default replay because it invoked the old whole-current helper reader.",
+        "target": "A source-qualified helper-card extension obstructed original source-plane default\u2019s old whole-current helper call."
+      },
+      {
+        "block": 8,
+        "id": "mdbook-build-destination-locality:8:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The qualified historical adapter changes only that call to the helper reader's existing snapshot mode, conserving every other original predicate, programme and product.",
+        "target": "The qualified historical adapter changes only that call to existing helper snapshot mode; every other original predicate/programme/product conserves."
+      },
+      {
+        "block": 8,
+        "id": "mdbook-build-destination-locality:8:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Its command is:",
+        "target": "Its command is:"
+      },
+      {
+        "block": 9,
+        "id": "mdbook-build-destination-locality:9:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`",
+        "target": "`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`"
+      },
+      {
+        "block": 10,
+        "id": "mdbook-build-destination-locality:10:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Historical success does not establish current card, query, reader or source currency.",
+        "target": "Historical success does not establish current card/query/reader/source currency."
+      },
+      {
+        "block": 10,
+        "id": "mdbook-build-destination-locality:10:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The current publication reader checks complete core/helper/tooling meanings and question ownership, unique book guidance, canonical source-view selection/endpoints/bytes/ignore policy, exact current budget and indexed members.",
+        "target": "Current publication checks complete core/helper/tooling meanings/question ownership, unique book guidance, canonical selection/endpoints/bytes/ignore policy, exact current budget and indexed members."
+      },
+      {
+        "block": 10,
+        "id": "mdbook-build-destination-locality:10:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The original destination-locality replay remains required.",
+        "target": "Original destination-locality replay remains required."
+      },
+      {
+        "block": 10,
+        "id": "mdbook-build-destination-locality:10:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Native copied bytes still need the factory's explicit output check; visual QA remains pending.",
+        "target": "Explicit factory output checks remain required for native copied bytes; visual QA stays pending."
+      }
+    ],
+    "metadata": "Complete original front matter, ordered questions, identities, dates, tags, evidence and reverify commands remain exact; routes/date/evidence additions belong to atomic publication.",
+    "semantic_review": "This complete sentence/clause map records engineer equivalence judgments. Mechanical source coverage and target/loss checks do not decide unrestricted natural-language equivalence."
+  },
+  "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+    "addition": "Every original nonempty error joins source-inferred class/guard family to complete own/public phase/function/visible-argument roles; empty allocations, contexts and opaque raw bytes conserve. Nested Metadata and new outer Value keep separate class/phase roles, conserving the entire inner operand through catch/interpolation/new throw. Source associations precede new raw intake. Native/private/formatter/encoding/hidden-argument/identity/coordinate/address meanings stay unmeasured or separately owned.",
+    "addition_authority": "docs/audits/record-value-class-frame-join-20261006/scope.txt",
+    "blocks": [
+      {
+        "ids": [
+          "record-value-finite-copy-probe-reader:0:0",
+          "record-value-finite-copy-probe-reader:0:1"
+        ],
+        "index": 0,
+        "source": "Separate models qualify whole typed graph bijections, reachable reference counts,\ninput/result sharing, readonly, kinds, cycles and detachment for the plain profile.\nGenuine Storable/alias/split-sharing/cycle-alias/input-kind/result-kind providers\nreach intended assertions; non-target records conserve."
+      },
+      {
+        "ids": [
+          "record-value-finite-copy-probe-reader:1:0",
+          "record-value-finite-copy-probe-reader:1:1",
+          "record-value-finite-copy-probe-reader:1:2"
+        ],
+        "index": 1,
+        "source": "Native refusal records preserve whole causes, class, HASH shape and within-capture\nidentity for both observed empty blessed classes. Native-class copying and\nstructured-clone cycle support remain unqualified. Graph/cause/identity and whole\nprogramme mutations reject."
+      },
+      {
+        "ids": [
+          "record-value-finite-copy-probe-reader:2:0",
+          "record-value-finite-copy-probe-reader:2:1",
+          "record-value-finite-copy-probe-reader:2:2",
+          "record-value-finite-copy-probe-reader:2:3",
+          "record-value-finite-copy-probe-reader:2:4",
+          "record-value-finite-copy-probe-reader:2:5",
+          "record-value-finite-copy-probe-reader:2:6",
+          "record-value-finite-copy-probe-reader:2:7",
+          "record-value-finite-copy-probe-reader:2:8",
+          "record-value-finite-copy-probe-reader:2:9",
+          "record-value-finite-copy-probe-reader:2:10",
+          "record-value-finite-copy-probe-reader:2:11",
+          "record-value-finite-copy-probe-reader:2:12",
+          "record-value-finite-copy-probe-reader:2:13",
+          "record-value-finite-copy-probe-reader:2:14",
+          "record-value-finite-copy-probe-reader:2:15",
+          "record-value-finite-copy-probe-reader:2:16",
+          "record-value-finite-copy-probe-reader:2:17",
+          "record-value-finite-copy-probe-reader:2:18",
+          "record-value-finite-copy-probe-reader:2:19",
+          "record-value-finite-copy-probe-reader:2:20",
+          "record-value-finite-copy-probe-reader:2:21",
+          "record-value-finite-copy-probe-reader:2:22",
+          "record-value-finite-copy-probe-reader:2:23",
+          "record-value-finite-copy-probe-reader:2:24"
+        ],
+        "index": 2,
+        "source": "Fresh same-volume replay uses pinned sources and retains all native records\nand both streams. Addresses have per-capture lifetimes; sealed producers run\nelsewhere. The finite join authenticates completed owners and fresh products.\nOriginal captures retain unchanged-input Storable/alias trials and the full\nalias run\u2019s downstream mutation/abort. Independent typed models qualify\noriginal copy graphs, genuine trials, readonly and detachment. Whole API/parser\nresults match source models; private-source allocations conserve. Independently\nmodeled copy interventions rebuild full input/private typed graphs, readonly\ncopies and detached outputs. The known private range sibling changes string\nwidth2 to number2; its outer caller stays unchanged through a detached private copy.\nEvery copied width joins the full raw type, carrier/default/metadata roles,\nancestor context and compatible-source set. The input/private join qualifies\nwhole graph/field/source/context/raw-kind/detachment meanings for the captured\nmodes. Finite source-context models qualify helper/consumer/parser locations,\ncomplete parser texts and operation spans, separately from cause/operand truth.\nIndependent primary models derive each API/helper/parser first cause and\nacceptance from qualified source inputs.\nRaw bodies and lossless grammar qualify. Source/publisher contracts infer\nunblessed scalar errors for this finite capture; original classes were unmeasured.\nPOD4.05 is stale; runtime JSON::PP4.06 owns version identity. Direct Value models\nbind active order and source roles to visible type/scalar footprints. Metadata\nguard/record-recursion paths qualify, including cycles; list recursion is bound\nbut unexercised. Nested Scope/capture/private-root inputs bind the entire\nsource-constructed interface graph, preserving kinds, sharing and cycles.\nWhole inner scalar forwarding now conserves the new outer prefix. Public die\ncontrols distinguish explicit rethrow, propagation and hook replacement. Original\nhook state/provider bytes stay unmeasured. Source models join nested Value and\ncapture/Scope eval/wrapper paths and visible operand roles. The complete own API\njoin partitions every refusal into source guard/function/visible-role models. Own observer and helper source meanings are canonical in the\n[observer/helper path card](record-value-original-observer-helper-paths.md).\nFull observer/display/frame/coordinate/address, consumer, alias/semantic/cold/\ncandidate-parent, hot and host-native meanings remain open."
+      },
+      {
+        "ids": [
+          "record-value-finite-copy-probe-reader:3:0"
+        ],
+        "index": 3,
+        "source": "Reverify runs the complete source chain and separate probe replay."
+      }
+    ],
+    "facts": [
+      {
+        "block": 0,
+        "id": "record-value-finite-copy-probe-reader:0:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Separate models qualify whole typed graph bijections, reachable reference counts, input/result sharing, readonly, kinds, cycles and detachment for the plain profile.",
+        "target": "Separate plain-profile models qualify whole typed graph bijections, reachable reference counts, input/result sharing, readonly, kinds, cycles and detachment."
+      },
+      {
+        "block": 0,
+        "id": "record-value-finite-copy-probe-reader:0:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Genuine Storable/alias/split-sharing/cycle-alias/input-kind/result-kind providers reach intended assertions; non-target records conserve.",
+        "target": "Genuine Storable/alias/split-sharing/cycle-alias/input-kind/result-kind providers reach intended assertions; non-target records conserve."
+      },
+      {
+        "block": 1,
+        "id": "record-value-finite-copy-probe-reader:1:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Native refusal records preserve whole causes, class, HASH shape and within-capture identity for both observed empty blessed classes.",
+        "target": "Native refusals preserve whole causes, class, HASH shape and within-capture identity for both observed empty blessed classes."
+      },
+      {
+        "block": 1,
+        "id": "record-value-finite-copy-probe-reader:1:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Native-class copying and structured-clone cycle support remain unqualified.",
+        "target": "Native-class copying and structured-clone cycle support remain unqualified."
+      },
+      {
+        "block": 1,
+        "id": "record-value-finite-copy-probe-reader:1:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Graph/cause/identity and whole programme mutations reject.",
+        "target": "Graph/cause/identity and whole programme mutations reject."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Fresh same-volume replay uses pinned sources and retains all native records and both streams.",
+        "target": "Fresh same-volume replay pins sources and retains all native records and both streams."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Addresses have per-capture lifetimes; sealed producers run elsewhere.",
+        "target": "Addresses have per-capture lifetimes; sealed producers run elsewhere."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The finite join authenticates completed owners and fresh products.",
+        "target": "The finite join authenticates completed owners and fresh products."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Original captures retain unchanged-input Storable/alias trials and the full alias run\u2019s downstream mutation/abort.",
+        "target": "Original Storable/alias trials retain unchanged inputs and the full alias run\u2019s downstream mutation/abort."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:4",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Independent typed models qualify original copy graphs, genuine trials, readonly and detachment.",
+        "target": "Independent typed models qualify original copy graphs, genuine trials, readonly and detachment."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:5",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Whole API/parser results match source models; private-source allocations conserve.",
+        "target": "Whole API/parser results match source models; private-source allocations conserve."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:6",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Independently modeled copy interventions rebuild full input/private typed graphs, readonly copies and detached outputs.",
+        "target": "Copy-intervention models independently rebuild full input/private typed graphs, readonly copies and detached outputs."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:7",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The known private range sibling changes string width2 to number2; its outer caller stays unchanged through a detached private copy.",
+        "target": "The private range sibling changes string width2 to number2; its outer caller stays unchanged through a detached private copy."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:8",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Every copied width joins the full raw type, carrier/default/metadata roles, ancestor context and compatible-source set.",
+        "target": "Every copied width joins full raw type, carrier/default/metadata roles, ancestor context and compatible sources."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:9",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The input/private join qualifies whole graph/field/source/context/raw-kind/detachment meanings for the captured modes.",
+        "target": "Input/private joins qualify captured modes\u2019 whole graph/field/source/context/raw-kind/detachment meanings."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:10",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Finite source-context models qualify helper/consumer/parser locations, complete parser texts and operation spans, separately from cause/operand truth.",
+        "target": "Finite context models qualify helper/consumer/parser locations, complete parser texts and operation spans separately from cause/operand truth."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:11",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Independent primary models derive each API/helper/parser first cause and acceptance from qualified source inputs.",
+        "target": "Each API/helper/parser first cause and acceptance derives independently from qualified source inputs."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:12",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Raw bodies and lossless grammar qualify.",
+        "target": "Raw bodies and lossless grammar qualify."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:13",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Source/publisher contracts infer unblessed scalar errors for this finite capture; original classes were unmeasured.",
+        "target": "Source/publisher contracts infer unblessed scalar errors for this finite capture; original classes were unmeasured."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:14",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "POD4.05 is stale; runtime JSON::PP4.06 owns version identity.",
+        "target": "POD4.05 is stale; runtime JSON::PP4.06 owns version identity."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:15",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Direct Value models bind active order and source roles to visible type/scalar footprints.",
+        "target": "Direct Value active-order/source-role models bind visible type/scalar footprints."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:16",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Metadata guard/record-recursion paths qualify, including cycles; list recursion is bound but unexercised.",
+        "target": "Metadata guards/record recursion, including cycles, qualify; list recursion is bound, unexercised."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:17",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Nested Scope/capture/private-root inputs bind the entire source-constructed interface graph, preserving kinds, sharing and cycles.",
+        "target": "Nested Scope/capture/private-root inputs bind the whole source-built interface graph\u2019s kinds/sharing/cycles."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:18",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Whole inner scalar forwarding now conserves the new outer prefix.",
+        "target": "Whole inner scalar forwarding conserves the new outer prefix."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:19",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Public die controls distinguish explicit rethrow, propagation and hook replacement.",
+        "target": "Public die controls distinguish explicit rethrow, propagation and hook replacement."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:20",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Original hook state/provider bytes stay unmeasured.",
+        "target": "Original hook state/provider bytes stay unmeasured."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:21",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Source models join nested Value and capture/Scope eval/wrapper paths and visible operand roles.",
+        "target": "Source models join nested Value/capture/Scope eval/wrapper paths and visible operand roles."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:22",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The complete own API join partitions every refusal into source guard/function/visible-role models.",
+        "target": "Every own API refusal partitions into source guard/function/visible-role models."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:23",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Own observer and helper source meanings are canonical in the [observer/helper path card](record-value-original-observer-helper-paths.md).",
+        "target": "[Observer/helper source meanings](record-value-original-observer-helper-paths.md) are canonical."
+      },
+      {
+        "block": 2,
+        "id": "record-value-finite-copy-probe-reader:2:24",
+        "refinement": "Finite own/public source class/frame association refines only the corresponding prior open scope; original native/private/display/formatter/coordinate/address and broader owners remain open.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/candidate-parent, hot and host-native meanings remain open.",
+        "target": "Full observer/display/private-frame/coordinate/address, consumer, alias/semantic/cold/candidate-parent, hot/host-native meanings stay open."
+      },
+      {
+        "block": 3,
+        "id": "record-value-finite-copy-probe-reader:3:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Reverify runs the complete source chain and separate probe replay.",
+        "target": "Complete source-chain and separate probe replay remain required."
+      }
+    ],
+    "metadata": "Complete original front matter, ordered questions, identities, dates, tags, evidence and reverify commands remain exact; routes/date/evidence additions belong to atomic publication.",
+    "semantic_review": "This complete sentence/clause map records engineer equivalence judgments. Mechanical source coverage and target/loss checks do not decide unrestricted natural-language equivalence."
+  },
+  "docs/knowledge/record-value-original-observer-helper-paths.md": {
+    "addition": "This finite source-class/frame join binds every operation/helper/authored-body/public/entry/load and visible operand role at each original throw phase. Inherited inner operands stay opaque retained evidence, not formatter/coordinate/address oracles. Class/family/phase/order/argument/population/native-promotion controls preserve predecessor meanings; opaque inner-frame byte changes pass prior own/public predicates but break whole forwarding.",
+    "addition_authority": "docs/audits/record-value-class-frame-join-20261006/scope.txt",
+    "blocks": [
+      {
+        "ids": [
+          "record-value-original-observer-helper-paths:0:0",
+          "record-value-original-observer-helper-paths:0:1",
+          "record-value-original-observer-helper-paths:0:2",
+          "record-value-original-observer-helper-paths:0:3",
+          "record-value-original-observer-helper-paths:0:4",
+          "record-value-original-observer-helper-paths:0:5",
+          "record-value-original-observer-helper-paths:0:6",
+          "record-value-original-observer-helper-paths:0:7",
+          "record-value-original-observer-helper-paths:0:8"
+        ],
+        "index": 0,
+        "source": "Own observer/callback source roles/bodies/allocations inventory.\nObserver models join every API/parser operation, eval and installed wrapper with\nsource argument roles. The parser receiver role is declared; identity is unmeasured.\nNamed helpers preserve complete source graphs and active paths.\nCompiled callback/refuses/helper-wrapper paths bind parameterless operation,\nsource regex-body and label displays; identity and full formatting remain open.\nSource join binds every helper allocation, full supplied/default\ninputs, returned argument-building operations and compiled callback/refusal paths\nthrough both nested throw phases. Source models construct the intended join\nbefore comparing recorded contiguous function order and visible argument roles.\nReturned helpers are separate from active frames. Complete model/allocation/\nphase/member/order/operand corruptions reject."
+      },
+      {
+        "ids": [
+          "record-value-original-observer-helper-paths:1:0",
+          "record-value-original-observer-helper-paths:1:1",
+          "record-value-original-observer-helper-paths:1:2"
+        ],
+        "index": 1,
+        "source": "Full observer/display/frame/class-frame/raw-coordinate/address, subtest/load,\nframework/quoting/truncation and parser-internal meanings stay open.\nOriginal provider/hook/class measurements and callback/regex/object/native\nidentity stay unmeasured. Consumer, alias, complete semantic/cold/\ncandidate-parent and permanent/hot/host-native repairs stay open; visual\nmdBook QA is pending."
+      },
+      {
+        "ids": [
+          "record-value-original-observer-helper-paths:2:0"
+        ],
+        "index": 2,
+        "source": "Related: [[record-value-finite-copy-probe-reader]]."
+      },
+      {
+        "ids": [
+          "record-value-original-observer-helper-paths:3:0"
+        ],
+        "index": 3,
+        "source": "## Qualified own subtest and do-load source boundaries"
+      },
+      {
+        "ids": [
+          "record-value-original-observer-helper-paths:4:0",
+          "record-value-original-observer-helper-paths:4:1",
+          "record-value-original-observer-helper-paths:4:2",
+          "record-value-original-observer-helper-paths:4:3",
+          "record-value-original-observer-helper-paths:4:4",
+          "record-value-original-observer-helper-paths:4:5"
+        ],
+        "index": 4,
+        "source": "The complete own source model assigns every original refusal to its authored\nnamed subtest body. The observer saves the public Test::More subtest delegate,\nreceives the name/body/extra arguments, wraps the callback with the\ncompiled-helper observer, forwards the callback arguments to the original body\nand forwards extra arguments to the saved delegate. Authored original subtests\nsupply no extra arguments. Recorded throw-phase headers agree with the modeled\nbody and own observer callback's empty visible argument lists and with the\npublic delegate/own entry's authored name and CODE reference kind. The reference\nkind does not establish actual callback identity. External framework frames\nbetween those own roles are retained as opaque observations."
+      },
+      {
+        "ids": [
+          "record-value-original-observer-helper-paths:5:0",
+          "record-value-original-observer-helper-paths:5:1",
+          "record-value-original-observer-helper-paths:5:2",
+          "record-value-original-observer-helper-paths:5:3",
+          "record-value-original-observer-helper-paths:5:4"
+        ],
+        "index": 5,
+        "source": "The observer's original test load is an explicit do\n'./t/1986-isf-record-port-value-gates.t', followed by captures of $@, $! and\ndefined($ok). Recorded diagnostic frames contain a require marker with that\nexact file identifier. This marker agrees with the file role; it does not change\nthe source operator to require or establish the formatter. Necessary installed\npublic POD documents named subtest callbacks and extra arguments, do-file\nreturn/error semantics and require's do-file loading mechanism. The captured\ncurrent Perl/Test::More profile is current public-interface evidence; the\noriginal framework version remains unmeasured."
+      },
+      {
+        "ids": [
+          "record-value-original-observer-helper-paths:6:0",
+          "record-value-original-observer-helper-paths:6:1",
+          "record-value-original-observer-helper-paths:6:2",
+          "record-value-original-observer-helper-paths:6:3"
+        ],
+        "index": 6,
+        "source": "Original Test::Builder/Test::More headers match authored-name prefixes/CODE\nkinds and body/delegate/entry/do-load order at every throw phase. Independent\ndated public fixtures select them. Receiver tokens/private eval intervals stay\nopaque. Wrong name/kind/population/order rejects."
+      }
+    ],
+    "facts": [
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Own observer/callback source roles/bodies/allocations inventory.",
+        "target": "Own observer/callback source roles/bodies/allocations inventory."
+      },
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Observer models join every API/parser operation, eval and installed wrapper with source argument roles.",
+        "target": "Observer models join every API/parser operation/eval/installed wrapper and source argument roles."
+      },
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The parser receiver role is declared; identity is unmeasured.",
+        "target": "The parser receiver role is declared; identity is unmeasured."
+      },
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Named helpers preserve complete source graphs and active paths.",
+        "target": "Named helpers preserve complete source graphs/active paths."
+      },
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:4",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Compiled callback/refuses/helper-wrapper paths bind parameterless operation, source regex-body and label displays; identity and full formatting remain open.",
+        "target": "Compiled callback/refuses/helper-wrapper paths bind parameterless operation and source regex-body/label displays; identity/full formatting stay open."
+      },
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:5",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Source join binds every helper allocation, full supplied/default inputs, returned argument-building operations and compiled callback/refusal paths through both nested throw phases.",
+        "target": "Every helper allocation\u2019s full supplied/default inputs, returned argument-building operations and compiled callback/refusal paths join through both nested throw phases."
+      },
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:6",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Source models construct the intended join before comparing recorded contiguous function order and visible argument roles.",
+        "target": "Source derivation precedes comparison of recorded contiguous function order and visible argument roles."
+      },
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:7",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Returned helpers are separate from active frames.",
+        "target": "Returned helpers are separate from active frames."
+      },
+      {
+        "block": 0,
+        "id": "record-value-original-observer-helper-paths:0:8",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Complete model/allocation/phase/member/order/operand corruptions reject.",
+        "target": "Complete model/allocation/phase/member/order/operand corruptions reject."
+      },
+      {
+        "block": 1,
+        "id": "record-value-original-observer-helper-paths:1:0",
+        "refinement": "Finite own/public source class/frame association refines only the corresponding prior open scope; original native/private/display/formatter/coordinate/address and broader owners remain open.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Full observer/display/frame/class-frame/raw-coordinate/address, subtest/load, framework/quoting/truncation and parser-internal meanings stay open.",
+        "target": "Full observer/display/private-frame/native-class/raw-coordinate/address, subtest/load/framework/quoting/truncation and parser-internal meanings stay open."
+      },
+      {
+        "block": 1,
+        "id": "record-value-original-observer-helper-paths:1:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Original provider/hook/class measurements and callback/regex/object/native identity stay unmeasured.",
+        "target": "Original provider/hook/class measurements and callback/regex/object/native identity stay unmeasured."
+      },
+      {
+        "block": 1,
+        "id": "record-value-original-observer-helper-paths:1:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Consumer, alias, complete semantic/cold/candidate-parent and permanent/hot/host-native repairs stay open; visual mdBook QA is pending.",
+        "target": "Consumer, alias, complete semantic/cold/candidate-parent and permanent/hot/host-native repairs stay open; visual mdBook QA is pending."
+      },
+      {
+        "block": 2,
+        "id": "record-value-original-observer-helper-paths:2:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Related: [[record-value-finite-copy-probe-reader]].",
+        "target": "Related: [[record-value-finite-copy-probe-reader]]."
+      },
+      {
+        "block": 3,
+        "id": "record-value-original-observer-helper-paths:3:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "## Qualified own subtest and do-load source boundaries",
+        "target": "## Qualified own subtest and do-load source boundaries"
+      },
+      {
+        "block": 4,
+        "id": "record-value-original-observer-helper-paths:4:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The complete own source model assigns every original refusal to its authored named subtest body.",
+        "target": "Complete own source models assign every original refusal to its authored named subtest body."
+      },
+      {
+        "block": 4,
+        "id": "record-value-original-observer-helper-paths:4:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The observer saves the public Test::More subtest delegate, receives the name/body/extra arguments, wraps the callback with the compiled-helper observer, forwards the callback arguments to the original body and forwards extra arguments to the saved delegate.",
+        "target": "The observer saves the public Test::More subtest delegate, receives name/body/extras, wraps the callback with the compiled-helper observer, then forwards callback arguments to the original body and extras to the saved delegate."
+      },
+      {
+        "block": 4,
+        "id": "record-value-original-observer-helper-paths:4:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Authored original subtests supply no extra arguments.",
+        "target": "Authored original subtests supply no extras."
+      },
+      {
+        "block": 4,
+        "id": "record-value-original-observer-helper-paths:4:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Recorded throw-phase headers agree with the modeled body and own observer callback's empty visible argument lists and with the public delegate/own entry's authored name and CODE reference kind.",
+        "target": "Every recorded throw-phase header agrees with empty visible body/own-observer-callback arguments and authored name/CODE reference kind at public delegate/own entry."
+      },
+      {
+        "block": 4,
+        "id": "record-value-original-observer-helper-paths:4:4",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The reference kind does not establish actual callback identity.",
+        "target": "Reference kind does not prove actual callback identity."
+      },
+      {
+        "block": 4,
+        "id": "record-value-original-observer-helper-paths:4:5",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "External framework frames between those own roles are retained as opaque observations.",
+        "target": "External frames between own roles stay opaque observations."
+      },
+      {
+        "block": 5,
+        "id": "record-value-original-observer-helper-paths:5:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The observer's original test load is an explicit do './t/1986-isf-record-port-value-gates.t', followed by captures of $@, $! and defined($ok).",
+        "target": "The original observer explicitly loads with do './t/1986-isf-record-port-value-gates.t', then captures $@, $! and defined($ok)."
+      },
+      {
+        "block": 5,
+        "id": "record-value-original-observer-helper-paths:5:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Recorded diagnostic frames contain a require marker with that exact file identifier.",
+        "target": "Recorded diagnostic frames display a require marker for that exact file identifier."
+      },
+      {
+        "block": 5,
+        "id": "record-value-original-observer-helper-paths:5:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "This marker agrees with the file role; it does not change the source operator to require or establish the formatter.",
+        "target": "The file marker neither changes the source do operator to require nor proves the formatter."
+      },
+      {
+        "block": 5,
+        "id": "record-value-original-observer-helper-paths:5:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Necessary installed public POD documents named subtest callbacks and extra arguments, do-file return/error semantics and require's do-file loading mechanism.",
+        "target": "Installed public POD documents named subtest callbacks/extras, do-file returns/errors and require's do-file loading mechanism."
+      },
+      {
+        "block": 5,
+        "id": "record-value-original-observer-helper-paths:5:4",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "The captured current Perl/Test::More profile is current public-interface evidence; the original framework version remains unmeasured.",
+        "target": "Captured current Perl/Test::More profile is public-interface evidence; original framework version stays unmeasured."
+      },
+      {
+        "block": 6,
+        "id": "record-value-original-observer-helper-paths:6:0",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Original Test::Builder/Test::More headers match authored-name prefixes/CODE kinds and body/delegate/entry/do-load order at every throw phase.",
+        "target": "Every original Test::Builder/Test::More throw-phase header matches authored-name prefixes/CODE kinds and body/delegate/entry/do-load order."
+      },
+      {
+        "block": 6,
+        "id": "record-value-original-observer-helper-paths:6:1",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Independent dated public fixtures select them.",
+        "target": "Independent dated public fixtures select them."
+      },
+      {
+        "block": 6,
+        "id": "record-value-original-observer-helper-paths:6:2",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Receiver tokens/private eval intervals stay opaque.",
+        "target": "Receiver tokens/private eval intervals stay opaque."
+      },
+      {
+        "block": 6,
+        "id": "record-value-original-observer-helper-paths:6:3",
+        "refinement": "None; source proposition retained.",
+        "review": "Engineer reviewed every clause: named roles, full populations, exact literals, qualification scopes, negative boundaries and replay obligations retain. Wrapping and redundant narration compact.",
+        "source": "Wrong name/kind/population/order rejects.",
+        "target": "Wrong name/kind/population/order rejects."
+      }
+    ],
+    "metadata": "Complete original front matter, ordered questions, identities, dates, tags, evidence and reverify commands remain exact; routes/date/evidence additions belong to atomic publication.",
+    "semantic_review": "This complete sentence/clause map records engineer equivalence judgments. Mechanical source coverage and target/loss checks do not decide unrestricted natural-language equivalence."
+  }
+}

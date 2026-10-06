@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.3.2` (pending)
-- next_action: Activate semantic retention .6.3.2 from the clean admission commit; model every prior core/observer/tooling proposition, qualifier and question, bind complete qualified class/frame additions, and prove non-growing retention under unchanged collection authority before atomic publication.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.3.3` (pending)
+- next_action: Activate atomic current publication .6.3.3 from the clean retention commit; authenticate complete admission/retention roots, publish every retained/additional qualified fact and all affected reader routes together under unchanged collection authority, then qualify current/native/snapshot roles.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
-- in_flight_background: none; resume pending semantic retention from committed complete publication admission.
+- in_flight_background: none; resume pending atomic current publication from committed complete semantic retention.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; .6.3 must preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
   Historical startup/parent qualification and full CI/push remain gated; director-directed cadence deferral is owned by SEM .69.2, eventual qualified push by .69.3. Visual mdBook QA remains pending.

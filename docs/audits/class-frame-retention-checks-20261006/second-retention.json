@@ -1,0 +1,37 @@
+{
+  "members": {
+    "docs/audits/class-frame-retention-checks-20261006/second-prepare.py.txt": {
+      "bytes": 25596,
+      "sha256": "16bad59122d7c629e503ec926a0b11ae584918bd7a485094f606654a46c920fc"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/second-proposal.json": {
+      "bytes": 31226,
+      "sha256": "06610fe3d64640a730856d9705efc8abc8e724b53cd8f8f5c5757f68f83353de"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/second-retention-map.json": {
+      "bytes": 79291,
+      "sha256": "8cdf064ac0992e584f2ada5239bcd66a67f401e24ac28ae671afee769f1e3618"
+    }
+  },
+  "role": "Exact second unsealed draft and invocation programme retained before supersession; no original/live source is altered.",
+  "second_budget": {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/class-frame-retention-checks-20261006/check_budget.py"
+    ],
+    "instruments": {
+      "docs/audits/class-frame-retention-checks-20261006/check_budget.py": {
+        "bytes": 1114,
+        "sha256": "f35a9a5e95ffe288072fe73be1e4d585e398a09f2120f5ec7a8c430cac6e1830"
+      },
+      "docs/audits/class-frame-retention-checks-20261006/run.py": {
+        "bytes": 1122,
+        "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+      }
+    },
+    "status": 1,
+    "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/class-frame-retention-checks-20261006/check_budget.py\", line 17, in <module>\n    assert b['files'] == a['files'] and b['bytes'] <= a['bytes'] and b['LF'] <= a['LF'], 'complete retention proposal must not grow bytes or LF'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: complete retention proposal must not grow bytes or LF\n",
+    "stdout": "{\"before\": {\"LF\": 240, \"bytes\": 14898, \"files\": 3}, \"delta\": {\"LF\": 7, \"bytes\": -27, \"files\": 0}, \"proposal\": {\"LF\": 247, \"bytes\": 14871, \"files\": 3}}\n"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-retention-checks-20261006/build_native.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/build_native.py": {
+      "bytes": 1753,
+      "sha256": "56adfd7c497d3b23d35f78b0c248622c1b77e640f2b0262a2d1c104d2d59a32d"
+    },
+    "docs/audits/class-frame-retention-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 62781; host 71.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/class-frame-retention-checks-20261006/build_native.py\", line 29, in <module>\n    assert len(records) == len(phases) and all(type(r['status']) is int and r['status'] == 0 for r in records)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15267780 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/class-frame-retention-book`\nbook-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\nbook-source-index: complete indexed directory and checked source projection agree\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/class-frame-retention-checks-20261006/native_guide.py\", line 9, in <module>\n    ns['proof'](raw.decode())\n    ~~~~~~~~~~~^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-class-frame-retention-20261006/book.py\", line 76, in proof\n    check(html)\n    ~~~~~^^^^^^\n  File \"docs/audits/record-value-class-frame-retention-20261006/book.py\", line 72, in check\n    raise ValueError('native complete semantic-retention scope and retained gaps')\nValueError: native complete semantic-retention scope and retained gaps\n"
+}

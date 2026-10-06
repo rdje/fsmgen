@@ -1,0 +1,87 @@
+{
+  "destination": ".artifacts/class-frame-retention-book",
+  "phases": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--write"
+      ],
+      "instruments": {
+        "scripts/book_source_references.py": {
+          "bytes": 11033,
+          "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book",
+        "-d",
+        ".artifacts/class-frame-retention-book"
+      ],
+      "instruments": {},
+      "status": 0,
+      "stderr": " INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15267780 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/class-frame-retention-book`\n",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        ".artifacts/class-frame-retention-book"
+      ],
+      "instruments": {
+        "scripts/book_source_references.py": {
+          "bytes": 11033,
+          "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "instruments": {
+        "scripts/check_book_source_index.py": {
+          "bytes": 1278,
+          "sha256": "1311f277544ca01c067eb311fc93ae99751a003117b93b3fe501dd19a413893f"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-index: complete indexed directory and checked source projection agree\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/class-frame-retention-checks-20261006/native_guide.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-retention-checks-20261006/native_guide.py": {
+          "bytes": 726,
+          "sha256": "0d5ef01581eb516b8f6b9436a1a7a51c6756dde4b8943681ca32d3773ab58c35"
+        }
+      },
+      "status": 1,
+      "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/class-frame-retention-checks-20261006/native_guide.py\", line 9, in <module>\n    ns['proof'](raw.decode())\n    ~~~~~~~~~~~^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-class-frame-retention-20261006/book.py\", line 76, in proof\n    check(html)\n    ~~~~~^^^^^^\n  File \"docs/audits/record-value-class-frame-retention-20261006/book.py\", line 72, in check\n    raise ValueError('native complete semantic-retention scope and retained gaps')\nValueError: native complete semantic-retention scope and retained gaps\n",
+      "stdout": ""
+    }
+  ],
+  "role": "Actual repository-local native build, source selection/current/copied-byte/index checks and complete rendered retention guide controls; visual QA remains pending."
+}
