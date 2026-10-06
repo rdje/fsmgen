@@ -1,0 +1,35 @@
+{
+  "attempts": [
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/artifact-sweep-20261006/census.py"
+      ],
+      "observation": "process-tree inspection unavailable inside sandbox; no child launched",
+      "status": 2
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/artifact-sweep-20261006/census.py"
+      ],
+      "observation": "AssertionError: daily sweep is not due; guard admitted process at host 64.0% with unchanged 88%/4096-MiB limits; complete original producer source retains as census.py.txt",
+      "status": 1
+    }
+  ],
+  "due": false,
+  "prior": "# Latest artifact cleanup\n\n2026-10-05T07:25:20.637128+00:00 \u2014 Removed nothing: own log/bin/bytecode and Rust locations censused; all artifacts retained because exact safe-disposal authority is unproved. Native/compiler/audit evidence and current book preserved.\n",
+  "prior_identity": {
+    "bytes": 264,
+    "sha256": "2cddea654acb5bbf914776c21c80eb68f67f05e22a3aae92fb7a81368838164c"
+  },
+  "result": "No census, deletion or latest-record write; original due guard stopped before mutation.",
+  "revision": "ba48971d0f934a7c9a9c1871c322a7646ffd6a28",
+  "utc": "2026-10-06T06:32:51.018737+00:00"
+}

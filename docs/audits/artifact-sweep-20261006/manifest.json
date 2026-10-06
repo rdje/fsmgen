@@ -1,0 +1,22 @@
+{
+  "census.py.txt": {
+    "bytes": 4641,
+    "sha256": "413edc57a87d543b27d13aa81f41adad100d8083eb449e6d5842c6d83710f3e3"
+  },
+  "controls.json": {
+    "bytes": 292,
+    "sha256": "fb610de7d91438a2717d28cec0f8efa2dd54dbd75183dabbc9c9acd4f89f7c96"
+  },
+  "due-check.json": {
+    "bytes": 1352,
+    "sha256": "1615b3278b1882e025a1c4cd0fb1b54596ce3ca5fc5ecc0ba6f6f754b284cefb"
+  },
+  "scope.txt": {
+    "bytes": 900,
+    "sha256": "238f9d1ac2b99fb3cc4997a044ceef1813bc817f48ae75a26d377ea38d091562"
+  },
+  "verify.py.txt": {
+    "bytes": 4227,
+    "sha256": "1f30273af8838e4a2697f8615481ce08fe1c2edafdac874a52f0361e3020e58f"
+  }
+}

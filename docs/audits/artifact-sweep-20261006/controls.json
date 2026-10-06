@@ -1,0 +1,17 @@
+[
+  {
+    "cause": "not-due exact interval",
+    "control": "false-due",
+    "status": 1
+  },
+  {
+    "cause": "not-due exact interval",
+    "control": "wrong-kind",
+    "status": 1
+  },
+  {
+    "cause": "whole committed prior cleanup",
+    "control": "changed-record",
+    "status": 1
+  }
+]

@@ -1,0 +1,5 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.75
+RE-DERIVE: host UTC and exact committed previous cleanup timestamp show the daily sweep is not due. The original producer refuses at its due guard before census or mutation.
+FALSIFY: explicit interval comparison distinguishes calendar-day change from elapsed 24 hours; due=True and altered prior-record bytes must reject in the reader.
+DURABILITY: complete proposed producer and reader sources, dated due-check and observed tool outcomes retain. Tool outcomes are transcribed from tool results, not represented as complete saved child streams. No artifact or cleanup-record mutation was performed.
+Startup policy review: the read-only shared claim template is byte-identical to the previously reviewed template.txt; decision0104 remains authoritative. README policy and containment guide already adopted. Existing book maintenance guidance is unchanged.
