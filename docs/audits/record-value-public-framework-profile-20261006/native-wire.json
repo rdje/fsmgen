@@ -1,0 +1,152 @@
+{
+  "Carp": {
+    "command": [
+      "perldoc",
+      "-T",
+      "Carp"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 10972,
+      "sha256": "5af8a3f0d0e8e163a93455b6c00bc84f04d6f1fcb2b1895c9a308f2125308868"
+    }
+  },
+  "Carp_documentation_path": {
+    "command": [
+      "perldoc",
+      "-l",
+      "Carp"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 34,
+      "sha256": "227e32eb5cdbe5f080d78e4b2290208891a2cbc3033cf098e29cac83b3afee29"
+    }
+  },
+  "Test::Builder": {
+    "command": [
+      "perldoc",
+      "-T",
+      "Test::Builder"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 22813,
+      "sha256": "a1b474ec1f0ddb441536eae29bb678ba075c8f9c6842349efe943fd0647f6d77"
+    }
+  },
+  "Test::Builder_documentation_path": {
+    "command": [
+      "perldoc",
+      "-l",
+      "Test::Builder"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 42,
+      "sha256": "1afb6e5a86c33bc599ed2b6cb5f55e8eb61d050e26ecead8191bcd39aa1ca84e"
+    }
+  },
+  "Test::More": {
+    "command": [
+      "perldoc",
+      "-T",
+      "Test::More"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 37843,
+      "sha256": "81a13d648b6a4e05db709b3967fcdbbf1043fa026fbdf150629605323a60f708"
+    }
+  },
+  "Test::More_documentation_path": {
+    "command": [
+      "perldoc",
+      "-l",
+      "Test::More"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 39,
+      "sha256": "1442362c7c47656af4fa4f95770fbfcc0629aa0458527d3bec02804305d9ad67"
+    }
+  },
+  "caller": {
+    "command": [
+      "perldoc",
+      "-T",
+      "-f",
+      "caller"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 4929,
+      "sha256": "f18d44a608cbb4caa119690a290b68c69c38ea246f61dbf6d14422c903ab2321"
+    }
+  },
+  "eval": {
+    "command": [
+      "perldoc",
+      "-T",
+      "-f",
+      "eval"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 11625,
+      "sha256": "55c671c3117730721f76d9372648c56f1d72b68ac71b0d902d258f2c10d3d71b"
+    }
+  },
+  "versions": {
+    "command": [
+      "perl",
+      "-MJSON::PP",
+      "-MCarp",
+      "-MTest::More",
+      "-MTest::Builder",
+      "-e",
+      "print JSON::PP->new->canonical->encode({perl=>\"$^V\",Carp=>\"\".Carp->VERSION, \"Test::More\"=>\"\".Test::More->VERSION,\"Test::Builder\"=>\"\".Test::Builder->VERSION}),chr(10);"
+    ],
+    "status": 0,
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_identity": {
+      "bytes": 84,
+      "sha256": "96e6b2619451df8e30535497813236c3c92e609e946f1ebe66045f60f7cce33c"
+    }
+  }
+}

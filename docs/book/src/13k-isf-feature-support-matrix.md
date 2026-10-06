@@ -544,6 +544,27 @@ raw coordinates and native address meanings, consumer
 operand truth and the full alias run’s downstream causes remain open. The complete semantic join and cold replay
 precede the candidate-parent join and permanent test-copy and consumer repairs.
 
+The dated installed public framework profile now pins complete caller/eval,
+Carp and Test::More/Test::Builder documentation plus runtime version and public
+documentation-location accessors. These public contracts describe callback
+argument forwarding, block-eval/error roles and trace interfaces. Debugger
+argument snapshots are best effort and may reflect aliases or later changes;
+they do not establish original argument or reference identity.
+
+This qualifies the installed public documentation/profile only. Independent
+public native controls and the original outer-boundary join remain next steps.
+The original framework/provider version and private implementation, full trace
+display, scalar encoding, hidden suffixes, coordinates and addresses remain
+unmeasured. Necessary installed toolchain documentation is read-only; all
+project captures and scratch stay inside the repository.
+
+Default replay verifies the dated saved profile. Explicit current replay also
+reexecutes the pinned public commands and compares every raw output byte:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-framework-profile-20261006/verify.py --current
+```
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

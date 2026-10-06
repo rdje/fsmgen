@@ -1,0 +1,12 @@
+{
+  "repository_relative_workspace": ".artifacts/public-framework-profile/work",
+  "checked_directory_chain": [
+    ".artifacts/public-framework-profile/work",
+    ".artifacts/public-framework-profile",
+    ".artifacts"
+  ],
+  "same_volume_regular_directories": true,
+  "nested_git_and_symlink_nodes": [],
+  "workspace_members": [],
+  "role": "Actual dedicated scratch census after public captures/replays. Installed toolchain location strings are required read-only metadata observations, not project data or routing dependencies."
+}

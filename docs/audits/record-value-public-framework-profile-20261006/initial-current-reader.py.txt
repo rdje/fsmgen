@@ -1,0 +1,204 @@
+"""Qualify complete installed public evidence; never inspect implementation."""
+import argparse
+import copy
+import datetime
+import hashlib
+import io
+import json
+import os
+import subprocess
+import tarfile
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-public-framework-profile-20261006')
+PRIOR = Path('docs/audits/record-value-own-subtest-boundaries-20261005')
+REVISION = '326d85a9f978bca6669f80c1f73458630dd3d25f'
+PROFILE = {'perl': 'v5.34.1', 'Carp': '1.52', 'Test::More': '1.302183', 'Test::Builder': '1.302183'}
+
+
+def module(path):
+    ns = {'__name__': 'public_framework_profile_prerequisite'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+producer, model = (module(BASE / name) for name in ('capture.py', 'model.py'))
+
+
+def require(value, cause):
+    if not value:
+        raise ValueError(cause)
+
+
+def identity(raw):
+    return dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+
+
+def same(left, right):
+    return json.dumps(left, sort_keys=True) == json.dumps(right, sort_keys=True)
+
+
+def load(path):
+    return json.loads(path.read_bytes())
+
+
+def members():
+    paths = list(BASE.iterdir())
+    require(all(p.is_file() and not p.is_symlink() for p in paths), 'whole regular public-profile member domain')
+    return {p.name: identity(p.read_bytes()) for p in paths if p.name != 'manifest.json'}
+
+
+def save(name, product):
+    path = BASE / name
+    if path.exists():
+        require(same(load(path), product), 'whole saved public-profile product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(), 'sealed public-profile reader cannot publish')
+        path.write_text(json.dumps(product, sort_keys=True, indent=2) + '\n')
+
+
+def committed(root):
+    data = subprocess.check_output(['git', 'archive', REVISION, str(root)])
+    with tarfile.open(fileobj=io.BytesIO(data), mode='r:') as archive:
+        return {entry.name: archive.extractfile(entry).read() for entry in archive.getmembers()
+                if entry.isfile() and Path(entry.name).parent == root}
+
+
+def authenticate():
+    binding = load(BASE / 'binding.json')
+    require(binding['revision'] == REVISION and binding['task_path'] == 'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md',
+            'fixed prior public-profile intake revision/path')
+    task = subprocess.check_output(['git', 'show', REVISION + ':' + binding['task_path']])
+    require(same(identity(task), binding['task_identity']), 'whole committed prior public-profile task identity')
+    owner = (PRIOR / 'scope.txt').read_text().splitlines()[0].removeprefix('Owner: ')
+    start = task.decode().index('- ID: `' + owner + '`')
+    end = task.decode().index('\n- ID:', start + 1)
+    require(binding['owner'] == owner and binding['owner_body'] == task.decode()[start:end]
+            and '\n  Status: `done`\n' in binding['owner_body'], 'whole completed prior own-subtest source owner')
+    actual = {str(p): p.read_bytes() for p in PRIOR.iterdir()}
+    require(actual == committed(PRIOR) and same(binding['archive'], {p: identity(raw) for p, raw in actual.items()}),
+            'whole committed prior public/source/programme/product members')
+    require(same(binding['capture_identity'], identity((BASE / 'public-profile.json').read_bytes())),
+            'whole original dated public capture identity')
+    if (BASE / 'manifest.json').exists():
+        require(same(load(BASE / 'manifest.json'), members()), 'whole public-profile seal/member identity')
+    command = ['python3', '-B', str(PRIOR / 'verify_public.py')]
+    run = subprocess.run(command, capture_output=True, text=True)
+    require(run.returncode == 0, 'whole prior public-interface reader and controls replay')
+    return dict(command=command, status=run.returncode, stdout=run.stdout, stderr=run.stderr)
+
+
+def check(record):
+    require(set(record) == {'captured_at', 'environment', 'commands', 'scope'}, 'complete public-profile source domain')
+    require(set(record['commands']) == set(producer['COMMANDS']), 'complete necessary public command population')
+    require(record['environment'] == dict(temporary_workspace=str(producer['WORK']), pager='cat',
+        role='Absolute temporary paths derive at runtime from the repository root; installed tools/docs are necessary read-only dependencies.'),
+        'explicit repository-local temporary and public-read-only contract')
+    require(type(record['captured_at']) is str and datetime.datetime.fromisoformat(record['captured_at']).date()
+            == datetime.date(2026, 10, 6), 'dated public capture timestamp kind/epoch')
+    for name, row in record['commands'].items():
+        require(row['command'] == producer['COMMANDS'][name], 'exact public command role: ' + name)
+        require(type(row['status']) is int and row['status'] == 0, 'public profile integer command success')
+        for field, key in (('stdout', 'identity'), ('stderr', 'stderr_identity')):
+            require(type(row[field]) is str and type(row[key]['bytes']) is int
+                    and row[key]['bytes'] >= 0 and same(row[key], identity(row[field].encode())),
+                    'whole public stream byte/kind identity')
+    require(same(json.loads(record['commands']['versions']['stdout']), PROFILE), 'qualified dated runtime accessor profile')
+    clauses = model['derive'](record, require)
+    for name in ('Carp', 'Test::More', 'Test::Builder'):
+        observed = record['commands'][name + '_documentation_path']['stdout']
+        require(observed.endswith('/' + name.replace('::', '/') + '.pm\n') and observed.count('\n') == 1,
+                'complete public documentation location observation')
+    require(record['scope'] == 'Dated installed public documentation and runtime accessor profile only. Original framework/provider identity, private implementation and universal/native trace meanings remain unmeasured. No foreign implementation or submodule source is read; all project outputs and scratch remain repository-local.',
+            'current public profile versus missing original historical/internal identity')
+    require(same(identity((json.dumps(record, sort_keys=True, indent=2)+'\n').encode()),
+                 load(BASE / 'binding.json')['capture_identity']), 'whole pinned complete public-profile capture epoch')
+    return clauses
+
+
+def replay_wire(record):
+    work = producer['WORK']
+    work.mkdir(parents=True, exist_ok=True)
+    require(work.resolve().is_relative_to(Path.cwd()) and work.stat().st_dev == Path('.').stat().st_dev,
+            'independent wire replay same-volume repository workspace')
+    env = {**os.environ, 'TMPDIR': str(work.resolve()), 'TMP': str(work.resolve()), 'TEMP': str(work.resolve()),
+           'PERLDOC_PAGER': 'cat', 'PAGER': 'cat'}
+    results = {}
+    for name, command in producer['COMMANDS'].items():
+        run = subprocess.run(command, env=env, capture_output=True)
+        expected = record['commands'][name]
+        # This independent binary leg qualifies exact wire bytes for this
+        # finite text-mode capture, including the absence of newline loss.
+        require(run.returncode == expected['status'] == 0
+                and run.stdout == expected['stdout'].encode() and run.stderr == expected['stderr'].encode(),
+                'independent complete native raw-output public replay: ' + name)
+        results[name] = dict(command=command, status=run.returncode,
+            stdout_identity=identity(run.stdout), stderr_identity=identity(run.stderr))
+    return results
+
+
+def controls(record):
+    result = []
+    def borrow_runtime(candidate):
+        row = candidate['commands']['versions']
+        profile = json.loads(row['stdout'])
+        profile['Carp'] = '1.50'
+        row['stdout'] = json.dumps(profile, sort_keys=True, separators=(',', ':')) + '\n'
+        row['identity'] = identity(row['stdout'].encode())
+    def borrow_location(candidate):
+        row = candidate['commands']['Carp_documentation_path']
+        row['stdout'] = candidate['commands']['Test::More_documentation_path']['stdout']
+        row['identity'] = identity(row['stdout'].encode())
+    def replace_clause(candidate, name, clause):
+        row = candidate['commands'][name]
+        # Preserve physical whitespace while changing a selected public word;
+        # recompute its pin so source-clause selection is the separating leg.
+        row['stdout'] = row['stdout'].replace(clause, 'borrowed', 1)
+        row['identity'] = identity(row['stdout'].encode())
+    cases = [
+        ('lost-public-document', lambda r: r['commands'].pop('Test::Builder'), 'complete necessary public command population'),
+        ('borrowed-public-command', lambda r: r['commands']['caller'].update(command=r['commands']['eval']['command']), 'exact public command role: caller'),
+        ('changed-whole-public-stream', lambda r: r['commands']['eval'].update(stdout='borrowed'), 'whole public stream byte/kind identity'),
+        ('Boolean-public-status', lambda r: r['commands']['Carp'].update(status=False), 'public profile integer command success'),
+        ('float-public-status', lambda r: r['commands']['Test::More'].update(status=0.0), 'public profile integer command success'),
+        ('Boolean-public-byte-count', lambda r: r['commands']['eval']['identity'].update(bytes=True), 'whole public stream byte/kind identity'),
+        ('off-volume-temporary-workspace', lambda r: r['environment'].update(temporary_workspace='/tmp'), 'explicit repository-local temporary and public-read-only contract'),
+        ('borrowed-old-capture-date', lambda r: r.update(captured_at='2026-10-05T12:00:00+00:00'), 'dated public capture timestamp kind/epoch'),
+        ('borrowed-runtime-version', borrow_runtime, 'qualified dated runtime accessor profile'),
+        ('borrowed-public-documentation-location', borrow_location, 'complete public documentation location observation'),
+        ('lost-caller-target-clause', lambda r: replace_clause(r, 'caller', '$subroutine is the function'), 'complete selected public contract clause: caller_call_target'),
+        ('lost-callback-argument-clause', lambda r: replace_clause(r, 'Test::Builder', 'passed to the subtests reference.'), 'complete selected public contract clause: builder_arguments'),
+        ('invented-original-runtime-identity', lambda r: r.update(scope='Original toolchain versions and every native framework frame are measured.'), 'current public profile versus missing original historical/internal identity'),
+    ]
+    for name, mutate, cause in cases:
+        changed = copy.deepcopy(record)
+        mutate(changed)
+        require(not same(changed, record), 'genuine public-profile intervention: ' + name)
+        try:
+            check(changed)
+        except ValueError as error:
+            require(str(error) == cause, 'intended public-profile refusal: ' + name)
+            result.append(dict(control=name, status=1, cause=str(error)))
+        else:
+            raise ValueError('false-green public-profile control: ' + name)
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    prerequisite = authenticate()
+    record = load(BASE / 'public-profile.json')
+    clauses = check(record)
+    wire = replay_wire(record)
+    rejected = controls(record)
+    save('proofs.json', dict(clauses=clauses, native_wire_replay=wire, controls=rejected,
+                            prior_public_reader=prerequisite, profile=PROFILE, scope=record['scope']))
+    if args.seal:
+        save('manifest.json', members())
+    print('PASS complete dated public framework/profile clauses and raw-output replay; original framework/native meanings remain open.')
+
+
+if __name__ == '__main__':
+    main()

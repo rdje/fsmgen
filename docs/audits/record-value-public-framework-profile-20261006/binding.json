@@ -1,0 +1,84 @@
+{
+  "archive": {
+    "docs/audits/record-value-own-subtest-boundaries-20261005/binding.json": {
+      "bytes": 1376397,
+      "sha256": "1be1799274f78d137c965e2c6a4d87e2a364a952c17066e7d1b2b6d3259eb4b1"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/book-transform.json": {
+      "bytes": 358026,
+      "sha256": "194a29e5f0855d3f6353c6fa77bc24903d86b61389ecdac5faca4db6ff36f4f6"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/capture_public.py": {
+      "bytes": 1928,
+      "sha256": "67771fcd97aee4a6bcf7889c8f860e178999e0eab90e14cbeb64600f1c018e71"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/initial-public-capture.txt": {
+      "bytes": 1921,
+      "sha256": "192b93a144d4c370422ec5b44ed05b87cbd0ebe06cf0a7b59d2516a9438495c3"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/initial-public-interface.json": {
+      "bytes": 17718,
+      "sha256": "3d38c8ce931e0322787e340b7ae049964a6db516444e81b86ccd8ededd26881c"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/manifest.json": {
+      "bytes": 2072,
+      "sha256": "3a46038b2d13c949e345666719c4d3f204d64a4a680170b60ecea6be477f2bb2"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/model.py": {
+      "bytes": 3325,
+      "sha256": "ceaf8ea72faa7cdd86aa3bbeebb4a53cab23449250a10b189228c71be21f5fe7"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/pending-fact.txt": {
+      "bytes": 2054,
+      "sha256": "04d5009013007a0b35afe6893455aba67c1f6bca8707dc12d198efbcc5d9e8a1"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/prepare.py": {
+      "bytes": 1457,
+      "sha256": "c824060d7ef6da36d42acdb1568bc91099aa709fa15a8102123ade1da668d06b"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/proofs.json": {
+      "bytes": 1133265,
+      "sha256": "b4ffee9372564e04439f67f4e779eaf4bbd30afa348b995e3e2e5b7bac265f4b"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/public-interface.json": {
+      "bytes": 17725,
+      "sha256": "312e68abeeec0ef996b3d9174e2c313b726ff4cafdb953cc11ff7502cd8fd489"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/public-proofs.json": {
+      "bytes": 1048,
+      "sha256": "20d738a8e9566eb2b46758dfff8c840d55e2fe2463d74a84dd77c964f54c5810"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/publish_book.py": {
+      "bytes": 4169,
+      "sha256": "597f97ac1fd98ca04d652115a207c335fae929d427c1fd954af3638863c75342"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/scope.txt": {
+      "bytes": 3358,
+      "sha256": "af762b368c4f0a860434ad38765114f1fc614c7ec883e2428908ac9ecb7a838c"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/verify.py": {
+      "bytes": 11130,
+      "sha256": "e722b2bb29dfa3d42a6fd01a4831a7862bb6a249ac09708a1f23c3c9aa6507a5"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/verify_book.py": {
+      "bytes": 2805,
+      "sha256": "ced88889538b9f63c04410e5877f1cf71eba945941ba37220f4f1c90f7986da0"
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005/verify_public.py": {
+      "bytes": 3687,
+      "sha256": "dd30e046f2304b892f8be95dc68ebe84f4597c20a0f34eda7f2d593c66200f36"
+    }
+  },
+  "capture_identity": {
+    "bytes": 96522,
+    "sha256": "a081e926835acc65164930867ce29aa53d7e26b7057ba1e4ac30925c1ba6177d"
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4.1",
+  "owner_body": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4.1`\n  Status: `done`\n  Goal: `Qualify complete own subtest and test-load source boundaries.`\n  Acceptance: `Authenticate the complete committed helper join and all inherited source/receipt/recorded-body identities. Derive all authored subtest owners, exact observer wrapper/body/delegate argument roles and explicit original test do/error capture from complete own sources and necessary installed public POD/metadata only. Model intended own boundaries before comparison with all finite original API/parser throw phases; preserve opaque external framework intervals, raw body/argument text and unmeasured module/object/coordinate/display identities. Genuine source/body/member/name/delegate/load/kind controls must reject their intended causes. Update book source guidance and exact aggregate, retain a source-faithful pending fact proposal for .2, run focused originals/docs and staged doctrines, seal and commit before publication. No external implementation inspection, original native/provider capture, host probe, full CI/push or off-volume fixture.`\n  Verification: `Whole committed helper-join intake/task, every archive and inherited receipt authenticate/reexecute. Complete own source yields ten authored bodies and exact saved delegate/wrapper/callback/extra-argument/do/error contracts before native comparison. Every50 API/parser refusal and57 throw phases per ordinary/Storable/control mode agree with empty own body/callback arguments, authored name/CODE kind at public delegate/own entry and exact diagnostic load-file marker. Framework intervals remain opaque; source operator is do. Thirteen genuine source/model/member/name/function/argument/load/population/kind controls reject intended causes. Whole public POD/current metadata and five genuine interface/member/body/status/scope controls pass; original framework version remains unmeasured. Fresh full sealed-reader0 regenerates all saved products with unchanged executed programme/product pins; exact receipt checker rejects actual older successful identity. Focused original/book All tests successful Files3 Tests318, exact whole source/SUMMARY/aggregate and rendered guidance pass. Claim inventory/dispositions and task integrity pass; final copied-byte/index, staged doctrines and normal hooks gate commit. Pending fact proposal is owned .3.4.2; Knowledge Map publication durability explicitly remains there. No new live card/chapter, allowance increase, original capture, external implementation inspection, full CI/push or source/API/diagnostic change. Framework/display/coordinates/native identity, visual QA and broader parent/native work remain owned.`\n  Commit: `this slice; resolve with work-unit Git subject`\n",
+  "revision": "326d85a9f978bca6669f80c1f73458630dd3d25f",
+  "task_identity": {
+    "bytes": 1361284,
+    "sha256": "69e9b768403495ebc28ad1894f5724056d2f2ee1fdd67b7c6a741ff927a0327f"
+  },
+  "task_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+}

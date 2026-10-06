@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "original framework version remains unmeasured",
+    "-1",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "status": 0,
+  "stdout": "commit ebd3df0c21d2e8383e179cf88a81f0c780568e14\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 23:54:04 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4.1: qualify own subtest and do-load roles\n    \n    Derive complete authored bodies and observer delegate/load contracts before\n    comparing the finite original API/parser throw-phase headers. Preserve opaque\n    framework intervals and unmeasured original version/display/native identities.\n    \n    Seal and reexecute the complete prerequisite/source/public/book evidence, with\n    genuine rejecting controls and exact fresh reader/product receipt identities.\n    Document scope and measured book aggregate; retain the fact proposal for .2.\n    Focused original/book tests, source copies/index and staged doctrines qualify.\n",
+  "stderr": ""
+}

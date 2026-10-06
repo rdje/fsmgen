@@ -1,0 +1,300 @@
+{
+  "clauses": {
+    "builder_arguments": {
+      "clause": "\"subtest\" also, and optionally, accepts arguments which will be passed to the subtests reference.",
+      "document": "Test::Builder",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "builder_subtest": {
+      "clause": "$builder->subtest($name, \\&subtests, @args);",
+      "document": "Test::Builder",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "caller_alias_limit": {
+      "clause": "Perl does not take a copy of @_, so @DB::args will contain modifications the subroutine makes to @_ or its contents, not the original values at call time.",
+      "document": "caller",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "caller_argument_limit": {
+      "clause": "Be aware that setting @DB::args is *best effort*, intended for debugging or generating backtraces, and should not be relied upon.",
+      "document": "caller",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "caller_block_eval": {
+      "clause": "for an \"eval BLOCK\" statement, $subroutine is \"(eval)\", but $evaltext is undefined.",
+      "document": "caller",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "caller_call_target": {
+      "clause": "$subroutine is the function that the caller called (rather than the function containing the caller).",
+      "document": "caller",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "caller_require_use": {
+      "clause": "$is_require is true if the frame is created by a \"require\" or \"use\" statement",
+      "document": "caller",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "caller_visible_frames": {
+      "clause": "the only types of call frames that are visible are subroutine calls and \"eval\".",
+      "document": "caller",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "carp_controls": {
+      "clause": "You can also alter the way the output and logic of \"Carp\" works, by changing some global variables in the \"Carp\" namespace.",
+      "document": "Carp",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "carp_long_trace": {
+      "clause": "In the case of \"cluck()\" and \"confess()\", that context is a summary of every call in the call-stack; \"longmess()\" returns the contents of the error message.",
+      "document": "Carp",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "eval_failure": {
+      "clause": "\"eval\" returns \"undef\" in scalar context, or an empty list in list context, and $@ is set to the error message.",
+      "document": "eval",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "eval_success": {
+      "clause": "If there was no error, $@ is set to the empty string.",
+      "document": "eval",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "more_arguments": {
+      "clause": "Extra arguments given to \"subtest\" are passed to the callback.",
+      "document": "Test::More",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    },
+    "more_subtest": {
+      "clause": "subtest $name => \\&code, @args;",
+      "document": "Test::More",
+      "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+    }
+  },
+  "controls": [
+    {
+      "cause": "complete necessary public command population",
+      "control": "lost-public-document",
+      "status": 1
+    },
+    {
+      "cause": "exact public command role: caller",
+      "control": "borrowed-public-command",
+      "status": 1
+    },
+    {
+      "cause": "whole public stream byte/kind identity",
+      "control": "changed-whole-public-stream",
+      "status": 1
+    },
+    {
+      "cause": "public profile integer command success",
+      "control": "Boolean-public-status",
+      "status": 1
+    },
+    {
+      "cause": "public profile integer command success",
+      "control": "float-public-status",
+      "status": 1
+    },
+    {
+      "cause": "whole public stream byte/kind identity",
+      "control": "Boolean-public-byte-count",
+      "status": 1
+    },
+    {
+      "cause": "explicit repository-local temporary and public-read-only contract",
+      "control": "off-volume-temporary-workspace",
+      "status": 1
+    },
+    {
+      "cause": "dated public capture timestamp kind/epoch",
+      "control": "borrowed-old-capture-date",
+      "status": 1
+    },
+    {
+      "cause": "complete selected public contract clause: caller_call_target",
+      "control": "lost-caller-target-clause",
+      "status": 1
+    },
+    {
+      "cause": "complete selected public contract clause: builder_arguments",
+      "control": "lost-callback-argument-clause",
+      "status": 1
+    },
+    {
+      "cause": "current public profile versus missing original historical/internal identity",
+      "control": "invented-original-runtime-identity",
+      "status": 1
+    }
+  ],
+  "native_wire_replay": {
+    "Carp": {
+      "command": [
+        "perldoc",
+        "-T",
+        "Carp"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 10972,
+        "sha256": "5af8a3f0d0e8e163a93455b6c00bc84f04d6f1fcb2b1895c9a308f2125308868"
+      }
+    },
+    "Carp_documentation_path": {
+      "command": [
+        "perldoc",
+        "-l",
+        "Carp"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 34,
+        "sha256": "227e32eb5cdbe5f080d78e4b2290208891a2cbc3033cf098e29cac83b3afee29"
+      }
+    },
+    "Test::Builder": {
+      "command": [
+        "perldoc",
+        "-T",
+        "Test::Builder"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 22813,
+        "sha256": "a1b474ec1f0ddb441536eae29bb678ba075c8f9c6842349efe943fd0647f6d77"
+      }
+    },
+    "Test::Builder_documentation_path": {
+      "command": [
+        "perldoc",
+        "-l",
+        "Test::Builder"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 42,
+        "sha256": "1afb6e5a86c33bc599ed2b6cb5f55e8eb61d050e26ecead8191bcd39aa1ca84e"
+      }
+    },
+    "Test::More": {
+      "command": [
+        "perldoc",
+        "-T",
+        "Test::More"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 37843,
+        "sha256": "81a13d648b6a4e05db709b3967fcdbbf1043fa026fbdf150629605323a60f708"
+      }
+    },
+    "Test::More_documentation_path": {
+      "command": [
+        "perldoc",
+        "-l",
+        "Test::More"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 39,
+        "sha256": "1442362c7c47656af4fa4f95770fbfcc0629aa0458527d3bec02804305d9ad67"
+      }
+    },
+    "caller": {
+      "command": [
+        "perldoc",
+        "-T",
+        "-f",
+        "caller"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 4929,
+        "sha256": "f18d44a608cbb4caa119690a290b68c69c38ea246f61dbf6d14422c903ab2321"
+      }
+    },
+    "eval": {
+      "command": [
+        "perldoc",
+        "-T",
+        "-f",
+        "eval"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 11625,
+        "sha256": "55c671c3117730721f76d9372648c56f1d72b68ac71b0d902d258f2c10d3d71b"
+      }
+    },
+    "versions": {
+      "command": [
+        "perl",
+        "-MJSON::PP",
+        "-MCarp",
+        "-MTest::More",
+        "-MTest::Builder",
+        "-e",
+        "print JSON::PP->new->canonical->encode({perl=>\"$^V\",Carp=>\"\".Carp->VERSION, \"Test::More\"=>\"\".Test::More->VERSION,\"Test::Builder\"=>\"\".Test::Builder->VERSION}),chr(10);"
+      ],
+      "status": 0,
+      "stderr_identity": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout_identity": {
+        "bytes": 84,
+        "sha256": "96e6b2619451df8e30535497813236c3c92e609e946f1ebe66045f60f7cce33c"
+      }
+    }
+  },
+  "prior_public_reader": {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-own-subtest-boundaries-20261005/verify_public.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "PASS whole public POD/current metadata interfaces and genuine controls; original framework version remains unmeasured.\n"
+  },
+  "profile": {
+    "Carp": "1.52",
+    "Test::Builder": "1.302183",
+    "Test::More": "1.302183",
+    "perl": "v5.34.1"
+  },
+  "scope": "Dated installed public documentation and runtime accessor profile only. Original framework/provider identity, private implementation and universal/native trace meanings remain unmeasured. No foreign implementation or submodule source is read; all project outputs and scratch remain repository-local."
+}

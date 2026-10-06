@@ -1,0 +1,100 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-framework-profile-20261006/verify.py",
+    "--current",
+    "--seal"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 36055; host 60.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete dated public framework/profile clauses and raw-output replay; original framework/native meanings remain open.\n",
+  "whole_sealed_members": {
+    "binding.json": {
+      "bytes": 6661,
+      "sha256": "46fdcd0ac9ef0e945893e9c102366a3c50867551929a8521550f6034e47943b3"
+    },
+    "book-change.json": {
+      "bytes": 373024,
+      "sha256": "b621c5df1fb3250af0caa9bc6b5562d0802f6a199538b3738d9cdf2272f91dcc"
+    },
+    "book-input.html": {
+      "bytes": 217642,
+      "sha256": "e41f699bc8bf0af473b28553b3a1976e6659f922c4a21b384341495d70b9f37f"
+    },
+    "book-proof.json": {
+      "bytes": 647,
+      "sha256": "948b427a9dbfd2b0b32b1fb3aa6799d49198a7824f4a42dbc4c148a651f45996"
+    },
+    "book.py": {
+      "bytes": 3629,
+      "sha256": "41cc44693bbf7dcc081174376bbc7f4a62b4a42b085c25c11cbd2591b9f45500"
+    },
+    "capture.py": {
+      "bytes": 2956,
+      "sha256": "10732edb28324bdf6af22f3c3fd6b4f22418a6219d31da04e579738eb0f44b22"
+    },
+    "initial-current-reader.py.txt": {
+      "bytes": 11746,
+      "sha256": "39f064a089f5f4784f474296d2c92481a88a6e8923029795cc47d836422210da"
+    },
+    "initial-native-receipts.json": {
+      "bytes": 2875,
+      "sha256": "804f53328f055ae7a5f2f0e30f315b1bd7f9b4934a36bc43a4c60e9ac5222824"
+    },
+    "initial-proofs.json": {
+      "bytes": 10633,
+      "sha256": "1096daef7bf30d6358b56cd258d622a5efb87b7f6b51e3c53e4a95325b50cd91"
+    },
+    "initial-reader.py.txt": {
+      "bytes": 10969,
+      "sha256": "748834a816b6715367de5a378db362158d4cd66235a16482aeecd79a5d5d77da"
+    },
+    "locality.json": {
+      "bytes": 535,
+      "sha256": "8f5c7a5630e963573d88242e337d58c7347dcc34a8917998c1a5060be4b086ad"
+    },
+    "manifest.json": {
+      "bytes": 2582,
+      "sha256": "1036e513b23bf4e11f8330efa39cd5a99ca73dd2ed66e6e0dbb8dcb7a4833086"
+    },
+    "model.py": {
+      "bytes": 2463,
+      "sha256": "4a9a5edc28b5f582b65b3e2ba85c3dae3bb824222a094cdedf14081588a6ba24"
+    },
+    "native-and-parser-current.json": {
+      "bytes": 934,
+      "sha256": "dc9e01b23332bd7a9de52b2a777f5f43f605ad78208468593195450b23b612d9"
+    },
+    "native-wire.json": {
+      "bytes": 3714,
+      "sha256": "503ed72f4c6e3ffb6cc51cce69ac2af3498447632c037643fb9294223cc84e60"
+    },
+    "prepare.py": {
+      "bytes": 1409,
+      "sha256": "006a6283a857da604ca738bd2d102af5a7c8c3ad88d67cf1e4cc489aad9a15a6"
+    },
+    "proofs.json": {
+      "bytes": 10927,
+      "sha256": "fadb431aacd0b95dd6ad12ca1c2256a8c5a18f595665f3cb9b66bf94480e1e92"
+    },
+    "public-profile.json": {
+      "bytes": 96522,
+      "sha256": "a081e926835acc65164930867ce29aa53d7e26b7057ba1e4ac30925c1ba6177d"
+    },
+    "publish_book.py": {
+      "bytes": 2837,
+      "sha256": "b83e1a539614129450f18c949cf8c541ecc76ea1292c2a56768437555dd51a16"
+    },
+    "scope.txt": {
+      "bytes": 3158,
+      "sha256": "43db74dbc0d4f769ef8b0af0a790060f40d4d65b1568e65d32ef428320ad7512"
+    },
+    "verify.py": {
+      "bytes": 12342,
+      "sha256": "e95e9426fcaa5682699bfc8e04e75572c169e44b06f0f1cbce93b65b8cc86818"
+    }
+  }
+}

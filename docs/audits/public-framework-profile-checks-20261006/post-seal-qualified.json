@@ -1,0 +1,16 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/public-framework-profile-checks-20261006/verify_seal.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual public-profile seal, whole saved contract/native/control regeneration and typed/borrowed-result refusals.\n",
+  "stderr": "ram-guard: PID 10477; host 67.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "checker_identity": {
+    "bytes": 4544,
+    "sha256": "71337e0f5121815bf666e848bda60c9ffc3940b17cfdbeccbdba2b13f74049aa"
+  }
+}

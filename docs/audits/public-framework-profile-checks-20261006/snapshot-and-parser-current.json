@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-public-framework-profile-20261006/verify.py"
+    ],
+    "status": 0,
+    "stdout": "PASS complete dated public framework/profile clauses and raw-output replay; original framework/native meanings remain open.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-parser-path-publication-20261006/current_role.py"
+    ],
+    "status": 0,
+    "stdout": "PASS actual scoped current fact/query/guide/physical authority; source replay remains separately authenticated.\n",
+    "stderr": ""
+  }
+]
