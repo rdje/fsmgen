@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/tooling-current-reader-checks-20261006/prepare.py",
+    "--finish"
+  ],
+  "instruments": {
+    "docs/audits/tooling-current-reader-checks-20261006/prepare.py": {
+      "bytes": 4432,
+      "sha256": "113ce732049db576440e3f8b835cc68eb4006ade6de437fea0aa72710b5cd9af"
+    },
+    "docs/audits/tooling-current-reader-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS complete initial source/current snapshot and actual global query conservation.\n"
+}

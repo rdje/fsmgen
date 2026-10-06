@@ -1,0 +1,24 @@
+{
+  "controls": [
+    {
+      "cause": "native exact current companion command",
+      "control": "snapshot-command",
+      "status": 1
+    },
+    {
+      "cause": "native complete checkpoint and current companion guide",
+      "control": "borrowed-currency",
+      "status": 1
+    },
+    {
+      "cause": "native complete checkpoint and current companion guide",
+      "control": "invented-visual-qualification",
+      "status": 1
+    }
+  ],
+  "input_identity": {
+    "bytes": 228289,
+    "sha256": "ba316f9be2a07bdb5285c6b4209d3e211cbe99484ee168fd01a979a6cf136b45"
+  },
+  "visual_QA": "pending; separately owned"
+}

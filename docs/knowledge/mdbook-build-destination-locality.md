@@ -8,11 +8,11 @@ answers:
   - "do canonical source symlinks outside the book refresh under native serve?"
   - "why do native book source-view addresses encode terminal markdown extensions?"
   - "why must historical source-plane replay use the helper snapshot role?"
-date: 2026-10-05
+date: 2026-10-06
 status: current
 tags: [mdbook, documentation, artifacts, locality, verification]
 evidence: docs/audits/specforge-rule-admission-20260924/book-output-recovery.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/audits/record-value-own-boundary-publication-20261005/scope.txt
-reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-own-boundary-publication-20261005/verify.py --current
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-tooling-current-reader-20261006/verify.py --current
 ---
 
 `mdbook build docs/book --dest-dir DEST` resolves relative `DEST` against the

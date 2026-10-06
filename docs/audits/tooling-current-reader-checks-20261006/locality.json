@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py"
+  ],
+  "instruments": {
+    "docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py": {
+      "bytes": 2129,
+      "sha256": "e55151218dc3908f59ab4835a142e58913e55abfec4d8ad98ef9a816fc486219"
+    },
+    "docs/audits/tooling-current-reader-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 54111; host 63.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"mdbook_version\": \"mdbook v0.5.4\", \"probes\": [{\"exit_code\": 0, \"fresh_render_contains_marker\": true, \"mode\": \"relative\", \"repository_local_same_volume\": true, \"resolved_against_invocation_cwd\": true}, {\"exit_code\": 0, \"fresh_render_contains_marker\": true, \"mode\": \"absolute\", \"repository_local_same_volume\": true, \"resolved_against_invocation_cwd\": true}], \"temporary_workspace_removed\": true}\n"
+}

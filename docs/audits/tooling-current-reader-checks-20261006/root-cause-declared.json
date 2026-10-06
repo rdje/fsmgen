@@ -1,0 +1,26 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "whole current source/role/question/reader epoch",
+    "-1",
+    "--format=%H",
+    "--fixed-strings",
+    "--",
+    "docs/audits/record-value-own-boundary-publication-20261005/verify.py"
+  ],
+  "instruments": {
+    "docs/audits/record-value-own-boundary-publication-20261005/verify.py": {
+      "bytes": 13943,
+      "sha256": "0870c9727de42f38aa1647c8397e5f457031dc3679c1d9b26baa8df8c019d59a"
+    },
+    "docs/audits/tooling-current-reader-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "e11d97f0c79c22c240243350a27e000a13bc6243\n"
+}

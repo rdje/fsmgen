@@ -1,0 +1,24 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "mdbook",
+    "build",
+    "docs/book",
+    "--dest-dir",
+    ".artifacts/tooling-current-reader-book"
+  ],
+  "instruments": {
+    "docs/audits/tooling-current-reader-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 78192; host 77.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15248117 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/tooling-current-reader-book`\n",
+  "stdout": ""
+}

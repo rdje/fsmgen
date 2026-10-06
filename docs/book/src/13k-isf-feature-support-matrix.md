@@ -674,6 +674,10 @@ replay preserves the source/proposal snapshot and does not borrow live currency.
 Original framework/provider/private/formatter/reference/coordinate/address
 meanings and visual QA remain unmeasured or separately owned.
 
+The following observer publication guide records its 2026-10-06 checkpoint.
+Its scoped observer command remains valid. The companion repair and complete
+current core/observer/tooling route are qualified immediately after that guide.
+
 The public-boundary fact publication now qualifies the finite original
 Test::Builder/Test::More header relationship: authored-name prefixes, CODE kinds
 and body/delegate/entry/do-load order match at every retained throw phase.
@@ -708,6 +712,30 @@ current command above for this observer topic. The tooling companion still
 advertises the superseded current role; its immediate owned repair remains
 pending before the public publication parent can close. Original programmes
 and seals remain unchanged.
+
+The tooling companion now uses the qualified current reader below. The
+earlier pending-repair statements describe the observer publication checkpoint;
+this companion repair completes that dependency. The core and observer cards
+remain exact, and every tooling fact and ordered question remains unchanged.
+Only the tooling date and current reverify route change. No physical card or
+question is added, and the collection authority is unchanged.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-tooling-current-reader-20261006/verify.py --current
+```
+
+This current role checks complete core/observer/tooling meanings and actual
+direct/cache question ownership, the scoped guides, source selection, relative
+endpoints, current bytes, ignore policy, indexed members and exact budgets.
+Unrelated book progress is permitted. Default replay authenticates the source
+and saved publication snapshot; it cannot establish current currency.
+`--current --build repository-relative-output` additionally checks current native
+source copies and rendered guidance. The original destination-locality replay
+remains part of the tooling reverify command. Historical source-plane replay
+uses its snapshot adapter; older current readers retain their exact epochs.
+No old programme or seal changes. Visual QA and original/private/formatter,
+class/frame/coordinate/address, host-native and broader CI/push gaps remain
+separately owned.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the

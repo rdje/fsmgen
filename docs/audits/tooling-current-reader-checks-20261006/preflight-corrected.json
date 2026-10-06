@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/tooling-current-reader-checks-20261006/preflight.py"
+  ],
+  "instruments": {
+    "docs/audits/tooling-current-reader-checks-20261006/preflight.py": {
+      "bytes": 641,
+      "sha256": "44c375bc432e2ad37c75fe8104d00e22444509d577d46a4e351fc96db494650f"
+    },
+    "docs/audits/tooling-current-reader-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS complete proposed current source and genuine controls: 9 13\n"
+}

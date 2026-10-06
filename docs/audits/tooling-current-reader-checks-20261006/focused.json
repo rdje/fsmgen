@@ -1,0 +1,25 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t",
+    "t/1549-task-tree-integrity-doctrine.t",
+    "t/1567-knowledge-map-shards.t"
+  ],
+  "instruments": {
+    "docs/audits/tooling-current-reader-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 43419; host 69.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "t/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nt/1549-task-tree-integrity-doctrine.t ...... ok\nt/1567-knowledge-map-shards.t .............. ok\nAll tests successful.\nFiles=4, Tests=361, 23 wallclock secs ( 0.03 usr  0.01 sys + 12.11 cusr  4.14 csys = 16.29 CPU)\nResult: PASS\n"
+}

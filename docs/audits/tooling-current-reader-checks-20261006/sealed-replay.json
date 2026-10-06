@@ -1,0 +1,72 @@
+{
+  "actual_result_identity": {
+    "bytes": 1056,
+    "sha256": "dd72d4ebfb156943c7f23870b10968f0591f165e14c1c2ce926dce9833559dde"
+  },
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-tooling-current-reader-20261006/verify.py",
+    "--current",
+    "--build",
+    ".artifacts/tooling-current-reader-book",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/record-value-tooling-current-reader-20261006/verify.py": {
+      "bytes": 20778,
+      "sha256": "bd6591cd47eb2d900ae4e710e27aed7bbc624d0f4400dc01793c37b9e5d51e3a"
+    },
+    "docs/audits/tooling-current-reader-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 13620; host 61.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS current complete core/observer/tooling facts, questions and source routes under unchanged collection authority.\n",
+  "whole_members": {
+    "binding.json": {
+      "bytes": 13294,
+      "sha256": "7e087650c1f08812c5beb59301d9e05107e94b196664fd1446cd03055cbb035d"
+    },
+    "controls.json": {
+      "bytes": 3138,
+      "sha256": "2317da30ca28c563b1c7b35eda436cc32f1e920ad85a26a64c651dfa15d3bccd"
+    },
+    "manifest.json": {
+      "bytes": 1023,
+      "sha256": "3936f8ff062795ed5a7be050559a96ef6b585650e0deb05d86eb28c0c50bd334"
+    },
+    "native-input.html": {
+      "bytes": 228289,
+      "sha256": "ba316f9be2a07bdb5285c6b4209d3e211cbe99484ee168fd01a979a6cf136b45"
+    },
+    "native-proof.json": {
+      "bytes": 617,
+      "sha256": "65bf19f660e376f0814f00ec3acc9aa00a1d5d39227a0e466c6696d48f4d14f9"
+    },
+    "publication.json": {
+      "bytes": 3731962,
+      "sha256": "fa5f1aa88e4a5262b4ae106c39cad3d85290c815214cae535abe0dfc2643c0f5"
+    },
+    "scope.txt": {
+      "bytes": 578,
+      "sha256": "e0b91e10187fb2e8a779f6f5e648b8af64f1deb2d9a8ce1aaecabe2a12ada98e"
+    },
+    "source-proof.json": {
+      "bytes": 11674,
+      "sha256": "0c0f1b591ecb4b3234a526575a47c485526c2728741eeb2fd5f1c7ccd37cd9b7"
+    },
+    "verify.py": {
+      "bytes": 20778,
+      "sha256": "bd6591cd47eb2d900ae4e710e27aed7bbc624d0f4400dc01793c37b9e5d51e3a"
+    }
+  }
+}

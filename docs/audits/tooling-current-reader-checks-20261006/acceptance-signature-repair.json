@@ -1,0 +1,25 @@
+{
+  "actual_reordered_command": {
+    "bytes": 726,
+    "sha256": "d18cb3281e1cb939672030f4a5ecc38a000d07e1be9eb1063ffbffcaa36b8104"
+  },
+  "cause": "A legitimate option-reordered pickaxe command did not contain the exact declared literal git log -S. Staged gate correctly refused the fresh root-cause box.",
+  "declaration": {
+    "bytes": 1974,
+    "sha256": "16ac893acfa4db12b6095a9d16652bc3e9bc3a6538a3319bd196cf47da1a30e1"
+  },
+  "initial_gate": {
+    "bytes": 62889,
+    "sha256": "9ab42ebb92440b0bb8d9f2c17c814239cd44c6ec0d3790d4fa86c5ce6cc0d0b3"
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.3",
+  "policy_change": false,
+  "task_after": {
+    "bytes": 1422880,
+    "sha256": "215a87e7fe8a7c3818bd5f59bc56b6cc17b41c2e2b6a4049823fc86df427edde"
+  },
+  "task_before": {
+    "bytes": 1422630,
+    "sha256": "9e167fc4bb900b7835849449cdf92bb5014e2da475d279800de2c97643ef0714"
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "archives": {
+    "docs/audits/public-boundary-publication-checks-20261006": {
+      "docs/audits/public-boundary-publication-checks-20261006/board-emulator-discussion.md.txt": {
+        "bytes": 6769,
+        "sha256": "0841f5e6ac07bf605edbda731389590adf2f6315ac2bc5c3f54a398b7de9644d"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/capture_result.py": {
+        "bytes": 829,
+        "sha256": "da6e1cdf5b7f17038c8b8230918239d3d73dcef58585b33ade9d435b359a3d1e"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/claim-dispositions.json": {
+        "bytes": 486,
+        "sha256": "c7f83b51832eb55fa78816a5b64a14a557924356d1cfbb9beb56295291774269"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/current-diagnostic.json": {
+        "bytes": 1793,
+        "sha256": "287782e094529240137b0089c657f7c5faab6a3a16fcddf4cc331e7b62acaccb"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/declare_task_budget.py": {
+        "bytes": 3318,
+        "sha256": "66e97c999b6c8b9979772f045b9da8ead764c1361816ef920b2f69fc376d09f0"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/final-source-copies-index-repair.json": {
+        "bytes": 1843,
+        "sha256": "6a330f9aff93446c66f4ec9c8ba63e6432815b19392ed042c408fcc89d09e089"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/final-source-copies-staged.json": {
+        "bytes": 689,
+        "sha256": "5600bb3696812d82c4891eb9488d503667abd80f59d709cdea9e8ea24a49d3bf"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/final-source-copies.json": {
+        "bytes": 689,
+        "sha256": "5600bb3696812d82c4891eb9488d503667abd80f59d709cdea9e8ea24a49d3bf"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/first-live-checks.py.txt": {
+        "bytes": 3596,
+        "sha256": "cf0b8125fda8bb82959b932bea8b15893b998c3bae86f136b5899f2babd80377"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/first-module-verify.py.txt": {
+        "bytes": 23483,
+        "sha256": "c8075322944f6d3e7baaee2f160fa0d2fa7db4eb893a8b04ec2c7686083b87fb"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/first-prepare.py.txt": {
+        "bytes": 4950,
+        "sha256": "ac6edefa67128395028dea65a32cdd64f51d13e38aa2794dfb1b62da8644ff71"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/focused.json": {
+        "bytes": 1098,
+        "sha256": "2500f1c2754c0894c464dd7b8eb5a151ab098303f689b555d1c876a3106d5e14"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/guide-revision.json": {
+        "bytes": 666,
+        "sha256": "1d17862d9fec1a53b5eeeb4d5993bb1f896eacb8d9460b78284721e1252c9c59"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/independent-result.json": {
+        "bytes": 1670,
+        "sha256": "6f1eb42e43bbb47b8b7ebb88c7f0c3362e239155ab5b452b3ab8a18f170a304c"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/index-row-repair.json": {
+        "bytes": 3066,
+        "sha256": "af5683a1cbc7f555def10d4468d38e6e327baef0a2fe42a97efed45a2f155c1d"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/initial-guide.md.txt": {
+        "bytes": 189668,
+        "sha256": "53d2c30025d9f9b11bfa783af665cafdf4a93e3df2b4184a508d3692284176db"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/live-checks-command.json": {
+        "bytes": 1715,
+        "sha256": "5b7bca2039e9edae9569ad49f2c0699548bd2abcdc360d03099fe7addb9fe4c7"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/live-checks-corrected.json": {
+        "bytes": 964,
+        "sha256": "615430a8e43c15780be47007a1b83ead73cbb8725b21d1cbe11acaab68a243da"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/live-roles.json": {
+        "bytes": 463825,
+        "sha256": "06c038b8170d4f1ea6bbca3f22e97db075c5a719c9183b0969f6747748266484"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/live_checks.py": {
+        "bytes": 3962,
+        "sha256": "a9b6ad6c4963f0f9ab4ce6a18203f4a8ae3306fd040cae5f6f79c11ead440225"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/native-build-commit.json": {
+        "bytes": 903,
+        "sha256": "e6bcbc5c9fb2367df73392188a383e818cb3ff3b3855da5eb2971b753ec60050"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/native-build-final.json": {
+        "bytes": 904,
+        "sha256": "2ccc8dd562130469366c475343076b0f29d3d5ccdbc18c4ff2fbf3d5ec4ddd0f"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/native-build-index-repair.json": {
+        "bytes": 904,
+        "sha256": "efe5eb80febb785344d4f45eeeb23abe5b2219c4acf928130c0d6498b647fca8"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/native-build.json": {
+        "bytes": 904,
+        "sha256": "df82ee19602f35d4fef2bc65ae092f61e55e49c8688bcce801cb3c919844d868"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/preflight.json": {
+        "bytes": 683,
+        "sha256": "31ffc5a9b3cef890e679b6ed63d56980b12b6f16912bb180dd180818fbc16f56"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/preflight.py": {
+        "bytes": 574,
+        "sha256": "22e47a9acb79f922f9e7c78ed168ecab781359ed1898f362133105b1a24b97e4"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/prepare.py": {
+        "bytes": 5000,
+        "sha256": "353028c82fd4eea4cddded7771aae69e99e122473e04cb2aa9504423406bbef3"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/progress-restoration-intake.json": {
+        "bytes": 460262,
+        "sha256": "0c252a78ee769fdc465a83f96259bd971b9d0695d7225aea81cd82f1cde710bc"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/publish-corrected.json": {
+        "bytes": 418,
+        "sha256": "6152c3d6fa6e584b2704704e2ec30c9347d25c0c6496fa0e8acb243d9b1dd2bd"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/publish.json": {
+        "bytes": 1179,
+        "sha256": "a8775bfbecc4f0ce53d84fbba10e412ad22a8a1ac6792cbf39e0284e5a056fab"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/reader-epoch-cause.json": {
+        "bytes": 866,
+        "sha256": "7ce93779299f72f354b581087e3ec21725878c456cbf1172430feee3613a21dc"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/revise_guide.py": {
+        "bytes": 2174,
+        "sha256": "8e244cbee1e56f93f8386227183cb30469336726f26a15f3325d9996868da906"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/root-cause.json": {
+        "bytes": 447,
+        "sha256": "58f7507bafb6d28cab86a6a29893bcb8a8d254eb3d93e7e7ada35969aa6ff1ab"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/run.py": {
+        "bytes": 990,
+        "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/seal-command-final.json": {
+        "bytes": 1067,
+        "sha256": "ff920f6f65180472615f7935b7c022c63017217285f61526ba7939a7c6454b67"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/seal-command-retry.json": {
+        "bytes": 1899,
+        "sha256": "48c3e984880172add90387efb4c2114c0faf6fad21c0af1e4a58bc6c5416ce8e"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/seal-command.json": {
+        "bytes": 1056,
+        "sha256": "5114b2a07808218c2868e699e16a0a4827a5f199af27829a5a9f61b2f70c52cb"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/sealed-replay.json": {
+        "bytes": 2447,
+        "sha256": "32e911a0eed8046311fec8f9f09a1197e2d7a4d52a2d28b205d8e86f64dd0d17"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/snapshot-capture.json": {
+        "bytes": 645,
+        "sha256": "e36bac9fbe1a20ca67f42b1f7c2bbf90c01596cdb055bf726145037d965b4b86"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/staged-doctrines-final.json": {
+        "bytes": 62675,
+        "sha256": "10682fff4f7b5f47cb79e82245147515d71d05efccad53a659a5cf759c3376d0"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/staged-doctrines.json": {
+        "bytes": 62913,
+        "sha256": "dc13f5af917098176ce0f89cf12149809258cebba63218ca8294ae7e1776c3b7"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/stale-native-0-copied.txt": {
+        "bytes": 1423,
+        "sha256": "52ae49b8af41583fd405b76180b7fbf148dbc2e4389f5d26517748344b3da264"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/stale-native-0-current.txt": {
+        "bytes": 1518,
+        "sha256": "f48f6f1cf4adc9fa9ec95eadcd07b27c43a8164453aab0d78486e7b57af1f22a"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/stale-native-1-copied.txt": {
+        "bytes": 40134,
+        "sha256": "13029ec981e09f3e4f5d285b717be33817e06350c2a565f4cce45f0720878271"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/stale-native-1-current.txt": {
+        "bytes": 40232,
+        "sha256": "8944eea084d61df85b832e19e3b3a39d5a6baeabb016efedb3ab945db5ef0685"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/stale-native-census.json": {
+        "bytes": 293,
+        "sha256": "43416e4ce8c13b4023c3406ec135f274d765b3a0029c22c17f9b9759d92af700"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/stale-native-proof.json": {
+        "bytes": 1261,
+        "sha256": "97eb9ef6c3c8d92f8fab392e1db84cd3bef917002d66f763e024ace300831f64"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/task-budget.json": {
+        "bytes": 106634,
+        "sha256": "84812be2e23e8174a255a241f1a7e0f093887d0ef56ba3c7ea6bdc9a2b338e7a"
+      },
+      "docs/audits/public-boundary-publication-checks-20261006/verify_seal.py": {
+        "bytes": 11373,
+        "sha256": "21f1addd343c068304392dbd253d84d404a5cf518009d6022c489c1a4b57cfe9"
+      }
+    },
+    "docs/audits/record-value-public-boundary-publication-20261006": {
+      "docs/audits/record-value-public-boundary-publication-20261006/binding.json": {
+        "bytes": 14016,
+        "sha256": "564844c91cc95dd9e39d39564ce7a990605db74e09865b59ec7f8f944197d368"
+      },
+      "docs/audits/record-value-public-boundary-publication-20261006/controls.json": {
+        "bytes": 1602,
+        "sha256": "319369f7d45668cba1e6a853fb528bfa240129c5565f6815a8ea212a618a71de"
+      },
+      "docs/audits/record-value-public-boundary-publication-20261006/manifest.json": {
+        "bytes": 1025,
+        "sha256": "c93defd80b910a2ecffc740105200a6f01049712ba8390231ecc2e894e1e298b"
+      },
+      "docs/audits/record-value-public-boundary-publication-20261006/native-input.html": {
+        "bytes": 226550,
+        "sha256": "1cb2be47b3e7728d4e1301e72ff9356ba39e8c9a90ba65e334b79fba9c877185"
+      },
+      "docs/audits/record-value-public-boundary-publication-20261006/native-proof.json": {
+        "bytes": 600,
+        "sha256": "3e399012164d9656244476ee2e9244209d7f680fb9bdd2cab7156d4d8051272f"
+      },
+      "docs/audits/record-value-public-boundary-publication-20261006/publication.json": {
+        "bytes": 6289087,
+        "sha256": "d40e8bec6136783f262ed4f288ab3e40c11c696369901be3aa3e55aff88946ad"
+      },
+      "docs/audits/record-value-public-boundary-publication-20261006/scope.txt": {
+        "bytes": 2599,
+        "sha256": "325483592a5fbfa7e11c83ca3b93913ce86b7236c555c3c2251dd22f40739383"
+      },
+      "docs/audits/record-value-public-boundary-publication-20261006/source-proof.json": {
+        "bytes": 488099,
+        "sha256": "c20b2700ef0d79752db58caf89716ce7d63d849d17303d89225233cdc1a95137"
+      },
+      "docs/audits/record-value-public-boundary-publication-20261006/verify.py": {
+        "bytes": 23506,
+        "sha256": "2d10c5669a0c9ac6137a919e98cca3b313e0bf6bb11f4c22ff7c8d2b2afe6998"
+      }
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.3",
+  "programmes": {
+    "docs/audits/knowledge-card-rollover-20261005/verify.py": {
+      "bytes": 15366,
+      "sha256": "0ad4e5e5b1329a6dd968d99fb7346477ac8b2a579ce153956bf4fea354af14c3"
+    },
+    "knowledge-map/scripts/knowledge_map.conf": {
+      "bytes": 981,
+      "sha256": "a7a1a816c261388c35a10095654c96599ee62bf25454037e8dd31b4fd4394965"
+    },
+    "knowledge-map/scripts/knowledge_map.pl": {
+      "bytes": 29597,
+      "sha256": "2fd40d5bc253ce8b2849fd4b6e5f096f486d7016fac6dcd58ef639e11ae5ade3"
+    },
+    "knowledge-map/scripts/query_knowledge_map.sh": {
+      "bytes": 771,
+      "sha256": "fa7994b450c8b31caf2c1629823a8ab221af3318afc0bac3273b5fed4cd75d59"
+    },
+    "scripts/book_source_references.py": {
+      "bytes": 11033,
+      "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+    },
+    "scripts/check_book_source_index.py": {
+      "bytes": 1278,
+      "sha256": "1311f277544ca01c067eb311fc93ae99751a003117b93b3fe501dd19a413893f"
+    }
+  },
+  "revision": "e94e43234e4456d55fd55c99f2e3e37a529a4cbf"
+}

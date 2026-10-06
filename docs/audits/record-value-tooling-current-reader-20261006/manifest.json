@@ -1,0 +1,34 @@
+{
+  "binding.json": {
+    "bytes": 13294,
+    "sha256": "7e087650c1f08812c5beb59301d9e05107e94b196664fd1446cd03055cbb035d"
+  },
+  "controls.json": {
+    "bytes": 3138,
+    "sha256": "2317da30ca28c563b1c7b35eda436cc32f1e920ad85a26a64c651dfa15d3bccd"
+  },
+  "native-input.html": {
+    "bytes": 228289,
+    "sha256": "ba316f9be2a07bdb5285c6b4209d3e211cbe99484ee168fd01a979a6cf136b45"
+  },
+  "native-proof.json": {
+    "bytes": 617,
+    "sha256": "65bf19f660e376f0814f00ec3acc9aa00a1d5d39227a0e466c6696d48f4d14f9"
+  },
+  "publication.json": {
+    "bytes": 3731962,
+    "sha256": "fa5f1aa88e4a5262b4ae106c39cad3d85290c815214cae535abe0dfc2643c0f5"
+  },
+  "scope.txt": {
+    "bytes": 578,
+    "sha256": "e0b91e10187fb2e8a779f6f5e648b8af64f1deb2d9a8ce1aaecabe2a12ada98e"
+  },
+  "source-proof.json": {
+    "bytes": 11674,
+    "sha256": "0c0f1b591ecb4b3234a526575a47c485526c2728741eeb2fd5f1c7ccd37cd9b7"
+  },
+  "verify.py": {
+    "bytes": 20778,
+    "sha256": "bd6591cd47eb2d900ae4e710e27aed7bbc624d0f4400dc01793c37b9e5d51e3a"
+  }
+}

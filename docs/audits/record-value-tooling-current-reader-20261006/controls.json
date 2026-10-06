@@ -1,0 +1,116 @@
+{
+  "companion": [
+    {
+      "cause": "complete current core observer tooling facts questions identity and routes",
+      "control": "tooling-body-loss",
+      "status": 1
+    },
+    {
+      "cause": "complete current core observer tooling facts questions identity and routes",
+      "control": "core-body-loss",
+      "status": 1
+    },
+    {
+      "cause": "complete current core observer tooling facts questions identity and routes",
+      "control": "observer-loss",
+      "status": 1
+    },
+    {
+      "cause": "complete current core observer tooling facts questions identity and routes",
+      "control": "lost-tooling-question",
+      "status": 1
+    },
+    {
+      "cause": "complete current core observer tooling facts questions identity and routes",
+      "control": "superseded-tooling-route",
+      "status": 1
+    },
+    {
+      "cause": "complete current core observer tooling question ownership",
+      "control": "borrowed-tooling-owner",
+      "status": 1
+    },
+    {
+      "cause": "unique scoped current and checkpoint reader guidance",
+      "control": "snapshot-guide",
+      "status": 1
+    },
+    {
+      "cause": "whole unchanged canonical source budget",
+      "control": "lost-source-budget",
+      "status": 1
+    },
+    {
+      "cause": "unique complete raw-source and native build roles",
+      "control": "lost-native-role",
+      "status": 1
+    }
+  ],
+  "observer": [
+    {
+      "cause": "whole admitted source facts questions identity and route",
+      "control": "lost-receiver-fact",
+      "status": 1
+    },
+    {
+      "cause": "whole admitted source facts questions identity and route",
+      "control": "wrong-fact-id",
+      "status": 1
+    },
+    {
+      "cause": "whole admitted source facts questions identity and route",
+      "control": "wrong-current-route",
+      "status": 1
+    },
+    {
+      "cause": "whole admitted source facts questions identity and route",
+      "control": "lost-new-question",
+      "status": 1
+    },
+    {
+      "cause": "complete current question ownership",
+      "control": "borrowed-owner",
+      "status": 1
+    },
+    {
+      "cause": "actual query integer success",
+      "control": "Boolean-query-success",
+      "status": 1
+    },
+    {
+      "cause": "actual query integer success",
+      "control": "float-query-success",
+      "status": 1
+    },
+    {
+      "cause": "actual distinct direct/cache query command roles",
+      "control": "borrowed-query-command",
+      "status": 1
+    },
+    {
+      "cause": "unique scoped source/current/snapshot publication guide",
+      "control": "borrowed-snapshot-guide",
+      "status": 1
+    },
+    {
+      "cause": "physical capacity kind/allowance: files",
+      "control": "Boolean-capacity",
+      "status": 1
+    },
+    {
+      "cause": "complete physical capacity dimensions",
+      "control": "missing-capacity",
+      "status": 1
+    },
+    {
+      "cause": "physical capacity kind/allowance: files",
+      "control": "extra-physical-card",
+      "status": 1
+    },
+    {
+      "cause": "whole unchanged physical card authority",
+      "control": "widened-allowance",
+      "status": 1
+    }
+  ]
+}

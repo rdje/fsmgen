@@ -1,0 +1,65 @@
+# IASIM timing fidelity — DBINP recommendation (2026-10-06)
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.3.1
+
+The director asks whether IASIM needs cycle accuracy and, if neither an HDL
+event-driven simulator nor cycle accurate, what kind of simulator it is.
+This records discussion, not an activated runtime or a selected timing contract.
+
+Canonical sources reviewed:
+- docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md: native semantic authority;
+  one engine with direct tier adapters; .1 profile selection, .2 execution
+  model, .3 time/event/concurrency/update semantics, .5 HIAL/VIAL ordering,
+  .6 kernel/session contract and .7 independent qualification.
+- docs/knowledge/iasim-executable-reference-semantics.md: executable intent
+  reference semantics independent from HDL and backend scheduling.
+- The director's board-emulator requirements are retained in
+  docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md, board-emulator discussion:
+  native execution is the default, both native and FSM/HDL routes are required,
+  and the board host is Rust. Higher-level debugging must not require lowering.
+
+Recommended description: deterministic executable intent simulator. Its
+native engine executes state, rules, guards, actions, concurrency and
+transactions according to an explicit versioned contract. Timing fidelity is
+a model/profile capability, not a consequence of its implementation language
+or whether HDL was generated.
+
+Functional fidelity promises correct outcomes and state transitions without
+a latency claim. Transaction fidelity adds explicit ordering and bus-visible
+behavior; a timed profile additionally defines completion times, timeout and
+interrupt delivery in emulator virtual time. Cycle accuracy promises correct
+observable behavior at each specified clock edge and requires a defined
+clock/schedule reference. None of these labels substitutes for qualification.
+
+For board debugging, transaction execution with explicit virtual time is the
+recommended default integration profile. Firmware can observe BUSY, completion
+and interrupts without every internal hardware cycle being modeled. The model
+must advance and produce asynchronous outputs while firmware makes no accesses;
+an untimed functional model needs an explicit, separately identified timing
+policy before it can promise timed board behavior. Wall-clock or IPC delays are
+not device time. Existing intent clocks, delays, deadlines or committed schedules
+must not silently disappear when this profile is selected.
+
+Cycle fidelity is needed where a supported intent/profile specifies clock-edge
+behavior or the intended check depends on exact cycle relationships. Native
+IAL0 and scheduled intent execution can be qualified against those clocks
+without generating HDL first. Direct IAL1/IAL2 execution must preserve specified
+timing and leave unspecified implementation timing visibly unspecified; it
+must not invent a lowered implementation schedule or claim parity to one.
+
+Not an HDL event-driven simulator does not imply no events at all. Native
+intent events can include transaction completion, timeout, clock edge, reset
+and interrupt. A deterministic engine may schedule these in virtual time or
+use logical ticks, according to .1/.3's future contract. It need not adopt HDL
+signal-event regions, delta-cycle conventions or HDL semantics. The existing
+IASIM proposal explicitly includes native time, events, clocks and settling;
+an absolute no-event rule would be a new constraint, not an existing decision.
+
+Recommendation for review: one native engine, explicit fidelity capabilities,
+and one embedding time contract; avoid independent divergent schedulers for
+the tiers or timing profiles. Unsupported or unspecified timing must remain
+visible in capabilities and diagnostics. Selection of first profile, event
+algorithm, clock relationships, time resolution, same-time ordering,
+backpressure, reset, save/restore and equivalence criteria belongs to the
+existing proposed IASIM architecture/time/session leaves. This discussion
+does not activate them, settle those choices or pivot the tooling repair.
