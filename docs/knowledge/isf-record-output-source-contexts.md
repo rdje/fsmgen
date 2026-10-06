@@ -12,6 +12,7 @@ date: 2026-10-01
 status: current
 tags: [isf, record, output, contexts, samples, domains, shadows]
 evidence: >-
+  docs/audits/record-value-parser-path-models-20261006/scope.txt;
   docs/audits/record-value-original-parser-sources-20261005/scope.txt;
   docs/audits/record-value-parser-source-publication-20261005/scope.txt;
   docs/audits/record-output-source-contexts-20261001/manifest.json;
@@ -27,7 +28,7 @@ reverify: >-
   t/2030-isf-record-output-writer-admission.t
   t/1991-isf-record-port-sample-contexts.t &&
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-parser-source-publication-20261005/verify.py --current
+  docs/audits/record-value-parser-path-models-20261006/verify.py --current
 ---
 
 At baseline 8f31768d, prepared output-only actors bypassed source context/sample
@@ -90,3 +91,10 @@ raw coordinates, reference/address lifetimes, consumer/alias/cold meanings and
 permanent/native repairs remain separate owners. Visual mdBook QA is pending.
 
 Related: [[record-value-original-observer-helper-paths]].
+
+Finite source models distinguish the original refused paths: list actor-port
+admission stops before record contexts; output-field writes reach the write guard.
+Complete positional/named roles identify supplied source expressions. Receiver,
+normalized AST and partial-actor payloads remain unmeasured. Returned callees are
+excluded from active own ancestry. Complete nested API allocations reuse dated
+source-family proofs; native/API/helper frame matching remains separate.

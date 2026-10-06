@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path; n={'__name__':'final_native_model_publication'}; p=Path('docs/audits/record-value-parser-path-models-20261006/publication.py'); exec(compile(p.read_bytes(),str(p),'exec'),n); n['verify'](current=True,build='.artifacts/parser-path-models/final-book'); print('PASS final scoped current source/native rendering and all controls')"
+  ],
+  "status": 0,
+  "stdout": "PASS final scoped current source/native rendering and all controls\n",
+  "stderr": "ram-guard: PID 75621; host 79.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -1,0 +1,18 @@
+{
+  "controls": [
+    {
+      "control": "native-wrong-reader-role",
+      "error": "native unique current source-model command",
+      "status": 1
+    },
+    {
+      "control": "native-invented-payload-measurement",
+      "error": "native complete source-model scope and missing legs",
+      "status": 1
+    }
+  ],
+  "whole_rendered": {
+    "bytes": 212522,
+    "sha256": "15a03584737878a0edaaf4d4fec0028b098cc78733fa3e88a757ca6de52174b7"
+  }
+}

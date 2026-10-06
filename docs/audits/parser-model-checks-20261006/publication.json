@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-path-models-20261006/verify.py",
+    "--publish"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 69693; host 80.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-parser-path-models-20261006/verify.py\", line 224, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-parser-path-models-20261006/verify.py\", line 214, in main\n    publication['publish']()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"docs/audits/record-value-parser-path-models-20261006/publication.py\", line 235, in publish\n    require(same(previous['collection'](), before), 'whole independently Git-bound prepublication card population')\n            ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-own-boundary-publication-20261005/verify.py\", line 28, in same\n    return json.dumps(a, sort_keys=True, allow_nan=False) == json.dumps(b, sort_keys=True, allow_nan=False)\n           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py\", line 242, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py\", line 202, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py\", line 263, in iterencode\n    return _iterencode(o, 0)\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py\", line 182, in default\n    raise TypeError(f'Object of type {o.__class__.__name__} '\n                    f'is not JSON serializable')\nTypeError: Object of type bytes is not JSON serializable\nwhen serializing dict item 'docs/knowledge/README.md'\n"
+}

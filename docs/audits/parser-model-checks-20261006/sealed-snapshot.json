@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-path-models-20261006/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS finite original source guard/ancestry/argument roles and dated nested source allocations; native joins remain open.\nPASS saved source/publication snapshot; current currency is not established\n",
+  "stderr": "ram-guard: PID 1895; host 69.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "control": "lost-prior-body",
+    "error": "whole prior qualified source-context body",
+    "status": 1
+  },
+  {
+    "control": "lost-prior-evidence",
+    "error": "whole prior fact evidence routes",
+    "status": 1
+  },
+  {
+    "control": "lost-prior-test-command",
+    "error": "whole prior source-context tests and current verification prefix",
+    "status": 1
+  },
+  {
+    "control": "invented-native-assurance",
+    "error": "whole new qualified source-model meaning",
+    "status": 1
+  },
+  {
+    "control": "missing-ordered-question",
+    "error": "complete stable prior source question identities",
+    "status": 1
+  },
+  {
+    "control": "Boolean-query-status",
+    "error": "actual current source-model query integer status",
+    "status": 1
+  },
+  {
+    "control": "borrowed-query-ID",
+    "error": "complete scoped old question current ownership",
+    "status": 1
+  },
+  {
+    "control": "wrong-reader-guide",
+    "error": "unique complete current source-model guide",
+    "status": 1
+  },
+  {
+    "control": "excess-cardinality",
+    "error": "current physical card allowance/kind: files",
+    "status": 1
+  }
+]

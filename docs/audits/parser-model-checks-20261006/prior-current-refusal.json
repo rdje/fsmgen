@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-path-models-20261006/probe_prior.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual prior whole-card epoch refusal with full inputs and restoration\n",
+  "stderr": "ram-guard: PID 32852; host 60.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

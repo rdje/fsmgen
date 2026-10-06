@@ -1,0 +1,142 @@
+{
+  "archives": {
+    "docs/audits/record-value-original-parser-sources-20261005": {
+      "binding.json": {
+        "bytes": 1318609,
+        "sha256": "d76f5b80bc3d7d71ad2223d1d486421bd70c04cf8e3869f9d1bc8501156ef8a1"
+      },
+      "book-input.html": {
+        "bytes": 211023,
+        "sha256": "7445c597cced44740d19da38d92a7307135aa799be4bc3b4dbac9f9a536072a9"
+      },
+      "book-proofs.json": {
+        "bytes": 1364,
+        "sha256": "8f1d37f14aa7b019ff7a3d2fab003095f729cf97ede0a940d492e0dd5ce0b25d"
+      },
+      "current-controls.json": {
+        "bytes": 524,
+        "sha256": "6db47ae0dce22b5d07b1dede42def6c1e54d8a8baf042ef2d2535128144d4081"
+      },
+      "current-input.json": {
+        "bytes": 2775702,
+        "sha256": "c590fd1b19c7d704a0432476f69dd952615a44ccb8931b151e99ec015f26da51"
+      },
+      "manifest.json": {
+        "bytes": 1801,
+        "sha256": "bc49211f94dc8f5fe5b31e88f872dcc7597b1b0d8bc20ccc690732e9588ee2c2"
+      },
+      "prepare.py": {
+        "bytes": 1427,
+        "sha256": "b2161fd2a30a21177aacaeed47a53496abf2a95df6348e3b5379e24c0c6a88a4"
+      },
+      "probe_unrelated.py": {
+        "bytes": 3185,
+        "sha256": "17a9cdeb1a13db4f9a2476e6fb74c75d50f3118e18cc529c404a1ac17e8a4bdd"
+      },
+      "proofs.json": {
+        "bytes": 626350,
+        "sha256": "ebfc16413e86f1978c907c193f50f753bb9f1075ec286d6fd24a3a46f3e77e02"
+      },
+      "publication.json": {
+        "bytes": 364364,
+        "sha256": "68520e7f3b19c39076aa6874ca00f568adeb861bc13caec59d39c7f2c72bd80c"
+      },
+      "publication.py": {
+        "bytes": 13232,
+        "sha256": "041c6d282b819d39cf9178921f71f53daae2d4159146ff21c8ecce059448486d"
+      },
+      "recipes.py": {
+        "bytes": 6757,
+        "sha256": "4e1859d39b63fcaab3a2b6b0df1b2c33646a9d418bc3fcb5f09fdd962a3762ac"
+      },
+      "scope.txt": {
+        "bytes": 3300,
+        "sha256": "e442787f301439e2c0f718262cfd48c78a6b8c70d0e2914a825ac0ae6cb09c82"
+      },
+      "unrelated-progress.json": {
+        "bytes": 86557,
+        "sha256": "0724b27f1344178903d6155632d75d2189bb0be0da00a2ca5cad92581ec5ab66"
+      },
+      "verify.py": {
+        "bytes": 12235,
+        "sha256": "ca733ab3f770c9d9fa8519ebeba416210a8f3ac0fc563236c880486481713f0b"
+      }
+    },
+    "docs/audits/record-value-parser-source-publication-20261005": {
+      "binding.json": {
+        "bytes": 2544,
+        "sha256": "5149671b4995438cbd7bb503594edcdf03120046fc1bf42769622b9da8a00ea3"
+      },
+      "book-input.html": {
+        "bytes": 211423,
+        "sha256": "85cbecd2d5ddbc45061c24945e6f2228c39f5e6a747de2f82172e81bf69552f2"
+      },
+      "book-proofs.json": {
+        "bytes": 1739,
+        "sha256": "d55f706634d6f46f903e630d2f51ccd73fab7996fd9b6e37e05310ccf54755cb"
+      },
+      "book-source-proof.json": {
+        "bytes": 7594,
+        "sha256": "435cc38b507b41d1ce3f6d9e918dceb702de3e317e6fa630ee8ac6757ad2deee"
+      },
+      "collection-members.json": {
+        "bytes": 486230,
+        "sha256": "26b215af9f42a01d046b52752e8b542da28ca228eaf07674c15007d3091eec8e"
+      },
+      "collection-proof.json": {
+        "bytes": 4107,
+        "sha256": "5aec35e08926c971b96c744c60b326cf47aa1450511dff45d13d2ac35b2e3c57"
+      },
+      "controls.json": {
+        "bytes": 1172,
+        "sha256": "805d04372336e6f4b43382c126dfc3b825881372050b12c08e9c22fc4e975bd1"
+      },
+      "current-input.json": {
+        "bytes": 2781290,
+        "sha256": "060705b4c3e915a8b8e07f04a682b32472c36033aeeef626ca5d0f46210d27d0"
+      },
+      "manifest.json": {
+        "bytes": 1698,
+        "sha256": "f65831c1775f1882837d35096fc15c3c756ac4ddd6bbbd70c6760401626aab90"
+      },
+      "probe_unrelated.py": {
+        "bytes": 3273,
+        "sha256": "a8e6c32713487eca9af64d91acd6e63e914ff105c1c77e3bffc85257818b6b36"
+      },
+      "publication.json": {
+        "bytes": 365980,
+        "sha256": "d8526d4fefb736c472bdf2c9d234df5cc2729e07ef5e05dfbed209b7a43d5fdb"
+      },
+      "scope.txt": {
+        "bytes": 3497,
+        "sha256": "3f9091906f18a9d8ecf89904ce9ec1ed9c3138fea005bf3b77e19ed1338ed1c8"
+      },
+      "unrelated-progress.json": {
+        "bytes": 86529,
+        "sha256": "ff3de603e875647b2b6b961f79f34e189a0ec5c4a56da5e6ccc1dfe66f0ea320"
+      },
+      "verify.py": {
+        "bytes": 21086,
+        "sha256": "940741bcaf23a15d5514d90526f91804530157f3e54e3afce9fa3ae9dfcca041"
+      }
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.1",
+  "owner_body": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.1`\n  Status: `done`\n  Goal: `Inventory complete original parser refusal source units and call boundaries.`\n  Acceptance: `Authenticate and reexecute the completed own-source/helper/API/parser/context/primary prerequisites. Bind whole original own facade/parser/record-context source texts and complete relevant function bodies, declarations, ordered source call/guard statements and supplied parameter roles. Independently select source boundaries before native comparison. Genuine source/body/member/statement/kind corruptions reject. This slice inventories source recipes only; active path/guard semantics and native argument comparisons remain .2/.3.`\n  Verification: `Complete original facade/parser/context units retain481487 bytes and379 lexical declarations; twelve independently selected complete bodies bind parameter roles and ordered call/guard statements. Ten genuine source/body/member/statement/parameter/kind controls reject. Whole committed own-source publication/task/actual receipt domains authenticate and historical source/helper/API/parser/context/primary chain reexecutes. First standalone-card proposal, native/source/current products and failed collection gate remain sealed; its old current command refuses after withdrawal, while historical source replay remains valid. Separate superseding publisher preserves the existing source-context card whole prior body/ID/four ordered questions/reverify prefix, adds only two source-inventory questions/provenance, and independently conserves whole card-member identities and all physical collection dimensions. Final collection1260 files/3878262 bytes/53059LF is within unchanged allowance; cardinality headroom remains zero and rollover debt stays owned. Nine genuine publication/source/query/kind/capacity/guide controls and two native guide controls reject. Actual unrelated chapter/authority progress0 restores every byte. Fresh superseding sealed current/native0 and saved snapshot0 rederive products; exact actual pre/post receipt pins hold and the withdrawn proposal successful identity rejects. Book64 files68089->68112LF/3784441->3785756 bytes, SUMMARY conserved. Focused source-context/book5/326 and earlier4/323 pass; final Knowledge Map, prior current source-plane/index/copied-byte and staged-doctrine receipts own regression. Three legs/missing scope: original parser sources and superseding parser source publication scope.txt. Active paths/arguments .2, native/API/helper join .3 and full path publication .4 stay open; no original captures/external implementation/native probes/full CI/push. Visual QA pending.`\n  Commit: `this slice; resolve with work-unit Git subject`\n",
+  "receipts": {
+    "docs/audits/parser-source-checks-20261005/superseding-sealed-reader.json": {
+      "bytes": 2034,
+      "sha256": "31dbb2d58e171942a5770c4702fce66bb95d077256a0d42c035abd71fb700939"
+    },
+    "docs/audits/parser-source-checks-20261005/verify_superseding_receipt.py": {
+      "bytes": 2358,
+      "sha256": "28617140fda1ea685e22dc099457284ff2114e2fcb686f93196ad87f707fd330"
+    }
+  },
+  "revision": "781749b7eb6675ac912125a30ded3be860c57360",
+  "task_identity": {
+    "bytes": 1315112,
+    "sha256": "e9a703864c0533088cb7bf6bf04909589a467e3f4c37156997e72e6111c6c1a2"
+  },
+  "task_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-path-models-20261006/verify.py",
+    "--publish"
+  ],
+  "status": 0,
+  "stdout": "PASS unchanged-authority bounded parser source-model publication\nPASS finite original source guard/ancestry/argument roles and dated nested source allocations; native joins remain open.\n",
+  "stderr": "ram-guard: PID 94615; host 66.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

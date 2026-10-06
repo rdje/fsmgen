@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path; n={'__name__':'guard_oracle'}; p=Path('docs/audits/record-value-parser-path-models-20261006/verify.py'); exec(compile(p.read_bytes(),str(p),'exec'),n); inventory,authored,primary=n['inputs'](); paths=n['model']['derive'](inventory,authored,n['require'],n['identity']); proof=n['guard_truth'](inventory); print('PASS isolated original guards',len(proof['inputs']['type']),len(proof['inputs']['write']),'and finite paths',len(paths))"
+  ],
+  "status": 0,
+  "stdout": "PASS isolated original guards 32 288 and finite paths 2\n",
+  "stderr": "ram-guard: PID 15091; host 86.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

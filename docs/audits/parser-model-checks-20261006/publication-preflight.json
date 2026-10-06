@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path; n={'__name__':'preflight_models'}; p=Path('docs/audits/record-value-parser-path-models-20261006/publication.py'); exec(compile(p.read_bytes(),str(p),'exec'),n); proof=n['source_proof'](); n['previous']['within'](proof['collection_after'],n['previous']['declaration']()); print({k:proof[k] for k in ['collection_before','collection_after','book_delta']})"
+  ],
+  "status": 0,
+  "stdout": "{'collection_before': {'files': 1260, 'lines_total': 53059, 'bytes_total': 3878262, 'lines_each': 422, 'bytes_each': 31755, 'line_bytes_each': 819}, 'collection_after': {'files': 1260, 'lines_total': 53067, 'bytes_total': 3878796, 'lines_each': 422, 'bytes_each': 31755, 'line_bytes_each': 819}, 'book_delta': {'files': 0, 'lines_total': 18, 'bytes_total': 1093}}\n",
+  "stderr": "ram-guard: PID 11235; host 55.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

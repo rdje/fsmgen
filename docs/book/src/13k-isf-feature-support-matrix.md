@@ -612,8 +612,9 @@ The original parser source inventory binds complete own facade, parser and
 record-context source units, lexical declarations, selected whole function bodies,
 parameter roles and ordered call/guard statements. Output-field source admission
 and aggregate actor-port admission have distinct source boundaries. This inventory
-does not establish active failure paths or native argument meanings; independent
-path models and complete API/helper/frame joins remain subsequent work.
+does not establish active failure paths or native argument meanings. The finite
+source models below qualify own ancestry and argument roles; complete
+API/helper/native frame joins remain separate work.
 
 The initial new-card proposal exceeded the collection file allowance and was
 withdrawn. Its complete source proof and candidate publication remain immutable.
@@ -622,7 +623,7 @@ preserving its prior body, identity, questions and verification command. The
 current reader additionally checks all physical collection dimensions:
 
 ```bash
-python3 -B docs/audits/record-value-parser-source-publication-20261005/verify.py --current
+python3 -B docs/audits/record-value-parser-path-models-20261006/verify.py --current
 ```
 
 The original source reader defaults to historical replay; its withdrawn live
@@ -630,6 +631,23 @@ proposal is not current authority. This publication reader separates that source
 proof from live fact, query, capacity and guide checks. Framework/display,
 coordinates, native identity and broader consumer/alias/cold meanings remain
 separately owned. Visual QA is pending.
+
+The finite source models now distinguish active own ancestors from returned
+delegates. List actor-port admission stops at the aggregate type guard before
+record-context validation. Output-field admission reaches the transaction write
+guard before assignment RHS validation or actor publication. Both models retain
+every supplied positional and named argument role as a source expression.
+
+Receiver, normalized AST and whole partial-actor payloads remain unmeasured.
+The independently evaluated original Perl guards agree with the finite model.
+Complete nested API membership reuses the dated qualified source-family models;
+it does not establish a new native stack. Complete API/helper/native frame joins
+and public formatter, coordinate and address contracts remain separate work.
+
+The scoped current reader preserves all qualified prior and new source meanings,
+question ownership, source guidance and physical collection bounds. Historical
+publication replay remains distinct from current semantic qualification. Visual
+QA is pending.
 
 [portable replay repair](reference-source/docs/audits/record-value-replay-portability-20261004/scope.txt.source.txt)
 now binds each Python process filename to its exact invoked reader. The original

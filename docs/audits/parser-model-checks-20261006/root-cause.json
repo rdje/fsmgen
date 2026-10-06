@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "does not establish active failure paths",
+    "-1",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "status": 0,
+  "stdout": "commit 781749b7eb6675ac912125a30ded3be860c57360\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Tue Oct 6 01:48:45 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.1: inventory original parser refusal sources\n    \n    Bind complete original own facade/parser/context sources, declarations, twelve\n    whole bodies and parameter/call/guard statements without claiming active paths.\n    \n    Preserve the first standalone-card proposal and failed gate as immutable\n    evidence. Re-home qualified provenance into the existing source-context topic,\n    conserving all old facts/questions and unchanged collection allowances.\n    Independently qualify superseding current/query/native and historical roles;\n    retain hostile controls, full-member conservation and fresh sealed receipts.\n    \n    Validation: focused Files=5 Tests=326 and earlier4/323; source/current/native\n    and unrelated-progress readers; prior current helper/source-plane reader;\n    Knowledge Map, claim census, copied source bytes and staged doctrines.\n",
+  "stderr": "ram-guard: PID 88649; host 71.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

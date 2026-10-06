@@ -1,0 +1,104 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-path-models-20261006/verify.py",
+    "--current",
+    "--build",
+    ".artifacts/parser-path-models/book"
+  ],
+  "status": 0,
+  "stdout": "PASS finite original source guard/ancestry/argument roles and dated nested source allocations; native joins remain open.\nPASS current scoped source meanings/query/guide/capacity\n",
+  "stderr": "ram-guard: PID 2129; host 69.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "programme_and_product_identity": {
+    "binding.json": {
+      "bytes": 7956,
+      "sha256": "e7089830cbf5f4b69bdd61f7ee68a2ae10046da2d631ee31f2cb5599ebafea88"
+    },
+    "book-input.html": {
+      "bytes": 212522,
+      "sha256": "15a03584737878a0edaaf4d4fec0028b098cc78733fa3e88a757ca6de52174b7"
+    },
+    "book-proofs.json": {
+      "bytes": 446,
+      "sha256": "8ae317bf26b6d3e0c5ecc937bc9e4e3e26267284ac943eccd847d326b357d3dd"
+    },
+    "current-controls.json": {
+      "bytes": 1135,
+      "sha256": "01346529eee274ab03a2dde059980a1d5075afd6592d45741206e61511c25b63"
+    },
+    "current-input.json": {
+      "bytes": 2782902,
+      "sha256": "b7d80e96e1d531897d9e57fc4ff64a38167105cf0351975ae089041f2b2bd822"
+    },
+    "initial-byte-map-publication.py.txt": {
+      "bytes": 16362,
+      "sha256": "a10d4ddeea7e99256c6539e2a95abbe01b33fd9bc6894e8790db609cfd5255a9"
+    },
+    "initial-published-programme.py.txt": {
+      "bytes": 16354,
+      "sha256": "fc4c7d3539cea8a6ec725225ca3b90458be1eea81b316a3765f37d2a77b0e35a"
+    },
+    "initial-source-proof.json": {
+      "bytes": 5431,
+      "sha256": "3b8040cd3a9244841c3b5ed183ff6dd0c9d09fe7e54fb8262361f7adfd326cd0"
+    },
+    "manifest.json": {
+      "bytes": 2766,
+      "sha256": "3f98dfbb320d68ad6011791f521f56c2cbde656a6e99b342e40d0f8191663d56"
+    },
+    "model.py": {
+      "bytes": 9629,
+      "sha256": "6755f91b8b2d98d9dc71e9433b6a302b79d68301229dfd4e4149cde27e21c80d"
+    },
+    "prepare.py": {
+      "bytes": 1323,
+      "sha256": "77ad1b78e3f659d6a4c6c74dc2f40b09ea7ffa3d9e43e0fde50f491613975f00"
+    },
+    "prior-current-refusal.json": {
+      "bytes": 12920,
+      "sha256": "f5b6cb7b255e359baa0fbee7e5842cfbf5cb9fdd8a543b9dd826a8ed53684394"
+    },
+    "probe_prior.py": {
+      "bytes": 1643,
+      "sha256": "9ff74759afc28a0ed078f79694f64854a0203c112f2fbc7d15b6d0a8a2d0b6e6"
+    },
+    "probe_unrelated.py": {
+      "bytes": 3739,
+      "sha256": "0483ff0835c597c76c0452306ec0e2831dea0f2f61d38d6454d7052c6ccea8c3"
+    },
+    "proofs.json": {
+      "bytes": 960445,
+      "sha256": "356ebd6f71dfee1abb8c849f44430121f51e988b75977e7bce04827fdf981e8d"
+    },
+    "publication.json": {
+      "bytes": 369607,
+      "sha256": "133b00e6c918301d7da5ae286f7fd31f919cc3794ca0cf706d157d57eba1c2d8"
+    },
+    "publication.py": {
+      "bytes": 18046,
+      "sha256": "2b5b8c78f64a11f637d158aadf67d9833dab5f272fe3bacf89f554f2d693c84b"
+    },
+    "scope.txt": {
+      "bytes": 4070,
+      "sha256": "9bbd5c5a842ec6cf4285421c66b5d5a69c1a08f7b9d983d0f311280b117639b9"
+    },
+    "source-guide-recovery.json": {
+      "bytes": 552,
+      "sha256": "cf7a6f99e05a57b1ffc114ef2c14950754e385ce0c62fee387f21d171fad4900"
+    },
+    "source-proof.json": {
+      "bytes": 5431,
+      "sha256": "f124c4ad483ce01fbfd538bee73709fc0050e490ea90eed2c1e7b9763a2b6920"
+    },
+    "unrelated-progress.json": {
+      "bytes": 98598,
+      "sha256": "e8b8ac101882008b7f6d988b72b2f884aaea316f3163c57648a5a9a997f6be75"
+    },
+    "verify.py": {
+      "bytes": 14067,
+      "sha256": "e07aab4a3503d67800742a678b9689997853f6967209b96149a80d8fe2c2196f"
+    }
+  },
+  "identity_unchanged_after_execution": true
+}

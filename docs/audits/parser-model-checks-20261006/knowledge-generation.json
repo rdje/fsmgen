@@ -1,0 +1,8 @@
+{
+  "command": [
+    "knowledge-map/scripts/generate_knowledge_map.sh"
+  ],
+  "status": 127,
+  "stdout": "",
+  "stderr": "ram-guard: PID 33626; host 75.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nscripts/run_with_ram_guard.sh: line 280: knowledge-map/scripts/generate_knowledge_map.sh: No such file or directory\n"
+}

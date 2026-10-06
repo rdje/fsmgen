@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-path-models-20261006/prepare.py"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "ram-guard: PID 19536; host 79.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
