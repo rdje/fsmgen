@@ -1,0 +1,6 @@
+{
+  "role": "Local semantic/control review; complete committed prerequisite replay remains required.",
+  "status": 0,
+  "stderr": "ram-guard: PID 47839; host 74.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS genuine context controls: 17\n"
+}

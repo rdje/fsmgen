@@ -1,0 +1,40 @@
+{
+  "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-context-join-20261006/verify.py",
+  "controls": [
+    {
+      "cause": "native exact context-join replay command",
+      "control": "extra-command-argument",
+      "status": 1
+    },
+    {
+      "cause": "native complete context-join guidance and missing legs",
+      "control": "broadened-scope",
+      "status": 1
+    },
+    {
+      "cause": "native complete context-join guidance and missing legs",
+      "control": "lost-identity-gap",
+      "status": 1
+    },
+    {
+      "cause": "native complete admitted source-link destinations",
+      "control": "unadmitted-parser-function-order-link",
+      "status": 1
+    },
+    {
+      "cause": "native complete admitted source-link destinations",
+      "control": "unadmitted-parser-argument-roles-link",
+      "status": 1
+    },
+    {
+      "cause": "native complete admitted source-link destinations",
+      "control": "unadmitted-parser-context-join-link",
+      "status": 1
+    }
+  ],
+  "native_identity": {
+    "bytes": 215202,
+    "sha256": "e2ae176cb81236388caaa52e1738f762f37c548bbce887ee378d66f5a26cf47e"
+  },
+  "visual_QA": "not performed; separately owned"
+}

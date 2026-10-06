@@ -1,0 +1,327 @@
+"""Finite complete own parser/API/observer/helper/subtest source-context join."""
+import argparse
+import copy
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-parser-context-join-20261006')
+ARGUMENT = Path('docs/audits/record-value-parser-argument-roles-20261006')
+CHECKS = Path('docs/audits/parser-argument-role-checks-20261006')
+OBSERVER = Path('docs/audits/record-value-original-observer-boundaries-20261005')
+HELPER = Path('docs/audits/record-value-original-helper-join-20261005')
+SUBTEST = Path('docs/audits/record-value-own-subtest-boundaries-20261005')
+REVISION = 'b0fd54bb086db4f1a01c45d6d121c68b35594613'
+
+
+def module(path):
+    namespace = {'__name__': 'parser_context_join_prerequisite'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), namespace)
+    return namespace
+
+
+argument = module(ARGUMENT / 'verify.py')
+observer, helper, subtest = (module(path / 'verify.py') for path in (OBSERVER, HELPER, SUBTEST))
+api = observer['api']
+require, same, identity, load = (argument[key] for key in ('require', 'same', 'identity', 'load'))
+RAW = argument['prior']['RAW']
+MODEL = module(BASE / 'model.py')
+READERS = {'argument': argument, 'observer': observer, 'helper': helper, 'subtest': subtest}
+DIRECTORIES = (ARGUMENT, CHECKS, argument['ORDER'], argument['prior']['MODELS'],
+               RAW, OBSERVER, api['BASE'], HELPER, SUBTEST)
+
+
+def owners():
+    result = {}
+    for directory in DIRECTORIES:
+        scope = ARGUMENT / 'scope.txt' if directory == CHECKS else directory / 'scope.txt'
+        text = scope.read_text().splitlines()[0]
+        require(text.startswith('Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.'), 'declared completed source owner')
+        result[str(directory)] = text.removeprefix('Owner: ')
+    return result
+
+
+def save(name, value):
+    path = BASE / name
+    if path.exists():
+        require(same(load(path), value), 'whole saved context-join product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(), 'sealed context join cannot publish')
+        path.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+
+
+def authenticate():
+    binding = load(BASE / 'binding.json')
+    require(binding['revision'] == REVISION and binding['owners'] == owners(), 'complete committed context-join intake')
+    task = subprocess.check_output(['git', 'show', REVISION + ':' + binding['task_path']])
+    require(same(identity(task), binding['task_identity']), 'whole committed context-join task identity')
+    text = task.decode()
+    require(set(binding['archives']) == set(binding['owners']), 'complete context-join archive domain')
+    for directory, owner in binding['owners'].items():
+        start = text.index('- ID: `' + owner + '`'); end = text.index('\n- ID:', start + 1)
+        require(text[start:end] == binding['owner_bodies'][owner]
+                and '\n  Status: `done`\n' in text[start:end], 'whole completed context-join source owner')
+        committed = argument['prior']['committed_members'](REVISION, directory)
+        actual = {str(path): path.read_bytes() for path in Path(directory).iterdir()}
+        require(actual == committed and same(binding['archives'][directory],
+                {path: identity(raw) for path, raw in actual.items()}), 'whole committed context-join source members')
+    if (BASE / 'manifest.json').exists():
+        require(same(load(BASE / 'manifest.json'), argument['prior']['members'](BASE)), 'whole context-join seal')
+    # The argument root reexecutes source models -> original parser sources ->
+    # own-boundary publication -> subtest -> helper -> callback/named helper ->
+    # observer -> own API, as well as raw/order chains and their controls.
+    # These exact committed programmes make coverage inspectable; no later
+    # source/native join is replaced by a saved successful stdout string.
+    receipts = []
+    for programme in (ARGUMENT / 'verify.py', CHECKS / 'verify_seal.py'):
+        command = ['python3', '-B', str(programme)]
+        run = subprocess.run(command, capture_output=True, text=True)
+        require(run.returncode == 0, 'complete source/API/observer/helper/subtest prerequisite replay')
+        receipts.append({'command': command, 'status': run.returncode, 'stdout': run.stdout, 'stderr': run.stderr})
+    return receipts
+
+
+def models():
+    return MODEL['derive'](READERS, require, same)
+
+
+def nested_records(expected):
+    capture = module(RAW / 'verify.py')['CAPTURE']
+    result = []
+    for mode in expected['modes']:
+        native = load(capture / (mode['mode'] + '.json'))
+        cases = []
+        for allocation in expected['nested']:
+            index = allocation['parse_index']
+            parsed = native['parses'][index]
+            rows = []
+            for position, actual in enumerate(native['api']):
+                if actual['parse'] == index:
+                    rows.append(dict(index=position, **{key: actual[key] for key in
+                                 ('kind', 'caller', 'helper', 'parse', 'accepted', 'error')}))
+            cases.append({'parse_index': index, 'bounds': [parsed['api_start'], parsed['api_end']],
+                          'helper': parsed['helper'], 'members': rows})
+        result.append({'mode': mode['mode'], 'api_population': len(native['api']), 'cases': cases})
+        del native
+    return result
+
+
+def local_checks(expected, native):
+    argument['check'](expected['parser'], expected['parser'], native, native, expected['order'])
+    api['check'](expected['api'], expected['api'], native, expected['sources']['api'])
+    observer['check'](expected['observer'], expected['observer'], native, expected['sources']['observer'])
+    helper_proof = helper['check'](expected['helper'], expected['helper'], native, expected['sources']['helper'])
+    subtest_proof = subtest['check'](expected['subtest'], expected['subtest'], native, expected['sources']['helper'])
+    return helper_proof, subtest_proof
+
+
+def function(frame):
+    return frame['call'].split('(', 1)[0]
+
+
+def check(actual_models, expected, native, original, nested, original_nested):
+    require(same(actual_models, expected), 'whole independent source context-join models')
+    require([row['mode'] for row in native] == [row['mode'] for row in expected['modes']],
+            'complete context-join native mode population')
+    trace = module(RAW / 'trace_inventory.py')['inventory']
+    for mode in native:
+        for domain in ('api', 'parses'):
+            for row in mode['domains'][domain]['nonempty']:
+                require(type(row['index']) is int and type(row['context']['helper']) is int,
+                        'context-join native discrete allocation kinds')
+                require(row['wire_kind'] == 'string' and type(row['body']) is str
+                        and same(row['body_identity'], identity(row['body'].encode()))
+                        and same({key: row[key] for key in ('segments', 'opaque_lexemes')}, trace(row['body'])),
+                        'whole reversible context-join native bodies')
+    helper_modes, subtest_modes = local_checks(expected, native)
+    observed = []
+    own_prefixes = ('FSM::Adapter::ISF::', 'FSM::Support::ISFRecordPortContexts::', *api['PACKAGES'], 'main::')
+    for model, inventory, helpers, subtests in zip(expected['modes'], native, helper_modes, subtest_modes, strict=True):
+        helper_cases = {(case['domain'], case['index']): case for case in helpers['cases']}
+        subtest_cases = {(case['domain'], case['index']): case for case in subtests['cases']}
+        cases = []
+        for case in model['cases']:
+            key = case['domain'], case['index']
+            row = next(row for row in inventory['domains'][case['domain']]['nonempty'] if row['index'] == case['index'])
+            require(row['context']['helper'] == case['helper'] and same(row['context']['caller'], case['caller']),
+                    'whole source context-join caller/helper allocation')
+            frames = [frame for frame in row['segments'] if frame['kind'] == 'frame']
+            covered, phases, start = set(), [], 0
+            for wanted, helper_phase, body_phase in zip(case['phases'], helper_cases[key]['joint_paths'],
+                                                      subtest_cases[key]['phases'], strict=True):
+                helper_positions = helper_phase['frame_positions']
+                loaded = body_phase['load_position']
+                core_prefixes = argument['prior']['OWN_PACKAGES'] if case['domain'] == 'parses' else api['PACKAGES']
+                core = [i for i in range(start, loaded + 1) if function(frames[i]).startswith(core_prefixes)]
+                require([function(frames[i]) for i in core] == [frame['function'] for frame in wanted['core']],
+                        'source complete per-phase core order')
+                boundary_function = 'main::parse' if case['domain'] == 'parses' else 'main::call_api'
+                anchors = [i for i in range(start, loaded + 1) if function(frames[i]) == boundary_function]
+                require(len(anchors) == len(wanted['operations']), 'source per-phase operation boundary population')
+                operations = []
+                for anchor, operation in zip(anchors, wanted['operations'], strict=True):
+                    positions = list(range(anchor - 2, anchor + 2))
+                    require(anchor - 2 in core and anchor - 2 >= start
+                            and [function(frames[i]) for i in positions]
+                            == [frame['function'] for frame in operation['frames']],
+                            'source core/operation boundary overlap')
+                    operations.append(positions)
+                    covered.update(positions)
+                require(operations[-1][-1] + 1 == helper_positions[0],
+                        'source operation-wrapper/helper adjacency')
+                require(helper_positions[-1] + 1 == body_phase['body_positions'][0]
+                        and body_phase['entry_positions'][-1] + 1 == loaded,
+                        'source helper/body and entry/load adjacency')
+                require(start <= core[0] and operations[-1][-1] < helper_positions[0]
+                        and body_phase['body_positions'][-1] < body_phase['entry_positions'][0],
+                        'source complete own context interval order')
+                for positions in (core, helper_positions, body_phase['body_positions'], body_phase['entry_positions'], [loaded]):
+                    covered.update(positions)
+                phases.append({'phase': wanted['phase'], 'core_positions': core, 'operations': operations,
+                               'helper_positions': helper_positions, 'body_positions': body_phase['body_positions'],
+                               'entry_positions': body_phase['entry_positions'], 'load_position': loaded,
+                               'opaque_framework': body_phase['opaque_framework_frames']})
+                start = loaded + 1
+            own = {i for i, frame in enumerate(frames) if function(frame).startswith(own_prefixes)}
+            require(own <= covered, 'complete source-qualified own context frame population')
+            cases.append({'domain': key[0], 'index': key[1], 'body': row['body_identity'],
+                          'phases': phases, 'covered_frame_positions': sorted(covered),
+                          'opaque_frames': [frame for i, frame in enumerate(frames) if i not in covered]})
+        observed.append({'mode': model['mode'], 'cases': cases})
+    require([row['mode'] for row in nested] == [row['mode'] for row in expected['modes']],
+            'complete nested context mode population')
+    for mode, inventory in zip(nested, native, strict=True):
+        require(type(mode['api_population']) is int and mode['api_population'] == inventory['domains']['api']['population'],
+                'complete nested context API population')
+        require([case['parse_index'] for case in mode['cases']] == [case['parse_index'] for case in expected['nested']],
+                'complete nested parser allocation population')
+        for case, wanted in zip(mode['cases'], expected['nested'], strict=True):
+            index = case['parse_index']
+            source_case = next(row for row in expected['modes'][0]['cases'] if row['domain'] == 'parses' and row['index'] == index)
+            require(same(case['bounds'], wanted['dated_bounds']) and case['helper'] == source_case['helper'],
+                    'whole dated nested parser bounds/helper allocation')
+            require([row['index'] for row in case['members']] == [row['index'] for row in wanted['source_API_members']],
+                    'complete source nested API member allocation')
+            empty = set(inventory['domains']['api']['empty_string_members'])
+            for row, source in zip(case['members'], wanted['source_API_members'], strict=True):
+                require(all(type(row[key]) is int for key in ('index', 'helper', 'parse', 'accepted')),
+                        'nested context discrete source/native kinds')
+                require(row['parse'] == index and row['helper'] == source_case['helper']
+                        and row['kind'] == source['kind'], 'source nested API kind/helper/parser context')
+                require(row['accepted'] == 1 and type(row['error']) is str and row['error'] == ''
+                        and row['index'] in empty, 'completed nested API empty native error footprint')
+    require(same(nested, original_nested), 'whole original nested operation observations conserve')
+    require(same(native, original), 'whole original raw context inventory conserves')
+    return {'contexts': observed, 'nested_completed_operations': nested}
+
+
+def controls(expected, original, original_nested):
+    trace = module(RAW / 'trace_inventory.py')['inventory']
+    helper_modes, subtest_modes = local_checks(expected, original)
+
+    def row(native, domain, index):
+        return next(case for case in native[0]['domains'][domain]['nonempty'] if case['index'] == index)
+
+    def rebuild(record, parts):
+        body = ''.join(parts)
+        require(body != record['body'], 'genuine complete raw context intervention')
+        record.update(body=body, body_identity=identity(body.encode()), **trace(body))
+
+    def frame_segments(record):
+        return [(i, segment) for i, segment in enumerate(record['segments']) if segment['kind'] == 'frame']
+
+    def insert_gap(native, owned):
+        record = row(native, 'parses', 2)
+        frames = frame_segments(record)
+        if owned:
+            body = next(case for case in subtest_modes[0]['cases'] if case['domain'] == 'parses' and case['index'] == 2)
+            position = frames[body['phases'][0]['body_positions'][-1]][0] + 1
+            call = 'main::unmodeled()'
+        else:
+            anchor = next(i for i, (_, frame) in enumerate(frames) if function(frame) == 'main::parse')
+            position = frames[anchor + 1][0] + 1
+            call = 'opaque::gap()'
+        template = frames[0][1]
+        require(template['call'] in template['raw'], 'whole actual frame control template')
+        inserted = template['raw'].replace(template['call'], call, 1)
+        parts = [segment['raw'] for segment in record['segments']]
+        rebuild(record, parts[:position] + [inserted] + parts[position:])
+
+    def move_phase(native):
+        case = next(case for case in expected['modes'][0]['cases'] if case['domain'] == 'api' and len(case['phases']) == 2)
+        record = row(native, 'api', case['index'])
+        helper_case = next(c for c in helper_modes[0]['cases'] if c['domain'] == 'api' and c['index'] == case['index'])
+        subtest_case = next(c for c in subtest_modes[0]['cases'] if c['domain'] == 'api' and c['index'] == case['index'])
+        frames = frame_segments(record)
+        start = frames[helper_case['joint_paths'][0]['frame_positions'][0]][0]
+        end = frames[subtest_case['phases'][0]['load_position']][0] + 1
+        anchor = next(i for i, (_, frame) in enumerate(frames) if function(frame) == 'main::call_api')
+        destination = frames[anchor + 1][0] + 1
+        require(destination < start < end, 'genuine inherited cross-phase control interval')
+        parts = [segment['raw'] for segment in record['segments']]
+        rebuild(record, parts[:destination] + parts[start:end] + parts[destination:start] + parts[end:])
+
+    def change_header(native, domain, index, before, after):
+        record = row(native, domain, index)
+        require(before in record['body'], 'actual context header control operand')
+        rebuild(record, [record['body'].replace(before, after, 1)])
+
+    direct_case = next(case for case in expected['api'][0]['cases'] if case['family'] == 'direct_Value')
+    api_index = direct_case['index']
+    mutations = [
+        ('lost-source-context', lambda m, n, r: m['modes'][0]['cases'].pop(), 'whole independent source context-join models', False),
+        ('borrowed-source-phase', lambda m, n, r: next(case for case in m['modes'][0]['cases'] if len(case['phases']) == 2)['phases'].reverse(), 'whole independent source context-join models', False),
+        ('invented-source-reference-identity', lambda m, n, r: m['parser'][0]['frames'][1]['arguments'][1].update(native_identity='measured'), 'whole independent source context-join models', False),
+        ('lost-native-mode', lambda m, n, r: n.pop(), 'complete context-join native mode population', False),
+        ('Boolean-native-helper', lambda m, n, r: row(n, 'parses', 2)['context'].update(helper=True), 'context-join native discrete allocation kinds', False),
+        ('lost-native-api', lambda m, n, r: n[0]['domains']['api']['nonempty'].pop(), 'complete joined own API native refusal population', False),
+        ('wrong-parser-operand', lambda m, n, r: change_header(n, 'parses', 2, '_assignment("value.flag", 1,', '_assignment("value.flag", 2,'), 'source parser complete visible scalar role', False),
+        ('wrong-api-core-function', lambda m, n, r: change_header(n, 'api', api_index, direct_case['frames'][0]['function'] + '(', 'borrowed::core('), 'complete source-derived own API frame order', False),
+        ('wrapper-helper-gap', lambda m, n, r: insert_gap(n, False), 'source operation-wrapper/helper adjacency', True),
+        ('unmodeled-own-frame-in-opaque-interval', lambda m, n, r: insert_gap(n, True), 'complete source-qualified own context frame population', True),
+        ('intact-helper-phase-moved-across-core', lambda m, n, r: move_phase(n), 'source complete per-phase core order', True),
+        ('lost-nested-operation', lambda m, n, r: r[0]['cases'][0]['members'].pop(), 'complete source nested API member allocation', False),
+        ('wrong-nested-kind', lambda m, n, r: r[0]['cases'][0]['members'][0].update(kind='borrowed'), 'source nested API kind/helper/parser context', False),
+        ('Boolean-nested-acceptance', lambda m, n, r: r[0]['cases'][0]['members'][0].update(accepted=True), 'nested context discrete source/native kinds', False),
+        ('invented-nested-throw', lambda m, n, r: r[0]['cases'][0]['members'][0].update(error='borrowed error'), 'completed nested API empty native error footprint', False),
+        ('borrowed-nested-bounds', lambda m, n, r: r[0]['cases'][0]['bounds'].__setitem__(0, 0), 'whole dated nested parser bounds/helper allocation', False),
+        ('Boolean-nested-population', lambda m, n, r: r[0].update(api_population=True), 'complete nested context API population', False),
+    ]
+    results = []
+    for name, mutate, cause, separating in mutations:
+        modeled, native, nested = (copy.deepcopy(value) for value in (expected, original, original_nested))
+        mutate(modeled, native, nested)
+        require(not (same(modeled, expected) and same(native, original) and same(nested, original_nested)),
+                'genuine context-join control: ' + name)
+        if separating:
+            local_checks(expected, native)
+        try:
+            check(modeled, expected, native, original, nested, original_nested)
+        except ValueError as error:
+            require(str(error) == cause, 'intended context-join control: ' + name + ': ' + str(error))
+            results.append({'control': name, 'status': 1, 'cause': str(error),
+                            'separately_qualified_local_checks': 'passed' if separating else 'not asserted'})
+        else:
+            raise ValueError('false-green context-join control: ' + name)
+    return results
+
+
+def main():
+    parser = argparse.ArgumentParser(); parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    receipts = authenticate()
+    expected = models()
+    native = load(RAW / 'proofs.json')['inventories']
+    nested = nested_records(expected)
+    save('proofs.json', {'models': expected, 'observations': check(expected, expected, native, native, nested, nested),
+                        'controls': controls(expected, native, nested),
+                        'scope': 'Complete finite own source roles, phases, adjacency and completed nested allocation only; opaque framework, original formatter/scalar encoding/referents/coordinates/address meanings stay open.'})
+    save('prerequisite-replays.json', receipts)
+    save('book-native-proof.json', module(BASE / 'book.py')['proof']((BASE / 'book-input.html').read_text()))
+    if args.seal:
+        save('manifest.json', argument['prior']['members'](BASE))
+    print('PASS complete finite own parser/API/observer/helper/subtest context join and completed nested allocations; opaque native meanings remain open.')
+
+
+if __name__ == '__main__':
+    main()

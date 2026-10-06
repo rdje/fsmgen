@@ -608,7 +608,25 @@ endpoints, bytes, ignore policy, budget and complete staged membership. Snapshot
 success does not supply current semantic currency. The original destination
 locality replay and explicit native copied-byte check remain required.
 
-The [parser argument-role replay](reference-source/docs/audits/record-value-parser-argument-roles-20261006/scope.txt.source.txt)
+The complete own parser context replay
+joins the finite parser/API core, observer operation, helper and subtest/load
+source roles throughout every retained refusal. Per-phase core order, operation
+overlap, wrapper/helper/body/entry/load adjacency and complete own frame coverage
+agree. Completed nested API allocations conserve separately; their empty error
+footprints supply no active throw frames.
+
+The source-only guides below retain their inventory/model roles. This context
+replay adds the finite frame join; full combined fact publication is the next
+stage. External framework intervals, original formatter/provider versions,
+scalar encoding, hidden suffixes, referent contents/identity, coordinates and
+addresses remain unmeasured. The source load operator stays do; the recorded
+require marker agrees only with its file role. Replay from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-context-join-20261006/verify.py
+```
+
+The parser argument-role replay
 binds all supplied source argument slots to retained visible header footprints.
 Scalar glyphs and proper visible prefixes agree; receiver labels and reference
 kinds match their declared source roles. The guard's normalized false value is
@@ -617,21 +635,21 @@ Whole headers and raw bodies conserve after those comparisons.
 
 These are positional source roles and visible footprints. Same-kind reference
 identity, receiver/AST/partial-actor contents, hidden suffixes, scalar flags,
-exact truncation and original formatter versions remain unmeasured. Full nested
-API/helper context is still a separate join. Replay from the repository root:
+exact truncation and original formatter versions remain unmeasured. The complete
+own API/helper context replay above joins these roles. Replay from the repository root:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-argument-roles-20261006/verify.py
 ```
 
-The separate [parser function-order replay](reference-source/docs/audits/record-value-parser-function-order-20261006/scope.txt.source.txt)
+The separate parser function-order replay
 now binds independently selected own parser/context ancestry to every retained
 parser refusal and throw phase. It preserves complete raw bodies and opaque
 outer intervals and excludes returned delegates from active own frames.
 Genuine raw function/order and complete mode/member/kind controls reject.
-This qualifies own function order only. Visible arguments, complete nested
-API/helper context, formatter, coordinates and reference identity retain their
-separate owners. Replay from the repository root:
+This qualifies own function order only. Visible arguments and own API/helper
+context have separate qualified replays above. Formatter, coordinates and
+reference identity retain separate owners. Replay from the repository root:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-function-order-20261006/verify.py

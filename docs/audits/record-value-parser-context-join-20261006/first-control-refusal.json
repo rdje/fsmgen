@@ -1,0 +1,7 @@
+{
+  "cause": "Reversing the first one-phase source case changes nothing. The genuine-intervention guard refuses before claiming a rejecting control.",
+  "operation": "Run models, nested_records and controls through the unbound local-review entrypoint.",
+  "status": 1,
+  "stderr": "ram-guard: PID 22567; host 60.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"<stdin>\", line 4, in <module>\n  File \"docs/audits/record-value-parser-context-join-20261006/verify.py\", line 294, in controls\n    require(not (same(modeled, expected) and same(native, original) and same(nested, original_nested)),\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'genuine context-join control: ' + name)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-parser-function-order-20261006/verify.py\", line 28, in require\n    raise ValueError(cause)\nValueError: genuine context-join control: borrowed-source-phase\n",
+  "stdout": ""
+}

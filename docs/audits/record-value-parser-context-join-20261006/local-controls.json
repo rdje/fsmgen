@@ -1,0 +1,104 @@
+[
+  {
+    "cause": "whole independent source context-join models",
+    "control": "lost-source-context",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "whole independent source context-join models",
+    "control": "borrowed-source-phase",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "whole independent source context-join models",
+    "control": "invented-source-reference-identity",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "complete context-join native mode population",
+    "control": "lost-native-mode",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "context-join native discrete allocation kinds",
+    "control": "Boolean-native-helper",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "complete joined own API native refusal population",
+    "control": "lost-native-api",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "source parser complete visible scalar role",
+    "control": "wrong-parser-operand",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "complete source-derived own API frame order",
+    "control": "wrong-api-core-function",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "source operation-wrapper/helper adjacency",
+    "control": "wrapper-helper-gap",
+    "separately_qualified_local_checks": "passed",
+    "status": 1
+  },
+  {
+    "cause": "complete source-qualified own context frame population",
+    "control": "unmodeled-own-frame-in-opaque-interval",
+    "separately_qualified_local_checks": "passed",
+    "status": 1
+  },
+  {
+    "cause": "source complete per-phase core order",
+    "control": "intact-helper-phase-moved-across-core",
+    "separately_qualified_local_checks": "passed",
+    "status": 1
+  },
+  {
+    "cause": "complete source nested API member allocation",
+    "control": "lost-nested-operation",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "source nested API kind/helper/parser context",
+    "control": "wrong-nested-kind",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "nested context discrete source/native kinds",
+    "control": "Boolean-nested-acceptance",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "completed nested API empty native error footprint",
+    "control": "invented-nested-throw",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "whole dated nested parser bounds/helper allocation",
+    "control": "borrowed-nested-bounds",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  },
+  {
+    "cause": "complete nested context API population",
+    "control": "Boolean-nested-population",
+    "separately_qualified_local_checks": "not asserted",
+    "status": 1
+  }
+]

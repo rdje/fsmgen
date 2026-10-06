@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "wider joins remain open",
+    "-1",
+    "--",
+    "docs/audits/record-value-parser-argument-roles-20261006/verify.py"
+  ],
+  "status": 0,
+  "stdout": "commit 10e8520d1a0e485693d155c08c48c374ef1e6897\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Tue Oct 6 09:50:41 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.2: qualify visible parser argument roles\n    \n    Bind complete committed source/order/task/receipt inputs and independently\n    derive every supplied source expression before matching retained headers.\n    Conserve full visible headers and raw bodies; expose encoding, referent\n    identity and truncation-policy attribution gaps through separating controls.\n    \n    Retain initial and sealed programmes, products, full replay receipts, seventeen\n    semantic controls and independently regenerated actual sealed results.\n    Sync scoped mdBook guidance, exact aggregate authority and task/Memory pointers.\n    Preserve first smart-apostrophe refusal and exact generated-book path recovery.\n    \n    Validation: focused parser/book Files=5 Tests=330; full source/raw/observer/order\n    replays; current source/query/guide/capacity; native guide and rejecting controls;\n    whole source copies, exact misplaced-output removal, sealed receipt pins, claim\n    inventory and staged doctrines. Full CI/push remain director-deferred/gated.\n",
+  "stderr": ""
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/parser-context-join-checks-20261006/verify_seal.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual sealed replay, complete file pins, source/context/control regeneration and typed receipt refusals.\n",
+  "stderr": "ram-guard: PID 30831; host 74.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "checker_identity": {
+    "bytes": 3834,
+    "sha256": "49a3c14ddf08ea25fe3a07b7504d3d97ea4d22211d28db2da793cc09a1f30d9c"
+  }
+}

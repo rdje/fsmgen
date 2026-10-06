@@ -1,0 +1,76 @@
+"""Serve and consume every source click in the two scoped native chapters."""
+import functools
+import hashlib
+import json
+import threading
+import urllib.error
+import urllib.request
+from html.parser import HTMLParser
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+
+OUTPUT = Path('.artifacts/parser-context-join-book')
+CHECKS = Path('docs/audits/parser-context-join-checks-20261006')
+
+
+class Links(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.hrefs = []
+
+    def handle_starttag(self, tag, attributes):
+        href = dict(attributes).get('href', '')
+        if tag == 'a' and href.startswith('reference-source/'):
+            self.hrefs.append(href)
+
+
+class Handler(SimpleHTTPRequestHandler):
+    def log_message(self, *_):
+        pass
+
+
+def main():
+    sources = []
+    for chapter in ('13k-isf-feature-support-matrix.html', '90-reference-map.html'):
+        parser = Links()
+        parser.feed((OUTPUT / chapter).read_text())
+        sources += parser.hrefs
+    assert sources
+    server = ThreadingHTTPServer(('127.0.0.1', 0),
+        functools.partial(Handler, directory=str(OUTPUT.resolve())))
+    thread = threading.Thread(target=server.serve_forever)
+    thread.start()
+    origin = 'http://127.0.0.1:' + str(server.server_port)
+    rows, controls = [], []
+    try:
+        for href in sorted(set(sources)):
+            with urllib.request.urlopen(origin + '/' + href, timeout=10) as response:
+                raw = response.read()
+                assert response.status == 200 and response.headers.get_content_type() == 'text/plain'
+                assert raw == (OUTPUT / href).read_bytes()
+                rows.append({'href': href, 'status': response.status, 'content_type': response.headers.get_content_type(),
+                             'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()})
+        for name in ('parser-function-order', 'parser-argument-roles', 'parser-context-join'):
+            href = 'reference-source/docs/audits/record-value-' + name + '-20261006/scope.txt.source.txt'
+            assert href not in sources
+            try:
+                urllib.request.urlopen(origin + '/' + href, timeout=10)
+            except urllib.error.HTTPError as error:
+                assert error.code == 404
+                controls.append({'unadmitted_href': href, 'actual_status': error.code})
+            else:
+                raise ValueError('unexpected unadmitted source delivery')
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=10)
+        assert not thread.is_alive()
+    result = {'role': 'Dated initial native source-link delivery, not visual QA or future source-byte currency.',
+              'output': str(OUTPUT), 'chapter_source_href_occurrences': len(sources),
+              'delivered': rows, 'removed_unadmitted_controls': controls, 'server_shutdown': 'complete'}
+    (CHECKS / 'initial-native-source-delivery.json').write_text(json.dumps(result, sort_keys=True, indent=2) + '\n')
+    print('PASS every scoped native source click delivers complete text bytes; removed unadmitted routes404; server shut down.')
+
+
+if __name__ == '__main__':
+    main()

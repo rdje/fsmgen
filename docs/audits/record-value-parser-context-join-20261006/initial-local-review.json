@@ -1,0 +1,7 @@
+{
+  "operation": "Compile the saved initial reader as a non-main module; derive models, load whole raw inventory, project completed nested records, run check against originals, save complete models and observations.",
+  "role": "Local source/model/context semantic review only; full committed intake and prerequisite replay were not performed.",
+  "status": 0,
+  "stderr": "ram-guard: PID 58072; host 65.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS local source-selected complete contexts; committed prerequisite authentication is still pending.\n"
+}

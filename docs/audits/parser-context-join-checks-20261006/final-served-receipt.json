@@ -1,0 +1,17 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/parser-context-join-checks-20261006/serve_sources.py",
+    "--final"
+  ],
+  "status": 0,
+  "stdout": "PASS every scoped native source click delivers complete text bytes; removed unadmitted routes404; server shut down.\n",
+  "stderr": "ram-guard: PID 81066; host 70.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "programme_identity": {
+    "bytes": 3388,
+    "sha256": "e86f9f4cce53f76024cd08012dfe8a128d8ba072131b871ea75109e196e41aad"
+  }
+}

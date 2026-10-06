@@ -1,0 +1,545 @@
+{
+  "archives": {
+    "docs/audits/parser-argument-role-checks-20261006": {
+      "docs/audits/parser-argument-role-checks-20261006/final-native-book.json": {
+        "bytes": 2182,
+        "sha256": "01734735afeca7132fbeff90076f6cc607e6316a3e3daec40824ca135f0adc59"
+      },
+      "docs/audits/parser-argument-role-checks-20261006/first-final-copied-byte-refusal.json": {
+        "bytes": 128795,
+        "sha256": "9d78257b7524600ce257895d0c890cab11db6b82a592d6128b07e5edd197777c"
+      },
+      "docs/audits/parser-argument-role-checks-20261006/misplaced-output-comparison.json": {
+        "bytes": 102262,
+        "sha256": "fa63f66b2590233e41235cd207533af2371dfc0f551c5ae373631a2f6df1aefc"
+      },
+      "docs/audits/parser-argument-role-checks-20261006/misplaced-removal.json": {
+        "bytes": 15965,
+        "sha256": "04aef02bb8bcff886ee2b7d09e4f027502b376095cb70b6ec28a55006ecdfc04"
+      },
+      "docs/audits/parser-argument-role-checks-20261006/post-seal-qualified.json": {
+        "bytes": 544,
+        "sha256": "0824ee593ad14f6858e64aeb221f36f12965362e5909be829047ac2f24675e39"
+      },
+      "docs/audits/parser-argument-role-checks-20261006/remove_misplaced.py": {
+        "bytes": 2991,
+        "sha256": "515f81070b6a1e1ebc32c9bb49e0f8c3f99d2462aa0c135a3bb29939d3f3f110"
+      },
+      "docs/audits/parser-argument-role-checks-20261006/sealed-replay.json": {
+        "bytes": 3233,
+        "sha256": "22704fe605aff3ae801c91531215427b8f71fd2eff91b03824f9e689181de212"
+      },
+      "docs/audits/parser-argument-role-checks-20261006/staged-doctrines.json": {
+        "bytes": 62168,
+        "sha256": "efdfd77150b9ae5e67229d5d9027a28ac3c0262b92dec47640e0c35437fbaaf6"
+      },
+      "docs/audits/parser-argument-role-checks-20261006/verify_seal.py": {
+        "bytes": 3816,
+        "sha256": "86d734b7a7ee3b40b3e94534348a96b641d05dfe54841e950161456f78daa372"
+      }
+    },
+    "docs/audits/record-value-original-api-paths-20261005": {
+      "docs/audits/record-value-original-api-paths-20261005/binding.json": {
+        "bytes": 1258266,
+        "sha256": "3630d3a8d30238f55a36a5a58f6fb46a03a3bb5efe385d9010f758bdf1f2c1bc"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/book-authority.json": {
+        "bytes": 259,
+        "sha256": "1c98cf41559ea9f5722492b27c9b40b05b1d8487b373c28e908288a4b8363b07"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/book-transform.json": {
+        "bytes": 338149,
+        "sha256": "6ed9c9d207f553fd7e5cbffbe21c95688c3e2ccadb22d7291677e9cbf988ba17"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/manifest.json": {
+        "bytes": 894,
+        "sha256": "41e07869c0b4bd6cf3f1dabda326de40ba0f13219ee8674107aaff48e9ce993f"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/proofs.json": {
+        "bytes": 841383,
+        "sha256": "1217083690453141f952b8d993b812d77330808d038873365c860862de3e9cd0"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/scope.txt": {
+        "bytes": 3950,
+        "sha256": "94f7a5bfdb85b039bd19103009881fb5a6c4ab7e5fa55f315e16c9f07830e3f1"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/verify.py": {
+        "bytes": 11726,
+        "sha256": "812d917a6ba2605c53e77f82be978c7229ab5402869ae6a200749341f7fc2a87"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/verify_book.py": {
+        "bytes": 2541,
+        "sha256": "cb39d846d5d0952ae08a399cd76ab71aeab7402f8510cd80ecb74af656a32239"
+      }
+    },
+    "docs/audits/record-value-original-helper-join-20261005": {
+      "docs/audits/record-value-original-helper-join-20261005/binding.json": {
+        "bytes": 1290699,
+        "sha256": "a3c464f371f28aee170e50e2739042a8476788de5a61bb6c7d28eaa300ab8df0"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/book-authority.json": {
+        "bytes": 259,
+        "sha256": "d313422c03313163072d0a7ecfaa321a0886c56fccec74515d6166c939dde79d"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/book-transform.json": {
+        "bytes": 341759,
+        "sha256": "2acd5af385ac2f92761642a426925bc91a93f488e53b24c5770acdabbe7bc1be"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/initial-overbound-fact.txt": {
+        "bytes": 6192,
+        "sha256": "744901a939f1f1402d9ba25956750d49b5177bb989ed198063f8dd598832babd"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/knowledge-transform.json": {
+        "bytes": 16757,
+        "sha256": "5597411dcc0fbd32fb9cefe10b2ed2730d98ac3538594b92bcd3113aa3764d59"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/manifest.json": {
+        "bytes": 1304,
+        "sha256": "5c800c7153f2bdd06884f0ecada0ae997ccd0f16e16c457b4b1f64e645d6e140"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/proofs.json": {
+        "bytes": 4139187,
+        "sha256": "04301a6c3c33807e1e52830e0dc601b0c0642ac2539828c111fab86960743566"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/scope.txt": {
+        "bytes": 4384,
+        "sha256": "80e16f8b3cf622ed2ee6ac2d2b7ba329e15fd560ad02909c0d4854af5cddf437"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/verify.py": {
+        "bytes": 12913,
+        "sha256": "0191cddf0b41cbb30118423601ce71f64ca6af8b4376fd1d2e7185021d79cab6"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/verify_book.py": {
+        "bytes": 2555,
+        "sha256": "aff5fade029da4e6478b65e45d88959c38b80008898d6ba04c9914043ea5ccd9"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/verify_knowledge.py": {
+        "bytes": 2918,
+        "sha256": "76dc0a72539b0ccc4c063668a1f1c30c4c767c2452bb98b982e104ac83cb3e39"
+      }
+    },
+    "docs/audits/record-value-original-observer-boundaries-20261005": {
+      "docs/audits/record-value-original-observer-boundaries-20261005/binding.json": {
+        "bytes": 1271433,
+        "sha256": "80d3f4def056355d92a5c9e8ecd5d3ff56dcf19711b0e2c7e09756b615633baa"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/book-authority.json": {
+        "bytes": 259,
+        "sha256": "340b9eee33b80674e76e5762ab214c31118dc9d794761bb937e726c93febf04e"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/book-transform.json": {
+        "bytes": 339483,
+        "sha256": "0e242254281ab629a7457420dcf81283318b073ce5144b6d997aab172d86ecf8"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/frame_model.py": {
+        "bytes": 4225,
+        "sha256": "efaac79a1afbc20da994b78da0b7b8465867d4b6955aaeba0ef0b9726d3740f2"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/manifest.json": {
+        "bytes": 1022,
+        "sha256": "869eece85c2077fbc5344c23ba5ea892e7a9eb9a8975c6ea65b448bd7d949692"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/proofs.json": {
+        "bytes": 1609209,
+        "sha256": "e5c6859ed9fdbe390799bff20484035b021eb88c924fb55108ff4b76fc263375"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/scope.txt": {
+        "bytes": 4165,
+        "sha256": "6246cc442f2e6c1023e1a77f2009c2d1df47da1fdfb80053e7af5170a36f3f58"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/verify.py": {
+        "bytes": 19196,
+        "sha256": "b17a0a9fee7fcdeadd14ce5a1eef91a26369d8535736960b463de5052a7b606c"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/verify_book.py": {
+        "bytes": 2561,
+        "sha256": "640c2d544600cf73a3deee3955959434af70b1581b5d1e482c821b07b0cea261"
+      }
+    },
+    "docs/audits/record-value-original-raw-20261005": {
+      "docs/audits/record-value-original-raw-20261005/binding.json": {
+        "bytes": 1192786,
+        "sha256": "48b2281740162f773836df2008164368cd82190d940406d84b3ba252ffb9d33a"
+      },
+      "docs/audits/record-value-original-raw-20261005/book-authority.json": {
+        "bytes": 259,
+        "sha256": "8ee1ac150600c380626c927eb986b14421ecf1f53455bb97c1d31777fee2927a"
+      },
+      "docs/audits/record-value-original-raw-20261005/book-transform.json": {
+        "bytes": 332655,
+        "sha256": "55ef01f676470b6b71d28767e2ed03ad26a487862b470283b20438f249bd976f"
+      },
+      "docs/audits/record-value-original-raw-20261005/manifest.json": {
+        "bytes": 898,
+        "sha256": "1e1650eb7d5ffcebd0fbda5bfe7fd4e58e8514c64cf53e062be6dfd73539f134"
+      },
+      "docs/audits/record-value-original-raw-20261005/proofs.json": {
+        "bytes": 3431319,
+        "sha256": "aa2f83a9dda50bf556b550bf486fcdcdc30f27683ef5325348b41b36f00707a9"
+      },
+      "docs/audits/record-value-original-raw-20261005/scope.txt": {
+        "bytes": 2737,
+        "sha256": "7f868dfae9666da95bd7b3a6720b61a6e00e9e73590a9801d9a034338c71b0a1"
+      },
+      "docs/audits/record-value-original-raw-20261005/trace_inventory.py": {
+        "bytes": 1475,
+        "sha256": "e9a3e1ace18c468bd093cefa0241aa379bf0b7d66178b404e7b851041f9ec72e"
+      },
+      "docs/audits/record-value-original-raw-20261005/verify.py": {
+        "bytes": 8109,
+        "sha256": "9eda39f96bc12f97f663598fc59d810a66bbec2c5d0a4c6600c297c34bc71653"
+      }
+    },
+    "docs/audits/record-value-own-subtest-boundaries-20261005": {
+      "docs/audits/record-value-own-subtest-boundaries-20261005/binding.json": {
+        "bytes": 1376397,
+        "sha256": "1be1799274f78d137c965e2c6a4d87e2a364a952c17066e7d1b2b6d3259eb4b1"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/book-transform.json": {
+        "bytes": 358026,
+        "sha256": "194a29e5f0855d3f6353c6fa77bc24903d86b61389ecdac5faca4db6ff36f4f6"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/capture_public.py": {
+        "bytes": 1928,
+        "sha256": "67771fcd97aee4a6bcf7889c8f860e178999e0eab90e14cbeb64600f1c018e71"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/initial-public-capture.txt": {
+        "bytes": 1921,
+        "sha256": "192b93a144d4c370422ec5b44ed05b87cbd0ebe06cf0a7b59d2516a9438495c3"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/initial-public-interface.json": {
+        "bytes": 17718,
+        "sha256": "3d38c8ce931e0322787e340b7ae049964a6db516444e81b86ccd8ededd26881c"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/manifest.json": {
+        "bytes": 2072,
+        "sha256": "3a46038b2d13c949e345666719c4d3f204d64a4a680170b60ecea6be477f2bb2"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/model.py": {
+        "bytes": 3325,
+        "sha256": "ceaf8ea72faa7cdd86aa3bbeebb4a53cab23449250a10b189228c71be21f5fe7"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/pending-fact.txt": {
+        "bytes": 2054,
+        "sha256": "04d5009013007a0b35afe6893455aba67c1f6bca8707dc12d198efbcc5d9e8a1"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/prepare.py": {
+        "bytes": 1457,
+        "sha256": "c824060d7ef6da36d42acdb1568bc91099aa709fa15a8102123ade1da668d06b"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/proofs.json": {
+        "bytes": 1133265,
+        "sha256": "b4ffee9372564e04439f67f4e779eaf4bbd30afa348b995e3e2e5b7bac265f4b"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/public-interface.json": {
+        "bytes": 17725,
+        "sha256": "312e68abeeec0ef996b3d9174e2c313b726ff4cafdb953cc11ff7502cd8fd489"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/public-proofs.json": {
+        "bytes": 1048,
+        "sha256": "20d738a8e9566eb2b46758dfff8c840d55e2fe2463d74a84dd77c964f54c5810"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/publish_book.py": {
+        "bytes": 4169,
+        "sha256": "597f97ac1fd98ca04d652115a207c335fae929d427c1fd954af3638863c75342"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/scope.txt": {
+        "bytes": 3358,
+        "sha256": "af762b368c4f0a860434ad38765114f1fc614c7ec883e2428908ac9ecb7a838c"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/verify.py": {
+        "bytes": 11130,
+        "sha256": "e722b2bb29dfa3d42a6fd01a4831a7862bb6a249ac09708a1f23c3c9aa6507a5"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/verify_book.py": {
+        "bytes": 2805,
+        "sha256": "ced88889538b9f63c04410e5877f1cf71eba945941ba37220f4f1c90f7986da0"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/verify_public.py": {
+        "bytes": 3687,
+        "sha256": "dd30e046f2304b892f8be95dc68ebe84f4597c20a0f34eda7f2d593c66200f36"
+      }
+    },
+    "docs/audits/record-value-parser-argument-roles-20261006": {
+      "docs/audits/record-value-parser-argument-roles-20261006/binding.json": {
+        "bytes": 7879,
+        "sha256": "1c3145ca4d43c1457458f0b9c28faeed9dcdacae935305d414715284284395bd"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/book-and-history.json": {
+        "bytes": 2180,
+        "sha256": "15af3db579ee29603d6a99f73f25b7b1f0a76c375264ba706a7f359f155d9229"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/book-change.json": {
+        "bytes": 361782,
+        "sha256": "6ad4c8028f37e85ba11f286e32d5c0f5638c1c51bdbc4d7cd6a3c5a36a501c3d"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/book-input.html": {
+        "bytes": 214349,
+        "sha256": "814666706e6ff4f16bc691282701f80386b91e4ab53e3e31e00dd65b016b1a96"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/book-native-proof.json": {
+        "bytes": 747,
+        "sha256": "90d3e007aea388f3ed3dfef89607343759a0f5a34e2dbb65bafc3b8ca437da79"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/book.py": {
+        "bytes": 3244,
+        "sha256": "6c5e52adccefef76515a74ddac41450e4658319087124ef54a1f3b7d05d02b45"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/current-source.json": {
+        "bytes": 500,
+        "sha256": "72667f6266f89610965c68fee1fa80f8b859db2957cdd513a556a13016ed92ce"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/first-native-guide-refusal.json": {
+        "bytes": 544,
+        "sha256": "570752415374c08b982f960d2805ca18cba692c9aebcf9a2c20dd1a4e3a23daf"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/focused.json": {
+        "bytes": 879,
+        "sha256": "7cebd24ebcd60553de0f70fdc8b57fcc5890bb69b57494b822f8bbb02128170d"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/initial-book-reader.py.txt": {
+        "bytes": 3242,
+        "sha256": "9cfe24462ad3559fc1173e165952d9802ac9cf4d1fcb7dbeaeebbd90cdafe6a1"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/initial-proof.json": {
+        "bytes": 146199,
+        "sha256": "8a9b95915dddffccedf7dc19019f9333a442af90aaae2ab781698822e1ee2531"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/initial-reader.py.txt": {
+        "bytes": 15163,
+        "sha256": "cb83af8b49886304bebb8dab2cbf354956945a6a12ab5570e601324eee91b4ec"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/initial-replay.json": {
+        "bytes": 656,
+        "sha256": "74a29dbf3e3d469bb8acd1d75a776ac854875d7096e27a9cb52d141ecfc420ed"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/local-review.json": {
+        "bytes": 891,
+        "sha256": "b296c6943783b70d7ca202bda7af6f2e63d3301cff074212eeeb58594de1a94b"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/manifest.json": {
+        "bytes": 2473,
+        "sha256": "ec6179a761adf908f1b94c2c912b2e66cc65024fddbcfdbb02df6c21ffa7bf2a"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/prepare.py": {
+        "bytes": 1157,
+        "sha256": "b26714e8fd668971e9751404ec3be6174109e4a441f632465404d1487cd8663c"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/prerequisite-replays.json": {
+        "bytes": 625,
+        "sha256": "c38ddca2528b7dd351594f4eb9994544e4b4980b07a7990c2c563316084d526b"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/proofs.json": {
+        "bytes": 146508,
+        "sha256": "841ec2f296c85044892ae48e5434379d450dae20a9c8b49318d061c2a2308c40"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/scope.txt": {
+        "bytes": 2681,
+        "sha256": "31010be62b6df6d854c4127f43f6d5e444cb5f5754777b78310358335032f3d0"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/verify.py": {
+        "bytes": 16442,
+        "sha256": "13c367ef3cf1ec7c99d49de587492977e973e0f0d7936e6662ef3854770bbdd3"
+      }
+    },
+    "docs/audits/record-value-parser-function-order-20261006": {
+      "docs/audits/record-value-parser-function-order-20261006/binding.json": {
+        "bytes": 15814,
+        "sha256": "158c44c500deac53d9d635280d0b9526a878d12862faa33082ad897ba02f20b3"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/book-change.json": {
+        "bytes": 359169,
+        "sha256": "f3df2c6656c79cf8a395b275880d0d9d7cc35afe541e7d072814e2529b6af590"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/book-checks.json": {
+        "bytes": 622,
+        "sha256": "562894a15bdd170a07ce11f4562df3198e6adbcf5b67fb4dfc1aacb2c67672b9"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/book-focused.json": {
+        "bytes": 577,
+        "sha256": "c8a4d3add8113cb1c495406ebcb5d7f4e6ca72b802ddd0d2639d31a107bbbdb7"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/book-input.html": {
+        "bytes": 213341,
+        "sha256": "37cf47c6a2c1f5d2f505e50535390c33ff38b4a6d48bee96e0cd0691db5a4c35"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/book-native-proof.json": {
+        "bytes": 740,
+        "sha256": "49e457dc9894735336fd8c8366a0b56b3aad4a717b7e8e2e24f2e051ca5a95bc"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/book.py": {
+        "bytes": 3027,
+        "sha256": "6740f50bd6d6371519154d4f1eded4da9d269ed4a7de94f5935730206c910d6f"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/current-source.json": {
+        "bytes": 500,
+        "sha256": "a220a944270192a9b599d34cd945f920a5479aa1e6c640243e36c50945b56b31"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/focused-control-review.json": {
+        "bytes": 2352,
+        "sha256": "03b8a7ed3b9b9acfe5115a06721aa3fe2b2d8519f0cc88e7787ec9a19498393a"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/focused.json": {
+        "bytes": 780,
+        "sha256": "f533c5e107ef7d7ec1f1a1e7abb6813a0b2b05086bf1ea4bf4b3e5177d323d57"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/initial-proof.json": {
+        "bytes": 110624,
+        "sha256": "1770989ca41cc769006d82718de9a8066c022a4535604874c2cc2911b2d83ffb"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/initial-reader.py.txt": {
+        "bytes": 14635,
+        "sha256": "f9e467a48f9f66160eaefeb884a8c58f70680fd21fc8f989d493b73a6559859c"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/initial-replay.json": {
+        "bytes": 643,
+        "sha256": "45174f9cbc3fa83630976dd8a48c443209e5eb302e6ecf5ce52e746d4650b1eb"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/manifest.json": {
+        "bytes": 2455,
+        "sha256": "e10357af2556656fab5219af0fb8092f33c31ecbe738dcdc2bf51bce68fe692a"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/prepare.py": {
+        "bytes": 1193,
+        "sha256": "63001a2221b61f25ee0d7573961d5cb327de63f61968ae93e24efe0c242e837d"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/prerequisite-replays.json": {
+        "bytes": 6933,
+        "sha256": "b716a8976abe90a656ba3cc46ca194dcc1b1a62379125071d1e5e44f9ec0bdd1"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/proofs.json": {
+        "bytes": 110756,
+        "sha256": "95c58728d23ddbef9b91e84661ffd28d1f776a56cb899af6fbbdcbea43aea6c3"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/root-cause.json": {
+        "bytes": 1564,
+        "sha256": "a2a7ba55c1882078605ab757c9313938ca54d53c21b0eacc49ddbc7e0ee1c24b"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/scope.txt": {
+        "bytes": 2073,
+        "sha256": "bddf0471d3289e1ccfe86e7bc56c48e7b7b7ea1a944eb6f2eae3f3a6e0d9e3fd"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/verify.py": {
+        "bytes": 15090,
+        "sha256": "782ce7fd60a48a83b3250b7b8a1a3adcba57b42482027de2e1839a85f35568c2"
+      }
+    },
+    "docs/audits/record-value-parser-path-models-20261006": {
+      "docs/audits/record-value-parser-path-models-20261006/binding.json": {
+        "bytes": 7956,
+        "sha256": "e7089830cbf5f4b69bdd61f7ee68a2ae10046da2d631ee31f2cb5599ebafea88"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/book-input.html": {
+        "bytes": 212522,
+        "sha256": "15a03584737878a0edaaf4d4fec0028b098cc78733fa3e88a757ca6de52174b7"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/book-proofs.json": {
+        "bytes": 446,
+        "sha256": "8ae317bf26b6d3e0c5ecc937bc9e4e3e26267284ac943eccd847d326b357d3dd"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/current-controls.json": {
+        "bytes": 1135,
+        "sha256": "01346529eee274ab03a2dde059980a1d5075afd6592d45741206e61511c25b63"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/current-input.json": {
+        "bytes": 2782902,
+        "sha256": "b7d80e96e1d531897d9e57fc4ff64a38167105cf0351975ae089041f2b2bd822"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/initial-byte-map-publication.py.txt": {
+        "bytes": 16362,
+        "sha256": "a10d4ddeea7e99256c6539e2a95abbe01b33fd9bc6894e8790db609cfd5255a9"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/initial-published-programme.py.txt": {
+        "bytes": 16354,
+        "sha256": "fc4c7d3539cea8a6ec725225ca3b90458be1eea81b316a3765f37d2a77b0e35a"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/initial-source-proof.json": {
+        "bytes": 5431,
+        "sha256": "3b8040cd3a9244841c3b5ed183ff6dd0c9d09fe7e54fb8262361f7adfd326cd0"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/manifest.json": {
+        "bytes": 2766,
+        "sha256": "3f98dfbb320d68ad6011791f521f56c2cbde656a6e99b342e40d0f8191663d56"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/model.py": {
+        "bytes": 9629,
+        "sha256": "6755f91b8b2d98d9dc71e9433b6a302b79d68301229dfd4e4149cde27e21c80d"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/prepare.py": {
+        "bytes": 1323,
+        "sha256": "77ad1b78e3f659d6a4c6c74dc2f40b09ea7ffa3d9e43e0fde50f491613975f00"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/prior-current-refusal.json": {
+        "bytes": 12920,
+        "sha256": "f5b6cb7b255e359baa0fbee7e5842cfbf5cb9fdd8a543b9dd826a8ed53684394"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/probe_prior.py": {
+        "bytes": 1643,
+        "sha256": "9ff74759afc28a0ed078f79694f64854a0203c112f2fbc7d15b6d0a8a2d0b6e6"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/probe_unrelated.py": {
+        "bytes": 3739,
+        "sha256": "0483ff0835c597c76c0452306ec0e2831dea0f2f61d38d6454d7052c6ccea8c3"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/proofs.json": {
+        "bytes": 960445,
+        "sha256": "356ebd6f71dfee1abb8c849f44430121f51e988b75977e7bce04827fdf981e8d"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/publication.json": {
+        "bytes": 369607,
+        "sha256": "133b00e6c918301d7da5ae286f7fd31f919cc3794ca0cf706d157d57eba1c2d8"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/publication.py": {
+        "bytes": 18046,
+        "sha256": "2b5b8c78f64a11f637d158aadf67d9833dab5f272fe3bacf89f554f2d693c84b"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/scope.txt": {
+        "bytes": 4070,
+        "sha256": "9bbd5c5a842ec6cf4285421c66b5d5a69c1a08f7b9d983d0f311280b117639b9"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/source-guide-recovery.json": {
+        "bytes": 552,
+        "sha256": "cf7a6f99e05a57b1ffc114ef2c14950754e385ce0c62fee387f21d171fad4900"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/source-proof.json": {
+        "bytes": 5431,
+        "sha256": "f124c4ad483ce01fbfd538bee73709fc0050e490ea90eed2c1e7b9763a2b6920"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/unrelated-progress.json": {
+        "bytes": 98598,
+        "sha256": "e8b8ac101882008b7f6d988b72b2f884aaea316f3163c57648a5a9a997f6be75"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/verify.py": {
+        "bytes": 14067,
+        "sha256": "e07aab4a3503d67800742a678b9689997853f6967209b96149a80d8fe2c2196f"
+      }
+    }
+  },
+  "owner_bodies": {
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1`\n  Status: `done`\n  Goal: `Authenticate the complete original raw-error population and lossless trace inventory.`\n  Acceptance: `Bind the entire completed primary owner/task and committed prerequisite archives, then reexecute primary meanings. Independently enumerate every raw API/copy/parser error field and run-level exception in unchanged-input ordinary/Storable/control modes; preserve string/null wire kinds and every byte. Parse whole trace physical lines, exact frame call-site suffixes and opaque address lexeme spans with reversible assembly and full empty/nonempty membership. Exact byte/member/frame/coordinate/address changes reject. This closes capture/grammar only; semantic class/frame/source/coordinate/address authority remains in siblings.`\n  Verification: `Sealed docs/audits/record-value-original-raw-20261005 binds whole done primary owner/task and every committed prerequisite archive at clean7812abb76; reexecutes all completed source/context/graph/field/product/copy/primary meanings and controls. Complete API/copy/parser/run-level error field populations preserve every empty and nonempty member, whole serialized string/body/context identity, reversible physical line/byte allocation, exact literal frame/origin suffixes and opaque address-looking lexeme spans. No lexeme supplies object type, identity or lifetime. Nine actual omission/wire-kind/body/context/frame/coordinate/borrowed-address/span corruptions reject at intended conservation/grammar contracts. Exact whole saved proof independently rederives after sealing; fresh sealed-reader0 retains. All original modes have9283 API/697copy/4parser/1run error fields;48 API and2parser nonempty bodies per mode. All raw bodies retain without normalization. Only capture/grammar closes; class/frame/source/coordinate/address semantics and final raw join remain explicit siblings. Original/book Files3 Tests318, build/exact whole source/aggregate/rendered text pass; task/KM/claim/staged doctrines/hooks run before commit. Browser visual QA and historical native/full-CI/push gates remain pending.`\n  Commit: `this slice`\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2.4": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2.4`\n  Status: `done`\n  Goal: `Join complete finite own API failure frame paths.`\n  Acceptance: `Reexecute direct Value, recursive metadata and inherited API models, then join every finite API refusal and intended source argument role. Actual wrong guard/frame/order/role/member controls reject; full observer/parser/framework/source-coordinate/address meaning remains separately owned.`\n  Verification: `Sealed docs/audits/record-value-original-api-paths-20261005 authenticates whole done inherited owner/task and every committed prerequisite at70ad725a3; all source/input/private/graph/copy/field/context/primary/class/raw/direct/metadata/nested input/forwarding/inherited meanings and controls reexecute. Exact committed auxiliary old/sealed/receipt-reader products bind and genuine-old-successful-receipt controls rerun with current programme/proof/manifest pins. Fresh independently derived direct Value, recursive metadata and inherited models completely/disjointly partition all48 source-primary API refusals per unchanged-input mode: direct34 and nested14. Each capture joins metadata plus inherited own Value path; each Scope additionally joins its new Value throw. Intended guards/whole own function order/argument roles derive before native comparison. Complete actual nonempty API population, own family allocation, every own frame/order and visible scalar/reference-kind footprint agree. Ten actual source guard/model guard/role/member/nested allocation/native population/family/function/order/operand corruptions reject; all prior genuine/role/order/tail/receipt controls conserve. Current-reader0 and fresh full sealed-reader0 independently regenerate whole saved proof; complete member bytes/hash stay sealed and fresh receipt pins exact programme/proof/manifest. Original/book Files3 Tests318, book build/source/aggregate/rendered guidance and KM pass; task/claim/staged doctrines/hooks run before commit. Bounded evidence routes products/input/field scopes through complete authenticated current chain without changing facts/ceilings. Full observer/parser/framework/display/coordinates/live identity, raw-cause and broader consumer/alias/cold/permanent/native legs remain owned. No production/T1986/provider/external/submodule write, native probe, full CI or push.`\n  Commit: `this slice`\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.2": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.2`\n  Status: `done`\n  Goal: `Qualify observer API and parser boundary paths.`\n  Acceptance: `Derive complete observed API/parser wrapper, eval, original operation and argument roles from pinned own observer and qualified source calls. Join own API paths; compare source membership/order and visible finite footprints. Wrong wrapper/eval/API/parser/caller/argument/member controls reject; full helper/framework/display/native meaning remains separate.`\n  Verification: `Whole completed source owner/task, all committed prerequisite/archive and receipt-control authority authenticate and reexecute. Independently qualified direct/metadata/inherited paths and source parser contexts/constructor derive all48 API and two parser refusals per mode, including69 API operation boundaries through both nested throw phases. Exact source original-operation lookup precedes installed wrapper; every operation/eval/delegate/wrapper order and visible argument footprint agrees. Fourteen actual source/operation/model/bridge/member/caller/order/API/parser operand/receiver corruptions reject. Current-reader0 and fresh full sealed-reader0 regenerate identical whole proofs; exact programme/proof/manifest pins verify. Initial focused1 exposed differing formal interface role labels; preserve both with the qualified whole-graph bridge, focused0 and borrowed-authority control fix/verify the new join. Original parser receiver role is declared; identity remains unmeasured. Focused original/book318 tests, source/aggregate/rendered guidance and Knowledge Map pass; task/claim/staged doctrines/hooks run before commit. Full callback/framework/display/native identity and broader successors retain owners.`\n  Commit: `this slice`\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3.3": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3.3`\n  Status: `done`\n  Goal: `Join complete own helper and callback paths.`\n  Acceptance: `Reexecute completed named-helper and compiled callback/refuses children, joining every original source helper operation allocation, both nested throw phases, supplied/default argument roles and visible footprints. Preserve full framework/display/native coordinate/address dependencies and broader observer join ownership.`\n  Verification: `Whole done compiled-callback owner/task, all committed prerequisite/archive and receipt-control identities authenticate/reexecute. Source named-helper inputs/defaults/returned operations and callback/pattern/label allocations independently construct the complete joint paths and both nested throw phases before native contiguous order/visible-role comparison. Every43 source helper recipe and50 API/parser refusal joins57 throw-phase paths per mode. Thirteen actual source/default/recipe/allocation/return/phase/member/function/operand/extra-frame corruptions reject. Current-reader0 and fresh full sealed-reader0 independently regenerate the complete saved proof; exact programme/proof/manifest receipt pins verify and older actual successful identity rejects. Focused original/book All tests successful Files3 Tests318; book build/whole source/aggregate/rendered guidance, KM and task integrity pass. Fact authoring refused6192-byte monolith before writing; exact semantic partition preserves whole facts/questions and rejects source/member/overstated-identity corruptions, but initial staged aggregate allowance refuses its publication. Exact attempted bytes/controls/gate retain. Superseding bounded original-card signpost and full book/audit meanings preserve all facts; collection rollover is P2 .72 after .71. No limit widens. Original sandbox process-inspection refusals retain; approved unchanged88%/4096-MiB guard current/sealed runs0. Startup claim template remains byte-identical to reviewed source; policies already adopted and cleanup current. Public sync scope is evidence/book/fact/workflow only; no source syntax/API/manifest/diagnostic/downstream contract change. Fresh claim inventory/staged doctrines/hooks run before commit. Framework/display/coordinates/native identity and wider successors remain owned; visual QA/full-CI/push remain gated/deferred. Required ISF checklist retired-journal defect is owned P2 .71 next after clean commit.`\n  Commit: `this slice; resolve with work-unit Git subject`\n\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4.1": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4.1`\n  Status: `done`\n  Goal: `Qualify complete own subtest and test-load source boundaries.`\n  Acceptance: `Authenticate the complete committed helper join and all inherited source/receipt/recorded-body identities. Derive all authored subtest owners, exact observer wrapper/body/delegate argument roles and explicit original test do/error capture from complete own sources and necessary installed public POD/metadata only. Model intended own boundaries before comparison with all finite original API/parser throw phases; preserve opaque external framework intervals, raw body/argument text and unmeasured module/object/coordinate/display identities. Genuine source/body/member/name/delegate/load/kind controls must reject their intended causes. Update book source guidance and exact aggregate, retain a source-faithful pending fact proposal for .2, run focused originals/docs and staged doctrines, seal and commit before publication. No external implementation inspection, original native/provider capture, host probe, full CI/push or off-volume fixture.`\n  Verification: `Whole committed helper-join intake/task, every archive and inherited receipt authenticate/reexecute. Complete own source yields ten authored bodies and exact saved delegate/wrapper/callback/extra-argument/do/error contracts before native comparison. Every50 API/parser refusal and57 throw phases per ordinary/Storable/control mode agree with empty own body/callback arguments, authored name/CODE kind at public delegate/own entry and exact diagnostic load-file marker. Framework intervals remain opaque; source operator is do. Thirteen genuine source/model/member/name/function/argument/load/population/kind controls reject intended causes. Whole public POD/current metadata and five genuine interface/member/body/status/scope controls pass; original framework version remains unmeasured. Fresh full sealed-reader0 regenerates all saved products with unchanged executed programme/product pins; exact receipt checker rejects actual older successful identity. Focused original/book All tests successful Files3 Tests318, exact whole source/SUMMARY/aggregate and rendered guidance pass. Claim inventory/dispositions and task integrity pass; final copied-byte/index, staged doctrines and normal hooks gate commit. Pending fact proposal is owned .3.4.2; Knowledge Map publication durability explicitly remains there. No new live card/chapter, allowance increase, original capture, external implementation inspection, full CI/push or source/API/diagnostic change. Framework/display/coordinates/native identity, visual QA and broader parent/native work remain owned.`\n  Commit: `this slice; resolve with work-unit Git subject`\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.2": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.2`\n  Status: `done`\n  Goal: `Derive complete finite original parser admission and argument path models.`\n  Acceptance: `Use qualified original parser texts, source inventory and primary/context guard models to derive both refused parser paths and nested API allocations. Bind active function order and complete supplied argument roles without deriving intended paths from captured frames. Genuine guard/source/path/argument/member substitutions reject.`\n  Verification: `Complete committed source inventory/publication/task/actual receipt domains authenticate and historical source/helper/API/parser/context/primary chain reexecutes. Whole finite authored forms, declarations and source guards independently derive two refused own ancestries with8/5 functions and all supplied positional/named source-expression roles; returned delegates stay outside active ancestry. Original Perl predicates and whole _port_root independently agree on32 type and288 write truth cases. Predicate source_value0 is normalized logical truth, not an original Perl SV or native formatter encoding; reference/AST/whole partial-actor contents and native identity remain unmeasured. Complete dated source-family partitions regenerate293/0 nested API members with whole source-model/link identities; thirteen genuine model/source/role/argument/member/kind controls reject. Existing source-context body/ID/status/date/tags/ordered six questions/evidence/test prefix conserves; scoped current predicates protect qualified prior/new meanings and complete parser guide while accepting actual valid inventory/chapter/authority progress and restoring all bytes. Nine current and two native controls reject. Actual prior whole-card epoch refusal and complete input/programme identity/restoration retain. Initial raw-byte/JSON comparison TypeError stops before publication; exact raw byte maps qualify correction. First awkward transition/programme/source epoch and actual old predicate acceptance retain; whole section correction independently refuses first bad guide. Wrong generator127 retains; actual gen_knowledge_map command and parity pass. Independent full Git populations/member identity roots/SUMMARY/censuses conserve; cards1260/3878796 bytes/53067LF within unchanged allowance; residual LF headroom2 and cardinality headroom0 stay owned debt. Book64 files68112->68130LF/3785756->3786837 bytes. Fresh sealed current/native0 and saved snapshot0 replay all source/guard/products/controls; pre/post pins unchanged and older actual inventory success rejects. Sealed publisher1 refuses before writes. Focused6/335 passes; final earlier current source-plane/index/copied-byte, inventory and staged gates own regression. Three legs/missing scope: record-value-parser-path-models-20261006/scope.txt. Complete original native/API/helper join .3 and full joined publication .4 remain open; no original capture/external implementation/native probe/full CI/push. Visual QA pending.`\n  Commit: `this slice; resolve with work-unit Git subject`\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.1": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.1`\n  Status: `done`\n  Goal: `Join the source-derived parser function order with every retained refusal phase.`\n  Acceptance: `Authenticate and reexecute committed finite source models and complete original raw inventories. Compare the independently derived own parser/context function order with every refused parser in every recorded mode. Genuine missing/extra/reordered/borrowed/wrong-function/mode/member/kind controls reject; preserve complete raw bodies and opaque outer intervals. Do not infer argument values, formatter, coordinates or identity.`\n  Verification: `Complete committed source/raw/observer member and done-owner identities authenticate at179476c83; their whole chains reexecute. Source-selected own ancestry joins every retained refused parser in ordinary/Storable/control modes without choosing intended order from native frames. Complete raw bodies and opaque outer intervals conserve; returned delegates stay excluded. Nineteen genuine source/raw/function/order/phase/mode/member/context/kind/byte-loss controls reject at intended contracts. Initial proof/programme, final proof/seal, full prerequisite receipts and saved-result regeneration retain in docs/audits/record-value-parser-function-order-20261006 and parser-function-order-checks-20261006. Typed receipt status/byte-count controls reject. The aggregate gate caught an updater field-name error; exact corrected authority and preserved failure qualify. Source cohort All tests successful Files3 Tests22; book cohort Files2 Tests308, native scoped guide/three controls, copied bytes and current source-fact/query/guide/capacity pass. Audit/book guidance only; source semantics, facade/schema/capabilities unchanged. Arguments .2, complete API/helper .3 and full publication .4.4 remain open. Mandatory staged doctrines and hooks gate commit; historical native/formatter/coordinate/identity/visual/full-CI/push gaps remain.`\n  Commit: `this function-order slice; resolve by work-unit Git subject`\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.2": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.2`\n  Status: `done`\n  Goal: `Qualify visible parser argument roles separately from source truth and native encoding.`\n  Acceptance: `After .1 clean commit, bind all supplied source argument roles to retained visible parser headers through explicit source-expression and observed-display boundaries. Normalized predicate truth is not a native Perl scalar literal. Receiver/AST/partial-actor contents and formatting/version/identity gaps stay explicitly unmeasured. Genuine role/operand/kind/truncation/member controls reject.`\n  Verification: `Complete committed done-order/task/archive/actual-receipt intake authenticates at0fa36cca38bb7096dc4513e0020a6803e6aa7c8b and source/raw/observer/order chains reexecute. Independent all-slot source models bind every retained mode/member/phase visible scalar glyph, proper prefix, reference label/kind and false-compatible predicate; reversible headers and whole original bodies conserve. Seventeen genuine source/header controls reject at intended contracts; truth-preserving zero, same-kind reference swaps and shorter compatible prefixes reach byte conservation, exposing encoding/identity/truncation-policy attribution gaps. Initial/final programmes, proofs, replay streams, immutable manifest and complete sealed receipt retain in docs/audits/record-value-parser-argument-roles-20261006 and docs/audits/parser-argument-role-checks-20261006. Saved-result regeneration and typed status/byte-count controls pass. Focused parser/book All tests successful Files5 Tests330; current source-fact/query/guide/capacity and native guidance/three controls pass. The first native guide mismatch is mdBook smart-apostrophe rendering; exact original reader/failure retain and rendered expected guidance resolves it. Partial audit/book publication leaves composite .3.3, full fact .4.4 and every declared unmeasured boundary open. Final book source copies, claim inventory and mandatory staged doctrines/hooks gate commit; no new native capture, host probe, foreign write, full CI or push.`\n  Commit: `this visible argument-role slice; resolve by work-unit Git subject`\n"
+  },
+  "owners": {
+    "docs/audits/parser-argument-role-checks-20261006": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.2",
+    "docs/audits/record-value-original-api-paths-20261005": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2.4",
+    "docs/audits/record-value-original-helper-join-20261005": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3.3",
+    "docs/audits/record-value-original-observer-boundaries-20261005": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.2",
+    "docs/audits/record-value-original-raw-20261005": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1",
+    "docs/audits/record-value-own-subtest-boundaries-20261005": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4.1",
+    "docs/audits/record-value-parser-argument-roles-20261006": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.2",
+    "docs/audits/record-value-parser-function-order-20261006": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.1",
+    "docs/audits/record-value-parser-path-models-20261006": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.2"
+  },
+  "revision": "b0fd54bb086db4f1a01c45d6d121c68b35594613",
+  "task_identity": {
+    "bytes": 1347329,
+    "sha256": "68b7bb78118332dff375554cc9823ffc444fd30e1210bad65b432a1d976b61c9"
+  },
+  "task_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+}
