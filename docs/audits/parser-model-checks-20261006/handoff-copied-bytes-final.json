@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "scripts/book_source_references.py",
+    "--check",
+    "--verify-build",
+    ".artifacts/parser-path-models/handoff-book-qualified"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 95546; host 58.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 213, in <module>\n    if __name__ == '__main__': main()\n                               ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 209, in main\n    if not args.write: check_index(rows)\n                       ~~~~~~~~~~~^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 197, in check_index\n    check_object(path,mode,local_read(ROOT/path,max(SOURCE_BYTES,MANIFEST_BYTES)))\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 191, in check_object\n    require(indexed[path] == (mode,wanted), 'checked bytes/mode agree with Git result: '+path)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 32, in require\n    if not condition: raise ValueError(message)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: checked bytes/mode agree with Git result: docs/TASK_TREE.md\n"
+}

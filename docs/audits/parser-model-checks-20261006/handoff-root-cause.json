@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Source guard/ancestry/argument-role models are committed by .2",
+    "-1",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "status": 0,
+  "stdout": "commit f029e3f22298fed9e531f7ca665f39153d236b90\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Tue Oct 6 02:47:53 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.2: derive finite original parser refusal paths\n    \n    Derive both own source guard/ancestry paths and every supplied argument role\n    without using native frames as intended source selection. Independently evaluate\n    original Perl guards and reuse complete dated nested API source-family models.\n    \n    Preserve prior source-context facts/questions/evidence/tests and publish only\n    qualified source meanings through scoped current predicates. Retain first\n    publication failures/programmes, exact source epochs, hostile controls and\n    actual restored progress. Keep normalized truth separate from native encodings.\n    \n    Validation: focused Files=6 Tests=335; 32 type/288 write guard cases; current\n    and native source/query/capacity checks; fresh sealed current/snapshot/receipt\n    identity; Knowledge Map, earlier current source plane, copied bytes and staged\n    doctrines. Native joins, referents, visual and full-CI/push remain open.\n",
+  "stderr": "ram-guard: PID 91804; host 56.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

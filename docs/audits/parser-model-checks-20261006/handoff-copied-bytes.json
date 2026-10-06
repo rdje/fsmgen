@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "scripts/book_source_references.py",
+    "--check",
+    "--verify-build",
+    ".artifacts/parser-path-models/handoff-book"
+  ],
+  "status": 2,
+  "stdout": "",
+  "stderr": "ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval\n"
+}

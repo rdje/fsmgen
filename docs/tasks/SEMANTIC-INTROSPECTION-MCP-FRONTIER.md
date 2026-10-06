@@ -4748,11 +4748,42 @@ For FSMGen, the analogs are:
   Commit: `this slice; resolve with work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join complete original parser paths with native and nested API/helper context.`
   Acceptance: `Reexecute source inventory and path models plus completed API/observer/helper/own-subtest prerequisites. Compare every refused parser and nested API path and visible argument role with complete recorded populations and phases. Genuine native order/function/role/context/population mutations reject; formatter, coordinates and native identity stay separately owned.`
   Verification: `Source guard/ancestry/argument-role models are committed by .2. Normalize logical predicate truth separately from original Perl scalar and formatter encodings; never treat model source_value0 as a native argument literal. Receiver/AST/whole partial-actor referents stay unmeasured until independent evidence qualifies them. Capacity debt remains owned; collection has only2LF and zero file allowance headroom.`
   Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.4`
+  Status: `done`
+  Goal: `Plan a safe native parser join sequence and preserve a clean session-health handoff.`
+  Acceptance: `Split the broad join before implementation into independently reviewable function-order, visible argument-role and complete API/helper joins. Preserve every existing seal and source fact; record actual session-health limitation and a single next action.`
+  Verification: `The broad join is partitioned into function-order .1, visible argument roles .2 and complete API/helper context .3, each pending. Original invalid .0 child and real failures retain; positive .4 planning child fixes it. Focused task-tree integrity0 and regression1/48 pass. No model/source/fact/book behavior or old seal changes; the book already marks native and wider joins open. Final current inventory/source-copy/staged-doctrine checks gate the clean health handoff. A fresh session should activate .1 only after reading committed Memory and qualified source models.`
+  Commit: `this planning slice; resolve with work-unit Git subject`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.1`
+  Status: `pending`
+  Goal: `Join the source-derived parser function order with every retained refusal phase.`
+  Acceptance: `Authenticate and reexecute committed finite source models and complete original raw inventories. Compare the independently derived own parser/context function order with every refused parser in every recorded mode. Genuine missing/extra/reordered/borrowed/wrong-function/mode/member/kind controls reject; preserve complete raw bodies and opaque outer intervals. Do not infer argument values, formatter, coordinates or identity.`
+  Verification: `The independently derived source order exists before native comparison. Canonical raw domain is record-value-original-raw-20261005, obtained through the qualified observer reader.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.2`
+  Status: `pending`
+  Goal: `Qualify visible parser argument roles separately from source truth and native encoding.`
+  Acceptance: `After .1 clean commit, bind all supplied source argument roles to retained visible parser headers through explicit source-expression and observed-display boundaries. Normalized predicate truth is not a native Perl scalar literal. Receiver/AST/partial-actor contents and formatting/version/identity gaps stay explicitly unmeasured. Genuine role/operand/kind/truncation/member controls reject.`
+  Verification: `No implementation started; full original formatter/version evidence may remain unavailable and must never be invented.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.3`
+  Status: `pending`
+  Goal: `Join complete parser, nested API and helper context after function and role qualification.`
+  Acceptance: `After .1/.2 clean commits, reexecute complete source and own API/observer/helper/subtest prerequisites. Join every parser and nested API member/phase/context without replacing opaque framework or identity gaps with source self-agreement. Genuine function/order/role/helper/context/population controls reject. Commit before full fact publication .4.4.`
+  Verification: `No implementation started. Collection rollover debt remains owned; do not widen bounds for later publication.`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.4`
   Status: `pending`
@@ -6652,3 +6683,15 @@ Routine command recovery within .4.2: parser-model-checks-20261006/knowledge-gen
 - [x] **NO REGRESSION** — evidence-family: prove_summary. `prove -Iperl -It/lib t/1986-isf-record-port-value-gates.t t/2031-isf-record-output-source-contexts.t t/2030-isf-record-output-writer-admission.t t/1303-isf-public-live-book-paths-audit.t t/1305-isf-book-feature-matrix-audit.t t/1567-knowledge-map-shards.t` reports `All tests successful.` and `Files=6, Tests=335`; complete actual command/status/streams are docs/audits/parser-model-checks-20261006/focused.json. Native complete section/current/source/query/KM checks pass; final earlier current source-plane/index/copied bytes, current claim inventory and staged doctrines/hooks gate commit. No full CI or push is claimed.
 
 Recovery closure within .4.2: exact first byte-comparison refusal/programme, first published source epoch/programme and old predicate acceptance, and wrong generator invocation all remain preserved. Raw whole-population byte equality, complete protected source section and the actual generator resolve them before commit; current/native/hostile/progress/sealed/receipt checks pass. Every source_value associated with the computed guard predicate is normalized logical truth; original native scalar flags/encoding are explicitly unmeasured and assigned to .3. Collection rollover debt is not renewed by this bounded fact extension.
+
+Session-health handoff owned by parser join .3.4: several avoidable finalization errors in the long source-model run were reproduced, corrected, retained and verified before f029e3f22298fed9e531f7ca665f39153d236b90. Continuing the combined native/argument/helper join without recovering focus would risk signoff quality. The next task is now the narrower .3.1 function-order comparison; .3.2 and .3.3 remain pending. No code/native unit is mid-execution, no unresolved verification is running, and no original capture or host probe is authorized by this handoff. A fresh session should resume from committed Memory/task state before implementing .3.1.
+
+Owned handoff-ID recovery: actual handoff-tree1 and handoff-focused1 reject the planning child .0 as an invalid positive numeric descendant. The complete original task bytes and both actual receipts retain. Rename only that new planning child to .4, preserving implementation children .1/.2/.3; focused task-tree checks and staged doctrines must pass before commit.
+
+Owned handoff-index recovery: actual handoff-staged-doctrines1 rejects the expanded frontier row against the unchanged focused-document line-width allowance. Complete first index bytes retain in parser-model-checks-20261006/handoff-first-index.md.txt. Shorten only its summary, conserving the qualified boundaries and next action; the owning task nodes retain the full scope. No allowance or ceiling changes. Fresh inventory, book source copies and staged doctrines qualify the correction before commit. Initial source-copy status2 is a sandbox process-inspection refusal; the qualified guarded rerun0 retains separately.
+
+## Acceptance Checklist — safe parser join handoff .3.4
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — evidence-family: git_history. `git log -S 'Source guard/ancestry/argument-role models are committed by .2' -1 -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` returnsf029e3f22298fed9e531f7ca665f39153d236b90; full actual command/streams/status retain in docs/audits/parser-model-checks-20261006/handoff-root-cause.json. The next leaf combined all native function, visible argument and nested API/helper qualification. Session focus has declined after a long run with avoidable finalization errors; split that scope before implementation. Actual first tree/test failures identify the invalid zero child ID, with whole first task bytes retained.
+- [x] **ADDRESSED (verified)** — Positive planning child .4 owns this doc-only handoff. Three independently reviewable pending implementation children define function-order, visible source/argument role and API/helper joins, preserving normalized truth versus original scalar/formatter distinctions and all unmeasured boundaries. Corrected live task-tree integrity0 passes. No implementation, old seal, source fact or user behavior changes; current book guidance already declares the native/wider gaps. Session-health state and precise .1 next action route to the task tree and bounded Memory, with focused regression and staged gates before commit.
+- [x] **NO REGRESSION** — evidence-family: prove_summary. `prove t/1549-task-tree-integrity-doctrine.t` reports `All tests successful.` and `Files=1, Tests=48`; complete command/status/streams retain in docs/audits/parser-model-checks-20261006/handoff-focused-qualified.json. Current implementation6/335 and native/source/hostile/progress/sealed proof remain committed at f029e3f22298fed9e531f7ca665f39153d236b90. Final inventory, source-copy and mandatory staged doctrines/hooks gate this planning commit. No full CI or push is claimed.

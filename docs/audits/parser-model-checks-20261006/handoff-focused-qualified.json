@@ -1,0 +1,9 @@
+{
+  "command": [
+    "prove",
+    "t/1549-task-tree-integrity-doctrine.t"
+  ],
+  "status": 0,
+  "stdout": "t/1549-task-tree-integrity-doctrine.t .. ok\nAll tests successful.\nFiles=1, Tests=48, 15 wallclock secs ( 0.03 usr  0.01 sys +  8.47 cusr  3.18 csys = 11.69 CPU)\nResult: PASS\n",
+  "stderr": "ram-guard: PID 98439; host 62.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

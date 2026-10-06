@@ -1,0 +1,9 @@
+{
+  "command": [
+    "perl",
+    "scripts/check_task_tree_integrity.pl"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "ram-guard: PID 40298; host 65.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: container SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3 has malformed direct child SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.0\n[task-tree-integrity] FAIL: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md: node SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.0 is not a descendant of root SEMANTIC-INTROSPECTION-MCP-FRONTIER\n[task-tree-integrity] active task-tree invariants failed\n"
+}
