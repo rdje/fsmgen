@@ -1,0 +1,6 @@
+{
+  "cause": "StopIteration: the inline new Memory assignment searched the preceding task-document variable before assigning the Memory text.",
+  "reproduced": true,
+  "status": 1,
+  "unchanged_memory": "# MEMORY \u2014 pointer to the frontier (layer A; state only, overwrite-only)\n\nPointer only, nothing else \u2014 decisions `0067` and `0068`. Rationale: `docs/decisions/`.\nStatus and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.\n\n## Resume\n\n- repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.\n- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.76` (in_progress)\n- next_action: Run and independently qualify the due daily artifact census; retain every unproved candidate, commit .76, then resume parser/API/helper .3.3.\n- in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.\n- in_flight_background: none; derive process state before restarting any verification.\n- blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.\n  Historical startup/parent qualification and full CI/push remain gated; director-directed cadence deferral is owned by SEM .69.2, eventual qualified push by .69.3. Visual mdBook QA remains pending.\n"
+}

@@ -1,0 +1,22 @@
+{
+  "actual-census.json": {
+    "bytes": 399,
+    "sha256": "2e346339d33a1c6fc7671c3d586399dc8c1b2d566675e6171bb8306cc3b04c1d"
+  },
+  "census.json": {
+    "bytes": 3629177,
+    "sha256": "b12db483cac29afed71a217d0452dcf82a51eb80988512ba72839dd5ba771a5b"
+  },
+  "census.py": {
+    "bytes": 4710,
+    "sha256": "2fd10e144e3844997fe37c8dd14116d3ed9b0eb6c56769f2e252af645a1c211d"
+  },
+  "scope.txt": {
+    "bytes": 1360,
+    "sha256": "53831fb476bf8a8b0ee92bd421fc7407d571cd86c0d8a9d4ed7dc9df1c3a2200"
+  },
+  "verify.py": {
+    "bytes": 4552,
+    "sha256": "2315b636d22c9d7771a040bc4497ee166aff9b3a677c33444c2c9c0fb492ef83"
+  }
+}

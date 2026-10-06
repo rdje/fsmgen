@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/artifact-sweep-due-20261006/census.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 45116; host 59.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"artifact_members\": 9651, \"removed\": [], \"status\": 0, \"utc\": \"2026-10-06T07:54:09.548764+00:00\"}\n"
+}

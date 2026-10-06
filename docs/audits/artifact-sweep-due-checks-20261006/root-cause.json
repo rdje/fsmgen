@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "2026-10-05T07:25:20.637128",
+    "-1",
+    "--",
+    "docs/ARTIFACT_CLEANUP.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "commit 7812abb761715ab5df55162e824d73b3a2433ec4\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 5 09:34:07 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.70: complete due read-only artifact sweep\n    \n    Retain all unproved disposable log/bin/bytecode candidates and capture complete independent membership and Rust locations. Preserve initial guard and task-tree failures, with unchanged limits and verified corrections.\n    \n    Latest-only date and maintenance guidance reflect no deletions. Book tests pass 2 files/308 assertions; sealed census controls and book source/aggregate/rendered checks pass. Resume original raw-stack qualification; push stays deferred.\n"
+}

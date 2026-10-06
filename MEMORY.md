@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.3` (pending)
-- next_action: Own the now-due daily artifact census before beginning parser/API/helper join .3.3; commit the census separately.
+- next_action: Join complete original parser, nested API and helper source/native context in .3.3 from committed .3.1/.3.2 and qualified prerequisites; keep opaque framework/identity gaps explicit.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none; derive process state before restarting any verification.
 - blockers: Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
