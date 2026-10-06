@@ -1,0 +1,14 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "mdbook",
+    "build",
+    "docs/book",
+    "--dest-dir",
+    ".artifacts/public-boundary-join-book"
+  ],
+  "status": 0,
+  "stdout": "",
+  "stderr": "ram-guard: PID 91510; host 45.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15231690 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/public-boundary-join-book`\n"
+}

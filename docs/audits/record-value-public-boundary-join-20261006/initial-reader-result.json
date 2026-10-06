@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-join-20261006/verify.py"
+  ],
+  "status": 0,
+  "stdout": "PASS complete finite original public boundary/header compatibility and separating controls; historical/private/identity meanings remain open.\n",
+  "stderr": "ram-guard: PID 18159; host 86.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

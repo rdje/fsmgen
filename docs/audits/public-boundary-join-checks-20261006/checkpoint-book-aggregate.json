@@ -1,0 +1,200 @@
+{
+  "before": {
+    "baseline": {
+      "bytes_each": 204855,
+      "bytes_total": null,
+      "files": null,
+      "line_bytes_each": 7542,
+      "lines_each": 3501,
+      "lines_total": null
+    },
+    "canonical_inputs": [],
+    "classification": {
+      "audience": "FSMGen authors and users",
+      "rationale": "The mdBook contains unique maintained user-facing behavior whose legitimate aggregate scope follows the product. Stable semantic chapters, a complete bounded SUMMARY, and per-part review limits constrain navigation and reviewability without treating new product documentation as historical overflow.",
+      "role": "unique_product_reference"
+    },
+    "containment_status": "pinned_deferred",
+    "enforcement_ceilings": {
+      "bytes_each": 409600,
+      "bytes_total": null,
+      "files": null,
+      "line_bytes_each": 8566,
+      "lines_each": 5000,
+      "lines_total": null
+    },
+    "health_targets": {
+      "bytes_each": 409600,
+      "bytes_total": null,
+      "files": null,
+      "line_bytes_each": 1024,
+      "lines_each": 5000,
+      "lines_total": null
+    },
+    "index": "docs/book/src/SUMMARY.md",
+    "index_contract": {
+      "kind": "membership",
+      "verifier": "builtin:markdown_links"
+    },
+    "lifecycle": "maintained_reference",
+    "locator": "collection",
+    "milestones": {
+      "rollover_pct": 90,
+      "warning_pct": 80
+    },
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15",
+    "reference_contract": {
+      "aggregate_change": {
+        "authority_id": "PUBLIC-BOUNDARY-JOIN-20261006-SHIPPED-BEHAVIOR",
+        "baseline": {
+          "bytes_total": 3793414,
+          "files": 64,
+          "lines_total": 68247
+        },
+        "delta": {
+          "bytes_total": 1764,
+          "files": 0,
+          "lines_total": 28
+        },
+        "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.3",
+        "rationale": "Publish complete finite original public-header compatibility and retire only the completed join deferral; all historical/private identities remain open."
+      },
+      "mandatory_read": {
+        "bytes_ceiling": 4096,
+        "lines_ceiling": 64,
+        "path": "docs/book/src/SUMMARY.md"
+      },
+      "max_navigation_depth": 1
+    },
+    "routes_to": [],
+    "state": "rollover_debt",
+    "surface_id": "shipped_behavior",
+    "targets": [
+      "docs/book/src/*.md"
+    ],
+    "transition": {
+      "max_growth": {
+        "bytes_each": 87630,
+        "bytes_total": null,
+        "files": null,
+        "line_bytes_each": 512,
+        "lines_each": 1227,
+        "lines_total": null
+      },
+      "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8",
+      "ratchet_step": {
+        "bytes_each": 16384,
+        "bytes_total": null,
+        "files": null,
+        "line_bytes_each": 512,
+        "lines_each": 100,
+        "lines_total": null
+      }
+    },
+    "verifier": "builtin:maintained_reference"
+  },
+  "after": {
+    "baseline": {
+      "bytes_each": 204855,
+      "bytes_total": null,
+      "files": null,
+      "line_bytes_each": 7542,
+      "lines_each": 3501,
+      "lines_total": null
+    },
+    "canonical_inputs": [],
+    "classification": {
+      "audience": "FSMGen authors and users",
+      "rationale": "The mdBook contains unique maintained user-facing behavior whose legitimate aggregate scope follows the product. Stable semantic chapters, a complete bounded SUMMARY, and per-part review limits constrain navigation and reviewability without treating new product documentation as historical overflow.",
+      "role": "unique_product_reference"
+    },
+    "containment_status": "pinned_deferred",
+    "enforcement_ceilings": {
+      "bytes_each": 409600,
+      "bytes_total": null,
+      "files": null,
+      "line_bytes_each": 8566,
+      "lines_each": 5000,
+      "lines_total": null
+    },
+    "health_targets": {
+      "bytes_each": 409600,
+      "bytes_total": null,
+      "files": null,
+      "line_bytes_each": 1024,
+      "lines_each": 5000,
+      "lines_total": null
+    },
+    "index": "docs/book/src/SUMMARY.md",
+    "index_contract": {
+      "kind": "membership",
+      "verifier": "builtin:markdown_links"
+    },
+    "lifecycle": "maintained_reference",
+    "locator": "collection",
+    "milestones": {
+      "rollover_pct": 90,
+      "warning_pct": 80
+    },
+    "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.15",
+    "reference_contract": {
+      "aggregate_change": {
+        "authority_id": "PUBLIC-BOUNDARY-CHECKPOINT-20261006-SHIPPED-BEHAVIOR",
+        "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.3",
+        "baseline": {
+          "files": 64,
+          "lines_total": 68247,
+          "bytes_total": 3793414
+        },
+        "delta": {
+          "files": 0,
+          "lines_total": 33,
+          "bytes_total": 2073
+        },
+        "rationale": "Publish verified public-header checkpoint and explicit RAM-stopped seal/durability gap; no final closure claimed."
+      },
+      "mandatory_read": {
+        "bytes_ceiling": 4096,
+        "lines_ceiling": 64,
+        "path": "docs/book/src/SUMMARY.md"
+      },
+      "max_navigation_depth": 1
+    },
+    "routes_to": [],
+    "state": "rollover_debt",
+    "surface_id": "shipped_behavior",
+    "targets": [
+      "docs/book/src/*.md"
+    ],
+    "transition": {
+      "max_growth": {
+        "bytes_each": 87630,
+        "bytes_total": null,
+        "files": null,
+        "line_bytes_each": 512,
+        "lines_each": 1227,
+        "lines_total": null
+      },
+      "owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.17.4.8",
+      "ratchet_step": {
+        "bytes_each": 16384,
+        "bytes_total": null,
+        "files": null,
+        "line_bytes_each": 512,
+        "lines_each": 100,
+        "lines_total": null
+      }
+    },
+    "verifier": "builtin:maintained_reference"
+  },
+  "baseline": {
+    "files": 64,
+    "lines_total": 68247,
+    "bytes_total": 3793414
+  },
+  "actual": {
+    "files": 64,
+    "lines_total": 68280,
+    "bytes_total": 3795487
+  }
+}

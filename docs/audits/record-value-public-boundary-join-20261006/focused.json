@@ -1,0 +1,17 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "-It/lib",
+    "t/1986-isf-record-port-value-gates.t",
+    "t/2031-isf-record-output-source-contexts.t",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t",
+    "t/1549-task-tree-integrity-doctrine.t"
+  ],
+  "status": 0,
+  "stdout": "t/1986-isf-record-port-value-gates.t ........ ok\nt/2031-isf-record-output-source-contexts.t .. ok\nt/1303-isf-public-live-book-paths-audit.t ... ok\nt/1305-isf-book-feature-matrix-audit.t ...... ok\nt/1549-task-tree-integrity-doctrine.t ....... ok\nAll tests successful.\nFiles=5, Tests=372, 16 wallclock secs ( 0.02 usr  0.01 sys +  9.70 cusr  4.19 csys = 13.92 CPU)\nResult: PASS\n",
+  "stderr": "ram-guard: PID 83136; host 44.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

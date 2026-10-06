@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "The finite original public-boundary join and full current fact publication",
+    "-1",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "status": 0,
+  "stdout": "commit 66fb051cfca1d170cdcf7c8b46d316b8d8e185ae\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Tue Oct 6 12:52:23 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.2: qualify independent public native fixtures\n    \n    Fix own public source and expected roles before observing current callback,\n    block-eval, isolated load and trace policy outputs. Retain complete raw streams,\n    prior public-profile ownership and explicit historical/private identity gaps.\n    \n    Qualify nine finite roles, fourteen coordinated observation controls, three\n    source controls and five successful native behavioral mutations that refuse\n    the intended role. Preserve and diagnose first cache/direct-emitter/serialized\n    order hypotheses; seal complete products and independently regenerate the\n    actual result with typed and real borrowed-success controls.\n    \n    Validation: focused original/book/task Files=4 Tests=366; current public/profile\n    and saved replays, native guide/controls, exact copied sources/aggregate,\n    retained parser currency, claim inventory and staged doctrines. Original public\n    boundary joining remains the next leaf. No card or ceiling changes.\n",
+  "stderr": ""
+}

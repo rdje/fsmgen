@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "-c",
+    "import json\nfrom pathlib import Path\np=Path('docs/audits/record-value-public-boundary-join-20261006/verify.py')\nn={'__name__':'finite_local_public_join'}\nexec(compile(p.read_bytes(),str(p),'exec'),n)\ne=n['load'](n['BASE']/'pre-native-models.json')\nr=n['load'](n['context']['RAW']/'proofs.json')['inventories']\ns=n['context']['nested_records'](e['own'])\nproduct=dict(observations=n['check'](e,e,r,r,s),controls=n['controls'](e,r,s),scope='Local semantic compatibility only; full committed root/source/checker/ancestry replay is pending and not replaced.')\nn['save']('initial-local-proof.json',product)\nprint('PASS local public join and separating controls; complete ancestry replay remains pending.')\n"
+  ],
+  "status": 0,
+  "stdout": "PASS local public join and separating controls; complete ancestry replay remains pending.\n",
+  "stderr": "ram-guard: PID 42273; host 77.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

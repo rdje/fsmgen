@@ -1,0 +1,10 @@
+{
+  "command": [
+    "scripts/check_claim_verification_inventory.pl",
+    "--write",
+    "--report"
+  ],
+  "status": 0,
+  "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13343, candidates=1977, quantified=964, conservative=1013, constants=2918, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1977)\nclaim-inventory: partition adoption_reference_or_structure=118\nclaim-inventory: partition code_or_data_example=3328\nclaim-inventory: partition derived_and_watched_projection=185\nclaim-inventory: partition identifier_literal_or_navigation=7735\n",
+  "stderr": ""
+}

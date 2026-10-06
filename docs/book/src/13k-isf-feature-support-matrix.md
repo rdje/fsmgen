@@ -553,7 +553,7 @@ they do not establish original argument or reference identity.
 
 This dated evidence qualifies the installed public documentation/profile.
 The independent public fixtures below now refine current interface roles; the
-original outer-boundary join remains the next step.
+finite original public-header compatibility below now refines those boundaries.
 The original framework/provider version and private implementation, full trace
 display, scalar encoding, hidden suffixes, coordinates and addresses remain
 unmeasured. Necessary installed toolchain documentation is read-only; all
@@ -590,9 +590,42 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-nati
 External framework names stay opaque. These fixtures do not measure original
 framework/provider versions, private operations, full formatter or hidden
 arguments, reference identity, direct-emitter/source coordinates or addresses.
-The finite original public-boundary join and full current fact publication
-remain the next owned steps. All project outputs and scratch stay local;
+The finite original public-header join below now qualifies source/signature
+compatibility; full current fact publication remains the next owned step. All project outputs and scratch stay local;
 installed public toolchain access is necessary and read-only.
+
+The public-header checks and scoped native guide below are qualified as a
+checkpoint. The current combined seal replay stopped at the unchanged RAM guard
+cutoff. No whole-member seal or independent final result qualification is
+claimed yet; these durability steps remain active before full fact publication.
+
+The complete finite original public boundary join now compares source-selected
+named-subtest bodies, own eval/delegate/load boundaries and recorded public
+Test::Builder/Test::More headers. Published interfaces and separate current
+fixtures select the public symbols and path before original traces are examined.
+Across the original cases and throw phases, visible authored-name displays and
+CODE kinds agree with the public signatures and body/delegate/entry/load order.
+Receiver tokens stay opaque; truncated displays qualify only visible prefixes.
+
+Wrong public names, callback kinds, extra public frames and an early delegate
+first pass the prior own-source semantic composite within their intervention
+epoch, then fail the new public-header check. That local acceptance never
+replaces original ancestry: complete committed roots, actual seal checkers and
+every original raw body remain independently authenticated and conserved.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-join-20261006/verify.py
+```
+
+This qualifies finite source/header compatibility with the dated exercised
+public interfaces. It does not establish the original framework/provider
+versions, private delegation or eval purposes, original formatter/settings,
+hidden suffixes, scalar encoding, receiver/callback contents or identity,
+coordinates or addresses. Private framework frames and eval intervals remain
+opaque. The authored load operator remains do despite its displayed require
+marker. Full current fact publication and the class/frame and coordinate/address
+joins retain their own next steps; current compatibility never supplies missing
+historical identity.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
