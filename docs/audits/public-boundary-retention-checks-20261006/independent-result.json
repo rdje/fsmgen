@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-retention-checks-20261006/verify_seal.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 43356; host 66.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS independently consumed actual retention seal, complete regenerated source/fact/control/native products and typed/member/borrowed-result refusals.\nstatus-True: refused at actual retention seal integer success\nstatus-0.0: refused at actual retention seal integer success\nstatus-1: refused at actual retention seal integer success\nbyte-count-True: refused at actual retention receipt discrete member byte counts\nbyte-count-0.0: refused at actual retention receipt discrete member byte counts\nlost-sealed-member: refused at whole actual retention receipt member pins\ninvented-guard-authority: refused at actual successful retention default-guard diagnostics\nborrowed-draft-construction-success: refused at exact actual retention-only seal command/result\n"
+}

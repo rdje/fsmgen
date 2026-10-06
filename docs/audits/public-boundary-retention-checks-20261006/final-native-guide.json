@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import runpy; from pathlib import Path; n=runpy.run_path(\"docs/audits/public-boundary-retention-checks-20261006/book.py\"); n[\"controls\"](Path(\".artifacts/public-boundary-retention-book/13k-isf-feature-support-matrix.html\").read_text()); print(\"PASS actual final native retention-only guide and four genuine controls\")"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS actual final native retention-only guide and four genuine controls\n"
+}

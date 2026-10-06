@@ -636,7 +636,7 @@ they ran again. Changed inputs, programmes or saved receipt roles refuse. Both
 commands retain the default RAM limits. The earlier broad seal attempt stopped
 at the host cutoff and remains failure evidence.
 
-A source-bound draft for the next fact publication preserves the ordered
+At the draft checkpoint, a source-bound draft for the next fact publication preserves the ordered
 questions and authored subtest/do-load section within a non-growing card budget.
 The draft check qualifies construction and physical deltas; semantic retention
 of removed or re-formed narration remains a separate prerequisite. A coherently
@@ -647,6 +647,32 @@ The canonical fact card remains unchanged at this draft checkpoint.
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-draft-20261006/verify_draft.py
 ```
+
+The superseding retention proposal has a complete reviewed source-fact and
+removal map. It preserves each unique source meaning, including the declared
+parser receiver and broader observer/display/frame gaps. Removed helper-input
+and joined-status narration maps to the richer retained join; the authored
+subtest/do-load section stays byte-exact. The revised whole card does not grow
+in encoded bytes or line feeds. Genuine fact, gap, question and review-row loss
+refuses, including the coherent receiver deletion accepted by the draft check.
+
+The review map records the engineer's semantic equivalence judgments. Its
+checker proves the complete declared source census, target presence and tested
+loss rejection; it does not decide unrestricted natural-language equivalence.
+Completed public-header source and original-population controls authenticate
+separately. Replay the retained proposal from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-retention-20261006/verify.py
+```
+
+This is proposal qualification. Atomic live fact publication, actual current
+queries and reader routes remain the next slice. `--live-unchanged` additionally
+checks that the pre-publication card and its collection authority still match
+their committed sources; it must stop accepting after publication. Default
+replay preserves the source/proposal snapshot and does not borrow live currency.
+Original framework/provider/private/formatter/reference/coordinate/address
+meanings and visual QA remain unmeasured or separately owned.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the

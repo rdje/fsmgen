@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import runpy; n=runpy.run_path(\"docs/audits/record-value-public-boundary-retention-20261006/verify.py\"); p=n[\"load\"](n[\"BASE\"] / \"proposal.json\"); r=n[\"load\"](n[\"BASE\"] / \"retention-map.json\"); n[\"check_semantics\"](p,r); n[\"controls\"](p,r); print(\"PASS complete local retention facts, reviewed body and genuine controls\")"
+  ],
+  "status": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import runpy; n=runpy.run_path(\"docs/audits/record-value-public-boundary-retention-20261006/verify.py\"); p=n[\"load\"](n[\"BASE\"] / \"proposal.json\"); r=n[\"load\"](n[\"BASE\"] / \"retention-map.json\"); n[\"check_semantics\"](p,r); n[\"controls\"](p,r); print(\"PASS complete local retention facts, reviewed body and genuine controls\")\n                                                                                                                                                                                                                                 ~~~~~~~~~~~~~^^^^^\n  File \"docs/audits/record-value-public-boundary-retention-20261006/verify.py\", line 190, in controls\n    refusal('Boolean-source-block-identity', proposal, candidate_map, 'complete ordered original prose-block census')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-public-boundary-retention-20261006/verify.py\", line 153, in refusal\n    require(candidate != proposal or candidate_map != review, 'genuine retention intervention: ' + name)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-public-boundary-retention-20261006/verify.py\", line 27, in require\n    raise ValueError(cause)\nValueError: genuine retention intervention: Boolean-source-block-identity\n",
+  "stdout": ""
+}

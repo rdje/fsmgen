@@ -1,0 +1,288 @@
+{
+  "docs/audits/public-boundary-join-checks-20261006": {
+    "docs/audits/public-boundary-join-checks-20261006/checkpoint-book-aggregate.json": {
+      "bytes": 6127,
+      "sha256": "36b0d13a9e79c04a89196e72aa414d5e32962db9e5762e31c1d43227d0b24260"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/checkpoint-inventory.json": {
+      "bytes": 727,
+      "sha256": "3dff42cb0d2b3e51e21f512512f5047c1c645eb95fd010491f2c07262161718c"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/checkpoint-native.json": {
+      "bytes": 2853,
+      "sha256": "838ce85e5079f813828af01e0a70c506c9ee4a304b22bbebdc17f8667de97c1c"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/checkpoint-preparation.json": {
+      "bytes": 448,
+      "sha256": "f44320c857d3898e5d930ac355ce74b8c13e8d56ea6b2382979f2e7038a48ff7"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/checkpoint-staged-doctrines.json": {
+      "bytes": 62317,
+      "sha256": "9effd68a0384d22c11202f4bccbfbb0833d4f53a611d12cffebe37dc9fb3553d"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/final-current-guide.json": {
+      "bytes": 1298,
+      "sha256": "6a7a423554ce7351b5fa9e808076d0793b63270632874c955038cf7c56f70509"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/final-current-native.json": {
+      "bytes": 1833,
+      "sha256": "83309227cc49775f23de5b28a9b2e147297729541771201010357dea95ea5025"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/final-inventory.json": {
+      "bytes": 727,
+      "sha256": "8dd96bebf119339a485c54c944764d29a31b885bc47000ed76152ff9d3e640f6"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/first-independent-seal.json": {
+      "bytes": 1636,
+      "sha256": "132d7ee4c283c8682478de37a74c185605fbfa9a55ad5b439a81c1ddbfacc41f"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/first-narrow-publisher-refusal.json": {
+      "bytes": 460,
+      "sha256": "dc22e00847c7c8c73d3fe14345a120714791813210981e3f630751ce06d767b7"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/first-seal-memory-refusal.json": {
+      "bytes": 4101,
+      "sha256": "f5da09dabb7f5f897016a5ee88199852ca6f836d088ae527560f45b26f0cfffb"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/focused-regression.json": {
+      "bytes": 868,
+      "sha256": "2dae43e0dc88d856e8b9473181fcf8ed6742dbf491dcc581684aec010f09738c"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/independent-seal.json": {
+      "bytes": 1104,
+      "sha256": "95bd97519500cf730f774934c200bf2404e576a9c87f2e244565d08e218a5608"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/initial-verify-seal.py.txt": {
+      "bytes": 6522,
+      "sha256": "5dbc48a7c19e9ad0ad593ee961bb49b3351681a0ee9f28de1de3146e7f692f8f"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/narrow-book-change.json": {
+      "bytes": 382292,
+      "sha256": "74d74b79bb1fb312ac41d5fb7f4a63f87db46a27c25847d6df10c97f90249851"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/narrow-book-publisher.json": {
+      "bytes": 279,
+      "sha256": "cfb75c06cb7de13572de0e3df441dc2c8549ed42a7d58acccda4165e4952a50f"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/narrow-first-replay.json": {
+      "bytes": 1186,
+      "sha256": "c7391d6943703c37456fdb38feff642257d94490b07c47dcf2ff8474ff435026"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/narrow-native-build.json": {
+      "bytes": 849,
+      "sha256": "f1b13974c136a4a2f49468df0da12f30587fc4a1b19f34f211df7e490e81650b"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/resource-baseline.json": {
+      "bytes": 220,
+      "sha256": "914306b27818097558b3e3dd04d9248b02cb4a7614ece47278e08d08d9bcc1f6"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/retained-filename-readback.json": {
+      "bytes": 402,
+      "sha256": "6fcdfc1e9349f3ef50498100b095e334ad97c2777728be82dc932641f89c034f"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/root-cause.json": {
+      "bytes": 1531,
+      "sha256": "eab02d41cbbd1587acfeea524586bfaccbce15e2250898d7ffc506d175b7b15e"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/seal-recovery-history.json": {
+      "bytes": 466,
+      "sha256": "c11439333f517f3cd5dadec59eecc8cebe8ef481cff3d5c850df7687905568db"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/seal-staged-doctrines.json": {
+      "bytes": 62323,
+      "sha256": "865d081dfe6d23c7994d5ce668f1525b5af11ad7163b2592f362833aa222ce4c"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/seal-task-allowance.json": {
+      "bytes": 106312,
+      "sha256": "98b6cb829c5fe15327a5e5c6377be9d59d48e37d63c803f5e7a932c21a6108f6"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/sealed-replay.json": {
+      "bytes": 5851,
+      "sha256": "9d910226b4e42816ac7a7bdb107f0c4623b9a9c0787921f40b844d5ccb20b57f"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/task-allowance.json": {
+      "bytes": 114593,
+      "sha256": "4c6da6f5cca66dc8a97807edf403f173dd50abb3e016a3021ede4ce452ffd0a8"
+    },
+    "docs/audits/public-boundary-join-checks-20261006/verify_seal.py": {
+      "bytes": 6690,
+      "sha256": "2bf4dd6bbd43c8e471ec5e862fc1b7fe9c14df30c64e93ed672c9ad1ba37bc5a"
+    }
+  },
+  "docs/audits/record-value-public-boundary-draft-20261006": {
+    "docs/audits/record-value-public-boundary-draft-20261006/draft-controls.json": {
+      "bytes": 1366,
+      "sha256": "00a4f4650aa6c96f6b1d92c0cbf8f1e2f96c93985b2cc27174d8277a3fbb8fb2"
+    },
+    "docs/audits/record-value-public-boundary-draft-20261006/draft-manifest.json": {
+      "bytes": 652,
+      "sha256": "301f28ba134f0a372c55f27498ad6e7d32e7280bf03c773c451481073a10d2a2"
+    },
+    "docs/audits/record-value-public-boundary-draft-20261006/draft-proof.json": {
+      "bytes": 1825,
+      "sha256": "a78b417ed41daf2e8d760a539d493448ffed27cf5ad9638a1b208cda5a5a49a6"
+    },
+    "docs/audits/record-value-public-boundary-draft-20261006/first-card-proposal.json": {
+      "bytes": 11064,
+      "sha256": "3833e76905798dbe2d6512a4f15ba3a2c3dac270cf14a3dbb782d9c237652984"
+    },
+    "docs/audits/record-value-public-boundary-draft-20261006/scope.txt": {
+      "bytes": 1823,
+      "sha256": "99ceca190a3b9c14060b5e2116199dedbaf4342f39721a6167d48cf3f23321c1"
+    },
+    "docs/audits/record-value-public-boundary-draft-20261006/verify_draft.py": {
+      "bytes": 7423,
+      "sha256": "982820b6c4ceb928fafbd528819c0dd23f22ea57894bafc6cca7607f1e5caee8"
+    }
+  },
+  "docs/audits/record-value-public-boundary-join-20261006": {
+    "docs/audits/record-value-public-boundary-join-20261006/binding.json": {
+      "bytes": 23663,
+      "sha256": "bce80fdb9bfa2e205fb3a886caba75f4d0b19a44a21118bdab15f1bf9fd264d8"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/book-change.json": {
+      "bytes": 379465,
+      "sha256": "5a8b525e7cf417f45f1e00279f197b0ae14d095117c67008a1d716eb875becbf"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/book-input.html": {
+      "bytes": 221981,
+      "sha256": "6bc919870c1cf99025adc7e59101d50d45d3c3fc74448eb4e43ae61a38a94702"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/book-proof.json": {
+      "bytes": 1077,
+      "sha256": "c0dd06bd0a671824fdf049037067a70e9ca16dece0da35145443d74c70b261ca"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/book.py": {
+      "bytes": 6043,
+      "sha256": "8bf2bdbacddbee7574275af109a29f3c298c8b3fa28c478fe18998c28cb731c1"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/checkpoint-book-input.html": {
+      "bytes": 221222,
+      "sha256": "bb7be56ef20421d92d8c4bade401806c3abaf60f377c95253a122e607cfccde8"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/checkpoint-book-proof.json": {
+      "bytes": 784,
+      "sha256": "c14c4fb157a81cb94ad4a4f91e802ac27539344d9af99c322b04bb5c84c4061c"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/checkpoint-book.py.txt": {
+      "bytes": 4618,
+      "sha256": "d074e75ba9b5aa6e7b285ce0d64a357b2c7135ecd20c22fe4494c81c3e02921b"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/checkpoint-inputs.json": {
+      "bytes": 125379,
+      "sha256": "e16fde0888bea700e32aace37e25d8bfded59950fae82d57f2babcbded9c1fa7"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/checkpoint-proof.json": {
+      "bytes": 1284,
+      "sha256": "a2c1d5d18c57aa19be3613feb40a0c05c9b36097f5d9056fe1ab924510527118"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/checkpoint-publish-book.py.txt": {
+      "bytes": 3591,
+      "sha256": "5382fdf0e03ee22a9d5a022111760e4e7e23814070d1856e197dfc967fc9e73d"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/checkpoint-scope.txt.txt": {
+      "bytes": 2956,
+      "sha256": "41d504124c3523e259c7fa96202ed352b515c6684dbcef60914fd4fe3b71efbd"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/checkpoint.py": {
+      "bytes": 8748,
+      "sha256": "5327a507157073fa7617f31c8a3294f1fd39c159782b5a643c9481472ce96798"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/focused.json": {
+      "bytes": 868,
+      "sha256": "efa137d9ddfd2da9692246442f8667491233d8b49e5ade6160d5f8abf1e625e5"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-book-change.json": {
+      "bytes": 379437,
+      "sha256": "fa94baddaf890e2361ab05121835f846de9ee0742bd6fbba260a365f7cbe1515"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-book-input.html": {
+      "bytes": 221194,
+      "sha256": "b9b30c41d944336cf0b3fc0c0d91970c9b67cf9efeae985d6ec62e161c5f30fd"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-book-proof.json": {
+      "bytes": 644,
+      "sha256": "ed2dd03ec3be48899d819c871cbc594009c08f2a4a59f05e5816b715e6b38aec"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-book.py.txt": {
+      "bytes": 4097,
+      "sha256": "9b7e4f987fd8d8f0a79be4c81c8372ba90d400a192ae8ff72a90f5e3f7588fef"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-local-proof.json": {
+      "bytes": 1382480,
+      "sha256": "b7f0e1c72a8b85fd976f65b3fe56a09cad51e8764c806cd582b0584eccd39ce2"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-local-result.json": {
+      "bytes": 1053,
+      "sha256": "356e1bcec1d088a01473e6487e3a96f0607676ea75b7be84aac5f73996d2e0ad"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-publish-book.py.txt": {
+      "bytes": 3339,
+      "sha256": "12b4ad676ff3eb6fe3f645395aa78fea5c5fe571ed9d6b50b5cf895ea84affc5"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-reader-result.json": {
+      "bytes": 448,
+      "sha256": "b6a194cf71e36327813c15538012e48a34a5f3bfef836f6413e366476baa6b5a"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/initial-reader.py.txt": {
+      "bytes": 12766,
+      "sha256": "0d508e81a3da136d30e97e27495d2541cf092dba1f104299094c33b3201d28f6"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/manifest.json": {
+      "bytes": 4789,
+      "sha256": "fa2997eae69b1f309d2b8d0ff64e75944440b1566b2b26ffb506a878934a3e24"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/model.py": {
+      "bytes": 2441,
+      "sha256": "98858e0e60c504f804977ec313c74ddc53f69bec44e00b462942b0fc793fee34"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/native-and-parser-current.json": {
+      "bytes": 1058,
+      "sha256": "8e3380e0c8d64d434b440c0e9f44c84c5f98b11427252e4927a0faea52a78c86"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/native-build.json": {
+      "bytes": 534,
+      "sha256": "05e99946b0dfba8515305eb98eab6fbe86966eb6a1c82227010fade037b7e27e"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/pre-native-models.json": {
+      "bytes": 11586036,
+      "sha256": "2bf7894f84e746a1b0b56590f369b4405f3b64556f7e5e072a00ecd315ddeff1"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/prepare.py": {
+      "bytes": 1502,
+      "sha256": "20ab2ccf99bafd1aa3437c2a100bc8489ad3df8eab10ba76a25012f87f79762e"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/prepare_checkpoint.py": {
+      "bytes": 630,
+      "sha256": "5f57c543cd5fee1fb900a12f707b755d0bfcab1432771f0f64e750a186fa2807"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/prerequisite-replays.json": {
+      "bytes": 1266,
+      "sha256": "607856cd4e0dcafc2af3c2b7cbce86f85e6c8e715e190bda7b8356eb49650d0c"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/proofs.json": {
+      "bytes": 13561834,
+      "sha256": "2d791f948faf7f9dcfcfe3a80765b29de5122affdca03d41b2dafec007ed03a2"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/publish_book.py": {
+      "bytes": 3591,
+      "sha256": "5382fdf0e03ee22a9d5a022111760e4e7e23814070d1856e197dfc967fc9e73d"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/publish_replay_book.py": {
+      "bytes": 3668,
+      "sha256": "3b5cab83bffba5f26f21037024049dddee1eb94411fb29809c672d9e97dd04a4"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/qualified-native-build.json": {
+      "bytes": 533,
+      "sha256": "009851aa859624cef0c31f410d4a47b9322ca5ef7de7cd5e192072c897ed1f37"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/scope.txt": {
+      "bytes": 3852,
+      "sha256": "f4b7976fb6cebee636ecaa919d889b95f4fd6928f9d270ea42b1443cc6da802a"
+    },
+    "docs/audits/record-value-public-boundary-join-20261006/verify.py": {
+      "bytes": 14041,
+      "sha256": "ff644e49e6d92bfd64b31f9b7c7ae4ab9469d33c66da7af4afda310d0d5defd0"
+    }
+  }
+}

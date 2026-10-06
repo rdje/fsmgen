@@ -1,0 +1,76 @@
+{
+  "actual_result_identity": {
+    "bytes": 489,
+    "sha256": "5e90534d15ad3e222057bdbf6cb9cd7f5443cfd6735a1b367eb5836e69159b8f"
+  },
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-retention-20261006/verify.py",
+    "--live-unchanged",
+    "--seal"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 41242; host 82.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete reviewed source-fact/removal retention, genuine loss controls and non-growing proposal; live publication remains unqualified.\n",
+  "whole_members": {
+    "controls.json": {
+      "bytes": 4231,
+      "sha256": "65d6d8ff96921d17e5e403a6592cb239da59da5bb534c7823af896f2b8475692"
+    },
+    "live-conservation.json": {
+      "bytes": 244738,
+      "sha256": "b6f77be5e3a92b2329fd272f3a8f008edda805750f09d68fc65c4cc889fd0dce"
+    },
+    "manifest.json": {
+      "bytes": 1679,
+      "sha256": "aacd1c4233c226c9dc5f7a5dbb01aeb9140a7f245b214275644e3d6e053c9057"
+    },
+    "native-guide.py.txt": {
+      "bytes": 4055,
+      "sha256": "d6b00f3c20fafe7606700fd968eb12497afc19798585ff55c3f2575ea74d70a2"
+    },
+    "native-input.html": {
+      "bytes": 224363,
+      "sha256": "c0c8ab9f88f84a294c614b52fcc5f2502d081be8ac7f68b37cfb1b023e0f5c7e"
+    },
+    "native-proof.json": {
+      "bytes": 1005,
+      "sha256": "012a22232e31028bbae0bf0b93c324d0c6519ae102a9e945a85da33e06890357"
+    },
+    "prepare.py": {
+      "bytes": 11828,
+      "sha256": "605cfd616d961eb93945bcd62837cc7fe1851c8eeeafb95136b5d4881f880c7b"
+    },
+    "prerequisite-proof.json": {
+      "bytes": 13850,
+      "sha256": "2cd84fa7284510b521a0313bda78b1fd89c064a19021114452619ddbc5213f1c"
+    },
+    "proof.json": {
+      "bytes": 3694,
+      "sha256": "63b7ccb4b4c76036626c3fc9b532ad25adac969ff650800e21eaa994725bdceb"
+    },
+    "proposal.json": {
+      "bytes": 9198,
+      "sha256": "d8aeeab23266793452c31a0f38ebda42d8c1130d84961b6302d9ab043d317a0d"
+    },
+    "recovery-proof.json": {
+      "bytes": 2128,
+      "sha256": "ff9ba1696f6c3b7b7bf535b37ad1991762e00b404008959e43f6c4a9ffe87d05"
+    },
+    "retention-map.json": {
+      "bytes": 21354,
+      "sha256": "c420f2b4b4161e7f06858a12ba6ca6ba6e244589936d20a421187148dbb8749d"
+    },
+    "scope.txt": {
+      "bytes": 4121,
+      "sha256": "c12a81fc6abc201e146fb7d51d1af1eb8b7718732621988ca21aa43a7e1d23d9"
+    },
+    "verify.py": {
+      "bytes": 17475,
+      "sha256": "3001837a045ed903f0361dfb3fde398d3497d453aba901a3e601b2a07fa532ca"
+    }
+  }
+}

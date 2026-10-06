@@ -1,0 +1,48 @@
+{
+  "failures": [
+    {
+      "actual_receipt": "docs/audits/public-boundary-retention-checks-20261006/first-local.json",
+      "cause": "actual target-byte intervention: separating-controls",
+      "programme": "docs/audits/public-boundary-retention-checks-20261006/first-verify.py.txt",
+      "programme_identity": {
+        "bytes": 12846,
+        "sha256": "aaa7b984bc62331a6e2f0838652026977216be19280f9c17b192a12250e5d7de"
+      },
+      "receipt_identity": {
+        "bytes": 1560,
+        "sha256": "822363cd6c3595627c1ca3540d92c3c64a45b48431d437e3c8e8e629891501be"
+      }
+    },
+    {
+      "actual_receipt": "docs/audits/public-boundary-retention-checks-20261006/final-local.json",
+      "cause": "intended retention refusal: unreviewed-historical-assurance-within-budget",
+      "programme": "docs/audits/public-boundary-retention-checks-20261006/first-body-control-verify.py.txt",
+      "programme_identity": {
+        "bytes": 14259,
+        "sha256": "9aafb1d3f1cb5814a73c0c7bd7369c1add9e30f1379b226b8ed00ce4b7656032"
+      },
+      "receipt_identity": {
+        "bytes": 2936,
+        "sha256": "3a5f1833f390a7077c60d765a528f5f3386b10878575015a6aa34307e6e90f16"
+      }
+    },
+    {
+      "actual_receipt": "docs/audits/public-boundary-retention-checks-20261006/body-local.json",
+      "cause": "genuine retention intervention: Boolean-source-block-identity",
+      "programme": "docs/audits/public-boundary-retention-checks-20261006/first-kind-control-verify.py.txt",
+      "programme_identity": {
+        "bytes": 14249,
+        "sha256": "1ddcc0c21cbcb640ad731d09a0ee448434ae193a9e59a8b467a04ecf1c565caf"
+      },
+      "receipt_identity": {
+        "bytes": 1989,
+        "sha256": "e86476532f927beda6398e61cb00bb19065ed3ca2e62b6c889a966e4807d0f29"
+      }
+    }
+  ],
+  "initial_controls_identity": {
+    "bytes": 3954,
+    "sha256": "31183e3f9671ee611280acf3fe2e395fdc0a52e55465ed82f737cc9fa59ef58e"
+  },
+  "initial_full": "first-full.json is retained unsealed diagnostic execution evidence; its invocation-time instrument identity was not captured, so it cannot substitute for the current sealed result."
+}

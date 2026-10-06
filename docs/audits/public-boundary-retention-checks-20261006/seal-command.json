@@ -1,0 +1,14 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-retention-20261006/verify.py",
+    "--live-unchanged",
+    "--seal"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 41242; host 82.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete reviewed source-fact/removal retention, genuine loss controls and non-growing proposal; live publication remains unqualified.\n"
+}

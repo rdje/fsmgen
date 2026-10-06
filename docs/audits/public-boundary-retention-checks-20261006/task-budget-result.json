@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-retention-checks-20261006/declare_task_budget.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS measured task byte declaration; baseline/ceilings and card authority unchanged.\n"
+}

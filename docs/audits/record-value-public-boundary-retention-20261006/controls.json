@@ -1,0 +1,157 @@
+[
+  {
+    "cause": "retained source proposition: observer-inventory",
+    "control": "lost-observer-inventory",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: observer-operation-roles",
+    "control": "lost-observer-operation-roles",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: parser-receiver-boundary",
+    "control": "lost-parser-receiver-boundary",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: helper-graphs-active-paths",
+    "control": "lost-helper-graphs-active-paths",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: compiled-footprints-and-gaps",
+    "control": "lost-compiled-footprints-and-gaps",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: helper-graphs-active-paths",
+    "control": "lost-complete-helper-join",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: source-before-observation",
+    "control": "lost-source-before-observation",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: returned-versus-active",
+    "control": "lost-returned-versus-active",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: separating-controls",
+    "control": "lost-separating-controls",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: subtest-load-gap",
+    "control": "lost-subtest-load-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: framework-format-gap",
+    "control": "lost-framework-format-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: subtest-load-gap",
+    "control": "lost-parser-internal-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: class-coordinate-gap",
+    "control": "lost-class-coordinate-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: subtest-load-gap",
+    "control": "lost-callback-regex-object-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: original-profile-gap",
+    "control": "lost-original-profile-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: consumer-alias-gap",
+    "control": "lost-consumer-alias-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: visual-gap",
+    "control": "lost-visual-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: class-coordinate-gap",
+    "control": "lost-broader-observer-frame-gap",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: reader-topic",
+    "control": "lost-reader-topic",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: own-source-heading",
+    "control": "lost-own-source-heading",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: whole-authored-subtest",
+    "control": "lost-whole-authored-subtest",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: whole-authored-load",
+    "control": "lost-whole-authored-load",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: whole-authored-subtest",
+    "control": "lost-refined-gap-and-native-identity",
+    "status": 1
+  },
+  {
+    "cause": "whole ordered retained questions and public addition",
+    "control": "lost-prior-question",
+    "status": 1
+  },
+  {
+    "cause": "complete independently declared source-fact census",
+    "control": "lost-fact-review-row",
+    "status": 1
+  },
+  {
+    "cause": "complete ordered original prose-block census",
+    "control": "lost-source-block",
+    "status": 1
+  },
+  {
+    "cause": "explicit retention-only publication boundary",
+    "control": "borrowed-live-currency",
+    "status": 1
+  },
+  {
+    "cause": "whole admitted retained proposal body",
+    "control": "unreviewed-historical-assurance-within-budget",
+    "status": 1
+  },
+  {
+    "cause": "complete ordered original prose-block census",
+    "control": "Boolean-source-block-identity",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: parser-receiver-boundary",
+    "control": "coherent-draft-accepted-parser-receiver-loss",
+    "status": 1
+  },
+  {
+    "cause": "retained source proposition: observer-inventory",
+    "control": "original-draft-lost-inventory-and-broader-gap",
+    "status": 1
+  }
+]

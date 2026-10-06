@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import runpy; n=runpy.run_path(\"docs/audits/record-value-public-boundary-retention-20261006/verify.py\"); p=n[\"load\"](n[\"BASE\"] / \"proposal.json\"); r=n[\"load\"](n[\"BASE\"] / \"retention-map.json\"); n[\"check_semantics\"](p,r); n[\"controls\"](p,r); print(\"PASS complete local retention facts and genuine controls\")"
+  ],
+  "status": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import runpy; n=runpy.run_path(\"docs/audits/record-value-public-boundary-retention-20261006/verify.py\"); p=n[\"load\"](n[\"BASE\"] / \"proposal.json\"); r=n[\"load\"](n[\"BASE\"] / \"retention-map.json\"); n[\"check_semantics\"](p,r); n[\"controls\"](p,r); print(\"PASS complete local retention facts and genuine controls\")\n                                                                                                                                                                                                                                 ~~~~~~~~~~~~~^^^^^\n  File \"docs/audits/record-value-public-boundary-retention-20261006/verify.py\", line 160, in controls\n    require(found is not None, 'actual target-byte intervention: ' + fact['id'])\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-public-boundary-retention-20261006/verify.py\", line 27, in require\n    raise ValueError(cause)\nValueError: actual target-byte intervention: separating-controls\n",
+  "stdout": ""
+}

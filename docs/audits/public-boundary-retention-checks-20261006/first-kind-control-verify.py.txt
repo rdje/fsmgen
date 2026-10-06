@@ -1,0 +1,245 @@
+"""Qualify a finite reviewed retention map without granting live currency."""
+import argparse
+import copy
+import hashlib
+import io
+import json
+import subprocess
+import tarfile
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-public-boundary-retention-20261006')
+DRAFT = Path('docs/audits/record-value-public-boundary-draft-20261006')
+JOIN = Path('docs/audits/record-value-public-boundary-join-20261006')
+JOIN_CHECKS = Path('docs/audits/public-boundary-join-checks-20261006')
+REVISION = '0008d8da16b6d4660b093eb8d8f181dc826f2645'
+SOURCE = '89631f67061eb741a95a06e3ec6eb6fa1df335da'
+CARD = 'docs/knowledge/record-value-original-observer-helper-paths.md'
+REGISTRY = 'doctrine/live_document_size/surfaces.jsonl'
+QUESTION = 'what qualifies original public subtest header and boundary compatibility?'
+ROLE = 'Semantic retention proposal only; live publication remains separate.'
+SUCCESS = 'PASS complete reviewed source-fact/removal retention, genuine loss controls and non-growing proposal; live publication remains unqualified.\n'
+FACT_IDS = set('observer-inventory observer-operation-roles parser-receiver-boundary helper-graphs-active-paths compiled-footprints-and-gaps complete-helper-join source-before-observation returned-versus-active separating-controls subtest-load-gap framework-format-gap parser-internal-gap class-coordinate-gap callback-regex-object-gap original-profile-gap consumer-alias-gap visual-gap broader-observer-frame-gap reader-topic own-source-heading whole-authored-subtest whole-authored-load refined-gap-and-native-identity'.split())
+
+
+def require(value, cause):
+    if not value:
+        raise ValueError(cause)
+
+
+def identity(raw):
+    return dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+
+
+def same(a, b):
+    return json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
+
+
+def load(path):
+    return json.loads(path.read_bytes())
+
+
+def module(path):
+    ns = {'__name__': 'retention_prerequisite'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+def git(path, revision=REVISION):
+    return subprocess.check_output(['git', 'show', revision + ':' + str(path)])
+
+
+def committed(root):
+    raw = subprocess.check_output(['git', 'archive', REVISION, str(root)])
+    with tarfile.open(fileobj=io.BytesIO(raw)) as archive:
+        return {m.name: archive.extractfile(m).read() for m in archive.getmembers() if m.isfile()}
+
+
+def whole(root):
+    paths = list(root.iterdir())
+    require(all(p.is_file() and not p.is_symlink() for p in paths), 'whole regular retention prerequisite members')
+    return {str(p): p.read_bytes() for p in paths}
+
+
+def authenticate():
+    proof = {}
+    for root in (DRAFT, JOIN, JOIN_CHECKS):
+        actual = whole(root)
+        require(actual == committed(root), 'complete committed retention prerequisite population: ' + str(root))
+        proof[str(root)] = {p: identity(raw) for p, raw in actual.items()}
+    draft = module(DRAFT / 'verify_draft.py')
+    proposal = load(DRAFT / 'first-card-proposal.json')
+    require(draft['check'](proposal) == load(DRAFT / 'draft-proof.json'), 'whole authenticated draft source/budget result')
+    require(draft['controls'](proposal) == load(DRAFT / 'draft-controls.json'), 'whole authenticated missing semantic leg')
+    # Saved execution receipts are authenticated as saved evidence, never
+    # represented as current executions. The initial retained join's explicit
+    # checkpoint mode remains the public replay contract.
+    source = module(JOIN / 'verify.py')
+    source['authenticate'](checkpoint_prerequisites=True)
+    expected = source['models']()
+    original = source['load'](source['context']['RAW'] / 'proofs.json')['inventories']
+    nested = source['context']['nested_records'](expected['own'])
+    saved = source['load'](JOIN / 'proofs.json')
+    require(saved['models'] == expected and saved['observations'] == source['check'](expected, expected, original, original, nested),
+            'whole completed public join source and original population')
+    require(saved['controls'] == source['controls'](expected, original, nested), 'whole separating public join controls')
+    actual = module(JOIN_CHECKS / 'verify_seal.py')
+    actual['check'](load(JOIN_CHECKS / 'sealed-replay.json'))
+    return proof
+
+
+def normalized(text):
+    # Only prose wrapping is ignored. Exact authored-section bytes are checked
+    # separately below; no fact vocabulary or literal is normalized away.
+    return ' '.join(text.split()).replace('/ ', '/')
+
+
+def questions(text):
+    header = text.split('---', 2)[1]
+    return [json.loads(s.removeprefix('  - ')) for s in header.splitlines() if s.startswith('  - ')]
+
+
+def check_semantics(proposal, review):
+    require(set(proposal) == {'before', 'after', 'role', 'revision'}
+            and all(type(v) is str for v in proposal.values()), 'closed retention proposal grammar')
+    require(set(review) == {'blocks', 'facts', 'semantic_review', 'new_fact', 'new_fact_authority', 'unpublished_routes'}
+            and type(review['blocks']) is list and type(review['facts']) is list,
+            'closed semantic retention review grammar')
+    original = git(CARD, SOURCE).decode()
+    require(proposal['before'] == original and proposal['revision'] == SOURCE, 'whole fixed original retention source')
+    require(proposal['role'] == ROLE, 'explicit retention-only publication boundary')
+    source_blocks = original.split('---', 2)[2].strip().split('\n\n')
+    require(all(type(r['block']) is int for r in review['blocks'])
+            and [r['block'] for r in review['blocks']] == list(range(len(source_blocks)))
+            and [r['source'] for r in review['blocks']] == source_blocks,
+            'complete ordered original prose-block census')
+    ids = [f['id'] for f in review['facts']]
+    require(len(ids) == len(set(ids)) and set(ids) == FACT_IDS, 'complete independently declared source-fact census')
+    for row in review['blocks']:
+        require(set(row) == {'block', 'source', 'fact_ids', 'role'}, 'closed original block disposition grammar')
+        require(row['fact_ids'] == [f['id'] for f in review['facts'] if row['block'] in f['blocks']]
+                and bool(row['fact_ids']) and bool(row['role']), 'complete block/fact disposition join')
+    after = proposal['after']
+    for fact in review['facts']:
+        require(set(fact) == {'id', 'blocks', 'source', 'targets', 'review'}, 'closed retained source fact grammar')
+        require(bool(fact['review']) and bool(fact['targets']) and bool(fact['blocks'])
+                and all(type(i) is int and 0 <= i < len(source_blocks) for i in fact['blocks']),
+                'reviewed closed source fact/removal disposition: ' + fact['id'])
+        require(normalized(fact['source']) in normalized('\n\n'.join(source_blocks[i] for i in fact['blocks'])),
+                'actual original source proposition: ' + fact['id'])
+        require(all(normalized(target) in normalized(after) for target in fact['targets']),
+                'retained source proposition: ' + fact['id'])
+    for i in (4, 5, 6, 7):
+        require(after.count(source_blocks[i]) == 1, 'whole exact authored source block: ' + str(i))
+    require(questions(after) == questions(original) + [QUESTION], 'whole ordered retained questions and public addition')
+    require(after.count(review['new_fact']) == 1 and review['new_fact_authority'] == str(JOIN / 'scope.txt'),
+            'source-selected finite public fact and completed authority')
+    require('historical' in (JOIN / 'scope.txt').read_text() and bool(review['semantic_review']),
+            'explicit semantic review and public historical limits')
+    a, b = original.encode(), after.encode()
+    require(len(b) <= len(a) and b.count(b'\n') <= a.count(b'\n'), 'whole revised non-growing byte/LF budget')
+    require(after == load(BASE / 'proposal.json')['after'], 'whole admitted retained proposal body')
+    return dict(source=identity(a), survivor=identity(b), byte_delta=len(b)-len(a), LF_delta=b.count(b'\n')-a.count(b'\n'),
+        source_blocks=[identity(p.encode()) for p in source_blocks], fact_ids=ids,
+        questions_before=questions(original), questions_after=questions(after),
+        semantic_review=review['semantic_review'], role=ROLE,
+        missing_legs='Atomic live publication, current queries/routes/guide and collection-health claims remain separate; original/private/native/visual/CI/push limits remain open.')
+
+
+def controls(proposal, review):
+    results = []
+
+    def refusal(name, candidate, candidate_map, cause):
+        require(candidate != proposal or candidate_map != review, 'genuine retention intervention: ' + name)
+        try:
+            check_semantics(candidate, candidate_map)
+        except ValueError as error:
+            require(str(error) == cause, 'intended retention refusal: ' + name)
+            results.append(dict(control=name, status=1, cause=str(error)))
+        else:
+            raise ValueError('false-green retention control: ' + name)
+
+    for fact in review['facts']:
+        candidate = copy.deepcopy(proposal)
+        target = fact['targets'][0]
+        # The exact target can span prose wraps; controls replace the actual
+        # corresponding byte interval rather than mutating a detached label.
+        import re
+        pattern = re.escape(normalized(target)).replace(r'\ ', r'\s+').replace('/', r'/\s*')
+        found = re.search(pattern, candidate['after'])
+        require(found is not None, 'actual target-byte intervention: ' + fact['id'])
+        candidate['after'] = candidate['after'][:found.start()] + '[removed unique meaning]' + candidate['after'][found.end():]
+        # An earlier overlapping fact may detect the same loss. Derive that
+        # first affected declared fact, independently of the target's owner.
+        first = next(f['id'] for f in review['facts'] if not all(normalized(t) in normalized(candidate['after']) for t in f['targets']))
+        refusal('lost-' + fact['id'], candidate, review, 'retained source proposition: ' + first)
+    candidate = copy.deepcopy(proposal); candidate['after'] = candidate['after'].replace('  - "' + questions(proposal['before'])[0] + '"\n', '', 1)
+    refusal('lost-prior-question', candidate, review, 'whole ordered retained questions and public addition')
+    candidate_map = copy.deepcopy(review); candidate_map['facts'].pop()
+    refusal('lost-fact-review-row', proposal, candidate_map, 'complete independently declared source-fact census')
+    candidate_map = copy.deepcopy(review); candidate_map['blocks'].pop()
+    refusal('lost-source-block', proposal, candidate_map, 'complete ordered original prose-block census')
+    candidate = {**proposal, 'role': 'All current publication roles are qualified.'}
+    refusal('borrowed-live-currency', candidate, review, 'explicit retention-only publication boundary')
+    candidate = copy.deepcopy(proposal)
+    candidate['after'] = candidate['after'].replace(
+        'title: Original observer/helper source paths have a complete finite join',
+        'title: Retention', 1) + 'Original versions are measured.\n'
+    refusal('unreviewed-historical-assurance-within-budget', candidate, review, 'whole admitted retained proposal body')
+    candidate_map = copy.deepcopy(review); candidate_map['blocks'][0]['block'] = False
+    refusal('Boolean-source-block-identity', proposal, candidate_map, 'complete ordered original prose-block census')
+    # Reproduce the actual coherent deletion that passed the old constructor;
+    # this is the distinguishing missing-leg input retained at the checkpoint.
+    draft = module(DRAFT / 'verify_draft.py')
+    bad = load(DRAFT / 'first-card-proposal.json')
+    draft['coherent_change'](bad, 'The parser receiver role is declared; identity is unmeasured.\n', '')
+    draft['check'](bad)
+    # Apply the same deletion to the revised candidate so other repaired
+    # boundaries cannot conceal this particular separating failure.
+    candidate = copy.deepcopy(proposal)
+    candidate['after'] = candidate['after'].replace('The parser receiver role is declared; identity is unmeasured.\n', '', 1)
+    refusal('coherent-draft-accepted-parser-receiver-loss', candidate, review,
+            'retained source proposition: parser-receiver-boundary')
+    original_draft = load(DRAFT / 'first-card-proposal.json')
+    refusal('original-draft-lost-inventory-and-broader-gap', {**proposal, 'after': original_draft['after']}, review,
+            'retained source proposition: observer-inventory')
+    return results
+
+
+def members():
+    return {Path(p).name: identity(raw) for p, raw in whole(BASE).items() if Path(p).name != 'manifest.json'}
+
+
+def save(name, value):
+    path = BASE / name
+    if path.exists():
+        require(same(load(path), value), 'whole saved retention product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(), 'sealed retention cannot save')
+        path.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--seal', action='store_true')
+    p.add_argument('--live-unchanged', action='store_true')
+    args = p.parse_args()
+    if (BASE / 'manifest.json').exists():
+        require(same(load(BASE / 'manifest.json'), members()), 'whole immutable retention seal')
+    module(BASE / 'prepare.py')['main']()
+    save('prerequisite-proof.json', authenticate())
+    proposal, review = load(BASE / 'proposal.json'), load(BASE / 'retention-map.json')
+    save('proof.json', check_semantics(proposal, review))
+    save('controls.json', controls(proposal, review))
+    if args.live_unchanged:
+        require(Path(CARD).read_bytes() == git(CARD, SOURCE), 'live card remains unchanged before publication')
+        current = next(json.loads(s) for s in Path(REGISTRY).read_text().splitlines() if json.loads(s).get('surface_id') == 'knowledge_cards')
+        captured = next(json.loads(s) for s in git(REGISTRY).decode().splitlines() if json.loads(s).get('surface_id') == 'knowledge_cards')
+        require(current == captured, 'whole unchanged Knowledge Map collection authority')
+    if args.seal:
+        save('manifest.json', members())
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

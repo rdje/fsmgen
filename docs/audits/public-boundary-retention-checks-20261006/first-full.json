@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-retention-20261006/verify.py",
+    "--live-unchanged"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS complete reviewed source-fact/removal retention, genuine loss controls and non-growing proposal; live publication remains unqualified.\n"
+}

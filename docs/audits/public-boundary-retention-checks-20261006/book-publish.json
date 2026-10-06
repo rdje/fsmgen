@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-retention-checks-20261006/publish_book.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS complete scoped retention guide and exact aggregate authority; live card unchanged.\n"
+}

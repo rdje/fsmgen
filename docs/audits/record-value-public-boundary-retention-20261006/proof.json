@@ -1,0 +1,97 @@
+{
+  "LF_delta": -2,
+  "byte_delta": -4,
+  "fact_ids": [
+    "observer-inventory",
+    "observer-operation-roles",
+    "parser-receiver-boundary",
+    "helper-graphs-active-paths",
+    "compiled-footprints-and-gaps",
+    "complete-helper-join",
+    "source-before-observation",
+    "returned-versus-active",
+    "separating-controls",
+    "subtest-load-gap",
+    "framework-format-gap",
+    "parser-internal-gap",
+    "class-coordinate-gap",
+    "callback-regex-object-gap",
+    "original-profile-gap",
+    "consumer-alias-gap",
+    "visual-gap",
+    "broader-observer-frame-gap",
+    "reader-topic",
+    "own-source-heading",
+    "whole-authored-subtest",
+    "whole-authored-load",
+    "refined-gap-and-native-identity"
+  ],
+  "missing_legs": "Atomic live publication, current queries/routes/guide and collection-health claims remain separate; original/private/native/visual/CI/push limits remain open.",
+  "questions_after": [
+    "what inventories original observer and callback source roles?",
+    "what qualifies original observer API and parser operation boundaries?",
+    "what qualifies original named helper inputs defaults and active paths?",
+    "what qualifies original compiled callback and refusal wrapper paths?",
+    "are all original helper input and callback paths joined?",
+    "what qualifies original own subtest body and delegate source roles?",
+    "what qualifies the original do-load source and recorded file marker?",
+    "what qualifies original public subtest header and boundary compatibility?"
+  ],
+  "questions_before": [
+    "what inventories original observer and callback source roles?",
+    "what qualifies original observer API and parser operation boundaries?",
+    "what qualifies original named helper inputs defaults and active paths?",
+    "what qualifies original compiled callback and refusal wrapper paths?",
+    "are all original helper input and callback paths joined?",
+    "what qualifies original own subtest body and delegate source roles?",
+    "what qualifies the original do-load source and recorded file marker?"
+  ],
+  "role": "Semantic retention proposal only; live publication remains separate.",
+  "semantic_review": "Explicit engineer review of every source paragraph and each target equivalence. The checker proves exact census/target presence and demonstrated loss rejection, not unrestricted natural-language equivalence.",
+  "source": {
+    "bytes": 4424,
+    "sha256": "719f442f3a10922b9573a0787af135130ca248c33d42e050b721e311157e1403"
+  },
+  "source_blocks": [
+    {
+      "bytes": 1027,
+      "sha256": "9ec3da39c137dd0bee05029e8b4ad1c3df94a143749aa8b2872870f829f6a65b"
+    },
+    {
+      "bytes": 385,
+      "sha256": "d9a18ca6682a479ebad2e4c2cb4a13674e715bf97a27742848feada26c2330ee"
+    },
+    {
+      "bytes": 64,
+      "sha256": "20efb552f270792728fcc3ca20486d3adbf25e0bb87adf2f265ec3847f68aa4b"
+    },
+    {
+      "bytes": 138,
+      "sha256": "434e7aaf22c046a879e97c78ef147f2ac4960d0cbcd4fad36de19d88a5b3a0e0"
+    },
+    {
+      "bytes": 51,
+      "sha256": "500ba5b5c366db10d18503192b12f1f77629fe1220bd79fb824eabe1a481eaeb"
+    },
+    {
+      "bytes": 54,
+      "sha256": "f98bb8e2da91cd84b3c1bff53edebe571290285365024b9a41f125523fe46f0a"
+    },
+    {
+      "bytes": 753,
+      "sha256": "ce26bffecdc268f52c8eb4ea96423fb32e12a3750d6551a26a0e884dba28818b"
+    },
+    {
+      "bytes": 636,
+      "sha256": "4c88dd44b53ddc18be4fc10136358f786acfa15a37b249482ff3b90c64c75ded"
+    },
+    {
+      "bytes": 147,
+      "sha256": "1c150f659477ed29b899f30de5a87aeefe39f590e1459e0d8b222bc327a43cbd"
+    }
+  ],
+  "survivor": {
+    "bytes": 4420,
+    "sha256": "8fae960b3e41530a358368c5ff004df92227a122d994d47800d2e16d291df8c9"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import runpy; n=runpy.run_path(\"docs/audits/record-value-public-boundary-retention-20261006/verify.py\"); p=n[\"load\"](n[\"BASE\"] / \"proposal.json\"); r=n[\"load\"](n[\"BASE\"] / \"retention-map.json\"); n[\"check_semantics\"](p,r); n[\"controls\"](p,r); print(\"PASS complete local retention facts and genuine controls\")"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS complete local retention facts and genuine controls\n"
+}

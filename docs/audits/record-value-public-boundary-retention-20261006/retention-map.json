@@ -1,0 +1,376 @@
+{
+  "blocks": [
+    {
+      "block": 0,
+      "fact_ids": [
+        "observer-inventory",
+        "observer-operation-roles",
+        "parser-receiver-boundary",
+        "helper-graphs-active-paths",
+        "compiled-footprints-and-gaps",
+        "complete-helper-join",
+        "source-before-observation",
+        "returned-versus-active",
+        "separating-controls"
+      ],
+      "role": "reviewed re-form or duplicate; see each fact review",
+      "source": "Own observer/callback source roles, bodies and operation allocations now inventory.\nObserver models join every API/parser operation, eval and installed wrapper with\nsource argument roles. The parser receiver role is declared; identity is unmeasured.\nNamed helper models preserve supplied/default inputs, complete source graphs,\nreturned argument-building calls and active paths through both throw phases.\nCompiled callback/refuses/helper-wrapper paths bind parameterless operation,\nsource regex-body and label displays; identity and full formatting remain open. Paths now join.\nThe complete source join now binds every helper allocation, full supplied/default\ninputs, returned argument-building operations and compiled callback/refusal paths\nthrough both nested throw phases. Source models construct the intended join before\nrecorded contiguous function order and visible argument roles are compared.\nReturned helpers remain separate from active frames. Complete model/allocation/\nphase/member/order/operand corruptions reject."
+    },
+    {
+      "block": 1,
+      "fact_ids": [
+        "subtest-load-gap",
+        "framework-format-gap",
+        "parser-internal-gap",
+        "class-coordinate-gap",
+        "callback-regex-object-gap",
+        "original-profile-gap",
+        "consumer-alias-gap",
+        "visual-gap"
+      ],
+      "role": "reviewed re-form or duplicate; see each fact review",
+      "source": "Full subtest/require, public framework/quoting/truncation, parser internal paths,\nobserver/class-frame/raw coordinates and actual callback/regex/object/address\nidentity remain separately owned. Original provider/hook/class measurements stay\nunmeasured. Consumer, alias, complete semantic/cold/candidate-parent and permanent/\nhot/native repairs remain open. Visual mdBook QA is pending."
+    },
+    {
+      "block": 2,
+      "fact_ids": [
+        "broader-observer-frame-gap"
+      ],
+      "role": "reviewed re-form or duplicate; see each fact review",
+      "source": "The finite-copy core retains the original broader open boundary:"
+    },
+    {
+      "block": 3,
+      "fact_ids": [
+        "broader-observer-frame-gap"
+      ],
+      "role": "reviewed re-form or duplicate; see each fact review",
+      "source": "Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/\ncandidate-parent, hot and host-native meanings remain open."
+    },
+    {
+      "block": 4,
+      "fact_ids": [
+        "reader-topic"
+      ],
+      "role": "exact retained",
+      "source": "Related: [[record-value-finite-copy-probe-reader]]."
+    },
+    {
+      "block": 5,
+      "fact_ids": [
+        "own-source-heading"
+      ],
+      "role": "exact retained",
+      "source": "## Qualified own subtest and do-load source boundaries"
+    },
+    {
+      "block": 6,
+      "fact_ids": [
+        "whole-authored-subtest"
+      ],
+      "role": "exact retained",
+      "source": "The complete own source model assigns every original refusal to its authored\nnamed subtest body. The observer saves the public Test::More subtest delegate,\nreceives the name/body/extra arguments, wraps the callback with the\ncompiled-helper observer, forwards the callback arguments to the original body\nand forwards extra arguments to the saved delegate. Authored original subtests\nsupply no extra arguments. Recorded throw-phase headers agree with the modeled\nbody and own observer callback's empty visible argument lists and with the\npublic delegate/own entry's authored name and CODE reference kind. The reference\nkind does not establish actual callback identity. External framework frames\nbetween those own roles are retained as opaque observations."
+    },
+    {
+      "block": 7,
+      "fact_ids": [
+        "whole-authored-load"
+      ],
+      "role": "exact retained",
+      "source": "The observer's original test load is an explicit do\n'./t/1986-isf-record-port-value-gates.t', followed by captures of $@, $! and\ndefined($ok). Recorded diagnostic frames contain a require marker with that\nexact file identifier. This marker agrees with the file role; it does not change\nthe source operator to require or establish the formatter. Necessary installed\npublic POD documents named subtest callbacks and extra arguments, do-file\nreturn/error semantics and require's do-file loading mechanism. The captured\ncurrent Perl/Test::More profile is current public-interface evidence; the\noriginal framework version remains unmeasured."
+    },
+    {
+      "block": 8,
+      "fact_ids": [
+        "refined-gap-and-native-identity"
+      ],
+      "role": "reviewed re-form or duplicate; see each fact review",
+      "source": "These own source roles refine the earlier broad subtest/require gap; full\nframework/display and actual callback/native identity remain unqualified."
+    }
+  ],
+  "facts": [
+    {
+      "blocks": [
+        0
+      ],
+      "id": "observer-inventory",
+      "review": "Re-form the same source inventory explicitly; do not infer it from helper allocations.",
+      "source": "Own observer/callback source roles, bodies and operation allocations now inventory.",
+      "targets": [
+        "Own observer/callback source roles/bodies/allocations inventory."
+      ]
+    },
+    {
+      "blocks": [
+        0
+      ],
+      "id": "observer-operation-roles",
+      "review": "Retain every operation and the source argument qualification literally.",
+      "source": "Observer models join every API/parser operation, eval and installed wrapper with source argument roles.",
+      "targets": [
+        "Observer models join every API/parser operation, eval and installed wrapper with source argument roles."
+      ]
+    },
+    {
+      "blocks": [
+        0
+      ],
+      "id": "parser-receiver-boundary",
+      "review": "Unique receiver declaration and identity gap must survive together.",
+      "source": "The parser receiver role is declared; identity is unmeasured.",
+      "targets": [
+        "The parser receiver role is declared; identity is unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        0
+      ],
+      "id": "helper-graphs-active-paths",
+      "review": "Complete graphs and active paths stay explicit; the richer retained join owns supplied/default, returned-call and phase details.",
+      "source": "Named helper models preserve supplied/default inputs, complete source graphs, returned argument-building calls and active paths through both throw phases.",
+      "targets": [
+        "Named helpers preserve complete source graphs and active paths.",
+        "Source join binds every helper allocation, full supplied/default inputs, returned argument-building operations and compiled callback/refusal paths through both nested throw phases."
+      ]
+    },
+    {
+      "blocks": [
+        0
+      ],
+      "id": "compiled-footprints-and-gaps",
+      "review": "Retain parameterless, regex-body, label, identity and formatting roles; generic joined status is duplicate of the full retained join.",
+      "source": "Compiled callback/refuses/helper-wrapper paths bind parameterless operation, source regex-body and label displays; identity and full formatting remain open. Paths now join.",
+      "targets": [
+        "Compiled callback/refuses/helper-wrapper paths bind parameterless operation, source regex-body and label displays; identity and full formatting remain open.",
+        "Source join binds every helper allocation, full supplied/default inputs, returned argument-building operations and compiled callback/refusal paths through both nested throw phases."
+      ]
+    },
+    {
+      "blocks": [
+        0
+      ],
+      "id": "complete-helper-join",
+      "review": "Only redundant The/complete/now narration is removed; every allocation, full input set and both nested phases remain exact.",
+      "source": "The complete source join now binds every helper allocation, full supplied/default inputs, returned argument-building operations and compiled callback/refusal paths through both nested throw phases.",
+      "targets": [
+        "Source join binds every helper allocation, full supplied/default inputs, returned argument-building operations and compiled callback/refusal paths through both nested throw phases."
+      ]
+    },
+    {
+      "blocks": [
+        0
+      ],
+      "id": "source-before-observation",
+      "review": "Retain the direction of derivation and both visible observation dimensions.",
+      "source": "Source models construct the intended join before recorded contiguous function order and visible argument roles are compared.",
+      "targets": [
+        "Source models construct the intended join before comparing recorded contiguous function order and visible argument roles."
+      ]
+    },
+    {
+      "blocks": [
+        0
+      ],
+      "id": "returned-versus-active",
+      "review": "Only verb tense changes; returned calls remain excluded from active frames.",
+      "source": "Returned helpers remain separate from active frames.",
+      "targets": [
+        "Returned helpers are separate from active frames."
+      ]
+    },
+    {
+      "blocks": [
+        0
+      ],
+      "id": "separating-controls",
+      "review": "Retain the complete existing corruption vocabulary.",
+      "source": "Complete model/allocation/phase/member/order/operand corruptions reject.",
+      "targets": [
+        "Complete model/allocation/phase/member/order/operand corruptions reject."
+      ]
+    },
+    {
+      "blocks": [
+        1
+      ],
+      "id": "subtest-load-gap",
+      "review": "Merge overlapping open-boundary narration; retain each listed scope explicitly and never promote an unmeasured meaning.",
+      "source": "Full subtest/require",
+      "targets": [
+        "subtest/load",
+        "meanings stay open.",
+        "identity stay unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        1
+      ],
+      "id": "framework-format-gap",
+      "review": "Merge overlapping open-boundary narration; retain each listed scope explicitly and never promote an unmeasured meaning.",
+      "source": "public framework/quoting/truncation",
+      "targets": [
+        "framework/quoting/truncation",
+        "meanings stay open.",
+        "identity stay unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        1
+      ],
+      "id": "parser-internal-gap",
+      "review": "Merge overlapping open-boundary narration; retain each listed scope explicitly and never promote an unmeasured meaning.",
+      "source": "parser internal paths",
+      "targets": [
+        "parser-internal meanings stay open.",
+        "meanings stay open.",
+        "identity stay unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        1
+      ],
+      "id": "class-coordinate-gap",
+      "review": "Merge overlapping open-boundary narration; retain each listed scope explicitly and never promote an unmeasured meaning.",
+      "source": "observer/class-frame/raw coordinates",
+      "targets": [
+        "observer/display/frame/class-frame/raw-coordinate/address",
+        "meanings stay open.",
+        "identity stay unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        1
+      ],
+      "id": "callback-regex-object-gap",
+      "review": "Merge overlapping open-boundary narration; retain each listed scope explicitly and never promote an unmeasured meaning.",
+      "source": "actual callback/regex/object/address identity remain separately owned.",
+      "targets": [
+        "callback/regex/object/native identity stay unmeasured.",
+        "meanings stay open.",
+        "identity stay unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        1
+      ],
+      "id": "original-profile-gap",
+      "review": "Merge overlapping open-boundary narration; retain each listed scope explicitly and never promote an unmeasured meaning.",
+      "source": "Original provider/hook/class measurements stay unmeasured.",
+      "targets": [
+        "Original provider/hook/class measurements",
+        "meanings stay open.",
+        "identity stay unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        1
+      ],
+      "id": "consumer-alias-gap",
+      "review": "Merge overlapping open-boundary narration; retain each listed scope explicitly and never promote an unmeasured meaning.",
+      "source": "Consumer, alias, complete semantic/cold/candidate-parent and permanent/hot/native repairs remain open.",
+      "targets": [
+        "Consumer, alias, complete semantic/cold/candidate-parent and permanent/hot/host-native repairs stay open;",
+        "meanings stay open.",
+        "identity stay unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        1
+      ],
+      "id": "visual-gap",
+      "review": "Merge overlapping open-boundary narration; retain each listed scope explicitly and never promote an unmeasured meaning.",
+      "source": "Visual mdBook QA is pending.",
+      "targets": [
+        "mdBook QA is pending.",
+        "meanings stay open.",
+        "identity stay unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        2,
+        3
+      ],
+      "id": "broader-observer-frame-gap",
+      "review": "The finite-copy introduction is editorial duplication, but its full observer/display/frame/coordinate/address and consumer/alias/cold/hot/host-native boundaries are unique obligations, now explicit in the merged gap.",
+      "source": "Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/\ncandidate-parent, hot and host-native meanings remain open.",
+      "targets": [
+        "Full observer/display/frame/class-frame/raw-coordinate/address",
+        "Consumer, alias, complete semantic/cold/candidate-parent",
+        "hot/host-native repairs stay open;"
+      ]
+    },
+    {
+      "blocks": [
+        4
+      ],
+      "id": "reader-topic",
+      "review": "Keep the exact related reader topic and route.",
+      "source": "Related: [[record-value-finite-copy-probe-reader]].",
+      "targets": [
+        "Related: [[record-value-finite-copy-probe-reader]]."
+      ]
+    },
+    {
+      "blocks": [
+        5
+      ],
+      "id": "own-source-heading",
+      "review": "Keep the exact authored-section boundary.",
+      "source": "## Qualified own subtest and do-load source boundaries",
+      "targets": [
+        "## Qualified own subtest and do-load source boundaries"
+      ]
+    },
+    {
+      "blocks": [
+        6
+      ],
+      "id": "whole-authored-subtest",
+      "review": "Byte-exact retention preserves every source-body/delegate/callback/extra-argument/name/kind/identity/opaque-frame fact.",
+      "source": "The complete own source model assigns every original refusal to its authored\nnamed subtest body. The observer saves the public Test::More subtest delegate,\nreceives the name/body/extra arguments, wraps the callback with the\ncompiled-helper observer, forwards the callback arguments to the original body\nand forwards extra arguments to the saved delegate. Authored original subtests\nsupply no extra arguments. Recorded throw-phase headers agree with the modeled\nbody and own observer callback's empty visible argument lists and with the\npublic delegate/own entry's authored name and CODE reference kind. The reference\nkind does not establish actual callback identity. External framework frames\nbetween those own roles are retained as opaque observations.",
+      "targets": [
+        "The complete own source model assigns every original refusal to its authored\nnamed subtest body. The observer saves the public Test::More subtest delegate,\nreceives the name/body/extra arguments, wraps the callback with the\ncompiled-helper observer, forwards the callback arguments to the original body\nand forwards extra arguments to the saved delegate. Authored original subtests\nsupply no extra arguments. Recorded throw-phase headers agree with the modeled\nbody and own observer callback's empty visible argument lists and with the\npublic delegate/own entry's authored name and CODE reference kind. The reference\nkind does not establish actual callback identity. External framework frames\nbetween those own roles are retained as opaque observations."
+      ]
+    },
+    {
+      "blocks": [
+        7
+      ],
+      "id": "whole-authored-load",
+      "review": "Byte-exact retention preserves do, file identifier, error/return accessors, displayed require, formatter boundary, published interfaces and current/original version distinction.",
+      "source": "The observer's original test load is an explicit do\n'./t/1986-isf-record-port-value-gates.t', followed by captures of $@, $! and\ndefined($ok). Recorded diagnostic frames contain a require marker with that\nexact file identifier. This marker agrees with the file role; it does not change\nthe source operator to require or establish the formatter. Necessary installed\npublic POD documents named subtest callbacks and extra arguments, do-file\nreturn/error semantics and require's do-file loading mechanism. The captured\ncurrent Perl/Test::More profile is current public-interface evidence; the\noriginal framework version remains unmeasured.",
+      "targets": [
+        "The observer's original test load is an explicit do\n'./t/1986-isf-record-port-value-gates.t', followed by captures of $@, $! and\ndefined($ok). Recorded diagnostic frames contain a require marker with that\nexact file identifier. This marker agrees with the file role; it does not change\nthe source operator to require or establish the formatter. Necessary installed\npublic POD documents named subtest callbacks and extra arguments, do-file\nreturn/error semantics and require's do-file loading mechanism. The captured\ncurrent Perl/Test::More profile is current public-interface evidence; the\noriginal framework version remains unmeasured."
+      ]
+    },
+    {
+      "blocks": [
+        8
+      ],
+      "id": "refined-gap-and-native-identity",
+      "review": "The retained own-source section and completed finite public join explain the refinement; full display/framework/native identity gaps stay explicit. This does not qualify private purposes or historical identity.",
+      "source": "These own source roles refine the earlier broad subtest/require gap; full\nframework/display and actual callback/native identity remain unqualified.",
+      "targets": [
+        "The complete own source model assigns every original refusal to its authored\nnamed subtest body. The observer saves the public Test::More subtest delegate,\nreceives the name/body/extra arguments, wraps the callback with the\ncompiled-helper observer, forwards the callback arguments to the original body\nand forwards extra arguments to the saved delegate. Authored original subtests\nsupply no extra arguments. Recorded throw-phase headers agree with the modeled\nbody and own observer callback's empty visible argument lists and with the\npublic delegate/own entry's authored name and CODE reference kind. The reference\nkind does not establish actual callback identity. External framework frames\nbetween those own roles are retained as opaque observations.",
+        "The observer's original test load is an explicit do\n'./t/1986-isf-record-port-value-gates.t', followed by captures of $@, $! and\ndefined($ok). Recorded diagnostic frames contain a require marker with that\nexact file identifier. This marker agrees with the file role; it does not change\nthe source operator to require or establish the formatter. Necessary installed\npublic POD documents named subtest callbacks and extra arguments, do-file\nreturn/error semantics and require's do-file loading mechanism. The captured\ncurrent Perl/Test::More profile is current public-interface evidence; the\noriginal framework version remains unmeasured.",
+        "framework/quoting/truncation",
+        "Full observer/display/frame/class-frame/raw-coordinate/address",
+        "callback/regex/object/native identity stay unmeasured.",
+        "Original Test::Builder/Test::More headers match authored-name prefixes/CODE\nkinds and body/delegate/entry/do-load order at every throw phase. Independent\ndated public fixtures select them. Receiver tokens/private eval intervals stay\nopaque. Wrong name/kind/population/order rejects.\n"
+      ]
+    }
+  ],
+  "new_fact": "Original Test::Builder/Test::More headers match authored-name prefixes/CODE\nkinds and body/delegate/entry/do-load order at every throw phase. Independent\ndated public fixtures select them. Receiver tokens/private eval intervals stay\nopaque. Wrong name/kind/population/order rejects.\n",
+  "new_fact_authority": "docs/audits/record-value-public-boundary-join-20261006/scope.txt",
+  "semantic_review": "Explicit engineer review of every source paragraph and each target equivalence. The checker proves exact census/target presence and demonstrated loss rejection, not unrestricted natural-language equivalence.",
+  "unpublished_routes": "Proposed evidence/reverify paths belong to .5.4.2.2 and are not executed or advertised as current here."
+}

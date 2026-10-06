@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "A coherently omitted parser-receiver fact",
+    "-1",
+    "--format=%H %s",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": ""
+}
