@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-parser-function-order-20261006/verify.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "PASS complete source-selected original parser function order in every retained mode/member/phase; argument and wider joins remain open.\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/parser-function-order-checks-20261006/verify_seal.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "PASS actual sealed replay, complete file pins, source/order/control regeneration and typed receipt refusals.\n"
+  }
+]

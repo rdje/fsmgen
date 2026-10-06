@@ -1,0 +1,78 @@
+{
+  "binding.json": {
+    "bytes": 7879,
+    "sha256": "1c3145ca4d43c1457458f0b9c28faeed9dcdacae935305d414715284284395bd"
+  },
+  "book-and-history.json": {
+    "bytes": 2180,
+    "sha256": "15af3db579ee29603d6a99f73f25b7b1f0a76c375264ba706a7f359f155d9229"
+  },
+  "book-change.json": {
+    "bytes": 361782,
+    "sha256": "6ad4c8028f37e85ba11f286e32d5c0f5638c1c51bdbc4d7cd6a3c5a36a501c3d"
+  },
+  "book-input.html": {
+    "bytes": 214349,
+    "sha256": "814666706e6ff4f16bc691282701f80386b91e4ab53e3e31e00dd65b016b1a96"
+  },
+  "book-native-proof.json": {
+    "bytes": 747,
+    "sha256": "90d3e007aea388f3ed3dfef89607343759a0f5a34e2dbb65bafc3b8ca437da79"
+  },
+  "book.py": {
+    "bytes": 3244,
+    "sha256": "6c5e52adccefef76515a74ddac41450e4658319087124ef54a1f3b7d05d02b45"
+  },
+  "current-source.json": {
+    "bytes": 500,
+    "sha256": "72667f6266f89610965c68fee1fa80f8b859db2957cdd513a556a13016ed92ce"
+  },
+  "first-native-guide-refusal.json": {
+    "bytes": 544,
+    "sha256": "570752415374c08b982f960d2805ca18cba692c9aebcf9a2c20dd1a4e3a23daf"
+  },
+  "focused.json": {
+    "bytes": 879,
+    "sha256": "7cebd24ebcd60553de0f70fdc8b57fcc5890bb69b57494b822f8bbb02128170d"
+  },
+  "initial-book-reader.py.txt": {
+    "bytes": 3242,
+    "sha256": "9cfe24462ad3559fc1173e165952d9802ac9cf4d1fcb7dbeaeebbd90cdafe6a1"
+  },
+  "initial-proof.json": {
+    "bytes": 146199,
+    "sha256": "8a9b95915dddffccedf7dc19019f9333a442af90aaae2ab781698822e1ee2531"
+  },
+  "initial-reader.py.txt": {
+    "bytes": 15163,
+    "sha256": "cb83af8b49886304bebb8dab2cbf354956945a6a12ab5570e601324eee91b4ec"
+  },
+  "initial-replay.json": {
+    "bytes": 656,
+    "sha256": "74a29dbf3e3d469bb8acd1d75a776ac854875d7096e27a9cb52d141ecfc420ed"
+  },
+  "local-review.json": {
+    "bytes": 891,
+    "sha256": "b296c6943783b70d7ca202bda7af6f2e63d3301cff074212eeeb58594de1a94b"
+  },
+  "prepare.py": {
+    "bytes": 1157,
+    "sha256": "b26714e8fd668971e9751404ec3be6174109e4a441f632465404d1487cd8663c"
+  },
+  "prerequisite-replays.json": {
+    "bytes": 625,
+    "sha256": "c38ddca2528b7dd351594f4eb9994544e4b4980b07a7990c2c563316084d526b"
+  },
+  "proofs.json": {
+    "bytes": 146508,
+    "sha256": "841ec2f296c85044892ae48e5434379d450dae20a9c8b49318d061c2a2308c40"
+  },
+  "scope.txt": {
+    "bytes": 2681,
+    "sha256": "31010be62b6df6d854c4127f43f6d5e444cb5f5754777b78310358335032f3d0"
+  },
+  "verify.py": {
+    "bytes": 16442,
+    "sha256": "13c367ef3cf1ec7c99d49de587492977e973e0f0d7936e6662ef3854770bbdd3"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "cause": "native complete argument-role guidance and missing legs",
+  "native_identity": {
+    "bytes": 214349,
+    "sha256": "814666706e6ff4f16bc691282701f80386b91e4ab53e3e31e00dd65b016b1a96"
+  },
+  "original_programme": "initial-book-reader.py.txt",
+  "root_cause": "Native mdBook renders the source apostrophe in the guard possessive as U+2019. The first literal guide expected ASCII U+0027. Pin the exact observed native punctuation in the guide oracle; do not normalize raw parser headers or qualify their formatter.",
+  "status": 1
+}

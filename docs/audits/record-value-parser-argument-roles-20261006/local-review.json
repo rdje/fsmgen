@@ -1,0 +1,18 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path; p=Path(\"docs/audits/record-value-parser-argument-roles-20261006/verify.py\"); n={\"__name__\":\"finite_role_review\"}; exec(compile(p.read_bytes(),str(p),\"exec\"),n); m=n[\"models\"](); o=n[\"prior\"][\"source_models\"](); r=n[\"load\"](n[\"prior\"][\"RAW\"] / \"proofs.json\")[\"inventories\"]; print(len(n[\"check\"](m,m,r,r,o)),len(n[\"controls\"](m,r,o)))"
+  ],
+  "programme_identity": {
+    "bytes": 15163,
+    "sha256": "cb83af8b49886304bebb8dab2cbf354956945a6a12ab5570e601324eee91b4ec"
+  },
+  "scope": "Local finite model/header/control review only; full committed prerequisite replay is still required.",
+  "status": 0,
+  "stderr": "ram-guard: PID 25526; host 68.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "3 15\n"
+}

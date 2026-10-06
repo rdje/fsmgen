@@ -1,0 +1,37 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "scripts/book_source_references.py",
+      "--check",
+      "--verify-build",
+      ".artifacts/parser-argument-roles-book"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+  },
+  {
+    "command": [
+      "scripts/check_live_document_reference_authority.pl"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "live-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode worktree)\n"
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-S",
+      "argument and wider joins remain open",
+      "-1",
+      "--",
+      "docs/audits/record-value-parser-function-order-20261006/verify.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "commit 0fa36cca38bb7096dc4513e0020a6803e6aa7c8b\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Tue Oct 6 09:08:38 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.1: qualify original parser function order\n    \n    Bind complete committed source models, raw inventories and observer boundaries.\n    Compare independently selected own ancestry throughout all retained parser\n    refusal modes and phases; conserve complete bodies and opaque outer intervals.\n    \n    Retain initial and sealed products, complete replay receipts, genuine native\n    function/order/population/kind/byte-loss controls and saved-result qualification.\n    Keep arguments, nested API/helper, formatter, coordinate and identity gaps owned.\n    \n    Sync scoped mdBook guidance, exact aggregate authority, task frontier and Memory.\n    Retain and correct the first aggregate updater field-name refusal.\n    Validation: parser/context Files=3 Tests=22; book Files=2 Tests=308; source/raw/\n    observer replays, current source/query/guide/capacity, native guide controls,\n    copied bytes, sealed-file/result regeneration, claim inventory and doctrines.\n    No full CI or push; director ordering .69.2 remains in effect.\n"
+  }
+]

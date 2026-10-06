@@ -1,0 +1,25 @@
+{
+  "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-argument-roles-20261006/verify.py",
+  "controls": [
+    {
+      "cause": "native exact argument-role replay command",
+      "control": "extra-command-argument",
+      "status": 1
+    },
+    {
+      "cause": "native complete argument-role guidance and missing legs",
+      "control": "broadened-scope",
+      "status": 1
+    },
+    {
+      "cause": "native complete argument-role guidance and missing legs",
+      "control": "lost-identity-gap",
+      "status": 1
+    }
+  ],
+  "native_identity": {
+    "bytes": 214349,
+    "sha256": "814666706e6ff4f16bc691282701f80386b91e4ab53e3e31e00dd65b016b1a96"
+  },
+  "visual_QA": "not performed; separately owned"
+}

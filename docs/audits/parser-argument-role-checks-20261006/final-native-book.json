@@ -1,0 +1,72 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "scripts/book_source_references.py",
+      "--check",
+      "--verify-build",
+      ".artifacts/parser-argument-roles-book"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+  },
+  {
+    "command": [
+      "scripts/check_live_document_reference_authority.pl"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "live-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode worktree)\n"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "mdbook",
+      "build",
+      "docs/book",
+      "--dest-dir",
+      ".artifacts/parser-argument-roles-book"
+    ],
+    "native_guidance": {
+      "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-argument-roles-20261006/verify.py",
+      "controls": [
+        {
+          "cause": "native exact argument-role replay command",
+          "control": "extra-command-argument",
+          "status": 1
+        },
+        {
+          "cause": "native complete argument-role guidance and missing legs",
+          "control": "broadened-scope",
+          "status": 1
+        },
+        {
+          "cause": "native complete argument-role guidance and missing legs",
+          "control": "lost-identity-gap",
+          "status": 1
+        }
+      ],
+      "native_identity": {
+        "bytes": 214349,
+        "sha256": "814666706e6ff4f16bc691282701f80386b91e4ab53e3e31e00dd65b016b1a96"
+      },
+      "visual_QA": "not performed; separately owned"
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 96298; host 75.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15213538 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/parser-argument-roles-book`\n",
+    "stdout": ""
+  }
+]

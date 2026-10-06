@@ -608,6 +608,22 @@ endpoints, bytes, ignore policy, budget and complete staged membership. Snapshot
 success does not supply current semantic currency. The original destination
 locality replay and explicit native copied-byte check remain required.
 
+The [parser argument-role replay](reference-source/docs/audits/record-value-parser-argument-roles-20261006/scope.txt.source.txt)
+binds all supplied source argument slots to retained visible header footprints.
+Scalar glyphs and proper visible prefixes agree; receiver labels and reference
+kinds match their declared source roles. The guard's normalized false value is
+compatible with the observed false display, without treating it as native zero.
+Whole headers and raw bodies conserve after those comparisons.
+
+These are positional source roles and visible footprints. Same-kind reference
+identity, receiver/AST/partial-actor contents, hidden suffixes, scalar flags,
+exact truncation and original formatter versions remain unmeasured. Full nested
+API/helper context is still a separate join. Replay from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-argument-roles-20261006/verify.py
+```
+
 The separate [parser function-order replay](reference-source/docs/audits/record-value-parser-function-order-20261006/scope.txt.source.txt)
 now binds independently selected own parser/context ancestry to every retained
 parser refusal and throw phase. It preserves complete raw bodies and opaque

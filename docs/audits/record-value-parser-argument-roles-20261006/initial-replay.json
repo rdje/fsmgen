@@ -1,0 +1,15 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-parser-argument-roles-20261006/verify.py"
+  ],
+  "product": "initial-proof.json",
+  "programme": "initial-reader.py.txt",
+  "scope": "Complete first source/role/prerequisite replay before adding explicit reference/prefix attribution-gap controls and native book replay.",
+  "status": 0,
+  "stderr": "ram-guard: PID 28117; host 65.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete finite parser source-expression/visible-header roles; scalar encoding, referents and wider joins remain open.\n"
+}

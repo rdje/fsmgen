@@ -1,0 +1,70 @@
+"""Exact native command and scoped guidance proof; this is not visual QA."""
+import hashlib
+from html.parser import HTMLParser
+
+COMMAND = 'scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-argument-roles-20261006/verify.py'
+GUIDANCE = '''The parser argument-role replay
+binds all supplied source argument slots to retained visible header footprints.
+Scalar glyphs and proper visible prefixes agree; receiver labels and reference
+kinds match their declared source roles. The guard's normalized false value is
+compatible with the observed false display, without treating it as native zero.
+Whole headers and raw bodies conserve after those comparisons.
+
+These are positional source roles and visible footprints. Same-kind reference
+identity, receiver/AST/partial-actor contents, hidden suffixes, scalar flags,
+exact truncation and original formatter versions remain unmeasured. Full nested
+API/helper context is still a separate join. Replay from the repository root:'''
+
+
+class Visible(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts, self.codes, self.code = [], [], None
+
+    def handle_starttag(self, tag, attributes):
+        if tag == 'code':
+            self.code = []
+
+    def handle_data(self, data):
+        self.parts.append(data)
+        if self.code is not None:
+            self.code.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == 'code' and self.code is not None:
+            self.codes.append(''.join(self.code).strip())
+            self.code = None
+
+
+def check(html):
+    parser = Visible()
+    parser.feed(html)
+    if parser.codes.count(COMMAND) != 1:
+        raise ValueError('native exact argument-role replay command')
+    text = ' '.join(' '.join(parser.parts).split())
+    if text.count(' '.join(GUIDANCE.split())) != 1:
+        raise ValueError('native complete argument-role guidance and missing legs')
+
+
+def proof(html):
+    check(html)
+    controls = []
+    for name, before, after, cause in [
+        ('extra-command-argument', COMMAND, COMMAND + ' --borrowed', 'native exact argument-role replay command'),
+        ('broadened-scope', 'These are positional source roles and visible footprints.', 'These qualify every native meaning.', 'native complete argument-role guidance and missing legs'),
+        ('lost-identity-gap', 'identity, receiver/AST/partial-actor contents, hidden suffixes, scalar flags,', 'identity and scalar flags,', 'native complete argument-role guidance and missing legs'),
+    ]:
+        changed = html.replace(before, after)
+        if changed == html:
+            raise ValueError('vacuous native book control: ' + name)
+        try:
+            check(changed)
+        except ValueError as error:
+            if str(error) != cause:
+                raise ValueError('wrong native book control cause: ' + name) from error
+            controls.append({'control': name, 'status': 1, 'cause': str(error)})
+        else:
+            raise ValueError('false-green native book control: ' + name)
+    raw = html.encode()
+    return {'native_identity': {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()},
+            'command': COMMAND, 'controls': controls, 'visual_QA': 'not performed; separately owned'}

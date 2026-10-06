@@ -1,0 +1,2040 @@
+{
+  "corrected": {
+    "directories": [
+      "css",
+      "fonts",
+      "reference-source",
+      "reference-source/docs",
+      "reference-source/docs/audits",
+      "reference-source/docs/audits/aggregate-record-helper-plan-20261003",
+      "reference-source/docs/audits/atl-source-width-kind-repair-20261003",
+      "reference-source/docs/audits/caller-formal-binding-cause-repair-20261003",
+      "reference-source/docs/audits/coverage-repair-historical-context-20261004",
+      "reference-source/docs/audits/formal-resource-cause-repair-20261003",
+      "reference-source/docs/audits/formal-source-context-cause-repair-20261003",
+      "reference-source/docs/audits/interface-metadata-cause-repair-20261004",
+      "reference-source/docs/audits/interface-metadata-copy-controls-20261004",
+      "reference-source/docs/audits/interface-metadata-copy-join-20261004",
+      "reference-source/docs/audits/interface-metadata-copy-repair-20261004",
+      "reference-source/docs/audits/interface-metadata-diagnostic-join-20261004",
+      "reference-source/docs/audits/interface-metadata-fields-20261004",
+      "reference-source/docs/audits/interface-metadata-helper-contract-20261003",
+      "reference-source/docs/audits/interface-metadata-helper-outcome-20261004",
+      "reference-source/docs/audits/interface-metadata-runtime-20261004",
+      "reference-source/docs/audits/interface-metadata-source-product-join-20261004",
+      "reference-source/docs/audits/interface-metadata-writer-cause-repair-20261004",
+      "reference-source/docs/audits/local-formal-helper-cause-repair-20261003",
+      "reference-source/docs/audits/named-helper-membership-20261003",
+      "reference-source/docs/audits/prepared-reservation-cause-repair-20261003",
+      "reference-source/docs/audits/prepared-reservation-helper-causes-20261003",
+      "reference-source/docs/audits/prepared-reservation-snapshot-diagnosis-20261003",
+      "reference-source/docs/audits/prepared-reservation-snapshot-repair-20261003",
+      "reference-source/docs/audits/record-value-actors-20261004",
+      "reference-source/docs/audits/record-value-api-join-20261004",
+      "reference-source/docs/audits/record-value-captures-20261004",
+      "reference-source/docs/audits/record-value-clone-join-20261004",
+      "reference-source/docs/audits/record-value-clone-paths-20261004",
+      "reference-source/docs/audits/record-value-clone-root-20261004",
+      "reference-source/docs/audits/record-value-clone-tree-20261004",
+      "reference-source/docs/audits/record-value-clones-20261004",
+      "reference-source/docs/audits/record-value-copies-20261004",
+      "reference-source/docs/audits/record-value-copy-fields-20261004",
+      "reference-source/docs/audits/record-value-copy-inputs-20261004",
+      "reference-source/docs/audits/record-value-copy-probe-join-20261004",
+      "reference-source/docs/audits/record-value-copy-probes-20261004",
+      "reference-source/docs/audits/record-value-copy-reader-20261004",
+      "reference-source/docs/audits/record-value-core-join-20261004",
+      "reference-source/docs/audits/record-value-field-join-20261004",
+      "reference-source/docs/audits/record-value-fields-20261004",
+      "reference-source/docs/audits/record-value-helper-contract-20261004",
+      "reference-source/docs/audits/record-value-identities-20261004",
+      "reference-source/docs/audits/record-value-original-api-paths-20261005",
+      "reference-source/docs/audits/record-value-original-callback-paths-20261005",
+      "reference-source/docs/audits/record-value-original-candidate-20261004",
+      "reference-source/docs/audits/record-value-original-class-20261005",
+      "reference-source/docs/audits/record-value-original-contexts-20261005",
+      "reference-source/docs/audits/record-value-original-copy-reader-20261004",
+      "reference-source/docs/audits/record-value-original-fields-20261005",
+      "reference-source/docs/audits/record-value-original-forwarding-20261005",
+      "reference-source/docs/audits/record-value-original-helper-join-20261005",
+      "reference-source/docs/audits/record-value-original-inherited-frames-20261005",
+      "reference-source/docs/audits/record-value-original-input-graphs-20261005",
+      "reference-source/docs/audits/record-value-original-input-join-20261005",
+      "reference-source/docs/audits/record-value-original-metadata-frames-20261005",
+      "reference-source/docs/audits/record-value-original-named-helpers-20261005",
+      "reference-source/docs/audits/record-value-original-nested-inputs-20261005",
+      "reference-source/docs/audits/record-value-original-observer-boundaries-20261005",
+      "reference-source/docs/audits/record-value-original-observer-sources-20261005",
+      "reference-source/docs/audits/record-value-original-primary-20261005",
+      "reference-source/docs/audits/record-value-original-products-20261005",
+      "reference-source/docs/audits/record-value-original-raw-20261005",
+      "reference-source/docs/audits/record-value-original-replay-20261004",
+      "reference-source/docs/audits/record-value-original-value-frames-20261005",
+      "reference-source/docs/audits/record-value-products-20261004",
+      "reference-source/docs/audits/record-value-ranges-20261004",
+      "reference-source/docs/audits/record-value-references-20261004",
+      "reference-source/docs/audits/record-value-replay-portability-20261004",
+      "reference-source/docs/audits/record-value-runtime-20261004",
+      "reference-source/docs/audits/record-value-scopes-20261004",
+      "reference-source/docs/audits/record-value-semantic-join-20261004",
+      "reference-source/docs/audits/record-value-snapshots-20261004",
+      "reference-source/docs/audits/reservation-coverage-atl-module-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-cause-diagnosis-20261003",
+      "reference-source/docs/audits/reservation-coverage-cause-repair-20261003",
+      "reference-source/docs/audits/reservation-coverage-copy-repair-20261003",
+      "reference-source/docs/audits/reservation-coverage-generated-module-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-helper-causes-20261003",
+      "reference-source/docs/audits/reservation-coverage-historical-context-20261003",
+      "reference-source/docs/audits/reservation-coverage-module-capture-20261003",
+      "reference-source/docs/audits/reservation-coverage-module-join-20261003",
+      "reference-source/docs/audits/reservation-coverage-plain-native-boundary-20261003",
+      "reference-source/docs/audits/reservation-coverage-producer-removal-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-qualification-join-20261003",
+      "reference-source/docs/audits/reservation-coverage-reusable-module-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-snapshot-capture-20261003",
+      "reference-source/docs/audits/reservation-coverage-snapshot-field-join-20261003",
+      "reference-source/docs/audits/reservation-coverage-snapshot-native-join-20261003",
+      "reference-source/docs/audits/reservation-coverage-snapshot-normal-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-source-copies-20261003",
+      "reference-source/docs/audits/reservation-coverage-value-only-controls-20261003",
+      "reference-source/docs/audits/residual-named-helper-cohorts-20261003",
+      "reference-source/docs/audits/reusable-cause-repair-20261003",
+      "reference-source/docs/audits/reusable-product-helper-causes-20261003",
+      "reference-source/docs/audits/reusable-projection-kind-repair-20261003",
+      "reference-source/docs/decisions",
+      "reference-source/docs/tasks"
+    ],
+    "files": {
+      ".nojekyll": {
+        "bytes": 72,
+        "sha256": "235d4f83c4c71612f43995dbda167720cd0c5384bf9ea64f9328b187c409b51d"
+      },
+      "00-introduction.html": {
+        "bytes": 25151,
+        "sha256": "1a64689a2d322c9f4542d0372350adab02436724d5cd94541418f6434d19ceec"
+      },
+      "01-first-fsm.html": {
+        "bytes": 25490,
+        "sha256": "71757a7f55f69c952796608d0c3003176889af7f79e02df69a97abfebabba3dc"
+      },
+      "02-language-basics.html": {
+        "bytes": 47271,
+        "sha256": "e7e15400ced8aba780228c0ab126a9950f98549f1b0f2b5fb1bb77e8845913f8"
+      },
+      "03-decision-trees-and-fsms.html": {
+        "bytes": 45911,
+        "sha256": "909cd57097c9c515ad11eab8f082bf0ac72b32b804dc5f1831c743d89203fe57"
+      },
+      "04-symbols-types-and-imports.html": {
+        "bytes": 44260,
+        "sha256": "ffc4207f930055f6c1b65e83a468e8cdf42984a1d901d9fe8561004bd0cc0a1a"
+      },
+      "05-composition-basics.html": {
+        "bytes": 50832,
+        "sha256": "4572cce5db8f2af0c1aadc4922ea6279963ce45f5634f155d003a07fb737e3a0"
+      },
+      "06-composition-advanced.html": {
+        "bytes": 56138,
+        "sha256": "7783e659c6641526a4ecf606dc159deb126498b7e2b9c6442c275716551a8a56"
+      },
+      "07-packages-and-sharing.html": {
+        "bytes": 25783,
+        "sha256": "1d3344461759d84a72000b13fe354014a6b97312180c426060bce8a57b918e98"
+      },
+      "08-type-inference-and-aggregate-data.html": {
+        "bytes": 38510,
+        "sha256": "df37e640f03dca7f46a0ab0abc33ae90717e7fe7bde5e0a85146ce5ad4548774"
+      },
+      "09-generated-hdl-debugging-and-inspection.html": {
+        "bytes": 50950,
+        "sha256": "e9073ce444b3dc22cac79f97b070c5df2e372f95ba4f20879b19011db0eed58b"
+      },
+      "10-errors-strict-mode-and-troubleshooting.html": {
+        "bytes": 72502,
+        "sha256": "0fa25a5d4ee2b6acea0eedce2015fcb1bebc9bfb51d2b8e56cb9c69cd6e517f5"
+      },
+      "10a-downstream-issue-reporting.html": {
+        "bytes": 34443,
+        "sha256": "cd2354816552af7c52ba9f75161e63cbd4ac4dda4ef9c9fde4d634bbf0a6da32"
+      },
+      "11-extensions-and-embedding.html": {
+        "bytes": 255146,
+        "sha256": "24a196272db1a4e1f3650a8d553f68c7f0ac33f2f58b26b55deaacaf6963bc62"
+      },
+      "12-cookbook.html": {
+        "bytes": 35761,
+        "sha256": "be7ecd07a935c7497925d58b23e4016bc96db940bf2694091dc91ec1ec5f1a78"
+      },
+      "13-intent-scheduling.html": {
+        "bytes": 87095,
+        "sha256": "74a00edb1d1828bd4586730447810d0911b8dd282da976aef37037a912db24ab"
+      },
+      "13a-actor-interface.html": {
+        "bytes": 81360,
+        "sha256": "5c7221b9dcd5438e946ff526ac7763b652a87a6c0e2fc60b61e3b10219f6b382"
+      },
+      "13b-transactions.html": {
+        "bytes": 148869,
+        "sha256": "b35903b19000e35075118611059bd7af8e0ccebe6ad504673b3a8240b8490fdc"
+      },
+      "13c-drive-blocks.html": {
+        "bytes": 28588,
+        "sha256": "231df0ffbf91c5ec240d056ba85c77e02db0af7e6745d193a17751e22f5f0581"
+      },
+      "13d-control-flow.html": {
+        "bytes": 115375,
+        "sha256": "c230e19b85fbf8714e0c2854baa0ffa04aa93807908676caf7a4fb9130fd7c43"
+      },
+      "13e-data-manipulation.html": {
+        "bytes": 64666,
+        "sha256": "bf7442b2d8d72f67c0dd79715991dfeac1ea2afab0d82dfbc088c65a87802e71"
+      },
+      "13f-composition.html": {
+        "bytes": 132556,
+        "sha256": "f6ad1a7df56e7910e30c332c1efcbfc1e5f05e15f62a59b097170fab2a80e275"
+      },
+      "13g-rules.html": {
+        "bytes": 59162,
+        "sha256": "423f7b8b27bed11616e8767afbd10adf982f13b6b029c401043ecae03f5c7f99"
+      },
+      "13h-lowering-reference.html": {
+        "bytes": 138861,
+        "sha256": "2224a1f825d1ec1c3962e64a193a7685343ca951c1b20a0fdf161e47f2d0caf6"
+      },
+      "13i-downstream-integration.html": {
+        "bytes": 304275,
+        "sha256": "3f501dc943fc9f3f21e51362ff3958dfb2c9e5fbc5a3f75c6eb6bfddedaf3ac1"
+      },
+      "13j-type-enum-aggregate.html": {
+        "bytes": 79872,
+        "sha256": "7a802557a8720be78046a9f9de93b9424e1c90f7f022530e67ecf60a0ff8d268"
+      },
+      "13k-isf-feature-support-matrix.html": {
+        "bytes": 214349,
+        "sha256": "814666706e6ff4f16bc691282701f80386b91e4ab53e3e31e00dd65b016b1a96"
+      },
+      "13l-procedures.html": {
+        "bytes": 31728,
+        "sha256": "b4bd3c50353d955214420c3681a30ec3528c8ba58d9b75c0c3bc377eb5e0daa7"
+      },
+      "13m-local-variables.html": {
+        "bytes": 29046,
+        "sha256": "30e5a6b1a2860bdd9f11290edaceb424361cbc89c67206079fb6686a49a1ffa9"
+      },
+      "14-feature-backlog.html": {
+        "bytes": 27610,
+        "sha256": "ab2ca59aef38d41cc57dd2fb71464257f0c8e37c0295facdd72975e36ce00741"
+      },
+      "14a-language-and-data.html": {
+        "bytes": 33614,
+        "sha256": "d9ed0c5973781823f0a7c9f7ba980cecf7fb08a84a80081babe9897cd53f61ac"
+      },
+      "14b-composition-backlog.html": {
+        "bytes": 97502,
+        "sha256": "65ad2b55449a1be3ebf2cbc029f16fe390f148fc8af234a91f1b56e8d9ed8080"
+      },
+      "14c-actor-network-orchestration.html": {
+        "bytes": 69458,
+        "sha256": "7c5041a611d36a3b4532bafed5dc008f968d705bd92e255018a1c06840084fab"
+      },
+      "14d-ial2-foundations.html": {
+        "bytes": 128296,
+        "sha256": "6f0015120f9813f293bbfd4f13a2d5e3c553edbf7a38ecd72e077c61dc5aa1fb"
+      },
+      "14e-hial-vial-verification.html": {
+        "bytes": 30592,
+        "sha256": "a0373f847a4908b1d956ce402f071358d42c5db2a8c4c1a0d09bdbf321e07c78"
+      },
+      "14f-axi-manager-core.html": {
+        "bytes": 176098,
+        "sha256": "392967e9e9fdccaf3e15fbdeb6b588f7332f5b63824beb49f44c0b5b9bc18c0b"
+      },
+      "14g-axi-dynamic-identity.html": {
+        "bytes": 233227,
+        "sha256": "594a845a79f642f44b4d64c2ebb3889778cf606ef6d7e4e9426d8905e1bd04b1"
+      },
+      "14h-protocol-profiles-and-apb.html": {
+        "bytes": 193151,
+        "sha256": "7ff59a5f2cb75a63664a5b7d5c43452ed32a471585cf7990c91209992dbe3a64"
+      },
+      "14i-ahb-and-integration.html": {
+        "bytes": 199527,
+        "sha256": "169d2e80b4822d17b59a0b4f113a9f8a87e3784b94c07f3cfbafcdf9852b3126"
+      },
+      "14j-extended-axi.html": {
+        "bytes": 151227,
+        "sha256": "13234a2ee0d0c00def3ed1750dac2b41aa95cadd03bcb1a3d4a91afd15fa15c8"
+      },
+      "14k-isf-language-and-scheduling.html": {
+        "bytes": 123472,
+        "sha256": "3bed058e741c28cea66407915ec6773cf4b744f1d132d3a69f2535d33c9048a2"
+      },
+      "14l-backends-validation-and-apis.html": {
+        "bytes": 96258,
+        "sha256": "629936ed5b84e9f07db14cad6a0c8015958eb56b45d94d8decef76baeb95c8ba"
+      },
+      "15-implementation-blueprint.html": {
+        "bytes": 29962,
+        "sha256": "7b98c052d527f188a80f982ed311d0418b903340f503a82a0f66cff416722689"
+      },
+      "15a-ial2-new-protocol-support.html": {
+        "bytes": 25989,
+        "sha256": "15d3ed57cc053e5f851155c63f369e0f50fb4c0a45cb8020f30506db1a2583e9"
+      },
+      "16-ial2-protocol-platform-intent.html": {
+        "bytes": 32565,
+        "sha256": "160fa3ef8b4e4fb36cb0307e367e564a69255f3c7f7b20fe053f01c412931c61"
+      },
+      "16a-ial2-axi.html": {
+        "bytes": 84992,
+        "sha256": "9fd8c9f525feb69fd539f97b837d95b2713013fbed0ca9fdd752a96f3689adf0"
+      },
+      "16aa-ial2-axi-manager-capacity-status.html": {
+        "bytes": 60356,
+        "sha256": "13fba2215344e61b4290b3c848105df59563056872f42fdc29a673ecd6ac9ba5"
+      },
+      "16b-ial2-apb.html": {
+        "bytes": 30397,
+        "sha256": "04feec2287418fba244daa6e63f666235ace6ddb2d45e8e1bdca2d6f8147d1cf"
+      },
+      "16c-ial2-ahb.html": {
+        "bytes": 254470,
+        "sha256": "18e30e6a0932cfbf7e2293f490be9f4603d6e1527788e04fb5e17be419e408a9"
+      },
+      "16d-hial-vial-verification-architecture.html": {
+        "bytes": 330700,
+        "sha256": "97c42de3cf88a608b2d143c38321f0f19bde9b2ffc37f9310558da18d8b9eff0"
+      },
+      "16da-vial-balanced-portable-composition.html": {
+        "bytes": 46770,
+        "sha256": "eb7ebc7c7a699901d4e68a57cde7a2c90013edec15d774495ba1ee885c612b6a"
+      },
+      "16db-vial-structural-backend-emission-matrix.html": {
+        "bytes": 29523,
+        "sha256": "c2c3176224f824a56e90b69a83fe78e1f116cb6d7daeef23ecf91c4bf06f4cbe"
+      },
+      "16dc-vial-portable-verilator-runtime-measurement.html": {
+        "bytes": 322375,
+        "sha256": "25b2207c249319262d478f210c364a69d1596044b4d0b8f7d5b5769da195e676"
+      },
+      "16dd-vial-portable-vhdl-runtime-measurement.html": {
+        "bytes": 62575,
+        "sha256": "12efe3c4a74b28e4842ce682f7595794cfb0a886814ed83eaa9d244f606c3172"
+      },
+      "16de-vial-osvvm-runtime-execution-plan.html": {
+        "bytes": 62366,
+        "sha256": "93198fe2d6eac4f5648163477a987c278d9269d56611bfa629b0f755ff361509"
+      },
+      "16df-vial-architecture-scale-cap-closeout.html": {
+        "bytes": 204125,
+        "sha256": "56f4a3fa01dbb0133d6d1e531777d2d4181a2f87ca4c74af7c83d708dd6054ec"
+      },
+      "16dg-vial-public-lifecycle-reference.html": {
+        "bytes": 57217,
+        "sha256": "f191e860634c1b7ec1a4820809ab314ee67c65a2d25250727f4df956ef576537"
+      },
+      "16dh-vial-ahb-end-to-end-tutorial.html": {
+        "bytes": 38420,
+        "sha256": "a160b127dd1c109e768addfa4f007a720f5dfedfef75fcb2bda92bb236ed23cb"
+      },
+      "16di-vial-legacy-migration.html": {
+        "bytes": 41447,
+        "sha256": "e3f944b1cd93063414f7c94014edf99c8a91ba8a5e570af140ddb8c9ad897290"
+      },
+      "16dj-vial-capability-support-reference.html": {
+        "bytes": 43133,
+        "sha256": "6cddc8b06fc3bc4bad2de27c9c28e9f32a10c7038fe011731336ff8566a3b83a"
+      },
+      "16dk-inactive-proxy-lifetimes.html": {
+        "bytes": 127215,
+        "sha256": "dfb9d9e33f7770b386401e630627762e5b90eadcf727c58aa23a5eddb45f9f77"
+      },
+      "16e-nexsim-api-mcp-consumer-requirements.html": {
+        "bytes": 144907,
+        "sha256": "7b0202d61e74e0e181bb128d5cef6244cceabf1bd9eb609b76678eec231fdfa5"
+      },
+      "404.html": {
+        "bytes": 17673,
+        "sha256": "d30aaa4060c957fda988ee195cc0d332a09309cecd0a0b2e5553f9206a2970d1"
+      },
+      "90-reference-map.html": {
+        "bytes": 83129,
+        "sha256": "5b6c8bde6aa7527a28e3de883c3cf89a8ad1d58c519a16aaedbc2ec3773da2ce"
+      },
+      "91-live-document-containment-adoption.html": {
+        "bytes": 45608,
+        "sha256": "797e035d8b3eba73b73be9cfcaec10812c17a9fb24cac1e28db0e7a33347c328"
+      },
+      "ayu-highlight-3fdfc3ac.css": {
+        "bytes": 907,
+        "sha256": "3fdfc3ac5e435e0cef96dafee74da487e4846ffce4dff5973bb45d68b678dd7f"
+      },
+      "book-609e4cb8.js": {
+        "bytes": 30932,
+        "sha256": "609e4cb80f92aa954a3f48869c751f6f8848433604f1297bb70fde0e3e58a569"
+      },
+      "clipboard-1626706a.min.js": {
+        "bytes": 10754,
+        "sha256": "1626706afc88d95ebe1173b553ec732c6dc82a576989315fdf5e7779af738a44"
+      },
+      "css/chrome-d279d366.css": {
+        "bytes": 18032,
+        "sha256": "d279d366359c0d588c9c10cb46afe2b543fc731dea722803639b4e45016d5fe2"
+      },
+      "css/general-e96d0476.css": {
+        "bytes": 11478,
+        "sha256": "e96d0476741bfcbe8cc0ac02db00187c45a63946834361d0eab846016787c646"
+      },
+      "css/print-9e4910d8.css": {
+        "bytes": 689,
+        "sha256": "9e4910d8eb508863172430c60d49fd3b442e9e7f5963a18cd1d655c386ffeae9"
+      },
+      "css/variables-8adf115d.css": {
+        "bytes": 10422,
+        "sha256": "8adf115df892369c90b830767c4651a9e058b79273e219935f7c8a96c6eab9c0"
+      },
+      "elasticlunr-ef4e11c1.min.js": {
+        "bytes": 18051,
+        "sha256": "ef4e11c157b1e2e89782d30bd726f2d5ff7834ea5e26ad02474325f8b1f126c9"
+      },
+      "favicon-8114d1fc.png": {
+        "bytes": 5679,
+        "sha256": "8114d1fc74f4b5621ad9afde7746ed9cf7e420be317a6e29023d2298d58aa15b"
+      },
+      "favicon-de23e50b.svg": {
+        "bytes": 1835,
+        "sha256": "de23e50b1c4dd6e052b3e21d444fcd4b13568b3840ac3c99d9be4e9263c0ef59"
+      },
+      "fonts/OPEN-SANS-LICENSE.txt": {
+        "bytes": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      "fonts/SOURCE-CODE-PRO-LICENSE.txt": {
+        "bytes": 4528,
+        "sha256": "d1e6d465a83ba1a3be52db6484868cf5812ae9bbf91abdad3900ba0165afcf93"
+      },
+      "fonts/fonts-9644e21d.css": {
+        "bytes": 3818,
+        "sha256": "94b5131beb9b75a55f9649fcf12de167350feae0fab2bab26c2703cd75c0c781"
+      },
+      "fonts/open-sans-v17-all-charsets-300-7736aa35.woff2": {
+        "bytes": 44352,
+        "sha256": "7736aa3596c468515c3209f2f9d68cfae96d94c05689bcc11a5dce426a6ee2e8"
+      },
+      "fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2": {
+        "bytes": 40656,
+        "sha256": "2c7b95c08df0d228caec6d4bfed06da0f7ab6b76ea5cc3f75b5c6ae416bc571b"
+      },
+      "fonts/open-sans-v17-all-charsets-600-486c6759.woff2": {
+        "bytes": 44936,
+        "sha256": "486c67592731a0b36a89dba1fd0b97aeb73f236bbf60dbf28d7c6b5723c07989"
+      },
+      "fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2": {
+        "bytes": 42120,
+        "sha256": "1a3e865977024f444834a75a1b33b89b93134c93007ae3d6e14f24e6c88d8dfb"
+      },
+      "fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2": {
+        "bytes": 44988,
+        "sha256": "c22fe8c70c36f1d862903b772eaed864d3a8fa849473c9caff224fdb852428e4"
+      },
+      "fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2": {
+        "bytes": 40800,
+        "sha256": "238ae9593944112bee8dd65f8ebc5f3d3862160a8a245fbe1ee3150bc9a2fd81"
+      },
+      "fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2": {
+        "bytes": 44536,
+        "sha256": "3d2c812adf74deb36fead3ff8469800d3c0b23eb2c858ae49310291f89490146"
+      },
+      "fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2": {
+        "bytes": 40812,
+        "sha256": "ba1521ec219db9bc5bfec0e3e7a897369d98b30d4e853ee4aa525322784428b8"
+      },
+      "fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2": {
+        "bytes": 41076,
+        "sha256": "6c9463f7096c0b9d610e095ed248ac1e8a8da7e92d17e9be544f3baced7b62b2"
+      },
+      "fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2": {
+        "bytes": 43236,
+        "sha256": "2e3b1d34ac67763ab50652da19305d4b3694c6b6e6bf35f4b98411ce4af646d2"
+      },
+      "fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2": {
+        "bytes": 59140,
+        "sha256": "2bdd9410b0141db3cbbf4cfc3818cc6fad279e8e63940940e06cd6af76ccbfcf"
+      },
+      "highlight-493f70e1.css": {
+        "bytes": 1209,
+        "sha256": "493f70e1527d895653b5ac7157abba8e2c656e43698da93b6c1997e2855a5059"
+      },
+      "highlight-abc7f01d.js": {
+        "bytes": 137537,
+        "sha256": "abc7f01d0ce8c64e4ba9e131d651e48ae1a567b2a1254fea8aab03502288de58"
+      },
+      "index.html": {
+        "bytes": 25151,
+        "sha256": "1a64689a2d322c9f4542d0372350adab02436724d5cd94541418f6434d19ceec"
+      },
+      "mark-09e88c2c.min.js": {
+        "bytes": 17320,
+        "sha256": "09e88c2cfaf23ea8a37b5681433eafea97033af632ecc948c8c1ee9944647743"
+      },
+      "print.html": {
+        "bytes": 4780760,
+        "sha256": "8ef346c78b05461e54dc73e65e276f96783d214241b85e2e779685d0aabb0bc0"
+      },
+      "reference-source/CLAIM_VERIFICATION.markdown.source.txt": {
+        "bytes": 12983,
+        "sha256": "a83d74f53d4b5503cecb25dea0b8e3fb2a5ac6778767b7a9caf9a30d8fc75ca6"
+      },
+      "reference-source/COMMIT.markdown.source.txt": {
+        "bytes": 14752,
+        "sha256": "93df7a86d11e919038a7749b92b01541d94e527752a7b7e358739f6f55840429"
+      },
+      "reference-source/LIVE_DOCUMENT_SIZE_CONTAINMENT.markdown.source.txt": {
+        "bytes": 32730,
+        "sha256": "beefcc17ed958a1a5b3d55f4ba91cf6458c68c5e91ab715046980444cf723cbf"
+      },
+      "reference-source/MEMORY.markdown.source.txt": {
+        "bytes": 1157,
+        "sha256": "b334d15b501c8a110da95a09b82a925f55b34c08eab88218c6aa6c8a5a7efa14"
+      },
+      "reference-source/README_POLICY.markdown.source.txt": {
+        "bytes": 9849,
+        "sha256": "882682fa1ace703ae68726b8532a4ad24fe2c8a271bae4e07b859bd197a621c9"
+      },
+      "reference-source/ROADMAP_V2.markdown.source.txt": {
+        "bytes": 15745,
+        "sha256": "75079f86f3f12caa7b57059bd0be828bb9a23acc9d6ef82446efdecb9d5a03e3"
+      },
+      "reference-source/TASK_ACCEPTANCE.markdown.source.txt": {
+        "bytes": 7121,
+        "sha256": "4a5bb05842dc0313e5f8a34fff1979f79061001cdf6c7772fb1dfaa795c6fef0"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.markdown.source.txt": {
+        "bytes": 6296,
+        "sha256": "1153fe8e4346ecddfd6defd4833b2accfc1391d079684cf46724296f635afdcc"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.markdown.source.txt": {
+        "bytes": 6457,
+        "sha256": "7a4a9470bfb9981f3f236db181f3acb7e344785a929057a2678f84d7bfb8cc7c"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.markdown.source.txt": {
+        "bytes": 10488,
+        "sha256": "4e2f81485ec0e98162210c68aa2f050c01df04996f11983e413117a75ceab209"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.markdown.source.txt": {
+        "bytes": 9281,
+        "sha256": "d62fe45cddf41d53bd5b3c45cf64c5dea3d3ab99de98f2448610da3db48f0290"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.markdown.source.txt": {
+        "bytes": 5962,
+        "sha256": "a2b418eedefb5a681562f4b2f9c34fa87ee454f23cc54a920d725e76a5b1e4b8"
+      },
+      "reference-source/docs/BIN_FSMGEN_IMPORT_TREE.markdown.source.txt": {
+        "bytes": 132030,
+        "sha256": "2870d1e18a51644ec7e73212f583ca3b15a8e4a08c2c9b4e7e361c3ee176adbc"
+      },
+      "reference-source/docs/COMPOSITION_LEGACY_MAPPING.markdown.source.txt": {
+        "bytes": 8279,
+        "sha256": "74bf56258cffe30bc2549806142c4595e1cf588c015ec9241b4ab56f17e32e7a"
+      },
+      "reference-source/docs/COMPOSITION_SCOPE.markdown.source.txt": {
+        "bytes": 74077,
+        "sha256": "65359e60145669c1d03656e82accddaf77a5054271886a5be4041693efd12a19"
+      },
+      "reference-source/docs/EXTENSION_MODEL.markdown.source.txt": {
+        "bytes": 16474,
+        "sha256": "3063d8f867fc8c19ceffad07418f360eca6bc6a30044bf775730755d851105c7"
+      },
+      "reference-source/docs/FEATURE_BACKLOG.markdown.source.txt": {
+        "bytes": 548,
+        "sha256": "e1b4dc6feda32e3075dd84d297ff9ea5f44253186676b40e85a6b847b92ef5de"
+      },
+      "reference-source/docs/INTENT_CAPTURE_AXI_CASE_STUDY.markdown.source.txt": {
+        "bytes": 13960,
+        "sha256": "ef2aac2fa8b555be19015d0c3cd178fc43527f80e13787f6165c9d07d06b2d21"
+      },
+      "reference-source/docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.markdown.source.txt": {
+        "bytes": 1147,
+        "sha256": "8df21646517c56b231aebe692474ce4d7b40922060a6e5a3155ce5a967a1d3c7"
+      },
+      "reference-source/docs/ISF_PUBLIC_INTERFACE_CONTRACT.markdown.source.txt": {
+        "bytes": 993,
+        "sha256": "401b5acd4da757378eee7fb29e4a0bb12d2808f1df6dda7e7794764d94e8a28e"
+      },
+      "reference-source/docs/ISF_SPEC.markdown.source.txt": {
+        "bytes": 1981,
+        "sha256": "073d0b2f9476c18b60e71fa81a9955dff4926cb6ed846743f6998463b98b4859"
+      },
+      "reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.markdown.source.txt": {
+        "bytes": 21047,
+        "sha256": "7d0ac07f16771bce2dcd2886be1f7e093c399e3a6467522289085f0474993d6f"
+      },
+      "reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.markdown.source.txt": {
+        "bytes": 17902,
+        "sha256": "1e913ffad3194f7592259c4864d9f819cc741b5912c8d88474fd71281842de78"
+      },
+      "reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.markdown.source.txt": {
+        "bytes": 54150,
+        "sha256": "49351a2a54a9fd0bf05d2372c7444aa983b36064f203274430d6747b3a5d5e48"
+      },
+      "reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.markdown.source.txt": {
+        "bytes": 3997,
+        "sha256": "3df6934b3604ee316de7a26fe40f24d2cf7e74359ecc8dd38191dfa039237972"
+      },
+      "reference-source/docs/REGRESSION_CORPUS.markdown.source.txt": {
+        "bytes": 172995,
+        "sha256": "cd8fc0635d03375f44312c66b5029168a0280bdbeabe5221f64eaf438b78d359"
+      },
+      "reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt": {
+        "bytes": 97295,
+        "sha256": "92f80e29b82737f2708a369315d8190b0dd00f5fc07b5db1c4c4154fa8130cc1"
+      },
+      "reference-source/docs/TASK_TREE.markdown.source.txt": {
+        "bytes": 40062,
+        "sha256": "005cd4890bb5ea2aff3f600d49459b67775534017ea501223413cce88f639369"
+      },
+      "reference-source/docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.markdown.source.txt": {
+        "bytes": 5872,
+        "sha256": "3f95e5b402c6c44ad545e9ce016bfb6f0e84d4eba66bbfac8347f0ba5d98dbaa"
+      },
+      "reference-source/docs/audits/ROADMAP_STATUS_VALUE_AUDIT.markdown.source.txt": {
+        "bytes": 6394,
+        "sha256": "da661a45577931416e39b31f1431e3a979cd06cb6b9ae7cae468ac888467871a"
+      },
+      "reference-source/docs/audits/aggregate-record-helper-plan-20261003/scope.txt.source.txt": {
+        "bytes": 2557,
+        "sha256": "15dfdc71b69e650ee7c9cbcec37daa8e97388b8f4bb5768ed294121107c0fa93"
+      },
+      "reference-source/docs/audits/atl-source-width-kind-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4099,
+        "sha256": "44fa0d60d9591d43a66c9e524c15bb049562f765379bd9c8a8cdba6c22fd72d3"
+      },
+      "reference-source/docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4787,
+        "sha256": "ccaa1e7cabbcbb93e127d67ebb3635bbc1e2a24febe5a5a980914b299c75ff27"
+      },
+      "reference-source/docs/audits/coverage-repair-historical-context-20261004/scope.txt.source.txt": {
+        "bytes": 2903,
+        "sha256": "5c76739cb5a1e8f8491e311d0356d05f5a613948d4cb44bcb88628098d7b94d9"
+      },
+      "reference-source/docs/audits/formal-resource-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4063,
+        "sha256": "ced437b1de47d84930bf633bebda492673781ca32e276353489c869c211a404a"
+      },
+      "reference-source/docs/audits/formal-source-context-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 6153,
+        "sha256": "7b648a0fe869c5905dd3b9c4cb680c46a0737acd68c751e26cfa6ee380a1522c"
+      },
+      "reference-source/docs/audits/interface-metadata-cause-repair-20261004/scope.txt.source.txt": {
+        "bytes": 3198,
+        "sha256": "6364764031ac865cb03ceee47276f587b03531f92a2b7a06cbff0d1b1e371e5c"
+      },
+      "reference-source/docs/audits/interface-metadata-copy-controls-20261004/scope.txt.source.txt": {
+        "bytes": 4309,
+        "sha256": "98e85f3b217eda9cd3925a5cccb59e9b56a9629583775cbf49e119bdaacc633b"
+      },
+      "reference-source/docs/audits/interface-metadata-copy-join-20261004/scope.txt.source.txt": {
+        "bytes": 3739,
+        "sha256": "04702cc07cce28694250eef2e6a01b893d20752b2bb71ac6ff3bf3f579ca64f5"
+      },
+      "reference-source/docs/audits/interface-metadata-copy-repair-20261004/scope.txt.source.txt": {
+        "bytes": 5168,
+        "sha256": "9840c28b9f8e1beeac6ec68b59dae39770a1684fab82bcdd34272b19bea3ec2a"
+      },
+      "reference-source/docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt.source.txt": {
+        "bytes": 2744,
+        "sha256": "5731d3d8370bc93e655dba1a2ea72e847515320df7ea174740585a1d1d65a1d6"
+      },
+      "reference-source/docs/audits/interface-metadata-fields-20261004/scope.txt.source.txt": {
+        "bytes": 4750,
+        "sha256": "cba017b4bb6b6b477cf420fe83a7f569ee75faabd14eb343ea7d04188a989950"
+      },
+      "reference-source/docs/audits/interface-metadata-helper-contract-20261003/scope.txt.source.txt": {
+        "bytes": 3429,
+        "sha256": "bdeae941146a55c6f1c24fe7ba76e3722dbc425849eaaaf9fee3a613f1d5b5fc"
+      },
+      "reference-source/docs/audits/interface-metadata-helper-outcome-20261004/scope.txt.source.txt": {
+        "bytes": 3181,
+        "sha256": "3840665f51f8174760bbd1d8fca1d0e8f2e29c3cb8c1e454eff5aa8ddc373706"
+      },
+      "reference-source/docs/audits/interface-metadata-runtime-20261004/scope.txt.source.txt": {
+        "bytes": 4834,
+        "sha256": "eecaf951f9d4ae6a9b10697848eda6a69cda78f973e45fe8f2c9b6e336b3260f"
+      },
+      "reference-source/docs/audits/interface-metadata-source-product-join-20261004/scope.txt.source.txt": {
+        "bytes": 3521,
+        "sha256": "4116020114266e3a51303e5b58ec92039abf67d10f1fb5ca617e94d8272746e0"
+      },
+      "reference-source/docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt.source.txt": {
+        "bytes": 3366,
+        "sha256": "b85e12f35c38d2d8ecd1379aeedcb15feed7f89bb46a6fcad019ad388a9870ff"
+      },
+      "reference-source/docs/audits/local-formal-helper-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 5893,
+        "sha256": "452da0499ed735537175bad1843802c91304ae999205457d732ef7c5db3a4a8e"
+      },
+      "reference-source/docs/audits/named-helper-membership-20261003/scope.txt.source.txt": {
+        "bytes": 3990,
+        "sha256": "5dec581f70bd9c8860408e1299111ad2c499c5abaeca190e2fe5ae26c652ee0b"
+      },
+      "reference-source/docs/audits/prepared-reservation-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4139,
+        "sha256": "1e79967a5f0334eaad34f380d910cca82e48a9196fe103f9c70b8f50fb1783d3"
+      },
+      "reference-source/docs/audits/prepared-reservation-helper-causes-20261003/scope.txt.source.txt": {
+        "bytes": 5245,
+        "sha256": "a3ce5e386e2bc50c77faa48ce9e0942baae5c84dac9c5fd28c0b626166ab2452"
+      },
+      "reference-source/docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt.source.txt": {
+        "bytes": 3851,
+        "sha256": "e6f4d3722b65968b16345ba6c9026b0015826d0ab3505364a04e20be62cd79b0"
+      },
+      "reference-source/docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4567,
+        "sha256": "b7b05d51fd98760dce6d2023d65ed2aaa9beed03400c9bec0bb09ca5dee02ff9"
+      },
+      "reference-source/docs/audits/record-value-actors-20261004/scope.txt.source.txt": {
+        "bytes": 4010,
+        "sha256": "6d24a0f5608e4d6bbd035e4fdf0c93ffd4804f5b321337849ad8ae2cf4cbcf08"
+      },
+      "reference-source/docs/audits/record-value-api-join-20261004/scope.txt.source.txt": {
+        "bytes": 3495,
+        "sha256": "2f0cf785928f01e74d01b61c71cce33fc4ae6a2280f9b5f320af0fafc9570c75"
+      },
+      "reference-source/docs/audits/record-value-captures-20261004/scope.txt.source.txt": {
+        "bytes": 3818,
+        "sha256": "d3cebc35c78cd24c90c4da3bf19be7d5462e1eed258c9ed29fe48a57786daa6c"
+      },
+      "reference-source/docs/audits/record-value-clone-join-20261004/scope.txt.source.txt": {
+        "bytes": 5035,
+        "sha256": "ca882130267b26c3c3b0cf2fe84a7cac47eff5a50ee13ea46d05f3b9e36993f3"
+      },
+      "reference-source/docs/audits/record-value-clone-paths-20261004/scope.txt.source.txt": {
+        "bytes": 5768,
+        "sha256": "28d172e1791ce07ea776288c404ad36210b39a459315ef56e3632ac324eedd3b"
+      },
+      "reference-source/docs/audits/record-value-clone-root-20261004/scope.txt.source.txt": {
+        "bytes": 4920,
+        "sha256": "779c67480d6267ed7aa44b8fabcfa2fb3aec0339f48619c37940db424196b230"
+      },
+      "reference-source/docs/audits/record-value-clone-tree-20261004/scope.txt.source.txt": {
+        "bytes": 5657,
+        "sha256": "3357e957c52e3db87d8489230697a7ea5b749e7e3baf41cc86e04ddb649c4ef9"
+      },
+      "reference-source/docs/audits/record-value-clones-20261004/scope.txt.source.txt": {
+        "bytes": 4583,
+        "sha256": "cd8583f7a1d5980bacf3c1711da94e2e7c3f9606315b1f633c59016c07c832b5"
+      },
+      "reference-source/docs/audits/record-value-copies-20261004/scope.txt.source.txt": {
+        "bytes": 4002,
+        "sha256": "9a28961780aa2b9a58da99d8f58598050e197d64f7139137c3a449216f050a8b"
+      },
+      "reference-source/docs/audits/record-value-copy-fields-20261004/scope.txt.source.txt": {
+        "bytes": 4196,
+        "sha256": "1080c737fe5c156d10151f6615f77267c0d4a56cb08adc037062f3b80c8c7698"
+      },
+      "reference-source/docs/audits/record-value-copy-inputs-20261004/scope.txt.source.txt": {
+        "bytes": 3679,
+        "sha256": "c75e1794e015d0c49dfea5053e9ba7e6378fa5b0b76f632265626c513e620bd8"
+      },
+      "reference-source/docs/audits/record-value-copy-probe-join-20261004/scope.txt.source.txt": {
+        "bytes": 2538,
+        "sha256": "5a728fee5cd6f0ec69faaeab22159affe6191c8f3faf025d760c95bcc992d38f"
+      },
+      "reference-source/docs/audits/record-value-copy-probes-20261004/scope.txt.source.txt": {
+        "bytes": 3065,
+        "sha256": "da508ce559ebe5c54acb274d26b08cb8c54a0bd61f4e08c1411ef059de73aaeb"
+      },
+      "reference-source/docs/audits/record-value-copy-reader-20261004/scope.txt.source.txt": {
+        "bytes": 4136,
+        "sha256": "f5718c57cfa574a641a0cd211686b3162bfb0ff6ba34208d88f5992abe448d5e"
+      },
+      "reference-source/docs/audits/record-value-core-join-20261004/scope.txt.source.txt": {
+        "bytes": 4430,
+        "sha256": "ba890a118a281738084228b96ab9fa15e4ee885fd8e1476797b38f1e21b4481a"
+      },
+      "reference-source/docs/audits/record-value-field-join-20261004/scope.txt.source.txt": {
+        "bytes": 3179,
+        "sha256": "993661a19b26229aaafb69c001995b30b7482c738a090f23ae77c928468811f0"
+      },
+      "reference-source/docs/audits/record-value-fields-20261004/scope.txt.source.txt": {
+        "bytes": 3375,
+        "sha256": "ee559a4d0a4328de64e173e43e7e5c5d73eff8761d512c8c59d776aed93680ad"
+      },
+      "reference-source/docs/audits/record-value-helper-contract-20261004/scope.txt.source.txt": {
+        "bytes": 3749,
+        "sha256": "55703abb46756f36a9c019a14b8f81bd4a93d2a5f28afae4a56863d98eeda728"
+      },
+      "reference-source/docs/audits/record-value-identities-20261004/scope.txt.source.txt": {
+        "bytes": 5358,
+        "sha256": "274c04943212f5c3035744688a248a5b6bc7948520751b6458eb0bced2b4da34"
+      },
+      "reference-source/docs/audits/record-value-original-api-paths-20261005/scope.txt.source.txt": {
+        "bytes": 3950,
+        "sha256": "94f7a5bfdb85b039bd19103009881fb5a6c4ab7e5fa55f315e16c9f07830e3f1"
+      },
+      "reference-source/docs/audits/record-value-original-callback-paths-20261005/scope.txt.source.txt": {
+        "bytes": 3750,
+        "sha256": "8be0c2936f9aa0ba5e740465126b9755e7371e1365c6e5ae2bff2e55bbba6130"
+      },
+      "reference-source/docs/audits/record-value-original-candidate-20261004/scope.txt.source.txt": {
+        "bytes": 4292,
+        "sha256": "9b144d6a13e0024060bdb18e43f444efca83fbed78ec74be4e6d6ae333af30f3"
+      },
+      "reference-source/docs/audits/record-value-original-class-20261005/scope.txt.source.txt": {
+        "bytes": 3438,
+        "sha256": "cad80aab06f4a2067485eabe1afa00764abdbc26afd96144a9d47c1f2ba5c95e"
+      },
+      "reference-source/docs/audits/record-value-original-contexts-20261005/scope.txt.source.txt": {
+        "bytes": 3144,
+        "sha256": "a13d037f8214707d4a9a7230d42295b56b5a71fae2da03d60c7e5d5f6c58e2a6"
+      },
+      "reference-source/docs/audits/record-value-original-copy-reader-20261004/scope.txt.source.txt": {
+        "bytes": 2946,
+        "sha256": "bfbf441262a4c346906d380f9b822d8fe76604fb1bce516b048d0956285e0c35"
+      },
+      "reference-source/docs/audits/record-value-original-fields-20261005/scope.txt.source.txt": {
+        "bytes": 3882,
+        "sha256": "fdc2bb44aaff6f9ab7b21d2c4279ac1c6e98c82dca66e6afdbaa8e1bc79df073"
+      },
+      "reference-source/docs/audits/record-value-original-forwarding-20261005/scope.txt.source.txt": {
+        "bytes": 4225,
+        "sha256": "9a49f3ca97fb6d50261d62f8cb22c728514fffd0a10db66f55419a0f914a2bd5"
+      },
+      "reference-source/docs/audits/record-value-original-helper-join-20261005/scope.txt.source.txt": {
+        "bytes": 4384,
+        "sha256": "80e16f8b3cf622ed2ee6ac2d2b7ba329e15fd560ad02909c0d4854af5cddf437"
+      },
+      "reference-source/docs/audits/record-value-original-inherited-frames-20261005/scope.txt.source.txt": {
+        "bytes": 4942,
+        "sha256": "66d13d0840e4df212f7a86dee8a9e193fb2a1d1c3139e84a4ec44263cd941cb5"
+      },
+      "reference-source/docs/audits/record-value-original-input-graphs-20261005/scope.txt.source.txt": {
+        "bytes": 4009,
+        "sha256": "e301824a803c90cf587dc65fe6d22b37b6c30443b2bc7fb26f059c85a87b0005"
+      },
+      "reference-source/docs/audits/record-value-original-input-join-20261005/scope.txt.source.txt": {
+        "bytes": 3166,
+        "sha256": "3b3ab51f05fab0001ac9199562835a0460a091f4fc9c148f8ea89153ca2cd86a"
+      },
+      "reference-source/docs/audits/record-value-original-metadata-frames-20261005/scope.txt.source.txt": {
+        "bytes": 2883,
+        "sha256": "82810adc8775aa40072fc200e5ae003841eec9174d1b42336e4f15e349f780c7"
+      },
+      "reference-source/docs/audits/record-value-original-named-helpers-20261005/scope.txt.source.txt": {
+        "bytes": 3650,
+        "sha256": "918956ffa33f1757162471e86343b5d800ecf1e73275350baef4e2a4fec0eee6"
+      },
+      "reference-source/docs/audits/record-value-original-nested-inputs-20261005/scope.txt.source.txt": {
+        "bytes": 2905,
+        "sha256": "8717c76d3e16258d96835f1604a3efe2d3a4aee868f042fd68563783f68e604c"
+      },
+      "reference-source/docs/audits/record-value-original-observer-boundaries-20261005/scope.txt.source.txt": {
+        "bytes": 4165,
+        "sha256": "6246cc442f2e6c1023e1a77f2009c2d1df47da1fdfb80053e7af5170a36f3f58"
+      },
+      "reference-source/docs/audits/record-value-original-observer-sources-20261005/scope.txt.source.txt": {
+        "bytes": 3531,
+        "sha256": "cef5ad82cc4648f3e9032c1affa9c730e9558e315b1b2e17daaf4d9abeafd8c9"
+      },
+      "reference-source/docs/audits/record-value-original-primary-20261005/scope.txt.source.txt": {
+        "bytes": 3495,
+        "sha256": "86b5bae2a56abcde2147c77058117f40c29679b7cd97b5404b00fa57c56531c7"
+      },
+      "reference-source/docs/audits/record-value-original-products-20261005/scope.txt.source.txt": {
+        "bytes": 3130,
+        "sha256": "91288994a49eb7b4d2671fc55b13b5566a460e84a2d047ce3e9ee8c86b6aebf6"
+      },
+      "reference-source/docs/audits/record-value-original-raw-20261005/scope.txt.source.txt": {
+        "bytes": 2737,
+        "sha256": "7f868dfae9666da95bd7b3a6720b61a6e00e9e73590a9801d9a034338c71b0a1"
+      },
+      "reference-source/docs/audits/record-value-original-replay-20261004/scope.txt.source.txt": {
+        "bytes": 3310,
+        "sha256": "dd30d310ef8d443ff3875865b11c4d622eafdee57dd54fe58d7d7cddb01c4b82"
+      },
+      "reference-source/docs/audits/record-value-original-value-frames-20261005/scope.txt.source.txt": {
+        "bytes": 2750,
+        "sha256": "18cc8ce3b7a3822f68b97bd982039dad6278cbf9e878052989c9805be3209d5b"
+      },
+      "reference-source/docs/audits/record-value-products-20261004/scope.txt.source.txt": {
+        "bytes": 5028,
+        "sha256": "05f104090c2e2dd2ec97c56fa27b974c51e9a92c153f1a86593d17cf5d3ecc71"
+      },
+      "reference-source/docs/audits/record-value-ranges-20261004/scope.txt.source.txt": {
+        "bytes": 4129,
+        "sha256": "cb25dbbac5d935458fd239918e865da09b216b9d6579f11f588c1dc040bc713a"
+      },
+      "reference-source/docs/audits/record-value-references-20261004/scope.txt.source.txt": {
+        "bytes": 4626,
+        "sha256": "fe0b75af5309822c67a051720bf189832620cf90d8609b8c68b07ca6adbbf398"
+      },
+      "reference-source/docs/audits/record-value-replay-portability-20261004/scope.txt.source.txt": {
+        "bytes": 4546,
+        "sha256": "25d415f6429d1d15b1b73b010327bc8457afe7d4d14ae7c8560fc27904c1c862"
+      },
+      "reference-source/docs/audits/record-value-runtime-20261004/scope.txt.source.txt": {
+        "bytes": 5182,
+        "sha256": "d8ae9aeb4193030a81374b6841e6bfd1f1db9210e5301081f574fc765117fd08"
+      },
+      "reference-source/docs/audits/record-value-scopes-20261004/scope.txt.source.txt": {
+        "bytes": 4219,
+        "sha256": "6c19c3d6a438a2eb6edce19e935ae5a582d5baf1d89c9880284cfff5fb557fdf"
+      },
+      "reference-source/docs/audits/record-value-semantic-join-20261004/scope.txt.source.txt": {
+        "bytes": 7283,
+        "sha256": "4d39a222c29b23bcbbbd20e01f92c5b8251f110b927f890fdbcc6a8e78468487"
+      },
+      "reference-source/docs/audits/record-value-snapshots-20261004/scope.txt.source.txt": {
+        "bytes": 3577,
+        "sha256": "f6fdf660ffb23ad133b6fb778a9bef090af703357a5ae21d417fa6039aa6f37e"
+      },
+      "reference-source/docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt.source.txt": {
+        "bytes": 4336,
+        "sha256": "fb18dddc31fb029c6465aef41d73e6a0f12703e872d8375377f2e5b29e4cdee6"
+      },
+      "reference-source/docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt.source.txt": {
+        "bytes": 2943,
+        "sha256": "e3061d5a840e9258c90f8cef157ff9b8b7e2e5a58bca94470c462a0f8f393c15"
+      },
+      "reference-source/docs/audits/reservation-coverage-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 3248,
+        "sha256": "3b2eecbd397437365a808b3516ec6e3293989cd40f3674ba4756111a1c530b7f"
+      },
+      "reference-source/docs/audits/reservation-coverage-copy-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4792,
+        "sha256": "424a079275a3211f77000580c30eac879875e64cfb15d01564aa8ef766ac3076"
+      },
+      "reference-source/docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt.source.txt": {
+        "bytes": 4149,
+        "sha256": "e8e9a07981a480c2bddb3cb44f3b829277d0215f880119fa695282ef7bad5a64"
+      },
+      "reference-source/docs/audits/reservation-coverage-helper-causes-20261003/scope.txt.source.txt": {
+        "bytes": 2202,
+        "sha256": "7c43821f52209c0cb894fd1770b7abee16a3f21032a60d93364c4f33d663263c"
+      },
+      "reference-source/docs/audits/reservation-coverage-historical-context-20261003/scope.txt.source.txt": {
+        "bytes": 3478,
+        "sha256": "4096eac9c99759a3a6f1123087e8d7e489a910a3e5a0d22d779e1b18ba937f81"
+      },
+      "reference-source/docs/audits/reservation-coverage-module-capture-20261003/scope.txt.source.txt": {
+        "bytes": 3160,
+        "sha256": "8efc05ee7ceab87931e40311c00d3577e35fbc2b0dffe5c123709f263bd94da1"
+      },
+      "reference-source/docs/audits/reservation-coverage-module-join-20261003/scope.txt.source.txt": {
+        "bytes": 3266,
+        "sha256": "ec47aa49d09dde7db63216cb3fe6d593211cd7a2fc9e51a0f21f379b6b8921d7"
+      },
+      "reference-source/docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt.source.txt": {
+        "bytes": 3439,
+        "sha256": "02cd3a25c3000429dab7f01503fb4c28df0b39a78882eab3ba72c8cccc72cf5f"
+      },
+      "reference-source/docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt.source.txt": {
+        "bytes": 4012,
+        "sha256": "94555b04e1f5f5bacffc5ee6015271211d191b5578b93502b6069b1954f654c2"
+      },
+      "reference-source/docs/audits/reservation-coverage-qualification-join-20261003/scope.txt.source.txt": {
+        "bytes": 3852,
+        "sha256": "2d7d1a7e050125cdc939220ef8ff59762a75e06ae929ef84168856be1a8e58eb"
+      },
+      "reference-source/docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt.source.txt": {
+        "bytes": 3900,
+        "sha256": "7853223bebe161f4af50d0b81220be64fb1ea4c47f98c9780033038e9695480b"
+      },
+      "reference-source/docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt.source.txt": {
+        "bytes": 3054,
+        "sha256": "2ba9621965398db89ebf923ff960aec04b2a84a2ef86ae2224cff847d6181475"
+      },
+      "reference-source/docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt.source.txt": {
+        "bytes": 2528,
+        "sha256": "13ccbb5559b9a83968e24a1522f0d76e47f8db5c2b2bb2d285b25f349411c4da"
+      },
+      "reference-source/docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt.source.txt": {
+        "bytes": 3365,
+        "sha256": "134a8a975d6c0df8673670777f08a917255cec032f52aa9de8b464f89c989a3b"
+      },
+      "reference-source/docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt.source.txt": {
+        "bytes": 3321,
+        "sha256": "4c8a7909cff79538d5566f8035aa82369134a95aa64a0fe2691c8c035941ea52"
+      },
+      "reference-source/docs/audits/reservation-coverage-source-copies-20261003/scope.txt.source.txt": {
+        "bytes": 3401,
+        "sha256": "5d8cf79822df0b6c47ee5940a9a331142e459e38ccd3ea697f851cdea7e83227"
+      },
+      "reference-source/docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt.source.txt": {
+        "bytes": 3105,
+        "sha256": "1f71da2e8146938eaa432018d4a4e22e87d5b4de082b69f007078614eceea7d3"
+      },
+      "reference-source/docs/audits/residual-named-helper-cohorts-20261003/scope.txt.source.txt": {
+        "bytes": 3656,
+        "sha256": "19e9dcd61c27d513ff001a5602ef01dbe0d4076ee6f555b7d65baa795645645d"
+      },
+      "reference-source/docs/audits/reusable-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 3734,
+        "sha256": "0b317fefdc31ef2b85404fbc25e15816e09a331384bbbd9bb47085419e521d73"
+      },
+      "reference-source/docs/audits/reusable-product-helper-causes-20261003/scope.txt.source.txt": {
+        "bytes": 6047,
+        "sha256": "9767b0610fe92369d5b9989ee2043b8c5a26789fed5d7709bb336a8f7ee09e86"
+      },
+      "reference-source/docs/audits/reusable-projection-kind-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4244,
+        "sha256": "2bb518f937c8171647106ea66a9d07fcac0f689c97df78c7db77ef3778a2df2f"
+      },
+      "reference-source/docs/decisions/0102-push-cadence-is-500-commits.markdown.source.txt": {
+        "bytes": 613,
+        "sha256": "15ec6db1451e6530374ee53c376fbb8dda736e4e351b5164900877adf2a2be5c"
+      },
+      "reference-source/docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.markdown.source.txt": {
+        "bytes": 24391,
+        "sha256": "70987bc25dbd05187a62b7dc66d99384befb576a1f8605d5600d01024a071ea5"
+      },
+      "reference-source/routes.jsonl": {
+        "bytes": 31020,
+        "sha256": "a24f8fc15d8d0ddddd7eafe6a8963fe88df3d56949a6a36ade2bb9e72c80e95a"
+      },
+      "searcher-09f2665d.js": {
+        "bytes": 20294,
+        "sha256": "369af24488a4b16bfc228ab8b6671768c952bfa720f1a4867001a683b710d798"
+      },
+      "searchindex-87d4cbfa.js": {
+        "bytes": 15253368,
+        "sha256": "87d4cbfa4e548c67526a9ca5bc770e6fe9c6662b0aa0a7f92b955fa2b5b16880"
+      },
+      "toc-7727513f.js": {
+        "bytes": 31354,
+        "sha256": "7727513f2246a8126695b48c218eeb52cf5eadf09d5e1d5c79420916901738e6"
+      },
+      "toc.html": {
+        "bytes": 14642,
+        "sha256": "c5c2db87908aa220460a64cd3007bf412e8d3a483e01cd543b7ce2d784ba1041"
+      },
+      "tomorrow-night-4c0ae647.css": {
+        "bytes": 1694,
+        "sha256": "4c0ae647a06ef1699806fb9b4b6d0ef72de026708c6e8581362641c9298cb5f7"
+      }
+    }
+  },
+  "corrected_from_root": ".artifacts/parser-argument-roles-book",
+  "deletion": "not attempted in this read-only comparison",
+  "exact_population_and_bytes_equal": true,
+  "misplaced": {
+    "directories": [
+      "css",
+      "fonts",
+      "reference-source",
+      "reference-source/docs",
+      "reference-source/docs/audits",
+      "reference-source/docs/audits/aggregate-record-helper-plan-20261003",
+      "reference-source/docs/audits/atl-source-width-kind-repair-20261003",
+      "reference-source/docs/audits/caller-formal-binding-cause-repair-20261003",
+      "reference-source/docs/audits/coverage-repair-historical-context-20261004",
+      "reference-source/docs/audits/formal-resource-cause-repair-20261003",
+      "reference-source/docs/audits/formal-source-context-cause-repair-20261003",
+      "reference-source/docs/audits/interface-metadata-cause-repair-20261004",
+      "reference-source/docs/audits/interface-metadata-copy-controls-20261004",
+      "reference-source/docs/audits/interface-metadata-copy-join-20261004",
+      "reference-source/docs/audits/interface-metadata-copy-repair-20261004",
+      "reference-source/docs/audits/interface-metadata-diagnostic-join-20261004",
+      "reference-source/docs/audits/interface-metadata-fields-20261004",
+      "reference-source/docs/audits/interface-metadata-helper-contract-20261003",
+      "reference-source/docs/audits/interface-metadata-helper-outcome-20261004",
+      "reference-source/docs/audits/interface-metadata-runtime-20261004",
+      "reference-source/docs/audits/interface-metadata-source-product-join-20261004",
+      "reference-source/docs/audits/interface-metadata-writer-cause-repair-20261004",
+      "reference-source/docs/audits/local-formal-helper-cause-repair-20261003",
+      "reference-source/docs/audits/named-helper-membership-20261003",
+      "reference-source/docs/audits/prepared-reservation-cause-repair-20261003",
+      "reference-source/docs/audits/prepared-reservation-helper-causes-20261003",
+      "reference-source/docs/audits/prepared-reservation-snapshot-diagnosis-20261003",
+      "reference-source/docs/audits/prepared-reservation-snapshot-repair-20261003",
+      "reference-source/docs/audits/record-value-actors-20261004",
+      "reference-source/docs/audits/record-value-api-join-20261004",
+      "reference-source/docs/audits/record-value-captures-20261004",
+      "reference-source/docs/audits/record-value-clone-join-20261004",
+      "reference-source/docs/audits/record-value-clone-paths-20261004",
+      "reference-source/docs/audits/record-value-clone-root-20261004",
+      "reference-source/docs/audits/record-value-clone-tree-20261004",
+      "reference-source/docs/audits/record-value-clones-20261004",
+      "reference-source/docs/audits/record-value-copies-20261004",
+      "reference-source/docs/audits/record-value-copy-fields-20261004",
+      "reference-source/docs/audits/record-value-copy-inputs-20261004",
+      "reference-source/docs/audits/record-value-copy-probe-join-20261004",
+      "reference-source/docs/audits/record-value-copy-probes-20261004",
+      "reference-source/docs/audits/record-value-copy-reader-20261004",
+      "reference-source/docs/audits/record-value-core-join-20261004",
+      "reference-source/docs/audits/record-value-field-join-20261004",
+      "reference-source/docs/audits/record-value-fields-20261004",
+      "reference-source/docs/audits/record-value-helper-contract-20261004",
+      "reference-source/docs/audits/record-value-identities-20261004",
+      "reference-source/docs/audits/record-value-original-api-paths-20261005",
+      "reference-source/docs/audits/record-value-original-callback-paths-20261005",
+      "reference-source/docs/audits/record-value-original-candidate-20261004",
+      "reference-source/docs/audits/record-value-original-class-20261005",
+      "reference-source/docs/audits/record-value-original-contexts-20261005",
+      "reference-source/docs/audits/record-value-original-copy-reader-20261004",
+      "reference-source/docs/audits/record-value-original-fields-20261005",
+      "reference-source/docs/audits/record-value-original-forwarding-20261005",
+      "reference-source/docs/audits/record-value-original-helper-join-20261005",
+      "reference-source/docs/audits/record-value-original-inherited-frames-20261005",
+      "reference-source/docs/audits/record-value-original-input-graphs-20261005",
+      "reference-source/docs/audits/record-value-original-input-join-20261005",
+      "reference-source/docs/audits/record-value-original-metadata-frames-20261005",
+      "reference-source/docs/audits/record-value-original-named-helpers-20261005",
+      "reference-source/docs/audits/record-value-original-nested-inputs-20261005",
+      "reference-source/docs/audits/record-value-original-observer-boundaries-20261005",
+      "reference-source/docs/audits/record-value-original-observer-sources-20261005",
+      "reference-source/docs/audits/record-value-original-primary-20261005",
+      "reference-source/docs/audits/record-value-original-products-20261005",
+      "reference-source/docs/audits/record-value-original-raw-20261005",
+      "reference-source/docs/audits/record-value-original-replay-20261004",
+      "reference-source/docs/audits/record-value-original-value-frames-20261005",
+      "reference-source/docs/audits/record-value-products-20261004",
+      "reference-source/docs/audits/record-value-ranges-20261004",
+      "reference-source/docs/audits/record-value-references-20261004",
+      "reference-source/docs/audits/record-value-replay-portability-20261004",
+      "reference-source/docs/audits/record-value-runtime-20261004",
+      "reference-source/docs/audits/record-value-scopes-20261004",
+      "reference-source/docs/audits/record-value-semantic-join-20261004",
+      "reference-source/docs/audits/record-value-snapshots-20261004",
+      "reference-source/docs/audits/reservation-coverage-atl-module-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-cause-diagnosis-20261003",
+      "reference-source/docs/audits/reservation-coverage-cause-repair-20261003",
+      "reference-source/docs/audits/reservation-coverage-copy-repair-20261003",
+      "reference-source/docs/audits/reservation-coverage-generated-module-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-helper-causes-20261003",
+      "reference-source/docs/audits/reservation-coverage-historical-context-20261003",
+      "reference-source/docs/audits/reservation-coverage-module-capture-20261003",
+      "reference-source/docs/audits/reservation-coverage-module-join-20261003",
+      "reference-source/docs/audits/reservation-coverage-plain-native-boundary-20261003",
+      "reference-source/docs/audits/reservation-coverage-producer-removal-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-qualification-join-20261003",
+      "reference-source/docs/audits/reservation-coverage-reusable-module-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-snapshot-capture-20261003",
+      "reference-source/docs/audits/reservation-coverage-snapshot-field-join-20261003",
+      "reference-source/docs/audits/reservation-coverage-snapshot-native-join-20261003",
+      "reference-source/docs/audits/reservation-coverage-snapshot-normal-fields-20261003",
+      "reference-source/docs/audits/reservation-coverage-source-copies-20261003",
+      "reference-source/docs/audits/reservation-coverage-value-only-controls-20261003",
+      "reference-source/docs/audits/residual-named-helper-cohorts-20261003",
+      "reference-source/docs/audits/reusable-cause-repair-20261003",
+      "reference-source/docs/audits/reusable-product-helper-causes-20261003",
+      "reference-source/docs/audits/reusable-projection-kind-repair-20261003",
+      "reference-source/docs/decisions",
+      "reference-source/docs/tasks"
+    ],
+    "files": {
+      ".nojekyll": {
+        "bytes": 72,
+        "sha256": "235d4f83c4c71612f43995dbda167720cd0c5384bf9ea64f9328b187c409b51d"
+      },
+      "00-introduction.html": {
+        "bytes": 25151,
+        "sha256": "1a64689a2d322c9f4542d0372350adab02436724d5cd94541418f6434d19ceec"
+      },
+      "01-first-fsm.html": {
+        "bytes": 25490,
+        "sha256": "71757a7f55f69c952796608d0c3003176889af7f79e02df69a97abfebabba3dc"
+      },
+      "02-language-basics.html": {
+        "bytes": 47271,
+        "sha256": "e7e15400ced8aba780228c0ab126a9950f98549f1b0f2b5fb1bb77e8845913f8"
+      },
+      "03-decision-trees-and-fsms.html": {
+        "bytes": 45911,
+        "sha256": "909cd57097c9c515ad11eab8f082bf0ac72b32b804dc5f1831c743d89203fe57"
+      },
+      "04-symbols-types-and-imports.html": {
+        "bytes": 44260,
+        "sha256": "ffc4207f930055f6c1b65e83a468e8cdf42984a1d901d9fe8561004bd0cc0a1a"
+      },
+      "05-composition-basics.html": {
+        "bytes": 50832,
+        "sha256": "4572cce5db8f2af0c1aadc4922ea6279963ce45f5634f155d003a07fb737e3a0"
+      },
+      "06-composition-advanced.html": {
+        "bytes": 56138,
+        "sha256": "7783e659c6641526a4ecf606dc159deb126498b7e2b9c6442c275716551a8a56"
+      },
+      "07-packages-and-sharing.html": {
+        "bytes": 25783,
+        "sha256": "1d3344461759d84a72000b13fe354014a6b97312180c426060bce8a57b918e98"
+      },
+      "08-type-inference-and-aggregate-data.html": {
+        "bytes": 38510,
+        "sha256": "df37e640f03dca7f46a0ab0abc33ae90717e7fe7bde5e0a85146ce5ad4548774"
+      },
+      "09-generated-hdl-debugging-and-inspection.html": {
+        "bytes": 50950,
+        "sha256": "e9073ce444b3dc22cac79f97b070c5df2e372f95ba4f20879b19011db0eed58b"
+      },
+      "10-errors-strict-mode-and-troubleshooting.html": {
+        "bytes": 72502,
+        "sha256": "0fa25a5d4ee2b6acea0eedce2015fcb1bebc9bfb51d2b8e56cb9c69cd6e517f5"
+      },
+      "10a-downstream-issue-reporting.html": {
+        "bytes": 34443,
+        "sha256": "cd2354816552af7c52ba9f75161e63cbd4ac4dda4ef9c9fde4d634bbf0a6da32"
+      },
+      "11-extensions-and-embedding.html": {
+        "bytes": 255146,
+        "sha256": "24a196272db1a4e1f3650a8d553f68c7f0ac33f2f58b26b55deaacaf6963bc62"
+      },
+      "12-cookbook.html": {
+        "bytes": 35761,
+        "sha256": "be7ecd07a935c7497925d58b23e4016bc96db940bf2694091dc91ec1ec5f1a78"
+      },
+      "13-intent-scheduling.html": {
+        "bytes": 87095,
+        "sha256": "74a00edb1d1828bd4586730447810d0911b8dd282da976aef37037a912db24ab"
+      },
+      "13a-actor-interface.html": {
+        "bytes": 81360,
+        "sha256": "5c7221b9dcd5438e946ff526ac7763b652a87a6c0e2fc60b61e3b10219f6b382"
+      },
+      "13b-transactions.html": {
+        "bytes": 148869,
+        "sha256": "b35903b19000e35075118611059bd7af8e0ccebe6ad504673b3a8240b8490fdc"
+      },
+      "13c-drive-blocks.html": {
+        "bytes": 28588,
+        "sha256": "231df0ffbf91c5ec240d056ba85c77e02db0af7e6745d193a17751e22f5f0581"
+      },
+      "13d-control-flow.html": {
+        "bytes": 115375,
+        "sha256": "c230e19b85fbf8714e0c2854baa0ffa04aa93807908676caf7a4fb9130fd7c43"
+      },
+      "13e-data-manipulation.html": {
+        "bytes": 64666,
+        "sha256": "bf7442b2d8d72f67c0dd79715991dfeac1ea2afab0d82dfbc088c65a87802e71"
+      },
+      "13f-composition.html": {
+        "bytes": 132556,
+        "sha256": "f6ad1a7df56e7910e30c332c1efcbfc1e5f05e15f62a59b097170fab2a80e275"
+      },
+      "13g-rules.html": {
+        "bytes": 59162,
+        "sha256": "423f7b8b27bed11616e8767afbd10adf982f13b6b029c401043ecae03f5c7f99"
+      },
+      "13h-lowering-reference.html": {
+        "bytes": 138861,
+        "sha256": "2224a1f825d1ec1c3962e64a193a7685343ca951c1b20a0fdf161e47f2d0caf6"
+      },
+      "13i-downstream-integration.html": {
+        "bytes": 304275,
+        "sha256": "3f501dc943fc9f3f21e51362ff3958dfb2c9e5fbc5a3f75c6eb6bfddedaf3ac1"
+      },
+      "13j-type-enum-aggregate.html": {
+        "bytes": 79872,
+        "sha256": "7a802557a8720be78046a9f9de93b9424e1c90f7f022530e67ecf60a0ff8d268"
+      },
+      "13k-isf-feature-support-matrix.html": {
+        "bytes": 214349,
+        "sha256": "814666706e6ff4f16bc691282701f80386b91e4ab53e3e31e00dd65b016b1a96"
+      },
+      "13l-procedures.html": {
+        "bytes": 31728,
+        "sha256": "b4bd3c50353d955214420c3681a30ec3528c8ba58d9b75c0c3bc377eb5e0daa7"
+      },
+      "13m-local-variables.html": {
+        "bytes": 29046,
+        "sha256": "30e5a6b1a2860bdd9f11290edaceb424361cbc89c67206079fb6686a49a1ffa9"
+      },
+      "14-feature-backlog.html": {
+        "bytes": 27610,
+        "sha256": "ab2ca59aef38d41cc57dd2fb71464257f0c8e37c0295facdd72975e36ce00741"
+      },
+      "14a-language-and-data.html": {
+        "bytes": 33614,
+        "sha256": "d9ed0c5973781823f0a7c9f7ba980cecf7fb08a84a80081babe9897cd53f61ac"
+      },
+      "14b-composition-backlog.html": {
+        "bytes": 97502,
+        "sha256": "65ad2b55449a1be3ebf2cbc029f16fe390f148fc8af234a91f1b56e8d9ed8080"
+      },
+      "14c-actor-network-orchestration.html": {
+        "bytes": 69458,
+        "sha256": "7c5041a611d36a3b4532bafed5dc008f968d705bd92e255018a1c06840084fab"
+      },
+      "14d-ial2-foundations.html": {
+        "bytes": 128296,
+        "sha256": "6f0015120f9813f293bbfd4f13a2d5e3c553edbf7a38ecd72e077c61dc5aa1fb"
+      },
+      "14e-hial-vial-verification.html": {
+        "bytes": 30592,
+        "sha256": "a0373f847a4908b1d956ce402f071358d42c5db2a8c4c1a0d09bdbf321e07c78"
+      },
+      "14f-axi-manager-core.html": {
+        "bytes": 176098,
+        "sha256": "392967e9e9fdccaf3e15fbdeb6b588f7332f5b63824beb49f44c0b5b9bc18c0b"
+      },
+      "14g-axi-dynamic-identity.html": {
+        "bytes": 233227,
+        "sha256": "594a845a79f642f44b4d64c2ebb3889778cf606ef6d7e4e9426d8905e1bd04b1"
+      },
+      "14h-protocol-profiles-and-apb.html": {
+        "bytes": 193151,
+        "sha256": "7ff59a5f2cb75a63664a5b7d5c43452ed32a471585cf7990c91209992dbe3a64"
+      },
+      "14i-ahb-and-integration.html": {
+        "bytes": 199527,
+        "sha256": "169d2e80b4822d17b59a0b4f113a9f8a87e3784b94c07f3cfbafcdf9852b3126"
+      },
+      "14j-extended-axi.html": {
+        "bytes": 151227,
+        "sha256": "13234a2ee0d0c00def3ed1750dac2b41aa95cadd03bcb1a3d4a91afd15fa15c8"
+      },
+      "14k-isf-language-and-scheduling.html": {
+        "bytes": 123472,
+        "sha256": "3bed058e741c28cea66407915ec6773cf4b744f1d132d3a69f2535d33c9048a2"
+      },
+      "14l-backends-validation-and-apis.html": {
+        "bytes": 96258,
+        "sha256": "629936ed5b84e9f07db14cad6a0c8015958eb56b45d94d8decef76baeb95c8ba"
+      },
+      "15-implementation-blueprint.html": {
+        "bytes": 29962,
+        "sha256": "7b98c052d527f188a80f982ed311d0418b903340f503a82a0f66cff416722689"
+      },
+      "15a-ial2-new-protocol-support.html": {
+        "bytes": 25989,
+        "sha256": "15d3ed57cc053e5f851155c63f369e0f50fb4c0a45cb8020f30506db1a2583e9"
+      },
+      "16-ial2-protocol-platform-intent.html": {
+        "bytes": 32565,
+        "sha256": "160fa3ef8b4e4fb36cb0307e367e564a69255f3c7f7b20fe053f01c412931c61"
+      },
+      "16a-ial2-axi.html": {
+        "bytes": 84992,
+        "sha256": "9fd8c9f525feb69fd539f97b837d95b2713013fbed0ca9fdd752a96f3689adf0"
+      },
+      "16aa-ial2-axi-manager-capacity-status.html": {
+        "bytes": 60356,
+        "sha256": "13fba2215344e61b4290b3c848105df59563056872f42fdc29a673ecd6ac9ba5"
+      },
+      "16b-ial2-apb.html": {
+        "bytes": 30397,
+        "sha256": "04feec2287418fba244daa6e63f666235ace6ddb2d45e8e1bdca2d6f8147d1cf"
+      },
+      "16c-ial2-ahb.html": {
+        "bytes": 254470,
+        "sha256": "18e30e6a0932cfbf7e2293f490be9f4603d6e1527788e04fb5e17be419e408a9"
+      },
+      "16d-hial-vial-verification-architecture.html": {
+        "bytes": 330700,
+        "sha256": "97c42de3cf88a608b2d143c38321f0f19bde9b2ffc37f9310558da18d8b9eff0"
+      },
+      "16da-vial-balanced-portable-composition.html": {
+        "bytes": 46770,
+        "sha256": "eb7ebc7c7a699901d4e68a57cde7a2c90013edec15d774495ba1ee885c612b6a"
+      },
+      "16db-vial-structural-backend-emission-matrix.html": {
+        "bytes": 29523,
+        "sha256": "c2c3176224f824a56e90b69a83fe78e1f116cb6d7daeef23ecf91c4bf06f4cbe"
+      },
+      "16dc-vial-portable-verilator-runtime-measurement.html": {
+        "bytes": 322375,
+        "sha256": "25b2207c249319262d478f210c364a69d1596044b4d0b8f7d5b5769da195e676"
+      },
+      "16dd-vial-portable-vhdl-runtime-measurement.html": {
+        "bytes": 62575,
+        "sha256": "12efe3c4a74b28e4842ce682f7595794cfb0a886814ed83eaa9d244f606c3172"
+      },
+      "16de-vial-osvvm-runtime-execution-plan.html": {
+        "bytes": 62366,
+        "sha256": "93198fe2d6eac4f5648163477a987c278d9269d56611bfa629b0f755ff361509"
+      },
+      "16df-vial-architecture-scale-cap-closeout.html": {
+        "bytes": 204125,
+        "sha256": "56f4a3fa01dbb0133d6d1e531777d2d4181a2f87ca4c74af7c83d708dd6054ec"
+      },
+      "16dg-vial-public-lifecycle-reference.html": {
+        "bytes": 57217,
+        "sha256": "f191e860634c1b7ec1a4820809ab314ee67c65a2d25250727f4df956ef576537"
+      },
+      "16dh-vial-ahb-end-to-end-tutorial.html": {
+        "bytes": 38420,
+        "sha256": "a160b127dd1c109e768addfa4f007a720f5dfedfef75fcb2bda92bb236ed23cb"
+      },
+      "16di-vial-legacy-migration.html": {
+        "bytes": 41447,
+        "sha256": "e3f944b1cd93063414f7c94014edf99c8a91ba8a5e570af140ddb8c9ad897290"
+      },
+      "16dj-vial-capability-support-reference.html": {
+        "bytes": 43133,
+        "sha256": "6cddc8b06fc3bc4bad2de27c9c28e9f32a10c7038fe011731336ff8566a3b83a"
+      },
+      "16dk-inactive-proxy-lifetimes.html": {
+        "bytes": 127215,
+        "sha256": "dfb9d9e33f7770b386401e630627762e5b90eadcf727c58aa23a5eddb45f9f77"
+      },
+      "16e-nexsim-api-mcp-consumer-requirements.html": {
+        "bytes": 144907,
+        "sha256": "7b0202d61e74e0e181bb128d5cef6244cceabf1bd9eb609b76678eec231fdfa5"
+      },
+      "404.html": {
+        "bytes": 17673,
+        "sha256": "d30aaa4060c957fda988ee195cc0d332a09309cecd0a0b2e5553f9206a2970d1"
+      },
+      "90-reference-map.html": {
+        "bytes": 83129,
+        "sha256": "5b6c8bde6aa7527a28e3de883c3cf89a8ad1d58c519a16aaedbc2ec3773da2ce"
+      },
+      "91-live-document-containment-adoption.html": {
+        "bytes": 45608,
+        "sha256": "797e035d8b3eba73b73be9cfcaec10812c17a9fb24cac1e28db0e7a33347c328"
+      },
+      "ayu-highlight-3fdfc3ac.css": {
+        "bytes": 907,
+        "sha256": "3fdfc3ac5e435e0cef96dafee74da487e4846ffce4dff5973bb45d68b678dd7f"
+      },
+      "book-609e4cb8.js": {
+        "bytes": 30932,
+        "sha256": "609e4cb80f92aa954a3f48869c751f6f8848433604f1297bb70fde0e3e58a569"
+      },
+      "clipboard-1626706a.min.js": {
+        "bytes": 10754,
+        "sha256": "1626706afc88d95ebe1173b553ec732c6dc82a576989315fdf5e7779af738a44"
+      },
+      "css/chrome-d279d366.css": {
+        "bytes": 18032,
+        "sha256": "d279d366359c0d588c9c10cb46afe2b543fc731dea722803639b4e45016d5fe2"
+      },
+      "css/general-e96d0476.css": {
+        "bytes": 11478,
+        "sha256": "e96d0476741bfcbe8cc0ac02db00187c45a63946834361d0eab846016787c646"
+      },
+      "css/print-9e4910d8.css": {
+        "bytes": 689,
+        "sha256": "9e4910d8eb508863172430c60d49fd3b442e9e7f5963a18cd1d655c386ffeae9"
+      },
+      "css/variables-8adf115d.css": {
+        "bytes": 10422,
+        "sha256": "8adf115df892369c90b830767c4651a9e058b79273e219935f7c8a96c6eab9c0"
+      },
+      "elasticlunr-ef4e11c1.min.js": {
+        "bytes": 18051,
+        "sha256": "ef4e11c157b1e2e89782d30bd726f2d5ff7834ea5e26ad02474325f8b1f126c9"
+      },
+      "favicon-8114d1fc.png": {
+        "bytes": 5679,
+        "sha256": "8114d1fc74f4b5621ad9afde7746ed9cf7e420be317a6e29023d2298d58aa15b"
+      },
+      "favicon-de23e50b.svg": {
+        "bytes": 1835,
+        "sha256": "de23e50b1c4dd6e052b3e21d444fcd4b13568b3840ac3c99d9be4e9263c0ef59"
+      },
+      "fonts/OPEN-SANS-LICENSE.txt": {
+        "bytes": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      "fonts/SOURCE-CODE-PRO-LICENSE.txt": {
+        "bytes": 4528,
+        "sha256": "d1e6d465a83ba1a3be52db6484868cf5812ae9bbf91abdad3900ba0165afcf93"
+      },
+      "fonts/fonts-9644e21d.css": {
+        "bytes": 3818,
+        "sha256": "94b5131beb9b75a55f9649fcf12de167350feae0fab2bab26c2703cd75c0c781"
+      },
+      "fonts/open-sans-v17-all-charsets-300-7736aa35.woff2": {
+        "bytes": 44352,
+        "sha256": "7736aa3596c468515c3209f2f9d68cfae96d94c05689bcc11a5dce426a6ee2e8"
+      },
+      "fonts/open-sans-v17-all-charsets-300italic-2c7b95c0.woff2": {
+        "bytes": 40656,
+        "sha256": "2c7b95c08df0d228caec6d4bfed06da0f7ab6b76ea5cc3f75b5c6ae416bc571b"
+      },
+      "fonts/open-sans-v17-all-charsets-600-486c6759.woff2": {
+        "bytes": 44936,
+        "sha256": "486c67592731a0b36a89dba1fd0b97aeb73f236bbf60dbf28d7c6b5723c07989"
+      },
+      "fonts/open-sans-v17-all-charsets-600italic-1a3e8659.woff2": {
+        "bytes": 42120,
+        "sha256": "1a3e865977024f444834a75a1b33b89b93134c93007ae3d6e14f24e6c88d8dfb"
+      },
+      "fonts/open-sans-v17-all-charsets-700-c22fe8c7.woff2": {
+        "bytes": 44988,
+        "sha256": "c22fe8c70c36f1d862903b772eaed864d3a8fa849473c9caff224fdb852428e4"
+      },
+      "fonts/open-sans-v17-all-charsets-700italic-238ae959.woff2": {
+        "bytes": 40800,
+        "sha256": "238ae9593944112bee8dd65f8ebc5f3d3862160a8a245fbe1ee3150bc9a2fd81"
+      },
+      "fonts/open-sans-v17-all-charsets-800-3d2c812a.woff2": {
+        "bytes": 44536,
+        "sha256": "3d2c812adf74deb36fead3ff8469800d3c0b23eb2c858ae49310291f89490146"
+      },
+      "fonts/open-sans-v17-all-charsets-800italic-ba1521ec.woff2": {
+        "bytes": 40812,
+        "sha256": "ba1521ec219db9bc5bfec0e3e7a897369d98b30d4e853ee4aa525322784428b8"
+      },
+      "fonts/open-sans-v17-all-charsets-italic-6c9463f7.woff2": {
+        "bytes": 41076,
+        "sha256": "6c9463f7096c0b9d610e095ed248ac1e8a8da7e92d17e9be544f3baced7b62b2"
+      },
+      "fonts/open-sans-v17-all-charsets-regular-2e3b1d34.woff2": {
+        "bytes": 43236,
+        "sha256": "2e3b1d34ac67763ab50652da19305d4b3694c6b6e6bf35f4b98411ce4af646d2"
+      },
+      "fonts/source-code-pro-v11-all-charsets-500-2bdd9410.woff2": {
+        "bytes": 59140,
+        "sha256": "2bdd9410b0141db3cbbf4cfc3818cc6fad279e8e63940940e06cd6af76ccbfcf"
+      },
+      "highlight-493f70e1.css": {
+        "bytes": 1209,
+        "sha256": "493f70e1527d895653b5ac7157abba8e2c656e43698da93b6c1997e2855a5059"
+      },
+      "highlight-abc7f01d.js": {
+        "bytes": 137537,
+        "sha256": "abc7f01d0ce8c64e4ba9e131d651e48ae1a567b2a1254fea8aab03502288de58"
+      },
+      "index.html": {
+        "bytes": 25151,
+        "sha256": "1a64689a2d322c9f4542d0372350adab02436724d5cd94541418f6434d19ceec"
+      },
+      "mark-09e88c2c.min.js": {
+        "bytes": 17320,
+        "sha256": "09e88c2cfaf23ea8a37b5681433eafea97033af632ecc948c8c1ee9944647743"
+      },
+      "print.html": {
+        "bytes": 4780760,
+        "sha256": "8ef346c78b05461e54dc73e65e276f96783d214241b85e2e779685d0aabb0bc0"
+      },
+      "reference-source/CLAIM_VERIFICATION.markdown.source.txt": {
+        "bytes": 12983,
+        "sha256": "a83d74f53d4b5503cecb25dea0b8e3fb2a5ac6778767b7a9caf9a30d8fc75ca6"
+      },
+      "reference-source/COMMIT.markdown.source.txt": {
+        "bytes": 14752,
+        "sha256": "93df7a86d11e919038a7749b92b01541d94e527752a7b7e358739f6f55840429"
+      },
+      "reference-source/LIVE_DOCUMENT_SIZE_CONTAINMENT.markdown.source.txt": {
+        "bytes": 32730,
+        "sha256": "beefcc17ed958a1a5b3d55f4ba91cf6458c68c5e91ab715046980444cf723cbf"
+      },
+      "reference-source/MEMORY.markdown.source.txt": {
+        "bytes": 1157,
+        "sha256": "b334d15b501c8a110da95a09b82a925f55b34c08eab88218c6aa6c8a5a7efa14"
+      },
+      "reference-source/README_POLICY.markdown.source.txt": {
+        "bytes": 9849,
+        "sha256": "882682fa1ace703ae68726b8532a4ad24fe2c8a271bae4e07b859bd197a621c9"
+      },
+      "reference-source/ROADMAP_V2.markdown.source.txt": {
+        "bytes": 15745,
+        "sha256": "75079f86f3f12caa7b57059bd0be828bb9a23acc9d6ef82446efdecb9d5a03e3"
+      },
+      "reference-source/TASK_ACCEPTANCE.markdown.source.txt": {
+        "bytes": 7121,
+        "sha256": "4a5bb05842dc0313e5f8a34fff1979f79061001cdf6c7772fb1dfaa795c6fef0"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.markdown.source.txt": {
+        "bytes": 6296,
+        "sha256": "1153fe8e4346ecddfd6defd4833b2accfc1391d079684cf46724296f635afdcc"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.markdown.source.txt": {
+        "bytes": 6457,
+        "sha256": "7a4a9470bfb9981f3f236db181f3acb7e344785a929057a2678f84d7bfb8cc7c"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.markdown.source.txt": {
+        "bytes": 10488,
+        "sha256": "4e2f81485ec0e98162210c68aa2f050c01df04996f11983e413117a75ceab209"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.markdown.source.txt": {
+        "bytes": 9281,
+        "sha256": "d62fe45cddf41d53bd5b3c45cf64c5dea3d3ab99de98f2448610da3db48f0290"
+      },
+      "reference-source/docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.markdown.source.txt": {
+        "bytes": 5962,
+        "sha256": "a2b418eedefb5a681562f4b2f9c34fa87ee454f23cc54a920d725e76a5b1e4b8"
+      },
+      "reference-source/docs/BIN_FSMGEN_IMPORT_TREE.markdown.source.txt": {
+        "bytes": 132030,
+        "sha256": "2870d1e18a51644ec7e73212f583ca3b15a8e4a08c2c9b4e7e361c3ee176adbc"
+      },
+      "reference-source/docs/COMPOSITION_LEGACY_MAPPING.markdown.source.txt": {
+        "bytes": 8279,
+        "sha256": "74bf56258cffe30bc2549806142c4595e1cf588c015ec9241b4ab56f17e32e7a"
+      },
+      "reference-source/docs/COMPOSITION_SCOPE.markdown.source.txt": {
+        "bytes": 74077,
+        "sha256": "65359e60145669c1d03656e82accddaf77a5054271886a5be4041693efd12a19"
+      },
+      "reference-source/docs/EXTENSION_MODEL.markdown.source.txt": {
+        "bytes": 16474,
+        "sha256": "3063d8f867fc8c19ceffad07418f360eca6bc6a30044bf775730755d851105c7"
+      },
+      "reference-source/docs/FEATURE_BACKLOG.markdown.source.txt": {
+        "bytes": 548,
+        "sha256": "e1b4dc6feda32e3075dd84d297ff9ea5f44253186676b40e85a6b847b92ef5de"
+      },
+      "reference-source/docs/INTENT_CAPTURE_AXI_CASE_STUDY.markdown.source.txt": {
+        "bytes": 13960,
+        "sha256": "ef2aac2fa8b555be19015d0c3cd178fc43527f80e13787f6165c9d07d06b2d21"
+      },
+      "reference-source/docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.markdown.source.txt": {
+        "bytes": 1147,
+        "sha256": "8df21646517c56b231aebe692474ce4d7b40922060a6e5a3155ce5a967a1d3c7"
+      },
+      "reference-source/docs/ISF_PUBLIC_INTERFACE_CONTRACT.markdown.source.txt": {
+        "bytes": 993,
+        "sha256": "401b5acd4da757378eee7fb29e4a0bb12d2808f1df6dda7e7794764d94e8a28e"
+      },
+      "reference-source/docs/ISF_SPEC.markdown.source.txt": {
+        "bytes": 1981,
+        "sha256": "073d0b2f9476c18b60e71fa81a9955dff4926cb6ed846743f6998463b98b4859"
+      },
+      "reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.markdown.source.txt": {
+        "bytes": 21047,
+        "sha256": "7d0ac07f16771bce2dcd2886be1f7e093c399e3a6467522289085f0474993d6f"
+      },
+      "reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.markdown.source.txt": {
+        "bytes": 17902,
+        "sha256": "1e913ffad3194f7592259c4864d9f819cc741b5912c8d88474fd71281842de78"
+      },
+      "reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.markdown.source.txt": {
+        "bytes": 54150,
+        "sha256": "49351a2a54a9fd0bf05d2372c7444aa983b36064f203274430d6747b3a5d5e48"
+      },
+      "reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.markdown.source.txt": {
+        "bytes": 3997,
+        "sha256": "3df6934b3604ee316de7a26fe40f24d2cf7e74359ecc8dd38191dfa039237972"
+      },
+      "reference-source/docs/REGRESSION_CORPUS.markdown.source.txt": {
+        "bytes": 172995,
+        "sha256": "cd8fc0635d03375f44312c66b5029168a0280bdbeabe5221f64eaf438b78d359"
+      },
+      "reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt": {
+        "bytes": 97295,
+        "sha256": "92f80e29b82737f2708a369315d8190b0dd00f5fc07b5db1c4c4154fa8130cc1"
+      },
+      "reference-source/docs/TASK_TREE.markdown.source.txt": {
+        "bytes": 40062,
+        "sha256": "005cd4890bb5ea2aff3f600d49459b67775534017ea501223413cce88f639369"
+      },
+      "reference-source/docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.markdown.source.txt": {
+        "bytes": 5872,
+        "sha256": "3f95e5b402c6c44ad545e9ce016bfb6f0e84d4eba66bbfac8347f0ba5d98dbaa"
+      },
+      "reference-source/docs/audits/ROADMAP_STATUS_VALUE_AUDIT.markdown.source.txt": {
+        "bytes": 6394,
+        "sha256": "da661a45577931416e39b31f1431e3a979cd06cb6b9ae7cae468ac888467871a"
+      },
+      "reference-source/docs/audits/aggregate-record-helper-plan-20261003/scope.txt.source.txt": {
+        "bytes": 2557,
+        "sha256": "15dfdc71b69e650ee7c9cbcec37daa8e97388b8f4bb5768ed294121107c0fa93"
+      },
+      "reference-source/docs/audits/atl-source-width-kind-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4099,
+        "sha256": "44fa0d60d9591d43a66c9e524c15bb049562f765379bd9c8a8cdba6c22fd72d3"
+      },
+      "reference-source/docs/audits/caller-formal-binding-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4787,
+        "sha256": "ccaa1e7cabbcbb93e127d67ebb3635bbc1e2a24febe5a5a980914b299c75ff27"
+      },
+      "reference-source/docs/audits/coverage-repair-historical-context-20261004/scope.txt.source.txt": {
+        "bytes": 2903,
+        "sha256": "5c76739cb5a1e8f8491e311d0356d05f5a613948d4cb44bcb88628098d7b94d9"
+      },
+      "reference-source/docs/audits/formal-resource-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4063,
+        "sha256": "ced437b1de47d84930bf633bebda492673781ca32e276353489c869c211a404a"
+      },
+      "reference-source/docs/audits/formal-source-context-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 6153,
+        "sha256": "7b648a0fe869c5905dd3b9c4cb680c46a0737acd68c751e26cfa6ee380a1522c"
+      },
+      "reference-source/docs/audits/interface-metadata-cause-repair-20261004/scope.txt.source.txt": {
+        "bytes": 3198,
+        "sha256": "6364764031ac865cb03ceee47276f587b03531f92a2b7a06cbff0d1b1e371e5c"
+      },
+      "reference-source/docs/audits/interface-metadata-copy-controls-20261004/scope.txt.source.txt": {
+        "bytes": 4309,
+        "sha256": "98e85f3b217eda9cd3925a5cccb59e9b56a9629583775cbf49e119bdaacc633b"
+      },
+      "reference-source/docs/audits/interface-metadata-copy-join-20261004/scope.txt.source.txt": {
+        "bytes": 3739,
+        "sha256": "04702cc07cce28694250eef2e6a01b893d20752b2bb71ac6ff3bf3f579ca64f5"
+      },
+      "reference-source/docs/audits/interface-metadata-copy-repair-20261004/scope.txt.source.txt": {
+        "bytes": 5168,
+        "sha256": "9840c28b9f8e1beeac6ec68b59dae39770a1684fab82bcdd34272b19bea3ec2a"
+      },
+      "reference-source/docs/audits/interface-metadata-diagnostic-join-20261004/scope.txt.source.txt": {
+        "bytes": 2744,
+        "sha256": "5731d3d8370bc93e655dba1a2ea72e847515320df7ea174740585a1d1d65a1d6"
+      },
+      "reference-source/docs/audits/interface-metadata-fields-20261004/scope.txt.source.txt": {
+        "bytes": 4750,
+        "sha256": "cba017b4bb6b6b477cf420fe83a7f569ee75faabd14eb343ea7d04188a989950"
+      },
+      "reference-source/docs/audits/interface-metadata-helper-contract-20261003/scope.txt.source.txt": {
+        "bytes": 3429,
+        "sha256": "bdeae941146a55c6f1c24fe7ba76e3722dbc425849eaaaf9fee3a613f1d5b5fc"
+      },
+      "reference-source/docs/audits/interface-metadata-helper-outcome-20261004/scope.txt.source.txt": {
+        "bytes": 3181,
+        "sha256": "3840665f51f8174760bbd1d8fca1d0e8f2e29c3cb8c1e454eff5aa8ddc373706"
+      },
+      "reference-source/docs/audits/interface-metadata-runtime-20261004/scope.txt.source.txt": {
+        "bytes": 4834,
+        "sha256": "eecaf951f9d4ae6a9b10697848eda6a69cda78f973e45fe8f2c9b6e336b3260f"
+      },
+      "reference-source/docs/audits/interface-metadata-source-product-join-20261004/scope.txt.source.txt": {
+        "bytes": 3521,
+        "sha256": "4116020114266e3a51303e5b58ec92039abf67d10f1fb5ca617e94d8272746e0"
+      },
+      "reference-source/docs/audits/interface-metadata-writer-cause-repair-20261004/scope.txt.source.txt": {
+        "bytes": 3366,
+        "sha256": "b85e12f35c38d2d8ecd1379aeedcb15feed7f89bb46a6fcad019ad388a9870ff"
+      },
+      "reference-source/docs/audits/local-formal-helper-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 5893,
+        "sha256": "452da0499ed735537175bad1843802c91304ae999205457d732ef7c5db3a4a8e"
+      },
+      "reference-source/docs/audits/named-helper-membership-20261003/scope.txt.source.txt": {
+        "bytes": 3990,
+        "sha256": "5dec581f70bd9c8860408e1299111ad2c499c5abaeca190e2fe5ae26c652ee0b"
+      },
+      "reference-source/docs/audits/prepared-reservation-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4139,
+        "sha256": "1e79967a5f0334eaad34f380d910cca82e48a9196fe103f9c70b8f50fb1783d3"
+      },
+      "reference-source/docs/audits/prepared-reservation-helper-causes-20261003/scope.txt.source.txt": {
+        "bytes": 5245,
+        "sha256": "a3ce5e386e2bc50c77faa48ce9e0942baae5c84dac9c5fd28c0b626166ab2452"
+      },
+      "reference-source/docs/audits/prepared-reservation-snapshot-diagnosis-20261003/scope.txt.source.txt": {
+        "bytes": 3851,
+        "sha256": "e6f4d3722b65968b16345ba6c9026b0015826d0ab3505364a04e20be62cd79b0"
+      },
+      "reference-source/docs/audits/prepared-reservation-snapshot-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4567,
+        "sha256": "b7b05d51fd98760dce6d2023d65ed2aaa9beed03400c9bec0bb09ca5dee02ff9"
+      },
+      "reference-source/docs/audits/record-value-actors-20261004/scope.txt.source.txt": {
+        "bytes": 4010,
+        "sha256": "6d24a0f5608e4d6bbd035e4fdf0c93ffd4804f5b321337849ad8ae2cf4cbcf08"
+      },
+      "reference-source/docs/audits/record-value-api-join-20261004/scope.txt.source.txt": {
+        "bytes": 3495,
+        "sha256": "2f0cf785928f01e74d01b61c71cce33fc4ae6a2280f9b5f320af0fafc9570c75"
+      },
+      "reference-source/docs/audits/record-value-captures-20261004/scope.txt.source.txt": {
+        "bytes": 3818,
+        "sha256": "d3cebc35c78cd24c90c4da3bf19be7d5462e1eed258c9ed29fe48a57786daa6c"
+      },
+      "reference-source/docs/audits/record-value-clone-join-20261004/scope.txt.source.txt": {
+        "bytes": 5035,
+        "sha256": "ca882130267b26c3c3b0cf2fe84a7cac47eff5a50ee13ea46d05f3b9e36993f3"
+      },
+      "reference-source/docs/audits/record-value-clone-paths-20261004/scope.txt.source.txt": {
+        "bytes": 5768,
+        "sha256": "28d172e1791ce07ea776288c404ad36210b39a459315ef56e3632ac324eedd3b"
+      },
+      "reference-source/docs/audits/record-value-clone-root-20261004/scope.txt.source.txt": {
+        "bytes": 4920,
+        "sha256": "779c67480d6267ed7aa44b8fabcfa2fb3aec0339f48619c37940db424196b230"
+      },
+      "reference-source/docs/audits/record-value-clone-tree-20261004/scope.txt.source.txt": {
+        "bytes": 5657,
+        "sha256": "3357e957c52e3db87d8489230697a7ea5b749e7e3baf41cc86e04ddb649c4ef9"
+      },
+      "reference-source/docs/audits/record-value-clones-20261004/scope.txt.source.txt": {
+        "bytes": 4583,
+        "sha256": "cd8583f7a1d5980bacf3c1711da94e2e7c3f9606315b1f633c59016c07c832b5"
+      },
+      "reference-source/docs/audits/record-value-copies-20261004/scope.txt.source.txt": {
+        "bytes": 4002,
+        "sha256": "9a28961780aa2b9a58da99d8f58598050e197d64f7139137c3a449216f050a8b"
+      },
+      "reference-source/docs/audits/record-value-copy-fields-20261004/scope.txt.source.txt": {
+        "bytes": 4196,
+        "sha256": "1080c737fe5c156d10151f6615f77267c0d4a56cb08adc037062f3b80c8c7698"
+      },
+      "reference-source/docs/audits/record-value-copy-inputs-20261004/scope.txt.source.txt": {
+        "bytes": 3679,
+        "sha256": "c75e1794e015d0c49dfea5053e9ba7e6378fa5b0b76f632265626c513e620bd8"
+      },
+      "reference-source/docs/audits/record-value-copy-probe-join-20261004/scope.txt.source.txt": {
+        "bytes": 2538,
+        "sha256": "5a728fee5cd6f0ec69faaeab22159affe6191c8f3faf025d760c95bcc992d38f"
+      },
+      "reference-source/docs/audits/record-value-copy-probes-20261004/scope.txt.source.txt": {
+        "bytes": 3065,
+        "sha256": "da508ce559ebe5c54acb274d26b08cb8c54a0bd61f4e08c1411ef059de73aaeb"
+      },
+      "reference-source/docs/audits/record-value-copy-reader-20261004/scope.txt.source.txt": {
+        "bytes": 4136,
+        "sha256": "f5718c57cfa574a641a0cd211686b3162bfb0ff6ba34208d88f5992abe448d5e"
+      },
+      "reference-source/docs/audits/record-value-core-join-20261004/scope.txt.source.txt": {
+        "bytes": 4430,
+        "sha256": "ba890a118a281738084228b96ab9fa15e4ee885fd8e1476797b38f1e21b4481a"
+      },
+      "reference-source/docs/audits/record-value-field-join-20261004/scope.txt.source.txt": {
+        "bytes": 3179,
+        "sha256": "993661a19b26229aaafb69c001995b30b7482c738a090f23ae77c928468811f0"
+      },
+      "reference-source/docs/audits/record-value-fields-20261004/scope.txt.source.txt": {
+        "bytes": 3375,
+        "sha256": "ee559a4d0a4328de64e173e43e7e5c5d73eff8761d512c8c59d776aed93680ad"
+      },
+      "reference-source/docs/audits/record-value-helper-contract-20261004/scope.txt.source.txt": {
+        "bytes": 3749,
+        "sha256": "55703abb46756f36a9c019a14b8f81bd4a93d2a5f28afae4a56863d98eeda728"
+      },
+      "reference-source/docs/audits/record-value-identities-20261004/scope.txt.source.txt": {
+        "bytes": 5358,
+        "sha256": "274c04943212f5c3035744688a248a5b6bc7948520751b6458eb0bced2b4da34"
+      },
+      "reference-source/docs/audits/record-value-original-api-paths-20261005/scope.txt.source.txt": {
+        "bytes": 3950,
+        "sha256": "94f7a5bfdb85b039bd19103009881fb5a6c4ab7e5fa55f315e16c9f07830e3f1"
+      },
+      "reference-source/docs/audits/record-value-original-callback-paths-20261005/scope.txt.source.txt": {
+        "bytes": 3750,
+        "sha256": "8be0c2936f9aa0ba5e740465126b9755e7371e1365c6e5ae2bff2e55bbba6130"
+      },
+      "reference-source/docs/audits/record-value-original-candidate-20261004/scope.txt.source.txt": {
+        "bytes": 4292,
+        "sha256": "9b144d6a13e0024060bdb18e43f444efca83fbed78ec74be4e6d6ae333af30f3"
+      },
+      "reference-source/docs/audits/record-value-original-class-20261005/scope.txt.source.txt": {
+        "bytes": 3438,
+        "sha256": "cad80aab06f4a2067485eabe1afa00764abdbc26afd96144a9d47c1f2ba5c95e"
+      },
+      "reference-source/docs/audits/record-value-original-contexts-20261005/scope.txt.source.txt": {
+        "bytes": 3144,
+        "sha256": "a13d037f8214707d4a9a7230d42295b56b5a71fae2da03d60c7e5d5f6c58e2a6"
+      },
+      "reference-source/docs/audits/record-value-original-copy-reader-20261004/scope.txt.source.txt": {
+        "bytes": 2946,
+        "sha256": "bfbf441262a4c346906d380f9b822d8fe76604fb1bce516b048d0956285e0c35"
+      },
+      "reference-source/docs/audits/record-value-original-fields-20261005/scope.txt.source.txt": {
+        "bytes": 3882,
+        "sha256": "fdc2bb44aaff6f9ab7b21d2c4279ac1c6e98c82dca66e6afdbaa8e1bc79df073"
+      },
+      "reference-source/docs/audits/record-value-original-forwarding-20261005/scope.txt.source.txt": {
+        "bytes": 4225,
+        "sha256": "9a49f3ca97fb6d50261d62f8cb22c728514fffd0a10db66f55419a0f914a2bd5"
+      },
+      "reference-source/docs/audits/record-value-original-helper-join-20261005/scope.txt.source.txt": {
+        "bytes": 4384,
+        "sha256": "80e16f8b3cf622ed2ee6ac2d2b7ba329e15fd560ad02909c0d4854af5cddf437"
+      },
+      "reference-source/docs/audits/record-value-original-inherited-frames-20261005/scope.txt.source.txt": {
+        "bytes": 4942,
+        "sha256": "66d13d0840e4df212f7a86dee8a9e193fb2a1d1c3139e84a4ec44263cd941cb5"
+      },
+      "reference-source/docs/audits/record-value-original-input-graphs-20261005/scope.txt.source.txt": {
+        "bytes": 4009,
+        "sha256": "e301824a803c90cf587dc65fe6d22b37b6c30443b2bc7fb26f059c85a87b0005"
+      },
+      "reference-source/docs/audits/record-value-original-input-join-20261005/scope.txt.source.txt": {
+        "bytes": 3166,
+        "sha256": "3b3ab51f05fab0001ac9199562835a0460a091f4fc9c148f8ea89153ca2cd86a"
+      },
+      "reference-source/docs/audits/record-value-original-metadata-frames-20261005/scope.txt.source.txt": {
+        "bytes": 2883,
+        "sha256": "82810adc8775aa40072fc200e5ae003841eec9174d1b42336e4f15e349f780c7"
+      },
+      "reference-source/docs/audits/record-value-original-named-helpers-20261005/scope.txt.source.txt": {
+        "bytes": 3650,
+        "sha256": "918956ffa33f1757162471e86343b5d800ecf1e73275350baef4e2a4fec0eee6"
+      },
+      "reference-source/docs/audits/record-value-original-nested-inputs-20261005/scope.txt.source.txt": {
+        "bytes": 2905,
+        "sha256": "8717c76d3e16258d96835f1604a3efe2d3a4aee868f042fd68563783f68e604c"
+      },
+      "reference-source/docs/audits/record-value-original-observer-boundaries-20261005/scope.txt.source.txt": {
+        "bytes": 4165,
+        "sha256": "6246cc442f2e6c1023e1a77f2009c2d1df47da1fdfb80053e7af5170a36f3f58"
+      },
+      "reference-source/docs/audits/record-value-original-observer-sources-20261005/scope.txt.source.txt": {
+        "bytes": 3531,
+        "sha256": "cef5ad82cc4648f3e9032c1affa9c730e9558e315b1b2e17daaf4d9abeafd8c9"
+      },
+      "reference-source/docs/audits/record-value-original-primary-20261005/scope.txt.source.txt": {
+        "bytes": 3495,
+        "sha256": "86b5bae2a56abcde2147c77058117f40c29679b7cd97b5404b00fa57c56531c7"
+      },
+      "reference-source/docs/audits/record-value-original-products-20261005/scope.txt.source.txt": {
+        "bytes": 3130,
+        "sha256": "91288994a49eb7b4d2671fc55b13b5566a460e84a2d047ce3e9ee8c86b6aebf6"
+      },
+      "reference-source/docs/audits/record-value-original-raw-20261005/scope.txt.source.txt": {
+        "bytes": 2737,
+        "sha256": "7f868dfae9666da95bd7b3a6720b61a6e00e9e73590a9801d9a034338c71b0a1"
+      },
+      "reference-source/docs/audits/record-value-original-replay-20261004/scope.txt.source.txt": {
+        "bytes": 3310,
+        "sha256": "dd30d310ef8d443ff3875865b11c4d622eafdee57dd54fe58d7d7cddb01c4b82"
+      },
+      "reference-source/docs/audits/record-value-original-value-frames-20261005/scope.txt.source.txt": {
+        "bytes": 2750,
+        "sha256": "18cc8ce3b7a3822f68b97bd982039dad6278cbf9e878052989c9805be3209d5b"
+      },
+      "reference-source/docs/audits/record-value-products-20261004/scope.txt.source.txt": {
+        "bytes": 5028,
+        "sha256": "05f104090c2e2dd2ec97c56fa27b974c51e9a92c153f1a86593d17cf5d3ecc71"
+      },
+      "reference-source/docs/audits/record-value-ranges-20261004/scope.txt.source.txt": {
+        "bytes": 4129,
+        "sha256": "cb25dbbac5d935458fd239918e865da09b216b9d6579f11f588c1dc040bc713a"
+      },
+      "reference-source/docs/audits/record-value-references-20261004/scope.txt.source.txt": {
+        "bytes": 4626,
+        "sha256": "fe0b75af5309822c67a051720bf189832620cf90d8609b8c68b07ca6adbbf398"
+      },
+      "reference-source/docs/audits/record-value-replay-portability-20261004/scope.txt.source.txt": {
+        "bytes": 4546,
+        "sha256": "25d415f6429d1d15b1b73b010327bc8457afe7d4d14ae7c8560fc27904c1c862"
+      },
+      "reference-source/docs/audits/record-value-runtime-20261004/scope.txt.source.txt": {
+        "bytes": 5182,
+        "sha256": "d8ae9aeb4193030a81374b6841e6bfd1f1db9210e5301081f574fc765117fd08"
+      },
+      "reference-source/docs/audits/record-value-scopes-20261004/scope.txt.source.txt": {
+        "bytes": 4219,
+        "sha256": "6c19c3d6a438a2eb6edce19e935ae5a582d5baf1d89c9880284cfff5fb557fdf"
+      },
+      "reference-source/docs/audits/record-value-semantic-join-20261004/scope.txt.source.txt": {
+        "bytes": 7283,
+        "sha256": "4d39a222c29b23bcbbbd20e01f92c5b8251f110b927f890fdbcc6a8e78468487"
+      },
+      "reference-source/docs/audits/record-value-snapshots-20261004/scope.txt.source.txt": {
+        "bytes": 3577,
+        "sha256": "f6fdf660ffb23ad133b6fb778a9bef090af703357a5ae21d417fa6039aa6f37e"
+      },
+      "reference-source/docs/audits/reservation-coverage-atl-module-fields-20261003/scope.txt.source.txt": {
+        "bytes": 4336,
+        "sha256": "fb18dddc31fb029c6465aef41d73e6a0f12703e872d8375377f2e5b29e4cdee6"
+      },
+      "reference-source/docs/audits/reservation-coverage-cause-diagnosis-20261003/scope.txt.source.txt": {
+        "bytes": 2943,
+        "sha256": "e3061d5a840e9258c90f8cef157ff9b8b7e2e5a58bca94470c462a0f8f393c15"
+      },
+      "reference-source/docs/audits/reservation-coverage-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 3248,
+        "sha256": "3b2eecbd397437365a808b3516ec6e3293989cd40f3674ba4756111a1c530b7f"
+      },
+      "reference-source/docs/audits/reservation-coverage-copy-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4792,
+        "sha256": "424a079275a3211f77000580c30eac879875e64cfb15d01564aa8ef766ac3076"
+      },
+      "reference-source/docs/audits/reservation-coverage-generated-module-fields-20261003/scope.txt.source.txt": {
+        "bytes": 4149,
+        "sha256": "e8e9a07981a480c2bddb3cb44f3b829277d0215f880119fa695282ef7bad5a64"
+      },
+      "reference-source/docs/audits/reservation-coverage-helper-causes-20261003/scope.txt.source.txt": {
+        "bytes": 2202,
+        "sha256": "7c43821f52209c0cb894fd1770b7abee16a3f21032a60d93364c4f33d663263c"
+      },
+      "reference-source/docs/audits/reservation-coverage-historical-context-20261003/scope.txt.source.txt": {
+        "bytes": 3478,
+        "sha256": "4096eac9c99759a3a6f1123087e8d7e489a910a3e5a0d22d779e1b18ba937f81"
+      },
+      "reference-source/docs/audits/reservation-coverage-module-capture-20261003/scope.txt.source.txt": {
+        "bytes": 3160,
+        "sha256": "8efc05ee7ceab87931e40311c00d3577e35fbc2b0dffe5c123709f263bd94da1"
+      },
+      "reference-source/docs/audits/reservation-coverage-module-join-20261003/scope.txt.source.txt": {
+        "bytes": 3266,
+        "sha256": "ec47aa49d09dde7db63216cb3fe6d593211cd7a2fc9e51a0f21f379b6b8921d7"
+      },
+      "reference-source/docs/audits/reservation-coverage-plain-native-boundary-20261003/scope.txt.source.txt": {
+        "bytes": 3439,
+        "sha256": "02cd3a25c3000429dab7f01503fb4c28df0b39a78882eab3ba72c8cccc72cf5f"
+      },
+      "reference-source/docs/audits/reservation-coverage-producer-removal-fields-20261003/scope.txt.source.txt": {
+        "bytes": 4012,
+        "sha256": "94555b04e1f5f5bacffc5ee6015271211d191b5578b93502b6069b1954f654c2"
+      },
+      "reference-source/docs/audits/reservation-coverage-qualification-join-20261003/scope.txt.source.txt": {
+        "bytes": 3852,
+        "sha256": "2d7d1a7e050125cdc939220ef8ff59762a75e06ae929ef84168856be1a8e58eb"
+      },
+      "reference-source/docs/audits/reservation-coverage-reusable-module-fields-20261003/scope.txt.source.txt": {
+        "bytes": 3900,
+        "sha256": "7853223bebe161f4af50d0b81220be64fb1ea4c47f98c9780033038e9695480b"
+      },
+      "reference-source/docs/audits/reservation-coverage-snapshot-capture-20261003/scope.txt.source.txt": {
+        "bytes": 3054,
+        "sha256": "2ba9621965398db89ebf923ff960aec04b2a84a2ef86ae2224cff847d6181475"
+      },
+      "reference-source/docs/audits/reservation-coverage-snapshot-field-join-20261003/scope.txt.source.txt": {
+        "bytes": 2528,
+        "sha256": "13ccbb5559b9a83968e24a1522f0d76e47f8db5c2b2bb2d285b25f349411c4da"
+      },
+      "reference-source/docs/audits/reservation-coverage-snapshot-native-join-20261003/scope.txt.source.txt": {
+        "bytes": 3365,
+        "sha256": "134a8a975d6c0df8673670777f08a917255cec032f52aa9de8b464f89c989a3b"
+      },
+      "reference-source/docs/audits/reservation-coverage-snapshot-normal-fields-20261003/scope.txt.source.txt": {
+        "bytes": 3321,
+        "sha256": "4c8a7909cff79538d5566f8035aa82369134a95aa64a0fe2691c8c035941ea52"
+      },
+      "reference-source/docs/audits/reservation-coverage-source-copies-20261003/scope.txt.source.txt": {
+        "bytes": 3401,
+        "sha256": "5d8cf79822df0b6c47ee5940a9a331142e459e38ccd3ea697f851cdea7e83227"
+      },
+      "reference-source/docs/audits/reservation-coverage-value-only-controls-20261003/scope.txt.source.txt": {
+        "bytes": 3105,
+        "sha256": "1f71da2e8146938eaa432018d4a4e22e87d5b4de082b69f007078614eceea7d3"
+      },
+      "reference-source/docs/audits/residual-named-helper-cohorts-20261003/scope.txt.source.txt": {
+        "bytes": 3656,
+        "sha256": "19e9dcd61c27d513ff001a5602ef01dbe0d4076ee6f555b7d65baa795645645d"
+      },
+      "reference-source/docs/audits/reusable-cause-repair-20261003/scope.txt.source.txt": {
+        "bytes": 3734,
+        "sha256": "0b317fefdc31ef2b85404fbc25e15816e09a331384bbbd9bb47085419e521d73"
+      },
+      "reference-source/docs/audits/reusable-product-helper-causes-20261003/scope.txt.source.txt": {
+        "bytes": 6047,
+        "sha256": "9767b0610fe92369d5b9989ee2043b8c5a26789fed5d7709bb336a8f7ee09e86"
+      },
+      "reference-source/docs/audits/reusable-projection-kind-repair-20261003/scope.txt.source.txt": {
+        "bytes": 4244,
+        "sha256": "2bb518f937c8171647106ea66a9d07fcac0f689c97df78c7db77ef3778a2df2f"
+      },
+      "reference-source/docs/decisions/0102-push-cadence-is-500-commits.markdown.source.txt": {
+        "bytes": 613,
+        "sha256": "15ec6db1451e6530374ee53c376fbb8dda736e4e351b5164900877adf2a2be5c"
+      },
+      "reference-source/docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.markdown.source.txt": {
+        "bytes": 24391,
+        "sha256": "70987bc25dbd05187a62b7dc66d99384befb576a1f8605d5600d01024a071ea5"
+      },
+      "reference-source/routes.jsonl": {
+        "bytes": 31020,
+        "sha256": "a24f8fc15d8d0ddddd7eafe6a8963fe88df3d56949a6a36ade2bb9e72c80e95a"
+      },
+      "searcher-09f2665d.js": {
+        "bytes": 20294,
+        "sha256": "369af24488a4b16bfc228ab8b6671768c952bfa720f1a4867001a683b710d798"
+      },
+      "searchindex-87d4cbfa.js": {
+        "bytes": 15253368,
+        "sha256": "87d4cbfa4e548c67526a9ca5bc770e6fe9c6662b0aa0a7f92b955fa2b5b16880"
+      },
+      "toc-7727513f.js": {
+        "bytes": 31354,
+        "sha256": "7727513f2246a8126695b48c218eeb52cf5eadf09d5e1d5c79420916901738e6"
+      },
+      "toc.html": {
+        "bytes": 14642,
+        "sha256": "c5c2db87908aa220460a64cd3007bf412e8d3a483e01cd543b7ce2d784ba1041"
+      },
+      "tomorrow-night-4c0ae647.css": {
+        "bytes": 1694,
+        "sha256": "4c0ae647a06ef1699806fb9b4b6d0ef72de026708c6e8581362641c9298cb5f7"
+      }
+    }
+  },
+  "misplaced_from_root": "../../.artifacts/parser-argument-roles-book",
+  "parent_foreign_git_and_symlink_check": "passed",
+  "same_device_check": "passed"
+}

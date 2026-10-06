@@ -1,0 +1,3283 @@
+{
+  "controls": [
+    {
+      "cause": "whole source parser argument expression/role/kind models",
+      "control": "lost-source-role",
+      "status": 1
+    },
+    {
+      "cause": "whole source parser argument expression/role/kind models",
+      "control": "Boolean-source-truth-kind",
+      "status": 1
+    },
+    {
+      "cause": "whole source parser argument expression/role/kind models",
+      "control": "invented-referent-measurement",
+      "status": 1
+    },
+    {
+      "cause": "source parser complete visible scalar role",
+      "control": "wrong-write-role",
+      "status": 1
+    },
+    {
+      "cause": "source parser complete visible scalar role",
+      "control": "wrong-operand",
+      "status": 1
+    },
+    {
+      "cause": "source parser reference display role/kind",
+      "control": "wrong-reference-kind",
+      "status": 1
+    },
+    {
+      "cause": "source parser reference display role/kind",
+      "control": "wrong-parser-class",
+      "status": 1
+    },
+    {
+      "cause": "complete parser supplied argument membership",
+      "control": "lost-option-argument",
+      "status": 1
+    },
+    {
+      "cause": "source parser complete visible scalar role",
+      "control": "wrong-option-key",
+      "status": 1
+    },
+    {
+      "cause": "normalized false / visible false compatibility",
+      "control": "false-predicate-became-true",
+      "status": 1
+    },
+    {
+      "cause": "source parser complete visible scalar role",
+      "control": "cleared-truncation-marker",
+      "status": 1
+    },
+    {
+      "cause": "source parser proper visible truncation prefix",
+      "control": "empty-truncation-prefix",
+      "status": 1
+    },
+    {
+      "cause": "source parser proper visible truncation prefix",
+      "control": "borrowed-truncation-prefix",
+      "status": 1
+    },
+    {
+      "cause": "source parser scalar display kind",
+      "control": "invented-remaining-arguments",
+      "status": 1
+    },
+    {
+      "cause": "whole original argument-header/body conservation",
+      "control": "truth-preserving-display-change",
+      "status": 1
+    }
+  ],
+  "models": [
+    {
+      "frames": [
+        {
+          "arguments": [
+            {
+              "expression": "!output_field_write",
+              "match": "logical false compatible with visible false scalar; no literal or flag inference",
+              "native_scalar_encoding": "not measured",
+              "position": 0,
+              "role": "guard predicate",
+              "source_value": 0
+            },
+            {
+              "expression": "$message",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 1,
+              "role": "guard message",
+              "source_value": "transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification"
+            }
+          ],
+          "function": "FSM::Support::ISFRecordPortContexts::_require",
+          "parameters": null,
+          "whole_source_body": {
+            "bytes": 185,
+            "sha256": "d861c245d4e211e3c97d0fe9379506e8837ad60c2c55f54f1b54e951cb902d29"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "expression": "$target",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 0,
+              "role": "target token",
+              "source_value": "value.flag"
+            },
+            {
+              "display_class": null,
+              "expression": "$local / $scope",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 1,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "transaction record context"
+            },
+            {
+              "expression": "'write'",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 2,
+              "role": "access",
+              "source_value": "write"
+            },
+            {
+              "expression": "$context target",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 3,
+              "role": "reference context",
+              "source_value": "transaction 'main' set target"
+            }
+          ],
+          "function": "FSM::Support::ISFRecordPortContexts::_reference",
+          "parameters": "$token, $scope, $access, $context",
+          "whole_source_body": {
+            "bytes": 1885,
+            "sha256": "9858abe855056b702072f443c6444832b03fc3087f7261858acf5501cab5e991"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "expression": "$clause->[1]",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 0,
+              "role": "write target",
+              "source_value": "value.flag"
+            },
+            {
+              "expression": "$clause->[2]",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 1,
+              "role": "source operand",
+              "source_value": "1"
+            },
+            {
+              "display_class": null,
+              "expression": "$local / $scope",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 2,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "transaction record context"
+            },
+            {
+              "expression": "$context set",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 3,
+              "role": "assignment context",
+              "source_value": "transaction 'main' set"
+            }
+          ],
+          "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+          "parameters": "$target, $source, $scope, $context",
+          "whole_source_body": {
+            "bytes": 364,
+            "sha256": "15779726843f64e9065a4cc0f261e26221e8f65f84800d9ad801a128c11e2dec"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "display_class": null,
+              "expression": "$tx->{clauses}",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "ARRAY",
+              "referent_contents": "not measured",
+              "role": "transaction clauses"
+            },
+            {
+              "display_class": null,
+              "expression": "$local / $scope",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 1,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "transaction record context"
+            },
+            {
+              "display_class": null,
+              "expression": "$result / $actor",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 2,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "partially built actor"
+            },
+            {
+              "expression": "transaction 'main'",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 3,
+              "role": "transaction context",
+              "source_value": "transaction 'main'"
+            }
+          ],
+          "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+          "parameters": "$clauses, $scope, $actor, $context",
+          "whole_source_body": {
+            "bytes": 3220,
+            "sha256": "6e821a3e40cec36711dc3b37ced99c8363f2b1fd681a1953318c26d150b79e9c"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "expression": "actor",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 0,
+              "role": "option key",
+              "source_value": "actor"
+            },
+            {
+              "display_class": null,
+              "expression": "$result / $actor",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 1,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "partially built actor"
+            },
+            {
+              "expression": "whole_output_writes_only",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 2,
+              "role": "option key",
+              "source_value": "whole_output_writes_only"
+            },
+            {
+              "expression": "1",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 3,
+              "role": "option value",
+              "source_value": 1
+            }
+          ],
+          "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+          "parameters": "%args",
+          "whole_source_body": {
+            "bytes": 2430,
+            "sha256": "c041cc46b1d5b84e0b58db017fb5350f352935cde5733d976e5cbc31a7238050"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "display_class": "FSM::Adapter::ISF::Parser",
+              "expression": "$self",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "contained parser receiver"
+            },
+            {
+              "display_class": null,
+              "expression": "$actor_ast",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 1,
+              "reference_kind": "ARRAY",
+              "referent_contents": "not measured",
+              "role": "normalized actor AST"
+            },
+            {
+              "expression": "$source_label",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 2,
+              "role": "source label",
+              "source_value": "still-refused.isf"
+            }
+          ],
+          "function": "FSM::Adapter::ISF::Parser::_build_actor",
+          "parameters": "$self, $actor_ast, $source_label",
+          "whole_source_body": {
+            "bytes": 14386,
+            "sha256": "e042a061300967956bdaeb7accd4a16a532deb82505dd5c99f0b77db8721cc97"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "display_class": "FSM::Adapter::ISF::Parser",
+              "expression": "$self",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "contained parser receiver"
+            },
+            {
+              "expression": "$source_text",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 1,
+              "role": "source text",
+              "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+            },
+            {
+              "expression": "$source_label",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 2,
+              "role": "source label",
+              "source_value": "still-refused.isf"
+            }
+          ],
+          "function": "FSM::Adapter::ISF::Parser::parse_source",
+          "parameters": "$self, $source_text, $source_label",
+          "whole_source_body": {
+            "bytes": 2147,
+            "sha256": "dd14c0ed29c1e81d676f87dced01a8f85d9624afe1ab3d45c8e75a3d93d3f4a9"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "display_class": "FSM::Adapter::ISF",
+              "expression": "$self",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "facade receiver"
+            },
+            {
+              "expression": "$source_text",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 1,
+              "role": "source text",
+              "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+            },
+            {
+              "expression": "$source_label",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 2,
+              "role": "source label",
+              "source_value": "still-refused.isf"
+            }
+          ],
+          "function": "FSM::Adapter::ISF::parse_source",
+          "parameters": "$self, @args",
+          "whole_source_body": {
+            "bytes": 404,
+            "sha256": "1569a3409d8f8d000540b2bdbd3a4509765b9e9b3dc9c16a21633513b0b19bd4"
+          }
+        }
+      ],
+      "parse_index": 2,
+      "whole_source": {
+        "bytes": 176,
+        "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+      }
+    },
+    {
+      "frames": [
+        {
+          "arguments": [
+            {
+              "display_class": "FSM::Adapter::ISF::Parser",
+              "expression": "$self",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "contained parser receiver"
+            },
+            {
+              "display_class": null,
+              "expression": "$result / $actor",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 1,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "partially built actor"
+            },
+            {
+              "display_class": null,
+              "expression": "$port",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 2,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "interface port entry"
+            },
+            {
+              "expression": "$context",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 3,
+              "role": "admission context",
+              "source_value": "actor 'refused' interface port 'value'"
+            },
+            {
+              "expression": "allow_record",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 4,
+              "role": "option key",
+              "source_value": "allow_record"
+            },
+            {
+              "expression": "1",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 5,
+              "role": "option value",
+              "source_value": 1
+            }
+          ],
+          "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+          "parameters": "$self, $actor, $entry, $context, %options",
+          "whole_source_body": {
+            "bytes": 1242,
+            "sha256": "10ab540f848a3a53bfbf861a4128a9b5c4ef209a8b3dee5829e9b9c338333d27"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "display_class": "FSM::Adapter::ISF::Parser",
+              "expression": "$self",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "contained parser receiver"
+            },
+            {
+              "display_class": null,
+              "expression": "$result / $actor",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 1,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "partially built actor"
+            }
+          ],
+          "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+          "parameters": "$self, $actor",
+          "whole_source_body": {
+            "bytes": 1952,
+            "sha256": "54890c6114551cd4b048168744009faa323646bc315ab86b5bf4e5bdd40bab90"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "display_class": "FSM::Adapter::ISF::Parser",
+              "expression": "$self",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "contained parser receiver"
+            },
+            {
+              "display_class": null,
+              "expression": "$actor_ast",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 1,
+              "reference_kind": "ARRAY",
+              "referent_contents": "not measured",
+              "role": "normalized actor AST"
+            },
+            {
+              "expression": "$source_label",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 2,
+              "role": "source label",
+              "source_value": "still-refused.isf"
+            }
+          ],
+          "function": "FSM::Adapter::ISF::Parser::_build_actor",
+          "parameters": "$self, $actor_ast, $source_label",
+          "whole_source_body": {
+            "bytes": 14386,
+            "sha256": "e042a061300967956bdaeb7accd4a16a532deb82505dd5c99f0b77db8721cc97"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "display_class": "FSM::Adapter::ISF::Parser",
+              "expression": "$self",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "contained parser receiver"
+            },
+            {
+              "expression": "$source_text",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 1,
+              "role": "source text",
+              "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+            },
+            {
+              "expression": "$source_label",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 2,
+              "role": "source label",
+              "source_value": "still-refused.isf"
+            }
+          ],
+          "function": "FSM::Adapter::ISF::Parser::parse_source",
+          "parameters": "$self, $source_text, $source_label",
+          "whole_source_body": {
+            "bytes": 2147,
+            "sha256": "dd14c0ed29c1e81d676f87dced01a8f85d9624afe1ab3d45c8e75a3d93d3f4a9"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "display_class": "FSM::Adapter::ISF",
+              "expression": "$self",
+              "match": "source reference role / visible kind only",
+              "native_identity": "not measured",
+              "position": 0,
+              "reference_kind": "HASH",
+              "referent_contents": "not measured",
+              "role": "facade receiver"
+            },
+            {
+              "expression": "$source_text",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 1,
+              "role": "source text",
+              "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+            },
+            {
+              "expression": "$source_label",
+              "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+              "native_scalar_encoding": "not measured",
+              "position": 2,
+              "role": "source label",
+              "source_value": "still-refused.isf"
+            }
+          ],
+          "function": "FSM::Adapter::ISF::parse_source",
+          "parameters": "$self, @args",
+          "whole_source_body": {
+            "bytes": 404,
+            "sha256": "1569a3409d8f8d000540b2bdbd3a4509765b9e9b3dc9c16a21633513b0b19bd4"
+          }
+        }
+      ],
+      "parse_index": 3,
+      "whole_source": {
+        "bytes": 172,
+        "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "cases": [
+        {
+          "body": {
+            "bytes": 3794,
+            "sha256": "64d8501916dfa502f99600a12010182a998f7792e98824f6e0ea4be678b73963"
+          },
+          "index": 2,
+          "phases": [
+            {
+              "phase": 0,
+              "visible_source_roles": [
+                {
+                  "display": [
+                    {
+                      "display_text": "",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "transaction 'main' set target record output field writes are ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 4,
+                      "raw": "\"transaction 'main' set target record output field writes are \"...",
+                      "truncated": true
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_require",
+                  "source_arguments": [
+                    {
+                      "expression": "!output_field_write",
+                      "match": "logical false compatible with visible false scalar; no literal or flag inference",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "guard predicate",
+                      "source_value": 0
+                    },
+                    {
+                      "expression": "$message",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "guard message",
+                      "source_value": "transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "value.flag",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"value.flag\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 14,
+                      "opaque_address_lexeme": "0x7562ad5030",
+                      "raw": "HASH(0x7562ad5030)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "write",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 34,
+                      "raw": "\"write\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "transaction 'main' set target",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 43,
+                      "raw": "\"transaction 'main' set target\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_reference",
+                  "source_arguments": [
+                    {
+                      "expression": "$target",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "target token",
+                      "source_value": "value.flag"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "expression": "'write'",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "access",
+                      "source_value": "write"
+                    },
+                    {
+                      "expression": "$context target",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "reference context",
+                      "source_value": "transaction 'main' set target"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "value.flag",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"value.flag\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 14,
+                      "raw": "1",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 17,
+                      "opaque_address_lexeme": "0x7562ad5030",
+                      "raw": "HASH(0x7562ad5030)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "transaction 'main' set",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 37,
+                      "raw": "\"transaction 'main' set\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+                  "source_arguments": [
+                    {
+                      "expression": "$clause->[1]",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "write target",
+                      "source_value": "value.flag"
+                    },
+                    {
+                      "expression": "$clause->[2]",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source operand",
+                      "source_value": "1"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "expression": "$context set",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "assignment context",
+                      "source_value": "transaction 'main' set"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x75600dae58",
+                      "raw": "ARRAY(0x75600dae58)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 21,
+                      "opaque_address_lexeme": "0x7562ad5030",
+                      "raw": "HASH(0x7562ad5030)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 41,
+                      "opaque_address_lexeme": "0x7562614db0",
+                      "raw": "HASH(0x7562614db0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "transaction 'main'",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 61,
+                      "raw": "\"transaction 'main'\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+                  "source_arguments": [
+                    {
+                      "display_class": null,
+                      "expression": "$tx->{clauses}",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "transaction clauses"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "expression": "transaction 'main'",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "transaction context",
+                      "source_value": "transaction 'main'"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "actor",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"actor\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 9,
+                      "opaque_address_lexeme": "0x7562614db0",
+                      "raw": "HASH(0x7562614db0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "whole_output_writes_only",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 29,
+                      "raw": "\"whole_output_writes_only\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 57,
+                      "raw": "1",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+                  "source_arguments": [
+                    {
+                      "expression": "actor",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "option key",
+                      "source_value": "actor"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "expression": "whole_output_writes_only",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "option key",
+                      "source_value": "whole_output_writes_only"
+                    },
+                    {
+                      "expression": "1",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "option value",
+                      "source_value": 1
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x755fed2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x755fed2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7562863858",
+                      "raw": "ARRAY(0x7562863858)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 67,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_build_actor",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$actor_ast",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "normalized actor AST"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x755fed2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x755fed2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 46,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 114,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x755fedc1b0",
+                      "raw": "FSM::Adapter::ISF=HASH(0x755fedc1b0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 38,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 106,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "facade receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "body": {
+            "bytes": 3330,
+            "sha256": "fe2d09b1c15062013b356063825ce4f8a16c8ee4dfcca1ea5f08ca5e5230ba61"
+          },
+          "index": 3,
+          "phases": [
+            {
+              "phase": 0,
+              "visible_source_roles": [
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x755fed2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x755fed2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x75626ecd38",
+                      "raw": "HASH(0x75626ecd38)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 66,
+                      "opaque_address_lexeme": "0x7562614600",
+                      "raw": "HASH(0x7562614600)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "actor 'refused' interface port 'value'",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 86,
+                      "raw": "\"actor 'refused' interface port 'value'\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "allow_record",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 128,
+                      "raw": "\"allow_record\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 144,
+                      "raw": "1",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$port",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "interface port entry"
+                    },
+                    {
+                      "expression": "$context",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "admission context",
+                      "source_value": "actor 'refused' interface port 'value'"
+                    },
+                    {
+                      "expression": "allow_record",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 4,
+                      "role": "option key",
+                      "source_value": "allow_record"
+                    },
+                    {
+                      "expression": "1",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 5,
+                      "role": "option value",
+                      "source_value": 1
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x755fed2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x755fed2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x75626ecd38",
+                      "raw": "HASH(0x75626ecd38)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x755fed2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x755fed2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x75600dbdc8",
+                      "raw": "ARRAY(0x75600dbdc8)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 67,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_build_actor",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$actor_ast",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "normalized actor AST"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x755fed2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x755fed2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 46,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 114,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x755fedc1b0",
+                      "raw": "FSM::Adapter::ISF=HASH(0x755fedc1b0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 38,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 106,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "facade receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "ordinary"
+    },
+    {
+      "cases": [
+        {
+          "body": {
+            "bytes": 3794,
+            "sha256": "e02529c1a58021e0ea2cd7135670c027f59c3189d365029558229524f7cab1fb"
+          },
+          "index": 2,
+          "phases": [
+            {
+              "phase": 0,
+              "visible_source_roles": [
+                {
+                  "display": [
+                    {
+                      "display_text": "",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "transaction 'main' set target record output field writes are ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 4,
+                      "raw": "\"transaction 'main' set target record output field writes are \"...",
+                      "truncated": true
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_require",
+                  "source_arguments": [
+                    {
+                      "expression": "!output_field_write",
+                      "match": "logical false compatible with visible false scalar; no literal or flag inference",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "guard predicate",
+                      "source_value": 0
+                    },
+                    {
+                      "expression": "$message",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "guard message",
+                      "source_value": "transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "value.flag",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"value.flag\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 14,
+                      "opaque_address_lexeme": "0x7624012180",
+                      "raw": "HASH(0x7624012180)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "write",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 34,
+                      "raw": "\"write\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "transaction 'main' set target",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 43,
+                      "raw": "\"transaction 'main' set target\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_reference",
+                  "source_arguments": [
+                    {
+                      "expression": "$target",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "target token",
+                      "source_value": "value.flag"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "expression": "'write'",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "access",
+                      "source_value": "write"
+                    },
+                    {
+                      "expression": "$context target",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "reference context",
+                      "source_value": "transaction 'main' set target"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "value.flag",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"value.flag\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 14,
+                      "raw": "1",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 17,
+                      "opaque_address_lexeme": "0x7624012180",
+                      "raw": "HASH(0x7624012180)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "transaction 'main' set",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 37,
+                      "raw": "\"transaction 'main' set\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+                  "source_arguments": [
+                    {
+                      "expression": "$clause->[1]",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "write target",
+                      "source_value": "value.flag"
+                    },
+                    {
+                      "expression": "$clause->[2]",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source operand",
+                      "source_value": "1"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "expression": "$context set",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "assignment context",
+                      "source_value": "transaction 'main' set"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7621490e70",
+                      "raw": "ARRAY(0x7621490e70)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 21,
+                      "opaque_address_lexeme": "0x7624012180",
+                      "raw": "HASH(0x7624012180)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 41,
+                      "opaque_address_lexeme": "0x7623bd85e8",
+                      "raw": "HASH(0x7623bd85e8)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "transaction 'main'",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 61,
+                      "raw": "\"transaction 'main'\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+                  "source_arguments": [
+                    {
+                      "display_class": null,
+                      "expression": "$tx->{clauses}",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "transaction clauses"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "expression": "transaction 'main'",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "transaction context",
+                      "source_value": "transaction 'main'"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "actor",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"actor\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 9,
+                      "opaque_address_lexeme": "0x7623bd85e8",
+                      "raw": "HASH(0x7623bd85e8)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "whole_output_writes_only",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 29,
+                      "raw": "\"whole_output_writes_only\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 57,
+                      "raw": "1",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+                  "source_arguments": [
+                    {
+                      "expression": "actor",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "option key",
+                      "source_value": "actor"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "expression": "whole_output_writes_only",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "option key",
+                      "source_value": "whole_output_writes_only"
+                    },
+                    {
+                      "expression": "1",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "option value",
+                      "source_value": 1
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7620f10648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x7620f10648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7623a53228",
+                      "raw": "ARRAY(0x7623a53228)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 67,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_build_actor",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$actor_ast",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "normalized actor AST"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7620f10648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x7620f10648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 46,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 114,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7620f121b0",
+                      "raw": "FSM::Adapter::ISF=HASH(0x7620f121b0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 38,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 106,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "facade receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "body": {
+            "bytes": 3330,
+            "sha256": "baf06212ffaf631db65e3eeed815d854fb750bd999410b9527881bcb40aebbb4"
+          },
+          "index": 3,
+          "phases": [
+            {
+              "phase": 0,
+              "visible_source_roles": [
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7620f10648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x7620f10648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7623956ea0",
+                      "raw": "HASH(0x7623956ea0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 66,
+                      "opaque_address_lexeme": "0x7622f30600",
+                      "raw": "HASH(0x7622f30600)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "actor 'refused' interface port 'value'",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 86,
+                      "raw": "\"actor 'refused' interface port 'value'\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "allow_record",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 128,
+                      "raw": "\"allow_record\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 144,
+                      "raw": "1",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$port",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "interface port entry"
+                    },
+                    {
+                      "expression": "$context",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "admission context",
+                      "source_value": "actor 'refused' interface port 'value'"
+                    },
+                    {
+                      "expression": "allow_record",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 4,
+                      "role": "option key",
+                      "source_value": "allow_record"
+                    },
+                    {
+                      "expression": "1",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 5,
+                      "role": "option value",
+                      "source_value": 1
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7620f10648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x7620f10648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7623956ea0",
+                      "raw": "HASH(0x7623956ea0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7620f10648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x7620f10648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7623b0ea38",
+                      "raw": "ARRAY(0x7623b0ea38)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 67,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_build_actor",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$actor_ast",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "normalized actor AST"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7620f10648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x7620f10648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 46,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 114,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x7620f121b0",
+                      "raw": "FSM::Adapter::ISF=HASH(0x7620f121b0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 38,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 106,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "facade receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "storable"
+    },
+    {
+      "cases": [
+        {
+          "body": {
+            "bytes": 3794,
+            "sha256": "791e2a72aa74f394432fbc6caae22820c51af72d3e0ffb793d295e6cbf39f646"
+          },
+          "index": 2,
+          "phases": [
+            {
+              "phase": 0,
+              "visible_source_roles": [
+                {
+                  "display": [
+                    {
+                      "display_text": "",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "transaction 'main' set target record output field writes are ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 4,
+                      "raw": "\"transaction 'main' set target record output field writes are \"...",
+                      "truncated": true
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_require",
+                  "source_arguments": [
+                    {
+                      "expression": "!output_field_write",
+                      "match": "logical false compatible with visible false scalar; no literal or flag inference",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "guard predicate",
+                      "source_value": 0
+                    },
+                    {
+                      "expression": "$message",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "guard message",
+                      "source_value": "transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "value.flag",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"value.flag\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 14,
+                      "opaque_address_lexeme": "0x7a012e7c90",
+                      "raw": "HASH(0x7a012e7c90)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "write",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 34,
+                      "raw": "\"write\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "transaction 'main' set target",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 43,
+                      "raw": "\"transaction 'main' set target\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_reference",
+                  "source_arguments": [
+                    {
+                      "expression": "$target",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "target token",
+                      "source_value": "value.flag"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "expression": "'write'",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "access",
+                      "source_value": "write"
+                    },
+                    {
+                      "expression": "$context target",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "reference context",
+                      "source_value": "transaction 'main' set target"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "value.flag",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"value.flag\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 14,
+                      "raw": "1",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 17,
+                      "opaque_address_lexeme": "0x7a012e7c90",
+                      "raw": "HASH(0x7a012e7c90)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "transaction 'main' set",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 37,
+                      "raw": "\"transaction 'main' set\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+                  "source_arguments": [
+                    {
+                      "expression": "$clause->[1]",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "write target",
+                      "source_value": "value.flag"
+                    },
+                    {
+                      "expression": "$clause->[2]",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source operand",
+                      "source_value": "1"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "expression": "$context set",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "assignment context",
+                      "source_value": "transaction 'main' set"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff234390",
+                      "raw": "ARRAY(0x79ff234390)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 21,
+                      "opaque_address_lexeme": "0x7a012e7c90",
+                      "raw": "HASH(0x7a012e7c90)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 41,
+                      "opaque_address_lexeme": "0x7a016c9438",
+                      "raw": "HASH(0x7a016c9438)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "transaction 'main'",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 61,
+                      "raw": "\"transaction 'main'\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+                  "source_arguments": [
+                    {
+                      "display_class": null,
+                      "expression": "$tx->{clauses}",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "transaction clauses"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$local / $scope",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "transaction record context"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "expression": "transaction 'main'",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "transaction context",
+                      "source_value": "transaction 'main'"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_text": "actor",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 0,
+                      "raw": "\"actor\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 9,
+                      "opaque_address_lexeme": "0x7a016c9438",
+                      "raw": "HASH(0x7a016c9438)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "whole_output_writes_only",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 29,
+                      "raw": "\"whole_output_writes_only\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 57,
+                      "raw": "1",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+                  "source_arguments": [
+                    {
+                      "expression": "actor",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 0,
+                      "role": "option key",
+                      "source_value": "actor"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "expression": "whole_output_writes_only",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "option key",
+                      "source_value": "whole_output_writes_only"
+                    },
+                    {
+                      "expression": "1",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "option value",
+                      "source_value": 1
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff0e2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7a01416780",
+                      "raw": "ARRAY(0x7a01416780)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 67,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_build_actor",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$actor_ast",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "normalized actor AST"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff0e2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 46,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 114,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff0ec1b0",
+                      "raw": "FSM::Adapter::ISF=HASH(0x79ff0ec1b0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 38,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 106,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "facade receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 176,
+            "sha256": "a976fcd59042e4307596299b94c71d23dcb4eab11b52e21e034793433e12703a"
+          }
+        },
+        {
+          "body": {
+            "bytes": 3330,
+            "sha256": "202fb47f133c114b06a2307530468fa0e0bbd5a3e3eda7ca3ae4b0692328128c"
+          },
+          "index": 3,
+          "phases": [
+            {
+              "phase": 0,
+              "visible_source_roles": [
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff0e2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7a01745a80",
+                      "raw": "HASH(0x7a01745a80)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 66,
+                      "opaque_address_lexeme": "0x7a017474b0",
+                      "raw": "HASH(0x7a017474b0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "actor 'refused' interface port 'value'",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 86,
+                      "raw": "\"actor 'refused' interface port 'value'\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "allow_record",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 128,
+                      "raw": "\"allow_record\"",
+                      "truncated": false
+                    },
+                    {
+                      "display_text": "1",
+                      "lexical_kind": "integer token",
+                      "offset_bytes": 144,
+                      "raw": "1",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$port",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 2,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "interface port entry"
+                    },
+                    {
+                      "expression": "$context",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 3,
+                      "role": "admission context",
+                      "source_value": "actor 'refused' interface port 'value'"
+                    },
+                    {
+                      "expression": "allow_record",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 4,
+                      "role": "option key",
+                      "source_value": "allow_record"
+                    },
+                    {
+                      "expression": "1",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 5,
+                      "role": "option value",
+                      "source_value": 1
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff0e2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7a01745a80",
+                      "raw": "HASH(0x7a01745a80)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$result / $actor",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "partially built actor"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff0e2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_class": null,
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 46,
+                      "opaque_address_lexeme": "0x7a01745a08",
+                      "raw": "ARRAY(0x7a01745a08)",
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 67,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::_build_actor",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "display_class": null,
+                      "expression": "$actor_ast",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 1,
+                      "reference_kind": "ARRAY",
+                      "referent_contents": "not measured",
+                      "role": "normalized actor AST"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff0e2648",
+                      "raw": "FSM::Adapter::ISF::Parser=HASH(0x79ff0e2648)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 46,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 114,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::Parser::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF::Parser",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "contained parser receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                },
+                {
+                  "display": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "lexical_kind": "reference",
+                      "native_identity": "not measured",
+                      "offset_bytes": 0,
+                      "opaque_address_lexeme": "0x79ff0ec1b0",
+                      "raw": "FSM::Adapter::ISF=HASH(0x79ff0ec1b0)",
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured"
+                    },
+                    {
+                      "display_text": "(actor refused (types (type frame (record (flag bit))) (type ",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 38,
+                      "raw": "\"(actor refused (types (type frame (record (flag bit))) (type \"...",
+                      "truncated": true
+                    },
+                    {
+                      "display_text": "still-refused.isf",
+                      "lexical_kind": "quoted scalar",
+                      "offset_bytes": 106,
+                      "raw": "\"still-refused.isf\"",
+                      "truncated": false
+                    }
+                  ],
+                  "function": "FSM::Adapter::ISF::parse_source",
+                  "source_arguments": [
+                    {
+                      "display_class": "FSM::Adapter::ISF",
+                      "expression": "$self",
+                      "match": "source reference role / visible kind only",
+                      "native_identity": "not measured",
+                      "position": 0,
+                      "reference_kind": "HASH",
+                      "referent_contents": "not measured",
+                      "role": "facade receiver"
+                    },
+                    {
+                      "expression": "$source_text",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 1,
+                      "role": "source text",
+                      "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+                    },
+                    {
+                      "expression": "$source_label",
+                      "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+                      "native_scalar_encoding": "not measured",
+                      "position": 2,
+                      "role": "source label",
+                      "source_value": "still-refused.isf"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "source": {
+            "bytes": 172,
+            "sha256": "620e7c93b6d5c17232c2f2a6202814fec60d7b37fbca259fd06a99af96e2746b"
+          }
+        }
+      ],
+      "mode": "controls"
+    }
+  ],
+  "scope": "Source expressions bind visible lexical roles only. Normalized false is not a native literal; whole referents, scalar flags, formatter, identity, coordinates and nested API/helper joins remain unmeasured or separately owned."
+}

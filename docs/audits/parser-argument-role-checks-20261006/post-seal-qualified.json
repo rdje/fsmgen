@@ -1,0 +1,16 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/parser-argument-role-checks-20261006/verify_seal.py"
+  ],
+  "programme_identity": {
+    "bytes": 3816,
+    "sha256": "86d734b7a7ee3b40b3e94534348a96b641d05dfe54841e950161456f78daa372"
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 91397; host 81.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS actual sealed replay, complete file pins, source/role/control regeneration and typed receipt refusals.\n"
+}
