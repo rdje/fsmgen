@@ -4838,9 +4838,26 @@ For FSMGen, the analogs are:
   Commit: `this draft-only checkpoint commit`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify semantic retention and publish the finite public facts atomically.`
   Acceptance: `After .1 commits, independently qualify every unique before/after source fact and each declared duplicate/superseded removal against the completed source/header join. Do not treat draft construction or net metrics as semantic preservation. Authenticate current root/result, publish only admitted facts/question/route changes and actual current direct/cache queries within unchanged collection authority, preserving original snapshots and historical/private gaps. Separate source/current/snapshot/native guide roles, qualify genuine corruption/borrowing and unrelated live progress, whole actual-result durability, focused and staged/hook gates. Only then close .5.4 and .5.`
+  Verification: `Source-bound draft still accepts coherent unique parser-receiver deletion. Split semantic fact/removal qualification .1 from current atomic publication .2 before implementation. Only .1 may qualify revised non-growing proposal and its complete fact/question/removal coverage; no live card/query route changes until the independently committed semantic leg passes. Current canonical card, draft/old seals and unchanged collection authority retain. Historical/private/native/visual/CI/push gaps remain owned.`
+  Commit: `pending`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.1`
+  Status: `pending`
+  Goal: `Qualify every retained source fact and proposed duplicate or superseded removal before publication.`
+  Acceptance: `Bind the complete prior card and original draft to their committed revisions. Independently enumerate all source propositions, questions and removal dispositions against their richer retained homes and completed source/public join evidence. Preserve any unique boundary lost by the first draft in a superseding non-growing proposal. Reject coherent unique parser-receiver deletion and every fact/gap/question loss; authenticate the completed header join and actual result, preserve prior seals, qualify actual retention result and source/native book guidance. Leave live cards, queries and authority unchanged. Commit before current publication .2.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.2`
+  Status: `pending`
+  Goal: `Publish admitted finite public facts and current reader roles atomically.`
+  Acceptance: `After .1 commits, authenticate its whole semantic proposal/result and the completed public join. Publish only the admitted facts/question/route changes within unchanged collection authority. Qualify actual current direct/cache queries, source/current/snapshot/native guide roles, unrelated book progress, genuine fact/question/identity/route/kind/capacity and borrowed snapshot controls and whole actual-result durability. Preserve all historical/private gaps and old seals; run focused and staged/hook gates before closing .5.4 and .5.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6884,3 +6901,9 @@ Owned index currency correction within .5.3: .72 is done, while the knowledge_ca
 
 
 Session-health handoff owned by .5.4.1: focus has slipped in this long run. Full semantic-retention/current-publication qualification has grown beyond the safe draft-construction slice and is separately .5.4.2. Finish and commit every verified .1 product; activate .2 only after a fresh scoped read of the committed source/proposal/proof/counterexample and completed public-header join. The draft is explicitly unqualified for semantic publication. No user decision, authentication or external permission is pending; the next engineer must implement and verify the missing semantic predicate before live mutation. This handoff does not close .5.4, resolve collection debt or claim full PNT exhaustion.
+
+## Acceptance Checklist — publication split .5.4.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` of the draft-only semantic-gap clause names the committed .5.4.1 construction/budget checkpoint; exact command/result is docs/audits/public-boundary-retention-plan-20261006/root-cause.json. The coherent parser-receiver deletion still passes that narrow predicate; .2.1 owns semantic qualification before .2.2 publishes. The first staged doctrine run rejects only task_evidence total-byte allowance after the owned split; its exact diagnosed boundary is retained in budget.json. No live fact or old seal changes.
+- [x] **ADDRESSED (verified)** — The authoritative .5.4.2 node now has semantic-retention .1 and atomic-publication .2 children, each with explicit acceptance and predecessor commit. Required task declaration follows the local measured-actual-plus-existing-step procedure; baseline, health targets, ceilings and Knowledge Map authority are unchanged. The selected read-only claim-policy source matches its adopted snapshot. All scope, authority, physical census and separating budget evidence retain in docs/audits/public-boundary-retention-plan-20261006.
+- [x] **NO REGRESSION** — Current staged gate reports `knowledge-map: OK` and passes task-tree integrity plus claim inventory/dispositions after the measured task allowance declaration. The first acceptance refusal caught an omitted evidence signature prefix; exact output remains in first-staged-doctrines.txt. Mandatory staged doctrines and normal hooks gate this commit. This planning slice changes task ownership and its required allowance only. Existing mdBook already states the missing semantic prerequisite; no user-facing replay or live card/query behavior changes.

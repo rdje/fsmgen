@@ -1,0 +1,9 @@
+{
+  "revision": "0008d8da16b6d4660b093eb8d8f181dc826f2645",
+  "selected_claim_source_sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd",
+  "matches_adopted_snapshot": true,
+  "source_access": "user-authorized necessary read-only external policy; no external write",
+  "artifact_census": "docs/ARTIFACT_CLEANUP.md current date; no daily cleanup due",
+  "book": "existing draft-only guidance already reflects the semantic/publication prerequisite",
+  "authority": "local README and live-document adoption guide reviewed; no policy change required"
+}

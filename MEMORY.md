@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4` (active; .1 done, .2 pending)
-- next_action: Activate .5.4.2 from the committed draft checkpoint, qualify every unique source fact and duplicate/superseded removal, and reject the retained coherent parser-receiver fact-loss example before any live publication.
+- next_action: Activate .5.4.2.1; qualify complete source fact/removal coverage and a superseding non-growing proposal before atomic current publication .5.4.2.2.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none after mandatory commit gates; semantic publication .5.4.2 has not started.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; .5.4 must preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
