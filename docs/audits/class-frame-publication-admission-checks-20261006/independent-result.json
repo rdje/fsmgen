@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-admission-checks-20261006/verify_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/class-frame-publication-admission-checks-20261006/verify_seal.py": {
+      "bytes": 9750,
+      "sha256": "dc9cbabb4c6be95c68868a13cac438e1eb8c94f43198523cb25cf72c2112954d"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 26743; host 81.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "status-True: refused at actual publication-admission integer process success\nstatus-0.0: refused at actual publication-admission integer process success\nstatus-1: refused at actual publication-admission integer process success\nmember-count-True: refused at actual publication-admission discrete sealed byte-count kinds\nmember-count-0.0: refused at actual publication-admission discrete sealed byte-count kinds\nlost-sealed-member: refused at every actual publication-admission sealed member conserves\nwidened-guard: refused at actual publication-admission default guard diagnostics\nborrowed-join-success: refused at exact actual publication-admission command and complete output role\nborrowed-preparation-success: refused at exact actual publication-admission command and complete output role\nborrowed-current-tooling-success: refused at exact actual publication-admission command and complete output role\nPASS independently consumed complete actual publication admission, regenerated full semantic and source products and qualified typed/member/guard/real borrowed-result refusals.\n"
+}

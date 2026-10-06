@@ -1,0 +1,29 @@
+{
+  "controls": [
+    {
+      "cause": "native exact publication-admission command",
+      "control": "wrong-command",
+      "status": 1
+    },
+    {
+      "cause": "native complete publication-admission scope and retained gaps",
+      "control": "invented-recapture",
+      "status": 1
+    },
+    {
+      "cause": "native complete publication-admission scope and retained gaps",
+      "control": "invented-current-publication",
+      "status": 1
+    },
+    {
+      "cause": "native complete publication-admission scope and retained gaps",
+      "control": "lost-native-gap",
+      "status": 1
+    }
+  ],
+  "input_identity": {
+    "bytes": 235189,
+    "sha256": "69e690a91b6bc8069a85a7015b7bc6b0593369268e519c91eb2b8b38861ee08f"
+  },
+  "visual_QA": "pending; separately owned"
+}

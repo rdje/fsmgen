@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-admission-checks-20261006/build_native_final.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-admission-checks-20261006/build_native_final.py": {
+      "bytes": 1783,
+      "sha256": "dc07dbda19454e664dd41cfb159acce7ca8197a008ae00d3b2305357fe8b88b2"
+    },
+    "docs/audits/class-frame-publication-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 71562; host 60.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15264951 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/class-frame-publication-admission-book`\nbook-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\nbook-source-index: complete indexed directory and checked source projection agree\nPASS native publication-admission guide and genuine scope controls; complete rendered input retained.\nPASS actual complete local source/native admission publication phases.\n"
+}

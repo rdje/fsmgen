@@ -1,0 +1,92 @@
+[
+  {
+    "cause": "publication admission revision and native scope",
+    "control": "native-scope-promotion",
+    "status": 1
+  },
+  {
+    "cause": "whole completed publication prerequisite task-owner authority",
+    "control": "lost-prerequisite-owner",
+    "status": 1
+  },
+  {
+    "cause": "whole completed publication prerequisite task-owner authority",
+    "control": "changed-prerequisite-owner",
+    "status": 1
+  },
+  {
+    "cause": "whole committed publication source model and result population",
+    "control": "lost-source-result-member",
+    "status": 1
+  },
+  {
+    "cause": "whole committed publication source model and result population",
+    "control": "borrowed-source-model",
+    "status": 1
+  },
+  {
+    "cause": "publication admission discrete source member byte counts",
+    "control": "Boolean-source-count",
+    "status": 1
+  },
+  {
+    "cause": "whole prior target fact bodies identities ordered questions and routes",
+    "control": "lost-whole-prior-card",
+    "status": 1
+  },
+  {
+    "cause": "complete global prior question identity path and occurrence allocation",
+    "control": "lost-global-question",
+    "status": 1
+  },
+  {
+    "cause": "whole prior physical and logical fact member population",
+    "control": "lost-physical-card",
+    "status": 1
+  },
+  {
+    "cause": "source fact census discrete capacity kinds",
+    "control": "Boolean-fact-count",
+    "status": 1
+  },
+  {
+    "cause": "whole prior fact census and frozen collection authority",
+    "control": "widened-card-authority",
+    "status": 1
+  },
+  {
+    "cause": "whole unchanged query and canonical source programme budget",
+    "control": "lost-source-budget",
+    "status": 1
+  },
+  {
+    "cause": "actual publication prerequisite integer success",
+    "control": "replay-status-True",
+    "status": 1
+  },
+  {
+    "cause": "actual publication prerequisite integer success",
+    "control": "replay-status-0.0",
+    "status": 1
+  },
+  {
+    "cause": "actual publication prerequisite integer success",
+    "control": "replay-status-1",
+    "status": 1
+  },
+  {
+    "cause": "publication prerequisite fresh versus retained scope",
+    "control": "invented-native-recapture",
+    "status": 1
+  },
+  {
+    "cause": "whole invocation-time publication prerequisite source and input identities",
+    "control": "lost-invocation-source",
+    "status": 1
+  },
+  {
+    "cause": "exact complete publication prerequisite command streams and role",
+    "control": "borrowed-current-tooling-success",
+    "status": 1
+  }
+]

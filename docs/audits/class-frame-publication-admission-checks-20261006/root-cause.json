@@ -1,0 +1,22 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Complete prerequisite admission .1 and independent finite class/frame/source/body/phase/argument/operand join .2 verified.",
+    "-1",
+    "--format=%H",
+    "--fixed-strings",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "017a8f70b02490288ec87e6815eb6fdda6702061\n"
+}

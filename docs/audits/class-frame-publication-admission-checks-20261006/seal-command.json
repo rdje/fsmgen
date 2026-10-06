@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-publication-admission-20261006/verify.py",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-publication-admission-20261006/verify.py": {
+      "bytes": 18285,
+      "sha256": "82f35fef418bdfb22120bf452b21984cefde2e1f30495a62992c34992a2f30ac"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 16148; host 62.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete committed class/frame publication admission, regenerated semantics and saved scoped executions; semantic retention and atomic current publication remain pending.\n"
+}

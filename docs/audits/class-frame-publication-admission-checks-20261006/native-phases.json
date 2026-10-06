@@ -1,0 +1,87 @@
+{
+  "destination": ".artifacts/class-frame-publication-admission-book",
+  "phases": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--write"
+      ],
+      "instruments": {
+        "scripts/book_source_references.py": {
+          "bytes": 11033,
+          "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book",
+        "-d",
+        ".artifacts/class-frame-publication-admission-book"
+      ],
+      "instruments": {},
+      "status": 0,
+      "stderr": " INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15264951 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/class-frame-publication-admission-book`\n",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        ".artifacts/class-frame-publication-admission-book"
+      ],
+      "instruments": {
+        "scripts/book_source_references.py": {
+          "bytes": 11033,
+          "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "instruments": {
+        "scripts/check_book_source_index.py": {
+          "bytes": 1278,
+          "sha256": "1311f277544ca01c067eb311fc93ae99751a003117b93b3fe501dd19a413893f"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-index: complete indexed directory and checked source projection agree\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/class-frame-publication-admission-checks-20261006/native_guide.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-admission-checks-20261006/native_guide.py": {
+          "bytes": 753,
+          "sha256": "6f827dd4c89bf40945227b5588889ecd990176acad9197869dbfc776305cf860"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS native publication-admission guide and genuine scope controls; complete rendered input retained.\n"
+    }
+  ],
+  "role": "Actual repository-local native build, source selection/current/copied-byte/index checks and complete rendered admission guide controls; visual QA remains pending."
+}

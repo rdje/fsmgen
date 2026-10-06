@@ -1,0 +1,42 @@
+{
+  "independent_result": {
+    "actual": {
+      "bytes": 90861,
+      "sha256": "09cdde14bdef8bd3936d4a2fe6d2c021c7f640e4c2ab3060c38f9c2412dabcc7"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/class-frame-join-checks-20261006/verify_seal.py"
+    ],
+    "role": "Fresh independent complete actual semantic seal/product/control/first-failure/typed/member/borrowed-result qualification; original native captures retained.",
+    "status": 0
+  },
+  "semantic": {
+    "actual": {
+      "bytes": 90156,
+      "sha256": "792346d8a801f56905fd33d8504cc62a8e50151b7e553698173297264c88ebe9"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-class-frame-join-20261006/verify.py"
+    ],
+    "role": "Fresh complete committed semantic/source/raw/phase/operand/control/default execution; original capture and transitive native receipts retained.",
+    "status": 0
+  },
+  "tooling_current": {
+    "actual": {
+      "bytes": 90114,
+      "sha256": "2102ecf85ddc99c3a95e537b367af248b6f0da084c31a21307a6b5962b2f030e"
+    },
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-tooling-current-reader-20261006/verify.py",
+      "--current"
+    ],
+    "role": "Fresh current pre-publication complete core/observer/tooling facts, actual direct/cache ownership and canonical source routes; no new class/frame fact publication.",
+    "status": 0
+  }
+}

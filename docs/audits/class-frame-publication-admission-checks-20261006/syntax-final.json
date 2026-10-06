@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-admission-checks-20261006/check_sources.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-admission-checks-20261006/check_sources.py": {
+      "bytes": 637,
+      "sha256": "f84ffac640925ebf3cdeae5b6aa16bbbdaebf05373ccd158418303c578c50858"
+    },
+    "docs/audits/class-frame-publication-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "Parsed: docs/audits/record-value-class-frame-publication-admission-20261006/book.py\nParsed: docs/audits/record-value-class-frame-publication-admission-20261006/publish_book.py\nParsed: docs/audits/record-value-class-frame-publication-admission-20261006/verify.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/build_native.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/capture_seal.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/check_sources.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/declare_task_budget.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/finish.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/native_guide.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/run.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/verify_publication.py\nParsed: docs/audits/class-frame-publication-admission-checks-20261006/verify_seal.py\nPASS every owned programme parses; no bytecode artifact is produced.\n"
+}

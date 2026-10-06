@@ -1,0 +1,97 @@
+{
+  "actual_result_identity": {
+    "bytes": 1071,
+    "sha256": "3155a4ebc92d1aaf30657dde18963c4889ddfac51d2b93d6d87a27bd92bba6b6"
+  },
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-publication-admission-20261006/verify.py",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-publication-admission-20261006/verify.py": {
+      "bytes": 18285,
+      "sha256": "82f35fef418bdfb22120bf452b21984cefde2e1f30495a62992c34992a2f30ac"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 16148; host 62.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete committed class/frame publication admission, regenerated semantics and saved scoped executions; semantic retention and atomic current publication remain pending.\n",
+  "whole_members": {
+    "binding.json": {
+      "bytes": 696040,
+      "sha256": "4c5c433eff8e1580173fb7e9b645e05e09457942e2910ef31843ff646c3bde9c"
+    },
+    "book-change.json": {
+      "bytes": 417231,
+      "sha256": "92af69c0f7681cc979a4e46e070f930ec71258bd0f200c83390dbbc0c2f53d03"
+    },
+    "book-input.html": {
+      "bytes": 235189,
+      "sha256": "69e690a91b6bc8069a85a7015b7bc6b0593369268e519c91eb2b8b38861ee08f"
+    },
+    "book-proof.json": {
+      "bytes": 779,
+      "sha256": "c48f57889b0301c00d472caa07887d2c50a7ee77eaab2423049f40b15cef93c7"
+    },
+    "book.py": {
+      "bytes": 5021,
+      "sha256": "9c69cbf2ff62fc4c3fa15b55fa5f7b29bdc5f056b57dd3b57af0c17ca3961768"
+    },
+    "controls.json": {
+      "bytes": 2515,
+      "sha256": "99bc39c14e241d637c476025f404de8594942f1a34bbccd11750d7d3c1bc844d"
+    },
+    "manifest.json": {
+      "bytes": 1957,
+      "sha256": "426f08d49ccf784c4070bca34ec720a41cb4ff090db42c86aaa56e616cb75096"
+    },
+    "publish_book.py": {
+      "bytes": 3284,
+      "sha256": "e632a3008a458de6d9f787b8872e1c0a7326f599bc193a27130a2128ccdd6d44"
+    },
+    "replay-independent_result.json": {
+      "bytes": 90861,
+      "sha256": "09cdde14bdef8bd3936d4a2fe6d2c021c7f640e4c2ab3060c38f9c2412dabcc7"
+    },
+    "replay-proof.json": {
+      "bytes": 1415,
+      "sha256": "83492b56495a61315a1eaba2c34ad58b936f0fd62c8a95b148c51fe033a76b95"
+    },
+    "replay-semantic.json": {
+      "bytes": 90156,
+      "sha256": "792346d8a801f56905fd33d8504cc62a8e50151b7e553698173297264c88ebe9"
+    },
+    "replay-tooling_current.json": {
+      "bytes": 90114,
+      "sha256": "2102ecf85ddc99c3a95e537b367af248b6f0da084c31a21307a6b5962b2f030e"
+    },
+    "scope.txt": {
+      "bytes": 1078,
+      "sha256": "4dbffd5720fbac95a6eed6d25e0ec2081e5a68c731bc4f069e851fff650a20bb"
+    },
+    "semantic-proof.json": {
+      "bytes": 2578021,
+      "sha256": "0b4b4fe86819b011e9490a3f92ca55d7785d1f3234c6926441b06e1b8baeef04"
+    },
+    "source-snapshot.json": {
+      "bytes": 1842382,
+      "sha256": "d398796017c5c4bc7fdfc1b627e22d6cb0e37120251bab9e8ac35fbbb3b4488b"
+    },
+    "verify.py": {
+      "bytes": 18285,
+      "sha256": "82f35fef418bdfb22120bf452b21984cefde2e1f30495a62992c34992a2f30ac"
+    }
+  }
+}

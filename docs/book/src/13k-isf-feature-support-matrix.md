@@ -813,6 +813,38 @@ outputs and scratch stay repository-local; public toolchain reads remain
 necessary and read-only. Visual QA, HIAL host repair and full CI/push retain
 their separate owners.
 
+The publication-admission checkpoint authenticates the complete committed
+class/frame source models, semantic controls, actual-result programmes and every
+transitive admitted member at 017a8f70. Complete source associations, raw objects,
+class/frame/body/phase/operand joins and separating controls are reconstructed
+and compared as whole values. Existing committed model/raw corpora remain the
+durable evidence; this checkpoint does not duplicate their large representations.
+
+Fresh executions cover the full semantic reader, independent actual-result
+reader and pre-publication current-tooling reader. Their commands, complete
+streams, integer statuses, roles and invocation-time source/input identities
+are retained separately. Original native captures and transitive native results
+remain retained evidence, never a new recapture. Existing canonical facts,
+ordered questions, query routes, source budgets and collection authority stay
+unchanged. Semantic retention and atomic current publication remain pending.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-admission-20261006/verify.py
+```
+
+The default authenticates whole committed custody, regenerates complete
+semantic products, checks saved scoped executions and genuine member, owner,
+kind, native-scope, question, authority and borrowed-result refusals, and checks
+the saved native guide. It checks the unchanged pre-publication fact epoch;
+a qualified successor owns later fact or route changes. It does not rerun those
+prerequisite processes or claim live current class/frame publication.
+Independent actual-result qualification
+also rejects typed status/counts, omitted members, widened guard and real
+borrowed narrower successes. Original native class/provider/hooks, private
+frames, formatter, scalar encoding, identity, coordinates and address/lifetimes
+remain unmeasured or separately owned. Visual QA, HIAL repair and full CI/push
+retain their separate owners. Project outputs and scratch remain repository-local.
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

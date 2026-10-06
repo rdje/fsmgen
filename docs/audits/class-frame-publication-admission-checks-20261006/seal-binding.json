@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-admission-checks-20261006/capture_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-admission-checks-20261006/capture_seal.py": {
+      "bytes": 1229,
+      "sha256": "2775443beea47468e055fc7a39865e2e053cdcbc7d3fccd9e236fdecf8059052"
+    },
+    "docs/audits/class-frame-publication-admission-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS untouched actual class/frame seal process and complete relative member binding.\n"
+}
