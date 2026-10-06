@@ -1,0 +1,24 @@
+{
+  "controls": [
+    {
+      "cause": "native exact publication current command",
+      "control": "extra-current-argument",
+      "status": 1
+    },
+    {
+      "cause": "native complete publication source/current/snapshot guide",
+      "control": "borrowed-live-currency",
+      "status": 1
+    },
+    {
+      "cause": "native complete publication source/current/snapshot guide",
+      "control": "invented-reference-identity",
+      "status": 1
+    }
+  ],
+  "native_identity": {
+    "bytes": 216412,
+    "sha256": "107476f7d3576ef94ca82edf25133bdbfd46df39bffcdfebd42a4b26e989055f"
+  },
+  "visual_QA": "pending; separately owned"
+}

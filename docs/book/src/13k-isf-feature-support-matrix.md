@@ -616,8 +616,8 @@ agree. Completed nested API allocations conserve separately; their empty error
 footprints supply no active throw frames.
 
 The source-only guides below retain their inventory/model roles. This context
-replay adds the finite frame join; full combined fact publication is the next
-stage. External framework intervals, original formatter/provider versions,
+replay adds the finite frame join; full current fact publication is qualified
+below. External framework intervals, original formatter/provider versions,
 scalar encoding, hidden suffixes, referent contents/identity, coordinates and
 addresses remain unmeasured. The source load operator stays do; the recorded
 require marker agrees only with its file role. Replay from the repository root:
@@ -661,16 +661,16 @@ parameter roles and ordered call/guard statements. Output-field source admission
 and aggregate actor-port admission have distinct source boundaries. This inventory
 does not establish active failure paths or native argument meanings. The finite
 source models below qualify own ancestry and argument roles; complete
-API/helper/native frame joins remain separate work.
+own frame joins have their separate replay above.
 
 The initial new-card proposal exceeded the collection file allowance and was
 withdrawn. Its complete source proof and candidate publication remain immutable.
 The qualified provenance now extends the existing source-context topic while
 preserving its prior body, identity, questions and verification command. The
-current reader additionally checks all physical collection dimensions:
+source-model reader preserves its dated publication snapshot:
 
 ```bash
-python3 -B docs/audits/record-value-parser-path-models-20261006/verify.py --current
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-path-models-20261006/verify.py
 ```
 
 The original source reader defaults to historical replay; its withdrawn live
@@ -688,13 +688,33 @@ every supplied positional and named argument role as a source expression.
 Receiver, normalized AST and whole partial-actor payloads remain unmeasured.
 The independently evaluated original Perl guards agree with the finite model.
 Complete nested API membership reuses the dated qualified source-family models;
-it does not establish a new native stack. Complete API/helper/native frame joins
-and public formatter, coordinate and address contracts remain separate work.
+it does not establish a new native stack. Own frame joins are qualified above;
+public formatter, coordinate and address contracts remain separate work.
 
-The scoped current reader preserves all qualified prior and new source meanings,
-question ownership, source guidance and physical collection bounds. Historical
-publication replay remains distinct from current semantic qualification. Visual
+The source-model reader preserves its qualified source meanings and dated
+publication snapshot. Current finite-join qualification has its own reader
+below. Historical replay does not supply current semantic currency. Visual
 QA is pending.
+
+The full parser publication now qualifies current facts and question ownership
+for these finite own joins. It preserves the original source inventory and
+source-expression roles, while qualifying visible function/argument footprints,
+complete own operation/helper/subtest phases and completed nested allocations.
+Normalized false remains a source predicate role; reference kinds and visible
+prefixes do not qualify referent identity or hidden suffixes. Framework/provider,
+formatter, scalar encoding, coordinates and addresses remain unmeasured.
+
+Current replay checks the scoped fact, actual direct/cache questions, unchanged
+physical card authority and this complete guide. Default replay authenticates
+the original sources and saved publication snapshot; snapshot success cannot
+supply live semantic currency. Replay the current role from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-path-publication-20261006/verify.py --current
+```
+
+An optional `--build repository-relative-output` additionally checks complete
+current native source copies and rendered guidance. Visual QA remains pending.
 
 [portable replay repair](reference-source/docs/audits/record-value-replay-portability-20261004/scope.txt.source.txt)
 now binds each Python process filename to its exact invoked reader. The original

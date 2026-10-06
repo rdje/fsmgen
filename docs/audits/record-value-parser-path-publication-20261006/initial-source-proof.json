@@ -1,0 +1,74 @@
+{
+  "book_before": {
+    "bytes_total": 3789383,
+    "files": 64,
+    "lines_total": 68177
+  },
+  "book_delta": {
+    "bytes_total": 1081,
+    "files": 0,
+    "lines_total": 20
+  },
+  "book_member_roots": {
+    "after": {
+      "bytes": 9126,
+      "sha256": "1f0df7284d5d36f6887fe97037bafed1f0396a188220a5c2cc2a7080390da258"
+    },
+    "before": {
+      "bytes": 9126,
+      "sha256": "5b4cf33f44eef06527caf72704fa1c3197d11bc4b1726f2144b9b49d523d0fea"
+    }
+  },
+  "collection_after": {
+    "bytes_each": 31755,
+    "bytes_total": 3879501,
+    "files": 1260,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 53069
+  },
+  "collection_before": {
+    "bytes_each": 31755,
+    "bytes_total": 3878796,
+    "files": 1260,
+    "line_bytes_each": 819,
+    "lines_each": 422,
+    "lines_total": 53067
+  },
+  "collection_member_roots": {
+    "after": {
+      "bytes": 215209,
+      "sha256": "118e455cd563e4f848d01871ab589eaa01ece2c1be16a413944c497310762b5c"
+    },
+    "before": {
+      "bytes": 215209,
+      "sha256": "b6497a89030fc9cd4be8d49a61a51ca166bd99c87e267a57fc3e70dacd94ad06"
+    }
+  },
+  "fact_role": "Finite own source/visible context joins qualified by complete authenticated root replay; broader native meanings remain open.",
+  "questions_after": [
+    "can scalar formals borrow an outer record output layout?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "do output record scalar samples preserve signed and state traits?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "does the original parser source inventory qualify active native paths?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "what inventories original parser refusal source bodies?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "what qualifies original parser function argument and helper context joins?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "which source checks must run for an output-only record actor?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "why do record output field reads cross clock-domain boundaries?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md"
+  ],
+  "questions_before": [
+    "can scalar formals borrow an outer record output layout?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "do output record scalar samples preserve signed and state traits?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "does the original parser source inventory qualify active native paths?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "what inventories original parser refusal source bodies?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "which source checks must run for an output-only record actor?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md",
+    "why do record output field reads cross clock-domain boundaries?\tisf-record-output-source-contexts\tdocs/knowledge/isf-record-output-source-contexts.md"
+  ],
+  "source_models_identity": {
+    "bytes": 11180934,
+    "sha256": "af7a4a82cd69ff60f39dd08884b3f832e92f7535b7c40687351b3ea2f972e4e4"
+  },
+  "summary_identity": {
+    "bytes": 3988,
+    "sha256": "db6fd112545899db52b60357940a2a4a82e2aa9c8fb38bfc509b14d1f889d67b"
+  }
+}

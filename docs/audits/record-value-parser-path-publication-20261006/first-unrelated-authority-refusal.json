@@ -1,0 +1,10 @@
+{
+  "command": [
+    "scripts/check_live_document_reference_authority.pl"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "live-doc-reference-authority: surface shipped_behavior aggregate baseline lines_total is 68177, expected 68197\nlive-doc-reference-authority: surface shipped_behavior aggregate baseline bytes_total is 3789383, expected 3790530\nlive-doc-reference-authority: surface shipped_behavior aggregate delta lines_total is 23, expected 3\nlive-doc-reference-authority: surface shipped_behavior aggregate delta bytes_total is 1296, expected 149\n",
+  "restored": true,
+  "role": "First current-predicate success does not qualify book aggregate authority. Its temporary baseline incorrectly used the uncommitted current population; the independently declared gate requires fixed HEAD baseline. The first detector expected a nonexistent mismatch suffix and stopped after restoring all bytes; actual complete superseding diagnosis retains the exact declared message."
+}

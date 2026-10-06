@@ -1,0 +1,77 @@
+[
+  {
+    "cause": "whole preserved source facts and finite-join meanings/routes",
+    "control": "lost-prior-source-fact",
+    "status": 1
+  },
+  {
+    "cause": "whole preserved source facts and finite-join meanings/routes",
+    "control": "borrowed-join-assurance",
+    "status": 1
+  },
+  {
+    "cause": "whole preserved source facts and finite-join meanings/routes",
+    "control": "invented-native-false-encoding",
+    "status": 1
+  },
+  {
+    "cause": "whole preserved source facts and finite-join meanings/routes",
+    "control": "lost-source-evidence",
+    "status": 1
+  },
+  {
+    "cause": "whole preserved source facts and finite-join meanings/routes",
+    "control": "lost-prior-question",
+    "status": 1
+  },
+  {
+    "cause": "complete current prior/join question ownership",
+    "control": "borrowed-question-owner",
+    "status": 1
+  },
+  {
+    "cause": "actual publication query integer success",
+    "control": "Boolean-query-status",
+    "status": 1
+  },
+  {
+    "cause": "actual publication query integer success",
+    "control": "float-query-status",
+    "status": 1
+  },
+  {
+    "cause": "actual distinct direct/cache query command roles",
+    "control": "borrowed-cached-query-command",
+    "status": 1
+  },
+  {
+    "cause": "unique complete source/current/snapshot publication guide",
+    "control": "wrong-current-reader-guide",
+    "status": 1
+  },
+  {
+    "cause": "physical card kind/allowance: files",
+    "control": "Boolean-physical-files",
+    "status": 1
+  },
+  {
+    "cause": "physical card kind/allowance: lines_total",
+    "control": "float-physical-lines",
+    "status": 1
+  },
+  {
+    "cause": "complete physical card census dimensions",
+    "control": "missing-physical-dimension",
+    "status": 1
+  },
+  {
+    "cause": "physical card kind/allowance: files",
+    "control": "unadmitted-new-card",
+    "status": 1
+  },
+  {
+    "cause": "whole unchanged physical card authority",
+    "control": "widened-physical-allowance",
+    "status": 1
+  }
+]

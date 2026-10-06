@@ -1,0 +1,49 @@
+"""Actual unrelated chapter/authority progress preserves scoped live currency."""
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-parser-path-publication-20261006')
+target = BASE / 'unrelated-progress.json'
+assert not target.exists() and not (BASE / 'manifest.json').exists()
+ns = {'__name__': 'scoped_full_publication_progress'}
+exec(compile((BASE / 'verify.py').read_bytes(), str(BASE / 'verify.py'), 'exec'), ns)
+other, registry = Path('docs/book/src/00-introduction.md'), Path(ns['REGISTRY'])
+before = {str(p): p.read_bytes() for p in (other, registry, Path(ns['CARD']), Path(ns['CHAPTER']))}
+addition = '\nQualified current fact readers preserve their scoped meanings while unrelated\nchapter guidance advances under its own measured reference authority.\n'
+candidate = before[str(other)] + addition.encode()
+book = {str(p): p.read_bytes() for p in Path('docs/book/src').glob('*.md')}
+new_book = {**book, str(other): candidate}
+lines = registry.read_text().splitlines()
+for i, line in enumerate(lines):
+    row = json.loads(line)
+    if row.get('surface_id') == 'shipped_behavior':
+        keys = ('files', 'lines_total', 'bytes_total')
+        original = {p: raw for p, raw in ns['committed']('docs/book/src').items() if p.endswith('.md')}
+        baseline = {k: ns['metrics'](original)[k] for k in keys}
+        delta = {k: ns['metrics'](new_book)[k] - baseline[k] for k in keys}
+        row['reference_contract']['aggregate_change'] = dict(
+            authority_id='PARSER-FULL-PUBLICATION-UNRELATED-PROGRESS', owner=ns['OWNER'],
+            baseline=baseline, delta=delta,
+            rationale='Temporary actual unrelated chapter progress exercises scoped current meanings; every live byte restores.')
+        lines[i] = json.dumps(row, sort_keys=True, separators=(',', ':'))
+registry_candidate = ('\n'.join(lines)+'\n').encode()
+command = ['python3', '-B', str(BASE / 'current_role.py')]
+try:
+    other.write_bytes(candidate)
+    registry.write_bytes(registry_candidate)
+    result = subprocess.run(command, capture_output=True, text=True)
+    authority_command = ['scripts/check_live_document_reference_authority.pl']
+    authority = subprocess.run(authority_command, capture_output=True, text=True)
+finally:
+    for path, raw in before.items():
+        Path(path).write_bytes(raw)
+restored = all(Path(path).read_bytes() == raw for path, raw in before.items())
+record = dict(before={p: raw.decode() for p, raw in before.items()},
+    candidates={str(other): candidate.decode(), str(registry): registry_candidate.decode()},
+    command=command, status=result.returncode, stdout=result.stdout, stderr=result.stderr,
+    authority=dict(command=authority_command, status=authority.returncode, stdout=authority.stdout, stderr=authority.stderr),
+    restored=restored, role='Actual scoped current semantic predicate plus whole committed source/receipt binding. It does not repeat the separate full transitive source replay or claim visual/native-copy currency for this temporary chapter.')
+target.write_text(json.dumps(record, sort_keys=True, indent=2)+'\n')
+assert result.returncode == authority.returncode == 0 and restored
+print('PASS actual unrelated chapter/measured-authority progress; all live source bytes restored.')

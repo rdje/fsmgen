@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "full combined fact publication is the next",
+    "-1",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "status": 0,
+  "stdout": "commit 4cceb992edf4ee03486b5d47fc9a20738d4c1a43\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Tue Oct 6 11:00:23 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.3: qualify complete finite parser context joins\n    \n    Join independently derived parser/API cores with every own observer/helper/subtest\n    phase; conserve completed nested operations separately from native throw ancestry.\n    Retain full committed source/raw/prerequisite replays, seventeen genuine controls,\n    immutable products and independently regenerated actual sealed results.\n    \n    Repair three unadmitted book source hyperlinks while preserving precise proof\n    commands, scoped prose and all admitted source-plane contracts. Qualify native\n    guide controls and actual served source bytes; retain first failures and repairs.\n    \n    Validation: focused parser/book Files=5 Tests=330; complete source/current and\n    sealed receipt qualification, final native current copies and staged doctrines.\n    Full current fact publication is next; broader native meanings and CI/push stay open.\n",
+  "stderr": ""
+}

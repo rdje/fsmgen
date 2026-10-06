@@ -1,0 +1,16 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/parser-path-publication-checks-20261006/verify_seal.py"
+  ],
+  "status": 0,
+  "stdout": "PASS actual full-publication seal, complete source/snapshot/control regeneration and typed/borrowed-result refusals.\n",
+  "stderr": "ram-guard: PID 79701; host 79.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "checker_identity": {
+    "bytes": 4722,
+    "sha256": "12658375cc443d973da7c77db7e8ee57c890af3e4924003063a3af35f5c932ea"
+  }
+}

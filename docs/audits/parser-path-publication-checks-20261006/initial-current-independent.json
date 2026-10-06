@@ -1,0 +1,28 @@
+[
+  {
+    "command": [
+      "knowledge-map/scripts/check_knowledge_map.sh"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": "knowledge-map: OK (1266 facts, 6972 unique questions, 7149 answer occurrences, 184 bounded topic shards; query parity verified)\n"
+  },
+  {
+    "command": [
+      "scripts/check_live_document_reference_authority.pl"
+    ],
+    "status": 0,
+    "stdout": "live-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode worktree)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

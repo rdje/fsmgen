@@ -1,0 +1,17 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/parser-path-publication-checks-20261006/serve_sources.py",
+    "--final"
+  ],
+  "status": 0,
+  "stdout": "PASS every scoped native source click delivers complete text bytes; removed unadmitted routes404; server shut down.\n",
+  "stderr": "ram-guard: PID 7030; host 80.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "programme_identity": {
+    "bytes": 3396,
+    "sha256": "e6ad3e287f2cd380cb1b4a014348549b5fcb51d33f684d9c0727c673724904b3"
+  }
+}

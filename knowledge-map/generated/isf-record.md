@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-record`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **19** facts · **73** uniquely owned question entries.
+> **19** facts · **74** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -52,6 +52,7 @@
 - q="what blocks record output whole-copy admission?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="what does a failed record output schedule query publish?" · facts=[isf-record-output-public-sources](../../docs/knowledge/isf-record-output-public-sources.md)
 - q="what inventories original parser refusal source bodies?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
+- q="what qualifies original parser function argument and helper context joins?" · facts=[isf-record-output-source-contexts](../../docs/knowledge/isf-record-output-source-contexts.md)
 - q="where are detached record output writers inventoried?" · facts=[isf-record-output-writer-ingress](../../docs/knowledge/isf-record-output-writer-ingress.md)
 - q="where do generated-top semantic reports retain authored record declarations?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)
 - q="where does a generated record-input copy store and reset its target?" · facts=[isf-record-input-generated-carriers](../../docs/knowledge/isf-record-input-generated-carriers.md)

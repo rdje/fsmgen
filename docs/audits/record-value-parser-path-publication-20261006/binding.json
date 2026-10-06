@@ -1,0 +1,176 @@
+{
+  "archives": {
+    "docs/audits/parser-context-join-checks-20261006": {
+      "docs/audits/parser-context-join-checks-20261006/final-native-book.json": {
+        "bytes": 2790,
+        "sha256": "0ef9583f52af93fae2201041e49ce87001f9315755224cbc3c8640d3c328ae1e"
+      },
+      "docs/audits/parser-context-join-checks-20261006/final-native-source-delivery.json": {
+        "bytes": 35911,
+        "sha256": "ba0fd69986a100ac727c33370a5ddfe03db056d2d1c8382a20f1148d38a616a8"
+      },
+      "docs/audits/parser-context-join-checks-20261006/final-served-receipt.json": {
+        "bytes": 568,
+        "sha256": "313c7e2ebaa045f27b1b5c449b75c5543004dec80ab73f7ef3cd10f4f9c9d9e8"
+      },
+      "docs/audits/parser-context-join-checks-20261006/initial-native-source-delivery.json": {
+        "bytes": 35913,
+        "sha256": "13fe5610dec8aa7a684964f86ea54523198df4b3f8f1c8b9af95304f011d2e54"
+      },
+      "docs/audits/parser-context-join-checks-20261006/initial-serve_sources.py.txt": {
+        "bytes": 3227,
+        "sha256": "f4e7e9c17eeee9a655adcb075f50bbe1c7919598d50bebf45f1caa302e576635"
+      },
+      "docs/audits/parser-context-join-checks-20261006/post-seal-qualified.json": {
+        "bytes": 544,
+        "sha256": "633b7993af88059336e78caa00916112549b4f01691ca8e6b60946710c8d9423"
+      },
+      "docs/audits/parser-context-join-checks-20261006/root-cause.json": {
+        "bytes": 1523,
+        "sha256": "0d35fd465cd7d64d900b173fa07c51245da4b861cfe001054cc630eef24661e2"
+      },
+      "docs/audits/parser-context-join-checks-20261006/sealed-replay.json": {
+        "bytes": 4451,
+        "sha256": "9054dc5b931d8251c6e123a944304befc50c8a6a3aecbe3ade45275730c11fb7"
+      },
+      "docs/audits/parser-context-join-checks-20261006/serve_sources.py": {
+        "bytes": 3388,
+        "sha256": "e86f9f4cce53f76024cd08012dfe8a128d8ba072131b871ea75109e196e41aad"
+      },
+      "docs/audits/parser-context-join-checks-20261006/served-receipt.json": {
+        "bytes": 422,
+        "sha256": "5710129f65d0b8d1e05626e74d02c65c573ea6f91014514c6960baa1132160df"
+      },
+      "docs/audits/parser-context-join-checks-20261006/staged-doctrines.json": {
+        "bytes": 62164,
+        "sha256": "f9d5d0beb58a763f30cc37dea7d0ca2125c3311b80a5b09c07d71ce00e28ba24"
+      },
+      "docs/audits/parser-context-join-checks-20261006/verify_seal.py": {
+        "bytes": 3834,
+        "sha256": "49a3c14ddf08ea25fe3a07b7504d3d97ea4d22211d28db2da793cc09a1f30d9c"
+      }
+    },
+    "docs/audits/record-value-parser-context-join-20261006": {
+      "docs/audits/record-value-parser-context-join-20261006/binding.json": {
+        "bytes": 47606,
+        "sha256": "802aaf9a7bdeae07ad407f056481b676f207da011315e37db0e36df175dc6d5f"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/book-change.json": {
+        "bytes": 476210,
+        "sha256": "d88241eb4c914300d30eb68baa262b66f570bbb172b242c596633fce686863aa"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/book-input.html": {
+        "bytes": 215202,
+        "sha256": "e2ae176cb81236388caaa52e1738f762f37c548bbce887ee378d66f5a26cf47e"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/book-native-proof.json": {
+        "bytes": 1211,
+        "sha256": "74f35dc7eee24b10982ba64a87ecc315da52cc0075cb982d8d66cae884d7ab3a"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/book.py": {
+        "bytes": 4865,
+        "sha256": "bc219e76ae702e6473e0640a32ace9a651f56605107ae58e74ab40e364254fc7"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/current-source.json": {
+        "bytes": 500,
+        "sha256": "b210a91a6f4496b756a364a271f85161a1f05f95fadeaaab5b4f510386dc88ab"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/first-control-reader.py.txt": {
+        "bytes": 21475,
+        "sha256": "f1336f0472a8bfb5cbe958e5c4b4e42ce2214b85ab425f0053e3d56cf92aef34"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/first-control-refusal.json": {
+        "bytes": 1081,
+        "sha256": "929b530195ec47ca7d9745137f82a6a0966d60955f38e1f8bb0d1c522a494190"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/first-source-link-census.json": {
+        "bytes": 49218,
+        "sha256": "d160496e3eb28b9018491355937d853756cd09477100ff413ea9bd0cc55c633e"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/focused.json": {
+        "bytes": 878,
+        "sha256": "8eeaabb06c0fb4d09ad1ce4440c85eba2bb6801ccb7864aec353257169da923a"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/initial-local-model.py.txt": {
+        "bytes": 5967,
+        "sha256": "612031acdd9e82f7d4bef301e7fccd24f2cf41d4f2e23d158d3a67bc54079bed"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/initial-local-models.json": {
+        "bytes": 9674890,
+        "sha256": "0c367b3640c3369d50e0472be18f4842a527259303fa9897fca214e22386dc29"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/initial-local-observations.json": {
+        "bytes": 926255,
+        "sha256": "8a745969c16957a581a28455244cb56c91154e86dc8ca0b5da3f0e01e4b3c2a2"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/initial-local-reader.py.txt": {
+        "bytes": 14770,
+        "sha256": "90f7dcc015877966e71ddcac19c639a16d2aaed482d3ee5d93579450d4bc8782"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/initial-local-review.json": {
+        "bytes": 589,
+        "sha256": "01edb8f700a23b6fb932753270ef52f9c107e1c3a9583583102ea161a7ca5e17"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/local-control-review.json": {
+        "bytes": 278,
+        "sha256": "7c8356bd74219f78c12ef25456ec70e69175f396e86a81a171a31ae13519fade"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/local-controls.json": {
+        "bytes": 3138,
+        "sha256": "bb15a99de2ac0005c46ca8f2a62883a9b2a62bf46030a76b9f8c49040b1fe330"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/manifest.json": {
+        "bytes": 3611,
+        "sha256": "a3ac8f15bc274d970ed365ec2c3631d470303389624804182f1479fbc9cb02f3"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/model.py": {
+        "bytes": 5967,
+        "sha256": "612031acdd9e82f7d4bef301e7fccd24f2cf41d4f2e23d158d3a67bc54079bed"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/native-build.json": {
+        "bytes": 531,
+        "sha256": "f1696f504a4d69ec3d00ecb7ee56cdddcf165c042622a9841d1f6157fa616945"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/native-source-and-authority.json": {
+        "bytes": 620,
+        "sha256": "a426aeb2f9b9b83f63f47644d8c0f8a74522266be55f7fdb8b054e034ef43e9d"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/prepare.py": {
+        "bytes": 1345,
+        "sha256": "7c6cac70192c2428d9c1be69444b8f7fa5e3765b87d70122480466e64d1fbe03"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/prerequisite-replays.json": {
+        "bytes": 611,
+        "sha256": "d4b697006daa8b8490a5214e4aaed3132f1cb443d4ca8b54f275512686b92b90"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/proofs.json": {
+        "bytes": 11180934,
+        "sha256": "af7a4a82cd69ff60f39dd08884b3f832e92f7535b7c40687351b3ea2f972e4e4"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/qualified-source-link-diagnosis.json": {
+        "bytes": 41555,
+        "sha256": "3bd50acc87977120749400996c71ae8b873267f68f11a4f391b8840ce3d3b9fb"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/scope.txt": {
+        "bytes": 3072,
+        "sha256": "7bb0f9d706fe0092379d1c0a5a38188188a5087eafdd2653694c9e9842c2eff4"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/source-link-repair.json": {
+        "bytes": 363668,
+        "sha256": "b54cfb6fe19c298fbaca5e3ba5683fec7c49fb8bb14e14f4e46af2dd77f21df0"
+      },
+      "docs/audits/record-value-parser-context-join-20261006/verify.py": {
+        "bytes": 21633,
+        "sha256": "3e311d0370a263781f8ca323b192f733507ba547722bd3ec1a2cdb64250f8efc"
+      }
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.3",
+  "owner_body": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.3`\n  Status: `done`\n  Goal: `Join complete parser, nested API and helper context after function and role qualification.`\n  Acceptance: `After .1/.2 clean commits, reexecute complete source and own API/observer/helper/subtest prerequisites. Join every parser and nested API member/phase/context without replacing opaque framework or identity gaps with source self-agreement. Genuine function/order/role/helper/context/population controls reject. Commit before full fact publication .4.4.`\n  Verification: `Complete committed root replay and actual seal0 pass. Independent whole-member/receipt verification regenerates all source/context/nested models and seventeen genuine controls, including three interventions that first pass every local check then reject the new join. All refused parser/API operation phases conserve core order/overlap, helper/subtest/load adjacency and complete own-frame membership; completed nested allocations preserve their empty error footprints separately. Whole raw bodies and source vocabularies retain. Sealed initial/final sources, products and failures retain. Native guide/six controls and actual served complete source links200 pass; three unadmitted links are removed and their routes404. Earlier intentional relative-symlink endpoints conserve. Current source fact/query/guide/capacity and focused parser/book Files5 Tests330 pass; final refreshed native copies, claim inventory and staged doctrines/hooks gate commit. Full fact publication remains .4.4; wider framework/formatter/identity/encoding/coordinates/address, visual and HIAL/full-CI/push limits stay owned.`\n  Commit: `this commit`\n\n",
+  "revision": "4cceb992edf4ee03486b5d47fc9a20738d4c1a43",
+  "task_identity": {
+    "bytes": 1354763,
+    "sha256": "3c748a91e08dbea1ce534724f84a9eb4761c7f63048bfa1ff23b8189773e6257"
+  },
+  "task_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+}
