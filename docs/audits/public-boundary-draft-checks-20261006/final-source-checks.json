@@ -1,0 +1,76 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "scripts/book_source_references.py",
+      "--write"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+  },
+  {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "mdbook",
+      "build",
+      "docs/book",
+      "--dest-dir",
+      ".artifacts/public-boundary-draft-book"
+    ],
+    "status": 0,
+    "stderr": "ram-guard: PID 90862; host 59.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15234787 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/public-boundary-draft-book`\n",
+    "stdout": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "scripts/book_source_references.py",
+      "--check",
+      "--verify-build",
+      ".artifacts/public-boundary-draft-book"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+  },
+  {
+    "command": [
+      "scripts/check_live_document_reference_authority.pl"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "live-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode worktree)\n"
+  },
+  {
+    "command": [
+      "scripts/check_live_document_ceiling_authority.pl"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "live-doc-ceiling-authority: all ceiling-change invariants hold (0 increase(s), mode worktree)\n"
+  },
+  {
+    "command": [
+      "scripts/check_claim_verification_inventory.pl",
+      "--write",
+      "--report"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13346, candidates=1977, quantified=964, conservative=1013, constants=2918, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1977)\nclaim-inventory: partition adoption_reference_or_structure=118\nclaim-inventory: partition code_or_data_example=3330\nclaim-inventory: partition derived_and_watched_projection=185\nclaim-inventory: partition identifier_literal_or_navigation=7736\n"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": ""
+  }
+]

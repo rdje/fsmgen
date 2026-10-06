@@ -1,0 +1,22 @@
+{
+  "draft-controls.json": {
+    "bytes": 1366,
+    "sha256": "00a4f4650aa6c96f6b1d92c0cbf8f1e2f96c93985b2cc27174d8277a3fbb8fb2"
+  },
+  "draft-proof.json": {
+    "bytes": 1825,
+    "sha256": "a78b417ed41daf2e8d760a539d493448ffed27cf5ad9638a1b208cda5a5a49a6"
+  },
+  "first-card-proposal.json": {
+    "bytes": 11064,
+    "sha256": "3833e76905798dbe2d6512a4f15ba3a2c3dac270cf14a3dbb782d9c237652984"
+  },
+  "scope.txt": {
+    "bytes": 1823,
+    "sha256": "99ceca190a3b9c14060b5e2116199dedbaf4342f39721a6167d48cf3f23321c1"
+  },
+  "verify_draft.py": {
+    "bytes": 7423,
+    "sha256": "982820b6c4ceb928fafbd528819c0dd23f22ea57894bafc6cca7607f1e5caee8"
+  }
+}

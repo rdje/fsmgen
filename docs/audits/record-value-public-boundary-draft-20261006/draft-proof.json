@@ -1,0 +1,38 @@
+{
+  "LF_delta": -4,
+  "byte_delta": -3,
+  "card": "docs/knowledge/record-value-original-observer-helper-paths.md",
+  "proposed_identity": {
+    "bytes": 4421,
+    "sha256": "51adfbc28bc698ee8a7e50862087a57e9c384e249a7e84bc6fe4023d032f61fe"
+  },
+  "protected_section_identity": {
+    "bytes": 1449,
+    "sha256": "fd568698075b72d7aa82434e50a452390548f9ff95c80d163a600956851b87bc"
+  },
+  "questions_after": [
+    "what inventories original observer and callback source roles?",
+    "what qualifies original observer API and parser operation boundaries?",
+    "what qualifies original named helper inputs defaults and active paths?",
+    "what qualifies original compiled callback and refusal wrapper paths?",
+    "are all original helper input and callback paths joined?",
+    "what qualifies original own subtest body and delegate source roles?",
+    "what qualifies the original do-load source and recorded file marker?",
+    "what qualifies original public subtest header and boundary compatibility?"
+  ],
+  "questions_before": [
+    "what inventories original observer and callback source roles?",
+    "what qualifies original observer API and parser operation boundaries?",
+    "what qualifies original named helper inputs defaults and active paths?",
+    "what qualifies original compiled callback and refusal wrapper paths?",
+    "are all original helper input and callback paths joined?",
+    "what qualifies original own subtest body and delegate source roles?",
+    "what qualifies the original do-load source and recorded file marker?"
+  ],
+  "revision": "89631f67061eb741a95a06e3ec6eb6fa1df335da",
+  "role": "Draft only; no live card mutation or semantic retention qualification yet.",
+  "source_identity": {
+    "bytes": 4424,
+    "sha256": "719f442f3a10922b9573a0787af135130ca248c33d42e050b721e311157e1403"
+  }
+}

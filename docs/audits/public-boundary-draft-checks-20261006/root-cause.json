@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "with Knowledge Map collection debt requiring governed compaction",
+    "-1",
+    "--format=%H%n%s",
+    "--",
+    "docs/TASK_TREE.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "89631f67061eb741a95a06e3ec6eb6fa1df335da\nSEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.3: qualify resource-safe public header seal\n"
+}

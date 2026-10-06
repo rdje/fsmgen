@@ -636,6 +636,18 @@ they ran again. Changed inputs, programmes or saved receipt roles refuse. Both
 commands retain the default RAM limits. The earlier broad seal attempt stopped
 at the host cutoff and remains failure evidence.
 
+A source-bound draft for the next fact publication preserves the ordered
+questions and authored subtest/do-load section within a non-growing card budget.
+The draft check qualifies construction and physical deltas; semantic retention
+of removed or re-formed narration remains a separate prerequisite. A coherently
+omitted parser-receiver fact still passes the narrow draft check. The publication
+slice must reject that loss before changing any live fact or current query route.
+The canonical fact card remains unchanged at this draft checkpoint.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-draft-20261006/verify_draft.py
+```
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

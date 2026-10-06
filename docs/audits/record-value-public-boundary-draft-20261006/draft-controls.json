@@ -1,0 +1,48 @@
+{
+  "refusals": [
+    {
+      "cause": "whole committed draft source card",
+      "control": "wrong-source",
+      "status": 1
+    },
+    {
+      "cause": "explicit draft-only unqualified semantic role",
+      "control": "borrowed-semantic-assurance",
+      "status": 1
+    },
+    {
+      "cause": "discrete draft metric kinds",
+      "control": "Boolean-byte-delta",
+      "status": 1
+    },
+    {
+      "cause": "discrete draft metric kinds",
+      "control": "float-LF-delta",
+      "status": 1
+    },
+    {
+      "cause": "whole deterministically reconstructed draft body",
+      "control": "changed-unconstructed-body",
+      "status": 1
+    },
+    {
+      "cause": "ordered prior questions and exact proposed new question",
+      "control": "lost-prior-question",
+      "status": 1
+    },
+    {
+      "cause": "whole protected authored subtest and load section",
+      "control": "changed-authored-section",
+      "status": 1
+    }
+  ],
+  "separating_semantic_gap": {
+    "draft_status": 0,
+    "proposed_identity": {
+      "bytes": 4359,
+      "sha256": "5486362a0a07b0d1817ed236aa3e98b673ba809a9ff89f97018f8ce0bfc6dbe7"
+    },
+    "removed_unique_fact": "The parser receiver role is declared; identity is unmeasured.",
+    "scope": "Construction/budget acceptance only; live publication is forbidden until .5.4.2 independently rejects this fact loss."
+  }
+}

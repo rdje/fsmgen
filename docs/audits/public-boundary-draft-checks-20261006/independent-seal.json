@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-draft-checks-20261006/verify_seal.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 27195; host 79.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS independently consumed draft seal and regenerated source/control/budget products; semantic retention/publication remain unqualified.\nstatus-True: refused at actual draft seal integer success\nstatus-0.0: refused at actual draft seal integer success\nstatus-1: refused at actual draft seal integer success\nmember-count-True: refused at actual draft receipt discrete member count kinds\nmember-count-0.0: refused at actual draft receipt discrete member count kinds\nborrowed-public-header-success: refused at exact actual draft-only seal command/result\n"
+}

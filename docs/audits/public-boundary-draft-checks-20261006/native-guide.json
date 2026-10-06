@@ -1,0 +1,21 @@
+{
+  "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-draft-20261006/verify_draft.py",
+  "controls": [
+    {
+      "cause": "native exact draft-only guarded command",
+      "control": "extra-command-argument",
+      "status": 1
+    },
+    {
+      "cause": "native complete draft-only scope and missing semantic leg",
+      "control": "borrowed-semantic-retention",
+      "status": 1
+    },
+    {
+      "cause": "native complete draft-only scope and missing semantic leg",
+      "control": "invented-live-publication",
+      "status": 1
+    }
+  ],
+  "visual_QA": "pending; separately owned"
+}
