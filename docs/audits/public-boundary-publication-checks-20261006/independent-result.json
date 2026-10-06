@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-publication-checks-20261006/verify_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/public-boundary-publication-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "docs/audits/public-boundary-publication-checks-20261006/verify_seal.py": {
+      "bytes": 11373,
+      "sha256": "21f1addd343c068304392dbd253d84d404a5cf518009d6022c489c1a4b57cfe9"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 98789; host 85.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS independently consumed actual current publication seal, whole regenerated source/control/native/role products and typed/member/borrowed-result refusals.\nstatus-True: refused at actual publication integer success\nstatus-0.0: refused at actual publication integer success\nstatus-1: refused at actual publication integer success\nbyte-count-True: refused at actual publication member byte-count kinds\nbyte-count-0.0: refused at actual publication member byte-count kinds\nlost-whole-member: refused at whole actual publication result member pins\ninvented-guard-authority: refused at actual current publication default-guard diagnostics\nborrowed-retention-snapshot-success: refused at exact actual current publication command/result\nborrowed-stopped-seal: refused at actual publication integer success\n"
+}

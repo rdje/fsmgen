@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-publication-checks-20261006/live_checks.py"
+  ],
+  "instruments": {
+    "docs/audits/public-boundary-publication-checks-20261006/live_checks.py": {
+      "bytes": 3596,
+      "sha256": "cf0b8125fda8bb82959b932bea8b15893b998c3bae86f136b5899f2babd80377"
+    },
+    "docs/audits/public-boundary-publication-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 67515; host 44.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/public-boundary-publication-checks-20261006/live_checks.py\", line 57, in <module>\n    if __name__=='__main__': main()\n                             ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/public-boundary-publication-checks-20261006/live_checks.py\", line 47, in main\n    require(progress['status']==0 and progress['stdout']==ns['CURRENT_SUCCESS'], 'actual unrelated book progress current acceptance')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-public-boundary-publication-20261006/verify.py\", line 68, in require\n    raise ValueError(cause)\nValueError: actual unrelated book progress current acceptance\n",
+  "stdout": ""
+}

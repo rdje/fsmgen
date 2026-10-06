@@ -1,0 +1,25 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "whole current source/role/question/reader epoch",
+    "-1",
+    "--format=%H %s",
+    "--",
+    "docs/audits/record-value-own-boundary-publication-20261005/verify.py"
+  ],
+  "instruments": {
+    "docs/audits/public-boundary-publication-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "docs/audits/record-value-own-boundary-publication-20261005/verify.py": {
+      "bytes": 13943,
+      "sha256": "0870c9727de42f38aa1647c8397e5f457031dc3679c1d9b26baa8df8c019d59a"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "e11d97f0c79c22c240243350a27e000a13bc6243 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4.2.2: publish source-faithful own boundary facts\n"
+}

@@ -591,7 +591,7 @@ External framework names stay opaque. These fixtures do not measure original
 framework/provider versions, private operations, full formatter or hidden
 arguments, reference identity, direct-emitter/source coordinates or addresses.
 The finite original public-header join below now qualifies source/signature
-compatibility; full current fact publication remains the next owned step. All project outputs and scratch stay local;
+compatibility; current fact publication is qualified below. All project outputs and scratch stay local;
 installed public toolchain access is necessary and read-only.
 
 The complete finite original public boundary join now compares source-selected
@@ -618,7 +618,7 @@ versions, private delegation or eval purposes, original formatter/settings,
 hidden suffixes, scalar encoding, receiver/callback contents or identity,
 coordinates or addresses. Private framework frames and eval intervals remain
 opaque. The authored load operator remains do despite its displayed require
-marker. Full current fact publication and the class/frame and coordinate/address
+marker. Current fact publication is qualified below. Class/frame and coordinate/address
 joins retain their own next steps; current compatibility never supplies missing
 historical identity.
 
@@ -666,13 +666,48 @@ separately. Replay the retained proposal from the repository root:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-retention-20261006/verify.py
 ```
 
-This is proposal qualification. Atomic live fact publication, actual current
-queries and reader routes remain the next slice. `--live-unchanged` additionally
+This command qualifies the retained proposal snapshot. Live publication and
+current query/reader qualification use the new command below. `--live-unchanged` additionally
 checks that the pre-publication card and its collection authority still match
 their committed sources; it must stop accepting after publication. Default
 replay preserves the source/proposal snapshot and does not borrow live currency.
 Original framework/provider/private/formatter/reference/coordinate/address
 meanings and visual QA remain unmeasured or separately owned.
+
+The public-boundary fact publication now qualifies the finite original
+Test::Builder/Test::More header relationship: authored-name prefixes, CODE kinds
+and body/delegate/entry/do-load order match at every retained throw phase.
+Independent dated public fixtures select the symbols. Original provider/version,
+private eval purposes, formatter/settings, hidden arguments, receiver/callback
+contents and identity, class/frame joins, coordinates and addresses remain open.
+
+The canonical observer/helper topic retains every reviewed source fact and prior
+question, adding one public-boundary question. Its exact admitted body does not
+grow in encoded bytes or line feeds. Collection authority remains unchanged;
+this publication supplies no new physical card allowance or healthy-collection
+claim. The review is an explicit semantic judgment, not a language oracle.
+
+Current replay checks the exact fact, actual direct/cache question ownership,
+all physical capacity dimensions, this scoped guide and current source routes:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-publication-20261006/verify.py --current
+```
+
+Default replay authenticates committed prerequisites and the saved publication
+snapshot; snapshot success cannot supply live currency. Unrelated book progress
+does not invalidate this scoped current reader. An optional
+`--build repository-relative-output` checks current native source copies and
+rendered guidance. Visual QA remains separately pending.
+
+The retained proposal's default replay still authenticates its source snapshot.
+Its `--live-unchanged` pre-publication role now refuses the changed live card.
+The superseded own-boundary publication also retains its default snapshot replay;
+its old whole-card current role refuses this qualified extension. Use the new
+current command above for this observer topic. The tooling companion still
+advertises the superseded current role; its immediate owned repair remains
+pending before the public publication parent can close. Original programmes
+and seals remain unchanged.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
@@ -711,12 +746,12 @@ The finite-copy core keeps its original fact ID and direct path. Its observer an
 helper questions now route to a separate bounded semantic topic, with a return
 route to the core. This separates copy-graph qualification from the original
 helper allocation, supplied/default inputs, returned argument construction and
-callback/refusal paths. The publication reader preserves the complete source
-meaning and question ownership, checks actual direct and cached queries, and
-rejects lost source roles, wrong routes and invented parser identity:
+callback/refusal paths. The historical publication preserves the original source meaning and question
+ownership. Its default snapshot replay remains available below; use the new
+observer command above for current facts, queries and source roles:
 
 ```bash
-python3 -B docs/audits/record-value-own-boundary-publication-20261005/verify.py --current
+python3 -B docs/audits/record-value-own-boundary-publication-20261005/verify.py
 ```
 
 This topic uses the capacity recovered by the admitted collection rollover.
@@ -724,16 +759,16 @@ Existing collection bounds remain in force; rollover debt remains open. The
 separately owned subtest/require, framework/display, raw-coordinate and native
 address/object-identity gaps remain explicit in both semantic topics.
 
-The live helper reader checks the current core and topic, their complete question
-ownership and source routes, and this reader guidance. It also authenticates the
-original sealed publication at its recorded boundary. That historical census and
-whole-book authority remain snapshot evidence; an unrelated chapter edit does
-not change the helper source meanings or require a new helper capture. Relevant
-source, role, question and route changes still require qualification.
+The superseded helper reader retains its original whole-card current epoch.
+Its default replay preserves the historical source census and book authority;
+the new observer current command above qualifies this admitted extension.
+The tooling companion's old current route still needs its immediate owned repair.
+Relevant source, question and route changes require qualification; unrelated
+book progress does not invalidate the scoped observer reader.
 
-The current publication reader also qualifies the own subtest/do-load source
+The superseded publication snapshot preserves the own subtest/do-load source
 facts and tooling question routes. It authenticates the historical source-plane
-adapter separately, then checks current canonical source-view selection,
+adapter separately. The new current reader above checks canonical source-view selection,
 endpoints, bytes, ignore policy, budget and complete staged membership. Snapshot
 success does not supply current semantic currency. The original destination
 locality replay and explicit native copied-byte check remain required.

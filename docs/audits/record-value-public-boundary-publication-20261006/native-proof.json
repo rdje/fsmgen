@@ -1,0 +1,24 @@
+{
+  "controls": [
+    {
+      "cause": "native exact current publication command",
+      "control": "borrowed-native-command",
+      "status": 1
+    },
+    {
+      "cause": "native complete scoped publication guide",
+      "control": "borrowed-native-currency",
+      "status": 1
+    },
+    {
+      "cause": "native complete scoped publication guide",
+      "control": "invented-native-identity",
+      "status": 1
+    }
+  ],
+  "input_identity": {
+    "bytes": 226550,
+    "sha256": "1cb2be47b3e7728d4e1301e72ff9356ba39e8c9a90ba65e334b79fba9c877185"
+  },
+  "visual_QA": "pending; separately owned"
+}

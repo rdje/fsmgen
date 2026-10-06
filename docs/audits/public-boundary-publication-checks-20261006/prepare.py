@@ -1,0 +1,70 @@
+"""Capture the clean source boundary, then publish the exact admitted proposal."""
+import argparse
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-public-boundary-publication-20261006')
+ns = {'__name__': 'publication_preparation'}
+exec(compile((BASE / 'verify.py').read_bytes(), str(BASE / 'verify.py'), 'exec'), ns)
+require, same, identity, load = (ns[k] for k in ('require', 'same', 'identity', 'load'))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--finish', action='store_true')
+    args = parser.parse_args()
+    if args.finish:
+        publication = load(BASE / 'publication.json')
+        require('snapshot' not in publication, 'initial snapshot not previously captured')
+        record = ns['current_input'](); ns['check_current'](record)
+        require(same(ns['pins'](ns['cards']()), publication['after_members']), 'initial complete physical publication conservation')
+        publication['snapshot'] = record
+        (BASE / 'publication.json').write_text(json.dumps(publication, sort_keys=True, indent=2)+'\n')
+        print('PASS initial publication snapshot with actual direct/cache queries.')
+        return
+    require(not (BASE / 'binding.json').exists(), 'fresh publication preparation only')
+    before = ns['cards']()
+    source = {p: raw for p, raw in ns['committed']('docs/knowledge').items()
+              if Path(p).parent == Path('docs/knowledge') and p.endswith('.md')}
+    require(before == source and Path(ns['CHAPTER']).read_bytes() == ns['git'](ns['CHAPTER']), 'complete clean source card/chapter boundary')
+    decision_source = {p:raw for p,raw in ns['committed']('docs/decisions').items() if p.endswith('.md')}
+    require({str(p): p.read_bytes() for p in Path('docs/decisions').rglob('*.md')} == decision_source,
+            'complete clean decision source question population')
+    proposal = load(ns['RETENTION'] / 'proposal.json')
+    require(before[ns['CARD']].decode() == proposal['before'], 'exact admitted proposal source before live write')
+    owner = ns['OWNER'].removesuffix('.2')+'.1'
+    task = ns['git'](ns['TASK']); start = task.decode().index('- ID: `'+owner+'`'); end=task.decode().index('\n- ID:',start+1)
+    programmes = ['knowledge-map/scripts/query_knowledge_map.sh', 'knowledge-map/scripts/knowledge_map.pl',
+                  'knowledge-map/scripts/knowledge_map.conf', 'scripts/book_source_references.py', 'scripts/check_book_source_index.py',
+                  'docs/audits/knowledge-card-rollover-20261005/verify.py']
+    binding = dict(revision=ns['REVISION'], owner=owner, task_identity=identity(task), owner_body=task.decode()[start:end],
+        archives={str(r): ns['pins'](ns['committed'](r)) for r in (ns['RETENTION'], ns['RETAINED_RESULT'])},
+        programmes={p: identity(ns['git'](p)) for p in programmes})
+    ns['save']('binding.json', binding); ns['authenticate']()
+    before_queries = ns['queries']()
+    chapter_before = ns['git'](ns['CHAPTER']).decode(); chapter_after=ns['transform_chapter'](chapter_before)
+    after = {**before, ns['CARD']:proposal['after'].encode()}
+    book_before={p:raw for p,raw in ns['committed']('docs/book/src').items()
+                 if Path(p).parent==Path('docs/book/src') and p.endswith('.md')}
+    require({str(p):p.read_bytes() for p in Path('docs/book/src').glob('*.md')}==book_before,'complete clean source book population')
+    book_after={**book_before,ns['CHAPTER']:chapter_after.encode()}
+    keys=('files','lines_total','bytes_total'); baseline={k:ns['metrics'](book_before)[k] for k in keys}
+    delta={k:ns['metrics'](book_after)[k]-baseline[k] for k in keys}
+    registry=Path(ns['REGISTRY']); lines=registry.read_text().splitlines()
+    i=next(i for i,s in enumerate(lines) if json.loads(s).get('surface_id')=='shipped_behavior')
+    authority_before=json.loads(lines[i]); authority_after=json.loads(lines[i])
+    authority_after['reference_contract']['aggregate_change']=dict(
+        authority_id='PUBLIC-BOUNDARY-PUBLICATION-20261006-SHIPPED-BEHAVIOR',owner=ns['OWNER'],baseline=baseline,delta=delta,
+        rationale='Publish admitted finite public facts and explicit source/snapshot/current native reader roles.')
+    lines[i]=json.dumps(authority_after,sort_keys=True,separators=(',',':'))
+    ns['save']('publication.json',dict(before_members=ns['pins'](before),after_members=ns['pins'](after),
+        before_queries=before_queries,chapter_before=chapter_before,chapter_after=chapter_after,
+        book_before=ns['pins'](book_before),book_after=ns['pins'](book_after),
+        authority_before=authority_before,authority_after=authority_after,baseline=baseline,delta=delta))
+    Path(ns['CARD']).write_bytes(after[ns['CARD']]); Path(ns['CHAPTER']).write_text(chapter_after)
+    registry.write_text('\n'.join(lines)+'\n')
+    print('PASS exact admitted non-growing card and scoped guide published; refresh projections before snapshot capture.')
+
+
+if __name__=='__main__':
+    main()

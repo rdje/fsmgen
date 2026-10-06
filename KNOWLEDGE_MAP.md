@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1266** facts · **6972** unique questions · **7149** answer occurrences · **184** topic shards.
+> **1266** facts · **6973** unique questions · **7150** answer occurrences · **184** topic shards.
 
 Query first:
 
@@ -166,7 +166,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `push-cadence` | 3 | 5 | [`push-cadence.md`](knowledge-map/generated/push-cadence.md) |
 | `ram-guard` | 1 | 7 | [`ram-guard.md`](knowledge-map/generated/ram-guard.md) |
 | `readme-nearly` | 1 | 13 | [`readme-nearly.md`](knowledge-map/generated/readme-nearly.md) |
-| `record-value` | 2 | 28 | [`record-value.md`](knowledge-map/generated/record-value.md) |
+| `record-value` | 2 | 29 | [`record-value.md`](knowledge-map/generated/record-value.md) |
 | `semantic-introspection` | 1 | 77 | [`semantic-introspection.md`](knowledge-map/generated/semantic-introspection.md) |
 | `semantic-public` | 1 | 3 | [`semantic-public.md`](knowledge-map/generated/semantic-public.md) |
 | `specforge-feature` | 1 | 7 | [`specforge-feature.md`](knowledge-map/generated/specforge-feature.md) |

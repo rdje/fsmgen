@@ -1,0 +1,34 @@
+[
+  {
+    "asset": "reference-source/MEMORY.markdown.source.txt",
+    "copied": 1423,
+    "copied_identity": {
+      "bytes": 1423,
+      "sha256": "52ae49b8af41583fd405b76180b7fbf148dbc2e4389f5d26517748344b3da264"
+    },
+    "copied_path": "docs/audits/public-boundary-publication-checks-20261006/stale-native-0-copied.txt",
+    "current": 1518,
+    "current_identity": {
+      "bytes": 1518,
+      "sha256": "f48f6f1cf4adc9fa9ec95eadcd07b27c43a8164453aab0d78486e7b57af1f22a"
+    },
+    "current_path": "docs/audits/public-boundary-publication-checks-20261006/stale-native-0-current.txt",
+    "source": "MEMORY.md"
+  },
+  {
+    "asset": "reference-source/docs/TASK_TREE.markdown.source.txt",
+    "copied": 40134,
+    "copied_identity": {
+      "bytes": 40134,
+      "sha256": "13029ec981e09f3e4f5d285b717be33817e06350c2a565f4cce45f0720878271"
+    },
+    "copied_path": "docs/audits/public-boundary-publication-checks-20261006/stale-native-1-copied.txt",
+    "current": 40232,
+    "current_identity": {
+      "bytes": 40232,
+      "sha256": "8944eea084d61df85b832e19e3b3a39d5a6baeabb016efedb3ab945db5ef0685"
+    },
+    "current_path": "docs/audits/public-boundary-publication-checks-20261006/stale-native-1-current.txt",
+    "source": "docs/TASK_TREE.md"
+  }
+]

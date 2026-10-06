@@ -4841,11 +4841,11 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Qualify semantic retention and publish the finite public facts atomically.`
   Acceptance: `After .1 commits, independently qualify every unique before/after source fact and each declared duplicate/superseded removal against the completed source/header join. Do not treat draft construction or net metrics as semantic preservation. Authenticate current root/result, publish only admitted facts/question/route changes and actual current direct/cache queries within unchanged collection authority, preserving original snapshots and historical/private gaps. Separate source/current/snapshot/native guide roles, qualify genuine corruption/borrowing and unrelated live progress, whole actual-result durability, focused and staged/hook gates. Only then close .5.4 and .5.`
-  Verification: `Source-bound draft still accepts coherent unique parser-receiver deletion. Split semantic fact/removal qualification .1 from current atomic publication .2 before implementation. Semantic-retention .1 now qualifies the superseding complete reviewed non-growing proposal and actual sealed result. Atomic publication .2 remains pending; no live card/query route has changed. Current canonical card, draft/old seals and unchanged collection authority retain. Historical/private/native/visual/CI/push gaps remain owned.`
+  Verification: `Semantic retention .1 and atomic observer publication .2 are done with independently qualified actual results. Exact current observer facts/questions/source routes and unchanged collection authority qualify; original snapshots retain. Publication exposed the tooling companion's old whole-card current reverify dependency. P1 repair .3 is immediate and pending; complete companion/core/tooling routes must qualify before this parent, .5.4 and .5 close. Historical/private/native/visual/CI/push gaps remain owned.`
   Commit: `pending`
 
 
-  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.2`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.1`
   Status: `done`
@@ -4855,10 +4855,27 @@ For FSMGen, the analogs are:
   Commit: `this semantic-retention checkpoint; resolve by work-unit Git subject`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish admitted finite public facts and current reader roles atomically.`
   Acceptance: `After .1 commits, authenticate its whole semantic proposal/result and the completed public join. Publish only the admitted facts/question/route changes within unchanged collection authority. Qualify actual current direct/cache queries, source/current/snapshot/native guide roles, unrelated book progress, genuine fact/question/identity/route/kind/capacity and borrowed snapshot controls and whole actual-result durability. Preserve all historical/private gaps and old seals; run focused and staged/hook gates before closing .5.4 and .5.`
-  Verification: `pending`
+  Verification: `Whole committed semantic proposal/actual-result and public-header roots authenticate; complete original source/models/controls regenerate. Exact admitted observer card publishes with every prior question and one public-header question; complete physical member preservation and independent whole-source global query conservation qualify. Card deltas are minus4 encoded bytes/minus2 LF; complete physical census passes unchanged Knowledge Map authority, without a healthy-collection claim. Actual direct/cache ownership, scoped current/source/snapshot/native guide, source copies and thirteen genuine source/question/identity/route/kind/capacity/borrowing controls pass. Old own-boundary default snapshot remains actual0; both old current and retention live-unchanged roles refuse at their exact epochs. Actual unrelated book progress accepts and exact chapter/registry bytes restore. Final guarded --current --build --seal0 and independent whole-result0 conserve all nine sealed members and regenerate complete source/current/control/native/role products; nine typed/member/default-guard/real borrowed-result controls refuse. First Markdown/catalog source-domain error, wrapper child-stream loss, missing __file__ loader error, stopped host88.1/status137 seal and stale native MEMORY/task-index copy refusal all retain; exact sources/programmes/results qualify each repair, without relabeling failure. Initial unsealed producer lacks invocation-time instrument identity and supplies no substitute final result. Focused All tests successful Files4 Tests361 passes. Whole proof/seal/raw results/programmes are under record-value-public-boundary-publication-20261006 and public-boundary-publication-checks-20261006. Final source refresh, measured task bytes, claim inventory, staged doctrines and normal hooks gate this commit. Immediate P1 tooling companion route .5.4.2.3 remains pending; .5.4.2/.5.4/.5 stay active. All original historical/private/formatter/class/frame/coordinate/address/native/visual/HIAL/CI/push gaps retain owners. The subordinate DBINP record preserves the full requested board-emulator explanation, both required routes, direct native IASIM default and Rust host constraint without runtime activation or pivot.`
+  Commit: `this atomic observer-publication commit; resolve by work-unit subject`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.2.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.2.1`
+  Status: `done`
+  Goal: `Record the director's nonpivot DBINP board-emulator feasibility discussion.`
+  Acceptance: `Review canonical IAL/IASIM contracts and primary emulator integration documentation. Record feasible wrapper routes, software-visible device contract, execution/time semantics and verification needs; distinguish proposed architecture from shipped capability. No runtime implementation, emulator choice, roadmap activation or pivot. Preserve current publication execution.`
+  Verification: `Discussion record authored under docs/audits/public-boundary-publication-checks-20261006/board-emulator-discussion.md.txt. Canonical language-neutral, downstream and proposed IASIM records reviewed; official QEMU MMIO and Renode peripheral/HDL co-simulation documents read on2026-10-06. Director subsequently confirms the IASIM adapter direction; record the architectural preference without implementation activation or pivot. Full requested explanation and both required routes are recorded in the board-emulator discussion section. Director selects direct native IASIM execution as the default; higher-level board debugging must not require FSM lowering. Both native and lowered FSM/HDL routes remain future requirements under IASIM prerequisites, without a current pivot. No runtime/capability or quantitative performance claim.`
+  Commit: `with the owning publication slice; discussion only`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.3`
+  Status: `pending`
+  Goal: `Repair and qualify the tooling companion current route after observer publication.`
+  Acceptance: `P1 dependency defect: docs/knowledge/mdbook-build-destination-locality.md still advertises the old own-boundary --current reader, whose exact observer-card epoch rejects the admitted public extension. Reproduce through that public reader. Preserve complete tooling/core facts, ordered questions and source-plane/native/locality contracts; qualify the companion route against the new observer publication without widening collection authority or borrowing snapshot success. Keep .5.4.2/.5.4/.5 open until the complete advertised current route set works. Genuine source/question/route/kind/borrowed controls, actual unrelated progress, focused/staged/hook checks and whole actual-result durability required. Fix immediately after the atomic observer slice; no recapture or foreign implementation access.`
+  Verification: `Owned before companion mutation. Source reverify names the superseded programme; its check_live requires the previous whole observer card. Atomic observer .2 will retain the actual superseded current refusal and default snapshot result. Companion qualification is the next frontier, rather than closing the public publication parents prematurely.`
   Commit: `pending`
 
 
@@ -6915,3 +6932,67 @@ Session-health handoff owned by .5.4.1: focus has slipped in this long run. Full
 - [x] **NO REGRESSION** — Guarded focused book/task-tree checks report `All tests successful.` and `Files=3, Tests=356`, `Result: PASS` in docs/audits/public-boundary-retention-checks-20261006/focused.json. Actual native retention guide/command/oracle/publication/identity controls and source-copy checks pass. Final copied-source refresh, measured book/task declarations, current claim inventory, staged doctrines and normal hooks gate the commit. No production behavior, original/draft/public seals, current facts/questions/Knowledge Map projection/collection authority, original capture, foreign implementation/submodule access, native/security probe, full CI or push changes.
 
 Evidence correction owned by .5.4.2.1: the preceding planning pickaxe and first local pickaxe returned status0 with empty stdout because the chosen literal crossed an authored LF. They identified no revision; the preceding planning acceptance overstated that receipt. Preserve the original planning result and first-empty-pickaxe.json. The superseding root-cause.json searches the exact LF-contained clause and returns the whole committed draft-checkpoint revision. Complete fixed-Git source/card/draft/header authentication independently binds the mechanism; the correction changes neither the retained first evidence nor any sealed product. Reproduce from docs/audits/public-boundary-retention-checks-20261006/evidence-correction.txt and root-cause.json.
+
+
+## Board-emulator integration — director discussion record (2026-10-06)
+
+Owned by the nonpivot discussion leaf .5.4.2.2.1 above. Future execution
+prerequisites are owned by `IASIM-EXECUTABLE-REFERENCE-SEMANTICS.1/.2/.3/.9`;
+this record does not activate them or switch the current publication frontier.
+
+**Director requirement:** debug IAL1/IAL2 using the emulated board as their
+environment, without lowering to an FSM first. Also support inserting the
+lowered FSM model in that same board environment. **Both routes are required;
+direct native execution through an IASIM adapter is FSMGen's default integration
+route.** The FSM/HDL route remains explicitly supported and separately qualified,
+including comparison against the native route. The director confirms this
+direction. **Host constraint:** the board emulator is written in Rust; the
+IASIM adapter/session interface must be language-neutral across the Rust host
+and FSMGen/IASIM implementation. A versioned process protocol or an audited
+embedding ABI are possible transports; transport must preserve logical time,
+values, interrupts, lifecycle and deterministic replay without duplicating the
+semantic engine. These are future requirements, not a shipped integration claim.
+
+The full explanation requested by the director is retained below. Its original
+"proposed direction" wording records the earlier discussion; the requirement
+and default choice immediately above are the subsequently confirmed direction.
+
+**Yes. An executable IAL1/IAL2 model could be wrapped as a peripheral in a board emulator**, allowing real firmware on its CPU or MCU to interact with it as a chip.
+
+The connection would be:
+
+`CPU/MCU → emulated bus → peripheral adapter → executing IAL model`
+
+Responses and interrupts flow back through the adapter. This fits established emulator designs: QEMU exposes memory-mapped devices through read/write callbacks, and Renode provides peripheral interfaces and register modeling. [QEMU memory API (https://www.qemu.org/docs/master/devel/memory.html)](<https://www.qemu.org/docs/master/devel/memory.html>), [Renode peripheral guide (https://renode.readthedocs.io/en/latest/advanced/writing-peripherals.html)](<https://renode.readthedocs.io/en/latest/advanced/writing-peripherals.html>).
+
+The key is that the IAL model must describe the behavior firmware expects. A protocol controller alone does not necessarily describe a whole chip: its registers, command processing, FIFOs, interrupt conditions and reset behavior must also exist. Its bus role must fit the attachment—a CPU-accessible peripheral usually needs a subordinate endpoint.
+
+There are two plausible routes:
+
+| Route | What it involves |
+|---|---|
+| **Through generated HDL** | IAL2 → IAL1 → IAL0 → HDL simulation, connected to the board emulator through an adapter. Renode already documents this kind of bus and interrupt co-simulation. |
+| **Direct native execution** | Execute the intent model in IASIM and connect an emulator adapter to its session API. This aligns with our proposed IASIM architecture, but a qualified embeddable peripheral interface is still work to establish. |
+
+The HDL route has existing integration mechanisms to build upon. [Renode HDL co-simulation (https://renode.readthedocs.io/en/latest/advanced/co-simulating-with-an-hdl-simulator.html)](<https://renode.readthedocs.io/en/latest/advanced/co-simulating-with-an-hdl-simulator.html>).
+
+What it would take:
+
+1. **A device interface contract.** Addresses or bus attachment, register layout, access widths, endianness, partial writes, read/write side effects, errors, reset and interrupts. Add DMA or external pins where the device needs them.
+2. **An execution engine.** Something must execute state transitions, guards, actions, scheduling and handshakes. Semantic JSON and schedule reports alone cannot perform that job.
+3. **A precise time contract.** Define how emulator virtual time advances the model, when clock edges occur, and how simultaneous events, delayed responses and backpressure behave. The device must continue working—and raise an interrupt—even while firmware makes no accesses.
+4. **An embedding interface and adapter.** Model creation, reset, transactions, advancing time, output/IRQ delivery, errors and state save/restore. The emulator-specific adapter translates these operations into its public peripheral API.
+5. **Qualification with real firmware.** Exercise normal operations, partial accesses, reset during an operation, timeout behavior, interrupts without polling and deterministic replay. State clearly whether the model promises functional, transaction or cycle fidelity.
+
+A useful first demonstration would be a small accelerator: firmware writes input and START, observes BUSY, receives a completion interrupt, reads the result and acknowledges completion. That exercises the essential integration seams.
+
+***
+
+**💡 Direction for your review:** I would make this an **IASIM adapter**, sharing the device’s executable semantics with the rest of FSMGen. That could let one intent model support firmware development and hardware generation while reducing duplicated behavior. I’ve recorded this as a proposed direction; DBINP has not changed the active work.
+
+
+## Acceptance Checklist — atomic observer publication .5.4.2.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual `git log -S 'whole current source/role/question/reader epoch' -1` on the old own-boundary verify.py returns e11d97f0c79c22c240243350a27e000a13bc6243, captured in reader-epoch-cause.json. Its check_live whole-card epoch rejects the exact admitted extension; live-roles.json contains the actual current refusal and default snapshot0. Matched retention-guide pickaxe returns066a576877 in root-cause.json. The first source-loader current diagnostic also captures NameError for missing __file__ at scripts/book_source_references.py:10; first-module-verify.py.txt reproduces that cause, and the repaired loader preserves the actual repository root. Companion tooling reverify remains P1-owned by .5.4.2.3.
+- [x] **ADDRESSED (verified)** — Source-proof.json independently conserves every original physical member/question, exact admitted body, whole global query addition and unchanged capacity authority. Actual seal-command-final.json is guarded current/build/seal0; sealed-replay.json binds untouched command/streams/invocation instruments plus every sealed byte. Independent-result.json is actual0 and regenerates full source/fact/current/native/role products, thirteen scoped controls, three native controls and nine typed/member/guard/real borrowed-result refusals. Live-roles.json proves genuine old snapshot/current boundaries and restored unrelated-progress acceptance. Original first failures and current repairs remain reviewable; no missing/private/historical meaning is promoted. Full director board-emulator request/default/Rust constraints are logged above under the subordinate discussion owner; no implementation is activated.
+- [x] **NO REGRESSION** — Guarded focused.json reports All tests successful; Files=4, Tests=361 across live book paths, feature matrix, task-tree doctrine and Knowledge Map shards. Fresh source-copy/current index and native guide checks pass in the final actual seal. Mandatory staged doctrines and normal hooks gate this commit; CI/push remain under the existing explicit deferral.

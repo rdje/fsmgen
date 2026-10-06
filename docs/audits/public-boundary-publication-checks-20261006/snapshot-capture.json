@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-publication-checks-20261006/prepare.py",
+    "--finish"
+  ],
+  "instruments": {
+    "docs/audits/public-boundary-publication-checks-20261006/prepare.py": {
+      "bytes": 5000,
+      "sha256": "353028c82fd4eea4cddded7771aae69e99e122473e04cb2aa9504423406bbef3"
+    },
+    "docs/audits/public-boundary-publication-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS initial publication snapshot with actual direct/cache queries.\n"
+}

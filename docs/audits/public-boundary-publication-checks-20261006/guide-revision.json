@@ -1,0 +1,16 @@
+{
+  "before_publication_identity": {
+    "bytes": 3492659,
+    "sha256": "67c9d9ecd6eca99037b3e7d3d56a96b2b529973d9d42460280dc98cdeb87e10e"
+  },
+  "final_guide_identity": {
+    "bytes": 189850,
+    "sha256": "4f2775465081d02334643ce2c5e7ceb97b050a4c224d4a7f39144fc319bf715e"
+  },
+  "preliminary_guide_identity": {
+    "bytes": 189668,
+    "sha256": "53d2c30025d9f9b11bfa783af665cafdf4a93e3df2b4184a508d3692284176db"
+  },
+  "reason": "Explicit superseded whole-card snapshot/current roles and immediately owned tooling companion repair.",
+  "role": "Preliminary unsealed producer wording corrected before current qualification; final actual seal is authoritative."
+}

@@ -1,0 +1,233 @@
+{
+  "archives": {
+    "docs/audits/public-boundary-retention-checks-20261006": {
+      "docs/audits/public-boundary-retention-checks-20261006/body-local.json": {
+        "bytes": 1989,
+        "sha256": "e86476532f927beda6398e61cb00bb19065ed3ca2e62b6c889a966e4807d0f29"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/book-change.json": {
+        "bytes": 406503,
+        "sha256": "ee0b602e47a2bf6a3d78b8548208d04d8e305edd5bdc1cc5bd989f339216312e"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/book-publish.json": {
+        "bytes": 261,
+        "sha256": "ce3ee8bc7e60e3a943c9e9b2696b4c91bf6a3c8121cb1fdca07698675ffa97ef"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/book.py": {
+        "bytes": 4055,
+        "sha256": "d6b00f3c20fafe7606700fd968eb12497afc19798585ff55c3f2575ea74d70a2"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/capture_result.py": {
+        "bytes": 705,
+        "sha256": "9f7b50a1b29c7362ef159d66bc3d300c77d062594553501e1c915777faebb27d"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/declare_task_budget.py": {
+        "bytes": 3316,
+        "sha256": "46096043f2f3505ba2d106c487239705ddbe8646fe26c13720d5e27d4c813c6a"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/evidence-correction.txt": {
+        "bytes": 756,
+        "sha256": "05261d8ad6a03a1b5f4d26abc4f5cd4eec476056946e210ac0813c367770b217"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/final-local.json": {
+        "bytes": 2936,
+        "sha256": "3a5f1833f390a7077c60d765a528f5f3386b10878575015a6aa34307e6e90f16"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/final-native-build.json": {
+        "bytes": 405,
+        "sha256": "25f86d499495498e8dfa7e145a2ebeaa752946658fa10c8046b8f5c37020c015"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/final-native-guide.json": {
+        "bytes": 510,
+        "sha256": "ef207f7e983abac4c7b804807b3a44ae4974da22d67efdb2bcc7606e1460760c"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/final-native-sources.json": {
+        "bytes": 327,
+        "sha256": "17ffd5626de0a546d4cdf501daac44e4327b365a0dea93f06f05e57f56d2f385"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/first-body-control-verify.py.txt": {
+        "bytes": 14259,
+        "sha256": "9aafb1d3f1cb5814a73c0c7bd7369c1add9e30f1379b226b8ed00ce4b7656032"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/first-empty-pickaxe.json": {
+        "bytes": 247,
+        "sha256": "f8d564317357691b16fc27f29d4580953443032caf1b1cc5a5e7b1d3edda5bc7"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/first-full.json": {
+        "bytes": 336,
+        "sha256": "ce0bbc10e021a6f4dbd96a3ca4b2916a2813bc103dc82a4965e88438c8a9daa6"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/first-kind-control-verify.py.txt": {
+        "bytes": 14249,
+        "sha256": "1ddcc0c21cbcb640ad731d09a0ee448434ae193a9e59a8b467a04ecf1c565caf"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/first-local.json": {
+        "bytes": 1560,
+        "sha256": "822363cd6c3595627c1ca3540d92c3c64a45b48431d437e3c8e8e629891501be"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/first-verify.py.txt": {
+        "bytes": 12846,
+        "sha256": "aaa7b984bc62331a6e2f0838652026977216be19280f9c17b192a12250e5d7de"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/focused.json": {
+        "bytes": 517,
+        "sha256": "b63bb2729ad62121fb082cfe54b81afabd8fe94bae4b3a8015cad83f71a01eb0"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/independent-result.json": {
+        "bytes": 1073,
+        "sha256": "e057527083e7100ed426171a0e176726d56e347a7ed5c9e36e35cc4cc612fcfc"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/initial-controls.json": {
+        "bytes": 3954,
+        "sha256": "31183e3f9671ee611280acf3fe2e395fdc0a52e55465ed82f737cc9fa59ef58e"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/local.json": {
+        "bytes": 496,
+        "sha256": "de8541d5962d66102fe819ce985b822c293b99155c16dd0566d244a0dfba10fc"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/native-build.json": {
+        "bytes": 405,
+        "sha256": "25f86d499495498e8dfa7e145a2ebeaa752946658fa10c8046b8f5c37020c015"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/native-current.json": {
+        "bytes": 560,
+        "sha256": "6d0c677f6cdadfc8dac48d5f9121ddc97be24cd72aac2325e13385ceb21a9766"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/publish_book.py": {
+        "bytes": 3478,
+        "sha256": "7eb9470538408cd80d647335cb1a85c206a288222a3038e152def1091845de12"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/qualified-local.json": {
+        "bytes": 526,
+        "sha256": "91ba5ea7405a4920a0c1364a58f34516e691526d791847af7cd1aaa529cee111"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/recovery-local.json": {
+        "bytes": 537,
+        "sha256": "90e224f67b512874bc87af13962ea68cfc3ca10d56bedf5f78ddeada8f6c32ce"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/root-cause.json": {
+        "bytes": 457,
+        "sha256": "d56b9e9a3be8d918dc38d4078ac711991026f4c4a41f52982e1ff0f6585d2e2a"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/run.py": {
+        "bytes": 826,
+        "sha256": "971b31cf68266f25a9269f5403a592375e1ee4a98656e8feff29492f37afffef"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/seal-command.json": {
+        "bytes": 489,
+        "sha256": "5e90534d15ad3e222057bdbf6cb9cd7f5443cfd6735a1b367eb5836e69159b8f"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/sealed-replay.json": {
+        "bytes": 2562,
+        "sha256": "b408b493c08da2d6b54fbdf61d42704368c8b41e6c13c5269fd411771391f54c"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/staged-doctrines.json": {
+        "bytes": 62176,
+        "sha256": "063351a3312f4e035b049fab7fe176f5e63b9c22c04c0f1fa4779ba396411131"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/task-budget-result.json": {
+        "bytes": 264,
+        "sha256": "e809a8e8ad01db24f08df30fac15545fffc02b242495ffa87c5beef497df1f41"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/task-budget.json": {
+        "bytes": 106634,
+        "sha256": "4637756c8db534a7c8f66e1d212b3802bffdc96c6bbf6b5005a45ed3cc3a6ac7"
+      },
+      "docs/audits/public-boundary-retention-checks-20261006/verify_seal.py": {
+        "bytes": 5934,
+        "sha256": "547e98d608e3a16c3dd758f346148a217e16f111a67a32026d9b25572eb0cd1c"
+      }
+    },
+    "docs/audits/record-value-public-boundary-retention-20261006": {
+      "docs/audits/record-value-public-boundary-retention-20261006/controls.json": {
+        "bytes": 4231,
+        "sha256": "65d6d8ff96921d17e5e403a6592cb239da59da5bb534c7823af896f2b8475692"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/live-conservation.json": {
+        "bytes": 244738,
+        "sha256": "b6f77be5e3a92b2329fd272f3a8f008edda805750f09d68fc65c4cc889fd0dce"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/manifest.json": {
+        "bytes": 1679,
+        "sha256": "aacd1c4233c226c9dc5f7a5dbb01aeb9140a7f245b214275644e3d6e053c9057"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/native-guide.py.txt": {
+        "bytes": 4055,
+        "sha256": "d6b00f3c20fafe7606700fd968eb12497afc19798585ff55c3f2575ea74d70a2"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/native-input.html": {
+        "bytes": 224363,
+        "sha256": "c0c8ab9f88f84a294c614b52fcc5f2502d081be8ac7f68b37cfb1b023e0f5c7e"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/native-proof.json": {
+        "bytes": 1005,
+        "sha256": "012a22232e31028bbae0bf0b93c324d0c6519ae102a9e945a85da33e06890357"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/prepare.py": {
+        "bytes": 11828,
+        "sha256": "605cfd616d961eb93945bcd62837cc7fe1851c8eeeafb95136b5d4881f880c7b"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/prerequisite-proof.json": {
+        "bytes": 13850,
+        "sha256": "2cd84fa7284510b521a0313bda78b1fd89c064a19021114452619ddbc5213f1c"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/proof.json": {
+        "bytes": 3694,
+        "sha256": "63b7ccb4b4c76036626c3fc9b532ad25adac969ff650800e21eaa994725bdceb"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/proposal.json": {
+        "bytes": 9198,
+        "sha256": "d8aeeab23266793452c31a0f38ebda42d8c1130d84961b6302d9ab043d317a0d"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/recovery-proof.json": {
+        "bytes": 2128,
+        "sha256": "ff9ba1696f6c3b7b7bf535b37ad1991762e00b404008959e43f6c4a9ffe87d05"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/retention-map.json": {
+        "bytes": 21354,
+        "sha256": "c420f2b4b4161e7f06858a12ba6ca6ba6e244589936d20a421187148dbb8749d"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/scope.txt": {
+        "bytes": 4121,
+        "sha256": "c12a81fc6abc201e146fb7d51d1af1eb8b7718732621988ca21aa43a7e1d23d9"
+      },
+      "docs/audits/record-value-public-boundary-retention-20261006/verify.py": {
+        "bytes": 17475,
+        "sha256": "3001837a045ed903f0361dfb3fde398d3497d453aba901a3e601b2a07fa532ca"
+      }
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.1",
+  "owner_body": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.4.2.1`\n  Status: `done`\n  Goal: `Qualify every retained source fact and proposed duplicate or superseded removal before publication.`\n  Acceptance: `Bind the complete prior card and original draft to their committed revisions. Independently enumerate all source propositions, questions and removal dispositions against their richer retained homes and completed source/public join evidence. Preserve any unique boundary lost by the first draft in a superseding non-growing proposal. Reject coherent unique parser-receiver deletion and every fact/gap/question loss; authenticate the completed header join and actual result, preserve prior seals, qualify actual retention result and source/native book guidance. Leave live cards, queries and authority unchanged. Commit before current publication .2.`\n  Verification: `Whole fixed-Git original/draft/public-header/checker populations authenticate and complete source/raw/control/prior-result models reexecute. Separate ordered prose/fact/removal review preserves every declared source meaning, exact authored subtest/do-load bytes and ordered prior questions. The superseding proposal explicitly restores observer inventory and broad observer/display/frame gaps; whole-card deltas are minus4 encoded bytes/minus2 LF, with no live fact/query/authority change. Genuine per-fact/gap/question/review/body/kind loss and the draft-accepted coherent receiver deletion reject. Human semantic equivalence review is explicit; token presence is not an unrestricted semantic oracle. Actual guarded --live-unchanged --seal0 and independent whole-result0 regenerate every product and conserve all sealed bytes; typed/member/default-guard/real borrowed draft-success controls reject. Complete physical card membership/bytes and Knowledge Map authority equal committed sources. Three exact local instrument failures/programmes/results reexecute and their repairs qualify. The initial unsealed full receipt has a declared invocation-instrument gap and cannot substitute for the final result. Native retention guide/four controls, source copies and focused All tests successful Files3 Tests356 pass. Corrected matched Git evidence supersedes empty pickaxe attribution; original receipts retain. Whole source/programme/proof/native/manifest/results live in docs/audits/record-value-public-boundary-retention-20261006 and public-boundary-retention-checks-20261006. Final source refresh, claim inventory and staged doctrines/normal hooks gate this commit. Current atomic publication stays .2; every original/private/class/frame/coordinate/address/native/HIAL/visual/CI/push gap remains owned.`\n  Commit: `this semantic-retention checkpoint; resolve by work-unit Git subject`\n",
+  "programmes": {
+    "docs/audits/knowledge-card-rollover-20261005/verify.py": {
+      "bytes": 15366,
+      "sha256": "0ad4e5e5b1329a6dd968d99fb7346477ac8b2a579ce153956bf4fea354af14c3"
+    },
+    "knowledge-map/scripts/knowledge_map.conf": {
+      "bytes": 981,
+      "sha256": "a7a1a816c261388c35a10095654c96599ee62bf25454037e8dd31b4fd4394965"
+    },
+    "knowledge-map/scripts/knowledge_map.pl": {
+      "bytes": 29597,
+      "sha256": "2fd40d5bc253ce8b2849fd4b6e5f096f486d7016fac6dcd58ef639e11ae5ade3"
+    },
+    "knowledge-map/scripts/query_knowledge_map.sh": {
+      "bytes": 771,
+      "sha256": "fa7994b450c8b31caf2c1629823a8ab221af3318afc0bac3273b5fed4cd75d59"
+    },
+    "scripts/book_source_references.py": {
+      "bytes": 11033,
+      "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+    },
+    "scripts/check_book_source_index.py": {
+      "bytes": 1278,
+      "sha256": "1311f277544ca01c067eb311fc93ae99751a003117b93b3fe501dd19a413893f"
+    }
+  },
+  "revision": "066a576877e19a020e5ae48a53fe50e216c22543",
+  "task_identity": {
+    "bytes": 1405522,
+    "sha256": "c2f693009f5a0a3bfb7bfb6d2ce4d66cb0bbc99e4e892170a03ba72bf0e3b73e"
+  }
+}

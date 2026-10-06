@@ -1,0 +1,72 @@
+{
+  "actual_result_identity": {
+    "bytes": 1067,
+    "sha256": "ff920f6f65180472615f7935b7c022c63017217285f61526ba7939a7c6454b67"
+  },
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-publication-20261006/verify.py",
+    "--current",
+    "--build",
+    ".artifacts/public-boundary-publication-book",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/public-boundary-publication-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "docs/audits/record-value-public-boundary-publication-20261006/verify.py": {
+      "bytes": 23506,
+      "sha256": "2d10c5669a0c9ac6137a919e98cca3b313e0bf6bb11f4c22ff7c8d2b2afe6998"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 17959; host 81.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS fresh current public facts, direct/cache ownership, unchanged capacity and scoped reader/source roles.\n",
+  "whole_members": {
+    "binding.json": {
+      "bytes": 14016,
+      "sha256": "564844c91cc95dd9e39d39564ce7a990605db74e09865b59ec7f8f944197d368"
+    },
+    "controls.json": {
+      "bytes": 1602,
+      "sha256": "319369f7d45668cba1e6a853fb528bfa240129c5565f6815a8ea212a618a71de"
+    },
+    "manifest.json": {
+      "bytes": 1025,
+      "sha256": "c93defd80b910a2ecffc740105200a6f01049712ba8390231ecc2e894e1e298b"
+    },
+    "native-input.html": {
+      "bytes": 226550,
+      "sha256": "1cb2be47b3e7728d4e1301e72ff9356ba39e8c9a90ba65e334b79fba9c877185"
+    },
+    "native-proof.json": {
+      "bytes": 600,
+      "sha256": "3e399012164d9656244476ee2e9244209d7f680fb9bdd2cab7156d4d8051272f"
+    },
+    "publication.json": {
+      "bytes": 6289087,
+      "sha256": "d40e8bec6136783f262ed4f288ab3e40c11c696369901be3aa3e55aff88946ad"
+    },
+    "scope.txt": {
+      "bytes": 2599,
+      "sha256": "325483592a5fbfa7e11c83ca3b93913ce86b7236c555c3c2251dd22f40739383"
+    },
+    "source-proof.json": {
+      "bytes": 488099,
+      "sha256": "c20b2700ef0d79752db58caf89716ce7d63d849d17303d89225233cdc1a95137"
+    },
+    "verify.py": {
+      "bytes": 23506,
+      "sha256": "2d10c5669a0c9ac6137a919e98cca3b313e0bf6bb11f4c22ff7c8d2b2afe6998"
+    }
+  }
+}

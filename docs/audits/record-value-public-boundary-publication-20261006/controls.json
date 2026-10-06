@@ -1,0 +1,67 @@
+[
+  {
+    "cause": "whole admitted source facts questions identity and route",
+    "control": "lost-receiver-fact",
+    "status": 1
+  },
+  {
+    "cause": "whole admitted source facts questions identity and route",
+    "control": "wrong-fact-id",
+    "status": 1
+  },
+  {
+    "cause": "whole admitted source facts questions identity and route",
+    "control": "wrong-current-route",
+    "status": 1
+  },
+  {
+    "cause": "whole admitted source facts questions identity and route",
+    "control": "lost-new-question",
+    "status": 1
+  },
+  {
+    "cause": "complete current question ownership",
+    "control": "borrowed-owner",
+    "status": 1
+  },
+  {
+    "cause": "actual query integer success",
+    "control": "Boolean-query-success",
+    "status": 1
+  },
+  {
+    "cause": "actual query integer success",
+    "control": "float-query-success",
+    "status": 1
+  },
+  {
+    "cause": "actual distinct direct/cache query command roles",
+    "control": "borrowed-query-command",
+    "status": 1
+  },
+  {
+    "cause": "unique scoped source/current/snapshot publication guide",
+    "control": "borrowed-snapshot-guide",
+    "status": 1
+  },
+  {
+    "cause": "physical capacity kind/allowance: files",
+    "control": "Boolean-capacity",
+    "status": 1
+  },
+  {
+    "cause": "complete physical capacity dimensions",
+    "control": "missing-capacity",
+    "status": 1
+  },
+  {
+    "cause": "physical capacity kind/allowance: files",
+    "control": "extra-physical-card",
+    "status": 1
+  },
+  {
+    "cause": "whole unchanged physical card authority",
+    "control": "widened-allowance",
+    "status": 1
+  }
+]

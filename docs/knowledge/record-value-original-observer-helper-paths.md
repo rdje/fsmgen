@@ -1,6 +1,6 @@
 ---
 id: record-value-original-observer-helper-paths
-title: Original observer and helper source paths have a complete finite join
+title: Original observer/helper source paths have a complete finite join
 answers:
   - "what inventories original observer and callback source roles?"
   - "what qualifies original observer API and parser operation boundaries?"
@@ -9,43 +9,39 @@ answers:
   - "are all original helper input and callback paths joined?"
   - "what qualifies original own subtest body and delegate source roles?"
   - "what qualifies the original do-load source and recorded file marker?"
-date: 2026-10-05
+  - "what qualifies original public subtest header and boundary compatibility?"
+date: 2026-10-06
 status: current
 tags: [isf, record, helper, observer, qualification]
 evidence: >-
   docs/audits/record-value-original-helper-join-20261005/scope.txt;
   docs/audits/record-value-own-subtest-boundaries-20261005/scope.txt;
-  docs/audits/record-value-own-boundary-publication-20261005/scope.txt;
+  docs/audits/record-value-own-boundary-publication-20261005/scope.txt; docs/audits/record-value-public-boundary-join-20261006/scope.txt; docs/audits/record-value-public-boundary-publication-20261006/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-own-boundary-publication-20261005/verify.py --current
+  docs/audits/record-value-public-boundary-publication-20261006/verify.py --current
 ---
 
-Own observer/callback source roles, bodies and operation allocations now inventory.
+Own observer/callback source roles/bodies/allocations inventory.
 Observer models join every API/parser operation, eval and installed wrapper with
 source argument roles. The parser receiver role is declared; identity is unmeasured.
-Named helper models preserve supplied/default inputs, complete source graphs,
-returned argument-building calls and active paths through both throw phases.
+Named helpers preserve complete source graphs and active paths.
 Compiled callback/refuses/helper-wrapper paths bind parameterless operation,
-source regex-body and label displays; identity and full formatting remain open. Paths now join.
-The complete source join now binds every helper allocation, full supplied/default
+source regex-body and label displays; identity and full formatting remain open.
+Source join binds every helper allocation, full supplied/default
 inputs, returned argument-building operations and compiled callback/refusal paths
-through both nested throw phases. Source models construct the intended join before
-recorded contiguous function order and visible argument roles are compared.
-Returned helpers remain separate from active frames. Complete model/allocation/
+through both nested throw phases. Source models construct the intended join
+before comparing recorded contiguous function order and visible argument roles.
+Returned helpers are separate from active frames. Complete model/allocation/
 phase/member/order/operand corruptions reject.
 
-Full subtest/require, public framework/quoting/truncation, parser internal paths,
-observer/class-frame/raw coordinates and actual callback/regex/object/address
-identity remain separately owned. Original provider/hook/class measurements stay
-unmeasured. Consumer, alias, complete semantic/cold/candidate-parent and permanent/
-hot/native repairs remain open. Visual mdBook QA is pending.
-
-The finite-copy core retains the original broader open boundary:
-
-Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/
-candidate-parent, hot and host-native meanings remain open.
+Full observer/display/frame/class-frame/raw-coordinate/address, subtest/load,
+framework/quoting/truncation and parser-internal meanings stay open.
+Original provider/hook/class measurements and callback/regex/object/native
+identity stay unmeasured. Consumer, alias, complete semantic/cold/
+candidate-parent and permanent/hot/host-native repairs stay open; visual
+mdBook QA is pending.
 
 Related: [[record-value-finite-copy-probe-reader]].
 
@@ -72,5 +68,7 @@ return/error semantics and require's do-file loading mechanism. The captured
 current Perl/Test::More profile is current public-interface evidence; the
 original framework version remains unmeasured.
 
-These own source roles refine the earlier broad subtest/require gap; full
-framework/display and actual callback/native identity remain unqualified.
+Original Test::Builder/Test::More headers match authored-name prefixes/CODE
+kinds and body/delegate/entry/do-load order at every throw phase. Independent
+dated public fixtures select them. Receiver tokens/private eval intervals stay
+opaque. Wrong name/kind/population/order rejects.

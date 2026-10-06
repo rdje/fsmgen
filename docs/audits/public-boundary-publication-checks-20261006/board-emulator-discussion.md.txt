@@ -1,0 +1,104 @@
+# DBINP: an IAL model as a board-emulator peripheral
+
+Director question, 2026-10-06. Owned discussion activity: publication leaf .5.4.2.2.1.
+This is feasibility analysis and architectural advice, not an implementation
+selection, new shipped capability, emulator choice or task-tree pivot.
+
+Yes in principle: firmware executes on the board emulator's CPU/MCU; a peripheral
+adapter translates its public bus/pin/time interactions into executable IAL
+semantics and translates model outputs into responses, interrupts and optional
+DMA. Firmware sees the device's software-visible contract. The wrapper does not
+automatically supply register behavior, a missing bus endpoint or chip functions
+that the IAL source does not model. An IAL2 bus-manager description cannot simply
+be exposed as a subordinate peripheral without the appropriate endpoint.
+
+Two feasible routes have different evidence obligations:
+
+- Existing production lowering: IAL2 -> IAL1 -> IAL0 -> supported HDL -> simulator
+  -> board adapter. Renode documents HDL co-simulation, including bus/interrupt
+  integration. Selecting any exact profile still needs a project-specific audit
+  and runnable firmware/device proof; no support claim follows from this note.
+- Proposed native intent route: elaborate the IAL source into a qualified
+  executable model, execute it in IASIM, expose a versioned session interface and
+  build a small emulator adapter. IASIM is already a separately owned proposed
+  HDL-independent kernel; its public mature embeddable peripheral API is not
+  established by the reviewed record. Semantic JSON/schedule reports alone are
+  not an executable peripheral runtime.
+
+The contract must define address/bus attachment; register widths, endianness,
+byte enables and invalid accesses; read/write side effects, FIFOs and errors;
+reset and IRQ behavior; optional DMA and external signals. Execution must preserve
+state, guards, actions, arbitration, handshake and reset semantics. Define
+logical time, clock-domain edges, same-time ordering, settle/update phases and
+how delayed responses/backpressure interact with emulator virtual time. The
+device must advance and issue an IRQ even when firmware makes no bus access.
+Wall-clock sleeps or stepping only on reads/writes cannot define device timing.
+
+An embedding interface could offer create/reset, reads/writes or typed bus
+transactions, advance-to-time, pending-event/IRQ queries, external inputs and
+state snapshot/restore. These are proposed operations, not selected API names.
+Memory ownership, lifecycle, errors, deterministic replay and transport must be
+specified. An in-process ABI and a separate process are options; choose only
+after defining semantics and auditing the target emulator's public interface.
+
+Qualification should run real firmware against a small register-based device:
+write START/input, observe BUSY, advance virtual time, receive IRQ, read result,
+clear completion and reset. Compare independently derived cases and native/HDL
+paths where qualified. Exercise partial accesses, access side effects, invalid
+addresses, backpressure, reset mid-operation, event ordering, IRQ without polling,
+and snapshot replay. Functional, transaction and cycle fidelity must be named
+separately. Digital device equivalence does not establish analog/electrical
+behavior or board/silicon timing.
+
+Architectural direction confirmed by the director: make this an adapter/client
+of IASIM's stable session interface. A separate emulator-specific semantic implementation
+would duplicate device behavior and create drift. The director subsequently confirmed this adapter direction ("Perfect for the IASIM adapter").
+This confirms the architectural preference without activating implementation or
+pivoting the current publication work.
+
+Repository sources: README.md; docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md;
+docs/knowledge/ial-contracts-backend-language-neutral.md;
+docs/knowledge/iasim-executable-reference-semantics.md;
+docs/knowledge/xial-native-development-framework.md;
+docs/tasks/IASIM-EXECUTABLE-REFERENCE-SEMANTICS.md.
+
+Primary external sources read on2026-10-06:
+https://www.qemu.org/docs/master/devel/memory.html (MMIO uses host read/write callbacks)
+https://renode.readthedocs.io/en/latest/advanced/writing-peripherals.html (bus/register modeling and side effects)
+https://renode.readthedocs.io/en/latest/advanced/co-simulating-with-an-hdl-simulator.html (HDL bus/IRQ integration and simulator transports)
+https://renode.readthedocs.io/en/latest/tutorials/co-simulating-custom-hdl.html (model evaluation and signal binding)
+
+## Director clarification and accepted direction
+
+The purpose is to debug IAL1/IAL2 against the emulated board as their environment
+without lowering them to an FSM first. The same board environment must also
+accept the FSM model through the lowered/HDL route. Both integration routes
+are requirements, not alternatives from which only one will be retained.
+
+The director confirms the IASIM-adapter direction and specifies direct native
+execution as FSMGen's default integration route. The lowered FSM/HDL route
+remains supported explicitly for board integration and differential validation.
+The direct route must use level-specific native semantic adapters, preserving
+IAL1/IAL2 source identities, state/transaction/rule observations and diagnostics;
+production lowering remains independently comparable rather than defining the
+native execution meaning. Existing proposed IASIM .1/.2/.3/.9 contracts own the
+architecture/execution/time/public-delivery prerequisites. The full request is
+recorded in the owning task-tree's board-emulator discussion section. No runtime
+implementation, emulator selection or current PNT frontier pivot is authorized
+by this documentation capture.
+
+## Cross-language host constraint
+
+The director specifies that the board emulator is written in Rust, independently
+of FSMGen's implementation language. The board adapter and IASIM session boundary
+must therefore be language-neutral. A Rust adapter communicating with the Perl
+reference kernel through a versioned typed process protocol is a proposed initial
+option; native execution does not imply in-process execution. An in-process ABI
+is another option requiring runtime embedding, ownership/lifetimes, arbitrary-width
+value representation, logical time, callbacks/reentrancy, error/panic boundaries
+and state restore to be explicit. Transport must not redefine semantics or use
+wall-clock message arrival as model time. Select transport only through the IASIM
+architecture/integration audit; profile representative firmware/device workloads
+before admitting an optimization. No Rust engine rewrite or foreign-repository
+write is implied. Both direct native (default) and lowered FSM/HDL routes remain
+required.

@@ -1,0 +1,30 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-publication-20261006/verify.py",
+    "--current",
+    "--build",
+    ".artifacts/public-boundary-publication-book",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/public-boundary-publication-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    },
+    "docs/audits/record-value-public-boundary-publication-20261006/verify.py": {
+      "bytes": 23506,
+      "sha256": "2d10c5669a0c9ac6137a919e98cca3b313e0bf6bb11f4c22ff7c8d2b2afe6998"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 137,
+  "stderr": "ram-guard: PID 36886; host 77.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nram-guard: host memory 88.1% reached cutoff 88%\nram-guard: terminating PID tree: 36886 36948 \n",
+  "stdout": ""
+}

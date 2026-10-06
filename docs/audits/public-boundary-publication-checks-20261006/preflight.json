@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-publication-checks-20261006/preflight.py"
+  ],
+  "instruments": {
+    "docs/audits/public-boundary-publication-checks-20261006/preflight.py": {
+      "bytes": 574,
+      "sha256": "22e47a9acb79f922f9e7c78ed168ecab781359ed1898f362133105b1a24b97e4"
+    },
+    "docs/audits/public-boundary-publication-checks-20261006/run.py": {
+      "bytes": 990,
+      "sha256": "fcd9d3e1f247efdd63a1833a6c48d44184f9ba743379ad04cf212e8a9e6843a7"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS source/current/native publication predicates and genuine controls; complete prerequisite replay remains separate.\n"
+}
