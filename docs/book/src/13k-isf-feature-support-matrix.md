@@ -594,11 +594,6 @@ The finite original public-header join below now qualifies source/signature
 compatibility; full current fact publication remains the next owned step. All project outputs and scratch stay local;
 installed public toolchain access is necessary and read-only.
 
-The public-header checks and scoped native guide below are qualified as a
-checkpoint. The current combined seal replay stopped at the unchanged RAM guard
-cutoff. No whole-member seal or independent final result qualification is
-claimed yet; these durability steps remain active before full fact publication.
-
 The complete finite original public boundary join now compares source-selected
 named-subtest bodies, own eval/delegate/load boundaries and recorded public
 Test::Builder/Test::More headers. Published interfaces and separate current
@@ -626,6 +621,20 @@ opaque. The authored load operator remains do despite its displayed require
 marker. Full current fact publication and the class/frame and coordinate/address
 joins retain their own next steps; current compatibility never supplies missing
 historical identity.
+
+For a narrower replay, authenticate the successful full prerequisite executions
+and every declared transitive audit input against committed checkpoint af4999e7,
+then execute the current source models, original header join, separating controls
+and native guide checks afresh:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-join-20261006/verify.py --checkpoint-prerequisites
+```
+
+This option reports saved prerequisite executions explicitly; it does not claim
+they ran again. Changed inputs, programmes or saved receipt roles refuse. Both
+commands retain the default RAM limits. The earlier broad seal attempt stopped
+at the host cutoff and remains failure evidence.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the

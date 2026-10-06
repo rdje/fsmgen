@@ -1,0 +1,6 @@
+{
+  "actual_pending": "The public-header checks and scoped native guide below are qualified as a\ncheckpoint. The current combined seal replay stopped at the unchanged RAM guard\ncutoff. No whole-member seal or independent final result qualification is\nclaimed yet; these durability steps remain active before full fact publication.\n\n",
+  "cause": "Exact pending-note assertion failed before chapter or scope mutation.",
+  "guide_count": 1,
+  "status": 1
+}

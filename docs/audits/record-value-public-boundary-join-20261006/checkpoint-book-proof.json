@@ -1,0 +1,26 @@
+{
+  "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-join-20261006/verify.py",
+  "controls": [
+    {
+      "cause": "native exact original public join command",
+      "control": "extra-public-join-argument",
+      "status": 1
+    },
+    {
+      "cause": "native completed public join deferrals retired",
+      "control": "stale-profile-next-step",
+      "status": 1
+    },
+    {
+      "cause": "native full finite public compatibility and historical gaps",
+      "control": "invented-original-version",
+      "status": 1
+    },
+    {
+      "cause": "native full finite public compatibility and historical gaps",
+      "control": "invented-private-eval-purpose",
+      "status": 1
+    }
+  ],
+  "visual_QA": "pending; separately owned"
+}

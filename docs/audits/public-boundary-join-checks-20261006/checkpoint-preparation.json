@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-join-20261006/prepare_checkpoint.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 28376; host 78.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS committed transitive checkpoint inputs, saved actual prerequisite receipts and genuine scope/member/typed/borrowed controls.\n"
+}

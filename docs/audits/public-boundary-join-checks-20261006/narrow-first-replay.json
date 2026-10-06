@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-join-20261006/verify.py",
+    "--checkpoint-prerequisites"
+  ],
+  "status": 1,
+  "stderr": "ram-guard: PID 52737; host 50.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-public-boundary-join-20261006/verify.py\", line 221, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-public-boundary-join-20261006/verify.py\", line 203, in main\n    save('book-proof.json', guide['proof']((BASE / 'book-input.html').read_text()))\n                            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-public-boundary-join-20261006/book.py\", line 89, in proof\n    check(html)\n    ~~~~~^^^^^^\n  File \"docs/audits/record-value-public-boundary-join-20261006/book.py\", line 82, in check\n    raise ValueError('native exact checkpoint public join command')\nValueError: native exact checkpoint public join command\n",
+  "stdout": ""
+}

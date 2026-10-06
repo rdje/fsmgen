@@ -2,6 +2,7 @@
 from html.parser import HTMLParser
 
 COMMAND = 'scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-join-20261006/verify.py'
+CHECKPOINT_COMMAND = COMMAND + ' --checkpoint-prerequisites'
 GUIDE = '''The complete finite original public boundary join now compares source-selected
 named-subtest bodies, own eval/delegate/load boundaries and recorded public
 Test::Builder/Test::More headers. Published interfaces and separate current
@@ -29,6 +30,20 @@ opaque. The authored load operator remains do despite its displayed require
 marker. Full current fact publication and the class/frame and coordinate/address
 joins retain their own next steps; current compatibility never supplies missing
 historical identity.
+
+For a narrower replay, authenticate the successful full prerequisite executions
+and every declared transitive audit input against committed checkpoint af4999e7,
+then execute the current source models, original header join, separating controls
+and native guide checks afresh:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-public-boundary-join-20261006/verify.py --checkpoint-prerequisites
+```
+
+This option reports saved prerequisite executions explicitly; it does not claim
+they ran again. Changed inputs, programmes or saved receipt roles refuse. Both
+commands retain the default RAM limits. The earlier broad seal attempt stopped
+at the host cutoff and remains failure evidence.
 
 '''
 
@@ -60,9 +75,12 @@ def check(html):
         raise ValueError('native exact original public join command')
     visible = ' '.join(' '.join(p.parts).split())
     for stale in ('original outer-boundary join remains the next step.',
-                  'The finite original public-boundary join and full current fact publication remain the next owned steps.'):
+                  'The finite original public-boundary join and full current fact publication remain the next owned steps.',
+                  'The public-header checks and scoped native guide below are qualified as a checkpoint.'):
         if stale in visible:
             raise ValueError('native completed public join deferrals retired')
+    if p.codes.count(CHECKPOINT_COMMAND) != 1:
+        raise ValueError('native exact checkpoint public join command')
     expected = GUIDE.replace('```bash\n', '').replace('```\n', '')
     if ' '.join(expected.split()) not in ' '.join(' '.join(p.parts).split()):
         raise ValueError('native full finite public compatibility and historical gaps')
@@ -74,6 +92,8 @@ def proof(html):
     for name, before, after, cause in [
         ('extra-public-join-argument',COMMAND,COMMAND+' --borrowed','native exact original public join command'),
         ('stale-profile-next-step','</body>','<p>original outer-boundary join remains the next step.</p></body>','native completed public join deferrals retired'),
+        ('stale-pending-seal','</body>','<p>The public-header checks and scoped native guide below are qualified as a checkpoint.</p></body>','native completed public join deferrals retired'),
+        ('invented-fresh-prerequisites','This option reports saved prerequisite executions explicitly;','This option reports fresh prerequisite executions explicitly;','native full finite public compatibility and historical gaps'),
         ('invented-original-version','does not establish the original','establishes the original','native full finite public compatibility and historical gaps'),
         ('invented-private-eval-purpose','Private framework frames and eval intervals remain','Private framework frames and eval intervals are explained and remain','native full finite public compatibility and historical gaps'),
     ]:

@@ -1,0 +1,11 @@
+{
+  "mapping": {
+    "book-input.html": "checkpoint-book-input.html",
+    "book-proof.json": "checkpoint-book-proof.json",
+    "book.py": "checkpoint-book.py.txt",
+    "publish_book.py": "checkpoint-publish-book.py.txt",
+    "scope.txt": "checkpoint-scope.txt.txt"
+  },
+  "role": "Narrow exact retained filename/Git-byte readback; full independent result verification still required.",
+  "status": 0
+}

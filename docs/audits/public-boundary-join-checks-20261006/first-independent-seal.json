@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-join-checks-20261006/verify_seal.py"
+  ],
+  "status": 1,
+  "stderr": "ram-guard: PID 7188; host 53.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/public-boundary-join-checks-20261006/verify_seal.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/public-boundary-join-checks-20261006/verify_seal.py\", line 75, in main\n    check(receipt)\n    ~~~~~^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/public-boundary-join-checks-20261006/verify_seal.py\", line 57, in check\n    require(retained.read_bytes() == committed, 'whole retained committed checkpoint guide/scope/producer: ' + name)\n            ~~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 777, in read_bytes\n    with self.open(mode='rb', buffering=0) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 771, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'docs/audits/record-value-public-boundary-join-20261006/checkpoint-publish_book.py.txt'\n",
+  "stdout": ""
+}

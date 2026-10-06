@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-public-boundary-join-20261006/publish_replay_book.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS exact committed chapter transformation and measured aggregate for resource-safe replay guide.\n"
+}

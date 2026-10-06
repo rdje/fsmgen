@@ -12,6 +12,16 @@
       "status": 1
     },
     {
+      "cause": "native completed public join deferrals retired",
+      "control": "stale-pending-seal",
+      "status": 1
+    },
+    {
+      "cause": "native full finite public compatibility and historical gaps",
+      "control": "invented-fresh-prerequisites",
+      "status": 1
+    },
+    {
       "cause": "native full finite public compatibility and historical gaps",
       "control": "invented-original-version",
       "status": 1

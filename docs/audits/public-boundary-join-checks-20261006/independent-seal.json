@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/public-boundary-join-checks-20261006/verify_seal.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 67321; host 63.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS actual checkpoint public boundary seal, complete independent source/header/control/guide regeneration and typed/member/borrowed-result refusals.\nstatus-True: refused at actual public boundary seal integer success\nstatus-0.0: refused at actual public boundary seal integer success\nstatus-1: refused at actual public boundary seal integer success\nmember-count-True: refused at actual public boundary discrete member byte-count kind\nmember-count-0.0: refused at actual public boundary discrete member byte-count kind\nlost-sealed-member: refused at whole actual public boundary sealed byte population\ninvented-guard-threshold: refused at whole successful default-guard seal diagnostics\nborrowed-public-fixture-success: refused at exact actual checkpoint public boundary seal command/result\n"
+}

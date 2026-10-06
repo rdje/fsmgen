@@ -1,0 +1,45 @@
+{
+  "controls": [
+    {
+      "cause": "exact committed checkpoint and saved execution scope",
+      "control": "borrowed-checkpoint",
+      "status": 1
+    },
+    {
+      "cause": "complete unchanged checkpoint input/member/programme binding",
+      "control": "lost-transitive-input-root",
+      "status": 1
+    },
+    {
+      "cause": "checkpoint input discrete byte-count kind",
+      "control": "boolean-input-byte-count",
+      "status": 1
+    },
+    {
+      "cause": "complete unchanged checkpoint input/member/programme binding",
+      "control": "changed-transitive-member",
+      "status": 1
+    },
+    {
+      "cause": "saved prerequisite integer success",
+      "control": "saved-prerequisite-status-True",
+      "status": 1
+    },
+    {
+      "cause": "saved prerequisite integer success",
+      "control": "saved-prerequisite-status-0.0",
+      "status": 1
+    },
+    {
+      "cause": "saved prerequisite integer success",
+      "control": "saved-prerequisite-status-1",
+      "status": 1
+    },
+    {
+      "cause": "exact saved actual prerequisite command/result",
+      "control": "borrowed-public-only-prerequisite",
+      "status": 1
+    }
+  ],
+  "scope": "Saved actual full prerequisites at the committed checkpoint; no fresh prerequisite execution is claimed."
+}

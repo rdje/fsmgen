@@ -14,6 +14,7 @@ CONTEXT_CHECKS = Path('docs/audits/parser-context-join-checks-20261006')
 FIXTURE = Path('docs/audits/record-value-public-native-fixtures-20261006')
 FIXTURE_CHECKS = Path('docs/audits/public-native-fixture-checks-20261006')
 REVISION = '66fb051cfca1d170cdcf7c8b46d316b8d8e185ae'
+SUCCESS = 'PASS complete finite original public boundary/header compatibility and separating controls; historical/private/identity meanings remain open.\n'
 
 
 def module(path):
@@ -50,7 +51,7 @@ def committed(directory):
         return {entry.name: archive.extractfile(entry).read() for entry in archive.getmembers() if entry.isfile()}
 
 
-def authenticate():
+def authenticate(checkpoint_prerequisites=False):
     binding = load(BASE / 'binding.json')
     require(binding['revision'] == REVISION and set(binding['archives']) == {str(p) for p in DIRECTORIES},
             'fixed complete original/public root and actual-checker intake')
@@ -67,6 +68,8 @@ def authenticate():
             {p:identity(raw) for p,raw in actual.items()}), 'whole committed public/context source/programme/receipt products')
     if (BASE / 'manifest.json').exists():
         require(same(load(BASE / 'manifest.json'), members()), 'whole immutable original public boundary seal')
+    if checkpoint_prerequisites:
+        return module(BASE / 'checkpoint.py')['qualify'](globals())
     receipts = []
     for directory in DIRECTORIES:
         programme = directory / ('verify_seal.py' if directory in (CONTEXT_CHECKS, FIXTURE_CHECKS) else 'verify.py')
@@ -185,8 +188,12 @@ def controls(expected, original, nested):
 
 
 def main():
-    p = argparse.ArgumentParser(description=__doc__); p.add_argument('--seal',action='store_true'); args=p.parse_args()
-    replays = authenticate(); expected = models()
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--seal', action='store_true')
+    p.add_argument('--checkpoint-prerequisites', action='store_true',
+                   help='authenticate saved full prerequisite executions at the unchanged committed checkpoint; rerun the current join')
+    args = p.parse_args()
+    replays = authenticate(args.checkpoint_prerequisites); expected = models()
     original = load(context['RAW'] / 'proofs.json')['inventories']
     nested = context['nested_records'](expected['own'])
     save('proofs.json', dict(models=expected, observations=check(expected,expected,original,original,nested),
@@ -205,7 +212,9 @@ def main():
         raise ValueError('false-green initial stale chapter currency')
     if args.seal:
         save('manifest.json',members())
-    print('PASS complete finite original public boundary/header compatibility and separating controls; historical/private/identity meanings remain open.')
+    if args.checkpoint_prerequisites:
+        print('Prerequisites: authenticated saved full executions at af4999e7; current source/header/control/guide checks rerun.')
+    print(SUCCESS, end='')
 
 
 if __name__ == '__main__':
