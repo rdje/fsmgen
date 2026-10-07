@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-source-catalog-checks-20261007/verify_book.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-source-catalog-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "9742def199885f93858d17f0304a80b90699c2fc87436cc86cf2540db36b1126"
+    },
+    "docs/audits/coordinate-source-catalog-checks-20261007/verify_book.py": {
+      "bytes": 4628,
+      "sha256": "4ab327a6530c252d943653cda2e4c7878b82ae86264411391f43b4d7009b88b7"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 36278; host 41.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete saved scoped source/native coordinate catalog guide and genuine controls; runtime line selection and original coordinate join remain pending.\n"
+}

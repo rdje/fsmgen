@@ -5007,9 +5007,55 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.2: retain historical result epoch fact without collection growth`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Derive complete independent raw-coordinate source recipes before intake.`
   Acceptance: `Select all coordinate hypotheses from qualified complete own call/guard/observer/generated-source statements and the pinned public caller/eval/Carp/subtest contracts, never from raw coordinates or opaque inherited operands. Bind exact legitimate invocation-root/line recipes; partition any unmeasured original/private/formatter dependency explicitly. Run independent source/generation/public finite controls before new original-coordinate intake.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1`
+  Status: `done`
+  Goal: `Bind complete own source and generated-observer statement/line catalog.`
+  Acceptance: `Independently select all qualified own guard/call, observer/helper/subtest and parser source statements from whole committed sources. Bind byte offsets, lexical owner bodies and unambiguous source-line ranges plus source/generation/invocation-root custody. Do not read new original raw coordinates or infer Perl/Carp line selection yet. Genuine missing/duplicate/borrowed/owner/line/kind/source-generation controls must reject. Retain complete source inputs and independent reconstruction before public recipe work.`
+  Verification: `Whole fixed ac6fa991 original own source authority and complete ordered observer generation authenticate. Seven own units independently yield422 complete named functions, all selected Value/Metadata guard/call declarations and113 qualified origin/observer/helper/callback/subtest/parser spans. Exact UTF-8 source bytes and inclusive lexical line ranges conserve; every original source fixture before/after and all four invocation recipes bind. First multiline-only scanner failure and full first programme/inputs retain; single-line predicates and diagnostic_line are restored, with independent binary span and whole function reconstruction. First saved-consumer sorted-map order mismatch also retains; complete map equality and independently committed declaration order qualify immutable ordered arrays without reseal. Eleven genuine source/control mutations and seven independent actual/kind/member/span controls reject. Complete saved admission replay passes; guarded focused current/book All tests successful Files3 Tests310. Separate source/native/claim/staged/hooks must qualify commit. Public runtime line selection, original coordinate joins and original private/formatter/toolchain identities remain explicitly pending; Knowledge Map publication stays .2.4-owned under unchanged authority.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1: qualify independent own coordinate source catalog`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1.1`
+  Status: `done`
+  Goal: `Repair the first incomplete own named-function lexical scanner.`
+  Acceptance: `Retain first programme and actual failed source derivation. The scanner accepted only multiline bodies and therefore omitted existing single-line predicates and diagnostic_line. Derive both finite authored forms, independently conserve every complete function and source span, and reject actual omission/source/line/owner controls. Preserve complete first source inputs and qualify repair before parent catalog closes.`
+  Verification: `Complete first scanner programme/inputs/actual failure and precise omission diagnosis retain. Both finite single-line and multiline bodies now conserve every source-declared function; independent byte/LF span reconstruction and genuine omission/line/source/owner controls pass. No raw coordinate or public runtime line claim follows.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1: qualify independent own coordinate source catalog`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1.2`
+  Status: `done`
+  Goal: `Repair independent catalog consumption after sorted JSON object serialization.`
+  Acceptance: `Preserve the first saved consumer and actual failure plus the immutable catalog seal. JSON object ordering differs after serialization; selecting declaration order from loaded objects changes ordered span arrays. Authenticate complete saved maps against independently fixed committed source, then reconstruct the producer declaration order from that source before comparison. Keep all lexical/line/kind/owner/member/raw-scope predicates and genuine controls; no reseal, broader normalization or original coordinate claim.`
+  Verification: `First independent consumer programme/actual failure and sorted-map cause retain. Whole saved source maps authenticate against fixed committed declarations, whose original insertion order independently regenerates ordered arrays. Immutable catalog/seal remain exact; every function/UTF-8/line/owner/control predicate and genuine status/size/member refusals pass. No sorted-array or raw-coordinate normalization occurs.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1: qualify independent own coordinate source catalog`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1.3`
+  Status: `done`
+  Goal: `Close the new source-catalog guide claim disposition and inventory gate.`
+  Acceptance: `Retain the first full staged gate failure. Its new UTF-8 source-span statement is an unreviewed general-book candidate, and inventory regeneration preceded the last live budget update. Add evidence-bearing disposition for the exact existing source claim without changing its semantics; regenerate inventory after all live updates, and rerun the complete staged gate. No claim/collection ceiling or original evidence changes.`
+  Verification: `First full gate retains exact inventory drift and one open general-book candidate. The new scoped source-span claim receives distinct committed-source derivation, independent binary/control falsification and sealed source/native/actual durability legs. Second gate retains required canonical general-book group ownership and sorted-watcher diagnostics; declaration metadata is corrected without source/seal/predicate changes. Final inventory and staged/hooks qualify commit.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1: qualify independent own coordinate source catalog`
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Qualify public finite caller/eval/Carp line and filename recipes.`
+  Acceptance: `Use pinned complete public contracts and independent own fixtures to select exact line and filename behavior for the source catalog, including multiline calls, eval/load, anonymous delegates and legitimate invocation roots. Retain whole public native commands/inputs/results and genuine wrong-caller/line/root/control decisions. Original toolchain/private/formatter identity remains unmeasured; no new original-coordinate intake.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3`
+  Status: `pending`
+  Goal: `Compose and seal every independent coordinate source hypothesis.`
+  Acceptance: `Join complete qualified own statement/generation/invocation-root custody, per-refusal source paths and independent finite public recipes before new original-coordinate intake. Independently rederive whole hypotheses and all separating controls; every unresolved original/private dependency remains explicitly partitioned with follow-up ownership. Commit the full source derivation before .2.3 original join.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6654,3 +6700,9 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual `git log -S 'whole actual current physical source and non-target conservation'` history and the complete f7 first-actual-publication_result.json identify the historical qualifier's old live-source precondition. Canonical query for historical class/frame actual-result verification returned no owner; the repaired committed-epoch result needs a durable scoped fact and question. Initial proposed growth exceeds the unchanged physical byte allowance and genuinely refuses bytes_total.
 - [x] **ADDRESSED (verified)** — Exact fixed before/after source and four explicit clause reviews retain every original fact/question outside the finite reviewed compactions. One new question and unchanged committed-epoch replay fact add at zero byte growth. The maintained target transformer, canonical card and current historical/native result prerequisite update together. Complete source/allocation/census/capacity and prior sealed admission execution qualify; original evidence/current currency remain separate. Re-derivation, falsification and durability legs retain in the owning publication audit; unrestricted prose-equivalence and original coordinate/native-private measurement are not claimed.
 - [x] **NO REGRESSION** — Guarded T2066/T2003/T1303/T1305 reports All tests successful, Files=4, Tests=312. Current and immutable dated admission replays pass after genuine current progress; new question/epoch/private promotion and retained compiler results are protected. Fresh complete source/native actual capture, frozen saved consumer and genuine typed/member/borrowed controls plus claim/staged/doctrine/hooks must gate commit. No allowance/ceiling, original source/capture/seal, visual/HIAL/full-CI/push change occurs.
+
+## Acceptance Checklist — coordinate source catalog .3.2.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` in docs/audits/coordinate-source-catalog-checks-20261007/root-cause.json locates the complete predecessor model’s explicit unmeasured coordinate scope. First actual scanner failure names verify.py:129 and omitted existing single-line bodies; complete programme/source/diagnosis retain. First independent consumer failure at verify_saved.py:113 exposes sorted-object iteration changing ordered derived arrays. Both are owned before repair; source maps, declaration order and runtime-coordinate meanings remain distinct.
+- [x] **ADDRESSED (verified)** — Complete committed original own sources and ordered observer generation independently derive lexical UTF-8 spans and line ranges, with full function/guard/call/helper/callback/subtest/parser coverage and legitimate original invocation recipes. Independent binary reconstruction and whole-map/declaration-order checks pass without any old capture/seal change. Final instrument-pinned actual seal and genuine wrong-line/owner/member/source/generation/root/kind/promotion controls qualify the retained catalog. Public runtime selection and original-coordinate join remain explicitly scheduled.
+- [x] **NO REGRESSION** — `All tests successful.` in docs/audits/coordinate-source-catalog-checks-20261007/focused.json covers current publication and public book paths/matrix: Files3 Tests310. Complete saved admission replay, sealed catalog and independent actual-result consumption pass. Source endpoints, native book, fresh claim inventory and staged doctrine/hooks qualify closure; no allowance ceiling, old sealed source/programme/capture, private/submodule/native/HIAL/full-CI/push or visual closure changes.

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-source-catalog-20261007/verify.py"
+  ],
+  "status": 1,
+  "stderr": "ram-guard: PID 28080; host 83.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-coordinate-source-catalog-20261007/verify.py\", line 268, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-coordinate-source-catalog-20261007/verify.py\", line 258, in main\n    expected = derive(source)\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-coordinate-source-catalog-20261007/verify.py\", line 129, in derive\n    require([m[1] for m in functions] == re.findall(r'^sub ([A-Za-z_]\\w*)', body, re.M),\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'complete finite own named function lexical bodies')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-coordinate-source-catalog-20261007/verify.py\", line 37, in require\n    raise ValueError(cause)\nValueError: complete finite own named function lexical bodies\n",
+  "stdout": ""
+}

@@ -1,0 +1,52 @@
+{
+  "actual": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "mdbook",
+      "build",
+      "docs/book",
+      "--dest-dir",
+      ".artifacts/coordinate-source-catalog-book"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-source-catalog-checks-20261007/run.py": {
+        "bytes": 1255,
+        "sha256": "9742def199885f93858d17f0304a80b90699c2fc87436cc86cf2540db36b1126"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 34900; host 34.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15278717 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/coordinate-source-catalog-book`\n",
+    "stdout": ""
+  },
+  "controls": [
+    {
+      "cause": "complete native source-catalog guide and explicit coordinate deferral",
+      "control": "lost-runtime-deferral",
+      "status": 1
+    },
+    {
+      "cause": "complete native source-catalog guide and explicit coordinate deferral",
+      "control": "borrowed-reader-route",
+      "status": 1
+    },
+    {
+      "cause": "actual exact same-volume native book build command and integer success",
+      "control": "Boolean-native-status",
+      "status": 1
+    }
+  ],
+  "native": {
+    "bytes": 242264,
+    "sha256": "830f808f37c8b070f02b0d7e64692a1d67e33b193f9dae8345f55887c949c855"
+  },
+  "scope": "Exact scoped saved source/native guide; no live future currency, runtime line selection, original coordinate, formatter/private identity or visual QA claim.",
+  "source": {
+    "bytes": 205042,
+    "sha256": "fef8a040210b8b22ea5a12bb06e49d951c71ffc5792319127949b18df8684c53"
+  }
+}

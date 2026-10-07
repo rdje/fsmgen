@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-source-catalog-checks-20261007/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-source-catalog-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "9742def199885f93858d17f0304a80b90699c2fc87436cc86cf2540db36b1126"
+    },
+    "docs/audits/coordinate-source-catalog-checks-20261007/verify_saved.py": {
+      "bytes": 8373,
+      "sha256": "1629ddadb9866d15839b4a33cc135a248665e4644a1f0270625063059f858148"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 34539; host 36.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"controls\": [{\"cause\": \"actual catalog genuine integer success\", \"control\": \"status-True\", \"status\": 1}, {\"cause\": \"actual catalog genuine integer success\", \"control\": \"status-0.0\", \"status\": 1}, {\"cause\": \"actual catalog genuine integer success\", \"control\": \"status-1\", \"status\": 1}, {\"cause\": \"independent every complete single-line and multiline named function\", \"control\": \"missing-function\", \"status\": 1}, {\"cause\": \"independent inclusive lexical source line range\", \"control\": \"wrong-lexical-line\", \"status\": 1}, {\"cause\": \"independent complete UTF-8 source span selection\", \"control\": \"wrong-source-byte\", \"status\": 1}, {\"cause\": \"source span genuine integer dimensions\", \"control\": \"Boolean-source-size\", \"status\": 1}], \"members\": 9, \"named_functions\": 422, \"role\": \"Complete own lexical source spans and generated-observer/invocation custody only. Runtime call-site line selection, original raw coordinates, private framework and original formatter/toolchain identity are not established by this catalog.\", \"selected_spans\": 113, \"units\": 7}\n"
+}

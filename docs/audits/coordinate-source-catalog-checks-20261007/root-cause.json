@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "Original pre-serialization class, hooks, formatter, coordinates and referent identities are unmeasured.",
+    "--",
+    "docs/audits/record-value-class-frame-join-20261006/model.py"
+  ],
+  "locus": "The complete qualified class/frame source model explicitly leaves coordinates unmeasured; this new slice derives lexical own-source spans independently, before public runtime selection.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "017a8f70b02490288ec87e6815eb6fdda6702061 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.2: qualify independent finite class/frame join\n"
+}

@@ -1,0 +1,25 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "scripts/check_claim_verification_dispositions.pl",
+    "--report"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-source-catalog-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "9742def199885f93858d17f0304a80b90699c2fc87436cc86cf2540db36b1126"
+    },
+    "scripts/check_claim_verification_dispositions.pl": {
+      "bytes": 28293,
+      "sha256": "19928d1e7d5124a631e35ea4db7d35569b87521586f28fe872a62e6dff547243"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 56414; host 46.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "claim-dispositions: bounded disposition join holds (candidates=1980, disposed=1980, claim_records=316, gates=1037, reviewed=627, gaps=0, open=0, groups=6)\nclaim-dispositions: group general_book disposed=296 total=296 open=0 required_complete=1\nclaim-dispositions: group ial2_ahb disposed=232 total=232 open=0 required_complete=1\nclaim-dispositions: group inactive_proxy disposed=5 total=5 open=0 required_complete=1\nclaim-dispositions: group protocol disposed=557 total=557 open=0 required_complete=1\nclaim-dispositions: group root_documents disposed=92 total=92 open=0 required_complete=1\nclaim-dispositions: group verification_architecture disposed=798 total=798 open=0 required_complete=1\n"
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-source-catalog-20261007/verify.py",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-source-catalog-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "9742def199885f93858d17f0304a80b90699c2fc87436cc86cf2540db36b1126"
+    },
+    "docs/audits/record-value-coordinate-source-catalog-20261007/verify.py": {
+      "bytes": 16881,
+      "sha256": "33887b16ef240a63b2f89518945e7b47a90918bc01419a37fd2229dfb36dfcea"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 33126; host 50.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete independently derived own source span catalog and genuine controls; public line selection and original-coordinate join remain pending.\n"
+}

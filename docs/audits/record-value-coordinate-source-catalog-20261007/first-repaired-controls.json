@@ -1,0 +1,57 @@
+[
+  {
+    "cause": "whole own lexical source span catalog and integer kinds",
+    "control": "wrong-line",
+    "status": 1
+  },
+  {
+    "cause": "whole own lexical source span catalog and integer kinds",
+    "control": "Boolean-line",
+    "status": 1
+  },
+  {
+    "cause": "whole own lexical source span catalog and integer kinds",
+    "control": "wrong-owner",
+    "status": 1
+  },
+  {
+    "cause": "whole own lexical source span catalog and integer kinds",
+    "control": "lost-call",
+    "status": 1
+  },
+  {
+    "cause": "whole source unit path/body identity",
+    "control": "borrowed-source",
+    "status": 1
+  },
+  {
+    "cause": "unique complete source span",
+    "control": "duplicate-statement",
+    "status": 1
+  },
+  {
+    "cause": "unique ordered observer generation replacement",
+    "control": "changed-generation",
+    "status": 1
+  },
+  {
+    "cause": "legitimate original invocation root recipe",
+    "control": "foreign-root",
+    "status": 1
+  },
+  {
+    "cause": "source invocation genuine same-volume Boolean",
+    "control": "Boolean-root-proof",
+    "status": 1
+  },
+  {
+    "cause": "exact original invocation command recipe",
+    "control": "borrowed-command",
+    "status": 1
+  },
+  {
+    "cause": "whole own lexical source span catalog and integer kinds",
+    "control": "runtime-coordinate-promotion",
+    "status": 1
+  }
+]

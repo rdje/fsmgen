@@ -1,0 +1,12 @@
+{
+  "reconstructed_identity": {
+    "bytes": 15087,
+    "sha256": "3de7542d03f8ab92e7b4f4080efaf6515041c1b80f53d1f8dc7961be589259ed"
+  },
+  "replacement": {
+    "after": "        # The pinned own sources contain both whole single-line predicates\n        # and bodies ending at a column-zero closing brace. This finite\n        # scanner is checked against every declaration; it is not a general\n        # Perl parser and cannot silently omit another authored form.\n        functions = list(re.finditer(\n            r'^sub ([A-Za-z_]\\w*)[^\\n]*?\\{(?:[^\\n]*\\}$|\\n.*?^})',\n            body, re.M | re.S))\n",
+    "before": "        functions = list(re.finditer(r'^sub ([A-Za-z_]\\w*)[^\\n]*\\{\\n.*?^}', body, re.M | re.S))\n"
+  },
+  "role": "Reconstructed intermediate source, not an originally retained or byte-pinned executed programme. Earlier successful derive.json is retained as a draft result only; final seal.json has independently checked complete executed instrument identities.",
+  "whole_source_inputs_and_both_saved_products_rederived": true
+}

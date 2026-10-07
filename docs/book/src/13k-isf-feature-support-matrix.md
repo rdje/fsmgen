@@ -948,6 +948,16 @@ toolchain identities remain unmeasured.
 The current reader also independently consumes this committed admission’s complete
 historical and native result evidence before checking present source currency.
 
+The own-source coordinate catalog now binds complete guard/call, named function,
+observer wrapper, callback and subtest source spans to their exact UTF-8 bytes
+and lexical line ranges. It preserves ordered observer generation and the
+original fixture-root invocation recipes. Lexical spans do not yet select
+runtime call-site lines or qualify original raw coordinates:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-source-catalog-20261007/verify.py
+```
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

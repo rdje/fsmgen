@@ -1,0 +1,5 @@
+{
+  "cause": "Sorted JSON object serialization does not retain Python dictionary insertion order. Whole source objects agree; deriving ordered arrays from the reloaded map produces a different order.",
+  "locus": "verify_saved.py:113",
+  "repair": "Authenticate whole maps; independently reconstruct fixed committed declaration order before deriving arrays. Preserve all seal/member/typed span predicates."
+}
