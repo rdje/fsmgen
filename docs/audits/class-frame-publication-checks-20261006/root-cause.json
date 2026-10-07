@@ -1,0 +1,22 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Complete original core/observer/tooling sentence/clause propositions",
+    "-1",
+    "--format=%H",
+    "--fixed-strings",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "50dd117496d4d226bff3cf2a5226caab45104416\n"
+}

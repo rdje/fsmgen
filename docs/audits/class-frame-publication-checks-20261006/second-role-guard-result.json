@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py",
+    "--resume"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+      "bytes": 6049,
+      "sha256": "a3ef2dfa1e545ce56ec206265e1ecca25be763c56f48749573b0db7ac418c2b4"
+    },
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 137,
+  "stderr": "ram-guard: PID 73869; host 61.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nram-guard: host memory 88.2% reached cutoff 88%\nram-guard: terminating PID tree: 73869 74133 18609 \n",
+  "stdout": ""
+}

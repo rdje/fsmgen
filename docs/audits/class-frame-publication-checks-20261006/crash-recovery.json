@@ -1,0 +1,41 @@
+{
+  "backup": {
+    "bytes": 203343,
+    "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+  },
+  "completed_roles": [
+    "new-default",
+    "new-current",
+    "retention-default",
+    "retention-old-epoch",
+    "tooling-default",
+    "tooling-old-epoch",
+    "core-obligation-1",
+    "core-obligation-2",
+    "core-obligation-3",
+    "core-obligation-4",
+    "original-locality-obligation"
+  ],
+  "members": {
+    "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+      "bytes": 7458,
+      "retained": "docs/audits/class-frame-publication-checks-20261006/crash-qualify-roles.py.txt",
+      "sha256": "16e119496316fa3e0ed05594a39c7bd7a5a14351e19c0251c9f5ef1116d9a2e1"
+    },
+    "docs/audits/class-frame-publication-checks-20261006/roles.json": {
+      "bytes": 25585,
+      "retained": "docs/audits/class-frame-publication-checks-20261006/crash-role-prefix.json",
+      "sha256": "326f1520d351d4016cbc15d5e6ed0ebc4ac9704e9769078d5a67c80eba44c912"
+    },
+    "docs/book/src/13k-isf-feature-support-matrix.md": {
+      "bytes": 203430,
+      "retained": "docs/audits/class-frame-publication-checks-20261006/interrupted-book.md.txt",
+      "sha256": "547d6694f4e4df9ebf55887e50300aa3e1015201742e4f4d3c956bff20f857ea"
+    }
+  },
+  "missing_result": "roles-result.json",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.3.3",
+  "progress": "\nTemporary unrelated book-progress control for the owned current-reader qualification.\n",
+  "revision": "50dd117496d4d226bff3cf2a5226caab45104416",
+  "role": "User-reported machine crash; completed child prefix survives but enclosing process terminal result is missing. No interrupted or unrecorded role is claimed successful. Exact temporary control restoration precedes suffix-only continuation."
+}

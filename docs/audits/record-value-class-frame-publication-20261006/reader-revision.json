@@ -1,0 +1,51 @@
+{
+  "after": {
+    "bytes": 22291,
+    "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+  },
+  "before": {
+    "bytes": 20316,
+    "sha256": "7ed3d6160715a31f1c92a5de600d3a586872cceb839bce6c28bd39fbf09f61e4"
+  },
+  "changed_functions": [
+    "check_current",
+    "controls",
+    "current_input",
+    "replays"
+  ],
+  "controls": [
+    {
+      "cause": "whole global current question identity path and occurrence allocation",
+      "control": "lost-non-target-question",
+      "new": "refused",
+      "old": "accepted"
+    },
+    {
+      "cause": "whole exact current physical population census",
+      "control": "reduced-physical-population",
+      "new": "refused",
+      "old": "accepted"
+    },
+    {
+      "cause": "whole current physical member and non-target source conservation",
+      "control": "lost-non-target-member",
+      "new": "refused",
+      "old": "accepted"
+    }
+  ],
+  "preserved_functions": [
+    "binding",
+    "check_binding",
+    "git",
+    "main",
+    "members",
+    "module",
+    "replay_specs",
+    "save",
+    "semantic_products",
+    "source_model",
+    "sources",
+    "target_rows"
+  ],
+  "role": "Whole original preparation/replay caller retained; only stronger current population predicates, their controls and explicit historical caller identity differ. Constructed vectors are not actual query receipts."
+}

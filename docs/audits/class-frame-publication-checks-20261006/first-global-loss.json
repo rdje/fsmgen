@@ -1,0 +1,15 @@
+{
+  "lost_non_target_question": "accepted",
+  "lost_physical_population": "accepted",
+  "positive": "accepted",
+  "programme": {
+    "bytes": 20316,
+    "sha256": "7ed3d6160715a31f1c92a5de600d3a586872cceb839bce6c28bd39fbf09f61e4"
+  },
+  "removed_row": "MEMORY.md is N lines (> cap 120)\tmemory-pointer-layer-a-content\tdocs/knowledge/memory-pointer-layer-a-content.md",
+  "scope": "Source-constructed predicate vectors only, never actual query receipts or live publication. The unpublished sketch must bind complete global ownership and physical members before publication.",
+  "source_model": {
+    "bytes": 1803902,
+    "sha256": "0eb11929211cc50dbe85cc91ad15ddad049776219fdbb1ee6b28d3154da4e77d"
+  }
+}

@@ -674,6 +674,11 @@ replay preserves the source/proposal snapshot and does not borrow live currency.
 Original framework/provider/private/formatter/reference/coordinate/address
 meanings and visual QA remain unmeasured or separately owned.
 
+The following observer and tooling guides are retained publication checkpoints.
+Their earlier current commands check their exact fact epochs. They do not prove
+the newly published class/frame facts; use the complete current reader below.
+The old programmes, source contracts, native results and seals remain immutable.
+
 The following observer publication guide records its 2026-10-06 checkpoint.
 Its scoped observer command remains valid. The companion repair and complete
 current core/observer/tooling route are qualified immediately after that guide.
@@ -874,6 +879,53 @@ never recaptured. Private frames, native class/provider/hooks, formatter,
 encoding, hidden arguments, identity, coordinates and address/lifetime meanings
 remain unmeasured or separately owned. Visual QA, HIAL repair and full CI/push
 retain their owners. Project outputs and scratch remain repository-local.
+
+The complete finite class/frame publication now retains every prior core,
+observer and tooling proposition, qualifier, example and ordered question, and
+adds the qualified source-class/frame/body/phase/operand join. Every original
+nonempty error binds source-inferred class and guard family to its complete own
+and finite public phase, function order and visible argument roles. Empty
+allocations, source contexts and opaque raw bytes retain. Nested Metadata and
+new outer Value keep separate class/phase roles while the entire inner operand
+passes through catch, interpolation and the new throw. Source associations were
+qualified before the new raw intake. Genuine class/family/phase/order/argument/
+population/native-promotion controls conserve predecessor meanings; changing
+opaque inner-frame bytes passes those local meanings but breaks whole forwarding.
+
+The current route checks all three complete canonical cards, actual direct and
+cached question ownership, every collection-capacity dimension, exact source
+budgets and canonical source selection, relative endpoints, current bytes,
+ignore policy and indexed members. Its native variant additionally checks every
+copied canonical source and the rendered current/retained guide:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py --current
+```
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py --current --build .artifacts/class-frame-publication-book
+```
+
+The core reverify chain still runs the original helper join, finite copy join
+and separate fresh finite copy-probe replay before this current check. Tooling
+still runs its original destination-locality replay. The fresh finite probe is
+not an original raw-error recapture. Earlier admission and retention guides
+describe their checkpoints; explicit old-epoch checks refuse the changed facts.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py
+```
+
+Default replay authenticates complete committed custody, reconstructs the full
+retention and class/frame meanings and controls, and checks the saved publication
+snapshot and native guide. It cannot establish current currency. Unrelated book
+progress is permitted by the current reader. The collection allowance is never
+widened; every original fact/question retains. This remains reviewed prose
+equivalence rather than unrestricted mechanical natural-language proof.
+Original native class/provider/hooks, private frames, formatter, encoding,
+hidden arguments, identity, coordinates and address/lifetime meanings remain
+unmeasured or separately owned. Visual QA, HIAL repair and full CI/push retain
+their owners. Project outputs and scratch remain repository-local.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the

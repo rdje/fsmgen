@@ -1,0 +1,2 @@
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.3.3
+The editor saved the complete lightweight retain_probe.py before its trailing inline ast.parse check raised NameError because the editor itself did not import ast. Actual tool exit1: NameError: name ast is not defined. This is an editor-check error, not a native probe or saved programme failure. Fresh explicit import/AST parse0 verifies the saved programme; the actual guarded retention command has its own complete result receipt.

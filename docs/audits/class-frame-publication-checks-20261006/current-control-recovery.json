@@ -1,0 +1,26 @@
+{
+  "cause": "core-native-promotion targets original classes were unmeasured, split by a source newline; unchanged control correctly refuses as nongenuine.",
+  "members": {
+    "docs/audits/class-frame-publication-checks-20261006/current-native-result.json": {
+      "bytes": 2094,
+      "retained": "docs/audits/class-frame-publication-checks-20261006/first-current-native-result.json",
+      "sha256": "28e80d4f6c94c048fe85ce8486271ebcc2420fbee5827ddd539294dd38da5043"
+    },
+    "docs/audits/class-frame-publication-checks-20261006/revision-result.json": {
+      "bytes": 1049,
+      "retained": "docs/audits/class-frame-publication-checks-20261006/first-revision-result.json",
+      "sha256": "0fedc8c8beaf4452d87669982e341fe778190df7f17617d16d73291effd69bfb"
+    },
+    "docs/audits/record-value-class-frame-publication-20261006/reader-revision.json": {
+      "bytes": 1372,
+      "retained": "docs/audits/class-frame-publication-checks-20261006/first-reader-revision.json",
+      "sha256": "881247e9f99614eadc73e4e864223d0721d3d1a7549b0e98abcc6fcc343072ba"
+    },
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+      "bytes": 22309,
+      "retained": "docs/audits/class-frame-publication-checks-20261006/first-current-verify.py.txt",
+      "sha256": "8dad1275fc578318c4247b02a34ae5840bd946cfd47d1b98371d6821f2b68af9"
+    }
+  },
+  "role": "Actual current/native attempt failed before controls and no success is claimed; programme/result/revision products retained before exact control literal repair."
+}

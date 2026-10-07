@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-checks-20261006/retain_guard_stop.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/retain_guard_stop.py": {
+      "bytes": 1660,
+      "sha256": "bb5f4f76bcb7a0a8102202f4ab27c26759bfc08fb8b4446e5fb0c7ac41749f20"
+    },
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    }
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS actual terminal native host-guard stop and whole programme retained; unchanged-limit serial retry is owned.\n"
+}

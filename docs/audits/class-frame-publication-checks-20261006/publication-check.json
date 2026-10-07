@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-checks-20261006/verify_publication.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/class-frame-publication-checks-20261006/verify_publication.py": {
+      "bytes": 6830,
+      "sha256": "13d3adf3cf5b408196a6ba5dbb99906cad6d52373ede6b5d5e1d44b6c3d99a0b"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 34261; host 84.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS independent complete class/frame source/card/global/book population and measured authority; genuine source/member/scope/aggregate/ceiling losses refuse.\n"
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-checks-20261006/retain_probe.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/retain_probe.py": {
+      "bytes": 5791,
+      "sha256": "af5536a8fa709a3c545175d2932e11f37ae35bfeedde3e7f2f0acf908cfd90b4"
+    },
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 11030; host 74.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete actual fresh finite fixture copy, byte/member verification and independent native replay qualification; no ignored scratch dependency.\n"
+}

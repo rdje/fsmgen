@@ -23,7 +23,7 @@ answers:
   - "what qualifies whole nested original error forwarding?"
   - "what qualifies inherited original nested API frames?"
   - "are all original own API refusal paths joined?"
-date: 2026-10-05
+date: 2026-10-06
 status: current
 tags: [isf, record, copy, native, graph, qualification]
 evidence: >-
@@ -31,56 +31,54 @@ evidence: >-
   docs/audits/record-value-copy-reader-20261004/scope.txt;
   docs/audits/record-value-copy-reader-20261004/replay.py;
   docs/audits/record-value-original-helper-join-20261005/scope.txt;
-  docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: >-
-  scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-original-helper-join-20261005/verify.py &&
-  python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py &&
-  scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-copy-reader-20261004/replay.py
+  docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/audits/record-value-class-frame-join-20261006/scope.txt
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-original-helper-join-20261005/verify.py && python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-copy-reader-20261004/replay.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py --current
 ---
 
-Separate models qualify whole typed graph bijections, reachable reference counts,
-input/result sharing, readonly, kinds, cycles and detachment for the plain profile.
-Genuine Storable/alias/split-sharing/cycle-alias/input-kind/result-kind providers
-reach intended assertions; non-target records conserve.
+Separate plain-profile models qualify whole typed graph bijections, reachable reference
+counts, input/result sharing, readonly, kinds, cycles and detachment. Genuine
+Storable/alias/split-sharing/cycle-alias/input-kind/result-kind providers reach intended
+assertions; non-target records conserve.
 
-Native refusal records preserve whole causes, class, HASH shape and within-capture
-identity for both observed empty blessed classes. Native-class copying and
-structured-clone cycle support remain unqualified. Graph/cause/identity and whole
-programme mutations reject.
+Native refusals preserve whole causes, class, HASH shape and within-capture identity for
+both observed empty blessed classes. Native-class copying and structured-clone cycle
+support remain unqualified. Graph/cause/identity and whole programme mutations reject.
 
-Fresh same-volume replay uses pinned sources and retains all native records
-and both streams. Addresses have per-capture lifetimes; sealed producers run
-elsewhere. The finite join authenticates completed owners and fresh products.
-Original captures retain unchanged-input Storable/alias trials and the full
-alias run’s downstream mutation/abort. Independent typed models qualify
-original copy graphs, genuine trials, readonly and detachment. Whole API/parser
-results match source models; private-source allocations conserve. Independently
-modeled copy interventions rebuild full input/private typed graphs, readonly
-copies and detached outputs. The known private range sibling changes string
-width2 to number2; its outer caller stays unchanged through a detached private copy.
-Every copied width joins the full raw type, carrier/default/metadata roles,
-ancestor context and compatible-source set. The input/private join qualifies
-whole graph/field/source/context/raw-kind/detachment meanings for the captured
-modes. Finite source-context models qualify helper/consumer/parser locations,
-complete parser texts and operation spans, separately from cause/operand truth.
-Independent primary models derive each API/helper/parser first cause and
-acceptance from qualified source inputs.
-Raw bodies and lossless grammar qualify. Source/publisher contracts infer
-unblessed scalar errors for this finite capture; original classes were unmeasured.
-POD4.05 is stale; runtime JSON::PP4.06 owns version identity. Direct Value models
-bind active order and source roles to visible type/scalar footprints. Metadata
-guard/record-recursion paths qualify, including cycles; list recursion is bound
-but unexercised. Nested Scope/capture/private-root inputs bind the entire
-source-constructed interface graph, preserving kinds, sharing and cycles.
-Whole inner scalar forwarding now conserves the new outer prefix. Public die
-controls distinguish explicit rethrow, propagation and hook replacement. Original
-hook state/provider bytes stay unmeasured. Source models join nested Value and
-capture/Scope eval/wrapper paths and visible operand roles. The complete own API
-join partitions every refusal into source guard/function/visible-role models. Own observer and helper source meanings are canonical in the
-[observer/helper path card](record-value-original-observer-helper-paths.md).
-Full observer/display/frame/coordinate/address, consumer, alias/semantic/cold/
-candidate-parent, hot and host-native meanings remain open.
+Fresh same-volume replay pins sources and retains all native records and both streams.
+Addresses have per-capture lifetimes; sealed producers run elsewhere. The finite join
+authenticates completed owners and fresh products. Original Storable/alias trials retain
+unchanged inputs and the full alias run’s downstream mutation/abort. Independent typed
+models qualify original copy graphs, genuine trials, readonly and detachment. Whole
+API/parser results match source models; private-source allocations conserve.
+Copy-intervention models independently rebuild full input/private typed graphs, readonly
+copies and detached outputs. The private range sibling changes string width2 to number2;
+its outer caller stays unchanged through a detached private copy. Every copied width joins
+full raw type, carrier/default/metadata roles, ancestor context and compatible sources.
+Input/private joins qualify captured modes’ whole
+graph/field/source/context/raw-kind/detachment meanings. Finite context models qualify
+helper/consumer/parser locations, complete parser texts and operation spans separately
+from cause/operand truth. Each API/helper/parser first cause and acceptance derives
+independently from qualified source inputs. Raw bodies and lossless grammar qualify.
+Source/publisher contracts infer unblessed scalar errors for this finite capture; original
+classes were unmeasured. POD4.05 is stale; runtime JSON::PP4.06 owns version identity.
+Direct Value active-order/source-role models bind visible type/scalar footprints. Metadata
+guards/record recursion, including cycles, qualify; list recursion is bound, unexercised.
+Nested Scope/capture/private-root inputs bind the whole source-built interface graph’s
+kinds/sharing/cycles. Whole inner scalar forwarding conserves the new outer prefix. Public
+die controls distinguish explicit rethrow, propagation and hook replacement. Original hook
+state/provider bytes stay unmeasured. Source models join nested Value/capture/Scope
+eval/wrapper paths and visible operand roles. Every own API refusal partitions into source
+guard/function/visible-role models. [Observer/helper source
+meanings](record-value-original-observer-helper-paths.md) are canonical. Full
+observer/display/private-frame/coordinate/address, consumer,
+alias/semantic/cold/candidate-parent, hot/host-native meanings stay open.
 
-Reverify runs the complete source chain and separate probe replay.
+Complete source-chain and separate probe replay remain required.
+
+Every original nonempty error joins source-inferred class/guard family to complete
+own/public phase/function/visible-argument roles; empty allocations, contexts and opaque
+raw bytes conserve. Nested Metadata and new outer Value keep separate class/phase roles,
+conserving the entire inner operand through catch/interpolation/new throw. Source
+associations precede new raw intake.
+Native/private/formatter/encoding/hidden-argument/identity/coordinate/address meanings
+stay unmeasured or separately owned.

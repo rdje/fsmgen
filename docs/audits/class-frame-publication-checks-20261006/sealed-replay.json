@@ -1,0 +1,97 @@
+{
+  "actual_result_identity": {
+    "bytes": 977,
+    "sha256": "c98d9ed36ec7c570c0e50162c85d376e046d65f660a63f4d2bfae4e449079355"
+  },
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+      "bytes": 22291,
+      "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 81090; host 63.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete committed class/frame publication source and saved snapshot; current currency requires --current.\n",
+  "whole_members": {
+    "binding.json": {
+      "bytes": 725103,
+      "sha256": "1cc92105af48d4403832f8b045f4963b87644102e25377f223d23bcf74f00758"
+    },
+    "book.py": {
+      "bytes": 6843,
+      "sha256": "3ef962ef7c8f438075ee7f7c66fdec6a0e858c6798c19ee1918f09236aa568e5"
+    },
+    "controls.json": {
+      "bytes": 3143,
+      "sha256": "1c418c60001ddd434a6f57b5e2c7380fc5146419ea4a7db9f2c203d67228cec4"
+    },
+    "manifest.json": {
+      "bytes": 1931,
+      "sha256": "2b9d09c832d6ee46218ac36aecd4813db316dc1a214afe6f8dad392f71278ed9"
+    },
+    "model.py": {
+      "bytes": 2020,
+      "sha256": "2925716392e48252850391357fb4555db6be2922727f12bdf2d56f382b96fb58"
+    },
+    "native-input.html": {
+      "bytes": 240471,
+      "sha256": "7ffbd73767edd2ab679a9ec95a456ccc5e740574466535d0e00fa877be50e6de"
+    },
+    "native-proof.json": {
+      "bytes": 987,
+      "sha256": "b3288d559fb855e4cd98ea8fcde02bc3955af2e80d2a52b55b6e2961dc09577a"
+    },
+    "publication.json": {
+      "bytes": 3546799,
+      "sha256": "14f0848fab5627c04ec3410a13e5541605d8fd2a6f311a997b53e6de72dfe63b"
+    },
+    "reader-revision.json": {
+      "bytes": 1372,
+      "sha256": "10844f65b46186f21ca2b8436fcf6a8c1d968d6b515cd68c761178fca0ac9196"
+    },
+    "replay-independent.json": {
+      "bytes": 1902,
+      "sha256": "0ed4f236c739216a9ed6b82272b9cec2bee3be2a246dfd3457b0ed8dd32f2435"
+    },
+    "replay-proof.json": {
+      "bytes": 581,
+      "sha256": "fe56e2843ec462c6e3f30be6e0ce6bb39049be1940fdb6b0d688912d1084716e"
+    },
+    "replay-semantic.json": {
+      "bytes": 989,
+      "sha256": "68be73b76a02a5632de5390e6dbe23588ad968b86ddfd28d44a56ba39fac6e99"
+    },
+    "scope.txt": {
+      "bytes": 1564,
+      "sha256": "2867b85696f006a492bdf426834cc4157c2931698d852a2c22cb77e23a27f6dc"
+    },
+    "semantic-proof.json": {
+      "bytes": 42044,
+      "sha256": "b26f0c828329e33985f47034610e8ef3c88b016df15bd63e1835591d8e1d7a62"
+    },
+    "source-model.json": {
+      "bytes": 1803902,
+      "sha256": "0eb11929211cc50dbe85cc91ad15ddad049776219fdbb1ee6b28d3154da4e77d"
+    },
+    "verify.py": {
+      "bytes": 22291,
+      "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+    }
+  }
+}

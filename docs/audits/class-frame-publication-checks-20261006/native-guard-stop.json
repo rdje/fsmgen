@@ -1,0 +1,12 @@
+{
+  "actual": {
+    "bytes": 941,
+    "sha256": "8b9703d0a200035c06889c33442ea4c1b90042a2681e6e4ee590d14d417caeeb"
+  },
+  "cause": "Actual host occupied memory 89.9% reached the existing 88% guard cutoff; protected PID tree terminated with137.",
+  "programme": {
+    "bytes": 1715,
+    "sha256": "26a02f5c8e9eebb5648434d97bcf3277b93eac85a916e11223bb263ef69813e4"
+  },
+  "role": "Terminal protected first native attempt retained; retry is serial with unchanged 88%/4096MiB/2s limits, not a duplicate live job or native success."
+}

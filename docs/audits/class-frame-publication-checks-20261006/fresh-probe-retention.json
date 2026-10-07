@@ -1,0 +1,56 @@
+{
+  "actual": {
+    "bytes": 1522,
+    "sha256": "2498ca2b1ef15004007344ad0d443a907469beb5f237aa71bd92aaa0c924cd99"
+  },
+  "destination": "docs/audits/class-frame-publication-checks-20261006/fresh-finite-probe",
+  "fixture": ".artifacts/record-value-copy-reader-20261004/replay-_72ldsyx",
+  "members": {
+    "docs/audits/record-value-copy-probes-20261004/alias.json": {
+      "bytes": 8533,
+      "sha256": "2e083b44e84263e49c90a4f9f0677a9ccbd54ad58107ce11f8be04b46cea668b"
+    },
+    "docs/audits/record-value-copy-probes-20261004/candidate.pl": {
+      "bytes": 2749,
+      "sha256": "e10ef526c01fc88fedbaaa8bd7053dbc9cbd5ae10317c753924386d0608eae16"
+    },
+    "docs/audits/record-value-copy-probes-20261004/cycle-alias.json": {
+      "bytes": 8679,
+      "sha256": "87a3c8cb1c01fbcac08ecf6e0c8cbc7c1397951ae4b41f3b71198393151cc580"
+    },
+    "docs/audits/record-value-copy-probes-20261004/mutate-input.json": {
+      "bytes": 8615,
+      "sha256": "d7394c8344eb9aaca1304c4badf6ead3e53c9f1aafa70400882a4813d7f52c6b"
+    },
+    "docs/audits/record-value-copy-probes-20261004/native-receipts.json": {
+      "bytes": 21010,
+      "sha256": "ec8cef29dd6c0bce373de1c46dd8b90f84cd2db715a12b25f3b63834f1601346"
+    },
+    "docs/audits/record-value-copy-probes-20261004/numeric-result.json": {
+      "bytes": 8617,
+      "sha256": "1182ed58943eb87085aa0a83fe5300d0cc931239371c1d79aa068578bb936751"
+    },
+    "docs/audits/record-value-copy-probes-20261004/ordinary.json": {
+      "bytes": 8603,
+      "sha256": "cba7a367e3d173d65c58c63d86d331e5b6689f38e40700c7f57f129d35327937"
+    },
+    "docs/audits/record-value-copy-probes-20261004/probe.pl": {
+      "bytes": 5316,
+      "sha256": "317e02bd5fab02905dc169120630eff058ba3fa451262f836a465fcd08ba6660"
+    },
+    "docs/audits/record-value-copy-probes-20261004/split-sharing.json": {
+      "bytes": 8644,
+      "sha256": "07968935a0b7c3dc5686617e9672686355cae8258c2df28d9bffb1e675854979"
+    },
+    "docs/audits/record-value-copy-probes-20261004/storable.json": {
+      "bytes": 8611,
+      "sha256": "b051bae28d5aed0d62094148e511dc6d282d1dd37ca77fd30427adcf2057ec16"
+    },
+    "replay-receipt.json": {
+      "bytes": 388042,
+      "sha256": "017dd13dfb9ba1490f5e0b4e01bda0a03f8c205c5ba42849a3f135d43356105e"
+    }
+  },
+  "receipt": ".artifacts/record-value-copy-reader-20261004/replay-_72ldsyx/replay-receipt.json",
+  "role": "Complete fresh finite probe fixture retained byte-for-byte; original native/raw captures unchanged and not recaptured."
+}

@@ -1,0 +1,59 @@
+"""Execute distinct current/checkpoint roles and genuine unrelated-book progress."""
+import json
+import shlex
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-class-frame-publication-20261006')
+CHECKS = Path('docs/audits/class-frame-publication-checks-20261006')
+ns = {'__name__':'publication_roles','__file__':str(BASE / 'verify.py')}
+exec(compile((BASE / 'verify.py').read_bytes(),str(BASE / 'verify.py'),'exec'),ns)
+require,same,identity,load = (ns[k] for k in ('require','same','identity','load'))
+OUT = CHECKS / 'roles.json'
+require(not OUT.exists(),'actual role executions cannot overwrite')
+records = []
+
+def execute(name,command,status,stdout=None,cause=None):
+    instruments = {str(CHECKS / 'qualify_roles.py'):identity((CHECKS / 'qualify_roles.py').read_bytes())}
+    for item in command:
+        p = Path(item)
+        if p.is_file() and (item.endswith('.py') or item == 'scripts/run_with_ram_guard.sh'):
+            instruments[item] = identity(p.read_bytes())
+    result = subprocess.run(command,capture_output=True)
+    row = dict(name=name,command=command,status=result.returncode,stdout=result.stdout.decode(),stderr=result.stderr.decode(),instruments=instruments,
+        cards={p:identity(Path(p).read_bytes()) for p in ns['PATHS']},chapter=identity(ns['CHAPTER'].read_bytes()))
+    records.append(row); OUT.write_text(json.dumps(dict(records=records,role='Actual distinct current, saved checkpoint and original obligations; fresh finite probe is not original raw-error recapture.'),sort_keys=True,indent=2)+'\n')
+    require(type(row['status']) is int and row['status'] == status,'actual intended role exit: ' + name + ': ' + row['stderr'])
+    if stdout is not None: require(row['stdout'] == stdout,'whole actual intended role stdout: ' + name)
+    if cause is not None: require(row['stdout'] == '' and row['stderr'].endswith('ValueError: ' + cause + '\n'),'actual intended old-epoch refusal: ' + name)
+    print(name + ': actual status ' + str(status),flush=True)
+    return row
+
+if __name__ == '__main__':
+    original = {root:ns['whole'](root) for root in map(Path,ns['binding']()['inputs'])}
+    execute('new-default',['python3','-B',str(BASE / 'verify.py')],0,ns['SUCCESS'])
+    execute('new-current',['python3','-B',str(BASE / 'verify.py'),'--current'],0,ns['CURRENT_SUCCESS'])
+    execute('retention-default',['python3','-B',str(ns['RETENTION'] / 'verify.py')],0,ns['retention']['SUCCESS'])
+    execute('retention-old-epoch',['python3','-B',str(ns['RETENTION'] / 'verify.py'),'--live-unchanged'],1,cause='whole unchanged live original source facts and decisions')
+    tooling = Path('docs/audits/record-value-tooling-current-reader-20261006/verify.py'); old = ns['module'](tooling)
+    execute('tooling-default',['python3','-B',str(tooling)],0,old['SUCCESS'])
+    execute('tooling-old-epoch',['python3','-B',str(tooling),'--current'],1,cause='complete current core observer tooling facts questions identity and routes')
+    core_commands = [shlex.split(c) for c in ns['model']['replay_value'](Path(ns['CORE']).read_text()).split(' && ')]
+    require(len(core_commands) == 4 and core_commands[-1] == shlex.split(ns['model']['COMMAND']),'whole exact core original and current replay chain')
+    for index,command in enumerate(core_commands): execute('core-obligation-' + str(index+1),command,0)
+    locality = shlex.split(ns['model']['replay_value'](Path(ns['TOOLING']).read_text()).split(' && ')[0])
+    execute('original-locality-obligation',locality,0)
+    chapter = ns['CHAPTER']; before = chapter.read_bytes(); backup = CHECKS / 'unrelated-book-before.md.txt'
+    require(not backup.exists(),'unrelated progress must retain exact prior chapter'); backup.write_bytes(before)
+    progress = b'\nTemporary unrelated book-progress control for the owned current-reader qualification.\n'
+    require(progress not in before,'genuine unrelated book progress')
+    try:
+        chapter.write_bytes(before + progress)
+        execute('unrelated-progress-current',['python3','-B',str(BASE / 'verify.py'),'--current'],0,ns['CURRENT_SUCCESS'])
+        execute('unrelated-progress-default',['python3','-B',str(BASE / 'verify.py')],0,ns['SUCCESS'])
+    finally:
+        chapter.write_bytes(before)
+        require(chapter.read_bytes() == before,'exact unrelated book progress restoration')
+    require(all(same(ns['whole'](root),members) for root,members in original.items()),'every original source/semantic/native/programme/seal byte conserves after actual roles')
+    ns['check_current'](ns['current_input']())
+    print('PASS actual full current/checkpoint/original replay and unrelated-book progress roles with exact restoration; original raw/native captures retained.')

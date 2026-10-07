@@ -1,0 +1,541 @@
+{
+  "records": [
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 4724,
+          "sha256": "f88f1a82f07171ea733945ffe0108def6d0054fa15acdbaab40c0134abbe9c63"
+        },
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+          "bytes": 22291,
+          "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+        }
+      },
+      "name": "new-default",
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS complete committed class/frame publication source and saved snapshot; current currency requires --current.\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py",
+        "--current"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 4724,
+          "sha256": "f88f1a82f07171ea733945ffe0108def6d0054fa15acdbaab40c0134abbe9c63"
+        },
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+          "bytes": 22291,
+          "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+        }
+      },
+      "name": "new-current",
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS current complete class/frame core observer tooling facts, actual question ownership and canonical source routes under unchanged authority.\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-class-frame-retention-20261006/verify.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 4724,
+          "sha256": "f88f1a82f07171ea733945ffe0108def6d0054fa15acdbaab40c0134abbe9c63"
+        },
+        "docs/audits/record-value-class-frame-retention-20261006/verify.py": {
+          "bytes": 21795,
+          "sha256": "231b3d8ef2c80cdfeb61892b8c0ff249853a1c7f552512f83ddc40134cf52b27"
+        }
+      },
+      "name": "retention-default",
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS complete reviewed class/frame source-proposition qualifier question route and non-growing collection retention; atomic current publication remains pending.\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-class-frame-retention-20261006/verify.py",
+        "--live-unchanged"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 4724,
+          "sha256": "f88f1a82f07171ea733945ffe0108def6d0054fa15acdbaab40c0134abbe9c63"
+        },
+        "docs/audits/record-value-class-frame-retention-20261006/verify.py": {
+          "bytes": 21795,
+          "sha256": "231b3d8ef2c80cdfeb61892b8c0ff249853a1c7f552512f83ddc40134cf52b27"
+        }
+      },
+      "name": "retention-old-epoch",
+      "status": 1,
+      "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-retention-20261006/verify.py\", line 302, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-retention-20261006/verify.py\", line 289, in main\n    live_unchanged(sources)\n    ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-retention-20261006/verify.py\", line 152, in live_unchanged\n    require(all(Path(p).is_file() and not Path(p).is_symlink() and Path(p).stat().st_dev == Path.cwd().stat().st_dev and Path(p).read_bytes() == raw for p,raw in sources.items()),\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'whole unchanged live original source facts and decisions')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 32, in require\n    raise ValueError(cause)\nValueError: whole unchanged live original source facts and decisions\n",
+      "stdout": ""
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-tooling-current-reader-20261006/verify.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 4724,
+          "sha256": "f88f1a82f07171ea733945ffe0108def6d0054fa15acdbaab40c0134abbe9c63"
+        },
+        "docs/audits/record-value-tooling-current-reader-20261006/verify.py": {
+          "bytes": 20778,
+          "sha256": "bd6591cd47eb2d900ae4e710e27aed7bbc624d0f4400dc01793c37b9e5d51e3a"
+        }
+      },
+      "name": "tooling-default",
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS authenticated tooling-route source and saved snapshot; current currency requires --current.\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-tooling-current-reader-20261006/verify.py",
+        "--current"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 4724,
+          "sha256": "f88f1a82f07171ea733945ffe0108def6d0054fa15acdbaab40c0134abbe9c63"
+        },
+        "docs/audits/record-value-tooling-current-reader-20261006/verify.py": {
+          "bytes": 20778,
+          "sha256": "bd6591cd47eb2d900ae4e710e27aed7bbc624d0f4400dc01793c37b9e5d51e3a"
+        }
+      },
+      "name": "tooling-old-epoch",
+      "status": 1,
+      "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-tooling-current-reader-20261006/verify.py\", line 342, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-tooling-current-reader-20261006/verify.py\", line 326, in main\n    check_current(current_input())\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-tooling-current-reader-20261006/verify.py\", line 161, in check_current\n    require(record['cards'] == expected, 'complete current core observer tooling facts questions identity and routes')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-tooling-current-reader-20261006/verify.py\", line 63, in require\n    raise ValueError(cause)\nValueError: complete current core observer tooling facts questions identity and routes\n",
+      "stdout": ""
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/record-value-original-helper-join-20261005/verify.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 7458,
+          "sha256": "16e119496316fa3e0ed05594a39c7bd7a5a14351e19c0251c9f5ef1116d9a2e1"
+        },
+        "docs/audits/record-value-original-helper-join-20261005/verify.py": {
+          "bytes": 12913,
+          "sha256": "0191cddf0b41cbb30118423601ce71f64ca6af8b4376fd1d2e7185021d79cab6"
+        },
+        "scripts/run_with_ram_guard.sh": {
+          "bytes": 10663,
+          "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+        }
+      },
+      "name": "core-obligation-1",
+      "status": 0,
+      "stderr": "ram-guard: PID 72852; host 46.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "PASS full original-source capture membership/program/source/fixture/host/TAP/status and genuine provider observations. Alias downstream mutation/abort is retained; independent graph/source/product qualification and replay remain pending.\nPASS independently qualified original17 unchanged-input copy/joint/kind/readonly/identity/isolation graphs and genuine Storable/alias trials; full API/consumer and alias downstream semantics remain open.\nPASS all original9283 API/four authored parser whole results and680 private source allocations across candidate/Storable/unchanged-input-control modes. Input/private graphs, consumers/helpers/raw causes and full alias downstream semantics remain open.\nPASS complete current original API before/after and private/test before/after/result/joint graphs, source-derived copy interventions, primitive kinds, private/test readonly and actual detachment. Exact known private range sibling kind change retains; outer caller is unchanged. Copied-field and consumer/cause/full-alias semantics remain open.\nPASS complete current copied fields, raw kinds, whole source properties/orders/cycles, source-candidate sets and ancestor/carrier/default/metadata roles in all three unchanged-input modes. Graph/field join, consumer/cause/full-alias and cold/permanent repairs remain open.\nPASS complete current original source/input/private graph/field/context/kind/readonly/detachment join. Consumer/cause/full-alias/product/semantic/cold and permanent/host-native repairs remain open.\nPASS complete finite source-authored helper/consumer/parser contexts and qualified own operation spans. Raw operands/errors retain; primary/raw-coordinate and consumer-operand truth remain open.\nPASS complete finite source-derived API/helper/parser primary causes and acceptance; full raw coordinates/address and consumer operand truth remain open.\nPASS complete lossless original raw-error inventory and intended controls; frame/class/coordinate/address meanings remain open.\nPASS finite source/publisher class contracts and genuine native object refusals; full frames/coordinates/address meanings stay open.\nPASS direct finite Value source paths and visible argument footprints; metadata/inherited/display/coordinate/address meanings remain open.\nPASS finite metadata guard/recursion paths and visible argument footprints; inherited API and full display/trace meanings remain open.\nPASS whole finite nested Scope/private-root/capture input joins; catch/rethrow and inherited/full frame meanings remain open.\nPASS whole finite nested catch/explicit-rethrow/interpolation/new-throw prefix conservation; inherited/full trace meanings remain open.\nPASS finite inherited Value/capture/eval source path roles and visible footprints; full observer/display/coordinate/address meaning stays open.\n{\"controls\": [{\"cause\": \"exact current programme/proof/manifest receipt identity\", \"control\": \"actual-initial-successful-receipt\", \"status\": 1}, {\"cause\": \"exact current programme/proof/manifest receipt identity\", \"control\": \"borrowed-initial-programme-pin\", \"status\": 1}], \"current_identity\": {\"frame_model.py\": {\"bytes\": 3276, \"sha256\": \"bf9776779da38a30cd11215901c3e33f85446db500344f0a5dc4824059874530\"}, \"manifest.json\": {\"bytes\": 1416, \"sha256\": \"70572fc71d65dbdf9656cd9b6f7a19c7a2629fa199b2b8ccf7bbfe2b30f5eca4\"}, \"proofs.json\": {\"bytes\": 412789, \"sha256\": \"39611b0aff33ecfc873aabc63a235fddcfd0e1bd4cc8120f15e439c85600ec5b\"}, \"verify.py\": {\"bytes\": 16574, \"sha256\": \"9fd4e4e9613f91892d5f1481630ce836b73897a5b38dc6af1e4a17167802bde3\"}}, \"scope\": \"Fresh executed sealed reader pins; identical legacy successful stdout is insufficient.\", \"status\": 0}\nPASS complete finite own API refusal source-frame/guard/visible-role partition and join; full observer/parser/framework/display/coordinate/address meaning stays open.\nPASS complete own observer/callback source recipes and rejecting controls; native frame/header/framework/display meanings remain open.\nPASS complete finite observer API/parser operation boundaries and visible roles; full callback/framework/display/native identity stays open.\nPASS complete own named-helper supplied/default inputs and active source paths; compiled callback/framework/display/native identity remains open.\nPASS complete finite compiled callback/refusal/helper-wrapper paths and visible source roles; full framework/display/native identity remains open.\nPASS complete finite source helper allocation/input/default/return/throw-phase and callback/refusal path join; full framework/display/native identity remains open.\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-copy-probe-join-20261004/verify.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 7458,
+          "sha256": "16e119496316fa3e0ed05594a39c7bd7a5a14351e19c0251c9f5ef1116d9a2e1"
+        },
+        "docs/audits/record-value-copy-probe-join-20261004/verify.py": {
+          "bytes": 5629,
+          "sha256": "937804d60522acdada5928c64707356ee0973c7bd1624f47b7b534e08fcf2788"
+        }
+      },
+      "name": "core-obligation-2",
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS independent complete source/typed graph/native/TAP models and reader RED controls; finite profile only.\nPASS complete finite source/capture/reader/native/control/reexecution join; original copies and hot repairs remain open.\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/record-value-copy-reader-20261004/replay.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 7458,
+          "sha256": "16e119496316fa3e0ed05594a39c7bd7a5a14351e19c0251c9f5ef1116d9a2e1"
+        },
+        "docs/audits/record-value-copy-reader-20261004/replay.py": {
+          "bytes": 4135,
+          "sha256": "19533d23ac97db2bc19ea3bf5b044d72a8f2f1f9dde7b0b956d7c7a7b5899a45"
+        },
+        "scripts/run_with_ram_guard.sh": {
+          "bytes": 10663,
+          "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+        }
+      },
+      "name": "core-obligation-3",
+      "status": 0,
+      "stderr": "ram-guard: PID 60088; host 54.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "PASS fresh exact-source seven-mode native replay and independent complete graph/cause/TAP controls: .artifacts/record-value-copy-reader-20261004/replay-_72ldsyx/replay-receipt.json\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py",
+        "--current"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 7458,
+          "sha256": "16e119496316fa3e0ed05594a39c7bd7a5a14351e19c0251c9f5ef1116d9a2e1"
+        },
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+          "bytes": 22291,
+          "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+        },
+        "scripts/run_with_ram_guard.sh": {
+          "bytes": 10663,
+          "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+        }
+      },
+      "name": "core-obligation-4",
+      "status": 0,
+      "stderr": "ram-guard: PID 61978; host 54.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "PASS current complete class/frame core observer tooling facts, actual question ownership and canonical source routes under unchanged authority.\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203343,
+        "sha256": "025a132b01bd56c8686a0f8eed26d4f4c568a90747300ac6079ffe5021795060"
+      },
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 7458,
+          "sha256": "16e119496316fa3e0ed05594a39c7bd7a5a14351e19c0251c9f5ef1116d9a2e1"
+        },
+        "docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py": {
+          "bytes": 2129,
+          "sha256": "e55151218dc3908f59ab4835a142e58913e55abfec4d8ad98ef9a816fc486219"
+        },
+        "scripts/run_with_ram_guard.sh": {
+          "bytes": 10663,
+          "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+        }
+      },
+      "name": "original-locality-obligation",
+      "status": 0,
+      "stderr": "ram-guard: PID 13103; host 71.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+      "stdout": "{\"mdbook_version\": \"mdbook v0.5.4\", \"probes\": [{\"exit_code\": 0, \"fresh_render_contains_marker\": true, \"mode\": \"relative\", \"repository_local_same_volume\": true, \"resolved_against_invocation_cwd\": true}, {\"exit_code\": 0, \"fresh_render_contains_marker\": true, \"mode\": \"absolute\", \"repository_local_same_volume\": true, \"resolved_against_invocation_cwd\": true}], \"temporary_workspace_removed\": true}\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203430,
+        "sha256": "547d6694f4e4df9ebf55887e50300aa3e1015201742e4f4d3c956bff20f857ea"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py",
+        "--current"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 8070,
+          "sha256": "e50e20c282e5041dcb5752bd8754d53700f3549cc3bf85110bbd980612bd9657"
+        },
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+          "bytes": 22291,
+          "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+        }
+      },
+      "name": "unrelated-progress-current",
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS current complete class/frame core observer tooling facts, actual question ownership and canonical source routes under unchanged authority.\n"
+    },
+    {
+      "cards": {
+        "docs/knowledge/mdbook-build-destination-locality.md": {
+          "bytes": 4532,
+          "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+        },
+        "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+          "bytes": 5886,
+          "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+        },
+        "docs/knowledge/record-value-original-observer-helper-paths.md": {
+          "bytes": 4617,
+          "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+        }
+      },
+      "chapter": {
+        "bytes": 203430,
+        "sha256": "547d6694f4e4df9ebf55887e50300aa3e1015201742e4f4d3c956bff20f857ea"
+      },
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/qualify_roles.py": {
+          "bytes": 8070,
+          "sha256": "e50e20c282e5041dcb5752bd8754d53700f3549cc3bf85110bbd980612bd9657"
+        },
+        "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+          "bytes": 22291,
+          "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+        }
+      },
+      "name": "unrelated-progress-default",
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS complete committed class/frame publication source and saved snapshot; current currency requires --current.\n"
+    }
+  ],
+  "role": "Actual distinct current, saved checkpoint and original obligations; fresh finite probe is not original raw-error recapture."
+}

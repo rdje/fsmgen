@@ -1,0 +1,16 @@
+{
+  "independent": {
+    "actual": {
+      "bytes": 1902,
+      "sha256": "0ed4f236c739216a9ed6b82272b9cec2bee3be2a246dfd3457b0ed8dd32f2435"
+    },
+    "role": "Fresh full retained semantic/actual-result execution; original raw and transitive native captures retained, never recaptured."
+  },
+  "semantic": {
+    "actual": {
+      "bytes": 989,
+      "sha256": "68be73b76a02a5632de5390e6dbe23588ad968b86ddfd28d44a56ba39fac6e99"
+    },
+    "role": "Fresh full retained semantic/actual-result execution; original raw and transitive native captures retained, never recaptured."
+  }
+}

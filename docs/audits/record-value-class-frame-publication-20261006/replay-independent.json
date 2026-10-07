@@ -1,0 +1,25 @@
+{
+  "binding": {
+    "bytes": 725103,
+    "sha256": "1cc92105af48d4403832f8b045f4963b87644102e25377f223d23bcf74f00758"
+  },
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/class-frame-retention-checks-20261006/verify_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-retention-checks-20261006/verify_seal.py": {
+      "bytes": 9979,
+      "sha256": "e27c6dd197001e0f843c7d6b7a28da97734c9a1bf3d7569e66e59d343c0594f0"
+    },
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+      "bytes": 20316,
+      "sha256": "7ed3d6160715a31f1c92a5de600d3a586872cceb839bce6c28bd39fbf09f61e4"
+    }
+  },
+  "role": "Fresh full retained semantic/actual-result execution; original raw and transitive native captures retained, never recaptured.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "status-True: refused at actual semantic-retention integer process success\nstatus-0.0: refused at actual semantic-retention integer process success\nstatus-1: refused at actual semantic-retention integer process success\nmember-count-True: refused at actual semantic-retention discrete sealed byte-count kinds\nmember-count-0.0: refused at actual semantic-retention discrete sealed byte-count kinds\nlost-sealed-member: refused at every actual semantic-retention sealed member conserves\nwidened-guard: refused at actual semantic-retention default guard diagnostics\nborrowed-admission-success: refused at exact actual semantic-retention command and complete output role\nborrowed-constructor-success: refused at exact actual semantic-retention command and complete output role\nborrowed-budget-success: refused at exact actual semantic-retention command and complete output role\nPASS independently consumed complete actual semantic retention, regenerated all source/semantic/collection/recovery/native products and qualified typed/member/guard/real borrowed-result refusals.\n"
+}

@@ -1,0 +1,13 @@
+{
+  "phases": [
+    {
+      "command": [
+        "knowledge-map/scripts/gen_knowledge_map.sh"
+      ],
+      "status": 0,
+      "stderr": "knowledge-map: wrote KNOWLEDGE_MAP.md plus 184 topic shards (1266 facts, 6973 unique questions, 7150 answer occurrences)\n",
+      "stdout": ""
+    }
+  ],
+  "role": "Actual whole Knowledge Map regeneration; every failed mutation is restored exactly."
+}

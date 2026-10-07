@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-checks-20261006/verify_seal.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/class-frame-publication-checks-20261006/verify_seal.py": {
+      "bytes": 22872,
+      "sha256": "3c616c6a33cca60c96393f0c4c15ac01cd96a0daf8928c1777aa0f6362e84db5"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 73883; host 50.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS independent complete class/frame source/card/global/book population and measured authority; genuine source/member/scope/aggregate/ceiling losses refuse.\nstatus-True: refused at actual publication integer process success\nstatus-0.0: refused at actual publication integer process success\nstatus-1: refused at actual publication integer process success\nmember-count-True: refused at actual publication discrete sealed member byte-count kinds\nmember-count-0.0: refused at actual publication discrete sealed member byte-count kinds\nlost-sealed-member: refused at every actual complete publication sealed member conserves\nwidened-guard: refused at actual publication unchanged default guard diagnostics\nborrowed-current-native-success: refused at exact actual publication command and complete output role\nborrowed-preparation-success: refused at exact actual publication command and complete output role\nborrowed-retention-success: refused at exact actual publication command and complete output role\nPASS independently consumed complete actual publication, regenerated full source/semantic/global/revision/recovery/native/role products and qualified typed/member/guard/real borrowed-result refusals.\n"
+}

@@ -1,0 +1,87 @@
+{
+  "destination": ".artifacts/class-frame-publication-book",
+  "phases": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--write"
+      ],
+      "instruments": {
+        "scripts/book_source_references.py": {
+          "bytes": 11033,
+          "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+    },
+    {
+      "command": [
+        "mdbook",
+        "build",
+        "docs/book",
+        "-d",
+        ".artifacts/class-frame-publication-book"
+      ],
+      "instruments": {},
+      "status": 0,
+      "stderr": " INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15273496 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/class-frame-publication-book`\n",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/book_source_references.py",
+        "--check",
+        "--verify-build",
+        ".artifacts/class-frame-publication-book"
+      ],
+      "instruments": {
+        "scripts/book_source_references.py": {
+          "bytes": 11033,
+          "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "scripts/check_book_source_index.py"
+      ],
+      "instruments": {
+        "scripts/check_book_source_index.py": {
+          "bytes": 1278,
+          "sha256": "1311f277544ca01c067eb311fc93ae99751a003117b93b3fe501dd19a413893f"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "book-source-index: complete indexed directory and checked source projection agree\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/audits/class-frame-publication-checks-20261006/native_guide.py"
+      ],
+      "instruments": {
+        "docs/audits/class-frame-publication-checks-20261006/native_guide.py": {
+          "bytes": 726,
+          "sha256": "bdc91a2d4428082a62000d97e5f6fa4485042e81a8bfc32fd384b9c83ce961a3"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "PASS native complete class/frame current retained guide and genuine scope controls; whole rendered input retained.\n"
+    }
+  ],
+  "role": "Actual complete repository-local canonical/current/copied-source/index/native-guide phases; original raw/native captures retained and visual QA pending."
+}

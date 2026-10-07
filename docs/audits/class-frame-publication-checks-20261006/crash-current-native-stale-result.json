@@ -1,0 +1,29 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py",
+    "--current",
+    "--build",
+    ".artifacts/class-frame-publication-book"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+      "bytes": 22291,
+      "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 67544; host 63.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-publication-20261006/verify.py\", line 277, in <module>\n    if __name__ == '__main__': main()\n                               ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-publication-20261006/verify.py\", line 272, in main\n    plane['check'](rows,args.build); book['check']((output / (CHAPTER.stem + '.html')).read_text())\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"scripts/book_source_references.py\", line 164, in check\n    require(local_read(target,SOURCE_BYTES) == source_bytes(row['source']), 'fresh whole native copied source bytes')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"scripts/book_source_references.py\", line 32, in require\n    if not condition: raise ValueError(message)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: fresh whole native copied source bytes\n",
+  "stdout": ""
+}

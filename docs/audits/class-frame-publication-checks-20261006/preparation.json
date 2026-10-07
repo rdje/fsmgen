@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py",
+    "--prepare"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py": {
+      "bytes": 20316,
+      "sha256": "7ed3d6160715a31f1c92a5de600d3a586872cceb839bce6c28bd39fbf09f61e4"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 95054; host 72.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete publication source/semantic/capacity preparation; actual replay and atomic current publication remain required.\n"
+}

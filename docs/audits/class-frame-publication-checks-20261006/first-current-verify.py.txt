@@ -1,0 +1,277 @@
+"""Qualify complete class/frame publication with distinct snapshot/current roles."""
+import argparse
+import copy
+import json
+import re
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-class-frame-publication-20261006')
+CHECKS = Path('docs/audits/class-frame-publication-checks-20261006')
+RETENTION = Path('docs/audits/record-value-class-frame-retention-20261006')
+RETENTION_CHECKS = Path('docs/audits/class-frame-retention-checks-20261006')
+REVISION = '50dd117496d4d226bff3cf2a5226caab45104416'
+OWNER = 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.3.3'
+CHAPTER = Path('docs/book/src/13k-isf-feature-support-matrix.md')
+TOOLING_CHAPTER = Path('docs/book/src/90-reference-map.md')
+REGISTRY = Path('doctrine/live_document_size/surfaces.jsonl')
+SUCCESS = 'PASS complete committed class/frame publication source and saved snapshot; current currency requires --current.\n'
+CURRENT_SUCCESS = 'PASS current complete class/frame core observer tooling facts, actual question ownership and canonical source routes under unchanged authority.\n'
+REPLAY_SUCCESS = 'PASS fresh complete retention semantic and independent actual-result prerequisites; no current publication claimed.\n'
+
+
+def module(path):
+    ns = {'__name__':'class_frame_publication','__file__':str(path)}
+    exec(compile(path.read_bytes(),str(path),'exec'),ns)
+    return ns
+
+
+retention = module(RETENTION / 'verify.py')
+require,same,identity,load,whole = (retention[k] for k in ('require','same','identity','load','whole'))
+metadata,public = retention['metadata'],retention['public']
+model = module(BASE / 'model.py'); book = module(BASE / 'book.py')
+PATHS,CORE,OBSERVER,TOOLING = (model[k] for k in ('PATHS','CORE','OBSERVER','TOOLING'))
+
+
+def git(path):
+    return subprocess.check_output(['git','show',REVISION + ':' + str(path)])
+
+
+def save(name,value):
+    path = BASE / name
+    if path.exists(): require(same(load(path),value),'whole immutable publication product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(),'sealed publication cannot add products')
+        path.write_text(json.dumps(value,sort_keys=True,indent=2) + '\n')
+
+
+def members():
+    return {str(Path(p).relative_to(BASE)):pin for p,pin in whole(BASE).items() if Path(p) != BASE / 'manifest.json'}
+
+
+def binding():
+    roots = sorted({Path(p) for p in load(RETENTION / 'binding.json')['inputs']} | {RETENTION,RETENTION_CHECKS},key=str)
+    authority = retention['intake']['admission']; previous = authority['REVISION']
+    try:
+        authority['REVISION'] = REVISION
+        inputs = authority['committed_inputs'](roots)
+        task = git(retention['intake']['TASK'])
+        owners = authority['owner_rows'](roots,task.decode())
+    finally: authority['REVISION'] = previous
+    return dict(revision=REVISION,owner=OWNER,inputs=inputs,owners=owners,task=identity(task),
+        scope='Complete committed retention/admission/source/semantic/actual-result/native domains and every transitive member; original captures remain immutable retained evidence.')
+
+
+def check_binding(candidate,expected):
+    require(candidate['revision'] == REVISION and candidate['owner'] == OWNER and candidate['scope'] == expected['scope'],'complete publication custody epoch owner and native scope')
+    require(all(type(p['bytes']) is int and p['bytes'] >= 0 for rows in candidate['inputs'].values() for p in rows.values()),'publication custody discrete member byte-count kinds')
+    require(same(candidate['inputs'],expected['inputs']),'whole committed publication source semantic and actual-result member population')
+    require(same(candidate['owners'],expected['owners']) and same(candidate['task'],expected['task']),'whole completed publication owner and task authority')
+    require(same(candidate,expected),'closed complete publication custody')
+
+
+def semantic_products():
+    retention['check_binding'](load(RETENTION / 'binding.json'),retention['binding']())
+    retention['construct'](); proposal,review = load(RETENTION / 'proposal.json'),load(RETENTION / 'retention-map.json')
+    sources = retention['original_sources']()
+    derived = dict(
+        semantic=retention['semantics'](proposal,review,sources),
+        collection=retention['collection'](proposal,sources),
+        authority=retention['authority'](),
+        controls=retention['controls'](proposal,review,sources,load(RETENTION / 'binding.json')),
+        recoveries=module(RETENTION / 'recoveries.py')['check'](retention),
+        admission=retention['fresh_admission'](False),
+        native=module(RETENTION / 'book.py')['proof']((RETENTION / 'book-input.html').read_text()))
+    names = dict(semantic='semantic-proof.json',collection='collection-proof.json',authority='source-authority.json',controls='controls.json',
+        recoveries='recovery-proof.json',admission='admission-proof.json',native='book-proof.json')
+    for key,name in names.items(): require(same(derived[key],load(RETENTION / name)),'whole regenerated complete publication prerequisite: ' + key)
+    require(same(load(RETENTION / 'manifest.json'),retention['members']()),'whole immutable publication retention seal')
+    return dict(semantic=derived['semantic'],controls=derived['controls'],class_frame_controls=derived['authority']['semantic_products']['controls'],
+        qualified_full_products={key:dict(path=str(RETENTION / name),identity=identity((RETENTION / name).read_bytes())) for key,name in names.items()},
+        scope='Every complete prerequisite value is reconstructed and compared to its committed corpus. Full retained products remain canonical without duplicating their representations; original native/private/formatter/identity/coordinate/address gaps conserve.')
+
+
+def sources():
+    paths = subprocess.check_output(['git','ls-tree','-r','--name-only',REVISION,'docs/knowledge','docs/decisions'],text=True).splitlines()
+    return metadata['git_blobs'](REVISION,sorted(p for p in paths if p.endswith('.md')))
+
+
+def source_model():
+    original = sources(); cards = model['cards']()
+    prior = load(RETENTION / 'proposal.json')
+    for path,text in cards.items():
+        require(original[path].decode() == prior[path]['before'],'whole original publication card source epoch: ' + path)
+        require(text.rsplit('---\n',1)[1] == prior[path]['after'].rsplit('---\n',1)[1],'complete reviewed retained and added publication body: ' + path)
+        require(metadata['metadata'](text.encode()) == metadata['metadata'](original[path]),'exact original publication identity and ordered questions: ' + path)
+    old_core = model['replay_value'](original[CORE].decode()).split(' && ')
+    require(model['replay_value'](cards[CORE]).split(' && ') == [*old_core,model['COMMAND']],'whole unchanged original helper finite join probe replay and added current chain')
+    old_locality = model['replay_value'](original[TOOLING].decode()).split(' && ')[0]
+    require(model['replay_value'](cards[TOOLING]).split(' && ') == [old_locality,model['COMMAND']]
+        and model['replay_value'](cards[OBSERVER]) == model['COMMAND'],'complete original locality and atomic observer tooling current obligations')
+    physical = {p:raw for p,raw in original.items() if Path(p).parent == Path('docs/knowledge')}
+    after = {**physical,**{p:text.encode() for p,text in cards.items()}}
+    surface = public['authority'](git(REGISTRY)); public['within'](public['metrics'](after),surface)
+    before_allocation,after_allocation = metadata['allocation'](original),metadata['allocation']({**original,**{p:t.encode() for p,t in cards.items()}})
+    require(same(before_allocation,after_allocation),'whole unchanged publication global question identity path and occurrence allocation')
+    budget = next(json.loads(s) for s in git(REGISTRY).decode().splitlines() if json.loads(s).get('surface_id') == 'book_source_manifest')
+    return dict(revision=REVISION,cards=cards,before_members={p:identity(r) for p,r in physical.items()},after_members={p:identity(r) for p,r in after.items()},
+        before=public['metrics'](physical),after=public['metrics'](after),allocation=before_allocation,surface=surface,source_budget=budget,
+        body_scope='Exact complete committed retention bodies; only declared core date/join citation and all current routes change. Original helper/probe/locality obligations retain.',
+        legs=dict(rederive='whole fixed-Git physical/logical source and original questions, exact admitted body/current metadata transform and every capacity dimension',
+            falsify='genuine original body/qualifier/question/route/kind/member/native-scope/budget and borrowed-role losses refuse',
+            durability='tracked model, complete source/semantic/actual-result/native products, immutable seal and independent actual-result consumption'))
+
+
+def target_rows(text):
+    allocation = metadata['allocation']({p:t.encode() for p,t in model['cards']().items()})
+    wanted = {line.split('\t')[0] for line in allocation['rows'].splitlines()}; ids = {Path(p).stem for p in PATHS}
+    rows = []
+    for line in text.splitlines():
+        fields = line.split('\t'); require(len(fields) == 3,'complete actual publication query row grammar')
+        if fields[0] in wanted or ids.intersection(fields[1].split(',')): rows.append(line)
+    return sorted(rows)
+
+
+def current_input():
+    return dict(cards={p:Path(p).read_text() for p in PATHS},chapter=CHAPTER.read_text(),tooling_chapter=TOOLING_CHAPTER.read_text(),
+        queries=public['queries'](),census=public['metrics'](public['cards']()),surface=public['authority'](REGISTRY.read_bytes()),
+        physical_members={p:identity(raw) for p,raw in public['cards']().items()},
+        source_budget=next(json.loads(s) for s in REGISTRY.read_text().splitlines() if json.loads(s).get('surface_id') == 'book_source_manifest'))
+
+
+def check_current(record):
+    require(record['cards'] == model['cards'](),'complete current class/frame retained facts qualifiers questions identity and all routes')
+    require(record['chapter'].count(book['GUIDE']) == 1 and record['chapter'].count(book['EPOCH']) == 1
+        and all(record['chapter'].count('```bash\n' + command + '\n```') == 1 for command in (book['COMMAND'],book['DEFAULT'],book['BUILD'])),
+        'unique exact current default native and retained publication guides')
+    public['within'](record['census'],record['surface'])
+    declared = source_model()
+    require(all(type(pin['bytes']) is int and pin['bytes'] >= 0 for pin in record['physical_members'].values()),'current physical member discrete byte-count kinds')
+    require(same(record['physical_members'],declared['after_members']),'whole current physical member and non-target source conservation')
+    require(same(record['census'],declared['after']),'whole exact current physical population census')
+    require(set(record['queries']) == {'direct','cached'},'complete actual current direct cached query roles')
+    expected = sorted(metadata['allocation']({p:t.encode() for p,t in model['cards']().items()})['rows'].splitlines())
+    for role,actual in record['queries'].items():
+        require(type(actual['status']) is int and actual['status'] == 0,'actual current query integer success')
+        command = ['knowledge-map/scripts/query_knowledge_map.sh','--all'] + (['--no-cache'] if role == 'direct' else [])
+        require(actual['command'] == command and actual['stderr'] == '','whole distinct actual current query command and streams')
+        require(target_rows(actual['stdout']) == expected,'whole current class/frame question ownership')
+        require(actual['stdout'] == declared['allocation']['rows'],'whole global current question identity path and occurrence allocation')
+    budget = declared['source_budget']
+    require(same(record['source_budget'],budget),'whole unchanged current canonical source budget')
+    plane = module(Path('scripts/book_source_references.py'))
+    original = load(Path('docs/audits/book-source-plane-20261005/book-authority.json'))['block'].split('\nThe asset plane is available;',1)[0]
+    require(record['tooling_chapter'].count(original) == 1,'unique complete canonical source and native build roles')
+    for row in plane['expected_rows']():
+        chapter = record['chapter'] if row['chapter'] == CHAPTER.stem else record['tooling_chapter']
+        require(chapter.count('](' + row['asset'] + ')') == 1,'unique complete publication canonical source destination')
+
+
+def replay_specs():
+    return [dict(name='semantic',path=str(RETENTION / 'verify.py'),stdout=retention['SUCCESS']),
+        dict(name='independent',path=str(RETENTION_CHECKS / 'verify_seal.py'),stdout=load(RETENTION_CHECKS / 'independent-result.json')['stdout'])]
+
+
+def replays(fresh):
+    result = {}
+    for spec in replay_specs():
+        path = BASE / ('replay-' + spec['name'] + '.json'); command = ['python3','-B',spec['path']]
+        # The whole actual prerequisite caller preceded the explicitly
+        # qualified stronger current predicate. It never executed current mode.
+        instruments = {str(BASE / 'verify.py'):identity((CHECKS / 'first-verify.py.txt').read_bytes()),
+                       spec['path']:identity(Path(spec['path']).read_bytes())}
+        if fresh:
+            require(not path.exists(),'actual publication prerequisite cannot overwrite an execution')
+            execution = subprocess.run(command,capture_output=True)
+            save(path.name,dict(command=command,status=execution.returncode,stdout=execution.stdout.decode(),stderr=execution.stderr.decode(),
+                instruments=instruments,binding=identity((BASE / 'binding.json').read_bytes()),
+                role='Fresh full retained semantic/actual-result execution; original raw and transitive native captures retained, never recaptured.'))
+        actual = load(path)
+        require(type(actual['status']) is int and actual['status'] == 0 and actual['command'] == command and actual['stdout'] == spec['stdout'] and actual['stderr'] == '',
+                'whole complete actual publication prerequisite command status and streams')
+        require(same(actual['instruments'],instruments) and same(actual['binding'],identity((BASE / 'binding.json').read_bytes()))
+            and actual['role'] == 'Fresh full retained semantic/actual-result execution; original raw and transitive native captures retained, never recaptured.',
+            'whole publication invocation source and fresh retained native roles')
+        require(set(actual) == {'command','status','stdout','stderr','instruments','binding','role'},'closed actual complete publication prerequisite')
+        result[spec['name']] = dict(actual=identity(path.read_bytes()),role=actual['role'])
+    return result
+
+
+def controls(record,bound):
+    result = []
+    def refuse(name,candidate,predicate,cause):
+        try: predicate(candidate)
+        except ValueError as error:
+            require(str(error) == cause,'intended complete publication refusal: ' + name + ': ' + str(error))
+            result.append(dict(control=name,status=1,cause=cause))
+        else: raise ValueError('false-green publication control: ' + name)
+    for name,mutate,cause in (
+        ('core-native-promotion',lambda r:r['cards'].update({CORE:r['cards'][CORE].replace('original classes were unmeasured','original classes were measured',1)}),'complete current class/frame retained facts qualifiers questions identity and all routes'),
+        ('observer-body-loss',lambda r:r['cards'].update({OBSERVER:r['cards'][OBSERVER].replace('opaque retained evidence','formatter evidence',1)}),'complete current class/frame retained facts qualifiers questions identity and all routes'),
+        ('lost-tooling-locality-obligation',lambda r:r['cards'].update({TOOLING:r['cards'][TOOLING].replace('Original destination-locality replay remains required.','Original destination-locality replay is optional.',1)}),'complete current class/frame retained facts qualifiers questions identity and all routes'),
+        ('lost-question',lambda r:r['cards'].update({OBSERVER:r['cards'][OBSERVER].replace('  - "what inventories original observer and callback source roles?"\n','',1)}),'complete current class/frame retained facts qualifiers questions identity and all routes'),
+        ('borrowed-old-current-route',lambda r:r['cards'].update({OBSERVER:git(OBSERVER).decode()}),'complete current class/frame retained facts qualifiers questions identity and all routes'),
+        ('borrowed-question-owner',lambda r:r['queries']['direct'].update(stdout=r['queries']['direct']['stdout'].replace('\tmdbook-build-destination-locality\t','\tborrowed-tooling\t')),'whole current class/frame question ownership'),
+        ('snapshot-current-guide',lambda r:r.update(chapter=r['chapter'].replace(book['COMMAND'],book['DEFAULT'])),'unique exact current default native and retained publication guides'),
+        ('lost-source-budget',lambda r:r['source_budget']['targets'].clear(),'whole unchanged current canonical source budget'),
+        ('Boolean-current-capacity',lambda r:r['census'].update(files=True),'physical capacity kind/allowance: files'),
+        ('lost-capacity-dimension',lambda r:r['census'].pop('bytes_total'),'complete physical capacity dimensions'),
+        ('widened-current-authority',lambda r:r['surface']['transition']['max_growth'].update(files=999),'whole unchanged physical card authority')):
+        changed = copy.deepcopy(record); mutate(changed); require(not same(changed,record),'genuine full current publication intervention: ' + name)
+        refuse(name,changed,check_current,cause)
+    for status in (True,0.0,1):
+        changed = copy.deepcopy(record); changed['queries']['direct']['status'] = status
+        refuse('query-status-' + repr(status),changed,check_current,'actual current query integer success')
+    ids = {Path(p).stem for p in PATHS}
+    line = next(line for line in record['queries']['direct']['stdout'].splitlines() if not ids.intersection(line.split('\t')[1].split(',')))
+    changed = copy.deepcopy(record); changed['queries']['direct']['stdout'] = changed['queries']['direct']['stdout'].replace(line + '\n','',1)
+    refuse('lost-non-target-global-question',changed,check_current,'whole global current question identity path and occurrence allocation')
+    changed = copy.deepcopy(record); changed['physical_members'].pop(next(iter(changed['physical_members'])))
+    refuse('lost-non-target-physical-member',changed,check_current,'whole current physical member and non-target source conservation')
+    changed = copy.deepcopy(record); next(iter(changed['physical_members'].values()))['bytes'] = True
+    refuse('Boolean-physical-member-count',changed,check_current,'current physical member discrete byte-count kinds')
+    changed = copy.deepcopy(record); changed['census']['files'] -= 1
+    refuse('reduced-current-population',changed,check_current,'whole exact current physical population census')
+    for name,mutate,cause in (
+        ('lost-completed-owner',lambda r:r['owners'].pop(next(iter(r['owners']))),'whole completed publication owner and task authority'),
+        ('lost-source-result-member',lambda r:next(iter(r['inputs'].values())).pop(next(iter(next(iter(r['inputs'].values()))))),'whole committed publication source semantic and actual-result member population'),
+        ('Boolean-source-count',lambda r:next(iter(next(iter(r['inputs'].values())).values())).update(bytes=True),'publication custody discrete member byte-count kinds'),
+        ('original-native-recapture-promotion',lambda r:r.update(scope='Original native classes and private identities recaptured.'),'complete publication custody epoch owner and native scope')):
+        changed = copy.deepcopy(bound); mutate(changed); require(not same(changed,bound),'genuine publication custody intervention: ' + name)
+        refuse(name,changed,lambda r:check_binding(r,bound),cause)
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--prepare',action='store_true'); parser.add_argument('--replay',action='store_true')
+    parser.add_argument('--current',action='store_true'); parser.add_argument('--build'); parser.add_argument('--seal',action='store_true')
+    args = parser.parse_args()
+    require(not ((args.prepare or args.replay) and (args.current or args.build or args.seal)) and not(args.prepare and args.replay),'publication preparation replay and current roles are distinct')
+    require(args.current or args.build is None,'native publication build requires explicit current role')
+    if (BASE / 'manifest.json').exists():
+        require(not args.prepare and not args.replay,'sealed publication cannot recapture')
+        require(same(load(BASE / 'manifest.json'),members()),'whole immutable complete publication manifest')
+    bound = binding(); check_binding(bound,bound); save('binding.json',bound)
+    save('semantic-proof.json',semantic_products()); save('source-model.json',source_model())
+    if args.prepare:
+        print('PASS complete publication source/semantic/capacity preparation; actual replay and atomic current publication remain required.'); return
+    save('replay-proof.json',replays(args.replay))
+    if args.replay: print(REPLAY_SUCCESS,end=''); return
+    publication = load(BASE / 'publication.json'); check_current(publication['snapshot'])
+    save('controls.json',controls(publication['snapshot'],bound))
+    save('native-proof.json',book['proof']((BASE / 'native-input.html').read_text()))
+    if args.current:
+        check_current(current_input())
+        plane = module(Path('scripts/book_source_references.py')); rows = plane['expected_rows']()
+        plane['check'](rows); plane['check_index'](rows)
+        if args.build:
+            output = Path(args.build)
+            require(not output.is_absolute() and '..' not in output.parts and output.resolve().is_relative_to(Path.cwd())
+                and output.stat().st_dev == Path.cwd().stat().st_dev,'repository-relative same-volume publication native output')
+            plane['check'](rows,args.build); book['check']((output / (CHAPTER.stem + '.html')).read_text())
+    if args.seal: save('manifest.json',members())
+    print(CURRENT_SUCCESS if args.current else SUCCESS,end='')
+
+
+if __name__ == '__main__': main()

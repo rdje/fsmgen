@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-publication-checks-20261006/publish.py"
+  ],
+  "instruments": {
+    "docs/audits/class-frame-publication-checks-20261006/publish.py": {
+      "bytes": 6047,
+      "sha256": "3e269e92498b16092e421b285ef188a8db34cd75fc077616df6aa3640af36bfe"
+    },
+    "docs/audits/class-frame-publication-checks-20261006/run.py": {
+      "bytes": 1122,
+      "sha256": "6312748d3ba88bfb1c5c66d09ca520d25428b68051b0663511ed0a5e3b473636"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 25146; host 86.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete atomic class/frame facts/routes/guide publication and actual full global direct/cache question conservation; collection authority unchanged.\n"
+}

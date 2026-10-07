@@ -1,0 +1,14 @@
+[
+  {
+    "asset": "reference-source/MEMORY.markdown.source.txt",
+    "copied": {
+      "bytes": 1511,
+      "sha256": "74274fbb71ca3adbb2ceb12ca3acf8f69fe6f39ccb024f48ef55cb9450ca5728"
+    },
+    "current": {
+      "bytes": 1587,
+      "sha256": "a47a13b60511e196569661a27d3041396e293c34128120f8ce64e60d584a0538"
+    },
+    "source": "MEMORY.md"
+  }
+]

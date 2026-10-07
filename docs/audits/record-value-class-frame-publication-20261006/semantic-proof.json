@@ -1,0 +1,935 @@
+{
+  "class_frame_controls": [
+    {
+      "cause": "source exception class/primary/family to frame-case association",
+      "control": "cross-family-class-frame-association",
+      "intervention": "new source-association bridge; predecessor products intact",
+      "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+      "status": 1
+    },
+    {
+      "cause": "ordered complete source class/frame throw phases",
+      "control": "reversed-source-throw-phases",
+      "intervention": "new source-association bridge; predecessor products intact",
+      "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+      "status": 1
+    },
+    {
+      "cause": "source guard family to active throw-phase association",
+      "control": "wrong-phase-guard-family",
+      "intervention": "new source-association bridge; predecessor products intact",
+      "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+      "status": 1
+    },
+    {
+      "cause": "complete source class/frame phase function order",
+      "control": "reordered-source-core-functions",
+      "intervention": "new source-association bridge; predecessor products intact",
+      "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+      "status": 1
+    },
+    {
+      "cause": "complete source class/frame phase argument roles",
+      "control": "wrong-source-core-argument",
+      "intervention": "new source-association bridge; predecessor products intact",
+      "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+      "status": 1
+    },
+    {
+      "cause": "complete joint class/frame refusal population",
+      "control": "lost-class-frame-refusal",
+      "intervention": "new source-association bridge; predecessor products intact",
+      "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+      "status": 1
+    },
+    {
+      "cause": "source-inferred scalar class without native promotion",
+      "control": "native-class-promotion",
+      "intervention": "new source-association bridge; predecessor products intact",
+      "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+      "status": 1
+    },
+    {
+      "cause": "whole serialized inner operand joins Metadata class/frame to outer Value body",
+      "control": "inner-operand-no-longer-forwarded-whole",
+      "intervention": "whole raw operand relation; predecessor own/public meanings intact",
+      "prior_predicates": "complete independent class and public frame predicates passed in intervention epoch",
+      "status": 1
+    }
+  ],
+  "controls": [
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:0:0",
+      "control": "lost-mdbook-build-destination-locality:0:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:0:1",
+      "control": "lost-mdbook-build-destination-locality:0:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:0:2",
+      "control": "lost-mdbook-build-destination-locality:0:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:1:0",
+      "control": "lost-mdbook-build-destination-locality:1:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:1:1",
+      "control": "lost-mdbook-build-destination-locality:1:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:1:2",
+      "control": "lost-mdbook-build-destination-locality:1:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:2:0",
+      "control": "lost-mdbook-build-destination-locality:2:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:2:1",
+      "control": "lost-mdbook-build-destination-locality:2:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:2:2",
+      "control": "lost-mdbook-build-destination-locality:2:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:2:3",
+      "control": "lost-mdbook-build-destination-locality:2:3",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:2:4",
+      "control": "lost-mdbook-build-destination-locality:2:4",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:2:5",
+      "control": "lost-mdbook-build-destination-locality:2:5",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:3:0",
+      "control": "lost-mdbook-build-destination-locality:3:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:4:0",
+      "control": "lost-mdbook-build-destination-locality:4:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:4:1",
+      "control": "lost-mdbook-build-destination-locality:4:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:4:2",
+      "control": "lost-mdbook-build-destination-locality:4:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:4:3",
+      "control": "lost-mdbook-build-destination-locality:4:3",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:5:0",
+      "control": "lost-mdbook-build-destination-locality:5:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:5:1",
+      "control": "lost-mdbook-build-destination-locality:5:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:5:2",
+      "control": "lost-mdbook-build-destination-locality:5:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:5:3",
+      "control": "lost-mdbook-build-destination-locality:5:3",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:5:4",
+      "control": "lost-mdbook-build-destination-locality:5:4",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:6:0",
+      "control": "lost-mdbook-build-destination-locality:6:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:6:1",
+      "control": "lost-mdbook-build-destination-locality:6:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:6:2",
+      "control": "lost-mdbook-build-destination-locality:6:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:6:3",
+      "control": "lost-mdbook-build-destination-locality:6:3",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:6:4",
+      "control": "lost-mdbook-build-destination-locality:6:4",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:7:0",
+      "control": "lost-mdbook-build-destination-locality:7:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:8:0",
+      "control": "lost-mdbook-build-destination-locality:8:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:8:1",
+      "control": "lost-mdbook-build-destination-locality:8:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:8:2",
+      "control": "lost-mdbook-build-destination-locality:8:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:9:0",
+      "control": "lost-mdbook-build-destination-locality:9:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:10:0",
+      "control": "lost-mdbook-build-destination-locality:10:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:10:1",
+      "control": "lost-mdbook-build-destination-locality:10:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:10:2",
+      "control": "lost-mdbook-build-destination-locality:10:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:10:3",
+      "control": "lost-mdbook-build-destination-locality:10:3",
+      "status": 1
+    },
+    {
+      "cause": "whole exact identity date tags evidence ordered questions and reverify obligations: docs/knowledge/mdbook-build-destination-locality.md",
+      "control": "lost-question-docs/knowledge/mdbook-build-destination-locality.md",
+      "status": 1
+    },
+    {
+      "cause": "complete independently declared source proposition and qualifier census: docs/knowledge/mdbook-build-destination-locality.md",
+      "control": "lost-proposition-row-docs/knowledge/mdbook-build-destination-locality.md",
+      "status": 1
+    },
+    {
+      "cause": "retention-only current publication boundary: docs/knowledge/mdbook-build-destination-locality.md",
+      "control": "borrowed-current-scope-docs/knowledge/mdbook-build-destination-locality.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:5:0",
+      "control": "lost-qualifier-default-docs/knowledge/mdbook-build-destination-locality.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: mdbook-build-destination-locality:1:0",
+      "control": "lost-qualifier-same-volume-docs/knowledge/mdbook-build-destination-locality.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:0:0",
+      "control": "lost-record-value-finite-copy-probe-reader:0:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:0:1",
+      "control": "lost-record-value-finite-copy-probe-reader:0:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:1:0",
+      "control": "lost-record-value-finite-copy-probe-reader:1:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:1:1",
+      "control": "lost-record-value-finite-copy-probe-reader:1:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:1:2",
+      "control": "lost-record-value-finite-copy-probe-reader:1:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:0",
+      "control": "lost-record-value-finite-copy-probe-reader:2:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:1",
+      "control": "lost-record-value-finite-copy-probe-reader:2:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:2",
+      "control": "lost-record-value-finite-copy-probe-reader:2:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:3",
+      "control": "lost-record-value-finite-copy-probe-reader:2:3",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:4",
+      "control": "lost-record-value-finite-copy-probe-reader:2:4",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:5",
+      "control": "lost-record-value-finite-copy-probe-reader:2:5",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:6",
+      "control": "lost-record-value-finite-copy-probe-reader:2:6",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:7",
+      "control": "lost-record-value-finite-copy-probe-reader:2:7",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:8",
+      "control": "lost-record-value-finite-copy-probe-reader:2:8",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:9",
+      "control": "lost-record-value-finite-copy-probe-reader:2:9",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:10",
+      "control": "lost-record-value-finite-copy-probe-reader:2:10",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:11",
+      "control": "lost-record-value-finite-copy-probe-reader:2:11",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:12",
+      "control": "lost-record-value-finite-copy-probe-reader:2:12",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:13",
+      "control": "lost-record-value-finite-copy-probe-reader:2:13",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:14",
+      "control": "lost-record-value-finite-copy-probe-reader:2:14",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:15",
+      "control": "lost-record-value-finite-copy-probe-reader:2:15",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:16",
+      "control": "lost-record-value-finite-copy-probe-reader:2:16",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:17",
+      "control": "lost-record-value-finite-copy-probe-reader:2:17",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:18",
+      "control": "lost-record-value-finite-copy-probe-reader:2:18",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:19",
+      "control": "lost-record-value-finite-copy-probe-reader:2:19",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:20",
+      "control": "lost-record-value-finite-copy-probe-reader:2:20",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:21",
+      "control": "lost-record-value-finite-copy-probe-reader:2:21",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:22",
+      "control": "lost-record-value-finite-copy-probe-reader:2:22",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:23",
+      "control": "lost-record-value-finite-copy-probe-reader:2:23",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:24",
+      "control": "lost-record-value-finite-copy-probe-reader:2:24",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:3:0",
+      "control": "lost-record-value-finite-copy-probe-reader:3:0",
+      "status": 1
+    },
+    {
+      "cause": "whole exact identity date tags evidence ordered questions and reverify obligations: docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "control": "lost-question-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "complete independently declared source proposition and qualifier census: docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "control": "lost-proposition-row-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "retention-only current publication boundary: docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "control": "borrowed-current-scope-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "complete finite class frame body phase operand addition: docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "control": "native-promotion-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:13",
+      "control": "lost-qualifier-unmeasured-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "complete finite class frame body phase operand addition: docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "control": "lost-qualifier-opaque-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:1:0",
+      "control": "lost-qualifier-within-capture-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:3",
+      "control": "lost-qualifier-unchanged-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:8",
+      "control": "lost-qualifier-default-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-finite-copy-probe-reader:2:0",
+      "control": "lost-qualifier-same-volume-docs/knowledge/record-value-finite-copy-probe-reader.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:0",
+      "control": "lost-record-value-original-observer-helper-paths:0:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:1",
+      "control": "lost-record-value-original-observer-helper-paths:0:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:2",
+      "control": "lost-record-value-original-observer-helper-paths:0:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:3",
+      "control": "lost-record-value-original-observer-helper-paths:0:3",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:4",
+      "control": "lost-record-value-original-observer-helper-paths:0:4",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:5",
+      "control": "lost-record-value-original-observer-helper-paths:0:5",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:6",
+      "control": "lost-record-value-original-observer-helper-paths:0:6",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:7",
+      "control": "lost-record-value-original-observer-helper-paths:0:7",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:8",
+      "control": "lost-record-value-original-observer-helper-paths:0:8",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:1:0",
+      "control": "lost-record-value-original-observer-helper-paths:1:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:1:1",
+      "control": "lost-record-value-original-observer-helper-paths:1:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:1:2",
+      "control": "lost-record-value-original-observer-helper-paths:1:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:2:0",
+      "control": "lost-record-value-original-observer-helper-paths:2:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:3:0",
+      "control": "lost-record-value-original-observer-helper-paths:3:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:4:0",
+      "control": "lost-record-value-original-observer-helper-paths:4:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:4:1",
+      "control": "lost-record-value-original-observer-helper-paths:4:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:4:2",
+      "control": "lost-record-value-original-observer-helper-paths:4:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:4:3",
+      "control": "lost-record-value-original-observer-helper-paths:4:3",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:4:4",
+      "control": "lost-record-value-original-observer-helper-paths:4:4",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:4:5",
+      "control": "lost-record-value-original-observer-helper-paths:4:5",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:5:0",
+      "control": "lost-record-value-original-observer-helper-paths:5:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:5:1",
+      "control": "lost-record-value-original-observer-helper-paths:5:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:5:2",
+      "control": "lost-record-value-original-observer-helper-paths:5:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:5:3",
+      "control": "lost-record-value-original-observer-helper-paths:5:3",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:5:4",
+      "control": "lost-record-value-original-observer-helper-paths:5:4",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:6:0",
+      "control": "lost-record-value-original-observer-helper-paths:6:0",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:6:1",
+      "control": "lost-record-value-original-observer-helper-paths:6:1",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:6:2",
+      "control": "lost-record-value-original-observer-helper-paths:6:2",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:6:3",
+      "control": "lost-record-value-original-observer-helper-paths:6:3",
+      "status": 1
+    },
+    {
+      "cause": "whole exact identity date tags evidence ordered questions and reverify obligations: docs/knowledge/record-value-original-observer-helper-paths.md",
+      "control": "lost-question-docs/knowledge/record-value-original-observer-helper-paths.md",
+      "status": 1
+    },
+    {
+      "cause": "complete independently declared source proposition and qualifier census: docs/knowledge/record-value-original-observer-helper-paths.md",
+      "control": "lost-proposition-row-docs/knowledge/record-value-original-observer-helper-paths.md",
+      "status": 1
+    },
+    {
+      "cause": "retention-only current publication boundary: docs/knowledge/record-value-original-observer-helper-paths.md",
+      "control": "borrowed-current-scope-docs/knowledge/record-value-original-observer-helper-paths.md",
+      "status": 1
+    },
+    {
+      "cause": "complete finite class frame body phase operand addition: docs/knowledge/record-value-original-observer-helper-paths.md",
+      "control": "native-promotion-docs/knowledge/record-value-original-observer-helper-paths.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:2",
+      "control": "lost-qualifier-unmeasured-docs/knowledge/record-value-original-observer-helper-paths.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:4:5",
+      "control": "lost-qualifier-opaque-docs/knowledge/record-value-original-observer-helper-paths.md",
+      "status": 1
+    },
+    {
+      "cause": "retained source proposition and qualifier: record-value-original-observer-helper-paths:0:5",
+      "control": "lost-qualifier-default-docs/knowledge/record-value-original-observer-helper-paths.md",
+      "status": 1
+    },
+    {
+      "cause": "complete retention custody revision owner and native scope",
+      "control": "native-custody-promotion",
+      "status": 1
+    },
+    {
+      "cause": "whole retention completed-owner and task authority",
+      "control": "lost-completed-owner",
+      "status": 1
+    },
+    {
+      "cause": "whole committed retention model source and actual-result member population",
+      "control": "lost-source-result-member",
+      "status": 1
+    },
+    {
+      "cause": "retention source member discrete byte-count kinds",
+      "control": "Boolean-source-count",
+      "status": 1
+    },
+    {
+      "cause": "whole original physical collection member and source population",
+      "control": "lost-physical-source",
+      "status": 1
+    },
+    {
+      "cause": "whole original physical collection member and source population",
+      "control": "borrowed-physical-source",
+      "status": 1
+    },
+    {
+      "cause": "whole unchanged proposal collection authority",
+      "control": "widened-collection-allowance",
+      "status": 1
+    },
+    {
+      "cause": "physical capacity kind/allowance: files",
+      "control": "Boolean-collection-count",
+      "status": 1
+    },
+    {
+      "cause": "complete physical capacity dimensions",
+      "control": "lost-capacity-dimension",
+      "status": 1
+    },
+    {
+      "cause": "whole global retained question identity path and occurrence allocation",
+      "control": "lost-global-question-allocation",
+      "status": 1
+    }
+  ],
+  "qualified_full_products": {
+    "admission": {
+      "identity": {
+        "bytes": 387,
+        "sha256": "fd5086272829fe89ae36ce215f8ca0aabdd80a0d78eb535545ad9229351d0167"
+      },
+      "path": "docs/audits/record-value-class-frame-retention-20261006/admission-proof.json"
+    },
+    "authority": {
+      "identity": {
+        "bytes": 2714814,
+        "sha256": "3968fe810c279ed9bfa180f10ca5e958f99d64355409cba32701a090a171bb69"
+      },
+      "path": "docs/audits/record-value-class-frame-retention-20261006/source-authority.json"
+    },
+    "collection": {
+      "identity": {
+        "bytes": 2068084,
+        "sha256": "24d8c71668c8817f576a352d0ef271462c832bd87e477d9c7e7c9ee1945c2e25"
+      },
+      "path": "docs/audits/record-value-class-frame-retention-20261006/collection-proof.json"
+    },
+    "controls": {
+      "identity": {
+        "bytes": 25190,
+        "sha256": "2202ff87f4262a1bcd5be14758a740c401e59786cf720a0218e3b88c40a0077c"
+      },
+      "path": "docs/audits/record-value-class-frame-retention-20261006/controls.json"
+    },
+    "native": {
+      "identity": {
+        "bytes": 919,
+        "sha256": "b9d2d5cf0759c84c5736f86a7bb72ee690b8d156d91078b1b4a836ca43a2211f"
+      },
+      "path": "docs/audits/record-value-class-frame-retention-20261006/book-proof.json"
+    },
+    "recoveries": {
+      "identity": {
+        "bytes": 2913,
+        "sha256": "8510018ac7b255f254d0edb7243a113320c480f764640e524901949b01f74d73"
+      },
+      "path": "docs/audits/record-value-class-frame-retention-20261006/recovery-proof.json"
+    },
+    "semantic": {
+      "identity": {
+        "bytes": 10249,
+        "sha256": "04dfd7576915aa58cc51fe79dbf35fabca09f89ddf386f6d8dfcfa34ff42f3f0"
+      },
+      "path": "docs/audits/record-value-class-frame-retention-20261006/semantic-proof.json"
+    }
+  },
+  "scope": "Every complete prerequisite value is reconstructed and compared to its committed corpus. Full retained products remain canonical without duplicating their representations; original native/private/formatter/identity/coordinate/address gaps conserve.",
+  "semantic": {
+    "docs/knowledge/mdbook-build-destination-locality.md": {
+      "addition": null,
+      "after": {
+        "bytes": 4531,
+        "sha256": "7c41c78a85fe1e42b5270f87b621a15467cb7c8fe2255f42e987eee8f8ad975f"
+      },
+      "before": {
+        "bytes": 5093,
+        "sha256": "f06c2b9fd65e989712990d66a7be330ef1a75f9c668f42934950782ab198ee6e"
+      },
+      "ordered_questions": [
+        "where does mdbook build resolve a relative dest-dir?",
+        "how do book verification scripts keep output inside the repository?",
+        "what caused the reset-slice book output locality recovery?",
+        "do canonical source symlinks outside the book refresh under native serve?",
+        "why do native book source-view addresses encode terminal markdown extensions?",
+        "why must historical source-plane replay use the helper snapshot role?"
+      ],
+      "proposition_ids": [
+        "mdbook-build-destination-locality:0:0",
+        "mdbook-build-destination-locality:0:1",
+        "mdbook-build-destination-locality:0:2",
+        "mdbook-build-destination-locality:1:0",
+        "mdbook-build-destination-locality:1:1",
+        "mdbook-build-destination-locality:1:2",
+        "mdbook-build-destination-locality:2:0",
+        "mdbook-build-destination-locality:2:1",
+        "mdbook-build-destination-locality:2:2",
+        "mdbook-build-destination-locality:2:3",
+        "mdbook-build-destination-locality:2:4",
+        "mdbook-build-destination-locality:2:5",
+        "mdbook-build-destination-locality:3:0",
+        "mdbook-build-destination-locality:4:0",
+        "mdbook-build-destination-locality:4:1",
+        "mdbook-build-destination-locality:4:2",
+        "mdbook-build-destination-locality:4:3",
+        "mdbook-build-destination-locality:5:0",
+        "mdbook-build-destination-locality:5:1",
+        "mdbook-build-destination-locality:5:2",
+        "mdbook-build-destination-locality:5:3",
+        "mdbook-build-destination-locality:5:4",
+        "mdbook-build-destination-locality:6:0",
+        "mdbook-build-destination-locality:6:1",
+        "mdbook-build-destination-locality:6:2",
+        "mdbook-build-destination-locality:6:3",
+        "mdbook-build-destination-locality:6:4",
+        "mdbook-build-destination-locality:7:0",
+        "mdbook-build-destination-locality:8:0",
+        "mdbook-build-destination-locality:8:1",
+        "mdbook-build-destination-locality:8:2",
+        "mdbook-build-destination-locality:9:0",
+        "mdbook-build-destination-locality:10:0",
+        "mdbook-build-destination-locality:10:1",
+        "mdbook-build-destination-locality:10:2",
+        "mdbook-build-destination-locality:10:3"
+      ],
+      "semantic_review": "This complete sentence/clause map records engineer equivalence judgments. Mechanical source coverage and target/loss checks do not decide unrestricted natural-language equivalence."
+    },
+    "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+      "addition": "Every original nonempty error joins source-inferred class/guard family to complete own/public phase/function/visible-argument roles; empty allocations, contexts and opaque raw bytes conserve. Nested Metadata and new outer Value keep separate class/phase roles, conserving the entire inner operand through catch/interpolation/new throw. Source associations precede new raw intake. Native/private/formatter/encoding/hidden-argument/identity/coordinate/address meanings stay unmeasured or separately owned.",
+      "after": {
+        "bytes": 5712,
+        "sha256": "cb272bc91b2daa0643099c72aedf80ec9e7f8c76178663a55670e054efd4f1e3"
+      },
+      "before": {
+        "bytes": 5385,
+        "sha256": "b4637bb33e8f6c19db9bdc3127904e9c05d3dab3f831195b226699f728fbd59e"
+      },
+      "ordered_questions": [
+        "are the T1986 finite copy probes independently qualified?",
+        "what validates plain copy helper sharing and detachment?",
+        "how can the finite copy probes be replayed without changing sealed evidence?",
+        "are original T1986 candidate copy inputs captured?",
+        "what qualifies original T1986 candidate copy graphs?",
+        "do original T1986 candidate API results match their source models?",
+        "what qualifies original T1986 candidate input and private graphs?",
+        "why does the private packed range sibling width change JSON kind?",
+        "what qualifies current original T1986 copied fields and source candidates?",
+        "are original T1986 candidate input graphs and copied fields joined?",
+        "what qualifies original T1986 helper consumer and parser source contexts?",
+        "what qualifies original T1986 candidate primary causes and acceptance?",
+        "are complete original T1986 raw error bodies inventoried?",
+        "what qualifies finite original exception classes?",
+        "why does JSON PP documentation say version 4.05?",
+        "what qualifies direct original Value failure frames?",
+        "what qualifies original metadata failure recursion frames?",
+        "what joins nested original Scope and capture inputs?",
+        "what qualifies whole nested original error forwarding?",
+        "what qualifies inherited original nested API frames?",
+        "are all original own API refusal paths joined?"
+      ],
+      "proposition_ids": [
+        "record-value-finite-copy-probe-reader:0:0",
+        "record-value-finite-copy-probe-reader:0:1",
+        "record-value-finite-copy-probe-reader:1:0",
+        "record-value-finite-copy-probe-reader:1:1",
+        "record-value-finite-copy-probe-reader:1:2",
+        "record-value-finite-copy-probe-reader:2:0",
+        "record-value-finite-copy-probe-reader:2:1",
+        "record-value-finite-copy-probe-reader:2:2",
+        "record-value-finite-copy-probe-reader:2:3",
+        "record-value-finite-copy-probe-reader:2:4",
+        "record-value-finite-copy-probe-reader:2:5",
+        "record-value-finite-copy-probe-reader:2:6",
+        "record-value-finite-copy-probe-reader:2:7",
+        "record-value-finite-copy-probe-reader:2:8",
+        "record-value-finite-copy-probe-reader:2:9",
+        "record-value-finite-copy-probe-reader:2:10",
+        "record-value-finite-copy-probe-reader:2:11",
+        "record-value-finite-copy-probe-reader:2:12",
+        "record-value-finite-copy-probe-reader:2:13",
+        "record-value-finite-copy-probe-reader:2:14",
+        "record-value-finite-copy-probe-reader:2:15",
+        "record-value-finite-copy-probe-reader:2:16",
+        "record-value-finite-copy-probe-reader:2:17",
+        "record-value-finite-copy-probe-reader:2:18",
+        "record-value-finite-copy-probe-reader:2:19",
+        "record-value-finite-copy-probe-reader:2:20",
+        "record-value-finite-copy-probe-reader:2:21",
+        "record-value-finite-copy-probe-reader:2:22",
+        "record-value-finite-copy-probe-reader:2:23",
+        "record-value-finite-copy-probe-reader:2:24",
+        "record-value-finite-copy-probe-reader:3:0"
+      ],
+      "semantic_review": "This complete sentence/clause map records engineer equivalence judgments. Mechanical source coverage and target/loss checks do not decide unrestricted natural-language equivalence."
+    },
+    "docs/knowledge/record-value-original-observer-helper-paths.md": {
+      "addition": "This finite source-class/frame join binds every operation/helper/authored-body/public/entry/load and visible operand role at each original throw phase. Inherited inner operands stay opaque retained evidence, not formatter/coordinate/address oracles. Class/family/phase/order/argument/population/native-promotion controls preserve predecessor meanings; opaque inner-frame byte changes pass prior own/public predicates but break whole forwarding.",
+      "after": {
+        "bytes": 4628,
+        "sha256": "34de995788a7c1a4a9079424b987def9f7d677f703f464f2655501cbfaf1af7c"
+      },
+      "before": {
+        "bytes": 4420,
+        "sha256": "8fae960b3e41530a358368c5ff004df92227a122d994d47800d2e16d291df8c9"
+      },
+      "ordered_questions": [
+        "what inventories original observer and callback source roles?",
+        "what qualifies original observer API and parser operation boundaries?",
+        "what qualifies original named helper inputs defaults and active paths?",
+        "what qualifies original compiled callback and refusal wrapper paths?",
+        "are all original helper input and callback paths joined?",
+        "what qualifies original own subtest body and delegate source roles?",
+        "what qualifies the original do-load source and recorded file marker?",
+        "what qualifies original public subtest header and boundary compatibility?"
+      ],
+      "proposition_ids": [
+        "record-value-original-observer-helper-paths:0:0",
+        "record-value-original-observer-helper-paths:0:1",
+        "record-value-original-observer-helper-paths:0:2",
+        "record-value-original-observer-helper-paths:0:3",
+        "record-value-original-observer-helper-paths:0:4",
+        "record-value-original-observer-helper-paths:0:5",
+        "record-value-original-observer-helper-paths:0:6",
+        "record-value-original-observer-helper-paths:0:7",
+        "record-value-original-observer-helper-paths:0:8",
+        "record-value-original-observer-helper-paths:1:0",
+        "record-value-original-observer-helper-paths:1:1",
+        "record-value-original-observer-helper-paths:1:2",
+        "record-value-original-observer-helper-paths:2:0",
+        "record-value-original-observer-helper-paths:3:0",
+        "record-value-original-observer-helper-paths:4:0",
+        "record-value-original-observer-helper-paths:4:1",
+        "record-value-original-observer-helper-paths:4:2",
+        "record-value-original-observer-helper-paths:4:3",
+        "record-value-original-observer-helper-paths:4:4",
+        "record-value-original-observer-helper-paths:4:5",
+        "record-value-original-observer-helper-paths:5:0",
+        "record-value-original-observer-helper-paths:5:1",
+        "record-value-original-observer-helper-paths:5:2",
+        "record-value-original-observer-helper-paths:5:3",
+        "record-value-original-observer-helper-paths:5:4",
+        "record-value-original-observer-helper-paths:6:0",
+        "record-value-original-observer-helper-paths:6:1",
+        "record-value-original-observer-helper-paths:6:2",
+        "record-value-original-observer-helper-paths:6:3"
+      ],
+      "semantic_review": "This complete sentence/clause map records engineer equivalence judgments. Mechanical source coverage and target/loss checks do not decide unrestricted natural-language equivalence."
+    }
+  }
+}

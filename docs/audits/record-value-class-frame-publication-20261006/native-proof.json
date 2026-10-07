@@ -1,0 +1,34 @@
+{
+  "controls": [
+    {
+      "cause": "native exact distinct current default and build commands",
+      "control": "borrowed-current-command",
+      "status": 1
+    },
+    {
+      "cause": "native complete current retained semantic scope and remaining gaps",
+      "control": "invented-default-currency",
+      "status": 1
+    },
+    {
+      "cause": "native complete current retained semantic scope and remaining gaps",
+      "control": "invented-original-recapture",
+      "status": 1
+    },
+    {
+      "cause": "native complete current retained semantic scope and remaining gaps",
+      "control": "lost-native-gap",
+      "status": 1
+    },
+    {
+      "cause": "native complete current retained semantic scope and remaining gaps",
+      "control": "lost-opaque-inner-operand",
+      "status": 1
+    }
+  ],
+  "input_identity": {
+    "bytes": 240471,
+    "sha256": "7ffbd73767edd2ab679a9ec95a456ccc5e740574466535d0e00fa877be50e6de"
+  },
+  "visual_QA": "pending; separately owned"
+}
