@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-capture-checks-20261007/refresh_native.py",
+    "--after"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-capture-checks-20261007/refresh_native.py": {
+      "bytes": 2821,
+      "sha256": "f6f731a39540978bc810652652805d540b416b1c27f90c9cf4126158131133ad"
+    },
+    "docs/audits/coordinate-public-capture-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "0aba14e52dd90a2b24d1ec29725c47e6ee93124dcf9f09e3adae3e25b773c52d"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 89229; host 36.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"members\": 127, \"mismatched_sources\": [], \"phase\": \"after\"}\n"
+}

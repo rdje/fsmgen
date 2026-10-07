@@ -1,0 +1,17 @@
+{
+  "cause": "The committed pre-native guide explicitly deferred public fixture execution and recipe selection; this slice closes only whole dated capture custody.",
+  "command": [
+    "git",
+    "log",
+    "--format=%H %s",
+    "-S",
+    "fixture execution and recipe selection are the next step:",
+    "0f597fbb50a7632a18fb9464c1985645dccadaf0",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "locus": "docs/book/src/13k-isf-feature-support-matrix.md / committed hypotheses calls and invocations",
+  "status": 0,
+  "stderr": "",
+  "stdout": "0f597fbb50a7632a18fb9464c1985645dccadaf0 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.1: bind public coordinate hypotheses before native capture\n"
+}

@@ -1,0 +1,30 @@
+{
+  "binding.json": {
+    "bytes": 11002,
+    "sha256": "cc150ba432b6cef6ba5f76260a24d6fcdc8058badc3e224950988e56082eb5b2"
+  },
+  "capture.py": {
+    "bytes": 4190,
+    "sha256": "876fd3e12cbb24800ad19fe14bacc8de921c0da6636cb53f53d9e3eb48b44564"
+  },
+  "controls.json": {
+    "bytes": 1396,
+    "sha256": "414ea1ffe9b8b4dcf78299cfd323401a861e666b4b633465ae8e96c3f17051d1"
+  },
+  "custody.json": {
+    "bytes": 36255,
+    "sha256": "24e8de863a368c92b4339528d9d74a394f06ce6eefcee380a6efd806b66ee9a9"
+  },
+  "scope.txt": {
+    "bytes": 1905,
+    "sha256": "e1439967c60a46e132367877424d26e631ed70bb5b406e4d61dbffc3ba9bda6d"
+  },
+  "verify.py": {
+    "bytes": 10631,
+    "sha256": "d3367ab466c40d3cc4c0b107ed625cdc0db4fe9fd8592c1fa3609f4ee556d45d"
+  },
+  "wire.json": {
+    "bytes": 32134,
+    "sha256": "6b8bb50f93d5a8a64a19d05e8ca9f092a1cec9ebae9aa1ab3f86e140a02c3422"
+  }
+}

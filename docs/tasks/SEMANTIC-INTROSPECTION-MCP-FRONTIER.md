@@ -5071,11 +5071,58 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.1: bind public coordinate hypotheses before native capture`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Execute and qualify complete finite public coordinate recipes and native controls.`
   Acceptance: `After all pre-native hypotheses/programmes commit, execute every declared own fixture in legitimate same-volume invocation roots. Select exact current public line/filename behavior from independently declared competing hypotheses, conserve all command/source/status/streams/frame/error bytes, and separate genuine wrong-caller/line/root/borrowed controls from prior role meanings. Independently reconstruct whole saved results, source/profile/custody and native publication; missing original/private/formatter/toolchain identity stays explicit. Commit before .2.2.3 composition or any new original-coordinate intake.`
   Verification: `pending`
   Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1`
+  Status: `done`
+  Goal: `Capture and independently consume both complete public coordinate fixture executions.`
+  Acceptance: `Bind the whole committed pre-native source/hypothesis/check domain at 0f597fbb. Execute every own case in both declared same-volume roots, retaining complete source before/after, command, status, binary-decoded streams, public dependency metadata and raw frames/errors. Independently consume whole saved wire and custody, reject typed/status/source/member/root/borrowed/promotion losses, and publish only dated capture custody. Line/filename selection and genuine native semantic controls remain .2-owned; preserve every original capture/seal.`
+  Verification: `Complete fixed0f597fbb pre-native source/hypothesis/check domain and completed owner authenticate before native capture. Fresh unchanged prerequisite reader passes. Both declared same-volume roots execute all nine own observation cases successfully with complete binary-decoded command/stdout/stderr, all raw caller frame/error bytes, public version metadata and opaque executable identity. Every copied source before/after conserves. Sealed seven-member capture corpus and independent fixed-Git source/full-wire reconstruction qualify; eleven producer custody and five independent typed/member/root/wire controls reject intended causes. First guide predecessor-literal and independent control genuineness failures retain with exact programmes and reproduced bounded repairs in completed children. Final continuity edits leave two stale native copied assets; complete127-route census, unchanged refresh and current/native0 qualify. Daemon recovery consumes the intact terminal receipt without replaying spent captures. Focused current/book All tests successful Files3 Tests310; complete saved source/native guide and genuine scope/route/status controls pass. Fresh measured aggregate/task declarations, claim census and staged/hooks gate commit. Only dated capture custody closes: public coordinate selections/native semantic controls remain .2, final public qualification .3, and original/private/formatter/address/visual/HIAL/full-CI/push successors remain unchanged.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1: retain complete dated public coordinate fixture captures`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1.1`
+  Status: `done`
+  Goal: `Repair the unpublished cloned native guide qualifier’s corrupted predecessor literal.`
+  Acceptance: `The draft copy changed the old committed block through a later global phrase replacement. Retain complete first programme and actual named source-conservation failure; restore only the exact fixed predecessor literal, then independently qualify the whole source replacement, rendered guide and genuine native controls. No original source, captures, hypotheses or seals change.`
+  Verification: `Complete first cloned qualifier and actual source-conservation failure retain. Its exact corrupted OLD_BLOCK reproduces the named failure; only the literal is restored from the fixed committed prior qualifier. Corrected whole source replacement/native guide and genuine scope/route/Boolean status controls pass; independent repair proof conserves new guide and every sealed source/wire member.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1: retain complete dated public coordinate fixture captures`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1.2`
+  Status: `done`
+  Goal: `Repair the independent result control’s type-erasing genuineness comparison.`
+  Acceptance: `Retain complete first reader and actual failure. Python object equality identifies False, zero and floating zero as equal, so changed != wire rejects genuine typed counterfactuals before the intended native status check. Compare exact JSON serializations for control genuineness, retaining explicit integer status predicates and every whole source/wire check. Reproduce first failure and both Boolean/float intended refusals independently before parent closure; no captured bytes or sealed root changes.`
+  Verification: `Complete first independent reader and actual genuineness failure retain. Exact first programme reproduces Python False/zero equivalence stopping typed controls before their intended predicate. Only the candidate genuineness comparison changes to exact JSON serialization; explicit integer status and all prior source/wire/actual predicates conserve. Genuine Boolean and float candidates now reach their intended independent native-status refusals; independent whole repair proof passes.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1: retain complete dated public coordinate fixture captures`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1.3`
+  Status: `done`
+  Goal: `Refresh native copied source assets after final continuity updates.`
+  Acceptance: `Retain the first actual current/native freshness failure and whole route/member mismatch census before rebuilding. Final MEMORY and task-index edits legitimately superseded their copied book assets. Refresh all native outputs with the unchanged public build recipe, conserve canonical source/guide/capture bytes and qualify every copied source plus actual current/native success before commit. No source predicates, seals or ceilings change.`
+  Verification: `Complete first current/native freshness failure retains. Whole127-route census independently identifies exactly MEMORY.md and docs/TASK_TREE.md copied-byte drift after final continuity edits. Unchanged mdBook recipe refreshes all native assets; complete after-census reports no mismatch and every canonical source conserves. Retained full guide/source HTML stays byte-identical. Complete actual current/native0 qualifies. Daemon restart recovery consumes its already terminal intact receipt without rerunning either spent fixture capture; no missing result is fabricated. Final measured task/claim/staged/hooks gate commit.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1: retain complete dated public coordinate fixture captures`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Select public coordinate alternatives and qualify genuine native semantic controls.`
+  Acceptance: `After .1 commits, compare all current public own call/boundary/origin coordinates against committed source alternatives. Preserve competing hypotheses and declare exact selected/equivalent cases; produce genuine native wrong-caller/line/root/borrowed-source captures and intended separating refusals. Retain every complete programme/source/wire and independently reconstruct all selections and control decisions. No original-coordinate intake or original/private/formatter identity promotion.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3`
+  Status: `pending`
+  Goal: `Publish qualified finite public recipes and close public-coordinate qualification.`
+  Acceptance: `After .2 commits, authenticate the complete capture and semantic/native-control domains and actual independent results. Sync the full scoped mdBook/native guide and durable reader route, keep missing original/private/formatter/toolchain identity explicit, and close only the complete public finite recipe parent. Commit before whole original-source hypothesis composition .2.2.3 or any original-coordinate intake.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3`
   Status: `pending`
@@ -6737,3 +6784,9 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` in docs/audits/coordinate-public-hypotheses-checks-20261007/root-cause.json identifies the prior native model’s explicit unmeasured coordinate recipes. Complete public caller/remapping/load documentation and own programme spans establish the required independent input. The retained doc-control-root-cause.json and pre-doc-validation programme locate a genuine draft false green: derive ignored changed public_docs, so a removed remapping clause passed; full input and before/after decisions survive.
 - [x] **ADDRESSED (verified)** — Whole fixed committed own/public source custody, complete own programmes, call/eval/load/delegate/origin spans and source-selected line/filename alternatives are sealed before coordinate capture. Syntax-only execution conserves all sources and has no observation output. Independent binary source/POD reconstruction and actual seal/source/status consumption pass; genuine source/document/clause/line/root/kind/promotion controls reject. Original/private/formatter and future runtime selections remain explicitly unmeasured and owned.
 - [x] **NO REGRESSION** — `All tests successful.` in docs/audits/coordinate-public-hypotheses-checks-20261007/focused.json covers current publication and public book paths/matrix, Files3 Tests310. Public whole-POD replay, source catalog/profile conservation, pre-native sealed consumer and scoped native guide pass; final inventory/staged/hooks gate commit. No old programme/capture/seal, collection/claim ceiling, submodule/foreign repository, original/native/HIAL/full-CI/push or visual closure changes.
+
+## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed0f597fbb identifies the complete pre-native guide deferral and source-declared fixture invocation contracts. `docs/audits/coordinate-public-capture-checks-20261007/root-cause.json` retains command/status/streams and exact gap/locus; first native/source-conservation and typed-candidate failures retain complete programmes/actuals and independent before/after reproduction in repair-proof.json.
+- [x] **ADDRESSED (verified)** — Both complete committed public fixtures execute successfully in their declared same-volume roots with every own source byte conserved before/after. Complete sealed source/raw wire and fixed-Git independent consumption pass; eleven producer custody and five independent typed/member/root/byte controls reject intended causes. Saved actual commands/instruments/status/streams and scoped native guide retain; runtime coordinate meanings/native semantic controls remain explicitly .2-owned.
+- [x] **NO REGRESSION** — Guarded prove current-publication/book path/matrix checks report All tests successful Files=3, Tests=310 in `docs/audits/coordinate-public-capture-checks-20261007/focused.json`. Complete mdBook build, whole saved native guide and scope/route/status controls pass; measured aggregate, final inventory, staged doctrines and normal hooks qualify this commit.

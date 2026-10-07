@@ -1,0 +1,57 @@
+[
+  {
+    "cause": "integer actual public native success",
+    "control": "Boolean-native-status",
+    "status": 1
+  },
+  {
+    "cause": "integer actual public native success",
+    "control": "float-native-status",
+    "status": 1
+  },
+  {
+    "cause": "integer actual public native success",
+    "control": "nonzero-native-status",
+    "status": 1
+  },
+  {
+    "cause": "complete declared native invocation population",
+    "control": "lost-public-run",
+    "status": 1
+  },
+  {
+    "cause": "complete declared invocation identity and order",
+    "control": "borrowed-invocation",
+    "status": 1
+  },
+  {
+    "cause": "exact public native command and legitimate invocation root",
+    "control": "borrowed-command-root",
+    "status": 1
+  },
+  {
+    "cause": "whole actual public wire byte identity",
+    "control": "lost-wire-byte",
+    "status": 1
+  },
+  {
+    "cause": "complete independently committed executed own sources",
+    "control": "borrowed-source",
+    "status": 1
+  },
+  {
+    "cause": "every complete native fixture source member conserves",
+    "control": "lost-source-member",
+    "status": 1
+  },
+  {
+    "cause": "whole native producing instrument identity",
+    "control": "borrowed-instrument",
+    "status": 1
+  },
+  {
+    "cause": "dated custody cannot promote coordinate or original identity meaning",
+    "control": "original-identity-promotion",
+    "status": 1
+  }
+]

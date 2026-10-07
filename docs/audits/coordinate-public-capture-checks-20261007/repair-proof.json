@@ -1,0 +1,80 @@
+[
+  {
+    "after_status": 0,
+    "before_status": 1,
+    "first_actual": {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/coordinate-public-capture-checks-20261007/verify_book.py"
+      ],
+      "instruments": {
+        "docs/audits/coordinate-public-capture-checks-20261007/run.py": {
+          "bytes": 1255,
+          "sha256": "0aba14e52dd90a2b24d1ec29725c47e6ee93124dcf9f09e3adae3e25b773c52d"
+        },
+        "docs/audits/coordinate-public-capture-checks-20261007/verify_book.py": {
+          "bytes": 5006,
+          "sha256": "69bcd5f93d966e38b2995463963cdf3955244384d1631a96c853db0cadc2c886"
+        },
+        "scripts/run_with_ram_guard.sh": {
+          "bytes": 10663,
+          "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+        }
+      },
+      "status": 1,
+      "stderr": "ram-guard: PID 73948; host 36.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_book.py\", line 88, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_book.py\", line 54, in main\n    product = check(source, rendered, actual)\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_book.py\", line 36, in check\n    require(before.count(OLD_BLOCK) == 1 and source == before.replace(OLD_BLOCK, BLOCK),\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'whole source guide exact scoped replacement and prior conservation')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_book.py\", line 18, in require\n    raise ValueError(cause)\nValueError: whole source guide exact scoped replacement and prior conservation\n",
+      "stdout": ""
+    },
+    "first_programme": {
+      "bytes": 5006,
+      "sha256": "69bcd5f93d966e38b2995463963cdf3955244384d1631a96c853db0cadc2c886"
+    },
+    "repaired_programme": {
+      "bytes": 5002,
+      "sha256": "131a943c7237398ed250a9e8c708a0e3f2f6cd617ceb0a5c516f149410d8e59d"
+    },
+    "reproduced_cause": "whole source guide exact scoped replacement and prior conservation"
+  },
+  {
+    "after_status": 0,
+    "before_status": 1,
+    "first_actual": {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py"
+      ],
+      "instruments": {
+        "docs/audits/coordinate-public-capture-checks-20261007/run.py": {
+          "bytes": 1255,
+          "sha256": "0aba14e52dd90a2b24d1ec29725c47e6ee93124dcf9f09e3adae3e25b773c52d"
+        },
+        "docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py": {
+          "bytes": 8473,
+          "sha256": "e28c88d1464c4f3580de4699a67033b621a4587da2ef9169075a034771a6c4be"
+        },
+        "scripts/run_with_ram_guard.sh": {
+          "bytes": 10663,
+          "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+        }
+      },
+      "status": 1,
+      "stderr": "ram-guard: PID 72872; host 37.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py\", line 149, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py\", line 133, in main\n    need(changed != wire, 'genuine independent saved result control')\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py\", line 19, in need\n    raise ValueError(cause)\nValueError: genuine independent saved result control\n",
+      "stdout": ""
+    },
+    "first_programme": {
+      "bytes": 8473,
+      "sha256": "e28c88d1464c4f3580de4699a67033b621a4587da2ef9169075a034771a6c4be"
+    },
+    "repaired_programme": {
+      "bytes": 8542,
+      "sha256": "e43b753fe6eea4d292c95ab064a710bcf0be803c338b942c085727aecce1d532"
+    },
+    "reproduced_cause": "genuine independent saved result control"
+  }
+]

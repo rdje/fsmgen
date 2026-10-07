@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-capture-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "0aba14e52dd90a2b24d1ec29725c47e6ee93124dcf9f09e3adae3e25b773c52d"
+    },
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py": {
+      "bytes": 8473,
+      "sha256": "e28c88d1464c4f3580de4699a67033b621a4587da2ef9169075a034771a6c4be"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 72872; host 37.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py\", line 149, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py\", line 133, in main\n    need(changed != wire, 'genuine independent saved result control')\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py\", line 19, in need\n    raise ValueError(cause)\nValueError: genuine independent saved result control\n",
+  "stdout": ""
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-capture-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "0aba14e52dd90a2b24d1ec29725c47e6ee93124dcf9f09e3adae3e25b773c52d"
+    },
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py": {
+      "bytes": 8542,
+      "sha256": "e43b753fe6eea4d292c95ab064a710bcf0be803c338b942c085727aecce1d532"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 74603; host 52.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"controls\": [{\"cause\": \"independent integer native execution and root\", \"control\": \"Boolean-saved-status\", \"status\": 1}, {\"cause\": \"independent integer native execution and root\", \"control\": \"float-saved-status\", \"status\": 1}, {\"cause\": \"independent whole committed native source conservation\", \"control\": \"lost-saved-source\", \"status\": 1}, {\"cause\": \"independent exact legitimate invocation recipe\", \"control\": \"borrowed-saved-root\", \"status\": 1}, {\"cause\": \"independent complete native wire bytes\", \"control\": \"lost-saved-wire-byte\", \"status\": 1}], \"members\": 7, \"observations_per_run\": [9, 9], \"runs\": 2, \"scope\": \"Dated current public fixture source/wire custody only. Raw coordinates and complete errors are preserved; line/filename selection, original-coordinate joins and original/private/formatter/toolchain identity remain unqualified.\"}\n"
+}

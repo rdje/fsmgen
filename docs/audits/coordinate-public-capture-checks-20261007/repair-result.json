@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_repairs.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-capture-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "0aba14e52dd90a2b24d1ec29725c47e6ee93124dcf9f09e3adae3e25b773c52d"
+    },
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_repairs.py": {
+      "bytes": 3806,
+      "sha256": "40874bdfbf2c7a8d9275d64519587ac23e207d19bf670a2dde6c02c7dd86a2d3"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 75469; host 74.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS both complete first draft failures reproduce; exact repaired source/native and typed-result predicates qualify.\n"
+}

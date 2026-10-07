@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_book.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-capture-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "0aba14e52dd90a2b24d1ec29725c47e6ee93124dcf9f09e3adae3e25b773c52d"
+    },
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_book.py": {
+      "bytes": 5002,
+      "sha256": "131a943c7237398ed250a9e8c708a0e3f2f6cd617ceb0a5c516f149410d8e59d"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 74723; host 53.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete saved scoped source/native public capture guide and genuine controls; coordinate selection and original join remain pending.\n"
+}

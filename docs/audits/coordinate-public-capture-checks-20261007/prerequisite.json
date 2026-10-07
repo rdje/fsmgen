@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-hypotheses-checks-20261007/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-capture-checks-20261007/run.py": {
+      "bytes": 1255,
+      "sha256": "0aba14e52dd90a2b24d1ec29725c47e6ee93124dcf9f09e3adae3e25b773c52d"
+    },
+    "docs/audits/coordinate-public-hypotheses-checks-20261007/verify_saved.py": {
+      "bytes": 6729,
+      "sha256": "9a1a9d904338fc2cc4c2ec1d453f99cd70b3e3740d0efd01b9e09bd04c458b89"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 70715; host 55.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"actual_controls\": [{\"cause\": \"actual pre-native complete command and integer success\", \"status\": true}, {\"cause\": \"actual pre-native complete command and integer success\", \"status\": 0.0}, {\"cause\": \"actual pre-native complete command and integer success\", \"status\": 1}], \"boundaries\": 5, \"calls\": 9, \"full_public_wire\": {\"perlsyn\": {\"command\": [\"perldoc\", \"-T\", \"perlsyn\"], \"status\": 0, \"stderr\": {\"bytes\": 0, \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"}, \"stdout\": {\"bytes\": 50098, \"sha256\": \"250267d359abb21909f529538689a0b318f29bd886e2656e59648b1d69c9335c\"}}, \"perlvar\": {\"command\": [\"perldoc\", \"-T\", \"perlvar\"], \"status\": 0, \"stderr\": {\"bytes\": 0, \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"}, \"stdout\": {\"bytes\": 92970, \"sha256\": \"42939b89313da74d9f2978c3c4359692218f5e94c900ea901745a31239181926\"}}, \"require\": {\"command\": [\"perldoc\", \"-T\", \"-f\", \"require\"], \"status\": 0, \"stderr\": {\"bytes\": 0, \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"}, \"stdout\": {\"bytes\": 9685, \"sha256\": \"31125d75888393f0c8c54764ce6b5a95f510fa0ec5b3f6653048e5e61cc37607\"}}}, \"members\": 15, \"role\": \"Pre-native complete own fixture/source and competing public coordinate hypotheses only. No runtime line or filename alternative is selected; no original raw coordinate, private framework or original formatter/toolchain identity is measured.\"}\n"
+}
