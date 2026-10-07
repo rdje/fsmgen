@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-origin-hypotheses-checks-20261007/qualify_index.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-origin-hypotheses-checks-20261007/qualify_index.py": {
+      "bytes": 5025,
+      "sha256": "ce1e212f3476dd2ef85ae2e25aae746130ee5f8726c013e2d71c9d0f99305773"
+    },
+    "docs/audits/coordinate-public-origin-hypotheses-checks-20261007/run.py": {
+      "bytes": 1265,
+      "sha256": "c9837e8ae7eacb0eccd8b1c32f5dbc1ded8d3df8ec812d58231add6eab8b7bee"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 56888; host 74.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-origin-hypotheses-checks-20261007/qualify_index.py\", line 83, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-origin-hypotheses-checks-20261007/qualify_index.py\", line 63, in main\n    rows=plane.expected_rows();plane.check(rows,OUTPUT);plane.check_index(rows)\n                                                        ~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 197, in check_index\n    check_object(path,mode,local_read(ROOT/path,max(SOURCE_BYTES,MANIFEST_BYTES)))\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 191, in check_object\n    require(indexed[path] == (mode,wanted), 'checked bytes/mode agree with Git result: '+path)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py\", line 32, in require\n    if not condition: raise ValueError(message)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: checked bytes/mode agree with Git result: docs/TASK_TREE.md\n",
+  "stdout": ""
+}

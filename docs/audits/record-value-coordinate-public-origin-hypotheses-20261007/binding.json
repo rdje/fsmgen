@@ -1,0 +1,283 @@
+{
+  "members": {
+    "docs/audits/coordinate-public-caller-selection-checks-20261007": {
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/book-aggregate.json": {
+        "bytes": 555,
+        "sha256": "ecfcb356f00c2e1d691545ba72aed4a47aae24362a76bd9e23bfdcba73caf1ea"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/book-final.json": {
+        "bytes": 926,
+        "sha256": "2eb2369a5aae42c1144f798c9a45bb370f1df81134e00fe5f51a987062bb74ae"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/book-input.html": {
+        "bytes": 243226,
+        "sha256": "97599239cca4582fff9de5016dfcbaebc88d78378a0ddf8a28af60b655689a40"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/book-proof.json": {
+        "bytes": 2117,
+        "sha256": "adce90a3c95b677151032ecc77e7eec91bb487cce07aabe1c6d2e913a1621387"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/book-source.md.txt": {
+        "bytes": 205964,
+        "sha256": "a016d600db7c3c933d2af49c2be60b6dada80924326c51171e727971727fbd8d"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/book.json": {
+        "bytes": 926,
+        "sha256": "01b24ccc79aa6d58c72bca7ad1ab3253b07e1aa41da810655e3c168fbe227b4f"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/claim-inventory.json": {
+        "bytes": 1397,
+        "sha256": "ad07d209102ef7707bbe1c4a2db46a5c2ee59d25475f04641687851c855c22b8"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/derive.json": {
+        "bytes": 1029,
+        "sha256": "aef1a54b7f4960186de70a35a1f9d992785192efce7ad424eeeeaad9fdaf0f44"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/doctrines.json": {
+        "bytes": 62810,
+        "sha256": "b665c073cbde2eb8990cb7fb1cc1b25ae596afc0a3188044eea16ec3d2de040a"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/final-native-proof.json": {
+        "bytes": 76520,
+        "sha256": "3253b68bb2605b644ec7a0d4e0ed272fc94077fa77848c299f0ed36a3c24c0f3"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/final-native.json": {
+        "bytes": 991,
+        "sha256": "71c158be8b92c7e3116872fb90036aa22918f3eb5728f63c0dc6059467a5fdc4"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/focused.json": {
+        "bytes": 1506,
+        "sha256": "4ba041024a055f551b91b3505fd6f6e5dde4e87e0997f90c92469dd4cc8a8787"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/native-guide.json": {
+        "bytes": 1035,
+        "sha256": "84c7cabab714dc4e2437c3988746567c1a04fb920fefadf127c7598e93ed1baf"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/prerequisite.json": {
+        "bytes": 1775,
+        "sha256": "37d3272c17ed971a0110594106c7523e477cb8c54443b2abaa8a55e9ccefc0ee"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/root-cause.json": {
+        "bytes": 829,
+        "sha256": "b6a3ad4e80fad88a2e7a48242b0f3b696abe69737e2d78a7b5342376299a5c80"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/run.py": {
+        "bytes": 1264,
+        "sha256": "d76e20282e6a06bed050ccaf7941c53a2ff47b310cda3baf978bf2256630142c"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/saved-result.json": {
+        "bytes": 2092,
+        "sha256": "036d1ab2e23f69539d85e7a260c3787e77f4600aea88aef5032b802594b34562"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/seal.json": {
+        "bytes": 1043,
+        "sha256": "4fd35f96841a4f6fc97e21fe5aad0e8361130e2b6af6fa924ecf3ffd03040686"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/verify_book.py": {
+        "bytes": 5718,
+        "sha256": "317b65e89355e01a83479d3e463385e3d7edd784bd61becc18cf473dc682b187"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/verify_final_native.py": {
+        "bytes": 2274,
+        "sha256": "8ab337d495ae0b1a469a44826f6fe1ffd43e34bc5b30a9004ed630c7be335bd6"
+      },
+      "docs/audits/coordinate-public-caller-selection-checks-20261007/verify_saved.py": {
+        "bytes": 9815,
+        "sha256": "9814899ebb212d09f4d9d75af7ca35a6892366791ae8c9ea6e244656e32baf7e"
+      }
+    },
+    "docs/audits/record-value-coordinate-public-caller-selection-20261007": {
+      "docs/audits/record-value-coordinate-public-caller-selection-20261007/binding.json": {
+        "bytes": 22921,
+        "sha256": "d091215c75a25202410fd9b62a4a2742c6baeb5af90819c94913623544642db7"
+      },
+      "docs/audits/record-value-coordinate-public-caller-selection-20261007/controls.json": {
+        "bytes": 609533,
+        "sha256": "26dbdfc4cc9305da4f1a932d2eb3de7a92d8bbf3e805620656ac6c62b97e83cc"
+      },
+      "docs/audits/record-value-coordinate-public-caller-selection-20261007/inputs.json": {
+        "bytes": 52827,
+        "sha256": "913536335168de7200c9d10ebc04db2370fe5cf309c46a7342974585828dc8ff"
+      },
+      "docs/audits/record-value-coordinate-public-caller-selection-20261007/manifest.json": {
+        "bytes": 756,
+        "sha256": "fcb5f4603388094aebaa31acbd1a54577083b5148dcc9aba3dc46705abfdfb22"
+      },
+      "docs/audits/record-value-coordinate-public-caller-selection-20261007/scope.txt": {
+        "bytes": 1904,
+        "sha256": "06750f0bb88d308d3e806a96bc5af64c4f169841fdb131e9386cce0fb5dce779"
+      },
+      "docs/audits/record-value-coordinate-public-caller-selection-20261007/selections.json": {
+        "bytes": 27950,
+        "sha256": "38d5e3f00c7f84da99cec1948662f87cb3602cd0b2b40a7264b9ed30bb94d822"
+      },
+      "docs/audits/record-value-coordinate-public-caller-selection-20261007/verify.py": {
+        "bytes": 11623,
+        "sha256": "63cff4170b22b88882dbce4d540403cbe5be22d710602ebf6c65f7bb7538ef5f"
+      }
+    },
+    "docs/audits/record-value-coordinate-public-hypotheses-20261007": {
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/binding.json": {
+        "bytes": 18330,
+        "sha256": "a8370905aa78efd6d8c2664bc65925a4e7b99492cb08eaa9b1d13fd72a2fbe5b"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/capture_docs.py": {
+        "bytes": 2055,
+        "sha256": "0bb4fb5efa1aa5e142a7ff63df96dd7a73fda0490a9d2968519929192027063f"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/controls.json": {
+        "bytes": 1421,
+        "sha256": "2058e5cedfa44b96a51a192004f5825f00fb867a87303a25879c88a1b8e4c652"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/dependency.pm": {
+        "bytes": 144,
+        "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/first-controls.json": {
+        "bytes": 1115,
+        "sha256": "47060a02b4e117d15a96bf38b2a50245e37cb230dbb7c41d4dc2a1a54c581ab0"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/first-verify-reconstructed.py.txt": {
+        "bytes": 13056,
+        "sha256": "a01ada58484a2ae18a12bb02f680f9f24abfe6d0175fb117a6aaa8adb5647dc5"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/fixture.pl": {
+        "bytes": 2111,
+        "sha256": "05c52ae83e9c614a2b7eca41969fc1d332e9562a75ed00d868cb28918abc82d7"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/hypotheses.json": {
+        "bytes": 15826,
+        "sha256": "069db90c5fa47e392831fdcb25fbc9c7cb0238aa429a5d3bbd62fdf5b4987c4e"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/inputs.json": {
+        "bytes": 168951,
+        "sha256": "4a651990bd83208a4eb34eb3277aaedeaf6a7162facc39ea5c679672b95c8802"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/load-body.pl": {
+        "bytes": 56,
+        "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/manifest.json": {
+        "bytes": 1939,
+        "sha256": "7a25533cb10ef60c1398a1197e5f36c924d0f879074aae39d89369d84abbb013"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/pre-doc-validation-programme.py.txt": {
+        "bytes": 13186,
+        "sha256": "07b5c7c130ee649f159b43aaa0d5a4c1d099389c3200e6b51549d19f571714c0"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/public-docs.json": {
+        "bytes": 160083,
+        "sha256": "3380251e942b3381ac36ddad7383fa1f0d32894516121e918833270478f66ad8"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/require-body.pl": {
+        "bytes": 66,
+        "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/scope.txt": {
+        "bytes": 1933,
+        "sha256": "eb88ab57752f1d6bcf68812d589b93102d071496cab8d4236e30eb3089f72264"
+      },
+      "docs/audits/record-value-coordinate-public-hypotheses-20261007/verify.py": {
+        "bytes": 13954,
+        "sha256": "f63c5ebd6e44e0210ae00182d6414ba437e7db285bc3958ddd732167f62673a3"
+      }
+    },
+    "docs/audits/record-value-public-framework-profile-20261006": {
+      "docs/audits/record-value-public-framework-profile-20261006/binding.json": {
+        "bytes": 6661,
+        "sha256": "46fdcd0ac9ef0e945893e9c102366a3c50867551929a8521550f6034e47943b3"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/book-change.json": {
+        "bytes": 373024,
+        "sha256": "b621c5df1fb3250af0caa9bc6b5562d0802f6a199538b3738d9cdf2272f91dcc"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/book-input.html": {
+        "bytes": 217642,
+        "sha256": "e41f699bc8bf0af473b28553b3a1976e6659f922c4a21b384341495d70b9f37f"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/book-proof.json": {
+        "bytes": 647,
+        "sha256": "948b427a9dbfd2b0b32b1fb3aa6799d49198a7824f4a42dbc4c148a651f45996"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/book.py": {
+        "bytes": 3629,
+        "sha256": "41cc44693bbf7dcc081174376bbc7f4a62b4a42b085c25c11cbd2591b9f45500"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/capture.py": {
+        "bytes": 2956,
+        "sha256": "10732edb28324bdf6af22f3c3fd6b4f22418a6219d31da04e579738eb0f44b22"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/initial-current-reader.py.txt": {
+        "bytes": 11746,
+        "sha256": "39f064a089f5f4784f474296d2c92481a88a6e8923029795cc47d836422210da"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/initial-native-receipts.json": {
+        "bytes": 2875,
+        "sha256": "804f53328f055ae7a5f2f0e30f315b1bd7f9b4934a36bc43a4c60e9ac5222824"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/initial-proofs.json": {
+        "bytes": 10633,
+        "sha256": "1096daef7bf30d6358b56cd258d622a5efb87b7f6b51e3c53e4a95325b50cd91"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/initial-reader.py.txt": {
+        "bytes": 10969,
+        "sha256": "748834a816b6715367de5a378db362158d4cd66235a16482aeecd79a5d5d77da"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/locality.json": {
+        "bytes": 535,
+        "sha256": "8f5c7a5630e963573d88242e337d58c7347dcc34a8917998c1a5060be4b086ad"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/manifest.json": {
+        "bytes": 2582,
+        "sha256": "1036e513b23bf4e11f8330efa39cd5a99ca73dd2ed66e6e0dbb8dcb7a4833086"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/model.py": {
+        "bytes": 2463,
+        "sha256": "4a9a5edc28b5f582b65b3e2ba85c3dae3bb824222a094cdedf14081588a6ba24"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/native-and-parser-current.json": {
+        "bytes": 934,
+        "sha256": "dc9e01b23332bd7a9de52b2a777f5f43f605ad78208468593195450b23b612d9"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/native-wire.json": {
+        "bytes": 3714,
+        "sha256": "503ed72f4c6e3ffb6cc51cce69ac2af3498447632c037643fb9294223cc84e60"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/prepare.py": {
+        "bytes": 1409,
+        "sha256": "006a6283a857da604ca738bd2d102af5a7c8c3ad88d67cf1e4cc489aad9a15a6"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/proofs.json": {
+        "bytes": 10927,
+        "sha256": "fadb431aacd0b95dd6ad12ca1c2256a8c5a18f595665f3cb9b66bf94480e1e92"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/public-profile.json": {
+        "bytes": 96522,
+        "sha256": "a081e926835acc65164930867ce29aa53d7e26b7057ba1e4ac30925c1ba6177d"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/publish_book.py": {
+        "bytes": 2837,
+        "sha256": "b83e1a539614129450f18c949cf8c541ecc76ea1292c2a56768437555dd51a16"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/scope.txt": {
+        "bytes": 3158,
+        "sha256": "43db74dbc0d4f769ef8b0af0a790060f40d4d65b1568e65d32ef428320ad7512"
+      },
+      "docs/audits/record-value-public-framework-profile-20261006/verify.py": {
+        "bytes": 12342,
+        "sha256": "e95e9426fcaa5682699bfc8e04e75572c169e44b06f0f1cbce93b65b8cc86818"
+      }
+    }
+  },
+  "owners": {
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.1": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.1`\n  Status: `done`\n  Goal: `Capture and qualify the required installed public framework/trace profile.`\n  Acceptance: `Pin complete published Perl caller/eval, Carp and Test::More/Test::Builder documents and runtime version/location accessors. Preserve whole commands/status/body bytes, whole prior public profile/owner evidence and genuine loss/borrowed/kind/scope controls. Record necessary read-only cross-volume toolchain access; every output/cache/scratch remains repository-local. Current interface evidence must not invent original framework/provider identity or explain opaque internals. Sync scoped book guidance and commit before native controls.`\n  Verification: `Complete necessary installed public POD/accessor capture0 and independent raw binary replay0 pass; all9 command stdout/stderr byte streams agree exactly. Fourteen source-selected published clauses qualify caller/eval/trace/subtest roles and debugger-argument limits; thirteen genuine document/command/body/typed status/count/date/runtime/location/original-identity controls reject. Whole prior public source/task/archive and five-control reader replay authenticate. Current --seal0, independently consumed whole-member/result/saved native/contract/control regeneration0 and default historical snapshot0 pass; Boolean/float/status/byte-count and real borrowed parser-success receipts reject with every sealed byte conserved. Runtime tuple is dated current public metadata, never original identity. Necessary cross-volume public docs/modules are read-only; actual dedicated scratch and all parents are same-volume regular directories without nested Git/symlinks, and scratch is empty. Native guide/three controls, earlier parser current role, complete source copies and measured aggregate pass. Focused original/book/task All tests successful Files4 Tests366. Final native refresh/claim/staged/hooks gate commit. Independent public native controls .2, original finite public join .3, current fact publication .4 and all opaque/native/version/coordinate/address gaps remain owned.`\n  Commit: `this commit`\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.1": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.1`\n  Status: `done`\n  Goal: `Commit independent public coordinate hypotheses and complete own fixtures before capture.`\n  Acceptance: `Authenticate complete committed own source catalog, public caller/eval/Carp/subtest documentation and necessary full public filename/remapping/module-load documentation. Select all finite own fixture call/eval/load/anonymous/subtest spans and competing first/closing line hypotheses independently of native coordinates. Bind exact repository-relative invocation/source recipes, complete programmes and public-only dependency scope; genuine source/member/hypothesis/kind/root/promotion controls must reject. Preserve pre-native products and source/native book meaning, then commit before executing the new public coordinate fixtures.`\n  Verification: `Whole fixed150517f0 own source catalog/actual-checks and complete dated public profile authenticate with completed owners and all member identities. Necessary full public perlsyn/require/perlvar documents retain exact commands/status/streams and independent binary replay. Complete four own programmes compile under Perl -c in an isolated same-volume fixture, conserving every source and capturing no coordinate observations. Independent source selection fixes nine call cases, five own eval/load/delegate boundaries, separate longmess/confess origin statements, first/closing line alternatives and exact relative source/invocation recipes before native capture. All runtime selections remain null; private named-subtest incoming coordinates and original formatter/toolchain/identity meanings are explicit gaps. Ten genuine source/POD/line/kind/root/promotion controls reject. Complete unpublished old missing-clause false green and corrected named refusal retain with independent reproduction; no captured document or predecessor changes. Sealed15-member source corpus and independently consumed final actual instrument/status/streams pass. Focused current/book All tests successful Files3 Tests310; scoped native, claim inventory and staged/hooks qualify commit. Public fixture execution and recipe selection are the pending .2 successor; no original-coordinate, address, visual, HIAL or full-CI/push closure follows.`\n  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.1: bind public coordinate hypotheses before native capture`\n\n  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.1.1`\n",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.1": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.1`\n  Status: `done`\n  Goal: `Select and independently qualify every source-declared public caller and boundary coordinate.`\n  Acceptance: `Authenticate complete committed pre-native source hypotheses and both native capture/check domains at fixed3ae29914, including full actual custody qualification. Join every declared own call and boundary to its exact caller target, source-selected first/closing line alternatives, filename alternatives and invocation recipe; preserve label ambiguity where alternatives coincide. Genuine wrong-caller/line/filename/kind/member/root/source/promotion candidate controls must reject, with independent binary source/span and whole selected-result reconstruction. Retain all original and public raw bytes. This closes dated finite caller/boundary selection only; trace/confess origins, genuine native semantic controls and whole final qualification remain separately owned.`\n  Verification: `Complete fixed3ae29914 pre-native source/hypothesis and native capture/check domains authenticate with whole committed member/task-owner and fresh independent actual custody. Every declared own public call and boundary selects its exact caller target, source-derived lexical first/closing alternative and legitimate relative filename in both roots; all raw coordinates/arguments/errors remain intact. Multiline call and block eval boundary distinguish opening from closing; coincident source alternatives retain both labels. Source module filename accessor agrees. Six-member immutable selection corpus retains all complete inputs, selected products and eleven full genuine candidate counterfactuals; intended caller/line/filename/kind/member/root/source/promotion refusals pass. Independent fixed-Git binary UTF8/LF/source/raw reconstruction and six selected-result controls reject false closing choice, lost equivalent label, Boolean line, omitted call and borrowed filename/scope. These candidate mutations are not native semantic control captures. Guarded current/book All tests successful Files3 Tests310, complete scoped source/native guide and ambiguity/route/origin-deferral/status controls pass. Final native copied-source refresh, measured aggregate/task declarations, claim/staged/hooks gate commit. Only finite dated caller/boundary selection closes; origins, genuine native semantic controls, whole qualification/publication and original/private/formatter/toolchain/address/visual/HIAL/full-CI/push successors retain owners.`\n  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.1: select source-declared public caller coordinates`\n"
+  },
+  "revision": "52e2769325318ba5e9f79ff84353e32b44d7b086",
+  "role": "Pure-source finite public longmess/confess origin alternatives only. No captured trace/error origin text is interpreted and no alternative is selected. Public global/private formatter state and every original coordinate/identity meaning remain unmeasured.",
+  "task_identity": {
+    "bytes": 1336572,
+    "sha256": "d494f6140b4d4aa4b2d81e8c6da5c39a80f713589539ec7ccf3d20a351b48fd0"
+  }
+}

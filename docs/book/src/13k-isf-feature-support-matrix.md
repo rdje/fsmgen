@@ -973,6 +973,16 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-caller-selection-20261007/verify.py
 ```
 
+Public origin hypotheses now bind the complete own observer calls, outer
+invocations, boundaries and longmess/confess statements to source alternatives
+and full public Carp/eval documentation before origin interpretation.
+Carp global, internal and formatter settings remain unmeasured.
+The source model selects no trace/error origin yet:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-origin-hypotheses-20261007/verify.py
+```
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

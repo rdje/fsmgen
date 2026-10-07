@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-origin-hypotheses-checks-20261007/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-origin-hypotheses-checks-20261007/run.py": {
+      "bytes": 1265,
+      "sha256": "c9837e8ae7eacb0eccd8b1c32f5dbc1ded8d3df8ec812d58231add6eab8b7bee"
+    },
+    "docs/audits/coordinate-public-origin-hypotheses-checks-20261007/verify_saved.py": {
+      "bytes": 10096,
+      "sha256": "c3c9052232824d3f7ae724362824dbd2538c173329122112e4298791d9440eb4"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 43610; host 31.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"cases\": 9, \"controls\": [{\"cause\": \"whole independently reconstructed origin statement allocation and unselected scope\", \"control\": \"lost-outer-statement\", \"status\": 1}, {\"cause\": \"whole independently reconstructed origin statement allocation and unselected scope\", \"control\": \"premature-selected-origin\", \"status\": 1}, {\"cause\": \"whole independently reconstructed origin statement allocation and unselected scope\", \"control\": \"borrowed-configuration-scope\", \"status\": 1}], \"members\": 6, \"scope\": \"Pure-source finite public longmess/confess origin alternatives only. No captured trace/error origin text is interpreted and no alternative is selected. Public global/private formatter state and every original coordinate/identity meaning remain unmeasured.\"}\n"
+}

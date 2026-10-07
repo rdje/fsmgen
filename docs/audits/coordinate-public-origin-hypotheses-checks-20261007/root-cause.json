@@ -1,0 +1,17 @@
+{
+  "cause": "The committed finite public caller/boundary guide still deferred trace origins; source-selected own origin alternatives and complete public Carp configuration clauses must be fixed before origin interpretation.",
+  "command": [
+    "git",
+    "log",
+    "--format=%H %s",
+    "-S",
+    "Trace origins and native wrong-caller",
+    "52e2769325318ba5e9f79ff84353e32b44d7b086",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "locus": "committed own fixture trace/confess/call/outer/boundary statements and full public Carp/eval documentation",
+  "status": 0,
+  "stderr": "",
+  "stdout": "52e2769325318ba5e9f79ff84353e32b44d7b086 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.1: select source-declared public caller coordinates\n"
+}

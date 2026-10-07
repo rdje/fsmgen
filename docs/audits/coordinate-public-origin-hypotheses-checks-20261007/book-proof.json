@@ -1,0 +1,57 @@
+{
+  "actual": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "mdbook",
+      "build",
+      "docs/book",
+      "--dest-dir",
+      ".artifacts/coordinate-public-origin-hypotheses-book"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-public-origin-hypotheses-checks-20261007/run.py": {
+        "bytes": 1265,
+        "sha256": "c9837e8ae7eacb0eccd8b1c32f5dbc1ded8d3df8ec812d58231add6eab8b7bee"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 44217; host 33.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15281666 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/coordinate-public-origin-hypotheses-book`\n",
+    "stdout": ""
+  },
+  "controls": [
+    {
+      "cause": "complete native pure-source origin guide and unmeasured/unselected scope",
+      "control": "lost-configuration-gap",
+      "status": 1
+    },
+    {
+      "cause": "complete native pure-source origin guide and unmeasured/unselected scope",
+      "control": "borrowed-origin-reader",
+      "status": 1
+    },
+    {
+      "cause": "complete native pure-source origin guide and unmeasured/unselected scope",
+      "control": "lost-unselected-origin-scope",
+      "status": 1
+    },
+    {
+      "cause": "actual exact same-volume native book build command and integer success",
+      "control": "Boolean-native-status",
+      "status": 1
+    }
+  ],
+  "native": {
+    "bytes": 243742,
+    "sha256": "d7fb6617ac8ba27a79859eb41e9da98282863b49698111a28c55c4d75fda4040"
+  },
+  "scope": "Exact scoped saved source/native guide; no live future currency, unrestricted runtime coordinate selection, original coordinate, formatter/private identity or visual QA claim.",
+  "source": {
+    "bytes": 206440,
+    "sha256": "8b1f719771d75f1181f10f2f33716dab6608b47cc2d9efb3923d5a7d273c135d"
+  }
+}

@@ -1,0 +1,689 @@
+{
+  "documents": {
+    "captured_at": "2026-10-06T09:38:19.158983+00:00",
+    "commands": {
+      "Carp": {
+        "command": [
+          "perldoc",
+          "-T",
+          "Carp"
+        ],
+        "identity": {
+          "bytes": 10972,
+          "sha256": "5af8a3f0d0e8e163a93455b6c00bc84f04d6f1fcb2b1895c9a308f2125308868"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "NAME\n    Carp - alternative warn and die for modules\n\nSYNOPSIS\n        use Carp;\n\n        # warn user (from perspective of caller)\n        carp \"string trimmed to 80 chars\";\n\n        # die of errors (from perspective of caller)\n        croak \"We're outta here!\";\n\n        # die of errors with stack backtrace\n        confess \"not implemented\";\n\n        # cluck, longmess and shortmess not exported by default\n        use Carp qw(cluck longmess shortmess);\n        cluck \"This is how we got here!\"; # warn with stack backtrace\n        $long_message   = longmess( \"message from cluck() or confess()\" );\n        $short_message  = shortmess( \"message from carp() or croak()\" );\n\nDESCRIPTION\n    The Carp routines are useful in your own modules because they act like\n    \"die()\" or \"warn()\", but with a message which is more likely to be\n    useful to a user of your module. In the case of \"cluck()\" and\n    \"confess()\", that context is a summary of every call in the call-stack;\n    \"longmess()\" returns the contents of the error message.\n\n    For a shorter message you can use \"carp()\" or \"croak()\" which report the\n    error as being from where your module was called. \"shortmess()\" returns\n    the contents of this error message. There is no guarantee that that is\n    where the error was, but it is a good educated guess.\n\n    \"Carp\" takes care not to clobber the status variables $! and $^E in the\n    course of assembling its error messages. This means that a $SIG{__DIE__}\n    or $SIG{__WARN__} handler can capture the error information held in\n    those variables, if it is required to augment the error message, and if\n    the code calling \"Carp\" left useful values there. Of course, \"Carp\"\n    can't guarantee the latter.\n\n    You can also alter the way the output and logic of \"Carp\" works, by\n    changing some global variables in the \"Carp\" namespace. See the section\n    on \"GLOBAL VARIABLES\" below.\n\n    Here is a more complete description of how \"carp\" and \"croak\" work. What\n    they do is search the call-stack for a function call stack where they\n    have not been told that there shouldn't be an error. If every call is\n    marked safe, they give up and give a full stack backtrace instead. In\n    other words they presume that the first likely looking potential suspect\n    is guilty. Their rules for telling whether a call shouldn't generate\n    errors work as follows:\n\n    1.  Any call from a package to itself is safe.\n\n    2.  Packages claim that there won't be errors on calls to or from\n        packages explicitly marked as safe by inclusion in @CARP_NOT, or (if\n        that array is empty) @ISA. The ability to override what @ISA says is\n        new in 5.8.\n\n    3.  The trust in item 2 is transitive. If A trusts B, and B trusts C,\n        then A trusts C. So if you do not override @ISA with @CARP_NOT, then\n        this trust relationship is identical to, \"inherits from\".\n\n    4.  Any call from an internal Perl module is safe. (Nothing keeps user\n        modules from marking themselves as internal to Perl, but this\n        practice is discouraged.)\n\n    5.  Any call to Perl's warning system (eg Carp itself) is safe. (This\n        rule is what keeps it from reporting the error at the point where\n        you call \"carp\" or \"croak\".)\n\n    6.  $Carp::CarpLevel can be set to skip a fixed number of additional\n        call levels. Using this is not recommended because it is very\n        difficult to get it to behave correctly.\n\n  Forcing a Stack Trace\n    As a debugging aid, you can force Carp to treat a croak as a confess and\n    a carp as a cluck across *all* modules. In other words, force a detailed\n    stack trace to be given. This can be very helpful when trying to\n    understand why, or from where, a warning or error is being generated.\n\n    This feature is enabled by 'importing' the non-existent symbol\n    'verbose'. You would typically enable it by saying\n\n        perl -MCarp=verbose script.pl\n\n    or by including the string \"-MCarp=verbose\" in the PERL5OPT environment\n    variable.\n\n    Alternately, you can set the global variable $Carp::Verbose to true. See\n    the \"GLOBAL VARIABLES\" section below.\n\n  Stack Trace formatting\n    At each stack level, the subroutine's name is displayed along with its\n    parameters. For simple scalars, this is sufficient. For complex data\n    types, such as objects and other references, this can simply display\n    'HASH(0x1ab36d8)'.\n\n    Carp gives two ways to control this.\n\n    1.  For objects, a method, \"CARP_TRACE\", will be called, if it exists.\n        If this method doesn't exist, or it recurses into \"Carp\", or it\n        otherwise throws an exception, this is skipped, and Carp moves on to\n        the next option, otherwise checking stops and the string returned is\n        used. It is recommended that the object's type is part of the string\n        to make debugging easier.\n\n    2.  For any type of reference, $Carp::RefArgFormatter is checked (see\n        below). This variable is expected to be a code reference, and the\n        current parameter is passed in. If this function doesn't exist (the\n        variable is undef), or it recurses into \"Carp\", or it otherwise\n        throws an exception, this is skipped, and Carp moves on to the next\n        option, otherwise checking stops and the string returned is used.\n\n    3.  Otherwise, if neither \"CARP_TRACE\" nor $Carp::RefArgFormatter is\n        available, stringify the value ignoring any overloading.\n\nGLOBAL VARIABLES\n  $Carp::MaxEvalLen\n    This variable determines how many characters of a string-eval are to be\n    shown in the output. Use a value of 0 to show all text.\n\n    Defaults to 0.\n\n  $Carp::MaxArgLen\n    This variable determines how many characters of each argument to a\n    function to print. Use a value of 0 to show the full length of the\n    argument.\n\n    Defaults to 64.\n\n  $Carp::MaxArgNums\n    This variable determines how many arguments to each function to show.\n    Use a false value to show all arguments to a function call. To suppress\n    all arguments, use -1 or '0 but true'.\n\n    Defaults to 8.\n\n  $Carp::Verbose\n    This variable makes \"carp()\" and \"croak()\" generate stack backtraces\n    just like \"cluck()\" and \"confess()\". This is how \"use Carp 'verbose'\" is\n    implemented internally.\n\n    Defaults to 0.\n\n  $Carp::RefArgFormatter\n    This variable sets a general argument formatter to display references.\n    Plain scalars and objects that implement \"CARP_TRACE\" will not go\n    through this formatter. Calling \"Carp\" from within this function is not\n    supported.\n\n        local $Carp::RefArgFormatter = sub {\n            require Data::Dumper;\n            Data::Dumper->Dump($_[0]); # not necessarily safe\n        };\n\n  @CARP_NOT\n    This variable, *in your package*, says which packages are *not* to be\n    considered as the location of an error. The \"carp()\" and \"cluck()\"\n    functions will skip over callers when reporting where an error occurred.\n\n    NB: This variable must be in the package's symbol table, thus:\n\n        # These work\n        our @CARP_NOT; # file scope\n        use vars qw(@CARP_NOT); # package scope\n        @My::Package::CARP_NOT = ... ; # explicit package variable\n\n        # These don't work\n        sub xyz { ... @CARP_NOT = ... } # w/o declarations above\n        my @CARP_NOT; # even at top-level\n\n    Example of use:\n\n        package My::Carping::Package;\n        use Carp;\n        our @CARP_NOT;\n        sub bar     { .... or _error('Wrong input') }\n        sub _error  {\n            # temporary control of where'ness, __PACKAGE__ is implicit\n            local @CARP_NOT = qw(My::Friendly::Caller);\n            carp(@_)\n        }\n\n    This would make \"Carp\" report the error as coming from a caller not in\n    \"My::Carping::Package\", nor from \"My::Friendly::Caller\".\n\n    Also read the \"DESCRIPTION\" section above, about how \"Carp\" decides\n    where the error is reported from.\n\n    Use @CARP_NOT, instead of $Carp::CarpLevel.\n\n    Overrides \"Carp\"'s use of @ISA.\n\n  %Carp::Internal\n    This says what packages are internal to Perl. \"Carp\" will never report\n    an error as being from a line in a package that is internal to Perl. For\n    example:\n\n        $Carp::Internal{ (__PACKAGE__) }++;\n        # time passes...\n        sub foo { ... or confess(\"whatever\") };\n\n    would give a full stack backtrace starting from the first caller outside\n    of __PACKAGE__. (Unless that package was also internal to Perl.)\n\n  %Carp::CarpInternal\n    This says which packages are internal to Perl's warning system. For\n    generating a full stack backtrace this is the same as being internal to\n    Perl, the stack backtrace will not start inside packages that are listed\n    in %Carp::CarpInternal. But it is slightly different for the summary\n    message generated by \"carp\" or \"croak\". There errors will not be\n    reported on any lines that are calling packages in %Carp::CarpInternal.\n\n    For example \"Carp\" itself is listed in %Carp::CarpInternal. Therefore\n    the full stack backtrace from \"confess\" will not start inside of \"Carp\",\n    and the short message from calling \"croak\" is not placed on the line\n    where \"croak\" was called.\n\n  $Carp::CarpLevel\n    This variable determines how many additional call frames are to be\n    skipped that would not otherwise be when reporting where an error\n    occurred on a call to one of \"Carp\"'s functions. It is fairly easy to\n    count these call frames on calls that generate a full stack backtrace.\n    However it is much harder to do this accounting for calls that generate\n    a short message. Usually people skip too many call frames. If they are\n    lucky they skip enough that \"Carp\" goes all of the way through the call\n    stack, realizes that something is wrong, and then generates a full stack\n    backtrace. If they are unlucky then the error is reported from somewhere\n    misleading very high in the call stack.\n\n    Therefore it is best to avoid $Carp::CarpLevel. Instead use @CARP_NOT,\n    %Carp::Internal and %Carp::CarpInternal.\n\n    Defaults to 0.\n\nBUGS\n    The Carp routines don't handle exception objects currently. If called\n    with a first argument that is a reference, they simply call die() or\n    warn(), as appropriate.\n\nSEE ALSO\n    Carp::Always, Carp::Clan\n\nCONTRIBUTING\n    Carp is maintained by the perl 5 porters as part of the core perl 5\n    version control repository. Please see the perlhack perldoc for how to\n    submit patches and contribute to it.\n\nAUTHOR\n    The Carp module first appeared in Larry Wall's perl 5.000 distribution.\n    Since then it has been modified by several of the perl 5 porters. Andrew\n    Main (Zefram) <zefram@fysh.org> divested Carp into an independent\n    distribution.\n\nCOPYRIGHT\n    Copyright (C) 1994-2013 Larry Wall\n\n    Copyright (C) 2011, 2012, 2013 Andrew Main (Zefram) <zefram@fysh.org>\n\nLICENSE\n    This module is free software; you can redistribute it and/or modify it\n    under the same terms as Perl itself.\n\n"
+      },
+      "Carp_documentation_path": {
+        "command": [
+          "perldoc",
+          "-l",
+          "Carp"
+        ],
+        "identity": {
+          "bytes": 34,
+          "sha256": "227e32eb5cdbe5f080d78e4b2290208891a2cbc3033cf098e29cac83b3afee29"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "/System/Library/Perl/5.34/Carp.pm\n"
+      },
+      "Test::Builder": {
+        "command": [
+          "perldoc",
+          "-T",
+          "Test::Builder"
+        ],
+        "identity": {
+          "bytes": 22813,
+          "sha256": "a1b474ec1f0ddb441536eae29bb678ba075c8f9c6842349efe943fd0647f6d77"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "NAME\n    Test::Builder - Backend for building test libraries\n\nSYNOPSIS\n      package My::Test::Module;\n      use base 'Test::Builder::Module';\n\n      my $CLASS = __PACKAGE__;\n\n      sub ok {\n          my($test, $name) = @_;\n          my $tb = $CLASS->builder;\n\n          $tb->ok($test, $name);\n      }\n\nDESCRIPTION\n    Test::Simple and Test::More have proven to be popular testing modules,\n    but they're not always flexible enough. Test::Builder provides a\n    building block upon which to write your own test libraries *which can\n    work together*.\n\n  Construction\n    new\n          my $Test = Test::Builder->new;\n\n        Returns a Test::Builder object representing the current state of the\n        test.\n\n        Since you only run one test per program \"new\" always returns the\n        same Test::Builder object. No matter how many times you call\n        \"new()\", you're getting the same object. This is called a singleton.\n        This is done so that multiple modules share such global information\n        as the test counter and where test output is going.\n\n        If you want a completely new Test::Builder object different from the\n        singleton, use \"create\".\n\n    create\n          my $Test = Test::Builder->create;\n\n        Ok, so there can be more than one Test::Builder object and this is\n        how you get it. You might use this instead of \"new()\" if you're\n        testing a Test::Builder based module, but otherwise you probably\n        want \"new\".\n\n        NOTE: the implementation is not complete. \"level\", for example, is\n        still shared by all Test::Builder objects, even ones created using\n        this method. Also, the method name may change in the future.\n\n    subtest\n            $builder->subtest($name, \\&subtests, @args);\n\n        See documentation of \"subtest\" in Test::More.\n\n        \"subtest\" also, and optionally, accepts arguments which will be\n        passed to the subtests reference.\n\n    name\n         diag $builder->name;\n\n        Returns the name of the current builder. Top level builders default\n        to $0 (the name of the executable). Child builders are named via the\n        \"child\" method. If no name is supplied, will be named \"Child of\n        $parent->name\".\n\n    reset\n          $Test->reset;\n\n        Reinitializes the Test::Builder singleton to its original state.\n        Mostly useful for tests run in persistent environments where the\n        same test might be run multiple times in the same process.\n\n  Setting up tests\n    These methods are for setting up tests and declaring how many there are.\n    You usually only want to call one of these methods.\n\n    plan\n          $Test->plan('no_plan');\n          $Test->plan( skip_all => $reason );\n          $Test->plan( tests => $num_tests );\n\n        A convenient way to set up your tests. Call this and Test::Builder\n        will print the appropriate headers and take the appropriate actions.\n\n        If you call \"plan()\", don't call any of the other methods below.\n\n    expected_tests\n            my $max = $Test->expected_tests;\n            $Test->expected_tests($max);\n\n        Gets/sets the number of tests we expect this test to run and prints\n        out the appropriate headers.\n\n    no_plan\n          $Test->no_plan;\n\n        Declares that this test will run an indeterminate number of tests.\n\n    done_testing\n          $Test->done_testing();\n          $Test->done_testing($num_tests);\n\n        Declares that you are done testing, no more tests will be run after\n        this point.\n\n        If a plan has not yet been output, it will do so.\n\n        $num_tests is the number of tests you planned to run. If a numbered\n        plan was already declared, and if this contradicts, a failing test\n        will be run to reflect the planning mistake. If \"no_plan\" was\n        declared, this will override.\n\n        If \"done_testing()\" is called twice, the second call will issue a\n        failing test.\n\n        If $num_tests is omitted, the number of tests run will be used, like\n        no_plan.\n\n        \"done_testing()\" is, in effect, used when you'd want to use\n        \"no_plan\", but safer. You'd use it like so:\n\n            $Test->ok($a == $b);\n            $Test->done_testing();\n\n        Or to plan a variable number of tests:\n\n            for my $test (@tests) {\n                $Test->ok($test);\n            }\n            $Test->done_testing(scalar @tests);\n\n    has_plan\n          $plan = $Test->has_plan\n\n        Find out whether a plan has been defined. $plan is either \"undef\"\n        (no plan has been set), \"no_plan\" (indeterminate # of tests) or an\n        integer (the number of expected tests).\n\n    skip_all\n          $Test->skip_all;\n          $Test->skip_all($reason);\n\n        Skips all the tests, using the given $reason. Exits immediately with\n        0.\n\n    exported_to\n          my $pack = $Test->exported_to;\n          $Test->exported_to($pack);\n\n        Tells Test::Builder what package you exported your functions to.\n\n        This method isn't terribly useful since modules which share the same\n        Test::Builder object might get exported to different packages and\n        only the last one will be honored.\n\n  Running tests\n    These actually run the tests, analogous to the functions in Test::More.\n\n    They all return true if the test passed, false if the test failed.\n\n    $name is always optional.\n\n    ok\n          $Test->ok($test, $name);\n\n        Your basic test. Pass if $test is true, fail if $test is false. Just\n        like Test::Simple's \"ok()\".\n\n    is_eq\n          $Test->is_eq($got, $expected, $name);\n\n        Like Test::More's \"is()\". Checks if \"$got eq $expected\". This is the\n        string version.\n\n        \"undef\" only ever matches another \"undef\".\n\n    is_num\n          $Test->is_num($got, $expected, $name);\n\n        Like Test::More's \"is()\". Checks if \"$got == $expected\". This is the\n        numeric version.\n\n        \"undef\" only ever matches another \"undef\".\n\n    isnt_eq\n          $Test->isnt_eq($got, $dont_expect, $name);\n\n        Like Test::More's \"isnt()\". Checks if \"$got ne $dont_expect\". This\n        is the string version.\n\n    isnt_num\n          $Test->isnt_num($got, $dont_expect, $name);\n\n        Like Test::More's \"isnt()\". Checks if \"$got ne $dont_expect\". This\n        is the numeric version.\n\n    like\n          $Test->like($thing, qr/$regex/, $name);\n          $Test->like($thing, '/$regex/', $name);\n\n        Like Test::More's \"like()\". Checks if $thing matches the given\n        $regex.\n\n    unlike\n          $Test->unlike($thing, qr/$regex/, $name);\n          $Test->unlike($thing, '/$regex/', $name);\n\n        Like Test::More's \"unlike()\". Checks if $thing does not match the\n        given $regex.\n\n    cmp_ok\n          $Test->cmp_ok($thing, $type, $that, $name);\n\n        Works just like Test::More's \"cmp_ok()\".\n\n            $Test->cmp_ok($big_num, '!=', $other_big_num);\n\n  Other Testing Methods\n    These are methods which are used in the course of writing a test but are\n    not themselves tests.\n\n    BAIL_OUT\n            $Test->BAIL_OUT($reason);\n\n        Indicates to the Test::Harness that things are going so badly all\n        testing should terminate. This includes running any additional test\n        scripts.\n\n        It will exit with 255.\n\n    skip\n            $Test->skip;\n            $Test->skip($why);\n\n        Skips the current test, reporting $why.\n\n    todo_skip\n          $Test->todo_skip;\n          $Test->todo_skip($why);\n\n        Like \"skip()\", only it will declare the test as failing and TODO.\n        Similar to\n\n            print \"not ok $tnum # TODO $why\\n\";\n\n  Test building utility methods\n    These methods are useful when writing your own test methods.\n\n    maybe_regex\n          $Test->maybe_regex(qr/$regex/);\n          $Test->maybe_regex('/$regex/');\n\n        This method used to be useful back when Test::Builder worked on\n        Perls before 5.6 which didn't have qr//. Now its pretty useless.\n\n        Convenience method for building testing functions that take regular\n        expressions as arguments.\n\n        Takes a quoted regular expression produced by \"qr//\", or a string\n        representing a regular expression.\n\n        Returns a Perl value which may be used instead of the corresponding\n        regular expression, or \"undef\" if its argument is not recognized.\n\n        For example, a version of \"like()\", sans the useful diagnostic\n        messages, could be written as:\n\n          sub laconic_like {\n              my ($self, $thing, $regex, $name) = @_;\n              my $usable_regex = $self->maybe_regex($regex);\n              die \"expecting regex, found '$regex'\\n\"\n                  unless $usable_regex;\n              $self->ok($thing =~ m/$usable_regex/, $name);\n          }\n\n    is_fh\n            my $is_fh = $Test->is_fh($thing);\n\n        Determines if the given $thing can be used as a filehandle.\n\n  Test style\n    level\n            $Test->level($how_high);\n\n        How far up the call stack should $Test look when reporting where the\n        test failed.\n\n        Defaults to 1.\n\n        Setting $Test::Builder::Level overrides. This is typically useful\n        localized:\n\n            sub my_ok {\n                my $test = shift;\n\n                local $Test::Builder::Level = $Test::Builder::Level + 1;\n                $TB->ok($test);\n            }\n\n        To be polite to other functions wrapping your own you usually want\n        to increment $Level rather than set it to a constant.\n\n    use_numbers\n            $Test->use_numbers($on_or_off);\n\n        Whether or not the test should output numbers. That is, this if\n        true:\n\n          ok 1\n          ok 2\n          ok 3\n\n        or this if false\n\n          ok\n          ok\n          ok\n\n        Most useful when you can't depend on the test output order, such as\n        when threads or forking is involved.\n\n        Defaults to on.\n\n    no_diag\n            $Test->no_diag($no_diag);\n\n        If set true no diagnostics will be printed. This includes calls to\n        \"diag()\".\n\n    no_ending\n            $Test->no_ending($no_ending);\n\n        Normally, Test::Builder does some extra diagnostics when the test\n        ends. It also changes the exit code as described below.\n\n        If this is true, none of that will be done.\n\n    no_header\n            $Test->no_header($no_header);\n\n        If set to true, no \"1..N\" header will be printed.\n\n  Output\n    Controlling where the test output goes.\n\n    It's ok for your test to change where STDOUT and STDERR point to,\n    Test::Builder's default output settings will not be affected.\n\n    diag\n            $Test->diag(@msgs);\n\n        Prints out the given @msgs. Like \"print\", arguments are simply\n        appended together.\n\n        Normally, it uses the \"failure_output()\" handle, but if this is for\n        a TODO test, the \"todo_output()\" handle is used.\n\n        Output will be indented and marked with a # so as not to interfere\n        with test output. A newline will be put on the end if there isn't\n        one already.\n\n        We encourage using this rather than calling print directly.\n\n        Returns false. Why? Because \"diag()\" is often used in conjunction\n        with a failing test (\"ok() || diag()\") it \"passes through\" the\n        failure.\n\n            return ok(...) || diag(...);\n\n    note\n            $Test->note(@msgs);\n\n        Like \"diag()\", but it prints to the \"output()\" handle so it will not\n        normally be seen by the user except in verbose mode.\n\n    explain\n            my @dump = $Test->explain(@msgs);\n\n        Will dump the contents of any references in a human readable format.\n        Handy for things like...\n\n            is_deeply($have, $want) || diag explain $have;\n\n        or\n\n            is_deeply($have, $want) || note explain $have;\n\n    output\n    failure_output\n    todo_output\n            my $filehandle = $Test->output;\n            $Test->output($filehandle);\n            $Test->output($filename);\n            $Test->output(\\$scalar);\n\n        These methods control where Test::Builder will print its output.\n        They take either an open $filehandle, a $filename to open and write\n        to or a $scalar reference to append to. It will always return a\n        $filehandle.\n\n        output is where normal \"ok/not ok\" test output goes.\n\n        Defaults to STDOUT.\n\n        failure_output is where diagnostic output on test failures and\n        \"diag()\" goes. It is normally not read by Test::Harness and instead\n        is displayed to the user.\n\n        Defaults to STDERR.\n\n        \"todo_output\" is used instead of \"failure_output()\" for the\n        diagnostics of a failing TODO test. These will not be seen by the\n        user.\n\n        Defaults to STDOUT.\n\n    reset_outputs\n          $tb->reset_outputs;\n\n        Resets all the output filehandles back to their defaults.\n\n    carp\n          $tb->carp(@message);\n\n        Warns with @message but the message will appear to come from the\n        point where the original test function was called (\"$tb->caller\").\n\n    croak\n          $tb->croak(@message);\n\n        Dies with @message but the message will appear to come from the\n        point where the original test function was called (\"$tb->caller\").\n\n  Test Status and Info\n    no_log_results\n        This will turn off result long-term storage. Calling this method\n        will make \"details\" and \"summary\" useless. You may want to use this\n        if you are running enough tests to fill up all available memory.\n\n            Test::Builder->new->no_log_results();\n\n        There is no way to turn it back on.\n\n    current_test\n            my $curr_test = $Test->current_test;\n            $Test->current_test($num);\n\n        Gets/sets the current test number we're on. You usually shouldn't\n        have to set this.\n\n        If set forward, the details of the missing tests are filled in as\n        'unknown'. if set backward, the details of the intervening tests are\n        deleted. You can erase history if you really want to.\n\n    is_passing\n           my $ok = $builder->is_passing;\n\n        Indicates if the test suite is currently passing.\n\n        More formally, it will be false if anything has happened which makes\n        it impossible for the test suite to pass. True otherwise.\n\n        For example, if no tests have run \"is_passing()\" will be true\n        because even though a suite with no tests is a failure you can add a\n        passing test to it and start passing.\n\n        Don't think about it too much.\n\n    summary\n            my @tests = $Test->summary;\n\n        A simple summary of the tests so far. True for pass, false for fail.\n        This is a logical pass/fail, so todos are passes.\n\n        Of course, test #1 is $tests[0], etc...\n\n    details\n            my @tests = $Test->details;\n\n        Like \"summary()\", but with a lot more detail.\n\n            $tests[$test_num - 1] =\n                    { 'ok'       => is the test considered a pass?\n                      actual_ok  => did it literally say 'ok'?\n                      name       => name of the test (if any)\n                      type       => type of test (if any, see below).\n                      reason     => reason for the above (if any)\n                    };\n\n        'ok' is true if Test::Harness will consider the test to be a pass.\n\n        'actual_ok' is a reflection of whether or not the test literally\n        printed 'ok' or 'not ok'. This is for examining the result of 'todo'\n        tests.\n\n        'name' is the name of the test.\n\n        'type' indicates if it was a special test. Normal tests have a type\n        of ''. Type can be one of the following:\n\n            skip        see skip()\n            todo        see todo()\n            todo_skip   see todo_skip()\n            unknown     see below\n\n        Sometimes the Test::Builder test counter is incremented without it\n        printing any test output, for example, when \"current_test()\" is\n        changed. In these cases, Test::Builder doesn't know the result of\n        the test, so its type is 'unknown'. These details for these tests\n        are filled in. They are considered ok, but the name and actual_ok is\n        left \"undef\".\n\n        For example \"not ok 23 - hole count # TODO insufficient donuts\"\n        would result in this structure:\n\n            $tests[22] =    # 23 - 1, since arrays start from 0.\n              { ok        => 1,   # logically, the test passed since its todo\n                actual_ok => 0,   # in absolute terms, it failed\n                name      => 'hole count',\n                type      => 'todo',\n                reason    => 'insufficient donuts'\n              };\n\n    todo\n            my $todo_reason = $Test->todo;\n            my $todo_reason = $Test->todo($pack);\n\n        If the current tests are considered \"TODO\" it will return the\n        reason, if any. This reason can come from a $TODO variable or the\n        last call to \"todo_start()\".\n\n        Since a TODO test does not need a reason, this function can return\n        an empty string even when inside a TODO block. Use \"$Test->in_todo\"\n        to determine if you are currently inside a TODO block.\n\n        \"todo()\" is about finding the right package to look for $TODO in.\n        It's pretty good at guessing the right package to look at. It first\n        looks for the caller based on \"$Level + 1\", since \"todo()\" is\n        usually called inside a test function. As a last resort it will use\n        \"exported_to()\".\n\n        Sometimes there is some confusion about where \"todo()\" should be\n        looking for the $TODO variable. If you want to be sure, tell it\n        explicitly what $pack to use.\n\n    find_TODO\n            my $todo_reason = $Test->find_TODO();\n            my $todo_reason = $Test->find_TODO($pack);\n\n        Like \"todo()\" but only returns the value of $TODO ignoring\n        \"todo_start()\".\n\n        Can also be used to set $TODO to a new value while returning the old\n        value:\n\n            my $old_reason = $Test->find_TODO($pack, 1, $new_reason);\n\n    in_todo\n            my $in_todo = $Test->in_todo;\n\n        Returns true if the test is currently inside a TODO block.\n\n    todo_start\n            $Test->todo_start();\n            $Test->todo_start($message);\n\n        This method allows you declare all subsequent tests as TODO tests,\n        up until the \"todo_end\" method has been called.\n\n        The \"TODO:\" and $TODO syntax is generally pretty good about figuring\n        out whether or not we're in a TODO test. However, often we find that\n        this is not possible to determine (such as when we want to use $TODO\n        but the tests are being executed in other packages which can't be\n        inferred beforehand).\n\n        Note that you can use this to nest \"todo\" tests\n\n         $Test->todo_start('working on this');\n         # lots of code\n         $Test->todo_start('working on that');\n         # more code\n         $Test->todo_end;\n         $Test->todo_end;\n\n        This is generally not recommended, but large testing systems often\n        have weird internal needs.\n\n        We've tried to make this also work with the TODO: syntax, but it's\n        not guaranteed and its use is also discouraged:\n\n         TODO: {\n             local $TODO = 'We have work to do!';\n             $Test->todo_start('working on this');\n             # lots of code\n             $Test->todo_start('working on that');\n             # more code\n             $Test->todo_end;\n             $Test->todo_end;\n         }\n\n        Pick one style or another of \"TODO\" to be on the safe side.\n\n    \"todo_end\"\n         $Test->todo_end;\n\n        Stops running tests as \"TODO\" tests. This method is fatal if called\n        without a preceding \"todo_start\" method call.\n\n    caller\n            my $package = $Test->caller;\n            my($pack, $file, $line) = $Test->caller;\n            my($pack, $file, $line) = $Test->caller($height);\n\n        Like the normal \"caller()\", except it reports according to your\n        \"level()\".\n\n        $height will be added to the \"level()\".\n\n        If \"caller()\" winds up off the top of the stack it report the\n        highest context.\n\nEXIT CODES\n    If all your tests passed, Test::Builder will exit with zero (which is\n    normal). If anything failed it will exit with how many failed. If you\n    run less (or more) tests than you planned, the missing (or extras) will\n    be considered failures. If no tests were ever run Test::Builder will\n    throw a warning and exit with 255. If the test died, even after having\n    successfully completed all its tests, it will still be considered a\n    failure and will exit with 255.\n\n    So the exit codes are...\n\n        0                   all tests successful\n        255                 test died or all passed but wrong # of tests run\n        any other number    how many failed (including missing or extras)\n\n    If you fail more than 254 tests, it will be reported as 254.\n\nTHREADS\n    In perl 5.8.1 and later, Test::Builder is thread-safe. The test number\n    is shared by all threads. This means if one thread sets the test number\n    using \"current_test()\" they will all be effected.\n\n    While versions earlier than 5.8.1 had threads they contain too many bugs\n    to support.\n\n    Test::Builder is only thread-aware if threads.pm is loaded *before*\n    Test::Builder.\n\n    You can directly disable thread support with one of the following:\n\n        $ENV{T2_NO_IPC} = 1\n\n    or\n\n        no Test2::IPC;\n\n    or\n\n        Test2::API::test2_ipc_disable()\n\nMEMORY\n    An informative hash, accessible via \"details()\", is stored for each test\n    you perform. So memory usage will scale linearly with each test run.\n    Although this is not a problem for most test suites, it can become an\n    issue if you do large (hundred thousands to million) combinatorics tests\n    in the same run.\n\n    In such cases, you are advised to either split the test file into\n    smaller ones, or use a reverse approach, doing \"normal\" (code) compares\n    and triggering \"fail()\" should anything go unexpected.\n\n    Future versions of Test::Builder will have a way to turn history off.\n\nEXAMPLES\n    CPAN can provide the best examples. Test::Simple, Test::More,\n    Test::Exception and Test::Differences all use Test::Builder.\n\nSEE ALSO\n  INTERNALS\n    Test2, Test2::API\n\n  LEGACY\n    Test::Simple, Test::More\n\n  EXTERNAL\n    Test::Harness\n\nAUTHORS\n    Original code by chromatic, maintained by Michael G Schwern\n    <schwern@pobox.com>\n\nMAINTAINERS\n    Chad Granum <exodist@cpan.org>\n\nCOPYRIGHT\n    Copyright 2002-2008 by chromatic <chromatic@wgz.org> and Michael G\n    Schwern <schwern@pobox.com>.\n\n    This program is free software; you can redistribute it and/or modify it\n    under the same terms as Perl itself.\n\n    See http://www.perl.com/perl/misc/Artistic.html\n\n"
+      },
+      "Test::Builder_documentation_path": {
+        "command": [
+          "perldoc",
+          "-l",
+          "Test::Builder"
+        ],
+        "identity": {
+          "bytes": 42,
+          "sha256": "1afb6e5a86c33bc599ed2b6cb5f55e8eb61d050e26ecead8191bcd39aa1ca84e"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "/System/Library/Perl/5.34/Test/Builder.pm\n"
+      },
+      "Test::More": {
+        "command": [
+          "perldoc",
+          "-T",
+          "Test::More"
+        ],
+        "identity": {
+          "bytes": 37843,
+          "sha256": "81a13d648b6a4e05db709b3967fcdbbf1043fa026fbdf150629605323a60f708"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "NAME\n    Test::More - yet another framework for writing test scripts\n\nSYNOPSIS\n      use Test::More tests => 23;\n      # or\n      use Test::More skip_all => $reason;\n      # or\n      use Test::More;   # see done_testing()\n\n      require_ok( 'Some::Module' );\n\n      # Various ways to say \"ok\"\n      ok($got eq $expected, $test_name);\n\n      is  ($got, $expected, $test_name);\n      isnt($got, $expected, $test_name);\n\n      # Rather than print STDERR \"# here's what went wrong\\n\"\n      diag(\"here's what went wrong\");\n\n      like  ($got, qr/expected/, $test_name);\n      unlike($got, qr/expected/, $test_name);\n\n      cmp_ok($got, '==', $expected, $test_name);\n\n      is_deeply($got_complex_structure, $expected_complex_structure, $test_name);\n\n      SKIP: {\n          skip $why, $how_many unless $have_some_feature;\n\n          ok( foo(),       $test_name );\n          is( foo(42), 23, $test_name );\n      };\n\n      TODO: {\n          local $TODO = $why;\n\n          ok( foo(),       $test_name );\n          is( foo(42), 23, $test_name );\n      };\n\n      can_ok($module, @methods);\n      isa_ok($object, $class);\n\n      pass($test_name);\n      fail($test_name);\n\n      BAIL_OUT($why);\n\n      # UNIMPLEMENTED!!!\n      my @status = Test::More::status;\n\nDESCRIPTION\n    STOP! If you're just getting started writing tests, have a look at\n    Test2::Suite first.\n\n    This is a drop in replacement for Test::Simple which you can switch to\n    once you get the hang of basic testing.\n\n    The purpose of this module is to provide a wide range of testing\n    utilities. Various ways to say \"ok\" with better diagnostics, facilities\n    to skip tests, test future features and compare complicated data\n    structures. While you can do almost anything with a simple \"ok()\"\n    function, it doesn't provide good diagnostic output.\n\n  I love it when a plan comes together\n    Before anything else, you need a testing plan. This basically declares\n    how many tests your script is going to run to protect against premature\n    failure.\n\n    The preferred way to do this is to declare a plan when you \"use\n    Test::More\".\n\n      use Test::More tests => 23;\n\n    There are cases when you will not know beforehand how many tests your\n    script is going to run. In this case, you can declare your tests at the\n    end.\n\n      use Test::More;\n\n      ... run your tests ...\n\n      done_testing( $number_of_tests_run );\n\n    NOTE \"done_testing()\" should never be called in an \"END { ... }\" block.\n\n    Sometimes you really don't know how many tests were run, or it's too\n    difficult to calculate. In which case you can leave off\n    $number_of_tests_run.\n\n    In some cases, you'll want to completely skip an entire testing script.\n\n      use Test::More skip_all => $skip_reason;\n\n    Your script will declare a skip with the reason why you skipped and exit\n    immediately with a zero (success). See Test::Harness for details.\n\n    If you want to control what functions Test::More will export, you have\n    to use the 'import' option. For example, to import everything but\n    'fail', you'd do:\n\n      use Test::More tests => 23, import => ['!fail'];\n\n    Alternatively, you can use the \"plan()\" function. Useful for when you\n    have to calculate the number of tests.\n\n      use Test::More;\n      plan tests => keys %Stuff * 3;\n\n    or for deciding between running the tests at all:\n\n      use Test::More;\n      if( $^O eq 'MacOS' ) {\n          plan skip_all => 'Test irrelevant on MacOS';\n      }\n      else {\n          plan tests => 42;\n      }\n\n    done_testing\n            done_testing();\n            done_testing($number_of_tests);\n\n        If you don't know how many tests you're going to run, you can issue\n        the plan when you're done running tests.\n\n        $number_of_tests is the same as \"plan()\", it's the number of tests\n        you expected to run. You can omit this, in which case the number of\n        tests you ran doesn't matter, just the fact that your tests ran to\n        conclusion.\n\n        This is safer than and replaces the \"no_plan\" plan.\n\n        Note: You must never put \"done_testing()\" inside an \"END { ... }\"\n        block. The plan is there to ensure your test does not exit before\n        testing has completed. If you use an END block you completely bypass\n        this protection.\n\n  Test names\n    By convention, each test is assigned a number in order. This is largely\n    done automatically for you. However, it's often very useful to assign a\n    name to each test. Which would you rather see:\n\n      ok 4\n      not ok 5\n      ok 6\n\n    or\n\n      ok 4 - basic multi-variable\n      not ok 5 - simple exponential\n      ok 6 - force == mass * acceleration\n\n    The later gives you some idea of what failed. It also makes it easier to\n    find the test in your script, simply search for \"simple exponential\".\n\n    All test functions take a name argument. It's optional, but highly\n    suggested that you use it.\n\n  I'm ok, you're not ok.\n    The basic purpose of this module is to print out either \"ok #\" or \"not\n    ok #\" depending on if a given test succeeded or failed. Everything else\n    is just gravy.\n\n    All of the following print \"ok\" or \"not ok\" depending on if the test\n    succeeded or failed. They all also return true or false, respectively.\n\n    ok\n          ok($got eq $expected, $test_name);\n\n        This simply evaluates any expression (\"$got eq $expected\" is just a\n        simple example) and uses that to determine if the test succeeded or\n        failed. A true expression passes, a false one fails. Very simple.\n\n        For example:\n\n            ok( $exp{9} == 81,                   'simple exponential' );\n            ok( Film->can('db_Main'),            'set_db()' );\n            ok( $p->tests == 4,                  'saw tests' );\n            ok( !grep(!defined $_, @items),      'all items defined' );\n\n        (Mnemonic: \"This is ok.\")\n\n        $test_name is a very short description of the test that will be\n        printed out. It makes it very easy to find a test in your script\n        when it fails and gives others an idea of your intentions.\n        $test_name is optional, but we very strongly encourage its use.\n\n        Should an \"ok()\" fail, it will produce some diagnostics:\n\n            not ok 18 - sufficient mucus\n            #   Failed test 'sufficient mucus'\n            #   in foo.t at line 42.\n\n        This is the same as Test::Simple's \"ok()\" routine.\n\n    is\n    isnt\n          is  ( $got, $expected, $test_name );\n          isnt( $got, $expected, $test_name );\n\n        Similar to \"ok()\", \"is()\" and \"isnt()\" compare their two arguments\n        with \"eq\" and \"ne\" respectively and use the result of that to\n        determine if the test succeeded or failed. So these:\n\n            # Is the ultimate answer 42?\n            is( ultimate_answer(), 42,          \"Meaning of Life\" );\n\n            # $foo isn't empty\n            isnt( $foo, '',     \"Got some foo\" );\n\n        are similar to these:\n\n            ok( ultimate_answer() eq 42,        \"Meaning of Life\" );\n            ok( $foo ne '',     \"Got some foo\" );\n\n        \"undef\" will only ever match \"undef\". So you can test a value\n        against \"undef\" like this:\n\n            is($not_defined, undef, \"undefined as expected\");\n\n        (Mnemonic: \"This is that.\" \"This isn't that.\")\n\n        So why use these? They produce better diagnostics on failure. \"ok()\"\n        cannot know what you are testing for (beyond the name), but \"is()\"\n        and \"isnt()\" know what the test was and why it failed. For example\n        this test:\n\n            my $foo = 'waffle';  my $bar = 'yarblokos';\n            is( $foo, $bar,   'Is foo the same as bar?' );\n\n        Will produce something like this:\n\n            not ok 17 - Is foo the same as bar?\n            #   Failed test 'Is foo the same as bar?'\n            #   in foo.t at line 139.\n            #          got: 'waffle'\n            #     expected: 'yarblokos'\n\n        So you can figure out what went wrong without rerunning the test.\n\n        You are encouraged to use \"is()\" and \"isnt()\" over \"ok()\" where\n        possible, however do not be tempted to use them to find out if\n        something is true or false!\n\n          # XXX BAD!\n          is( exists $brooklyn{tree}, 1, 'A tree grows in Brooklyn' );\n\n        This does not check if \"exists $brooklyn{tree}\" is true, it checks\n        if it returns 1. Very different. Similar caveats exist for false and\n        0. In these cases, use \"ok()\".\n\n          ok( exists $brooklyn{tree},    'A tree grows in Brooklyn' );\n\n        A simple call to \"isnt()\" usually does not provide a strong test but\n        there are cases when you cannot say much more about a value than\n        that it is different from some other value:\n\n          new_ok $obj, \"Foo\";\n\n          my $clone = $obj->clone;\n          isa_ok $obj, \"Foo\", \"Foo->clone\";\n\n          isnt $obj, $clone, \"clone() produces a different object\";\n\n        For those grammatical pedants out there, there's an \"isn't()\"\n        function which is an alias of \"isnt()\".\n\n    like\n          like( $got, qr/expected/, $test_name );\n\n        Similar to \"ok()\", \"like()\" matches $got against the regex\n        \"qr/expected/\".\n\n        So this:\n\n            like($got, qr/expected/, 'this is like that');\n\n        is similar to:\n\n            ok( $got =~ m/expected/, 'this is like that');\n\n        (Mnemonic \"This is like that\".)\n\n        The second argument is a regular expression. It may be given as a\n        regex reference (i.e. \"qr//\") or (for better compatibility with\n        older perls) as a string that looks like a regex (alternative\n        delimiters are currently not supported):\n\n            like( $got, '/expected/', 'this is like that' );\n\n        Regex options may be placed on the end ('/expected/i').\n\n        Its advantages over \"ok()\" are similar to that of \"is()\" and\n        \"isnt()\". Better diagnostics on failure.\n\n    unlike\n          unlike( $got, qr/expected/, $test_name );\n\n        Works exactly as \"like()\", only it checks if $got does not match the\n        given pattern.\n\n    cmp_ok\n          cmp_ok( $got, $op, $expected, $test_name );\n\n        Halfway between \"ok()\" and \"is()\" lies \"cmp_ok()\". This allows you\n        to compare two arguments using any binary perl operator. The test\n        passes if the comparison is true and fails otherwise.\n\n            # ok( $got eq $expected );\n            cmp_ok( $got, 'eq', $expected, 'this eq that' );\n\n            # ok( $got == $expected );\n            cmp_ok( $got, '==', $expected, 'this == that' );\n\n            # ok( $got && $expected );\n            cmp_ok( $got, '&&', $expected, 'this && that' );\n            ...etc...\n\n        Its advantage over \"ok()\" is when the test fails you'll know what\n        $got and $expected were:\n\n            not ok 1\n            #   Failed test in foo.t at line 12.\n            #     '23'\n            #         &&\n            #     undef\n\n        It's also useful in those cases where you are comparing numbers and\n        \"is()\"'s use of \"eq\" will interfere:\n\n            cmp_ok( $big_hairy_number, '==', $another_big_hairy_number );\n\n        It's especially useful when comparing greater-than or smaller-than\n        relation between values:\n\n            cmp_ok( $some_value, '<=', $upper_limit );\n\n    can_ok\n          can_ok($module, @methods);\n          can_ok($object, @methods);\n\n        Checks to make sure the $module or $object can do these @methods\n        (works with functions, too).\n\n            can_ok('Foo', qw(this that whatever));\n\n        is almost exactly like saying:\n\n            ok( Foo->can('this') && \n                Foo->can('that') && \n                Foo->can('whatever') \n              );\n\n        only without all the typing and with a better interface. Handy for\n        quickly testing an interface.\n\n        No matter how many @methods you check, a single \"can_ok()\" call\n        counts as one test. If you desire otherwise, use:\n\n            foreach my $meth (@methods) {\n                can_ok('Foo', $meth);\n            }\n\n    isa_ok\n          isa_ok($object,   $class, $object_name);\n          isa_ok($subclass, $class, $object_name);\n          isa_ok($ref,      $type,  $ref_name);\n\n        Checks to see if the given \"$object->isa($class)\". Also checks to\n        make sure the object was defined in the first place. Handy for this\n        sort of thing:\n\n            my $obj = Some::Module->new;\n            isa_ok( $obj, 'Some::Module' );\n\n        where you'd otherwise have to write\n\n            my $obj = Some::Module->new;\n            ok( defined $obj && $obj->isa('Some::Module') );\n\n        to safeguard against your test script blowing up.\n\n        You can also test a class, to make sure that it has the right\n        ancestor:\n\n            isa_ok( 'Vole', 'Rodent' );\n\n        It works on references, too:\n\n            isa_ok( $array_ref, 'ARRAY' );\n\n        The diagnostics of this test normally just refer to 'the object'. If\n        you'd like them to be more specific, you can supply an $object_name\n        (for example 'Test customer').\n\n    new_ok\n          my $obj = new_ok( $class );\n          my $obj = new_ok( $class => \\@args );\n          my $obj = new_ok( $class => \\@args, $object_name );\n\n        A convenience function which combines creating an object and calling\n        \"isa_ok()\" on that object.\n\n        It is basically equivalent to:\n\n            my $obj = $class->new(@args);\n            isa_ok $obj, $class, $object_name;\n\n        If @args is not given, an empty list will be used.\n\n        This function only works on \"new()\" and it assumes \"new()\" will\n        return just a single object which isa $class.\n\n    subtest\n            subtest $name => \\&code, @args;\n\n        \"subtest()\" runs the &code as its own little test with its own plan\n        and its own result. The main test counts this as a single test using\n        the result of the whole subtest to determine if its ok or not ok.\n\n        For example...\n\n          use Test::More tests => 3;\n \n          pass(\"First test\");\n\n          subtest 'An example subtest' => sub {\n              plan tests => 2;\n\n              pass(\"This is a subtest\");\n              pass(\"So is this\");\n          };\n\n          pass(\"Third test\");\n\n        This would produce.\n\n          1..3\n          ok 1 - First test\n              # Subtest: An example subtest\n              1..2\n              ok 1 - This is a subtest\n              ok 2 - So is this\n          ok 2 - An example subtest\n          ok 3 - Third test\n\n        A subtest may call \"skip_all\". No tests will be run, but the subtest\n        is considered a skip.\n\n          subtest 'skippy' => sub {\n              plan skip_all => 'cuz I said so';\n              pass('this test will never be run');\n          };\n\n        Returns true if the subtest passed, false otherwise.\n\n        Due to how subtests work, you may omit a plan if you desire. This\n        adds an implicit \"done_testing()\" to the end of your subtest. The\n        following two subtests are equivalent:\n\n          subtest 'subtest with implicit done_testing()', sub {\n              ok 1, 'subtests with an implicit done testing should work';\n              ok 1, '... and support more than one test';\n              ok 1, '... no matter how many tests are run';\n          };\n\n          subtest 'subtest with explicit done_testing()', sub {\n              ok 1, 'subtests with an explicit done testing should work';\n              ok 1, '... and support more than one test';\n              ok 1, '... no matter how many tests are run';\n              done_testing();\n          };\n\n        Extra arguments given to \"subtest\" are passed to the callback. For\n        example:\n\n            sub my_subtest {\n                my $range = shift;\n                ...\n            }\n\n            for my $range (1, 10, 100, 1000) {\n                subtest \"testing range $range\", \\&my_subtest, $range;\n            }\n\n    pass\n    fail\n          pass($test_name);\n          fail($test_name);\n\n        Sometimes you just want to say that the tests have passed. Usually\n        the case is you've got some complicated condition that is difficult\n        to wedge into an \"ok()\". In this case, you can simply use \"pass()\"\n        (to declare the test ok) or fail (for not ok). They are synonyms for\n        ok(1) and ok(0).\n\n        Use these very, very, very sparingly.\n\n  Module tests\n    Sometimes you want to test if a module, or a list of modules, can\n    successfully load. For example, you'll often want a first test which\n    simply loads all the modules in the distribution to make sure they work\n    before going on to do more complicated testing.\n\n    For such purposes we have \"use_ok\" and \"require_ok\".\n\n    require_ok\n           require_ok($module);\n           require_ok($file);\n\n        Tries to \"require\" the given $module or $file. If it loads\n        successfully, the test will pass. Otherwise it fails and displays\n        the load error.\n\n        \"require_ok\" will guess whether the input is a module name or a\n        filename.\n\n        No exception will be thrown if the load fails.\n\n            # require Some::Module\n            require_ok \"Some::Module\";\n\n            # require \"Some/File.pl\";\n            require_ok \"Some/File.pl\";\n\n            # stop testing if any of your modules will not load\n            for my $module (@module) {\n                require_ok $module or BAIL_OUT \"Can't load $module\";\n            }\n\n    use_ok\n           BEGIN { use_ok($module); }\n           BEGIN { use_ok($module, @imports); }\n\n        Like \"require_ok\", but it will \"use\" the $module in question and\n        only loads modules, not files.\n\n        If you just want to test a module can be loaded, use \"require_ok\".\n\n        If you just want to load a module in a test, we recommend simply\n        using \"use\" directly. It will cause the test to stop.\n\n        It's recommended that you run \"use_ok()\" inside a BEGIN block so its\n        functions are exported at compile-time and prototypes are properly\n        honored.\n\n        If @imports are given, they are passed through to the use. So this:\n\n           BEGIN { use_ok('Some::Module', qw(foo bar)) }\n\n        is like doing this:\n\n           use Some::Module qw(foo bar);\n\n        Version numbers can be checked like so:\n\n           # Just like \"use Some::Module 1.02\"\n           BEGIN { use_ok('Some::Module', 1.02) }\n\n        Don't try to do this:\n\n           BEGIN {\n               use_ok('Some::Module');\n\n               ...some code that depends on the use...\n               ...happening at compile time...\n           }\n\n        because the notion of \"compile-time\" is relative. Instead, you want:\n\n          BEGIN { use_ok('Some::Module') }\n          BEGIN { ...some code that depends on the use... }\n\n        If you want the equivalent of \"use Foo ()\", use a module but not\n        import anything, use \"require_ok\".\n\n          BEGIN { require_ok \"Foo\" }\n\n  Complex data structures\n    Not everything is a simple eq check or regex. There are times you need\n    to see if two data structures are equivalent. For these instances\n    Test::More provides a handful of useful functions.\n\n    NOTE I'm not quite sure what will happen with filehandles.\n\n    is_deeply\n          is_deeply( $got, $expected, $test_name );\n\n        Similar to \"is()\", except that if $got and $expected are references,\n        it does a deep comparison walking each data structure to see if they\n        are equivalent. If the two structures are different, it will display\n        the place where they start differing.\n\n        \"is_deeply()\" compares the dereferenced values of references, the\n        references themselves (except for their type) are ignored. This\n        means aspects such as blessing and ties are not considered\n        \"different\".\n\n        \"is_deeply()\" currently has very limited handling of function\n        reference and globs. It merely checks if they have the same\n        referent. This may improve in the future.\n\n        Test::Differences and Test::Deep provide more in-depth functionality\n        along these lines.\n\n        NOTE is_deeply() has limitations when it comes to comparing strings\n        and refs:\n\n            my $path = path('.');\n            my $hash = {};\n            is_deeply( $path, \"$path\" ); # ok\n            is_deeply( $hash, \"$hash\" ); # fail\n\n        This happens because is_deeply will unoverload all arguments\n        unconditionally. It is probably best not to use is_deeply with\n        overloading. For legacy reasons this is not likely to ever be fixed.\n        If you would like a much better tool for this you should see\n        Test2::Suite Specifically Test2::Tools::Compare has an \"is()\"\n        function that works like \"is_deeply\" with many improvements.\n\n  Diagnostics\n    If you pick the right test function, you'll usually get a good idea of\n    what went wrong when it failed. But sometimes it doesn't work out that\n    way. So here we have ways for you to write your own diagnostic messages\n    which are safer than just \"print STDERR\".\n\n    diag\n          diag(@diagnostic_message);\n\n        Prints a diagnostic message which is guaranteed not to interfere\n        with test output. Like \"print\" @diagnostic_message is simply\n        concatenated together.\n\n        Returns false, so as to preserve failure.\n\n        Handy for this sort of thing:\n\n            ok( grep(/foo/, @users), \"There's a foo user\" ) or\n                diag(\"Since there's no foo, check that /etc/bar is set up right\");\n\n        which would produce:\n\n            not ok 42 - There's a foo user\n            #   Failed test 'There's a foo user'\n            #   in foo.t at line 52.\n            # Since there's no foo, check that /etc/bar is set up right.\n\n        You might remember \"ok() or diag()\" with the mnemonic \"open() or\n        die()\".\n\n        NOTE The exact formatting of the diagnostic output is still\n        changing, but it is guaranteed that whatever you throw at it won't\n        interfere with the test.\n\n    note\n          note(@diagnostic_message);\n\n        Like \"diag()\", except the message will not be seen when the test is\n        run in a harness. It will only be visible in the verbose TAP stream.\n\n        Handy for putting in notes which might be useful for debugging, but\n        don't indicate a problem.\n\n            note(\"Tempfile is $tempfile\");\n\n    explain\n          my @dump = explain @diagnostic_message;\n\n        Will dump the contents of any references in a human readable format.\n        Usually you want to pass this into \"note\" or \"diag\".\n\n        Handy for things like...\n\n            is_deeply($have, $want) || diag explain $have;\n\n        or\n\n            note explain \\%args;\n            Some::Class->method(%args);\n\n  Conditional tests\n    Sometimes running a test under certain conditions will cause the test\n    script to die. A certain function or method isn't implemented (such as\n    \"fork()\" on MacOS), some resource isn't available (like a net\n    connection) or a module isn't available. In these cases it's necessary\n    to skip tests, or declare that they are supposed to fail but will work\n    in the future (a todo test).\n\n    For more details on the mechanics of skip and todo tests see\n    Test::Harness.\n\n    The way Test::More handles this is with a named block. Basically, a\n    block of tests which can be skipped over or made todo. It's best if I\n    just show you...\n\n    SKIP: BLOCK\n          SKIP: {\n              skip $why, $how_many if $condition;\n\n              ...normal testing code goes here...\n          }\n\n        This declares a block of tests that might be skipped, $how_many\n        tests there are, $why and under what $condition to skip them. An\n        example is the easiest way to illustrate:\n\n            SKIP: {\n                eval { require HTML::Lint };\n\n                skip \"HTML::Lint not installed\", 2 if $@;\n\n                my $lint = new HTML::Lint;\n                isa_ok( $lint, \"HTML::Lint\" );\n\n                $lint->parse( $html );\n                is( $lint->errors, 0, \"No errors found in HTML\" );\n            }\n\n        If the user does not have HTML::Lint installed, the whole block of\n        code *won't be run at all*. Test::More will output special ok's\n        which Test::Harness interprets as skipped, but passing, tests.\n\n        It's important that $how_many accurately reflects the number of\n        tests in the SKIP block so the # of tests run will match up with\n        your plan. If your plan is \"no_plan\" $how_many is optional and will\n        default to 1.\n\n        It's perfectly safe to nest SKIP blocks. Each SKIP block must have\n        the label \"SKIP\", or Test::More can't work its magic.\n\n        You don't skip tests which are failing because there's a bug in your\n        program, or for which you don't yet have code written. For that you\n        use TODO. Read on.\n\n    TODO: BLOCK\n            TODO: {\n                local $TODO = $why if $condition;\n\n                ...normal testing code goes here...\n            }\n\n        Declares a block of tests you expect to fail and $why. Perhaps it's\n        because you haven't fixed a bug or haven't finished a new feature:\n\n            TODO: {\n                local $TODO = \"URI::Geller not finished\";\n\n                my $card = \"Eight of clubs\";\n                is( URI::Geller->your_card, $card, 'Is THIS your card?' );\n\n                my $spoon;\n                URI::Geller->bend_spoon;\n                is( $spoon, 'bent',    \"Spoon bending, that's original\" );\n            }\n\n        With a todo block, the tests inside are expected to fail. Test::More\n        will run the tests normally, but print out special flags indicating\n        they are \"todo\". Test::Harness will interpret failures as being ok.\n        Should anything succeed, it will report it as an unexpected success.\n        You then know the thing you had todo is done and can remove the TODO\n        flag.\n\n        The nice part about todo tests, as opposed to simply commenting out\n        a block of tests, is that it is like having a programmatic todo\n        list. You know how much work is left to be done, you're aware of\n        what bugs there are, and you'll know immediately when they're fixed.\n\n        Once a todo test starts succeeding, simply move it outside the\n        block. When the block is empty, delete it.\n\n    todo_skip\n            TODO: {\n                todo_skip $why, $how_many if $condition;\n\n                ...normal testing code...\n            }\n\n        With todo tests, it's best to have the tests actually run. That way\n        you'll know when they start passing. Sometimes this isn't possible.\n        Often a failing test will cause the whole program to die or hang,\n        even inside an \"eval BLOCK\" with and using \"alarm\". In these extreme\n        cases you have no choice but to skip over the broken tests entirely.\n\n        The syntax and behavior is similar to a \"SKIP: BLOCK\" except the\n        tests will be marked as failing but todo. Test::Harness will\n        interpret them as passing.\n\n    When do I use SKIP vs. TODO?\n        If it's something the user might not be able to do, use SKIP. This\n        includes optional modules that aren't installed, running under an OS\n        that doesn't have some feature (like \"fork()\" or symlinks), or maybe\n        you need an Internet connection and one isn't available.\n\n        If it's something the programmer hasn't done yet, use TODO. This is\n        for any code you haven't written yet, or bugs you have yet to fix,\n        but want to put tests in your testing script (always a good idea).\n\n  Test control\n    BAIL_OUT\n            BAIL_OUT($reason);\n\n        Indicates to the harness that things are going so badly all testing\n        should terminate. This includes the running of any additional test\n        scripts.\n\n        This is typically used when testing cannot continue such as a\n        critical module failing to compile or a necessary external utility\n        not being available such as a database connection failing.\n\n        The test will exit with 255.\n\n        For even better control look at Test::Most.\n\n  Discouraged comparison functions\n    The use of the following functions is discouraged as they are not\n    actually testing functions and produce no diagnostics to help figure out\n    what went wrong. They were written before \"is_deeply()\" existed because\n    I couldn't figure out how to display a useful diff of two arbitrary data\n    structures.\n\n    These functions are usually used inside an \"ok()\".\n\n        ok( eq_array(\\@got, \\@expected) );\n\n    \"is_deeply()\" can do that better and with diagnostics.\n\n        is_deeply( \\@got, \\@expected );\n\n    They may be deprecated in future versions.\n\n    eq_array\n          my $is_eq = eq_array(\\@got, \\@expected);\n\n        Checks if two arrays are equivalent. This is a deep check, so\n        multi-level structures are handled correctly.\n\n    eq_hash\n          my $is_eq = eq_hash(\\%got, \\%expected);\n\n        Determines if the two hashes contain the same keys and values. This\n        is a deep check.\n\n    eq_set\n          my $is_eq = eq_set(\\@got, \\@expected);\n\n        Similar to \"eq_array()\", except the order of the elements is not\n        important. This is a deep check, but the irrelevancy of order only\n        applies to the top level.\n\n            ok( eq_set(\\@got, \\@expected) );\n\n        Is better written:\n\n            is_deeply( [sort @got], [sort @expected] );\n\n        NOTE By historical accident, this is not a true set comparison.\n        While the order of elements does not matter, duplicate elements do.\n\n        NOTE \"eq_set()\" does not know how to deal with references at the top\n        level. The following is an example of a comparison which might not\n        work:\n\n            eq_set([\\1, \\2], [\\2, \\1]);\n\n        Test::Deep contains much better set comparison functions.\n\n  Extending and Embedding Test::More\n    Sometimes the Test::More interface isn't quite enough. Fortunately,\n    Test::More is built on top of Test::Builder which provides a single,\n    unified backend for any test library to use. This means two test\n    libraries which both use <Test::Builder> can be used together in the\n    same program>.\n\n    If you simply want to do a little tweaking of how the tests behave, you\n    can access the underlying Test::Builder object like so:\n\n    builder\n            my $test_builder = Test::More->builder;\n\n        Returns the Test::Builder object underlying Test::More for you to\n        play with.\n\nEXIT CODES\n    If all your tests passed, Test::Builder will exit with zero (which is\n    normal). If anything failed it will exit with how many failed. If you\n    run less (or more) tests than you planned, the missing (or extras) will\n    be considered failures. If no tests were ever run Test::Builder will\n    throw a warning and exit with 255. If the test died, even after having\n    successfully completed all its tests, it will still be considered a\n    failure and will exit with 255.\n\n    So the exit codes are...\n\n        0                   all tests successful\n        255                 test died or all passed but wrong # of tests run\n        any other number    how many failed (including missing or extras)\n\n    If you fail more than 254 tests, it will be reported as 254.\n\n    NOTE This behavior may go away in future versions.\n\nCOMPATIBILITY\n    Test::More works with Perls as old as 5.8.1.\n\n    Thread support is not very reliable before 5.10.1, but that's because\n    threads are not very reliable before 5.10.1.\n\n    Although Test::More has been a core module in versions of Perl since\n    5.6.2, Test::More has evolved since then, and not all of the features\n    you're used to will be present in the shipped version of Test::More. If\n    you are writing a module, don't forget to indicate in your package\n    metadata the minimum version of Test::More that you require. For\n    instance, if you want to use \"done_testing()\" but want your test script\n    to run on Perl 5.10.0, you will need to explicitly require Test::More >\n    0.88.\n\n    Key feature milestones include:\n\n    subtests\n        Subtests were released in Test::More 0.94, which came with Perl\n        5.12.0. Subtests did not implicitly call \"done_testing()\" until\n        0.96; the first Perl with that fix was Perl 5.14.0 with 0.98.\n\n    \"done_testing()\"\n        This was released in Test::More 0.88 and first shipped with Perl in\n        5.10.1 as part of Test::More 0.92.\n\n    \"cmp_ok()\"\n        Although \"cmp_ok()\" was introduced in 0.40, 0.86 fixed an important\n        bug to make it safe for overloaded objects; the fixed first shipped\n        with Perl in 5.10.1 as part of Test::More 0.92.\n\n    \"new_ok()\" \"note()\" and \"explain()\"\n        These were was released in Test::More 0.82, and first shipped with\n        Perl in 5.10.1 as part of Test::More 0.92.\n\n    There is a full version history in the Changes file, and the Test::More\n    versions included as core can be found using Module::CoreList:\n\n        $ corelist -a Test::More\n\nCAVEATS and NOTES\n    utf8 / \"Wide character in print\"\n        If you use utf8 or other non-ASCII characters with Test::More you\n        might get a \"Wide character in print\" warning. Using \"binmode\n        STDOUT, \":utf8\"\" will not fix it. Test::Builder (which powers\n        Test::More) duplicates STDOUT and STDERR. So any changes to them,\n        including changing their output disciplines, will not be seen by\n        Test::More.\n\n        One work around is to apply encodings to STDOUT and STDERR as early\n        as possible and before Test::More (or any other Test module) loads.\n\n            use open ':std', ':encoding(utf8)';\n            use Test::More;\n\n        A more direct work around is to change the filehandles used by\n        Test::Builder.\n\n            my $builder = Test::More->builder;\n            binmode $builder->output,         \":encoding(utf8)\";\n            binmode $builder->failure_output, \":encoding(utf8)\";\n            binmode $builder->todo_output,    \":encoding(utf8)\";\n\n    Overloaded objects\n        String overloaded objects are compared as strings (or in\n        \"cmp_ok()\"'s case, strings or numbers as appropriate to the\n        comparison op). This prevents Test::More from piercing an object's\n        interface allowing better blackbox testing. So if a function starts\n        returning overloaded objects instead of bare strings your tests\n        won't notice the difference. This is good.\n\n        However, it does mean that functions like \"is_deeply()\" cannot be\n        used to test the internals of string overloaded objects. In this\n        case I would suggest Test::Deep which contains more flexible testing\n        functions for complex data structures.\n\n    Threads\n        Test::More will only be aware of threads if \"use threads\" has been\n        done *before* Test::More is loaded. This is ok:\n\n            use threads;\n            use Test::More;\n\n        This may cause problems:\n\n            use Test::More\n            use threads;\n\n        5.8.1 and above are supported. Anything below that has too many\n        bugs.\n\nHISTORY\n    This is a case of convergent evolution with Joshua Pritikin's Test\n    module. I was largely unaware of its existence when I'd first written my\n    own \"ok()\" routines. This module exists because I can't figure out how\n    to easily wedge test names into Test's interface (along with a few other\n    problems).\n\n    The goal here is to have a testing utility that's simple to learn, quick\n    to use and difficult to trip yourself up with while still providing more\n    flexibility than the existing Test.pm. As such, the names of the most\n    common routines are kept tiny, special cases and magic side-effects are\n    kept to a minimum. WYSIWYG.\n\nSEE ALSO\n  \n  ALTERNATIVES\n    Test2::Suite is the most recent and modern set of tools for testing.\n\n    Test::Simple if all this confuses you and you just want to write some\n    tests. You can upgrade to Test::More later (it's forward compatible).\n\n    Test::Legacy tests written with Test.pm, the original testing module, do\n    not play well with other testing libraries. Test::Legacy emulates the\n    Test.pm interface and does play well with others.\n\n  ADDITIONAL LIBRARIES\n    Test::Differences for more ways to test complex data structures. And it\n    plays well with Test::More.\n\n    Test::Class is like xUnit but more perlish.\n\n    Test::Deep gives you more powerful complex data structure testing.\n\n    Test::Inline shows the idea of embedded testing.\n\n    Mock::Quick The ultimate mocking library. Easily spawn objects defined\n    on the fly. Can also override, block, or reimplement packages as needed.\n\n    Test::FixtureBuilder Quickly define fixture data for unit tests.\n\n  OTHER COMPONENTS\n    Test::Harness is the test runner and output interpreter for Perl. It's\n    the thing that powers \"make test\" and where the \"prove\" utility comes\n    from.\n\n  BUNDLES\n    Test::Most Most commonly needed test functions and features.\n\nAUTHORS\n    Michael G Schwern <schwern@pobox.com> with much inspiration from Joshua\n    Pritikin's Test module and lots of help from Barrie Slaymaker, Tony\n    Bowden, blackstar.co.uk, chromatic, Fergal Daly and the perl-qa gang.\n\nMAINTAINERS\n    Chad Granum <exodist@cpan.org>\n\nBUGS\n    See https://github.com/Test-More/test-more/issues to report and view\n    bugs.\n\nSOURCE\n    The source code repository for Test::More can be found at\n    http://github.com/Test-More/test-more/.\n\nCOPYRIGHT\n    Copyright 2001-2008 by Michael G Schwern <schwern@pobox.com>.\n\n    This program is free software; you can redistribute it and/or modify it\n    under the same terms as Perl itself.\n\n    See http://www.perl.com/perl/misc/Artistic.html\n\n"
+      },
+      "Test::More_documentation_path": {
+        "command": [
+          "perldoc",
+          "-l",
+          "Test::More"
+        ],
+        "identity": {
+          "bytes": 39,
+          "sha256": "1442362c7c47656af4fa4f95770fbfcc0629aa0458527d3bec02804305d9ad67"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "/System/Library/Perl/5.34/Test/More.pm\n"
+      },
+      "caller": {
+        "command": [
+          "perldoc",
+          "-T",
+          "-f",
+          "caller"
+        ],
+        "identity": {
+          "bytes": 4929,
+          "sha256": "f18d44a608cbb4caa119690a290b68c69c38ea246f61dbf6d14422c903ab2321"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "    caller EXPR\n    caller  Returns the context of the current pure perl subroutine call. In\n            scalar context, returns the caller's package name if there *is*\n            a caller (that is, if we're in a subroutine or \"eval\" or\n            \"require\") and the undefined value otherwise. caller never\n            returns XS subs and they are skipped. The next pure perl sub\n            will appear instead of the XS sub in caller's return values. In\n            list context, caller returns\n\n                   # 0         1          2\n                my ($package, $filename, $line) = caller;\n\n            Like \"__FILE__\" and \"__LINE__\", the filename and line number\n            returned here may be altered by the mechanism described at\n            \"Plain Old Comments (Not!)\" in perlsyn.\n\n            With EXPR, it returns some extra information that the debugger\n            uses to print a stack trace. The value of EXPR indicates how\n            many call frames to go back before the current one.\n\n                #  0         1          2      3            4\n             my ($package, $filename, $line, $subroutine, $hasargs,\n\n                #  5          6          7            8       9         10\n                $wantarray, $evaltext, $is_require, $hints, $bitmask, $hinthash)\n              = caller($i);\n\n            Here, $subroutine is the function that the caller called (rather\n            than the function containing the caller). Note that $subroutine\n            may be \"(eval)\" if the frame is not a subroutine call, but an\n            \"eval\". In such a case additional elements $evaltext and\n            $is_require are set: $is_require is true if the frame is created\n            by a \"require\" or \"use\" statement, $evaltext contains the text\n            of the \"eval EXPR\" statement. In particular, for an \"eval BLOCK\"\n            statement, $subroutine is \"(eval)\", but $evaltext is undefined.\n            (Note also that each \"use\" statement creates a \"require\" frame\n            inside an \"eval EXPR\" frame.) $subroutine may also be\n            \"(unknown)\" if this particular subroutine happens to have been\n            deleted from the symbol table. $hasargs is true if a new\n            instance of @_ was set up for the frame. $hints and $bitmask\n            contain pragmatic hints that the caller was compiled with.\n            $hints corresponds to $^H, and $bitmask corresponds to\n            \"${^WARNING_BITS}\". The $hints and $bitmask values are subject\n            to change between versions of Perl, and are not meant for\n            external use.\n\n            $hinthash is a reference to a hash containing the value of \"%^H\"\n            when the caller was compiled, or \"undef\" if \"%^H\" was empty. Do\n            not modify the values of this hash, as they are the actual\n            values stored in the optree.\n\n            Note that the only types of call frames that are visible are\n            subroutine calls and \"eval\". Other forms of context, such as\n            \"while\" or \"foreach\" loops or \"try\" blocks are not considered\n            interesting to \"caller\", as they do not alter the behaviour of\n            the \"return\" expression.\n\n            Furthermore, when called from within the DB package in list\n            context, and with an argument, caller returns more detailed\n            information: it sets the list variable @DB::args to be the\n            arguments with which the subroutine was invoked.\n\n            Be aware that the optimizer might have optimized call frames\n            away before \"caller\" had a chance to get the information. That\n            means that caller(N) might not return information about the call\n            frame you expect it to, for \"N > 1\". In particular, @DB::args\n            might have information from the previous time \"caller\" was\n            called.\n\n            Be aware that setting @DB::args is *best effort*, intended for\n            debugging or generating backtraces, and should not be relied\n            upon. In particular, as @_ contains aliases to the caller's\n            arguments, Perl does not take a copy of @_, so @DB::args will\n            contain modifications the subroutine makes to @_ or its\n            contents, not the original values at call time. @DB::args, like\n            @_, does not hold explicit references to its elements, so under\n            certain cases its elements may have become freed and reallocated\n            for other variables or temporary values. Finally, a side effect\n            of the current implementation is that the effects of \"shift @_\"\n            can *normally* be undone (but not \"pop @_\" or other splicing,\n            *and* not if a reference to @_ has been taken, *and* subject to\n            the caveat about reallocated elements), so @DB::args is actually\n            a hybrid of the current state and initial state of @_. Buyer\n            beware.\n\n"
+      },
+      "eval": {
+        "command": [
+          "perldoc",
+          "-T",
+          "-f",
+          "eval"
+        ],
+        "identity": {
+          "bytes": 11625,
+          "sha256": "55c671c3117730721f76d9372648c56f1d72b68ac71b0d902d258f2c10d3d71b"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "    eval EXPR\n    eval BLOCK\n    eval    \"eval\" in all its forms is used to execute a little Perl\n            program, trapping any errors encountered so they don't crash the\n            calling program.\n\n            Plain \"eval\" with no argument is just \"eval EXPR\", where the\n            expression is understood to be contained in $_. Thus there are\n            only two real \"eval\" forms; the one with an EXPR is often called\n            \"string eval\". In a string eval, the value of the expression\n            (which is itself determined within scalar context) is first\n            parsed, and if there were no errors, executed as a block within\n            the lexical context of the current Perl program. This form is\n            typically used to delay parsing and subsequent execution of the\n            text of EXPR until run time. Note that the value is parsed every\n            time the \"eval\" executes.\n\n            The other form is called \"block eval\". It is less general than\n            string eval, but the code within the BLOCK is parsed only once\n            (at the same time the code surrounding the \"eval\" itself was\n            parsed) and executed within the context of the current Perl\n            program. This form is typically used to trap exceptions more\n            efficiently than the first, while also providing the benefit of\n            checking the code within BLOCK at compile time. BLOCK is parsed\n            and compiled just once. Since errors are trapped, it often is\n            used to check if a given feature is available.\n\n            In both forms, the value returned is the value of the last\n            expression evaluated inside the mini-program; a return statement\n            may also be used, just as with subroutines. The expression\n            providing the return value is evaluated in void, scalar, or list\n            context, depending on the context of the \"eval\" itself. See\n            \"wantarray\" for more on how the evaluation context can be\n            determined.\n\n            If there is a syntax error or runtime error, or a \"die\"\n            statement is executed, \"eval\" returns \"undef\" in scalar context,\n            or an empty list in list context, and $@ is set to the error\n            message. (Prior to 5.16, a bug caused \"undef\" to be returned in\n            list context for syntax errors, but not for runtime errors.) If\n            there was no error, $@ is set to the empty string. A control\n            flow operator like \"last\" or \"goto\" can bypass the setting of\n            $@. Beware that using \"eval\" neither silences Perl from printing\n            warnings to STDERR, nor does it stuff the text of warning\n            messages into $@. To do either of those, you have to use the\n            $SIG{__WARN__} facility, or turn off warnings inside the BLOCK\n            or EXPR using \"no warnings 'all'\". See \"warn\", perlvar, and\n            warnings.\n\n            Note that, because \"eval\" traps otherwise-fatal errors, it is\n            useful for determining whether a particular feature (such as\n            \"socket\" or \"symlink\") is implemented. It is also Perl's\n            exception-trapping mechanism, where the \"die\" operator is used\n            to raise exceptions.\n\n            Before Perl 5.14, the assignment to $@ occurred before\n            restoration of localized variables, which means that for your\n            code to run on older versions, a temporary is required if you\n            want to mask some, but not all errors:\n\n             # alter $@ on nefarious repugnancy only\n             {\n                my $e;\n                {\n                  local $@; # protect existing $@\n                  eval { test_repugnancy() };\n                  # $@ =~ /nefarious/ and die $@; # Perl 5.14 and higher only\n                  $@ =~ /nefarious/ and $e = $@;\n                }\n                die $e if defined $e\n             }\n\n            There are some different considerations for each form:\n\n            String eval\n                Since the return value of EXPR is executed as a block within\n                the lexical context of the current Perl program, any outer\n                lexical variables are visible to it, and any package\n                variable settings or subroutine and format definitions\n                remain afterwards.\n\n                Under the \"unicode_eval\" feature\n                    If this feature is enabled (which is the default under a\n                    \"use 5.16\" or higher declaration), EXPR is considered to\n                    be in the same encoding as the surrounding program. Thus\n                    if \"use utf8\" is in effect, the string will be treated\n                    as being UTF-8 encoded. Otherwise, the string is\n                    considered to be a sequence of independent bytes. Bytes\n                    that correspond to ASCII-range code points will have\n                    their normal meanings for operators in the string. The\n                    treatment of the other bytes depends on if the\n                    \"'unicode_strings\"\" feature is in effect.\n\n                    In a plain \"eval\" without an EXPR argument, being in\n                    \"use utf8\" or not is irrelevant; the UTF-8ness of $_\n                    itself determines the behavior.\n\n                    Any \"use utf8\" or \"no utf8\" declarations within the\n                    string have no effect, and source filters are forbidden.\n                    (\"unicode_strings\", however, can appear within the\n                    string.) See also the \"evalbytes\" operator, which works\n                    properly with source filters.\n\n                    Variables defined outside the \"eval\" and used inside it\n                    retain their original UTF-8ness. Everything inside the\n                    string follows the normal rules for a Perl program with\n                    the given state of \"use utf8\".\n\n                Outside the \"unicode_eval\" feature\n                    In this case, the behavior is problematic and is not so\n                    easily described. Here are two bugs that cannot easily\n                    be fixed without breaking existing programs:\n\n                    *   It can lose track of whether something should be\n                        encoded as UTF-8 or not.\n\n                    *   Source filters activated within \"eval\" leak out into\n                        whichever file scope is currently being compiled. To\n                        give an example with the CPAN module\n                        Semi::Semicolons:\n\n                         BEGIN { eval \"use Semi::Semicolons; # not filtered\" }\n                         # filtered here!\n\n                        \"evalbytes\" fixes that to work the way one would\n                        expect:\n\n                         use feature \"evalbytes\";\n                         BEGIN { evalbytes \"use Semi::Semicolons; # filtered\" }\n                         # not filtered\n\n                Problems can arise if the string expands a scalar containing\n                a floating point number. That scalar can expand to letters,\n                such as \"NaN\" or \"Infinity\"; or, within the scope of a \"use\n                locale\", the decimal point character may be something other\n                than a dot (such as a comma). None of these are likely to\n                parse as you are likely expecting.\n\n                You should be especially careful to remember what's being\n                looked at when:\n\n                    eval $x;        # CASE 1\n                    eval \"$x\";      # CASE 2\n\n                    eval '$x';      # CASE 3\n                    eval { $x };    # CASE 4\n\n                    eval \"\\$$x++\";  # CASE 5\n                    $$x++;          # CASE 6\n\n                Cases 1 and 2 above behave identically: they run the code\n                contained in the variable $x. (Although case 2 has\n                misleading double quotes making the reader wonder what else\n                might be happening (nothing is).) Cases 3 and 4 likewise\n                behave in the same way: they run the code '$x', which does\n                nothing but return the value of $x. (Case 4 is preferred for\n                purely visual reasons, but it also has the advantage of\n                compiling at compile-time instead of at run-time.) Case 5 is\n                a place where normally you *would* like to use double\n                quotes, except that in this particular situation, you can\n                just use symbolic references instead, as in case 6.\n\n                An \"eval ''\" executed within a subroutine defined in the\n                \"DB\" package doesn't see the usual surrounding lexical\n                scope, but rather the scope of the first non-DB piece of\n                code that called it. You don't normally need to worry about\n                this unless you are writing a Perl debugger.\n\n                The final semicolon, if any, may be omitted from the value\n                of EXPR.\n\n            Block eval\n                If the code to be executed doesn't vary, you may use the\n                eval-BLOCK form to trap run-time errors without incurring\n                the penalty of recompiling each time. The error, if any, is\n                still returned in $@. Examples:\n\n                    # make divide-by-zero nonfatal\n                    eval { $answer = $a / $b; }; warn $@ if $@;\n\n                    # same thing, but less efficient\n                    eval '$answer = $a / $b'; warn $@ if $@;\n\n                    # a compile-time error\n                    eval { $answer = }; # WRONG\n\n                    # a run-time error\n                    eval '$answer =';   # sets $@\n\n                If you want to trap errors when loading an XS module, some\n                problems with the binary interface (such as Perl version\n                skew) may be fatal even with \"eval\" unless\n                $ENV{PERL_DL_NONLAZY} is set. See perlrun.\n\n                Using the \"eval {}\" form as an exception trap in libraries\n                does have some issues. Due to the current arguably broken\n                state of \"__DIE__\" hooks, you may wish not to trigger any\n                \"__DIE__\" hooks that user code may have installed. You can\n                use the \"local $SIG{__DIE__}\" construct for this purpose, as\n                this example shows:\n\n                    # a private exception trap for divide-by-zero\n                    eval { local $SIG{'__DIE__'}; $answer = $a / $b; };\n                    warn $@ if $@;\n\n                This is especially significant, given that \"__DIE__\" hooks\n                can call \"die\" again, which has the effect of changing their\n                error messages:\n\n                    # __DIE__ hooks may modify error messages\n                    {\n                       local $SIG{'__DIE__'} =\n                              sub { (my $x = $_[0]) =~ s/foo/bar/g; die $x };\n                       eval { die \"foo lives here\" };\n                       print $@ if $@;                # prints \"bar lives here\"\n                    }\n\n                Because this promotes action at a distance, this\n                counterintuitive behavior may be fixed in a future release.\n\n                \"eval BLOCK\" does *not* count as a loop, so the loop control\n                statements \"next\", \"last\", or \"redo\" cannot be used to leave\n                or restart the block.\n\n                The final semicolon, if any, may be omitted from within the\n                BLOCK.\n\n"
+      },
+      "versions": {
+        "command": [
+          "perl",
+          "-MJSON::PP",
+          "-MCarp",
+          "-MTest::More",
+          "-MTest::Builder",
+          "-e",
+          "print JSON::PP->new->canonical->encode({perl=>\"$^V\",Carp=>\"\".Carp->VERSION, \"Test::More\"=>\"\".Test::More->VERSION,\"Test::Builder\"=>\"\".Test::Builder->VERSION}),chr(10);"
+        ],
+        "identity": {
+          "bytes": 84,
+          "sha256": "96e6b2619451df8e30535497813236c3c92e609e946f1ebe66045f60f7cce33c"
+        },
+        "status": 0,
+        "stderr": "",
+        "stderr_identity": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": "{\"Carp\":\"1.52\",\"Test::Builder\":\"1.302183\",\"Test::More\":\"1.302183\",\"perl\":\"v5.34.1\"}\n"
+      }
+    },
+    "environment": {
+      "pager": "cat",
+      "role": "Absolute temporary paths derive at runtime from the repository root; installed tools/docs are necessary read-only dependencies.",
+      "temporary_workspace": ".artifacts/public-framework-profile/work"
+    },
+    "scope": "Dated installed public documentation and runtime accessor profile only. Original framework/provider identity, private implementation and universal/native trace meanings remain unmeasured. No foreign implementation or submodule source is read; all project outputs and scratch remain repository-local."
+  },
+  "hypotheses": {
+    "boundaries": {
+      "anonymous_delegate": {
+        "callee": "CoordinatePublic::__ANON__",
+        "caller_frame_index": 2,
+        "filename": "fixture.pl",
+        "line_hypotheses": {
+          "closing": 50,
+          "first": 50
+        },
+        "source": {
+          "closing_line": 50,
+          "first_line": 50,
+          "identity": {
+            "bytes": 36,
+            "sha256": "12efde74fa5f000a4c56401ce7bc6fe0a346164637c7440592b0c25736f50ba2"
+          },
+          "offset_bytes": 1160,
+          "text": "$body->(); # site anonymous delegate"
+        }
+      },
+      "block_eval": {
+        "callee": "(eval)",
+        "caller_frame_index": 2,
+        "filename": "fixture.pl",
+        "line_hypotheses": {
+          "closing": 45,
+          "first": 42
+        },
+        "source": {
+          "closing_line": 45,
+          "first_line": 42,
+          "identity": {
+            "bytes": 123,
+            "sha256": "9f22307bc8ba306a7906a074428b99a58f0fd026b2ba13b315095352b8d2cc2e"
+          },
+          "offset_bytes": 928,
+          "text": "my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary"
+        }
+      },
+      "do_load": {
+        "callee": "(eval)",
+        "caller_frame_index": 2,
+        "filename": "fixture.pl",
+        "line_hypotheses": {
+          "closing": 53,
+          "first": 53
+        },
+        "source": {
+          "closing_line": 53,
+          "first_line": 53,
+          "identity": {
+            "bytes": 51,
+            "sha256": "1ad3e0794a14957ec471c1b9c5325229811d2350a0c40a806f99908c9a4319ca"
+          },
+          "offset_bytes": 1214,
+          "text": "my $value = do './load-body.pl'; # site do boundary"
+        }
+      },
+      "module_delegate": {
+        "callee": "CoordinateDependency::module_call",
+        "caller_frame_index": 2,
+        "filename": "fixture.pl",
+        "line_hypotheses": {
+          "closing": 70,
+          "first": 70
+        },
+        "source": {
+          "closing_line": 70,
+          "first_line": 70,
+          "identity": {
+            "bytes": 36,
+            "sha256": "77ed07bef14f41d6565056d8af8aa7949b8d3faccac2e886130d5f20ebfaf137"
+          },
+          "offset_bytes": 1714,
+          "text": "CoordinateDependency::module_call();"
+        }
+      },
+      "require_load": {
+        "callee": "(eval)",
+        "caller_frame_index": 2,
+        "filename": "fixture.pl",
+        "line_hypotheses": {
+          "closing": 56,
+          "first": 56
+        },
+        "source": {
+          "closing_line": 56,
+          "first_line": 56,
+          "identity": {
+            "bytes": 67,
+            "sha256": "7f51cde727ac7c0ab00ca02200481510132d7352d75fd6996ce26d4eb00b3863"
+          },
+          "offset_bytes": 1322,
+          "text": "my $required = require './require-body.pl'; # site require boundary"
+        }
+      }
+    },
+    "calls": [
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "fixture.pl"
+        ],
+        "line_hypotheses": {
+          "closing": 31,
+          "first": 31
+        },
+        "role": "single",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 31,
+          "first_line": 31,
+          "identity": {
+            "bytes": 32,
+            "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+          },
+          "offset_bytes": 715,
+          "text": "observe('single'); # site single"
+        },
+        "unit": "fixture.pl"
+      },
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "fixture.pl"
+        ],
+        "line_hypotheses": {
+          "closing": 36,
+          "first": 34
+        },
+        "role": "multiline",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 36,
+          "first_line": 34,
+          "identity": {
+            "bytes": 68,
+            "sha256": "5ce35a8b4601c70638ee8b27822b1fdbb12a9ae38c3eebdabb63db9ee4dea23f"
+          },
+          "offset_bytes": 770,
+          "text": "observe( # site multiline\n        'multiline'\n    ); # end multiline"
+        },
+        "unit": "fixture.pl"
+      },
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "fixture.pl"
+        ],
+        "line_hypotheses": {
+          "closing": 39,
+          "first": 39
+        },
+        "role": "postfix",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 39,
+          "first_line": 39,
+          "identity": {
+            "bytes": 45,
+            "sha256": "9a8f7ca8cc3e2ec601399728fac1716d7036cdaa89fa0c25f1319beca1db16d8"
+          },
+          "offset_bytes": 859,
+          "text": "observe('postfix') for 1 .. 1; # site postfix"
+        },
+        "unit": "fixture.pl"
+      },
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "fixture.pl"
+        ],
+        "line_hypotheses": {
+          "closing": 43,
+          "first": 43
+        },
+        "role": "block-eval",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 43,
+          "first_line": 43,
+          "identity": {
+            "bytes": 40,
+            "sha256": "263717f7234e03a766f2a3f7ee03885a005c7c1247d9fbfd8c2d521f2b0236f1"
+          },
+          "offset_bytes": 973,
+          "text": "observe('block-eval'); # site block-eval"
+        },
+        "unit": "fixture.pl"
+      },
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "fixture.pl"
+        ],
+        "line_hypotheses": {
+          "closing": 49,
+          "first": 49
+        },
+        "role": "anonymous",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 49,
+          "first_line": 49,
+          "identity": {
+            "bytes": 21,
+            "sha256": "0af146606d45401c108dcc0a73918472dafad0900d98062c7a194f5ea2136644"
+          },
+          "offset_bytes": 1114,
+          "text": "observe('anonymous');"
+        },
+        "unit": "fixture.pl"
+      },
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "./load-body.pl",
+          "load-body.pl"
+        ],
+        "line_hypotheses": {
+          "closing": 1,
+          "first": 1
+        },
+        "role": "do-load",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 1,
+          "first_line": 1,
+          "identity": {
+            "bytes": 52,
+            "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+          },
+          "offset_bytes": 0,
+          "text": "CoordinatePublic::observe('do-load'); # site do-load"
+        },
+        "unit": "load-body.pl"
+      },
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "./require-body.pl",
+          "require-body.pl"
+        ],
+        "line_hypotheses": {
+          "closing": 1,
+          "first": 1
+        },
+        "role": "require-load",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 1,
+          "first_line": 1,
+          "identity": {
+            "bytes": 62,
+            "sha256": "ec37b403af41a542ec3af7744662cd4336c347875cecbfa22cbf4a478aeba05f"
+          },
+          "offset_bytes": 0,
+          "text": "CoordinatePublic::observe('require-load'); # site require-load"
+        },
+        "unit": "require-body.pl"
+      },
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "lib/CoordinateDependency.pm"
+        ],
+        "line_hypotheses": {
+          "closing": 5,
+          "first": 5
+        },
+        "role": "module-call",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 5,
+          "first_line": 5,
+          "identity": {
+            "bytes": 60,
+            "sha256": "ac57e5aa9b474cd8934b9e6c3f273606734b52ad9671e7d23781ea1ad56f5471"
+          },
+          "offset_bytes": 78,
+          "text": "CoordinatePublic::observe('module-call'); # site module-call"
+        },
+        "unit": "lib/CoordinateDependency.pm"
+      },
+      {
+        "callee": "CoordinatePublic::observe",
+        "caller_frame_index": 1,
+        "filename_hypotheses": [
+          "fixture.pl"
+        ],
+        "line_hypotheses": {
+          "closing": 73,
+          "first": 73
+        },
+        "role": "subtest",
+        "selected_filename": null,
+        "selected_line": null,
+        "source": {
+          "closing_line": 73,
+          "first_line": 73,
+          "identity": {
+            "bytes": 52,
+            "sha256": "5eee87a2728a5802cb62890ea0151190a87aa0548c0197119572ac5a86069daa"
+          },
+          "offset_bytes": 1844,
+          "text": "CoordinatePublic::observe('subtest'); # site subtest"
+        },
+        "unit": "fixture.pl"
+      }
+    ],
+    "filename_clauses": {
+      "hook_limit": {
+        "clause": "this hook is by default inserted into %INC in place of a filename.",
+        "document": "perlvar"
+      },
+      "module_filename": {
+        "clause": "the value is the location of the file found.",
+        "document": "perlvar"
+      },
+      "next_line": {
+        "clause": "with $1 being the line number for the next line, and $3 being the optional filename",
+        "document": "perlsyn"
+      },
+      "require_path": {
+        "clause": "my $realfilename = \"$prefix/$filename\";",
+        "document": "require"
+      },
+      "source_remapping": {
+        "clause": "one can control Perl's idea of filenames and line numbers in error or warning messages",
+        "document": "perlsyn"
+      }
+    },
+    "invocations": [
+      {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-a",
+        "root": ".artifacts/public-coordinate-native/root-a"
+      },
+      {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-b",
+        "root": ".artifacts/public-coordinate-native/root-b"
+      }
+    ],
+    "module_filename": "lib/CoordinateDependency.pm",
+    "opaque": "Named subtest incoming/private framework coordinates, original runtime/formatter identity and all address/referent meanings are unmeasured.",
+    "prior_public_clauses": {
+      "builder_arguments": {
+        "clause": "\"subtest\" also, and optionally, accepts arguments which will be passed to the subtests reference.",
+        "document": "Test::Builder",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "builder_subtest": {
+        "clause": "$builder->subtest($name, \\&subtests, @args);",
+        "document": "Test::Builder",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "caller_alias_limit": {
+        "clause": "Perl does not take a copy of @_, so @DB::args will contain modifications the subroutine makes to @_ or its contents, not the original values at call time.",
+        "document": "caller",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "caller_argument_limit": {
+        "clause": "Be aware that setting @DB::args is *best effort*, intended for debugging or generating backtraces, and should not be relied upon.",
+        "document": "caller",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "caller_block_eval": {
+        "clause": "for an \"eval BLOCK\" statement, $subroutine is \"(eval)\", but $evaltext is undefined.",
+        "document": "caller",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "caller_call_target": {
+        "clause": "$subroutine is the function that the caller called (rather than the function containing the caller).",
+        "document": "caller",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "caller_require_use": {
+        "clause": "$is_require is true if the frame is created by a \"require\" or \"use\" statement",
+        "document": "caller",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "caller_visible_frames": {
+        "clause": "the only types of call frames that are visible are subroutine calls and \"eval\".",
+        "document": "caller",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "carp_controls": {
+        "clause": "You can also alter the way the output and logic of \"Carp\" works, by changing some global variables in the \"Carp\" namespace.",
+        "document": "Carp",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "carp_long_trace": {
+        "clause": "In the case of \"cluck()\" and \"confess()\", that context is a summary of every call in the call-stack; \"longmess()\" returns the contents of the error message.",
+        "document": "Carp",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "eval_failure": {
+        "clause": "\"eval\" returns \"undef\" in scalar context, or an empty list in list context, and $@ is set to the error message.",
+        "document": "eval",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "eval_success": {
+        "clause": "If there was no error, $@ is set to the empty string.",
+        "document": "eval",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "more_arguments": {
+        "clause": "Extra arguments given to \"subtest\" are passed to the callback.",
+        "document": "Test::More",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      },
+      "more_subtest": {
+        "clause": "subtest $name => \\&code, @args;",
+        "document": "Test::More",
+        "qualification": "dated public-interface contract only; original native/historical interpretation remains separate"
+      }
+    },
+    "role": "Pre-native complete own fixture/source and competing public coordinate hypotheses only. No runtime line or filename alternative is selected; no original raw coordinate, private framework or original formatter/toolchain identity is measured.",
+    "source_pins": {
+      "fixture.pl": {
+        "bytes": 2111,
+        "sha256": "05c52ae83e9c614a2b7eca41969fc1d332e9562a75ed00d868cb28918abc82d7"
+      },
+      "lib/CoordinateDependency.pm": {
+        "bytes": 144,
+        "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+      },
+      "load-body.pl": {
+        "bytes": 56,
+        "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+      },
+      "require-body.pl": {
+        "bytes": 66,
+        "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+      }
+    },
+    "trace_origin_sources": {
+      "confess_call": {
+        "closing_line": 24,
+        "first_line": 24,
+        "identity": {
+          "bytes": 64,
+          "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+        },
+        "offset_bytes": 472,
+        "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+      },
+      "longmess_call": {
+        "closing_line": 23,
+        "first_line": 23,
+        "identity": {
+          "bytes": 58,
+          "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+        },
+        "offset_bytes": 409,
+        "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+      }
+    }
+  },
+  "role": "Pure-source finite public longmess/confess origin alternatives only. No captured trace/error origin text is interpreted and no alternative is selected. Public global/private formatter state and every original coordinate/identity meaning remain unmeasured.",
+  "source": {
+    "fixture.pl": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+    "lib/CoordinateDependency.pm": "package CoordinateDependency;\nuse strict;\nuse warnings;\nsub module_call {\n    CoordinatePublic::observe('module-call'); # site module-call\n}\n1;\n",
+    "load-body.pl": "CoordinatePublic::observe('do-load'); # site do-load\n1;\n",
+    "require-body.pl": "CoordinatePublic::observe('require-load'); # site require-load\n1;\n"
+  },
+  "source_pins": {
+    "fixture.pl": {
+      "bytes": 2111,
+      "sha256": "05c52ae83e9c614a2b7eca41969fc1d332e9562a75ed00d868cb28918abc82d7"
+    },
+    "lib/CoordinateDependency.pm": {
+      "bytes": 144,
+      "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+    },
+    "load-body.pl": {
+      "bytes": 56,
+      "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+    },
+    "require-body.pl": {
+      "bytes": 66,
+      "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+    }
+  }
+}

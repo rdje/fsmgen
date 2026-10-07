@@ -1,0 +1,1587 @@
+{
+  "cases": [
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 31,
+                "first": 31
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 31,
+                "first_line": 31,
+                "identity": {
+                  "bytes": 32,
+                  "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+                },
+                "offset_bytes": 715,
+                "text": "observe('single'); # site single"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 64,
+                "first": 64
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 64,
+                "first_line": 64,
+                "identity": {
+                  "bytes": 27,
+                  "sha256": "acd9dda09ca9b4489688cf376913fb1268191f42c4aaaf220f108dfdfd51039a"
+                },
+                "offset_bytes": 1537,
+                "text": "CoordinatePublic::single();"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 31,
+                "first": 31
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 31,
+                "first_line": 31,
+                "identity": {
+                  "bytes": 32,
+                  "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+                },
+                "offset_bytes": 715,
+                "text": "observe('single'); # site single"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 64,
+                "first": 64
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 64,
+                "first_line": 64,
+                "identity": {
+                  "bytes": 27,
+                  "sha256": "acd9dda09ca9b4489688cf376913fb1268191f42c4aaaf220f108dfdfd51039a"
+                },
+                "offset_bytes": 1537,
+                "text": "CoordinatePublic::single();"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "single"
+    },
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 36,
+                "first": 34
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 36,
+                "first_line": 34,
+                "identity": {
+                  "bytes": 68,
+                  "sha256": "5ce35a8b4601c70638ee8b27822b1fdbb12a9ae38c3eebdabb63db9ee4dea23f"
+                },
+                "offset_bytes": 770,
+                "text": "observe( # site multiline\n        'multiline'\n    ); # end multiline"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 65,
+                "first": 65
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 65,
+                "first_line": 65,
+                "identity": {
+                  "bytes": 30,
+                  "sha256": "700ee6224c4322411d6bbb7ad05876e6b76d9d79201ce152882b7ad5a6f5660e"
+                },
+                "offset_bytes": 1565,
+                "text": "CoordinatePublic::multiline();"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 36,
+                "first": 34
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 36,
+                "first_line": 34,
+                "identity": {
+                  "bytes": 68,
+                  "sha256": "5ce35a8b4601c70638ee8b27822b1fdbb12a9ae38c3eebdabb63db9ee4dea23f"
+                },
+                "offset_bytes": 770,
+                "text": "observe( # site multiline\n        'multiline'\n    ); # end multiline"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 65,
+                "first": 65
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 65,
+                "first_line": 65,
+                "identity": {
+                  "bytes": 30,
+                  "sha256": "700ee6224c4322411d6bbb7ad05876e6b76d9d79201ce152882b7ad5a6f5660e"
+                },
+                "offset_bytes": 1565,
+                "text": "CoordinatePublic::multiline();"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "multiline"
+    },
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 39,
+                "first": 39
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 39,
+                "first_line": 39,
+                "identity": {
+                  "bytes": 45,
+                  "sha256": "9a8f7ca8cc3e2ec601399728fac1716d7036cdaa89fa0c25f1319beca1db16d8"
+                },
+                "offset_bytes": 859,
+                "text": "observe('postfix') for 1 .. 1; # site postfix"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 66,
+                "first": 66
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 66,
+                "first_line": 66,
+                "identity": {
+                  "bytes": 28,
+                  "sha256": "bc2b61472c9df90b1e02153cd6874dac6be0e1047dcd6825657e3878370dafb3"
+                },
+                "offset_bytes": 1596,
+                "text": "CoordinatePublic::postfix();"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 39,
+                "first": 39
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 39,
+                "first_line": 39,
+                "identity": {
+                  "bytes": 45,
+                  "sha256": "9a8f7ca8cc3e2ec601399728fac1716d7036cdaa89fa0c25f1319beca1db16d8"
+                },
+                "offset_bytes": 859,
+                "text": "observe('postfix') for 1 .. 1; # site postfix"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 66,
+                "first": 66
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 66,
+                "first_line": 66,
+                "identity": {
+                  "bytes": 28,
+                  "sha256": "bc2b61472c9df90b1e02153cd6874dac6be0e1047dcd6825657e3878370dafb3"
+                },
+                "offset_bytes": 1596,
+                "text": "CoordinatePublic::postfix();"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "postfix"
+    },
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 43,
+                "first": 43
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 43,
+                "first_line": 43,
+                "identity": {
+                  "bytes": 40,
+                  "sha256": "263717f7234e03a766f2a3f7ee03885a005c7c1247d9fbfd8c2d521f2b0236f1"
+                },
+                "offset_bytes": 973,
+                "text": "observe('block-eval'); # site block-eval"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 67,
+                "first": 67
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 67,
+                "first_line": 67,
+                "identity": {
+                  "bytes": 31,
+                  "sha256": "23fa14b8f6a2215fa21ff39e9f885dc5e9f19219163c541095884bdc4b83c946"
+                },
+                "offset_bytes": 1625,
+                "text": "CoordinatePublic::block_eval();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 45,
+                "first": 42
+              },
+              "name": "own-boundary:block_eval",
+              "source": {
+                "closing_line": 45,
+                "first_line": 42,
+                "identity": {
+                  "bytes": 123,
+                  "sha256": "9f22307bc8ba306a7906a074428b99a58f0fd026b2ba13b315095352b8d2cc2e"
+                },
+                "offset_bytes": 928,
+                "text": "my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 43,
+                "first": 43
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 43,
+                "first_line": 43,
+                "identity": {
+                  "bytes": 40,
+                  "sha256": "263717f7234e03a766f2a3f7ee03885a005c7c1247d9fbfd8c2d521f2b0236f1"
+                },
+                "offset_bytes": 973,
+                "text": "observe('block-eval'); # site block-eval"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 67,
+                "first": 67
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 67,
+                "first_line": 67,
+                "identity": {
+                  "bytes": 31,
+                  "sha256": "23fa14b8f6a2215fa21ff39e9f885dc5e9f19219163c541095884bdc4b83c946"
+                },
+                "offset_bytes": 1625,
+                "text": "CoordinatePublic::block_eval();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 45,
+                "first": 42
+              },
+              "name": "own-boundary:block_eval",
+              "source": {
+                "closing_line": 45,
+                "first_line": 42,
+                "identity": {
+                  "bytes": 123,
+                  "sha256": "9f22307bc8ba306a7906a074428b99a58f0fd026b2ba13b315095352b8d2cc2e"
+                },
+                "offset_bytes": 928,
+                "text": "my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "block-eval"
+    },
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 49,
+                "first": 49
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 49,
+                "first_line": 49,
+                "identity": {
+                  "bytes": 21,
+                  "sha256": "0af146606d45401c108dcc0a73918472dafad0900d98062c7a194f5ea2136644"
+                },
+                "offset_bytes": 1114,
+                "text": "observe('anonymous');"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 68,
+                "first": 68
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 68,
+                "first_line": 68,
+                "identity": {
+                  "bytes": 30,
+                  "sha256": "370dcfe0c41024f055658ed3713c501101ab07015284a272aeb8f9c9fdad12d5"
+                },
+                "offset_bytes": 1657,
+                "text": "CoordinatePublic::anonymous();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 50,
+                "first": 50
+              },
+              "name": "own-boundary:anonymous_delegate",
+              "source": {
+                "closing_line": 50,
+                "first_line": 50,
+                "identity": {
+                  "bytes": 36,
+                  "sha256": "12efde74fa5f000a4c56401ce7bc6fe0a346164637c7440592b0c25736f50ba2"
+                },
+                "offset_bytes": 1160,
+                "text": "$body->(); # site anonymous delegate"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 49,
+                "first": 49
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 49,
+                "first_line": 49,
+                "identity": {
+                  "bytes": 21,
+                  "sha256": "0af146606d45401c108dcc0a73918472dafad0900d98062c7a194f5ea2136644"
+                },
+                "offset_bytes": 1114,
+                "text": "observe('anonymous');"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 68,
+                "first": 68
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 68,
+                "first_line": 68,
+                "identity": {
+                  "bytes": 30,
+                  "sha256": "370dcfe0c41024f055658ed3713c501101ab07015284a272aeb8f9c9fdad12d5"
+                },
+                "offset_bytes": 1657,
+                "text": "CoordinatePublic::anonymous();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 50,
+                "first": 50
+              },
+              "name": "own-boundary:anonymous_delegate",
+              "source": {
+                "closing_line": 50,
+                "first_line": 50,
+                "identity": {
+                  "bytes": 36,
+                  "sha256": "12efde74fa5f000a4c56401ce7bc6fe0a346164637c7440592b0c25736f50ba2"
+                },
+                "offset_bytes": 1160,
+                "text": "$body->(); # site anonymous delegate"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "anonymous"
+    },
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "./load-body.pl",
+                "load-body.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 1,
+                "first": 1
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 1,
+                "first_line": 1,
+                "identity": {
+                  "bytes": 52,
+                  "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+                },
+                "offset_bytes": 0,
+                "text": "CoordinatePublic::observe('do-load'); # site do-load"
+              },
+              "unit": "load-body.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 69,
+                "first": 69
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 69,
+                "first_line": 69,
+                "identity": {
+                  "bytes": 25,
+                  "sha256": "ffedb71b4d596ea796c5bb99b65d6c0b4c094c4b09b2f9a7de1a97e39ce2dbba"
+                },
+                "offset_bytes": 1688,
+                "text": "CoordinatePublic::load();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 53,
+                "first": 53
+              },
+              "name": "own-boundary:do_load",
+              "source": {
+                "closing_line": 53,
+                "first_line": 53,
+                "identity": {
+                  "bytes": 51,
+                  "sha256": "1ad3e0794a14957ec471c1b9c5325229811d2350a0c40a806f99908c9a4319ca"
+                },
+                "offset_bytes": 1214,
+                "text": "my $value = do './load-body.pl'; # site do boundary"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "./load-body.pl",
+                "load-body.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 1,
+                "first": 1
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 1,
+                "first_line": 1,
+                "identity": {
+                  "bytes": 52,
+                  "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+                },
+                "offset_bytes": 0,
+                "text": "CoordinatePublic::observe('do-load'); # site do-load"
+              },
+              "unit": "load-body.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 69,
+                "first": 69
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 69,
+                "first_line": 69,
+                "identity": {
+                  "bytes": 25,
+                  "sha256": "ffedb71b4d596ea796c5bb99b65d6c0b4c094c4b09b2f9a7de1a97e39ce2dbba"
+                },
+                "offset_bytes": 1688,
+                "text": "CoordinatePublic::load();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 53,
+                "first": 53
+              },
+              "name": "own-boundary:do_load",
+              "source": {
+                "closing_line": 53,
+                "first_line": 53,
+                "identity": {
+                  "bytes": 51,
+                  "sha256": "1ad3e0794a14957ec471c1b9c5325229811d2350a0c40a806f99908c9a4319ca"
+                },
+                "offset_bytes": 1214,
+                "text": "my $value = do './load-body.pl'; # site do boundary"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "do-load"
+    },
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "./require-body.pl",
+                "require-body.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 1,
+                "first": 1
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 1,
+                "first_line": 1,
+                "identity": {
+                  "bytes": 62,
+                  "sha256": "ec37b403af41a542ec3af7744662cd4336c347875cecbfa22cbf4a478aeba05f"
+                },
+                "offset_bytes": 0,
+                "text": "CoordinatePublic::observe('require-load'); # site require-load"
+              },
+              "unit": "require-body.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 69,
+                "first": 69
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 69,
+                "first_line": 69,
+                "identity": {
+                  "bytes": 25,
+                  "sha256": "ffedb71b4d596ea796c5bb99b65d6c0b4c094c4b09b2f9a7de1a97e39ce2dbba"
+                },
+                "offset_bytes": 1688,
+                "text": "CoordinatePublic::load();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 56,
+                "first": 56
+              },
+              "name": "own-boundary:require_load",
+              "source": {
+                "closing_line": 56,
+                "first_line": 56,
+                "identity": {
+                  "bytes": 67,
+                  "sha256": "7f51cde727ac7c0ab00ca02200481510132d7352d75fd6996ce26d4eb00b3863"
+                },
+                "offset_bytes": 1322,
+                "text": "my $required = require './require-body.pl'; # site require boundary"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "./require-body.pl",
+                "require-body.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 1,
+                "first": 1
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 1,
+                "first_line": 1,
+                "identity": {
+                  "bytes": 62,
+                  "sha256": "ec37b403af41a542ec3af7744662cd4336c347875cecbfa22cbf4a478aeba05f"
+                },
+                "offset_bytes": 0,
+                "text": "CoordinatePublic::observe('require-load'); # site require-load"
+              },
+              "unit": "require-body.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 69,
+                "first": 69
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 69,
+                "first_line": 69,
+                "identity": {
+                  "bytes": 25,
+                  "sha256": "ffedb71b4d596ea796c5bb99b65d6c0b4c094c4b09b2f9a7de1a97e39ce2dbba"
+                },
+                "offset_bytes": 1688,
+                "text": "CoordinatePublic::load();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 56,
+                "first": 56
+              },
+              "name": "own-boundary:require_load",
+              "source": {
+                "closing_line": 56,
+                "first_line": 56,
+                "identity": {
+                  "bytes": 67,
+                  "sha256": "7f51cde727ac7c0ab00ca02200481510132d7352d75fd6996ce26d4eb00b3863"
+                },
+                "offset_bytes": 1322,
+                "text": "my $required = require './require-body.pl'; # site require boundary"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "require-load"
+    },
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "lib/CoordinateDependency.pm"
+              ],
+              "line_hypotheses": {
+                "closing": 5,
+                "first": 5
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 5,
+                "first_line": 5,
+                "identity": {
+                  "bytes": 60,
+                  "sha256": "ac57e5aa9b474cd8934b9e6c3f273606734b52ad9671e7d23781ea1ad56f5471"
+                },
+                "offset_bytes": 78,
+                "text": "CoordinatePublic::observe('module-call'); # site module-call"
+              },
+              "unit": "lib/CoordinateDependency.pm"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 70,
+                "first": 70
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 70,
+                "first_line": 70,
+                "identity": {
+                  "bytes": 36,
+                  "sha256": "77ed07bef14f41d6565056d8af8aa7949b8d3faccac2e886130d5f20ebfaf137"
+                },
+                "offset_bytes": 1714,
+                "text": "CoordinateDependency::module_call();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 70,
+                "first": 70
+              },
+              "name": "own-boundary:module_delegate",
+              "source": {
+                "closing_line": 70,
+                "first_line": 70,
+                "identity": {
+                  "bytes": 36,
+                  "sha256": "77ed07bef14f41d6565056d8af8aa7949b8d3faccac2e886130d5f20ebfaf137"
+                },
+                "offset_bytes": 1714,
+                "text": "CoordinateDependency::module_call();"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "lib/CoordinateDependency.pm"
+              ],
+              "line_hypotheses": {
+                "closing": 5,
+                "first": 5
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 5,
+                "first_line": 5,
+                "identity": {
+                  "bytes": 60,
+                  "sha256": "ac57e5aa9b474cd8934b9e6c3f273606734b52ad9671e7d23781ea1ad56f5471"
+                },
+                "offset_bytes": 78,
+                "text": "CoordinatePublic::observe('module-call'); # site module-call"
+              },
+              "unit": "lib/CoordinateDependency.pm"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 70,
+                "first": 70
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 70,
+                "first_line": 70,
+                "identity": {
+                  "bytes": 36,
+                  "sha256": "77ed07bef14f41d6565056d8af8aa7949b8d3faccac2e886130d5f20ebfaf137"
+                },
+                "offset_bytes": 1714,
+                "text": "CoordinateDependency::module_call();"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 70,
+                "first": 70
+              },
+              "name": "own-boundary:module_delegate",
+              "source": {
+                "closing_line": 70,
+                "first_line": 70,
+                "identity": {
+                  "bytes": 36,
+                  "sha256": "77ed07bef14f41d6565056d8af8aa7949b8d3faccac2e886130d5f20ebfaf137"
+                },
+                "offset_bytes": 1714,
+                "text": "CoordinateDependency::module_call();"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "module-call"
+    },
+    {
+      "origins": {
+        "guard_error": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 24,
+                "first": 24
+              },
+              "name": "own-confess_call",
+              "source": {
+                "closing_line": 24,
+                "first_line": 24,
+                "identity": {
+                  "bytes": 64,
+                  "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                },
+                "offset_bytes": 472,
+                "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 73,
+                "first": 73
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 73,
+                "first_line": 73,
+                "identity": {
+                  "bytes": 52,
+                  "sha256": "5eee87a2728a5802cb62890ea0151190a87aa0548c0197119572ac5a86069daa"
+                },
+                "offset_bytes": 1844,
+                "text": "CoordinatePublic::observe('subtest'); # site subtest"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 75,
+                "first": 72
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 75,
+                "first_line": 72,
+                "identity": {
+                  "bytes": 163,
+                  "sha256": "68e51d29623d159bd0469a1e087c8412a31c7b8499d0940f31de3017369b0603"
+                },
+                "offset_bytes": 1793,
+                "text": "$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate guard\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        },
+        "trace": {
+          "alternatives": [
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 23,
+                "first": 23
+              },
+              "name": "own-longmess_call",
+              "source": {
+                "closing_line": 23,
+                "first_line": 23,
+                "identity": {
+                  "bytes": 58,
+                  "sha256": "7861b27bd45c8dc92c175e5ad0a2cc8de2c17c3668b2164a2849506015442934"
+                },
+                "offset_bytes": 409,
+                "text": "my $trace = Carp::longmess(\"public coordinate fixture\\n\");"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 73,
+                "first": 73
+              },
+              "name": "observer-call",
+              "source": {
+                "closing_line": 73,
+                "first_line": 73,
+                "identity": {
+                  "bytes": 52,
+                  "sha256": "5eee87a2728a5802cb62890ea0151190a87aa0548c0197119572ac5a86069daa"
+                },
+                "offset_bytes": 1844,
+                "text": "CoordinatePublic::observe('subtest'); # site subtest"
+              },
+              "unit": "fixture.pl"
+            },
+            {
+              "filename_hypotheses": [
+                "fixture.pl"
+              ],
+              "line_hypotheses": {
+                "closing": 75,
+                "first": 72
+              },
+              "name": "own-outer-invocation",
+              "source": {
+                "closing_line": 75,
+                "first_line": 72,
+                "identity": {
+                  "bytes": 163,
+                  "sha256": "68e51d29623d159bd0469a1e087c8412a31c7b8499d0940f31de3017369b0603"
+                },
+                "offset_bytes": 1793,
+                "text": "$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary"
+              },
+              "unit": "fixture.pl"
+            }
+          ],
+          "message": "public coordinate fixture\n",
+          "selected": null,
+          "unresolved": "Any origin outside these independently declared own statements remains unqualified; private external source and formatter/global state are not inferred."
+        }
+      },
+      "role": "subtest"
+    }
+  ],
+  "clauses": {
+    "confess_not_carp": {
+      "clause": "the full stack backtrace from \"confess\" will not start inside of \"Carp\"",
+      "document": "Carp"
+    },
+    "eval_failure": {
+      "clause": "\"eval\" returns \"undef\" in scalar context, or an empty list in list context, and $@ is set to the error message.",
+      "document": "eval"
+    },
+    "formatter": {
+      "clause": "For any type of reference, $Carp::RefArgFormatter is checked",
+      "document": "Carp"
+    },
+    "full_trace": {
+      "clause": "that context is a summary of every call in the call-stack; \"longmess()\" returns the contents of the error message.",
+      "document": "Carp"
+    },
+    "global_logic": {
+      "clause": "You can also alter the way the output and logic of \"Carp\" works, by changing some global variables in the \"Carp\" namespace.",
+      "document": "Carp"
+    },
+    "internal_skip": {
+      "clause": "the stack backtrace will not start inside packages that are listed in %Carp::CarpInternal.",
+      "document": "Carp"
+    }
+  },
+  "configuration": "Public Carp global/internal/formatter states were not measured in the retained captures; public version metadata and own source do not establish them.",
+  "invocations": [
+    {
+      "command": [
+        "perl",
+        "fixture.pl"
+      ],
+      "label": "root-a",
+      "root": ".artifacts/public-coordinate-native/root-a"
+    },
+    {
+      "command": [
+        "perl",
+        "fixture.pl"
+      ],
+      "label": "root-b",
+      "root": ".artifacts/public-coordinate-native/root-b"
+    }
+  ],
+  "role": "Pure-source finite public longmess/confess origin alternatives only. No captured trace/error origin text is interpreted and no alternative is selected. Public global/private formatter state and every original coordinate/identity meaning remain unmeasured.",
+  "source_pins": {
+    "fixture.pl": {
+      "bytes": 2111,
+      "sha256": "05c52ae83e9c614a2b7eca41969fc1d332e9562a75ed00d868cb28918abc82d7"
+    },
+    "lib/CoordinateDependency.pm": {
+      "bytes": 144,
+      "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+    },
+    "load-body.pl": {
+      "bytes": 56,
+      "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+    },
+    "require-body.pl": {
+      "bytes": 66,
+      "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "cause": "whole independently fixed own source identity",
+    "control": "borrowed-source",
+    "status": 1
+  },
+  {
+    "cause": "independently selected public origin clause: internal_skip",
+    "control": "lost-public-clause",
+    "status": 1
+  },
+  {
+    "cause": "integer complete public origin document success",
+    "control": "Boolean-document-status",
+    "status": 1
+  },
+  {
+    "cause": "complete pure-source origin alternatives and unresolved scope",
+    "control": "lost-origin-case",
+    "status": 1
+  },
+  {
+    "cause": "complete pure-source origin alternatives and unresolved scope",
+    "control": "borrowed-origin-line",
+    "status": 1
+  },
+  {
+    "cause": "complete pure-source origin alternatives and unresolved scope",
+    "control": "premature-origin-selection",
+    "status": 1
+  },
+  {
+    "cause": "complete pure-source origin alternatives and unresolved scope",
+    "control": "formatter-state-promotion",
+    "status": 1
+  },
+  {
+    "cause": "complete pure-source origin alternatives and unresolved scope",
+    "control": "lost-invocation",
+    "status": 1
+  }
+]

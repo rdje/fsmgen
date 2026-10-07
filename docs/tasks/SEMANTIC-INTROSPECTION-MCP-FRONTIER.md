@@ -5126,11 +5126,46 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.1: select source-declared public caller coordinates`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify every public longmess/confess origin coordinate with explicit formatter scope.`
   Acceptance: `Use complete committed own call/origin statements and public Carp/eval contracts before trace-origin interpretation. Compare all public captured origins to independently declared finite alternatives without broad normalization, retain complete raw trace/error/frame bytes and every unresolved private/formatter dependency, and qualify genuine separating source/line/origin controls. No original-coordinate intake or original formatter/provider identity claim.`
   Verification: `pending`
   Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1`
+  Status: `done`
+  Goal: `Seal pure-source public trace/confess origin hypotheses before interpretation.`
+  Acceptance: `Authenticate complete committed pre-native source/public POD and qualified caller/native custody at fixed52e27693. Derive all finite own trace/confess origin alternatives only from exact own statements, complete public Carp/eval clauses and already qualified source/invocation contracts, without parsing captured trace/error origin text. Preserve complete before-data hypotheses, source spans, source/body/kind/root/scope controls and independent byte/document reconstruction; commit before origin intake. Public configuration/private formatter states and every original identity remain unmeasured.`
+  Verification: `Complete fixed52e27693 own fixture/public POD/caller selection/actual-result domains authenticate with complete committed members and done owners. Source-only derivation fixes both public origin streams for every declared role, retaining exact longmess/confess, observer call, outer invocation and applicable own boundary statements, complete binary offsets/first/closing/filename alternatives and unselected outcomes. All full public Carp/eval documentation bytes and relevant clauses bind; public global/internal/formatter state remains explicitly unmeasured in retained captures. No captured trace/error origin text is interpreted. Six-member immutable source corpus, eight genuine source/clause/kind/line/case/root/promotion controls and independent full fixed-source/POD/binary span/role allocation reconstruction qualify. Independent missing-outer/premature-selection/configuration-promotion product controls reject. Guarded focused current/book All tests successful Files3 Tests310; complete additive source/native guide and gap/route/unselected/status controls pass while every prior caller fact remains exact. Final copied-source freshness, measured aggregate/task declarations, claim/staged/hooks gate commit. Only before-origin hypotheses close; origin intake .2, genuine native bad variants, whole final public qualification, original/private/formatter/toolchain/address/visual/HIAL/full-CI/push and canonical coordinate facts remain separately owned.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1: bind pure-source public origin hypotheses`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1.1`
+  Status: `done`
+  Goal: `Compact the task-index summary under its unchanged line allowance.`
+  Acceptance: `Retain complete first staged gate failure and exact before-index bytes. The SEM active summary grows to874 bytes beyond focused_documents baseline790 plus growth72. Keep every status/frontier/evidence obligation in its existing task-tree owner, shorten only duplicate index narration, independently compare the whole before/after index and canonical source allocations, then refresh the native copied index and final census/gates. No fact/owner/source/capture/seal or ceiling change.`
+  Verification: `Complete first staged gate retains exact focused_documents allowance refusal at874 over862. Exact whole before/after index conserves every field/row except duplicate SEM summary; its line falls to562 under unchanged allowance. Complete prior index source retains; all detailed raw/custody/source/caller/origin state and frontier remain in canonical task nodes. Initial native index qualifier correctly refuses stale staged docs/TASK_TREE bytes in both original and persistent-owner forms; complete actuals/programmes retain, and exact restaging resolves Git-result equality. Independent canonical node/body/frontier and full127-source copied-byte/current endpoint checks pass after unchanged native refresh; complete origin/caller guide remains byte-identical. Old copied-source proof retains its original dated source epoch. Child removes transient commit-message dependency with genuine cleared-input before/after proof. No source/capture/seal/claim/ceiling changes; final inventory/staged/hooks gate parent commit.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1: bind pure-source public origin hypotheses`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1.1.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1.1.1`
+  Status: `done`
+  Goal: `Remove the index repair qualifier’s ephemeral commit-message dependency.`
+  Acceptance: `Preserve the first programme/actual result and exact still-current commit-message bytes. The draft qualifier derives its owning unit from git_message_brief.txt, which COMMIT requires clearing; a fresh committed replay would fail. Bind the already sealed canonical scope owner instead, independently reproduce the old cleared-message failure without mutating the real message, and prove corrected qualification with no ephemeral input. Preserve all index/native/source predicates and original evidence.`
+  Verification: `Exact first qualifier programme, first actual staged-index refusal and complete transient message retain. Independent genuine cleared-message read returns the COMMIT-required empty value without changing the real message; old owner derivation refuses at its exact named cause. Only owner retrieval changes to the already sealed scope.txt; every source/index/native predicate conserves. Corrected complete qualifier passes with the transient message unavailable. Persistent-scope repair and final gates qualify parent commit.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1: bind pure-source public origin hypotheses`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Join every retained public trace/confess origin and qualify exact source controls.`
+  Acceptance: `After .1 commits, authenticate complete native captures and the sealed independent source hypotheses, then parse and join every finite public trace/confess origin without broad normalization or losing any raw error/frame/argument byte. Retain complete selected/ambiguous/unresolved allocations and genuine separating source/line/origin/scope controls. Independently reconstruct whole saved results and scope the source/native guide. No original coordinate/private/formatter/toolchain identity promotion; genuine native bad variants remain .3-owned.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3`
   Status: `pending`
@@ -6827,3 +6862,9 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed3ae29914 identifies the complete dated capture guide’s still-pending line/filename selection. `docs/audits/coordinate-public-caller-selection-checks-20261007/root-cause.json` retains exact command/status/streams, mechanism and source/hypothesis/raw-wire locus.
 - [x] **ADDRESSED (verified)** — Every source-declared own public call and boundary joins its exact caller target, source-selected line/filename alternatives and legitimate roots. Complete binary source/LF and raw-wire independent reconstruction agrees; all raw input bytes and ambiguous equivalent labels conserve. Eleven full candidate controls and six independent selected-result controls reject intended cases; scoped saved source/native guide qualifies. Native executed bad variants and origins remain separately owned.
 - [x] **NO REGRESSION** — Guarded focused current-publication/book path/matrix prove reports All tests successful Files=3, Tests=310 in `docs/audits/coordinate-public-caller-selection-checks-20261007/focused.json`. Complete native guide, final fresh copied-source checks, measured aggregate/claim inventory and staged doctrine/normal hooks gate commit.
+
+## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed52e27693 identifies the caller/boundary guide’s still-pending trace origins. `docs/audits/coordinate-public-origin-hypotheses-checks-20261007/root-cause.json` retains the complete command/status/streams and own trace/confess/call/outer/boundary/POD locus.
+- [x] **ADDRESSED (verified)** — Complete pure-source origin alternatives and public Carp/eval clauses bind before origin interpretation. Every own statement and per-role source/filename/line allocation reconstructs independently from fixed whole bytes; all origin selections remain null. Eight genuine producer controls and independent missing-statement/premature-selection/configuration-promotion controls reject intended causes; complete source/native guide preserves prior caller facts and explicitly unmeasured configuration.
+- [x] **NO REGRESSION** — Guarded focused current-publication/book path/matrix prove reports All tests successful Files=3, Tests=310 in `docs/audits/coordinate-public-origin-hypotheses-checks-20261007/focused.json`. Complete native guide, final copied-source freshness, measured aggregate/claim inventory and staged doctrine/normal hooks gate commit.

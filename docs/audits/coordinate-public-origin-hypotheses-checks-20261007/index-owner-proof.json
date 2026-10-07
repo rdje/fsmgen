@@ -1,0 +1,22 @@
+{
+  "after_status": 0,
+  "before_cause": "exact source-only hypothesis repair owner",
+  "before_status": 1,
+  "corrected_programme": {
+    "bytes": 5121,
+    "sha256": "4938105cdf89087c510ea74083797e521fe40b972341fc0f0e0ed9b4ebec817b"
+  },
+  "counterfactual": "Only the commit-message read returns the required cleared empty value; the real message and every repository/source/native byte remain untouched.",
+  "first_message": {
+    "bytes": 824,
+    "sha256": "cbb04f3b2e55e66270fdb3d01afa5045b543170aee04a0f777c92b65cc9115d8"
+  },
+  "first_programme": {
+    "bytes": 5025,
+    "sha256": "ce1e212f3476dd2ef85ae2e25aae746130ee5f8726c013e2d71c9d0f99305773"
+  },
+  "persistent_scope": {
+    "bytes": 1943,
+    "sha256": "51598080151fba50e9618cf05b81edabcac3a4cc4e62a4e390e9447619c2a8b1"
+  }
+}
