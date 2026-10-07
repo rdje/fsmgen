@@ -1,0 +1,25 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "scripts/check_claim_verification_inventory.pl",
+    "--write"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-plan-checks-20261008/run.py": {
+      "bytes": 1260,
+      "sha256": "bc4ed259d222d4219339341113c59cf12b20d5348694543bd0824052e806484c"
+    },
+    "scripts/check_claim_verification_inventory.pl": {
+      "bytes": 40247,
+      "sha256": "5f0d659dc59c542e8886894ec6b067c66a18ed4bf3961bd4c588a54a3f0136e4"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 67517; host 56.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13372, candidates=1980, quantified=965, conservative=1015, constants=2921, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1980)\n"
+}

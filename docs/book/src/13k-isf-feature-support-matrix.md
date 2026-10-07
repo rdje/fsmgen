@@ -993,6 +993,17 @@ alternatives and rejects borrowed source, line, message and scope candidates:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-origin-selection-20261007/verify.py
 ```
 
+Native control plans now retain complete own fixture variants, exact source
+changes and expected caller, line, invocation-root and borrowed-source refusals.
+Each fresh control root is valid for capture custody. Root qualification compares
+its actual location with the unchanged base invocation; source controls compare
+coordinates with the unchanged good declarations. The source-only reader checks
+these plans before execution. Captures and observed native refusals remain pending:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-control-plans-20261008/verify.py
+```
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

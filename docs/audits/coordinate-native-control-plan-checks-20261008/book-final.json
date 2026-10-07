@@ -1,0 +1,24 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "mdbook",
+    "build",
+    "docs/book",
+    "--dest-dir",
+    ".artifacts/coordinate-native-control-plan-book"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-plan-checks-20261008/run.py": {
+      "bytes": 1260,
+      "sha256": "bc4ed259d222d4219339341113c59cf12b20d5348694543bd0824052e806484c"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 67625; host 56.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15283449 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/coordinate-native-control-plan-book`\n",
+  "stdout": ""
+}

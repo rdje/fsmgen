@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-plan-checks-20261008/run.py": {
+      "bytes": 1260,
+      "sha256": "bc4ed259d222d4219339341113c59cf12b20d5348694543bd0824052e806484c"
+    },
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/verify_saved.py": {
+      "bytes": 12408,
+      "sha256": "78cae6f525b3f8304db270ca6996308e00b12e482da62ceb958debbd989ddf12"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 2,
+  "stderr": "ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval\n",
+  "stdout": ""
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-native-control-plans-20261008/verify.py",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-plan-checks-20261008/run.py": {
+      "bytes": 1260,
+      "sha256": "bc4ed259d222d4219339341113c59cf12b20d5348694543bd0824052e806484c"
+    },
+    "docs/audits/record-value-coordinate-native-control-plans-20261008/verify.py": {
+      "bytes": 10549,
+      "sha256": "9adad856a4cb09b9b0ff8fb56fa35e03c853f3c08bf4afba6960354e4f56e1d5"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 37917; host 56.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete source-only native control plans and genuine plan controls; no native variant executes.\n"
+}

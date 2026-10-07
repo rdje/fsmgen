@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "git",
+    "log",
+    "-1",
+    "e78541a5",
+    "-S",
+    "These headers qualify only the retained public fixtures.",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-plan-checks-20261008/run.py": {
+      "bytes": 1260,
+      "sha256": "bc4ed259d222d4219339341113c59cf12b20d5348694543bd0824052e806484c"
+    },
+    "docs/book/src/13k-isf-feature-support-matrix.md": {
+      "bytes": 207011,
+      "sha256": "77598fc11e78bcdad600f2d514e93421703aafd67ebb2dbd46b4ab5bd2d4544c"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 41929; host 57.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "commit e78541a5a84559c56cbef73d9afe5cbe1f1e498a\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Wed Oct 7 20:15:33 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.2: join all retained public trace and confess origins\n    \n    Bind complete committed source-only hypotheses, native custody, caller selections and actual results. Join every dated public longmess/confess header to all source alternatives while conserving all raw bodies and private frames.\n    \n    Retain ten full candidate counterfactuals and seven independent source/header/raw/result controls; exact source-built header reconstruction and focused current/book 3/310 pass. Scope the source/native guide and measured aggregate; unchanged original/private/formatter identities and genuine native bad variants remain owned.\n"
+}

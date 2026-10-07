@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "git",
+    "log",
+    "-1",
+    "e78541a5",
+    "-S",
+    "Genuine executed native bad variants",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-plan-checks-20261008/run.py": {
+      "bytes": 1260,
+      "sha256": "bc4ed259d222d4219339341113c59cf12b20d5348694543bd0824052e806484c"
+    },
+    "docs/book/src/13k-isf-feature-support-matrix.md": {
+      "bytes": 207011,
+      "sha256": "77598fc11e78bcdad600f2d514e93421703aafd67ebb2dbd46b4ab5bd2d4544c"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 39047; host 57.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": ""
+}

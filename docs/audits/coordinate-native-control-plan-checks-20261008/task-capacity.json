@@ -1,0 +1,43 @@
+{
+  "actual": {
+    "bytes_each": 2366453,
+    "bytes_total": 12738214,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 6929,
+    "lines_total": 118068
+  },
+  "after": {
+    "bytes_each": 1,
+    "bytes_total": 1498995,
+    "files": 5,
+    "line_bytes_each": 1,
+    "lines_each": 529,
+    "lines_total": 7150
+  },
+  "baseline": {
+    "bytes_each": 2366453,
+    "bytes_total": 11239220,
+    "files": 592,
+    "line_bytes_each": 6264,
+    "lines_each": 6401,
+    "lines_total": 110919
+  },
+  "before": {
+    "bytes_each": 1,
+    "bytes_total": 1495610,
+    "files": 5,
+    "line_bytes_each": 1,
+    "lines_each": 523,
+    "lines_total": 7144
+  },
+  "ceilings": {
+    "bytes_each": 4194304,
+    "bytes_total": 16777216,
+    "files": 768,
+    "line_bytes_each": 8192,
+    "lines_each": 8000,
+    "lines_total": 150000
+  },
+  "scope": "Fresh task-evidence dimensions; no ceiling increase or Knowledge Map growth."
+}

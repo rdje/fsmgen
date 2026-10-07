@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-10-07`
+- Last updated: `2026-10-08`
 - Owner: repo-local workflow
 
 ## Goal
@@ -5177,11 +5177,11 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Commit complete native bad-variant source plans and expected separating refusals before execution.`
   Acceptance: `Authenticate complete committed e78541a5 source/caller/origin/capture/actual domains and done owners. Independently author full caller-namespace, line-shift, fresh-root and borrowed-source variants from exact own fixture bytes; bind every source change, planned invocation and source-selected expected refusal. Conserve all original bytes and name the legitimate control-root versus unchanged base-root semantic boundary. Genuine source/member/kind/root/scope controls and independent binary allocation checks qualify. No variant executes before this plan commits.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Both clean preparation and complete independently qualified source-plan children are done. Complete plans and source-selected expected refusals commit before native execution; one-time capture .2 and semantic qualification .3 remain pending.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2: bind native control plans before execution`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2`
 
@@ -5193,11 +5193,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.1: preserve clean session-health handoff`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Commit complete native bad-variant source plans and expected separating refusals before execution.`
   Acceptance: `Authenticate complete committed e78541a5 source/caller/origin/capture/actual domains and done owners. Independently author full caller-namespace, line-shift, fresh-root and borrowed-source variants from exact own fixture bytes; bind every source change, planned invocation and source-selected expected refusal. Conserve all original bytes and name the legitimate control-root versus unchanged base-root semantic boundary. Genuine source/member/kind/root/scope controls and independent binary allocation checks qualify. No variant executes before this plan commits.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete fixed e785 coordinate/public source/native/programme/actual domain and every done owner authenticate without modifying predecessors. Complete caller namespace, five-blank-line insertion, source-identical fresh-root and renamed borrowed-load variants retain full sources/differences/invocations and source-selected expected refusing predicates. Legitimate control-root custody stays distinct from unchanged base-root semantics; no actual root is rewritten. Immutable plan seal, six full producer controls and independent binary source/LF/allocation reconstruction with six genuine product refusals pass. Fresh whole prior origin-result replay and instrument-pinned actual plan receipts qualify. First sandbox process-inspection refusal retains; approved unchanged guard replay resolves it. Guarded focused current/public book All tests successful Files3 Tests310; complete additive source/native guide, exact aggregate and genuine scope/route/status controls pass. Native captures and observed refusals remain pending separate successors; original/private/formatter/toolchain/address/visual/HIAL/full-CI/push meanings are unchanged. Fresh current/native delivery, claim census and staged doctrine/hooks gate this commit.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2: bind native control plans before execution`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.2`
@@ -6921,3 +6921,9 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed e785 in docs/audits/coordinate-context-refresh-checks-20261007/root-cause.json identifies the completed public-origin checkpoint and still-unexecuted native control seam. The director selects a clean pause and delegates future session-health checkpoint decisions; the only new implementation preparation is the complete retained scope/runner scaffold, with no model or native execution.
 - [x] **ADDRESSED (verified)** — Exact scaffold bytes/pins retain before active-copy removal. The independent saved preparation reader authenticates the entire fixed committed coordinate/public population and bytes, rejects a genuinely changed preparation identity and verifies the precise pending frontier and pause pointer. Complete source-plan/capture/qualification decomposition stays tracked. Decision0116, canonical catalog/indices, bootstrap and fresh Knowledge Map routing durably record the director’s authority.
 - [x] **NO REGRESSION** — Guarded prove in docs/audits/coordinate-context-refresh-checks-20261007/focused.json reports All tests successful Files=3, Tests=310 for current publication and public book paths/matrix. Complete decision-store verification and unchanged coordinate/public-domain conservation pass. Final current/native source delivery, claim census and staged doctrines/normal hooks gate the clean committed pause; no native bad capture, original/private/formatter promotion, ceiling, visual/HIAL/full-CI/push change occurs.
+
+## Acceptance Checklist — native control plans before execution
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S in docs/audits/coordinate-native-control-plan-checks-20261008/root-cause-final.json locates the complete e785 finite-public guide and still-pending native semantic controls. Complete committed source/caller/origin/capture/actual domains and done owners bind the exact source-plan seam. First sandbox process-inspection refusal retains; an approved guarded replay succeeds without changing the guard or any prior evidence.
+- [x] **ADDRESSED (verified)** — Complete source-only namespace, line-insertion, unchanged-source fresh-root and renamed borrowed-load plans retain all before/after source bytes and exact expected refusals. Whole fixed Git custody, independent binary/LF/allocation reconstruction, full producer candidates, independent genuine product controls and actual source-plan receipt consumption pass. No native control has executed; capture and observed refusal qualification remain explicit successors. Exact additive source/native guide and measured book aggregate preserve every prior fact.
+- [x] **NO REGRESSION** — Guarded focused prove reports All tests successful, Files=3, Tests=310 in docs/audits/coordinate-native-control-plan-checks-20261008/focused.json. Complete prior origin reader, immutable plan seal and independent saved plan/native guide checks pass. Fresh current/native copied-source delivery, claim inventory, staged doctrine gate and normal hooks qualify the commit; no ceiling, original capture, private/submodule, visual or HIAL/full-CI/push scope changes.

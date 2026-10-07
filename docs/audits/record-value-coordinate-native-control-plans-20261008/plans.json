@@ -1,0 +1,422 @@
+{
+  "native_executed": false,
+  "plans": [
+    {
+      "base_invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-a",
+        "root": ".artifacts/public-coordinate-native/root-a"
+      },
+      "changes": {
+        "fixture.pl": {
+          "after": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinateBorrowed;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinateBorrowed::single();\nCoordinateBorrowed::multiline();\nCoordinateBorrowed::postfix();\nCoordinateBorrowed::block_eval();\nCoordinateBorrowed::anonymous();\nCoordinateBorrowed::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinateBorrowed::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinateBorrowed::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+          "before": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n"
+        },
+        "lib/CoordinateDependency.pm": {
+          "after": "package CoordinateDependency;\nuse strict;\nuse warnings;\nsub module_call {\n    CoordinateBorrowed::observe('module-call'); # site module-call\n}\n1;\n",
+          "before": "package CoordinateDependency;\nuse strict;\nuse warnings;\nsub module_call {\n    CoordinatePublic::observe('module-call'); # site module-call\n}\n1;\n"
+        },
+        "load-body.pl": {
+          "after": "CoordinateBorrowed::observe('do-load'); # site do-load\n1;\n",
+          "before": "CoordinatePublic::observe('do-load'); # site do-load\n1;\n"
+        },
+        "require-body.pl": {
+          "after": "CoordinateBorrowed::observe('require-load'); # site require-load\n1;\n",
+          "before": "CoordinatePublic::observe('require-load'); # site require-load\n1;\n"
+        }
+      },
+      "custody": "Each fresh control root is legitimate custody; compare coordinates to unchanged good declarations. Only wrong-root compares its actual root to the unchanged base invocation. Never rewrite actual cwd or source.",
+      "expected": {
+        "caller": "CoordinateBorrowed::observe",
+        "closing_line": 31,
+        "coordinate_check": "refuse",
+        "disposition": "pending native capture and independent refusal qualification",
+        "filename": "fixture.pl",
+        "first_line": 31,
+        "frame_index": 1,
+        "good_declaration": {
+          "callee": "CoordinatePublic::observe",
+          "caller_frame_index": 1,
+          "filename_hypotheses": [
+            "fixture.pl"
+          ],
+          "line_hypotheses": {
+            "closing": 31,
+            "first": 31
+          },
+          "role": "single",
+          "selected_filename": null,
+          "selected_line": null,
+          "source": {
+            "closing_line": 31,
+            "first_line": 31,
+            "identity": {
+              "bytes": 32,
+              "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+            },
+            "offset_bytes": 715,
+            "text": "observe('single'); # site single"
+          },
+          "unit": "fixture.pl"
+        },
+        "refusal": "exact source-declared public caller target",
+        "role": "single",
+        "variant_statement": {
+          "closing_line": 31,
+          "first_line": 31,
+          "identity": {
+            "bytes": 32,
+            "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+          },
+          "offset_bytes": 717,
+          "text": "observe('single'); # site single"
+        },
+        "variant_unit": "fixture.pl"
+      },
+      "guard": [
+        "scripts/run_with_ram_guard.sh",
+        "--"
+      ],
+      "invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-caller"
+      },
+      "name": "wrong-caller",
+      "source": {
+        "fixture.pl": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinateBorrowed;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinateBorrowed::single();\nCoordinateBorrowed::multiline();\nCoordinateBorrowed::postfix();\nCoordinateBorrowed::block_eval();\nCoordinateBorrowed::anonymous();\nCoordinateBorrowed::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinateBorrowed::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinateBorrowed::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+        "lib/CoordinateDependency.pm": "package CoordinateDependency;\nuse strict;\nuse warnings;\nsub module_call {\n    CoordinateBorrowed::observe('module-call'); # site module-call\n}\n1;\n",
+        "load-body.pl": "CoordinateBorrowed::observe('do-load'); # site do-load\n1;\n",
+        "require-body.pl": "CoordinateBorrowed::observe('require-load'); # site require-load\n1;\n"
+      },
+      "source_pins": {
+        "fixture.pl": {
+          "bytes": 2129,
+          "sha256": "97617089177a3e90100c7dc9b5f7a7ba183e9a8cc6cfa52c1a75aea66601ac6c"
+        },
+        "lib/CoordinateDependency.pm": {
+          "bytes": 146,
+          "sha256": "5de17d55de0002c2a44e514ee6b04f774c0c89df00b78df88bb5de9c95685780"
+        },
+        "load-body.pl": {
+          "bytes": 58,
+          "sha256": "8b169d24307011f6683b6e54c27cff293359ddec7fe664b7ebf4e0c6d0d862f4"
+        },
+        "require-body.pl": {
+          "bytes": 68,
+          "sha256": "b7305065dbb4dd4920eee446382d9dd345a2c6a4a08136b0660c4ccd7321cbce"
+        }
+      }
+    },
+    {
+      "base_invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-a",
+        "root": ".artifacts/public-coordinate-native/root-a"
+      },
+      "changes": {
+        "fixture.pl": {
+          "after": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n\n\n\n\n\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+          "before": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n"
+        }
+      },
+      "custody": "Each fresh control root is legitimate custody; compare coordinates to unchanged good declarations. Only wrong-root compares its actual root to the unchanged base invocation. Never rewrite actual cwd or source.",
+      "expected": {
+        "caller": "CoordinatePublic::observe",
+        "closing_line": 36,
+        "coordinate_check": "refuse",
+        "disposition": "pending native capture and independent refusal qualification",
+        "filename": "fixture.pl",
+        "first_line": 36,
+        "frame_index": 1,
+        "good_declaration": {
+          "callee": "CoordinatePublic::observe",
+          "caller_frame_index": 1,
+          "filename_hypotheses": [
+            "fixture.pl"
+          ],
+          "line_hypotheses": {
+            "closing": 31,
+            "first": 31
+          },
+          "role": "single",
+          "selected_filename": null,
+          "selected_line": null,
+          "source": {
+            "closing_line": 31,
+            "first_line": 31,
+            "identity": {
+              "bytes": 32,
+              "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+            },
+            "offset_bytes": 715,
+            "text": "observe('single'); # site single"
+          },
+          "unit": "fixture.pl"
+        },
+        "refusal": "public line must select a predeclared lexical alternative",
+        "role": "single",
+        "variant_statement": {
+          "closing_line": 36,
+          "first_line": 36,
+          "identity": {
+            "bytes": 32,
+            "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+          },
+          "offset_bytes": 720,
+          "text": "observe('single'); # site single"
+        },
+        "variant_unit": "fixture.pl"
+      },
+      "guard": [
+        "scripts/run_with_ram_guard.sh",
+        "--"
+      ],
+      "invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-line"
+      },
+      "name": "wrong-line",
+      "source": {
+        "fixture.pl": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n\n\n\n\n\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+        "lib/CoordinateDependency.pm": "package CoordinateDependency;\nuse strict;\nuse warnings;\nsub module_call {\n    CoordinatePublic::observe('module-call'); # site module-call\n}\n1;\n",
+        "load-body.pl": "CoordinatePublic::observe('do-load'); # site do-load\n1;\n",
+        "require-body.pl": "CoordinatePublic::observe('require-load'); # site require-load\n1;\n"
+      },
+      "source_pins": {
+        "fixture.pl": {
+          "bytes": 2116,
+          "sha256": "2dde787c2eb9631ddd7a35eb98c98dc499afef81831040f988f161df0af4f8d9"
+        },
+        "lib/CoordinateDependency.pm": {
+          "bytes": 144,
+          "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+        },
+        "load-body.pl": {
+          "bytes": 56,
+          "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+        },
+        "require-body.pl": {
+          "bytes": 66,
+          "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+        }
+      }
+    },
+    {
+      "base_invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-a",
+        "root": ".artifacts/public-coordinate-native/root-a"
+      },
+      "changes": {},
+      "custody": "Each fresh control root is legitimate custody; compare coordinates to unchanged good declarations. Only wrong-root compares its actual root to the unchanged base invocation. Never rewrite actual cwd or source.",
+      "expected": {
+        "caller": "CoordinatePublic::observe",
+        "closing_line": 31,
+        "coordinate_check": "positive",
+        "disposition": "pending native capture and independent refusal qualification",
+        "filename": "fixture.pl",
+        "first_line": 31,
+        "frame_index": 1,
+        "good_declaration": {
+          "callee": "CoordinatePublic::observe",
+          "caller_frame_index": 1,
+          "filename_hypotheses": [
+            "fixture.pl"
+          ],
+          "line_hypotheses": {
+            "closing": 31,
+            "first": 31
+          },
+          "role": "single",
+          "selected_filename": null,
+          "selected_line": null,
+          "source": {
+            "closing_line": 31,
+            "first_line": 31,
+            "identity": {
+              "bytes": 32,
+              "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+            },
+            "offset_bytes": 715,
+            "text": "observe('single'); # site single"
+          },
+          "unit": "fixture.pl"
+        },
+        "refusal": "exact legitimate public selection invocation",
+        "role": "single",
+        "variant_statement": {
+          "closing_line": 31,
+          "first_line": 31,
+          "identity": {
+            "bytes": 32,
+            "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+          },
+          "offset_bytes": 715,
+          "text": "observe('single'); # site single"
+        },
+        "variant_unit": "fixture.pl"
+      },
+      "guard": [
+        "scripts/run_with_ram_guard.sh",
+        "--"
+      ],
+      "invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-root"
+      },
+      "name": "wrong-root",
+      "source": {
+        "fixture.pl": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+        "lib/CoordinateDependency.pm": "package CoordinateDependency;\nuse strict;\nuse warnings;\nsub module_call {\n    CoordinatePublic::observe('module-call'); # site module-call\n}\n1;\n",
+        "load-body.pl": "CoordinatePublic::observe('do-load'); # site do-load\n1;\n",
+        "require-body.pl": "CoordinatePublic::observe('require-load'); # site require-load\n1;\n"
+      },
+      "source_pins": {
+        "fixture.pl": {
+          "bytes": 2111,
+          "sha256": "05c52ae83e9c614a2b7eca41969fc1d332e9562a75ed00d868cb28918abc82d7"
+        },
+        "lib/CoordinateDependency.pm": {
+          "bytes": 144,
+          "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+        },
+        "load-body.pl": {
+          "bytes": 56,
+          "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+        },
+        "require-body.pl": {
+          "bytes": 66,
+          "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+        }
+      }
+    },
+    {
+      "base_invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-a",
+        "root": ".artifacts/public-coordinate-native/root-a"
+      },
+      "changes": {
+        "borrowed-body.pl": {
+          "after": "CoordinatePublic::observe('do-load'); # site do-load\n1;\n",
+          "before": null
+        },
+        "fixture.pl": {
+          "after": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './borrowed-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+          "before": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n"
+        },
+        "load-body.pl": {
+          "after": null,
+          "before": "CoordinatePublic::observe('do-load'); # site do-load\n1;\n"
+        }
+      },
+      "custody": "Each fresh control root is legitimate custody; compare coordinates to unchanged good declarations. Only wrong-root compares its actual root to the unchanged base invocation. Never rewrite actual cwd or source.",
+      "expected": {
+        "caller": "CoordinatePublic::observe",
+        "closing_line": 1,
+        "coordinate_check": "refuse",
+        "disposition": "pending native capture and independent refusal qualification",
+        "filename": "./borrowed-body.pl",
+        "first_line": 1,
+        "frame_index": 1,
+        "good_declaration": {
+          "callee": "CoordinatePublic::observe",
+          "caller_frame_index": 1,
+          "filename_hypotheses": [
+            "./load-body.pl",
+            "load-body.pl"
+          ],
+          "line_hypotheses": {
+            "closing": 1,
+            "first": 1
+          },
+          "role": "do-load",
+          "selected_filename": null,
+          "selected_line": null,
+          "source": {
+            "closing_line": 1,
+            "first_line": 1,
+            "identity": {
+              "bytes": 52,
+              "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+            },
+            "offset_bytes": 0,
+            "text": "CoordinatePublic::observe('do-load'); # site do-load"
+          },
+          "unit": "load-body.pl"
+        },
+        "refusal": "public filename must select a predeclared own source alternative",
+        "role": "do-load",
+        "variant_statement": {
+          "closing_line": 1,
+          "first_line": 1,
+          "identity": {
+            "bytes": 52,
+            "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+          },
+          "offset_bytes": 0,
+          "text": "CoordinatePublic::observe('do-load'); # site do-load"
+        },
+        "variant_unit": "borrowed-body.pl"
+      },
+      "guard": [
+        "scripts/run_with_ram_guard.sh",
+        "--"
+      ],
+      "invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "root": ".artifacts/public-coordinate-native-controls-20261008/borrowed-source"
+      },
+      "name": "borrowed-source",
+      "source": {
+        "borrowed-body.pl": "CoordinatePublic::observe('do-load'); # site do-load\n1;\n",
+        "fixture.pl": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './borrowed-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+        "lib/CoordinateDependency.pm": "package CoordinateDependency;\nuse strict;\nuse warnings;\nsub module_call {\n    CoordinatePublic::observe('module-call'); # site module-call\n}\n1;\n",
+        "require-body.pl": "CoordinatePublic::observe('require-load'); # site require-load\n1;\n"
+      },
+      "source_pins": {
+        "borrowed-body.pl": {
+          "bytes": 56,
+          "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+        },
+        "fixture.pl": {
+          "bytes": 2115,
+          "sha256": "97f4e26efdea2c2815f40fb6e087fe7ae185c0167866ea6a4c859569ff2e79b8"
+        },
+        "lib/CoordinateDependency.pm": {
+          "bytes": 144,
+          "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+        },
+        "require-body.pl": {
+          "bytes": 66,
+          "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+        }
+      }
+    }
+  ],
+  "role": "Source-only finite own native control plans. No variant execution or native refusal is earned. Original/private/formatter/toolchain identities remain unmeasured; capture and semantic qualification are separate successors."
+}

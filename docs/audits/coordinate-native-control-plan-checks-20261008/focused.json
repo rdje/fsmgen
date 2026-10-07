@@ -1,0 +1,36 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/2066-record-value-current-publication.t",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-plan-checks-20261008/run.py": {
+      "bytes": 1260,
+      "sha256": "bc4ed259d222d4219339341113c59cf12b20d5348694543bd0824052e806484c"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    },
+    "t/1303-isf-public-live-book-paths-audit.t": {
+      "bytes": 3196,
+      "sha256": "81612f9a721bcedf8b5311fd0e6081601b189f060f94210c8794a11efd44d956"
+    },
+    "t/1305-isf-book-feature-matrix-audit.t": {
+      "bytes": 22769,
+      "sha256": "09a570c4d2f963ba4d4f9e48394398305b455bc0a561bd39a6b44e05ad6a6189"
+    },
+    "t/2066-record-value-current-publication.t": {
+      "bytes": 620,
+      "sha256": "a1b3ceac3e85788f79b1dbb3f93ff4140788b50230ed59220c03449f522959ca"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 44843; host 56.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "t/2066-record-value-current-publication.t .. ok\nt/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nAll tests successful.\nFiles=3, Tests=310,  5 wallclock secs ( 0.01 usr  0.01 sys +  3.98 cusr  0.46 csys =  4.46 CPU)\nResult: PASS\n"
+}
