@@ -1,0 +1,42 @@
+[
+  {
+    "cause": "complete source-selected alternatives and explicit pre-native scope",
+    "control": "wrong-callee",
+    "status": 1
+  },
+  {
+    "cause": "complete source-selected alternatives and explicit pre-native scope",
+    "control": "wrong-line",
+    "status": 1
+  },
+  {
+    "cause": "complete source-selected alternatives and explicit pre-native scope",
+    "control": "Boolean-line",
+    "status": 1
+  },
+  {
+    "cause": "complete source-selected alternatives and explicit pre-native scope",
+    "control": "lost-case",
+    "status": 1
+  },
+  {
+    "cause": "complete own fixture source byte identity",
+    "control": "borrowed-source",
+    "status": 1
+  },
+  {
+    "cause": "exact legitimate finite relative invocation root and command",
+    "control": "escaped-root",
+    "status": 1
+  },
+  {
+    "cause": "complete source-selected alternatives and explicit pre-native scope",
+    "control": "premature-line-selection",
+    "status": 1
+  },
+  {
+    "cause": "complete source-selected alternatives and explicit pre-native scope",
+    "control": "original-identity-promotion",
+    "status": 1
+  }
+]

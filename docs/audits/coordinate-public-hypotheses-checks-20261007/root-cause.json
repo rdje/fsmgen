@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "coordinate recipes remain unmeasured",
+    "--",
+    "docs/audits/record-value-public-native-fixtures-20261006/model.py"
+  ],
+  "locus": "The complete prior public fixture model intentionally retains raw coordinate fields without source recipes. Pre-native selection must originate in complete own source and public contracts; the separately retained unpublished missing-clause counterexample repairs its own predicate gap.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "66fb051cfca1d170cdcf7c8b46d316b8d8e185ae SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5.2: qualify independent public native fixtures\n"
+}

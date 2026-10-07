@@ -1,0 +1,52 @@
+{
+  "actual": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "mdbook",
+      "build",
+      "docs/book",
+      "--dest-dir",
+      ".artifacts/coordinate-public-hypotheses-book"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-public-hypotheses-checks-20261007/run.py": {
+        "bytes": 1258,
+        "sha256": "3275e729da23f108256eefe364c8f66d02c4b4115c33389e84fe7e25352309e5"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 51166; host 51.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15279280 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/coordinate-public-hypotheses-book`\n",
+    "stdout": ""
+  },
+  "controls": [
+    {
+      "cause": "complete native public-hypothesis guide and unselected recipe scope",
+      "control": "lost-runtime-deferral",
+      "status": 1
+    },
+    {
+      "cause": "complete native public-hypothesis guide and unselected recipe scope",
+      "control": "borrowed-reader-route",
+      "status": 1
+    },
+    {
+      "cause": "actual exact same-volume native book build command and integer success",
+      "control": "Boolean-native-status",
+      "status": 1
+    }
+  ],
+  "native": {
+    "bytes": 242720,
+    "sha256": "7d60c396bc611db7a71374ec1a9270eae77fff6e61cb2a74309ce63fe84115d6"
+  },
+  "scope": "Exact scoped saved source/native guide; no live future currency, runtime line selection, original coordinate, formatter/private identity or visual QA claim.",
+  "source": {
+    "bytes": 205458,
+    "sha256": "583c1d9d094e3a572693a6bfd4a818c86e864881a95839b087b0d1eac7b91d75"
+  }
+}

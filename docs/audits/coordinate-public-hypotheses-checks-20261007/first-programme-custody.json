@@ -1,0 +1,8 @@
+{
+  "actual_pin_matches": true,
+  "programme_pin": {
+    "bytes": 13056,
+    "sha256": "a01ada58484a2ae18a12bb02f680f9f24abfe6d0175fb117a6aaa8adb5647dc5"
+  },
+  "role": "Exact reconstructed first programme; agrees with the complete actually captured executed-byte pin. It was not separately copied before the flat-member guard was added."
+}

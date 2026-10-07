@@ -1,0 +1,225 @@
+"""Source-selected finite public coordinate hypotheses before fixture execution."""
+import argparse
+import copy
+import hashlib
+import io
+import json
+import re
+import subprocess
+import tarfile
+from pathlib import Path
+
+BASE = Path('docs/audits/record-value-coordinate-public-hypotheses-20261007')
+REVISION = '150517f0b41d129e29ad14f4ab36b5ce5bc2b8be'
+CATALOG = Path('docs/audits/record-value-coordinate-source-catalog-20261007')
+PROFILE = Path('docs/audits/record-value-public-framework-profile-20261006')
+ROOTS = [CATALOG, Path('docs/audits/coordinate-source-catalog-checks-20261007'), PROFILE]
+FILES = {'fixture.pl': 'fixture.pl', 'dependency.pm': 'lib/CoordinateDependency.pm',
+         'load-body.pl': 'load-body.pl', 'require-body.pl': 'require-body.pl'}
+ROLE = ('Pre-native complete own fixture/source and competing public coordinate hypotheses only. '
+        'No runtime line or filename alternative is selected; no original raw coordinate, '
+        'private framework or original formatter/toolchain identity is measured.')
+SUCCESS = 'PASS complete source-selected public coordinate hypotheses and genuine controls; coordinate fixtures remain unexecuted.\n'
+CLAUSES = {
+    'source_remapping': ('perlsyn', "one can control Perl's idea of filenames and line numbers in error or warning messages"),
+    'next_line': ('perlsyn', 'with $1 being the line number for the next line, and $3 being the optional filename'),
+    'require_path': ('require', 'my $realfilename = "$prefix/$filename";'),
+    'module_filename': ('perlvar', 'the value is the location of the file found.'),
+    'hook_limit': ('perlvar', 'this hook is by default inserted into %INC in place of a filename.'),
+}
+
+
+def require(value, cause):
+    if not value:
+        raise ValueError(cause)
+
+
+def same(left, right):
+    return json.dumps(left, sort_keys=True) == json.dumps(right, sort_keys=True)
+
+
+def pin(raw):
+    return dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+
+
+def load(path):
+    return json.loads(path.read_bytes())
+
+
+def git(path):
+    return subprocess.check_output(['git', 'show', REVISION + ':' + str(path)])
+
+
+def module(path):
+    namespace = {'__name__': 'public_coordinate_source_dependency'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), namespace)
+    return namespace
+
+
+def binding():
+    result = {}
+    for root in ROOTS:
+        archived = subprocess.check_output(['git', 'archive', REVISION, str(root)])
+        with tarfile.open(fileobj=io.BytesIO(archived)) as archive:
+            committed = {m.name: archive.extractfile(m).read() for m in archive.getmembers() if m.isfile()}
+        current = {str(p): p.read_bytes() for p in root.iterdir() if p.is_file() and not p.is_symlink()}
+        require(current == committed, 'whole fixed committed prerequisite source/programme/actual members')
+        result[str(root)] = {p: pin(raw) for p, raw in committed.items()}
+    task = git('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md').decode()
+    owners = {}
+    for root in (CATALOG, PROFILE):
+        owner = (root / 'scope.txt').read_text().splitlines()[0].removeprefix('Owner: ')
+        start = task.index('- ID: `' + owner + '`'); end = task.index('\n- ID:', start + 1)
+        owners[owner] = task[start:end]
+        require('\n  Status: `done`\n' in owners[owner], 'whole completed own/public source owner')
+    return dict(revision=REVISION, roots=result, owners=owners, task_identity=pin(task.encode()), role=ROLE)
+
+
+def source_inputs():
+    docs = load(BASE / 'public-docs.json')
+    capture = module(BASE / 'capture_docs.py')
+    require(set(docs['commands']) == set(capture['COMMANDS']), 'complete necessary public documentation command domain')
+    for name, row in docs['commands'].items():
+        require(row['command'] == capture['COMMANDS'][name] and type(row['status']) is int and row['status'] == 0,
+                'exact public documentation command and integer success')
+        for field in ('stdout', 'stderr'):
+            require(type(row[field]) is str and same(row[field + '_identity'], pin(row[field].encode())),
+                    'complete public documentation stream identity')
+    clauses = {}
+    for role, (document, clause) in CLAUSES.items():
+        require(clause in ' '.join(docs['commands'][document]['stdout'].split()),
+                'complete independently selected public filename clause: ' + role)
+        clauses[role] = dict(document=document, clause=clause)
+    prior = module(PROFILE / 'model.py')
+    public = prior['derive'](json.loads(git(PROFILE / 'public-profile.json')), require)
+    source = {destination: (BASE / name).read_text() for name, destination in FILES.items()}
+    return dict(source=source, source_pins={p: pin(s.encode()) for p, s in source.items()},
+                public_docs=docs, filename_clauses=clauses, prior_public_clauses=public,
+                invocations=[dict(root='.artifacts/public-coordinate-native/' + label,
+                    command=['perl', 'fixture.pl'], label=label) for label in ('root-a', 'root-b')], role=ROLE)
+
+
+def literal_span(source, text):
+    require(source.count(text) == 1, 'unique independently authored fixture source span')
+    start = source.index(text)
+    return dict(offset_bytes=len(source[:start].encode()), text=text, identity=pin(text.encode()),
+                first_line=source[:start].count('\n') + 1,
+                closing_line=(source[:start] + text).count('\n') + 1)
+
+
+def derive(inputs):
+    require(set(inputs['source']) == set(FILES.values()) and inputs['role'] == ROLE,
+            'complete fixture source domain and pre-native scope')
+    for path, source in inputs['source'].items():
+        require(same(inputs['source_pins'][path], pin(source.encode())), 'complete own fixture source byte identity')
+        require(not re.search(r'^\s*#\s*line\b', source, re.M), 'baseline fixture has no filename/line remapping')
+    primary = inputs['source']['fixture.pl']
+    selections = [
+        ('single', 'fixture.pl', "observe('single'); # site single"),
+        ('multiline', 'fixture.pl', "observe( # site multiline\n        'multiline'\n    ); # end multiline"),
+        ('postfix', 'fixture.pl', "observe('postfix') for 1 .. 1; # site postfix"),
+        ('block-eval', 'fixture.pl', "observe('block-eval'); # site block-eval"),
+        ('anonymous', 'fixture.pl', "observe('anonymous');"),
+        ('do-load', 'load-body.pl', "CoordinatePublic::observe('do-load'); # site do-load"),
+        ('require-load', 'require-body.pl', "CoordinatePublic::observe('require-load'); # site require-load"),
+        ('module-call', 'lib/CoordinateDependency.pm', "CoordinatePublic::observe('module-call'); # site module-call"),
+        ('subtest', 'fixture.pl', "CoordinatePublic::observe('subtest'); # site subtest"),
+    ]
+    rows = []
+    for role, path, statement in selections:
+        span = literal_span(inputs['source'][path], statement)
+        filenames = ['./' + path, path] if path in ('load-body.pl', 'require-body.pl') else [path]
+        rows.append(dict(role=role, unit=path, callee='CoordinatePublic::observe', caller_frame_index=1,
+            source=span, line_hypotheses=dict(first=span['first_line'], closing=span['closing_line']),
+            filename_hypotheses=filenames,
+            selected_line=None, selected_filename=None))
+    boundaries = {}
+    for name, text, callee, position in [
+        ('block_eval', "my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary", '(eval)', 2),
+        ('anonymous_delegate', '$body->(); # site anonymous delegate', 'CoordinatePublic::__ANON__', 2),
+        ('do_load', "my $value = do './load-body.pl'; # site do boundary", '(eval)', 2),
+        ('require_load', "my $required = require './require-body.pl'; # site require boundary", '(eval)', 2),
+        ('module_delegate', 'CoordinateDependency::module_call();', 'CoordinateDependency::module_call', 2),
+    ]:
+        span = literal_span(primary, text)
+        boundaries[name] = dict(source=span, callee=callee, caller_frame_index=position,
+            line_hypotheses=dict(first=span['first_line'], closing=span['closing_line']), filename='fixture.pl')
+    origins = {name: literal_span(primary, text) for name, text in (
+        ('longmess_call', 'my $trace = Carp::longmess("public coordinate fixture\\n");'),
+        ('confess_call', 'my $ok = eval { Carp::confess("public coordinate guard\\n"); 1 };'))}
+    require("use lib 'lib';" in primary and "use CoordinateDependency;" in primary
+            and "$INC{'CoordinateDependency.pm'}" in primary, 'own public module filename accessor contract')
+    for row in inputs['invocations']:
+        require(type(row['root']) is str and row['root'] == '.artifacts/public-coordinate-native/' + row['label']
+                and row['label'] in ('root-a', 'root-b') and row['command'] == ['perl', 'fixture.pl'],
+                'exact legitimate finite relative invocation root and command')
+    return dict(calls=rows, boundaries=boundaries, trace_origin_sources=origins,
+                module_filename='lib/CoordinateDependency.pm', invocations=inputs['invocations'],
+                source_pins=inputs['source_pins'], prior_public_clauses=inputs['prior_public_clauses'],
+                filename_clauses=inputs['filename_clauses'],
+                opaque='Named subtest incoming/private framework coordinates, original runtime/formatter identity and all address/referent meanings are unmeasured.', role=ROLE)
+
+
+def check(candidate, inputs, expected):
+    require(same(derive(inputs), expected), 'whole independently reconstructed source hypotheses')
+    require(same(candidate, expected), 'complete source-selected alternatives and explicit pre-native scope')
+
+
+def controls(inputs, expected):
+    cases = [
+        ('wrong-callee', lambda c,s: c['calls'][0].update(callee='borrowed'), 'complete source-selected alternatives and explicit pre-native scope'),
+        ('wrong-line', lambda c,s: c['calls'][1]['line_hypotheses'].update(first=99999), 'complete source-selected alternatives and explicit pre-native scope'),
+        ('Boolean-line', lambda c,s: c['calls'][0]['line_hypotheses'].update(first=True), 'complete source-selected alternatives and explicit pre-native scope'),
+        ('lost-case', lambda c,s: c['calls'].pop(), 'complete source-selected alternatives and explicit pre-native scope'),
+        ('borrowed-source', lambda c,s: s['source'].update({'fixture.pl':s['source']['load-body.pl']}), 'complete own fixture source byte identity'),
+        ('escaped-root', lambda c,s: s['invocations'][0].update(root='../foreign'), 'exact legitimate finite relative invocation root and command'),
+        ('premature-line-selection', lambda c,s: c['calls'][1].update(selected_line=99999), 'complete source-selected alternatives and explicit pre-native scope'),
+        ('original-identity-promotion', lambda c,s: c.update(role='Original formatter and runtime identities are measured.'), 'complete source-selected alternatives and explicit pre-native scope'),
+    ]
+    result = []
+    for name, mutate, cause in cases:
+        candidate, source = copy.deepcopy(expected), copy.deepcopy(inputs)
+        mutate(candidate, source)
+        require(not same(candidate, expected) or not same(source, inputs), 'genuine pre-native hypothesis control')
+        try:
+            check(candidate, source, expected)
+        except ValueError as error:
+            require(str(error) == cause, 'intended pre-native refusal: ' + name)
+            result.append(dict(control=name, status=1, cause=cause))
+        else:
+            raise ValueError('false-green pre-native public hypothesis control')
+    return result
+
+
+def members():
+    require(all(p.is_file() and not p.is_symlink() for p in BASE.iterdir()), 'whole regular pre-native member domain')
+    return {p.name: pin(p.read_bytes()) for p in BASE.iterdir() if p.name != 'manifest.json'}
+
+
+def save(name, value):
+    path = BASE / name
+    if path.exists():
+        require(same(load(path), value), 'whole saved pre-native product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(), 'sealed pre-native source cannot publish')
+        path.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    if (BASE / 'manifest.json').exists():
+        require(same(load(BASE / 'manifest.json'), members()), 'whole immutable pre-native source seal')
+    before = binding(); save('binding.json', before)
+    inputs = source_inputs(); save('inputs.json', inputs)
+    expected = derive(inputs); save('hypotheses.json', expected)
+    check(expected, inputs, expected); save('controls.json', controls(inputs, expected))
+    require(same(binding(), before), 'every complete own/public prerequisite conserves')
+    if args.seal:
+        save('manifest.json', members())
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

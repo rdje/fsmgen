@@ -1,0 +1,48 @@
+{
+  "after": {
+    "fixture.pl": {
+      "bytes": 2111,
+      "sha256": "05c52ae83e9c614a2b7eca41969fc1d332e9562a75ed00d868cb28918abc82d7"
+    },
+    "lib/CoordinateDependency.pm": {
+      "bytes": 144,
+      "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+    },
+    "load-body.pl": {
+      "bytes": 56,
+      "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+    },
+    "require-body.pl": {
+      "bytes": 66,
+      "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+    }
+  },
+  "before": {
+    "fixture.pl": {
+      "bytes": 2111,
+      "sha256": "05c52ae83e9c614a2b7eca41969fc1d332e9562a75ed00d868cb28918abc82d7"
+    },
+    "lib/CoordinateDependency.pm": {
+      "bytes": 144,
+      "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+    },
+    "load-body.pl": {
+      "bytes": 56,
+      "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+    },
+    "require-body.pl": {
+      "bytes": 66,
+      "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+    }
+  },
+  "command": [
+    "perl",
+    "-c",
+    "fixture.pl"
+  ],
+  "cwd": ".artifacts/public-coordinate-hypotheses/syntax",
+  "role": "Syntax compilation only: -c does not execute own observation cases. Four complete same-volume source copies conserve; no coordinate fixture observations are captured.",
+  "status": 0,
+  "stderr": "fixture.pl syntax OK\n",
+  "stdout": ""
+}

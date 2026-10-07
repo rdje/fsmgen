@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-public-hypotheses-20261007/verify.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-hypotheses-checks-20261007/run.py": {
+      "bytes": 1258,
+      "sha256": "3275e729da23f108256eefe364c8f66d02c4b4115c33389e84fe7e25352309e5"
+    },
+    "docs/audits/record-value-coordinate-public-hypotheses-20261007/verify.py": {
+      "bytes": 13954,
+      "sha256": "f63c5ebd6e44e0210ae00182d6414ba437e7db285bc3958ddd732167f62673a3"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 53815; host 42.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete source-selected public coordinate hypotheses and genuine controls; coordinate fixtures remain unexecuted.\n"
+}

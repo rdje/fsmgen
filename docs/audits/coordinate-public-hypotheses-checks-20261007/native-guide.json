@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-hypotheses-checks-20261007/verify_book.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-hypotheses-checks-20261007/run.py": {
+      "bytes": 1258,
+      "sha256": "3275e729da23f108256eefe364c8f66d02c4b4115c33389e84fe7e25352309e5"
+    },
+    "docs/audits/coordinate-public-hypotheses-checks-20261007/verify_book.py": {
+      "bytes": 4518,
+      "sha256": "ae706f6aa6905acda7f4fb57e4b6f8a289c2d8c0b9354b38da17ce2fc34922ea"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 43358; host 48.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete saved scoped source/native public hypothesis guide and genuine controls; native fixture execution and original coordinate join remain pending.\n"
+}

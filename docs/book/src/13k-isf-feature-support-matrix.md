@@ -958,6 +958,15 @@ runtime call-site lines or qualify original raw coordinates:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-source-catalog-20261007/verify.py
 ```
 
+Public coordinate hypotheses bind complete own fixture statements to source
+line and filename alternatives from public caller, eval, trace and load
+contracts. First and closing lines remain explicit before observations; public
+fixture execution and recipe selection are the next step:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-hypotheses-20261007/verify.py
+```
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.
