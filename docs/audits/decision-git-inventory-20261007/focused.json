@@ -1,0 +1,15 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/2003-decision-store-git-continuity.t",
+    "t/2004-decision-reader-snapshots.t",
+    "t/2005-decision-ceiling-stores.t",
+    "t/2010-decision-production-growth.t"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 87479; host 46.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "t/2003-decision-store-git-continuity.t .. ok\nt/2004-decision-reader-snapshots.t ...... ok\nt/2005-decision-ceiling-stores.t ........ ok\nt/2010-decision-production-growth.t ..... ok\nAll tests successful.\nFiles=4, Tests=8, 128 wallclock secs ( 0.01 usr  0.01 sys + 58.79 cusr 56.14 csys = 114.95 CPU)\nResult: PASS\n"
+}

@@ -1,0 +1,34 @@
+{
+  "byte_delta": -36,
+  "current_sha256": "6bb3974eb4c8c79bad597109e68e3402155fee63a5fe47f109d94843c9c2e07f",
+  "lf_delta": -1,
+  "limit": "Question preservation and measured non-growth are mechanical; semantic equivalence review is declared human/agent judgment, not unrestricted machine proof.",
+  "old_sha256": "2dd0439a13f90f9e7560f9e891463a73f9ed428c0d1b3f00359040bb8e6930cf",
+  "questions_after": [
+    "how do I read the original text of a sealed decision?",
+    "does archiving a decision supersede its authority?",
+    "why do early decision files contain forwarding links?",
+    "how is decision archive reconstruction checked?",
+    "how must current decision edits synchronize the authenticated catalog?",
+    "why can selected Git tree inventory overflow while the same index fits?"
+  ],
+  "questions_before": [
+    "how do I read the original text of a sealed decision?",
+    "does archiving a decision supersede its authority?",
+    "why do early decision files contain forwarding links?",
+    "how is decision archive reconstruction checked?",
+    "how must current decision edits synchronize the authenticated catalog?"
+  ],
+  "semantic_review": [
+    "Forwarding originals, ordered multi-ID reader and complete index retained.",
+    "Immutable archive, relative-link view, authority/supersession and new-record policy retained.",
+    "Independent census/source bytes and complete projection/navigation/body-search checks retained.",
+    "Regression corruption rejection and separate root-alias pressure owner retained.",
+    "Current semantic parts, exact content/digest/metadata catalog updates and staged refusal retained.",
+    "Whole worktree check and selected prior/index continuity retained.",
+    "Originals, compatibility pages and transition census stay sealed.",
+    "New canonical inventory meaning is grounded in the full source proof and T2003."
+  ],
+  "source_path": "docs/knowledge/decision-record-exact-retrieval.md",
+  "source_revision": "e0620dd2ffb04c340b91693a04f5885c8abb6595"
+}

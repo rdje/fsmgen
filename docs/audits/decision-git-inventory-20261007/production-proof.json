@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/decision-git-inventory-20261007/verify.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 87375; host 46.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"canonical_bytes\": 4109891, \"canonical_overflow_refusal\": \"Git output exceeds selected snapshot bound\", \"canonical_sha256\": \"1f3db13c8cf9f6c4cf7f3d48dde6601abd75140e27b7615f689aaaa96b1fe64d\", \"current_source_sha256\": \"60614f439a2fcda761099fe3cc705c111d52db043a5bde8d8c9402d52c7dfa01\", \"git_version\": \"git version 2.54.0 (Apple Git-157)\", \"members\": 31175, \"old_refusal\": \"Git output exceeds selected snapshot bound\", \"old_source_sha256\": \"50908bfcd21602f0f5b787ccb1b96e798e4652960a30020f8930e7b8ac152d26\", \"oracle_command\": [\"git\", \"--no-replace-objects\", \"ls-tree\", \"-r\", \"--full-tree\", \"-z\", \"e0620dd2ffb04c340b91693a04f5885c8abb6595\"], \"revision\": \"e0620dd2ffb04c340b91693a04f5885c8abb6595\", \"scope\": \"Complete fixed-revision root path/mode/object allocation and selected decision-index bytes. No submodule recursion or native historical/capture qualification.\", \"source\": \"scripts/decision_store_git.py\", \"status\": 0, \"wire_bytes\": 4203416, \"wire_sha256\": \"c56fbf448e4b17c5ce4abdcbfb7e46fb6bd20203cec879c8c0b2f56508b4b6cf\"}\n"
+}

@@ -678,6 +678,11 @@ conflicting stages, nonregular sources and missing selected blobs also refuse.
 The continuity test exercises actual index and committed-tree growth beyond
 the former count limit, followed by actual byte overflow.
 
+Committed trees are read in bounded chunks and use the index's zero-stage record
+encoding, preserving every raw path, mode and object ID within the same budget.
+Standard NUL-delimited Git output preserves unusual filenames; custom formatting
+is avoided because it can quote them.
+
 `check-continuity` additionally requires `--prior-snapshot HEAD`, `HEAD^` or an
 exact commit. It returns one bounded JSON product after authenticating both
 selected stores. Optional canonical path arguments return exact bindings,

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/decision-git-inventory-20261007/reader-epoch-probe.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 45453; host 72.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"cause\": \"whole current physical member and non-target source conservation\", \"live_extension\": \"refused\", \"scope\": \"Actual historical current predicate and current source/query input. No original capture or whole semantic reader replay.\", \"snapshot\": \"passed\", \"status\": 0}\n"
+}

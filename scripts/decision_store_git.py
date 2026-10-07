@@ -9,8 +9,9 @@ import decision_catalog as catalog_api
 
 MAX_INVENTORY_BYTES = 4_194_304
 # Every SHA-1 index record needs mode, object ID, stage, tab, a nonempty
-# path and NUL; tree records are longer. The byte cap bounds all entries,
-# including unrelated tracked evidence, without a separate growth cliff.
+# path and NUL. Committed trees use that same zero-stage representation.
+# The byte cap bounds all entries, including unrelated tracked evidence,
+# without a separate growth cliff.
 MIN_INVENTORY_RECORD_BYTES = len(b'100644 ' + b'0' * 40 + b' 0\ta\0')
 MAX_TRACKED_PATHS = MAX_INVENTORY_BYTES // MIN_INVENTORY_RECORD_BYTES
 REGULAR_MODES = ('100644', '100755')
@@ -36,7 +37,7 @@ class GitSnapshot:
             catalog_api.require(re.fullmatch(r'[0-9a-f]{40}', revision), 'unresolved Git snapshot revision')
             self.revision = revision
             listing = self._git('ls-tree', '-r', '--full-tree', '-z', revision,
-                                maximum=MAX_INVENTORY_BYTES)
+                                maximum=MAX_INVENTORY_BYTES, tree_inventory=True)
         records = listing.split(b'\0')
         catalog_api.require(records[-1] == b'' and len(records) - 1 <= MAX_TRACKED_PATHS,
                             'Git path inventory exceeds bound or is incomplete')
@@ -48,15 +49,48 @@ class GitSnapshot:
                 catalog_api.require(len(fields) == 3 and fields[2] == '0', 'conflicting Git index stages')
                 mode, object_id = fields[:2]
             else:
-                catalog_api.require(len(fields) == 3, 'malformed Git tree inventory')
-                mode, _, object_id = fields
+                catalog_api.require(len(fields) == 3 and fields[2] == '0',
+                                    'malformed Git tree inventory')
+                mode, object_id = fields[:2]
             catalog_api.require(re.fullmatch(r'[0-9a-f]{40}', object_id), 'malformed Git object identity')
             catalog_api.require(path not in self.objects, 'duplicate Git inventory path')
             self.objects[path] = (mode, object_id)
         self.root_paths = tuple(sorted(path for path in self.objects
                                        if re.fullmatch(r'docs/decisions/[^/]+\.md', path)))
 
-    def _git(self, *arguments, maximum):
+    @staticmethod
+    def _read_tree_inventory(stream, maximum):
+        """Bound canonical metadata while preserving standard -z raw paths.
+
+        Standard tree headers carry an object type instead of an index stage.
+        Parse bounded chunks and retain the equivalent zero-stage encoding;
+        custom Git formatters can quote paths even with -z.
+        """
+        output = bytearray()
+        pending = b''
+        while block := stream.read1(65_536):
+            records = (pending + block).split(b'\0')
+            pending = records.pop()
+            for record in records:
+                header, separator, path = record.partition(b'\t')
+                fields = header.split(b' ')
+                catalog_api.require(separator and path and len(fields) == 3,
+                                    'malformed Git tree inventory')
+                mode, kind, object_id = fields
+                catalog_api.require(kind == (b'commit' if mode == b'160000' else b'blob'),
+                                    'malformed Git tree inventory')
+                canonical = mode + b' ' + object_id + b' 0\t' + path + b'\0'
+                catalog_api.require(len(output) + len(canonical) <= maximum,
+                                    'Git output exceeds selected snapshot bound')
+                output.extend(canonical)
+            # A commit header is at most five bytes longer than its canonical
+            # counterpart. Bound even an incomplete or malformed wire record.
+            catalog_api.require(len(output) + len(pending) <= maximum + 5,
+                                'Git output exceeds selected snapshot bound')
+        catalog_api.require(not pending, 'Git path inventory exceeds bound or is incomplete')
+        return bytes(output)
+
+    def _git(self, *arguments, maximum, tree_inventory=False):
         # Git metadata/blob commands never recurse into a gitlink. Merge the
         # diagnostic pipe to bound both streams; any successful warning would
         # invalidate the expected metadata or content rather than substitute it.
@@ -64,7 +98,8 @@ class GitSnapshot:
         process = subprocess.Popen(['git', '--no-replace-objects', '-C', str(self.root), *arguments],
                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=environment)
         try:
-            output = process.stdout.read(maximum + 1)
+            output = (self._read_tree_inventory(process.stdout, maximum) if tree_inventory
+                      else process.stdout.read(maximum + 1))
             if len(output) > maximum:
                 process.kill()
                 catalog_api.require(False, 'Git output exceeds selected snapshot bound')

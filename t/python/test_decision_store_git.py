@@ -5,6 +5,7 @@ import subprocess
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[2]
@@ -139,6 +140,52 @@ class SelectedStoreAccess(unittest.TestCase):
                 self.assertGreater(len(self.git(*command)), 4_194_304)
                 with self.assertRaisesRegex(ValueError, 'Git output exceeds selected snapshot bound'):
                     selected.GitSnapshot(self.root, selector)
+
+    def test_equivalent_tree_and_index_fit_the_same_exact_byte_boundary(self):
+        # Include path bytes which a text-oriented or quoted inventory could
+        # silently change, and nonregular modes which must remain visible.
+        names = ['ordinary.bin', 'spaces and \u03bb.bin', 'tab\tnewline\n.bin']
+        for name in names:
+            self.fixture.write(name, 'retained payload\n')
+        (self.root / 'linked.bin').symlink_to('ordinary.bin')
+        self.git('add', '.')
+        revision = self.git('rev-parse', 'HEAD').decode().strip()
+        self.git('update-index', '--add', '--cacheinfo', f'160000,{revision},external')
+        self.git('commit', '-q', '-m', 'fixture complete mode and raw path inventory')
+        index_bytes = self.git('ls-files', '--stage', '-z')
+        tree_bytes = self.git('ls-tree', '-r', '--full-tree', '-z', 'HEAD')
+        self.assertGreater(len(tree_bytes), len(index_bytes))
+        # The standard tree enumeration is the independent allocation oracle;
+        # this does not borrow the production --format expression.
+        expected = {}
+        for record in tree_bytes.split(b'\0')[:-1]:
+            header, path = record.split(b'\t', 1)
+            mode, kind, object_id = header.decode('ascii').split()
+            self.assertIn(kind, ('blob', 'commit'))
+            expected[path.decode('utf-8')] = (mode, object_id)
+        with patch.object(selected, 'MAX_INVENTORY_BYTES', len(index_bytes)):
+            # The old tree producer fails at this same population/bound.
+            snapshot = selected.GitSnapshot(self.root, 'index')
+            with self.assertRaisesRegex(ValueError, 'Git output exceeds selected snapshot bound'):
+                snapshot._git('ls-tree', '-r', '--full-tree', '-z', 'HEAD',
+                              maximum=len(index_bytes))
+            for selector in ('index', 'HEAD'):
+                with self.subTest(selector=selector):
+                    snapshot = selected.GitSnapshot(self.root, selector)
+                    self.assertEqual(snapshot.objects, expected)
+                    self.load(snapshot)
+                    for name in names[:2]:
+                        self.assertEqual(snapshot.read(name), b'retained payload\n')
+                    with self.assertRaisesRegex(ValueError, 'file path: invalid string'):
+                        snapshot.read(names[2])
+                    for name in ('linked.bin', 'external'):
+                        with self.assertRaisesRegex(ValueError, 'not a regular blob'):
+                            snapshot.read(name)
+        with patch.object(selected, 'MAX_INVENTORY_BYTES', len(index_bytes) - 1):
+            for selector in ('index', 'HEAD'):
+                with self.subTest(overflow_selector=selector):
+                    with self.assertRaisesRegex(ValueError, 'Git output exceeds selected snapshot bound'):
+                        selected.GitSnapshot(self.root, selector)
 
     def test_unsafe_missing_unbounded_selectors_paths_and_blobs_refuse(self):
         for selector in ('HEAD:docs/decisions/INDEX.md', '--help', '../HEAD', 'HEAD~99'):

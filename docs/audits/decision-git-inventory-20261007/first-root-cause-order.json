@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "-S",
+    "MAX_INVENTORY_BYTES",
+    "--",
+    "scripts/decision_store_git.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "commit f9329c41c4e6831a9ca45b745df91e0056568198\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Fri Oct 2 02:04:38 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.4.4.3: preserve complete predecessor products\n    \n    Authenticate exact old/current parser and scheduler selection in parent and real\n    native/API/newline transports. Preserve thirteen finite complete input/scalar/\n    storage/generated source, lowering, carrier, public and HDL generation products.\n    Retain full typed composition data, raw failures and complete response fragments.\n    \n    Repair the selected decision-reader global count cliff within its unchanged\n    metadata byte budget. Qualify real Git growth and overflow plus reader/authority\n    controls. Synchronize canonical downstream/public typed port and alias contracts\n    with actual complete source/report/profile metadata and their rendered example.\n    \n    Validation: T2036 Files=1/Tests=38; decision growth 1/2 and regression 4/8;\n    docs/examples 6/622; mdBook/syntax, complete saved witness and hostile verification.\n    Maintained output corpus is next; output generated/field/runtime remain open.\n"
+}
