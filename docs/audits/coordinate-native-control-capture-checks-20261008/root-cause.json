@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "git",
+    "log",
+    "-1",
+    "ef5ab4b222",
+    "-S",
+    "Captures and observed native refusals remain pending:",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-capture-checks-20261008/run.py": {
+      "bytes": 1263,
+      "sha256": "66ac64ca56487069691ad81d78c0efcf64ab19e0e10e043cafd6b758d3c764d3"
+    },
+    "docs/book/src/13k-isf-feature-support-matrix.md": {
+      "bytes": 208082,
+      "sha256": "d5400a970c26a56b7ce4ba1591f5fbc6c96a3498d07f307f4864ed46a876ea27"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 44252; host 60.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "commit ef5ab4b222a3d0c9a86d2d8431c9a6b62190a452\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Thu Oct 8 00:38:05 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2: bind native control plans before execution\n    \n    Bind complete fixed e785 source/native/actual prerequisites and every done owner. Retain complete independently authored caller, line, fresh-root and borrowed-source variants with exact source differences and predeclared refusing predicates.\n    \n    Seal source-only plans before any native execution. Independent binary source/allocation checks, genuine full candidates, prior origin replay and focused current/book checks pass. Synchronize the additive source/native guide, measured aggregate, bounded continuity and current claim census; capture and semantic qualification remain separate pending successors.\n"
+}

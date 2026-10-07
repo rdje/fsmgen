@@ -1,0 +1,50 @@
+{
+  "executable_after": {
+    "bytes": 167184,
+    "sha256": "85e5621137742a37be052f58800372b2005f91f609ad55019832214b5d9e61bc"
+  },
+  "executable_before": {
+    "bytes": 167184,
+    "sha256": "85e5621137742a37be052f58800372b2005f91f609ad55019832214b5d9e61bc"
+  },
+  "modules": {
+    "command": [
+      "perl",
+      "-MJSON::PP",
+      "-MCarp",
+      "-MTest::More",
+      "-e",
+      "print JSON::PP->new->canonical->encode({perl=>$^V.\"\", json_pp=>$JSON::PP::VERSION, carp=>$Carp::VERSION, test_more=>$Test::More::VERSION}), \"\\n\";"
+    ],
+    "cwd": ".artifacts/public-coordinate-native-controls-20261008/wrong-caller",
+    "status": 0,
+    "stderr": "",
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": "{\"carp\":\"1.52\",\"json_pp\":\"4.06\",\"perl\":\"v5.34.1\",\"test_more\":\"1.302183\"}\n",
+    "stdout_identity": {
+      "bytes": 73,
+      "sha256": "296f9beb628803377f28450939272143c1f4db52d3c10deee1db05f32f3d838b"
+    }
+  },
+  "version": {
+    "command": [
+      "perl",
+      "-V"
+    ],
+    "cwd": ".artifacts/public-coordinate-native-controls-20261008/wrong-caller",
+    "status": 0,
+    "stderr": "",
+    "stderr_identity": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": "Summary of my perl5 (revision 5 version 34 subversion 1) configuration:\n   \n  Platform:\n    osname=darwin\n    osvers=26.0\n    archname=darwin-thread-multi-2level\n    uname='darwin q7fsz.p1s.plx.sd.apple.com 26.0 darwin kernel version 23.0.0: thu feb 1 13:18:34 pst 2024; root:xnu-10002.1.11.100.4~1development_x86_64 x86_64 '\n    config_args='-ds -e -Dprefix=/usr -Dccflags=-g  -pipe  -Dldflags= -Dman3ext=3pm -Duseithreads -Duseshrplib -Dinc_version_list=none -Dcc=cc'\n    hint=recommended\n    useposix=true\n    d_sigaction=define\n    useithreads=define\n    usemultiplicity=define\n    use64bitint=define\n    use64bitall=define\n    uselongdouble=undef\n    usemymalloc=n\n    default_inc_excludes_dot=define\n  Compiler:\n    cc='cc'\n    ccflags =' -g -pipe -fno-strict-aliasing -fstack-protector-strong -DPERL_USE_SAFE_PUTENV'\n    optimize='-Os'\n    cppflags='-g -pipe -fno-strict-aliasing -fstack-protector-strong'\n    ccversion=''\n    gccversion='Apple LLVM 21.0.0 (clang-2100.3.31.1) [+internal-os]'\n    gccosandvers=''\n    intsize=4\n    longsize=8\n    ptrsize=8\n    doublesize=8\n    byteorder=12345678\n    doublekind=3\n    d_longlong=define\n    longlongsize=8\n    d_longdbl=define\n    longdblsize=16\n    longdblkind=3\n    ivtype='long'\n    ivsize=8\n    nvtype='double'\n    nvsize=8\n    Off_t='off_t'\n    lseeksize=8\n    alignbytes=8\n    prototype=define\n  Linker and Libraries:\n    ld='cc'\n    ldflags =' -fstack-protector-strong'\n    libpth=/AppleInternal/Library/BuildRoots/4~CV18ugAZl3EJDnwMsx6EUm5vgooPWVoCMlLJDVE/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.Internal.sdk/usr/local/lib /AppleInternal/Library/BuildRoots/4~CV18ugAZl3EJDnwMsx6EUm5vgooPWVoCMlLJDVE/Applications/Xcode.app/Contents/Developer/Toolchains/OSX27.0.xctoolchain/usr/lib/clang/21/lib /AppleInternal/Library/BuildRoots/4~CV18ugAZl3EJDnwMsx6EUm5vgooPWVoCMlLJDVE/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.Internal.sdk/usr/lib /AppleInternal/Library/BuildRoots/4~CV18ugAZl3EJDnwMsx6EUm5vgooPWVoCMlLJDVE/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib /usr/lib /usr/local/lib\n    libs= \n    perllibs=\n    libc=\n    so=dylib\n    useshrplib=true\n    libperl=libperl.dylib\n    gnulibc_version=''\n  Dynamic Linking:\n    dlsrc=dl_dlopen.xs\n    dlext=bundle\n    d_dlsymun=undef\n    ccdlflags=' '\n    cccdlflags=' '\n    lddlflags=' -bundle -undefined dynamic_lookup -fstack-protector-strong'\n\n\nCharacteristics of this binary (from libperl): \n  Compile-time options:\n    HAS_TIMES\n    MULTIPLICITY\n    PERLIO_LAYERS\n    PERL_COPY_ON_WRITE\n    PERL_DONT_CREATE_GVSV\n    PERL_IMPLICIT_CONTEXT\n    PERL_MALLOC_WRAP\n    PERL_OP_PARENT\n    PERL_PRESERVE_IVUV\n    PERL_USE_SAFE_PUTENV\n    USE_64_BIT_ALL\n    USE_64_BIT_INT\n    USE_ITHREADS\n    USE_LARGE_FILES\n    USE_LOCALE\n    USE_LOCALE_COLLATE\n    USE_LOCALE_CTYPE\n    USE_LOCALE_NUMERIC\n    USE_LOCALE_TIME\n    USE_PERLIO\n    USE_PERL_ATOF\n    USE_REENTRANT_API\n    USE_THREAD_SAFE_LOCALE\n  Locally applied patches:\n    /Library/Perl/Updates/<version> comes before system perl directories\n    installprivlib and installarchlib points to the Updates directory\n  Built under darwin\n  Compiled at Aug  8 2026 13:41:08\n  %ENV:\n    PERL5LIB=\"\"\n    PERL5OPT=\"\"\n    PERL_CPANM_HOME=\"/Volumes/SSD/Documents/github/fsmgen/.artifacts/cache/cpanm\"\n  @INC:\n    /Library/Perl/5.34/darwin-thread-multi-2level\n    /Library/Perl/5.34\n    /Network/Library/Perl/5.34/darwin-thread-multi-2level\n    /Network/Library/Perl/5.34\n    /Library/Perl/Updates/5.34.1\n    /System/Library/Perl/5.34/darwin-thread-multi-2level\n    /System/Library/Perl/5.34\n    /System/Library/Perl/Extras/5.34/darwin-thread-multi-2level\n    /System/Library/Perl/Extras/5.34\n",
+    "stdout_identity": {
+      "bytes": 3780,
+      "sha256": "ec77f23692e3e7c3f6605d1d2a88e803dba7d07b1d95667c93cd0ad87447a40f"
+    }
+  }
+}

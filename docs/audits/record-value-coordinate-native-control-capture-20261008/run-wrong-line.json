@@ -1,0 +1,76 @@
+{
+  "actual": {
+    "command": [
+      "perl",
+      "fixture.pl"
+    ],
+    "cwd": ".artifacts/public-coordinate-native-controls-20261008/wrong-line",
+    "status": 0,
+    "stderr": "1..1\n# Subtest: public coordinate callback\n    ok 1 - public callback ran\n    1..1\nok 1 - public coordinate callback\n",
+    "stderr_identity": {
+      "bytes": 117,
+      "sha256": "40052c2570816ad8b7e78f099185cf0ac64ab0338403b3c6f76a1101dc536ebf"
+    },
+    "stdout": "{\"module_filename\":\"lib/CoordinateDependency.pm\",\"observations\":[{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"CoordinatePublic\",\"fixture.pl\",36,\"CoordinatePublic::observe\",1,null,null,null],[\"main\",\"fixture.pl\",69,\"CoordinatePublic::single\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"single\\\") called at fixture.pl line 36\\n\\tCoordinatePublic::single() called at fixture.pl line 69\\n\",\"guard_ok\":null,\"role\":\"single\",\"trace\":\"public coordinate fixture\\n at fixture.pl line 36.\\n\\tCoordinatePublic::single() called at fixture.pl line 69\\n\"},{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"CoordinatePublic\",\"fixture.pl\",39,\"CoordinatePublic::observe\",1,null,null,null],[\"main\",\"fixture.pl\",70,\"CoordinatePublic::multiline\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"multiline\\\") called at fixture.pl line 39\\n\\tCoordinatePublic::multiline() called at fixture.pl line 70\\n\",\"guard_ok\":null,\"role\":\"multiline\",\"trace\":\"public coordinate fixture\\n at fixture.pl line 39.\\n\\tCoordinatePublic::multiline() called at fixture.pl line 70\\n\"},{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"CoordinatePublic\",\"fixture.pl\",44,\"CoordinatePublic::observe\",1,null,null,null],[\"main\",\"fixture.pl\",71,\"CoordinatePublic::postfix\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"postfix\\\") called at fixture.pl line 44\\n\\tCoordinatePublic::postfix() called at fixture.pl line 71\\n\",\"guard_ok\":null,\"role\":\"postfix\",\"trace\":\"public coordinate fixture\\n at fixture.pl line 44.\\n\\tCoordinatePublic::postfix() called at fixture.pl line 71\\n\"},{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"CoordinatePublic\",\"fixture.pl\",48,\"CoordinatePublic::observe\",1,null,null,null],[\"CoordinatePublic\",\"fixture.pl\",47,\"(eval)\",0,\"\",null,null],[\"main\",\"fixture.pl\",72,\"CoordinatePublic::block_eval\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"block-eval\\\") called at fixture.pl line 48\\n\\teval {...} called at fixture.pl line 47\\n\\tCoordinatePublic::block_eval() called at fixture.pl line 72\\n\",\"guard_ok\":null,\"role\":\"block-eval\",\"trace\":\"public coordinate fixture\\n at fixture.pl line 48.\\n\\teval {...} called at fixture.pl line 47\\n\\tCoordinatePublic::block_eval() called at fixture.pl line 72\\n\"},{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"CoordinatePublic\",\"fixture.pl\",54,\"CoordinatePublic::observe\",1,null,null,null],[\"CoordinatePublic\",\"fixture.pl\",55,\"CoordinatePublic::__ANON__\",1,null,null,null],[\"main\",\"fixture.pl\",73,\"CoordinatePublic::anonymous\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"anonymous\\\") called at fixture.pl line 54\\n\\tCoordinatePublic::__ANON__() called at fixture.pl line 55\\n\\tCoordinatePublic::anonymous() called at fixture.pl line 73\\n\",\"guard_ok\":null,\"role\":\"anonymous\",\"trace\":\"public coordinate fixture\\n at fixture.pl line 54.\\n\\tCoordinatePublic::__ANON__() called at fixture.pl line 55\\n\\tCoordinatePublic::anonymous() called at fixture.pl line 73\\n\"},{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"CoordinatePublic\",\"./load-body.pl\",1,\"CoordinatePublic::observe\",1,null,null,null],[\"CoordinatePublic\",\"fixture.pl\",58,\"(eval)\",0,\"\",\"./load-body.pl\",1],[\"main\",\"fixture.pl\",74,\"CoordinatePublic::load\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"do-load\\\") called at ./load-body.pl line 1\\n\\trequire ./load-body.pl called at fixture.pl line 58\\n\\tCoordinatePublic::load() called at fixture.pl line 74\\n\",\"guard_ok\":null,\"role\":\"do-load\",\"trace\":\"public coordinate fixture\\n at ./load-body.pl line 1.\\n\\trequire ./load-body.pl called at fixture.pl line 58\\n\\tCoordinatePublic::load() called at fixture.pl line 74\\n\"},{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"CoordinatePublic\",\"./require-body.pl\",1,\"CoordinatePublic::observe\",1,null,null,null],[\"CoordinatePublic\",\"fixture.pl\",61,\"(eval)\",0,\"\",\"./require-body.pl\",1],[\"main\",\"fixture.pl\",74,\"CoordinatePublic::load\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"require-load\\\") called at ./require-body.pl line 1\\n\\trequire ./require-body.pl called at fixture.pl line 61\\n\\tCoordinatePublic::load() called at fixture.pl line 74\\n\",\"guard_ok\":null,\"role\":\"require-load\",\"trace\":\"public coordinate fixture\\n at ./require-body.pl line 1.\\n\\trequire ./require-body.pl called at fixture.pl line 61\\n\\tCoordinatePublic::load() called at fixture.pl line 74\\n\"},{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"CoordinateDependency\",\"lib/CoordinateDependency.pm\",5,\"CoordinatePublic::observe\",1,null,null,null],[\"main\",\"fixture.pl\",75,\"CoordinateDependency::module_call\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"module-call\\\") called at lib/CoordinateDependency.pm line 5\\n\\tCoordinateDependency::module_call() called at fixture.pl line 75\\n\",\"guard_ok\":null,\"role\":\"module-call\",\"trace\":\"public coordinate fixture\\n at lib/CoordinateDependency.pm line 5.\\n\\tCoordinateDependency::module_call() called at fixture.pl line 75\\n\"},{\"frames\":[[\"CoordinatePublic\",\"fixture.pl\",22,\"CoordinatePublic::frames\",1,\"\",null,null],[\"main\",\"fixture.pl\",78,\"CoordinatePublic::observe\",1,null,null,null],[\"Test::Builder\",\"/System/Library/Perl/5.34/Test/Builder.pm\",374,\"main::__ANON__\",1,null,null,null],[\"Test::Builder\",\"/System/Library/Perl/5.34/Test/Builder.pm\",374,\"(eval)\",0,\"\",null,null],[\"Test::More\",\"/System/Library/Perl/5.34/Test/More.pm\",809,\"Test::Builder::subtest\",1,null,null,null],[\"main\",\"fixture.pl\",80,\"Test::More::subtest\",1,null,null,null]],\"guard_error\":\"public coordinate guard\\n at fixture.pl line 24.\\n\\teval {...} called at fixture.pl line 24\\n\\tCoordinatePublic::observe(\\\"subtest\\\") called at fixture.pl line 78\\n\\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\\n\\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\\n\\tTest::Builder::subtest(Test::Builder=HASH(0x7934dc2570), \\\"public coordinate callback\\\", CODE(0x79348e2df8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\\n\\tTest::More::subtest(\\\"public coordinate callback\\\", CODE(0x79348e2df8)) called at fixture.pl line 80\\n\",\"guard_ok\":null,\"role\":\"subtest\",\"trace\":\"public coordinate fixture\\n at fixture.pl line 78.\\n\\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\\n\\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\\n\\tTest::Builder::subtest(Test::Builder=HASH(0x7934dc2570), \\\"public coordinate callback\\\", CODE(0x79348e2df8)) called at /System/Library/Perl/5.34/Test/More.pm line 809\\n\\tTest::More::subtest(\\\"public coordinate callback\\\", CODE(0x79348e2df8)) called at fixture.pl line 80\\n\"}]}\n",
+    "stdout_identity": {
+      "bytes": 7704,
+      "sha256": "bc043cb62fc704251dc13e77bb2dbda5b119c0bc7c3673cb3d9befa1e7f1328b"
+    }
+  },
+  "after": {
+    "fixture.pl": {
+      "bytes": 2116,
+      "sha256": "2dde787c2eb9631ddd7a35eb98c98dc499afef81831040f988f161df0af4f8d9"
+    },
+    "lib/CoordinateDependency.pm": {
+      "bytes": 144,
+      "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+    },
+    "load-body.pl": {
+      "bytes": 56,
+      "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+    },
+    "require-body.pl": {
+      "bytes": 66,
+      "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+    }
+  },
+  "before": {
+    "fixture.pl": {
+      "bytes": 2116,
+      "sha256": "2dde787c2eb9631ddd7a35eb98c98dc499afef81831040f988f161df0af4f8d9"
+    },
+    "lib/CoordinateDependency.pm": {
+      "bytes": 144,
+      "sha256": "e5a713aefaadf48e1cedaa8599f6806ecce37436fcef079ebdd6550b521da6bb"
+    },
+    "load-body.pl": {
+      "bytes": 56,
+      "sha256": "e6db0e613fb948e2d58f0687d5a1042a1814933eaa77decd9b8d36a86daa81b4"
+    },
+    "require-body.pl": {
+      "bytes": 66,
+      "sha256": "9a8a0efde1597506751aa58bed96093ca0406aa3a5a844f328310e88ad9623b3"
+    }
+  },
+  "environment": {
+    "PERL5LIB": "",
+    "PERL5OPT": "",
+    "runtime_absolute_temporary_values": true,
+    "temporary_root": ".artifacts/public-coordinate-native-controls-20261008/wrong-line/.tmp"
+  },
+  "invocation": {
+    "command": [
+      "perl",
+      "fixture.pl"
+    ],
+    "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-line"
+  },
+  "name": "wrong-line",
+  "source": {
+    "fixture.pl": "use strict;\nuse warnings;\nuse lib 'lib';\nuse JSON::PP;\nuse Carp ();\nuse Test::More;\nuse CoordinateDependency;\n\npackage CoordinatePublic;\nour @observations;\nsub frames {\n    my @rows;\n    for my $depth (0 .. 127) {\n        my @frame = caller($depth);\n        last unless @frame;\n        push @rows, [@frame[0 .. 7]];\n    }\n    return \\@rows;\n}\nsub observe {\n    my ($role) = @_;\n    my $frames = frames();\n    my $trace = Carp::longmess(\"public coordinate fixture\\n\");\n    my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };\n    my $error = $@;\n    push @observations, {role => $role, frames => $frames, trace => $trace,\n        guard_ok => $ok, guard_error => $error};\n    return 1;\n}\nsub single {\n\n\n\n\n\n    observe('single'); # site single\n}\nsub multiline {\n    observe( # site multiline\n        'multiline'\n    ); # end multiline\n}\nsub postfix {\n    observe('postfix') for 1 .. 1; # site postfix\n}\nsub block_eval {\n    my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary\n    die $@ unless $ok;\n}\nsub anonymous {\n    my $body = sub { observe('anonymous'); }; # site anonymous\n    $body->(); # site anonymous delegate\n}\nsub load {\n    my $value = do './load-body.pl'; # site do boundary\n    die $@ if $@;\n    die $! unless defined $value;\n    my $required = require './require-body.pl'; # site require boundary\n    die 'public require result' unless $required;\n}\n\npackage main;\nmy $builder = Test::More->builder;\n$builder->output(\\*STDERR);\nplan tests => 1;\nCoordinatePublic::single();\nCoordinatePublic::multiline();\nCoordinatePublic::postfix();\nCoordinatePublic::block_eval();\nCoordinatePublic::anonymous();\nCoordinatePublic::load();\nCoordinateDependency::module_call();\nmy $subtest = Test::More->can('subtest');\n$subtest->('public coordinate callback', sub {\n    CoordinatePublic::observe('subtest'); # site subtest\n    pass('public callback ran');\n}); # end subtest boundary\nprint JSON::PP->new->canonical->encode({observations => \\@CoordinatePublic::observations,\n    module_filename => $INC{'CoordinateDependency.pm'}}), \"\\n\";\n",
+    "lib/CoordinateDependency.pm": "package CoordinateDependency;\nuse strict;\nuse warnings;\nsub module_call {\n    CoordinatePublic::observe('module-call'); # site module-call\n}\n1;\n",
+    "load-body.pl": "CoordinatePublic::observe('do-load'); # site do-load\n1;\n",
+    "require-body.pl": "CoordinatePublic::observe('require-load'); # site require-load\n1;\n"
+  }
+}

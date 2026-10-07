@@ -998,10 +998,19 @@ changes and expected caller, line, invocation-root and borrowed-source refusals.
 Each fresh control root is valid for capture custody. Root qualification compares
 its actual location with the unchanged base invocation; source controls compare
 coordinates with the unchanged good declarations. The source-only reader checks
-these plans before execution. Captures and observed native refusals remain pending:
+these plans before execution. Native semantic refusal qualification remains pending:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-control-plans-20261008/verify.py
+```
+
+Dated native executions now retain complete variant sources, raw caller frames,
+trace/error bytes, public tool metadata and per-run checkpoints in their declared
+fresh roots. The custody reader verifies these saved results without executing
+the captures again. Semantic refusal qualification remains a separate step:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-control-capture-20261008/verify.py
 ```
 
 The own subtest source model now assigns original refusals to their complete

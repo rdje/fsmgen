@@ -1,0 +1,172 @@
+{
+  "binding": {
+    "members": {
+      "docs/audits/coordinate-native-control-plan-checks-20261008/book-addition.txt": {
+        "bytes": 617,
+        "sha256": "3e68319b773695a307f0bf7eeed557c75d1d14b7513405fbdc3523451fc03170"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/book-before.md.txt": {
+        "bytes": 207011,
+        "sha256": "77598fc11e78bcdad600f2d514e93421703aafd67ebb2dbd46b4ab5bd2d4544c"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/book-final.json": {
+        "bytes": 914,
+        "sha256": "54bd7617e38c2f27d4c81dce9c1eb8ce3d32a3778b95568de10f0eeece3a0d79"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/book-input.html": {
+        "bytes": 245010,
+        "sha256": "249f0722a0fa6d55be35f95d00e15d981b31d02e17d15ce36a0fa305da14cf54"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/book-proof.json": {
+        "bytes": 4603,
+        "sha256": "12d0a945120e169ea5486df661fd3a927f6a29d5c3beaedcb256f6f3da53461d"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/book-source.md.txt": {
+        "bytes": 207628,
+        "sha256": "5dc4dcc1f9c596b777748821ce99a567036dd7ab8303cd48168d08e301bc5c07"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/book.json": {
+        "bytes": 914,
+        "sha256": "3c0d4d911e3460813f80ffc26f4163d55288303f0c28c3aa19d238956002b798"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/claim-inventory.json": {
+        "bytes": 1130,
+        "sha256": "9e4b6b116a86aeaf9d5d531d53c1368c19335a6d232f2be26654d023f0a7f0d0"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/commit-subject.txt": {
+        "bytes": 163,
+        "sha256": "d5990256bd41b9b6d53d38194e67fc2eefefde5b04323fdaeb74ba2e9ab0491e"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/doctrines.json": {
+        "bytes": 62800,
+        "sha256": "56cf9a7753e214f17c08702496b71fcba1802df7474b069a98d0debfb152fa31"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/final-native.json": {
+        "bytes": 986,
+        "sha256": "a32ba3ce2afaa682d51567d98deb9ca46428394249f279cd66a501500de34462"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/focused.json": {
+        "bytes": 1503,
+        "sha256": "4de153e7880be5d8ece56ec70e8375c77d8b2a16270dccd0fee04c577eee6a36"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/native-guide.json": {
+        "bytes": 1014,
+        "sha256": "985014a804317fe83b8acdca3fb495df403f8bd7cdfe9612d49fc1502ea39b84"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/prerequisite-approved.json": {
+        "bytes": 2274,
+        "sha256": "6595f5192bc9e87969c35f3639e013f2928af1e3e83dfc1c8c392b99514a5870"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/prerequisite.json": {
+        "bytes": 901,
+        "sha256": "475edf417af3ddf0a41a8f46678c57d9a235c9a306abba5346f9dabf894068c7"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/proof.json": {
+        "bytes": 2004,
+        "sha256": "cefe0b8f00d73ae196dd599c522fa66277548bc5ef38603c0b3a653c5c0c5cea"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/root-cause-final.json": {
+        "bytes": 1810,
+        "sha256": "7bce5cfc193d006318afb8754bdb1f496b6f12342eefbbb0fc117921e4f13259"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/root-cause.json": {
+        "bytes": 905,
+        "sha256": "4bfe275aeda1079b90bb892acc9cc766367ce3167f9f36077198ee489d1b3752"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/run.py": {
+        "bytes": 1260,
+        "sha256": "bc4ed259d222d4219339341113c59cf12b20d5348694543bd0824052e806484c"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/saved-result.json": {
+        "bytes": 1021,
+        "sha256": "950595da5c81766fdb407928c52050f97edbd481f00911aa88546b2af5cb441c"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/seal.json": {
+        "bytes": 990,
+        "sha256": "9d120e5e74c7f02ea9eccd0cbb78afa5038c1cd6b18b8d75ac9d3bd12694c72d"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/task-capacity.json": {
+        "bytes": 927,
+        "sha256": "8df67c2e32b6a4c6ca880ed6742deff3a31a80c00edc0b2b817dfcde7bc58663"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/verify_book.py": {
+        "bytes": 4710,
+        "sha256": "69c333c76d7d4704c60963aab45165cfdc2389b8202d2cd51e76bcb68e272436"
+      },
+      "docs/audits/coordinate-native-control-plan-checks-20261008/verify_saved.py": {
+        "bytes": 14042,
+        "sha256": "8ba58db16e6a3060023974eaa35242baaad1013a9b501524193b1451add4d7ff"
+      },
+      "docs/audits/record-value-coordinate-native-control-plans-20261008/binding.json": {
+        "bytes": 72138,
+        "sha256": "1398f180a58109cf214e4d2bc849116762544c854654ca1e6a05e115ba812538"
+      },
+      "docs/audits/record-value-coordinate-native-control-plans-20261008/controls.json": {
+        "bytes": 133297,
+        "sha256": "89c72d701e155d9f56fb8741ea557ff104c55f15d5034ab9f06183fd3a85ed36"
+      },
+      "docs/audits/record-value-coordinate-native-control-plans-20261008/inputs.json": {
+        "bytes": 20218,
+        "sha256": "c13d0e11be1d11069e22c21c046e3fbf31bea9950f64e27c31f8c7494a2bd313"
+      },
+      "docs/audits/record-value-coordinate-native-control-plans-20261008/manifest.json": {
+        "bytes": 751,
+        "sha256": "e07761fd31a53bfd06250464f604bbb31041889e20e018fa873db96a75028051"
+      },
+      "docs/audits/record-value-coordinate-native-control-plans-20261008/plans.json": {
+        "bytes": 37346,
+        "sha256": "a1f2da356215f889b1c98ac822d5918e4c6aaf245ad0051305b3635d17741382"
+      },
+      "docs/audits/record-value-coordinate-native-control-plans-20261008/scope.txt": {
+        "bytes": 2034,
+        "sha256": "78037e756b27264ed423dba9822172b962405961c9e3dcf234885fc56c9a2169"
+      },
+      "docs/audits/record-value-coordinate-native-control-plans-20261008/verify.py": {
+        "bytes": 10549,
+        "sha256": "9adad856a4cb09b9b0ff8fb56fa35e03c853f3c08bf4afba6960354e4f56e1d5"
+      }
+    },
+    "owner": "- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2`\n  Status: `done`\n  Goal: `Commit complete native bad-variant source plans and expected separating refusals before execution.`\n  Acceptance: `Authenticate complete committed e78541a5 source/caller/origin/capture/actual domains and done owners. Independently author full caller-namespace, line-shift, fresh-root and borrowed-source variants from exact own fixture bytes; bind every source change, planned invocation and source-selected expected refusal. Conserve all original bytes and name the legitimate control-root versus unchanged base-root semantic boundary. Genuine source/member/kind/root/scope controls and independent binary allocation checks qualify. No variant executes before this plan commits.`\n  Verification: `Complete fixed e785 coordinate/public source/native/programme/actual domain and every done owner authenticate without modifying predecessors. Complete caller namespace, five-blank-line insertion, source-identical fresh-root and renamed borrowed-load variants retain full sources/differences/invocations and source-selected expected refusing predicates. Legitimate control-root custody stays distinct from unchanged base-root semantics; no actual root is rewritten. Immutable plan seal, six full producer controls and independent binary source/LF/allocation reconstruction with six genuine product refusals pass. Fresh whole prior origin-result replay and instrument-pinned actual plan receipts qualify. First sandbox process-inspection refusal retains; approved unchanged guard replay resolves it. Guarded focused current/public book All tests successful Files3 Tests310; complete additive source/native guide, exact aggregate and genuine scope/route/status controls pass. Native captures and observed refusals remain pending separate successors; original/private/formatter/toolchain/address/visual/HIAL/full-CI/push meanings are unchanged. Fresh current/native delivery, claim census and staged doctrine/hooks gate this commit.`\n  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2: bind native control plans before execution`\n\n",
+    "revision": "ef5ab4b222a3d0c9a86d2d8431c9a6b62190a452",
+    "task_identity": {
+      "bytes": 1360766,
+      "sha256": "6a3c584e16b67bcc3145b8a5b17471bd2d3c72d597bd14790426ac90184ed575"
+    }
+  },
+  "capture_programme": {
+    "bytes": 6985,
+    "sha256": "a79cd50fae07b60bd670a61ec53b66b60cc2a2b144fe1d044b8cef90d34821d1"
+  },
+  "captured_utc": "2026-10-07T22:41:04.152650+00:00",
+  "planned_invocations": [
+    {
+      "command": [
+        "perl",
+        "fixture.pl"
+      ],
+      "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-caller"
+    },
+    {
+      "command": [
+        "perl",
+        "fixture.pl"
+      ],
+      "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-line"
+    },
+    {
+      "command": [
+        "perl",
+        "fixture.pl"
+      ],
+      "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-root"
+    },
+    {
+      "command": [
+        "perl",
+        "fixture.pl"
+      ],
+      "root": ".artifacts/public-coordinate-native-controls-20261008/borrowed-source"
+    }
+  ],
+  "scope": "Dated native control source/wire custody only; native semantic refusals and original/private/formatter/toolchain identities remain unqualified."
+}

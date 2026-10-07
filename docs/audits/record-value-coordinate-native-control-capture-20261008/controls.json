@@ -1,0 +1,47 @@
+[
+  {
+    "cause": "integer actual control native success",
+    "control": "Boolean-status",
+    "status": 1
+  },
+  {
+    "cause": "integer actual control native success",
+    "control": "float-status",
+    "status": 1
+  },
+  {
+    "cause": "complete declared native control run population",
+    "control": "lost-run",
+    "status": 1
+  },
+  {
+    "cause": "exact legitimate control native command and actual root",
+    "control": "borrowed-root",
+    "status": 1
+  },
+  {
+    "cause": "every complete native variant source member conserves",
+    "control": "lost-source-member",
+    "status": 1
+  },
+  {
+    "cause": "complete independently committed native variant source bytes",
+    "control": "borrowed-source",
+    "status": 1
+  },
+  {
+    "cause": "whole raw native control stream identity",
+    "control": "lost-wire-byte",
+    "status": 1
+  },
+  {
+    "cause": "whole native control capture instrument identity",
+    "control": "borrowed-instrument",
+    "status": 1
+  },
+  {
+    "cause": "native custody cannot promote semantic or original qualification",
+    "control": "semantic-promotion",
+    "status": 1
+  }
+]

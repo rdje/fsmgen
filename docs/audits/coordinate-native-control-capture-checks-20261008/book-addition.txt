@@ -1,0 +1,9 @@
+
+Dated native executions now retain complete variant sources, raw caller frames,
+trace/error bytes, public tool metadata and per-run checkpoints in their declared
+fresh roots. The custody reader verifies these saved results without executing
+the captures again. Semantic refusal qualification remains a separate step:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-control-capture-20261008/verify.py
+```
