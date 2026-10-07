@@ -945,6 +945,9 @@ separately checks present currency. Independent coordinate source recipes and
 the original-coordinate join remain pending; original private, formatter and
 toolchain identities remain unmeasured.
 
+The current reader also independently consumes this committed admission’s complete
+historical and native result evidence before checking present source currency.
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

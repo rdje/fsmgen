@@ -39,6 +39,9 @@ class CurrentPublicationTests(unittest.TestCase):
             (observer, 'opaque retained evidence', 'formatter evidence'),
             (tooling, 'destination-locality replay and factory native copied-byte checks remain required;',
              'destination-locality replay and factory native copied-byte checks are optional;'),
+            (tooling, current.epoch_fact.QUESTION, 'borrowed historical epoch question?'),
+            (tooling, 'same-volume committed-epoch', 'measured original private'),
+            (tooling, 'Compiler/HDL test results stay unchanged', 'Compiler/HDL test results change'),
             (observer, current.COMMAND, self.prior['model']['COMMAND']),
             (core, '  - "what qualifies finite original exception classes?"\n', '')):
             with self.subTest(path=path, old=old):

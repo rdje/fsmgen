@@ -1,0 +1,35 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "scripts/check_record_value_publication.py",
+    "--build",
+    ".artifacts/coordinate-epoch-publication-book"
+  ],
+  "input": {
+    "bytes": 3148535,
+    "sha256": "298f69c782b1303a650823fe336994213ac84af52a46579afe405b68ae79a88d"
+  },
+  "instruments": {
+    "docs/audits/coordinate-epoch-publication-checks-20261007/capture.py": {
+      "bytes": 2608,
+      "sha256": "01809ff66e804f73a50163e6d121d3dd2a86097628facb696cec775df697b2be"
+    },
+    "scripts/book_source_references.py": {
+      "bytes": 11033,
+      "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+    },
+    "scripts/check_record_value_publication.py": {
+      "bytes": 11910,
+      "sha256": "0507952b90dfa379208fe8eda5b8fc19576936a424a4d593106a837bd1b0b498"
+    },
+    "scripts/record_value_epoch_fact.py": {
+      "bytes": 4150,
+      "sha256": "b4023a9d92b2b2be86debca037aa01aea3414605b46f52d30df818868775d73a"
+    }
+  },
+  "role": "Fresh complete current tooling/source/query/census/native and committed historical epoch qualification; original evidence retained.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n"
+}

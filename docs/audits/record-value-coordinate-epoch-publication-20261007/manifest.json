@@ -1,0 +1,62 @@
+{
+  "clause-review.json": {
+    "bytes": 2226,
+    "sha256": "df458045aa748505ffe3bc3dc181ab8159e1f3eb93c7d0bd48192b5383118e16"
+  },
+  "controls.json": {
+    "bytes": 448,
+    "sha256": "78f66ab143a46d1e4ac05b72d1d477cec4375fc8aa89febf8279d6ffcb913c87"
+  },
+  "current-actual.json": {
+    "bytes": 1275,
+    "sha256": "c597122eb285b95e9e56d972fb4c2ea7911885eb07f5e8490e0cf768f1df0f21"
+  },
+  "current-checker.py.txt": {
+    "bytes": 11910,
+    "sha256": "0507952b90dfa379208fe8eda5b8fc19576936a424a4d593106a837bd1b0b498"
+  },
+  "current-input.json": {
+    "bytes": 3148535,
+    "sha256": "298f69c782b1303a650823fe336994213ac84af52a46579afe405b68ae79a88d"
+  },
+  "epoch-fact.py.txt": {
+    "bytes": 4150,
+    "sha256": "b4023a9d92b2b2be86debca037aa01aea3414605b46f52d30df818868775d73a"
+  },
+  "first-over-capacity-proposal.json": {
+    "bytes": 13857,
+    "sha256": "4ff2433a1ad4a1508573cecf9265c5c465a99e3c96df35b5c9174a127203cab0"
+  },
+  "fourth-growing-proposal.json": {
+    "bytes": 13621,
+    "sha256": "f2d10fad09328c8bcadfcf4d6737624717c05e8da9df733b34649a4641bc71d8"
+  },
+  "native-input.html": {
+    "bytes": 241727,
+    "sha256": "ac26050640ce41118b6894e7afcd848eb85cd14aa2d210f07b56ffb056220942"
+  },
+  "proposal.json": {
+    "bytes": 13603,
+    "sha256": "614cca377d01138987376e46b4268838974e159caad1f40aae37d86c086da442"
+  },
+  "scope.txt": {
+    "bytes": 2064,
+    "sha256": "553c850bb19ca4cad596d420867848b8311a8d50795fd74feb47f7ec8dc4ebd8"
+  },
+  "second-growing-proposal.json": {
+    "bytes": 13729,
+    "sha256": "ee94c4577047bd67ce4d389ab0143254ea3f2ce1405645c82ad3b01ecda875d5"
+  },
+  "source-proof.json": {
+    "bytes": 2879863,
+    "sha256": "e84e7823e570da6c4c344accf061d9abf59cf4e7e2882835f998fe302276a057"
+  },
+  "third-growing-proposal.json": {
+    "bytes": 13695,
+    "sha256": "ed2e64ec4345a0e0f75208d7c574c0652702d2e60bd37b7f371a676259daf48f"
+  },
+  "verify.py": {
+    "bytes": 8772,
+    "sha256": "44eecf18db19adccd327bcc2e2ecf37327c2f22bc96f151a424cfecef57d0b30"
+  }
+}

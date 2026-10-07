@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-epoch-publication-20261007/verify.py",
+    "--seal"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 51600; host 44.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete saved zero-growth epoch fact/source/question/native/actual-result proof; no later current currency or coordinate meaning.\n"
+}

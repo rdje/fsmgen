@@ -1,0 +1,18 @@
+[
+  {
+    "cause": "whole typed current epoch command and streams",
+    "control": "Boolean-status"
+  },
+  {
+    "cause": "whole typed current epoch command and streams",
+    "control": "float-status"
+  },
+  {
+    "cause": "closed complete actual epoch domain and original evidence scope",
+    "control": "native-promotion"
+  },
+  {
+    "cause": "whole typed current epoch command and streams",
+    "control": "borrowed-current-only-command"
+  }
+]

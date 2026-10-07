@@ -9,6 +9,7 @@ import subprocess
 from pathlib import Path
 
 import book_source_references as plane
+import record_value_epoch_fact as epoch_fact
 from decision_store_git import MAX_TRACKED_PATHS
 
 ROOT = plane.ROOT
@@ -16,6 +17,8 @@ HISTORICAL = Path('docs/audits/record-value-class-frame-publication-20261006')
 COMMAND = 'scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py'
 BUILD = COMMAND + ' --build .artifacts/class-frame-current-book'
 SUCCESS = 'PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n'
+EPOCH_REVISION = 'f7bcdaf5e9c2b831b79497dbe7c704dd1fd0c1d9'
+EPOCH_CHECKS = Path('docs/audits/coordinate-admission-checks-20261007')
 QUESTION = 'why did the class/frame current reader reject unrelated Knowledge Map updates?'
 OLD_SCOPE = '''Historical success does not establish current card/query/reader/source currency. Current
 publication checks complete core/helper/tooling meanings/question ownership, unique book
@@ -67,6 +70,7 @@ def expected_cards(prior):
             require(result[path].count(OLD_SCOPE) == 1, 'complete original tooling current-scope paragraph')
             result[path] = result[path].replace('date: 2026-10-07\n',
                 '  - "' + QUESTION + '"\ndate: 2026-10-07\n', 1).replace(OLD_SCOPE, NEW_SCOPE, 1)
+            result[path] = epoch_fact.extend(result[path])
     return result
 
 
@@ -184,6 +188,12 @@ def main():
     result = subprocess.run(command, capture_output=True, text=True)
     require(type(result.returncode) is int and result.returncode == 0
         and result.stdout == prior['SUCCESS'] and result.stderr == '', 'complete actual historical snapshot replay')
+    expected = json.loads(subprocess.check_output(['git', 'show', EPOCH_REVISION + ':'
+        + str(EPOCH_CHECKS / 'independent-final.json')]))
+    require(type(expected['status']) is int and expected['status'] == 0, 'qualified committed historical epoch result')
+    epoch = subprocess.run(['python3', '-B', str(EPOCH_CHECKS / 'verify_result.py')], capture_output=True, text=True)
+    require(type(epoch.returncode) is int and epoch.returncode == 0
+        and epoch.stdout == expected['stdout'] and epoch.stderr == '', 'complete actual historical epoch and native result qualification')
     canonical = sources()
     check(current_input(prior, canonical), canonical, prior, authority(prior))
     rows = plane.expected_rows()

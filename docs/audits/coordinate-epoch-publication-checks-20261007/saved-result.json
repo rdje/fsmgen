@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-epoch-publication-checks-20261007/verify_saved.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 96139; host 58.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"controls\": [{\"cause\": \"actual epoch seal integer success\", \"status\": \"True\"}, {\"cause\": \"actual epoch seal integer success\", \"status\": \"0.0\"}, {\"cause\": \"actual epoch seal integer success\", \"status\": \"1\"}, {\"cause\": \"whole actual epoch seal command streams and unchanged guard\", \"control\": \"borrowed-current-only-success\"}], \"members\": 15, \"scope\": \"Complete saved original/added question, zero-growth semantic review, source/query/native/input/instrument/actual-result epoch; no later currency or coordinate meaning.\"}\n"
+}

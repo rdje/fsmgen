@@ -1,7 +1,7 @@
 # Knowledge Map: `mdbook-build`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **7** uniquely owned question entries.
+> **1** facts · **8** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,7 @@
 - q="where does mdbook build resolve a relative dest-dir?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
 - q="why did the class/frame current reader reject unrelated Knowledge Map updates?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
 - q="why do native book source-view addresses encode terminal markdown extensions?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
+- q="why does historical class/frame actual-result verification reject live progress?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
 - q="why must historical source-plane replay use the helper snapshot role?" · facts=[mdbook-build-destination-locality](../../docs/knowledge/mdbook-build-destination-locality.md)
 
 ## Facts

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Ilib",
+    "t/2066-record-value-current-publication.t",
+    "t/2003-decision-store-git-continuity.t",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 44119; host 43.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "t/2066-record-value-current-publication.t .. ok\nt/2003-decision-store-git-continuity.t ..... ok\nt/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nAll tests successful.\nFiles=4, Tests=312, 11 wallclock secs ( 0.01 usr  0.01 sys +  6.77 cusr  7.14 csys = 13.93 CPU)\nResult: PASS\n"
+}

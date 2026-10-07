@@ -1,0 +1,58 @@
+{
+  "review": [
+    [
+      "destinations",
+      [
+        "fresh absolute destination from current root at runtime",
+        "containment and same-volume locality",
+        "persist repo-relative identity",
+        "retain actual argument even if absolute",
+        "build success alone cannot identify validated output"
+      ]
+    ],
+    [
+      "recovery",
+      [
+        "copy/hash-verify both exact misplaced books",
+        "consume recovered HTML",
+        "delete only those old roots",
+        "census residue",
+        "first carrier valid/local",
+        "later relative check reuses its render",
+        "historical receipt corrects that reuse",
+        "compiler/HDL test results unchanged",
+        "tracked miniature probe uses another source directory",
+        "relative/absolute destinations based on invocation cwd",
+        "fresh marker-bearing HTML and local same-volume paths",
+        "remove its owned workspace",
+        "manifest retains recovery"
+      ]
+    ],
+    [
+      "native links",
+      [
+        "relative filesystem links for canonical source",
+        "native-safe .source.txt views",
+        "native clicks rewrite .md.source.txt to .html despite valid direct requests",
+        "encode terminal .md as .markdown",
+        "href checks qualify encoding",
+        "complete UTF8 source and literal Markdown links preserve"
+      ]
+    ],
+    [
+      "serve",
+      [
+        "admitted mdBook0.5.4",
+        "all selected sources served",
+        "default native serve refreshes controlled visible source outside book directory",
+        "ignored scratch/parent-ignored inputs stale even extra-watch",
+        "presence/build success proves no watcher admission",
+        "factory checks complete current selection/endpoints/bytes/ignore policy",
+        "native checks every copied source",
+        "views reflect latest build",
+        "no universal refresh-time/platform promise"
+      ]
+    ]
+  ],
+  "scope": "Declared engineering review of exact before/after paragraphs. All original semantic clauses retain; every other body byte, original ordered question, helper/locality/probe/native/visual boundary remains mechanically conserved. No unrestricted natural-language proof."
+}
