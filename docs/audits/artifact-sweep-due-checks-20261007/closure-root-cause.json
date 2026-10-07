@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Latest artifact cleanup",
+    "-1",
+    "--",
+    "docs/ARTIFACT_CLEANUP.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "commit 495e394d1c9a30526429e290c217c6ee38c44eca\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Sat Sep 26 21:17:20 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.34: record safe artifact cleanup\n    \n    Remove verified disposable session render and scratch logs; preserve retained evidence.\n    Restore the bounded latest-cleanup record and generated document discovery.\n"
+}

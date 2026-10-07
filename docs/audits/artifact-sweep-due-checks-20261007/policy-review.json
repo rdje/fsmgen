@@ -1,0 +1,9 @@
+{
+  "byte_identical": true,
+  "decision": "No unreviewed template update. Local adopted policies retain authority; no source amendment required.",
+  "local_containment_guide": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md",
+  "local_readme_policy": "README_POLICY.md",
+  "reviewed_source": "docs/audits/claim-template-review-20260923/template.txt",
+  "shared_claim_source": "../pgen/docs/CLAIM_VERIFICATION.md",
+  "source_sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd"
+}

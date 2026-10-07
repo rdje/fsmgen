@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/artifact-sweep-due-20261007/census.py"
+  ],
+  "status": 2,
+  "stderr": "ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval\n",
+  "stdout": ""
+}
