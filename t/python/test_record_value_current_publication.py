@@ -80,10 +80,52 @@ class CurrentPublicationTests(unittest.TestCase):
                     'complete current target question ownership')
 
     def test_unrelated_progress_is_checked_against_current_sources(self):
-        path = 'docs/knowledge/decision-record-exact-retrieval.md'
         canonical = dict(self.canonical)
-        canonical[path] += b'\nFixture.\n'
+        non_targets = [p for p in canonical if Path(p).parent == Path('docs/knowledge')
+                       and p not in self.prior['PATHS'] and self.prior['metadata']['metadata'](canonical[p])]
+        path = max(non_targets, key=lambda p: len(canonical[p]))
+        identifier = self.prior['metadata']['metadata'](canonical[path])[0]
         record = copy.deepcopy(self.record)
+        # Exercise the valid initial source epoch at the exact byte allowance.
+        # Padding is a scoped unit fixture, never a published card edit.
+        limit = min(record['surface']['baseline']['bytes_total'] +
+                    record['surface']['transition']['max_growth']['bytes_total'],
+                    record['surface']['enforcement_ceilings']['bytes_total'])
+        padding = limit - record['census']['bytes_total']
+        self.assertGreaterEqual(padding, 0)
+        dimensions = {key: min(record['surface']['baseline'][key] +
+                               record['surface']['transition']['max_growth'][key],
+                               record['surface']['enforcement_ceilings'][key])
+                      for key in ('bytes_each', 'lines_each', 'line_bytes_each')}
+        for member in non_targets:
+            raw = canonical[member]
+            while padding and len(raw) < dimensions['bytes_each'] and raw.count(b'\n') < dimensions['lines_each']:
+                amount = min(padding, dimensions['bytes_each'] - len(raw), dimensions['line_bytes_each'] + 1)
+                suffix = b' ' * (amount - 1) + b'\n' if raw.endswith(b'\n') else b'\n'
+                raw += suffix; padding -= len(suffix)
+            canonical[member] = raw
+            if not padding:
+                break
+        self.assertEqual(padding, 0, 'fixture must reach capacity without exceeding another dimension')
+        record['source_members'] = {p: current.identity(raw) for p, raw in canonical.items()}
+        physical = {p: raw for p, raw in canonical.items() if Path(p).parent == Path('docs/knowledge')}
+        record['census'] = self.prior['public']['metrics'](physical)
+        self.assertEqual(record['census']['bytes_total'], limit)
+        self.check(record, canonical)
+        # The former append-only positive fixture is genuinely inadmissible.
+        appended = dict(canonical); appended[path] += b'\nFixture.\n'
+        invalid = copy.deepcopy(record)
+        invalid['source_members'][path] = current.identity(appended[path])
+        invalid['census'] = self.prior['public']['metrics']({p: raw for p, raw in appended.items()
+                                                          if Path(p).parent == Path('docs/knowledge')})
+        with self.assertRaisesRegex(ValueError, '^physical capacity kind/allowance: bytes_total$'):
+            self.check(invalid, appended)
+        # This synthetic non-target body reserves its own question space. The
+        # current reader verifies source currency; content belongs to its owner.
+        # The real admitted prose-equivalence update is separately native-tested.
+        header, body = canonical[path].rsplit(b'---\n', 1)
+        canonical[path] = header + b'---\n\nControlled non-target source fixture.\n'
+        self.assertGreater(len(body), 128)
         record['source_members'][path] = current.identity(canonical[path])
         physical = {p: raw for p, raw in canonical.items() if Path(p).parent == Path('docs/knowledge')}
         record['census'] = self.prior['public']['metrics'](physical)
@@ -94,7 +136,7 @@ class CurrentPublicationTests(unittest.TestCase):
         record['source_members'][path] = current.identity(canonical[path])
         record['census'] = self.prior['public']['metrics']({p: raw for p, raw in canonical.items()
                                                         if Path(p).parent == Path('docs/knowledge')})
-        extra = question + '\tdecision-record-exact-retrieval\t' + path
+        extra = question + '\t' + identifier + '\t' + path
         for role in record['queries']:
             record['queries'][role]['stdout'] = '\n'.join(sorted([*record['queries'][role]['stdout'].splitlines(), extra])) + '\n'
         self.check(record, canonical)

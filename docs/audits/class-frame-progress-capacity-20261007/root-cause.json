@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "canonical[path] += b'",
+    "-1",
+    "--",
+    "t/python/test_record_value_current_publication.py"
+  ],
+  "returncode": 0,
+  "stdout": "commit ec5fc5a35a478027621292234fc871fb213a1071\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Wed Oct 7 14:41:02 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.77.3: derive current publication from current canonical sources\n    \n    The class/frame current reader rejected unrelated Knowledge Map progress by\n    freezing whole-source bytes and global queries to its publication snapshot.\n    Keep the sealed historical proof and derive present membership, census and\n    query allocation from current canonical sources under unchanged authority.\n    Publish the reviewed Git fact and affected card/book routes together.\n    \n    Focused reader/Git/book checks, fresh old-role refusal, current/native proof,\n    independent saved-result controls and all staged doctrines passed.\n    Full CI and push remain deferred under SEM .69.2.\n",
+  "stderr": ""
+}

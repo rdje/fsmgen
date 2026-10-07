@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/2066-record-value-current-publication.t"
+  ],
+  "returncode": 0,
+  "stdout": "t/2066-record-value-current-publication.t .. ok\nAll tests successful.\nFiles=1, Tests=2,  4 wallclock secs ( 0.00 usr  0.00 sys +  2.96 cusr  0.43 csys =  3.39 CPU)\nResult: PASS\n",
+  "stderr": "ram-guard: PID 35425; host 33.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}
