@@ -959,14 +959,18 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-
 ```
 
 Public coordinate hypotheses preserve the source-selected first and closing
-line and filename alternatives fixed before observations. Dated executions now
-retain complete source, command, output, frame and error bytes. The readers
-replay pre-native sources and captured custody; line/filename selection and
-native wrong-caller, line and source controls remain pending:
+line and filename alternatives fixed before observations. Dated executions
+retain complete source, command, output, frame and error bytes. For these own
+fixtures, multiline calls and block eval boundaries select their opening lines;
+when both source alternatives occupy the same line, both labels remain valid.
+The readers replay pre-native sources, captured custody and caller/boundary
+selection. Trace origins and native wrong-caller, line and source controls
+remain pending:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-hypotheses-20261007/verify.py
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-capture-20261007/verify.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-caller-selection-20261007/verify.py
 ```
 
 The own subtest source model now assigns original refusals to their complete

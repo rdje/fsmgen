@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-caller-selection-checks-20261007/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-caller-selection-checks-20261007/run.py": {
+      "bytes": 1264,
+      "sha256": "d76e20282e6a06bed050ccaf7941c53a2ff47b310cda3baf978bf2256630142c"
+    },
+    "docs/audits/coordinate-public-caller-selection-checks-20261007/verify_saved.py": {
+      "bytes": 9815,
+      "sha256": "9814899ebb212d09f4d9d75af7ca35a6892366791ae8c9ea6e244656e32baf7e"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 16540; host 31.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"boundaries_per_run\": [5, 5], \"calls_per_run\": [9, 9], \"controls\": [{\"cause\": \"selected lines retain integer kind\", \"control\": \"Boolean-selected-line\", \"status\": 1}, {\"cause\": \"whole independent public source/raw selection allocation and scope\", \"control\": \"false-closing-alternative\", \"status\": 1}, {\"cause\": \"whole independent public source/raw selection allocation and scope\", \"control\": \"lost-equivalent-label\", \"status\": 1}, {\"cause\": \"whole independent public source/raw selection allocation and scope\", \"control\": \"lost-selected-call\", \"status\": 1}, {\"cause\": \"whole independent public source/raw selection allocation and scope\", \"control\": \"borrowed-selected-filename\", \"status\": 1}, {\"cause\": \"whole independent public source/raw selection allocation and scope\", \"control\": \"borrowed-selected-scope\", \"status\": 1}], \"members\": 6, \"runs\": 2, \"scope\": \"Dated finite own public caller/boundary coordinate selection only. Whole raw public wire is conserved; trace/confess origins and genuine native semantic controls remain pending. No original/private/formatter/toolchain identity or original-coordinate meaning is qualified.\"}\n"
+}

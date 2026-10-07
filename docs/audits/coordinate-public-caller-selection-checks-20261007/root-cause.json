@@ -1,0 +1,17 @@
+{
+  "cause": "Complete dated public captures existed, but their source-declared first/closing line and filename alternatives remained unselected. This slice selects only own public caller/boundary coordinates.",
+  "command": [
+    "git",
+    "log",
+    "--format=%H %s",
+    "-S",
+    "line/filename selection and",
+    "3ae29914b6a74f4009a52b6c9e8136f2bd471039",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "locus": "source hypotheses calls/boundaries and complete committed capture wire / docs/book/src/13k-isf-feature-support-matrix.md",
+  "status": 0,
+  "stderr": "",
+  "stdout": "3ae29914b6a74f4009a52b6c9e8136f2bd471039 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1: retain complete dated public coordinate fixture captures\n"
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-caller-selection-checks-20261007/verify_book.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-caller-selection-checks-20261007/run.py": {
+      "bytes": 1264,
+      "sha256": "d76e20282e6a06bed050ccaf7941c53a2ff47b310cda3baf978bf2256630142c"
+    },
+    "docs/audits/coordinate-public-caller-selection-checks-20261007/verify_book.py": {
+      "bytes": 5718,
+      "sha256": "317b65e89355e01a83479d3e463385e3d7edd784bd61becc18cf473dc682b187"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 18800; host 63.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete saved source/native public caller-selection guide and genuine controls; origins, native semantic controls and original join remain pending.\n"
+}

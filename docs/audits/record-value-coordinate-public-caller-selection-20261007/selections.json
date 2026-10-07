@@ -1,0 +1,963 @@
+{
+  "role": "Dated finite own public caller/boundary coordinate selection only. Whole raw public wire is conserved; trace/confess origins and genuine native semantic controls remain pending. No original/private/formatter/toolchain identity or original-coordinate meaning is qualified.",
+  "runs": [
+    {
+      "boundaries": {
+        "anonymous_delegate": {
+          "frame_index": 2,
+          "role": "anonymous",
+          "selection": {
+            "callee": "CoordinatePublic::__ANON__",
+            "filename": "fixture.pl",
+            "line": 50,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              50,
+              "CoordinatePublic::__ANON__",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 50,
+              "first_line": 50,
+              "identity": {
+                "bytes": 36,
+                "sha256": "12efde74fa5f000a4c56401ce7bc6fe0a346164637c7440592b0c25736f50ba2"
+              },
+              "offset_bytes": 1160,
+              "text": "$body->(); # site anonymous delegate"
+            }
+          }
+        },
+        "block_eval": {
+          "frame_index": 2,
+          "role": "block-eval",
+          "selection": {
+            "callee": "(eval)",
+            "filename": "fixture.pl",
+            "line": 42,
+            "matching_line_labels": [
+              "first"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              42,
+              "(eval)",
+              0,
+              "",
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 45,
+              "first_line": 42,
+              "identity": {
+                "bytes": 123,
+                "sha256": "9f22307bc8ba306a7906a074428b99a58f0fd026b2ba13b315095352b8d2cc2e"
+              },
+              "offset_bytes": 928,
+              "text": "my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary"
+            }
+          }
+        },
+        "do_load": {
+          "frame_index": 2,
+          "role": "do-load",
+          "selection": {
+            "callee": "(eval)",
+            "filename": "fixture.pl",
+            "line": 53,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              53,
+              "(eval)",
+              0,
+              "",
+              "./load-body.pl",
+              1
+            ],
+            "source": {
+              "closing_line": 53,
+              "first_line": 53,
+              "identity": {
+                "bytes": 51,
+                "sha256": "1ad3e0794a14957ec471c1b9c5325229811d2350a0c40a806f99908c9a4319ca"
+              },
+              "offset_bytes": 1214,
+              "text": "my $value = do './load-body.pl'; # site do boundary"
+            }
+          }
+        },
+        "module_delegate": {
+          "frame_index": 2,
+          "role": "module-call",
+          "selection": {
+            "callee": "CoordinateDependency::module_call",
+            "filename": "fixture.pl",
+            "line": 70,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "main",
+              "fixture.pl",
+              70,
+              "CoordinateDependency::module_call",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 70,
+              "first_line": 70,
+              "identity": {
+                "bytes": 36,
+                "sha256": "77ed07bef14f41d6565056d8af8aa7949b8d3faccac2e886130d5f20ebfaf137"
+              },
+              "offset_bytes": 1714,
+              "text": "CoordinateDependency::module_call();"
+            }
+          }
+        },
+        "require_load": {
+          "frame_index": 2,
+          "role": "require-load",
+          "selection": {
+            "callee": "(eval)",
+            "filename": "fixture.pl",
+            "line": 56,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              56,
+              "(eval)",
+              0,
+              "",
+              "./require-body.pl",
+              1
+            ],
+            "source": {
+              "closing_line": 56,
+              "first_line": 56,
+              "identity": {
+                "bytes": 67,
+                "sha256": "7f51cde727ac7c0ab00ca02200481510132d7352d75fd6996ce26d4eb00b3863"
+              },
+              "offset_bytes": 1322,
+              "text": "my $required = require './require-body.pl'; # site require boundary"
+            }
+          }
+        }
+      },
+      "calls": [
+        {
+          "frame_index": 1,
+          "role": "single",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 31,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              31,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 31,
+              "first_line": 31,
+              "identity": {
+                "bytes": 32,
+                "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+              },
+              "offset_bytes": 715,
+              "text": "observe('single'); # site single"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "multiline",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 34,
+            "matching_line_labels": [
+              "first"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              34,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 36,
+              "first_line": 34,
+              "identity": {
+                "bytes": 68,
+                "sha256": "5ce35a8b4601c70638ee8b27822b1fdbb12a9ae38c3eebdabb63db9ee4dea23f"
+              },
+              "offset_bytes": 770,
+              "text": "observe( # site multiline\n        'multiline'\n    ); # end multiline"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "postfix",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 39,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              39,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 39,
+              "first_line": 39,
+              "identity": {
+                "bytes": 45,
+                "sha256": "9a8f7ca8cc3e2ec601399728fac1716d7036cdaa89fa0c25f1319beca1db16d8"
+              },
+              "offset_bytes": 859,
+              "text": "observe('postfix') for 1 .. 1; # site postfix"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "block-eval",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 43,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              43,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 43,
+              "first_line": 43,
+              "identity": {
+                "bytes": 40,
+                "sha256": "263717f7234e03a766f2a3f7ee03885a005c7c1247d9fbfd8c2d521f2b0236f1"
+              },
+              "offset_bytes": 973,
+              "text": "observe('block-eval'); # site block-eval"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "anonymous",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 49,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              49,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 49,
+              "first_line": 49,
+              "identity": {
+                "bytes": 21,
+                "sha256": "0af146606d45401c108dcc0a73918472dafad0900d98062c7a194f5ea2136644"
+              },
+              "offset_bytes": 1114,
+              "text": "observe('anonymous');"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "do-load",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "./load-body.pl",
+            "line": 1,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "./load-body.pl",
+              1,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 1,
+              "first_line": 1,
+              "identity": {
+                "bytes": 52,
+                "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+              },
+              "offset_bytes": 0,
+              "text": "CoordinatePublic::observe('do-load'); # site do-load"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "require-load",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "./require-body.pl",
+            "line": 1,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "./require-body.pl",
+              1,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 1,
+              "first_line": 1,
+              "identity": {
+                "bytes": 62,
+                "sha256": "ec37b403af41a542ec3af7744662cd4336c347875cecbfa22cbf4a478aeba05f"
+              },
+              "offset_bytes": 0,
+              "text": "CoordinatePublic::observe('require-load'); # site require-load"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "module-call",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "lib/CoordinateDependency.pm",
+            "line": 5,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinateDependency",
+              "lib/CoordinateDependency.pm",
+              5,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 5,
+              "first_line": 5,
+              "identity": {
+                "bytes": 60,
+                "sha256": "ac57e5aa9b474cd8934b9e6c3f273606734b52ad9671e7d23781ea1ad56f5471"
+              },
+              "offset_bytes": 78,
+              "text": "CoordinatePublic::observe('module-call'); # site module-call"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "subtest",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 73,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "main",
+              "fixture.pl",
+              73,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 73,
+              "first_line": 73,
+              "identity": {
+                "bytes": 52,
+                "sha256": "5eee87a2728a5802cb62890ea0151190a87aa0548c0197119572ac5a86069daa"
+              },
+              "offset_bytes": 1844,
+              "text": "CoordinatePublic::observe('subtest'); # site subtest"
+            }
+          }
+        }
+      ],
+      "invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-a",
+        "root": ".artifacts/public-coordinate-native/root-a"
+      },
+      "module_filename": "lib/CoordinateDependency.pm",
+      "whole_raw_wire_identity": {
+        "bytes": 7704,
+        "sha256": "567dfda572dbfbeffa6c370717b6cf6bd960d52ef8a1f65253f48f28877087bc"
+      }
+    },
+    {
+      "boundaries": {
+        "anonymous_delegate": {
+          "frame_index": 2,
+          "role": "anonymous",
+          "selection": {
+            "callee": "CoordinatePublic::__ANON__",
+            "filename": "fixture.pl",
+            "line": 50,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              50,
+              "CoordinatePublic::__ANON__",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 50,
+              "first_line": 50,
+              "identity": {
+                "bytes": 36,
+                "sha256": "12efde74fa5f000a4c56401ce7bc6fe0a346164637c7440592b0c25736f50ba2"
+              },
+              "offset_bytes": 1160,
+              "text": "$body->(); # site anonymous delegate"
+            }
+          }
+        },
+        "block_eval": {
+          "frame_index": 2,
+          "role": "block-eval",
+          "selection": {
+            "callee": "(eval)",
+            "filename": "fixture.pl",
+            "line": 42,
+            "matching_line_labels": [
+              "first"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              42,
+              "(eval)",
+              0,
+              "",
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 45,
+              "first_line": 42,
+              "identity": {
+                "bytes": 123,
+                "sha256": "9f22307bc8ba306a7906a074428b99a58f0fd026b2ba13b315095352b8d2cc2e"
+              },
+              "offset_bytes": 928,
+              "text": "my $ok = eval { # site eval boundary\n        observe('block-eval'); # site block-eval\n        1;\n    }; # end eval boundary"
+            }
+          }
+        },
+        "do_load": {
+          "frame_index": 2,
+          "role": "do-load",
+          "selection": {
+            "callee": "(eval)",
+            "filename": "fixture.pl",
+            "line": 53,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              53,
+              "(eval)",
+              0,
+              "",
+              "./load-body.pl",
+              1
+            ],
+            "source": {
+              "closing_line": 53,
+              "first_line": 53,
+              "identity": {
+                "bytes": 51,
+                "sha256": "1ad3e0794a14957ec471c1b9c5325229811d2350a0c40a806f99908c9a4319ca"
+              },
+              "offset_bytes": 1214,
+              "text": "my $value = do './load-body.pl'; # site do boundary"
+            }
+          }
+        },
+        "module_delegate": {
+          "frame_index": 2,
+          "role": "module-call",
+          "selection": {
+            "callee": "CoordinateDependency::module_call",
+            "filename": "fixture.pl",
+            "line": 70,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "main",
+              "fixture.pl",
+              70,
+              "CoordinateDependency::module_call",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 70,
+              "first_line": 70,
+              "identity": {
+                "bytes": 36,
+                "sha256": "77ed07bef14f41d6565056d8af8aa7949b8d3faccac2e886130d5f20ebfaf137"
+              },
+              "offset_bytes": 1714,
+              "text": "CoordinateDependency::module_call();"
+            }
+          }
+        },
+        "require_load": {
+          "frame_index": 2,
+          "role": "require-load",
+          "selection": {
+            "callee": "(eval)",
+            "filename": "fixture.pl",
+            "line": 56,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              56,
+              "(eval)",
+              0,
+              "",
+              "./require-body.pl",
+              1
+            ],
+            "source": {
+              "closing_line": 56,
+              "first_line": 56,
+              "identity": {
+                "bytes": 67,
+                "sha256": "7f51cde727ac7c0ab00ca02200481510132d7352d75fd6996ce26d4eb00b3863"
+              },
+              "offset_bytes": 1322,
+              "text": "my $required = require './require-body.pl'; # site require boundary"
+            }
+          }
+        }
+      },
+      "calls": [
+        {
+          "frame_index": 1,
+          "role": "single",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 31,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              31,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 31,
+              "first_line": 31,
+              "identity": {
+                "bytes": 32,
+                "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+              },
+              "offset_bytes": 715,
+              "text": "observe('single'); # site single"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "multiline",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 34,
+            "matching_line_labels": [
+              "first"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              34,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 36,
+              "first_line": 34,
+              "identity": {
+                "bytes": 68,
+                "sha256": "5ce35a8b4601c70638ee8b27822b1fdbb12a9ae38c3eebdabb63db9ee4dea23f"
+              },
+              "offset_bytes": 770,
+              "text": "observe( # site multiline\n        'multiline'\n    ); # end multiline"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "postfix",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 39,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              39,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 39,
+              "first_line": 39,
+              "identity": {
+                "bytes": 45,
+                "sha256": "9a8f7ca8cc3e2ec601399728fac1716d7036cdaa89fa0c25f1319beca1db16d8"
+              },
+              "offset_bytes": 859,
+              "text": "observe('postfix') for 1 .. 1; # site postfix"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "block-eval",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 43,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              43,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 43,
+              "first_line": 43,
+              "identity": {
+                "bytes": 40,
+                "sha256": "263717f7234e03a766f2a3f7ee03885a005c7c1247d9fbfd8c2d521f2b0236f1"
+              },
+              "offset_bytes": 973,
+              "text": "observe('block-eval'); # site block-eval"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "anonymous",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 49,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "fixture.pl",
+              49,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 49,
+              "first_line": 49,
+              "identity": {
+                "bytes": 21,
+                "sha256": "0af146606d45401c108dcc0a73918472dafad0900d98062c7a194f5ea2136644"
+              },
+              "offset_bytes": 1114,
+              "text": "observe('anonymous');"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "do-load",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "./load-body.pl",
+            "line": 1,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "./load-body.pl",
+              1,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 1,
+              "first_line": 1,
+              "identity": {
+                "bytes": 52,
+                "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+              },
+              "offset_bytes": 0,
+              "text": "CoordinatePublic::observe('do-load'); # site do-load"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "require-load",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "./require-body.pl",
+            "line": 1,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinatePublic",
+              "./require-body.pl",
+              1,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 1,
+              "first_line": 1,
+              "identity": {
+                "bytes": 62,
+                "sha256": "ec37b403af41a542ec3af7744662cd4336c347875cecbfa22cbf4a478aeba05f"
+              },
+              "offset_bytes": 0,
+              "text": "CoordinatePublic::observe('require-load'); # site require-load"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "module-call",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "lib/CoordinateDependency.pm",
+            "line": 5,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "CoordinateDependency",
+              "lib/CoordinateDependency.pm",
+              5,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 5,
+              "first_line": 5,
+              "identity": {
+                "bytes": 60,
+                "sha256": "ac57e5aa9b474cd8934b9e6c3f273606734b52ad9671e7d23781ea1ad56f5471"
+              },
+              "offset_bytes": 78,
+              "text": "CoordinatePublic::observe('module-call'); # site module-call"
+            }
+          }
+        },
+        {
+          "frame_index": 1,
+          "role": "subtest",
+          "selection": {
+            "callee": "CoordinatePublic::observe",
+            "filename": "fixture.pl",
+            "line": 73,
+            "matching_line_labels": [
+              "first",
+              "closing"
+            ],
+            "raw_frame": [
+              "main",
+              "fixture.pl",
+              73,
+              "CoordinatePublic::observe",
+              1,
+              null,
+              null,
+              null
+            ],
+            "source": {
+              "closing_line": 73,
+              "first_line": 73,
+              "identity": {
+                "bytes": 52,
+                "sha256": "5eee87a2728a5802cb62890ea0151190a87aa0548c0197119572ac5a86069daa"
+              },
+              "offset_bytes": 1844,
+              "text": "CoordinatePublic::observe('subtest'); # site subtest"
+            }
+          }
+        }
+      ],
+      "invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-b",
+        "root": ".artifacts/public-coordinate-native/root-b"
+      },
+      "module_filename": "lib/CoordinateDependency.pm",
+      "whole_raw_wire_identity": {
+        "bytes": 7704,
+        "sha256": "23d53f2fad784b68e8d6f7a85b46f6fa50ec02c3905c00a1fcf8a24f9c8d6636"
+      }
+    }
+  ]
+}
