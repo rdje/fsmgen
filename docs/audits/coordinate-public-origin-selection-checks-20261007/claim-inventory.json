@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "scripts/check_claim_verification_inventory.pl",
+    "--write",
+    "--report"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/run.py": {
+      "bytes": 1264,
+      "sha256": "aa5b9061c8ac52472b2fcefcfe1300d6c1e8d020c2475556bbc3ae2b6dd4370c"
+    },
+    "scripts/check_claim_verification_inventory.pl": {
+      "bytes": 40247,
+      "sha256": "5f0d659dc59c542e8886894ec6b067c66a18ed4bf3961bd4c588a54a3f0136e4"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 88313; host 73.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13369, candidates=1980, quantified=965, conservative=1015, constants=2921, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1980)\nclaim-inventory: partition adoption_reference_or_structure=118\nclaim-inventory: partition code_or_data_example=3347\nclaim-inventory: partition derived_and_watched_projection=185\nclaim-inventory: partition identifier_literal_or_navigation=7739\n"
+}

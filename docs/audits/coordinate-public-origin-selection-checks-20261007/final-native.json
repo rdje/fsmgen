@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/verify_final_native.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/run.py": {
+      "bytes": 1264,
+      "sha256": "aa5b9061c8ac52472b2fcefcfe1300d6c1e8d020c2475556bbc3ae2b6dd4370c"
+    },
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/verify_final_native.py": {
+      "bytes": 2271,
+      "sha256": "bc1498cf7524bdbf00f013cc268c6f3c1db1b08d0ccb881b218f4ebc52ee9db5"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 89451; host 54.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete final copied-source currency and conserved dated finite public origin selection guide.\n"
+}

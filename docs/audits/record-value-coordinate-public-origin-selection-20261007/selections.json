@@ -1,0 +1,1678 @@
+{
+  "configuration": "Public Carp global/internal/formatter states were not measured in the retained captures; public version metadata and own source do not establish them.",
+  "role": "Dated finite own public origin-header selection only; exact retained fixture grammar. All raw bodies/frames/arguments remain intact. Public global/internal/formatter states and every original/private/formatter/toolchain identity remain unmeasured. Genuine executed native bad variants and original-coordinate intake remain pending.",
+  "runs": [
+    {
+      "cases": [
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"single\") called at fixture.pl line 31\n\tCoordinatePublic::single() called at fixture.pl line 64\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"single\") called at fixture.pl line 31\n\tCoordinatePublic::single() called at fixture.pl line 64\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 212,
+                "sha256": "baaab51b052cc1293efd9c13e3c39d15bf27d0970f2e48a45e69425b050c1946"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 31,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 31,
+                      "first": 31
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 31,
+                      "first_line": 31,
+                      "identity": {
+                        "bytes": 32,
+                        "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+                      },
+                      "offset_bytes": 715,
+                      "text": "observe('single'); # site single"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 31.\n\tCoordinatePublic::single() called at fixture.pl line 64\n",
+              "raw_body": "\tCoordinatePublic::single() called at fixture.pl line 64\n",
+              "raw_header": " at fixture.pl line 31.\n",
+              "raw_identity": {
+                "bytes": 107,
+                "sha256": "d172c401f5ce524ba1fbf63a15a83c32e40ce0d213a7a0228b4292b71f59bfb9"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "single"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"multiline\") called at fixture.pl line 34\n\tCoordinatePublic::multiline() called at fixture.pl line 65\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"multiline\") called at fixture.pl line 34\n\tCoordinatePublic::multiline() called at fixture.pl line 65\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 218,
+                "sha256": "8488114a5679e879d4c356058fa1ae94863b1c026c207df069738e5ed47c840c"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 34,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 36,
+                      "first": 34
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 36,
+                      "first_line": 34,
+                      "identity": {
+                        "bytes": 68,
+                        "sha256": "5ce35a8b4601c70638ee8b27822b1fdbb12a9ae38c3eebdabb63db9ee4dea23f"
+                      },
+                      "offset_bytes": 770,
+                      "text": "observe( # site multiline\n        'multiline'\n    ); # end multiline"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 34.\n\tCoordinatePublic::multiline() called at fixture.pl line 65\n",
+              "raw_body": "\tCoordinatePublic::multiline() called at fixture.pl line 65\n",
+              "raw_header": " at fixture.pl line 34.\n",
+              "raw_identity": {
+                "bytes": 110,
+                "sha256": "dcb3f8298ff295b217468b95d08b529b89a5c2f2b6316fc8c44d44e96bea956e"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "multiline"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"postfix\") called at fixture.pl line 39\n\tCoordinatePublic::postfix() called at fixture.pl line 66\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"postfix\") called at fixture.pl line 39\n\tCoordinatePublic::postfix() called at fixture.pl line 66\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 214,
+                "sha256": "a9e34807cce50a1aee93dffce901f5282f5404203978c9b2bdd310b727f5b118"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 39,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 39,
+                      "first": 39
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 39,
+                      "first_line": 39,
+                      "identity": {
+                        "bytes": 45,
+                        "sha256": "9a8f7ca8cc3e2ec601399728fac1716d7036cdaa89fa0c25f1319beca1db16d8"
+                      },
+                      "offset_bytes": 859,
+                      "text": "observe('postfix') for 1 .. 1; # site postfix"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 39.\n\tCoordinatePublic::postfix() called at fixture.pl line 66\n",
+              "raw_body": "\tCoordinatePublic::postfix() called at fixture.pl line 66\n",
+              "raw_header": " at fixture.pl line 39.\n",
+              "raw_identity": {
+                "bytes": 108,
+                "sha256": "ff653cd1cc21a488bb5fc1b72ffb63276fce74ad294cd81fd94016b07e95f72c"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "postfix"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"block-eval\") called at fixture.pl line 43\n\teval {...} called at fixture.pl line 42\n\tCoordinatePublic::block_eval() called at fixture.pl line 67\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"block-eval\") called at fixture.pl line 43\n\teval {...} called at fixture.pl line 42\n\tCoordinatePublic::block_eval() called at fixture.pl line 67\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 261,
+                "sha256": "504660ad2c37e2597582a54b3658396c0e75911278c34582ddfea71116c79b62"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 43,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 43,
+                      "first": 43
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 43,
+                      "first_line": 43,
+                      "identity": {
+                        "bytes": 40,
+                        "sha256": "263717f7234e03a766f2a3f7ee03885a005c7c1247d9fbfd8c2d521f2b0236f1"
+                      },
+                      "offset_bytes": 973,
+                      "text": "observe('block-eval'); # site block-eval"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 43.\n\teval {...} called at fixture.pl line 42\n\tCoordinatePublic::block_eval() called at fixture.pl line 67\n",
+              "raw_body": "\teval {...} called at fixture.pl line 42\n\tCoordinatePublic::block_eval() called at fixture.pl line 67\n",
+              "raw_header": " at fixture.pl line 43.\n",
+              "raw_identity": {
+                "bytes": 152,
+                "sha256": "b141f259bf46096a507519f6103ab728321428b75b1c51e9445cb31bfc744edb"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "block-eval"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"anonymous\") called at fixture.pl line 49\n\tCoordinatePublic::__ANON__() called at fixture.pl line 50\n\tCoordinatePublic::anonymous() called at fixture.pl line 68\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"anonymous\") called at fixture.pl line 49\n\tCoordinatePublic::__ANON__() called at fixture.pl line 50\n\tCoordinatePublic::anonymous() called at fixture.pl line 68\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 277,
+                "sha256": "28ee1d45aeaa6b1887bfb01693fba20cb47a29c0422ac71735218ed8657002b7"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 49,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 49,
+                      "first": 49
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 49,
+                      "first_line": 49,
+                      "identity": {
+                        "bytes": 21,
+                        "sha256": "0af146606d45401c108dcc0a73918472dafad0900d98062c7a194f5ea2136644"
+                      },
+                      "offset_bytes": 1114,
+                      "text": "observe('anonymous');"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 49.\n\tCoordinatePublic::__ANON__() called at fixture.pl line 50\n\tCoordinatePublic::anonymous() called at fixture.pl line 68\n",
+              "raw_body": "\tCoordinatePublic::__ANON__() called at fixture.pl line 50\n\tCoordinatePublic::anonymous() called at fixture.pl line 68\n",
+              "raw_header": " at fixture.pl line 49.\n",
+              "raw_identity": {
+                "bytes": 169,
+                "sha256": "0ed575c8b95b9ae89ae33837a7424775b60276ad83c8db0cd244876d7791db5f"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "anonymous"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"do-load\") called at ./load-body.pl line 1\n\trequire ./load-body.pl called at fixture.pl line 53\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"do-load\") called at ./load-body.pl line 1\n\trequire ./load-body.pl called at fixture.pl line 53\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 267,
+                "sha256": "912d0a8943b036c9a65888fea1d8e17fe7e9311fada4b02d3480fdce3ee312cf"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "./load-body.pl",
+              "line": 1,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "./load-body.pl",
+                      "load-body.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 1,
+                      "first": 1
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 1,
+                      "first_line": 1,
+                      "identity": {
+                        "bytes": 52,
+                        "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+                      },
+                      "offset_bytes": 0,
+                      "text": "CoordinatePublic::observe('do-load'); # site do-load"
+                    },
+                    "unit": "load-body.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at ./load-body.pl line 1.\n\trequire ./load-body.pl called at fixture.pl line 53\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_body": "\trequire ./load-body.pl called at fixture.pl line 53\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_header": " at ./load-body.pl line 1.\n",
+              "raw_identity": {
+                "bytes": 161,
+                "sha256": "0429389d3e633992b97305f6969d43363aa710efa098d924f61bce2c5ce38bf9"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "do-load"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"require-load\") called at ./require-body.pl line 1\n\trequire ./require-body.pl called at fixture.pl line 56\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"require-load\") called at ./require-body.pl line 1\n\trequire ./require-body.pl called at fixture.pl line 56\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 278,
+                "sha256": "b9eb833853c4d4f2f5653396e6107c4296c52eefde22476de822a50d73b72235"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "./require-body.pl",
+              "line": 1,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "./require-body.pl",
+                      "require-body.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 1,
+                      "first": 1
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 1,
+                      "first_line": 1,
+                      "identity": {
+                        "bytes": 62,
+                        "sha256": "ec37b403af41a542ec3af7744662cd4336c347875cecbfa22cbf4a478aeba05f"
+                      },
+                      "offset_bytes": 0,
+                      "text": "CoordinatePublic::observe('require-load'); # site require-load"
+                    },
+                    "unit": "require-body.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at ./require-body.pl line 1.\n\trequire ./require-body.pl called at fixture.pl line 56\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_body": "\trequire ./require-body.pl called at fixture.pl line 56\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_header": " at ./require-body.pl line 1.\n",
+              "raw_identity": {
+                "bytes": 167,
+                "sha256": "7821aec5009fc29854b869f64199eca82f0c3ec5ce200cf705ffb744d3199076"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "require-load"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"module-call\") called at lib/CoordinateDependency.pm line 5\n\tCoordinateDependency::module_call() called at fixture.pl line 70\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"module-call\") called at lib/CoordinateDependency.pm line 5\n\tCoordinateDependency::module_call() called at fixture.pl line 70\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 242,
+                "sha256": "efcdfd27cdf5ef1ee2018f70c94140805f9838f89f3e1e2e5d25f4117f9fc5eb"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "lib/CoordinateDependency.pm",
+              "line": 5,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "lib/CoordinateDependency.pm"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 5,
+                      "first": 5
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 5,
+                      "first_line": 5,
+                      "identity": {
+                        "bytes": 60,
+                        "sha256": "ac57e5aa9b474cd8934b9e6c3f273606734b52ad9671e7d23781ea1ad56f5471"
+                      },
+                      "offset_bytes": 78,
+                      "text": "CoordinatePublic::observe('module-call'); # site module-call"
+                    },
+                    "unit": "lib/CoordinateDependency.pm"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at lib/CoordinateDependency.pm line 5.\n\tCoordinateDependency::module_call() called at fixture.pl line 70\n",
+              "raw_body": "\tCoordinateDependency::module_call() called at fixture.pl line 70\n",
+              "raw_header": " at lib/CoordinateDependency.pm line 5.\n",
+              "raw_identity": {
+                "bytes": 132,
+                "sha256": "95f6bba9942f46ccbf543a19d1d5f6f1d418ff0e9dcf7420faa0a808ac2ee3c1"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "module-call"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"subtest\") called at fixture.pl line 73\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x74b73454c8), \"public coordinate callback\", CODE(0x74b7daad20)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"public coordinate callback\", CODE(0x74b7daad20)) called at fixture.pl line 75\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"subtest\") called at fixture.pl line 73\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x74b73454c8), \"public coordinate callback\", CODE(0x74b7daad20)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"public coordinate callback\", CODE(0x74b7daad20)) called at fixture.pl line 75\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 574,
+                "sha256": "ec2fcc80d75b636ab33b46a48eb7e58e65cf4c98249d3100bc2ed69a82a2762a"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 73,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 73,
+                      "first": 73
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 73,
+                      "first_line": 73,
+                      "identity": {
+                        "bytes": 52,
+                        "sha256": "5eee87a2728a5802cb62890ea0151190a87aa0548c0197119572ac5a86069daa"
+                      },
+                      "offset_bytes": 1844,
+                      "text": "CoordinatePublic::observe('subtest'); # site subtest"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 73.\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x74b73454c8), \"public coordinate callback\", CODE(0x74b7daad20)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"public coordinate callback\", CODE(0x74b7daad20)) called at fixture.pl line 75\n",
+              "raw_body": "\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x74b73454c8), \"public coordinate callback\", CODE(0x74b7daad20)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"public coordinate callback\", CODE(0x74b7daad20)) called at fixture.pl line 75\n",
+              "raw_header": " at fixture.pl line 73.\n",
+              "raw_identity": {
+                "bytes": 468,
+                "sha256": "5b362dc33fcdb95b8ce7191b69ab9efb0e37b94a06731ee03380dd695c6c18ae"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "subtest"
+        }
+      ],
+      "invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-a",
+        "root": ".artifacts/public-coordinate-native/root-a"
+      },
+      "whole_raw_wire_identity": {
+        "bytes": 7704,
+        "sha256": "567dfda572dbfbeffa6c370717b6cf6bd960d52ef8a1f65253f48f28877087bc"
+      }
+    },
+    {
+      "cases": [
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"single\") called at fixture.pl line 31\n\tCoordinatePublic::single() called at fixture.pl line 64\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"single\") called at fixture.pl line 31\n\tCoordinatePublic::single() called at fixture.pl line 64\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 212,
+                "sha256": "baaab51b052cc1293efd9c13e3c39d15bf27d0970f2e48a45e69425b050c1946"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 31,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 31,
+                      "first": 31
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 31,
+                      "first_line": 31,
+                      "identity": {
+                        "bytes": 32,
+                        "sha256": "bd3700ee233b603708f5b2b4aaa80e1901d006ea8022fb7a745146c4f0d51098"
+                      },
+                      "offset_bytes": 715,
+                      "text": "observe('single'); # site single"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 31.\n\tCoordinatePublic::single() called at fixture.pl line 64\n",
+              "raw_body": "\tCoordinatePublic::single() called at fixture.pl line 64\n",
+              "raw_header": " at fixture.pl line 31.\n",
+              "raw_identity": {
+                "bytes": 107,
+                "sha256": "d172c401f5ce524ba1fbf63a15a83c32e40ce0d213a7a0228b4292b71f59bfb9"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "single"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"multiline\") called at fixture.pl line 34\n\tCoordinatePublic::multiline() called at fixture.pl line 65\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"multiline\") called at fixture.pl line 34\n\tCoordinatePublic::multiline() called at fixture.pl line 65\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 218,
+                "sha256": "8488114a5679e879d4c356058fa1ae94863b1c026c207df069738e5ed47c840c"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 34,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 36,
+                      "first": 34
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 36,
+                      "first_line": 34,
+                      "identity": {
+                        "bytes": 68,
+                        "sha256": "5ce35a8b4601c70638ee8b27822b1fdbb12a9ae38c3eebdabb63db9ee4dea23f"
+                      },
+                      "offset_bytes": 770,
+                      "text": "observe( # site multiline\n        'multiline'\n    ); # end multiline"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 34.\n\tCoordinatePublic::multiline() called at fixture.pl line 65\n",
+              "raw_body": "\tCoordinatePublic::multiline() called at fixture.pl line 65\n",
+              "raw_header": " at fixture.pl line 34.\n",
+              "raw_identity": {
+                "bytes": 110,
+                "sha256": "dcb3f8298ff295b217468b95d08b529b89a5c2f2b6316fc8c44d44e96bea956e"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "multiline"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"postfix\") called at fixture.pl line 39\n\tCoordinatePublic::postfix() called at fixture.pl line 66\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"postfix\") called at fixture.pl line 39\n\tCoordinatePublic::postfix() called at fixture.pl line 66\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 214,
+                "sha256": "a9e34807cce50a1aee93dffce901f5282f5404203978c9b2bdd310b727f5b118"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 39,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 39,
+                      "first": 39
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 39,
+                      "first_line": 39,
+                      "identity": {
+                        "bytes": 45,
+                        "sha256": "9a8f7ca8cc3e2ec601399728fac1716d7036cdaa89fa0c25f1319beca1db16d8"
+                      },
+                      "offset_bytes": 859,
+                      "text": "observe('postfix') for 1 .. 1; # site postfix"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 39.\n\tCoordinatePublic::postfix() called at fixture.pl line 66\n",
+              "raw_body": "\tCoordinatePublic::postfix() called at fixture.pl line 66\n",
+              "raw_header": " at fixture.pl line 39.\n",
+              "raw_identity": {
+                "bytes": 108,
+                "sha256": "ff653cd1cc21a488bb5fc1b72ffb63276fce74ad294cd81fd94016b07e95f72c"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "postfix"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"block-eval\") called at fixture.pl line 43\n\teval {...} called at fixture.pl line 42\n\tCoordinatePublic::block_eval() called at fixture.pl line 67\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"block-eval\") called at fixture.pl line 43\n\teval {...} called at fixture.pl line 42\n\tCoordinatePublic::block_eval() called at fixture.pl line 67\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 261,
+                "sha256": "504660ad2c37e2597582a54b3658396c0e75911278c34582ddfea71116c79b62"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 43,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 43,
+                      "first": 43
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 43,
+                      "first_line": 43,
+                      "identity": {
+                        "bytes": 40,
+                        "sha256": "263717f7234e03a766f2a3f7ee03885a005c7c1247d9fbfd8c2d521f2b0236f1"
+                      },
+                      "offset_bytes": 973,
+                      "text": "observe('block-eval'); # site block-eval"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 43.\n\teval {...} called at fixture.pl line 42\n\tCoordinatePublic::block_eval() called at fixture.pl line 67\n",
+              "raw_body": "\teval {...} called at fixture.pl line 42\n\tCoordinatePublic::block_eval() called at fixture.pl line 67\n",
+              "raw_header": " at fixture.pl line 43.\n",
+              "raw_identity": {
+                "bytes": 152,
+                "sha256": "b141f259bf46096a507519f6103ab728321428b75b1c51e9445cb31bfc744edb"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "block-eval"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"anonymous\") called at fixture.pl line 49\n\tCoordinatePublic::__ANON__() called at fixture.pl line 50\n\tCoordinatePublic::anonymous() called at fixture.pl line 68\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"anonymous\") called at fixture.pl line 49\n\tCoordinatePublic::__ANON__() called at fixture.pl line 50\n\tCoordinatePublic::anonymous() called at fixture.pl line 68\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 277,
+                "sha256": "28ee1d45aeaa6b1887bfb01693fba20cb47a29c0422ac71735218ed8657002b7"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 49,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 49,
+                      "first": 49
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 49,
+                      "first_line": 49,
+                      "identity": {
+                        "bytes": 21,
+                        "sha256": "0af146606d45401c108dcc0a73918472dafad0900d98062c7a194f5ea2136644"
+                      },
+                      "offset_bytes": 1114,
+                      "text": "observe('anonymous');"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 49.\n\tCoordinatePublic::__ANON__() called at fixture.pl line 50\n\tCoordinatePublic::anonymous() called at fixture.pl line 68\n",
+              "raw_body": "\tCoordinatePublic::__ANON__() called at fixture.pl line 50\n\tCoordinatePublic::anonymous() called at fixture.pl line 68\n",
+              "raw_header": " at fixture.pl line 49.\n",
+              "raw_identity": {
+                "bytes": 169,
+                "sha256": "0ed575c8b95b9ae89ae33837a7424775b60276ad83c8db0cd244876d7791db5f"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "anonymous"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"do-load\") called at ./load-body.pl line 1\n\trequire ./load-body.pl called at fixture.pl line 53\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"do-load\") called at ./load-body.pl line 1\n\trequire ./load-body.pl called at fixture.pl line 53\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 267,
+                "sha256": "912d0a8943b036c9a65888fea1d8e17fe7e9311fada4b02d3480fdce3ee312cf"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "./load-body.pl",
+              "line": 1,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "./load-body.pl",
+                      "load-body.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 1,
+                      "first": 1
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 1,
+                      "first_line": 1,
+                      "identity": {
+                        "bytes": 52,
+                        "sha256": "43da69e7e095244c635ab165870129ae3255150ae00f902fd4e180ecb8d9f8c5"
+                      },
+                      "offset_bytes": 0,
+                      "text": "CoordinatePublic::observe('do-load'); # site do-load"
+                    },
+                    "unit": "load-body.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at ./load-body.pl line 1.\n\trequire ./load-body.pl called at fixture.pl line 53\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_body": "\trequire ./load-body.pl called at fixture.pl line 53\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_header": " at ./load-body.pl line 1.\n",
+              "raw_identity": {
+                "bytes": 161,
+                "sha256": "0429389d3e633992b97305f6969d43363aa710efa098d924f61bce2c5ce38bf9"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "do-load"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"require-load\") called at ./require-body.pl line 1\n\trequire ./require-body.pl called at fixture.pl line 56\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"require-load\") called at ./require-body.pl line 1\n\trequire ./require-body.pl called at fixture.pl line 56\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 278,
+                "sha256": "b9eb833853c4d4f2f5653396e6107c4296c52eefde22476de822a50d73b72235"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "./require-body.pl",
+              "line": 1,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "./require-body.pl",
+                      "require-body.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 1,
+                      "first": 1
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 1,
+                      "first_line": 1,
+                      "identity": {
+                        "bytes": 62,
+                        "sha256": "ec37b403af41a542ec3af7744662cd4336c347875cecbfa22cbf4a478aeba05f"
+                      },
+                      "offset_bytes": 0,
+                      "text": "CoordinatePublic::observe('require-load'); # site require-load"
+                    },
+                    "unit": "require-body.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at ./require-body.pl line 1.\n\trequire ./require-body.pl called at fixture.pl line 56\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_body": "\trequire ./require-body.pl called at fixture.pl line 56\n\tCoordinatePublic::load() called at fixture.pl line 69\n",
+              "raw_header": " at ./require-body.pl line 1.\n",
+              "raw_identity": {
+                "bytes": 167,
+                "sha256": "7821aec5009fc29854b869f64199eca82f0c3ec5ce200cf705ffb744d3199076"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "require-load"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"module-call\") called at lib/CoordinateDependency.pm line 5\n\tCoordinateDependency::module_call() called at fixture.pl line 70\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"module-call\") called at lib/CoordinateDependency.pm line 5\n\tCoordinateDependency::module_call() called at fixture.pl line 70\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 242,
+                "sha256": "efcdfd27cdf5ef1ee2018f70c94140805f9838f89f3e1e2e5d25f4117f9fc5eb"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "lib/CoordinateDependency.pm",
+              "line": 5,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "lib/CoordinateDependency.pm"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 5,
+                      "first": 5
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 5,
+                      "first_line": 5,
+                      "identity": {
+                        "bytes": 60,
+                        "sha256": "ac57e5aa9b474cd8934b9e6c3f273606734b52ad9671e7d23781ea1ad56f5471"
+                      },
+                      "offset_bytes": 78,
+                      "text": "CoordinatePublic::observe('module-call'); # site module-call"
+                    },
+                    "unit": "lib/CoordinateDependency.pm"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at lib/CoordinateDependency.pm line 5.\n\tCoordinateDependency::module_call() called at fixture.pl line 70\n",
+              "raw_body": "\tCoordinateDependency::module_call() called at fixture.pl line 70\n",
+              "raw_header": " at lib/CoordinateDependency.pm line 5.\n",
+              "raw_identity": {
+                "bytes": 132,
+                "sha256": "95f6bba9942f46ccbf543a19d1d5f6f1d418ff0e9dcf7420faa0a808ac2ee3c1"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "module-call"
+        },
+        {
+          "origins": {
+            "guard_error": {
+              "filename": "fixture.pl",
+              "line": 24,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 24,
+                      "first": 24
+                    },
+                    "name": "own-confess_call",
+                    "source": {
+                      "closing_line": 24,
+                      "first_line": 24,
+                      "identity": {
+                        "bytes": 64,
+                        "sha256": "52d55f33011f6052470f07ea4ab32768518a2bc91de3fa429aca63b290cf6e23"
+                      },
+                      "offset_bytes": 472,
+                      "text": "my $ok = eval { Carp::confess(\"public coordinate guard\\n\"); 1 };"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate guard\n",
+              "outcome": "selected",
+              "raw": "public coordinate guard\n at fixture.pl line 24.\n\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"subtest\") called at fixture.pl line 73\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x7a479894c8), \"public coordinate callback\", CODE(0x7a47d5ed20)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"public coordinate callback\", CODE(0x7a47d5ed20)) called at fixture.pl line 75\n",
+              "raw_body": "\teval {...} called at fixture.pl line 24\n\tCoordinatePublic::observe(\"subtest\") called at fixture.pl line 73\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x7a479894c8), \"public coordinate callback\", CODE(0x7a47d5ed20)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"public coordinate callback\", CODE(0x7a47d5ed20)) called at fixture.pl line 75\n",
+              "raw_header": " at fixture.pl line 24.\n",
+              "raw_identity": {
+                "bytes": 574,
+                "sha256": "e9c7412acc0df9b782dc28c69013a9d2800505a440d1ba80a1cb3c12900ca35a"
+              },
+              "unresolved": null
+            },
+            "trace": {
+              "filename": "fixture.pl",
+              "line": 73,
+              "matches": [
+                {
+                  "alternative": {
+                    "filename_hypotheses": [
+                      "fixture.pl"
+                    ],
+                    "line_hypotheses": {
+                      "closing": 73,
+                      "first": 73
+                    },
+                    "name": "observer-call",
+                    "source": {
+                      "closing_line": 73,
+                      "first_line": 73,
+                      "identity": {
+                        "bytes": 52,
+                        "sha256": "5eee87a2728a5802cb62890ea0151190a87aa0548c0197119572ac5a86069daa"
+                      },
+                      "offset_bytes": 1844,
+                      "text": "CoordinatePublic::observe('subtest'); # site subtest"
+                    },
+                    "unit": "fixture.pl"
+                  },
+                  "matching_line_labels": [
+                    "first",
+                    "closing"
+                  ]
+                }
+              ],
+              "message": "public coordinate fixture\n",
+              "outcome": "selected",
+              "raw": "public coordinate fixture\n at fixture.pl line 73.\n\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x7a479894c8), \"public coordinate callback\", CODE(0x7a47d5ed20)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"public coordinate callback\", CODE(0x7a47d5ed20)) called at fixture.pl line 75\n",
+              "raw_body": "\tmain::__ANON__() called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\teval {...} called at /System/Library/Perl/5.34/Test/Builder.pm line 374\n\tTest::Builder::subtest(Test::Builder=HASH(0x7a479894c8), \"public coordinate callback\", CODE(0x7a47d5ed20)) called at /System/Library/Perl/5.34/Test/More.pm line 809\n\tTest::More::subtest(\"public coordinate callback\", CODE(0x7a47d5ed20)) called at fixture.pl line 75\n",
+              "raw_header": " at fixture.pl line 73.\n",
+              "raw_identity": {
+                "bytes": 468,
+                "sha256": "abf5fca321d80ecd1d2eb59556e723ef34654cb1ddfaba0d9898bf2d61d7ac6a"
+              },
+              "unresolved": null
+            }
+          },
+          "role": "subtest"
+        }
+      ],
+      "invocation": {
+        "command": [
+          "perl",
+          "fixture.pl"
+        ],
+        "label": "root-b",
+        "root": ".artifacts/public-coordinate-native/root-b"
+      },
+      "whole_raw_wire_identity": {
+        "bytes": 7704,
+        "sha256": "23d53f2fad784b68e8d6f7a85b46f6fa50ec02c3905c00a1fcf8a24f9c8d6636"
+      }
+    }
+  ]
+}

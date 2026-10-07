@@ -1,0 +1,24 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "mdbook",
+    "build",
+    "docs/book",
+    "--dest-dir",
+    ".artifacts/coordinate-public-origin-selection-book"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/run.py": {
+      "bytes": 1264,
+      "sha256": "aa5b9061c8ac52472b2fcefcfe1300d6c1e8d020c2475556bbc3ae2b6dd4370c"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 85364; host 42.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15282297 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/coordinate-public-origin-selection-book`\n",
+  "stdout": ""
+}

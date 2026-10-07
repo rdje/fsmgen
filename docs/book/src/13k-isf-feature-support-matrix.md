@@ -964,8 +964,7 @@ retain complete source, command, output, frame and error bytes. For these own
 fixtures, multiline calls and block eval boundaries select their opening lines;
 when both source alternatives occupy the same line, both labels remain valid.
 The readers replay pre-native sources, captured custody and caller/boundary
-selection. Trace origins and native wrong-caller, line and source controls
-remain pending:
+selection. Native wrong-caller, line and source controls remain pending:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-hypotheses-20261007/verify.py
@@ -981,6 +980,17 @@ The source model selects no trace/error origin yet:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-origin-hypotheses-20261007/verify.py
+```
+
+For the retained public captures, longmess origin headers join the observer
+call sites. Confess headers join the own confess statement inside eval.
+These headers qualify only the retained public fixtures. Every raw header and
+following trace byte remains intact; private frames and formatter settings
+remain unmeasured. The saved origin reader preserves all matching source
+alternatives and rejects borrowed source, line, message and scope candidates:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-origin-selection-20261007/verify.py
 ```
 
 The own subtest source model now assigns original refusals to their complete

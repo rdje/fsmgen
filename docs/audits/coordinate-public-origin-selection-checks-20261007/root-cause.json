@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "git",
+    "log",
+    "--format=%H%n%s",
+    "-S",
+    "The source model selects no trace/error origin yet:",
+    "b3b1bc6164b1a0ea0943d2399ad90de11ecad9de",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/run.py": {
+      "bytes": 1264,
+      "sha256": "aa5b9061c8ac52472b2fcefcfe1300d6c1e8d020c2475556bbc3ae2b6dd4370c"
+    },
+    "docs/book/src/13k-isf-feature-support-matrix.md": {
+      "bytes": 206440,
+      "sha256": "8b1f719771d75f1181f10f2f33716dab6608b47cc2d9efb3923d5a7d273c135d"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 81631; host 76.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "b3b1bc6164b1a0ea0943d2399ad90de11ecad9de\nSEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1: bind pure-source public origin hypotheses\n"
+}

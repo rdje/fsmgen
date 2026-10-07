@@ -1,0 +1,27 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-public-origin-selection-20261007/verify.py",
+    "--seal"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/run.py": {
+      "bytes": 1264,
+      "sha256": "aa5b9061c8ac52472b2fcefcfe1300d6c1e8d020c2475556bbc3ae2b6dd4370c"
+    },
+    "docs/audits/record-value-coordinate-public-origin-selection-20261007/verify.py": {
+      "bytes": 11824,
+      "sha256": "1c843d0bdfdbc93f9f4f682de21b0686254e9de942605e71277552117df0f0b1"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 82862; host 38.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete predeclared public origin joins and genuine candidate controls; native bad variants and original identities remain pending.\n"
+}
