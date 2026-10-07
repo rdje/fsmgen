@@ -5168,11 +5168,52 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Capture and qualify genuine native wrong-caller/line/root/borrowed-source controls.`
   Acceptance: `After selected public recipes commit, execute independently authored bad native fixture variants under the unchanged tool/guard/locality recipes. Retain every complete source/command/status/stream/frame/error and classify intended separating refusals for wrong caller, line, invocation root and borrowed source. Independently consume all real control results; copied custody mutations alone cannot satisfy native semantic falsification.`
   Verification: `pending`
   Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1`
+  Status: `active`
+  Goal: `Commit complete native bad-variant source plans and expected separating refusals before execution.`
+  Acceptance: `Authenticate complete committed e78541a5 source/caller/origin/capture/actual domains and done owners. Independently author full caller-namespace, line-shift, fresh-root and borrowed-source variants from exact own fixture bytes; bind every source change, planned invocation and source-selected expected refusal. Conserve all original bytes and name the legitimate control-root versus unchanged base-root semantic boundary. Genuine source/member/kind/root/scope controls and independent binary allocation checks qualify. No variant executes before this plan commits.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.1`
+  Status: `done`
+  Goal: `Preserve native-control decomposition and prepare the authorized clean context-refresh handoff.`
+  Acceptance: `The director requests this clean pause and authorizes future engineer-selected context refreshes for signoff quality. Preserve the complete small unexecuted scaffold as preparation evidence, remove only its exact active copies, and leave source plans/captures/qualification pending in their owned leaves. Record the durable session-health directive and bootstrap route, conserve every committed public/native/original domain, verify current book/source delivery and final census/gates, commit and clear the message. No native variant execution or unfinished source-plan implementation may remain in flight.`
+  Verification: `Director-selected pause and future engineer-selected context-refresh authority retain in decision0116 and mandatory bootstrap. Complete unexecuted scope/runner bytes retain as preparation, with a genuine changed-identity refusal and complete member checks and active copies removed; no source variant, native capture or semantic control ran. Full immutable e785 committed coordinate/public source/raw/programme/actual membership and every byte conserve. Source-plan/capture/qualification boundaries remain owned; exact .2 source-plan frontier is pending and the pause pointer is saved. New canonical decision metadata/indices and Knowledge Map routes qualify without any knowledge-card collection growth or ceiling change. Guarded focused current/book All tests successful Files3 Tests310. Final native source-delivery, measured declarations, claim/staged/hooks and empty-message/clean-Git checks complete the handoff; full CI/push remains under existing deferral.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.1: preserve clean session-health handoff`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.2`
+  Status: `pending`
+  Goal: `Commit complete native bad-variant source plans and expected separating refusals before execution.`
+  Acceptance: `Authenticate complete committed e78541a5 source/caller/origin/capture/actual domains and done owners. Independently author full caller-namespace, line-shift, fresh-root and borrowed-source variants from exact own fixture bytes; bind every source change, planned invocation and source-selected expected refusal. Conserve all original bytes and name the legitimate control-root versus unchanged base-root semantic boundary. Genuine source/member/kind/root/scope controls and independent binary allocation checks qualify. No variant executes before this plan commits.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Capture every committed native bad variant once and qualify complete raw custody.`
+  Acceptance: `After .1 commits, authenticate the whole plan and actual independent qualification, then execute each declared fresh same-volume variant under unchanged guard/interpreter/environment recipes. Checkpoint complete commands/status/stdout/stderr/source and before/after census, retain opaque public tool metadata and every frame/error/argument byte. Independently consume whole fixed source and raw custody with genuine kind/member/root/instrument/promotion controls. Never replay a spent capture; semantic refusal selection remains .3.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3`
+  Status: `pending`
+  Goal: `Independently qualify every genuine native variant against its precommitted expected refusal.`
+  Acceptance: `After .2 commits, authenticate all native control plan/capture/actual domains. Qualify wrong caller, line and borrowed filename through unchanged good-source public coordinate predicates and wrong root through unchanged base invocation admission, while preserving native actual roots and every raw byte. Keep controlled comparison inputs explicit; classify every intended refusal independently from binary good/variant source and full actual wire. Qualify positive coordinate checks for the source-identical wrong-root case and genuine lost/refusal/source/promotion controls. Close only finite native semantic falsification, then whole public qualification .4.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.4`
   Status: `pending`
@@ -6874,3 +6915,9 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixedb3b1bc61 in docs/audits/coordinate-public-origin-selection-checks-20261007/root-cause.json locates the source-only guide’s explicit origin-intake gap. Complete independently declared own longmess/confess/observer/outer/boundary statements and public Carp/eval contracts precede all interpretation; every incoming source/raw/actual member and done owner authenticates.
 - [x] **ADDRESSED (verified)** — Every retained public origin joins all matching source-built filename/line alternatives without normalizing any raw header, body, frame or argument byte. Complete selected products and explicit unresolved/configuration/private scope retain. Ten full genuine candidate controls and seven independent kind/closing/equivalent/body/allocation/configuration/native-input controls reject intended causes; independent fixed-Git binary source/header reconstruction and actual-result consumption pass. Native executed bad variants remain a separate successor.
 - [x] **NO REGRESSION** — Guarded prove in docs/audits/coordinate-public-origin-selection-checks-20261007/focused-final.json reports All tests successful Files=3, Tests=310 for current publication and public book paths/matrix. Complete saved source/native guide and scope/route/byte/status controls pass; final native copied-source freshness, measured aggregate/final claim census and staged doctrines/hooks gate this commit. Original/private/formatter/toolchain identities and visual/HIAL/full-CI/push scope retain owners.
+
+## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed e785 in docs/audits/coordinate-context-refresh-checks-20261007/root-cause.json identifies the completed public-origin checkpoint and still-unexecuted native control seam. The director selects a clean pause and delegates future session-health checkpoint decisions; the only new implementation preparation is the complete retained scope/runner scaffold, with no model or native execution.
+- [x] **ADDRESSED (verified)** — Exact scaffold bytes/pins retain before active-copy removal. The independent saved preparation reader authenticates the entire fixed committed coordinate/public population and bytes, rejects a genuinely changed preparation identity and verifies the precise pending frontier and pause pointer. Complete source-plan/capture/qualification decomposition stays tracked. Decision0116, canonical catalog/indices, bootstrap and fresh Knowledge Map routing durably record the director’s authority.
+- [x] **NO REGRESSION** — Guarded prove in docs/audits/coordinate-context-refresh-checks-20261007/focused.json reports All tests successful Files=3, Tests=310 for current publication and public book paths/matrix. Complete decision-store verification and unchanged coordinate/public-domain conservation pass. Final current/native source delivery, claim census and staged doctrines/normal hooks gate the clean committed pause; no native bad capture, original/private/formatter promotion, ceiling, visual/HIAL/full-CI/push change occurs.

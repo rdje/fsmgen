@@ -1,0 +1,20 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "knowledge-map/scripts/gen_knowledge_map.sh"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-context-refresh-checks-20261007/run.py": {
+      "bytes": 1256,
+      "sha256": "4ed33e87828c2dd03c0a72321824efe3f60b9cc67fefbea35f571d5f4ff20429"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 44782; host 49.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: wrote KNOWLEDGE_MAP.md plus 185 topic shards (1267 facts, 6978 unique questions, 7155 answer occurrences)\n",
+  "stdout": ""
+}

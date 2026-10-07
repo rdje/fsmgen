@@ -1,0 +1,19 @@
+{
+  "retained": {
+    "docs/audits/coordinate-native-control-plan-checks-20261007/run.py": {
+      "identity": {
+        "bytes": 1260,
+        "sha256": "41f7d4e49fc4f07fdd33b3046412e2462c09921a451f3773b636df74473ea44c"
+      },
+      "retained": "docs/audits/coordinate-context-refresh-checks-20261007/unexecuted-plan-runner.py.txt"
+    },
+    "docs/audits/record-value-coordinate-native-control-plans-20261007/scope.txt": {
+      "identity": {
+        "bytes": 2032,
+        "sha256": "8334f56ed0c21ed7546f7d9e85718ee84f45ffe16f1b0e48f92707e4e4c63787"
+      },
+      "retained": "docs/audits/coordinate-context-refresh-checks-20261007/unexecuted-plan-scope.txt"
+    }
+  },
+  "scope": "Complete authoring scaffold only; no source variants, capture, semantic control execution or complete plan qualification existed. Exact copies retain before removal. Source/capture/qualification remain pending in the task tree."
+}

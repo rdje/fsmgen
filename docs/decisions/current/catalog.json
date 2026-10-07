@@ -1291,6 +1291,28 @@
       },
       "path": "docs/decisions/current/language-api/0115-multi-actor-ial2-lowers-through-atl-in-ial1.md",
       "type": "architecture"
+    },
+    {
+      "content": {
+        "bytes": 1781,
+        "line_bytes": 126,
+        "lines": 40,
+        "sha256": "fc96d0d86cf2badb736a875ffe3bed5b04e8858b150cd3779fd8d98824cc973f"
+      },
+      "id": "0116",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": "engineer-selects-clean-context-refresh-checkpoints",
+        "knowledge_status": "current",
+        "questions": [
+          "who decides when an engineering session needs a fresh context?",
+          "when may an agent pause PNT for session health?"
+        ]
+      },
+      "path": "docs/decisions/current/continuity/0116-engineer-selects-clean-context-refresh-checkpoints.md",
+      "type": "feedback/governance"
     }
   ],
   "schema_version": 1,

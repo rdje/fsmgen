@@ -28,6 +28,14 @@ PNT authorizes roadmap-aligned engineering decisions and bounded task
 decomposition. Do not seek renewed approval just to split fixture or diagnostic
 work into owned slices.
 
+## Context-refresh checkpoints
+
+The engineer decides when a fresh context would help maintain focus or signoff
+quality; no choice prompt is needed. First preserve and commit the owned work,
+consume required jobs, clear the message and verify a clean handoff. Then pause
+with the latest commit and next owned action. Resume from committed state.
+Authority: [decision 0116](docs/decisions/current/continuity/0116-engineer-selects-clean-context-refresh-checkpoints.md).
+
 ## Default start-of-session task
 Before doing anything else, perform this task first:
 
