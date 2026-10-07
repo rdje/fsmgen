@@ -1,0 +1,82 @@
+[
+  {
+    "cause": "coordinate admission epoch and unmeasured scope",
+    "control": "native-promotion",
+    "status": 1
+  },
+  {
+    "cause": "complete committed coordinate prerequisite task and done-owner authority",
+    "control": "lost-done-owner",
+    "status": 1
+  },
+  {
+    "cause": "whole coordinate direct/transitive source and result members",
+    "control": "lost-transitive-member",
+    "status": 1
+  },
+  {
+    "cause": "coordinate custody discrete source byte kinds",
+    "control": "Boolean-source-bytes",
+    "status": 1
+  },
+  {
+    "cause": "whole fixed coordinate prerequisite programme custody",
+    "control": "borrowed-programme",
+    "status": 1
+  },
+  {
+    "cause": "saved source epoch is not later currency",
+    "control": "later-currency-promotion",
+    "status": 1
+  },
+  {
+    "cause": "complete repaired target bodies and ordered questions",
+    "control": "lost-target-body",
+    "status": 1
+  },
+  {
+    "cause": "coordinate source census discrete kinds",
+    "control": "Boolean-census",
+    "status": 1
+  },
+  {
+    "cause": "whole committed coordinate logical and physical source population",
+    "control": "lost-source-member",
+    "status": 1
+  },
+  {
+    "cause": "whole committed coordinate question allocation",
+    "control": "lost-question",
+    "status": 1
+  },
+  {
+    "cause": "whole unchanged coordinate source capacity authority",
+    "control": "widened-authority",
+    "status": 1
+  },
+  {
+    "cause": "actual coordinate prerequisite integer success",
+    "control": "actual-status-True",
+    "status": 1
+  },
+  {
+    "cause": "actual coordinate prerequisite integer success",
+    "control": "actual-status-0.0",
+    "status": 1
+  },
+  {
+    "cause": "actual coordinate prerequisite integer success",
+    "control": "actual-status-1",
+    "status": 1
+  },
+  {
+    "cause": "whole coordinate prerequisite invocation source and input identities",
+    "control": "lost-invocation-source",
+    "status": 1
+  },
+  {
+    "cause": "whole actual coordinate prerequisite command and streams",
+    "control": "borrowed-current-success",
+    "status": 1
+  }
+]

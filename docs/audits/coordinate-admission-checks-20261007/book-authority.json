@@ -1,0 +1,29 @@
+{
+  "after": {
+    "bytes_total": 3815076,
+    "files": 64,
+    "lines_total": 68603
+  },
+  "before": {
+    "bytes_total": 3814142,
+    "files": 64,
+    "lines_total": 68586
+  },
+  "change": {
+    "authority_id": "COORDINATE-ADMISSION-EPOCH-20261007",
+    "baseline": {
+      "bytes_total": 3814142,
+      "files": 64,
+      "lines_total": 68586
+    },
+    "delta": {
+      "bytes_total": 934,
+      "files": 0,
+      "lines_total": 17
+    },
+    "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.1",
+    "rationale": "Expose complete saved coordinate admission and unchanged historical-epoch result replay while preserving current currency and pending coordinate/private/formatter/visual scopes."
+  },
+  "revision": "5f20dde9c42acb997c0a27d3957a7cdb2183802a",
+  "scope": "Exact full Git/live source populations and owned delta; all enforcement ceilings and Knowledge Map authority unchanged."
+}

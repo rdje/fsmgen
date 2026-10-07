@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-admission-20261007/verify.py",
+    "--replay"
+  ],
+  "status": 1,
+  "stderr": "ram-guard: PID 90045; host 32.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-coordinate-admission-20261007/verify.py\", line 279, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-coordinate-admission-20261007/verify.py\", line 271, in main\n    save('result-proof.json', replays(bound, source, args.replay))\n                              ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-coordinate-admission-20261007/verify.py\", line 209, in replays\n    check_actual(actual, spec, bound, source)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-coordinate-admission-20261007/verify.py\", line 171, in check_actual\n    require(type(actual['status']) is int and actual['status'] == 0, 'actual coordinate prerequisite integer success')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 32, in require\n    raise ValueError(cause)\nValueError: actual coordinate prerequisite integer success\n",
+  "stdout": "Retained actual coordinate prerequisite: publication\nRetained actual coordinate prerequisite: publication_result\n"
+}

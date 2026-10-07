@@ -1,0 +1,43 @@
+{
+  "controls": [
+    {
+      "cause": "exact complete rendered admission scope and route",
+      "control": "borrowed-historical-command"
+    },
+    {
+      "cause": "exact complete rendered admission scope and route",
+      "control": "coordinate-promotion"
+    },
+    {
+      "cause": "exact complete rendered admission scope and route",
+      "control": "private-identity-promotion"
+    },
+    {
+      "cause": "exact complete rendered admission scope and route",
+      "control": "wrong-declared-apostrophe"
+    }
+  ],
+  "proof": {
+    "command": "scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-admission-20261007/verify.py",
+    "config": {
+      "bytes": 351,
+      "sha256": "f716f9c04b71ecc347e2dc88ebc94ae6c7d30b55af5daacf261228a41b44c691"
+    },
+    "html": {
+      "bytes": 241556,
+      "sha256": "524972e0f0d4998b2f343e4f028486fcd801d5fe1bec795e99f66a78a3d052fc"
+    },
+    "programme": {
+      "bytes": 2090,
+      "sha256": "024d761ac674b01f29fede2777d7609c7529b9b64a1679b3abe76e562c8480f7"
+    },
+    "recipe": {
+      "after": "publication\u2019s",
+      "before": "publication's",
+      "occurrences": 1
+    },
+    "rendered": "Raw-coordinate qualification first admits the complete predecessor source and\nactual-result evidence. Its saved admission checks the dated source epoch; it\ndoes not establish coordinate meanings or later current currency:\n\nscripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-admission-20261007/verify.py\n\nThe historical publication\u2019s independent result qualifier expects its original\nfact, book and authority epoch. It rejects later live publication changes.\nAdmission executes that unchanged qualifier in a disposable same-volume copy of\nthe committed epoch and checks every source member before and after, preserving\nthe live sources and removing the fixture. The maintained current reader above\nseparately checks present currency. Independent coordinate source recipes and\nthe original-coordinate join remain pending; original private, formatter and\ntoolchain identities remain unmeasured.\n\n",
+    "scope": "Exact scoped rendered text and declared single apostrophe recipe; raw coordinates and original formatter identities are untouched, visual QA pending.",
+    "source": "Raw-coordinate qualification first admits the complete predecessor source and\nactual-result evidence. Its saved admission checks the dated source epoch; it\ndoes not establish coordinate meanings or later current currency:\n\n```bash\nscripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-admission-20261007/verify.py\n```\n\nThe historical publication's independent result qualifier expects its original\nfact, book and authority epoch. It rejects later live publication changes.\nAdmission executes that unchanged qualifier in a disposable same-volume copy of\nthe committed epoch and checks every source member before and after, preserving\nthe live sources and removing the fixture. The maintained current reader above\nseparately checks present currency. Independent coordinate source recipes and\nthe original-coordinate join remain pending; original private, formatter and\ntoolchain identities remain unmeasured.\n\n"
+  }
+}

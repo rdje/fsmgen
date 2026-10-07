@@ -1,0 +1,37 @@
+{
+  "after": {
+    "bytes_each": 1,
+    "bytes_total": 1436986,
+    "files": 5,
+    "line_bytes_each": 1,
+    "lines_each": 482,
+    "lines_total": 6868
+  },
+  "before": {
+    "bytes_each": 1,
+    "bytes_total": 1429412,
+    "files": 5,
+    "line_bytes_each": 1,
+    "lines_each": 482,
+    "lines_total": 6822
+  },
+  "ceilings": {
+    "bytes_each": 4194304,
+    "bytes_total": 16777216,
+    "files": 768,
+    "line_bytes_each": 8192,
+    "lines_each": 8000,
+    "lines_total": 150000
+  },
+  "metrics": {
+    "bytes_each": 2366453,
+    "bytes_total": 12676205,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 6882,
+    "lines_total": 117786
+  },
+  "scope": "Measured owned task growth under warning debt; ceilings/baseline/ratchet policy and Knowledge Map allowance unchanged.",
+  "state": "warning_debt",
+  "surface": "task_evidence"
+}

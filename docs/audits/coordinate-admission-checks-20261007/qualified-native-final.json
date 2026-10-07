@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-admission-checks-20261007/qualify_native.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 52642; host 41.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete declared rendered admission scope and exact apostrophe recipe; genuine route/coordinate/private/recipe losses refuse, visual QA pending.\n"
+}

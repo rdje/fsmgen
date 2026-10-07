@@ -1,0 +1,279 @@
+"""Admit complete coordinate prerequisites without assigning coordinate meanings."""
+import argparse
+import ast
+import copy
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, 'scripts')
+import check_record_value_publication as current
+
+BASE = Path('docs/audits/record-value-coordinate-admission-20261007')
+REVISION = '5f20dde9c42acb997c0a27d3957a7cdb2183802a'
+PUBLICATION = current.HISTORICAL
+REPAIR = Path('docs/audits/class-frame-current-repair-20261007')
+CONTINUITY = Path('docs/audits/record-value-coordinate-continuity-20261007')
+TASK = Path('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md')
+ROLE = ('Complete committed coordinate predecessor custody and scoped actual reader executions; '
+        'independent coordinate recipes and original-coordinate join remain pending. '
+        'Inherited serialized operands remain opaque evidence; dated public profiles do not '
+        'measure original formatter/provider/toolchain/private identities.')
+SUCCESS = 'PASS complete saved coordinate prerequisite custody, source epoch and actual results; coordinate recipes and join remain pending.\n'
+FRESH = 'PASS fresh complete coordinate prerequisite executions; original captures retained and coordinate meanings remain pending.\n'
+PROGRAMMES = ('scripts/check_record_value_publication.py', 'scripts/book_source_references.py',
+    'scripts/check_book_source_index.py', 'scripts/decision_store_git.py', 'scripts/run_with_ram_guard.sh',
+    't/2066-record-value-current-publication.t', 't/python/test_record_value_current_publication.py')
+
+
+def module(path):
+    namespace = {'__name__': 'coordinate_prerequisite', '__file__': str(path)}
+    exec(compile(path.read_bytes(), str(path), 'exec'), namespace)
+    return namespace
+
+
+prior = current.historical()
+admission = prior['retention']['intake']['admission']
+require, same, identity, load, whole = (admission[k] for k in ('require', 'same', 'identity', 'load', 'whole'))
+
+
+def git(path):
+    return subprocess.check_output(['git', 'show', REVISION + ':' + str(path)])
+
+
+def save(name, value):
+    path = BASE / name
+    if path.exists():
+        require(same(load(path), value), 'whole immutable coordinate admission product: ' + name)
+    else:
+        require(not (BASE / 'manifest.json').exists(), 'sealed coordinate admission cannot add products')
+        path.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+
+
+def members():
+    return {str(Path(p).relative_to(BASE)): pin for p, pin in whole(BASE).items() if Path(p) != BASE / 'manifest.json'}
+
+
+def domain():
+    """Whole published transitive roots plus complete newer source-literal closure."""
+    roots = {Path(p) for p in load(PUBLICATION / 'binding.json')['inputs']}
+    roots.update((PUBLICATION, Path('docs/audits/class-frame-publication-checks-20261006'),
+        REPAIR, Path('docs/audits/class-frame-current-checks-20261007'),
+        Path('docs/audits/class-frame-progress-capacity-20261007'), CONTINUITY,
+        Path('docs/audits/coordinate-continuity-checks-20261007')))
+    pending, scanned = list(roots), set()
+    while pending:
+        root = pending.pop()
+        if root in scanned:
+            continue
+        scanned.add(root)
+        for path in sorted(root.rglob('*.py')):
+            for node in ast.walk(ast.parse(path.read_bytes())):
+                if not isinstance(node, ast.Constant) or not isinstance(node.value, str) or not node.value.startswith('docs/audits/'):
+                    continue
+                parts = Path(node.value).parts
+                if len(parts) < 3:
+                    continue
+                dependency = Path(*parts[:3])
+                if dependency.is_dir() and dependency not in roots:
+                    require(dependency != BASE, 'coordinate source domain excludes its new output')
+                    roots.add(dependency); pending.append(dependency)
+    return sorted(roots, key=str)
+
+
+def binding():
+    roots = domain()
+    previous = admission['REVISION']
+    try:
+        admission['REVISION'] = REVISION
+        inputs = admission['committed_inputs'](roots)
+        task = git(TASK)
+        owners = admission['owner_rows'](roots, task.decode())
+    finally:
+        admission['REVISION'] = previous
+    return dict(revision=REVISION, task=dict(path=str(TASK), identity=identity(task)),
+        inputs=inputs, owners=owners, programmes={p: identity(git(p)) for p in PROGRAMMES},
+        original_capture=load(prior['retention']['intake']['JOIN'] / 'binding.json')['original_capture'],
+        role=ROLE)
+
+
+def check_binding(candidate, expected):
+    require(candidate['revision'] == REVISION and candidate['role'] == ROLE, 'coordinate admission epoch and unmeasured scope')
+    require(same(candidate['task'], expected['task']) and same(candidate['owners'], expected['owners']),
+            'complete committed coordinate prerequisite task and done-owner authority')
+    require(all(type(pin['bytes']) is int and pin['bytes'] >= 0
+        for rows in candidate['inputs'].values() for pin in rows.values()), 'coordinate custody discrete source byte kinds')
+    require(same(candidate['inputs'], expected['inputs']), 'whole coordinate direct/transitive source and result members')
+    require(same(candidate['programmes'], expected['programmes']), 'whole fixed coordinate prerequisite programme custody')
+    require(same(candidate['original_capture'], expected['original_capture']), 'whole original capture conservation')
+    require(same(candidate, expected), 'closed complete coordinate prerequisite binding')
+
+
+def snapshot():
+    names = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', REVISION, '--',
+        'docs/knowledge', 'docs/decisions'], text=True).splitlines()
+    canonical = prior['metadata']['git_blobs'](REVISION, sorted(p for p in names if p.endswith('.md')))
+    physical = {p: raw for p, raw in canonical.items() if Path(p).parent == Path('docs/knowledge')}
+    source = git('scripts/check_record_value_publication.py')
+    namespace = {'__name__': 'fixed_current_coordinate_predecessor', '__file__': 'scripts/check_record_value_publication.py'}
+    exec(compile(source, namespace['__file__'], 'exec'), namespace)
+    require({p: canonical[p].decode() for p in prior['PATHS']} == namespace['expected_cards'](prior),
+            'whole committed repaired target meanings and ordered questions')
+    registry = git(prior['REGISTRY'])
+    return dict(revision=REVISION, sources={p: identity(raw) for p, raw in canonical.items()},
+        cards={p: canonical[p].decode() for p in prior['PATHS']},
+        census=prior['public']['metrics'](physical), allocation=prior['metadata']['allocation'](canonical),
+        surface=prior['public']['authority'](registry),
+        source_budget=next(json.loads(s) for s in registry.decode().splitlines()
+            if json.loads(s).get('surface_id') == 'book_source_manifest'),
+        chapter=git(prior['CHAPTER']).decode(), tooling_chapter=git(prior['TOOLING_CHAPTER']).decode(),
+        role='Whole fixed committed source epoch and repaired target obligations; no later live currency or coordinate meaning.')
+
+
+def check_snapshot(candidate, expected):
+    require(candidate['revision'] == REVISION and candidate['role'] == expected['role'], 'saved source epoch is not later currency')
+    require(same(candidate['cards'], expected['cards']), 'complete repaired target bodies and ordered questions')
+    require(all(type(v) is int and v >= 0 for v in candidate['census'].values()), 'coordinate source census discrete kinds')
+    require(same(candidate['sources'], expected['sources']) and same(candidate['census'], expected['census']),
+            'whole committed coordinate logical and physical source population')
+    require(same(candidate['allocation'], expected['allocation']), 'whole committed coordinate question allocation')
+    require(same(candidate['surface'], expected['surface']) and same(candidate['source_budget'], expected['source_budget']),
+            'whole unchanged coordinate source capacity authority')
+    require(same(candidate, expected), 'closed complete committed coordinate source epoch')
+
+
+def specs():
+    return [dict(name='publication', command=['python3', '-B', str(PUBLICATION / 'verify.py')],
+                stdout=prior['SUCCESS'], role='Fresh complete historical class/frame semantic/source/raw/result snapshot; original captures retained.'),
+        dict(name='publication_result', command=['python3', '-B', 'docs/audits/class-frame-publication-checks-20261006/verify_seal.py'],
+             stdout=load(Path('docs/audits/class-frame-publication-checks-20261006/independent-result.json'))['stdout'],
+             role='Fresh independent whole historical publication actual-result, genuine typed/member/borrowed controls and retained native proofs.'),
+        dict(name='repair_result', command=['python3', '-B', str(REPAIR / 'verify_saved.py')],
+             stdout=load(Path('docs/audits/class-frame-current-checks-20261007/saved-result.json'))['stdout'],
+             role='Fresh independent complete dated repaired source/query/target/native and actual-result proof; no original recapture or later currency.'),
+        dict(name='current', command=['python3', '-B', 'scripts/check_record_value_publication.py'],
+             stdout=current.SUCCESS, role='Fresh whole current source/target/query/census/canonical-index execution at the admitted predecessor epoch; no native factory rebuild.'),
+        dict(name='continuity', command=['python3', '-B', str(CONTINUITY / 'verify.py')],
+             stdout=load(Path('docs/audits/coordinate-continuity-checks-20261007/saved-reader.json'))['stdout'],
+             role='Fresh complete saved task-history/source/graph/manifest-chain and genuine corruption controls; no later task currency.')]
+
+
+def instruments(bound):
+    result = {p: pin for rows in bound['inputs'].values() for p, pin in rows.items()
+        if p.endswith(('.py', '.pm', '.pl', '.py.txt'))}
+    result.update(bound['programmes'])
+    result[str(BASE / 'verify.py')] = identity((BASE / 'verify.py').read_bytes())
+    return result
+
+
+def check_actual(actual, spec, bound, source):
+    require(type(actual['status']) is int and actual['status'] == 0, 'actual coordinate prerequisite integer success')
+    require(actual['command'] == spec['command'] and actual['stdout'] == spec['stdout'] and actual['stderr'] == '',
+            'whole actual coordinate prerequisite command and streams')
+    require(actual['role'] == spec['role'], 'actual coordinate prerequisite fresh and retained roles')
+    require(same(actual['instruments'], instruments(bound))
+        and same(actual['binding'], identity((BASE / 'binding.json').read_bytes()))
+        and same(actual['source'], identity((BASE / 'source-snapshot.json').read_bytes())),
+        'whole coordinate prerequisite invocation source and input identities')
+    require(set(actual) == {'command', 'status', 'stdout', 'stderr', 'role', 'instruments', 'binding', 'source'},
+            'closed actual coordinate prerequisite execution')
+
+
+def check_live_epoch(source):
+    require(same({p: identity(raw) for p, raw in current.sources().items()}, source['sources']),
+            'whole invocation-time live logical source equals admitted fixed epoch')
+    require(prior['CHAPTER'].read_text() == source['chapter']
+        and prior['TOOLING_CHAPTER'].read_text() == source['tooling_chapter'],
+        'whole invocation-time live book source equals admitted fixed epoch')
+
+
+def replays(bound, source, fresh):
+    result = {}
+    for spec in specs():
+        name = 'actual-' + spec['name'] + '.json'
+        if fresh:
+            require(not (BASE / name).exists(), 'fresh coordinate execution cannot overwrite actual evidence')
+            require(same(binding(), bound) and same(snapshot(), source), 'whole coordinate source epoch before execution')
+            check_live_epoch(source)
+            require(all(Path(p).read_bytes() == git(p) for p in PROGRAMMES), 'actual coordinate programmes equal committed source epoch')
+            invocation = instruments(bound)
+            execution = subprocess.run(spec['command'], capture_output=True, text=True)
+            save(name, dict(command=spec['command'], status=execution.returncode, stdout=execution.stdout,
+                stderr=execution.stderr, role=spec['role'], instruments=invocation,
+                binding=identity((BASE / 'binding.json').read_bytes()), source=identity((BASE / 'source-snapshot.json').read_bytes())))
+            require(same(binding(), bound) and same(snapshot(), source), 'whole coordinate source epoch after execution')
+            check_live_epoch(source)
+            print('Retained actual coordinate prerequisite: ' + spec['name'], flush=True)
+        actual = load(BASE / name)
+        check_actual(actual, spec, bound, source)
+        result[spec['name']] = dict(path=str(BASE / name), identity=identity((BASE / name).read_bytes()),
+            command=spec['command'], status=actual['status'], role=spec['role'])
+    return result
+
+
+def controls(bound, source):
+    result = []
+    def refuse(name, original, mutate, predicate, cause):
+        candidate = copy.deepcopy(original); mutate(candidate)
+        require(not same(candidate, original), 'genuine coordinate prerequisite intervention: ' + name)
+        try:
+            predicate(candidate)
+        except ValueError as error:
+            require(str(error) == cause, 'intended coordinate prerequisite refusal: ' + name + ': ' + str(error))
+            result.append(dict(control=name, cause=cause, status=1))
+        else:
+            raise ValueError('false-green coordinate prerequisite: ' + name)
+    for name, mutate, cause in (
+        ('native-promotion', lambda r:r.update(role='Original formatter/provider/coordinate identity measured.'), 'coordinate admission epoch and unmeasured scope'),
+        ('lost-done-owner', lambda r:r['owners'].pop(next(iter(r['owners']))), 'complete committed coordinate prerequisite task and done-owner authority'),
+        ('lost-transitive-member', lambda r:next(iter(r['inputs'].values())).pop(next(iter(next(iter(r['inputs'].values()))))), 'whole coordinate direct/transitive source and result members'),
+        ('Boolean-source-bytes', lambda r:next(iter(next(iter(r['inputs'].values())).values())).update(bytes=True), 'coordinate custody discrete source byte kinds'),
+        ('borrowed-programme', lambda r:r['programmes'].update({'scripts/check_record_value_publication.py':r['programmes']['scripts/decision_store_git.py']}), 'whole fixed coordinate prerequisite programme custody')):
+        refuse(name, bound, mutate, lambda r:check_binding(r, bound), cause)
+    for name, mutate, cause in (
+        ('later-currency-promotion', lambda r:r.update(role='Proves every future current source epoch.'), 'saved source epoch is not later currency'),
+        ('lost-target-body', lambda r:r['cards'].pop(next(iter(r['cards']))), 'complete repaired target bodies and ordered questions'),
+        ('Boolean-census', lambda r:r['census'].update(files=True), 'coordinate source census discrete kinds'),
+        ('lost-source-member', lambda r:r['sources'].pop(next(iter(r['sources']))), 'whole committed coordinate logical and physical source population'),
+        ('lost-question', lambda r:r['allocation'].update(rows=r['allocation']['rows'].split('\n', 1)[1]), 'whole committed coordinate question allocation'),
+        ('widened-authority', lambda r:r['surface']['transition']['max_growth'].update(files=999), 'whole unchanged coordinate source capacity authority')):
+        refuse(name, source, mutate, lambda r:check_snapshot(r, source), cause)
+    spec = specs()[0]; original = load(BASE / 'actual-publication.json')
+    for status in (True, 0.0, 1):
+        refuse('actual-status-' + repr(status), original, lambda r:r.update(status=status),
+            lambda r:check_actual(r, spec, bound, source), 'actual coordinate prerequisite integer success')
+    refuse('lost-invocation-source', original, lambda r:r['instruments'].pop(next(iter(r['instruments']))),
+        lambda r:check_actual(r, spec, bound, source), 'whole coordinate prerequisite invocation source and input identities')
+    borrowed = load(BASE / 'actual-current.json')
+    check_actual(borrowed, specs()[3], bound, source)
+    refuse('borrowed-current-success', original, lambda r:r.update(borrowed),
+        lambda r:check_actual(r, spec, bound, source), 'whole actual coordinate prerequisite command and streams')
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--prepare', action='store_true')
+    parser.add_argument('--replay', action='store_true')
+    parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    require(not (args.prepare and (args.replay or args.seal)), 'coordinate preparation cannot supply actual executions or seal')
+    if (BASE / 'manifest.json').exists():
+        require(not args.prepare and not args.replay, 'sealed coordinate prerequisite cannot recapture')
+        require(same(load(BASE / 'manifest.json'), members()), 'whole immutable coordinate prerequisite seal')
+    bound, source = binding(), snapshot()
+    save('binding.json', bound); save('source-snapshot.json', source)
+    check_binding(load(BASE / 'binding.json'), bound); check_snapshot(load(BASE / 'source-snapshot.json'), source)
+    if args.prepare:
+        print('PASS complete committed coordinate custody and fixed source epoch; actual replays still required.')
+        return
+    save('result-proof.json', replays(bound, source, args.replay))
+    save('controls.json', controls(bound, source))
+    if args.seal:
+        save('manifest.json', members())
+    print(FRESH if args.replay else SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "scripts/check_record_value_publication.py",
+    "--build",
+    ".artifacts/coordinate-admission-book"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 15700; host 40.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n"
+}

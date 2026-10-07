@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-admission-checks-20261007/capture_native.py"
+  ],
+  "status": 1,
+  "stderr": "ram-guard: PID 8550; host 44.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-admission-checks-20261007/capture_native.py\", line 38, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-admission-checks-20261007/capture_native.py\", line 12, in main\n    proof = ns['proof'](html)\n  File \"docs/audits/record-value-coordinate-admission-20261007/book.py\", line 34, in proof\n    raise ValueError('unique complete native coordinate admission scope and checkpoint')\nValueError: unique complete native coordinate admission scope and checkpoint\n",
+  "stdout": ""
+}

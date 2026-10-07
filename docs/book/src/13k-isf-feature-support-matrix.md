@@ -928,6 +928,23 @@ hidden arguments, identity, coordinates and address/lifetime meanings remain
 unmeasured or separately owned. Visual QA, HIAL repair and full CI/push retain
 their owners. Project outputs and scratch remain repository-local.
 
+Raw-coordinate qualification first admits the complete predecessor source and
+actual-result evidence. Its saved admission checks the dated source epoch; it
+does not establish coordinate meanings or later current currency:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-admission-20261007/verify.py
+```
+
+The historical publication's independent result qualifier expects its original
+fact, book and authority epoch. It rejects later live publication changes.
+Admission executes that unchanged qualifier in a disposable same-volume copy of
+the committed epoch and checks every source member before and after, preserving
+the live sources and removing the fixture. The maintained current reader above
+separately checks present currency. Independent coordinate source recipes and
+the original-coordinate join remain pending; original private, formatter and
+toolchain identities remain unmeasured.
+
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
 callback with its helper observer and forwards callback and extra arguments.

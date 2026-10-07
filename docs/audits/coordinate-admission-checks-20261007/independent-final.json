@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-admission-checks-20261007/verify_result.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 41421; host 40.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"controls\": [{\"cause\": \"historical epoch actual integer success\", \"control\": \"Boolean-status\"}, {\"cause\": \"historical epoch actual integer success\", \"control\": \"float-status\"}, {\"cause\": \"whole independent historical committed source population\", \"control\": \"lost-historical-source\"}, {\"cause\": \"historical epoch discrete member byte kinds\", \"control\": \"Boolean-member-bytes\"}, {\"cause\": \"whole unchanged historical epoch command and streams\", \"control\": \"wrong-committed-epoch\"}, {\"cause\": \"historical epoch execution cannot establish later currency\", \"control\": \"later-current-promotion\"}, {\"cause\": \"whole unchanged historical epoch command and streams\", \"control\": \"borrowed-current-only-success\"}], \"members\": 31175, \"revision\": \"e0620dd2ffb04c340b91693a04f5885c8abb6595\", \"scope\": \"Whole retained genuine live-epoch failure and independently reconstructed complete unchanged historical execution; original programmes/seals retain and later current currency is separate.\"}\n{\"actual_readers\": 5, \"controls\": [{\"cause\": \"actual coordinate outer integer success\", \"control\": \"outer-status-True\"}, {\"cause\": \"actual coordinate outer integer success\", \"control\": \"outer-status-0.0\"}, {\"cause\": \"actual coordinate outer integer success\", \"control\": \"outer-status-1\"}, {\"cause\": \"whole actual coordinate outer command streams and unchanged guard\", \"control\": \"borrowed-current-success\"}, {\"cause\": \"whole coordinate admission sealed member corpus\", \"control\": \"lost-complete-source-snapshot\"}, {\"cause\": \"whole coordinate admission sealed member corpus\", \"control\": \"changed-whole-admission-programme\"}], \"done_owners\": 84, \"members\": 2634, \"role\": \"Complete committed coordinate predecessor custody and scoped actual reader executions; independent coordinate recipes and original-coordinate join remain pending. Inherited serialized operands remain opaque evidence; dated public profiles do not measure original formatter/provider/toolchain/private identities.\", \"roots\": 134}\n"
+}

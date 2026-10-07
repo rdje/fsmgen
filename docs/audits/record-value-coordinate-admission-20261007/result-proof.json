@@ -1,0 +1,72 @@
+{
+  "continuity": {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-coordinate-continuity-20261007/verify.py"
+    ],
+    "identity": {
+      "bytes": 105739,
+      "sha256": "26c1a8a4cac30befc63538f850c0f69e6fa8253f06c35331c6f177eb92da9ff2"
+    },
+    "path": "docs/audits/record-value-coordinate-admission-20261007/actual-continuity.json",
+    "role": "Fresh complete saved task-history/source/graph/manifest-chain and genuine corruption controls; no later task currency.",
+    "status": 0
+  },
+  "current": {
+    "command": [
+      "python3",
+      "-B",
+      "scripts/check_record_value_publication.py"
+    ],
+    "identity": {
+      "bytes": 104801,
+      "sha256": "ef7590c9a9f30b97735a7b3eb0573996afc73cd367d8220a575e83370f662681"
+    },
+    "path": "docs/audits/record-value-coordinate-admission-20261007/actual-current.json",
+    "role": "Fresh whole current source/target/query/census/canonical-index execution at the admitted predecessor epoch; no native factory rebuild.",
+    "status": 0
+  },
+  "publication": {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-class-frame-publication-20261006/verify.py"
+    ],
+    "identity": {
+      "bytes": 104793,
+      "sha256": "76923d75dc492e06951f42a577dc5c5d11981dcd811466c5a38a3f67caed0b76"
+    },
+    "path": "docs/audits/record-value-coordinate-admission-20261007/actual-publication.json",
+    "role": "Fresh complete historical class/frame semantic/source/raw/result snapshot; original captures retained.",
+    "status": 0
+  },
+  "publication_result": {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/record-value-coordinate-admission-20261007/replay_epoch.py"
+    ],
+    "identity": {
+      "bytes": 104891,
+      "sha256": "556d98240b222d22564b2c8cb36e9fe7f06a1a446557c115f2f87049c8a14cab"
+    },
+    "path": "docs/audits/record-value-coordinate-admission-20261007/actual-publication_result.json",
+    "role": "Fresh unchanged independent historical publication actual-result qualifier at its fixed committed source epoch; retained native proofs and live current sources conserve.",
+    "status": 0
+  },
+  "repair_result": {
+    "command": [
+      "python3",
+      "-B",
+      "docs/audits/class-frame-current-repair-20261007/verify_saved.py"
+    ],
+    "identity": {
+      "bytes": 105468,
+      "sha256": "54ccedd3225ce15298148a94ff9cbdbc39ba63d3c26dbdfaa18fb5b1e2d77641"
+    },
+    "path": "docs/audits/record-value-coordinate-admission-20261007/actual-repair_result.json",
+    "role": "Fresh independent complete dated repaired source/query/target/native and actual-result proof; no original recapture or later currency.",
+    "status": 0
+  }
+}

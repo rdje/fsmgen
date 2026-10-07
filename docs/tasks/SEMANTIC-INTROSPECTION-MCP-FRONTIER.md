@@ -4966,9 +4966,64 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.1: retain exact task history before coordinate admission`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Scope and execute all remaining raw coordinate-source qualification.`
   Acceptance: `Preserve the parent obligation to join every frame/origin to exact own source statements, observer generation and pinned external public toolchain contracts. After history rollover, read complete predecessors and distinguish legitimate invocation-root recipes from unmeasured original formatter/private/toolchain identities. Decompose bounded independent source derivation, complete intake/control joins and current publication before execution; preserve all arguments/errors/raw coordinates and genuine wrong-caller/line/borrowed-source refusals. No inferred original measurement or broad normalization.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1`
+  Status: `active`
+  Goal: `Admit complete coordinate predecessor source and actual-result custody.`
+  Acceptance: `Authenticate the complete committed class/frame publication and current-reader repair domains, all transitive own source/semantic/raw/public-profile/native products and completed owners. Consume actual prerequisite replays with exact programme/command/status/streams and typed/member/borrowed controls. Preserve original captures/seals and scope: inherited serialized operands are opaque evidence, dated public profiles do not measure original formatter/provider/toolchain/private identities. No coordinate meaning or publication closes before its independent source recipes and join.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.1`
+  Status: `done`
+  Goal: `Repair historical actual-result qualification after legitimate live publication progress.`
+  Acceptance: `Fresh python3 -B docs/audits/class-frame-publication-checks-20261006/verify_seal.py fails at whole actual current physical source and non-target conservation after admitted .77.3 progress. Retain its complete failed command/status/streams and invocation source. Preserve every original programme/capture/seal; qualify the complete historical result at its independently fixed committed publication epoch in an isolated same-volume source fixture, without substituting predicates, overwriting current sources or promoting snapshot success to current currency. Genuine epoch/member/kind/borrowed-result losses must reject. Admission cannot close until the complete remaining fresh readers, independent actual consumption and focused/native/staged checks pass.`
+  Verification: `Complete original class/frame/current-repair domains authenticate at fixed5f20dde9c with whole committed archive/member/task-owner and source/question/census/authority equality. All five scoped fresh readers pass. Initial unchanged historical result verifier genuinely fails at its old live-source predicate; complete first programme and actual streams retain. The identical qualifier passes at committed e0620dd2 in a contained same-volume fixture, conserving all31175 committed members and leaving no fixture residue. Independent archive reconstruction and typed/member/wrong-epoch/borrowed/current-promotion controls pass. No old source/programme/capture/seal changes or predicate substitutions occur. Separate current source/query validation passes at the admitted epoch. Guarded focused current/Git/book tests report All tests successful Files4 Tests312. Distinct complete re-derivation/falsification/durability legs and native/current/snapshot limits retain in record-value-coordinate-admission-20261007/scope.txt. Independent sealed whole actual consumption, updated scoped book/native source views, claim inventory and staged/hooks must qualify commit. Canonical non-growing new epoch-fact retention is separately owned by .2 before independent recipes; no coordinate/native-private/visual/HIAL/full-CI/push closure follows.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.1: qualify historical results at their committed source epoch`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.1.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.1.1`
+  Status: `done`
+  Goal: `Qualify the scoped native admission guide after explicit apostrophe rendering.`
+  Acceptance: `Retain the first native checker programme and actual failure. Its full source block differs from mdBook visible text only at the authored possessive apostrophe. Preserve the already sealed custody corpus, qualify the exact declared rendered block through a separate native consumer and complete input/proof/control/source seal, and reject genuine route/coordinate/private-scope losses. No broad raw-coordinate normalization, original programme/seal edits or visual-QA claim. Native/current/default/independent and staged gates must pass before parent repair closure.`
+  Verification: `Native visible text preserves the complete authored block except the single publication possessive apostrophe, matching docs/book/book.toml smart-punctuation=true. The failed first checker/actual receipt and custody seal remain immutable. A separate exact one-occurrence recipe qualifies whole source/config/rendered input/route/scope and genuine borrowed-route/coordinate/private/wrong-apostrophe controls, with complete retained native products and independent reconstruction. No raw-coordinate or original-formatter normalization occurs; copied-source/current/native/staged gates must qualify parent commit and visual QA stays pending.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.1: qualify historical results at their committed source epoch`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.2`
+  Status: `pending`
+  Goal: `Publish the historical result epoch finding without collection growth.`
+  Acceptance: `After the complete admission/epoch repair commits, query the canonical tooling card and retain a durable question/fact about why its historical actual-result qualifier rejects later live source progress and how unchanged committed-epoch replay preserves the result. Review exact semantic compaction before any governed non-growing target extension, preserve every prior ordered question and replay/locality/native/scope obligation, and update the maintained current checker with the canonical target body atomically. No old sealed source/programme/capture or collection authority may change. Fresh current/query/census/native, exact-capacity/unrelated progress and saved-epoch/actual-result regressions plus staged/hooks qualify closure before independent coordinate recipes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2`
+  Status: `pending`
+  Goal: `Derive complete independent raw-coordinate source recipes before intake.`
+  Acceptance: `Select all coordinate hypotheses from qualified complete own call/guard/observer/generated-source statements and the pinned public caller/eval/Carp/subtest contracts, never from raw coordinates or opaque inherited operands. Bind exact legitimate invocation-root/line recipes; partition any unmeasured original/private/formatter dependency explicitly. Run independent source/generation/public finite controls before new original-coordinate intake.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3`
+  Status: `pending`
+  Goal: `Join complete original raw coordinates and genuine source/line controls.`
+  Acceptance: `After source derivation commits, authenticate the complete original raw/source domain, apply independently declared recipes to every frame/origin and conserve every empty/nonempty allocation, argument/error byte and raw coordinate. Genuine wrong caller/line/borrowed source must separate from prior frame/class/operand meanings; no broad normalization or original/private measurement promotion. Own every proved mismatch before edits.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4`
+  Status: `pending`
+  Goal: `Retain and publish the qualified current coordinate meanings atomically.`
+  Acceptance: `After complete joined source/coordinate proofs commit, retain every prior fact/question/probe/locality obligation under unchanged collection authority. Update all affected current cards/checkers/book and exact source/query/native routes together, qualifying historical/current/borrowed/unrelated roles. Close the coordinate container only after full scope is proven; original provider/private/formatter/identity/address/visual/HIAL/full-CI/push gaps retain owners.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6594,8 +6649,8 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 ```
 
 
-## Acceptance Checklist — coordinate-admission history rollover
+## Acceptance Checklist — committed-epoch coordinate admission
 
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual `git log -S 'Version-Retrievable Historical Views' -1 -- docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md` locates 29ab49f217a82bacdd1ac83a8bcf2b687996f3ed and the existing exact suffix retention route. The clean bbc178c16 task is near its unchanged allowance; optional completed acceptance narration can leave the live file while all original source bytes and node bodies retain.
-- [x] **ADDRESSED (verified)** — The existing bounded manifest selects the complete fixed predecessor and exact historical suffix, preserving the previous manifest and older source chain. Independent complete metadata/node/notes and source/suffix identity reconstruction conserves every original body except the explicit coordinate container and two declared children; genuine source/suffix/count/node corruptions refuse. Distinct re-derivation/falsification/durability legs and snapshot-only limits retain in record-value-coordinate-continuity-20261007/scope.txt. No old proof/programme/capture, semantic fact/question, ceiling or book history contract changes.
-- [x] **NO REGRESSION** — Guarded T1549/T1303/T1305 reports All tests successful, Files=3, Tests=356 in focused.json. Current task integrity, complete saved-history reader and unchanged original continuity replay qualify source/graph custody. Fresh native source views/book, measured downward allowance ratchets, claim inventory, staged doctrines and normal hooks gate commit. Coordinates remain pending in the explicit successor; original/private/toolchain/formatter/visual/HIAL/full-CI/push gaps conserve.
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual `git log -S 'whole actual current physical source and non-target conservation' -1 --format='%H %s' -- docs/audits/class-frame-publication-checks-20261006/verify_publication.py` locates e0620dd2 and the historical full-live predicate. Fresh unchanged complete verification fails at verify_publication.py:44 after legitimate .77.3 progress; its entire first invocation/source/streams retain in first-actual-publication_result.json and first-verify.py.txt. Saved source proof remains valid; its current-epoch precondition causes the refusal.
+- [x] **ADDRESSED (verified)** — The unchanged historical qualifier executes at its exact committed source epoch in an isolated same-volume fixture. Every committed member conserves, full actual output matches its original success, and the disposable fixture has no residue. Complete prerequisite custody and all five fresh scoped readers pass; independent fixed-source reconstruction and genuine wrong-epoch/member/kind/borrowed/current-promotion controls pass. No historical predicate/source/seal is changed and no live source is overwritten. Distinct re-derivation/falsification/durability and missing coordinate/native/visual legs retain in scope.txt; canonical non-growing finding publication is the explicit next child.
+- [x] **NO REGRESSION** — Guarded T2066/T2003/T1303/T1305 reports All tests successful, Files=4, Tests=312 in coordinate-admission-checks-20261007/focused.json. Historical default/source/semantic/raw and repaired dated/current/task-history consumers all pass in actual receipts. Fresh sealed/default/independent actual consumption, scoped native/book/source projection and claim/staged/doctrine/hook gates are required before commit. Original capture/private/formatter/coordinate/address/visual/HIAL/full-CI/push boundaries retain.

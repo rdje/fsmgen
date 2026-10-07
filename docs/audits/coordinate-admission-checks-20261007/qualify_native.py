@@ -1,0 +1,84 @@
+"""Qualify the exact authored apostrophe recipe and complete native scope."""
+import hashlib
+import json
+import tomllib
+from pathlib import Path
+
+BASE = Path('docs/audits/coordinate-admission-checks-20261007')
+AUDIT = Path('docs/audits/record-value-coordinate-admission-20261007')
+book = {'__name__': 'retained_native_admission', '__file__': str(AUDIT / 'book.py')}
+exec(compile((AUDIT / 'book.py').read_bytes(), book['__file__'], 'exec'), book)
+parser = {'__name__': 'native_visible', '__file__': 'docs/audits/record-value-class-frame-publication-20261006/book.py'}
+exec(compile(Path(parser['__file__']).read_bytes(), parser['__file__'], 'exec'), parser)
+
+
+def identity(raw):
+    return dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+
+
+def proof(html):
+    config = Path('docs/book/book.toml').read_bytes()
+    if tomllib.loads(config.decode())['output']['html']['smart-punctuation'] is not True:
+        raise ValueError('exact declared native smart-punctuation authority')
+    source = book['BLOCK']
+    before, after = "publication's", 'publication’s'
+    if source.count(before) != 1:
+        raise ValueError('unique authored admission possessive apostrophe')
+    rendered = source.replace(before, after, 1).replace('```bash\n', '').replace('```\n', '').replace('`', '')
+    parsed = parser['Visible'](); parsed.feed(html)
+    visible = ' '.join(' '.join(parsed.parts).split())
+    if parsed.codes.count(book['COMMAND']) != 1 or ' '.join(rendered.split()) not in visible:
+        raise ValueError('exact complete rendered admission scope and route')
+    return dict(source=source, rendered=rendered, command=book['COMMAND'], config=identity(config),
+        programme=identity((AUDIT / 'book.py').read_bytes()), html=identity(html.encode()),
+        recipe=dict(before=before, after=after, occurrences=1),
+        scope='Exact scoped rendered text and declared single apostrophe recipe; raw coordinates and original formatter identities are untouched, visual QA pending.')
+
+
+def construct(html):
+    positive = proof(html)
+    try:
+        book['proof'](html)
+    except ValueError as error:
+        if str(error) != 'unique complete native coordinate admission scope and checkpoint':
+            raise
+    else:
+        raise ValueError('first native source checker unexpectedly accepts rendered apostrophe')
+    controls = []
+    for name, old, new in (
+        ('borrowed-historical-command', book['COMMAND'], 'scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py'),
+        ('coordinate-promotion', 'does not establish coordinate meanings', 'establishes original coordinate meanings'),
+        ('private-identity-promotion', 'toolchain identities remain unmeasured', 'toolchain identities are measured'),
+        ('wrong-declared-apostrophe', 'publication’s independent', "publication's independent")):
+        changed = html.replace(old, new)
+        if changed == html:
+            raise ValueError('nongenuine qualified native scope control: ' + name)
+        try:
+            proof(changed)
+        except ValueError as error:
+            if str(error) != 'exact complete rendered admission scope and route':
+                raise
+            controls.append(dict(control=name, cause=str(error)))
+        else:
+            raise ValueError('false-green qualified native scope: ' + name)
+    return dict(proof=positive, controls=controls)
+
+
+def main():
+    path = BASE / 'qualified-native-input.html'
+    result = BASE / 'qualified-native-proof.json'
+    if path.exists() != result.exists():
+        raise ValueError('complete qualified native pair required')
+    if not path.exists():
+        html = Path('.artifacts/coordinate-admission-book/13k-isf-feature-support-matrix.html').read_text()
+        value = construct(html)
+        path.write_text(html)
+        result.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+    expected = construct(path.read_text())
+    if json.dumps(json.loads(result.read_bytes()), sort_keys=True, allow_nan=False) != json.dumps(expected, sort_keys=True, allow_nan=False):
+        raise ValueError('whole immutable qualified native source/config/recipe/input/control proof')
+    print('PASS complete declared rendered admission scope and exact apostrophe recipe; genuine route/coordinate/private/recipe losses refuse, visual QA pending.')
+
+
+if __name__ == '__main__':
+    main()

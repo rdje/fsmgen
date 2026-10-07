@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "scripts/check_claim_verification_inventory.pl",
+    "--write",
+    "--report"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 29189; host 41.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13362, candidates=1979, quantified=964, conservative=1015, constants=2920, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1979)\nclaim-inventory: partition adoption_reference_or_structure=118\nclaim-inventory: partition code_or_data_example=3341\nclaim-inventory: partition derived_and_watched_projection=185\nclaim-inventory: partition identifier_literal_or_navigation=7739\n"
+}

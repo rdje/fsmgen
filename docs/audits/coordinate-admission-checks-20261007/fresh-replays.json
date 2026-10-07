@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-admission-20261007/verify.py",
+    "--replay"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 59197; host 30.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "Retained actual coordinate prerequisite: publication\nRetained actual coordinate prerequisite: publication_result\nRetained actual coordinate prerequisite: repair_result\nRetained actual coordinate prerequisite: current\nRetained actual coordinate prerequisite: continuity\nPASS fresh complete coordinate prerequisite executions; original captures retained and coordinate meanings remain pending.\n"
+}

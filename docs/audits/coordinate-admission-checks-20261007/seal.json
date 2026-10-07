@@ -1,0 +1,13 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-admission-20261007/verify.py",
+    "--seal"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 9163; host 33.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete saved coordinate prerequisite custody, source epoch and actual results; coordinate recipes and join remain pending.\n"
+}
