@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-continuity-20261007/verify.py"
+  ],
+  "returncode": 0,
+  "stdout": "{\"after\": {\"bytes\": 1291183, \"lines\": 6601, \"sha256\": \"ffdc7bf481c9f8520fefeb40338520b9cc8185dee106df1dc0e48185efe26dcc\"}, \"controls\": [{\"cause\": \"whole historical source identity\", \"field\": \"source_sha256\"}, {\"cause\": \"whole historical suffix identity\", \"field\": \"history_sha256\"}, {\"cause\": \"complete historical section population\", \"field\": \"history_sections\"}, {\"cause\": \"whole unchanged original node: SEMANTIC-INTROSPECTION-MCP-FRONTIER.1\", \"node\": \"SEMANTIC-INTROSPECTION-MCP-FRONTIER.1\"}], \"current_nodes\": 771, \"prior_nodes\": 769, \"scope\": \"Exact saved task rollover and prior-source chain; complete original live graph except declared container/two children. No later task currency or coordinate meaning is claimed.\", \"source\": {\"bytes\": 1477237, \"lines\": 7172, \"sha256\": \"5dbfb694ee7a2f93e7077f85e42d73593f5229399d7ecd0c03a93d88fe30e247\"}, \"suffix\": {\"bytes\": 191497, \"lines\": 608, \"sha256\": \"9b9cf7b2c68eca733308bc19ccb2bdac9c307d8fc2c5a2b0fa0357e4def9961e\"}}\n",
+  "stderr": "ram-guard: PID 92437; host 44.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

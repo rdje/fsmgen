@@ -1,0 +1,14 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "prove",
+    "-Iperl",
+    "t/1549-task-tree-integrity-doctrine.t",
+    "t/1303-isf-public-live-book-paths-audit.t",
+    "t/1305-isf-book-feature-matrix-audit.t"
+  ],
+  "returncode": 0,
+  "stdout": "t/1549-task-tree-integrity-doctrine.t ...... ok\nt/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nAll tests successful.\nFiles=3, Tests=356, 11 wallclock secs ( 0.02 usr  0.01 sys +  7.93 cusr  1.99 csys =  9.95 CPU)\nResult: PASS\n",
+  "stderr": "ram-guard: PID 70681; host 36.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

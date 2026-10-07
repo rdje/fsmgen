@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "Version-Retrievable Historical Views",
+    "-1",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "returncode": 0,
+  "stdout": "commit 29ab49f217a82bacdd1ac83a8bcf2b687996f3ed\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Sun Sep 27 10:22:02 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.54: retain exact task acceptance history\n    \n    Bind the complete 03d65d64 task source and Decisions-to-end historical suffix\n    in the existing bounded acceptance-history manifest. Keep the live node graph,\n    current frontier, active contracts and unresolved containment occurrence visible.\n    Every other node record is unchanged; no historical source is discarded.\n    \n    Independent source/suffix/graph/residue audit, actual task integrity, existing\n    hostile manifest tests, relative-path audit and mdBook build pass. Ratchet\n    unused task-evidence allowance downward without changing ceilings. Resume\n    .49.2.2.3.1.2 source-context preparation after this documentation-only rollover.\n    \n    The full staged doctrine gate passed, including authenticated history retrieval,\n    fresh task acceptance, complete claim joins and unchanged containment ceilings.\n",
+  "stderr": ""
+}

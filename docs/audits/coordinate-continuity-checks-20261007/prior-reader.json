@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-original-candidate-continuity-20261004/verify.py"
+  ],
+  "returncode": 0,
+  "stdout": "PASS exact predecessor/suffix/prior-manifest retrieval and every original live node; bounded split only.\n",
+  "stderr": ""
+}

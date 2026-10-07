@@ -1,0 +1,25 @@
+{
+  "history": {
+    "history_bytes": 191497,
+    "history_id": "through_bbc178c162c1",
+    "history_lines": 608,
+    "history_sections": 50,
+    "history_sha256": "9b9cf7b2c68eca733308bc19ccb2bdac9c307d8fc2c5a2b0fa0357e4def9961e",
+    "live_heading": "Version-Retrievable Historical Views",
+    "record_type": "acceptance_history",
+    "retention_contract": "fsmgen_required_history",
+    "schema_version": 1,
+    "source_bytes": 1477237,
+    "source_lines": 7172,
+    "source_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+    "source_revision": "bbc178c162c1fea0bc1db7b5abe5639f3e8af503",
+    "source_sha256": "5dbfb694ee7a2f93e7077f85e42d73593f5229399d7ecd0c03a93d88fe30e247",
+    "start_heading": "Version-Retrievable Historical Views"
+  },
+  "live_pointer": "## Version-Retrievable Historical Views\n\n- Acceptance history manifest: `docs/tasks/history/SEMANTIC-INTROSPECTION-MCP-FRONTIER/acceptance-history.jsonl`\n\nThe live node list remains authoritative. The manifest retrieves the exact\ncomplete predecessor and historical suffix, including the prior manifest pointer.\nRead `source_revision` from the manifest rather than maintaining another copy.\nThe predecessor revision also retains the prior manifest and older source chain.\nComplete source and suffix are overlapping retained products; no bytes are lost.\n\n```bash\nscripts/check_task_tree_integrity.pl\npython3 -B docs/audits/record-value-original-candidate-continuity-20261004/verify.py\n```\n",
+  "manifest": "docs/tasks/history/SEMANTIC-INTROSPECTION-MCP-FRONTIER/acceptance-history.jsonl",
+  "prior_manifest": "{\"max_bytes\":4096,\"max_record_bytes\":2048,\"max_records\":1,\"record_type\":\"registry\",\"schema_version\":1,\"tree_id\":\"SEMANTIC-INTROSPECTION-MCP-FRONTIER\"}\n{\"history_bytes\":305450,\"history_id\":\"through_3576dee88c7e\",\"history_lines\":1467,\"history_sections\":147,\"history_sha256\":\"a04fada04c365baf935387f18974c1519b7dc507cb550e1ff14c95b56b75f807\",\"live_heading\":\"Version-Retrievable Historical Views\",\"record_type\":\"acceptance_history\",\"retention_contract\":\"fsmgen_required_history\",\"schema_version\":1,\"source_bytes\":1365470,\"source_lines\":7189,\"source_path\":\"docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md\",\"source_revision\":\"3576dee88c7e447cc853dfcb9106acdfad0717b6\",\"source_sha256\":\"8886c8b701759d4f058f3278705e483291d790f98acc76aa2afc252342b542ea\",\"start_heading\":\"Version-Retrievable Historical Views\"}\n",
+  "revision": "bbc178c162c1fea0bc1db7b5abe5639f3e8af503",
+  "scope": "Exact complete fixed predecessor and historical suffix; original node graph retained except the explicit coordinate container and two new leaves. Prior manifest and older sources remain reachable through the selected revision.",
+  "task": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+}

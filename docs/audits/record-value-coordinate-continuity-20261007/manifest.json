@@ -1,0 +1,37 @@
+{
+  "after-manifest.jsonl.txt": {
+    "bytes": 801,
+    "lines": 2,
+    "sha256": "7a94a8bb8281f96ba10701c4ba8c3ab852d294797b6b3dfcd82fe86d692eb05d"
+  },
+  "after-task.md.txt": {
+    "bytes": 1291183,
+    "lines": 6601,
+    "sha256": "ffdc7bf481c9f8520fefeb40338520b9cc8185dee106df1dc0e48185efe26dcc"
+  },
+  "binding.json": {
+    "bytes": 2836,
+    "lines": 25,
+    "sha256": "fa7eebfb8011994325ace95e69a3b230b3f4a4d7411b1b83ac01208eb36af0b9"
+  },
+  "focused.json": {
+    "bytes": 660,
+    "lines": 14,
+    "sha256": "b7afc151c6bd176e802f5828c823d82dfadd3074f86c789f6cd7993eb4deeb3f"
+  },
+  "root-cause.json": {
+    "bytes": 1294,
+    "lines": 14,
+    "sha256": "af59274f555aa7dc75a9801fa5b595a98a2d0614eb520c03ba2c96c545b1214a"
+  },
+  "scope.txt": {
+    "bytes": 1457,
+    "lines": 18,
+    "sha256": "ee604e8a98dce8a97cc01cf792fc68da666eb069701672d3246f5ca386f4f746"
+  },
+  "verify.py": {
+    "bytes": 6643,
+    "lines": 130,
+    "sha256": "4abebc8ada927b22683a35c4778474079e1c7ad17f46b5219a8813239489db5d"
+  }
+}
