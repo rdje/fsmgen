@@ -8,11 +8,12 @@ answers:
   - "do canonical source symlinks outside the book refresh under native serve?"
   - "why do native book source-view addresses encode terminal markdown extensions?"
   - "why must historical source-plane replay use the helper snapshot role?"
-date: 2026-10-06
+  - "why did the class/frame current reader reject unrelated Knowledge Map updates?"
+date: 2026-10-07
 status: current
 tags: [mdbook, documentation, artifacts, locality, verification]
 evidence: docs/audits/specforge-rule-admission-20260924/book-output-recovery.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/audits/record-value-own-boundary-publication-20261005/scope.txt
-reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py --current
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py
 ---
 
 `mdbook build docs/book --dest-dir DEST` resolves relative `DEST` from the invocation
@@ -59,8 +60,11 @@ Its command is:
 
 `python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`
 
-Historical success does not establish current card/query/reader/source currency. Current
-publication checks complete core/helper/tooling meanings/question ownership, unique book
-guidance, canonical selection/endpoints/bytes/ignore policy, exact current budget and
-indexed members. Original destination-locality replay remains required. Explicit factory
-output checks remain required for native copied bytes; visual QA stays pending.
+Historical success proves no current card/query/reader/source currency. Current checks
+complete core/helper/tooling meanings/questions, unique book guidance, canonical
+selection/endpoints/bytes/ignore policy, exact budgets and indexed members. Original
+destination-locality replay and factory native copied-byte checks remain required;
+visual QA stays pending.
+
+The old class/frame current check froze unrelated card bytes/queries. This route
+derives complete global source allocation.

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-current-repair-20261007/capture_old_current.py"
+  ],
+  "returncode": 0,
+  "stdout": "PASS complete actual old-current refusal with fixed targets and unrelated extension; live sources/projections restored.\n",
+  "stderr": "ram-guard: PID 20523; host 56.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

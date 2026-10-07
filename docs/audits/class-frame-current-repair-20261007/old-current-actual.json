@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py",
+    "--current"
+  ],
+  "input_identity": {
+    "bytes": 3108355,
+    "sha256": "a20f6442676aaf62ecd76bee094dfe38630c33fcc4462d75009cbf86e054588e"
+  },
+  "programme": {
+    "bytes": 22291,
+    "sha256": "862855f1f6100c84ef4527168dd0ac925d6975236c7b024a77ccf280ddf86375"
+  },
+  "status": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-publication-20261006/verify.py\", line 277, in <module>\n    if __name__ == '__main__': main()\n                               ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-publication-20261006/verify.py\", line 265, in main\n    check_current(current_input())\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/record-value-class-frame-publication-20261006/verify.py\", line 150, in check_current\n    require(same(record['physical_members'],declared['after_members']),'whole current physical member and non-target source conservation')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 32, in require\n    raise ValueError(cause)\nValueError: whole current physical member and non-target source conservation\n",
+  "stdout": ""
+}

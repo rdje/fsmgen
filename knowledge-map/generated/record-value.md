@@ -41,12 +41,12 @@
 
 _Finite record-value copy probes have independent typed graph qualification_
 
-- **date:** 2026-10-06 · **status:** current
+- **date:** 2026-10-07 · **status:** current
 - **source and verification:** [`docs/knowledge/record-value-finite-copy-probe-reader.md`](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 
 ### record-value-original-observer-helper-paths
 
 _Original observer/helper source paths have a complete finite join_
 
-- **date:** 2026-10-06 · **status:** current
+- **date:** 2026-10-07 · **status:** current
 - **source and verification:** [`docs/knowledge/record-value-original-observer-helper-paths.md`](../../docs/knowledge/record-value-original-observer-helper-paths.md)

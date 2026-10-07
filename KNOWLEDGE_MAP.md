@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1266** facts · **6973** unique questions · **7150** answer occurrences · **184** topic shards.
+> **1266** facts · **6975** unique questions · **7152** answer occurrences · **184** topic shards.
 
 Query first:
 
@@ -41,7 +41,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `composition-two` | 1 | 3 | [`composition-two.md`](knowledge-map/generated/composition-two.md) |
 | `composition-vhdl` | 1 | 68 | [`composition-vhdl.md`](knowledge-map/generated/composition-vhdl.md) |
 | `darwin-inline` | 1 | 8 | [`darwin-inline.md`](knowledge-map/generated/darwin-inline.md) |
-| `decision-record` | 1 | 5 | [`decision-record.md`](knowledge-map/generated/decision-record.md) |
+| `decision-record` | 1 | 6 | [`decision-record.md`](knowledge-map/generated/decision-record.md) |
 | `decision-selected` | 1 | 3 | [`decision-selected.md`](knowledge-map/generated/decision-selected.md) |
 | `declarative-aggregate` | 1 | 3 | [`declarative-aggregate.md`](knowledge-map/generated/declarative-aggregate.md) |
 | `direct-hdl` | 1 | 8 | [`direct-hdl.md`](knowledge-map/generated/direct-hdl.md) |
@@ -149,7 +149,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `live-document` | 5 | 97 | [`live-document.md`](knowledge-map/generated/live-document.md) |
 | `loop-early` | 1 | 5 | [`loop-early.md`](knowledge-map/generated/loop-early.md) |
 | `lte-digital` | 1 | 5 | [`lte-digital.md`](knowledge-map/generated/lte-digital.md) |
-| `mdbook-build` | 1 | 6 | [`mdbook-build.md`](knowledge-map/generated/mdbook-build.md) |
+| `mdbook-build` | 1 | 7 | [`mdbook-build.md`](knowledge-map/generated/mdbook-build.md) |
 | `mdbook-test` | 1 | 7 | [`mdbook-test.md`](knowledge-map/generated/mdbook-test.md) |
 | `memory-pointer` | 1 | 6 | [`memory-pointer.md`](knowledge-map/generated/memory-pointer.md) |
 | `native-setpgid` | 1 | 3 | [`native-setpgid.md`](knowledge-map/generated/native-setpgid.md) |

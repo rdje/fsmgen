@@ -1,0 +1,14 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "mdbook",
+    "build",
+    "docs/book",
+    "--dest-dir",
+    ".artifacts/class-frame-current-book"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "ram-guard: PID 36803; host 32.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15276077 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/class-frame-current-book`\n"
+}

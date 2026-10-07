@@ -23,7 +23,7 @@ answers:
   - "what qualifies whole nested original error forwarding?"
   - "what qualifies inherited original nested API frames?"
   - "are all original own API refusal paths joined?"
-date: 2026-10-06
+date: 2026-10-07
 status: current
 tags: [isf, record, copy, native, graph, qualification]
 evidence: >-
@@ -32,7 +32,7 @@ evidence: >-
   docs/audits/record-value-copy-reader-20261004/replay.py;
   docs/audits/record-value-original-helper-join-20261005/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/audits/record-value-class-frame-join-20261006/scope.txt
-reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-original-helper-join-20261005/verify.py && python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-copy-reader-20261004/replay.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py --current
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-original-helper-join-20261005/verify.py && python3 -B docs/audits/record-value-copy-probe-join-20261004/verify.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-copy-reader-20261004/replay.py && scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py
 ---
 
 Separate plain-profile models qualify whole typed graph bijections, reachable reference

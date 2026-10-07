@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "whole current physical member and non-target source conservation",
+    "-1",
+    "--",
+    "docs/audits/record-value-class-frame-publication-20261006/verify.py"
+  ],
+  "returncode": 0,
+  "stdout": "commit e0620dd2ffb04c340b91693a04f5885c8abb6595\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Wed Oct 7 13:21:09 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.3.3: recover and complete class/frame publication\n    \n    Publish the complete retained class/frame facts and all current reader routes.\n    Preserve interrupted controller, completed prefix and temporary book bytes;\n    restore exactly and qualify only the unfinished roles under the RAM guard.\n    Retain complete native/current, seal, independent and staged-doctrine evidence.\n    Close the class/frame scope and leave the coordinate successor pending for handoff.\n",
+  "stderr": ""
+}

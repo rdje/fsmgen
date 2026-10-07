@@ -1,0 +1,62 @@
+{
+  "capture_current.py": {
+    "bytes": 2201,
+    "sha256": "a64967760b9bd828ba1a37fd5284f2f1b5e8c6a18afad615148f9b9079782c4b"
+  },
+  "capture_old_current.py": {
+    "bytes": 4601,
+    "sha256": "6ec9739ef63d24456332a550c795b9a2ce7a26b56f36e4880fb495ce17111ac7"
+  },
+  "current-actual.json": {
+    "bytes": 569,
+    "sha256": "5497c6aeb5c5bce127c5aa5aa2e4f2da9de069583d94cb6ff53b9fc9f44f8942"
+  },
+  "current-checker.py.txt": {
+    "bytes": 11084,
+    "sha256": "06ae4c57a0b192553264760ee38dbd861a518ddacc1d2852af1a0b74e6247418"
+  },
+  "current-input.json": {
+    "bytes": 3147069,
+    "sha256": "f821b976a81875e0a89186040ba3e1586bcfe4a7e14a884182feda9abe9c2cc9"
+  },
+  "focused.json": {
+    "bytes": 759,
+    "sha256": "a140bb8d4ef733a6042170fe4967db3f85d8abb06a4f548c8785a5ca2c244a75"
+  },
+  "native-input.html": {
+    "bytes": 240574,
+    "sha256": "38e42c5187b27213315e28362ec9732f9e36d78699d468b7df4e749ff633ad18"
+  },
+  "old-current-actual.json": {
+    "bytes": 1532,
+    "sha256": "c0f83689a30deedbed2f58df4d112497f3fa8fb411c580e88c11be50a520f2df"
+  },
+  "old-current-capture.json": {
+    "bytes": 436,
+    "sha256": "d86027fefd435d87f32f5768132f44a991201bcb847dc14e0dd3b84a69c9770e"
+  },
+  "old-current-input.json": {
+    "bytes": 3108355,
+    "sha256": "a20f6442676aaf62ecd76bee094dfe38630c33fcc4462d75009cbf86e054588e"
+  },
+  "old-current-sources.json": {
+    "bytes": 281720,
+    "sha256": "93fe7e318d2481ba6b77f82e03c727efe8b40c00c0c0305094604e8c662b6953"
+  },
+  "publication-review.json": {
+    "bytes": 9662,
+    "sha256": "f32a799c1d16e371d4a55ed17ac0e5955dc0c784ea0aa72179715d53f81f6d6d"
+  },
+  "root-cause.json": {
+    "bytes": 992,
+    "sha256": "424527321679e05f6531ea503fd3633519ec80afb58d265518145655cb3143cd"
+  },
+  "scope.txt": {
+    "bytes": 2940,
+    "sha256": "05542d0bd209e115cf1613f6ee08f40ff75ddb9ab6a22d6cf0119c2968ef732f"
+  },
+  "verify_saved.py": {
+    "bytes": 6583,
+    "sha256": "e2172d49a9dc408f33ef958b55bf433a4c17bae81b2e5439a3123ee02efbe4ab"
+  }
+}

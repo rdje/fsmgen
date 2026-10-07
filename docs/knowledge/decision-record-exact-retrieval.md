@@ -7,35 +7,34 @@ answers:
   - "why do early decision files contain forwarding links?"
   - "how is decision archive reconstruction checked?"
   - "how must current decision edits synchronize the authenticated catalog?"
-date: 2026-10-01
+  - "why can selected Git tree inventory overflow while the same index fits?"
+date: 2026-10-07
 status: current
 tags: [memory, decisions, archive, continuity]
 evidence: docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md; docs/decisions/INDEX.md; scripts/decision_records.py; t/1923-decision-record-archive.t
-reverify: scripts/decision_records.py check && prove -Iperl t/1923-decision-record-archive.t
+reverify: scripts/decision_records.py check && prove -Iperl t/1923-decision-record-archive.t t/2003-decision-store-git-continuity.t
 ---
 
-The sealed decision cohort keeps its original paths as forwarding pages.
-Follow the complete-record link or run `scripts/decision_records.py read 0014`
-from the repository root. Multiple IDs return their exact original text in
-requested order. No historical Git object or network access is needed for
-ordinary reading. The index remains the discovery route for all decisions.
+Sealed decisions keep their original paths as forwarding pages. Follow the
+complete-record link or run scripts/decision_records.py read 0014 from the
+root. Multiple IDs return exact originals in requested order; the index discovers
+all decisions. Immutable JSON retains originals; the human view relocates relative links.
+Storage preserves authority and supersession. Later policy changes use new
+decisions and the index, never appends to archive or generated view.
 
-Original text lives in the immutable JSON archive; the generated human view
-relocates its relative links. Storage never supersedes authority. Preserve
-existing supersession markers and record later policy changes through new
-decisions and the index. Do not append to the archive or generated view.
+Projection checks compare originals to the independent committed census, then
+verify view, root pointers, index links/destinations and affected Knowledge Map
+body-search commands. Regression reads compare fixed Git bytes and reject
+retention/navigation defects. Root aliases remain live file pressure with a
+separately scheduled owner.
 
-The live-document projection verifier checks exact originals against the
-independently committed source census, then verifies the view, root pointers,
-index links, link destinations and affected Knowledge Map body-search commands.
-The regression test independently compares reader bytes with the fixed Git
-source and rejects planted retention and navigation defects. Root alias
-cardinality remains live file-count pressure and has a separate scheduled owner.
+Current bodies live in semantic parts under docs/decisions/current/. Edits sync
+that ID's content dimensions/digest and metadata with current/catalog.json or
+reader/staged gates reject. check validates the whole worktree store;
+--snapshot index --prior-snapshot HEAD check-continuity compares staged and
+committed stores. Originals, compatibility pages and transition census stay sealed.
 
-Current decision bodies live in semantic parts under `docs/decisions/current/`.
-An edit must synchronize that ID's `content` dimensions/digest and `metadata`
-with `docs/decisions/current/catalog.json`; otherwise the reader and staged
-doctrine gate reject the changed body. `scripts/decision_records.py check`
-validates the complete worktree store; `--snapshot index --prior-snapshot HEAD
-check-continuity` verifies the staged store against its committed predecessor.
-Captured originals, compatibility pages and the transition census stay sealed.
+Selected Git trees stream standard NUL paths into index zero-stage metadata under
+the unchanged byte budget. T2003 compares every mode/object/path and rejects
+old-header/real-overflow controls; custom Git format quoting is avoided.
+Owner/evidence: SEMANTIC-INTROSPECTION-MCP-FRONTIER.77.1; docs/audits/decision-git-inventory-20261007/.

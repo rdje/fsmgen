@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-current-repair-20261007/verify_saved.py"
+  ],
+  "returncode": 0,
+  "stdout": "{\"controls\": [[\"old\", \"True\", \"whole typed actual old command and streams\"], [\"old\", \"0.0\", \"whole typed actual old command and streams\"], [\"old\", \"2\", \"whole typed actual old command and streams\"], [\"current\", \"True\", \"whole typed actual current command and streams\"], [\"current\", \"0.0\", \"whole typed actual current command and streams\"], [\"current\", \"2\", \"whole typed actual current command and streams\"], [\"current\", \"borrowed historical instrument\", \"whole actual current input and instrument binding\"]], \"current_members\": 1445, \"old_members\": 1445, \"scope\": \"Complete saved source/query/target/native epoch and actual receipts regenerate; no later current currency or visual/native-original claims.\"}\n",
+  "stderr": "ram-guard: PID 523; host 34.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

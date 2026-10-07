@@ -899,11 +899,11 @@ ignore policy and indexed members. Its native variant additionally checks every
 copied canonical source and the rendered current/retained guide:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py --current
+scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py
 ```
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py --current --build .artifacts/class-frame-publication-book
+scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py --build .artifacts/class-frame-current-book
 ```
 
 The core reverify chain still runs the original helper join, finite copy join
@@ -918,8 +918,9 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame
 
 Default replay authenticates complete committed custody, reconstructs the full
 retention and class/frame meanings and controls, and checks the saved publication
-snapshot and native guide. It cannot establish current currency. Unrelated book
-progress is permitted by the current reader. The collection allowance is never
+snapshot and native guide. It cannot establish current currency. Unrelated book and non-target Knowledge Map progress is permitted. The current
+reader derives the complete global question allocation and physical census from
+current canonical sources; the saved historical snapshot keeps its exact epoch. The collection allowance is never
 widened; every original fact/question retains. This remains reviewed prose
 equivalence rather than unrestricted mechanical natural-language proof.
 Original native class/provider/hooks, private frames, formatter, encoding,

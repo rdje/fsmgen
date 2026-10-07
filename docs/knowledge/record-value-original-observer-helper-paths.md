@@ -10,7 +10,7 @@ answers:
   - "what qualifies original own subtest body and delegate source roles?"
   - "what qualifies the original do-load source and recorded file marker?"
   - "what qualifies original public subtest header and boundary compatibility?"
-date: 2026-10-06
+date: 2026-10-07
 status: current
 tags: [isf, record, helper, observer, qualification]
 evidence: >-
@@ -18,7 +18,7 @@ evidence: >-
   docs/audits/record-value-own-subtest-boundaries-20261005/scope.txt;
   docs/audits/record-value-own-boundary-publication-20261005/scope.txt; docs/audits/record-value-public-boundary-join-20261006/scope.txt; docs/audits/record-value-public-boundary-publication-20261006/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-class-frame-publication-20261006/verify.py --current
+reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py
 ---
 
 Own observer/callback source roles/bodies/allocations inventory. Observer models join

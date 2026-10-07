@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/class-frame-current-repair-20261007/capture_current.py"
+  ],
+  "returncode": 0,
+  "stdout": "PASS retained complete actual current/native execution and stable source/query/programme epoch; no original recapture.\n",
+  "stderr": "ram-guard: PID 56212; host 50.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"
+}

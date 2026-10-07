@@ -1,0 +1,162 @@
+{
+  "base_revision": "9d604ce1311678a4fa1c34e800e0eb57019722e0",
+  "decision_proposal_identity": {
+    "bytes": 2426,
+    "sha256": "6bb3974eb4c8c79bad597109e68e3402155fee63a5fe47f109d94843c9c2e07f"
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.77.3",
+  "scope": "All core/observer complete bodies and prior ordered identity/questions retain. Tooling adds one cause/recovery question and replaces only OLD_SCOPE with NEW_SCOPE; all listed propositions retain by declared prose-equivalence review. Current routes/dates change, preserving earlier helper/probe/locality commands. Historical programmes/seals remain immutable. Earlier extended wordings measured +33 then +2 whole changed-card bytes and were further compacted before final publication review; no capacity authority changes.",
+  "target_changes": {
+    "docs/knowledge/mdbook-build-destination-locality.md": {
+      "after": {
+        "bytes": 4634,
+        "sha256": "eac319bf5db06ea8c7e5fb26dcc26f8ba5b65b0e1d80f4d19abf8af73ace4231"
+      },
+      "before": {
+        "bytes": 4532,
+        "sha256": "d7df4b7b82ff72eb6ac25a96bf89330c43e3a6e7b7acb70d18a9583383357bdc"
+      },
+      "body_unchanged": false,
+      "identity_questions_after": [
+        "mdbook-build-destination-locality",
+        [
+          "where does mdbook build resolve a relative dest-dir?",
+          "how do book verification scripts keep output inside the repository?",
+          "what caused the reset-slice book output locality recovery?",
+          "do canonical source symlinks outside the book refresh under native serve?",
+          "why do native book source-view addresses encode terminal markdown extensions?",
+          "why must historical source-plane replay use the helper snapshot role?",
+          "why did the class/frame current reader reject unrelated Knowledge Map updates?"
+        ]
+      ],
+      "identity_questions_before": [
+        "mdbook-build-destination-locality",
+        [
+          "where does mdbook build resolve a relative dest-dir?",
+          "how do book verification scripts keep output inside the repository?",
+          "what caused the reset-slice book output locality recovery?",
+          "do canonical source symlinks outside the book refresh under native serve?",
+          "why do native book source-view addresses encode terminal markdown extensions?",
+          "why must historical source-plane replay use the helper snapshot role?"
+        ]
+      ]
+    },
+    "docs/knowledge/record-value-finite-copy-probe-reader.md": {
+      "after": {
+        "bytes": 5850,
+        "sha256": "6788bc15ba0c4519052382491420165d6c3cfef76e80975d301577ac93633b66"
+      },
+      "before": {
+        "bytes": 5886,
+        "sha256": "2d43f0193eb6eb28dbc0c04b70eee670dce21fb79ab0449dd9e1c1926fd517a0"
+      },
+      "body_unchanged": true,
+      "identity_questions_after": [
+        "record-value-finite-copy-probe-reader",
+        [
+          "are the T1986 finite copy probes independently qualified?",
+          "what validates plain copy helper sharing and detachment?",
+          "how can the finite copy probes be replayed without changing sealed evidence?",
+          "are original T1986 candidate copy inputs captured?",
+          "what qualifies original T1986 candidate copy graphs?",
+          "do original T1986 candidate API results match their source models?",
+          "what qualifies original T1986 candidate input and private graphs?",
+          "why does the private packed range sibling width change JSON kind?",
+          "what qualifies current original T1986 copied fields and source candidates?",
+          "are original T1986 candidate input graphs and copied fields joined?",
+          "what qualifies original T1986 helper consumer and parser source contexts?",
+          "what qualifies original T1986 candidate primary causes and acceptance?",
+          "are complete original T1986 raw error bodies inventoried?",
+          "what qualifies finite original exception classes?",
+          "why does JSON PP documentation say version 4.05?",
+          "what qualifies direct original Value failure frames?",
+          "what qualifies original metadata failure recursion frames?",
+          "what joins nested original Scope and capture inputs?",
+          "what qualifies whole nested original error forwarding?",
+          "what qualifies inherited original nested API frames?",
+          "are all original own API refusal paths joined?"
+        ]
+      ],
+      "identity_questions_before": [
+        "record-value-finite-copy-probe-reader",
+        [
+          "are the T1986 finite copy probes independently qualified?",
+          "what validates plain copy helper sharing and detachment?",
+          "how can the finite copy probes be replayed without changing sealed evidence?",
+          "are original T1986 candidate copy inputs captured?",
+          "what qualifies original T1986 candidate copy graphs?",
+          "do original T1986 candidate API results match their source models?",
+          "what qualifies original T1986 candidate input and private graphs?",
+          "why does the private packed range sibling width change JSON kind?",
+          "what qualifies current original T1986 copied fields and source candidates?",
+          "are original T1986 candidate input graphs and copied fields joined?",
+          "what qualifies original T1986 helper consumer and parser source contexts?",
+          "what qualifies original T1986 candidate primary causes and acceptance?",
+          "are complete original T1986 raw error bodies inventoried?",
+          "what qualifies finite original exception classes?",
+          "why does JSON PP documentation say version 4.05?",
+          "what qualifies direct original Value failure frames?",
+          "what qualifies original metadata failure recursion frames?",
+          "what joins nested original Scope and capture inputs?",
+          "what qualifies whole nested original error forwarding?",
+          "what qualifies inherited original nested API frames?",
+          "are all original own API refusal paths joined?"
+        ]
+      ]
+    },
+    "docs/knowledge/record-value-original-observer-helper-paths.md": {
+      "after": {
+        "bytes": 4581,
+        "sha256": "2566757080d46a54088146fd64a7d3dcfe5bcc3030b269da070b31fddd44beca"
+      },
+      "before": {
+        "bytes": 4617,
+        "sha256": "256e8a558bb40cdc2f70d5803727ff2fe54e0ea148e05c760fa0c479fa0b34b1"
+      },
+      "body_unchanged": true,
+      "identity_questions_after": [
+        "record-value-original-observer-helper-paths",
+        [
+          "what inventories original observer and callback source roles?",
+          "what qualifies original observer API and parser operation boundaries?",
+          "what qualifies original named helper inputs defaults and active paths?",
+          "what qualifies original compiled callback and refusal wrapper paths?",
+          "are all original helper input and callback paths joined?",
+          "what qualifies original own subtest body and delegate source roles?",
+          "what qualifies the original do-load source and recorded file marker?",
+          "what qualifies original public subtest header and boundary compatibility?"
+        ]
+      ],
+      "identity_questions_before": [
+        "record-value-original-observer-helper-paths",
+        [
+          "what inventories original observer and callback source roles?",
+          "what qualifies original observer API and parser operation boundaries?",
+          "what qualifies original named helper inputs defaults and active paths?",
+          "what qualifies original compiled callback and refusal wrapper paths?",
+          "are all original helper input and callback paths joined?",
+          "what qualifies original own subtest body and delegate source roles?",
+          "what qualifies the original do-load source and recorded file marker?",
+          "what qualifies original public subtest header and boundary compatibility?"
+        ]
+      ]
+    }
+  },
+  "tooling_prose_review": {
+    "addition": "old current reader froze unrelated card bytes/queries; replacement derives complete current global source allocation",
+    "after": "Historical success proves no current card/query/reader/source currency. Current checks\ncomplete core/helper/tooling meanings/questions, unique book guidance, canonical\nselection/endpoints/bytes/ignore policy, exact budgets and indexed members. Original\ndestination-locality replay and factory native copied-byte checks remain required;\nvisual QA stays pending.\n\nThe old class/frame current check froze unrelated card bytes/queries. This route\nderives complete global source allocation.\n",
+    "before": "Historical success does not establish current card/query/reader/source currency. Current\npublication checks complete core/helper/tooling meanings/question ownership, unique book\nguidance, canonical selection/endpoints/bytes/ignore policy, exact current budget and\nindexed members. Original destination-locality replay remains required. Explicit factory\noutput checks remain required for native copied bytes; visual QA stays pending.\n",
+    "retained": [
+      "historical success proves no current card/query/reader/source currency",
+      "complete core/helper/tooling meanings and question ownership",
+      "unique book guidance",
+      "canonical selection/endpoints/bytes/ignore policy",
+      "exact current budgets",
+      "indexed members",
+      "original destination-locality replay required",
+      "explicit factory native copied-byte checks required",
+      "visual QA pending"
+    ]
+  },
+  "whole_changed_card_byte_delta": -6
+}

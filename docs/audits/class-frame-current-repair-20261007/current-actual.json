@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "scripts/check_record_value_publication.py",
+    "--build",
+    ".artifacts/class-frame-current-book"
+  ],
+  "input_identity": {
+    "bytes": 3147069,
+    "sha256": "f821b976a81875e0a89186040ba3e1586bcfe4a7e14a884182feda9abe9c2cc9"
+  },
+  "programme": {
+    "bytes": 11084,
+    "sha256": "06ae4c57a0b192553264760ee38dbd861a518ddacc1d2852af1a0b74e6247418"
+  },
+  "status": 0,
+  "stderr": "",
+  "stdout": "PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n"
+}
