@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.78` (pending)
-- next_action: Repair the owned P1 whole-Git-index byte-growth cliff in decision-catalog authentication under unchanged limits, then resume final public parent qualification.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.78.2` (pending)
+- next_action: Implement the source-qualified finite decision-store snapshot and trusted census bootstrap/final object join; preserve default whole-inventory contracts and unchanged limits.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none; consume required validation before activating the successor.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

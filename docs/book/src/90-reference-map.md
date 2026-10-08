@@ -666,6 +666,22 @@ missing forwarding/index links and obsolete Knowledge Map body searches.
 These checks run through the live-document doctrine's projection verifier.
 The archive is read on demand, not loaded as part of every session bootstrap.
 
+Selected Git verification captures modes, object IDs and complete raw paths before
+reading source bytes. Its current whole-inventory budget also counts unrelated
+tracked evidence. A dated native fixture reproduces the resulting decision-store
+refusal without changing any selected store source. P1 owner SEM.78 is repairing
+that dependence. The scoped source hypothesis includes the trusted legacy links,
+Knowledge Map command consumers, caller control files and ancestor metadata:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-scope-20261008/verify.py
+```
+
+This saved reader checks the complete dated source, input-object allocation and
+unchanged semantic products. The hypothesis adapter bypasses the stock inventory
+constructor; it establishes a source-selection recipe. The production repair and
+bootstrap/final source-object conservation remain pending.
+
 <div id="knowledge-map-architecture"></div>
 
 {{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}
