@@ -696,12 +696,14 @@ refuse. Run the saved stock and repaired-source checks from the repository root:
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-scope-20261008/verify.py
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-repair-20261008/verify.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-integration-20261008/verify.py
 ```
 
 The repair reader reconstructs every native object, selected source and unchanged
 semantic product from complete inputs. T2003 also exercises real index races,
-advancing HEAD, special path bytes and shared aggregate limits. Final gate
-integration remains SEM.78.3-owned.
+advancing HEAD, special path bytes and shared aggregate limits. Installed index,
+committed-tree, catalog and control integration is qualified; original-coordinate,
+HIAL, visual, full CI and push gates remain open.
 
 <div id="knowledge-map-architecture"></div>
 
