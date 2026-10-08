@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.78.3` (pending)
-- next_action: Qualify the committed source-scoped decision-store repair and full gate integration, then resume the finite public parent; perform due owned artifact cleanup from a clean boundary.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.80` (pending)
+- next_action: Perform due owned daily artifact cleanup from this clean boundary, then qualify SEM.78.3 integration before the finite public parent.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none; consume required validation before activating the successor.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
