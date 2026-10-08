@@ -667,20 +667,41 @@ These checks run through the live-document doctrine's projection verifier.
 The archive is read on demand, not loaded as part of every session bootstrap.
 
 Selected Git verification captures modes, object IDs and complete raw paths before
-reading source bytes. Its current whole-inventory budget also counts unrelated
-tracked evidence. A dated native fixture reproduces the resulting decision-store
-refusal without changing any selected store source. P1 owner SEM.78 is repairing
-that dependence. The scoped source hypothesis includes the trusted legacy links,
-Knowledge Map command consumers, caller control files and ancestor metadata:
+reading source bytes. The default whole-inventory API retains its byte bound.
+Selected Git decision authentication captures the complete decision namespace, transition
+source census and caller control files. The installed store also captures trusted
+legacy link targets and Knowledge Map command consumers.
+
+The fixed published legacy census determines that extra scope. Bootstrap verifies
+its digest; final capture must retain its exact mode and object ID. Committed
+selection resolves once to a SHA. Index selection reads all final metadata in one
+native query. Ancestor metadata rejects files, symlinks and gitlinks in source
+directory positions. Source reads cannot use unrelated objects. Scope declarations,
+aggregate inventory bytes and individual blobs retain bounded contracts.
+
+Check the selected current store and its continuity with the committed predecessor:
+
+```sh
+scripts/decision_records.py --snapshot index check
+scripts/decision_records.py --snapshot index --prior-snapshot HEAD \
+  --bind-file doctrine/live_document_size/surfaces.jsonl check-continuity
+```
+
+The dated stock fixture refused authentication solely because unrelated evidence
+exceeded the whole-inventory budget. The real scoped production constructor now
+authenticates the same complete store. Relevant overflow, missing membership,
+conflicting stages, bad modes and changed bootstrap/final census objects still
+refuse. Run the saved stock and repaired-source checks from the repository root:
 
 ```sh
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-scope-20261008/verify.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-repair-20261008/verify.py
 ```
 
-This saved reader checks the complete dated source, input-object allocation and
-unchanged semantic products. The hypothesis adapter bypasses the stock inventory
-constructor; it establishes a source-selection recipe. The production repair and
-bootstrap/final source-object conservation remain pending.
+The repair reader reconstructs every native object, selected source and unchanged
+semantic product from complete inputs. T2003 also exercises real index races,
+advancing HEAD, special path bytes and shared aggregate limits. Final gate
+integration remains SEM.78.3-owned.
 
 <div id="knowledge-map-architecture"></div>
 

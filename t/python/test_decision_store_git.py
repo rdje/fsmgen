@@ -11,8 +11,10 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import decision_store_git as selected
+import decision_records as published
 import test_decision_store as fixtures
 import test_decision_catalog as literals
+from test_decision_production_growth import ProductionFixture, SOURCE, REGISTRY, AUTHORITIES
 
 
 class SelectedStoreAccess(unittest.TestCase):
@@ -207,6 +209,227 @@ class SelectedStoreAccess(unittest.TestCase):
         object_id = snapshot.objects[fixtures.store.INDEX][1]
         with self.assertRaisesRegex(ValueError, 'output exceeds selected snapshot bound'):
             snapshot._git('cat-file', 'blob', object_id, maximum=1)
+
+
+class ScopedStoreAccess(unittest.TestCase):
+    """The same store oracle checks finite scope and independent native data."""
+
+    setUp = SelectedStoreAccess.setUp
+    git = SelectedStoreAccess.git
+    load = SelectedStoreAccess.load
+
+    def scoped(self, selector='index', *, files=(SOURCE,), subtrees=('docs/decisions',)):
+        return selected.GitSnapshot(self.root, selector, files=files, subtrees=subtrees)
+
+    def test_scope_preserves_captured_blobs_and_complete_decision_membership(self):
+        snapshots = [self.scoped(selector) for selector in ('index', 'HEAD')]
+        for snapshot in snapshots:
+            self.load(snapshot)
+            self.assertEqual(snapshot.root_paths, selected.GitSnapshot(self.root, 'HEAD').root_paths)
+        self.fixture.write(fixtures.store.INDEX, '# Wrong later index\n')
+        self.git('add', fixtures.store.INDEX)
+        self.git('commit', '-q', '-m', 'fixture later scoped source')
+        for snapshot in snapshots:
+            self.assertEqual(snapshot.read(fixtures.store.INDEX), fixtures.ROOT_INDEX.encode())
+            self.load(snapshot)
+
+    def test_exact_ancestor_pathspec_preserves_special_utf8_bytes_without_descendants(self):
+        names = ('!parent', '^parent', '-parent', ']parent', '[parent', '*parent', '?parent',
+                 'λ', 'plain[*?]λ', 'parent]tag')
+        oid = self.git('hash-object', '-w', '--stdin', input=b'opaque parent\n').decode().strip()
+        self.git('update-index', '--index-info', input=''.join(
+            f'100644 {oid}\t{name}\n' for name in names).encode())
+        self.fixture.write('near/source/opaque.txt', 'unselected descendant\n')
+        self.git('add', 'near')
+        self.git('commit', '-q', '-m', 'fixture exact ancestor metadata')
+        files = tuple(name + '/source.json' for name in names) + ('near/source',)
+        for selector in ('index', 'HEAD'):
+            with self.subTest(selector=selector):
+                snapshot = self.scoped(selector, files=files, subtrees=())
+                self.assertEqual(snapshot.objects, {name: ('100644', oid) for name in names})
+                for name in names:
+                    with self.assertRaisesRegex(ValueError, 'nondirectory ancestor'):
+                        snapshot.read(name + '/source.json')
+                    with self.assertRaisesRegex(ValueError, 'outside declared scope'):
+                        snapshot.read(name)
+                with self.assertRaisesRegex(ValueError, 'unresolved selected source'):
+                    snapshot.read('near/source')
+
+    def test_scoped_conflicts_modes_missing_and_oversized_sources_still_refuse(self):
+        path = 'docs/decisions/INDEX.md'
+        oid = self.git('hash-object', '-w', '--stdin', input=b'conflicting source\n').decode().strip()
+        self.git('update-index', '--index-info', input=(
+            f'0 {"0" * 40}\t{path}\n100644 {oid} 1\t{path}\n100644 {oid} 2\t{path}\n').encode())
+        with self.assertRaisesRegex(ValueError, 'conflicting Git index stages'):
+            self.scoped()
+        self.git('reset', '-q', 'HEAD', '--', path)
+        revision = self.git('rev-parse', 'HEAD').decode().strip()
+        self.git('update-index', '--add', '--cacheinfo', f'160000,{revision},external')
+        self.git('update-index', '--add', '--cacheinfo', f'120000,{oid},linked')
+        self.fixture.write('large.bin', 'x' * (selected.catalog_api.MAX_DOCUMENT_BYTES + 1))
+        self.git('add', 'large.bin')
+        self.git('commit', '-q', '-m', 'fixture scoped refusal modes')
+        for selector in ('index', 'HEAD'):
+            snapshot = self.scoped(selector, files=('external', 'linked', 'large.bin', 'missing'), subtrees=())
+            for name in ('external', 'linked'):
+                with self.assertRaisesRegex(ValueError, 'not a regular blob'):
+                    snapshot.read(name)
+            with self.assertRaisesRegex(ValueError, 'exceeds byte bound'):
+                snapshot.read('large.bin')
+            with self.assertRaisesRegex(ValueError, 'unresolved selected source'):
+                snapshot.read('missing')
+
+    def test_scope_declarations_are_closed_and_bounded(self):
+        for files in (True, (), (True,), ([],), ('../outside',), ('a' * 513,),
+                      tuple('a' for _ in range(selected.catalog_api.MAX_SOURCE_RECORDS + 1))):
+            with self.subTest(files=repr(files)[:80]):
+                with self.assertRaises(ValueError):
+                    self.scoped(files=files, subtrees=())
+        with self.assertRaisesRegex(ValueError, 'explicit source scope'):
+            selected.GitSnapshot(self.root, 'index', subtrees=('docs/decisions',))
+
+    def test_separate_exact_tree_queries_share_one_aggregate_byte_budget(self):
+        for name in ('first', 'second'):
+            self.fixture.write(name, 'bounded source\n')
+        self.git('add', 'first', 'second')
+        self.git('commit', '-q', '-m', 'fixture separate exact source queries')
+        baseline = self.scoped(files=('first', 'second'), subtrees=())
+        with patch.object(selected, 'MAX_INVENTORY_BYTES', baseline.inventory_bytes - 1):
+            for selector in ('index', 'HEAD'):
+                with self.subTest(selector=selector):
+                    with self.assertRaisesRegex(ValueError, 'output exceeds selected snapshot bound'):
+                        self.scoped(selector, files=('first', 'second'), subtrees=())
+
+
+class InstalledSourceScope(unittest.TestCase):
+    def setUp(self):
+        self.fixture = ProductionFixture()
+        self.addCleanup(self.fixture.close)
+        self.root = self.fixture.root
+        for name in ('decision_records', 'decision_store_git', 'decision_store', 'decision_catalog'):
+            self.fixture.write(f'scripts/{name}.py', (ROOT / f'scripts/{name}.py').read_bytes())
+        self.fixture.git('add', 'scripts')
+        self.fixture.git('commit', '-q', '-m', 'fixture current public reader')
+
+    def store(self, snapshot):
+        return published.selected_store(self.root, snapshot, False,
+                                        published.STORE_SOURCE_SHA256, published.STORE_INDEX_SHA256)
+
+    def grow(self, prefix):
+        def git_input(*arguments, data):
+            result = subprocess.run(['git', '-C', str(self.root), *arguments], input=data,
+                                    capture_output=True, timeout=60)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            return result.stdout
+
+        oid = git_input('hash-object', '-w', '--stdin', data=b'opaque unrelated data\n').decode().strip()
+        names = [prefix + '/' + 'x' * 160 + f'{i:05}.bin' for i in range(20_001)]
+        git_input('update-index', '--index-info', data=''.join(
+            f'100644 {oid}\t{name}\n' for name in names).encode())
+        self.fixture.git('commit', '-q', '-m', 'fixture real native byte overflow')
+
+    def test_unrelated_overflow_authenticates_identical_installed_products(self):
+        bindings = (REGISTRY, AUTHORITIES)
+        baseline = published.selected_snapshot(self.root, 'index', bindings=bindings)
+        prepared = self.store(baseline)
+        self.grow('unrelated')
+        revision = self.fixture.git('rev-parse', 'HEAD').decode().strip()
+        for selector in ('index', 'HEAD', revision):
+            with self.subTest(selector=selector):
+                with self.assertRaisesRegex(ValueError, 'output exceeds selected snapshot bound'):
+                    selected.GitSnapshot(self.root, selector)
+                snapshot = published.selected_snapshot(self.root, selector, bindings=bindings)
+                self.assertEqual(snapshot.objects, baseline.objects)
+                self.assertEqual(snapshot.inventory_bytes, baseline.inventory_bytes)
+                self.assertEqual(self.store(snapshot), prepared)
+                result = self.fixture.public('check', selector=selector, installed=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, b'decision-records: authenticated originals, current records, compatibility and indexes verified\n')
+                self.assertEqual(result.stderr, b'')
+                with self.assertRaisesRegex(ValueError, 'outside declared scope'):
+                    snapshot.read('unrelated/' + 'x' * 160 + '00000.bin')
+
+    def test_relevant_native_overflow_keeps_the_original_budget(self):
+        self.grow('docs/decisions/opaque')
+        for selector in ('index', 'HEAD'):
+            with self.subTest(selector=selector):
+                with self.assertRaisesRegex(ValueError, 'output exceeds selected snapshot bound'):
+                    published.selected_snapshot(self.root, selector)
+
+    def test_bootstrap_and_final_index_census_modes_and_objects_must_join(self):
+        original = selected.GitSnapshot
+        fixture = self.fixture
+        events = []
+
+        initial = original(self.root, 'index', files=(published.CENSUS,)).objects[published.CENSUS]
+        other = self.root / 'other-census.json'
+        other.write_text('{}\n')
+        replacement = fixture.git('hash-object', '-w', 'other-census.json').decode().strip()
+        for mode, object_id in (('100755', initial[1]), (initial[0], replacement)):
+            with self.subTest(mode=mode, object_id=object_id):
+                events.clear()
+
+                class ChangingIndex(original):
+                    def __init__(self, root, selector, **scope):
+                        super().__init__(root, selector, **scope)
+                        events.append((selector, scope))
+                        if published.CENSUS in scope.get('files', ()) and not scope.get('subtrees'):
+                            fixture.git('update-index', '--cacheinfo', f'{mode},{object_id},{published.CENSUS}')
+
+                with patch.object(selected, 'GitSnapshot', ChangingIndex):
+                    with self.assertRaisesRegex(ValueError, 'census object changed between source captures'):
+                        published.selected_snapshot(self.root, 'index')
+                self.assertEqual(len(events), 2)
+                self.assertEqual(events[1][0], 'index')
+                fixture.git('update-index', '--cacheinfo', f'{initial[0]},{initial[1]},{published.CENSUS}')
+
+    def test_head_advance_cannot_retarget_final_source_capture(self):
+        revision = self.fixture.git('rev-parse', 'HEAD').decode().strip()
+        original = selected.GitSnapshot
+        fixture = self.fixture
+        events = []
+
+        class AdvancingHead(original):
+            def __init__(self, root, selector, **scope):
+                super().__init__(root, selector, **scope)
+                events.append((selector, scope))
+                if published.CENSUS in scope.get('files', ()) and not scope.get('subtrees'):
+                    fixture.write(published.CENSUS, '{}\n')
+                    fixture.git('add', published.CENSUS)
+                    fixture.git('commit', '-q', '-m', 'fixture changed later census')
+
+        with patch.object(selected, 'GitSnapshot', AdvancingHead):
+            snapshot = published.selected_snapshot(self.root, 'HEAD')
+        self.assertNotEqual(self.fixture.git('rev-parse', 'HEAD').decode().strip(), revision)
+        self.assertEqual(snapshot.revision, revision)
+        self.assertEqual(events[1][0], revision)
+        self.store(snapshot)
+
+    def test_untrusted_census_is_refused_before_dependency_selection(self):
+        self.fixture.write(published.CENSUS, '{}\n')
+        self.fixture.git('add', published.CENSUS)
+        with self.assertRaisesRegex(ValueError, 'independent source census changed'):
+            published.selected_snapshot(self.root, 'index')
+
+    def test_link_targets_consumers_and_control_files_are_real_selected_inputs(self):
+        snapshot = published.selected_snapshot(self.root, 'index', bindings=(REGISTRY, AUTHORITIES))
+        for name in ('README_POLICY.md', REGISTRY, AUTHORITIES):
+            self.assertEqual(snapshot.read(name), self.fixture.original_products[name])
+        census = published.json.loads(snapshot.read(published.CENSUS))
+        path = next(row['path'] for row in census['body_or_identity_consumers']
+                    if row['text'].startswith('reverify:'))
+        self.fixture.write(path, 'reverify: obsolete forwarding-page search\n')
+        self.fixture.git('add', path)
+        self.store(snapshot)  # The saved reader remains detached from the index.
+        with self.assertRaisesRegex(ValueError, 'reverify omits exact record reader'):
+            self.store(published.selected_snapshot(self.root, 'index'))
+
+    def test_complete_flat_compatibility_membership_still_refuses_a_missing_root(self):
+        snapshot = published.selected_snapshot(self.root, 'index')
+        path = next(path for path in snapshot.root_paths if path != published.INDEX)
+        self.fixture.git('update-index', '--force-remove', path)
+        with self.assertRaisesRegex(ValueError, 'compatibility root membership differs'):
+            self.store(published.selected_snapshot(self.root, 'index'))
 
 
 class PriorCurrentContinuity(unittest.TestCase):

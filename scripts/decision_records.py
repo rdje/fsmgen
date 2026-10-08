@@ -152,11 +152,43 @@ def load_store(root, source_digest, index_digest, snapshot=None):
     return store
 
 
-def selected_snapshot(root, selector):
+def selected_snapshot(root, selector, *, supplied=False, bindings=()):
     if selector == 'worktree':
         return None
     from decision_store_git import GitSnapshot
-    return GitSnapshot(root, selector)
+    from decision_store import SOURCE, ORIGINAL_INDEX
+    files = {SOURCE, *bindings}
+    if not supplied:
+        # The immutable published census, rather than the ambient worktree or
+        # catalog metadata, owns the legacy link and command-consumer closure.
+        bootstrap = GitSnapshot(root, selector, files=(SOURCE, ORIGINAL_INDEX, CATALOG, CENSUS))
+        if CATALOG in bootstrap.objects:
+            # Preserve the installed authority prerequisite before legacy
+            # closure. A supplied fixture cannot borrow the installed digest.
+            require(STORE_SOURCE_SHA256 is not None and STORE_INDEX_SHA256 is not None,
+                    'catalog store has no installed independent authority')
+            source_bytes, index_bytes = bootstrap.read(SOURCE), bootstrap.read(ORIGINAL_INDEX)
+            require(hashlib.sha256(source_bytes).hexdigest() == STORE_SOURCE_SHA256,
+                    'independent transition source census changed')
+            require(hashlib.sha256(index_bytes).hexdigest() == STORE_INDEX_SHA256,
+                    'independent original decision index changed')
+        census_bytes = bootstrap.read(CENSUS)
+        require(hashlib.sha256(census_bytes).hexdigest() == CENSUS_SHA256,
+                'independent source census changed')
+        census = json.loads(census_bytes, object_pairs_hook=unique_object)
+        files.add(CENSUS)
+        files.update(posixpath.normpath(posixpath.join('docs/decisions', row['target']))
+                     for row in census['selected_links'])
+        files.update(row['path'] for row in census['body_or_identity_consumers']
+                     if row['text'].startswith('reverify:'))
+        # HEAD can advance between queries; all committed queries share the
+        # bootstrap's already resolved SHA. Index captures join the census ID.
+        selector = bootstrap.revision or 'index'
+    snapshot = GitSnapshot(root, selector, files=tuple(sorted(files)), subtrees=('docs/decisions',))
+    if not supplied:
+        require(snapshot.objects.get(CENSUS) == bootstrap.objects[CENSUS],
+                'legacy census object changed between source captures')
+    return snapshot
 
 
 def selected_store(root, snapshot, supplied, source_digest, index_digest):
@@ -312,7 +344,7 @@ def main(argv=None):
                 '--bind-file requires check-continuity')
         require(len(args.bind_file) <= 8 and len(set(args.bind_file)) == len(args.bind_file),
                 'invalid bounded control-file binding request')
-        snapshot = selected_snapshot(root, args.snapshot)
+        snapshot = selected_snapshot(root, args.snapshot, supplied=supplied, bindings=args.bind_file)
         reader = snapshot.read if snapshot is not None else None
         store = selected_store(root, snapshot, supplied, source_digest, index_digest)
         if supplied and args.operation != 'check-continuity':
@@ -323,7 +355,8 @@ def main(argv=None):
         if args.operation == 'check-continuity':
             require(args.prior_snapshot not in ('worktree', 'index'),
                     'predecessor must be a resolved Git revision')
-            prior_snapshot = selected_snapshot(root, args.prior_snapshot)
+            prior_snapshot = selected_snapshot(root, args.prior_snapshot,
+                                               supplied=supplied, bindings=args.bind_file)
             prior = selected_store(root, prior_snapshot, supplied, source_digest, index_digest)
             product = change_product(root, prior_snapshot, prior, store, args.ids, snapshot)
             if args.bind_file:

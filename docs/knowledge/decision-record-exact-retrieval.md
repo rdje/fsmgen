@@ -13,27 +13,27 @@ date: 2026-10-08
 status: current
 tags: [memory, decisions, archive, continuity]
 evidence: docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md; docs/decisions/INDEX.md; scripts/decision_records.py; t/1923-decision-record-archive.t
-reverify: scripts/decision_records.py check && prove -Iperl t/1923-decision-record-archive.t t/2003-decision-store-git-continuity.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-scope-20261008/verify.py
+reverify: scripts/decision_records.py check && prove -Iperl t/1923-decision-record-archive.t t/2003-decision-store-git-continuity.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-repair-20261008/verify.py
 ---
 
-Sealed decisions retain forwarding paths. Follow the full-record link or run
-scripts/decision_records.py read 0014 at root. Ordered IDs return exact originals;
-the index finds all. JSON originals and the human view’s relocated relative links
-preserve authority/supersession. Later policy needs a new decision/index, never
-archive/generated-view appends.
+Sealed decisions keep forwarding paths. Follow full-record links or run
+scripts/decision_records.py read 0014 at root. Ordered IDs give exact originals;
+the index finds all. JSON originals and human-view relocated relative links retain
+authority/supersession. Later policy needs new decision/index; no archive/generated-view appends.
 
-Projection checks: independent committed originals census; view/root pointers and
-index links/targets; affected Knowledge Map body-search commands. Fixed-Git regression
-reads reject retention/navigation defects. Root aliases keep live pressure with a separate owner.
+Checks: independent committed-original census; view/root/index links/targets; affected
+Knowledge Map body-search commands. Fixed-Git regression rejects retention/navigation
+defects. Root aliases retain live pressure; separate owner.
 
-Current bodies: semantic parts under docs/decisions/current/. Edits sync content
-dimensions/digest and metadata in current/catalog.json or reader/staged gates reject.
-check verifies the whole worktree; --snapshot index --prior-snapshot HEAD check-continuity
-compares staged/committed stores. Originals, compatibility and transition census stay sealed.
+Semantic parts: docs/decisions/current/. Sync dimensions/digest/metadata in
+current/catalog.json; reader/staged gates reject drift. check verifies the whole
+worktree; --snapshot index --prior-snapshot HEAD check-continuity compares staged/committed
+stores. Originals, compatibility and transition census stay sealed.
 
-Selected trees use standard NUL paths as index zero-stage metadata under the unchanged
-byte budget. T2003 checks every mode/object/path and old-header/real-overflow refusals;
-custom-format quoting is avoided. SEMANTIC-INTROSPECTION-MCP-FRONTIER.77.1;
-docs/audits/decision-git-inventory-20261007/.
+Standard NUL trees become zero-stage index metadata under unchanged limits. T2003
+checks every mode/object/path plus old-header/real-overflow refusals; no custom quoting.
+SEM.77.1: docs/audits/decision-git-inventory-20261007/.
 
-Dated unrelated-index overflow: P1 SEM.78; source hypothesis only.
+SEM.78 captures decisions, source/legacy links/consumers, controls and ancestors.
+Trusted census mode/object joins bootstrap/final; HEAD resolves once. Default whole
+and relevant overflow refuse; dated stock evidence retains.

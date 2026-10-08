@@ -10,8 +10,8 @@ import decision_catalog as catalog_api
 MAX_INVENTORY_BYTES = 4_194_304
 # Every SHA-1 index record needs mode, object ID, stage, tab, a nonempty
 # path and NUL. Committed trees use that same zero-stage representation.
-# The byte cap bounds all entries, including unrelated tracked evidence,
-# without a separate growth cliff.
+# The default whole-inventory API counts every tracked entry. An explicit
+# source scope uses the same cap for its complete selected metadata.
 MIN_INVENTORY_RECORD_BYTES = len(b'100644 ' + b'0' * 40 + b' 0\ta\0')
 MAX_TRACKED_PATHS = MAX_INVENTORY_BYTES // MIN_INVENTORY_RECORD_BYTES
 REGULAR_MODES = ('100644', '100755')
@@ -20,7 +20,7 @@ REGULAR_MODES = ('100644', '100755')
 class GitSnapshot:
     """Capture path/mode/object IDs once; never re-read a mutable index selector."""
 
-    def __init__(self, root, selector):
+    def __init__(self, root, selector, *, files=None, subtrees=()):
         self.root = Path(root).resolve(strict=True)
         top = self._git('rev-parse', '--show-toplevel', maximum=4096).decode('utf-8').strip()
         catalog_api.require(Path(top).resolve(strict=True) == self.root,
@@ -29,15 +29,95 @@ class GitSnapshot:
                             or type(selector) is str and re.fullmatch(r'[0-9a-f]{40}', selector),
                             'unsafe or unsupported Git snapshot selector')
         self.objects = {}
+        self.inventory_bytes = 0
+        self._files = None
+        if files is not None:
+            self._set_scope(files, subtrees)
+        else:
+            catalog_api.require(not subtrees, 'subtrees require an explicit source scope')
         if selector == 'index':
             self.revision = None
-            listing = self._git('ls-files', '--stage', '-z', maximum=MAX_INVENTORY_BYTES)
         else:
             revision = self._git('rev-parse', '--verify', selector + '^{commit}', maximum=128).decode().strip()
             catalog_api.require(re.fullmatch(r'[0-9a-f]{40}', revision), 'unresolved Git snapshot revision')
             self.revision = revision
-            listing = self._git('ls-tree', '-r', '--full-tree', '-z', revision,
-                                maximum=MAX_INVENTORY_BYTES, tree_inventory=True)
+        if self._files is None:
+            listing = (self._git('ls-files', '--stage', '-z', maximum=MAX_INVENTORY_BYTES)
+                       if selector == 'index' else
+                       self._git('ls-tree', '-r', '--full-tree', '-z', self.revision,
+                                 maximum=MAX_INVENTORY_BYTES, tree_inventory=True))
+            self._capture(listing, index=selector == 'index')
+        else:
+            self._capture_scope()
+        self.root_paths = tuple(sorted(path for path in self.objects
+                                       if re.fullmatch(r'docs/decisions/[^/]+\.md', path)))
+
+    def _set_scope(self, files, subtrees):
+        """Declare bounded sources and the metadata needed to reject ancestors."""
+        for values in (files, subtrees):
+            catalog_api.require(type(values) in (tuple, list)
+                                and len(values) <= catalog_api.MAX_SOURCE_RECORDS,
+                                'invalid bounded Git source scope')
+        paths = list(files) + list(subtrees)
+        catalog_api.require(paths and len(paths) <= catalog_api.MAX_SOURCE_RECORDS,
+                            'invalid bounded Git source scope')
+        parts = {}
+        for path in paths:
+            value = catalog_api.relative_parts(path)
+            parts[path] = value
+        catalog_api.require(sum(len(path.encode('utf-8')) + 1 for path in paths)
+                            <= catalog_api.MAX_DOCUMENT_BYTES, 'Git source scope exceeds byte bound')
+        self._files = frozenset(files)
+        self._subtrees = tuple(sorted(path for path in set(subtrees)
+                                      if not any(path.startswith(parent + '/')
+                                                 for parent in subtrees if parent != path)))
+        self._ancestors = frozenset('/'.join(value[:length])
+                                    for value in parts.values() for length in range(1, len(value)))
+
+    def _in_scope(self, path):
+        return path in self._files or any(path == parent or path.startswith(parent + '/')
+                                         for parent in self._subtrees)
+
+    @staticmethod
+    def _exact_index_pathspec(path):
+        # Literal directory names recurse in ls-files. A forced byte class
+        # selects only the exact tracked parent/file, including UTF-8 names.
+        raw = path.encode('utf-8')
+        first = bytes(raw[:1])
+        if first in (b'!', b'^', b'-', b']', b'['):
+            first = b'\\' + first
+        tail = b''.join((b'\\' if byte in b'\\*?[]' else b'') + bytes([byte])
+                        for byte in raw[1:])
+        return b':(top,glob)[' + first + b']' + tail
+
+    def _capture_scope(self):
+        exact = sorted(path for path in self._files | self._ancestors
+                       if not any(path == parent or path.startswith(parent + '/')
+                                  for parent in self._subtrees))
+        if self.revision is None:
+            # One index enumeration captures all relevant objects atomically;
+            # blob reads below never consult that mutable selector again.
+            specs = [':(top,literal)' + path for path in self._subtrees]
+            specs.extend(self._exact_index_pathspec(path) for path in exact)
+            listing = self._git('ls-files', '--stage', '-z', '--', *specs,
+                                maximum=MAX_INVENTORY_BYTES)
+            self._capture(listing, index=True)
+        else:
+            if self._subtrees:
+                listing = self._git('ls-tree', '-r', '--full-tree', '-z', self.revision,
+                                    '--', *[':(top,literal)' + path for path in self._subtrees],
+                                    maximum=MAX_INVENTORY_BYTES, tree_inventory=True)
+                self._capture(listing, index=False)
+            # ls-tree does not support glob magic. Overlapping parent arguments
+            # broaden its output; query each exact path at the same resolved SHA.
+            for path in exact:
+                listing = self._git('ls-tree', '--full-tree', '-z', self.revision,
+                                    '--', ':(top,literal)' + path,
+                                    maximum=MAX_INVENTORY_BYTES, tree_inventory=True,
+                                    directory_entries=True)
+                self._capture(listing, index=False, exact=path)
+
+    def _capture(self, listing, *, index, exact=None):
         records = listing.split(b'\0')
         catalog_api.require(records[-1] == b'' and len(records) - 1 <= MAX_TRACKED_PATHS,
                             'Git path inventory exceeds bound or is incomplete')
@@ -45,7 +125,7 @@ class GitSnapshot:
             header, path_bytes = record.split(b'\t', 1)
             path = path_bytes.decode('utf-8')
             fields = header.decode('ascii').split(' ')
-            if selector == 'index':
+            if index:
                 catalog_api.require(len(fields) == 3 and fields[2] == '0', 'conflicting Git index stages')
                 mode, object_id = fields[:2]
             else:
@@ -53,13 +133,23 @@ class GitSnapshot:
                                     'malformed Git tree inventory')
                 mode, object_id = fields[:2]
             catalog_api.require(re.fullmatch(r'[0-9a-f]{40}', object_id), 'malformed Git object identity')
+            if exact is not None:
+                catalog_api.require(path == exact, 'Git exact source inventory broadened')
+                if mode == '040000':
+                    continue  # Full recursive inventories also omit directories.
+            if self._files is not None:
+                catalog_api.require(self._in_scope(path) or path in self._ancestors,
+                                    'Git inventory escapes declared source scope')
             catalog_api.require(path not in self.objects, 'duplicate Git inventory path')
+            self.inventory_bytes += len(record) + 1
+            catalog_api.require(self.inventory_bytes <= MAX_INVENTORY_BYTES,
+                                'Git output exceeds selected snapshot bound')
+            catalog_api.require(len(self.objects) < MAX_TRACKED_PATHS,
+                                'Git path inventory exceeds bound or is incomplete')
             self.objects[path] = (mode, object_id)
-        self.root_paths = tuple(sorted(path for path in self.objects
-                                       if re.fullmatch(r'docs/decisions/[^/]+\.md', path)))
 
     @staticmethod
-    def _read_tree_inventory(stream, maximum):
+    def _read_tree_inventory(stream, maximum, *, directory_entries=False):
         """Bound canonical metadata while preserving standard -z raw paths.
 
         Standard tree headers carry an object type instead of an index stage.
@@ -77,7 +167,9 @@ class GitSnapshot:
                 catalog_api.require(separator and path and len(fields) == 3,
                                     'malformed Git tree inventory')
                 mode, kind, object_id = fields
-                catalog_api.require(kind == (b'commit' if mode == b'160000' else b'blob'),
+                expected_kind = (b'tree' if directory_entries and mode == b'040000'
+                                 else b'commit' if mode == b'160000' else b'blob')
+                catalog_api.require(kind == expected_kind,
                                     'malformed Git tree inventory')
                 canonical = mode + b' ' + object_id + b' 0\t' + path + b'\0'
                 catalog_api.require(len(output) + len(canonical) <= maximum,
@@ -90,7 +182,7 @@ class GitSnapshot:
         catalog_api.require(not pending, 'Git path inventory exceeds bound or is incomplete')
         return bytes(output)
 
-    def _git(self, *arguments, maximum, tree_inventory=False):
+    def _git(self, *arguments, maximum, tree_inventory=False, directory_entries=False):
         # Git metadata/blob commands never recurse into a gitlink. Merge the
         # diagnostic pipe to bound both streams; any successful warning would
         # invalidate the expected metadata or content rather than substitute it.
@@ -98,7 +190,8 @@ class GitSnapshot:
         process = subprocess.Popen(['git', '--no-replace-objects', '-C', str(self.root), *arguments],
                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=environment)
         try:
-            output = (self._read_tree_inventory(process.stdout, maximum) if tree_inventory
+            output = (self._read_tree_inventory(process.stdout, maximum,
+                                               directory_entries=directory_entries) if tree_inventory
                       else process.stdout.read(maximum + 1))
             if len(output) > maximum:
                 process.kill()
@@ -114,6 +207,8 @@ class GitSnapshot:
 
     def read(self, path):
         parts = catalog_api.relative_parts(path)
+        catalog_api.require(self._files is None or self._in_scope(path),
+                            f'selected source is outside declared scope: {path}')
         catalog_api.require(not any('/'.join(parts[:length]) in self.objects
                                     for length in range(1, len(parts))),
                             f'selected source has a nondirectory ancestor: {path}')
