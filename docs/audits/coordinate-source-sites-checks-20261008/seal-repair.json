@@ -1,0 +1,251 @@
+{
+  "controls": [
+    {
+      "candidate_members": {
+        "controls.json": {
+          "bytes": 4070,
+          "sha256": "ab570ba3f3c44e51b5ada69d5ca20803c1843718ffa340cb65b7e49ac31466ec"
+        },
+        "model.py": {
+          "bytes": 8249,
+          "sha256": "97ccc5142fdc17df91b40505434d64f6f63725c37d310539d27c559651d9807a"
+        },
+        "owners.json": {
+          "bytes": 517,
+          "sha256": "9c68c3fae47689a61113eb566dfc5628c5e18a16dba7ac3f62eff1130957d11d"
+        },
+        "scope.txt": {
+          "bytes": 113,
+          "sha256": "ca7378871f9bd412d938f0128b20a225edc167ca301490235774832f6b09dbbe"
+        },
+        "sites.json": {
+          "bytes": 1439362,
+          "sha256": "2b2fcd96b342400e1d02b48797bd0fff635d940c9c33d42695e2231582a54993"
+        },
+        "verify.py": {
+          "bytes": 12275,
+          "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+        }
+      },
+      "cause": "immutable source-site seal is required",
+      "name": "missing-seal",
+      "status": "refused"
+    },
+    {
+      "candidate_members": {
+        "model.py": {
+          "bytes": 8249,
+          "sha256": "97ccc5142fdc17df91b40505434d64f6f63725c37d310539d27c559651d9807a"
+        },
+        "owners.json": {
+          "bytes": 517,
+          "sha256": "9c68c3fae47689a61113eb566dfc5628c5e18a16dba7ac3f62eff1130957d11d"
+        },
+        "scope.txt": {
+          "bytes": 113,
+          "sha256": "ca7378871f9bd412d938f0128b20a225edc167ca301490235774832f6b09dbbe"
+        },
+        "seal.json": {
+          "bytes": 743,
+          "sha256": "95d3f0ff530b94a4f98e577db2a72ea0d45468905e78399972cf6d21660b41aa"
+        },
+        "sites.json": {
+          "bytes": 1439362,
+          "sha256": "2b2fcd96b342400e1d02b48797bd0fff635d940c9c33d42695e2231582a54993"
+        },
+        "verify.py": {
+          "bytes": 12275,
+          "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+        }
+      },
+      "cause": "whole immutable source-site member population and bytes",
+      "name": "missing-member",
+      "status": "refused"
+    },
+    {
+      "candidate_members": {
+        "controls.json": {
+          "bytes": 4070,
+          "sha256": "ab570ba3f3c44e51b5ada69d5ca20803c1843718ffa340cb65b7e49ac31466ec"
+        },
+        "model.py": {
+          "bytes": 8249,
+          "sha256": "97ccc5142fdc17df91b40505434d64f6f63725c37d310539d27c559651d9807a"
+        },
+        "owners.json": {
+          "bytes": 517,
+          "sha256": "9c68c3fae47689a61113eb566dfc5628c5e18a16dba7ac3f62eff1130957d11d"
+        },
+        "scope.txt": {
+          "bytes": 113,
+          "sha256": "ca7378871f9bd412d938f0128b20a225edc167ca301490235774832f6b09dbbe"
+        },
+        "seal.json": {
+          "bytes": 743,
+          "sha256": "95d3f0ff530b94a4f98e577db2a72ea0d45468905e78399972cf6d21660b41aa"
+        },
+        "sites.json": {
+          "bytes": 4070,
+          "sha256": "ab570ba3f3c44e51b5ada69d5ca20803c1843718ffa340cb65b7e49ac31466ec"
+        },
+        "verify.py": {
+          "bytes": 12275,
+          "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+        }
+      },
+      "cause": "whole immutable source-site member population and bytes",
+      "name": "borrowed-body",
+      "status": "refused"
+    },
+    {
+      "candidate_members": {
+        "controls.json": {
+          "bytes": 4070,
+          "sha256": "ab570ba3f3c44e51b5ada69d5ca20803c1843718ffa340cb65b7e49ac31466ec"
+        },
+        "model.py": {
+          "bytes": 8249,
+          "sha256": "97ccc5142fdc17df91b40505434d64f6f63725c37d310539d27c559651d9807a"
+        },
+        "owners.json": {
+          "bytes": 517,
+          "sha256": "9c68c3fae47689a61113eb566dfc5628c5e18a16dba7ac3f62eff1130957d11d"
+        },
+        "scope.txt": {
+          "bytes": 113,
+          "sha256": "ca7378871f9bd412d938f0128b20a225edc167ca301490235774832f6b09dbbe"
+        },
+        "seal.json": {
+          "bytes": 744,
+          "sha256": "87bed71f7bd987d9bd37903c4fcfdaab3b12752b37edf40ce2664a198697a80d"
+        },
+        "sites.json": {
+          "bytes": 1439362,
+          "sha256": "2b2fcd96b342400e1d02b48797bd0fff635d940c9c33d42695e2231582a54993"
+        },
+        "verify.py": {
+          "bytes": 12275,
+          "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+        }
+      },
+      "cause": "exact original immutable source-site seal identity",
+      "name": "changed-seal",
+      "status": "refused"
+    },
+    {
+      "candidate_members": {
+        "controls.json": {
+          "bytes": 4070,
+          "sha256": "ab570ba3f3c44e51b5ada69d5ca20803c1843718ffa340cb65b7e49ac31466ec"
+        },
+        "model.py": {
+          "bytes": 8249,
+          "sha256": "97ccc5142fdc17df91b40505434d64f6f63725c37d310539d27c559651d9807a"
+        },
+        "owners.json": {
+          "bytes": 517,
+          "sha256": "9c68c3fae47689a61113eb566dfc5628c5e18a16dba7ac3f62eff1130957d11d"
+        },
+        "scope.txt": {
+          "bytes": 9,
+          "sha256": "f535bffc6fa3a4eae7ce8c0db143f85c9a1f9f0816347974f86cb78ad18f9366"
+        },
+        "seal.json": {
+          "bytes": 743,
+          "sha256": "95d3f0ff530b94a4f98e577db2a72ea0d45468905e78399972cf6d21660b41aa"
+        },
+        "sites.json": {
+          "bytes": 1439362,
+          "sha256": "2b2fcd96b342400e1d02b48797bd0fff635d940c9c33d42695e2231582a54993"
+        },
+        "verify.py": {
+          "bytes": 12275,
+          "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+        }
+      },
+      "cause": "whole immutable source-site member population and bytes",
+      "name": "changed-scope",
+      "status": "refused"
+    }
+  ],
+  "original_members_before_after": {
+    "controls.json": {
+      "bytes": 4070,
+      "sha256": "ab570ba3f3c44e51b5ada69d5ca20803c1843718ffa340cb65b7e49ac31466ec"
+    },
+    "model.py": {
+      "bytes": 8249,
+      "sha256": "97ccc5142fdc17df91b40505434d64f6f63725c37d310539d27c559651d9807a"
+    },
+    "owners.json": {
+      "bytes": 517,
+      "sha256": "9c68c3fae47689a61113eb566dfc5628c5e18a16dba7ac3f62eff1130957d11d"
+    },
+    "scope.txt": {
+      "bytes": 113,
+      "sha256": "ca7378871f9bd412d938f0128b20a225edc167ca301490235774832f6b09dbbe"
+    },
+    "seal.json": {
+      "bytes": 743,
+      "sha256": "95d3f0ff530b94a4f98e577db2a72ea0d45468905e78399972cf6d21660b41aa"
+    },
+    "sites.json": {
+      "bytes": 1439362,
+      "sha256": "2b2fcd96b342400e1d02b48797bd0fff635d940c9c33d42695e2231582a54993"
+    },
+    "verify.py": {
+      "bytes": 12275,
+      "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+    }
+  },
+  "original_missing_seal": {
+    "candidate_members": {
+      "controls.json": {
+        "bytes": 4070,
+        "sha256": "ab570ba3f3c44e51b5ada69d5ca20803c1843718ffa340cb65b7e49ac31466ec"
+      },
+      "model.py": {
+        "bytes": 8249,
+        "sha256": "97ccc5142fdc17df91b40505434d64f6f63725c37d310539d27c559651d9807a"
+      },
+      "owners.json": {
+        "bytes": 517,
+        "sha256": "9c68c3fae47689a61113eb566dfc5628c5e18a16dba7ac3f62eff1130957d11d"
+      },
+      "scope.txt": {
+        "bytes": 113,
+        "sha256": "ca7378871f9bd412d938f0128b20a225edc167ca301490235774832f6b09dbbe"
+      },
+      "sites.json": {
+        "bytes": 1439362,
+        "sha256": "2b2fcd96b342400e1d02b48797bd0fff635d940c9c33d42695e2231582a54993"
+      },
+      "verify.py": {
+        "bytes": 12275,
+        "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+      }
+    },
+    "programme": {
+      "bytes": 12275,
+      "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+    },
+    "status": 0,
+    "stderr": "",
+    "stdout": "PASS complete independent binary source-site allocation and genuine controls; lexical extents do not predict original coordinates.\n"
+  },
+  "programmes": {
+    "docs/audits/coordinate-source-sites-20261008/verify.py": {
+      "bytes": 12275,
+      "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+    },
+    "docs/audits/coordinate-source-sites-checks-20261008/qualify_seal.py": {
+      "bytes": 5534,
+      "sha256": "881034ca97b7b5b241aebc314ea9ff7cb244c20779e28432b9f0c858bf91870a"
+    },
+    "docs/audits/coordinate-source-sites-checks-20261008/verify_sites.py": {
+      "bytes": 2499,
+      "sha256": "851808cda4ad0f25e5aed2ce9a863f7af0cb9aa627c6d63f282a7250cc322370"
+    }
+  },
+  "role": "Missing-seal default-reader repair only; original immutable bank, per-refusal composition and original coordinate selection remain unchanged."
+}

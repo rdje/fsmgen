@@ -1,0 +1,55 @@
+"""Recover the first qualifier exactly against its already retained instrument."""
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/coordinate-source-sites-checks-20261008')
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def main():
+    path = BASE / 'verify_publication.py'
+    current = path.read_text()
+    candidate = current.replace("'native-book-final': ['mdbook', 'build', 'docs/book', '--dest-dir', '.artifacts/coordinate-source-sites-sealed-book'],\n", "'native-book': ['mdbook', 'build', 'docs/book', '--dest-dir', '.artifacts/coordinate-source-sites-book'],")
+    candidate = candidate.replace("'current-native-final': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', '.artifacts/coordinate-source-sites-sealed-book'],\n        'seal-repair': ['python3', '-B', 'docs/audits/coordinate-source-sites-checks-20261008/qualify_seal.py'],\n        'published-reader': ['python3', '-B', 'docs/audits/coordinate-source-sites-checks-20261008/verify_sites.py'],", "'current-native': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', '.artifacts/coordinate-source-sites-book'],")
+    raw = candidate.encode()
+    expected = json.loads((BASE / 'checks.json').read_bytes())['publication-independent']['instruments'][str(path)]
+    # The initial reverse transform omitted one newline. Retain that first
+    # exact refusal, then use the pre-existing instrument identity as the oracle.
+    first = {'candidate_identity': pin(raw), 'expected': expected,
+             'status': 'refused', 'cause': 'first reverse source is one newline short of its actual instrument identity'}
+    if pin(raw) == expected:
+        raise ValueError('first reconstruction refusal must remain genuine')
+    # The staged index already retains the actual first programme. Consume its
+    # complete blob instead of trying to infer a lost byte from the digest.
+    result = subprocess.run(['git', '--no-replace-objects', 'show', ':' + str(path)], capture_output=True)
+    if result.returncode or result.stderr or pin(result.stdout) != expected:
+        retained = BASE / 'first-verify_publication.py.txt'
+        if not retained.is_file() or pin(retained.read_bytes()) != expected:
+            raise ValueError('exact first actual qualifier source required')
+        restored = retained.read_bytes()
+    else:
+        restored = result.stdout
+    (BASE / 'first-verify_publication.py.txt').write_bytes(restored)
+    binding = {'first_attempt': first, 'source': 'exact staged Git blob, retained for committed replay', 'restored_identity': pin(restored),
+               'first_publication': pin((BASE / 'first-publication.json').read_bytes()), 'sources': {}}
+    for logical, native in (
+        ('MEMORY.md', 'MEMORY.markdown.source.txt'),
+        ('docs/TASK_TREE.md', 'docs/TASK_TREE.markdown.source.txt'),
+        ('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md', 'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.markdown.source.txt'),
+    ):
+        source = Path('.artifacts/coordinate-source-sites-book/reference-source', native)
+        body = source.read_bytes()
+        output = BASE / ('first-' + Path(logical).name + '.txt')
+        output.write_bytes(body)
+        binding['sources'][logical] = {'retained': str(output), 'identity': pin(body), 'native_source': str(source)}
+    (BASE / 'first-publication-binding.json').write_text(json.dumps(binding, sort_keys=True, indent=2) + '\n')
+    print('PASS exact first staged qualifier source against actual instrument identity and complete first native continuity sources.')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,130 @@
+"""Independently check source publication, integer metrics and actual results."""
+import copy
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/coordinate-source-sites-checks-20261008')
+REVISION = '4ceb96fdc11317c77b3d18f5a5a163c12bfc58c4'
+CHAPTER = 'docs/book/src/90-reference-map.md'
+
+
+def need(condition, cause):
+    if not condition:
+        raise ValueError(cause)
+
+
+def equal(left, right):
+    return json.dumps(left, sort_keys=True) == json.dumps(right, sort_keys=True)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def native(*args):
+    result = subprocess.run(['git', '--no-replace-objects', *args], capture_output=True)
+    need(result.returncode == 0 and not result.stderr, 'whole native publication source result')
+    return result.stdout
+
+
+def counts(rows):
+    return {'files': len(rows), 'lines_total': sum(len(raw.splitlines(keepends=True)) for raw in rows),
+            'bytes_total': sum(len(raw) for raw in rows)}
+
+
+def expectation():
+    paths = native('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/book/src').decode().splitlines()
+    paths = sorted(path for path in paths if Path(path).parent == Path('docs/book/src') and path.endswith('.md'))
+    current_paths = sorted(path for path in native('ls-files', '-z', '--', 'docs/book/src').decode().split('\0')
+                           if Path(path).parent == Path('docs/book/src') and path.endswith('.md'))
+    need(current_paths == paths, 'whole independent book source membership')
+    before = [native('show', REVISION + ':' + path) for path in paths]
+    after = [Path(path).read_bytes() for path in paths]
+    need(all(not raw or raw.endswith(b'\n') for raw in before + after), 'whole book complete line endings')
+    need([path for path, old, new in zip(paths, before, after) if old != new] == [CHAPTER], 'unique independent chapter change')
+    old, new = before[paths.index(CHAPTER)], after[paths.index(CHAPTER)]
+    start = new.index(b'The source-site bank preserves')
+    end = new.index(b'<div id="knowledge-map-architecture">', start)
+    need(new[:start] + new[end:] == old, 'whole independently reversible source addition')
+    return {'revision': REVISION, 'source': CHAPTER, 'before': pin(old), 'after': pin(new),
+            'addition': new[start:end].decode(), 'book_before': counts(before), 'book_after': counts(after),
+            'owner': Path('docs/audits/coordinate-source-sites-20261008/scope.txt').read_text().strip(),
+            'previous_registry': pin(native('show', REVISION + ':doctrine/live_document_size/surfaces.jsonl'))}
+
+
+def check(actual, expected):
+    need(all(equal(actual[key], expected[key]) for key in ('revision', 'source', 'before', 'after', 'addition')),
+         'whole exact before/after source and addition')
+    need(equal(actual['book_before'], expected['book_before']) and equal(actual['book_after'], expected['book_after']),
+         'complete independent book integer metrics')
+    need(actual['owner'] == expected['owner'] and equal(actual['previous_registry'], expected['previous_registry']),
+         'exact source epoch and persistent owner')
+
+
+def receipt(row, command, name):
+    need(type(row['status']) is int and row['status'] == 0, 'typed actual successful receipt: ' + name)
+    need(row['command'] == ['scripts/run_with_ram_guard.sh', '--', *command],
+         'unchanged complete guarded actual command: ' + name)
+    need(all(equal(identity, pin(Path(path).read_bytes())) for path, identity in row['instruments'].items()),
+         'complete actual instrumentation identity: ' + name)
+
+
+def main():
+    actual = json.loads((BASE / 'publication.json').read_bytes())
+    expected = expectation()
+    check(actual, expected)
+    controls = (
+        ('borrowed-before', lambda p: p.update(before=p['after']), 'whole exact before/after source and addition'),
+        ('lost-addition', lambda p: p.update(addition=''), 'whole exact before/after source and addition'),
+        ('wrong-book-count', lambda p: p['book_after'].update(files=p['book_after']['files'] + 1), 'complete independent book integer metrics'),
+        ('Boolean-book-bytes', lambda p: p['book_after'].update(bytes_total=True), 'complete independent book integer metrics'),
+        ('borrowed-owner', lambda p: p.update(owner='borrowed'), 'exact source epoch and persistent owner'),
+    )
+    for name, change, cause in controls:
+        candidate = copy.deepcopy(actual)
+        change(candidate)
+        need(not equal(candidate, actual), 'genuine independent publication control')
+        try:
+            check(candidate, expected)
+        except ValueError as error:
+            need(str(error) == cause, 'intended independent publication refusal: ' + name)
+        else:
+            raise ValueError('false-green publication control: ' + name)
+    results = json.loads((BASE / 'checks.json').read_bytes())
+    model = 'docs/audits/coordinate-source-sites-20261008/model.py'
+    verifier = 'docs/audits/coordinate-source-sites-20261008/verify.py'
+    required = {
+        'source-admission-approved': ['python3', '-B', 'docs/audits/coordinate-source-admission-20261008/verify.py'],
+        'site-bank': ['python3', '-B', model],
+        'independent-controls': ['python3', '-B', verifier, '--record-controls'],
+        'sealed-bank': ['python3', '-B', model, '--seal'],
+        'sealed-independent': ['python3', '-B', verifier],
+        'focused': ['prove', '-Iperl', 't/1303-isf-public-live-book-paths-audit.t', 't/1305-isf-book-feature-matrix-audit.t'],
+        'native-book': ['mdbook', 'build', 'docs/book', '--dest-dir', '.artifacts/coordinate-source-sites-book'],
+        'current-native': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', '.artifacts/coordinate-source-sites-book'],
+    }
+    for name, command in required.items():
+        row = results[name]
+        receipt(row, command, name)
+    need(results['source-admission']['status'] == 2
+         and 'process-tree inspection is unavailable' in results['source-admission']['stderr'],
+         'first guard refusal remains explicit unsuccessful evidence')
+    for field, value, cause in (
+        ('status', False, 'typed actual successful receipt: focused'),
+        ('command', results['native-book']['command'], 'unchanged complete guarded actual command: focused'),
+    ):
+        candidate = copy.deepcopy(results['focused']); candidate[field] = value
+        need(not equal(candidate, results['focused']), 'genuine typed or borrowed actual result control')
+        try:
+            receipt(candidate, required['focused'], 'focused')
+        except ValueError as error:
+            need(str(error) == cause, 'intended typed or borrowed actual result refusal')
+        else:
+            raise ValueError('false-green typed or borrowed actual result control')
+    print('PASS complete independent source publication, integer metrics, genuine controls and typed actual guarded results.')
+
+
+if __name__ == '__main__':
+    main()

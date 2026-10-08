@@ -1,0 +1,26 @@
+{
+  "controls.json": {
+    "bytes": 4070,
+    "sha256": "ab570ba3f3c44e51b5ada69d5ca20803c1843718ffa340cb65b7e49ac31466ec"
+  },
+  "model.py": {
+    "bytes": 8249,
+    "sha256": "97ccc5142fdc17df91b40505434d64f6f63725c37d310539d27c559651d9807a"
+  },
+  "owners.json": {
+    "bytes": 517,
+    "sha256": "9c68c3fae47689a61113eb566dfc5628c5e18a16dba7ac3f62eff1130957d11d"
+  },
+  "scope.txt": {
+    "bytes": 113,
+    "sha256": "ca7378871f9bd412d938f0128b20a225edc167ca301490235774832f6b09dbbe"
+  },
+  "sites.json": {
+    "bytes": 1439362,
+    "sha256": "2b2fcd96b342400e1d02b48797bd0fff635d940c9c33d42695e2231582a54993"
+  },
+  "verify.py": {
+    "bytes": 12275,
+    "sha256": "67e6d4ee9f05ded1047482bc1705136f4dc3e1d218114fb4d18d1736ca7fbf1c"
+  }
+}

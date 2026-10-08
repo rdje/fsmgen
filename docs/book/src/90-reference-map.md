@@ -729,6 +729,19 @@ admission does not interpret original coordinates or execute original captures:
 python3 -B docs/audits/coordinate-source-admission-20261008/verify.py
 ```
 
+The source-site bank preserves each named owner, guard/call statement and
+observer, test and parser association with its complete source span. First and
+closing line labels remain distinct, including equivalent labels on one line.
+Invocation roots and observer generation stay tied to their admitted sources.
+Function and wrapper extents establish lexical ownership; they do not predict
+runtime call-site coordinates. Dated public recipes remain examples, while
+per-refusal statement/path composition and original-coordinate selection are
+separate pending steps. Read the saved source-only qualification with:
+
+```sh
+python3 -B docs/audits/coordinate-source-sites-checks-20261008/verify_sites.py
+```
+
 <div id="knowledge-map-architecture"></div>
 
 {{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}

@@ -1,0 +1,41 @@
+{
+  "addition": "The source-site bank preserves each named owner, guard/call statement and\nobserver, test and parser association with its complete source span. First and\nclosing line labels remain distinct, including equivalent labels on one line.\nInvocation roots and observer generation stay tied to their admitted sources.\nFunction and wrapper extents establish lexical ownership; they do not predict\nruntime call-site coordinates. Dated public recipes remain examples, while\nper-refusal statement/path composition and original-coordinate selection are\nseparate pending steps. Read the saved source-only qualification with:\n\n```sh\npython3 -B docs/audits/coordinate-source-sites-checks-20261008/verify_sites.py\n```\n\n",
+  "after": {
+    "bytes": 46527,
+    "sha256": "d5ebd222f4048e8823c622f42725390d552f5f7c76880a432c1d84d98b0361d0"
+  },
+  "before": {
+    "bytes": 45826,
+    "sha256": "dd6311575ca9784dd078ecf54db041dec09bb41f916b26cfb35294812f599693"
+  },
+  "book_after": {
+    "bytes_total": 3826772,
+    "files": 64,
+    "lines_total": 68810
+  },
+  "book_before": {
+    "bytes_total": 3826071,
+    "files": 64,
+    "lines_total": 68797
+  },
+  "legs": {
+    "durability": "Versioned source epoch, tracked programmes and complete publication/check receipts; registered maintained-reference and task pressure gates detect current drift.",
+    "falsify": "Unique chapter change and exact removal reconstruction reject borrowed source or unrelated book edits; source-site verify.py independently checks binary ownership and genuine controls.",
+    "rederive": "publish.py reconstructs complete fixed-Git book membership/bytes and current source delta."
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.1",
+  "previous_registry": {
+    "bytes": 36299,
+    "sha256": "0d9b1373971b2a8f4ea4ff3e08799faaf475ac23448f53d0503b45587c75eca5"
+  },
+  "revision": "4ceb96fdc11317c77b3d18f5a5a163c12bfc58c4",
+  "source": "docs/book/src/90-reference-map.md",
+  "task_metrics": {
+    "bytes_each": 2366453,
+    "bytes_total": 12806533,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 7159,
+    "lines_total": 118298
+  }
+}

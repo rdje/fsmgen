@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-10-08`
+- Last updated: `2026-10-09`
 - Owner: repo-local workflow
 
 ## Goal
@@ -5322,9 +5322,40 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Source-only admission and independent controls pass. Focused public-book checks, complete current/native copied-source publication and scripts/check_doctrines.sh reporting [doctrine] all doctrine checks passed gate this slice before successor activation. Original immutable inputs/observations, all target facts/questions and source/card/book capacities conserve.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Derive and independently qualify every per-refusal source-coordinate hypothesis.`
   Acceptance: `After .1 commits, compose every own guard/call/observer/test/parser source association with its complete lexical first/closing alternatives, legitimate invocation/source filename and generation custody, and the independently qualified public selection evidence. Preserve every equivalent label and unresolved original/private dependency with an exact downstream owner. Genuine role/source/owner/line/filename/root/alternative/identity controls must separate hypotheses from predecessor spans and public products. No original-coordinate intake or capture execution; source hypotheses remain conditional until .2.3.`
+  Verification: `Split before implementation: complete source-site recipe bank .1 precedes per-refusal statement/path composition .2. Neither child may interpret original coordinates or execute captures.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.1`
+  Status: `done`
+  Goal: `Qualify the complete source-site recipe bank and finite-public applicability boundary.`
+  Acceptance: `Bind the full committed admission at4ceb96fdc, original source/catalog/generation/invocations and complete finite-public recipes. Derive every named owner, guard/call and qualified observer/test/parser lexical association with exact binary spans, first/closing labels, legitimate source/load filenames and generation custody. Distinguish lexical extents from executable statements; no extent may become a call-site prediction. Preserve public equivalent labels as dated examples, original selection as null and all successor/private owners. Independently reconstruct full fixed source, associations and native custody; genuine role/source/owner/line/filename/root/alternative/promotion controls reject. Sync scoped book and commit before per-refusal path composition.`
+  Verification: `Whole committed4ceb admission source/public product authenticates and its unchanged independent reader passes. Complete site bank preserves every named, guard/call and qualified observer/test/parser span, exact source identities, containing named/subtest/file owners, first/closing and equivalent labels, legitimate filenames, all invocation roots and ordered observer generation. Independent original-Git binary source/transform/span/ownership reconstruction agrees; genuine role/owner/body/line/kind/filename/root/equivalence/extent-promotion/original-selection/gap controls reject. Immutable complete member seal replays through the required-seal successor in .1, which repairs and preserves the original missing-seal false green. First default-guard process-inspection refusal retains; approved unchanged guard resolves it without changing thresholds. Re-derive: model.py/sites.json; falsify: independent verify.py/controls.json; durability: complete sealed programmes/owners/products and fixed Git source epoch. Only lexical bank closes; per-refusal statement/path composition .2, whole source publication .3, original-coordinate intake and private/formatter/toolchain/address/visual/HIAL/full-CI/push remain owned. Scoped book delta, focused current/native copied-source and staged doctrine/normal-hook gates accompany commit.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Runtime call-site line selection' identifies source-catalog commit150517f0b41d129e29ad14f4ab36b5ce5bc2b8be. Its admitted spans and finite-public selections have separate scopes. A lexical function extent cannot predict a call-site coordinate; source-only bank/role/owner/alternative custody must precede per-refusal statement/path composition. Full command/result and template-update comparison retain in coordinate-source-sites-checks-20261008/root-cause.json.
+  - [x] **ADDRESSED (verified)** — Complete source-site bank and seal at coordinate-source-sites-20261008 retain all original source/generation/invocation associations with original selections null. Independent original-Git binary reconstruction and genuine owner/role/body/line/kind/filename/root/alternative/promotion controls pass; extents remain ownership evidence. Whole per-refusal composition is pending in the exact successor.
+  - [x] **NO REGRESSION** — Focused public/book checks report All tests successful; independent sealed bank and unchanged source admission pass under the default RAM limits. Scoped book/current/native copied-source and scripts/check_doctrines.sh reporting [doctrine] all doctrine checks passed gate this slice. All original coordinates, captures, source facts/questions and ceilings conserve.
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.1.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.1.1`
+  Status: `done`
+  Goal: `Require the seal in the published source-site reader.`
+  Acceptance: `The first sealed bank/qualifier accepts a copied product when its seal is missing because pre-seal setup remains available in the default reader. Preserve the complete original sealed bank and first publication/results unchanged. Reproduce actual missing-seal acceptance in an isolated same-volume copy, then publish a superseding reader that requires exact seal identity, full regular same-volume member bytes and the unchanged original independent qualification. Genuine missing-seal/member/borrowed-body/changed-seal/scope controls must refuse. Do not rewrite the original immutable corpus or weaken original source/private boundaries; synchronize the advertised book command and fresh native delivery before parent commit.`
+  Verification: `The original default qualifier actually returns success in a complete same-volume copied bank after removing only its seal. Full original programme and immutable corpus conserve. Superseding published verify_sites.py requires the exact original seal before and after unchanged independent qualification. Actual missing seal/member, borrowed body, changed seal and changed scope copies refuse their intended predicates; all copied fixtures are removed and full original member census remains identical. Complete first publication, exact first staged qualifier and task blobs, prior native Memory/task-index sources and all first results retain. Crash recovery preserves the interrupted recover_first.py and actual missing native task-copy failure; corrected retained-first-source replay reconstructs the original publication metrics and rejects missing/borrowed/invented-native task bindings. Final first-publication-binding.json and independent current publication consume the exact instrument/source/failure domains. A premature final consumer refused the still-in-flight current-native-final receipt; that failure retains separately and sequential final consumption gates handoff. Corrected published reader passes. Book now advertises the superseding sealed reader; fresh scoped publication/current/native/staged gates close parent. Per-refusal composition and original/private/formatter/toolchain/address/visual/HIAL/full-CI/push scopes remain unchanged.`
+  Commit: `parent source-site bank slice`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2`
+  Status: `pending`
+  Goal: `Compose and independently qualify complete per-refusal statement and call-path hypotheses.`
+  Acceptance: `After .1 commits, join every refusal to source-authored callback/subtest, guard and observer/test/parser call paths using previously qualified source cause/frame models and complete own statement bytes. Select statement-level first/closing and filename alternatives without interpreting original coordinates; keep every equivalent label, generation/invocation association and unresolved original/private dependency with its exact owner. Independent complete source/path allocation and genuine guard/caller/source/owner/line/filename/root/alternative/promotion controls qualify before whole source publication .3. No capture execution or original-coordinate intake.`
   Verification: `pending`
   Commit: `pending`
 

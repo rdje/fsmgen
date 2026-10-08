@@ -1,0 +1,53 @@
+"""Recover the first qualifier exactly against its already retained instrument."""
+import hashlib
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/coordinate-source-sites-checks-20261008')
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def main():
+    path = BASE / 'verify_publication.py'
+    current = path.read_text()
+    candidate = current.replace("'native-book-final': ['mdbook', 'build', 'docs/book', '--dest-dir', '.artifacts/coordinate-source-sites-sealed-book'],\n", "'native-book': ['mdbook', 'build', 'docs/book', '--dest-dir', '.artifacts/coordinate-source-sites-book'],")
+    candidate = candidate.replace("'current-native-final': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', '.artifacts/coordinate-source-sites-sealed-book'],\n        'seal-repair': ['python3', '-B', 'docs/audits/coordinate-source-sites-checks-20261008/qualify_seal.py'],\n        'published-reader': ['python3', '-B', 'docs/audits/coordinate-source-sites-checks-20261008/verify_sites.py'],", "'current-native': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', '.artifacts/coordinate-source-sites-book'],")
+    raw = candidate.encode()
+    expected = json.loads((BASE / 'checks.json').read_bytes())['publication-independent']['instruments'][str(path)]
+    # The initial reverse transform omitted one newline. Retain that first
+    # exact refusal, then use the pre-existing instrument identity as the oracle.
+    first = {'candidate_identity': pin(raw), 'expected': expected,
+             'status': 'refused', 'cause': 'first reverse source is one newline short of its actual instrument identity'}
+    if pin(raw) == expected:
+        raise ValueError('first reconstruction refusal must remain genuine')
+    matches = {}
+    for index, byte in enumerate(raw):
+        if byte == 10:
+            reconstructed = raw[:index] + b'\n' + raw[index:]
+            if pin(reconstructed) == expected:
+                matches[reconstructed] = index
+    if len(matches) != 1:
+        raise ValueError('unique exact first qualifier reconstruction required')
+    restored, index = next(iter(matches.items()))
+    (BASE / 'first-verify_publication.py.txt').write_bytes(restored)
+    binding = {'first_attempt': first, 'newline_offset': index, 'restored_identity': pin(restored),
+               'first_publication': pin((BASE / 'first-publication.json').read_bytes()), 'sources': {}}
+    for logical, native in (
+        ('MEMORY.md', 'MEMORY.markdown.source.txt'),
+        ('docs/TASK_TREE.md', 'docs/TASK_TREE.markdown.source.txt'),
+        ('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md', 'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.markdown.source.txt'),
+    ):
+        source = Path('.artifacts/coordinate-source-sites-book/reference-source', native)
+        body = source.read_bytes()
+        output = BASE / ('first-' + Path(logical).name + '.txt')
+        output.write_bytes(body)
+        binding['sources'][logical] = {'retained': str(output), 'identity': pin(body), 'native_source': str(source)}
+    (BASE / 'first-publication-binding.json').write_text(json.dumps(binding, sort_keys=True, indent=2) + '\n')
+    print('PASS unique exact first qualifier reconstruction against actual instrument identity and complete first native continuity sources.')
+
+
+if __name__ == '__main__':
+    main()

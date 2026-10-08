@@ -1,0 +1,128 @@
+[
+  {
+    "candidate_identity": {
+      "bytes": 1437896,
+      "sha256": "36fb4c67a6bd42c1600e54fd40805aa64eafc61700c621230c58e416d88fd16c"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "lost-site",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439356,
+      "sha256": "c08a6f99373f9855c41384f4868edb14fe0b50824400ef6e7960f37472970e40"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "wrong-role",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439340,
+      "sha256": "3873b975d0b922b66a7e387264bc0e98f778b3d25a1fe3cae3250892424febfe"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "wrong-owner",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439364,
+      "sha256": "07d29ddfceada04b0aa1796b0ca0721e1e345afa8b90fc043c92d1b58a3c42f3"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "Boolean-line",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439366,
+      "sha256": "56aedcaa17de31cf79f3c1b7c1492df8d4e309178ea54be38311312f0f3ab99c"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "wrong-closing",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1440171,
+      "sha256": "927dfd08654791add37277fc5286804b20582948f20f2fb10227eba3a16bc704"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "borrowed-body",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439332,
+      "sha256": "55c45ef693eff252bb7ee8ad512c88d45383b29285909100c8efb3f8a2dd1443"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "borrowed-filename",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439296,
+      "sha256": "3f8297bd47d4dc64d0413d60c9c6f3b379be8e9dfa1732441cb9d16050e809d6"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "lost-equivalent-label",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439361,
+      "sha256": "1f7d860e28c3e94f8c3e3fd6d970e30fc36a23d6ef2b46c01b250d365ee9cb48"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "extent-as-coordinate",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439303,
+      "sha256": "bdaca7629166fafcfe998dc68bafad5f650873b9c475f079bf23640a4435ced6"
+    },
+    "cause": "whole original invocation roots and commands",
+    "name": "foreign-root",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1438970,
+      "sha256": "533302712c7d1869a52b7e705a464513a13a9425b439d6db3da3a7a9016577f7"
+    },
+    "cause": "whole source and ordered generation custody",
+    "name": "changed-generation",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1436229,
+      "sha256": "827500bfdf147a7bb59c4cf875fa8f55255dc5099572edf50c3e7213eac72189"
+    },
+    "cause": "complete dated public labels and refusal examples",
+    "name": "lost-public-refusal",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439385,
+      "sha256": "e758edabae13cbfeb0185e58b779afded5b5070d775818b7fd87cfb1ec929a6d"
+    },
+    "cause": "whole independent source role/owner/span/line/filename/alternative allocation",
+    "name": "original-selection",
+    "status": "refused"
+  },
+  {
+    "candidate_identity": {
+      "bytes": 1439264,
+      "sha256": "7c6daab26e035bb6a781244f0022fd79b1f50506d034773ca5eee76af9a34d31"
+    },
+    "cause": "conditional scope and exact unresolved owners",
+    "name": "unowned-gap",
+    "status": "refused"
+  }
+]

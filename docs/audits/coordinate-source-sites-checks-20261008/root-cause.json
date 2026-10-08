@@ -1,0 +1,21 @@
+{
+  "cause": "The admitted catalog has lexical spans only. Finite public selections describe separate own fixtures. A complete source-site bank must keep extents, statements, filename alternatives and original selection apart before per-refusal composition.",
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "-S",
+    "Runtime call-site line selection",
+    "--format=%H %s",
+    "--",
+    "docs/audits/record-value-coordinate-source-catalog-20261007/verify.py"
+  ],
+  "policy_template_review": "The read-only PGEN template is byte-identical to the already reviewed docs/audits/claim-template-review-20260923/template.txt; no policy change is required.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "150517f0b41d129e29ad14f4ab36b5ce5bc2b8be SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1: qualify independent own coordinate source catalog\n",
+  "template_identity": {
+    "bytes": 18166,
+    "sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd"
+  }
+}

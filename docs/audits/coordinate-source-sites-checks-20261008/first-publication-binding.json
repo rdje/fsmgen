@@ -1,0 +1,72 @@
+{
+  "controls": [
+    {
+      "cause": "complete exact first continuity-source binding",
+      "name": "missing-task",
+      "status": "refused"
+    },
+    {
+      "cause": "complete exact first continuity-source binding",
+      "name": "borrowed-task",
+      "status": "refused"
+    },
+    {
+      "cause": "complete exact first continuity-source binding",
+      "name": "invented-native-task",
+      "status": "refused"
+    }
+  ],
+  "first_publication": {
+    "bytes": 2203,
+    "sha256": "663bd4393ec48539a9200f314600aa05df8a019b663df3ed50ba828a6df29f4a"
+  },
+  "first_reader": {
+    "identity": {
+      "bytes": 7029,
+      "sha256": "dfd2f25aa39493eb4b7e4e9cd816864ec82433fe8dc86ab4a6ed61bc93f6adf9"
+    },
+    "retained": "docs/audits/coordinate-source-sites-checks-20261008/first-verify_publication.py.txt"
+  },
+  "interrupted_programme": {
+    "identity": {
+      "bytes": 3686,
+      "sha256": "884b30b6eaf9f6af9e6e718d01a863475842ee6465eccf9d59fe2ae7434e4f9e"
+    },
+    "retained": "docs/audits/coordinate-source-sites-checks-20261008/interrupted-recover_first.py.txt"
+  },
+  "role": "Historical first publication only; current publication uses the superseding sealed reader.",
+  "sources": {
+    "MEMORY.md": {
+      "identity": {
+        "bytes": 1341,
+        "sha256": "935a7e4978d29272318c2e6040e6be11a441a7a780c225098f7f0d5afdd96502"
+      },
+      "origin": ".artifacts/coordinate-source-sites-book/reference-source/MEMORY.markdown.source.txt",
+      "retained": "docs/audits/coordinate-source-sites-checks-20261008/first-MEMORY.md.txt"
+    },
+    "docs/TASK_TREE.md": {
+      "identity": {
+        "bytes": 40106,
+        "sha256": "8bfb2a6ffc3f108daaa621b8ac13c96612c1b30da31ab039b2ab9cc92eece592"
+      },
+      "origin": ".artifacts/coordinate-source-sites-book/reference-source/docs/TASK_TREE.markdown.source.txt",
+      "retained": "docs/audits/coordinate-source-sites-checks-20261008/first-TASK_TREE.md.txt"
+    },
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md": {
+      "identity": {
+        "bytes": 1426379,
+        "sha256": "2c12586b094746f7297bfddcbd421f5bead5e9c1f208280291545705bd8a705f"
+      },
+      "origin": "first staged Git task blob; no native book-copy endpoint",
+      "retained": "docs/audits/coordinate-source-sites-checks-20261008/first-SEMANTIC-INTROSPECTION-MCP-FRONTIER.md.txt"
+    }
+  },
+  "task_metrics": {
+    "bytes_each": 2366453,
+    "bytes_total": 12803827,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 7150,
+    "lines_total": 118289
+  }
+}
