@@ -5046,11 +5046,11 @@ For FSMGen, the analogs are:
   Verification: `First full gate retains exact inventory drift and one open general-book candidate. The new scoped source-span claim receives distinct committed-source derivation, independent binary/control falsification and sealed source/native/actual durability legs. Second gate retains required canonical general-book group ownership and sorted-watcher diagnostics; declaration metadata is corrected without source/seal/predicate changes. Final inventory and staged/hooks qualify commit.`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1: qualify independent own coordinate source catalog`
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify public finite caller/eval/Carp line and filename recipes.`
   Acceptance: `Use pinned complete public contracts and independent own fixtures to select exact line and filename behavior for the source catalog, including multiline calls, eval/load, anonymous delegates and legitimate invocation roots. Retain whole public native commands/inputs/results and genuine wrong-caller/line/root/control decisions. Original toolchain/private/formatter identity remains unmeasured; no new original-coordinate intake.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Pre-native hypotheses and complete finite-public execution/publication children are done. Final declared-epoch route/reference/qualification and independent native object/source/result/Git-conservation evidence retain in coordinate-public-final-replay-20261008. Only finite public line/filename/caller/eval/Carp/subtest/origin recipes close; original source hypothesis composition is next. Original/private/formatter/toolchain/address/visual/HIAL/full-CI/push identities remain separately owned.`
+  Commit: `this slice`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2`
 
@@ -5071,11 +5071,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.1: bind public coordinate hypotheses before native capture`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Execute and qualify complete finite public coordinate recipes and native controls.`
   Acceptance: `After all pre-native hypotheses/programmes commit, execute every declared own fixture in legitimate same-volume invocation roots. Select exact current public line/filename behavior from independently declared competing hypotheses, conserve all command/source/status/streams/frame/error bytes, and separate genuine wrong-caller/line/root/borrowed controls from prior role meanings. Independently reconstruct whole saved results, source/profile/custody and native publication; missing original/private/formatter/toolchain identity stays explicit. Commit before .2.2.3 composition or any new original-coordinate intake.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Every owned child is done. Final unchanged dated route/reference/qualification and independent whole-source/result/conservation controls retain in coordinate-public-final-replay-20261008; current native source/question/publication and staged gates close only this finite-public contract. Original-source composition/intake and all original/private/formatter/toolchain/address/visual/HIAL/full-CI/push identities stay separately owned.`
+  Commit: `this slice`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3`
 
@@ -5110,11 +5110,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1: retain complete dated public coordinate fixture captures`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select public coordinate alternatives and qualify genuine native semantic controls.`
   Acceptance: `After .1 commits, compare all current public own call/boundary/origin coordinates against committed source alternatives. Preserve competing hypotheses and declare exact selected/equivalent cases; produce genuine native wrong-caller/line/root/borrowed-source captures and intended separating refusals. Retain every complete programme/source/wire and independently reconstruct all selections and control decisions. No original-coordinate intake or original/private/formatter identity promotion.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Every owned child is done. Final unchanged dated route/reference/qualification and independent whole-source/result/conservation controls retain in coordinate-public-final-replay-20261008; current native source/question/publication and staged gates close only this finite-public contract. Original-source composition/intake and all original/private/formatter/toolchain/address/visual/HIAL/full-CI/push identities stay separately owned.`
+  Commit: `this slice`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.4`
 
@@ -5234,11 +5234,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Publish qualified finite public recipes and close public-coordinate qualification.`
   Acceptance: `After .2 commits, authenticate the complete capture and semantic/native-control domains and actual independent results. Sync the full scoped mdBook/native guide and durable reader route, keep missing original/private/formatter/toolchain identity explicit, and close only the complete public finite recipe parent. Commit before whole original-source hypothesis composition .2.2.3 or any original-coordinate intake.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Every owned child is done. Final unchanged dated route/reference/qualification and independent whole-source/result/conservation controls retain in coordinate-public-final-replay-20261008; current native source/question/publication and staged gates close only this finite-public contract. Original-source composition/intake and all original/private/formatter/toolchain/address/visual/HIAL/full-CI/push identities stay separately owned.`
+  Commit: `this slice`
 
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.3`
@@ -5264,11 +5264,11 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Focused prove reports All tests successful; Files=3, Tests=310 in focused-final.json. Native source/rendered controls, maintained current replay, complete copied source factory, unchanged physical authority and full old public raw domain verify separately. Fresh staged acceptance/doctrines and normal hooks are required before successor activation; visual QA/HIAL/full CI/push remain open.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify final public recipe publication and close only the complete public-fixture parent.`
   Acceptance: `After .1/.2 commit, authenticate complete reference, Knowledge Map current-route and actual result domains, independently qualify whole source/question/native publication and genuine scope/route/identity controls, then close only the finished public children and parent. Preserve all original/public raw bytes, exact dated scopes and unresolved original/private/formatter/toolchain identities. Commit before whole original source hypothesis composition or any new original-coordinate intake.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Every owned child is done. Final unchanged dated route/reference/qualification and independent whole-source/result/conservation controls retain in coordinate-public-final-replay-20261008; current native source/question/publication and staged gates close only this finite-public contract. Original-source composition/intake and all original/private/formatter/toolchain/address/visual/HIAL/full-CI/push identities stay separately owned.`
+  Commit: `this slice`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.3.2`
 
@@ -5286,12 +5286,18 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Focused preparation and independent controls pass; scripts/check_doctrines.sh must report [doctrine] all doctrine checks passed for the fresh staged index and normal hooks before successor activation. Immutable public readers, original Git sources, existing scope/budgets and unresolved native/private identities conserve.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Consume dated and current publication domains and close the complete finite-public parent.`
   Acceptance: `After .1 commits, reconstruct the complete declared dependency population from the committed epoch with the qualified plain source fixture and read-only original objects. Execute the unchanged sealed .3.2 route reader and complete reference/prior actual readers, independently consume whole source/member/question/recipe/native scopes and genuine scope/route/identity controls. Retain every original byte and actual result; cleanup only the exactly owned replay fixture after verification. Separately qualify current canonical source/question/card/native publication and final staged gates, then close only finished public nodes. Whole original-source composition is next; original/private/formatter/toolchain/address/visual/HIAL/full-CI/push stay open.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Declared a284 source dependencies recover through the committed .3.3.1 transport, without whole-tree copying or another Git repository. Unchanged sealed route, complete public reference and whole qualification readers actually pass; all prior genuine native controls and original public/raw identities conserve. Independent immutable first-successful-scope admission plus native Git metadata and every object rederive whole before/after source bytes, Git modes, alias targets and volume membership. Original primary index/config/HEAD/packed refs/ref population conserve; exact disposable fixture cleanup and accepted read-only calls retain. Missing book-authority input is owned and explicitly added after the complete first refusal. Independent draft wrongly imposed host alias permissions0777; actual macOS rows0755 retain, old oracle failure reproduces with fresh instrumentation, and final Git-kind/target checks preserve typed host permissions as dated observations with genuine drift/Boolean controls. Object decoding follows all declared alias kinds, not first occurrence of a deduplicated blob. Whole typed/member/blob/reader/scope/primary/foreign-root/cleanup controls reject. Re-derivation: replay.py and attempt-4.json; falsification: unchanged saved controls and independent verify.py cases; durability: full source/transport/Git-object/member/command/result/cleanup records, retained earlier attempts and this commit. Fresh current source/question/card/native book and copied-source delivery, focused gates and staged doctrines/hooks finish only finite-public publication. Original-source composition is next; original/private/formatter/toolchain/address/visual/HIAL/full-CI/push stay open.`
+  Commit: `this slice`
 
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'complete non-target canonical bytes conserve' -- docs/audits/record-value-coordinate-public-route-20261008/verify.py identifies a2840582fc1722c29da808713d6f3c06bd42cd78 and its deliberately dated canonical-source predicate. The saved complete route requires its declared epoch, while the maintained current reader admits owned unrelated fact progress. First missing-input and host-permission oracle refusals retain and reproduce; neither indicates repository damage.
+  - [x] **ADDRESSED (verified)** — Unchanged dated route/reference/qualification run from the explicit same-volume source fixture. verify.py independently reconstructs every source blob/mode/alias and checks complete actual typed results, primary-Git/source conservation and cleanup; genuine omission/status/scope/foreign-root/alias-observation controls refuse. Complete reference/source/result programmes and native receipts retain in coordinate-public-final-replay-20261008.
+  - [x] **NO REGRESSION** — Fresh focused public-book checks, native copied-source verification, current complete publication and scripts/check_doctrines.sh reporting [doctrine] all doctrine checks passed are required before successor activation. All immutable source/raw domains, target questions/current routes, capacity contracts and original/HIAL/visual/full-CI/push boundaries conserve.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3`
   Status: `pending`

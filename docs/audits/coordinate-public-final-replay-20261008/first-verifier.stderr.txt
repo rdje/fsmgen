@@ -1,0 +1,16 @@
+ram-guard: PID 61352; host 49.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-final-replay-20261008/verify.py", line 156, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-final-replay-20261008/verify.py", line 127, in main
+    expected = expectation(); check(proof, expected)
+                              ~~~~~^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-final-replay-20261008/verify.py", line 102, in check
+    need(same(proof['recovered_before'], recovered) and same(proof['recovered_after'], recovered),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'whole source bytes modes aliases and same-volume conservation')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-final-replay-20261008/verify.py", line 23, in need
+    raise ValueError(cause)
+ValueError: whole source bytes modes aliases and same-volume conservation

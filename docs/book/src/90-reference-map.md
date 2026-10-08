@@ -710,10 +710,13 @@ source epoch. Fixture recovery declares exact input files or dependency namespac
 it does not copy the whole historical tree or create another Git repository.
 The preparation check qualifies regular and executable sources, a published book
 alias, same-volume recovery, a private alternative index and read-only original
-object access. Full dated publication replay remains a separate obligation:
+object access. The unchanged dated public route, complete reference and qualification
+now pass with only declared dependencies. Independently check the full source/result
+evidence and retained controls:
 
 ```sh
 python3 -B docs/audits/coordinate-public-final-preparation-20261008/verify.py
+python3 -B docs/audits/coordinate-public-final-replay-20261008/verify.py
 ```
 
 <div id="knowledge-map-architecture"></div>
