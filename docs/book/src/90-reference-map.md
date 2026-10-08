@@ -705,6 +705,17 @@ advancing HEAD, special path bytes and shared aggregate limits. Installed index,
 committed-tree, catalog and control integration is qualified; original-coordinate,
 HIAL, visual, full CI and push gates remain open.
 
+Saved checks that deliberately freeze canonical sources require their committed
+source epoch. Fixture recovery declares exact input files or dependency namespaces;
+it does not copy the whole historical tree or create another Git repository.
+The preparation check qualifies regular and executable sources, a published book
+alias, same-volume recovery, a private alternative index and read-only original
+object access. Full dated publication replay remains a separate obligation:
+
+```sh
+python3 -B docs/audits/coordinate-public-final-preparation-20261008/verify.py
+```
+
 <div id="knowledge-map-architecture"></div>
 
 {{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}

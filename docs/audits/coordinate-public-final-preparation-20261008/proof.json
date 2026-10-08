@@ -1,0 +1,296 @@
+{
+  "accepted_calls": "{\"arguments\": [\"rev-parse\", \"HEAD\"], \"operation\": \"rev-parse\"}\n{\"arguments\": [\"show\", \"a2840582fc1722c29da808713d6f3c06bd42cd78:README_POLICY.md\"], \"operation\": \"show\"}\n{\"arguments\": [\"ls-files\", \"--stage\", \"-z\", \"--\", \"README_POLICY.md\", \"docs/book/src/reference-source/README_POLICY.markdown.source.txt\", \"scripts/check_docs_relative_paths.sh\"], \"operation\": \"ls-files\"}\n{\"arguments\": [\"-C\", \"docs/book\", \"rev-parse\", \"--show-toplevel\"], \"operation\": \"rev-parse\"}\n{\"arguments\": [\"check-ignore\", \"--no-index\", \"--stdin\"], \"operation\": \"check-ignore\"}\n",
+  "controls": [
+    {
+      "actual": {
+        "arguments": [
+          "git",
+          "add",
+          "README_POLICY.md"
+        ],
+        "status": 2,
+        "stderr": "readonly epoch replay: Git command refused: add\n",
+        "stdout": ""
+      },
+      "name": "refused-add-README_POLICY.md"
+    },
+    {
+      "actual": {
+        "arguments": [
+          "git",
+          "read-tree",
+          "HEAD"
+        ],
+        "status": 2,
+        "stderr": "readonly epoch replay: Git command refused: read-tree\n",
+        "stdout": ""
+      },
+      "name": "refused-read-tree-HEAD"
+    },
+    {
+      "actual": {
+        "arguments": [
+          "git",
+          "hash-object",
+          "-w",
+          "README_POLICY.md"
+        ],
+        "status": 2,
+        "stderr": "readonly epoch replay: Git command refused: hash-object\n",
+        "stdout": ""
+      },
+      "name": "refused-hash-object--w-README_POLICY.md"
+    },
+    {
+      "actual": {
+        "arguments": [
+          "git",
+          "archive",
+          "-oowned.tar",
+          "HEAD"
+        ],
+        "status": 2,
+        "stderr": "readonly epoch replay: Git command refused: archive\n",
+        "stdout": ""
+      },
+      "name": "refused-archive--oowned.tar-HEAD"
+    },
+    {
+      "actual": {
+        "arguments": [
+          "git",
+          "-c",
+          "alias.unowned=!touch unowned",
+          "unowned"
+        ],
+        "status": 2,
+        "stderr": "readonly epoch replay: Git command refused: -c\n",
+        "stdout": ""
+      },
+      "name": "refused--c-alias.unowned=!touch unowned-unowned"
+    },
+    {
+      "actual": {
+        "arguments": [
+          "git",
+          "-C",
+          "..",
+          "rev-parse",
+          "HEAD"
+        ],
+        "status": 2,
+        "stderr": "readonly epoch replay: foreign Git working root\n",
+        "stdout": ""
+      },
+      "name": "foreign-working-root"
+    },
+    {
+      "cause": "contained canonical source path",
+      "name": "root-wildcard"
+    },
+    {
+      "cause": "explicit nonempty unique recovery scope",
+      "name": "missing-scope"
+    },
+    {
+      "cause": "explicit nonempty unique recovery scope",
+      "name": "duplicate-scope"
+    },
+    {
+      "cause": "contained canonical source path",
+      "name": "path-escape"
+    },
+    {
+      "cause": "contained canonical source path",
+      "name": "absolute-path"
+    },
+    {
+      "cause": "contained canonical source path",
+      "name": "metadata-path"
+    },
+    {
+      "cause": "contained canonical source path",
+      "name": "alias-escape"
+    },
+    {
+      "cause": "archive source membership",
+      "name": "member-loss"
+    },
+    {
+      "cause": "whole source blob identity",
+      "name": "blob-substitution"
+    },
+    {
+      "cause": "fresh plain fixture metadata directory",
+      "name": "fixture-metadata-alias"
+    }
+  ],
+  "metadata_base64": "MTAwNjQ0IGJsb2IgYWIwMmU1OWY2MmIzY2I0ZmJhMWEyMjY4YzkwNGRhYzE1YTgwMGMyNwlSRUFETUVfUE9MSUNZLm1kADEyMDAwMCBibG9iIDc5ZDgxMGViMjRiOGI4ZjgxMTMxMGJjYTE3ZWY2MjFjYzk0ZTg3NWEJZG9jcy9ib29rL3NyYy9yZWZlcmVuY2Utc291cmNlL1JFQURNRV9QT0xJQ1kubWFya2Rvd24uc291cmNlLnR4dAAxMDA3NTUgYmxvYiA5OTllMDk3M2U4ZWY1MzA5MTAyYjRjY2FmNmY2ZDU0MGM5MTljMjQyCXNjcmlwdHMvY2hlY2tfZG9jc19yZWxhdGl2ZV9wYXRocy5zaAA=",
+  "names": [
+    "README_POLICY.md",
+    "docs/book/src/reference-source/README_POLICY.markdown.source.txt",
+    "scripts/check_docs_relative_paths.sh"
+  ],
+  "objects": {
+    "79d810eb24b8b8f811310bca17ef621cc94e875a": "Li4vLi4vLi4vLi4vUkVBRE1FX1BPTElDWS5tZA==",
+    "999e0973e8ef5309102b4ccaf6f6d540c919c242": "IyEvdXNyL2Jpbi9lbnYgYmFzaAojCiMgY2hlY2tfZG9jc19yZWxhdGl2ZV9wYXRocy5zaCAtIGRvY3RyaW5lIGNoZWNrIGZvciByZXBvLXJvb3QtcmVsYXRpdmUgbGl2ZS1kb2MKIyBwYXRocy4gVGhlIHVuZGVybHlpbmcgYXVkaXQgaXMgYSBQZXJsIHJlZ3Jlc3Npb24gdGVzdCBiZWNhdXNlIGl0IGFscmVhZHkgb3ducwojIHRoZSBleGFjdCBwYXRoIHBvbGljeSBhbmQgdmlvbGF0aW9uIGRpYWdub3N0aWNzLgpzZXQgLWV1byBwaXBlZmFpbAoKUk9PVF9ESVI9IiQoY2QgIiQoZGlybmFtZSAiJHtCQVNIX1NPVVJDRVswXX0iKS8uLiIgJiYgcHdkKSIKY2QgIiR7Uk9PVF9ESVJ9IgoKZW52IC11IFBFUkw1TElCIHByb3ZlIC1JcGVybCB0LzE0MTQtZG9jcy1yZWxhdGl2ZS1wYXRocy1hdWRpdC50Cg==",
+    "ab02e59f62b3cb4fba1a2268c904dac15a800c27": "PCEtLSBSRUFETUUtUE9MSUNZLUxPQ0FMLUFET1BUSU9OOkJFR0lOIC0tPgojIyBMb2NhbCBhZG9wdGlvbiBub3RlIOKAlCBGU01HZW4KCi0gQXV0aG9yaXR5OiBGU01HZW4gbWFpbnRhaW5lcnMsIGFkb3B0ZWQgMjAyNi0wNy0zMCB1bmRlciBkZWNpc2lvbiAwMDI0IGFuZAogIHJlZmluZWQgMjAyNi0wNy0zMSB1bmRlciBkZWNpc2lvbnMgMDAzOCwgMDA0MCwgYW5kIDAwNDEuCi0gQXV0aG9yaXRhdGl2ZSBjb3B5OiByZXBvc2l0b3J5LXJvb3QgYFJFQURNRV9QT0xJQ1kubWRgLiBBZ2VudC9oYXJuZXNzCiAgYm9vdHN0cmFwIGZpbGVzIG1heSBwb2ludCBoZXJlLCBidXQgdGhleSBhcmUgbm90IHRoZSBwb2xpY3kncyBhdXRob3JpdHkuCi0gSW5kZXBlbmRlbmNlOiB0aGUgb3JpZ2luYXRpbmcgdGVtcGxhdGUgaXMgbm90IGFuIHVwc3RyZWFtLiBUaGVyZSBpcyBubwogIGF1dG9tYXRpYyBzeW5jaHJvbml6YXRpb247IGxhdGVyIGNoYW5nZXMgcmVxdWlyZSBkZWxpYmVyYXRlIGxvY2FsIHJldmlldy4KLSBSZXZpZXdlZCBoZWFsdGggdGFyZ2V0czogMjc1IGxpbmVzIGFuZCAxMiwyODggYnl0ZXMuIFRoZSBpbmNsdXNpdmUKICBlbmZvcmNlbWVudCBjZWlsaW5ncyBiZWdhbiBhdCB0aGUgMjQ2LWxpbmUgLyA5LDk1Mi1ieXRlIGFkb3B0aW9uIGJhc2VsaW5lCiAgYW5kIHJhdGNoZXQgZG93bndhcmQgYXMgdGhlIGxhbmRpbmcgcGFnZSBzaHJpbmtzOyB0aGVpciBjdXJyZW50IHZhbHVlcyBhcmUKICBkZXJpdmVkIGZyb20gYGRvY3RyaW5lL2xpdmVfZG9jdW1lbnRfc2l6ZS9zdXJmYWNlcy5qc29ubGAuIERlY2lzaW9uIDAwNDQgYW5kCiAgY29udGFpbm1lbnQgbGVhZiBgLjE4YCBkaXN0aW5ndWlzaCBoZWFsdGggZnJvbSBxdWFyYW50aW5lIHdpdGhvdXQgd2lkZW5pbmcKICBlaXRoZXIgYXhpcy4KLSBSb3V0ZWQgZGVzdGluYXRpb25zOiB0aGUgcHJvamVjdC1vd25lZCBkYXRhLW9ubHkgcmVnaXN0cnkgYXQKICBgZG9jdHJpbmUvcmVhZG1lX2VudHJ5cG9pbnQvcm91dGVkX2Rlc3RpbmF0aW9ucy5qc29ubGAgbWFwcyBldmVyeSBsb2NhbAogIFJFQURNRSByb3V0ZSBpbnRvIHRoZSBwcm9qZWN0LXdpZGUgc3VyZmFjZXMgZGVjbGFyZWQgYnkKICBgZG9jdHJpbmUvbGl2ZV9kb2N1bWVudF9zaXplL3N1cmZhY2VzLmpzb25sYC4gVGhlIGNvbW1vbiBjaGVja2VyIG93bnMgdGhlaXIKICBsaWZlY3ljbGUgYW5kIHByZXNzdXJlIHNlbWFudGljcy4KLSBMYW5kaW5nLXBhZ2UgaWRlbnRpdHk6IHRvcC1sZXZlbCBgUkVBRE1FLm1kYCBpcyB0aGUgcmVuZGVyZWQgR2l0SHViIHByb2plY3QKICBsYW5kaW5nIHBhZ2UsIHNvIGl0cyBwdXJwb3NlLCBtaW5pbWFsIGZpcnN0LXVzZSBwYXRoLCBhcmNoaXRlY3R1cmUgc3VtbWFyeSwKICBhbmQgY2Fub25pY2FsIG5hdmlnYXRpb24gcmVtYWluIGRpcmVjdGx5IHZpc2libGUgdGhlcmUuIENvbnRhaW5tZW50IHJvdXRlcwogIGNoYW5naW5nIGRldGFpbCBhbmQgY2hyb25vbG9neTsgaXQgZG9lcyBub3Qgb2ZmLWxvYWQgdGhlIGxhbmRpbmcgZnVuY3Rpb24uCjwhLS0gUkVBRE1FLVBPTElDWS1MT0NBTC1BRE9QVElPTjpFTkQgLS0+CgotLS0KCiMgUkVBRE1FIFN0YWJpbGl0eSBQb2xpY3kKClRoaXMgcHJvamVjdC0gYW5kIGhhcm5lc3MtbmV1dHJhbCBwb2xpY3kga2VlcHMgYSByZXBvc2l0b3J5IFJFQURNRSB1c2VmdWwgYXMgYQpzdGFibGUgbGFuZGluZyBwYWdlIGluc3RlYWQgb2YgbGV0dGluZyBpdCBncm93IGludG8gYSBjaGFuZ2Vsb2csIHJvYWRtYXAsIG9yCmRvY3VtZW50YXRpb24gY2F0YWxvZy4KCiMjIEF1dGhvcml0eSBhbmQgcHJvdmVuYW5jZQoKQWZ0ZXIgYWRvcHRpb24sIHRoZSBwcm9qZWN0IG93bnMgdGhpcyBwb2xpY3kuIENpdGUgaXRzIGF1dGhvcml0eSBieSBwcm9qZWN0Cm93bmVyIGFuZCBhZG9wdGlvbiBvciByZXZpc2lvbiBkYXRlLCB0b2dldGhlciB3aXRoIHRoZSBwcm9qZWN0LW93bmVkCmA8cmVwb3NpdG9yeS1yb290Pi9SRUFETUVfUE9MSUNZLm1kYC4gTmV2ZXIgY2l0ZSBhIHZlbmRvci0sIGFnZW50LSwgb3IKaGFybmVzcy1zcGVjaWZpYyBib290c3RyYXAgZmlsZSBhcyB0aGUgYXV0aG9yaXR5LiBCb290c3RyYXAgZmlsZXMgbWF5IGhlbHAKYXV0aG9ycyBhbmQgdG9vbHMgZGlzY292ZXIgdGhlIHBvbGljeTsgdGhleSBkbyBub3QgbWFrZSB0aGUgcG9saWN5IGJpbmRpbmcuCgojIyBTdG9yYWdlIGxvY2F0aW9uCgpTdG9yZSB0aGUgYWRvcHRpbmcgcHJvamVjdCdzIGNhbm9uaWNhbCBjb3B5IGFzIHRoZSBnaXQtdHJhY2tlZApgPHJlcG9zaXRvcnktcm9vdD4vUkVBRE1FX1BPTElDWS5tZGAsIGFsb25nc2lkZSBgUkVBRE1FLm1kYC4gS2VlcGluZyB0aGUgcG9saWN5CndpdGggdGhlIGZpbGUgaXQgZ292ZXJucyBnaXZlcyBjb250cmlidXRvcnMsIGxvY2FsIGhvb2tzLCBhbmQgQ0kgb25lCmRpc2NvdmVyYWJsZSwgdmVyc2lvbmVkIHNvdXJjZSBvZiB0cnV0aC4gQSB1c2VyLWhvbWUsIG1hY2hpbmUtZ2xvYmFsLCBvciBvdGhlcgpleHRlcm5hbCBjb3B5IG1heSBzZXJ2ZSBhcyBhIHJldXNhYmxlIHRlbXBsYXRlLCBidXQgaXQgbXVzdCBub3QgcmVwbGFjZSB0aGUKcHJvamVjdC1vd25lZCByZXBvc2l0b3J5IGNvcHkuIE9uY2UgY29waWVkLCB0aGUgcHJvamVjdC1vd25lZCBmaWxlIGlzCmF1dGhvcml0YXRpdmUgYW5kIHRoZSBvcmlnaW4gaXMgbm90IGFuIHVwc3RyZWFtLiBEbyBub3QgYXV0b21hdGljYWxseSByZS1zeW5jCmZyb20gdGhlIG9yaWdpbjsgYWRvcHQgbGF0ZXIgcmV2aXNpb25zIG9ubHkgdGhyb3VnaCBkZWxpYmVyYXRlIGxvY2FsIHJldmlldy4KCktlZXAgcHJvamVjdC1zcGVjaWZpYyBhZG9wdGlvbiBtZXRhZGF0YeKAlG93bmVyLCBkYXRlLCBkZWNpc2lvbnMsIGRlcml2ZWQgY2FwcywKYW5kIGxvY2FsIGVuZm9yY2VtZW50IGxpbmtz4oCUaW4gYSBjbGVhcmx5IGZlbmNlZCBhZG9wdGlvbiBub3RlIGFib3ZlIHRoZQpuZXV0cmFsIHBvbGljeSBib2R5LiBUaGlzIGtlZXBzIHRoZSByZXVzYWJsZSBib2R5IGZyZWUgb2YgcHJvamVjdC1zcGVjaWZpYyBhbmQKaGFybmVzcy12ZW5kb3Itc3BlY2lmaWMgdG9rZW5zIHdpdGhvdXQgaGlkaW5nIGxvY2FsIGF1dGhvcml0eS4KCiMjIENvbnRlbnQgY29udHJhY3QKCktlZXAgb25seSBpbmZvcm1hdGlvbiBhIGZpcnN0LXRpbWUgdmlzaXRvciBuZWVkczoKCi0gcHVycG9zZSwgYXVkaWVuY2UsIGFuZCB0b3AtbGV2ZWwgc2NvcGU7Ci0gcHJlcmVxdWlzaXRlcyBhbmQgb25lIG1pbmltYWwgdmVyaWZpZWQgcXVpY2sgc3RhcnQ7Ci0gc3RhYmxlIGFyY2hpdGVjdHVyZSBhdCBhIGdsYW5jZTsKLSBsaW5rcyB0byBjYW5vbmljYWwgZG9jdW1lbnRhdGlvbiwgc3VwcG9ydCwgYW5kIGNvbnRyaWJ1dGlvbiBndWlkYW5jZTsKLSBsaWNlbnNlIGFuZCBvdGhlciBlc3NlbnRpYWwgcmVwb3NpdG9yeS1sZXZlbCBub3RpY2VzLgoKUm91dGUgY2hhbmdpbmcgZGV0YWlsIGVsc2V3aGVyZToKCnwgQ29udGVudCB8IENhbm9uaWNhbCBob21lIHwKfCAtLS0gfCAtLS0gfAp8IFVzZXItZmFjaW5nIGZlYXR1cmUgZGV0YWlsIGFuZCBleGFtcGxlcyB8IFVzZXIgZ3VpZGUgb3IgcHJvZHVjdCBtYW51YWwgfAp8IEN1cnJlbnQgd29yaywgcHJpb3JpdGllcywgYW5kIHJvYWRtYXAgc3RhdHVzIHwgUm9hZG1hcCwgaXNzdWUgdHJhY2tlciwgb3IgdGFzayBzeXN0ZW0gfAp8IFJlbGVhc2UgaGlzdG9yeSB8IFJlbGVhc2VzLCBjaGFuZ2Vsb2csIG9yIGdpdCBoaXN0b3J5IHwKfCBEZXNpZ24gcmF0aW9uYWxlIHwgRGVjaXNpb24gcmVjb3JkcyBvciBhcmNoaXRlY3R1cmUgZG9jcyB8CnwgRXhoYXVzdGl2ZSBmaWxlL0FQSS9zYW1wbGUgaW52ZW50b3JpZXMgfCBHZW5lcmF0ZWQgaW5kZXhlcyBvciBkZWRpY2F0ZWQgcmVmZXJlbmNlcyB8CnwgRGlhZ25vc3RpY3MgYW5kIG9wZXJhdGlvbmFsIHByb2NlZHVyZXMgfCBUcm91Ymxlc2hvb3Rpbmcgb3IgY29udHJpYnV0b3IgZG9jcyB8CgpDaGFuZ2UgdGhlIFJFQURNRSBvbmx5IHdoZW4gaXRzIHB1cnBvc2UsIGZpcnN0LXVzZSBwYXRoLCB0b3AtbGV2ZWwgYXJjaGl0ZWN0dXJlLApvciBjYW5vbmljYWwgbmF2aWdhdGlvbiBjaGFuZ2VzLiBPcmRpbmFyeSBmZWF0dXJlIHdvcmsgc2hvdWxkIHVwZGF0ZSB0aGUKY2Fub25pY2FsIGRlc3RpbmF0aW9uLCBub3QgdGhlIFJFQURNRS4KCkJlZm9yZSBkZWxldGluZyBvciByZWxvY2F0aW5nIGFwcGFyZW50IGR1cGxpY2F0aW9uLCBwcm92ZSB0aGF0IGl0IGlzIGdlbnVpbmVseQpkdXBsaWNhdGVkIHdpdGggYSBwaHJhc2UsIGlkZW50aXR5LCBvciBjb250ZW50IHByb2JlIGFnYWluc3QgdGhlIGludGVuZGVkCmNhbm9uaWNhbCBob21lLiBJZiB0aGF0IGhvbWUgaXMgYWxyZWFkeSByaWNoZXIgYW5kIG1haW50YWluZWQsIGRlbGV0ZSB0aGUKUkVBRE1FIGNvcHkgYW5kIHJldGFpbiBvbmUgbGluay4gUmVsb2NhdGUgb25seSBpbmZvcm1hdGlvbiB0aGF0IGlzIHVuaXF1ZSBhbmQKc3RpbGwgYmVsb25ncyBpbiBtYWludGFpbmVkIGRvY3VtZW50YXRpb24uCgojIyBSb3V0aW5nIHByZXNzdXJlIGNsb3N1cmUKCk1vdmluZyBjb250ZW50IG91dCBvZiB0aGUgUkVBRE1FIGlzIG5vdCBzdWZmaWNpZW50IGlmIHRoZSBkZXN0aW5hdGlvbiBjYW4KYmVjb21lIGFuIHVuYm91bmRlZCBuZWlnaGJvcmluZyBzaW5rLiBJbnZlbnRvcnkgZXZlcnkgZGVzdGluYXRpb24gbmFtZWQgYnkgdGhlClJFQURNRSwgdGhpcyBwb2xpY3ksIG9yIHRoZSBndWFyZCdzIGZhaWx1cmUgZ3VpZGFuY2UuIEdpdmUgZWFjaCByb3V0ZSBhbiBvd25lciwKbGlmZWN5Y2xlIGNsYXNzLCBhbmQgcHJlc3N1cmUgY29udHJvbCwgYW5kIGZvbGxvdyByb3V0ZXMgdHJhbnNpdGl2ZWx5IHVudGlsCnRoZXkgZW5kIGF0IGEgY29udHJvbGxlZCB0ZXJtaW5hbC4gQW4gdW5jbGFzc2lmaWVkIGRlc3RpbmF0aW9uLCByb3V0aW5nIGN5Y2xlLApvciBjaGFpbiB0aGF0IG1lcmVseSBtb3ZlcyB0aGUgc2FtZSBhcHBlbmQgcHJlc3N1cmUgYWdhaW4gaXMgYSBmYWlsZWQgYWRvcHRpb24uCgpDbGFzc2lmeSByb3V0ZXMgYXMgYHJlYWRlcl9uYXZpZ2F0aW9uYCBvciBgYXV0aG9yX292ZXJmbG93YC4gVGhlIHNldHMgbWF5CmxlZ2l0aW1hdGVseSBkaWZmZXI6IHJlYWRlcnMgbWF5IGluc3BlY3QgaW1tdXRhYmxlIGNoYW5nZSBoaXN0b3J5LCB3aGlsZQphdXRob3JzIG11c3Qgbm90IGJlIHRvbGQgdG8gYXBwZW5kIG5ldyBzdGF0dXMgcHJvc2UgdGhlcmUuIERlcml2ZSBvdmVyZmxvdwpjYW5kaWRhdGVzIGZyb20gcGF0aC1zaGFwZWQgZGVzdGluYXRpb25zIGluIHRoZSBndWFyZCdzIGFjdHVhbCBlbWl0dGVkCmd1aWRhbmNlLCBub3Qgb25seSBmcm9tIGEgaGFuZC1tYWludGFpbmVkIHRhYmxlLCBhbmQgZmFpbCB3aGVuIGFuIGVtaXR0ZWQgaGludApoYXMgbm8gZ292ZXJuZWQgZGVzdGluYXRpb24uCgpVc2UgY29udHJvbHMgYXBwcm9wcmlhdGUgdG8gdGhlIGRlc3RpbmF0aW9uOgoKfCBEZXN0aW5hdGlvbiBjbGFzcyB8IFJlcXVpcmVkIHByZXNzdXJlIGNvbnRyb2wgfAp8IC0tLSB8IC0tLSB8CnwgSG90L2xpdmUgZmlsZSB8IERlcml2ZWQgbGluZSBhbmQgYnl0ZSBjZWlsaW5ncyBwbHVzIG92ZXJ3cml0ZSwgcmV2aWV3LCBvciBzdGFsZW5lc3Mgc2VtYW50aWNzIHwKfCBQYXJ0aXRpb25lZCBtYW51YWwgb3IgdGFzayBjb2xsZWN0aW9uIHwgQm91bmRlZCBpbmRleCBwbHVzIHBlci1wYXJ0LCBmaWxlLWNvdW50LCBhbmQgYWdncmVnYXRlIGNlaWxpbmdzIHwKfCBHZW5lcmF0ZWQgaW5kZXggfCBTaXplIGNlaWxpbmdzIHBsdXMgYSByZXByb2R1Y2libGUgZnJlc2huZXNzIGNoZWNrIGFnYWluc3QgY2Fub25pY2FsIHNvdXJjZXMgfAp8IEFwcGVuZC1vbmx5IGhpc3RvcnkgfCBRdWVyeS1maXJzdCBhY2Nlc3MgcGx1cyBhIHNoYXJkLCByb3RhdGlvbiwgb3IgYXJjaGl2YWwgdGhyZXNob2xkOyBuZXZlciBhIG1hbmRhdG9yeSBib290c3RyYXAgcmVhZCB8CnwgRXh0ZXJuYWwgc2VydmljZSB8IE5hbWVkIGF1dGhvcml0eSwgcmV0ZW50aW9uL2xpZmVjeWNsZSBvd25lciwgYW5kIGEgc3RhYmxlIHF1ZXJ5L2xpbmsgY29udHJhY3QgfAp8IEZyb3plbiBsZWdhY3kgcmVjb3JkIHwgQ29udGVudCBpZGVudGl0eSBvciBhbm90aGVyIHdyaXRlIHByb2hpYml0aW9uOyBuZXZlciBhbiBvdmVyZmxvdyBkZXN0aW5hdGlvbiB8CgpBIGxlZ2FjeSBkZXN0aW5hdGlvbiB0aGF0IGlzIGFscmVhZHkgdG9vIGxhcmdlIGlzIG5vdCBleGVtcHQuIFJlY29yZCBpdHMKY3VycmVudCBtZWFzdXJlZCBjZWlsaW5nIGFzIGRlYnQsIHN0b3AgZnVydGhlciBncm93dGggdGhlcmUsIGFuZCBvcGVuIGEKc2VwYXJhdGVseSBvd25lZCBwYXJ0aXRpb24vY29tcGFjdGlvbiB0YXNrLiBEbyBub3QgZGVzY3JpYmUgYSBtZWFzdXJlZCBsZWdhY3kKY2VpbGluZyBhcyBhbiBpZGVhbCByZXVzYWJsZSBkZWZhdWx0LiBSYWlzaW5nIGFueSBkZXN0aW5hdGlvbiB0aHJlc2hvbGQgbmVlZHMKdGhlIHNhbWUgZXhwbGljaXQgcmV2aWV3IGFzIHJhaXNpbmcgdGhlIFJFQURNRSBjYXAuCgpJbiBvbmUgbWVhc3VyZWQgYWRvcHRpb24sIFJFQURNRSBzdGF0dXMvaGlzdG9yeSBndWlkYW5jZSByb3V0ZWQgb3ZlcmZsb3cgaW50bwphbiBvdGhlcndpc2UgdW5jaGVja2VkIG5laWdoYm9yaW5nIHN0YXR1cyBmaWxlLiBUaGF0IGZpbGUgcmVhY2hlZCAxLDU0NywwNTcKYnl0ZXMsIGFuZCA5NC43JSBvZiBpdCB3YXMgZGF0ZWQgY2hhbmdlbG9nIGNvbnRlbnQuIFRoZSBSRUFETUUgY2FwIGhhZCBkaXNwbGFjZWQKdGhlIHByZXNzdXJlIHJhdGhlciB0aGFuIHJlbW92aW5nIGl0LiBBIGRlc3RpbmF0aW9uIHJlZ2lzdHJ5IGFuZCB1bmNvbmRpdGlvbmFsCmNsb3N1cmUgY2hlY2sgbWFrZSB0aGF0IGZhaWx1cmUgdmlzaWJsZSBiZWZvcmUgaXQgYmVjb21lcyBhbm90aGVyIG1lZ2FieXRlLQpzY2FsZSBib290c3RyYXAgc3VyZmFjZS4KCiMjIE1lY2hhbmljYWwgZ3Jvd3RoIGd1YXJkCgpFbmZvcmNlIGJvdGggYSBsaW5lIGNhcCBhbmQgYSBieXRlIGNhcC4gRGVyaXZlIGJvdGggZnJvbSB0aGUgbGFuZGluZyBwYWdlIHRoYXQKc3Vydml2ZXMgYSBkZWxpYmVyYXRlIHJldmlldyBhbmQgdHJpbSwgbGVhdmluZyBvbmx5IG1vZGVzdCBleHBsaWNpdCBoZWFkcm9vbS4KRG8gbm90IGNvcHkgZXhhbXBsZSB2YWx1ZXMgZnJvbSB0aGlzIHBvbGljeS4gTmV2ZXIgcmFpc2UgYSBjYXAgbWVyZWx5IHRvIGxhbmQKbmV3IGNvbnRlbnQ7IG1vdmUgdGhlIGRldGFpbCB0byBpdHMgY2Fub25pY2FsIGhvbWUuIEEgY2FwIGluY3JlYXNlIHJlcXVpcmVzIGFuCmV4cGxpY2l0IHJldmlld2VkIGRlY2lzaW9uIHRoYXQgdGhlIGxhbmRpbmctcGFnZSBjb250cmFjdCBpdHNlbGYgZXhwYW5kZWQuCgpBIG1pbmltYWwgZGV0ZXJtaW5pc3RpYyBjaGVjayBpczoKCmBgYHNoCmxpbmVfY2FwPV9fREVSSVZFRF9MSU5FX0NBUF9fCmJ5dGVfY2FwPV9fREVSSVZFRF9CWVRFX0NBUF9fCmxpbmVzPSQod2MgLWwgPCBSRUFETUUubWQgfCB0ciAtZCAnICcpCmJ5dGVzPSQod2MgLWMgPCBSRUFETUUubWQgfCB0ciAtZCAnICcpCnRlc3QgIiRsaW5lcyIgLWxlICIkbGluZV9jYXAiCnRlc3QgIiRieXRlcyIgLWxlICIkYnl0ZV9jYXAiCmBgYAoKUmVwbGFjZSBib3RoIHBsYWNlaG9sZGVycyB3aXRoIHRoZSBhZG9wdGluZyBwcm9qZWN0J3MgcmV2aWV3ZWQgdmFsdWVzIGJlZm9yZQplbmFibGluZyB0aGUgY2hlY2suIEtlZXAgaXQgbm9uLW11dGF0aW5nLCByZXR1cm4gbm9uemVybyB3aXRoIGEgcm91dGluZyBoaW50IG9uCmZhaWx1cmUsIGFuZCBydW4gaXQgdW5jb25kaXRpb25hbGx5IG9uIGV2ZXJ5IGNvbW1pdCBhbmQgQ0kgYnVpbGQuIExhbmRpbmctcGFnZQpzaXplIGlzIGEgcHJvcGVydHkgb2YgdGhlIHJlc3VsdGluZyB0cmVlLCBzbyB0aGUgZ3VhcmQgbXVzdCBub3Qgc2hvcnQtY2lyY3VpdAptZXJlbHkgYmVjYXVzZSBgUkVBRE1FLm1kYCBpcyBhYnNlbnQgZnJvbSBhIHN0YWdlZCBvciBjaGFuZ2VkLXBhdGggc2V0OyB0aGlzCmFsc28gY2F0Y2hlcyBvdmVyLWJ1ZGdldCBtZXJnZSBhbmQgcmV2ZXJ0IHJlc3VsdHMuCgpUaGUgc2FtZSB1bmNvbmRpdGlvbmFsIGNoZWNrIG11c3QgdmFsaWRhdGUgdGhlIHJvdXRlZC1kZXN0aW5hdGlvbiBpbnZlbnRvcnkKYW5kIGVhY2ggZGVjbGFyZWQgcHJlc3N1cmUgY29udHJvbC4gQSBjb21taXQgdGhhdCBkb2VzIG5vdCB0b3VjaCB0aGUgUkVBRE1FIGNhbgpzdGlsbCBvdmVyZ3JvdywgdW5mcmVlemUsIHJlbW92ZSwgb3Igc2lsZW50bHkgcmV0YXJnZXQgb25lIG9mIGl0cyBkZXN0aW5hdGlvbnMuCgpMaW5lIGFuZCBieXRlIGNoZWNrcyBhcmUgaW5kZXBlbmRlbnQuIEluIG9uZSByZWFsIGFkb3B0aW9uLCB0aGUgcmV0YWluZWQgUkVBRE1FCndhcyAxNDEgbGluZXMgeWV0IGFscmVhZHkgMTAsMjk3IGJ5dGVzOyBhIG51bWJlcmVkIHByb3NlIGxpc3QgbWVhc3VyZWQgcm91Z2hseQoxMTggYnl0ZXMgcGVyIGxpbmUgd2hpbGUgYSBwYXRoIGxpc3QgbWVhc3VyZWQgcm91Z2hseSA1Ny4gQSBsaW5lIGJ1ZGdldCBhbG9uZQp0aGVyZWZvcmUgY2Fubm90IGNvbnN0cmFpbiBwcm9zZSBkZW5zaXR5LCBhbmQgYSBieXRlIGJ1ZGdldCBhbG9uZSBjYW5ub3QKY29uc3RyYWluIHZlcnRpY2FsIHNwcmF3bC4KCiMjIEFkb3B0aW9uIGNoZWNrbGlzdAoKMS4gQWRkIGFuZCBjb21taXQgYDxyZXBvc2l0b3J5LXJvb3Q+L1JFQURNRV9QT0xJQ1kubWRgIGJlc2lkZSBgUkVBRE1FLm1kYC4KMi4gRmVuY2UgbG9jYWwgb3duZXIvZGF0ZSwgYXV0aG9yaXRhdGl2ZS1jb3B5LCBpbmRlcGVuZGVuY2UsIGRlY2lzaW9uLCBhbmQgY2FwCiAgIG1ldGFkYXRhIGFib3ZlIHRoZSBuZXV0cmFsIHBvbGljeSBib2R5LgozLiBQcm92ZSBhcHBhcmVudCBzdGF0dXMsIGhpc3RvcnksIGludmVudG9yeSwgYW5kIGRlZXAtcmVmZXJlbmNlIGR1cGxpY2F0aW9uCiAgIGFnYWluc3QgaXRzIGNhbm9uaWNhbCBob21lOyBkZWxldGUtd2l0aC1saW5rIHdoZW4gdGhhdCBob21lIGlzIHJpY2hlciwgYW5kCiAgIHJlbG9jYXRlIG9ubHkgZ2VudWluZWx5IHVuaXF1ZSBtYWludGFpbmVkIGNvbnRlbnQuCjQuIFZlcmlmeSB0aGUgcmV0YWluZWQgcXVpY2sgc3RhcnQgYW5kIGxpbmtzLgo1LiBSZWNvcmQgd2hlcmUgZWFjaCBleGNsdWRlZCBjb250ZW50IGNsYXNzIGJlbG9uZ3MsIHRoZW4gaW52ZW50b3J5IGV2ZXJ5CiAgIGFjdHVhbCByb3V0ZSB0aHJvdWdoIGEgY29udHJvbGxlZCB0ZXJtaW5hbDsgcmVqZWN0IGN5Y2xlcyBhbmQgdW5jbGFzc2lmaWVkCiAgIG5laWdoYm9yaW5nIHNpbmtzLgo2LiBHaXZlIGhvdC9saXZlIGZpbGVzIGxpbmUgYW5kIGJ5dGUgY2FwczsgZ2l2ZSBwYXJ0aXRpb25lZCwgZ2VuZXJhdGVkLAogICBoaXN0b3JpY2FsLCBleHRlcm5hbCwgYW5kIGZyb3plbiB0ZXJtaW5hbHMgdGhlIGNsYXNzLXNwZWNpZmljIGNvbnRyb2xzCiAgIGFib3ZlLiBUcmVhdCBtZWFzdXJlZCBsZWdhY3kgY2VpbGluZ3MgYXMgZGVidCwgbm90IGV4YW1wbGVzLgo3LiBEZXJpdmUgcmV2aWV3ZWQgbGluZSBhbmQgYnl0ZSBjYXBzIGZyb20gdGhlIHRyaW1tZWQgc3Vydml2b3Igd2l0aCBtb2Rlc3QKICAgZXhwbGljaXQgaGVhZHJvb207IGRvIG5vdCBjb3B5IGlsbHVzdHJhdGl2ZSB2YWx1ZXMuCjguIENvbW1pdCB0aGUgZGV0ZXJtaW5pc3RpYyBSRUFETUUgYW5kIHJvdXRpbmctY2xvc3VyZSBjaGVjayBhbmQgd2lyZSBpdAogICB1bmNvbmRpdGlvbmFsbHkgaW50byBldmVyeSBsb2NhbCBjb21taXQgYW5kIENJIGJ1aWxkLCBpbmRlcGVuZGVudCBvZgogICBjaGFuZ2VkLXBhdGggc2NvcGUuCjkuIFJlcXVpcmUgYW4gZXhwbGljaXQgZGVjaXNpb24gYmVmb3JlIHRoZSBSRUFETUUgY2FwIG9yIGFueSByb3V0ZWQtZGVzdGluYXRpb24KICAgdGhyZXNob2xkIGNhbiBpbmNyZWFzZS4K"
+  },
+  "positives": [
+    {
+      "arguments": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "status": 0,
+      "stderr": "",
+      "stdout": "b523086ab715a67fbb229e6ae1b258dbf6435b6d\n"
+    },
+    {
+      "arguments": [
+        "git",
+        "show",
+        "a2840582fc1722c29da808713d6f3c06bd42cd78:README_POLICY.md"
+      ],
+      "status": 0,
+      "stderr": "",
+      "stdout": "<!-- README-POLICY-LOCAL-ADOPTION:BEGIN -->\n## Local adoption note \u2014 FSMGen\n\n- Authority: FSMGen maintainers, adopted 2026-07-30 under decision 0024 and\n  refined 2026-07-31 under decisions 0038, 0040, and 0041.\n- Authoritative copy: repository-root `README_POLICY.md`. Agent/harness\n  bootstrap files may point here, but they are not the policy's authority.\n- Independence: the originating template is not an upstream. There is no\n  automatic synchronization; later changes require deliberate local review.\n- Reviewed health targets: 275 lines and 12,288 bytes. The inclusive\n  enforcement ceilings began at the 246-line / 9,952-byte adoption baseline\n  and ratchet downward as the landing page shrinks; their current values are\n  derived from `doctrine/live_document_size/surfaces.jsonl`. Decision 0044 and\n  containment leaf `.18` distinguish health from quarantine without widening\n  either axis.\n- Routed destinations: the project-owned data-only registry at\n  `doctrine/readme_entrypoint/routed_destinations.jsonl` maps every local\n  README route into the project-wide surfaces declared by\n  `doctrine/live_document_size/surfaces.jsonl`. The common checker owns their\n  lifecycle and pressure semantics.\n- Landing-page identity: top-level `README.md` is the rendered GitHub project\n  landing page, so its purpose, minimal first-use path, architecture summary,\n  and canonical navigation remain directly visible there. Containment routes\n  changing detail and chronology; it does not off-load the landing function.\n<!-- README-POLICY-LOCAL-ADOPTION:END -->\n\n---\n\n# README Stability Policy\n\nThis project- and harness-neutral policy keeps a repository README useful as a\nstable landing page instead of letting it grow into a changelog, roadmap, or\ndocumentation catalog.\n\n## Authority and provenance\n\nAfter adoption, the project owns this policy. Cite its authority by project\nowner and adoption or revision date, together with the project-owned\n`<repository-root>/README_POLICY.md`. Never cite a vendor-, agent-, or\nharness-specific bootstrap file as the authority. Bootstrap files may help\nauthors and tools discover the policy; they do not make the policy binding.\n\n## Storage location\n\nStore the adopting project's canonical copy as the git-tracked\n`<repository-root>/README_POLICY.md`, alongside `README.md`. Keeping the policy\nwith the file it governs gives contributors, local hooks, and CI one\ndiscoverable, versioned source of truth. A user-home, machine-global, or other\nexternal copy may serve as a reusable template, but it must not replace the\nproject-owned repository copy. Once copied, the project-owned file is\nauthoritative and the origin is not an upstream. Do not automatically re-sync\nfrom the origin; adopt later revisions only through deliberate local review.\n\nKeep project-specific adoption metadata\u2014owner, date, decisions, derived caps,\nand local enforcement links\u2014in a clearly fenced adoption note above the\nneutral policy body. This keeps the reusable body free of project-specific and\nharness-vendor-specific tokens without hiding local authority.\n\n## Content contract\n\nKeep only information a first-time visitor needs:\n\n- purpose, audience, and top-level scope;\n- prerequisites and one minimal verified quick start;\n- stable architecture at a glance;\n- links to canonical documentation, support, and contribution guidance;\n- license and other essential repository-level notices.\n\nRoute changing detail elsewhere:\n\n| Content | Canonical home |\n| --- | --- |\n| User-facing feature detail and examples | User guide or product manual |\n| Current work, priorities, and roadmap status | Roadmap, issue tracker, or task system |\n| Release history | Releases, changelog, or git history |\n| Design rationale | Decision records or architecture docs |\n| Exhaustive file/API/sample inventories | Generated indexes or dedicated references |\n| Diagnostics and operational procedures | Troubleshooting or contributor docs |\n\nChange the README only when its purpose, first-use path, top-level architecture,\nor canonical navigation changes. Ordinary feature work should update the\ncanonical destination, not the README.\n\nBefore deleting or relocating apparent duplication, prove that it is genuinely\nduplicated with a phrase, identity, or content probe against the intended\ncanonical home. If that home is already richer and maintained, delete the\nREADME copy and retain one link. Relocate only information that is unique and\nstill belongs in maintained documentation.\n\n## Routing pressure closure\n\nMoving content out of the README is not sufficient if the destination can\nbecome an unbounded neighboring sink. Inventory every destination named by the\nREADME, this policy, or the guard's failure guidance. Give each route an owner,\nlifecycle class, and pressure control, and follow routes transitively until\nthey end at a controlled terminal. An unclassified destination, routing cycle,\nor chain that merely moves the same append pressure again is a failed adoption.\n\nClassify routes as `reader_navigation` or `author_overflow`. The sets may\nlegitimately differ: readers may inspect immutable change history, while\nauthors must not be told to append new status prose there. Derive overflow\ncandidates from path-shaped destinations in the guard's actual emitted\nguidance, not only from a hand-maintained table, and fail when an emitted hint\nhas no governed destination.\n\nUse controls appropriate to the destination:\n\n| Destination class | Required pressure control |\n| --- | --- |\n| Hot/live file | Derived line and byte ceilings plus overwrite, review, or staleness semantics |\n| Partitioned manual or task collection | Bounded index plus per-part, file-count, and aggregate ceilings |\n| Generated index | Size ceilings plus a reproducible freshness check against canonical sources |\n| Append-only history | Query-first access plus a shard, rotation, or archival threshold; never a mandatory bootstrap read |\n| External service | Named authority, retention/lifecycle owner, and a stable query/link contract |\n| Frozen legacy record | Content identity or another write prohibition; never an overflow destination |\n\nA legacy destination that is already too large is not exempt. Record its\ncurrent measured ceiling as debt, stop further growth there, and open a\nseparately owned partition/compaction task. Do not describe a measured legacy\nceiling as an ideal reusable default. Raising any destination threshold needs\nthe same explicit review as raising the README cap.\n\nIn one measured adoption, README status/history guidance routed overflow into\nan otherwise unchecked neighboring status file. That file reached 1,547,057\nbytes, and 94.7% of it was dated changelog content. The README cap had displaced\nthe pressure rather than removing it. A destination registry and unconditional\nclosure check make that failure visible before it becomes another megabyte-\nscale bootstrap surface.\n\n## Mechanical growth guard\n\nEnforce both a line cap and a byte cap. Derive both from the landing page that\nsurvives a deliberate review and trim, leaving only modest explicit headroom.\nDo not copy example values from this policy. Never raise a cap merely to land\nnew content; move the detail to its canonical home. A cap increase requires an\nexplicit reviewed decision that the landing-page contract itself expanded.\n\nA minimal deterministic check is:\n\n```sh\nline_cap=__DERIVED_LINE_CAP__\nbyte_cap=__DERIVED_BYTE_CAP__\nlines=$(wc -l < README.md | tr -d ' ')\nbytes=$(wc -c < README.md | tr -d ' ')\ntest \"$lines\" -le \"$line_cap\"\ntest \"$bytes\" -le \"$byte_cap\"\n```\n\nReplace both placeholders with the adopting project's reviewed values before\nenabling the check. Keep it non-mutating, return nonzero with a routing hint on\nfailure, and run it unconditionally on every commit and CI build. Landing-page\nsize is a property of the resulting tree, so the guard must not short-circuit\nmerely because `README.md` is absent from a staged or changed-path set; this\nalso catches over-budget merge and revert results.\n\nThe same unconditional check must validate the routed-destination inventory\nand each declared pressure control. A commit that does not touch the README can\nstill overgrow, unfreeze, remove, or silently retarget one of its destinations.\n\nLine and byte checks are independent. In one real adoption, the retained README\nwas 141 lines yet already 10,297 bytes; a numbered prose list measured roughly\n118 bytes per line while a path list measured roughly 57. A line budget alone\ntherefore cannot constrain prose density, and a byte budget alone cannot\nconstrain vertical sprawl.\n\n## Adoption checklist\n\n1. Add and commit `<repository-root>/README_POLICY.md` beside `README.md`.\n2. Fence local owner/date, authoritative-copy, independence, decision, and cap\n   metadata above the neutral policy body.\n3. Prove apparent status, history, inventory, and deep-reference duplication\n   against its canonical home; delete-with-link when that home is richer, and\n   relocate only genuinely unique maintained content.\n4. Verify the retained quick start and links.\n5. Record where each excluded content class belongs, then inventory every\n   actual route through a controlled terminal; reject cycles and unclassified\n   neighboring sinks.\n6. Give hot/live files line and byte caps; give partitioned, generated,\n   historical, external, and frozen terminals the class-specific controls\n   above. Treat measured legacy ceilings as debt, not examples.\n7. Derive reviewed line and byte caps from the trimmed survivor with modest\n   explicit headroom; do not copy illustrative values.\n8. Commit the deterministic README and routing-closure check and wire it\n   unconditionally into every local commit and CI build, independent of\n   changed-path scope.\n9. Require an explicit decision before the README cap or any routed-destination\n   threshold can increase.\n"
+    },
+    {
+      "arguments": [
+        "git",
+        "ls-files",
+        "--stage",
+        "-z",
+        "--",
+        "README_POLICY.md",
+        "docs/book/src/reference-source/README_POLICY.markdown.source.txt",
+        "scripts/check_docs_relative_paths.sh"
+      ],
+      "status": 0,
+      "stderr": "",
+      "stdout": "100644 ab02e59f62b3cb4fba1a2268c904dac15a800c27 0\tREADME_POLICY.md\u0000120000 79d810eb24b8b8f811310bca17ef621cc94e875a 0\tdocs/book/src/reference-source/README_POLICY.markdown.source.txt\u0000100755 999e0973e8ef5309102b4ccaf6f6d540c919c242 0\tscripts/check_docs_relative_paths.sh\u0000"
+    },
+    {
+      "arguments": [
+        "git",
+        "-C",
+        "docs/book",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "status": 0,
+      "stderr": "",
+      "stdout": "/Volumes/SSD/Documents/github/fsmgen/.artifacts/coordinate-epoch-preparation-j6n63pwz\n"
+    },
+    {
+      "arguments": [
+        "git",
+        "check-ignore",
+        "--no-index",
+        "--stdin"
+      ],
+      "status": 1,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "primary_after": {
+    "files": {
+      "HEAD": {
+        "bytes": 21,
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80"
+      },
+      "config": {
+        "bytes": 388,
+        "sha256": "482673c87893d7c17601b45c1f1a67023ab3a4eb9be108dd68b964465c0a751a"
+      },
+      "index": {
+        "bytes": 4761053,
+        "sha256": "a4b62b270d124003d2562d9965deaa52d2a67155929cedc8267dc80f39853ee4"
+      },
+      "packed-refs": {
+        "bytes": 112,
+        "sha256": "b0be5713f71fdadc4ed41491d49acd4e3553b3bffdc67b335404a1445f0ba620"
+      }
+    },
+    "refs": "refs/codex/snapshots/ef16d7aa181344d32fafe32b14d300a6b0561b05 17022935994997126f63f55a21da0d8870018ed0\nrefs/heads/main b523086ab715a67fbb229e6ae1b258dbf6435b6d\nrefs/heads/openmodel e9234939bc7542b2016156a0084d47cf74136dc6\nrefs/remotes/origin/HEAD 54ac1c22d5314943027494f4c270f9c612e62704\nrefs/remotes/origin/main 54ac1c22d5314943027494f4c270f9c612e62704\n"
+  },
+  "primary_before": {
+    "files": {
+      "HEAD": {
+        "bytes": 21,
+        "sha256": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80"
+      },
+      "config": {
+        "bytes": 388,
+        "sha256": "482673c87893d7c17601b45c1f1a67023ab3a4eb9be108dd68b964465c0a751a"
+      },
+      "index": {
+        "bytes": 4761053,
+        "sha256": "a4b62b270d124003d2562d9965deaa52d2a67155929cedc8267dc80f39853ee4"
+      },
+      "packed-refs": {
+        "bytes": 112,
+        "sha256": "b0be5713f71fdadc4ed41491d49acd4e3553b3bffdc67b335404a1445f0ba620"
+      }
+    },
+    "refs": "refs/codex/snapshots/ef16d7aa181344d32fafe32b14d300a6b0561b05 17022935994997126f63f55a21da0d8870018ed0\nrefs/heads/main b523086ab715a67fbb229e6ae1b258dbf6435b6d\nrefs/heads/openmodel e9234939bc7542b2016156a0084d47cf74136dc6\nrefs/remotes/origin/HEAD 54ac1c22d5314943027494f4c270f9c612e62704\nrefs/remotes/origin/main 54ac1c22d5314943027494f4c270f9c612e62704\n"
+  },
+  "private_index": {
+    "bytes": 4755828,
+    "sha256": "9bcba237fc3f07ab246b4fad38fc9339eb183a29442a40e88a02a2582c774ce9"
+  },
+  "recovered": {
+    "README_POLICY.md": {
+      "executable": false,
+      "identity": {
+        "bytes": 9849,
+        "sha256": "882682fa1ace703ae68726b8532a4ad24fe2c8a271bae4e07b859bd197a621c9"
+      },
+      "mode": "100644",
+      "same_volume": true
+    },
+    "docs/book/src/reference-source/README_POLICY.markdown.source.txt": {
+      "executable": true,
+      "identity": {
+        "bytes": 28,
+        "sha256": "9a44071fd7ac491f2c42008de6fe7f7aac2ac9119c47716d9019f5c8eed89faa"
+      },
+      "mode": "120000",
+      "same_volume": true
+    },
+    "scripts/check_docs_relative_paths.sh": {
+      "executable": true,
+      "identity": {
+        "bytes": 394,
+        "sha256": "e1c3eb53ba7f974779450eb930666150dd28a22d2d913a13c9ad17bfd21c24a6"
+      },
+      "mode": "100755",
+      "same_volume": true
+    }
+  },
+  "revision": "a2840582fc1722c29da808713d6f3c06bd42cd78",
+  "rows": {
+    "README_POLICY.md": {
+      "mode": "100644",
+      "oid": "ab02e59f62b3cb4fba1a2268c904dac15a800c27"
+    },
+    "docs/book/src/reference-source/README_POLICY.markdown.source.txt": {
+      "mode": "120000",
+      "oid": "79d810eb24b8b8f811310bca17ef621cc94e875a"
+    },
+    "scripts/check_docs_relative_paths.sh": {
+      "mode": "100755",
+      "oid": "999e0973e8ef5309102b4ccaf6f6d540c919c242"
+    }
+  },
+  "scope": "Explicit small preparation population only; complete dated replay/current publication remains successor-owned. Logical historical path-size sum is not .git size or corruption evidence; whole-tree recovery was retired before copying.",
+  "sources": {
+    "epoch.py": "\"\"\"Stream exact committed sources into a plain same-volume filesystem fixture.\"\"\"\nimport hashlib\nimport os\nimport posixpath\nimport shutil\nimport subprocess\nimport tarfile\nfrom pathlib import Path, PurePosixPath\n\nROOT = Path(__file__).resolve().parents[3]\nBASE = Path(__file__).parent\nREVISION = 'a2840582fc1722c29da808713d6f3c06bd42cd78'\n\n\ndef need(ok, cause):\n    if not ok:\n        raise ValueError(cause)\n\n\ndef git(*args, input=None, environment=None):\n    result = subprocess.run(['git', '--no-replace-objects', '-C', str(ROOT), *args],\n                            input=input, env=environment, capture_output=True)\n    need(result.returncode == 0 and not result.stderr, 'complete successful native Git result')\n    return result.stdout\n\n\ndef scope(names):\n    need(type(names) in (list, tuple) and names and len(names) == len(set(names)),\n         'explicit nonempty unique recovery scope')\n    for name in names:\n        safe_path(name)\n    return sorted(names)\n\n\ndef metadata(names):\n    names = scope(names)\n    raw = git('--literal-pathspecs', 'ls-tree', '-r', '--full-tree', '-z', REVISION, '--', *names)\n    need(raw.endswith(b'\\0'), 'complete native source framing')\n    rows = {}\n    for record in raw.split(b'\\0')[:-1]:\n        header, name = record.split(b'\\t', 1)\n        mode, kind, oid = header.decode().split(' ')\n        path = name.decode()\n        need(kind == 'blob' and mode in ('100644', '100755', '120000'),\n             'only declared project blobs; no gitlink implementation recovery')\n        safe_path(path)\n        need(path not in rows, 'unique native source path')\n        rows[path] = {'mode': mode, 'oid': oid}\n    need(rows and all(any(path == name or path.startswith(name + '/') for name in names)\n                     for path in rows), 'exact declared recovery namespaces')\n    need(all(any(path == name or path.startswith(name + '/') for path in rows)\n             for name in names), 'every declared recovery namespace exists')\n    return raw, rows\n\n\ndef safe_path(path):\n    parts = PurePosixPath(path).parts\n    need(path and parts and '\\0' not in path and not path.startswith('/') and str(PurePosixPath(path)) == path\n         and all(part not in ('.', '..', '.git') for part in parts), 'contained canonical source path')\n\n\ndef alias_target(path, target):\n    need(target and not target.startswith('/'), 'contained relative source alias')\n    normalized = posixpath.normpath(posixpath.join(posixpath.dirname(path), target))\n    safe_path(normalized)\n    return normalized\n\n\ndef restore(member, stream, root, expected):\n    safe_path(member.name)\n    row = expected.get(member.name)\n    need(row is not None, 'archive source membership')\n    target = root / member.name\n    target.parent.mkdir(parents=True, exist_ok=True)\n    for parent in target.parents:\n        if parent == root:\n            break\n        need(not parent.is_symlink() and parent.stat().st_dev == ROOT.stat().st_dev,\n             'plain same-volume source parent')\n    need(not target.exists() and not target.is_symlink(), 'unique recovered source endpoint')\n    if member.issym():\n        need(row['mode'] == '120000', 'source alias mode')\n        alias_target(member.name, member.linkname)\n        raw = member.linkname.encode()\n        oid = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\\0' + raw).hexdigest()\n        need(oid == row['oid'], 'whole source blob identity')\n        target.symlink_to(member.linkname)\n    else:\n        need(member.isfile() and row['mode'] in ('100644', '100755'), 'regular source mode')\n        digest = hashlib.sha1(b'blob ' + str(member.size).encode() + b'\\0')\n        count = 0\n        with target.open('xb') as output:\n            while block := stream.read(1_048_576):\n                output.write(block)\n                digest.update(block)\n                count += len(block)\n        need(count == member.size and digest.hexdigest() == row['oid'], 'whole source blob identity')\n        target.chmod(0o755 if row['mode'] == '100755' else 0o644)\n\n\ndef recover(root, rows, names):\n    need(root.is_dir() and not root.is_symlink() and root.stat().st_dev == ROOT.stat().st_dev\n         and root == root.resolve() and root.is_relative_to(ROOT / '.artifacts') and not list(root.iterdir()),\n         'empty plain owned same-volume fixture root')\n    names = scope(names)\n    selected = dict(rows)\n    need(selected and all(any(path == name or path.startswith(name + '/') for name in names)\n                         for path in selected), 'exact declared recovery namespaces')\n    for path, row in selected.items():\n        safe_path(path)\n        need(row['mode'] in ('100644', '100755', '120000'), 'declared recovery source kind')\n    command = ['git', '--no-replace-objects', '--literal-pathspecs', '-C', str(ROOT),\n               'archive', '--format=tar', REVISION, '--', *names]\n    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)\n    observed = set()\n    try:\n        with tarfile.open(fileobj=process.stdout, mode='r|') as archive:\n            for member in archive:\n                if member.isdir():\n                    safe_path(member.name.rstrip('/'))\n                    continue\n                need(member.name not in observed, 'unique archive source member')\n                restore(member, archive.extractfile(member) if member.isfile() else None, root, selected)\n                observed.add(member.name)\n        error = process.stderr.read()\n        need(process.wait() == 0 and not error, 'complete successful source archive')\n    finally:\n        if process.poll() is None:\n            process.kill()\n            process.wait()\n        process.stdout.close()\n        process.stderr.close()\n    need(observed == set(selected), 'complete recovered source population')\n    for path, row in selected.items():\n        if row['mode'] == '120000':\n            endpoint = alias_target(path, os.readlink(root / path))\n            need(endpoint in selected and selected[endpoint]['mode'] in ('100644', '100755'),\n                 'source alias joins an owned regular canonical source')\n    return selected\n\n\ndef environment(root):\n    need(root.is_dir() and root == root.resolve() and root.is_relative_to(ROOT / '.artifacts')\n         and root.stat().st_dev == ROOT.stat().st_dev, 'plain owned same-volume Git fixture root')\n    directory = root / '.artifacts'\n    need(not directory.exists() and not directory.is_symlink(), 'fresh plain fixture metadata directory')\n    directory.mkdir()\n    index = directory / 'epoch.index'\n    metadata_root = git('rev-parse', '--absolute-git-dir').decode().strip()\n    env = dict(os.environ, GIT_DIR=metadata_root, GIT_WORK_TREE=str(root),\n               GIT_INDEX_FILE=str(index), GIT_OPTIONAL_LOCKS='0', GIT_NO_LAZY_FETCH='1',\n               PYTHONDONTWRITEBYTECODE='1')\n    # This writes only the explicitly owned alternative index. Original refs,\n    # configuration, objects and the primary index remain read-only.\n    git('read-tree', REVISION, environment=env)\n    binary = shutil.which('git')\n    need(binary is not None, 'installed Git executable')\n    wrapper = directory / 'readonly-bin'\n    wrapper.mkdir()\n    shutil.copyfile(BASE / 'git_readonly.py', wrapper / 'git')\n    (wrapper / 'git').chmod(0o755)\n    env.update(FSMGEN_EPOCH_ROOT=str(root), FSMGEN_EPOCH_GIT_BINARY=binary,\n               PATH=str(wrapper) + os.pathsep + env['PATH'])\n    return env\n",
+    "git_readonly.py": "#!/usr/bin/env python3\n\"\"\"Closed read-only Git transport for a project-owned plain epoch fixture.\"\"\"\nimport json\nimport os\nimport sys\nfrom pathlib import Path\n\nREADS = {'archive', 'cat-file', 'check-ignore', 'diff', 'for-each-ref',\n         'hash-object', 'log', 'ls-files', 'ls-tree', 'rev-parse', 'show', 'status'}\nCONFIG = {'core.quotePath=false', 'core.fsmonitor=false',\n          'core.untrackedCache=false', 'log.showSignature=false'}\nFORBIDDEN = {'-w', '-o', '--filters', '--textconv', '--ext-diff', '--refresh',\n             '--update', '--reset', '--unresolve', '--reupdate'}\n\n\ndef main():\n    args = sys.argv[1:]\n    root = Path(os.environ['FSMGEN_EPOCH_ROOT']).resolve(strict=True)\n    index = 0\n    while index < len(args):\n        value = args[index]\n        if value in ('--no-replace-objects', '--no-pager'):\n            index += 1\n        elif value == '-C' and index + 1 < len(args):\n            if not Path(args[index + 1]).resolve(strict=True).is_relative_to(root):\n                raise ValueError('foreign Git working root')\n            index += 2\n        elif value == '-c' and index + 1 < len(args) and args[index + 1] in CONFIG:\n            index += 2\n        else:\n            break\n    operation = args[index] if index < len(args) else ''\n    if operation not in READS or any(\n            arg in FORBIDDEN or arg.startswith(('--output', '--remote', '--exec', '--upload-archive'))\n            or (operation == 'archive' and arg.startswith('-o'))\n            or (operation == 'diff' and arg == '--no-index')\n            for arg in args[index + 1:]):\n        raise ValueError('Git command refused: ' + operation)\n    log = root / '.artifacts/readonly-git-calls.jsonl'\n    with log.open('a') as stream:\n        stream.write(json.dumps({'arguments': args, 'operation': operation}, sort_keys=True) + '\\n')\n    environment = dict(os.environ, GIT_OPTIONAL_LOCKS='0', GIT_NO_LAZY_FETCH='1')\n    binary = environment['FSMGEN_EPOCH_GIT_BINARY']\n    operation_args = args[index + 1:]\n    if operation in ('diff', 'show', 'log'):\n        operation_args = ['--no-ext-diff', '--no-textconv', *operation_args]\n    os.execve(binary, [binary, '--no-replace-objects', '--no-pager', '-c', 'core.fsmonitor=false',\n                      '-c', 'core.untrackedCache=false', *args[:index], operation,\n                      *operation_args], environment)\n\n\nif __name__ == '__main__':\n    try:\n        main()\n    except (OSError, KeyError, ValueError) as error:\n        print('readonly epoch replay: ' + str(error), file=sys.stderr)\n        sys.exit(2)\n",
+    "qualify.py": "\"\"\"Qualify explicit source recovery and fixture Git without whole-tree copying.\"\"\"\nimport base64\nimport hashlib\nimport io\nimport json\nimport os\nimport subprocess\nimport tarfile\nimport tempfile\nfrom pathlib import Path\n\nimport epoch\n\nROOT, BASE = epoch.ROOT, epoch.BASE\nNAMES = ('README_POLICY.md', 'docs/book/src/reference-source/README_POLICY.markdown.source.txt',\n         'scripts/check_docs_relative_paths.sh')\nSOURCES = ('epoch.py', 'git_readonly.py', 'qualify.py', 'verify.py')\n\n\ndef identity(raw):\n    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}\n\n\ndef primary():\n    directory = Path(epoch.git('rev-parse', '--absolute-git-dir').decode().strip())\n    return {'files': {name: identity((directory / name).read_bytes()) if (directory / name).exists() else None\n                      for name in ('index', 'config', 'HEAD', 'packed-refs')},\n            'refs': epoch.git('for-each-ref', '--format=%(refname) %(objectname)').decode()}\n\n\ndef run(args, root, env):\n    result = subprocess.run(args, cwd=root, env=env, capture_output=True, text=True)\n    return {'arguments': args, 'status': result.returncode,\n            'stdout': result.stdout, 'stderr': result.stderr}\n\n\ndef main():\n    before = primary()\n    metadata, rows = epoch.metadata(NAMES)\n    objects = {row['oid']: base64.b64encode(epoch.git('cat-file', 'blob', row['oid'])).decode()\n               for row in rows.values()}\n    controls = []\n    with tempfile.TemporaryDirectory(prefix='coordinate-epoch-preparation-', dir=ROOT / '.artifacts') as temporary:\n        root = Path(temporary)\n        epoch.recover(root, rows, NAMES)\n        recovered = {}\n        for path, row in rows.items():\n            endpoint = root / path\n            raw = os.readlink(endpoint).encode() if endpoint.is_symlink() else endpoint.read_bytes()\n            assert raw == base64.b64decode(objects[row['oid']])\n            recovered[path] = {'identity': identity(raw), 'mode': row['mode'],\n                               'same_volume': endpoint.lstat().st_dev == ROOT.stat().st_dev,\n                               'executable': bool(endpoint.lstat().st_mode & 0o111)}\n        blocked = root / 'blocked'\n        blocked.mkdir()\n        (root / '.artifacts').symlink_to('blocked', target_is_directory=True)\n        try:\n            epoch.environment(root)\n        except ValueError as error:\n            blocked_control = {'name': 'fixture-metadata-alias', 'cause': str(error)}\n        else:\n            raise ValueError('false-green fixture metadata alias')\n        assert not list(blocked.iterdir())\n        (root / '.artifacts').unlink()\n        blocked.rmdir()\n        env = epoch.environment(root)\n        positives = [run(args, root, env) for args in (\n            ['git', 'rev-parse', 'HEAD'],\n            ['git', 'show', epoch.REVISION + ':README_POLICY.md'],\n            ['git', 'ls-files', '--stage', '-z', '--', *NAMES],\n            ['git', '-C', 'docs/book', 'rev-parse', '--show-toplevel'])]\n        ignored = subprocess.run(['git', 'check-ignore', '--no-index', '--stdin'], input='\\n'.join(NAMES) + '\\n',\n                                 cwd=root, env=env, capture_output=True, text=True)\n        positives.append({'arguments': ['git', 'check-ignore', '--no-index', '--stdin'],\n                          'status': ignored.returncode, 'stdout': ignored.stdout, 'stderr': ignored.stderr})\n        for args in (['git', 'add', 'README_POLICY.md'], ['git', 'read-tree', 'HEAD'],\n                     ['git', 'hash-object', '-w', 'README_POLICY.md'],\n                     ['git', 'archive', '-oowned.tar', 'HEAD'],\n                     ['git', '-c', 'alias.unowned=!touch unowned', 'unowned']):\n            result = run(args, root, env)\n            assert result['status'] == 2 and result['stderr'].startswith('readonly epoch replay: Git command refused: ')\n            controls.append({'name': 'refused-' + '-'.join(args[1:]), 'actual': result})\n        foreign = run(['git', '-C', '..', 'rev-parse', 'HEAD'], root, env)\n        assert foreign['status'] == 2 and foreign['stderr'] == 'readonly epoch replay: foreign Git working root\\n'\n        controls.append({'name': 'foreign-working-root', 'actual': foreign})\n        calls = (root / '.artifacts/readonly-git-calls.jsonl').read_text()\n        private_index = identity((root / '.artifacts/epoch.index').read_bytes())\n        for name, action in (\n            ('root-wildcard', lambda: epoch.scope(['.'])),\n            ('missing-scope', lambda: epoch.scope([])),\n            ('duplicate-scope', lambda: epoch.scope(['README_POLICY.md', 'README_POLICY.md'])),\n            ('path-escape', lambda: epoch.safe_path('../escaped')),\n            ('absolute-path', lambda: epoch.safe_path('/escaped')),\n            ('metadata-path', lambda: epoch.safe_path('.git/config')),\n            ('alias-escape', lambda: epoch.alias_target('README_POLICY.md', '../escaped')),\n        ):\n            try:\n                action()\n            except ValueError as error:\n                controls.append({'name': name, 'cause': str(error)})\n            else:\n                raise ValueError('false-green control: ' + name)\n        for name, member_name, oid in (('member-loss', 'unknown.txt', rows['README_POLICY.md']['oid']),\n                                       ('blob-substitution', 'README_POLICY.md', '0' * 40)):\n            child = root / name\n            child.mkdir()\n            member = tarfile.TarInfo(member_name)\n            member.size = 1\n            declared = {'README_POLICY.md': {'mode': '100644', 'oid': oid}}\n            try:\n                epoch.restore(member, io.BytesIO(b'x'), child, declared)\n            except ValueError as error:\n                controls.append({'name': name, 'cause': str(error)})\n            else:\n                raise ValueError('false-green control: ' + name)\n    controls.append(blocked_control)\n    after = primary()\n    assert before == after\n    proof = {'scope': 'Explicit small preparation population only; complete dated replay/current publication remains successor-owned. Logical historical path-size sum is not .git size or corruption evidence; whole-tree recovery was retired before copying.',\n             'revision': epoch.REVISION, 'names': NAMES, 'metadata_base64': base64.b64encode(metadata).decode(),\n             'objects': objects, 'rows': rows, 'recovered': recovered,\n             'primary_before': before, 'primary_after': after, 'private_index': private_index,\n             'positives': positives, 'controls': controls, 'accepted_calls': calls,\n             'sources': {name: (BASE / name).read_text() for name in SOURCES}}\n    (BASE / 'proof.json').write_text(json.dumps(proof, sort_keys=True, indent=2) + '\\n')\n    print('PASS explicit same-volume preparation, exact object/mode/alias recovery and read-only Git controls; full replay remains open.')\n\n\nif __name__ == '__main__':\n    main()\n",
+    "verify.py": "\"\"\"Independently consume exact native preparation evidence and genuine controls.\"\"\"\nimport base64\nimport copy\nimport gzip\nimport hashlib\nimport json\nimport subprocess\nfrom pathlib import Path\n\nBASE = Path('docs/audits/coordinate-public-final-preparation-20261008')\nREVISION = 'a2840582fc1722c29da808713d6f3c06bd42cd78'\nNAMES = ['README_POLICY.md', 'docs/book/src/reference-source/README_POLICY.markdown.source.txt',\n         'scripts/check_docs_relative_paths.sh']\nSCOPE = 'Explicit small preparation population only; complete dated replay/current publication remains successor-owned. Logical historical path-size sum is not .git size or corruption evidence; whole-tree recovery was retired before copying.'\n\n\ndef need(ok, cause):\n    if not ok:\n        raise ValueError(cause)\n\n\ndef native(args):\n    result = subprocess.run(['git', '--no-replace-objects', *args], capture_output=True)\n    need(result.returncode == 0 and not result.stderr, 'complete independent native source')\n    return result.stdout\n\n\ndef pin(raw):\n    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}\n\n\ndef check(proof):\n    need(proof['revision'] == REVISION and proof['names'] == NAMES and proof['scope'] == SCOPE,\n         'closed explicit preparation scope')\n    need(proof['sources'] == {name: (BASE / name).read_text() for name in\n         ('epoch.py', 'git_readonly.py', 'qualify.py', 'verify.py')}, 'complete preparation programme currency')\n    raw = native(['--literal-pathspecs', 'ls-tree', '-r', '--full-tree', '-z', REVISION, '--', *NAMES])\n    need(base64.b64decode(proof['metadata_base64'], validate=True) == raw, 'complete source metadata')\n    rows = {}\n    for record in raw.rstrip(b'\\0').split(b'\\0'):\n        header, path = record.split(b'\\t')\n        mode, kind, oid = header.decode().split()\n        need(kind == 'blob', 'published blob source')\n        rows[path.decode()] = {'mode': mode, 'oid': oid}\n    need(proof['rows'] == rows and set(rows) == set(NAMES) and set(proof['recovered']) == set(NAMES),\n         'complete declared source membership')\n    expected_objects = {}\n    for path, row in rows.items():\n        content = native(['show', REVISION + ':' + path])\n        expected_objects[row['oid']] = base64.b64encode(content).decode()\n        record = proof['recovered'][path]\n        need(record['identity'] == pin(content) and type(record['identity']['bytes']) is int\n             and record['mode'] == row['mode'] and record['same_volume'] is True\n             and record['executable'] is (row['mode'] != '100644'), 'exact source bytes mode and same-volume recovery')\n    need(proof['objects'] == expected_objects, 'complete native object bytes')\n    alias = native(['show', REVISION + ':' + NAMES[1]]).decode()\n    need(alias == '../../../../README_POLICY.md', 'published contained canonical alias')\n    need(proof['primary_before'] == proof['primary_after'] and\n         set(proof['primary_before']['files']) == {'index', 'config', 'HEAD', 'packed-refs'},\n         'observed primary index configuration and reference conservation')\n    positives = proof['positives']\n    need(len(positives) == 5 and all(type(p['status']) is int and p['status'] == 0 and p['stderr'] == '' for p in positives[:4]),\n         'typed actual positive statuses')\n    need(positives[0]['arguments'] == ['git', 'rev-parse', 'HEAD']\n         and len(positives[0]['stdout'].strip()) == 40\n         and positives[1]['arguments'] == ['git', 'show', REVISION + ':README_POLICY.md']\n         and positives[1]['stdout'] == native(['show', REVISION + ':README_POLICY.md']).decode(), 'complete actual object reader')\n    expected_index = b''.join((row['mode'] + ' ' + row['oid'] + ' 0\\t' + path).encode() + b'\\0'\n                             for path, row in sorted(rows.items()))\n    need(positives[2]['arguments'] == ['git', 'ls-files', '--stage', '-z', '--', *NAMES]\n         and positives[2]['stdout'].encode() == expected_index, 'complete private-index source identities')\n    need(positives[3]['arguments'] == ['git', '-C', 'docs/book', 'rev-parse', '--show-toplevel']\n         and Path(positives[3]['stdout'].strip()).name.startswith('coordinate-epoch-preparation-'),\n         'owned nested Git working root')\n    ignored = positives[4]\n    need(ignored['arguments'] == ['git', 'check-ignore', '--no-index', '--stdin']\n         and type(ignored['status']) is int and ignored['status'] == 1\n         and ignored['stdout'] == ignored['stderr'] == '', 'native admitted source ignore policy')\n    calls = [json.loads(line) for line in proof['accepted_calls'].splitlines()]\n    need([r['arguments'] for r in calls] == [r['arguments'][1:] for r in positives]\n         and [r['operation'] for r in calls] == ['rev-parse', 'show', 'ls-files', 'rev-parse', 'check-ignore'], 'closed actually accepted read operations')\n    controls = proof['controls']\n    need(len(controls) == 16 and len({c['name'] for c in controls}) == 16, 'complete genuine refusal population')\n    for control in controls[:5]:\n        actual = control['actual']\n        need(type(actual['status']) is int and actual['status'] == 2 and actual['stdout'] == ''\n             and actual['stderr'].startswith('readonly epoch replay: Git command refused: '), 'actual Git mutation refusals')\n    foreign = controls[5]['actual']\n    need(controls[5]['name'] == 'foreign-working-root' and type(foreign['status']) is int\n         and foreign['status'] == 2 and foreign['stdout'] == ''\n         and foreign['stderr'] == 'readonly epoch replay: foreign Git working root\\n', 'foreign working-root refusal')\n    need({c['name']: c['cause'] for c in controls[6:]} == {\n        'root-wildcard': 'contained canonical source path',\n        'missing-scope': 'explicit nonempty unique recovery scope',\n        'duplicate-scope': 'explicit nonempty unique recovery scope',\n        'path-escape': 'contained canonical source path',\n        'absolute-path': 'contained canonical source path',\n        'metadata-path': 'contained canonical source path',\n        'alias-escape': 'contained canonical source path',\n        'member-loss': 'archive source membership',\n        'blob-substitution': 'whole source blob identity',\n        'fixture-metadata-alias': 'fresh plain fixture metadata directory'}, 'complete intended recovery refusal causes')\n\n\ndef main():\n    proof = json.loads((BASE / 'proof.json').read_bytes())\n    check(proof)\n    first = json.loads((BASE / 'first-reader-result.json').read_bytes())\n    first_proof = json.loads(gzip.decompress((BASE / 'first-proof.json.gz').read_bytes()))\n    need(type(first['status']) is int and first['status'] == 1 and first['stdout'] == ''\n         and first['stderr'].endswith('ValueError: genuine result control\\n')\n         and first['source'] == first_proof['sources']['verify.py']\n         and \"need(candidate != proof, 'genuine result control')\" in first['source'],\n         'complete first Boolean-equality oracle failure')\n    need(False == 0 and json.dumps(False) != json.dumps(0), 'typed Boolean/integer separation')\n    controls = (\n        ('missing-member', lambda p: p['recovered'].pop(NAMES[0]), 'complete declared source membership'),\n        ('substituted-object', lambda p: p['objects'].update({p['rows'][NAMES[0]]['oid']: 'eA=='}), 'complete native object bytes'),\n        ('Boolean-status', lambda p: p['positives'][0].update(status=False), 'typed actual positive statuses'),\n        ('mutation-accepted', lambda p: p['controls'][0]['actual'].update(status=0), 'actual Git mutation refusals'),\n        ('primary-change', lambda p: p['primary_after'].update(refs='changed'), 'observed primary index configuration and reference conservation'),\n        ('full-replay-promotion', lambda p: p.update(scope='whole public replay qualified'), 'closed explicit preparation scope'),\n    )\n    for name, mutate, cause in controls:\n        candidate = copy.deepcopy(proof)\n        mutate(candidate)\n        need(json.dumps(candidate, sort_keys=True) != json.dumps(proof, sort_keys=True), 'genuine result control')\n        try:\n            check(candidate)\n        except ValueError as error:\n            need(str(error) == cause, 'intended independent refusal: ' + name)\n        else:\n            raise ValueError('false-green independent control: ' + name)\n    print('PASS complete explicit preparation evidence and independent hostile controls; full dated replay/current publication remains open.')\n\n\nif __name__ == '__main__':\n    main()\n"
+  }
+}
