@@ -1,0 +1,114 @@
+{
+  "actual": {
+    "bytes_total": 3820115,
+    "files": 64,
+    "lines_total": 68695
+  },
+  "baseline": {
+    "bytes_total": 3819492,
+    "files": 64,
+    "lines_total": 68684
+  },
+  "controls": [
+    {
+      "cause": "complete public qualification rendered guide and corrected status",
+      "control": "final public recipe/fact publication and original-coordinate intake remain later steps:",
+      "status": 1
+    },
+    {
+      "cause": "complete public qualification rendered guide and corrected status",
+      "control": "record-value-coordinate-public-qualification-20261008/verify.py",
+      "status": 1
+    },
+    {
+      "cause": "complete public qualification rendered guide and corrected status",
+      "control": "Every selected and coincident source alternative,",
+      "status": 1
+    },
+    {
+      "cause": "exact public qualification native build success",
+      "control": "Boolean-native-status",
+      "status": 1
+    }
+  ],
+  "delta": {
+    "bytes_total": 623,
+    "files": 0,
+    "lines_total": 11
+  },
+  "native": {
+    "bytes": 246921,
+    "sha256": "5454da97f1ae1c11d51cd4fc44a988e1517e4b936fa7fd3e7cad9f8079effa0f"
+  },
+  "population": [
+    "docs/book/src/00-introduction.md",
+    "docs/book/src/01-first-fsm.md",
+    "docs/book/src/02-language-basics.md",
+    "docs/book/src/03-decision-trees-and-fsms.md",
+    "docs/book/src/04-symbols-types-and-imports.md",
+    "docs/book/src/05-composition-basics.md",
+    "docs/book/src/06-composition-advanced.md",
+    "docs/book/src/07-packages-and-sharing.md",
+    "docs/book/src/08-type-inference-and-aggregate-data.md",
+    "docs/book/src/09-generated-hdl-debugging-and-inspection.md",
+    "docs/book/src/10-errors-strict-mode-and-troubleshooting.md",
+    "docs/book/src/10a-downstream-issue-reporting.md",
+    "docs/book/src/11-extensions-and-embedding.md",
+    "docs/book/src/12-cookbook.md",
+    "docs/book/src/13-intent-scheduling.md",
+    "docs/book/src/13a-actor-interface.md",
+    "docs/book/src/13b-transactions.md",
+    "docs/book/src/13c-drive-blocks.md",
+    "docs/book/src/13d-control-flow.md",
+    "docs/book/src/13e-data-manipulation.md",
+    "docs/book/src/13f-composition.md",
+    "docs/book/src/13g-rules.md",
+    "docs/book/src/13h-lowering-reference.md",
+    "docs/book/src/13i-downstream-integration.md",
+    "docs/book/src/13j-type-enum-aggregate.md",
+    "docs/book/src/13k-isf-feature-support-matrix.md",
+    "docs/book/src/13l-procedures.md",
+    "docs/book/src/13m-local-variables.md",
+    "docs/book/src/14-feature-backlog.md",
+    "docs/book/src/14a-language-and-data.md",
+    "docs/book/src/14b-composition-backlog.md",
+    "docs/book/src/14c-actor-network-orchestration.md",
+    "docs/book/src/14d-ial2-foundations.md",
+    "docs/book/src/14e-hial-vial-verification.md",
+    "docs/book/src/14f-axi-manager-core.md",
+    "docs/book/src/14g-axi-dynamic-identity.md",
+    "docs/book/src/14h-protocol-profiles-and-apb.md",
+    "docs/book/src/14i-ahb-and-integration.md",
+    "docs/book/src/14j-extended-axi.md",
+    "docs/book/src/14k-isf-language-and-scheduling.md",
+    "docs/book/src/14l-backends-validation-and-apis.md",
+    "docs/book/src/15-implementation-blueprint.md",
+    "docs/book/src/15a-ial2-new-protocol-support.md",
+    "docs/book/src/16-ial2-protocol-platform-intent.md",
+    "docs/book/src/16a-ial2-axi.md",
+    "docs/book/src/16aa-ial2-axi-manager-capacity-status.md",
+    "docs/book/src/16b-ial2-apb.md",
+    "docs/book/src/16c-ial2-ahb.md",
+    "docs/book/src/16d-hial-vial-verification-architecture.md",
+    "docs/book/src/16da-vial-balanced-portable-composition.md",
+    "docs/book/src/16db-vial-structural-backend-emission-matrix.md",
+    "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md",
+    "docs/book/src/16dd-vial-portable-vhdl-runtime-measurement.md",
+    "docs/book/src/16de-vial-osvvm-runtime-execution-plan.md",
+    "docs/book/src/16df-vial-architecture-scale-cap-closeout.md",
+    "docs/book/src/16dg-vial-public-lifecycle-reference.md",
+    "docs/book/src/16dh-vial-ahb-end-to-end-tutorial.md",
+    "docs/book/src/16di-vial-legacy-migration.md",
+    "docs/book/src/16dj-vial-capability-support-reference.md",
+    "docs/book/src/16dk-inactive-proxy-lifetimes.md",
+    "docs/book/src/16e-nexsim-api-mcp-consumer-requirements.md",
+    "docs/book/src/90-reference-map.md",
+    "docs/book/src/91-live-document-containment-adoption.md",
+    "docs/book/src/SUMMARY.md"
+  ],
+  "scope": "Complete finite public source/native guide and contradiction repair only. Final publication, original identities and visual QA remain pending.",
+  "source": {
+    "bytes": 209419,
+    "sha256": "28d504a82f2c52a38a7457ed4f7d243ab5ad83d4fa0d8ed7a7c62f036310c38c"
+  }
+}

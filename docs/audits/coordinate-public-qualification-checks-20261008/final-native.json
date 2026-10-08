@@ -1,0 +1,28 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "scripts/check_record_value_publication.py",
+    "--build",
+    ".artifacts/coordinate-public-qualification-book"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+      "bytes": 1261,
+      "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+    },
+    "scripts/check_record_value_publication.py": {
+      "bytes": 11910,
+      "sha256": "0507952b90dfa379208fe8eda5b8fc19576936a424a4d593106a837bd1b0b498"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 99701; host 43.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n"
+}

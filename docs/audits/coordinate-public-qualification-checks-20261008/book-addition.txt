@@ -1,0 +1,11 @@
+
+The complete finite public qualification now authenticates the whole committed
+source, caller, boundary, origin and native-control domains and consumes their
+fresh independent results. Every selected and coincident source alternative,
+raw byte and intended native refusal retains its original dated scope.
+The joined reader checks saved data and preserves explicit identity gaps;
+final public recipe/fact publication and original-coordinate intake remain later steps:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-qualification-20261008/verify.py
+```

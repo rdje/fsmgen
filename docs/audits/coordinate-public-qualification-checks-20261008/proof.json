@@ -1,0 +1,149 @@
+{
+  "binding": {
+    "bytes": 122333,
+    "sha256": "38409c6e1c03257142b99054fd500a683bd3d93c200d8bcc1d9b7a34cd42a5b0"
+  },
+  "controls": [
+    {
+      "candidate_identity": {
+        "bytes": 309010,
+        "sha256": "c79d345d790fe9590908c6415baea4152b4676d2fdf22be3fe39d7c397b0fb0a"
+      },
+      "cause": "independent complete source/reader/result allocation",
+      "control": "lost-actual-domain",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 311083,
+        "sha256": "f4eb3d2751051755030592f0f9de0fde40e61ab02673a2b209902898375137c6"
+      },
+      "cause": "independent whole result statuses remain integer success",
+      "control": "Boolean-result",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 309692,
+        "sha256": "aea4288851eb3416b5423a17d15c3f87e658cfd1461e0e64ebe2f0d7cbe41839"
+      },
+      "cause": "independent complete binary-source/raw-wire/result join",
+      "control": "borrowed-result",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 311068,
+        "sha256": "93881c2d0ed9a67ba9b9e3aa0eb2543417c18f24b03d06cd5234145bad8cf063"
+      },
+      "cause": "independent complete binary-source/raw-wire/result join",
+      "control": "lost-equivalent-label",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 311078,
+        "sha256": "4a38c76fd7a03723d24cc7a35ff7600f88f0c2ee95b9abc9d3e93be7ce79a4fc"
+      },
+      "cause": "independent complete binary-source/raw-wire/result join",
+      "control": "changed-origin",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 311039,
+        "sha256": "ac6bc05f62d1e73f5d24a1eb16547b2a5e757e24cec62d356c3b163e4197fff1"
+      },
+      "cause": "independent complete binary-source/raw-wire/result join",
+      "control": "lost-refusal",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 311078,
+        "sha256": "5e6b15dc629499ad8757bc16e7e674339d7d6cfae2d41875522e1e56c85ca164"
+      },
+      "cause": "independent complete binary-source/raw-wire/result join",
+      "control": "false-root-coordinate",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 310896,
+        "sha256": "ad1135856fafad13191a2c1ad35ed05d7acdf4b084f2612183355c7e108c00ff"
+      },
+      "cause": "independent whole public scope preserves identity gaps",
+      "control": "original-promotion",
+      "status": 1
+    }
+  ],
+  "members": {
+    "binding.json": {
+      "bytes": 122333,
+      "sha256": "38409c6e1c03257142b99054fd500a683bd3d93c200d8bcc1d9b7a34cd42a5b0"
+    },
+    "controls.json": {
+      "bytes": 1898,
+      "sha256": "f13a8a3c31ab6f9c972e89e30a527f19a11c48f3519666957f7e9c56fbc960ea"
+    },
+    "qualification.json": {
+      "bytes": 519280,
+      "sha256": "f6c0db2606ee063a07cea60c4614c90805d9da220d6f1875da35bc5a3ed21902"
+    },
+    "scope.txt": {
+      "bytes": 2031,
+      "sha256": "3fa6b6255074ce7ad6f3825f48e56e7d7fbcf5ed13551fbdd6f703a377613bfc"
+    },
+    "verify.py": {
+      "bytes": 11036,
+      "sha256": "6bdd04807a550bfc057989f2134c268c246829e36ca85241b350089b4e1a0607"
+    }
+  },
+  "oracle_programmes": {
+    "docs/audits/coordinate-epoch-publication-checks-20261007/verify_saved.py": {
+      "bytes": 3397,
+      "sha256": "5a80f8363c1327c24d5164b1fb83ba4f24c5ea807029aaa758cdcd6a3459cbaa"
+    },
+    "docs/audits/coordinate-native-control-capture-checks-20261008/verify_saved.py": {
+      "bytes": 11046,
+      "sha256": "8e1cd881ae28cfa969aeb04c749749d76774ff28487b1b26bcd272ee4470de68"
+    },
+    "docs/audits/coordinate-native-control-plan-checks-20261008/verify_saved.py": {
+      "bytes": 14042,
+      "sha256": "8ba58db16e6a3060023974eaa35242baaad1013a9b501524193b1451add4d7ff"
+    },
+    "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py": {
+      "bytes": 17686,
+      "sha256": "8cbdf633df03cf856ef2148be7361515f07d32ccf10de9a8a95ddc8aeaf553bb"
+    },
+    "docs/audits/coordinate-public-caller-selection-checks-20261007/verify_saved.py": {
+      "bytes": 9815,
+      "sha256": "9814899ebb212d09f4d9d75af7ca35a6892366791ae8c9ea6e244656e32baf7e"
+    },
+    "docs/audits/coordinate-public-capture-checks-20261007/verify_saved.py": {
+      "bytes": 8542,
+      "sha256": "e43b753fe6eea4d292c95ab064a710bcf0be803c338b942c085727aecce1d532"
+    },
+    "docs/audits/coordinate-public-hypotheses-checks-20261007/verify_saved.py": {
+      "bytes": 6729,
+      "sha256": "9a1a9d904338fc2cc4c2ec1d453f99cd70b3e3740d0efd01b9e09bd04c458b89"
+    },
+    "docs/audits/coordinate-public-origin-hypotheses-checks-20261007/verify_saved.py": {
+      "bytes": 10096,
+      "sha256": "c3c9052232824d3f7ae724362824dbd2538c173329122112e4298791d9440eb4"
+    },
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/verify_saved.py": {
+      "bytes": 12408,
+      "sha256": "78cae6f525b3f8304db270ca6996308e00b12e482da62ceb958debbd989ddf12"
+    },
+    "docs/audits/coordinate-source-catalog-checks-20261007/verify_saved.py": {
+      "bytes": 8373,
+      "sha256": "1629ddadb9866d15839b4a33cc135a248665e4644a1f0270625063059f858148"
+    }
+  },
+  "reconstruction": {
+    "bytes": 311079,
+    "sha256": "2db0147f77f5963a8f9549b57969c24e86b81a4de33e22807e6648dcdbdf9fd4"
+  },
+  "role": "Whole dated finite own public caller/boundary/origin and native-control qualification only. Final publication, original-coordinate intake and original/private/formatter/toolchain/address identities remain pending."
+}

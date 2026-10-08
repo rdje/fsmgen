@@ -964,7 +964,7 @@ retain complete source, command, output, frame and error bytes. For these own
 fixtures, multiline calls and block eval boundaries select their opening lines;
 when both source alternatives occupy the same line, both labels remain valid.
 The readers replay pre-native sources, captured custody and caller/boundary
-selection. Native wrong-caller, line and source controls remain pending:
+selection. Their historical scopes remain separate from the native-control qualification below:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-hypotheses-20261007/verify.py
@@ -1018,12 +1018,23 @@ filename refusals against the unchanged good-source predicates. The source-ident
 fresh-root variant passes all caller, boundary and origin checks, then refuses the
 unchanged base-root admission. Independent binary-source and whole-wire reconstruction
 preserves every actual root, source difference, raw frame, argument and error byte.
-This closes finite native falsification; whole public qualification/publication and
+This closes finite native falsification; final public recipe/fact publication and
 original/private/formatter/toolchain/address identities remain open. Read saved
 semantic results without executing any capture:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-semantic-20261008/verify.py
+```
+
+The complete finite public qualification now authenticates the whole committed
+source, caller, boundary, origin and native-control domains and consumes their
+fresh independent results. Every selected and coincident source alternative,
+raw byte and intended native refusal retains its original dated scope.
+The joined reader checks saved data and preserves explicit identity gaps;
+final public recipe/fact publication and original-coordinate intake remain later steps:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-qualification-20261008/verify.py
 ```
 
 The own subtest source model now assigns original refusals to their complete

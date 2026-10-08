@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-public-caller-selection-20261007/verify.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+      "bytes": 1261,
+      "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+    },
+    "docs/audits/record-value-coordinate-public-caller-selection-20261007/verify.py": {
+      "bytes": 11623,
+      "sha256": "63cff4170b22b88882dbce4d540403cbe5be22d710602ebf6c65f7bb7538ef5f"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 24726; host 63.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete predeclared public caller/boundary selections and genuine candidate controls; origins and native semantic controls remain pending.\n"
+}

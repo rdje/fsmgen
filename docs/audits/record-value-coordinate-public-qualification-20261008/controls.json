@@ -1,0 +1,65 @@
+[
+  {
+    "candidate_identity": {
+      "bytes": 309010,
+      "sha256": "c79d345d790fe9590908c6415baea4152b4676d2fdf22be3fe39d7c397b0fb0a"
+    },
+    "cause": "whole public actual domain allocation",
+    "control": "lost-domain",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 311083,
+      "sha256": "d1fe7fd22a5936d107e7a06d3273480700f9a2e925f0386ef1a78e0f01cffa0d"
+    },
+    "cause": "whole public actual integer success",
+    "control": "Boolean-status",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 310908,
+      "sha256": "a5e911bc4e5cce7acf19195de627fd54e2dd2d16dd90bcaf72a3d30c70a1020c"
+    },
+    "cause": "whole public actual command/streams/instruments",
+    "control": "borrowed-programme",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 310923,
+      "sha256": "91bd09a48965051ccd10326359ade8ddf0ca9f5e0632118e180245e09b742953"
+    },
+    "cause": "whole public actual command/streams/instruments",
+    "control": "lost-actual-output",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 311068,
+      "sha256": "93881c2d0ed9a67ba9b9e3aa0eb2543417c18f24b03d06cd5234145bad8cf063"
+    },
+    "cause": "whole public selection/ambiguity/refusal and actual result join",
+    "control": "lost-equivalent-label",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 311039,
+      "sha256": "ac6bc05f62d1e73f5d24a1eb16547b2a5e757e24cec62d356c3b163e4197fff1"
+    },
+    "cause": "whole public selection/ambiguity/refusal and actual result join",
+    "control": "lost-native-refusal",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 310900,
+      "sha256": "ee9a0be762174d4cb41aff3f5e797accf9d232fefb9610dd6e1ea369a03524f1"
+    },
+    "cause": "finite public qualification cannot promote pending identities",
+    "control": "original-identity-promotion",
+    "status": 1
+  }
+]

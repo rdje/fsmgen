@@ -1,0 +1,128 @@
+{
+  "actual": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+        "bytes": 1261,
+        "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+      },
+      "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py": {
+        "bytes": 11434,
+        "sha256": "b988a1062cdbfb99485d2336410c6f7eb9be6fe9c90fe0d1411b3d671c5038b3"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 29594; host 80.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS independent complete public source/wire/result qualification and genuine controls; no original identity or capture execution.\n"
+  },
+  "controls": [
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+            "bytes": 1261,
+            "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+          },
+          "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py": {
+            "bytes": 11434,
+            "sha256": "b988a1062cdbfb99485d2336410c6f7eb9be6fe9c90fe0d1411b3d671c5038b3"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": false,
+        "stderr": "ram-guard: PID 29594; host 80.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS independent complete public source/wire/result qualification and genuine controls; no original identity or capture execution.\n"
+      },
+      "cause": "actual whole-public reader integer success",
+      "control": "Boolean-status",
+      "status": 1
+    },
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+            "bytes": 1261,
+            "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 29594; host 80.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS independent complete public source/wire/result qualification and genuine controls; no original identity or capture execution.\n"
+      },
+      "cause": "actual whole-public command/streams/instruments",
+      "control": "borrowed-reader",
+      "status": 1
+    },
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+            "bytes": 1261,
+            "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+          },
+          "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py": {
+            "bytes": 11434,
+            "sha256": "b988a1062cdbfb99485d2336410c6f7eb9be6fe9c90fe0d1411b3d671c5038b3"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 29594; host 80.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": ""
+      },
+      "cause": "actual whole-public command/streams/instruments",
+      "control": "lost-output",
+      "status": 1
+    }
+  ],
+  "independent_proof": {
+    "bytes": 5503,
+    "sha256": "2585a0e2bba523d76a2a89d3492c4120661b34aee064ad5c406ef473f648b42f"
+  },
+  "programme": {
+    "bytes": 1650,
+    "sha256": "44fe257eb04d8533725fafb115cd20874943501cfd8944d22232d9d003a0f9d6"
+  },
+  "scope": "Actual dated finite public qualification consumed. Final publication and every original/private/formatter/toolchain/address identity remain pending."
+}

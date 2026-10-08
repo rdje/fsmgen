@@ -1,0 +1,16 @@
+{
+  "adopted_local_references": [
+    "README_POLICY.md",
+    "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+    "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md"
+  ],
+  "checked_utc": "2026-10-08T08:03:13.223529+00:00",
+  "cleanup_due": false,
+  "cleanup_utc": "2026-10-07T11:31:21.201509+00:00",
+  "policy_updated": false,
+  "read_only_shared_source": "../pgen/docs/CLAIM_VERIFICATION.md",
+  "reviewed_policy_sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd",
+  "revision": "7a5446252d380e9a6fc784c0b44dc1e9a36d016f",
+  "scope": "Scoped R13 task/source/public-caller/boundary/origin/native-control interfaces and book reviewed; original native captures will not execute; no exhaustive repository/history audit claimed.",
+  "unchanged_cleanup_record_sha256": "5222058429d9ad01cca86482c2ecb03ecb22652afb45813570d271f6d0f5e729"
+}

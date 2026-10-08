@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "git",
+    "log",
+    "-S",
+    "Native wrong-caller, line and source controls remain pending:",
+    "--format=%H %s",
+    "7a5446252",
+    "--",
+    "docs/book/src/13k-isf-feature-support-matrix.md"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+      "bytes": 1261,
+      "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+    },
+    "docs/book/src/13k-isf-feature-support-matrix.md": {
+      "bytes": 208796,
+      "sha256": "77cd01291a732e532723a45d4b95fab503baccb644b3032c69716ac7a203e8e7"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 31674; host 47.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "e78541a5a84559c56cbef73d9afe5cbe1f1e498a SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.2: join all retained public trace and confess origins\n"
+}

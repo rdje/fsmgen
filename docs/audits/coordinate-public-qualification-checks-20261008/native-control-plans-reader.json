@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-native-control-plan-checks-20261008/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-plan-checks-20261008/verify_saved.py": {
+      "bytes": 14042,
+      "sha256": "8ba58db16e6a3060023974eaa35242baaad1013a9b501524193b1451add4d7ff"
+    },
+    "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+      "bytes": 1261,
+      "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 26063; host 72.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS independent whole source-only variant plans, binary spans, genuine refusing controls and actual seal custody; native execution remains pending.\n"
+}

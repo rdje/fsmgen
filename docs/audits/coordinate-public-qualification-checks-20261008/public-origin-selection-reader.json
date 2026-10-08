@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-origin-selection-checks-20261007/verify_saved.py": {
+      "bytes": 12408,
+      "sha256": "78cae6f525b3f8304db270ca6996308e00b12e482da62ceb958debbd989ddf12"
+    },
+    "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+      "bytes": 1261,
+      "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 25744; host 72.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"controls\": [{\"cause\": \"selected public origin lines retain integer kind\", \"control\": \"Boolean-origin-line\", \"status\": 1}, {\"cause\": \"whole independent origin source/raw allocation and unresolved scope\", \"control\": \"false-closing-origin\", \"status\": 1}, {\"cause\": \"whole independent origin source/raw allocation and unresolved scope\", \"control\": \"lost-equivalent-label\", \"status\": 1}, {\"cause\": \"whole unnormalized selected public origin byte partition\", \"control\": \"lost-private-body-bytes\", \"status\": 1}, {\"cause\": \"whole independent origin source/raw allocation and unresolved scope\", \"control\": \"borrowed-origin-allocation\", \"status\": 1}, {\"cause\": \"whole independent origin source/raw allocation and unresolved scope\", \"control\": \"configuration-promotion\", \"status\": 1}, {\"cause\": \"whole independently fixed source/hypothesis/raw-wire origin input\", \"control\": \"forged-raw-body-with-new-hash\", \"status\": 1}], \"members\": 6, \"origins_per_run\": [18, 18], \"runs\": 2, \"scope\": \"Dated finite own public origin-header selection only; exact retained fixture grammar. All raw bodies/frames/arguments remain intact. Public global/internal/formatter states and every original/private/formatter/toolchain identity remain unmeasured. Genuine executed native bad variants and original-coordinate intake remain pending.\"}\n"
+}

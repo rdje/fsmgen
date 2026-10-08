@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-qualification-checks-20261008/consume_actual.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-qualification-checks-20261008/consume_actual.py": {
+      "bytes": 3435,
+      "sha256": "a27746a5a1d020e88018308620dd0f0080e95c2f2a848dd2255bb19e71395429"
+    },
+    "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+      "bytes": 1261,
+      "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 31590; host 47.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS whole independent public qualification actual result custody and genuine controls; final publication and original identities remain pending.\n"
+}

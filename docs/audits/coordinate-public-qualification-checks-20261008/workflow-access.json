@@ -1,0 +1,26 @@
+{
+  "approved_process_inspection_and_git_writes": true,
+  "binding_only": true,
+  "first_binding_programme": "first-binding-producer.py.txt",
+  "first_process_inspection_receipt": "first-public-hypotheses-model.json",
+  "first_schedule": "first-execute_readers.py.txt",
+  "git_index_attempt": {
+    "command": [
+      "git",
+      "add",
+      "MEMORY.md",
+      "docs/TASK_TREE.md",
+      "docs/book/src/13k-isf-feature-support-matrix.md",
+      "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+      "doctrine/live_document_size/surfaces.jsonl",
+      "docs/audits/coordinate-public-qualification-checks-20261008",
+      "docs/audits/record-value-coordinate-public-qualification-20261008"
+    ],
+    "result": "No slice was staged. Subsequent no-configured-implementation exemption was not counted as acceptance; approved staging and a fresh evidence-backed staged-index pass followed.",
+    "status": null,
+    "status_gap": "The combined shell continued to an unstaged exemption and returned 0; the failed Git command status was not separately captured. No acceptance or staging success is inferred from that shell result.",
+    "stderr": "Normalized diagnostic: Git could not create repository .git/index.lock because operation was not permitted."
+  },
+  "guard_limits_unchanged": true,
+  "native_capture_executed": false
+}

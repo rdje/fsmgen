@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-native-semantic-20261008/verify.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+      "bytes": 1261,
+      "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+    },
+    "docs/audits/record-value-coordinate-native-semantic-20261008/verify.py": {
+      "bytes": 12749,
+      "sha256": "3de1261070d361c422335a8c80127f22f8cbd3bf74f16acbd3e86ae7414f0fe5"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 26401; host 75.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete retained native semantic refusals, positive wrong-root coordinates and genuine controls; no capture executes.\n"
+}

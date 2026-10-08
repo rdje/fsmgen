@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-public-origin-hypotheses-20261007/verify.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-qualification-checks-20261008/run.py": {
+      "bytes": 1261,
+      "sha256": "d2ddc770ede5cddd7f679c323e1da38d3fcfeb53074165dcbd1532af19a5f02b"
+    },
+    "docs/audits/record-value-coordinate-public-origin-hypotheses-20261007/verify.py": {
+      "bytes": 12265,
+      "sha256": "3e3134bf2f6005e4131e22a8263aa91517b70194f8464d753e2d73643d46cf45"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 25269; host 73.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete pure-source public origin hypotheses and genuine controls; trace/error origin interpretation remains pending.\n"
+}
