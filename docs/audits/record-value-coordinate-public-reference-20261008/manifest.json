@@ -1,0 +1,26 @@
+{
+  "actual-results.json": {
+    "bytes": 3484,
+    "sha256": "30fd0cd27b89e67d89bbf1da8d402b5f372e469c2f8e15295748e62c1466b4ce"
+  },
+  "binding.json": {
+    "bytes": 135873,
+    "sha256": "65868c87e7106551cf329c69b72bce93cf4fa36f56a27537328c3dde657805dc"
+  },
+  "controls.json": {
+    "bytes": 2249,
+    "sha256": "eac7c5f968bb1d97e04af79721ccbddcd6ee8c8d06251371157e0f17893aac43"
+  },
+  "recipes.json": {
+    "bytes": 86127,
+    "sha256": "80c99f89762d0e2ab7e7be06044114f5482aa7f51dfd245557ed3d2f36909006"
+  },
+  "scope.txt": {
+    "bytes": 1749,
+    "sha256": "dcd3dd116608ee0dbe03e11cc22a3240f263143ff3d1c2555f4d79808e18f79b"
+  },
+  "verify.py": {
+    "bytes": 9784,
+    "sha256": "6116de60e045a6009888d5dde37c02c70bddef6fc6a5ab615aece62fc3828897"
+  }
+}

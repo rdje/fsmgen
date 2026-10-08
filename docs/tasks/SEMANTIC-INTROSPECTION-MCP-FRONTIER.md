@@ -5234,9 +5234,33 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Publish qualified finite public recipes and close public-coordinate qualification.`
   Acceptance: `After .2 commits, authenticate the complete capture and semantic/native-control domains and actual independent results. Sync the full scoped mdBook/native guide and durable reader route, keep missing original/private/formatter/toolchain identity explicit, and close only the complete public finite recipe parent. Commit before whole original-source hypothesis composition .2.2.3 or any original-coordinate intake.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.1`
+  Status: `done`
+  Goal: `Publish a complete dated finite public recipe reference with whole source and actual-result custody.`
+  Acceptance: `Authenticate all committed public qualification and independent actual domains at 06d222d47. Derive every complete source-selected caller/boundary/origin recipe and every precommitted native refusal without interpreting original coordinates or replaying captures. Bind complete programme/source/products and actual results; independently rebuild the finite reference and reject lost domains, labels, kinds, roots, origins, refusals and identity promotion. Add scoped mdBook/native guidance; final current Knowledge Map route and parent closure remain .2/.3.`
+  Verification: `Whole fixed06d222d47 committed coordinate/source/capture/qualification/programme/actual member and completed-owner domain authenticates; fresh whole qualification, independent binary-source/raw-wire join and actual custody readers pass unchanged. Complete finite reference exposes every own caller, boundary and trace/confess origin with full source statements, selected/equivalent labels, root/filename and raw identity authority; all native expected/refused predicates retain. Independent fixed-Git/binary/LF/header reconstruction agrees; genuine omitted root/caller/boundary/origin/control, lost label, Boolean line, borrowed root/refusal and identity-promotion controls reject. Full actual independent proof/receipt consumes. Exact scoped book paragraphs and native table/route/label/status controls qualify; guarded focused current/book All tests successful Files3 Tests310 and book build pass. Current/copy freshness, exact aggregate/task declarations, final claim/staged doctrines and hooks gate this commit. Canonical non-growing reader route .2, final parent .3 and every original/private/formatter/toolchain/address/visual/HIAL/full-CI/push meaning retain owners.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.1: publish dated finite public coordinate recipes`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.2`
+  Status: `pending`
+  Goal: `Retain the public-coordinate reader route without Knowledge Map collection growth.`
+  Acceptance: `Before mutation, query the canonical record/tooling route, review exact semantic compaction and preserve every prior question and unique clause. Add a narrowly scoped public-fixture question/fact with unchanged total physical card bytes under existing rollover authority; update the maintained current reader expectation atomically. Preserve all old snapshots, sources, captured controls and qualifications. Independent clause/question/source/query/census and exact-capacity/borrowed-role controls, native delivery, focused and staged gates qualify the new route. No original-coordinate or original/private/formatter/toolchain identity promotion.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.3`
+  Status: `pending`
+  Goal: `Qualify final public recipe publication and close only the complete public-fixture parent.`
+  Acceptance: `After .1/.2 commit, authenticate complete reference, Knowledge Map current-route and actual result domains, independently qualify whole source/question/native publication and genuine scope/route/identity controls, then close only the finished public children and parent. Preserve all original/public raw bytes, exact dated scopes and unresolved original/private/formatter/toolchain identities. Commit before whole original source hypothesis composition or any new original-coordinate intake.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6955,3 +6979,9 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S 'Native wrong-caller, line and source controls remain pending:' at fixed7a5446252 identifies e78541a5a84559c56cbef73d9afe5cbe1f1e498a in coordinate-public-qualification-checks-20261008/root-cause.json. The whole prior book says both native controls pending and finite native falsification closed; the canonical completed .3 and unchanged saved-data readers qualify the latter. This slice joins the complete finite public domains and repairs that duplicate status while preserving every historical role/source/capture/seal.
 - [x] **ADDRESSED (verified)** — Complete fixed source/member/owner binding, all eight fresh primary/independent domain readers, sealed whole qualification, separate binary-source/wire/result reconstruction and actual receipt consumption pass. Deterministic full candidate controls reject omissions, Boolean status, borrowed programme/results, lost equivalent labels, changed origin/refusal and identity promotion. Exact first sandbox process-inspection failure/programme retain; approved read-only retry uses unchanged RAM limits and no spent capture. The whole book-source repair and native guide independently verify with genuine route/scope/status controls.
 - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 from guarded T2066/T1303/T1305 in coordinate-public-qualification-checks-20261008/focused.json. The mdBook build and complete source/native guide, exact aggregate and genuine controls pass. Final copied-source currency, fresh claim census, staged doctrine driver and normal hooks gate this slice. Final publication and original/private/formatter/toolchain/address, visual/HIAL/full-CI/push remain owned.
+
+## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S 'The complete finite public qualification now authenticates' identifies the exact 06d222d472d1d968ae563d08398fe15c73060337 qualification seam in coordinate-public-reference-checks-20261008/root-cause.json. Its completed whole typed/raw product deliberately precedes a finite source-selected reference and canonical current-route publication. This slice projects only qualified public fields, retaining full raw authority and pending original identities.
+- [x] **ADDRESSED (verified)** — Whole committed public/original source/result member and owner custody, all fresh prior primary/independent/actual readers, sealed complete finite recipe reference, independent binary-source/LF/header reconstruction and actual result consumption pass. Genuine missing root/caller/boundary/origin/control, lost equivalent label, Boolean line, borrowed root/refusal and identity-promotion controls refuse. Scoped source/native paragraphs and complete table cells independently verify with genuine route/scope/label/status controls; no spent capture executes.
+- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in coordinate-public-reference-checks-20261008/focused.json from guarded T2066/T1303/T1305. The mdBook build and whole native finite-reference guide pass. Final current source/copied-byte checks, exact aggregate/task measurement, final claim census, staged doctrines and normal hooks qualify the commit. Canonical route/final parent and original/private/formatter/toolchain/address/visual/HIAL/full-CI/push remain open.

@@ -1,0 +1,33 @@
+{
+  "controls": [
+    {
+      "cause": "whole finite-reference rendered paragraphs and scoped route",
+      "control": "record-value-coordinate-public-reference-20261008/verify.py",
+      "status": 1
+    },
+    {
+      "cause": "whole finite-reference rendered paragraphs and scoped route",
+      "control": "no original-coordinate intake is admitted by this reference.",
+      "status": 1
+    },
+    {
+      "cause": "whole finite-reference rendered table cells",
+      "control": "Preserve both labels when the alternatives coincide.",
+      "status": 1
+    },
+    {
+      "cause": "exact finite-reference native build success",
+      "control": "Boolean-native-status",
+      "status": 1
+    }
+  ],
+  "native": {
+    "bytes": 248747,
+    "sha256": "322f773f4b70e8997bb334704fa349f50cdba614bb81ca01760d862c387b307d"
+  },
+  "scope": "Complete dated finite reference source/native text/table only. Canonical route, final public parent and visual QA remain pending.",
+  "source": {
+    "bytes": 211008,
+    "sha256": "630603c4e27d74fa00828253d79acafce6bcd7dd25e259cf1789f02b4fa7ee5e"
+  }
+}

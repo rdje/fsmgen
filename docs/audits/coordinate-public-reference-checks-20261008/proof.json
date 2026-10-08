@@ -1,0 +1,187 @@
+{
+  "actual_results": [
+    {
+      "actual": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/record-value-coordinate-public-qualification-20261008/verify.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-reference-checks-20261008/run.py": {
+            "bytes": 1257,
+            "sha256": "389d7494087fed49f99cc92923e620645d6a2ca4e840cd7eccb1568ebefad9c6"
+          },
+          "docs/audits/record-value-coordinate-public-qualification-20261008/verify.py": {
+            "bytes": 11036,
+            "sha256": "6bdd04807a550bfc057989f2134c268c246829e36ca85241b350089b4e1a0607"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 59872; host 51.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS complete finite public coordinate qualification, whole actual results and controls; no capture executes or original identity qualifies.\n"
+      },
+      "name": "qualification"
+    },
+    {
+      "actual": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-qualification-checks-20261008/verify_saved.py": {
+            "bytes": 11434,
+            "sha256": "b988a1062cdbfb99485d2336410c6f7eb9be6fe9c90fe0d1411b3d671c5038b3"
+          },
+          "docs/audits/coordinate-public-reference-checks-20261008/run.py": {
+            "bytes": 1257,
+            "sha256": "389d7494087fed49f99cc92923e620645d6a2ca4e840cd7eccb1568ebefad9c6"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 59702; host 51.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS independent complete public source/wire/result qualification and genuine controls; no original identity or capture execution.\n"
+      },
+      "name": "independent"
+    },
+    {
+      "actual": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-public-qualification-checks-20261008/consume_actual.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-qualification-checks-20261008/consume_actual.py": {
+            "bytes": 3435,
+            "sha256": "a27746a5a1d020e88018308620dd0f0080e95c2f2a848dd2255bb19e71395429"
+          },
+          "docs/audits/coordinate-public-reference-checks-20261008/run.py": {
+            "bytes": 1257,
+            "sha256": "389d7494087fed49f99cc92923e620645d6a2ca4e840cd7eccb1568ebefad9c6"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 59848; host 51.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS whole independent public qualification actual result custody and genuine controls; final publication and original identities remain pending.\n"
+      },
+      "name": "actual"
+    }
+  ],
+  "controls": [
+    {
+      "candidate_identity": {
+        "bytes": 28421,
+        "sha256": "cf716cdedb40d90baec762f6d340fe4c262d3b4bc936ba6d5606f9b4d4fbac09"
+      },
+      "cause": "independent entire binary-source/reference allocation",
+      "control": "lost-root",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 46137,
+        "sha256": "da5360d0593cc38da2deb8d9e1cb37d19e0bd6946770e469ffc3ba6871d65d43"
+      },
+      "cause": "independent entire binary-source/reference allocation",
+      "control": "lost-origin",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 47577,
+        "sha256": "c40d38dc6bc2087e585038ad7c0a6365a87598c8fd4e5982a2f1a9f751ad70a0"
+      },
+      "cause": "independent entire binary-source/reference allocation",
+      "control": "lost-alternative",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 47591,
+        "sha256": "27b27bf2123b791ad866cddbfd6980376e1e657dcdf531bbaa8e54d09d643aaf"
+      },
+      "cause": "independent reference line kinds",
+      "control": "Boolean-line",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 47589,
+        "sha256": "e57450a7a8a7740ccb16afc6a55bcf5539b276dc2cc868266cc3fef70fa2892b"
+      },
+      "cause": "independent entire binary-source/reference allocation",
+      "control": "false-wrong-root",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 45445,
+        "sha256": "933cb5dfe52945b07c95149bcb453255a697c6000374db7fe451c5fc958f4d98"
+      },
+      "cause": "independent entire binary-source/reference allocation",
+      "control": "lost-native-control",
+      "status": 1
+    },
+    {
+      "candidate_identity": {
+        "bytes": 47426,
+        "sha256": "3f28b273291ab2b8d935667d53a0b27cdc71baa4be45c3a4392fd0688a02c7ad"
+      },
+      "cause": "independent finite reference identity gaps",
+      "control": "scope-promotion",
+      "status": 1
+    }
+  ],
+  "members": {
+    "actual-results.json": {
+      "bytes": 3484,
+      "sha256": "30fd0cd27b89e67d89bbf1da8d402b5f372e469c2f8e15295748e62c1466b4ce"
+    },
+    "binding.json": {
+      "bytes": 135873,
+      "sha256": "65868c87e7106551cf329c69b72bce93cf4fa36f56a27537328c3dde657805dc"
+    },
+    "controls.json": {
+      "bytes": 2249,
+      "sha256": "eac7c5f968bb1d97e04af79721ccbddcd6ee8c8d06251371157e0f17893aac43"
+    },
+    "recipes.json": {
+      "bytes": 86127,
+      "sha256": "80c99f89762d0e2ab7e7be06044114f5482aa7f51dfd245557ed3d2f36909006"
+    },
+    "scope.txt": {
+      "bytes": 1749,
+      "sha256": "dcd3dd116608ee0dbe03e11cc22a3240f263143ff3d1c2555f4d79808e18f79b"
+    },
+    "verify.py": {
+      "bytes": 9784,
+      "sha256": "6116de60e045a6009888d5dde37c02c70bddef6fc6a5ab615aece62fc3828897"
+    }
+  },
+  "reconstruction": {
+    "bytes": 47588,
+    "sha256": "d7edb6b91bc04e29877df8a25f7c24ee0bb4af5c7d04e1ef808a46b88dcaf9a0"
+  },
+  "role": "Dated complete finite own public coordinate recipes. Canonical current route, final public parent, original coordinates and original/private/formatter/toolchain/address identities remain pending."
+}

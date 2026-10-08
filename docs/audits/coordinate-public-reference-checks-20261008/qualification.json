@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/record-value-coordinate-public-qualification-20261008/verify.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-reference-checks-20261008/run.py": {
+      "bytes": 1257,
+      "sha256": "389d7494087fed49f99cc92923e620645d6a2ca4e840cd7eccb1568ebefad9c6"
+    },
+    "docs/audits/record-value-coordinate-public-qualification-20261008/verify.py": {
+      "bytes": 11036,
+      "sha256": "6bdd04807a550bfc057989f2134c268c246829e36ca85241b350089b4e1a0607"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 59872; host 51.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete finite public coordinate qualification, whole actual results and controls; no capture executes or original identity qualifies.\n"
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-reference-checks-20261008/consume_actual.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-reference-checks-20261008/consume_actual.py": {
+      "bytes": 3438,
+      "sha256": "c7bed5dd12c882440456fac87a1707555f97d436105f66e7d367863d839c0a95"
+    },
+    "docs/audits/coordinate-public-reference-checks-20261008/run.py": {
+      "bytes": 1257,
+      "sha256": "389d7494087fed49f99cc92923e620645d6a2ca4e840cd7eccb1568ebefad9c6"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 78092; host 50.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete independent finite reference actual custody and controls; canonical route, final public parent and original meanings remain pending.\n"
+}

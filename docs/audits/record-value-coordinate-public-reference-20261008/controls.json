@@ -1,0 +1,74 @@
+[
+  {
+    "candidate_identity": {
+      "bytes": 47185,
+      "sha256": "29951b5f114f9b49e158f163b975c855450ccc5a91954779d0cbb4e9a6db420f"
+    },
+    "cause": "complete public reference source/coordinate/ambiguity/refusal allocation",
+    "control": "lost-caller",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 47124,
+      "sha256": "acb00c301bb6f17a27629baef5b8145e10c7d816c91bc941b8e43fbc8528a1c9"
+    },
+    "cause": "complete public reference source/coordinate/ambiguity/refusal allocation",
+    "control": "lost-boundary",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 46137,
+      "sha256": "da5360d0593cc38da2deb8d9e1cb37d19e0bd6946770e469ffc3ba6871d65d43"
+    },
+    "cause": "complete public reference source/coordinate/ambiguity/refusal allocation",
+    "control": "lost-origin",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 47577,
+      "sha256": "c40d38dc6bc2087e585038ad7c0a6365a87598c8fd4e5982a2f1a9f751ad70a0"
+    },
+    "cause": "complete public reference source/coordinate/ambiguity/refusal allocation",
+    "control": "lost-equivalent-label",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 47590,
+      "sha256": "a0fd12147f72a0e46d8df441a88657cb48b9a674b3523a1406f55b5e7c1a8bcd"
+    },
+    "cause": "finite public reference integer coordinates",
+    "control": "Boolean-line",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 47553,
+      "sha256": "fdb4657b096ae1c20766564dab0e21018f816605e1730ddfbd600bab58b327bb"
+    },
+    "cause": "complete public reference source/coordinate/ambiguity/refusal allocation",
+    "control": "borrowed-root",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 47548,
+      "sha256": "068650e83a315051c2e8192820e9083f1f4dbb83c41d4f5316425f896ab8c558"
+    },
+    "cause": "complete public reference source/coordinate/ambiguity/refusal allocation",
+    "control": "lost-refusal",
+    "status": 1
+  },
+  {
+    "candidate_identity": {
+      "bytes": 47425,
+      "sha256": "92b7ab7935a5edbd145fbc4aa22ce458bbf35586252e68de7b25760f10614f95"
+    },
+    "cause": "finite public reference preserves pending identities",
+    "control": "identity-promotion",
+    "status": 1
+  }
+]

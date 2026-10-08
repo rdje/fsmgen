@@ -1031,11 +1031,34 @@ source, caller, boundary, origin and native-control domains and consumes their
 fresh independent results. Every selected and coincident source alternative,
 raw byte and intended native refusal retains its original dated scope.
 The joined reader checks saved data and preserves explicit identity gaps;
-final public recipe/fact publication and original-coordinate intake remain later steps:
+the canonical reader route and final public parent closure remain later steps; original-coordinate intake follows those:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-qualification-20261008/verify.py
 ```
+
+The dated finite public recipe reference exposes every declared call, boundary,
+origin alternative and intended native control refusal. Its source statements,
+byte identities, invocation roots and selected line labels come from the complete
+qualified captures above. The complete raw qualification remains the authority
+for every frame, argument and trace byte; this reference links its exact identity.
+
+| Retained public fixture meaning | Source-selected recipe |
+| --- | --- |
+| Own caller and eval boundary | Select the declared call target, legitimate source filename and opening or closing lexical line. Preserve both labels when the alternatives coincide. |
+| Multiline call and block eval | The recorded cases select their opening line. |
+| longmess origin | Join the header to the own observer call statement. |
+| confess origin | Join the header to the own confess statement inside eval. |
+| Native controls | Wrong caller, line and borrowed filename refuse their precommitted coordinate predicate. The source-identical fresh-root case passes coordinates, then refuses unchanged base-root admission. |
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-reference-20261008/verify.py
+```
+
+These recipes describe the retained own fixtures. Public configuration/private
+formatter state and original/provider/toolchain identities remain unmeasured.
+The non-growing canonical reader route and final public parent closure are
+separate successors; no original-coordinate intake is admitted by this reference.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the
