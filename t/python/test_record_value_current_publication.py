@@ -37,11 +37,14 @@ class CurrentPublicationTests(unittest.TestCase):
         for path, old, new in (
             (core, 'classes were unmeasured', 'classes were measured'),
             (observer, 'opaque retained evidence', 'formatter evidence'),
-            (tooling, 'destination-locality replay and factory native copied-byte checks remain required;',
-             'destination-locality replay and factory native copied-byte checks are optional;'),
+            (tooling, 'replay/factory native copied-byte checks stay required;',
+             'replay/factory native copied-byte checks are optional;'),
             (tooling, current.epoch_fact.QUESTION, 'borrowed historical epoch question?'),
             (tooling, 'same-volume committed-epoch', 'measured original private'),
-            (tooling, 'Compiler/HDL test results stay unchanged', 'Compiler/HDL test results change'),
+            (tooling, 'Compiler/HDL results stay unchanged', 'Compiler/HDL results change'),
+            (tooling, current.public_reference_fact.QUESTION, 'borrowed public recipe question?'),
+            (tooling, '../' + current.public_reference_fact.READER.removeprefix('docs/'), '../audits/borrowed-reader.py'),
+            (tooling, 'original coordinates/identities unmeasured', 'original coordinates/identities qualified'),
             (observer, current.COMMAND, self.prior['model']['COMMAND']),
             (core, '  - "what qualifies finite original exception classes?"\n', '')):
             with self.subTest(path=path, old=old):
@@ -81,6 +84,22 @@ class CurrentPublicationTests(unittest.TestCase):
         self.prior['check_current'](saved)
         self.refuse(lambda r: r.update(queries=copy.deepcopy(saved['queries'])),
                     'complete current target question ownership')
+
+    def test_public_reference_requires_complete_actual_success(self):
+        expected = current.public_reference_fact.SUCCESS
+        for status, stdout, stderr in ((0, expected, ''), (True, expected, ''),
+                (0.0, expected, ''), (1, expected, ''), (0, expected + 'extra\n', ''),
+                (0, expected, 'warning\n'), (0, '', '')):
+            with self.subTest(status=status, stdout=stdout, stderr=stderr):
+                actual = mock.Mock(returncode=status, stdout=stdout, stderr=stderr)
+                with mock.patch.object(current.subprocess, 'run', return_value=actual) as run:
+                    if type(status) is int and status == 0 and stdout == expected and not stderr:
+                        current.check_public_reference()
+                    else:
+                        with self.assertRaisesRegex(ValueError, '^complete actual dated public reference qualification$'):
+                            current.check_public_reference()
+                    run.assert_called_once_with(['python3', '-B', current.public_reference_fact.READER],
+                                                capture_output=True, text=True, cwd=current.ROOT)
 
     def test_unrelated_progress_is_checked_against_current_sources(self):
         canonical = dict(self.canonical)

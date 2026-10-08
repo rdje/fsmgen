@@ -10,6 +10,7 @@ from pathlib import Path
 
 import book_source_references as plane
 import record_value_epoch_fact as epoch_fact
+import record_value_public_reference_fact as public_reference_fact
 from decision_store_git import MAX_TRACKED_PATHS
 
 ROOT = plane.ROOT
@@ -71,6 +72,7 @@ def expected_cards(prior):
             result[path] = result[path].replace('date: 2026-10-07\n',
                 '  - "' + QUESTION + '"\ndate: 2026-10-07\n', 1).replace(OLD_SCOPE, NEW_SCOPE, 1)
             result[path] = epoch_fact.extend(result[path])
+            result[path] = public_reference_fact.extend(result[path])
     return result
 
 
@@ -178,6 +180,15 @@ def check_native(html, prior):
         require(' '.join(text.split()) in visible, 'native complete current retained scope and gaps')
 
 
+def check_public_reference():
+    """Consume the dated public reader, including its complete sealed custody."""
+    actual = subprocess.run(['python3', '-B', public_reference_fact.READER],
+                            capture_output=True, text=True, cwd=ROOT)
+    require(type(actual.returncode) is int and actual.returncode == 0
+        and actual.stdout == public_reference_fact.SUCCESS and actual.stderr == '',
+        'complete actual dated public reference qualification')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build', help='repository-relative current native book output')
@@ -194,6 +205,7 @@ def main():
     epoch = subprocess.run(['python3', '-B', str(EPOCH_CHECKS / 'verify_result.py')], capture_output=True, text=True)
     require(type(epoch.returncode) is int and epoch.returncode == 0
         and epoch.stdout == expected['stdout'] and epoch.stderr == '', 'complete actual historical epoch and native result qualification')
+    check_public_reference()
     canonical = sources()
     check(current_input(prior, canonical), canonical, prior, authority(prior))
     rows = plane.expected_rows()

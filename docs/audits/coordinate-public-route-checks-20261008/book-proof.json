@@ -1,0 +1,33 @@
+{
+  "controls": [
+    {
+      "cause": "whole native route guidance and identity gaps",
+      "control": "where are public coordinate recipes verified?",
+      "status": 1
+    },
+    {
+      "cause": "whole native route guidance and identity gaps",
+      "control": "record-value-coordinate-public-route-20261008/verify.py",
+      "status": 1
+    },
+    {
+      "cause": "whole native route guidance and identity gaps",
+      "control": "Original coordinates/identities remain unmeasured; visual QA remains pending.",
+      "status": 1
+    },
+    {
+      "cause": "exact route native build success",
+      "control": "Boolean-status",
+      "status": 1
+    }
+  ],
+  "native": {
+    "bytes": 249673,
+    "sha256": "51a27496520762276e74f7e293a5507b6af0960478894b09500bc62ce156d317"
+  },
+  "scope": "Complete route source delta and native text. Every copied canonical source has a separate full factory check; visual QA remains pending.",
+  "source": {
+    "bytes": 211888,
+    "sha256": "c4cc9fdab753745f5a315f4d31b8e3b1fb8fc1f505db5c895833aac836e8c5be"
+  }
+}

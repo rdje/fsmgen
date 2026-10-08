@@ -1,0 +1,13 @@
+{
+  "addition": "\nFind the public-fixture route or replay its exact source/question/capacity evidence:\n\n```bash\nknowledge-map/scripts/query_knowledge_map.sh 'where are public coordinate recipes verified?'\nscripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-route-20261008/verify.py\n```\n\nThe wording review conserves the named old propositions; exact byte, question,\nsource, census and actual-result controls are separate executable checks.\nOriginal coordinates/identities remain unmeasured; visual QA remains pending.\n",
+  "replacements": [
+    [
+      "the canonical reader route and final public parent closure remain later steps; original-coordinate intake follows those:",
+      "the canonical reader below now replays the dated public reference; final public parent closure precedes original-coordinate intake:"
+    ],
+    [
+      "The non-growing canonical reader route and final public parent closure are\nseparate successors; no original-coordinate intake is admitted by this reference.",
+      "The canonical tooling card now adds a dated public-fixture question and reader\nlink while preserving its original ordered questions and reviewed propositions.\nIts physical byte total decreases; collection authority stays unchanged.\nThe maintained current reader replays the complete public reference before\nchecking present canonical source, question and native copied-byte currency.\nFinal public parent closure remains pending; no original-coordinate intake is\nadmitted by this reference."
+    ]
+  ]
+}

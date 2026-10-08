@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-public-route-checks-20261008/first_proposal.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-route-checks-20261008/first_proposal.py": {
+      "bytes": 1381,
+      "sha256": "dede5398fd586f5dff070ac9d2e1d4b23ac73120815b3d211883336912c1effe"
+    },
+    "docs/audits/coordinate-public-route-checks-20261008/run.py": {
+      "bytes": 1253,
+      "sha256": "33d12e065294a1de53b3b7c7cec26f6d6cef3f5831367c0ca7b3486f64462744"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 65923; host 58.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-route-checks-20261008/first_proposal.py\", line 29, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-public-route-checks-20261008/first_proposal.py\", line 24, in main\n    model['extend'](before)\n    ~~~~~~~~~~~~~~~^^^^^^^^\n  File \"scripts/record_value_public_reference_fact.py\", line 86, in extend\n    raise ValueError('public-reference tooling extension must not grow physical card bytes')\nValueError: public-reference tooling extension must not grow physical card bytes\n",
+  "stdout": ""
+}

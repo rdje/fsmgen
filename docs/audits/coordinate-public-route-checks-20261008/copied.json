@@ -1,0 +1,29 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "scripts/book_source_references.py",
+    "--check",
+    "--verify-build",
+    ".artifacts/coordinate-public-route-book"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-public-route-checks-20261008/run.py": {
+      "bytes": 1253,
+      "sha256": "33d12e065294a1de53b3b7c7cec26f6d6cef3f5831367c0ca7b3486f64462744"
+    },
+    "scripts/book_source_references.py": {
+      "bytes": 11033,
+      "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 64207; host 65.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+}

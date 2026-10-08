@@ -1031,7 +1031,7 @@ source, caller, boundary, origin and native-control domains and consumes their
 fresh independent results. Every selected and coincident source alternative,
 raw byte and intended native refusal retains its original dated scope.
 The joined reader checks saved data and preserves explicit identity gaps;
-the canonical reader route and final public parent closure remain later steps; original-coordinate intake follows those:
+the canonical reader below now replays the dated public reference; final public parent closure precedes original-coordinate intake:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-qualification-20261008/verify.py
@@ -1057,8 +1057,24 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-
 
 These recipes describe the retained own fixtures. Public configuration/private
 formatter state and original/provider/toolchain identities remain unmeasured.
-The non-growing canonical reader route and final public parent closure are
-separate successors; no original-coordinate intake is admitted by this reference.
+The canonical tooling card now adds a dated public-fixture question and reader
+link while preserving its original ordered questions and reviewed propositions.
+Its physical byte total decreases; collection authority stays unchanged.
+The maintained current reader replays the complete public reference before
+checking present canonical source, question and native copied-byte currency.
+Final public parent closure remains pending; no original-coordinate intake is
+admitted by this reference.
+
+Find the public-fixture route or replay its exact source/question/capacity evidence:
+
+```bash
+knowledge-map/scripts/query_knowledge_map.sh 'where are public coordinate recipes verified?'
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-public-route-20261008/verify.py
+```
+
+The wording review conserves the named old propositions; exact byte, question,
+source, census and actual-result controls are separate executable checks.
+Original coordinates/identities remain unmeasured; visual QA remains pending.
 
 The own subtest source model now assigns original refusals to their complete
 authored named bodies. The observer saves the public subtest delegate, wraps the

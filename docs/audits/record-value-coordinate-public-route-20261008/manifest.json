@@ -1,0 +1,22 @@
+{
+  "binding.json": {
+    "bytes": 145267,
+    "sha256": "20accf7d598c4187943b20b51278edfa89484643a22376835712bd3b1d2a7997"
+  },
+  "controls.json": {
+    "bytes": 1870,
+    "sha256": "298f7783cb6202dbdbec38bae0d80f42fc2cd6bec2b3873bfd0a938f92468980"
+  },
+  "route.json": {
+    "bytes": 3197532,
+    "sha256": "0b35de361d0a4d7b9f6beacc167dd7b40f76515a40b94299cd6d86767394ef8c"
+  },
+  "scope.txt": {
+    "bytes": 1837,
+    "sha256": "859ab57d0d4ff5a5d5dc624506cc3dda88ef2ae0ad3aac7fe3fce51c52e422d6"
+  },
+  "verify.py": {
+    "bytes": 9061,
+    "sha256": "ef5db8675617292e19aed238247d6330ed328b67195a8f634bcf86b190cbf51c"
+  }
+}

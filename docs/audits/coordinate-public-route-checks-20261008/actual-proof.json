@@ -1,0 +1,128 @@
+{
+  "actual": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-public-route-checks-20261008/verify_saved.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-public-route-checks-20261008/run.py": {
+        "bytes": 1253,
+        "sha256": "33d12e065294a1de53b3b7c7cec26f6d6cef3f5831367c0ca7b3486f64462744"
+      },
+      "docs/audits/coordinate-public-route-checks-20261008/verify_saved.py": {
+        "bytes": 10127,
+        "sha256": "afccb4ab06ff7c4dd59e20d4aa5261049ce3e7d3b759d9f648ffe466ef7662a6"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 41063; host 74.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS independent whole public fact route, non-growing source census and exact global question allocation with genuine controls.\n"
+  },
+  "controls": [
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-public-route-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-route-checks-20261008/run.py": {
+            "bytes": 1253,
+            "sha256": "33d12e065294a1de53b3b7c7cec26f6d6cef3f5831367c0ca7b3486f64462744"
+          },
+          "docs/audits/coordinate-public-route-checks-20261008/verify_saved.py": {
+            "bytes": 10127,
+            "sha256": "afccb4ab06ff7c4dd59e20d4aa5261049ce3e7d3b759d9f648ffe466ef7662a6"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": false,
+        "stderr": "ram-guard: PID 41063; host 74.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS independent whole public fact route, non-growing source census and exact global question allocation with genuine controls.\n"
+      },
+      "cause": "actual whole-public reader integer success",
+      "control": "Boolean-status",
+      "status": 1
+    },
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-public-route-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-route-checks-20261008/run.py": {
+            "bytes": 1253,
+            "sha256": "33d12e065294a1de53b3b7c7cec26f6d6cef3f5831367c0ca7b3486f64462744"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 41063; host 74.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS independent whole public fact route, non-growing source census and exact global question allocation with genuine controls.\n"
+      },
+      "cause": "actual whole-public command/streams/instruments",
+      "control": "borrowed-reader",
+      "status": 1
+    },
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-public-route-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-public-route-checks-20261008/run.py": {
+            "bytes": 1253,
+            "sha256": "33d12e065294a1de53b3b7c7cec26f6d6cef3f5831367c0ca7b3486f64462744"
+          },
+          "docs/audits/coordinate-public-route-checks-20261008/verify_saved.py": {
+            "bytes": 10127,
+            "sha256": "afccb4ab06ff7c4dd59e20d4aa5261049ce3e7d3b759d9f648ffe466ef7662a6"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 41063; host 74.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": ""
+      },
+      "cause": "actual whole-public command/streams/instruments",
+      "control": "lost-output",
+      "status": 1
+    }
+  ],
+  "independent_proof": {
+    "bytes": 1711641,
+    "sha256": "b7b63b5ee11172e4321be876cda045f5dd9f726ddeacc26478951ff8af7bc1f8"
+  },
+  "programme": {
+    "bytes": 9061,
+    "sha256": "ef5db8675617292e19aed238247d6330ed328b67195a8f634bcf86b190cbf51c"
+  },
+  "scope": "Actual dated public route consumed. Final public parent and every original/private/formatter/toolchain/address identity remain pending."
+}

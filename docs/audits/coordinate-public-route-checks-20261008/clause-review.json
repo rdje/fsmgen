@@ -1,0 +1,88 @@
+{
+  "added_fact": "\n[Reader](../audits/record-value-coordinate-public-reference-20261008/verify.py): dated public fixtures; original coordinates/identities unmeasured.\n",
+  "added_question": "where are public coordinate recipes verified?",
+  "groups": [
+    {
+      "after": "`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` from invocation cwd,\nnot `docs/book`. From repository root, `../../.artifacts/` escapes. The reset publisher\nexposed this assumption when fresh local HTML was absent.\n",
+      "before": "`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` from the invocation\nworking directory, not `docs/book`. `../../.artifacts/` from the repository root therefore\nescapes it. The reset publisher exposed this mistaken assumption by failing to find fresh\nlocal HTML.\n",
+      "conserved_propositions": [
+        "relative destination resolves from invocation cwd",
+        "repository-root ../../.artifacts/ escapes",
+        "reset publisher exposed absent fresh local HTML"
+      ],
+      "name": "invocation-and-reset-diagnosis"
+    },
+    {
+      "after": "Reset recovery copied/hash-verified both exact misplaced books, consumed recovered\nHTML, deleted only old roots and censused residue. First carrier build was valid/local;\nthe later relative-destination check reused its render (historical receipt correction).\nCompiler/HDL results stay unchanged. Tracked miniature-book probe: another source\ndirectory; relative/absolute destinations from invocation cwd; fresh marker HTML;\nlocal same-volume paths; workspace removal. Manifest retains recovery.\n",
+      "before": "Reset recovery copied/hash-verified both exact misplaced books, consumed\nrecovered HTML, deleted only those old roots and censused residue. Its first\ncarrier build was valid/local; the later relative-destination check reused that\nrender, as the historical receipt corrects. Compiler/HDL test results stay unchanged.\nA tracked miniature-book probe uses another source directory to test relative/\nabsolute destinations from invocation cwd, requires fresh marker-bearing HTML\nand local same-volume paths, then removes its workspace. Manifest retains recovery.\n",
+      "conserved_propositions": [
+        "copy/hash verify both exact misplaced books",
+        "consume recovered HTML",
+        "delete only exact old roots and census residue",
+        "first carrier valid/local",
+        "later relative check reused render and historical receipt corrects it",
+        "compiler/HDL results unchanged",
+        "independent source directory relative/absolute cwd probe",
+        "fresh marker-bearing HTML",
+        "local same-volume paths",
+        "remove probe workspace",
+        "manifest retains recovery"
+      ],
+      "name": "reset-recovery-and-independent-probe"
+    },
+    {
+      "after": "`python3 -B scripts/book_source_references.py`: `--write` regenerates finite manifest/relative endpoints;\n`--check` verifies current sources; `--verify-build .artifacts/BOOK_OUTPUT` checks copied native bytes.\nOriginal destination-locality replay/source-plane qualification stay required.\nSource/assets stay in this repository on its volume; views add no chapter/copied prose.\n",
+      "before": "`python3 -B scripts/book_source_references.py --write` regenerates finite manifest/relative endpoints. `--check` qualifies current sources; `--verify-build .artifacts/BOOK_OUTPUT` also checks copied native bytes. Original destination-locality replay and recorded source-plane qualification remain required. Source/asset paths must stay inside this repository on its volume. No extra chapter/copied prose is added.\n",
+      "conserved_propositions": [
+        "manifest and relative endpoints regenerate in --write",
+        "--check verifies current",
+        "--verify-build verifies copied native bytes",
+        "original destination/source-plane replay required",
+        "repository and volume containment",
+        "no added chapter/copied prose"
+      ],
+      "name": "factory-modes-locality-and-retained-replays"
+    },
+    {
+      "after": "Source-qualified helper-card extension blocked original source-plane default\u2019s\nwhole-current helper call. Historical adapter switches only that call to existing\nhelper snapshot mode; all other original predicates/programmes/products conserve:\n",
+      "before": "A source-qualified helper-card extension obstructed original source-plane default\u2019s old\nwhole-current helper call. The qualified historical adapter changes only that call to\nexisting helper snapshot mode; every other original predicate/programme/product conserves.\nIts command is:\n",
+      "conserved_propositions": [
+        "qualified helper extension blocked old whole-current call",
+        "historical adapter only switches to existing snapshot mode",
+        "every other predicate/programme/product conserved",
+        "unchanged adapter command"
+      ],
+      "name": "helper-intervention-and-snapshot-conservation"
+    },
+    {
+      "after": "Historical pass proves no current card/query/reader/source currency. Current checks\ncomplete core/helper/tooling meanings/questions, unique book guide, canonical selection/\nendpoints/bytes/ignore policy, exact budgets/indexed members. Original destination-locality\nreplay/factory native copied-byte checks stay required; visual QA stays pending.\n",
+      "before": "Historical success proves no current card/query/reader/source currency. Current checks\ncomplete core/helper/tooling meanings/questions, unique book guidance, canonical\nselection/endpoints/bytes/ignore policy, exact budgets and indexed members. Original\ndestination-locality replay and factory native copied-byte checks remain required;\nvisual QA stays pending.\n",
+      "conserved_propositions": [
+        "historical result cannot prove current card/query/reader/source currency",
+        "complete core/helper/tooling meanings/questions",
+        "unique current guide",
+        "canonical selection/endpoints/bytes/ignore policy",
+        "exact budgets/indexed members",
+        "original destination and factory native checks required",
+        "visual QA pending"
+      ],
+      "name": "current-roles-and-native-obligations"
+    },
+    {
+      "after": "Canonical files use relative filesystem links to native-safe `.source.txt` views.\nNative clicks rewrote `.md.source.txt` to `.html` despite valid direct requests.\nEncode terminal `.md` as `.markdown`; href checks qualify encoding.\nViews retain complete UTF8 source/literal Markdown links.\n",
+      "before": "Relative filesystem links connect canonical files to native-safe `.source.txt` views.\nNative clicks rewrote `.md.source.txt` to `.html`; direct requests were valid.\nEncode terminal `.md` as `.markdown`. Href checks qualify encoding; views preserve\ncomplete UTF8 source/literal Markdown links.\n",
+      "conserved_propositions": [
+        "relative filesystem endpoints for canonical native-safe views",
+        "native click extension rewrite despite valid direct requests",
+        "terminal .md encoded .markdown",
+        "href verifies encoding",
+        "complete UTF8 source and literal Markdown links"
+      ],
+      "name": "native-source-links-and-encoding"
+    }
+  ],
+  "new_bytes": 4632,
+  "old_bytes": 4634,
+  "role": "Human review of exact six paragraph replacements; executable custody and controls do not prove universal prose equivalence.",
+  "unchanged_sections": "All text outside six named paragraphs, the date and the one added question/fact remains exact."
+}

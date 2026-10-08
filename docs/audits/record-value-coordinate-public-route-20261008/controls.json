@@ -1,0 +1,65 @@
+[
+  {
+    "candidate": {
+      "bytes": 3123760,
+      "sha256": "7ee4159456b5e1a9ba1ecd39481055a52c26784dfe0f16eca96c6a2e98448bd7"
+    },
+    "cause": "complete current target meanings questions metadata and replay routes",
+    "name": "lost-public-question",
+    "status": 1
+  },
+  {
+    "candidate": {
+      "bytes": 3123733,
+      "sha256": "8749546656d41f6b01d83a250e41a5e5bc3305480f11015712a34e4a480afe9a"
+    },
+    "cause": "complete current target meanings questions metadata and replay routes",
+    "name": "borrowed-public-reader",
+    "status": 1
+  },
+  {
+    "candidate": {
+      "bytes": 3123791,
+      "sha256": "a6b4da28005d3cb5514412ef801c1c02f010404bd0586f9bef6070115da837df"
+    },
+    "cause": "complete current target meanings questions metadata and replay routes",
+    "name": "original-identity-promotion",
+    "status": 1
+  },
+  {
+    "candidate": {
+      "bytes": 3123676,
+      "sha256": "75776bee36f8ee25fc4ef3afa16dae17c28afcea5e372eacecd5815c52b8c340"
+    },
+    "cause": "complete source-derived current global query allocation",
+    "name": "lost-global-row",
+    "status": 1
+  },
+  {
+    "candidate": {
+      "bytes": 3123792,
+      "sha256": "b221e45d8291d7593eff200d54e5012ff896249c6cbc8a45ec83130ad85bfe88"
+    },
+    "cause": "physical capacity kind/allowance: files",
+    "name": "Boolean-census",
+    "status": 1
+  },
+  {
+    "candidate": {
+      "bytes": 3123792,
+      "sha256": "1fbf3decddb334893085b37f327745cc4294c4614f58019fdf18269ffc3a580c"
+    },
+    "cause": "physical capacity kind/allowance: bytes_total",
+    "name": "positive-growth-over-authority",
+    "status": 1
+  },
+  {
+    "candidate": {
+      "bytes": 3123792,
+      "sha256": "071907f572f5d7133a38d3f4b4679c13b18dcc13167c2d270552896f73c6ffed"
+    },
+    "cause": "whole unchanged physical card authority",
+    "name": "widened-authority",
+    "status": 1
+  }
+]
