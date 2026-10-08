@@ -1,0 +1,12 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/artifact-sweep-due-checks-20261008/verify_actual.py"
+  ],
+  "status": 0,
+  "stderr": "ram-guard: PID 50521; host 61.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS complete actual census/reader results, typed status/result controls and immutable member conservation.\n"
+}

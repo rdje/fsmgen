@@ -6286,11 +6286,17 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.80`
-  Status: `pending`
+  Status: `done`
   Goal: `Perform the due daily safe artifact cleanup before repair integration.`
   Acceptance: `After .79 commits clean, own and census project log/bin/bytecode/stdout/stderr candidates plus published Rust release/deps/incremental locations without crossing Git/submodule or symlink boundaries. Last cleanup2026-10-07T11:31:21.201509+00:00 is past24 hours at fresh clock. Remove only100%-proven disposable artifacts; preserve compiler/native/audit, ambiguous evidence and current book. Complete independent membership/source/residue or explicit zero-deletion proof retains. Overwrite docs/ARTIFACT_CLEANUP.md with latest date/summary, keep book behavior aligned, update claim/task/pointer and ordinary gates, commit before .78.3. No deletion based only on age or suffix.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `From clean ada3084be3, the dated read-only census and independent rg/os.walk enumeration agree on all 9750 regular same-volume log/bin/bytecode/stdout/stderr candidates. Git, nested repository, symlink and foreign-volume boundaries exclude; all six conventional Rust locations are recorded. No candidate has authenticated safe-disposal authority, so all retain and no deletion executes. Prior committed cleanup text and its pickaxe history establish the due interval. Latest-only record is 2026-10-08T12:16:23.204525+00:00. First staged gate refused stale claim inventory because task-growth declarations changed after generation; final declarations precede regeneration. Complete census, prior/adapted programme sources, command/status/streams and immutable member seal retain in artifact-sweep-due-20261008 and artifact-sweep-due-checks-20261008. Independent saved reader and separate actual receipt regeneration pass; genuine omission/path/deletion/non-due/Boolean status/node-size and borrowed-time controls reject. Re-derivation is independent complete membership/metadata/receipt reconstruction; falsification is actual candidate intervention; durability is complete sealed source/results and task/Git. No artifact hash or future absence promise is inferred from dated node metadata. Existing book cleanup guidance remains accurate; fresh native/source-copy/claim/staged doctrines and hooks gate commit. Then resume .78.3 integration; native/HIAL/full-CI/push remain open.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S for the complete prior cleanup timestamp identifies its committed introduction; the whole prior record at ada3084be3 and exact fresh UTC interval establish why the daily sweep is due. Census and preserved boundaries identify the owned safe scope; no artifact has proved disposal authority.
+  - [x] **ADDRESSED (verified)** — Actual read-only census and independent enumeration conserve every dated member; sealed reader and separate complete actual receipt regeneration pass. Genuine population/path/deletion/time/kind controls reject. Latest-only record advances and all candidates retain.
+  - [x] **NO REGRESSION** — Commit requires [doctrine] all doctrine checks passed from the staged driver and normal hook. Complete saved reader, typed actual receipt controls, fresh native book and copied-source checks gate the exact cleanup record; product behavior and historical evidence remain unchanged.
 
 
 ## Implementation Notes From `.4`
