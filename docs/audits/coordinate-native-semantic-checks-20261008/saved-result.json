@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+      "bytes": 1256,
+      "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+    },
+    "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py": {
+      "bytes": 17686,
+      "sha256": "8cbdf633df03cf856ef2148be7361515f07d32ccf10de9a8a95ddc8aeaf553bb"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 90998; host 80.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS independent complete binary-source/native-wire semantic refusals and positive wrong-root coordinates; no original identity or whole-public promotion.\n"
+}

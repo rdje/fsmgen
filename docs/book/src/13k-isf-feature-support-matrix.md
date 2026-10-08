@@ -998,7 +998,7 @@ changes and expected caller, line, invocation-root and borrowed-source refusals.
 Each fresh control root is valid for capture custody. Root qualification compares
 its actual location with the unchanged base invocation; source controls compare
 coordinates with the unchanged good declarations. The source-only reader checks
-these plans before execution. Native semantic refusal qualification remains pending:
+the committed pre-execution plans:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-control-plans-20261008/verify.py
@@ -1007,10 +1007,23 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-
 Dated native executions now retain complete variant sources, raw caller frames,
 trace/error bytes, public tool metadata and per-run checkpoints in their declared
 fresh roots. The custody reader verifies these saved results without executing
-the captures again. Semantic refusal qualification remains a separate step:
+the captures again. Its dated custody scope remains separate from semantics:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-control-capture-20261008/verify.py
+```
+
+The saved native variants now qualify their precommitted caller, line and borrowed
+filename refusals against the unchanged good-source predicates. The source-identical
+fresh-root variant passes all caller, boundary and origin checks, then refuses the
+unchanged base-root admission. Independent binary-source and whole-wire reconstruction
+preserves every actual root, source difference, raw frame, argument and error byte.
+This closes finite native falsification; whole public qualification/publication and
+original/private/formatter/toolchain/address identities remain open. Read saved
+semantic results without executing any capture:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-semantic-20261008/verify.py
 ```
 
 The own subtest source model now assigns original refusals to their complete

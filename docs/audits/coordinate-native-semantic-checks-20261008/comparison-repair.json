@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-native-semantic-checks-20261008/verify_comparison.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+      "bytes": 1256,
+      "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+    },
+    "docs/audits/coordinate-native-semantic-checks-20261008/verify_comparison.py": {
+      "bytes": 2790,
+      "sha256": "9d95158ffb95cd40c7ae35fef52cb50e81517298a1dea835ee7f73903f49c518"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 12534; host 64.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS original schema failure, exact identity-field mapping and genuine changed-identity controls; no capture executes.\n"
+}

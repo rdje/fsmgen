@@ -1,0 +1,234 @@
+{
+  "actual": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+        "bytes": 1256,
+        "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+      },
+      "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py": {
+        "bytes": 17686,
+        "sha256": "8cbdf633df03cf856ef2148be7361515f07d32ccf10de9a8a95ddc8aeaf553bb"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 90998; host 80.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS independent complete binary-source/native-wire semantic refusals and positive wrong-root coordinates; no original identity or whole-public promotion.\n"
+  },
+  "comparison_conditions": {
+    "environment": [
+      {
+        "environment": {
+          "PERL5LIB": "",
+          "PERL5OPT": "",
+          "runtime_absolute_temporary_values": true,
+          "temporary_root": ".artifacts/public-coordinate-native/root-a/.tmp"
+        },
+        "invocation": {
+          "command": [
+            "perl",
+            "fixture.pl"
+          ],
+          "label": "root-a",
+          "root": ".artifacts/public-coordinate-native/root-a"
+        }
+      },
+      {
+        "environment": {
+          "PERL5LIB": "",
+          "PERL5OPT": "",
+          "runtime_absolute_temporary_values": true,
+          "temporary_root": ".artifacts/public-coordinate-native/root-b/.tmp"
+        },
+        "invocation": {
+          "command": [
+            "perl",
+            "fixture.pl"
+          ],
+          "label": "root-b",
+          "root": ".artifacts/public-coordinate-native/root-b"
+        }
+      },
+      {
+        "environment": {
+          "PERL5LIB": "",
+          "PERL5OPT": "",
+          "runtime_absolute_temporary_values": true,
+          "temporary_root": ".artifacts/public-coordinate-native-controls-20261008/wrong-caller/.tmp"
+        },
+        "invocation": {
+          "command": [
+            "perl",
+            "fixture.pl"
+          ],
+          "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-caller"
+        }
+      },
+      {
+        "environment": {
+          "PERL5LIB": "",
+          "PERL5OPT": "",
+          "runtime_absolute_temporary_values": true,
+          "temporary_root": ".artifacts/public-coordinate-native-controls-20261008/wrong-line/.tmp"
+        },
+        "invocation": {
+          "command": [
+            "perl",
+            "fixture.pl"
+          ],
+          "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-line"
+        }
+      },
+      {
+        "environment": {
+          "PERL5LIB": "",
+          "PERL5OPT": "",
+          "runtime_absolute_temporary_values": true,
+          "temporary_root": ".artifacts/public-coordinate-native-controls-20261008/wrong-root/.tmp"
+        },
+        "invocation": {
+          "command": [
+            "perl",
+            "fixture.pl"
+          ],
+          "root": ".artifacts/public-coordinate-native-controls-20261008/wrong-root"
+        }
+      },
+      {
+        "environment": {
+          "PERL5LIB": "",
+          "PERL5OPT": "",
+          "runtime_absolute_temporary_values": true,
+          "temporary_root": ".artifacts/public-coordinate-native-controls-20261008/borrowed-source/.tmp"
+        },
+        "invocation": {
+          "command": [
+            "perl",
+            "fixture.pl"
+          ],
+          "root": ".artifacts/public-coordinate-native-controls-20261008/borrowed-source"
+        }
+      }
+    ],
+    "executable_after": {
+      "bytes": 167184,
+      "sha256": "85e5621137742a37be052f58800372b2005f91f609ad55019832214b5d9e61bc"
+    },
+    "executable_before": {
+      "bytes": 167184,
+      "sha256": "85e5621137742a37be052f58800372b2005f91f609ad55019832214b5d9e61bc"
+    },
+    "public_modules": {
+      "carp": "1.52",
+      "json_pp": "4.06",
+      "perl": "v5.34.1",
+      "test_more": "1.302183"
+    }
+  },
+  "controls": [
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+            "bytes": 1256,
+            "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+          },
+          "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py": {
+            "bytes": 17686,
+            "sha256": "8cbdf633df03cf856ef2148be7361515f07d32ccf10de9a8a95ddc8aeaf553bb"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": false,
+        "stderr": "ram-guard: PID 90998; host 80.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS independent complete binary-source/native-wire semantic refusals and positive wrong-root coordinates; no original identity or whole-public promotion.\n"
+      },
+      "cause": "actual independent reader integer success",
+      "control": "Boolean-status",
+      "status": 1
+    },
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+            "bytes": 1256,
+            "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 90998; host 80.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": "PASS independent complete binary-source/native-wire semantic refusals and positive wrong-root coordinates; no original identity or whole-public promotion.\n"
+      },
+      "cause": "whole actual independent reader command/streams/instruments",
+      "control": "borrowed-instrument",
+      "status": 1
+    },
+    {
+      "candidate": {
+        "command": [
+          "scripts/run_with_ram_guard.sh",
+          "--",
+          "python3",
+          "-B",
+          "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py"
+        ],
+        "instruments": {
+          "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+            "bytes": 1256,
+            "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+          },
+          "docs/audits/coordinate-native-semantic-checks-20261008/verify_saved.py": {
+            "bytes": 17686,
+            "sha256": "8cbdf633df03cf856ef2148be7361515f07d32ccf10de9a8a95ddc8aeaf553bb"
+          },
+          "scripts/run_with_ram_guard.sh": {
+            "bytes": 10663,
+            "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+          }
+        },
+        "status": 0,
+        "stderr": "ram-guard: PID 90998; host 80.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+        "stdout": ""
+      },
+      "cause": "whole actual independent reader command/streams/instruments",
+      "control": "lost-actual-output",
+      "status": 1
+    }
+  ],
+  "independent_proof_identity": {
+    "bytes": 2837020,
+    "sha256": "814d3242e3037538c9b145817790dcbc76477e91a7b048b8d1b4eb31aa485cea"
+  },
+  "scope": "Dated fixed inputs and actual readers only; no spent capture replay, unmeasured original identity or whole-public signoff."
+}

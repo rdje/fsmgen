@@ -5168,11 +5168,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Capture and qualify genuine native wrong-caller/line/root/borrowed-source controls.`
   Acceptance: `After selected public recipes commit, execute independently authored bad native fixture variants under the unchanged tool/guard/locality recipes. Retain every complete source/command/status/stream/frame/error and classify intended separating refusals for wrong caller, line, invocation root and borrowed source. Independently consume all real control results; copied custody mutations alone cannot satisfy native semantic falsification.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `All source-plan, one-time capture-custody and native semantic qualification children are complete. Whole saved native source/wire and precommitted refusals authenticate without capture replay; wrong-root keeps every positive coordinate. Independent binary reconstruction and genuine source/refusal/root/kind/member/actual controls qualify finite native falsification only. Whole public qualification .4, publication .3 and original/private/formatter/toolchain/address/visual/HIAL/full-CI/push successors remain open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3: qualify genuine native coordinate refusals`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3`
 
@@ -5208,11 +5208,21 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.2: retain one-time native control capture custody`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Independently qualify every genuine native variant against its precommitted expected refusal.`
   Acceptance: `After .2 commits, authenticate all native control plan/capture/actual domains. Qualify wrong caller, line and borrowed filename through unchanged good-source public coordinate predicates and wrong root through unchanged base invocation admission, while preserving native actual roots and every raw byte. Keep controlled comparison inputs explicit; classify every intended refusal independently from binary good/variant source and full actual wire. Qualify positive coordinate checks for the source-identical wrong-root case and genuine lost/refusal/source/promotion controls. Close only finite native semantic falsification, then whole public qualification .4.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Whole fixed857ba3048 source/plan/capture/programme/actual domains and every completed owner authenticate. Unchanged good-source caller/boundary/origin predicates classify every complete saved native variant; all precommitted target refusals agree. Source-identical wrong-root passes every caller, boundary and origin coordinate before unchanged base admission refuses. Complete native actual roots/source differences/raw streams/frames/errors/arguments retain. Both whole good captures serve positive comparisons. Independent binary source/LF/header/wire reconstruction agrees, and genuine run/refusal/source/kind/root/promotion plus actual status/instrument/identity controls reject. Immutable semantic seal and independently consumed actual results conserve. Initial comparison-schema failure and exact repair remain child-owned. Guarded focused current/book All tests successful Files3 Tests310; whole scoped native guide and exact aggregate pass. Current source/copied native/claim/staged doctrines and normal hooks qualify commit. Whole public qualification/publication remains .4/.3-owned; original/private/formatter/toolchain/address/current-fact/visual/HIAL/full-CI/push meanings remain open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3: qualify genuine native coordinate refusals`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3.1`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3.1`
+  Status: `done`
+  Goal: `Repair the actual comparison consumer’s historical executable-identity field assumption.`
+  Acceptance: `Preserve the complete first consumer programme and actual KeyError before edits. The good capture declares executable_identity; the newer control capture separately declares executable_before and executable_after. Compare these exact declared identities without altering captures, then retain successful actual result consumption and genuine changed-identity/status/instrument controls. No spent capture or source/model seal changes.`
+  Verification: `First complete consumer programme and actual KeyError retain. Independent unchanged replay reproduces the original executable_before field failure; good executable_identity maps exactly to the newer before/after fields. Captured identities and public module versions agree; every actual isolated environment/root recipe conserves. Actual independent receipt/status/instrument controls and changed-before/after identity controls reject. Corrected actual consumption passes without capture, source or seal changes.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3: qualify genuine native coordinate refusals`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.4`
@@ -6933,3 +6943,9 @@ python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verif
 - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S in docs/audits/coordinate-native-control-capture-checks-20261008/root-cause.json locates the committed ef5 source-only plan boundary and its explicit pending capture/refusal scope. Complete committed plans and their independent actual qualifications bind the four exact fixture sources and invocation contracts before execution.
 - [x] **ADDRESSED (verified)** — Every committed native variant runs in its fresh same-volume root with a prior spent-admission marker and immediate full per-run checkpoints. Complete command/status/source/stream/raw frame/error/argument/tool/environment bytes retain. All sources conserve before/after. Independent whole fixed-Git binary-source/raw-stream/checkpoint reconstruction and actual-result consumption pass; genuine typed/member/root/source/wire/instrument/promotion controls reject. This closes dated capture custody only: independently selected native semantic refusals remain the next owner. Source/native guide and exact aggregate synchronize without changing predecessor captures or seals.
 - [x] **NO REGRESSION** — Guarded focused prove reports All tests successful, Files=3, Tests=310 in docs/audits/coordinate-native-control-capture-checks-20261008/focused.json. Fresh prior plan reader, complete sealed custody and independent saved/native-guide checks pass. Final current/native copied-source delivery, claim inventory, staged doctrine gate and normal hooks qualify the commit. No original/private/formatter/toolchain/address, visual or HIAL/full-CI/push closure follows; decision0116 owns the clean context-refresh checkpoint before semantic qualification.
+
+## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'semantic refusal selection remains pending' -1 against the committed capture producer pins the exact custody-only predecessor 857ba30485c5a176263e6e5779779051294d6f23. Its complete actual source/plan/wire custody deliberately leaves semantic decisions pending. The new unchanged-predicate consumer and independent binary-source reader qualify those saved decisions. Exact command/streams/instruments retain in coordinate-native-semantic-checks-20261008/root-cause-final.json; no spent capture executes.
+- [x] **ADDRESSED (verified)** — The model verify.py --seal, separate verify_saved.py and consume_actual.py retain complete semantic products and actual independent results. Caller, line and borrowed-source targets refuse exactly as precommitted; source-identical wrong-root coordinates pass before base-root admission refuses. Every raw root/source/frame/error byte conserves. Producer and independent genuine member/refusal/source/kind/promotion controls reject. Complete first comparison-schema failure, original programme, unchanged failure replay and exact field-map/changed-identity controls remain under child .1.
+- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 from the guarded T2066/T1303/T1305 run, retained with actual command/status/streams/instruments in coordinate-native-semantic-checks-20261008/focused.json. Native mdBook source/text guide, exact aggregate and genuine scope/route/status controls pass. Final fresh source-copy/native currency, claim inventory and staged scripts/check_doctrines.sh plus normal hooks gate this slice. Whole public/original/private/formatter/toolchain/address/visual/HIAL/full-CI/push closure is not claimed.

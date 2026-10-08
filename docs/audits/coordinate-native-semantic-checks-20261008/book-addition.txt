@@ -1,0 +1,13 @@
+
+The saved native variants now qualify their precommitted caller, line and borrowed
+filename refusals against the unchanged good-source predicates. The source-identical
+fresh-root variant passes all caller, boundary and origin checks, then refuses the
+unchanged base-root admission. Independent binary-source and whole-wire reconstruction
+preserves every actual root, source difference, raw frame, argument and error byte.
+This closes finite native falsification; whole public qualification/publication and
+original/private/formatter/toolchain/address identities remain open. Read saved
+semantic results without executing any capture:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-coordinate-native-semantic-20261008/verify.py
+```

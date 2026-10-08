@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-native-control-capture-checks-20261008/verify_saved.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-control-capture-checks-20261008/verify_saved.py": {
+      "bytes": 11046,
+      "sha256": "8e1cd881ae28cfa969aeb04c749749d76774ff28487b1b26bcd272ee4470de68"
+    },
+    "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+      "bytes": 1256,
+      "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 2,
+  "stderr": "ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval\n",
+  "stdout": ""
+}

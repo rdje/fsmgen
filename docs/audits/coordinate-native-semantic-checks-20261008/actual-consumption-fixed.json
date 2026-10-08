@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-native-semantic-checks-20261008/consume_actual.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-semantic-checks-20261008/consume_actual.py": {
+      "bytes": 4257,
+      "sha256": "25684e159fdc75923dcbf201c99c38701d08448ed7df534174365e5e5506988f"
+    },
+    "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+      "bytes": 1256,
+      "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 11029; host 58.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "PASS actual independent reader custody and explicit captured comparison conditions; original identities and whole-public qualification remain pending.\n"
+}

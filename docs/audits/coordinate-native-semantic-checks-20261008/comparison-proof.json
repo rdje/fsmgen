@@ -1,0 +1,65 @@
+{
+  "after": {
+    "bytes": 167184,
+    "sha256": "85e5621137742a37be052f58800372b2005f91f609ad55019832214b5d9e61bc"
+  },
+  "before": {
+    "bytes": 167184,
+    "sha256": "85e5621137742a37be052f58800372b2005f91f609ad55019832214b5d9e61bc"
+  },
+  "controls": [
+    {
+      "candidate": {
+        "bytes": 167184,
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "cause": "captured interpreter identities must agree across declared schema fields",
+      "control": "executable_before",
+      "status": 1
+    },
+    {
+      "candidate": {
+        "bytes": 167184,
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "cause": "captured interpreter identities must agree across declared schema fields",
+      "control": "executable_after",
+      "status": 1
+    }
+  ],
+  "first_actual": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-native-semantic-checks-20261008/consume_actual.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-native-semantic-checks-20261008/consume_actual.py": {
+        "bytes": 4210,
+        "sha256": "70eb924462df47d68209c4861167f964c37763d1e96de747f7070c3233fdd189"
+      },
+      "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+        "bytes": 1256,
+        "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 1,
+    "stderr": "ram-guard: PID 6714; host 64.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-native-semantic-checks-20261008/consume_actual.py\", line 77, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-native-semantic-checks-20261008/consume_actual.py\", line 54, in main\n    need(good['tools'][name] == native['tools'][name], 'same captured opaque interpreter bytes for controlled comparison')\n         ~~~~~~~~~~~~~^^^^^^\nKeyError: 'executable_before'\n",
+    "stdout": ""
+  },
+  "good_identity": {
+    "bytes": 167184,
+    "sha256": "85e5621137742a37be052f58800372b2005f91f609ad55019832214b5d9e61bc"
+  },
+  "original_programme": {
+    "bytes": 4210,
+    "sha256": "70eb924462df47d68209c4861167f964c37763d1e96de747f7070c3233fdd189"
+  },
+  "scope": "Exact declared historical/new field mapping only; no capture, source or seal changes."
+}

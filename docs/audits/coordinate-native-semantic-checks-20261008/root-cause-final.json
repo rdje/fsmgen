@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "git",
+    "log",
+    "-S",
+    "semantic refusal selection remains pending",
+    "-1",
+    "857ba30485c5a176263e6e5779779051294d6f23",
+    "--",
+    "docs/audits/record-value-coordinate-native-control-capture-20261008/capture.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-native-semantic-checks-20261008/run.py": {
+      "bytes": 1256,
+      "sha256": "a1b22f6d43ded6ceb59fc25d5f9578787c82f1d0f43b4d940c88050c3bdba148"
+    },
+    "docs/audits/record-value-coordinate-native-control-capture-20261008/capture.py": {
+      "bytes": 6985,
+      "sha256": "a79cd50fae07b60bd670a61ec53b66b60cc2a2b144fe1d044b8cef90d34821d1"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 37314; host 68.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "commit 857ba30485c5a176263e6e5779779051294d6f23\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Thu Oct 8 00:47:22 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.2: retain one-time native control capture custody\n    \n    Authenticate the complete committed native control plans before executing every declared fresh variant once. Retain full source/command/status/stream/frame/error/tool/environment custody with spent admission and immediate per-run checkpoints; every source member conserves.\n    \n    Independent whole fixed-Git/binary-wire/checkpoint reconstruction, genuine custody controls, prior actual replay and focused current/book checks pass. Synchronize source/native guide, exact aggregate, bounded continuity and claim inventory. Native semantic refusal selection remains the next owned leaf; preserve the clean decision0116 context-refresh checkpoint with no capture replay or HIAL/full-CI/push closure.\n"
+}
