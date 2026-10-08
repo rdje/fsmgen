@@ -5300,9 +5300,38 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Fresh focused public-book checks, native copied-source verification, current complete publication and scripts/check_doctrines.sh reporting [doctrine] all doctrine checks passed are required before successor activation. All immutable source/raw domains, target questions/current routes, capacity contracts and original/HIAL/visual/full-CI/push boundaries conserve.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Compose and seal every independent coordinate source hypothesis.`
   Acceptance: `Join complete qualified own statement/generation/invocation-root custody, per-refusal source paths and independent finite public recipes before new original-coordinate intake. Independently rederive whole hypotheses and all separating controls; every unresolved original/private dependency remains explicitly partitioned with follow-up ownership. Commit the full source derivation before .2.3 original join.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.1`
+  Status: `done`
+  Goal: `Admit complete source-only catalog, custody and qualified finite-public inputs.`
+  Acceptance: `Authenticate the complete committed source catalog and final public qualification inputs, rerun unchanged source-only/public readers, and independently reconstruct original own source/generation/invocation declarations without selecting any original raw coordinate. Preserve every lexical role, source path, public alternative/equivalence/refusal and unresolved original/private identity. Genuine membership/source/kind/scope/borrowed-result controls and typed actual receipts qualify admission; scoped book/task/pointer/capacity/staged gates commit before hypothesis construction.`
+  Verification: `Whole fixedcd5021 source-catalog, public-reference and final-public input namespaces authenticate with complete native metadata/member/blob identities and live same-volume regular bytes before/after admission. The unchanged source-only/public/final readers actually pass. Complete own original source units, ordered observer generation, every source/catalog lexical role and invocation recipe, full public alternatives/equivalent labels/origins/refusals and qualified current/native/focused/doctrine receipts conserve. Independent fixed-Git blob, original source-unit, ordered generation and UTF8 lexical byte/line reconstruction agrees; genuine missing member, borrowed body, Boolean line/status, lost lexical/public role, foreign root, borrowed current-only success and original/private promotion reject. Re-derivation: qualify.py/proof.json; falsification: independent verify.py actual controls; durability: all full source/input/custody/native programme/results, immutable Git epochs and this commit. This admits inputs only: per-refusal hypotheses .2 and complete source publication .3 remain pending before original-coordinate intake. Scoped book/task/pointer, fixed capacity/claim and staged/native gates finish admission; original/private/formatter/toolchain/address/visual/HIAL/full-CI/push remain open.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Own source spans before public line selection' -- docs/audits/record-value-coordinate-source-catalog-20261007/verify.py identifies the independently owned lexical source seam. The existing catalog and completed public reference have distinct declared scopes; whole source-only input admission is required before any per-refusal hypothesis or original-coordinate interpretation. Fixedcd5021 member and programme custody binds the already qualified antecedents without replaying original captures.
+  - [x] **ADDRESSED (verified)** — Whole committed source/catalog/generation/invocation and public alternatives/equivalences/refusals retain in coordinate-source-admission-20261008/proof.json. Fresh unchanged readers pass; independent native metadata/blob/original body/UTF8 byte-and-line reconstruction and actual missing/body/kind/root/result/scope controls pass. No original coordinate is selected or original/private identity promoted.
+  - [x] **NO REGRESSION** — Source-only admission and independent controls pass. Focused public-book checks, complete current/native copied-source publication and scripts/check_doctrines.sh reporting [doctrine] all doctrine checks passed gate this slice before successor activation. Original immutable inputs/observations, all target facts/questions and source/card/book capacities conserve.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2`
+  Status: `pending`
+  Goal: `Derive and independently qualify every per-refusal source-coordinate hypothesis.`
+  Acceptance: `After .1 commits, compose every own guard/call/observer/test/parser source association with its complete lexical first/closing alternatives, legitimate invocation/source filename and generation custody, and the independently qualified public selection evidence. Preserve every equivalent label and unresolved original/private dependency with an exact downstream owner. Genuine role/source/owner/line/filename/root/alternative/identity controls must separate hypotheses from predecessor spans and public products. No original-coordinate intake or capture execution; source hypotheses remain conditional until .2.3.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.3`
+  Status: `pending`
+  Goal: `Publish whole source-hypothesis qualification before original-coordinate intake.`
+  Acceptance: `After .1/.2 commit, authenticate complete original own source, per-refusal, public and hypothesis domains and typed actual results. Independently rederive all hypotheses, scope/identity/refusal controls and whole source/native book delivery, retain every unresolved original/private partition, then close only this source-composition parent. Commit before .2.3 original raw-coordinate join; no original/private/native/formatter/toolchain/address/visual/HIAL/full-CI/push promotion.`
   Verification: `pending`
   Commit: `pending`
 

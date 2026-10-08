@@ -719,6 +719,16 @@ python3 -B docs/audits/coordinate-public-final-preparation-20261008/verify.py
 python3 -B docs/audits/coordinate-public-final-replay-20261008/verify.py
 ```
 
+Source-coordinate composition first admits the complete own statement catalog,
+ordered observer generation and invocation custody together with the qualified
+finite-public recipes. Its unchanged readers and independent source/blob/span
+checks conserve every declared role and unresolved private identity. This input
+admission does not interpret original coordinates or execute original captures:
+
+```sh
+python3 -B docs/audits/coordinate-source-admission-20261008/verify.py
+```
+
 <div id="knowledge-map-architecture"></div>
 
 {{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}
