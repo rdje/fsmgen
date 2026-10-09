@@ -1,0 +1,148 @@
+{
+  "authority": {
+    "bytes": 36559,
+    "lines": 34,
+    "sha256": "60fad10c5d9285093f15416ed78db9c78f22e56702ff4944667914871c456bba"
+  },
+  "current": {
+    "docs/knowledge/mdbook-build-destination-locality.md": {
+      "bytes": 4607,
+      "lines": 54,
+      "sha256": "862ac31b5b411443f2174b904d5c6532f442dd3ba4a87b37bf6f278ee82b752a"
+    }
+  },
+  "descriptors": [
+    {
+      "bytes": 4632,
+      "current_pointer": "docs/knowledge/mdbook-build-destination-locality.md",
+      "descriptor_id": "coordinate-expression-fact-mdbook-build-destination-locality-20261009",
+      "former_path": "docs/knowledge/mdbook-build-destination-locality.md",
+      "lines": 74,
+      "range_id": "complete-card-before-non-growing-expression-fact-admission",
+      "record_type": "descriptor",
+      "retrieval_kind": "file",
+      "retrieval_locator": "docs/audits/coordinate-expression-fact-20261009/source/e57fe4336612548a478e1d9e1653eb35f30746424090cf4f0e806e082fe8b377.txt",
+      "revision": "6b3783bb03f5f0d65619dddbba31ea4fda3d0890",
+      "schema_version": 1,
+      "sealed_on": "2026-10-09",
+      "sha256": "e57fe4336612548a478e1d9e1653eb35f30746424090cf4f0e806e082fe8b377",
+      "surface_id": "exact_history",
+      "verifier": "builtin:file"
+    }
+  ],
+  "legs": {
+    "durability": "Tracked complete originals, archive descriptors, mapping/programmes and actual receipts in an atomic normal-hook commit.",
+    "falsify": "verify.py independent whole-source/current/question census and hostile source/question/rule/authority controls; genuine native descriptor source/digest controls and complete actual sealed expression reader.",
+    "rederive": "compact.py fixed-Git originals, complete source copies and reviewed semantic mapping."
+  },
+  "original_metadata": {
+    "docs/knowledge/mdbook-build-destination-locality.md": "---\nid: mdbook-build-destination-locality\ntitle: mdBook custom destinations resolve from the invocation working directory\nanswers:\n  - \"where does mdbook build resolve a relative dest-dir?\"\n  - \"how do book verification scripts keep output inside the repository?\"\n  - \"what caused the reset-slice book output locality recovery?\"\n  - \"do canonical source symlinks outside the book refresh under native serve?\"\n  - \"why do native book source-view addresses encode terminal markdown extensions?\"\n  - \"why must historical source-plane replay use the helper snapshot role?\"\n  - \"why did the class/frame current reader reject unrelated Knowledge Map updates?\"\n  - \"why does historical class/frame actual-result verification reject live progress?\"\n  - \"where are public coordinate recipes verified?\"\ndate: 2026-10-08\nstatus: current\ntags: [mdbook, documentation, artifacts, locality, verification]\nevidence: docs/audits/specforge-rule-admission-20260924/book-output-recovery.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/audits/record-value-own-boundary-publication-20261005/scope.txt\nreverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py\n---\n"
+  },
+  "products": {
+    "complete_source": "Exact complete retained files and fixed Git revision, independently compared byte for byte.",
+    "live_dimensions": {
+      "after": {
+        "bytes": 4607,
+        "lines": 54
+      },
+      "before": {
+        "bytes": 4632,
+        "lines": 74
+      },
+      "file_delta": 0
+    },
+    "overlap": "Complete source, semantic facts and live navigation intentionally overlap; no disjoint subtraction claim.",
+    "semantic_closure": "Ordered reviewed paragraph correspondence plus unchanged original IDs, questions, evidence and executable probe routes; one conditional expression-attribution fact.",
+    "unretained_residue": {
+      "bytes": 0,
+      "reason": "Every original byte retained in a descriptor-addressed complete source file."
+    }
+  },
+  "revision": "6b3783bb03f5f0d65619dddbba31ea4fda3d0890",
+  "schema_version": 1,
+  "semantic_mapping": {
+    "docs/knowledge/mdbook-build-destination-locality.md": {
+      "metadata": "All original IDs/title/questions/tags/evidence/reverify commands retained; date refreshed, one causal question/public expression probe added. Current original probe now consumes the sealed expression reader.",
+      "paragraphs": [
+        {
+          "current": "`mdbook build docs/book --dest-dir DEST`: relative `DEST` uses cwd, not `docs/book`; root `../../.artifacts/` escapes. Reset publisher found fresh local HTML absent.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` from invocation cwd,\nnot `docs/book`. From repository root, `../../.artifacts/` escapes. The reset publisher\nexposed this assumption when fresh local HTML was absent."
+        },
+        {
+          "current": "Custom builds: fresh runtime-root absolute destinations; containment/same-volume checks; persist repo-relative identity and actual arguments (even absolute). Build success cannot identify validated output.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Custom builds derive fresh absolute destinations from the current root at runtime;\ncheck containment/same-volume locality. Persist repo-relative identity; retain the actual\nargument even if absolute. Build success alone cannot identify validated output."
+        },
+        {
+          "current": "Reset copied/hash-verified both misplaced books, consumed recovered HTML, deleted only old roots, censused residue. First carrier valid/local; later relative-destination check reused its render (receipt correction). Compiler/HDL unchanged. Tracked miniature-book probe: other source directory, relative/absolute destinations from cwd, fresh marker HTML, same-volume local paths, workspace removal. Manifest retains recovery.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Reset recovery copied/hash-verified both exact misplaced books, consumed recovered\nHTML, deleted only old roots and censused residue. First carrier build was valid/local;\nthe later relative-destination check reused its render (historical receipt correction).\nCompiler/HDL results stay unchanged. Tracked miniature-book probe: another source\ndirectory; relative/absolute destinations from invocation cwd; fresh marker HTML;\nlocal same-volume paths; workspace removal. Manifest retains recovery."
+        },
+        {
+          "current": "## Native source views",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "## Native canonical source views"
+        },
+        {
+          "current": "Relative links expose full canonical UTF8/literal Markdown as `.source.txt`. Native clicks rewrote `.md.source.txt` to `.html` despite valid direct requests. Href-checked encoding: terminal `.md` to `.markdown`.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Canonical files use relative filesystem links to native-safe `.source.txt` views.\nNative clicks rewrote `.md.source.txt` to `.html` despite valid direct requests.\nEncode terminal `.md` as `.markdown`; href checks qualify encoding.\nViews retain complete UTF8 source/literal Markdown links."
+        },
+        {
+          "current": "mdBook0.5.4 serves all selected sources. Default serve refreshes controlled visible sources outside book; ignored scratch/parent-ignored sources stay stale even with extra-watch. Presence/build success proves no watcher admission. Factory checks all selection/endpoints/current bytes/ignore policy; native checks every copied source. Views reflect latest build; no universal refresh-time/platform promise.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Admitted mdBook0.5.4 serves all selected sources; default native serve refreshes a\ncontrolled visible source outside the book directory. Even extra-watch leaves\nignored scratch/parent-ignored visible sources stale. Presence/build success proves\nno watcher admission. Factory checks complete current selection/endpoints/bytes/\nignore policy; native checks every copied source. Views reflect their latest build,\nwithout universal refresh-time/platform promises."
+        },
+        {
+          "current": "`python3 -B scripts/book_source_references.py`: `--write`: finite manifest/relative endpoints; `--check`: current sources; `--verify-build .artifacts/BOOK_OUTPUT`: native copied bytes. Original destination-locality replay/source-plane qualification required. Source/assets stay in this repository/on its volume; no extra chapter/copied prose.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "`python3 -B scripts/book_source_references.py`: `--write` regenerates finite manifest/relative endpoints;\n`--check` verifies current sources; `--verify-build .artifacts/BOOK_OUTPUT` checks copied native bytes.\nOriginal destination-locality replay/source-plane qualification stay required.\nSource/assets stay in this repository on its volume; views add no chapter/copied prose."
+        },
+        {
+          "current": "## Historical/current reader roles",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "## Historical and current reader roles"
+        },
+        {
+          "current": "Source helper-card extension blocked original source-plane default\u2019s whole-current helper call. Historical adapter changes only that call to existing helper snapshot mode; other original predicates/programmes/products conserve:",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Source-qualified helper-card extension blocked original source-plane default\u2019s\nwhole-current helper call. Historical adapter switches only that call to existing\nhelper snapshot mode; all other original predicates/programmes/products conserve:"
+        },
+        {
+          "current": "`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`"
+        },
+        {
+          "current": "Historical pass proves no current card/query/reader/source currency. Current checks all core/helper/tooling\nmeanings/questions, unique book guide, canonical selection/endpoints/bytes/ignore policy, exact\nbudgets/indexed members. Original destination-locality replay/factory native copied-byte checks required;\nvisual QA pending.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Historical pass proves no current card/query/reader/source currency. Current checks\ncomplete core/helper/tooling meanings/questions, unique book guide, canonical selection/\nendpoints/bytes/ignore policy, exact budgets/indexed members. Original destination-locality\nreplay/factory native copied-byte checks stay required; visual QA stays pending."
+        },
+        {
+          "current": "Old class/frame current checking froze unrelated card bytes/queries; this route derives complete global source\nallocation.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "The old class/frame current check froze unrelated card bytes/queries. This route\nderives complete global source allocation."
+        },
+        {
+          "current": "Replay historical result qualifier unchanged in a same-volume committed-epoch fixture.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Replay the historical result qualifier unchanged in a same-volume committed-epoch\nfixture."
+        },
+        {
+          "current": "[Reader](../audits/record-value-coordinate-public-reference-20261008/verify.py): dated public fixtures; original coordinates/identities unmeasured.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "[Reader](../audits/record-value-coordinate-public-reference-20261008/verify.py): dated public fixtures; original coordinates/identities unmeasured."
+        }
+      ]
+    }
+  },
+  "sources": {
+    "docs/knowledge/mdbook-build-destination-locality.md": {
+      "bytes": 4632,
+      "lines": 74,
+      "sha256": "e57fe4336612548a478e1d9e1653eb35f30746424090cf4f0e806e082fe8b377"
+    }
+  },
+  "surface": "knowledge_cards"
+}

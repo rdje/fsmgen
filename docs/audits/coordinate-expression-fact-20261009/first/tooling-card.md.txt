@@ -1,0 +1,68 @@
+---
+id: mdbook-build-destination-locality
+title: mdBook custom destinations resolve from the invocation working directory
+answers:
+  - "where does mdbook build resolve a relative dest-dir?"
+  - "how do book verification scripts keep output inside the repository?"
+  - "what caused the reset-slice book output locality recovery?"
+  - "do canonical source symlinks outside the book refresh under native serve?"
+  - "why do native book source-view addresses encode terminal markdown extensions?"
+  - "why must historical source-plane replay use the helper snapshot role?"
+  - "why did the class/frame current reader reject unrelated Knowledge Map updates?"
+  - "why does historical class/frame actual-result verification reject live progress?"
+  - "where are public coordinate recipes verified?"
+  - "why can Perl caller lines follow pattern or predicate expressions?"
+date: 2026-10-09
+status: current
+tags: [mdbook, documentation, artifacts, locality, verification]
+evidence: docs/audits/specforge-rule-admission-20260924/book-output-recovery.json; docs/audits/specforge-rule-admission-20260924/isf-reset-polarity.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/audits/record-value-own-boundary-publication-20261005/scope.txt
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-rule-admission-20260924/verify-book-output-locality.py && scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/coordinate-expression-alternative-checks-20261009/verify_alternatives.py
+---
+
+`mdbook build docs/book --dest-dir DEST` resolves relative `DEST` from invocation cwd, not `docs/book`; root
+`../../.artifacts/` escapes. Reset publishing found fresh local HTML absent.
+
+Custom builds derive fresh absolute destinations from the current root, check containment/same-volume
+locality, persist repo-relative identity and retain actual arguments even if absolute. Build success cannot
+identify validated output.
+
+Reset recovery copied/hash-verified both misplaced books, consumed recovered HTML, deleted only old roots and
+censused residue. First carrier build was valid/local; later relative-destination checking reused its render
+(receipt correction). Compiler/HDL unchanged. Tracked miniature-book probe: other source directory,
+relative/absolute destinations from cwd, fresh marker HTML, local same-volume paths, workspace removal.
+Manifest retains recovery.
+
+## Native canonical source views
+
+Relative filesystem links expose canonical UTF8 source/literal Markdown links as `.source.txt`. Native clicks
+rewrote `.md.source.txt` to `.html` despite valid direct requests; encode terminal `.md` as `.markdown`,
+qualified by href checks.
+
+Admitted mdBook0.5.4 serves all selected sources; default serve refreshes controlled visible sources outside
+the book. Ignored scratch/parent-ignored sources stay stale even with extra-watch. Presence/build success
+proves no watcher admission. Factory checks complete selection/endpoints/current bytes/ignore policy; native
+checks every copied source. Views reflect latest builds, without universal refresh-time/platform promises.
+
+`python3 -B scripts/book_source_references.py`: `--write` regenerates finite manifest/relative endpoints; `--check` verifies current sources; `--verify-build .artifacts/BOOK_OUTPUT` checks native copied bytes. Original destination-locality replay/source-plane qualification remain required. Source/assets stay on this repository volume; views add no chapter/copied prose.
+
+## Historical and current reader roles
+
+Source-qualified helper-card extension blocked original source-plane default’s whole-current helper call.
+Historical adapter changes only that call to existing helper snapshot mode; other original
+predicates/programmes/products conserve:
+
+`python3 -B docs/audits/record-value-helper-reader-role-adapter-20261005/adapter.py --snapshot`
+
+Historical pass proves no current card/query/reader/source currency. Current checks complete
+core/helper/tooling meanings/questions, unique book guide, canonical selection/endpoints/bytes/ignore policy
+and exact budgets/indexed members. Original destination-locality replay/factory native copied-byte checks
+remain required; visual QA pending.
+
+Old class/frame current checking froze unrelated card bytes/queries; this route derives complete global source
+allocation.
+
+Replay the historical result qualifier unchanged in a same-volume committed-epoch fixture.
+
+[Reader](../audits/record-value-coordinate-public-reference-20261008/verify.py): dated public fixtures; original coordinates/identities unmeasured.
+
+Perl caller lines can follow argument expressions: public caller/compiler fixtures select helper pattern starts or live guard predicate endings; constant-only guards retain statement labels. Source-derived alternatives conserve old labels, filenames and exact spans, with no original selection or universal private/toolchain prediction. [Probe](../audits/coordinate-expression-alternative-checks-20261009/verify_alternatives.py).

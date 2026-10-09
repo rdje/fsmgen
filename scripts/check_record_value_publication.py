@@ -11,6 +11,7 @@ from pathlib import Path
 import book_source_references as plane
 import record_value_epoch_fact as epoch_fact
 import record_value_public_reference_fact as public_reference_fact
+import record_value_expression_fact as expression_fact
 from decision_store_git import MAX_TRACKED_PATHS
 
 ROOT = plane.ROOT
@@ -73,6 +74,7 @@ def expected_cards(prior):
                 '  - "' + QUESTION + '"\ndate: 2026-10-07\n', 1).replace(OLD_SCOPE, NEW_SCOPE, 1)
             result[path] = epoch_fact.extend(result[path])
             result[path] = public_reference_fact.extend(result[path])
+            result[path] = expression_fact.extend(result[path])
     return result
 
 
@@ -206,6 +208,14 @@ def main():
     require(type(epoch.returncode) is int and epoch.returncode == 0
         and epoch.stdout == expected['stdout'] and epoch.stderr == '', 'complete actual historical epoch and native result qualification')
     check_public_reference()
+    expression = subprocess.run(['python3', '-B', expression_fact.READER],
+                                capture_output=True, text=True, cwd=ROOT)
+    admitted = json.loads(subprocess.check_output(['git', '--no-replace-objects', 'show',
+        expression_fact.REVISION + ':docs/audits/coordinate-expression-alternative-checks-20261009/checks.json']))['published']
+    require(type(admitted['status']) is int and admitted['status'] == 0
+        and type(expression.returncode) is int and expression.returncode == 0
+        and expression.stdout == admitted['stdout'] and expression.stderr == '',
+        'complete actual sealed expression alternative qualification')
     canonical = sources()
     check(current_input(prior, canonical), canonical, prior, authority(prior))
     rows = plane.expected_rows()

@@ -1,0 +1,18 @@
+{
+  "actual_error": "ValueError: non-growing expression fact bytes and lines",
+  "before": {
+    "bytes": 4632,
+    "lines": 74
+  },
+  "first_draft": {
+    "bytes": 5070,
+    "lines": 68
+  },
+  "instrument": {
+    "bytes": 8235,
+    "sha256": "649ff407bcfa4a2d06f6a7f7b40688b1dc3d07a7a2776a6a1c88219427c80511"
+  },
+  "owner": "Current expression fact admission; repair the reviewed compaction before publishing, preserve complete predecessor propositions.",
+  "publication": "No canonical card or archive descriptor changed. Initial extend gate refused before publication.",
+  "status": 1
+}

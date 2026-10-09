@@ -1,0 +1,7 @@
+{
+  "status": 1,
+  "actual_error": "ValueError: non-growing expression fact bytes and lines",
+  "over_budget_bytes": 323,
+  "publication": "No canonical card or descriptor changed.",
+  "instrument_sha256": "106672ab7484be92ee4d7e48d7a25f601ff6d72179f8ebd9d604e12f9350eba0"
+}

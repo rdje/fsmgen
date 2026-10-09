@@ -860,9 +860,13 @@ no universal line-formatting prediction and every original selection empty:
 python3 -B docs/audits/coordinate-expression-alternative-checks-20261009/verify_alternatives.py
 ```
 
-Mandatory non-growing canonical causal-fact admission is next, before complete
-original matching resumes. Whole hostile qualification, alias capture and
-downstream, external framework, private formatting/toolchain and address
+Canonical expression-attribution facts and the public probe now live in the
+tooling card `docs/knowledge/mdbook-build-destination-locality.md`.
+Its current reader consumes the sealed expression qualification. Exact prior
+card bytes remain retrievable, with every prior question/probe preserved
+through non-growing semantic compaction under unchanged collection limits.
+Complete original matching is next. Whole hostile qualification, alias capture
+and downstream, external framework, private formatting/toolchain and address
 meanings retain their separate owners.
 
 Original coordinate selections, opaque framework callers, private runtime
