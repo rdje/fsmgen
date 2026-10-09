@@ -1,0 +1,18 @@
+{
+  "admission.json": {
+    "bytes": 1494222,
+    "sha256": "ef91e337648c3e04be3b0faccfa8dfbcaf131457097820471147833ec6f1c941"
+  },
+  "admit.py": {
+    "bytes": 9253,
+    "sha256": "7444ba3d4a223af0cb9f58761f9e6e546c3d85e9bccc848f2958f0d5a10ab8bd"
+  },
+  "scope.txt": {
+    "bytes": 109,
+    "sha256": "e01c66ace6e2d1afd1dc5f69cad44e8ea8a5508253a8606eb81ecc8e69ecf95c"
+  },
+  "verify.py": {
+    "bytes": 14401,
+    "sha256": "2a7b90eab8685a501123198fcf0037bde6009213b47e5642ef58ba88c86c85a8"
+  }
+}

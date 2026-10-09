@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "--no-replace-objects",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "qualified; joining original raw coordinates remains the next owned step.",
+    "--",
+    "docs/book/src/90-reference-map.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "390e4dda5eea6efac6637e65921524194a4aa68b SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.4: retain archive transport fact without collection growth\n"
+}

@@ -5444,11 +5444,42 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join complete original raw coordinates and genuine source/line controls.`
   Acceptance: `After source derivation commits, authenticate the complete original raw/source domain, apply independently declared recipes to every frame/origin and conserve every empty/nonempty allocation, argument/error byte and raw coordinate. Genuine wrong caller/line/borrowed source must separate from prior frame/class/operand meanings; no broad normalization or original/private measurement promotion. Own every proved mismatch before edits.`
+  Verification: `Source composition and mandatory archive fact admission are committed. Complete original-coordinate intake .1 now qualifies fixed whole source/raw custody, independent lossless reconstruction and actual original reader results without selection. Matching .2 and whole hostile qualification .3 remain pending; all original/private/framework/address/alias boundaries retain.`
+  Commit: `intake child this slice; matching and controls pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.1`
+  Status: `done`
+  Goal: `Admit complete original raw/source custody for coordinate matching.`
+  Acceptance: `Authenticate complete fixed original capture, every raw empty/nonempty allocation and opaque body/argument/coordinate byte, qualified class/frame associations, whole source-hypothesis products and their complete transitive own-source/programme/result custody. Independently rederive original raw inventory and native Git membership/modes/payloads with genuine controls and actual readers. Preserve alias/private/framework/formatter/address scopes; no coordinate selection or original recapture. Commit before matching.`
+  Verification: `Complete fixed390e4dda5 direct/transitive original capture, source/class-frame/hypothesis/programme/result corpus authenticates through streaming native Git tree/archive custody before and after actual readers. Separate verify.py requests and drains individual Git blobs, independently reconstructs every original empty/error allocation, context, whole serialized error body, exact UTF8 segmentation, caller file/line scalar and opaque argument/address lexeme directly from saved capture JSON, and matches the entire qualified raw inventory. Original nonempty keys join the complete class/frame and source-hypothesis refusal domains without selecting a coordinate. Whole alias capture custody and every unresolved private/framework/formatter/toolchain/address/alias owner retain. Complete actual unchanged source-hypothesis, class/frame and archive-policy readers succeed and independently regenerate exact command/status/stdout/stderr/programme products; no original recapture or configuration writes. Genuine missing/borrowed source, omitted empty/body, selection promotion, Boolean population, lost private owner, false-green status/command/stdout controls refuse. Exact immutable complete intake seal gates the published reader before and after full independent qualification. Actual copied missing seal/member, borrowed body, extra member, rewritten seal and symlink root controls refuse; original namespace/bytes conserve and owned fixtures dispose. Re-derive: admit.py full fixed-Git stream, exact original/source domain and actual readers; falsify: independent verify.py Git-blob protocol and complete original raw walker, actual regenerated results and genuine controls, plus copied-corpus seal controls and independent source/native book delivery; durability: fixed epochs, entire original custody, sealed admission/programmes, published reader, full actual receipts and normal-hook Git commit. All tests successful Files3 Tests310. Current source/native book delivery, exact measured book/task authority, fresh claim inventory and staged scripts/check_doctrines.sh plus normal hooks gate commitment. Only original-coordinate intake closes; applying declared source recipes and whole hostile matching qualification remain separately owned next. No original/private/native/alias/visual/HIAL/full-CI/push promotion.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'qualified; joining original raw coordinates remains the next owned step.' identifies source-parent closure390e4dda5 in coordinate-original-intake-checks-20261009/root-cause.json. Source-only hypotheses deliberately precede original-coordinate intake; their complete domain must join the authenticated original raw capture and qualified class/frame allocations before any original line is selected. Streaming is required for the whole retained corpus; trusted predecessors stay immutable.
+  - [x] **ADDRESSED (verified)** — Complete fixed original/source/programme/result namespaces authenticate through independent archive and Git-blob streams. Separate direct capture-JSON reconstruction conserves every empty/error allocation, raw body/argument/context/coordinate byte and the complete class/frame/source refusal domain. Actual unchanged prerequisite results independently regenerate. Published exact-seal intake and genuine copied-corpus controls conserve every original and dispose owned fixtures. Matching is explicitly the next separate leaf; original private/framework/address/alias scopes remain unmeasured.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in checks.json focused. Full independent original custody, raw reconstruction, actual-result and seal controls pass under unchanged RAM cutoffs. Fresh source/native book delivery, independent whole publication/receipt controls, exact measured book/task declarations, fresh claim inventory and staged scripts/check_doctrines.sh plus normal hooks gate commitment. Original captures, every source fact/question and opaque byte, original private owners and all ceilings conserve; Knowledge Map authority remains unchanged.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2`
+  Status: `pending`
+  Goal: `Apply independent caller recipes to every original coordinate.`
+  Acceptance: `Use committed complete intake and independently declared source recipes to bind every own original origin/frame/load/eval/caller file and line. Preserve all alternatives, empty/nonempty allocations, argument/error bytes, nested phases and exact source identities. Keep opaque external framework intervals and original private/toolchain/address/alias owners explicit; own every mismatch before repair and reject broad normalization.`
   Verification: `pending`
   Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3`
+  Status: `pending`
+  Goal: `Qualify whole original-coordinate results and hostile controls.`
+  Acceptance: `Reexecute complete admitted source/raw/matching readers and qualify every whole original result with genuine wrong caller/line/borrowed-source and typed actual-result controls. Show prior class/frame/argument meanings conserve under coordinate-specific mutants. Retain complete originals, all controls and whole source/native book delivery before closing the original-coordinate join parent. Current canonical coordinate publication remains its existing separate successor.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4`
   Status: `pending`

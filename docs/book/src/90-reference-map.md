@@ -813,6 +813,25 @@ ordered semantic correspondence, every existing question and executable probe,
 and unchanged Knowledge Map capacity authority. The first URL-wrapping draft
 and corrected publication both retain. Whole source-hypothesis composition is
 qualified; joining original raw coordinates remains the next owned step.
+
+The saved original-coordinate intake authenticates the complete own capture,
+its transitive proof corpus and the sealed source hypotheses. Independent Git
+archive and blob streams conserve membership, tracked modes and every byte.
+A separate walker rebuilds all empty/error allocations, whole error bodies,
+physical caller coordinates, contexts and opaque argument/address lexemes from
+the original capture JSON. Complete actual source/class-frame readers also
+regenerate; the original captures are retained without recapture.
+
+```sh
+python3 -B docs/audits/coordinate-original-intake-checks-20261009/verify_intake.py
+```
+
+Intake leaves every coordinate selection empty. Applying the independently
+declared statement alternatives to original callers is the next owned slice.
+The alias capture remains in custody with its downstream meanings separately
+owned. External framework, private formatting/toolchain and address meanings
+remain unmeasured.
+
 Original coordinate selections, opaque framework callers, private runtime
 formatting/toolchain/identity, address lifetimes and alias downstream retain
 their separate owners.
