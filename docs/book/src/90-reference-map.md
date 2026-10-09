@@ -782,10 +782,30 @@ payloads and original caller-coordinate snapshots. Read the sealed result with:
 python3 -B docs/audits/coordinate-refusal-phase-checks-20261009/verify_phases.py
 ```
 
-Whole source-hypothesis publication and original-coordinate joining remain
-pending, with original private runtime meanings and alias downstream still
-owned separately. The binding establishes source hypotheses, without choosing
-which line or filename an original runtime actually reported.
+Original-coordinate joining remains pending, with original private runtime
+meanings and alias downstream still owned separately. The binding establishes
+source hypotheses, without choosing which line or filename an original
+runtime actually reported.
+
+The complete source-hypothesis qualification joins the original own-source
+catalogue, lexical bank, executable statements, ordered refusal phases and
+dated finite-public examples. Complete fixed input membership and bytes retain
+their Git modes and source authorities. Separate original-source and call-path
+reconstruction checks every hypothesis, while actual source-only readers and
+genuine scope, identity, caller, guard and receipt controls qualify the join.
+The published reader requires the exact complete seal:
+
+```sh
+python3 -B docs/audits/coordinate-source-hypothesis-checks-20261009/verify_hypotheses.py
+```
+
+Archive permissions use an explicit transport mask; the first failed mode
+assumption and controlled repair retain with unchanged payloads and local
+configuration. Bounded Knowledge Map admission of that transport fact remains
+the required next slice before source-parent closure and original matching.
+Original coordinate selections, opaque framework callers, private runtime
+formatting/toolchain/identity, address lifetimes and alias downstream retain
+their separate owners.
 
 <div id="knowledge-map-architecture"></div>
 

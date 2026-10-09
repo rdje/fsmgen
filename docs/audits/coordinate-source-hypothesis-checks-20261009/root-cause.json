@@ -1,0 +1,18 @@
+{
+  "command": [
+    "git",
+    "--no-pager",
+    "log",
+    "--format=%H %s",
+    "-S",
+    "Whole source-hypothesis publication and original-coordinate joining remain",
+    "--",
+    "docs/book/src/90-reference-map.md"
+  ],
+  "locus": "docs/audits/coordinate-refusal-phases-20261009/phases.json",
+  "mechanism": "The complete source/site/path/statement/phase products and finite-public examples have separately qualified domains. Whole custody, scope, actual-reader and source/native publication composition must qualify before original-coordinate intake.",
+  "scope": "Full source-hypothesis publication only; original coordinate selections and runtime/private meanings remain unmeasured.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "f5d2e81710ddbd2dd10f406551220d1a5ff2c32a SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.2: bind ordered source-only refusal phases\n"
+}

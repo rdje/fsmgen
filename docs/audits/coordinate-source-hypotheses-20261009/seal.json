@@ -1,0 +1,18 @@
+{
+  "qualification.json": {
+    "bytes": 368969,
+    "sha256": "e6a6c5b377aac5582f332bcec00e347370e4b51bbaab4135c01a1540bd5c84ef"
+  },
+  "qualify.py": {
+    "bytes": 9887,
+    "sha256": "7e59330668f7e43edb29e01800567bc9604066e5f7f194725d44c643b17a0985"
+  },
+  "scope.txt": {
+    "bytes": 111,
+    "sha256": "97fc5c3b3a47ba9d1523d1846944692b1ac37f4dce71df3abc9ecb67f408c6bd"
+  },
+  "verify.py": {
+    "bytes": 15216,
+    "sha256": "1142ba6a0675e6bc53de962d1f04b7cc250dfd099c41b8d9472661e29b585ca9"
+  }
+}

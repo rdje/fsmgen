@@ -1,0 +1,246 @@
+"""Independent whole-source custody, hypothesis allocation and actual results.
+
+Git archive supplies complete fixed bytes. Existing separate binary-source and
+source-path oracles reconstruct the hypotheses; no producer main or capture
+executes. Finite callee semantics remain qualified predecessor inputs.
+"""
+import contextlib
+import copy
+import hashlib
+import io
+import json
+import runpy
+import subprocess
+import tarfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+BASE = Path('docs/audits/coordinate-source-hypotheses-20261009')
+REVISION = 'f5d2e81710ddbd2dd10f406551220d1a5ff2c32a'
+A = Path('docs/audits')
+FOLDERS = (
+    'coordinate-public-final-replay-20261008', 'coordinate-refusal-path-input-checks-20261009',
+    'coordinate-refusal-path-inputs-20261009', 'coordinate-refusal-phase-checks-20261009',
+    'coordinate-refusal-phases-20261009', 'coordinate-source-admission-20261008',
+    'coordinate-source-sites-20261008', 'coordinate-source-sites-checks-20261008',
+    'coordinate-statement-recipe-checks-20261009', 'coordinate-statement-recipes-20261009',
+    'record-value-coordinate-public-qualification-20261008',
+    'record-value-coordinate-public-reference-20261008', 'record-value-coordinate-source-catalog-20261007')
+COMMANDS = {
+    'source': 'coordinate-source-admission-20261008/verify.py',
+    'public': 'record-value-coordinate-public-reference-20261008/verify.py',
+    'sites': 'coordinate-source-sites-checks-20261008/verify_sites.py',
+    'paths': 'coordinate-refusal-path-inputs-20261009/verify.py',
+    'path_actual': 'coordinate-refusal-path-input-checks-20261009/consume_actual.py',
+    'statements': 'coordinate-statement-recipe-checks-20261009/verify_recipes.py',
+    'statement_actual': 'coordinate-statement-recipe-checks-20261009/consume_published.py',
+    'phases': 'coordinate-refusal-phase-checks-20261009/verify_phases.py',
+    'phase_actual': 'coordinate-refusal-phase-checks-20261009/consume_actual.py'}
+
+
+def need(ok, cause):
+    if not ok:
+        raise ValueError(cause)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def same(a, b):
+    return json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
+
+
+def identity(value):
+    return pin(json.dumps(value, sort_keys=True).encode())
+
+
+def native(*args):
+    run = subprocess.run(['git', '--no-replace-objects', *args], cwd=ROOT, capture_output=True)
+    need(run.returncode == 0 and not run.stderr, 'independent complete native source-publication input')
+    return run.stdout
+
+
+def original():
+    roots = sorted([str(A / f) for f in FOLDERS] + [str(A / 'record-value-class-frame-join-20261006/source-models.json')])
+    tree = native('--literal-pathspecs', 'ls-tree', '-r', '-z', REVISION, '--', *roots)
+    entries = {}
+    for row in tree.rstrip(b'\0').split(b'\0'):
+        prefix, path = row.split(b'\t', 1)
+        mode, kind, oid = prefix.decode().split()
+        need(kind == 'blob' and mode in ('100644', '100755'), 'independent own regular input modes')
+        entries[path.decode()] = (mode, oid)
+    body = native('--literal-pathspecs', 'archive', '--format=tar', REVISION, '--', *roots)
+    blobs, members = {}, {}
+    with tarfile.open(fileobj=io.BytesIO(body)) as archive:
+        for member in archive:
+            if member.isdir():
+                continue
+            need(member.isfile() and member.name in entries and member.name not in blobs,
+                 'independent exact unique archive membership')
+            raw = archive.extractfile(member).read()
+            path = ROOT / member.name
+            need(path.resolve() == path and path.is_file() and path.stat().st_dev == ROOT.stat().st_dev
+                 and path.read_bytes() == raw, 'independent complete unchanged same-volume source bytes')
+            need(all(not (parent / '.git').exists() for parent in path.parents
+                     if ROOT in parent.parents), 'independent own input repository boundary')
+            mode, oid = entries[member.name]
+            need(member.mode == int(mode, 8) & 0o777, 'independent complete archive mode identity')
+            blobs[member.name] = raw
+            members[member.name] = {'mode': mode, 'oid': oid, 'identity': pin(raw)}
+    need(set(blobs) == set(entries), 'independent complete committed member population')
+    for folder in FOLDERS:
+        directory = A / folder
+        need({str(p) for p in directory.iterdir()} == {p for p in blobs if Path(p).parent == directory},
+             'independent complete live member namespace')
+    return {'revision': REVISION, 'roots': roots, 'members': members}, blobs
+
+
+def reconstruction(blobs):
+    def module(folder):
+        return runpy.run_path(str(A / folder / 'verify.py'))
+
+    admission = module('coordinate-source-admission-20261008')
+    source = admission['expected']()['inputs']['source']
+    # These are independent source reconstructions, not sealed producer mains.
+    with contextlib.redirect_stdout(io.StringIO()):
+        bank = module('coordinate-source-sites-20261008')['expectation']()
+        paths = module('coordinate-refusal-path-inputs-20261009')['expectation']()
+        recipes = module('coordinate-statement-recipes-20261009')['expectation']()
+        phases = module('coordinate-refusal-phases-20261009')['expectation']()
+    for expected, folder, file in ((bank, 'coordinate-source-sites-20261008', 'sites.json'),
+                                   (paths, 'coordinate-refusal-path-inputs-20261009', 'paths.json'),
+                                   (recipes, 'coordinate-statement-recipes-20261009', 'recipes.json'),
+                                   (phases, 'coordinate-refusal-phases-20261009', 'phases.json')):
+        need(same(expected, json.loads(blobs[str(A / folder / file)])), 'independent complete reconstructed hypothesis product')
+    public_module = module('record-value-coordinate-public-reference-20261008')
+    public = public_module['reference'](json.loads(blobs[str(A / 'record-value-coordinate-public-qualification-20261008/qualification.json')]))
+    need(same(bank['public_examples'], public), 'independent whole qualified finite-public example join')
+    allocation = {(r['mode'], r['domain'], r['index']): r for r in paths['allocations']}
+    need(len(allocation) == len(paths['allocations']), 'independent distinct path allocation keys')
+    joins = []
+    for binding in phases['refusals']:
+        key = binding['mode'], binding['domain'], binding['index']
+        admitted = allocation.pop(key)
+        need(binding['admitted_allocation_identity'] == identity(admitted)
+             and binding['helper'] == admitted['helper']['index']
+             and binding['subtest'] == admitted['subtest']['name'], 'independent whole refusal identity join')
+        sequence = []
+        for phase in binding['phases']:
+            callers = []
+            for call in phase['active_path_inner_to_outer']:
+                callers.append(call['caller']['recipe_id'] if call['caller']['kind'] == 'own_statement' else None)
+            sequence.append({'phase': phase['phase'], 'family': phase['family'], 'identity': identity(phase),
+                             'origin': phase['origin']['caller']['recipe_id'], 'callers_inner_to_outer': callers,
+                             'original_selection': None})
+        joins.append({'mode': key[0], 'domain': key[1], 'index': key[2], 'helper': admitted['helper']['index'],
+                      'subtest': admitted['subtest']['name'], 'admission_identity': identity(admitted),
+                      'binding_identity': identity(binding), 'phases': sequence, 'original_selection': None})
+    need(not allocation, 'independent complete refusal domain conservation')
+    owner = phases['unresolved']['whole_source_publication']
+    need((BASE / 'scope.txt').read_text().strip() == owner, 'independent exact source-publication scope')
+    unresolved = {k: v for k, v in phases['unresolved'].items() if k != 'whole_source_publication'}
+    unresolved['opaque_external_framework_callers'] = phases['unresolved']['original_coordinates']
+    return {'role': 'Complete dated own-source coordinate hypotheses and finite-public examples; original coordinate selections and private runtime meanings remain unmeasured.',
+            'owner': owner, 'own_source': {'units': {k: {'identity': v['identity'], 'path': v['path']} for k, v in source['units'].items()},
+                'source_authority': source['source_authority'], 'generation': bank['generation'], 'invocations': bank['invocations']},
+            'domains': {key: {'path': str(A / folder / file), 'identity': pin(blobs[str(A / folder / file)])}
+                        for key, folder, file in (
+                            ('admission', 'coordinate-source-admission-20261008', 'proof.json'),
+                            ('sites', 'coordinate-source-sites-20261008', 'sites.json'),
+                            ('paths', 'coordinate-refusal-path-inputs-20261009', 'paths.json'),
+                            ('statements', 'coordinate-statement-recipes-20261009', 'recipes.json'),
+                            ('phases', 'coordinate-refusal-phases-20261009', 'phases.json'))},
+            'refusals': joins, 'finite_public': {'identity': identity(public),
+                'role': 'Dated public examples only; no selection for the original refusal hypotheses.',
+                'runs': [{'identity': identity(r), 'invocation': r['invocation']} for r in public['runs']],
+                'native_controls': [{'identity': identity(r), 'name': r['name']} for r in public['native_controls']]},
+            'unresolved': unresolved}
+
+
+def actual_readers():
+    result = []
+    for name, relative in COMMANDS.items():
+        script = A / relative
+        command = ['python3', '-B', str(script)]
+        run = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+        need(type(run.returncode) is int and run.returncode == 0 and not run.stderr,
+             'independent whole actual successful source-only reader: ' + name)
+        result.append({'name': name, 'command': command, 'status': run.returncode,
+                       'stdout': run.stdout, 'stderr': run.stderr, 'programme': pin(script.read_bytes())})
+    return result
+
+
+def check(candidate, expected):
+    need(set(candidate) == set(expected), 'complete source-hypothesis publication schema')
+    for key in ('role', 'owner', 'custody', 'own_source', 'domains', 'refusals', 'finite_public', 'unresolved'):
+        need(same(candidate[key], expected[key]), 'whole source-hypothesis field: ' + key)
+    need(len(candidate['actual_readers']) == len(expected['actual_readers']), 'whole actual source-reader population')
+    for actual, wanted in zip(candidate['actual_readers'], expected['actual_readers'], strict=True):
+        need(type(actual['status']) is int and actual['status'] == 0, 'discrete actual source-reader success')
+        need(same(actual, wanted), 'complete actual source-reader result and instrumentation')
+
+
+def controls(expected):
+    outcomes = {}
+    trials = (
+        ('missing-member', lambda p:p['custody']['members'].pop(next(iter(p['custody']['members']))), 'custody'),
+        ('borrowed-epoch', lambda p:p['custody'].update(revision='0'*40), 'custody'),
+        ('borrowed-source', lambda p:p['own_source']['units']['value']['identity'].update(bytes=0), 'own_source'),
+        ('borrowed-generation', lambda p:p['own_source']['generation'].clear(), 'own_source'),
+        ('borrowed-invocation', lambda p:p['own_source']['invocations'][0].update(fixture='foreign'), 'own_source'),
+        ('missing-domain', lambda p:p['domains'].pop('phases'), 'domains'),
+        ('borrowed-hypothesis', lambda p:p['domains']['phases']['identity'].update(bytes=0), 'domains'),
+        ('missing-refusal', lambda p:p['refusals'].pop(), 'refusals'),
+        ('duplicate-refusal', lambda p:p['refusals'].__setitem__(1, copy.deepcopy(p['refusals'][0])), 'refusals'),
+        ('wrong-helper', lambda p:p['refusals'][0].update(helper=999), 'refusals'),
+        ('wrong-caller', lambda p:p['refusals'][0]['phases'][0]['callers_inner_to_outer'].__setitem__(0,'value-capture'), 'refusals'),
+        ('wrong-guard', lambda p:p['refusals'][0]['phases'][0].update(origin='parser-confess-statement'), 'refusals'),
+        ('original-selection', lambda p:p['refusals'][0].update(original_selection='first'), 'refusals'),
+        ('missing-public-refusal', lambda p:p['finite_public']['native_controls'].pop(), 'finite_public'),
+        ('borrowed-public-root', lambda p:p['finite_public']['runs'][0]['invocation'].update(root='foreign'), 'finite_public'),
+        ('original-public-promotion', lambda p:p['finite_public'].update(role='Original runtime selections qualified.'), 'finite_public'),
+        ('missing-alias-owner', lambda p:p['unresolved'].pop('alias_downstream'), 'unresolved'),
+        ('private-promotion', lambda p:p.update(role='All private runtime meanings qualified.'), 'role'))
+    for name, change, field in trials:
+        bad = copy.deepcopy(expected)
+        change(bad)
+        need(not same(bad, expected), 'genuine source-publication intervention: ' + name)
+        try:
+            check(bad, expected)
+        except ValueError as error:
+            need(str(error) == 'whole source-hypothesis field: ' + field, 'intended source-publication refusal: ' + name)
+            outcomes[name] = str(error)
+        else:
+            raise ValueError('false-green source-publication control: ' + name)
+    for name, change, cause in (
+        ('Boolean-status', lambda r:r.update(status=True), 'discrete actual source-reader success'),
+        ('false-result', lambda r:r.update(stdout='PASS\n'), 'complete actual source-reader result and instrumentation'),
+        ('borrowed-command', lambda r:r['command'].append('borrowed'), 'complete actual source-reader result and instrumentation'),
+        ('borrowed-programme', lambda r:r['programme'].update(bytes=0), 'complete actual source-reader result and instrumentation')):
+        bad = copy.deepcopy(expected)
+        change(bad['actual_readers'][0])
+        try:
+            check(bad, expected)
+        except ValueError as error:
+            need(str(error) == cause, 'intended source-reader receipt refusal: ' + name)
+            outcomes[name] = cause
+        else:
+            raise ValueError('false-green source-reader receipt: ' + name)
+    return outcomes
+
+
+def main():
+    need(Path.cwd().resolve() == ROOT, 'invoke independent source-publication reader from repository root')
+    custody, blobs = original()
+    expected = reconstruction(blobs)
+    expected['custody'] = custody
+    expected['actual_readers'] = actual_readers()
+    check(json.loads((BASE / 'qualification.json').read_bytes()), expected)
+    decisions = controls(expected)
+    need(same(original()[0], custody), 'complete original input conservation after source-publication qualification')
+    print(json.dumps({'result': 'PASS complete independently reconstructed source hypotheses and actual results', 'controls': decisions}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()
