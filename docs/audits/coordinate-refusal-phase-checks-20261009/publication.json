@@ -1,0 +1,41 @@
+{
+  "addition": "The source-only refusal-phase binding joins each admitted ordinary, Storable\nand control refusal to its ordered guard, observer, helper, body and entry\ncallers. Each own caller cites an exact executable statement, retaining both\nfirst/closing labels, equivalent alternatives and legitimate filenames. The\nnested metadata capture includes its observer wrapper and Value eval before\nthe outer Value guard; these remain separate throw phases. Framework-owned\ncaller intervals remain opaque. The lexical test loader is `do`; its qualified\nmodel label is retained separately.\n\nThe independent reader reconstructs the complete allocation from fixed Git\ninputs and checks genuine guard, caller, phase, source, role, alternative and\npromotion controls. It selects source topology only, excluding argument/error\npayloads and original caller-coordinate snapshots. Read the sealed result with:\n\n```sh\npython3 -B docs/audits/coordinate-refusal-phase-checks-20261009/verify_phases.py\n```\n\nWhole source-hypothesis publication and original-coordinate joining remain\npending, with original private runtime meanings and alias downstream still\nowned separately. The binding establishes source hypotheses, without choosing\nwhich line or filename an original runtime actually reported.\n\n",
+  "after": {
+    "bytes": 48903,
+    "sha256": "d9463d4314e9a27ba2035672dc50e116aef672abf40ad5507faaa4752e65bc14"
+  },
+  "before": {
+    "bytes": 47630,
+    "sha256": "14f4890e1456d85b6507ed3b6438a0a571ef8a4ccb0e71439b3d1b17525b7121"
+  },
+  "book_after": {
+    "bytes_total": 3829451,
+    "files": 64,
+    "lines_total": 68863
+  },
+  "book_before": {
+    "bytes_total": 3828178,
+    "files": 64,
+    "lines_total": 68840
+  },
+  "legs": {
+    "durability": "Versioned source epoch, tracked programmes and complete publication/check receipts; registered maintained-reference and task pressure gates detect current drift.",
+    "falsify": "Unique chapter change and exact removal reconstruction reject borrowed source or unrelated book edits; phase verify.py independently allocates fixed-Git source topology and statement recipes with genuine phase/caller/guard/role/alternative/promotion controls; predecessor statement reader separately reconstructs original binary boundaries.",
+    "rederive": "publish.py reconstructs complete fixed-Git book membership/bytes and current source delta."
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.2",
+  "previous_registry": {
+    "bytes": 36532,
+    "sha256": "4015a522fe62a4ba8ae7cd031a5861c40766ed87e960fbadaa724da801ae4c24"
+  },
+  "revision": "485275db33d4fe96576b1782f44708be66963fc1",
+  "source": "docs/book/src/90-reference-map.md",
+  "task_metrics": {
+    "bytes_each": 2366453,
+    "bytes_total": 12800020,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 7041,
+    "lines_total": 118180
+  }
+}

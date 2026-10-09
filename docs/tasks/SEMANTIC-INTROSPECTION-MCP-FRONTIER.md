@@ -5353,13 +5353,14 @@ For FSMGen, the analogs are:
   Commit: `parent source-site bank slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Compose and independently qualify complete per-refusal statement and call-path hypotheses.`
   Acceptance: `After .1 commits, join every refusal to source-authored callback/subtest, guard and observer/test/parser call paths using previously qualified source cause/frame models and complete own statement bytes. Select statement-level first/closing and filename alternatives without interpreting original coordinates; keep every equivalent label, generation/invocation association and unresolved original/private dependency with its exact owner. Independent complete source/path allocation and genuine guard/caller/source/owner/line/filename/root/alternative/promotion controls qualify before whole source publication .3. No capture execution or original-coordinate intake.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Child .1 admits complete source-only path populations; child .2 qualifies finite executable recipes and every ordered refusal phase before original intake. Binary source extents, caller statements, role/overlap allocation, nested capture eval, opaque external intervals and all equivalent filename/line labels remain distinct. Separate complete source/path reconstruction, genuine hostile controls and whole actual results qualify; whole source publication remains .3 and all original/private/alias owners conserve.`
+  Commit: `path, statement and phase child slices`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.1`
   Status: `done`
@@ -5376,13 +5377,14 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Compose and independently qualify complete statement-level refusal hypotheses from admitted path inputs.`
   Acceptance: `After .1 commits, derive every guard and observer/test/parser call-site statement from complete own bytes, retain all first/closing and filename labels and their equivalent alternatives, and bind each ordered refusal phase to the admitted path models. Independent complete source/path allocation and genuine guard/caller/source/owner/line/filename/root/alternative/promotion controls qualify; original coordinates remain unread and whole source publication stays the existing successor.`
-  Verification: `Split before implementation: finite complete executable statements and their source-only alternatives qualify in .1; ordered per-refusal phase allocation then qualifies in .2. Lexical extents and original coordinates remain separate.`
-  Commit: `pending`
+  Verification: `Children .1 and .2 independently qualify complete executable statements and their ordered per-refusal allocation. Sealed original-source reconstruction, separate fixed-Git topology/caller allocation, actual hostile controls and complete receipt readers retain in coordinate-statement-recipes-20261009 and coordinate-refusal-phases-20261009 with their checks packages. Every modeled phase/role/alternative and generation/invocation association conserves; original coordinates remain null and whole source publication stays the existing successor.`
+  Commit: `statement and phase child slices`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.2`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.1`
   Status: `done`
@@ -5399,11 +5401,17 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Bind every ordered refusal phase to independently qualified statement recipes.`
   Acceptance: `After .1 commits, join every complete admitted refusal and qualified own source phase to exact caller/callee statement recipes, preserving core/observer/helper/body/entry/load roles, nested capture/eval and equivalent alternatives. Independent source/path allocation and genuine guard/caller/root/phase/role/source/alternative/promotion controls qualify. Preserve unresolved original/private/alias owners; whole source publication remains existing successor. No original coordinate or capture execution.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete fixed 485275db3 recipe/path seals and qualified class-frame source models authenticate. Source-only topology excludes argument/error payloads, public traces and original caller snapshots. Each complete admitted mode/domain/index/helper/subtest joins ordered guard/origin, core/observer/helper/body/entry/load statement bindings with explicit overlap links and nested capture eval. Full first/closing/equivalent/filename alternatives, original generation/invocation/public custody and unresolved original/private/alias/address owners conserve. Independent fixed-Git outward-to-inward allocation and source literal checks agree with the separate producer. Genuine omission, guard/caller/callee/phase/family/role/model-link/source/owner/line/filename/alternative/root/load/promotion and opaque-interval controls reject. The first actual qualifier detects nondeterministic refusal predicates caused by unordered set iteration; full first programme/result retain. qualify_order.py reproduces varied hash-seed predicates and deterministic ordered repair before seal. Published verify_phases.py requires the exact immutable complete seal before and after qualification; actual copied missing seal/member, borrowed body, extra member, rewritten self-seal and symlink-root controls reject. Complete original member census conserves and owned scratch copies are removed. consume_actual.py authenticates whole actual status/command/streams/unchanged RAM guard/instruments and deterministic reader stdout, with genuine receipt controls. Re-derive: phases.py plus complete phases.json; falsify: separate verify.py fixed-Git topology/caller allocation, predecessor binary-source reader and genuine controls; durability: sealed product/programmes, fixed revisions, complete actual check receipts and normal Git commit. Focused public/book checks report All tests successful Files3 Tests310. Scoped whole-book/current/native delivery, measured aggregate/task declarations, fresh claim inventory and staged doctrines/normal hooks gate commit. Finite callee semantics remain trusted qualified inputs, not a general Perl interpreter or independent runtime formatter. Whole source publication remains the exact successor; original/private/alias/native/formatter/toolchain/address/visual/HIAL/full-CI/push owners remain open. Public ISF syntax/runtime/API/MCP/downstream contracts are unchanged.`
+  Commit: `this slice`
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Ordered refusal-phase binding' identifies statement-recipe commit485275db3 and its still-open source-phase scope in coordinate-refusal-phase-checks-20261009/root-cause.json. Lexical statements alone do not allocate every active caller; nested metadata observer capture and Value eval must precede the outer guard in distinct source phases. The actual first qualifier failure and complete programme retain; qualify_order.py replays its unordered predicate mechanism and corrected deterministic refusal order without capture execution.
+  - [x] **ADDRESSED (verified)** — Complete sealed phases.json binds every admitted source-only refusal phase to exact executable caller recipes, preserving origin/core/observer/helper/body/entry/load roles, overlap links, nested capture eval, opaque framework intervals and all alternatives. Separate verify.py reconstructs fixed-Git topology and caller allocation and rejects genuine phase/guard/caller/source/role/alternative/root/promotion controls. Published fixed-seal verify_phases.py and actual copied-corpus controls conserve the complete original. consume_actual.py checks actual producer/reader/guard/instrument results and genuine altered receipts. Whole publication and original/private/alias coordinates remain separately owned.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in checks.json focused. Independent sealed phase allocation, genuine controls and full actual-result consumption pass under unchanged RAM cutoffs. Fresh scoped book/current/native source bytes, exact measured aggregate/task declarations, fresh claim inventory and staged scripts/check_doctrines.sh plus normal hooks gate commit. No source fact/question, original capture, custody byte or ceiling is removed or widened.
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.3`
   Status: `pending`

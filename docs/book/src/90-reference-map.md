@@ -758,11 +758,34 @@ observer, helper, callback, subtest, nested capture and parser call statements.
 The parser's `confess` expression includes its trailing conditional guard in
 the executable recipe. Independent original-source reconstruction checks byte
 offsets, ownership, first/closing equivalents and filename alternatives.
-Ordered refusal-phase binding and original runtime selections remain pending:
+These recipes preserve alternatives without selecting original runtime coordinates:
 
 ```sh
 python3 -B docs/audits/coordinate-statement-recipe-checks-20261009/verify_recipes.py
 ```
+
+The source-only refusal-phase binding joins each admitted ordinary, Storable
+and control refusal to its ordered guard, observer, helper, body and entry
+callers. Each own caller cites an exact executable statement, retaining both
+first/closing labels, equivalent alternatives and legitimate filenames. The
+nested metadata capture includes its observer wrapper and Value eval before
+the outer Value guard; these remain separate throw phases. Framework-owned
+caller intervals remain opaque. The lexical test loader is `do`; its qualified
+model label is retained separately.
+
+The independent reader reconstructs the complete allocation from fixed Git
+inputs and checks genuine guard, caller, phase, source, role, alternative and
+promotion controls. It selects source topology only, excluding argument/error
+payloads and original caller-coordinate snapshots. Read the sealed result with:
+
+```sh
+python3 -B docs/audits/coordinate-refusal-phase-checks-20261009/verify_phases.py
+```
+
+Whole source-hypothesis publication and original-coordinate joining remain
+pending, with original private runtime meanings and alias downstream still
+owned separately. The binding establishes source hypotheses, without choosing
+which line or filename an original runtime actually reported.
 
 <div id="knowledge-map-architecture"></div>
 

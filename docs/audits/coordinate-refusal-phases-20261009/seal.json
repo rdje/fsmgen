@@ -1,0 +1,18 @@
+{
+  "phases.json": {
+    "bytes": 1793328,
+    "sha256": "acb96620178658749b0c16a0939e26d4a76262f8358436f203488d172926dc0d"
+  },
+  "phases.py": {
+    "bytes": 13984,
+    "sha256": "592cfa911e8098ec9795399c63a7a779654e342511d832e59e5d4437d0441d97"
+  },
+  "scope.txt": {
+    "bytes": 117,
+    "sha256": "d95b5504b3b65c461cbb0a12de96c1816fa6fa19cf95916957dea733ab7c5f64"
+  },
+  "verify.py": {
+    "bytes": 20218,
+    "sha256": "1d3d8505f0266ad76190cf980f40d150c777544004ec078664c3f0d7a2a0162f"
+  }
+}
