@@ -1,0 +1,108 @@
+"""Publish the finite hostile scope and measure the complete reversible book change."""
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/coordinate-original-hostile-checks-20261009')
+REVISION = '32c5f718528c9ca38b72ef0333e26703663674ab'
+CHAPTER = Path('docs/book/src/90-reference-map.md')
+SURFACES = Path('doctrine/live_document_size/surfaces.jsonl')
+OLD = '''Whole hostile qualification and atomic current canonical publication remain
+next. Address lifetimes and alias downstream remain separately owned.
+'''
+NEW = '''The whole original match now has dated hostile qualification. It enumerates
+every recorded own coordinate, then intervenes on a representative of each
+observed source recipe in each admitted mode. The interventions replace a
+terminal reported line or filename, or borrow a source declaration from a
+different file. Each intervention passes the complete predecessor class, frame,
+function, visible-argument and forwarding predicates before both coordinate
+procedures reject the changed coordinate or source association.
+
+Nested interventions change the child body and its complete forwarded parent
+together, covering every admitted pair. Untargeted records, complete function
+and argument text, and recorded context remain unchanged. Separate custody
+checks authenticate every immutable original member before and after the
+independent intervention run.
+
+The independent reader rebuilds source-link positions and uses byte intervals
+to construct interventions. It compares the complete result and rejects omitted
+points, source recipes, forwarded pairs, empty allocations and false or borrowed
+actual-reader results. The first constructor's duplicate-allocation refusal and
+its source-role correction remain retained. A later wrong-line constructor
+exhausted the candidate lines for a file with only its selected site; that
+failed programme/result also retain. The qualified constructor uses a positive
+adjacent line in that case. Reproduce the complete fixed-seal
+qualification from the repository root:
+
+```sh
+python3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py
+```
+
+An interrupted RAM-guarded attempt retains its complete partial-control journal
+and matching replay with its non-success status. The final independent reader
+checks that retained prefix; the guard limits remain unchanged.
+
+Atomic current canonical publication remains the next owned step. This dated
+qualification leaves original private formatting/toolchain/identity, external
+framework coordinate rules, address lifetimes and alias downstream with their
+existing owners.
+'''
+
+
+def fixed(*args):
+    run = subprocess.run(['git', '--no-replace-objects', *args], capture_output=True)
+    if run.returncode != 0 or run.stderr:
+        raise ValueError('complete fixed hostile book source')
+    return run.stdout
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def metrics(rows):
+    return {'files': len(rows), 'bytes_total': sum(map(len, rows)),
+            'lines_total': sum(raw.count(b'\n') for raw in rows)}
+
+
+def main():
+    destination = BASE / 'book.json'
+    if destination.exists():
+        raise ValueError('first hostile book publication only')
+    original = fixed('show', REVISION + ':' + str(CHAPTER))
+    if CHAPTER.read_bytes() != original or original.count(OLD.encode()) != 1:
+        raise ValueError('unique unchanged hostile book source')
+    CHAPTER.write_bytes(original.replace(OLD.encode(), NEW.encode(), 1))
+    paths = sorted(str(p) for p in Path('docs/book/src').glob('*.md'))
+    old_paths = sorted(p for p in fixed('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/book/src').decode().splitlines()
+                       if Path(p).parent == Path('docs/book/src') and p.endswith('.md'))
+    if paths != old_paths:
+        raise ValueError('complete unchanged hostile book membership')
+    before_rows = [fixed('show', REVISION + ':' + p) for p in paths]
+    after_rows = [Path(p).read_bytes() for p in paths]
+    if [p for p, a, b in zip(paths, before_rows, after_rows) if a != b] != [str(CHAPTER)]:
+        raise ValueError('only owned hostile book guidance changes')
+    before, after = metrics(before_rows), metrics(after_rows)
+    owner = Path('docs/audits/coordinate-original-hostile-20261009/scope.txt').read_text().strip()
+    records = list(map(json.loads, SURFACES.read_text().splitlines()))
+    for record in records:
+        if record.get('surface_id') == 'shipped_behavior':
+            record['reference_contract']['aggregate_change'] = {
+                'authority_id': 'COORDINATE-ORIGINAL-HOSTILE-20261009', 'baseline': before,
+                'delta': {key: after[key] - before[key] for key in before}, 'owner': owner,
+                'rationale': 'Publish whole original matching hostile qualification, finite source-recipe/mode intervention scope, predecessor preservation and independent byte-interval controls; retain current canonical publication and opaque/private successors under unchanged Knowledge Map authority.'}
+    SURFACES.write_text(''.join(json.dumps(row, sort_keys=True) + '\n' for row in records))
+    destination.write_text(json.dumps({
+        'revision': REVISION, 'owner': owner, 'source': str(CHAPTER),
+        'before': pin(original), 'after': pin(CHAPTER.read_bytes()),
+        'original_block': OLD, 'current_block': NEW, 'book_before': before, 'book_after': after,
+        'legs': {'rederive': 'Whole fixed-Git chapter membership and source bytes measured before/after the unique replacement.',
+                 'falsify': 'Independent whole-book reversal, actual source/native receipts and genuine product/receipt controls in verify_delivery.py.',
+                 'durability': 'Fixed source revision, exact blocks and identities, tracked measurements and actual receipts; normal staged doctrines and Git hooks.'},
+    }, sort_keys=True, indent=2) + '\n')
+    print('PASS reversible whole hostile book publication and exact aggregate authority; all ceilings and Knowledge Map authority unchanged.')
+
+
+if __name__ == '__main__':
+    main()

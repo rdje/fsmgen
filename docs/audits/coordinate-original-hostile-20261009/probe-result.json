@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-original-hostile-20261009/probe.py",
+    "docs/audits/coordinate-original-hostile-20261009/mutations.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-original-hostile-20261009/mutations.py": {
+      "bytes": 6406,
+      "sha256": "ad9006c6f87c3a50989393e221cb36c264c79d6de16740b10bf54c13e6bce590"
+    },
+    "docs/audits/coordinate-original-hostile-20261009/probe.py": {
+      "bytes": 1860,
+      "sha256": "f915cc1a629d3b2412f49ad0083c646dbf49bf978873f939d428020a57b50246"
+    },
+    "docs/audits/coordinate-original-hostile-checks-20261009/checks.py": {
+      "bytes": 1421,
+      "sha256": "9a8cf4e7a8789d18d25a9d139e133de52ae3a761ee0362f4218e8d4d8b687319"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 47322; host 67.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"controls\": [{\"affected\": [[\"ordinary\", \"api\", 820]], \"field\": \"line\", \"kind\": \"origin\", \"prior\": \"PASS complete class/frame/argument semantics\", \"refusal\": \"declared own caller coordinate: admitted/qualified/0\"}, {\"affected\": [[\"ordinary\", \"api\", 820]], \"field\": \"path\", \"kind\": \"origin\", \"prior\": \"PASS complete class/frame/argument semantics\", \"refusal\": \"declared own caller coordinate: admitted/qualified/0\"}, {\"affected\": [[\"ordinary\", \"api\", 7750], [\"ordinary\", \"api\", 7839]], \"field\": \"line\", \"kind\": \"forwarded-origin\", \"prior\": \"PASS complete class/frame/argument semantics\", \"refusal\": \"declared own caller coordinate: admitted/qualified/1\"}, {\"affected\": [[\"ordinary\", \"api\", 7750], [\"ordinary\", \"api\", 7839]], \"field\": \"path\", \"kind\": \"forwarded-origin\", \"prior\": \"PASS complete class/frame/argument semantics\", \"refusal\": \"declared own caller coordinate: admitted/qualified/1\"}, {\"affected\": [[\"ordinary\", \"api\", 820]], \"field\": \"line\", \"kind\": \"frame\", \"prior\": \"PASS complete class/frame/argument semantics\", \"refusal\": \"declared own caller coordinate: admitted/guard-call/value/GUARDS.values.16\"}, {\"affected\": [[\"ordinary\", \"api\", 820]], \"field\": \"path\", \"kind\": \"frame\", \"prior\": \"PASS complete class/frame/argument semantics\", \"refusal\": \"declared own caller coordinate: admitted/guard-call/value/GUARDS.values.16\"}, {\"affected\": [[\"ordinary\", \"api\", 820]], \"field\": \"line\", \"kind\": \"load\", \"prior\": \"PASS complete class/frame/argument semantics\", \"refusal\": \"declared own caller coordinate: admitted/qualified/99\"}, {\"affected\": [[\"ordinary\", \"api\", 820]], \"field\": \"path\", \"kind\": \"load\", \"prior\": \"PASS complete class/frame/argument semantics\", \"refusal\": \"declared own caller coordinate: admitted/qualified/99\"}], \"result\": \"PASS representative genuine coordinate interventions preserve complete predecessor meanings\"}\n"
+}

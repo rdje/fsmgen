@@ -921,8 +921,44 @@ allocations, full used and unused source candidates and explicit opaque owners.
 Fresh original-intake, expression and observer readers independently regenerate
 complete results. This dated own-coordinate match does not measure original
 private formatting/toolchain/identity or external framework coordinate rules.
-Whole hostile qualification and atomic current canonical publication remain
-next. Address lifetimes and alias downstream remain separately owned.
+The complete dated producer now executes original own-coordinate controls.
+It enumerates every recorded own coordinate and selects a representative of
+each observed source recipe in each admitted mode. The controls replace a
+terminal reported line or filename, or borrow a source declaration from a
+different file. Every completed producer control passes the complete predecessor
+class, frame, function, visible-argument and forwarding predicates before both
+coordinate procedures reject the changed coordinate or source association.
+
+Nested interventions change the child body and its complete forwarded parent
+together. Every nonempty original record and every admitted forwarding pair
+receives line and filename interventions. Untargeted records, complete function
+and argument text, and recorded context remain unchanged. The producer retains
+the whole original/source/matching replay and reauthenticates every immutable
+original custody member after its controls.
+
+Separate geometry reconstruction agrees on the complete source-linked point and
+forwarding allocation. Independent byte-interval examples cover origins,
+callers, loads and forwarded errors. Positive adjacent-line controls also pass
+for the parser facade in every mode. The first duplicate-allocation and exhausted
+candidate-line constructor failures retain beside their verified corrections.
+The complete producer is sealed; genuine copied missing, borrowed, extra,
+resealed and symlinked corpora are rejected while the originals conserve.
+
+Full independent reconstruction remains unfinished. Its first published attempt
+stopped at the unchanged host-memory cutoff before reconstructing the controls.
+An earlier producer attempt also retains its full partial-control journal and
+matching replay with its non-success status. These stopped attempts do not
+supply the missing independent leg. Retry the required complete reader from the
+repository root when host headroom permits:
+
+```sh
+python3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py
+```
+
+Complete independent qualification precedes atomic current canonical
+publication. Original private formatting/toolchain/identity, external framework
+coordinate rules, address lifetimes and alias downstream retain their existing
+owners.
 
 <div id="knowledge-map-architecture"></div>
 

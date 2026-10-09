@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "--no-pager",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "Whole hostile qualification and atomic current canonical publication remain",
+    "--",
+    "docs/book/src/90-reference-map.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "32c5f718528c9ca38b72ef0333e26703663674ab SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.3.2: match complete original own coordinates\n"
+}

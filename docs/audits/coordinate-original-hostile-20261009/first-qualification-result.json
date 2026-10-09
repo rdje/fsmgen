@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-original-hostile-20261009/qualify.py",
+    "docs/audits/coordinate-original-hostile-20261009/mutations.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-original-hostile-20261009/mutations.py": {
+      "bytes": 6406,
+      "sha256": "ad9006c6f87c3a50989393e221cb36c264c79d6de16740b10bf54c13e6bce590"
+    },
+    "docs/audits/coordinate-original-hostile-20261009/qualify.py": {
+      "bytes": 9697,
+      "sha256": "216ded914129c93f1bc26f36f53a384c1f4b593f08a19689328a0a8e21ee8742"
+    },
+    "docs/audits/coordinate-original-hostile-checks-20261009/checks.py": {
+      "bytes": 1421,
+      "sha256": "9a8cf4e7a8789d18d25a9d139e133de52ae3a761ee0362f4218e8d4d8b687319"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 67487; host 69.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-original-hostile-20261009/qualify.py\", line 155, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-original-hostile-20261009/qualify.py\", line 140, in main\n    separated=semantic_controls(raw,models,matched,points)\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-original-hostile-20261009/qualify.py\", line 83, in semantic_controls\n    bad_line=min(line for row in candidates.values() if filename in row['filename_alternatives']\n                 for line in row['line_alternatives'].values() if line not in selection['all_line_alternatives'].values())\nValueError: min() iterable argument is empty\n",
+  "stdout": ""
+}

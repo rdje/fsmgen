@@ -1,0 +1,284 @@
+"""Independently verify the sealed producer checkpoint and its explicit missing full leg."""
+import copy
+import hashlib
+import json
+import subprocess
+import runpy
+from pathlib import Path
+
+BASE = Path('docs/audits/coordinate-original-hostile-checks-20261009')
+PRODUCT = Path('docs/audits/coordinate-original-hostile-20261009')
+REVISION = '32c5f718528c9ca38b72ef0333e26703663674ab'
+CHAPTER = 'docs/book/src/90-reference-map.md'
+COMMANDS = {
+    'source-current': ['python3', '-B', 'scripts/book_source_references.py', '--check'],
+    'book-build': ['mdbook', 'build', 'docs/book'],
+    'native-staged': ['python3', '-B', 'scripts/book_source_references.py', '--check', '--verify-build', 'docs/book/book'],
+    'current-native': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', 'docs/book/book'],
+}
+
+
+def need(ok, why):
+    if not ok:
+        raise ValueError(why)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def git(*args):
+    run = subprocess.run(['git', '--no-replace-objects', *args], capture_output=True)
+    need(run.returncode == 0 and not run.stderr, 'complete independent hostile book source')
+    return run.stdout
+
+
+def counts(rows):
+    return {'files': len(rows), 'bytes_total': sum(map(len, rows)),
+            'lines_total': sum(len(raw.splitlines(keepends=True)) for raw in rows)}
+
+
+def expectation():
+    paths = sorted(p for p in git('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/book/src').decode().splitlines()
+                   if Path(p).parent == Path('docs/book/src') and p.endswith('.md'))
+    need(paths == sorted(str(p) for p in Path('docs/book/src').glob('*.md')), 'whole current hostile book membership')
+    before = [git('show', REVISION + ':' + p) for p in paths]
+    after = [Path(p).read_bytes() for p in paths]
+    need([p for p, a, b in zip(paths, before, after) if a != b] == [CHAPTER], 'unique current hostile book delta')
+    old, current = before[paths.index(CHAPTER)], after[paths.index(CHAPTER)]
+    marker = b'\n<div id="knowledge-map-architecture">'
+    old_start = old.index(b'Whole hostile qualification and atomic current canonical publication remain')
+    old_end = old.index(marker, old_start)
+    start = current.index(b'The complete dated producer now executes original own-coordinate controls.')
+    end = current.index(marker, start)
+    need(current[:start] == old[:old_start] and current[end:] == old[old_end:],
+         'reversible complete hostile guide replacement')
+    return {'revision': REVISION, 'owner': (BASE / 'scope.txt').read_text().strip(),
+            'source': CHAPTER, 'before': pin(old), 'after': pin(current),
+            'original_block': old[old_start:old_end].decode(), 'current_block': current[start:end].decode(),
+            'book_before': counts(before), 'book_after': counts(after)}
+
+
+def publication_check(actual, expected):
+    for key in expected:
+        need(json.dumps(actual[key], sort_keys=True) == json.dumps(expected[key], sort_keys=True),
+             'independent complete hostile delivery field: ' + key)
+
+
+def receipt_check(receipt, command, stdout=None):
+    need(type(receipt['status']) is int and receipt['status'] == 0, 'actual hostile receipt status')
+    need(receipt['command'] == ['scripts/run_with_ram_guard.sh', '--', *command], 'actual hostile receipt command')
+    instruments = {str(BASE / 'checks.py'), 'scripts/run_with_ram_guard.sh'} | {p for p in command if Path(p).is_file()}
+    need(receipt['instruments'] == {p: pin(Path(p).read_bytes()) for p in instruments}, 'complete actual hostile instruments')
+    need(type(receipt['stdout']) is str and type(receipt['stderr']) is str
+         and 'host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s' in receipt['stderr'],
+         'complete actual hostile streams and unchanged RAM cutoffs')
+    if stdout is not None:
+        need(receipt['stdout'] == stdout, 'complete actual hostile stdout')
+
+
+def capacity(expected):
+    prior = list(map(json.loads, git('show', REVISION + ':doctrine/live_document_size/surfaces.jsonl').splitlines()))
+    current = list(map(json.loads, Path('doctrine/live_document_size/surfaces.jsonl').read_text().splitlines()))
+    need([r.get('surface_id') for r in prior] == [r.get('surface_id') for r in current], 'whole hostile capacity membership')
+    for old, new in zip(prior, current):
+        corrected = copy.deepcopy(old)
+        if new.get('surface_id') == 'shipped_behavior':
+            change = new['reference_contract']['aggregate_change']
+            need(change['authority_id'] == 'COORDINATE-ORIGINAL-HOSTILE-CHECKPOINT-20261009'
+                 and change['owner'] == expected['owner'] and change['baseline'] == expected['book_before']
+                 and change['delta'] == {k: expected['book_after'][k] - expected['book_before'][k]
+                                         for k in expected['book_before']}, 'exact hostile book aggregate authority')
+            corrected['reference_contract']['aggregate_change'] = change
+        elif new.get('surface_id') == 'task_evidence':
+            paths = sorted({p for pattern in new['targets'] for p in Path('.').glob(pattern)})
+            data = [p.read_bytes() for p in paths]
+            measured = {**counts(data), 'bytes_each': max(map(len, data)),
+                        'lines_each': max(len(raw.splitlines(keepends=True)) for raw in data),
+                        'line_bytes_each': max(len(line.rstrip(b'\r')) for raw in data for line in raw.split(b'\n'))}
+            product = json.loads((BASE / 'task-metrics.json').read_bytes())
+            need(product['actual'] == measured and product['owner'] == expected['owner'],
+                 'complete independently measured hostile task evidence')
+            corrected['transition']['max_growth'] = {
+                k: max(0, min(v + new['transition']['ratchet_step'][k], new['enforcement_ceilings'][k]) - new['baseline'][k])
+                for k, v in measured.items()}
+        need(equal(corrected, new), 'only exact owned hostile book/task authority changes: ' + new.get('surface_id', 'collection-header'))
+
+
+def equal(left, right):
+    return json.dumps(left, sort_keys=True) == json.dumps(right, sort_keys=True)
+
+
+def qualify_results(checks):
+    commands = {name: ['python3', '-B', str(BASE / programme)] for name, programme in (
+        ('book', 'book.py'), ('task-pressure-repaired', 'task_pressure.py'), ('seal', 'seal.py'),
+        ('seal-controls', 'seal_controls.py'), ('oracle-probe', 'oracle_probe.py'))}
+    commands['qualification-final'] = ['python3', '-B', str(PRODUCT / 'qualify.py'), str(PRODUCT / 'mutations.py')]
+    commands['probe-repaired'] = ['python3', '-B', str(PRODUCT / 'probe.py'), str(PRODUCT / 'mutations.py')]
+    commands['line-probe-admitted'] = ['python3', '-B', str(BASE / 'line_probe.py'),
+                                        str(PRODUCT / 'qualify.py'), str(PRODUCT / 'oracle.py')]
+    commands['focused'] = ['prove', '-Iperl', 't/2066-record-value-current-publication.t',
+                           't/1303-isf-public-live-book-paths-audit.t', 't/1305-isf-book-feature-matrix-audit.t']
+    commands['claim-inventory'] = ['scripts/check_claim_verification_inventory.pl', '--write']
+    for name, command in commands.items():
+        receipt_check(checks[name], command)
+    need('All tests successful.' in checks['focused']['stdout'] and 'Files=3, Tests=310' in checks['focused']['stdout'],
+         'actual focused checkpoint regression')
+    published = runpy.run_path(str(BASE / 'verify_hostile.py'))
+    published['authenticate'](PRODUCT)
+    product = json.loads((PRODUCT / 'qualification.json').read_bytes())
+    need(set(product) == {'revision', 'owner', 'role', 'inputs', 'original', 'source_models', 'matching',
+                         'points', 'forwarding', 'representatives', 'baseline_predecessor', 'controls',
+                         'actual_matching_reader', 'original_custody', 'legs'}, 'closed whole producer checkpoint')
+    need(product['revision'] == REVISION and product['owner'] == (PRODUCT / 'scope.txt').read_text().strip()
+         and (BASE / 'scope.txt').read_text().strip() == product['owner'] + '.1', 'exact parent and checkpoint ownership')
+    class_root = 'docs/audits/record-value-class-frame-join-20261006/'
+    matching_root = 'docs/audits/coordinate-original-matching-qualified-20261009/'
+    need(set(product['inputs']) == {class_root + name for name in ('raw-product.json', 'source-models.json', 'proofs.json', 'verify.py')}
+         | {matching_root + name for name in ('matching.json', 'match.py', 'verify.py', 'seal.json')},
+         'closed complete checkpoint input namespace')
+    for path, identity in product['inputs'].items():
+        raw = git('show', REVISION + ':' + path)
+        need(raw == Path(path).read_bytes() and identity == pin(raw), 'complete fixed checkpoint input: ' + path)
+    class_root = 'docs/audits/record-value-class-frame-join-20261006/'
+    for key, path in [('original', class_root + 'raw-product.json'), ('source_models', class_root + 'source-models.json'),
+                      ('matching', 'docs/audits/coordinate-original-matching-qualified-20261009/matching.json')]:
+        need(equal(product[key], json.loads(git('show', REVISION + ':' + path))), 'complete original checkpoint field: ' + key)
+    proofs = json.loads(git('show', REVISION + ':' + class_root + 'proofs.json'))
+    oracle = runpy.run_path(str(PRODUCT / 'oracle.py'))
+    points, _ = oracle['points'](product['original'], product['matching'], proofs)
+    pairs = oracle['forwarding'](product['original'], proofs)
+    need(equal(points, product['points']) and equal(pairs, product['forwarding']), 'independent complete checkpoint geometry')
+    selected = {}
+    for point in points:
+        selected.setdefault((point['key'][0], point['selection']['recipe_id']), point)
+    representatives = list(selected.values())
+    need(equal(representatives, product['representatives']), 'complete observed recipe-mode checkpoint allocation')
+    need(equal(product['controls'], list(map(json.loads, (BASE / 'qualification-repaired-controls.jsonl').read_text().splitlines()))),
+         'whole completed producer control journal')
+    need(len(product['controls']) == len(representatives) * 3, 'complete producer intervention axis allocation')
+    for ordinal, point in enumerate(representatives):
+        controls = product['controls'][3 * ordinal:3 * ordinal + 3]
+        need([c['field'] for c in controls] == ['line', 'path', 'source']
+             and all(equal(c['point'], point) for c in controls), 'whole per-recipe producer axes')
+        for control in controls:
+            expected = 'declared own caller coordinate: ' + (control['value'] if control['field'] == 'source'
+                        else point['selection']['recipe_id'])
+            independent = 'independent declared caller line' if control['field'] == 'line' else 'independent declared caller filename'
+            need(control['refusals'] == {'derive': expected, 'reconstruct': independent}, 'actual intended producer coordinate refusals')
+    original_keys = set(oracle['records'](product['original']))
+    for field in ('line', 'path'):
+        need({tuple(key) for c in product['controls'] if c['field'] == field for key in c['affected']} == original_keys,
+             'every original nonempty record receives producer coordinate interventions')
+        for pair in pairs:
+            need(any(c['field'] == field and c['affected'] == sorted([pair['child'], pair['parent']])
+                     for c in product['controls']), 'every forwarded pair receives coherent producer interventions')
+    actual = product['actual_matching_reader']
+    matching_checks = 'docs/audits/coordinate-original-matching-qualified-checks-20261009/checks.json'
+    reader = 'docs/audits/coordinate-original-matching-qualified-checks-20261009/verify_matching.py'
+    need(type(actual['status']) is int and actual['status'] == 0 and actual['stderr'] == ''
+         and actual['command'] == ['python3', '-B', reader]
+         and actual['programme'] == pin(git('show', REVISION + ':' + reader))
+         and actual['stdout'] == json.loads(git('show', REVISION + ':' + matching_checks))['published']['stdout']
+         and equal(actual, json.loads((BASE / 'actual-matching-replay.json').read_bytes())),
+         'complete actual original/source/matching replay at checkpoint')
+    first = json.loads((PRODUCT / 'first-probe-result.json').read_bytes())
+    failed = json.loads((PRODUCT / 'first-qualification-result.json').read_bytes())
+    need(equal(first, checks['probe']) and type(first['status']) is int and first['status'] == 1
+         and 'ValueError: unique finite forwarding pairs' in first['stderr'], 'first duplicate source allocation refusal retains')
+    need(equal(failed, checks['qualification']) and type(failed['status']) is int and failed['status'] == 1
+         and failed['instruments'][str(PRODUCT / 'qualify.py')] == pin((PRODUCT / 'first-qualification.py.txt').read_bytes())
+         and 'ValueError: min() iterable argument is empty' in failed['stderr'], 'first exhausted line constructor refusal retains')
+    need(equal(json.loads((PRODUCT / 'probe-result.json').read_bytes()), checks['probe-repaired']), 'whole repaired actual probe retains')
+    partial = list(map(json.loads, (PRODUCT / 'ram-stopped-controls.jsonl').read_text().splitlines()))
+    need(equal(partial, product['controls'][:len(partial)])
+         and equal(json.loads((PRODUCT / 'ram-stopped-matching-replay.json').read_bytes()), actual)
+         and equal(json.loads((PRODUCT / 'ram-stopped-result.json').read_bytes()), checks['qualification-repaired']),
+         'whole interrupted producer prefix and replay retain')
+    for name in ('qualification-repaired', 'published'):
+        receipt = checks[name]
+        command = (['python3', '-B', str(PRODUCT / 'qualify.py'), str(PRODUCT / 'mutations.py')]
+                   if name == 'qualification-repaired' else ['python3', '-B', str(BASE / 'verify_hostile.py')])
+        instruments = {str(BASE / 'checks.py'), 'scripts/run_with_ram_guard.sh'} | {p for p in command if Path(p).is_file()}
+        need(type(receipt['status']) is int and receipt['status'] == 137
+             and receipt['command'] == ['scripts/run_with_ram_guard.sh', '--', *command]
+             and receipt['instruments'] == {p: pin(Path(p).read_bytes()) for p in instruments}
+             and 'reached cutoff 88%' in receipt['stderr']
+             and 'host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s' in receipt['stderr'],
+             'explicit non-success and unchanged RAM cutoff: ' + name)
+    need(checks['published']['stdout'] == '', 'full independent qualification has no successful result')
+    blocked = checks['line-probe']
+    need(type(blocked['status']) is int and blocked['status'] == 2
+         and 'process-tree inspection is unavailable' in blocked['stderr'], 'initial process-inspection refusal retains')
+    seals = json.loads(checks['seal-controls']['stdout'])
+    need(seals['result'] == 'PASS genuine copied hostile seal controls and whole original conservation'
+         and set(seals['controls']) == {'valid', 'missing-seal', 'missing-member', 'borrowed-body',
+                                        'extra-member', 'rewritten-seal', 'symlink-root'}, 'complete genuine copied checkpoint controls')
+    for path in ('doctrine/claim_verification/dispositions.jsonl', 'doctrine/claim_verification/disposition_groups.jsonl'):
+        need(Path(path).read_bytes() == git('show', REVISION + ':' + path), 'whole original checkpoint claim authority unchanged')
+    published['authenticate'](PRODUCT)
+    return {'points': len(points), 'source_recipe_modes': len(representatives), 'producer_controls': len(product['controls']),
+            'forwarding_pairs': len(pairs), 'intervened_records': len(original_keys),
+            'full_independent_qualification': 'unfinished; owning successor ' + product['owner'] + '.2'}
+
+
+
+
+def main():
+    actual = json.loads((BASE / 'book.json').read_bytes())
+    expected = expectation()
+    publication_check(actual, expected)
+    capacity(expected)
+    checks = json.loads((BASE / 'checks.json').read_bytes())
+    first = runpy.run_path(str(BASE / 'first-checkpoint-delivery.py.txt'))
+    try:
+        first['capacity'](expected)
+    except KeyError as error:
+        need(error.args == ('surface_id',), 'exact first collection-header diagnostic failure reproduction')
+    else:
+        raise ValueError('first collection-header diagnostic unexpectedly accepted')
+    failure = checks['delivery']
+    need(type(failure['status']) is int and failure['status'] == 1
+         and failure['instruments'][str(BASE / 'verify_delivery.py')] == pin((BASE / 'first-checkpoint-delivery.py.txt').read_bytes())
+         and "KeyError: 'surface_id'" in failure['stderr'], 'complete first checkpoint-delivery programme/result retain')
+    for name, command in COMMANDS.items():
+        output = None
+        if name in ('source-current', 'native-staged'):
+            output = 'book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n'
+        elif name == 'current-native':
+            output = 'PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n'
+        receipt_check(checks[name], command, output)
+    coverage = qualify_results(checks)
+    controls = {}
+    for name, field, mutate in (
+        ('borrowed-book', 'before', lambda p: p.update(before=p['after'])),
+        ('Boolean-count', 'book_after', lambda p: p['book_after'].update(files=True)),
+        ('omitted-block', 'current_block', lambda p: p.update(current_block=''))):
+        bad = copy.deepcopy(actual)
+        mutate(bad)
+        try:
+            publication_check(bad, expected)
+        except ValueError as error:
+            need(str(error) == 'independent complete hostile delivery field: ' + field, 'intended hostile book control')
+            controls[name] = str(error)
+        else:
+            raise ValueError('false-green hostile book control: ' + name)
+    for name, mutate, message in (
+        ('false-green-status', lambda r: r.update(status=True), 'actual hostile receipt status'),
+        ('borrowed-command', lambda r: r['command'].append('--foreign'), 'actual hostile receipt command'),
+        ('borrowed-stdout', lambda r: r.update(stdout='PASS\n'), 'complete actual hostile stdout')):
+        bad = copy.deepcopy(checks['current-native'])
+        mutate(bad)
+        try:
+            receipt_check(bad, COMMANDS['current-native'], checks['current-native']['stdout'])
+        except ValueError as error:
+            need(str(error) == message, 'intended actual hostile receipt control')
+            controls[name] = str(error)
+        else:
+            raise ValueError('false-green hostile native receipt control: ' + name)
+    print(json.dumps({'result': 'PASS sealed producer checkpoint, accurate unfinished independent boundary and whole source/native delivery',
+                      'coverage': coverage, 'book': expected, 'controls': controls}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

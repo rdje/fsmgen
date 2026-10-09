@@ -1,0 +1,82 @@
+{
+  "first-mutations.py.txt": {
+    "bytes": 6277,
+    "sha256": "41f036820add02717a5e0569dd9a59118a1a317890daf175769d7c4571ac7e8b"
+  },
+  "first-oracle.py.txt": {
+    "bytes": 7523,
+    "sha256": "b0850e7dac00ef1e53636ff68581ad9444749fe903436dc585ff1dea96edee97"
+  },
+  "first-probe-result.json": {
+    "bytes": 1738,
+    "sha256": "309aa15fd07d9bcfc748caaf370173dcd0892564a6579bf0b0a3d5584da87039"
+  },
+  "first-probe.py.txt": {
+    "bytes": 1860,
+    "sha256": "f915cc1a629d3b2412f49ad0083c646dbf49bf978873f939d428020a57b50246"
+  },
+  "first-qualification-progress.json": {
+    "bytes": 132,
+    "sha256": "d061e73d51552b329e16f126c459660615a78a2a176af09f7e08215eb33a8067"
+  },
+  "first-qualification-result.json": {
+    "bytes": 1879,
+    "sha256": "8ca78583d574fa404fb0d9d456870d818437fa8f4290cc644c0be68b482fc47f"
+  },
+  "first-qualification.py.txt": {
+    "bytes": 9697,
+    "sha256": "216ded914129c93f1bc26f36f53a384c1f4b593f08a19689328a0a8e21ee8742"
+  },
+  "first-verifier.py.txt": {
+    "bytes": 10880,
+    "sha256": "6f041f92dd37397958099c92380809049fa0ad30fac76969710198317f37467b"
+  },
+  "mutations.py": {
+    "bytes": 6406,
+    "sha256": "ad9006c6f87c3a50989393e221cb36c264c79d6de16740b10bf54c13e6bce590"
+  },
+  "oracle.py": {
+    "bytes": 7523,
+    "sha256": "b0850e7dac00ef1e53636ff68581ad9444749fe903436dc585ff1dea96edee97"
+  },
+  "probe-result.json": {
+    "bytes": 3122,
+    "sha256": "ace841d99a1b5089c974f0e48582185310fdcbb02a02a2dd9918b5b3f9e438fc"
+  },
+  "probe.py": {
+    "bytes": 1860,
+    "sha256": "f915cc1a629d3b2412f49ad0083c646dbf49bf978873f939d428020a57b50246"
+  },
+  "qualification.json": {
+    "bytes": 49265673,
+    "sha256": "60c54545fdc1170a9be92d5731ea4bcb48e2604a0365d90dd3ee660ef739a459"
+  },
+  "qualify.py": {
+    "bytes": 10223,
+    "sha256": "7de98487d4354aeb7a60f95c4b97e13ebf615ee3a9e0ecb7d557b1b49d84f0c8"
+  },
+  "ram-stopped-controls.jsonl": {
+    "bytes": 397927,
+    "sha256": "c735750e731835b5887bdb7f947fbe4d4406c43740adb89538798c613039748b"
+  },
+  "ram-stopped-matching-replay.json": {
+    "bytes": 40667,
+    "sha256": "ee45bbe16e6ac4dcd17e842c4022a7922380a60a3ce501c9f501669be256c969"
+  },
+  "ram-stopped-progress.json": {
+    "bytes": 131,
+    "sha256": "04a104f6c26c81f28cc918900489107ee129c775313913942e8519d4c1077289"
+  },
+  "ram-stopped-result.json": {
+    "bytes": 1184,
+    "sha256": "fb067695ab7a6fe9857ce6d7014009e78f5d99ee24836e2b52483167eaf5731d"
+  },
+  "scope.txt": {
+    "bytes": 109,
+    "sha256": "4dfa0275a3b55e5ee70091dab63e7581288b6ef56168d2e03d4bf3384d14da25"
+  },
+  "verify.py": {
+    "bytes": 13169,
+    "sha256": "497e458a1a909bdebabafcc417d2b6265a45a300728d54b0339a3b5396bad067"
+  }
+}

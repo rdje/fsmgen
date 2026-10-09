@@ -1,0 +1,147 @@
+{
+  "gaps": [
+    {
+      "ordinal": 142,
+      "point": {
+        "key": [
+          "ordinary",
+          "parses",
+          2
+        ],
+        "kind": "frame",
+        "phase": 0,
+        "role": "core",
+        "segment_index": 8,
+        "selection": {
+          "all_filename_alternatives": [
+            "perl/FSM/Adapter/ISF.pm"
+          ],
+          "all_line_alternatives": {
+            "closing": 72,
+            "first": 72
+          },
+          "candidate_identity": {
+            "bytes": 372,
+            "sha256": "e354057a04e2d1cda3ebe0593edabcd8c43573a36cbef51f1fbabe0716f7c2f6"
+          },
+          "equivalent_line_labels": [
+            [
+              "closing",
+              "first"
+            ]
+          ],
+          "matching_line_labels": [
+            "closing",
+            "first"
+          ],
+          "recipe_id": "facade-parse",
+          "reported_filename": "perl/FSM/Adapter/ISF.pm",
+          "reported_line": 72,
+          "statement_identity": {
+            "bytes": 722,
+            "sha256": "dfcfac6970a3dd0c71f2416174ba55fd7d2b28c8d72f6eebad9f33cffa3f10a3"
+          }
+        }
+      },
+      "whole_candidate_file_lines": [
+        72
+      ]
+    },
+    {
+      "ordinal": 296,
+      "point": {
+        "key": [
+          "storable",
+          "parses",
+          2
+        ],
+        "kind": "frame",
+        "phase": 0,
+        "role": "core",
+        "segment_index": 8,
+        "selection": {
+          "all_filename_alternatives": [
+            "perl/FSM/Adapter/ISF.pm"
+          ],
+          "all_line_alternatives": {
+            "closing": 72,
+            "first": 72
+          },
+          "candidate_identity": {
+            "bytes": 372,
+            "sha256": "e354057a04e2d1cda3ebe0593edabcd8c43573a36cbef51f1fbabe0716f7c2f6"
+          },
+          "equivalent_line_labels": [
+            [
+              "closing",
+              "first"
+            ]
+          ],
+          "matching_line_labels": [
+            "closing",
+            "first"
+          ],
+          "recipe_id": "facade-parse",
+          "reported_filename": "perl/FSM/Adapter/ISF.pm",
+          "reported_line": 72,
+          "statement_identity": {
+            "bytes": 722,
+            "sha256": "dfcfac6970a3dd0c71f2416174ba55fd7d2b28c8d72f6eebad9f33cffa3f10a3"
+          }
+        }
+      },
+      "whole_candidate_file_lines": [
+        72
+      ]
+    },
+    {
+      "ordinal": 450,
+      "point": {
+        "key": [
+          "controls",
+          "parses",
+          2
+        ],
+        "kind": "frame",
+        "phase": 0,
+        "role": "core",
+        "segment_index": 8,
+        "selection": {
+          "all_filename_alternatives": [
+            "perl/FSM/Adapter/ISF.pm"
+          ],
+          "all_line_alternatives": {
+            "closing": 72,
+            "first": 72
+          },
+          "candidate_identity": {
+            "bytes": 372,
+            "sha256": "e354057a04e2d1cda3ebe0593edabcd8c43573a36cbef51f1fbabe0716f7c2f6"
+          },
+          "equivalent_line_labels": [
+            [
+              "closing",
+              "first"
+            ]
+          ],
+          "matching_line_labels": [
+            "closing",
+            "first"
+          ],
+          "recipe_id": "facade-parse",
+          "reported_filename": "perl/FSM/Adapter/ISF.pm",
+          "reported_line": 72,
+          "statement_identity": {
+            "bytes": 722,
+            "sha256": "dfcfac6970a3dd0c71f2416174ba55fd7d2b28c8d72f6eebad9f33cffa3f10a3"
+          }
+        }
+      },
+      "whole_candidate_file_lines": [
+        72
+      ]
+    }
+  ],
+  "population": 462,
+  "result": "Complete observed recipe-mode census of same-file candidate-line control gaps"
+}

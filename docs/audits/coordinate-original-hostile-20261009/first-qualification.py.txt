@@ -1,0 +1,155 @@
+"""Qualify complete original matching with source-recipe separating interventions."""
+import copy
+import hashlib
+import json
+import runpy
+import subprocess
+from pathlib import Path
+
+A=Path('docs/audits')
+BASE=A/'coordinate-original-hostile-20261009'
+CHECKS=A/'coordinate-original-hostile-checks-20261009'
+CLASS=A/'record-value-class-frame-join-20261006'
+MATCHING=A/'coordinate-original-matching-qualified-20261009'
+READER=A/'coordinate-original-matching-qualified-checks-20261009/verify_matching.py'
+REVISION='32c5f718528c9ca38b72ef0333e26703663674ab'
+ROLE='Dated complete original own-coordinate hostile qualification; finite source-recipe interventions preserve predecessor class/frame/argument meanings. Original private/framework/toolchain/identity, address and alias meanings remain unmeasured.'
+
+
+def need(ok,why):
+    if not ok:
+        raise ValueError(why)
+
+
+def pin(raw):
+    return {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+
+
+def stamp(value):
+    return pin(json.dumps(value,sort_keys=True).encode())
+
+
+def fixed(path):
+    root=Path.cwd().resolve();full=root/path
+    need(full.resolve()==full and full.is_file() and full.stat().st_dev==root.stat().st_dev,'plain own same-volume hostile input')
+    for parent in full.parents:
+        if parent==root:
+            break
+        need(not (parent/'.git').exists(),'own hostile input repository boundary')
+    result=subprocess.run(['git','--no-replace-objects','show',REVISION+':'+str(path)],capture_output=True)
+    need(result.returncode==0 and not result.stderr and result.stdout==full.read_bytes(),'complete fixed hostile input')
+    return result.stdout
+
+
+def representatives(points):
+    selected={}
+    for point in points:
+        selected.setdefault((point['key'][0],point['selection']['recipe_id']),point)
+    return list(selected.values())
+
+
+def borrow_source(hypotheses,matching,point,recipe_id,raw):
+    candidate=copy.deepcopy(hypotheses)
+    key=tuple(point['key']);number=point['phase']
+    refusal=next(r for r in candidate['refusals'] if (r['mode'],r['domain'],r['index'])==key)
+    phase=refusal['phases'][number]
+    if point['kind'] in ('origin','load'):
+        phase[point['kind']]['caller']['recipe_id']=recipe_id
+    else:
+        record=next(r for mode in raw['inventories'] if mode['mode']==key[0]
+                    for r in mode['domains'][key[1]]['nonempty'] if r['index']==key[2])
+        frame_index=[i for i,s in enumerate(record['segments']) if s['kind']=='frame'].index(point['segment_index'])
+        case=next(r for r in matching['matches'] if (r['mode'],r['domain'],r['index'])==key)
+        binding=next(b for b in case['phases'][number]['callers_inner_to_outer'] if b['frame_index']==frame_index)['source_binding']
+        index=phase['active_path_inner_to_outer'].index(binding)
+        phase['active_path_inner_to_outer'][index]['caller']['recipe_id']=recipe_id
+    return candidate
+
+
+def semantic_controls(raw,models,matched,points):
+    mutations=runpy.run_path(str(BASE/'mutations.py'))
+    predecessor=runpy.run_path(str(CLASS/'verify.py'))
+    derive=runpy.run_path(str(MATCHING/'match.py'))['derive']
+    reconstruct=runpy.run_path(str(MATCHING/'verify.py'))['reconstruct']
+    nested=predecessor['public']['context']['nested_records'](models['frame_model']['own'])
+    candidates={r['recipe_id']:r for r in matched['expression_alternatives']['candidates']}
+    used={r['id'] for r in matched['source_phases']['statements']}
+    baseline=predecessor['check'](models,models,raw['inventories'],raw['inventories'],nested)
+    controls=[]
+    for ordinal,point in enumerate(representatives(points)):
+        selection=point['selection'];recipe=selection['recipe_id'];filename=selection['reported_filename']
+        other=next(r for key,r in sorted(candidates.items()) if key in used and filename not in r['filename_alternatives'])
+        bad_file=other['filename_alternatives'][0]
+        bad_line=min(line for row in candidates.values() if filename in row['filename_alternatives']
+                     for line in row['line_alternatives'].values() if line not in selection['all_line_alternatives'].values())
+        for field,value in [('line',bad_line),('path',bad_file),('source',other['recipe_id'])]:
+            if field=='source':
+                candidate=raw;affected=[]
+                source=borrow_source(matched['source_phases'],matched,point,value,raw)
+            else:
+                candidate,affected=mutations['mutate'](raw,point,field,value,models)
+                source=matched['source_phases']
+            qualified=predecessor['check'](models,models,candidate['inventories'],candidate['inventories'],nested)
+            observer=mutations['intervention_observer'](matched['observer_qualification'],candidate,qualified)
+            failures={}
+            for name,programme in [('derive',derive),('reconstruct',reconstruct)]:
+                try:
+                    programme(candidate,source,qualified,matched['expression_alternatives'],observer)
+                except ValueError as error:
+                    cause=str(error)
+                    expected=('declared own caller coordinate: '+(value if field=='source' else recipe)) if name=='derive' else (
+                        'independent declared caller line' if field=='line' else 'independent declared caller filename')
+                    need(cause==expected,'intended semantic coordinate refusal: '+name+': '+cause)
+                    failures[name]=cause
+                else:
+                    raise ValueError('false-green semantic coordinate: '+name)
+            controls.append({'point':point,'field':field,'value':value,'affected':affected,
+                'whole_intervention_original':stamp(candidate),'whole_intervention_source':stamp(source),
+                'complete_predecessor_result':stamp(qualified),'refusals':failures})
+        (CHECKS/'progress.json').write_text(json.dumps({'completed_representatives':ordinal+1,
+            'total_representatives':len(representatives(points)),'completed_controls':len(controls),'stage':'semantic-controls'},sort_keys=True)+'\n')
+    return {'baseline_predecessor':stamp(baseline),'controls':controls}
+
+
+def conserve_original_custody():
+    admission=json.loads(fixed(A/'coordinate-original-intake-20261009/admission.json'))
+    for name,record in admission['custody']['members'].items():
+        path=Path(name);need(path.resolve()==Path.cwd().resolve()/path and path.is_file()
+                           and path.stat().st_dev==Path('.').stat().st_dev,'whole original plain same-volume custody')
+        digest=hashlib.sha256();size=0
+        with path.open('rb') as stream:
+            while chunk:=stream.read(1024*1024):
+                digest.update(chunk);size+=len(chunk)
+        need(record['identity']=={'bytes':size,'sha256':digest.hexdigest()},'every original custody byte conserves')
+    return stamp(admission['custody'])
+
+
+def main():
+    need(not (BASE/'qualification.json').exists() and not (BASE/'seal.json').exists(),'hostile producer never rewrites')
+    paths=[CLASS/'raw-product.json',CLASS/'source-models.json',CLASS/'proofs.json',MATCHING/'matching.json',
+           MATCHING/'match.py',MATCHING/'verify.py',MATCHING/'seal.json',CLASS/'verify.py']
+    bodies=[fixed(p) for p in paths]
+    raw,models,proofs,matched=map(json.loads,bodies[:4])
+    command=['python3','-B',str(READER)];run=subprocess.run(command,capture_output=True,text=True)
+    need(type(run.returncode) is int and run.returncode==0 and not run.stderr,'actual complete original/source/matching replay')
+    actual={'command':command,'status':run.returncode,'stdout':run.stdout,'stderr':run.stderr,'programme':pin(fixed(READER))}
+    old=json.loads(fixed(A/'coordinate-original-matching-qualified-checks-20261009/checks.json'))['published']['stdout']
+    need(actual['stdout']==old,'complete original matching and every nested prerequisite result conserve')
+    mutations=runpy.run_path(str(BASE/'mutations.py'))
+    points=mutations['points'](raw,matched);pairs=mutations['forwarding'](models,raw)
+    separated=semantic_controls(raw,models,matched,points)
+    product={'revision':REVISION,'owner':(BASE/'scope.txt').read_text().strip(),'role':ROLE,
+        'inputs':{str(p):pin(b) for p,b in zip(paths,bodies,strict=True)},'original':raw,'source_models':models,
+        'matching':matched,'points':points,'forwarding':pairs,'representatives':representatives(points),
+        **separated,'actual_matching_reader':actual,'original_custody':conserve_original_custody(),
+        'legs':{'rederive':'qualify.py complete matched-point allocation and every observed used source recipe/mode with genuine line/file/source interventions and actual complete matching/prerequisite replay.',
+                'falsify':'verify.py separate source-link point reconstruction and byte-offset mutation construction, complete unchanged predecessor semantic predicates, both sealed coordinate procedures and typed/whole-result controls.',
+                'durability':'Complete fixed original/source/matching corpus, full point/representative/forwarding/control results and first prototype failure, immutable sealed programmes/product and published reader; normal Git commit.'}}
+    need([fixed(p) for p in paths]==bodies,'whole hostile original/source input conservation')
+    (BASE/'qualification.json').write_text(json.dumps(product,sort_keys=True,indent=2)+'\n')
+    (CHECKS/'progress.json').write_text(json.dumps({'stage':'complete','controls':len(product['controls'])},sort_keys=True)+'\n')
+    print('PASS complete original coordinate hostile qualification; predecessor meanings and whole originals conserve.')
+
+
+if __name__=='__main__':
+    main()

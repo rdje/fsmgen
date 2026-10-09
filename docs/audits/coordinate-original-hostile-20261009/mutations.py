@@ -1,0 +1,130 @@
+"""Construct coordinate-only intervention copies with complete nested forwarding."""
+import copy
+import hashlib
+import json
+import runpy
+from pathlib import Path
+
+A = Path('docs/audits')
+CLASS = A / 'record-value-class-frame-join-20261006'
+MATCHING = A / 'coordinate-original-matching-qualified-20261009'
+
+
+def need(ok, why):
+    if not ok:
+        raise ValueError(why)
+
+
+def stamp(value):
+    raw = value if type(value) is bytes else json.dumps(value,sort_keys=True).encode()
+    return {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+
+
+def records(raw):
+    return {(m['mode'],domain,r['index']):r for m in raw['inventories']
+            for domain,values in m['domains'].items() for r in values['nonempty']}
+
+
+def points(raw, matched):
+    rows = records(raw)
+    result = []
+    for case in matched['matches']:
+        key = (case['mode'],case['domain'],case['index'])
+        record = rows[key]
+        frames = [i for i,s in enumerate(record['segments']) if s['kind']=='frame']
+        for phase in case['phases']:
+            origin = phase['origin']
+            result.append({'key':list(key),'phase':phase['phase'],'kind':'origin','role':'origin',
+                'segment_index':origin['segment_index'],'selection':origin['selection']})
+            for binding in phase['callers_inner_to_outer']:
+                if binding['selection'] is not None:
+                    result.append({'key':list(key),'phase':phase['phase'],'kind':'frame',
+                        'role':binding['source_binding']['role'],'segment_index':frames[binding['frame_index']],
+                        'selection':binding['selection']})
+            load = phase['load']
+            result.append({'key':list(key),'phase':phase['phase'],'kind':'load','role':'load',
+                'segment_index':frames[load['frame_index']],'selection':load['selection']})
+    need(len({(tuple(p['key']),p['segment_index']) for p in result})==len(result),
+         'complete disjoint own-coordinate point allocation')
+    return result
+
+
+def forwarding(models, raw):
+    rows=records(raw);output=[]
+    for mode in models['frame_model']['own']['api']:
+        for case in mode['cases']:
+            link=case['nested_allocation']
+            if link is None or case['index'] != link['scope_api']:
+                continue
+            child=(mode['mode'],'api',link['capture_api'])
+            parent=(mode['mode'],'api',link['scope_api'])
+            inner,outer=rows[child]['body'],rows[parent]['body']
+            need(outer.count(inner)==1,'unique complete forwarded original inner operand')
+            start=outer.index(inner)
+            output.append({'child':list(child),'parent':list(parent),
+                'start_bytes':len(outer[:start].encode()),'bytes':len(inner.encode())})
+    need(len({tuple(r['child']) for r in output})==len(output)
+         and len({tuple(r['parent']) for r in output})==len(output),'unique finite forwarding pairs')
+    return output
+
+
+def mutate(raw, point, field, value, models):
+    changed=copy.deepcopy(raw);original=records(raw);rows=records(changed)
+    key=tuple(point['key']);index=point['segment_index']
+    segment=original[key]['segments'][index]
+    links=forwarding(models,raw)
+    for link in links:
+        if tuple(link['parent'])==key and link['start_bytes']<=segment['offset_bytes']<link['start_bytes']+link['bytes']:
+            offset=segment['offset_bytes']-link['start_bytes']
+            key=tuple(link['child'])
+            indexes=[i for i,s in enumerate(original[key]['segments']) if s['offset_bytes']==offset]
+            need(len(indexes)==1,'exact forwarded coordinate maps to complete child segment')
+            index=indexes[0];segment=original[key]['segments'][index]
+            break
+    need(segment['kind'] in ('origin','frame') and field in ('path','line') and segment[field]!=value,
+         'genuine single coordinate intervention')
+    before=segment['raw']
+    old=' line '+str(segment['line'])
+    new=' line '+str(value) if field=='line' else old
+    if field=='path':
+        old=(' at ' if segment['kind']=='origin' else ' called at ')+segment['path']+old
+        new=(' at ' if segment['kind']=='origin' else ' called at ')+value+new
+    suffix = '.\n' if segment['kind']=='origin' else '\n'
+    need(before.endswith(old+suffix),'complete literal terminal coordinate suffix')
+    parts=[s['raw'] for s in original[key]['segments']]
+    parts[index]=before[:-len(old+suffix)]+new+suffix
+    bodies={key:''.join(parts)}
+    for link in links:
+        if tuple(link['child'])==key:
+            parent=tuple(link['parent']);body=original[parent]['body']
+            bodies[parent]=body.replace(original[key]['body'],bodies[key],1)
+    trace=runpy.run_path(str(A/'record-value-original-raw-20261005/trace_inventory.py'))['inventory']
+    for affected,body in bodies.items():
+        rows[affected].update(body=body,body_identity=stamp(body.encode()),**trace(body))
+    for affected,record in rows.items():
+        if affected not in bodies:
+            need(record==original[affected],'all untargeted original records conserve')
+        else:
+            need([s['call'] for s in record['segments'] if s['kind']=='frame']==
+                 [s['call'] for s in original[affected]['segments'] if s['kind']=='frame'],
+                 'every function and complete visible argument byte conserves')
+            need(record['context']==original[affected]['context'],'whole predecessor caller/helper/parser context conserves')
+    return changed,sorted(map(list,bodies))
+
+
+def prior(models, raw):
+    module=runpy.run_path(str(CLASS/'verify.py'))
+    nested=module['public']['context']['nested_records'](models['frame_model']['own'])
+    return module['check'](models,models,raw['inventories'],raw['inventories'],nested)
+
+
+def intervention_observer(observer, raw, qualification):
+    result=copy.deepcopy(observer);rows=records(raw)
+    result['original']=raw
+    proofs={(m['mode'],c['domain'],c['index']):c for m in qualification['modes'] for c in m['cases']}
+    for row in result['associations']:
+        key=tuple(row['key']);record=rows[key]
+        frame=[s for s in record['segments'] if s['kind']=='frame'][row['frame_index']]
+        row['whole_original']=stamp(record);row['whole_frame']=stamp(frame);row['recorded_context']=record['context']
+        need(key in proofs,'whole intervention observer proof allocation')
+    return result

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "-c",
+    "print(\"PASS host headroom probe\")"
+  ],
+  "completion": {
+    "chunk_id": "e524e0",
+    "wall_time_seconds": 0.000005166,
+    "exit_code": 137,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "initial_stream_excerpt": "ram-guard: PID 35537; host 88.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nPASS host headroom probe\nram-guard: host memory 88.0% reached cutoff 88%\nram-guard: terminating PID tree: 35537 \n",
+  "retention": "Complete native completion and initial native output excerpt; the printed command output is not success because the guard exits 137."
+}

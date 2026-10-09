@@ -1,0 +1,31 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-original-hostile-20261009/qualify.py",
+    "docs/audits/coordinate-original-hostile-20261009/mutations.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-original-hostile-20261009/mutations.py": {
+      "bytes": 6406,
+      "sha256": "ad9006c6f87c3a50989393e221cb36c264c79d6de16740b10bf54c13e6bce590"
+    },
+    "docs/audits/coordinate-original-hostile-20261009/qualify.py": {
+      "bytes": 10223,
+      "sha256": "7de98487d4354aeb7a60f95c4b97e13ebf615ee3a9e0ecb7d557b1b49d84f0c8"
+    },
+    "docs/audits/coordinate-original-hostile-checks-20261009/checks.py": {
+      "bytes": 1421,
+      "sha256": "9a8cf4e7a8789d18d25a9d139e133de52ae3a761ee0362f4218e8d4d8b687319"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 137,
+  "stderr": "ram-guard: PID 96894; host 57.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nram-guard: host memory 89.1% reached cutoff 88%\nram-guard: terminating PID tree: 96894 \n",
+  "stdout": ""
+}

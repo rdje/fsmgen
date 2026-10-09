@@ -1,0 +1,42 @@
+{
+  "actual": [
+    {
+      "command": [
+        "ps",
+        "-axo",
+        "pid=,ppid=,rss=,comm="
+      ],
+      "retention": "RSS-ranked first twenty process rows",
+      "status": 0,
+      "stderr": "",
+      "stdout": "25710 24780 7899504 /Users/richarddje/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rustc\n37419  1003 273936 claude\n21950     1 140928 /Applications/ChatGPT.app/Contents/MacOS/ChatGPT\n  854     1 139936 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds_stores\n31710  8048 126976 /Users/richarddje/.codex/packages/app-server-daemon/releases/0.162.1-aarch64-apple-darwin/bin/codex\n15505 14681 118304 claude\n72972     1 109984 /Applications/iTerm.app/Contents/MacOS/iTerm2\n22276 21950 107760 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n11040     1 101296 /Applications/Claude.app/Contents/MacOS/Claude\n22108 21950  99488 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n  696     1  87408 /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge\n22110 21950  76288 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n22109 21950  74496 /Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex\n22358 21950  66176 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n22331 21950  65136 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n22560 21950  62208 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n11127 11040  62128 /Applications/Claude.app/Contents/Frameworks/Claude Helper (Renderer).app/Contents/MacOS/Claude Helper (Renderer)\n21985 21950  60176 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Service).app/Contents/MacOS/Codex (Service)\n  722     1  58848 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/corespotlightd\n22254 21950  58048 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n"
+    },
+    {
+      "command": [
+        "vm_stat"
+      ],
+      "retention": "whole output",
+      "status": 0,
+      "stderr": "",
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     6572.\nPages active:                                 369908.\nPages inactive:                               368977.\nPages speculative:                               162.\nPages throttled:                                   0.\nPages wired down:                             166220.\nPages purgeable:                                2095.\n\"Translation faults\":                     4608643066.\nPages copy-on-write:                       625580436.\nPages zero filled:                        1826610639.\nPages reactivated:                          61982909.\nPages purged:                                1836577.\nFile-backed pages:                            115126.\nAnonymous pages:                              623921.\nPages stored in compressor:                  1269744.\nPages occupied by compressor:                 627226.\nDecompressions:                             49042356.\nCompressions:                               71224238.\nPageins:                                    36215884.\nPageouts:                                       3794.\nSwapins:                                      160822.\nSwapouts:                                     339256.\n"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "retention": "whole output",
+      "status": 0,
+      "stderr": "",
+      "stdout": "25769803776\n"
+    }
+  ],
+  "monitor": {
+    "bytes": 10663,
+    "path": "scripts/run_with_ram_guard.sh",
+    "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+  },
+  "result": "Dated post-trip read-only host memory and process census; no process or external repository modified.",
+  "scope": "The guard itself proves the 89.1-percent host cutoff. These later samples describe recovery and concurrent load; they do not establish an exact causal attribution for the earlier peak."
+}
