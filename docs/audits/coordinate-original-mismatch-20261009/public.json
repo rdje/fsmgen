@@ -1,0 +1,178 @@
+{
+  "fixtures": [
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"multiline-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl\",\"kind\":\"helper\",\"line\":18,\"package\":\"main\"},{\"case\":\"multiline-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl\",\"kind\":\"callback\",\"line\":17,\"package\":\"main\"},{\"case\":\"single-line-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl\",\"kind\":\"helper\",\"line\":21,\"package\":\"main\"},{\"case\":\"single-line-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl\",\"kind\":\"callback\",\"line\":21,\"package\":\"main\"},{\"case\":\"separate-callback-close\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl\",\"kind\":\"helper\",\"line\":27,\"package\":\"main\"},{\"case\":\"separate-callback-close\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl\",\"kind\":\"callback\",\"line\":25,\"package\":\"main\"},{\"case\":\"named-code-reference\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl\",\"kind\":\"helper\",\"line\":31,\"package\":\"main\"},{\"case\":\"named-code-reference\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl\",\"kind\":\"callback\",\"line\":30,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 caller-fixture.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2383; $case:2367,2383] vM/LVINTRO,range=2\n4  <;> nextstate(main 2374 caller-fixture.pl:15) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"multiline-callback\"] s\n6  <0> padsv[$case:2367,2383] sRM*\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2374 caller-fixture.pl:18) v:*,&,{,x*,x&,x$,$\n9  <0> pushmark s\na  <$> anoncode[CV CODE] sRM\nb  <1> srefgen sKM/1\nc  </> qr(/\"marker\"/) sM\nd  <$> const[PV \"label\"] sM\ne  <#> gv[IV \\&main::callsite] s\nf  <1> entersub vKS/STRICT\ng  <;> nextstate(main 2376 caller-fixture.pl:20) v:*,&,{,x*,x&,x$,$\nh  <$> const[PV \"single-line-callback\"] s\ni  <0> padsv[$case:2367,2383] sRM*\nj  <2> sassign vKS/2\nk  <;> nextstate(main 2376 caller-fixture.pl:21) v:*,&,{,x*,x&,x$,$\nl  <0> pushmark s\nm  <$> anoncode[CV CODE] sRM\nn  <1> srefgen sKM/1\no  </> qr(/\"marker\"/) sM\np  <$> const[PV \"label\"] sM\nq  <#> gv[IV \\&main::callsite] s\nr  <1> entersub vKS/STRICT\ns  <;> nextstate(main 2378 caller-fixture.pl:23) v:*,&,{,x*,x&,x$,$\nt  <$> const[PV \"separate-callback-close\"] s\nu  <0> padsv[$case:2367,2383] sRM*\nv  <2> sassign vKS/2\nw  <;> nextstate(main 2378 caller-fixture.pl:27) v:*,&,{,x*,x&,x$,$\nx  <0> pushmark s\ny  <$> anoncode[CV CODE] sRM\nz  <1> srefgen sKM/1\n10 </> qr(/\"marker\"/) sM\n11 <$> const[PV \"label\"] sM\n12 <#> gv[IV \\&main::callsite] s\n13 <1> entersub vKS/STRICT\n14 <;> nextstate(main 2380 caller-fixture.pl:29) v:*,&,{,x*,x&,x$,$\n15 <$> const[PV \"named-code-reference\"] s\n16 <0> padsv[$case:2367,2383] sRM*\n17 <2> sassign vKS/2\n18 <;> nextstate(main 2380 caller-fixture.pl:30) v:*,&,{,x*,x&,x$,$\n19 <$> anoncode[CV CODE] sRM\n1a <1> srefgen sK/1\n1b <0> padsv[$callback:2382,2383] sRM*/LVINTRO\n1c <2> sassign vKS/2\n1d <;> nextstate(main 2383 caller-fixture.pl:31) v:*,&,{,x*,x&,x$,$\n1e <0> pushmark s\n1f <0> padsv[$callback:2382,2383] sM\n1g </> qr(/\"marker\"/) sM\n1h <$> const[PV \"label\"] sM\n1i <#> gv[IV \\&main::callsite] s\n1j <1> entersub vKS/STRICT\n1k <;> nextstate(main 2383 caller-fixture.pl:34) v:*,&,{,x*,x&,x$,$\n1l <0> pushmark s\n1m <0> pushmark s\n1n <0> pushmark s\n1o <0> pushmark s\n1p <$> const[PV \"JSON::PP\"] sM/BARE\n1q <.> method_named[PV \"new\"] s\n1r <1> entersub[t3] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1s <.> method_named[PV \"canonical\"] s\n1t <1> entersub[t6] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1u <0> pushmark s\n1v <$> const[PV \"perl_version\"] s/BARE\n1w <#> gvsv[*^V] s\n1x <@> stringify[t9] sK/1\n1y <$> const[PV \"observations\"] s/BARE\n1z <0> padav[@observations:2366,2383] lRM\n20 <1> srefgen sK/1\n21 <@> anonhash sKM*/1\n22 <.> method_named[PV \"encode\"] l\n23 <1> entersub[t14] lKRS/TARG,STRICT\n24 <$> const[PV \"\\n\"] s\n25 <@> print vK\n26 <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/caller-fixture.pl",
+      "source": {
+        "bytes": 915,
+        "sha256": "2ca1f4e728f9ad7c5998c4a84e258a8ee71139b4f5a0688f76d98e87645a992c"
+      }
+    },
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"multiline-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl\",\"kind\":\"helper\",\"line\":19,\"package\":\"main\"},{\"case\":\"multiline-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl\",\"kind\":\"callback\",\"line\":17,\"package\":\"main\"},{\"case\":\"single-line-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl\",\"kind\":\"helper\",\"line\":22,\"package\":\"main\"},{\"case\":\"single-line-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl\",\"kind\":\"callback\",\"line\":22,\"package\":\"main\"},{\"case\":\"separate-callback-close\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl\",\"kind\":\"helper\",\"line\":28,\"package\":\"main\"},{\"case\":\"separate-callback-close\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl\",\"kind\":\"callback\",\"line\":26,\"package\":\"main\"},{\"case\":\"named-code-reference\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl\",\"kind\":\"helper\",\"line\":32,\"package\":\"main\"},{\"case\":\"named-code-reference\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl\",\"kind\":\"callback\",\"line\":31,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 caller-pattern-shift.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2383; $case:2367,2383] vM/LVINTRO,range=2\n4  <;> nextstate(main 2374 caller-pattern-shift.pl:15) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"multiline-callback\"] s\n6  <0> padsv[$case:2367,2383] sRM*\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2374 caller-pattern-shift.pl:19) v:*,&,{,x*,x&,x$,$\n9  <0> pushmark s\na  <$> anoncode[CV CODE] sRM\nb  <1> srefgen sKM/1\nc  </> qr(/\"marker\"/) sM\nd  <$> const[PV \"label\"] sM\ne  <#> gv[IV \\&main::callsite] s\nf  <1> entersub vKS/STRICT\ng  <;> nextstate(main 2376 caller-pattern-shift.pl:21) v:*,&,{,x*,x&,x$,$\nh  <$> const[PV \"single-line-callback\"] s\ni  <0> padsv[$case:2367,2383] sRM*\nj  <2> sassign vKS/2\nk  <;> nextstate(main 2376 caller-pattern-shift.pl:22) v:*,&,{,x*,x&,x$,$\nl  <0> pushmark s\nm  <$> anoncode[CV CODE] sRM\nn  <1> srefgen sKM/1\no  </> qr(/\"marker\"/) sM\np  <$> const[PV \"label\"] sM\nq  <#> gv[IV \\&main::callsite] s\nr  <1> entersub vKS/STRICT\ns  <;> nextstate(main 2378 caller-pattern-shift.pl:24) v:*,&,{,x*,x&,x$,$\nt  <$> const[PV \"separate-callback-close\"] s\nu  <0> padsv[$case:2367,2383] sRM*\nv  <2> sassign vKS/2\nw  <;> nextstate(main 2378 caller-pattern-shift.pl:28) v:*,&,{,x*,x&,x$,$\nx  <0> pushmark s\ny  <$> anoncode[CV CODE] sRM\nz  <1> srefgen sKM/1\n10 </> qr(/\"marker\"/) sM\n11 <$> const[PV \"label\"] sM\n12 <#> gv[IV \\&main::callsite] s\n13 <1> entersub vKS/STRICT\n14 <;> nextstate(main 2380 caller-pattern-shift.pl:30) v:*,&,{,x*,x&,x$,$\n15 <$> const[PV \"named-code-reference\"] s\n16 <0> padsv[$case:2367,2383] sRM*\n17 <2> sassign vKS/2\n18 <;> nextstate(main 2380 caller-pattern-shift.pl:31) v:*,&,{,x*,x&,x$,$\n19 <$> anoncode[CV CODE] sRM\n1a <1> srefgen sK/1\n1b <0> padsv[$callback:2382,2383] sRM*/LVINTRO\n1c <2> sassign vKS/2\n1d <;> nextstate(main 2383 caller-pattern-shift.pl:32) v:*,&,{,x*,x&,x$,$\n1e <0> pushmark s\n1f <0> padsv[$callback:2382,2383] sM\n1g </> qr(/\"marker\"/) sM\n1h <$> const[PV \"label\"] sM\n1i <#> gv[IV \\&main::callsite] s\n1j <1> entersub vKS/STRICT\n1k <;> nextstate(main 2383 caller-pattern-shift.pl:35) v:*,&,{,x*,x&,x$,$\n1l <0> pushmark s\n1m <0> pushmark s\n1n <0> pushmark s\n1o <0> pushmark s\n1p <$> const[PV \"JSON::PP\"] sM/BARE\n1q <.> method_named[PV \"new\"] s\n1r <1> entersub[t3] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1s <.> method_named[PV \"canonical\"] s\n1t <1> entersub[t6] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1u <0> pushmark s\n1v <$> const[PV \"perl_version\"] s/BARE\n1w <#> gvsv[*^V] s\n1x <@> stringify[t9] sK/1\n1y <$> const[PV \"observations\"] s/BARE\n1z <0> padav[@observations:2366,2383] lRM\n20 <1> srefgen sK/1\n21 <@> anonhash sKM*/1\n22 <.> method_named[PV \"encode\"] l\n23 <1> entersub[t14] lKRS/TARG,STRICT\n24 <$> const[PV \"\\n\"] s\n25 <@> print vK\n26 <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/caller-pattern-shift.pl",
+      "source": {
+        "bytes": 919,
+        "sha256": "43bb035ced4c76cd2855c9712d13df6cdec9848dd3355966641f0677fa88311a"
+      }
+    },
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"multiline-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl\",\"kind\":\"helper\",\"line\":18,\"package\":\"main\"},{\"case\":\"multiline-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl\",\"kind\":\"callback\",\"line\":17,\"package\":\"main\"},{\"case\":\"single-line-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl\",\"kind\":\"helper\",\"line\":22,\"package\":\"main\"},{\"case\":\"single-line-callback\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl\",\"kind\":\"callback\",\"line\":22,\"package\":\"main\"},{\"case\":\"separate-callback-close\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl\",\"kind\":\"helper\",\"line\":28,\"package\":\"main\"},{\"case\":\"separate-callback-close\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl\",\"kind\":\"callback\",\"line\":26,\"package\":\"main\"},{\"case\":\"named-code-reference\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl\",\"kind\":\"helper\",\"line\":32,\"package\":\"main\"},{\"case\":\"named-code-reference\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl\",\"kind\":\"callback\",\"line\":31,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 caller-label-shift.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2383; $case:2367,2383] vM/LVINTRO,range=2\n4  <;> nextstate(main 2374 caller-label-shift.pl:15) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"multiline-callback\"] s\n6  <0> padsv[$case:2367,2383] sRM*\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2374 caller-label-shift.pl:18) v:*,&,{,x*,x&,x$,$\n9  <0> pushmark s\na  <$> anoncode[CV CODE] sRM\nb  <1> srefgen sKM/1\nc  </> qr(/\"marker\"/) sM\nd  <$> const[PV \"label\"] sM\ne  <#> gv[IV \\&main::callsite] s\nf  <1> entersub vKS/STRICT\ng  <;> nextstate(main 2376 caller-label-shift.pl:21) v:*,&,{,x*,x&,x$,$\nh  <$> const[PV \"single-line-callback\"] s\ni  <0> padsv[$case:2367,2383] sRM*\nj  <2> sassign vKS/2\nk  <;> nextstate(main 2376 caller-label-shift.pl:22) v:*,&,{,x*,x&,x$,$\nl  <0> pushmark s\nm  <$> anoncode[CV CODE] sRM\nn  <1> srefgen sKM/1\no  </> qr(/\"marker\"/) sM\np  <$> const[PV \"label\"] sM\nq  <#> gv[IV \\&main::callsite] s\nr  <1> entersub vKS/STRICT\ns  <;> nextstate(main 2378 caller-label-shift.pl:24) v:*,&,{,x*,x&,x$,$\nt  <$> const[PV \"separate-callback-close\"] s\nu  <0> padsv[$case:2367,2383] sRM*\nv  <2> sassign vKS/2\nw  <;> nextstate(main 2378 caller-label-shift.pl:28) v:*,&,{,x*,x&,x$,$\nx  <0> pushmark s\ny  <$> anoncode[CV CODE] sRM\nz  <1> srefgen sKM/1\n10 </> qr(/\"marker\"/) sM\n11 <$> const[PV \"label\"] sM\n12 <#> gv[IV \\&main::callsite] s\n13 <1> entersub vKS/STRICT\n14 <;> nextstate(main 2380 caller-label-shift.pl:30) v:*,&,{,x*,x&,x$,$\n15 <$> const[PV \"named-code-reference\"] s\n16 <0> padsv[$case:2367,2383] sRM*\n17 <2> sassign vKS/2\n18 <;> nextstate(main 2380 caller-label-shift.pl:31) v:*,&,{,x*,x&,x$,$\n19 <$> anoncode[CV CODE] sRM\n1a <1> srefgen sK/1\n1b <0> padsv[$callback:2382,2383] sRM*/LVINTRO\n1c <2> sassign vKS/2\n1d <;> nextstate(main 2383 caller-label-shift.pl:32) v:*,&,{,x*,x&,x$,$\n1e <0> pushmark s\n1f <0> padsv[$callback:2382,2383] sM\n1g </> qr(/\"marker\"/) sM\n1h <$> const[PV \"label\"] sM\n1i <#> gv[IV \\&main::callsite] s\n1j <1> entersub vKS/STRICT\n1k <;> nextstate(main 2383 caller-label-shift.pl:35) v:*,&,{,x*,x&,x$,$\n1l <0> pushmark s\n1m <0> pushmark s\n1n <0> pushmark s\n1o <0> pushmark s\n1p <$> const[PV \"JSON::PP\"] sM/BARE\n1q <.> method_named[PV \"new\"] s\n1r <1> entersub[t3] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1s <.> method_named[PV \"canonical\"] s\n1t <1> entersub[t6] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1u <0> pushmark s\n1v <$> const[PV \"perl_version\"] s/BARE\n1w <#> gvsv[*^V] s\n1x <@> stringify[t9] sK/1\n1y <$> const[PV \"observations\"] s/BARE\n1z <0> padav[@observations:2366,2383] lRM\n20 <1> srefgen sK/1\n21 <@> anonhash sKM*/1\n22 <.> method_named[PV \"encode\"] l\n23 <1> entersub[t14] lKRS/TARG,STRICT\n24 <$> const[PV \"\\n\"] s\n25 <@> print vK\n26 <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/caller-label-shift.pl",
+      "source": {
+        "bytes": 916,
+        "sha256": "5e26a630b813cd2db67f1abb699dd32368f86b039e13bf6dfc7a974a5094a9e6"
+      }
+    },
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-fixture.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"nested-first-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-fixture.pl\",\"kind\":\"guard\",\"line\":13,\"package\":\"main\"},{\"case\":\"nested-short-circuit-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-fixture.pl\",\"kind\":\"guard\",\"line\":17,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-fixture.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/guard-fixture.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 guard-fixture.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2374; $case:2367,2374] vM/LVINTRO,range=2\n4  <;> nextstate(main 2368 guard-fixture.pl:6) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"finite public guard\"] s\n6  <0> padsv[$context:2368,2374] sRM*/LVINTRO\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2374 guard-fixture.pl:12) v:*,&,{,x*,x&,x$,$\n9  <$> const[PV \"nested-first-argument\"] s\na  <0> padsv[$case:2367,2374] sRM*\nb  <2> sassign vKS/2\nc  <;> nextstate(main 2374 guard-fixture.pl:13) v:*,&,{,x*,x&,x$,$\nd  <0> pushmark s\ne  <0> pushmark s\nf  <$> const[IV 0] sM\ng  <#> gv[IV \\&main::identity] s\nh  <1> entersub sKS/STRICT\ni  <1> not sKM/1\nj  <0> padsv[$context:2368,2374] s\nk  <+> multiconcat(\" interpolated message\",-1,21)[t6] sK/STRINGIFY\nl  <#> gv[IV \\&main::guard] s\nm  <1> entersub vKS/STRICT\nn  <;> nextstate(main 2374 guard-fixture.pl:16) v:*,&,{,x*,x&,x$,$\no  <$> const[PV \"nested-short-circuit-argument\"] s\np  <0> padsv[$case:2367,2374] sRM*\nq  <2> sassign vKS/2\nr  <;> nextstate(main 2374 guard-fixture.pl:17) v:*,&,{,x*,x&,x$,$\ns  <0> pushmark s\nt  <0> pushmark s\nu  <$> const[IV 0] sM\nv  <#> gv[IV \\&main::identity] s\nw  <1> entersub sKPS/STRICT,FOLD\nx  <1> not sKM/1\ny  <0> padsv[$context:2368,2374] s\nz  <+> multiconcat(\" first fragment\",-1,15)[t10] sK/STRINGIFY\n10 <0> padsv[$context:2368,2374] s\n11 <+> multiconcat(\" second fragment\",-1,16)[t13] sK/STRINGIFY\n12 <2> concat[t14] sKM/2\n13 <#> gv[IV \\&main::guard] s\n14 <1> entersub vKS/STRICT\n15 <;> nextstate(main 2374 guard-fixture.pl:22) v:*,&,{,x*,x&,x$,$\n16 <0> pushmark s\n17 <0> pushmark s\n18 <0> pushmark s\n19 <0> pushmark s\n1a <$> const[PV \"JSON::PP\"] sM/BARE\n1b <.> method_named[PV \"new\"] s\n1c <1> entersub[t15] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1d <.> method_named[PV \"canonical\"] s\n1e <1> entersub[t16] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1f <0> pushmark s\n1g <$> const[PV \"perl_version\"] s/BARE\n1h <#> gvsv[*^V] s\n1i <@> stringify[t18] sK/1\n1j <$> const[PV \"observations\"] s/BARE\n1k <0> padav[@observations:2366,2374] lRM\n1l <1> srefgen sK/1\n1m <@> anonhash sKM*/1\n1n <.> method_named[PV \"encode\"] l\n1o <1> entersub[t19] lKRS/TARG,STRICT\n1p <$> const[PV \"\\n\"] s\n1q <@> print vK\n1r <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/guard-fixture.pl",
+      "source": {
+        "bytes": 637,
+        "sha256": "d453ee6b7976c24da9e382c82afdc894d87f53ce68b2ebcfd40dc5c66568c604"
+      }
+    },
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-expression-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"nested-first-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-expression-shift.pl\",\"kind\":\"guard\",\"line\":13,\"package\":\"main\"},{\"case\":\"nested-short-circuit-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-expression-shift.pl\",\"kind\":\"guard\",\"line\":18,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-expression-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/guard-expression-shift.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 guard-expression-shift.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2374; $case:2367,2374] vM/LVINTRO,range=2\n4  <;> nextstate(main 2368 guard-expression-shift.pl:6) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"finite public guard\"] s\n6  <0> padsv[$context:2368,2374] sRM*/LVINTRO\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2374 guard-expression-shift.pl:12) v:*,&,{,x*,x&,x$,$\n9  <$> const[PV \"nested-first-argument\"] s\na  <0> padsv[$case:2367,2374] sRM*\nb  <2> sassign vKS/2\nc  <;> nextstate(main 2374 guard-expression-shift.pl:13) v:*,&,{,x*,x&,x$,$\nd  <0> pushmark s\ne  <0> pushmark s\nf  <$> const[IV 0] sM\ng  <#> gv[IV \\&main::identity] s\nh  <1> entersub sKS/STRICT\ni  <1> not sKM/1\nj  <0> padsv[$context:2368,2374] s\nk  <+> multiconcat(\" interpolated message\",-1,21)[t6] sK/STRINGIFY\nl  <#> gv[IV \\&main::guard] s\nm  <1> entersub vKS/STRICT\nn  <;> nextstate(main 2374 guard-expression-shift.pl:17) v:*,&,{,x*,x&,x$,$\no  <$> const[PV \"nested-short-circuit-argument\"] s\np  <0> padsv[$case:2367,2374] sRM*\nq  <2> sassign vKS/2\nr  <;> nextstate(main 2374 guard-expression-shift.pl:18) v:*,&,{,x*,x&,x$,$\ns  <0> pushmark s\nt  <0> pushmark s\nu  <$> const[IV 0] sM\nv  <#> gv[IV \\&main::identity] s\nw  <1> entersub sKPS/STRICT,FOLD\nx  <1> not sKM/1\ny  <0> padsv[$context:2368,2374] s\nz  <+> multiconcat(\" first fragment\",-1,15)[t10] sK/STRINGIFY\n10 <0> padsv[$context:2368,2374] s\n11 <+> multiconcat(\" second fragment\",-1,16)[t13] sK/STRINGIFY\n12 <2> concat[t14] sKM/2\n13 <#> gv[IV \\&main::guard] s\n14 <1> entersub vKS/STRICT\n15 <;> nextstate(main 2374 guard-expression-shift.pl:23) v:*,&,{,x*,x&,x$,$\n16 <0> pushmark s\n17 <0> pushmark s\n18 <0> pushmark s\n19 <0> pushmark s\n1a <$> const[PV \"JSON::PP\"] sM/BARE\n1b <.> method_named[PV \"new\"] s\n1c <1> entersub[t15] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1d <.> method_named[PV \"canonical\"] s\n1e <1> entersub[t16] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1f <0> pushmark s\n1g <$> const[PV \"perl_version\"] s/BARE\n1h <#> gvsv[*^V] s\n1i <@> stringify[t18] sK/1\n1j <$> const[PV \"observations\"] s/BARE\n1k <0> padav[@observations:2366,2374] lRM\n1l <1> srefgen sK/1\n1m <@> anonhash sKM*/1\n1n <.> method_named[PV \"encode\"] l\n1o <1> entersub[t19] lKRS/TARG,STRICT\n1p <$> const[PV \"\\n\"] s\n1q <@> print vK\n1r <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/guard-expression-shift.pl",
+      "source": {
+        "bytes": 638,
+        "sha256": "f003ca7cc33bd1f28cc8bfc63515dbd46a0e664c168d1820475bfd64fc717776"
+      }
+    },
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-message-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"nested-first-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-message-shift.pl\",\"kind\":\"guard\",\"line\":13,\"package\":\"main\"},{\"case\":\"nested-short-circuit-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-message-shift.pl\",\"kind\":\"guard\",\"line\":18,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-message-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/guard-message-shift.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 guard-message-shift.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2374; $case:2367,2374] vM/LVINTRO,range=2\n4  <;> nextstate(main 2368 guard-message-shift.pl:6) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"finite public guard\"] s\n6  <0> padsv[$context:2368,2374] sRM*/LVINTRO\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2374 guard-message-shift.pl:12) v:*,&,{,x*,x&,x$,$\n9  <$> const[PV \"nested-first-argument\"] s\na  <0> padsv[$case:2367,2374] sRM*\nb  <2> sassign vKS/2\nc  <;> nextstate(main 2374 guard-message-shift.pl:13) v:*,&,{,x*,x&,x$,$\nd  <0> pushmark s\ne  <0> pushmark s\nf  <$> const[IV 0] sM\ng  <#> gv[IV \\&main::identity] s\nh  <1> entersub sKS/STRICT\ni  <1> not sKM/1\nj  <0> padsv[$context:2368,2374] s\nk  <+> multiconcat(\" interpolated message\",-1,21)[t6] sK/STRINGIFY\nl  <#> gv[IV \\&main::guard] s\nm  <1> entersub vKS/STRICT\nn  <;> nextstate(main 2374 guard-message-shift.pl:17) v:*,&,{,x*,x&,x$,$\no  <$> const[PV \"nested-short-circuit-argument\"] s\np  <0> padsv[$case:2367,2374] sRM*\nq  <2> sassign vKS/2\nr  <;> nextstate(main 2374 guard-message-shift.pl:18) v:*,&,{,x*,x&,x$,$\ns  <0> pushmark s\nt  <0> pushmark s\nu  <$> const[IV 0] sM\nv  <#> gv[IV \\&main::identity] s\nw  <1> entersub sKPS/STRICT,FOLD\nx  <1> not sKM/1\ny  <0> padsv[$context:2368,2374] s\nz  <+> multiconcat(\" first fragment\",-1,15)[t10] sK/STRINGIFY\n10 <0> padsv[$context:2368,2374] s\n11 <+> multiconcat(\" second fragment\",-1,16)[t13] sK/STRINGIFY\n12 <2> concat[t14] sKM/2\n13 <#> gv[IV \\&main::guard] s\n14 <1> entersub vKS/STRICT\n15 <;> nextstate(main 2374 guard-message-shift.pl:23) v:*,&,{,x*,x&,x$,$\n16 <0> pushmark s\n17 <0> pushmark s\n18 <0> pushmark s\n19 <0> pushmark s\n1a <$> const[PV \"JSON::PP\"] sM/BARE\n1b <.> method_named[PV \"new\"] s\n1c <1> entersub[t15] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1d <.> method_named[PV \"canonical\"] s\n1e <1> entersub[t16] sKRMS/LVINTRO,TARG,STRICT,INARGS\n1f <0> pushmark s\n1g <$> const[PV \"perl_version\"] s/BARE\n1h <#> gvsv[*^V] s\n1i <@> stringify[t18] sK/1\n1j <$> const[PV \"observations\"] s/BARE\n1k <0> padav[@observations:2366,2374] lRM\n1l <1> srefgen sK/1\n1m <@> anonhash sKM*/1\n1n <.> method_named[PV \"encode\"] l\n1o <1> entersub[t19] lKRS/TARG,STRICT\n1p <$> const[PV \"\\n\"] s\n1q <@> print vK\n1r <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/guard-message-shift.pl",
+      "source": {
+        "bytes": 638,
+        "sha256": "f54960a7893656a6d1317389f98ea45ec3b8c56f7748dfdc682e322b97a3ce10"
+      }
+    }
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.1",
+  "programme": {
+    "bytes": 2811,
+    "sha256": "f446e0051d40a7e18e6064854e10c70851c0364f43335cf1eb2b2445ea0be801"
+  },
+  "role": "Finite current public caller/compiler attribution only; original private runtime/toolchain meanings remain unmeasured."
+}

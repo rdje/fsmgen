@@ -1,0 +1,78 @@
+{
+  "caller-fixture.pl": {
+    "bytes": 915,
+    "sha256": "2ca1f4e728f9ad7c5998c4a84e258a8ee71139b4f5a0688f76d98e87645a992c"
+  },
+  "caller-label-shift.pl": {
+    "bytes": 916,
+    "sha256": "5e26a630b813cd2db67f1abb699dd32368f86b039e13bf6dfc7a974a5094a9e6"
+  },
+  "caller-pattern-shift.pl": {
+    "bytes": 919,
+    "sha256": "43bb035ced4c76cd2855c9712d13df6cdec9848dd3355966641f0677fa88311a"
+  },
+  "census.json": {
+    "bytes": 6373953,
+    "sha256": "3e037260284e4e3011a1f16b97f963f5cf983399e9e2d3cdd0374e7d4151bbb0"
+  },
+  "census.py": {
+    "bytes": 5531,
+    "sha256": "b6a093656704c13e98c30df6348387c41f4d6da6cc5ada64c2a30514ddd28c6e"
+  },
+  "guard-expression-shift.pl": {
+    "bytes": 638,
+    "sha256": "f003ca7cc33bd1f28cc8bfc63515dbd46a0e664c168d1820475bfd64fc717776"
+  },
+  "guard-fixture.pl": {
+    "bytes": 637,
+    "sha256": "d453ee6b7976c24da9e382c82afdc894d87f53ce68b2ebcfd40dc5c66568c604"
+  },
+  "guard-live-fixture.pl": {
+    "bytes": 950,
+    "sha256": "13480aa3a25cb88a056d5374b8537e33025c6dae14dc67190c7b57b030cc8cf6"
+  },
+  "guard-live-message-shift.pl": {
+    "bytes": 951,
+    "sha256": "158c73fdaef038c13896759f58c223b8bfc3ec7983e71bb91b5ce6a36a6e5253"
+  },
+  "guard-live-operand-shift.pl": {
+    "bytes": 951,
+    "sha256": "e9ee266240599c9bb3dfd40c72536f83ee065b0f00dd8d466809adbff6312b5b"
+  },
+  "guard-live.json": {
+    "bytes": 16679,
+    "sha256": "463db98e6de1c489d0c3ee84d0c739542a53eb6317c09a0590f1767b6a3e1158"
+  },
+  "guard-message-shift.pl": {
+    "bytes": 638,
+    "sha256": "f54960a7893656a6d1317389f98ea45ec3b8c56f7748dfdc682e322b97a3ce10"
+  },
+  "guard_live.py": {
+    "bytes": 2202,
+    "sha256": "f64648177ec6ea8304a36c145b9c3cc9348c31ca4083fd5ff5a7f83c2c4a6eed"
+  },
+  "public-first.py": {
+    "bytes": 2182,
+    "sha256": "2ca7309a378eb102bff553101eec5d8d5bbc95ffe1cfc958c4080484ef69c385"
+  },
+  "public.json": {
+    "bytes": 26732,
+    "sha256": "3cb0c016fdca65bdc53ec0a626359f591466bc91ab0204c2ee5fe399f5523365"
+  },
+  "public.py": {
+    "bytes": 2811,
+    "sha256": "f446e0051d40a7e18e6064854e10c70851c0364f43335cf1eb2b2445ea0be801"
+  },
+  "scope.txt": {
+    "bytes": 111,
+    "sha256": "d4cfcd7d9a329b4013a8b283b1025178220f5b0a672088e6c0d144a7ed02d5bf"
+  },
+  "verify-initial.py": {
+    "bytes": 13862,
+    "sha256": "7836760d0a20d1266afedb55e5178a96e7c4d75586276120d40dbe9aebc93753"
+  },
+  "verify.py": {
+    "bytes": 16142,
+    "sha256": "7058ec95a8885f6782184c538c35ed4a14ed41ed78f5a8e0fc34431762331181"
+  }
+}

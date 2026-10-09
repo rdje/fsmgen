@@ -1,0 +1,94 @@
+{
+  "fixtures": [
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-live-fixture.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"nested-live-first-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-live-fixture.pl\",\"kind\":\"guard\",\"line\":18,\"package\":\"main\"},{\"case\":\"nested-live-short-circuit\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-live-fixture.pl\",\"kind\":\"guard\",\"line\":23,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-live-fixture.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/guard-live-fixture.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 guard-live-fixture.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2379; $case:2367,2379] vM/LVINTRO,range=2\n4  <;> nextstate(main 2368 guard-live-fixture.pl:6) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"finite public guard\"] s\n6  <0> padsv[$context:2368,2379] sRM*/LVINTRO\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2369 guard-live-fixture.pl:7) v:*,&,{,x*,x&,x$,$\n9  <0> pushmark s\na  <$> const[PV \"value\"] s/BARE\nb  <$> const[IV 0] s\nc  <$> const[PV \"whole\"] s/BARE\nd  <$> const[IV 1] s\ne  <$> const[PV \"role\"] s/BARE\nf  <$> const[PV \"output\"] s\ng  <$> const[PV \"path\"] s/BARE\nh  <$> const[PV \"field\"] s\ni  <$> const[PV \"name\"] s/BARE\nj  <$> const[PV \"root\"] s\nk  <@> anonhash sK*/1\nl  <0> padsv[$source:2369,2379] sRM*/LVINTRO\nm  <2> sassign vKS/2\nn  <;> nextstate(main 2370 guard-live-fixture.pl:8) v:*,&,{,x*,x&,x$,$\no  <0> pushmark s\np  <$> const[PV \"value\"] s/BARE\nq  <$> const[IV 0] s\nr  <@> anonhash sK*/1\ns  <0> padsv[$target:2370,2379] sRM*/LVINTRO\nt  <2> sassign vKS/2\nu  <;> nextstate(main 2371 guard-live-fixture.pl:9) v:*,&,{,x*,x&,x$,$\nv  <0> pushmark s\nw  <$> const[PV \"root\"] s/BARE\nx  <$> const[IV 1] s\ny  <@> anonhash sK*/1\nz  <0> padsv[$roots:2371,2379] sRM*/LVINTRO\n10 <2> sassign vKS/2\n11 <;> nextstate(main 2379 guard-live-fixture.pl:16) v:*,&,{,x*,x&,x$,$\n12 <$> const[PV \"nested-live-first-argument\"] s\n13 <0> padsv[$case:2367,2379] sRM*\n14 <2> sassign vKS/2\n15 <;> nextstate(main 2379 guard-live-fixture.pl:18) v:*,&,{,x*,x&,x$,$\n16 <0> pushmark s\n17 <0> pushmark s\n18 <+> multideref($source->{\"value\"}) sKM/LVDEFER,STRICT\n19 <+> multideref($target->{\"value\"}) sKM/LVDEFER,STRICT\n1a <#> gv[IV \\&main::conflicts] s\n1b <1> entersub sKS/STRICT\n1c <1> not sKM/1\n1d <0> padsv[$context:2368,2379] s\n1e <+> multiconcat(\" interpolated message\",-1,21)[t12] sK/STRINGIFY\n1f <#> gv[IV \\&main::guard] s\n1g <1> entersub vKS/STRICT\n1h <;> nextstate(main 2379 guard-live-fixture.pl:20) v:*,&,{,x*,x&,x$,$\n1i <$> const[PV \"nested-live-short-circuit\"] s\n1j <0> padsv[$case:2367,2379] sRM*\n1k <2> sassign vKS/2\n1l <;> nextstate(main 2379 guard-live-fixture.pl:23) v:*,&,{,x*,x&,x$,$\n1m <0> pushmark s\n1n <+> multideref($source->{\"whole\"}) sK/STRICT\n1o <|> and(other->1p) sK/1\n1p     <0> padsv[$source:2369,2379] s\n1q     <|> and(other->1r) sK/1\n1r         <+> multideref($source->{\"role\"}) sK/STRICT\n1s         <$> const[PV \"output\"] s\n1t         <2> seq sK/2\n1u         <|> and(other->1v) sK/1\n1v             <+> multideref($source->{\"path\"}) sK/STRICT\n1w             <1> length[t17] sK/BOOL,1\n1x             <|> and(other->1y) sK/1\n1y                 <0> pushmark s\n1z                 <0> padsv[$roots:2371,2379] sM/DREFHV\n20                 <1> rv2hv[t20] sKR/STRICT\n21                 <+> multideref($source->{\"name\"}) sK/STRICT\n22                 <2> helem sKM/LVDEFER,2\n23                 <#> gv[IV \\&main::root] s\n24                 <1> entersub sKS/STRICT\n25 <1> not sKM/1\n26 <0> padsv[$context:2368,2379] s\n27 <+> multiconcat(\" first fragment\",-1,15)[t22] sK/STRINGIFY\n28 <0> padsv[$context:2368,2379] s\n29 <+> multiconcat(\" second fragment\",-1,16)[t24] sK/STRINGIFY\n2a <2> concat[t25] sKM/2\n2b <#> gv[IV \\&main::guard] s\n2c <1> entersub vKS/STRICT\n2d <;> nextstate(main 2379 guard-live-fixture.pl:26) v:*,&,{,x*,x&,x$,$\n2e <0> pushmark s\n2f <0> pushmark s\n2g <0> pushmark s\n2h <0> pushmark s\n2i <$> const[PV \"JSON::PP\"] sM/BARE\n2j <.> method_named[PV \"new\"] s\n2k <1> entersub[t26] sKRMS/LVINTRO,TARG,STRICT,INARGS\n2l <.> method_named[PV \"canonical\"] s\n2m <1> entersub[t27] sKRMS/LVINTRO,TARG,STRICT,INARGS\n2n <0> pushmark s\n2o <$> const[PV \"perl_version\"] s/BARE\n2p <#> gvsv[*^V] s\n2q <@> stringify[t29] sK/1\n2r <$> const[PV \"observations\"] s/BARE\n2s <0> padav[@observations:2366,2379] lRM\n2t <1> srefgen sK/1\n2u <@> anonhash sKM*/1\n2v <.> method_named[PV \"encode\"] l\n2w <1> entersub[t30] lKRS/TARG,STRICT\n2x <$> const[PV \"\\n\"] s\n2y <@> print vK\n2z <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/guard-live-fixture.pl",
+      "source": {
+        "bytes": 950,
+        "sha256": "13480aa3a25cb88a056d5374b8537e33025c6dae14dc67190c7b57b030cc8cf6"
+      }
+    },
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-live-operand-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"nested-live-first-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-live-operand-shift.pl\",\"kind\":\"guard\",\"line\":19,\"package\":\"main\"},{\"case\":\"nested-live-short-circuit\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-live-operand-shift.pl\",\"kind\":\"guard\",\"line\":24,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-live-operand-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/guard-live-operand-shift.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 guard-live-operand-shift.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2379; $case:2367,2379] vM/LVINTRO,range=2\n4  <;> nextstate(main 2368 guard-live-operand-shift.pl:6) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"finite public guard\"] s\n6  <0> padsv[$context:2368,2379] sRM*/LVINTRO\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2369 guard-live-operand-shift.pl:7) v:*,&,{,x*,x&,x$,$\n9  <0> pushmark s\na  <$> const[PV \"value\"] s/BARE\nb  <$> const[IV 0] s\nc  <$> const[PV \"whole\"] s/BARE\nd  <$> const[IV 1] s\ne  <$> const[PV \"role\"] s/BARE\nf  <$> const[PV \"output\"] s\ng  <$> const[PV \"path\"] s/BARE\nh  <$> const[PV \"field\"] s\ni  <$> const[PV \"name\"] s/BARE\nj  <$> const[PV \"root\"] s\nk  <@> anonhash sK*/1\nl  <0> padsv[$source:2369,2379] sRM*/LVINTRO\nm  <2> sassign vKS/2\nn  <;> nextstate(main 2370 guard-live-operand-shift.pl:8) v:*,&,{,x*,x&,x$,$\no  <0> pushmark s\np  <$> const[PV \"value\"] s/BARE\nq  <$> const[IV 0] s\nr  <@> anonhash sK*/1\ns  <0> padsv[$target:2370,2379] sRM*/LVINTRO\nt  <2> sassign vKS/2\nu  <;> nextstate(main 2371 guard-live-operand-shift.pl:9) v:*,&,{,x*,x&,x$,$\nv  <0> pushmark s\nw  <$> const[PV \"root\"] s/BARE\nx  <$> const[IV 1] s\ny  <@> anonhash sK*/1\nz  <0> padsv[$roots:2371,2379] sRM*/LVINTRO\n10 <2> sassign vKS/2\n11 <;> nextstate(main 2379 guard-live-operand-shift.pl:16) v:*,&,{,x*,x&,x$,$\n12 <$> const[PV \"nested-live-first-argument\"] s\n13 <0> padsv[$case:2367,2379] sRM*\n14 <2> sassign vKS/2\n15 <;> nextstate(main 2379 guard-live-operand-shift.pl:19) v:*,&,{,x*,x&,x$,$\n16 <0> pushmark s\n17 <0> pushmark s\n18 <+> multideref($source->{\"value\"}) sKM/LVDEFER,STRICT\n19 <+> multideref($target->{\"value\"}) sKM/LVDEFER,STRICT\n1a <#> gv[IV \\&main::conflicts] s\n1b <1> entersub sKS/STRICT\n1c <1> not sKM/1\n1d <0> padsv[$context:2368,2379] s\n1e <+> multiconcat(\" interpolated message\",-1,21)[t12] sK/STRINGIFY\n1f <#> gv[IV \\&main::guard] s\n1g <1> entersub vKS/STRICT\n1h <;> nextstate(main 2379 guard-live-operand-shift.pl:21) v:*,&,{,x*,x&,x$,$\n1i <$> const[PV \"nested-live-short-circuit\"] s\n1j <0> padsv[$case:2367,2379] sRM*\n1k <2> sassign vKS/2\n1l <;> nextstate(main 2379 guard-live-operand-shift.pl:24) v:*,&,{,x*,x&,x$,$\n1m <0> pushmark s\n1n <+> multideref($source->{\"whole\"}) sK/STRICT\n1o <|> and(other->1p) sK/1\n1p     <0> padsv[$source:2369,2379] s\n1q     <|> and(other->1r) sK/1\n1r         <+> multideref($source->{\"role\"}) sK/STRICT\n1s         <$> const[PV \"output\"] s\n1t         <2> seq sK/2\n1u         <|> and(other->1v) sK/1\n1v             <+> multideref($source->{\"path\"}) sK/STRICT\n1w             <1> length[t17] sK/BOOL,1\n1x             <|> and(other->1y) sK/1\n1y                 <0> pushmark s\n1z                 <0> padsv[$roots:2371,2379] sM/DREFHV\n20                 <1> rv2hv[t20] sKR/STRICT\n21                 <+> multideref($source->{\"name\"}) sK/STRICT\n22                 <2> helem sKM/LVDEFER,2\n23                 <#> gv[IV \\&main::root] s\n24                 <1> entersub sKS/STRICT\n25 <1> not sKM/1\n26 <0> padsv[$context:2368,2379] s\n27 <+> multiconcat(\" first fragment\",-1,15)[t22] sK/STRINGIFY\n28 <0> padsv[$context:2368,2379] s\n29 <+> multiconcat(\" second fragment\",-1,16)[t24] sK/STRINGIFY\n2a <2> concat[t25] sKM/2\n2b <#> gv[IV \\&main::guard] s\n2c <1> entersub vKS/STRICT\n2d <;> nextstate(main 2379 guard-live-operand-shift.pl:27) v:*,&,{,x*,x&,x$,$\n2e <0> pushmark s\n2f <0> pushmark s\n2g <0> pushmark s\n2h <0> pushmark s\n2i <$> const[PV \"JSON::PP\"] sM/BARE\n2j <.> method_named[PV \"new\"] s\n2k <1> entersub[t26] sKRMS/LVINTRO,TARG,STRICT,INARGS\n2l <.> method_named[PV \"canonical\"] s\n2m <1> entersub[t27] sKRMS/LVINTRO,TARG,STRICT,INARGS\n2n <0> pushmark s\n2o <$> const[PV \"perl_version\"] s/BARE\n2p <#> gvsv[*^V] s\n2q <@> stringify[t29] sK/1\n2r <$> const[PV \"observations\"] s/BARE\n2s <0> padav[@observations:2366,2379] lRM\n2t <1> srefgen sK/1\n2u <@> anonhash sKM*/1\n2v <.> method_named[PV \"encode\"] l\n2w <1> entersub[t30] lKRS/TARG,STRICT\n2x <$> const[PV \"\\n\"] s\n2y <@> print vK\n2z <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/guard-live-operand-shift.pl",
+      "source": {
+        "bytes": 951,
+        "sha256": "e9ee266240599c9bb3dfd40c72536f83ee065b0f00dd8d466809adbff6312b5b"
+      }
+    },
+    {
+      "actual": [
+        {
+          "command": [
+            "perl",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-live-message-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "",
+          "stdout": "{\"observations\":[{\"case\":\"nested-live-first-argument\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-live-message-shift.pl\",\"kind\":\"guard\",\"line\":18,\"package\":\"main\"},{\"case\":\"nested-live-short-circuit\",\"file\":\"docs/audits/coordinate-original-mismatch-20261009/guard-live-message-shift.pl\",\"kind\":\"guard\",\"line\":24,\"package\":\"main\"}],\"perl_version\":\"v5.34.1\"}\n"
+        },
+        {
+          "command": [
+            "perl",
+            "-MO=Concise,-exec",
+            "docs/audits/coordinate-original-mismatch-20261009/guard-live-message-shift.pl"
+          ],
+          "status": 0,
+          "stderr": "docs/audits/coordinate-original-mismatch-20261009/guard-live-message-shift.pl syntax OK\n",
+          "stdout": "1  <0> enter v\n2  <;> nextstate(main 2366 guard-live-message-shift.pl:4) v:*,&,{,x*,x&,x$,$\n3  <0> padrange[@observations:2366,2379; $case:2367,2379] vM/LVINTRO,range=2\n4  <;> nextstate(main 2368 guard-live-message-shift.pl:6) v:*,&,{,x*,x&,x$,$\n5  <$> const[PV \"finite public guard\"] s\n6  <0> padsv[$context:2368,2379] sRM*/LVINTRO\n7  <2> sassign vKS/2\n8  <;> nextstate(main 2369 guard-live-message-shift.pl:7) v:*,&,{,x*,x&,x$,$\n9  <0> pushmark s\na  <$> const[PV \"value\"] s/BARE\nb  <$> const[IV 0] s\nc  <$> const[PV \"whole\"] s/BARE\nd  <$> const[IV 1] s\ne  <$> const[PV \"role\"] s/BARE\nf  <$> const[PV \"output\"] s\ng  <$> const[PV \"path\"] s/BARE\nh  <$> const[PV \"field\"] s\ni  <$> const[PV \"name\"] s/BARE\nj  <$> const[PV \"root\"] s\nk  <@> anonhash sK*/1\nl  <0> padsv[$source:2369,2379] sRM*/LVINTRO\nm  <2> sassign vKS/2\nn  <;> nextstate(main 2370 guard-live-message-shift.pl:8) v:*,&,{,x*,x&,x$,$\no  <0> pushmark s\np  <$> const[PV \"value\"] s/BARE\nq  <$> const[IV 0] s\nr  <@> anonhash sK*/1\ns  <0> padsv[$target:2370,2379] sRM*/LVINTRO\nt  <2> sassign vKS/2\nu  <;> nextstate(main 2371 guard-live-message-shift.pl:9) v:*,&,{,x*,x&,x$,$\nv  <0> pushmark s\nw  <$> const[PV \"root\"] s/BARE\nx  <$> const[IV 1] s\ny  <@> anonhash sK*/1\nz  <0> padsv[$roots:2371,2379] sRM*/LVINTRO\n10 <2> sassign vKS/2\n11 <;> nextstate(main 2379 guard-live-message-shift.pl:16) v:*,&,{,x*,x&,x$,$\n12 <$> const[PV \"nested-live-first-argument\"] s\n13 <0> padsv[$case:2367,2379] sRM*\n14 <2> sassign vKS/2\n15 <;> nextstate(main 2379 guard-live-message-shift.pl:18) v:*,&,{,x*,x&,x$,$\n16 <0> pushmark s\n17 <0> pushmark s\n18 <+> multideref($source->{\"value\"}) sKM/LVDEFER,STRICT\n19 <+> multideref($target->{\"value\"}) sKM/LVDEFER,STRICT\n1a <#> gv[IV \\&main::conflicts] s\n1b <1> entersub sKS/STRICT\n1c <1> not sKM/1\n1d <0> padsv[$context:2368,2379] s\n1e <+> multiconcat(\" interpolated message\",-1,21)[t12] sK/STRINGIFY\n1f <#> gv[IV \\&main::guard] s\n1g <1> entersub vKS/STRICT\n1h <;> nextstate(main 2379 guard-live-message-shift.pl:21) v:*,&,{,x*,x&,x$,$\n1i <$> const[PV \"nested-live-short-circuit\"] s\n1j <0> padsv[$case:2367,2379] sRM*\n1k <2> sassign vKS/2\n1l <;> nextstate(main 2379 guard-live-message-shift.pl:24) v:*,&,{,x*,x&,x$,$\n1m <0> pushmark s\n1n <+> multideref($source->{\"whole\"}) sK/STRICT\n1o <|> and(other->1p) sK/1\n1p     <0> padsv[$source:2369,2379] s\n1q     <|> and(other->1r) sK/1\n1r         <+> multideref($source->{\"role\"}) sK/STRICT\n1s         <$> const[PV \"output\"] s\n1t         <2> seq sK/2\n1u         <|> and(other->1v) sK/1\n1v             <+> multideref($source->{\"path\"}) sK/STRICT\n1w             <1> length[t17] sK/BOOL,1\n1x             <|> and(other->1y) sK/1\n1y                 <0> pushmark s\n1z                 <0> padsv[$roots:2371,2379] sM/DREFHV\n20                 <1> rv2hv[t20] sKR/STRICT\n21                 <+> multideref($source->{\"name\"}) sK/STRICT\n22                 <2> helem sKM/LVDEFER,2\n23                 <#> gv[IV \\&main::root] s\n24                 <1> entersub sKS/STRICT\n25 <1> not sKM/1\n26 <0> padsv[$context:2368,2379] s\n27 <+> multiconcat(\" first fragment\",-1,15)[t22] sK/STRINGIFY\n28 <0> padsv[$context:2368,2379] s\n29 <+> multiconcat(\" second fragment\",-1,16)[t24] sK/STRINGIFY\n2a <2> concat[t25] sKM/2\n2b <#> gv[IV \\&main::guard] s\n2c <1> entersub vKS/STRICT\n2d <;> nextstate(main 2379 guard-live-message-shift.pl:27) v:*,&,{,x*,x&,x$,$\n2e <0> pushmark s\n2f <0> pushmark s\n2g <0> pushmark s\n2h <0> pushmark s\n2i <$> const[PV \"JSON::PP\"] sM/BARE\n2j <.> method_named[PV \"new\"] s\n2k <1> entersub[t26] sKRMS/LVINTRO,TARG,STRICT,INARGS\n2l <.> method_named[PV \"canonical\"] s\n2m <1> entersub[t27] sKRMS/LVINTRO,TARG,STRICT,INARGS\n2n <0> pushmark s\n2o <$> const[PV \"perl_version\"] s/BARE\n2p <#> gvsv[*^V] s\n2q <@> stringify[t29] sK/1\n2r <$> const[PV \"observations\"] s/BARE\n2s <0> padav[@observations:2366,2379] lRM\n2t <1> srefgen sK/1\n2u <@> anonhash sKM*/1\n2v <.> method_named[PV \"encode\"] l\n2w <1> entersub[t30] lKRS/TARG,STRICT\n2x <$> const[PV \"\\n\"] s\n2y <@> print vK\n2z <@> leave[1 ref] vKP/REFC\n"
+        }
+      ],
+      "path": "docs/audits/coordinate-original-mismatch-20261009/guard-live-message-shift.pl",
+      "source": {
+        "bytes": 951,
+        "sha256": "158c73fdaef038c13896759f58c223b8bfc3ec7983e71bb91b5ce6a36a6e5253"
+      }
+    }
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.1",
+  "programme": {
+    "bytes": 2202,
+    "sha256": "f64648177ec6ea8304a36c145b9c3cc9348c31ca4083fd5ff5a7f83c2c4a6eed"
+  },
+  "role": "Finite current public live-operand guard/compiler attribution only; no original private/toolchain promotion."
+}

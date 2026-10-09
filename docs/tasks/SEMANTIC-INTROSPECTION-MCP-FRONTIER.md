@@ -5466,12 +5466,40 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Apply independent caller recipes to every original coordinate.`
   Acceptance: `Use committed complete intake and independently declared source recipes to bind every own original origin/frame/load/eval/caller file and line. Preserve all alternatives, empty/nonempty allocations, argument/error bytes, nested phases and exact source identities. Keep opaque external framework intervals and original private/toolchain/address/alias owners explicit; own every mismatch before repair and reject broad normalization.`
+  Verification: `First complete matcher refuses helper-invocation/0: original line115 is outside declared first114/closing116. No matching product was written. Child .1 complete mismatch census and finite public/compiler attribution diagnosis now qualifies; .2 superseding source recipe qualification precedes .3 resumed complete matching. Whole hostile qualification remains the existing next sibling.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.1`
+  Status: `done`
+  Goal: `Diagnose the complete first original-coordinate mismatch domain.`
+  Acceptance: `Retain the exact first failed matcher programme and actual receipt, independently census every planned own coordinate against the sealed alternatives, and reproduce the attribution cause with controlled own public caller fixtures. Preserve the original corpus and source hypotheses; do not select or widen original alternatives. Record and schedule every mismatch before repair.`
+  Verification: `Whole admitted raw/source/class-frame domain is conserved. Complete census.py source-link allocation and separate verify.py sequential phase traversal agree on2943 own coordinate observations and39 line mismatches across five recipes in ordinary/Storable/controls, with no filename mismatch. First/closing-only alternatives from485275db3 omit interior lines: helper-invocation/0,39,40 and Value GUARDS.values.17/context-write-guard. Exact first failed match.py, status1/complete streams/instruments and unexecuted verifier draft retain; no matching product was written. Complete actual sealed intake executes and its whole result equals the committed publication. Public caller and B::Concise results independently regenerate for all nine source fixtures. Moving the relevant pattern/live operand shifts its reported line while moving a later constant label/message does not; compiler state labels join actual caller output. Constant-only guards retain as counterexamples and do not support the live-operand claim. First public selector matches two source blocks and refuses; full first producer/actual failure retain, corrected unique full-block selector and all exact source counterfactuals independently qualify. First narrower independent pass/programme also retain; complete successor checks closed census and every exact source transform. Genuine omitted observation/mismatch, Boolean status, borrowed source/command and wrong caller-line controls reject. Exact whole diagnostic seal, published reader and copied missing/changed/resealed/symlink/extra-member controls conserve originals and dispose owned fixtures. Re-derive: census.py complete fixed original/source allocation and actual sealed intake plus public.py/guard_live.py controlled source/native results; falsify: separate sequential verify.py, independent complete source transformations, fresh public runtime/compiler results and genuine product/receipt/seal controls; durability: fixed original epoch, complete census/native streams and programmes, retained first failures/drafts, sealed diagnosis, public reader and normal Git commit. Focused310 assertions, fresh source/native book delivery, independent delivery, claim inventory and staged doctrines plus normal hooks gate commitment. Only diagnosis closes. Superseding source-only alternatives and resumed whole matching are explicit next children; original private/formatter/toolchain/framework/address/alias meanings and parent whole-hostile/native/visual/HIAL/full-CI/push remain unpromoted.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "'line_alternatives': {'first': first, 'closing': closing}" identifies485275db3 recipes.py add in recipe-root-cause.json. The actual first complete matcher refuses helper-invocation/0 at original115 outside first114/closing116. Whole independent census owns every omission; public caller/compiler fixtures isolate interior pattern/live-operand attribution and retain constant-only counterexamples. First public selector ambiguity is separately reproduced by its retained two-match source and actual failure, then repaired by a unique whole block.
+  - [x] **ADDRESSED (verified)** — Complete source-link census and independent sequential raw-phase traversal agree on every own coordinate and all39 mismatches without widening an alternative. Every first programme/result/draft remains; fresh public runtime/compiler results and exact expression/message counterfactuals qualify the finite cause. Full fixed-seal diagnosis and copied-corpus controls pass, original namespace/bytes conserve and owned fixtures dispose. Repair is scheduled under .2 before resumed matching .3; no original-private scope is promoted.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in checks.json focused. Complete actual sealed intake, independent whole census/public/compiler/receipt/source/seal controls pass under unchanged RAM cutoffs. Source/native book delivery, independent complete delivery, fresh claim inventory, measured book/task authority, staged scripts/check_doctrines.sh and normal hooks gate commitment. Original corpus and every capacity ceiling/Knowledge Map authority remain unchanged; no false matching product or recapture.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.2`
+  Status: `pending`
+  Goal: `Qualify superseding source-derived caller alternatives.`
+  Acceptance: `After complete mismatch diagnosis commits, derive proper executable call-site alternatives from complete own source syntax independently of observed original line values. Preserve all predecessor statements, labels, source identities, raw originals and opaque owners. Use public fixtures and genuine wrong-source/line controls; publish an immutable superseding recipe product without editing prior seals.`
   Verification: `pending`
   Commit: `pending`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.3`
+  Status: `pending`
+  Goal: `Resume complete original-coordinate matching with qualified alternatives.`
+  Acceptance: `Use committed intake, original phase/source/frame products and independently qualified superseding recipes to match every own original coordinate. Conserve every alternative, original error/argument/context byte, empty allocation and explicit external/private/address/alias owner. Independent complete reconstruction and original delivery gates precede commitment.`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3`
   Status: `pending`

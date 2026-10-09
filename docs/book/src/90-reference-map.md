@@ -826,11 +826,28 @@ regenerate; the original captures are retained without recapture.
 python3 -B docs/audits/coordinate-original-intake-checks-20261009/verify_intake.py
 ```
 
-Intake leaves every coordinate selection empty. Applying the independently
-declared statement alternatives to original callers is the next owned slice.
-The alias capture remains in custody with its downstream meanings separately
-owned. External framework, private formatting/toolchain and address meanings
-remain unmeasured.
+Intake preserves every original coordinate without selecting its meaning.
+The first complete match rejects the first/closing-only source alternatives:
+some helper calls and guards report interior expression lines. A complete
+census retains every observation and mismatch, the first failed matcher and
+its separately marked unexecuted verifier draft. No original alternative has
+been widened.
+
+Finite public caller and compiler fixtures reproduce callback/pattern and
+live-operand guard attribution. Moving the relevant expression changes its
+reported line; moving a later constant message does not. Constant-only guard
+probes remain as counterexamples. The first ambiguous fixture selector and
+its corrected producer both retain. These are finite current public results;
+original private formatter/toolchain meanings remain unmeasured.
+
+```sh
+python3 -B docs/audits/coordinate-original-matching-checks-20261009/verify_diagnosis.py
+```
+
+The next owned slice qualifies superseding source-derived alternatives before
+complete original matching resumes. Whole hostile qualification, alias
+capture/downstream, external framework, private formatting/toolchain and
+address meanings retain their separate owners.
 
 Original coordinate selections, opaque framework callers, private runtime
 formatting/toolchain/identity, address lifetimes and alias downstream retain

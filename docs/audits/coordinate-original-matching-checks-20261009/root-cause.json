@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "--no-replace-objects",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "Intake leaves every coordinate selection empty.",
+    "--",
+    "docs/book/src/90-reference-map.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "39249cb445399c2318275829e5c7f10e0094d0c4 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.1: admit complete original raw coordinate inputs\n"
+}
