@@ -1,0 +1,18 @@
+{
+  "recipes.json": {
+    "bytes": 215467,
+    "sha256": "293554a98f6e2a917510eae6e16597615227e969141225b4b7b535403ddb6932"
+  },
+  "recipes.py": {
+    "bytes": 10074,
+    "sha256": "288ed2183e69644ceb49650a89a3e8c77b9b10577cc4326cb5a4307345a2f5d6"
+  },
+  "scope.txt": {
+    "bytes": 117,
+    "sha256": "7469853568d7cd35a2b1bd70a50f1866184230058691004bc677121e8a057e95"
+  },
+  "verify.py": {
+    "bytes": 14327,
+    "sha256": "090f6528b2bbf88978a19d2d5275970cd44ac2f0f7c5705b0cc7bca9bdf88fd2"
+  }
+}

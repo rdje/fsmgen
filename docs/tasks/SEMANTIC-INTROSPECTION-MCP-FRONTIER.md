@@ -5376,9 +5376,32 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Compose and independently qualify complete statement-level refusal hypotheses from admitted path inputs.`
   Acceptance: `After .1 commits, derive every guard and observer/test/parser call-site statement from complete own bytes, retain all first/closing and filename labels and their equivalent alternatives, and bind each ordered refusal phase to the admitted path models. Independent complete source/path allocation and genuine guard/caller/source/owner/line/filename/root/alternative/promotion controls qualify; original coordinates remain unread and whole source publication stays the existing successor.`
+  Verification: `Split before implementation: finite complete executable statements and their source-only alternatives qualify in .1; ordered per-refusal phase allocation then qualifies in .2. Lexical extents and original coordinates remain separate.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.1`
+  Status: `done`
+  Goal: `Derive and independently qualify complete finite executable statement recipes.`
+  Acceptance: `Bind committed source-site and whole path-input admission. Preserve every admitted guard/call/origin statement and derive complete observer operation/eval/wrapper, own helper/callback/subtest/load, nested Value capture/eval and active parser/context call statements from original own bytes. Independently reconstruct binary offsets, named or authored owners, first/closing equivalences and legitimate filenames; actual source/body/owner/line/kind/filename/alternative/extent/promotion controls refuse. Keep public examples and complete generation/invocation custody bound, original selections null. No original intake or capture execution. Required documentation rollover is owned here: seal the unchanged committed Candidate Future Phases historical suffix through the existing exact-version manifest, preserve the complete live node graph and prior manifest chain, and shorten only the index summary; raise no ceiling. Commit before whole per-refusal phase binding .2.`
+  Verification: `Complete committed source-site and path-input namespaces authenticate. Executable recipes retain every admitted guard/call/origin and add complete helper/callback/subtest, observer/wrapper/eval, nested Value capture and active parser/context statements. The parser lexical confess expression is preserved in its immutable source bank; the new executable recipe includes its conditional guard. Independent original Git bodies and ordered observer transform reconstruct binary offsets, source and containing owner, first/closing/equivalent labels, legitimate filenames and whole custody. Genuine missing/duplicate/body/source/owner/Boolean-line/offset/filename/equivalence/extent/promotion/root/public/alias-owner candidates reject at intended predicates. First sandbox RAM-guard refusal retains; approved unchanged limits pass. The first pure-source scanner has an unescaped closing-parenthesis pattern error; whole first programme and actual failure retain, and controlled old/new reconstruction qualifies its correction before seal. Complete actual producer/reader receipt and status/result/instrument controls pass. Focused publication/book regressions report All tests successful, Files=3 Tests=310. Re-derive: recipes.py/recipes.json; falsify: separate verify.py original binary scanner and genuine controls; durability: complete sealed programmes/product, fixed input revisions, retained actual checks and normal Git commit. Whole source/native book delivery, exact aggregate/task authority, fresh claim inventory and staged doctrine/normal hooks gate commit. An isolated same-volume extra-member copy with a rewritten self-seal actually passes the complete first reader. Full first reader/programme/result remain unchanged; published verify_recipes.py pins the exact original seal before and after unchanged independent qualification. Actual missing-seal/member, borrowed body, changed seal and extra-member copies reject their exact predicates; original member census conserves and all scratch copies are removed. The first doctrine run retains its exact task-rollover and index-line refusals. The existing history manifest now seals the unchanged committed Candidate Future Phases suffix; full source/suffix identities, prior descriptor chain and unchanged live node graph reconstruct. No recorded byte or owner is lost and ceilings do not widen. This closes finite statement construction only: phase allocation .2 and existing whole-source publication remain pending; original/private/alias/native/formatter/toolchain/address/visual/HIAL/full-CI/push owners stay open. Public ISF syntax/runtime/API/MCP/downstream contracts are unchanged; only the book audit-reader route extends.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'Runtime call-site line selection' retains the catalog source boundary in coordinate-statement-recipe-checks-20261009/root-cause.json. The admitted parser confess expression excludes its conditional guard, and function extents do not predict executable endpoints. Complete own-source statement boundaries must qualify before per-refusal phase allocation. First actual scanner failure and whole first programme retain; qualify_scanner.py reproduces the exact bad regex and repaired independent construction without capture execution.
+  - [x] **ADDRESSED (verified)** — Sealed recipes.json derives complete executable source statements with binary source identities, named/authored owners, first/closing/equivalent labels and filename alternatives. Separate verify.py reconstructs original Git units and ordered observer generation and rejects genuine membership/source/body/owner/line/kind/filename/equivalence/extent/root/public/alias-owner/original-selection corruptions. consume_published.py checks complete final actual results and genuine status/result/instrument refusals. Published verify_recipes.py fixes the demonstrated self-resealed-member false green using an exact original seal; qualify_seal.py retains the complete first success and actual repaired missing/extra/body/seal refusals with original member conservation and scratch removal. Runtime selections remain null and phase binding remains .2.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in checks.json focused. Independent sealed statement reconstruction and original scanner failure/repair qualify under unchanged RAM cutoffs. Scoped book source/native copied bytes, exact aggregate/task declarations, fresh claim inventory and scripts/check_doctrines.sh reporting [doctrine] all doctrine checks passed plus normal hooks gate commit. Original inputs, captures, source banks, all fact/questions and ceilings conserve.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Bind every ordered refusal phase to independently qualified statement recipes.`
+  Acceptance: `After .1 commits, join every complete admitted refusal and qualified own source phase to exact caller/callee statement recipes, preserving core/observer/helper/body/entry/load roles, nested capture/eval and equivalent alternatives. Independent source/path allocation and genuine guard/caller/root/phase/role/source/alternative/promotion controls qualify. Preserve unresolved original/private/alias owners; whole source publication remains existing successor. No original coordinate or capture execution.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6994,114 +7017,6 @@ and all remaining ticket claims require fresh evidence.
   task-tree leaf before any code, test, source, generated-artifact, or config
   change.
 
-## Candidate Future Phases
-
-- Phase 1: contract inventory and first safe semantic-introspection boundary.
-- Phase 2: stable machine API wrapper over existing JSON surfaces.
-- Phase 3: read-only MCP adapter for capabilities, diagnostics, semantic
-  summaries, lowering previews, and examples.
-- Phase 4: controlled generation tools with explicit workspace/output policy.
-- Phase 5: AI workflows for diagnostic triage, support discovery, example
-  matching, migration advice, and bug-report/reproducer packaging.
-
-## APB Source Repair Boundary — `.31.2.5`
-
-Correct `done_phase` body assignments to public `PSEL` and `PENABLE` and
-remove the unused parameterized `psel`/`penable` definitions. Actual current
-semantic input ports include their undriven `psel_start`, `psel_val`,
-`penable_start` and `penable_val` controls, beyond the declared APB interface.
-Retain the same transaction states and response-sampling order; do not invent
-nested drive calls or alter the language's drive lowering contract. Rename
-the sample comment to describe its explicit output phases.
-
-Own a focused source/lowering/structural-port regression in T1867, update the
-existing deterministic DT summary expectation after unused definitions are
-removed, and simulate generated HDL through wait, completion and repeat
-transfers with both read-data and error results. Recheck actual native/MCP
-semantic parity and support-accounted strict checks. The drive-block chapter
-must show concurrent direct output assignments and clarify that body pairs
-are not calls; also correct its stale expression-valued-body rejection claim
-against the existing T1194 public contract. Compiler collision regressions
-remain independent in T1866.
-
-## Compiler Repair Boundary — `.31.2.1`
-
-The selected change is module-wide deterministic allocation of assignment
-DT-local and LHS-level enable names in `EnableGraph::AssignmentSupport`.
-Keep existing readable candidates when available; separate colliding families
-before factorization contexts, structural assignment records, mux consumers
-and HDL emission are built. Reserve authored signal and top-level state/DT
-enable names. Reset allocation on each analysis build, including rebuilds of
-a prepared backend; do not change authored case or merge distinct signals.
-
-`t/1866-generated-enable-name-identity.t` will exercise case-distinct LHSs
-in the same and different DTs, distinct RHSs with colliding cleaned names,
-DT/LHS cross-family collisions, authored/reserved suffix conflicts and rebuild
-stability. Actual semantic CLI/MCP comparisons across process hash seeds
-must preserve original driver provenance; generated HDL simulation provides
-an independent behavioral check. Keep the APB source unchanged in this slice;
-`.31.2.5` owns its independent correction. Selected enable/factorization,
-structural IR and previous expression-alias tests provide the broader band.
-Update the embedding book limitation and the canonical semantic fact only
-when the native repair and its controls have passed.
-
-## Latest-Feature Audit — `.31.1` (2026-09-24)
-
-Capture revision: `5a44ad496c852b168c31d4021cfdb158001a47c7`.
-The tracked [result projection](../audits/mcp-feature-coverage-20260924/evidence.json)
-retains exact commands, input hashes, failure diagnostics, discovery results,
-seed/path observations and decisive trace lines. Full raw reports remain in
-`.artifacts/mcp-feature-coverage/`; their absence after cleanup does not turn the
-projection into an exhaustive compiler report or a replay guarantee.
-
-Re-derivation: the current manifest census was compared with actual native and
-MCP queries for direct FSM, ISF, PPIF, protocol aliases, VIAL v1/v2 and an
-expected negative source. Native capability metadata includes the later VIAL
-public API, execution, bridge and backend contract sections; capability queries
-select existing top-level sections dynamically. Source-bound coverage does
-not follow automatically from that manifest visibility.
-
-Falsification: native success with empty discovery contradicts alias coverage;
-native VIAL JSON success with MCP hardware-route failure contradicts VIAL
-parity; the native negative check preserves diagnostics that MCP discards.
-Independent native runs with identical ISF bytes and varied hash seed/path
-spelling selected different driver dependencies. The debug trace identifies
-case-folded name collision and context replacement, separating this cause from
-path metadata or legitimate Boolean simplification. Public drive-body syntax
-and lowered completion assignments separately identify the APB source defect.
-
-Durability: this task and the tracked projection commit the decisive evidence.
-Missing leg: exhaustive feature-by-feature semantic qualification and repair
-negative controls remain owned by `.31.2` and `.31.3`; no percentage or complete
-coverage claim is earned here. Execution/service/mutation expansion is outside
-the current read-only profile. The internal native proxy still lacks selected
-routing/qualification, so it is not advertised as an MCP execution feature.
-
-Repair order: compiler name identity (`.31.2.1`), APB source (`.31.2.5`),
-structured failures (`.31.2.2`), alias discovery (`.31.2.3`), VIAL public
-source tooling (`.31.2.4`), then complete qualification (`.31.3`). Actual
-implementation leaves must refine their smallest safe test/contract boundary
-before editing code. No discovered defect is closed by this audit alone.
-
-## Reset grammar defect ownership
-
-Canonical ownership is live node `.62` in the Task Tree above.
-
-## Reset question scope disposition
-
-Canonical ownership is live node `.61` in the Task Tree above.
-
-## Current Frontier
-
-Historical convenience view, retired under decision `0019`. Its former prose is
-retrievable exactly from Git; it is not the live frontier and is not backfilled.
-Read the eligible leaf nodes above, `docs/TASK_TREE.md`, and the bounded
-`MEMORY.md` pointer for current work.
-
-```sh
-git show 49ef15cba77bdb8572beb079a1a3e81bfa04a85e:docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
-```
-
 ## Version-Retrievable Historical Views
 
 - Acceptance history manifest: `docs/tasks/history/SEMANTIC-INTROSPECTION-MCP-FRONTIER/acceptance-history.jsonl`
@@ -7116,82 +7031,3 @@ Complete source and suffix are overlapping retained products; no bytes are lost.
 scripts/check_task_tree_integrity.pl
 python3 -B docs/audits/record-value-original-candidate-continuity-20261004/verify.py
 ```
-
-
-## Acceptance Checklist — zero-growth historical epoch fact publication
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual `git log -S 'whole actual current physical source and non-target conservation'` history and the complete f7 first-actual-publication_result.json identify the historical qualifier's old live-source precondition. Canonical query for historical class/frame actual-result verification returned no owner; the repaired committed-epoch result needs a durable scoped fact and question. Initial proposed growth exceeds the unchanged physical byte allowance and genuinely refuses bytes_total.
-- [x] **ADDRESSED (verified)** — Exact fixed before/after source and four explicit clause reviews retain every original fact/question outside the finite reviewed compactions. One new question and unchanged committed-epoch replay fact add at zero byte growth. The maintained target transformer, canonical card and current historical/native result prerequisite update together. Complete source/allocation/census/capacity and prior sealed admission execution qualify; original evidence/current currency remain separate. Re-derivation, falsification and durability legs retain in the owning publication audit; unrestricted prose-equivalence and original coordinate/native-private measurement are not claimed.
-- [x] **NO REGRESSION** — Guarded T2066/T2003/T1303/T1305 reports All tests successful, Files=4, Tests=312. Current and immutable dated admission replays pass after genuine current progress; new question/epoch/private promotion and retained compiler results are protected. Fresh complete source/native actual capture, frozen saved consumer and genuine typed/member/borrowed controls plus claim/staged/doctrine/hooks must gate commit. No allowance/ceiling, original source/capture/seal, visual/HIAL/full-CI/push change occurs.
-
-## Acceptance Checklist — coordinate source catalog .3.2.2.1
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` in docs/audits/coordinate-source-catalog-checks-20261007/root-cause.json locates the complete predecessor model’s explicit unmeasured coordinate scope. First actual scanner failure names verify.py:129 and omitted existing single-line bodies; complete programme/source/diagnosis retain. First independent consumer failure at verify_saved.py:113 exposes sorted-object iteration changing ordered derived arrays. Both are owned before repair; source maps, declaration order and runtime-coordinate meanings remain distinct.
-- [x] **ADDRESSED (verified)** — Complete committed original own sources and ordered observer generation independently derive lexical UTF-8 spans and line ranges, with full function/guard/call/helper/callback/subtest/parser coverage and legitimate original invocation recipes. Independent binary reconstruction and whole-map/declaration-order checks pass without any old capture/seal change. Final instrument-pinned actual seal and genuine wrong-line/owner/member/source/generation/root/kind/promotion controls qualify the retained catalog. Public runtime selection and original-coordinate join remain explicitly scheduled.
-- [x] **NO REGRESSION** — `All tests successful.` in docs/audits/coordinate-source-catalog-checks-20261007/focused.json covers current publication and public book paths/matrix: Files3 Tests310. Complete saved admission replay, sealed catalog and independent actual-result consumption pass. Source endpoints, native book, fresh claim inventory and staged doctrine/hooks qualify closure; no allowance ceiling, old sealed source/programme/capture, private/submodule/native/HIAL/full-CI/push or visual closure changes.
-
-## Acceptance Checklist — public coordinate pre-native hypotheses .3.2.2.2.1
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S` in docs/audits/coordinate-public-hypotheses-checks-20261007/root-cause.json identifies the prior native model’s explicit unmeasured coordinate recipes. Complete public caller/remapping/load documentation and own programme spans establish the required independent input. The retained doc-control-root-cause.json and pre-doc-validation programme locate a genuine draft false green: derive ignored changed public_docs, so a removed remapping clause passed; full input and before/after decisions survive.
-- [x] **ADDRESSED (verified)** — Whole fixed committed own/public source custody, complete own programmes, call/eval/load/delegate/origin spans and source-selected line/filename alternatives are sealed before coordinate capture. Syntax-only execution conserves all sources and has no observation output. Independent binary source/POD reconstruction and actual seal/source/status consumption pass; genuine source/document/clause/line/root/kind/promotion controls reject. Original/private/formatter and future runtime selections remain explicitly unmeasured and owned.
-- [x] **NO REGRESSION** — `All tests successful.` in docs/audits/coordinate-public-hypotheses-checks-20261007/focused.json covers current publication and public book paths/matrix, Files3 Tests310. Public whole-POD replay, source catalog/profile conservation, pre-native sealed consumer and scoped native guide pass; final inventory/staged/hooks gate commit. No old programme/capture/seal, collection/claim ceiling, submodule/foreign repository, original/native/HIAL/full-CI/push or visual closure changes.
-
-## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.1
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed0f597fbb identifies the complete pre-native guide deferral and source-declared fixture invocation contracts. `docs/audits/coordinate-public-capture-checks-20261007/root-cause.json` retains command/status/streams and exact gap/locus; first native/source-conservation and typed-candidate failures retain complete programmes/actuals and independent before/after reproduction in repair-proof.json.
-- [x] **ADDRESSED (verified)** — Both complete committed public fixtures execute successfully in their declared same-volume roots with every own source byte conserved before/after. Complete sealed source/raw wire and fixed-Git independent consumption pass; eleven producer custody and five independent typed/member/root/byte controls reject intended causes. Saved actual commands/instruments/status/streams and scoped native guide retain; runtime coordinate meanings/native semantic controls remain explicitly .2-owned.
-- [x] **NO REGRESSION** — Guarded prove current-publication/book path/matrix checks report All tests successful Files=3, Tests=310 in `docs/audits/coordinate-public-capture-checks-20261007/focused.json`. Complete mdBook build, whole saved native guide and scope/route/status controls pass; measured aggregate, final inventory, staged doctrines and normal hooks qualify this commit.
-
-## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.1
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed3ae29914 identifies the complete dated capture guide’s still-pending line/filename selection. `docs/audits/coordinate-public-caller-selection-checks-20261007/root-cause.json` retains exact command/status/streams, mechanism and source/hypothesis/raw-wire locus.
-- [x] **ADDRESSED (verified)** — Every source-declared own public call and boundary joins its exact caller target, source-selected line/filename alternatives and legitimate roots. Complete binary source/LF and raw-wire independent reconstruction agrees; all raw input bytes and ambiguous equivalent labels conserve. Eleven full candidate controls and six independent selected-result controls reject intended cases; scoped saved source/native guide qualifies. Native executed bad variants and origins remain separately owned.
-- [x] **NO REGRESSION** — Guarded focused current-publication/book path/matrix prove reports All tests successful Files=3, Tests=310 in `docs/audits/coordinate-public-caller-selection-checks-20261007/focused.json`. Complete native guide, final fresh copied-source checks, measured aggregate/claim inventory and staged doctrine/normal hooks gate commit.
-
-## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.1
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed52e27693 identifies the caller/boundary guide’s still-pending trace origins. `docs/audits/coordinate-public-origin-hypotheses-checks-20261007/root-cause.json` retains the complete command/status/streams and own trace/confess/call/outer/boundary/POD locus.
-- [x] **ADDRESSED (verified)** — Complete pure-source origin alternatives and public Carp/eval clauses bind before origin interpretation. Every own statement and per-role source/filename/line allocation reconstructs independently from fixed whole bytes; all origin selections remain null. Eight genuine producer controls and independent missing-statement/premature-selection/configuration-promotion controls reject intended causes; complete source/native guide preserves prior caller facts and explicitly unmeasured configuration.
-- [x] **NO REGRESSION** — Guarded focused current-publication/book path/matrix prove reports All tests successful Files=3, Tests=310 in `docs/audits/coordinate-public-origin-hypotheses-checks-20261007/focused.json`. Complete native guide, final copied-source freshness, measured aggregate/claim inventory and staged doctrine/normal hooks gate commit.
-
-## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.2.2
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixedb3b1bc61 in docs/audits/coordinate-public-origin-selection-checks-20261007/root-cause.json locates the source-only guide’s explicit origin-intake gap. Complete independently declared own longmess/confess/observer/outer/boundary statements and public Carp/eval contracts precede all interpretation; every incoming source/raw/actual member and done owner authenticates.
-- [x] **ADDRESSED (verified)** — Every retained public origin joins all matching source-built filename/line alternatives without normalizing any raw header, body, frame or argument byte. Complete selected products and explicit unresolved/configuration/private scope retain. Ten full genuine candidate controls and seven independent kind/closing/equivalent/body/allocation/configuration/native-input controls reject intended causes; independent fixed-Git binary source/header reconstruction and actual-result consumption pass. Native executed bad variants remain a separate successor.
-- [x] **NO REGRESSION** — Guarded prove in docs/audits/coordinate-public-origin-selection-checks-20261007/focused-final.json reports All tests successful Files=3, Tests=310 for current publication and public book paths/matrix. Complete saved source/native guide and scope/route/byte/status controls pass; final native copied-source freshness, measured aggregate/final claim census and staged doctrines/hooks gate this commit. Original/private/formatter/toolchain identities and visual/HIAL/full-CI/push scope retain owners.
-
-## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.1.1
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S at fixed e785 in docs/audits/coordinate-context-refresh-checks-20261007/root-cause.json identifies the completed public-origin checkpoint and still-unexecuted native control seam. The director selects a clean pause and delegates future session-health checkpoint decisions; the only new implementation preparation is the complete retained scope/runner scaffold, with no model or native execution.
-- [x] **ADDRESSED (verified)** — Exact scaffold bytes/pins retain before active-copy removal. The independent saved preparation reader authenticates the entire fixed committed coordinate/public population and bytes, rejects a genuinely changed preparation identity and verifies the precise pending frontier and pause pointer. Complete source-plan/capture/qualification decomposition stays tracked. Decision0116, canonical catalog/indices, bootstrap and fresh Knowledge Map routing durably record the director’s authority.
-- [x] **NO REGRESSION** — Guarded prove in docs/audits/coordinate-context-refresh-checks-20261007/focused.json reports All tests successful Files=3, Tests=310 for current publication and public book paths/matrix. Complete decision-store verification and unchanged coordinate/public-domain conservation pass. Final current/native source delivery, claim census and staged doctrines/normal hooks gate the clean committed pause; no native bad capture, original/private/formatter promotion, ceiling, visual/HIAL/full-CI/push change occurs.
-
-## Acceptance Checklist — native control plans before execution
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S in docs/audits/coordinate-native-control-plan-checks-20261008/root-cause-final.json locates the complete e785 finite-public guide and still-pending native semantic controls. Complete committed source/caller/origin/capture/actual domains and done owners bind the exact source-plan seam. First sandbox process-inspection refusal retains; an approved guarded replay succeeds without changing the guard or any prior evidence.
-- [x] **ADDRESSED (verified)** — Complete source-only namespace, line-insertion, unchanged-source fresh-root and renamed borrowed-load plans retain all before/after source bytes and exact expected refusals. Whole fixed Git custody, independent binary/LF/allocation reconstruction, full producer candidates, independent genuine product controls and actual source-plan receipt consumption pass. No native control has executed; capture and observed refusal qualification remain explicit successors. Exact additive source/native guide and measured book aggregate preserve every prior fact.
-- [x] **NO REGRESSION** — Guarded focused prove reports All tests successful, Files=3, Tests=310 in docs/audits/coordinate-native-control-plan-checks-20261008/focused.json. Complete prior origin reader, immutable plan seal and independent saved plan/native guide checks pass. Fresh current/native copied-source delivery, claim inventory, staged doctrine gate and normal hooks qualify the commit; no ceiling, original capture, private/submodule, visual or HIAL/full-CI/push scope changes.
-
-## Acceptance Checklist — one-time native control capture custody
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S in docs/audits/coordinate-native-control-capture-checks-20261008/root-cause.json locates the committed ef5 source-only plan boundary and its explicit pending capture/refusal scope. Complete committed plans and their independent actual qualifications bind the four exact fixture sources and invocation contracts before execution.
-- [x] **ADDRESSED (verified)** — Every committed native variant runs in its fresh same-volume root with a prior spent-admission marker and immediate full per-run checkpoints. Complete command/status/source/stream/raw frame/error/argument/tool/environment bytes retain. All sources conserve before/after. Independent whole fixed-Git binary-source/raw-stream/checkpoint reconstruction and actual-result consumption pass; genuine typed/member/root/source/wire/instrument/promotion controls reject. This closes dated capture custody only: independently selected native semantic refusals remain the next owner. Source/native guide and exact aggregate synchronize without changing predecessor captures or seals.
-- [x] **NO REGRESSION** — Guarded focused prove reports All tests successful, Files=3, Tests=310 in docs/audits/coordinate-native-control-capture-checks-20261008/focused.json. Fresh prior plan reader, complete sealed custody and independent saved/native-guide checks pass. Final current/native copied-source delivery, claim inventory, staged doctrine gate and normal hooks qualify the commit. No original/private/formatter/toolchain/address, visual or HIAL/full-CI/push closure follows; decision0116 owns the clean context-refresh checkpoint before semantic qualification.
-
-## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.3.3
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'semantic refusal selection remains pending' -1 against the committed capture producer pins the exact custody-only predecessor 857ba30485c5a176263e6e5779779051294d6f23. Its complete actual source/plan/wire custody deliberately leaves semantic decisions pending. The new unchanged-predicate consumer and independent binary-source reader qualify those saved decisions. Exact command/streams/instruments retain in coordinate-native-semantic-checks-20261008/root-cause-final.json; no spent capture executes.
-- [x] **ADDRESSED (verified)** — The model verify.py --seal, separate verify_saved.py and consume_actual.py retain complete semantic products and actual independent results. Caller, line and borrowed-source targets refuse exactly as precommitted; source-identical wrong-root coordinates pass before base-root admission refuses. Every raw root/source/frame/error byte conserves. Producer and independent genuine member/refusal/source/kind/promotion controls reject. Complete first comparison-schema failure, original programme, unchanged failure replay and exact field-map/changed-identity controls remain under child .1.
-- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 from the guarded T2066/T1303/T1305 run, retained with actual command/status/streams/instruments in coordinate-native-semantic-checks-20261008/focused.json. Native mdBook source/text guide, exact aggregate and genuine scope/route/status controls pass. Final fresh source-copy/native currency, claim inventory and staged scripts/check_doctrines.sh plus normal hooks gate this slice. Whole public/original/private/formatter/toolchain/address/visual/HIAL/full-CI/push closure is not claimed.
-
-## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.2.4
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S 'Native wrong-caller, line and source controls remain pending:' at fixed7a5446252 identifies e78541a5a84559c56cbef73d9afe5cbe1f1e498a in coordinate-public-qualification-checks-20261008/root-cause.json. The whole prior book says both native controls pending and finite native falsification closed; the canonical completed .3 and unchanged saved-data readers qualify the latter. This slice joins the complete finite public domains and repairs that duplicate status while preserving every historical role/source/capture/seal.
-- [x] **ADDRESSED (verified)** — Complete fixed source/member/owner binding, all eight fresh primary/independent domain readers, sealed whole qualification, separate binary-source/wire/result reconstruction and actual receipt consumption pass. Deterministic full candidate controls reject omissions, Boolean status, borrowed programme/results, lost equivalent labels, changed origin/refusal and identity promotion. Exact first sandbox process-inspection failure/programme retain; approved read-only retry uses unchanged RAM limits and no spent capture. The whole book-source repair and native guide independently verify with genuine route/scope/status controls.
-- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 from guarded T2066/T1303/T1305 in coordinate-public-qualification-checks-20261008/focused.json. The mdBook build and complete source/native guide, exact aggregate and genuine controls pass. Final copied-source currency, fresh claim census, staged doctrine driver and normal hooks gate this slice. Final publication and original/private/formatter/toolchain/address, visual/HIAL/full-CI/push remain owned.
-
-## Acceptance Checklist — SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2.2.3.1
-
-- [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S 'The complete finite public qualification now authenticates' identifies the exact 06d222d472d1d968ae563d08398fe15c73060337 qualification seam in coordinate-public-reference-checks-20261008/root-cause.json. Its completed whole typed/raw product deliberately precedes a finite source-selected reference and canonical current-route publication. This slice projects only qualified public fields, retaining full raw authority and pending original identities.
-- [x] **ADDRESSED (verified)** — Whole committed public/original source/result member and owner custody, all fresh prior primary/independent/actual readers, sealed complete finite recipe reference, independent binary-source/LF/header reconstruction and actual result consumption pass. Genuine missing root/caller/boundary/origin/control, lost equivalent label, Boolean line, borrowed root/refusal and identity-promotion controls refuse. Scoped source/native paragraphs and complete table cells independently verify with genuine route/scope/label/status controls; no spent capture executes.
-- [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in coordinate-public-reference-checks-20261008/focused.json from guarded T2066/T1303/T1305. The mdBook build and whole native finite-reference guide pass. Final current source/copied-byte checks, exact aggregate/task measurement, final claim census, staged doctrines and normal hooks qualify the commit. Canonical route/final parent and original/private/formatter/toolchain/address/visual/HIAL/full-CI/push remain open.

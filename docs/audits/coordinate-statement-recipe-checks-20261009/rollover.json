@@ -1,0 +1,46 @@
+{
+  "after": {
+    "bytes": 1417461,
+    "lines": 7033,
+    "sha256": "be2157df7b58178b022272122c557f2ca54749aa1f3902048cefedadd183e2ea"
+  },
+  "before": {
+    "bytes": 1445238,
+    "lines": 7220,
+    "sha256": "11d56bbcde29dca0427492b36b067044b791b917daa0ca9ca42aad8a09e07370"
+  },
+  "boundary": "## Candidate Future Phases",
+  "history": {
+    "bytes": 28465,
+    "lines": 201,
+    "sha256": "0d64f268a51462c5a9cd68f65f0a4c8ba52ecc2e2f6e094617915c0b58bf2d10"
+  },
+  "legs": {
+    "durability": "Existing finite manifest, fixed source and prior manifest revisions, named retention contract, tracked capture and owning work-unit Git commit.",
+    "falsify": "Unchanged historical suffix, exact beforeimage reconstruction and complete live-node byte equality separate retention from omission or graph edits; unchanged task integrity checker independently retrieves source and suffix.",
+    "rederive": "Exact Git source, suffix and previous descriptor reproduce all archived bytes."
+  },
+  "manifest": {
+    "bytes": 787,
+    "lines": 2,
+    "sha256": "4e3b556fa75b578946c6242fea678d38efbb5813390b6610e3357c352830008e"
+  },
+  "prior_manifest": {
+    "bytes": 801,
+    "lines": 2,
+    "sha256": "7a94a8bb8281f96ba10701c4ba8c3ab852d294797b6b3dfcd82fe86d692eb05d"
+  },
+  "retention_contract": "fsmgen_required_history",
+  "source": {
+    "bytes": 1438004,
+    "lines": 7197,
+    "sha256": "74246cb9c5ea93760171e685d3ecdcded3f7d1c231de388a719387a43498259e"
+  },
+  "source_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+  "source_revision": "663489aa0a15bfde83c3dfc137fde65c5cd3952a",
+  "unchanged_live_graph": {
+    "bytes": 1385782,
+    "lines": 6372,
+    "sha256": "ab80850ce72680f624f046a5fbe78f23944fcc81ec1047e8b7532ed9a547bc8d"
+  }
+}

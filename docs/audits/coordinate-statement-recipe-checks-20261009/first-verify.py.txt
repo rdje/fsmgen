@@ -1,0 +1,236 @@
+"""Independent binary-source reconstruction and hostile statement controls.
+
+Source scope and finite call meanings are reviewed inputs. Separate original
+Git reconstruction, source scanning and candidate controls qualify allocation,
+not a general Perl parser, runtime line selection or native formatting.
+"""
+import copy
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+BASE = Path('docs/audits/coordinate-statement-recipes-20261009')
+REVISION = '663489aa0a15bfde83c3dfc137fde65c5cd3952a'
+BANK = Path('docs/audits/coordinate-source-sites-20261008')
+PATHS = Path('docs/audits/coordinate-refusal-path-inputs-20261009')
+ADMISSION = Path('docs/audits/coordinate-source-admission-20261008/proof.json')
+
+
+def need(ok, cause):
+    if not ok:
+        raise ValueError(cause)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def equal(left, right):
+    # JSON spelling distinguishes Boolean values from discrete integers.
+    return json.dumps(left, sort_keys=True) == json.dumps(right, sort_keys=True)
+
+
+def git(path, revision=REVISION):
+    run = subprocess.run(['git', '--no-replace-objects', 'show', revision + ':' + str(path)],
+                         cwd=ROOT, capture_output=True)
+    need(run.returncode == 0 and not run.stderr, 'complete independent original Git input')
+    return run.stdout
+
+
+def authenticate(folder):
+    directory = ROOT / folder
+    need(directory.resolve() == directory and directory.stat().st_dev == ROOT.stat().st_dev,
+         'plain same-volume recipe input root')
+    seal = json.loads((directory / 'seal.json').read_bytes())
+    need(equal(seal, {p.name: pin(p.read_bytes()) for p in directory.iterdir()
+                      if p.name != 'seal.json' and p.is_file() and not p.is_symlink()
+                      and p.stat().st_dev == ROOT.stat().st_dev})
+         and len(list(directory.iterdir())) == len(seal) + 1,
+         'complete sealed recipe input members and bytes')
+
+
+def expectation():
+    authorities = {}
+    for folder in (BANK, PATHS):
+        authenticate(folder)
+        seal = git(folder / 'seal.json')
+        need((folder / 'seal.json').read_bytes() == seal, 'fixed whole input seal')
+        authorities[str(folder / 'seal.json')] = pin(seal)
+        for name, identity in json.loads(seal).items():
+            need(pin(git(folder / name)) == identity == pin((folder / name).read_bytes()),
+                 'complete fixed sealed input identity')
+    raw = git(ADMISSION)
+    need(ADMISSION.read_bytes() == raw, 'whole original source admission identity')
+    authorities[str(ADMISSION)] = pin(raw)
+    source = json.loads(raw)['inputs']['source']
+    bank = json.loads(git(BANK / 'sites.json'))
+    paths = json.loads(git(PATHS / 'paths.json'))
+    bodies = {}
+    for unit, row in source['units'].items():
+        if unit == 'observer':
+            transform = source['transform']
+            body = git(transform['source_path'], source['source_authority']['capture_revision'])
+            need(body == transform['before'].encode(), 'independent original observer beforeimage')
+            for old, new in transform['replacements']:
+                need(body.count(old.encode()) == 1, 'unique ordered original observer transform')
+                body = body.replace(old.encode(), new.encode())
+            need(body == transform['after'].encode(), 'complete original observer generation')
+        else:
+            body = git(row['path'], source['source_authority']['original_revision'])
+        need(body == row['body'].encode() and pin(body) == row['identity'],
+             'complete independently reconstructed own source unit')
+        bodies[unit] = body
+    sites = {s['id']: s for s in bank['sites']}
+    selected = []
+
+    def emit(key, site, raw, kind='statement'):
+        whole = bodies[site['unit']]
+        begin = site['span']['offset_bytes']
+        stop = begin + site['span']['bytes']
+        need(whole[begin:stop] == site['span']['text'].encode(), 'whole original container bytes')
+        hits = list(re.finditer(re.escape(raw), whole[begin:stop]))
+        need(len(hits) == 1, 'independent unique contained statement: ' + key)
+        offset = begin + hits[0].start()
+        end = offset + len(raw)
+        named = [m[1].decode() for m in re.finditer(
+            rb'^sub ([A-Za-z_]\w*)[^\n]*?\{(?:[^\n]*\}$|\n.*?^})', whole, re.M | re.S)
+                 if m.start() <= offset and end <= m.end()]
+        subtests = [m[1].decode() for m in re.finditer(
+            rb"^subtest '([^']+)' => sub \{\n.*?^};", whole, re.M | re.S)
+                    if m.start() <= offset and end <= m.end()]
+        need(len(named) <= 1 and len(subtests) <= 1, 'independent containing owner domain')
+        path = source['units'][site['unit']]['path']
+        owner = ({'kind': 'named_function', 'name': named[0]} if named else
+                 {'kind': 'authored_subtest', 'name': subtests[0]} if subtests else
+                 {'kind': 'file', 'name': path})
+        first = len(whole[:offset].split(b'\n'))
+        closing = len(whole[:offset + len(raw.rstrip(b'\n'))].split(b'\n'))
+        selected.append({'id': key, 'container': site['id'], 'unit': site['unit'], 'kind': kind,
+                         'source_path': path, 'source_identity': pin(whole), 'lexical_owner': owner,
+                         'offset_bytes': offset, 'text': raw.decode(), 'identity': pin(raw),
+                         'line_alternatives': {'first': first, 'closing': closing},
+                         'equivalent_line_labels': [['first', 'closing']] if first == closing else [],
+                         'filename_alternatives': ['./' + path, path] if site['unit'] == 'test' else [path],
+                         'original_selection': None})
+
+    def scan(key, container, pattern):
+        site = sites[container]
+        hits = list(re.finditer(pattern, site['span']['text'].encode(), re.M | re.S))
+        need(len(hits) == 1, 'independent exact finite source statement: ' + key)
+        emit(key, site, hits[0][0])
+
+    for site in bank['sites']:
+        if site['kind'] == 'statement' and site['id'] != 'qualified/3':
+            kind = 'statement_sequence' if site['role'].endswith('.test_error_capture') else 'statement'
+            emit('admitted/' + site['id'], site, site['span']['text'].encode(), kind)
+    for name in ('scope_for', 'reference', 'copy'):
+        scan('helper-return/' + name, 'named/test/' + name, rb'return [^\n].*?;(?=\n})')
+    callbacks = {a['helper']['index']: a['helper']['source_statement'] for a in paths['allocations']}
+    for site in bank['sites']:
+        if site['role'] == 'helper_callback':
+            index = site['span']['index']
+            raw = callbacks[index].encode()
+            need(raw == site['span']['text'].encode(), 'whole independently admitted callback allocation')
+            opening = raw.index(b'sub {') + len(b'sub {')
+            endings = list(re.finditer(rb'\},\s*(?=qr/|\$)', raw))
+            need(len(endings) == 1, 'independent complete finite callback boundary')
+            emit('callback/' + str(index), site, raw[opening:endings[0].start()].strip(), 'callback_expression')
+            emit('helper-invocation/' + str(index), site, raw)
+        elif site['role'] == 'named_subtest_body':
+            emit('subtest-invocation/' + site['span']['name'], site, site['span']['text'].encode())
+        elif site['role'] == 'installed_wrapper':
+            raw = site['span']['text'].encode()
+            matches = re.findall(rb'return (?:call_api|parse|copy_value)\([^\n]+;', raw)
+            for index, text in enumerate(matches):
+                emit('wrapper-delegate/' + site['span']['name'] + '/' + str(index), site, text)
+    for name in ('call_api', 'parse'):
+        container = 'named/observer/' + name
+        scan('observer-operation/' + name, container, rb'\$result = \$operation->\(@args\);')
+        scan('observer-eval/' + name, container,
+             (rb'my ' if name == 'parse' else b'') + rb'\$ok = eval \{\$result = \$operation->\(@args\); 1};')
+    scan('value-capture', 'named/value/_validate_type', rb'capture_interface_port_metadata\(.*?outputs => \[\]});')
+    scan('value-capture-eval', 'named/value/_validate_type', rb'my \$ok = eval \{\n.*?\n    };')
+    scan('value-capture-guard', 'named/value/_validate_type', rb'_require\(\$ok, [^\n]+;')
+    declarations = (
+        ('facade-parse', 'facade/parse_source', rb'my \$result = \$self->\{parser}->parse_source\([^\n]+;'),
+        ('parser-build', 'parser/parse_source', rb'my \$result = \$self->_build_actor\([^\n]+;'),
+        ('parser-finalize', 'parser/_build_actor', rb'\$self->_finalize_actor_type_references\([^\n]+;'),
+        ('parser-context', 'parser/_build_actor', rb'validate_actor_record_contexts\([^\n]+\n        if [^\n]+;'),
+        ('parser-port', 'parser/_finalize_actor_type_references', rb'\$self->_resolve_typed_width_entry\(\n                \$actor,\n                \$port,.*?\n            \);'),
+        ('context-clauses', 'context/validate_actor_record_contexts', rb'_clauses\(\$tx->\{clauses},[^\n]+;'),
+        ('context-assignment', 'context/_clauses', rb'_assignment\(\$clause->\[1\],[^\n]+;'),
+        ('context-reference', 'context/_assignment', rb'my \$to = _reference\([^\n]+;'),
+        ('context-write-guard', 'context/_reference', rb'_require\(!\(\$scope->\{whole_output_writes_only}.*?qualification"\);'),
+        ('parser-confess-statement', 'parser/_resolve_typed_width_entry', rb'confess "Error: \$context references aggregate type.*?\n            && [^\n]+;'),
+    )
+    for key, container, pattern in declarations:
+        scan(key, 'named/' + container, pattern)
+    scan('saved-subtest-delegate', 'qualified/19', rb'return \$subtest->\(.*?}, @args\);')
+    owner = bank['owners']['composition'] + '.2.1'
+    return {'role': 'Finite complete own-source statement alternatives; ordered refusal binding and original coordinate selections remain successor-owned.',
+            'revision': REVISION, 'owner': owner, 'authorities': authorities, 'statements': selected,
+            'invocation_custody': pin(json.dumps(paths['invocations'], sort_keys=True).encode()),
+            'generation_custody': pin(json.dumps(paths['generation'], sort_keys=True).encode()),
+            'public_examples': pin(json.dumps(bank['public_examples'], sort_keys=True).encode()),
+            'unresolved': {**paths['unresolved'], 'statement_hypotheses': bank['owners']['composition'] + '.2.2'}}
+
+
+def check(actual, expected):
+    need(set(actual) == set(expected), 'complete recipe product fields')
+    for key in expected:
+        if key != 'statements':
+            need(equal(actual[key], expected[key]), 'whole recipe custody and scope: ' + key)
+    rows = actual['statements']
+    need(isinstance(rows, list) and [r['id'] for r in rows] == [r['id'] for r in expected['statements']],
+         'complete unique ordered statement membership')
+    for row, oracle in zip(rows, expected['statements'], strict=True):
+        for key in oracle:
+            need(key in row and equal(row[key], oracle[key]), 'independent statement ' + key)
+        need(set(row) == set(oracle), 'complete statement field domain')
+
+
+def main():
+    need(Path.cwd().resolve() == ROOT, 'invoke independent recipes from repository root')
+    authenticate(BASE)
+    expected = expectation()
+    need((BASE / 'scope.txt').read_text().strip() == expected['owner'], 'exact recipe owner declaration')
+    actual = json.loads((BASE / 'recipes.json').read_bytes())
+    check(actual, expected)
+    controls = (
+        ('missing-statement', lambda p: p['statements'].pop(), 'complete unique ordered statement membership'),
+        ('duplicate-statement', lambda p: p['statements'].append(p['statements'][0]), 'complete unique ordered statement membership'),
+        ('borrowed-body', lambda p: p['statements'][0].update(text='borrowed'), 'independent statement text'),
+        ('borrowed-source', lambda p: p['statements'][0].update(source_path='borrowed.pm'), 'independent statement source_path'),
+        ('borrowed-owner', lambda p: p['statements'][0].update(lexical_owner={'kind': 'file', 'name': 'borrowed'}), 'independent statement lexical_owner'),
+        ('Boolean-line', lambda p: p['statements'][0]['line_alternatives'].update(first=True), 'independent statement line_alternatives'),
+        ('wrong-offset', lambda p: p['statements'][0].update(offset_bytes=0), 'independent statement offset_bytes'),
+        ('lost-filename', lambda p: p['statements'][0]['filename_alternatives'].clear(), 'independent statement filename_alternatives'),
+        ('lost-equivalent-label', lambda p: next(s for s in p['statements'] if s['equivalent_line_labels'])['equivalent_line_labels'].clear(), 'independent statement equivalent_line_labels'),
+        ('extent-promotion', lambda p: p['statements'][0].update(kind='lexical_extent'), 'independent statement kind'),
+        ('original-selection', lambda p: p['statements'][0].update(original_selection={'line': 1}), 'independent statement original_selection'),
+        ('borrowed-root-custody', lambda p: p['invocation_custody'].update(sha256='0' * 64), 'whole recipe custody and scope: invocation_custody'),
+        ('lost-public-alternative', lambda p: p['public_examples'].update(bytes=0), 'whole recipe custody and scope: public_examples'),
+        ('lost-downstream-owner', lambda p: p['unresolved'].pop('alias_downstream'), 'whole recipe custody and scope: unresolved'),
+    )
+    decisions = []
+    for name, mutate, cause in controls:
+        bad = copy.deepcopy(actual)
+        mutate(bad)
+        need(not equal(bad, actual), 'genuine recipe intervention: ' + name)
+        try:
+            check(bad, expected)
+        except ValueError as error:
+            need(str(error) == cause, 'intended recipe refusal: ' + name)
+            decisions.append({'control': name, 'status': 1, 'cause': cause})
+        else:
+            raise ValueError('false-green recipe control: ' + name)
+    authenticate(BASE)
+    print(json.dumps({'status': 0, 'controls': decisions,
+                      'scope': 'Finite complete own-source statement allocation only; runtime alternatives and ordered refusal phases remain open.'}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

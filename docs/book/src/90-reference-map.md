@@ -753,6 +753,17 @@ statement-level coordinate alternatives or qualify original coordinates:
 python3 -B docs/audits/coordinate-refusal-path-inputs-20261009/verify.py
 ```
 
+The executable statement recipes extend that lexical bank with complete own
+observer, helper, callback, subtest, nested capture and parser call statements.
+The parser's `confess` expression includes its trailing conditional guard in
+the executable recipe. Independent original-source reconstruction checks byte
+offsets, ownership, first/closing equivalents and filename alternatives.
+Ordered refusal-phase binding and original runtime selections remain pending:
+
+```sh
+python3 -B docs/audits/coordinate-statement-recipe-checks-20261009/verify_recipes.py
+```
+
 <div id="knowledge-map-architecture"></div>
 
 {{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}
