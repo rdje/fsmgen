@@ -1,0 +1,41 @@
+{
+  "addition": "A sweep may retain every candidate when disposal has not been proved. Its\ndated census records node metadata and independent file membership; it does\nnot establish artifact byte identity or future absence. Replay a saved example:\n\n```sh\npython3 -B docs/audits/artifact-sweep-due-20261009/verify.py\n```\n\n",
+  "after": {
+    "bytes": 26010,
+    "sha256": "95e7a61db07195cd172c223f87f36f8bc186fd254ce7ac35bdc81250f14a6bcf"
+  },
+  "before": {
+    "bytes": 25707,
+    "sha256": "db06a7f18da6deb5d8728ad82e19a2cb0693d04276328977134bfdb2c5211e39"
+  },
+  "book_after": {
+    "bytes_total": 3827075,
+    "files": 64,
+    "lines_total": 68818
+  },
+  "book_before": {
+    "bytes_total": 3826772,
+    "files": 64,
+    "lines_total": 68810
+  },
+  "legs": {
+    "durability": "Versioned source epoch, tracked programmes and complete publication/check receipts; registered maintained-reference and task pressure gates detect current drift.",
+    "falsify": "Unique chapter change and exact removal reconstruction reject borrowed source or unrelated book edits; sweep verify.py independently qualifies complete membership, dated metadata and genuine controls.",
+    "rederive": "publish.py reconstructs complete fixed-Git book membership/bytes and current source delta."
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.81",
+  "previous_registry": {
+    "bytes": 36546,
+    "sha256": "8918e850d85e243702d855ba97784759cea6331f38680ab62be5da15daf1fda0"
+  },
+  "revision": "d68b85bc1b4e85a4e0fcd0de15d30c862f2162a0",
+  "source": "docs/book/src/09-generated-hdl-debugging-and-inspection.md",
+  "task_metrics": {
+    "bytes_each": 2366453,
+    "bytes_total": 12809855,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 7174,
+    "lines_total": 118313
+  }
+}

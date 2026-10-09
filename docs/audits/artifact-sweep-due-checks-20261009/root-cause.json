@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-S",
+    "2026-10-08T12:16:23.204525+00:00",
+    "-1",
+    "--format=%H %s",
+    "--",
+    "docs/ARTIFACT_CLEANUP.md"
+  ],
+  "mechanism": "Latest-only cleanup record was past the daily interval at the retained census UTC. No candidate carries safe-disposal authority; age/suffix alone cannot authorize deletion.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "5d07d484b5b1e8217c9021608397c2c85817f8ac SEMANTIC-INTROSPECTION-MCP-FRONTIER.80: record due read-only artifact cleanup\n"
+}

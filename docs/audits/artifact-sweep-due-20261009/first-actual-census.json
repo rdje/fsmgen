@@ -1,0 +1,22 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/artifact-sweep-due-20261009/census.py"
+  ],
+  "instruments": {
+    "docs/audits/artifact-sweep-due-20261009/census.py": {
+      "bytes": 4710,
+      "sha256": "c67d9f4919f22e153799ebbbed349f0b55b648a3759b26ab63bd51a453063918"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 2,
+  "stderr": "ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval\n",
+  "stdout": ""
+}

@@ -318,6 +318,14 @@ The latest cleanup is recorded in `docs/ARTIFACT_CLEANUP.md`. Cleanup removes
 verified generated outputs while preserving failed-run evidence needed by open
 investigations.
 
+A sweep may retain every candidate when disposal has not been proved. Its
+dated census records node metadata and independent file membership; it does
+not establish artifact byte identity or future absence. Replay a saved example:
+
+```sh
+python3 -B docs/audits/artifact-sweep-due-20261009/verify.py
+```
+
 Output-bearing CLI options must resolve inside the repository and reject
 parent traversal, absolute external destinations, and symlink escapes. An
 external source may still be supplied as an explicit caller-authorized input;

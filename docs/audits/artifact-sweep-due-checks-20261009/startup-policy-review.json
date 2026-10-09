@@ -1,0 +1,9 @@
+{
+  "bytes": 18166,
+  "claim_template": "Director-specified read-only sibling policy equals the complete reviewed template snapshot; no new source revision to adopt.",
+  "containment_guide": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md reviewed against the current local neutral doctrine; derived-state, narrative-field and integration-test contracts already present.",
+  "equal": true,
+  "readme_policy": "README_POLICY.md adopted; retained bounded landing and canonical navigation checked.",
+  "retained_path": "docs/audits/claim-template-review-20260923/template.txt",
+  "sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd"
+}
