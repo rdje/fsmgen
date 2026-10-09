@@ -1,0 +1,18 @@
+{
+  "match.py": {
+    "bytes": 14596,
+    "sha256": "83eeaee7239c6fe0af2d65ee8b2ed764171f21de9fb8062ee792501f17002339"
+  },
+  "matching.json": {
+    "bytes": 20331004,
+    "sha256": "5b57a7a5ce8267b4ddf9a3a5ac12f5db33d9f85f13d95b41404bff62ee49dea4"
+  },
+  "scope.txt": {
+    "bytes": 113,
+    "sha256": "dc6b775479fd7433e7385dca14cd4020efb21b7b7f4bb6c2aa682d4531405e18"
+  },
+  "verify.py": {
+    "bytes": 19453,
+    "sha256": "ac13fbfbf47bce9be0a855a6b3a8b3d4c291e3ea20a65a43c03237df8a296eac"
+  }
+}

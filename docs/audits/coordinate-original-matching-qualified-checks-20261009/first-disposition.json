@@ -1,0 +1,34 @@
+{
+  "candidate_id": "published-b44fa204fc3c1dcba0ce2bf1",
+  "disposition": "derived_gate",
+  "durability": {
+    "evidence": "The fixed complete matching seal authenticates original inputs, producing and independent instruments and the full product before and after replay. The current book delivery verifier binds the exact example and complete original/source/observer results to the actual rendered publication.",
+    "producer_paths": [
+      "docs/audits/coordinate-original-matching-qualified-20261009/match.py",
+      "docs/audits/coordinate-original-matching-qualified-20261009/matching.json"
+    ],
+    "watcher_paths": [
+      "docs/audits/coordinate-original-matching-qualified-checks-20261009/verify_matching.py",
+      "docs/audits/coordinate-original-matching-qualified-checks-20261009/verify_delivery.py"
+    ]
+  },
+  "falsify": {
+    "competing_hypothesis": "The illustrated caller line or either equivalent label could be borrowed, dropped, or selected from a different source recipe; matching only aggregate counts would conceal that defect.",
+    "evidence": "The independent sequential original-frame walker rebuilds every selection from complete fixed Git inputs. Delivery verification requires the exact complete illustrated fields to equal a genuine matching selection, replays complete prerequisite results and rejects altered coordinate/source/alternative products.",
+    "oracle_paths": [
+      "docs/audits/coordinate-original-matching-qualified-20261009/verify.py",
+      "docs/audits/coordinate-original-matching-qualified-checks-20261009/verify_delivery.py"
+    ]
+  },
+  "owner_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+  "owner_task": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.3.2",
+  "record_type": "disposition",
+  "rederive": {
+    "evidence": "Complete fixed-source candidate and original-coordinate matching retains the GUARDS.values.16 call at original line107, with both first and predicate_expression_closing labels and the distinct closing108 alternative. The dated matching product retains the entire original record and source alternatives.",
+    "producer_paths": [
+      "docs/audits/coordinate-original-matching-qualified-20261009/match.py",
+      "docs/audits/coordinate-original-matching-qualified-20261009/matching.json"
+    ]
+  },
+  "schema_version": 1
+}

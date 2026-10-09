@@ -889,11 +889,40 @@ the `parse_source` delegate. Read the complete fixed-seal qualification with:
 python3 -B docs/audits/coordinate-observer-caller-checks-20261009/verify_callers.py
 ```
 
-Full original-coordinate matching resumes after this observer qualification
-commits. Whole hostile qualification and atomic current publication remain
-next, with their existing owners. Opaque framework callers, original private
-formatting/toolchain/identity, address lifetimes and alias downstream remain
-separately owned.
+Complete dated original own-coordinate matching now joins every error origin,
+own caller/eval and lexical-load position to the independently declared source
+candidates. Operation-specific observer snapshots join the same matched phase.
+A separate sequential walker checks the complete original frame intervals,
+including every explicitly opaque framework frame.
+
+Each selection retains its reported filename/line, all source alternatives and
+every matching label. Labels that share a line remain equivalent possibilities.
+For example, this original guard call matches both source labels at line 107,
+while the distinct statement-closing alternative remains available:
+
+```json
+{
+  "recipe_id": "admitted/guard-call/value/GUARDS.values.16",
+  "reported_filename": "perl/FSM/Support/ISFRecordPortValues.pm",
+  "reported_line": 107,
+  "matching_line_labels": ["first", "predicate_expression_closing"],
+  "all_line_alternatives": {"closing": 108, "first": 107, "predicate_expression_closing": 107}
+}
+```
+
+Read the complete fixed-seal matching qualification with:
+
+```sh
+python3 -B docs/audits/coordinate-original-matching-qualified-checks-20261009/verify_matching.py
+```
+
+The product retains complete original error/argument/context bytes, empty
+allocations, full used and unused source candidates and explicit opaque owners.
+Fresh original-intake, expression and observer readers independently regenerate
+complete results. This dated own-coordinate match does not measure original
+private formatting/toolchain/identity or external framework coordinate rules.
+Whole hostile qualification and atomic current canonical publication remain
+next. Address lifetimes and alias downstream remain separately owned.
 
 <div id="knowledge-map-architecture"></div>
 
