@@ -1,0 +1,18 @@
+{
+  "alternatives.json": {
+    "bytes": 1007121,
+    "sha256": "26c7f93dea4e5a67722f0cd502a0843e6a54ad305192776e34f02d7da878c343"
+  },
+  "derive.py": {
+    "bytes": 10133,
+    "sha256": "7d86c5afce46ad7638b13227d2e141dc35d77dc331e2a12efd51f5829674f99e"
+  },
+  "scope.txt": {
+    "bytes": 113,
+    "sha256": "d801bc77889fe900206e43fdade34311f7d7df9d00516bd02ed80c59264763f9"
+  },
+  "verify.py": {
+    "bytes": 11928,
+    "sha256": "2f79294f57b7854e3713bdcb3633b08f0b9eb11c949fb39a6cd52166d9f5168c"
+  }
+}

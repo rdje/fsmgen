@@ -844,10 +844,26 @@ original private formatter/toolchain meanings remain unmeasured.
 python3 -B docs/audits/coordinate-original-matching-checks-20261009/verify_diagnosis.py
 ```
 
-The next owned slice qualifies superseding source-derived alternatives before
-complete original matching resumes. Whole hostile qualification, alias
-capture/downstream, external framework, private formatting/toolchain and
-address meanings retain their separate owners.
+Source-only superseding candidates now retain every prior statement, label,
+filename and source identity, adding exact predicate-expression endings and
+helper-pattern starts. Their literal UTF8 spans are independently reconstructed
+from the complete original own source. `predicate_expression_closing` names
+the final byte of a guard predicate; `pattern_expression_first` names the first
+byte of a helper's pattern argument. The original statement first/closing
+labels remain available, including equivalent labels on the same line.
+
+The independent reader replays finite public caller/compiler examples and
+unchanged source-only prerequisites. These are conditional candidates, with
+no universal line-formatting prediction and every original selection empty:
+
+```sh
+python3 -B docs/audits/coordinate-expression-alternative-checks-20261009/verify_alternatives.py
+```
+
+Mandatory non-growing canonical causal-fact admission is next, before complete
+original matching resumes. Whole hostile qualification, alias capture and
+downstream, external framework, private formatting/toolchain and address
+meanings retain their separate owners.
 
 Original coordinate selections, opaque framework callers, private runtime
 formatting/toolchain/identity, address lifetimes and alias downstream retain

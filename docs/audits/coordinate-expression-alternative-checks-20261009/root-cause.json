@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "--no-replace-objects",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "first/closing-only source alternatives",
+    "--",
+    "docs/book/src/90-reference-map.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "a3efbe6489451f76cdb3fda343adb6aa556f2dc7 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.1: diagnose original caller recipe gaps\n"
+}

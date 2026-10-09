@@ -1,0 +1,30 @@
+{
+  "after": {
+    "bytes": 53111,
+    "sha256": "fe03f0bcd9e7a01962beab4c8e08439d230c567e0edb4ee541c4fc33afcfad33"
+  },
+  "before": {
+    "bytes": 52247,
+    "sha256": "bad09adb19aee398dd0ac9f97949059bf506b165403411432db406aed277ea3d"
+  },
+  "book_after": {
+    "bytes_total": 3833659,
+    "files": 64,
+    "lines_total": 68945
+  },
+  "book_before": {
+    "bytes_total": 3832795,
+    "files": 64,
+    "lines_total": 68929
+  },
+  "current_block": "Source-only superseding candidates now retain every prior statement, label,\nfilename and source identity, adding exact predicate-expression endings and\nhelper-pattern starts. Their literal UTF8 spans are independently reconstructed\nfrom the complete original own source. `predicate_expression_closing` names\nthe final byte of a guard predicate; `pattern_expression_first` names the first\nbyte of a helper's pattern argument. The original statement first/closing\nlabels remain available, including equivalent labels on the same line.\n\nThe independent reader replays finite public caller/compiler examples and\nunchanged source-only prerequisites. These are conditional candidates, with\nno universal line-formatting prediction and every original selection empty:\n\n```sh\npython3 -B docs/audits/coordinate-expression-alternative-checks-20261009/verify_alternatives.py\n```\n\nMandatory non-growing canonical causal-fact admission is next, before complete\noriginal matching resumes. Whole hostile qualification, alias capture and\ndownstream, external framework, private formatting/toolchain and address\nmeanings retain their separate owners.\n",
+  "legs": {
+    "durability": "Fixed source revision, tracked exact blocks/identities/measurements and actual receipts; normal staged doctrines and Git hooks.",
+    "falsify": "verify_delivery.py independently reconstructs the reversible whole-book change, exact authority and complete actual native delivery receipts, with genuine controls.",
+    "rederive": "Whole fixed-Git chapter membership and bytes measured before/after the unique scoped replacement."
+  },
+  "original_block": "The next owned slice qualifies superseding source-derived alternatives before\ncomplete original matching resumes. Whole hostile qualification, alias\ncapture/downstream, external framework, private formatting/toolchain and\naddress meanings retain their separate owners.\n",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.2.1",
+  "revision": "a3efbe6489451f76cdb3fda343adb6aa556f2dc7",
+  "source": "docs/book/src/90-reference-map.md"
+}
