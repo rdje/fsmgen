@@ -1,0 +1,16 @@
+{
+  "checker_contract": "start_heading rejects [\\r\\n`] under scripts/check_task_tree_integrity.pl",
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "## Implementation Notes From `.4`",
+    "--",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "129cfae085f10f55b606152a3c09c2ec21a28b4e SEMANTIC-INTROSPECTION-MCP-FRONTIER.4: ship read-only MCP adapter\n"
+}

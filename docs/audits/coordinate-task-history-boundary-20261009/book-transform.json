@@ -1,0 +1,4 @@
+{
+  "new": "bounded manifest, including the exact previous source and prior history chain.\nThe next rollover boundary precedes the completed implementation notes. Its\npreparatory commit preserves those notes; a separate rollover will authenticate\ntheir exact committed source. The independent coordinate reader remains\nrequired before whole coordinate qualification. Verify the boundary checkpoint:\n\n```sh\npython3 -B docs/audits/coordinate-task-history-boundary-20261009/verify.py\n```\n",
+  "old": "bounded manifest, including the exact previous source and prior history chain.\n"
+}

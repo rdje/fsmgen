@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2` (pending)
-- next_action: Prepare contained task evidence before fresh acceptance exceeds the task rollover threshold, then retry the unchanged published independent reader under child .2 with stable host headroom; preserve the original seal and all stopped attempts before whole qualification and current canonical publication.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2.2` (pending)
+- next_action: From the committed legal boundary, roll over the exact closed historical suffix under child .2 without losing any live node or prior history chain; then child .3 retries the unchanged independent coordinate reader with stable host headroom. Preserve every original seal and stopped attempt.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none; the published independent reader stopped137 at the unchanged host RAM cutoff before control reconstruction. Its exact actual receipt retains with the completed producer and interrupted prefix.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

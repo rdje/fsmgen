@@ -1,0 +1,135 @@
+"""Verify a committed legal boundary without deleting any historical byte."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+import re
+import subprocess
+
+BASE = Path(__file__).resolve().parent
+ROOT = BASE.parents[2]
+TASK = 'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md'
+BOOK = 'docs/book/src/90-reference-map.md'
+HISTORY = 'docs/tasks/history/SEMANTIC-INTROSPECTION-MCP-FRONTIER/acceptance-history.jsonl'
+SURFACES = 'doctrine/live_document_size/surfaces.jsonl'
+REVISION = '41810dbcddc4e7298d0a05c4619b4c9fffc0cd55'
+BOUNDARY = b'## Completed Historical Implementation Notes\n\n'
+OLD_HEADING = b'## Implementation Notes From `.4`\n'
+
+
+def git(*args):
+    return subprocess.check_output(['git', '--no-replace-objects', *args], cwd=ROOT)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def nodes(raw):
+    section = raw.split(b'## Task Tree\n', 1)[1].split(b'\n## ', 1)[0]
+    chunks = re.split(rb'(?m)(?=^- ID: `)', section)
+    result = {}
+    for chunk in chunks:
+        if not chunk.startswith(b'- ID: `'):
+            assert not chunk.strip()
+            continue
+        key = chunk.split(b'`', 2)[1].decode()
+        assert key not in result
+        result[key] = chunk.strip()
+    return result
+
+
+def conserved(old, new, owner):
+    a, b = nodes(old), nodes(new)
+    parent = owner.rsplit('.', 1)[0]
+    assert set(b) == set(a) | {parent + '.' + str(i) for i in range(1, 4)}
+    for key in a:
+        if key != parent:
+            assert a[key] == b[key], key
+    for number in range(4, 31):
+        key = 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.' + str(number)
+        assert b'Status: `done`' in a[key]
+    assert new.count(BOUNDARY) == 1
+    assert old.count(OLD_HEADING) == 1
+    before = old[old.index(OLD_HEADING):]
+    after = new[new.index(BOUNDARY) + len(BOUNDARY):]
+    assert before == after
+    assert old.split(b'## Task Tree\n', 1)[0] == new.split(b'## Task Tree\n', 1)[0]
+
+
+def main():
+    proof = json.loads((BASE / 'binding.json').read_bytes())
+    owner = (BASE / 'scope.txt').read_text().strip()
+    assert proof['revision'] == REVISION and proof['owner'] == owner
+    assert proof['verifier'] == pin(Path(__file__).read_bytes())
+    after = {}
+    for path, identity in proof['afterimages'].items():
+        raw = git('cat-file', 'blob', identity['blob'])
+        assert pin(raw) == identity['pin']
+        after[path] = raw
+    old = git('show', REVISION + ':' + TASK)
+    conserved(old, after[TASK], owner)
+    assert after[HISTORY] == git('show', REVISION + ':' + HISTORY)
+    # Separate native Perl census checks the complete historical suffix bytes.
+    suffix = old[old.index(OLD_HEADING):]
+    native = subprocess.check_output(['perl', '-MDigest::SHA=sha256_hex', '-e',
+        'local $/; binmode STDIN; my $s=<STDIN>; print sha256_hex($s);'], input=suffix)
+    assert native.decode() == hashlib.sha256(suffix).hexdigest()
+    controls = []
+    for name, candidate in (
+        ('lost_history', after[TASK].replace(b'Downstream intake note', b'Altered intake note', 1)),
+        ('lost_live_node', after[TASK].replace(b'- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.4`', b'- ID: `lost`', 1)),
+        ('duplicate_boundary', after[TASK] + BOUNDARY),
+    ):
+        try:
+            conserved(old, candidate, owner)
+        except (AssertionError, KeyError):
+            controls.append(name)
+        else:
+            raise AssertionError('genuine candidate accepted: ' + name)
+    transform = json.loads((BASE / 'book-transform.json').read_bytes())
+    paths = git('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/book/src').decode().splitlines()
+    paths = sorted(p for p in paths if Path(p).parent == Path('docs/book/src') and p.endswith('.md'))
+    before_book = [git('show', REVISION + ':' + p) for p in paths]
+    after_book = [after[p] for p in paths]
+    assert [p for p, a, b in zip(paths, before_book, after_book) if a != b] == [BOOK]
+    source = before_book[paths.index(BOOK)]
+    assert source.count(transform['old'].encode()) == 1
+    assert source.replace(transform['old'].encode(), transform['new'].encode(), 1) == after[BOOK]
+    rows = list(map(json.loads, after[SURFACES].splitlines()))
+    previous = list(map(json.loads, git('show', REVISION + ':' + SURFACES).splitlines()))
+    for old_row, new_row in zip(previous, rows):
+        expected = copy.deepcopy(old_row)
+        if old_row.get('surface_id') == 'task_evidence':
+            expected['transition']['max_growth'] = new_row['transition']['max_growth']
+            task_paths = proof['task_paths']
+            source_paths = git('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/tasks').decode().splitlines()
+            assert task_paths == sorted(p for p in source_paths if re.fullmatch(
+                r'docs/tasks/(?:[^/]+|segments/[^/]+/[^/]+)\.md', p))
+            raw = [after[p] for p in task_paths]
+            measured = {'files': len(raw), 'bytes_total': sum(map(len, raw)),
+                'lines_total': sum(x.count(b'\n') for x in raw),
+                'bytes_each': max(map(len, raw)), 'lines_each': max(x.count(b'\n') for x in raw),
+                'line_bytes_each': max(len(line.rstrip(b'\r')) for x in raw for line in x.split(b'\n'))}
+            for key, value in measured.items():
+                assert value <= old_row['enforcement_ceilings'][key]
+                wanted = max(0, min(value + old_row['transition']['ratchet_step'][key],
+                    old_row['enforcement_ceilings'][key]) - old_row['baseline'][key])
+                assert new_row['transition']['max_growth'][key] == wanted
+        if old_row.get('surface_id') == 'shipped_behavior':
+            expected['reference_contract']['aggregate_change'] = new_row['reference_contract']['aggregate_change']
+            change = new_row['reference_contract']['aggregate_change']
+            assert change['owner'] == owner
+            measured = lambda values: {'files': len(values), 'bytes_total': sum(map(len, values)), 'lines_total': sum(x.count(b'\n') for x in values)}
+            before, current = measured(before_book), measured(after_book)
+            assert change['baseline'] == before
+            assert change['delta'] == {key: current[key] - before[key] for key in before}
+        assert expected == new_row, old_row.get('surface_id', 'collection-header')
+    assert len(previous) == len(rows)
+    print(json.dumps({'result': 'PASS legal boundary, complete history and live-node conservation',
+        'source': pin(old), 'historical_suffix': pin(suffix), 'controls': controls,
+        'scope': 'Preparatory checkpoint only; rollover and independent coordinate qualification remain pending.'}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

@@ -5577,10 +5577,40 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in checks.json focused. Whole book source/native-copy and current-publication gates pass. Independent checkpoint geometry/original/input/journal/actual-result and honest missing-leg checks, exact measured book/task authority, fresh claim inventory and staged scripts/check_doctrines.sh plus normal hooks gate commitment. Both RAM stops, every original/opaque byte, all capacity ceilings and Knowledge Map authority retain unchanged.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Complete independent whole qualification and publish its qualified scope.`
   Acceptance: `After .1 commits and host headroom recovers, run the unchanged fixed-seal published reader to independently reconstruct every semantic control, whole product, original custody and first failures. Consume actual success, whole book/native delivery and normal commit gates before closing this leaf and the original-coordinate join parents. Preserve all stopped attempts and never edit or reseal the completed corpus.`
-  Verification: `Pending independent reader success; first actual published attempt137 stops at host88 percent before control reconstruction. Producer success and sealed copied controls are checkpoint evidence, not this missing independent leg.`
+  Verification: `Independent reader success remains pending; the first actual published attempt137 stops at host88 percent before control reconstruction. Children .1 and .2 own the required committed legal boundary and exact closed-history rollover before child .3 retries the unchanged reader and publishes the qualified scope. The task file is at its rollover target; the legal-boundary preparatory commit may cross that target under the unchanged ceiling, and must be consumed by .2 before further qualification narration. Producer success and copied controls do not replace the missing independent leg.`
+  Commit: `pending`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2.1`
+  Status: `done`
+  Goal: `Commit a legal boundary before the closed historical task suffix.`
+  Acceptance: `Preserve the complete live graph and all existing historical bytes. Prove the retired-note owners .4 through .30 are terminal, insert one unique legal level-two heading before Implementation Notes From .4, and qualify exact source/book transforms, prior history identity, unchanged limits and ordinary gates. Commit before the separate rollover; do not edit any sealed coordinate corpus or close independent qualification.`
+  Verification: `First staged gate rejects warning_debt at90.4 percent; declare rollover_debt and retain the complete refusal. Every pre-existing node body conserves except the declared qualification parent split; all historical-note owners .4 through .30 are terminal. Unique legal boundary and full fixed-Git book transform preserve the missing independent-reader leg. Distinct native Perl suffix digest, whole graph/source reconstruction and genuine lost-history/lost-node/duplicate-heading candidates reject. Complete source/afterimages/actual commands and unchanged-capacity measurements retain in coordinate-task-history-boundary-20261009. Focused task/book checks, source/native copy, staged doctrines and normal hooks gate this preparatory commit. The required separate rollover consumes its exact committed source next; no sealed coordinate corpus, ceiling, Knowledge Map or whole qualification changes.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S identifies the committed illegal-backtick Implementation Notes From .4 heading; the unchanged integrity checker forbids backticks in a history start_heading. Exact41810dbcd source and all completed note-owner statuses authenticate the closed suffix. Current task narration reaches rollover, so the legal boundary must commit before its immutable predecessor can be consumed.
+  - [x] **ADDRESSED (verified)** — Independent complete source/node reconstruction and native Perl suffix digest conserve historical bytes and all undeclared node contracts. Genuine historical-loss, live-node-loss and duplicate-boundary candidates reject. Exact reversible book guidance retains the unfinished independent coordinate qualification; complete source/afterimages and actual receipts remain durable.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=356 is required from the focused task-tree and public book checks. Whole source/native copied-book checks and scripts/check_doctrines.sh plus ordinary hooks gate commit. Every ceiling, prior manifest, opaque original and stopped reader receipt conserve; rollover and full coordinate qualification remain pending.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2.2`
+  Status: `pending`
+  Goal: `Roll over the exact committed closed-history suffix without losing live ownership.`
+  Acceptance: `After .1 commits, authenticate its entire task source and suffix under unchanged finite manifest and Git retention contracts. Preserve the complete previous manifest/source chain, every live node and active contract. Retain complete independent source/graph/dimension reconstruction and real corruption controls; lower measured task allowance, update book/Memory and commit before .3.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2.3`
+  Status: `pending`
+  Goal: `Complete unchanged independent original-coordinate qualification and publish its scope.`
+  Acceptance: `After .2 commits, retry the fixed-seal independent reader with stable host headroom and unchanged RAM guard. Consume whole semantic reconstruction, genuine controls, original custody and actual success. Preserve stopped attempts; qualify source/native/book delivery and normal gates before closing this parent and the join parents. Never edit or reseal the completed corpus.`
+  Verification: `pending`
   Commit: `pending`
 
 
@@ -6618,6 +6648,8 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — Sealed dated census, complete independent rg/os.walk membership and every conventional Rust location retain in artifact-sweep-due-20261009. Separate saved reader and actual-result consumer pass with genuine omission/path/deletion/time/kind/status/result controls. Latest-only record advances without deleting evidence.
   - [x] **NO REGRESSION** — All tests successful; Files=2, Tests=308 in checks.json focused-corrected. mdBook build and native copied-source verification pass. Initial sandbox refusal and mistaken focused-test paths retain; corrected unchanged-guard runs pass. Final staged scripts/check_doctrines.sh and normal hooks must pass before successor activation; ceilings and historical evidence conserve.
 
+
+## Completed Historical Implementation Notes
 
 ## Implementation Notes From `.4`
 
