@@ -799,10 +799,20 @@ The published reader requires the exact complete seal:
 python3 -B docs/audits/coordinate-source-hypothesis-checks-20261009/verify_hypotheses.py
 ```
 
-Archive permissions use an explicit transport mask; the first failed mode
-assumption and controlled repair retain with unchanged payloads and local
-configuration. Bounded Knowledge Map admission of that transport fact remains
-the required next slice before source-parent closure and original matching.
+Archive permissions follow Git's transport mask independently of tracked
+file modes. The canonical retrieval fact and its `umask` query now retain this
+rule. Controlled explicit masks qualify regular and executable payloads,
+including the original failed mode assumption, without configuration writes:
+
+```sh
+python3 -B docs/audits/archive-transport-fact-20261009/archive.py
+```
+
+The governed card compaction retains exact complete original sources and
+ordered semantic correspondence, every existing question and executable probe,
+and unchanged Knowledge Map capacity authority. The first URL-wrapping draft
+and corrected publication both retain. Whole source-hypothesis composition is
+qualified; joining original raw coordinates remains the next owned step.
 Original coordinate selections, opaque framework callers, private runtime
 formatting/toolchain/identity, address lifetimes and alias downstream retain
 their separate owners.

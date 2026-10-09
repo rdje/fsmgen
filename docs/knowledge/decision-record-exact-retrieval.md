@@ -9,31 +9,37 @@ answers:
   - "how must current decision edits synchronize the authenticated catalog?"
   - "why can selected Git tree inventory overflow while the same index fits?"
   - "why does unrelated index growth block decision authentication?"
-date: 2026-10-08
+  - "why do Git archive permissions differ from tracked modes and tar.umask?"
+date: 2026-10-09
 status: current
 tags: [memory, decisions, archive, continuity]
 evidence: docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md; docs/decisions/INDEX.md; scripts/decision_records.py; t/1923-decision-record-archive.t
-reverify: scripts/decision_records.py check && prove -Iperl t/1923-decision-record-archive.t t/2003-decision-store-git-continuity.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-repair-20261008/verify.py
+reverify: scripts/decision_records.py check && prove -Iperl t/1923-decision-record-archive.t t/2003-decision-store-git-continuity.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-repair-20261008/verify.py && python3 -B docs/audits/archive-transport-fact-20261009/archive.py
 ---
 
-Sealed decisions keep forwarding paths. Follow full-record links or run
-scripts/decision_records.py read 0014 at root. Ordered IDs give exact originals;
-the index finds all. JSON originals and human-view relocated relative links retain
-authority/supersession. Later policy needs new decision/index; no archive/generated-view appends.
+Sealed decisions keep forwarding paths. Full-record links or scripts/decision_records.py read 0014
+retrieve ordered exact originals; the index locates all. JSON originals and relocated relative
+human-view links retain authority/supersession. Later policy needs a new decision/index; never
+append to archives/generated views.
 
-Checks: independent committed-original census; view/root/index links/targets; affected
-Knowledge Map body-search commands. Fixed-Git regression rejects retention/navigation
-defects. Root aliases retain live pressure; separate owner.
+Checks independently census committed originals, view/root/index links/targets and affected
+Knowledge Map body searches. Fixed-Git regression rejects retention/navigation defects. Root-alias
+live pressure has a separate owner.
 
-Semantic parts: docs/decisions/current/. Sync dimensions/digest/metadata in
-current/catalog.json; reader/staged gates reject drift. check verifies the whole
-worktree; --snapshot index --prior-snapshot HEAD check-continuity compares staged/committed
-stores. Originals, compatibility and transition census stay sealed.
+Semantic parts: docs/decisions/current/. Synchronize current/catalog.json
+dimensions/digest/metadata; reader/staged gates reject drift. check covers the whole worktree;
+--snapshot index --prior-snapshot HEAD check-continuity compares staged/committed stores. Originals,
+compatibility and transition census stay sealed.
 
-Standard NUL trees become zero-stage index metadata under unchanged limits. T2003
-checks every mode/object/path plus old-header/real-overflow refusals; no custom quoting.
-SEM.77.1: docs/audits/decision-git-inventory-20261007/.
+Standard NUL trees become zero-stage index metadata under unchanged limits. T2003 checks every
+mode/object/path, old-header/real-overflow refusals; no custom quoting. SEM.77.1:
+docs/audits/decision-git-inventory-20261007/.
 
-SEM.78 captures decisions, source/legacy links/consumers, controls and ancestors.
-Trusted census mode/object joins bootstrap/final; HEAD resolves once. Default whole
-and relevant overflow refuse; dated stock evidence retains.
+SEM.78 captures decisions, source/legacy links/consumers, controls and ancestors. Trusted
+mode/object census joins bootstrap/final; HEAD resolves once. Default whole/relevant overflow
+refuse; dated stock evidence retains.
+
+Git archive tar.umask controls transport permissions independently of tracked modes. Per-command -c
+tar.umask=0022 gives regular/executable 0644/0755; 0002 gives 0664/0775. Same payloads; no
+configuration writes. Probe pins first failure/repair. Git default 0002:
+https://git-scm.com/docs/git-archive#Documentation/git-archive.txt-tarumask

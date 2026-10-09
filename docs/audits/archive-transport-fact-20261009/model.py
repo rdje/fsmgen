@@ -1,0 +1,75 @@
+"""Reviewed semantic compaction and one archive transport fact; no ambient capture."""
+from pathlib import Path
+from textwrap import fill
+
+BASE = Path('docs/audits/archive-transport-fact-20261009')
+REVISION = '0c86d2491e486e902e90f493bd883df8bc5fc6bf'
+RETRIEVAL = 'docs/knowledge/decision-record-exact-retrieval.md'
+INVENTORY = 'docs/knowledge/decision-selected-inventory-byte-budget.md'
+QUESTION = 'why do Git archive permissions differ from tracked modes and tar.umask?'
+PROBE = 'python3 -B docs/audits/archive-transport-fact-20261009/archive.py'
+
+# Old paragraph -> reviewed current paragraph. Source metadata/probes stay intact.
+# The correspondence is an explicit reviewed semantic claim, not an NLP proof.
+PARAGRAPHS = {
+    RETRIEVAL: [
+        'Sealed decisions keep forwarding paths. Full-record links or\n'
+        'scripts/decision_records.py read 0014 retrieve ordered exact originals;\n'
+        'the index locates all. JSON originals and relocated relative human-view\n'
+        'links retain authority/supersession. Later policy needs a new decision/index;\n'
+        'never append to archives/generated views.',
+        'Checks independently census committed originals, view/root/index links/targets\n'
+        'and affected Knowledge Map body searches. Fixed-Git regression rejects\n'
+        'retention/navigation defects. Root-alias live pressure has a separate owner.',
+        'Semantic parts: docs/decisions/current/. Synchronize current/catalog.json\n'
+        'dimensions/digest/metadata; reader/staged gates reject drift. check covers the\n'
+        'whole worktree; --snapshot index --prior-snapshot HEAD check-continuity compares\n'
+        'staged/committed stores. Originals, compatibility and transition census stay sealed.',
+        'Standard NUL trees become zero-stage index metadata under unchanged limits.\n'
+        'T2003 checks every mode/object/path, old-header/real-overflow refusals; no custom\n'
+        'quoting. SEM.77.1: docs/audits/decision-git-inventory-20261007/.',
+        'SEM.78 captures decisions, source/legacy links/consumers, controls and ancestors.\n'
+        'Trusted mode/object census joins bootstrap/final; HEAD resolves once. Default\n'
+        'whole/relevant overflow refuse; dated stock evidence retains.',
+    ],
+    INVENTORY: [
+        'Selected reads pin every repository path/mode/object, including unrelated evidence.\n'
+        'Old entry cap rejected actual staged predecessor within metadata bytes;\n'
+        'exact Git census/failed gate and selected-continuity preparation history retain\n'
+        'its cause.',
+        'Bound: unchanged metadata bytes / minimum SHA-1 index-record size (trees longer).\n'
+        'Pin before index/worktree changes: no filtering,\n'
+        'truncation, ambient fallback or submodule traversal. Blob/output-byte, regular-mode,\n'
+        'missing-path, unsafe-selector and conflicting-stage checks, ceilings and store pins\n'
+        'stay unchanged.',
+        'Re-derive: project-local index/tree fixtures exceed the old count; independent full\n'
+        'membership/authenticated reads. Falsify: real byte overflow in both selectors\n'
+        'and hostile/identity/snapshot/gate controls. Durability: exact RED/current tests,\n'
+        'code/census/Git, failed gate/sealed evidence, book/task/facts/Git. No unbounded\n'
+        'repository or metadata/blob-byte budget increase.',
+    ],
+}
+
+ARCHIVE = (
+    'Git archive tar.umask controls transport permissions independently of tracked modes.\n'
+    'Per-command -c tar.umask=0022 gives regular/executable 0644/0755; 0002 gives\n'
+    '0664/0775. Same payloads; no configuration writes. Probe pins first failure/repair.\n'
+    'Git default 0002:\n'
+    'https://git-scm.com/docs/git-archive#Documentation/git-archive.txt-tarumask'
+)
+
+
+def proposal(path, original):
+    front, body = original.decode().rsplit('---\n', 1)
+    if path == RETRIEVAL:
+        front = front.replace('date: 2026-10-08\n',
+                              '  - "' + QUESTION + '"\ndate: 2026-10-09\n', 1)
+        front = front.rstrip('\n') + ' && ' + PROBE + '\n'
+    else:
+        front = front.replace('date: 2026-10-02\n', 'date: 2026-10-09\n', 1)
+        front = front.replace('title: Selected decision Git inventories follow the existing metadata byte budget',
+                              'title: Selected decision Git inventory uses existing metadata byte budget', 1)
+    paragraphs = PARAGRAPHS[path] + ([ARCHIVE] if path == RETRIEVAL else [])
+    wrapped = [fill(' '.join(p.splitlines()), width=100,
+                    break_long_words=False, break_on_hyphens=False) for p in paragraphs]
+    return (front + '---\n\n' + '\n\n'.join(wrapped) + '\n').encode()

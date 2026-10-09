@@ -13,7 +13,7 @@
 
 ### decision-selected-inventory-byte-budget
 
-_Selected decision Git inventories follow the existing metadata byte budget_
+_Selected decision Git inventory uses existing metadata byte budget_
 
-- **date:** 2026-10-02 · **status:** current
+- **date:** 2026-10-09 · **status:** current
 - **source and verification:** [`docs/knowledge/decision-selected-inventory-byte-budget.md`](../../docs/knowledge/decision-selected-inventory-byte-budget.md)

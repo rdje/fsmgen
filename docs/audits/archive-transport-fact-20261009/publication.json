@@ -1,0 +1,163 @@
+{
+  "authority": {
+    "bytes": 36561,
+    "lines": 34,
+    "sha256": "cfb5b5edc89e77336a2690bde3cd62e35351e0519b333a70b6b4709666640936"
+  },
+  "current": {
+    "docs/knowledge/decision-record-exact-retrieval.md": {
+      "bytes": 2874,
+      "lines": 45,
+      "sha256": "61dd54b801154d1b1afe8f8f2323b114a28dff3587fdfc52ce97e7fb6ab79621"
+    },
+    "docs/knowledge/decision-selected-inventory-byte-budget.md": {
+      "bytes": 1908,
+      "lines": 36,
+      "sha256": "c38126f5cdf2e35af7b34dac2cdf68351cb493029c8898b418a41da8d5db2058"
+    }
+  },
+  "descriptors": [
+    {
+      "bytes": 2407,
+      "current_pointer": "docs/knowledge/decision-record-exact-retrieval.md",
+      "descriptor_id": "archive-transport-fact-decision-record-exact-retrieval-20261009",
+      "former_path": "docs/knowledge/decision-record-exact-retrieval.md",
+      "lines": 39,
+      "range_id": "complete-card-before-non-growing-transport-fact-admission",
+      "record_type": "descriptor",
+      "retrieval_kind": "file",
+      "retrieval_locator": "docs/audits/archive-transport-fact-20261009/source/557d68c2c7d5ae83025fecea9c622dadcb35b5de773a58fdf0bcf683b565aa1e.txt",
+      "revision": "0c86d2491e486e902e90f493bd883df8bc5fc6bf",
+      "schema_version": 1,
+      "sealed_on": "2026-10-09",
+      "sha256": "557d68c2c7d5ae83025fecea9c622dadcb35b5de773a58fdf0bcf683b565aa1e",
+      "surface_id": "exact_history",
+      "verifier": "builtin:file"
+    },
+    {
+      "bytes": 2382,
+      "current_pointer": "docs/knowledge/decision-selected-inventory-byte-budget.md",
+      "descriptor_id": "archive-transport-fact-decision-selected-inventory-byte-budget-20261009",
+      "former_path": "docs/knowledge/decision-selected-inventory-byte-budget.md",
+      "lines": 42,
+      "range_id": "complete-card-before-non-growing-transport-fact-admission",
+      "record_type": "descriptor",
+      "retrieval_kind": "file",
+      "retrieval_locator": "docs/audits/archive-transport-fact-20261009/source/5550af40a121dfb6abeb83aaca49edd71be53bef334f94c855c7c3715868524d.txt",
+      "revision": "0c86d2491e486e902e90f493bd883df8bc5fc6bf",
+      "schema_version": 1,
+      "sealed_on": "2026-10-09",
+      "sha256": "5550af40a121dfb6abeb83aaca49edd71be53bef334f94c855c7c3715868524d",
+      "surface_id": "exact_history",
+      "verifier": "builtin:file"
+    }
+  ],
+  "legs": {
+    "durability": "Tracked complete originals, archive descriptors, mapping/programmes and actual receipts in an atomic normal-hook commit.",
+    "falsify": "verify.py independent whole-source/current/question census and hostile source/question/rule/authority controls; archive.py controlled native Git payload/permission interventions.",
+    "rederive": "compact.py fixed-Git originals, complete source copies and reviewed semantic mapping."
+  },
+  "original_metadata": {
+    "docs/knowledge/decision-record-exact-retrieval.md": "---\nid: decision-record-exact-retrieval\ntitle: Sealed decision records preserve authority and exact retrieval\nanswers:\n  - \"how do I read the original text of a sealed decision?\"\n  - \"does archiving a decision supersede its authority?\"\n  - \"why do early decision files contain forwarding links?\"\n  - \"how is decision archive reconstruction checked?\"\n  - \"how must current decision edits synchronize the authenticated catalog?\"\n  - \"why can selected Git tree inventory overflow while the same index fits?\"\n  - \"why does unrelated index growth block decision authentication?\"\ndate: 2026-10-08\nstatus: current\ntags: [memory, decisions, archive, continuity]\nevidence: docs/decisions/0108-decision-records-seal-originals-with-stable-retrieval.md; docs/decisions/INDEX.md; scripts/decision_records.py; t/1923-decision-record-archive.t\nreverify: scripts/decision_records.py check && prove -Iperl t/1923-decision-record-archive.t t/2003-decision-store-git-continuity.t && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-repair-20261008/verify.py\n---\n",
+    "docs/knowledge/decision-selected-inventory-byte-budget.md": "---\nid: decision-selected-inventory-byte-budget\ntitle: Selected decision Git inventories follow the existing metadata byte budget\nanswers:\n  - \"why did selected decision continuity reject unrelated tracked evidence growth?\"\n  - \"what bounds complete selected decision Git path inventories?\"\n  - \"does the selected inventory repair weaken blob or metadata byte limits?\"\ndate: 2026-10-02\nstatus: current\ntags: [decisions, git, continuity, memory, capacity]\nevidence: >-\n  scripts/decision_store_git.py; t/python/test_decision_store_git.py;\n  docs/audits/record-output-predecessors-20261002/manifest.json;\n  docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md;\n  docs/book/src/10-errors-strict-mode-and-troubleshooting.md\nreverify: >-\n  scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib\n  t/2003-decision-store-git-continuity.t t/2004-decision-reader-snapshots.t\n  t/2005-decision-ceiling-stores.t t/2007-decision-hostile-boundaries.t\n  t/2010-decision-production-growth.t\n---\n"
+  },
+  "products": {
+    "complete_source": "Exact complete retained files and fixed Git revision, independently compared byte for byte.",
+    "live_dimensions": {
+      "after": {
+        "bytes": 4782,
+        "lines": 81
+      },
+      "before": {
+        "bytes": 4789,
+        "lines": 81
+      },
+      "file_delta": 0
+    },
+    "overlap": "Complete source, semantic facts and live navigation intentionally overlap; no disjoint subtraction claim.",
+    "semantic_closure": "Ordered reviewed paragraph correspondence plus unchanged original IDs, questions, evidence and executable probe routes; one new transport fact.",
+    "unretained_residue": {
+      "bytes": 0,
+      "reason": "Every original byte retained in a descriptor-addressed complete source file."
+    }
+  },
+  "revision": "0c86d2491e486e902e90f493bd883df8bc5fc6bf",
+  "schema_version": 1,
+  "semantic_mapping": {
+    "docs/knowledge/decision-record-exact-retrieval.md": {
+      "metadata": "IDs/questions/tags/evidence and every original reverify command retained; date refreshed, inventory title shortened, archive question/probe added only to retrieval.",
+      "paragraphs": [
+        {
+          "current": "Sealed decisions keep forwarding paths. Full-record links or\nscripts/decision_records.py read 0014 retrieve ordered exact originals;\nthe index locates all. JSON originals and relocated relative human-view\nlinks retain authority/supersession. Later policy needs a new decision/index;\nnever append to archives/generated views.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Sealed decisions keep forwarding paths. Follow full-record links or run\nscripts/decision_records.py read 0014 at root. Ordered IDs give exact originals;\nthe index finds all. JSON originals and human-view relocated relative links retain\nauthority/supersession. Later policy needs new decision/index; no archive/generated-view appends."
+        },
+        {
+          "current": "Checks independently census committed originals, view/root/index links/targets\nand affected Knowledge Map body searches. Fixed-Git regression rejects\nretention/navigation defects. Root-alias live pressure has a separate owner.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Checks: independent committed-original census; view/root/index links/targets; affected\nKnowledge Map body-search commands. Fixed-Git regression rejects retention/navigation\ndefects. Root aliases retain live pressure; separate owner."
+        },
+        {
+          "current": "Semantic parts: docs/decisions/current/. Synchronize current/catalog.json\ndimensions/digest/metadata; reader/staged gates reject drift. check covers the\nwhole worktree; --snapshot index --prior-snapshot HEAD check-continuity compares\nstaged/committed stores. Originals, compatibility and transition census stay sealed.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Semantic parts: docs/decisions/current/. Sync dimensions/digest/metadata in\ncurrent/catalog.json; reader/staged gates reject drift. check verifies the whole\nworktree; --snapshot index --prior-snapshot HEAD check-continuity compares staged/committed\nstores. Originals, compatibility and transition census stay sealed."
+        },
+        {
+          "current": "Standard NUL trees become zero-stage index metadata under unchanged limits.\nT2003 checks every mode/object/path, old-header/real-overflow refusals; no custom\nquoting. SEM.77.1: docs/audits/decision-git-inventory-20261007/.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Standard NUL trees become zero-stage index metadata under unchanged limits. T2003\nchecks every mode/object/path plus old-header/real-overflow refusals; no custom quoting.\nSEM.77.1: docs/audits/decision-git-inventory-20261007/."
+        },
+        {
+          "current": "SEM.78 captures decisions, source/legacy links/consumers, controls and ancestors.\nTrusted mode/object census joins bootstrap/final; HEAD resolves once. Default\nwhole/relevant overflow refuse; dated stock evidence retains.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "SEM.78 captures decisions, source/legacy links/consumers, controls and ancestors.\nTrusted census mode/object joins bootstrap/final; HEAD resolves once. Default whole\nand relevant overflow refuse; dated stock evidence retains."
+        }
+      ]
+    },
+    "docs/knowledge/decision-selected-inventory-byte-budget.md": {
+      "metadata": "IDs/questions/tags/evidence and every original reverify command retained; date refreshed, inventory title shortened, archive question/probe added only to retrieval.",
+      "paragraphs": [
+        {
+          "current": "Selected reads pin every repository path/mode/object, including unrelated evidence.\nOld entry cap rejected actual staged predecessor within metadata bytes;\nexact Git census/failed gate and selected-continuity preparation history retain\nits cause.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "The selected reader captures the complete repository path/mode/object inventory,\nincluding unrelated tracked evidence. Its former independent entry-count cap\nblocked the actual staged predecessor slice while its metadata still fit the\nexisting byte budget. Exact Git census and the failed staged gate retain that\ncause; history roots the cap at the selected-continuity preparation commit."
+        },
+        {
+          "current": "Bound: unchanged metadata bytes / minimum SHA-1 index-record size (trees longer).\nPin before index/worktree changes: no filtering,\ntruncation, ambient fallback or submodule traversal. Blob/output-byte, regular-mode,\nmissing-path, unsafe-selector and conflicting-stage checks, ceilings and store pins\nstay unchanged.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "The entry bound now derives from the unchanged metadata byte budget divided by\nthe minimum SHA-1 index record size. Tree records are longer. Capture remains\ncomplete and pinned before any later mutable index/worktree changes; there is\nno path filtering, truncation, ambient fallback or submodule traversal. Selected\nblob, output-byte, regular-mode, missing-path, unsafe-selector and conflicting\nstage checks remain in place. Live-document ceilings and store pins are unchanged."
+        },
+        {
+          "current": "Re-derive: project-local index/tree fixtures exceed the old count; independent full\nmembership/authenticated reads. Falsify: real byte overflow in both selectors\nand hostile/identity/snapshot/gate controls. Durability: exact RED/current tests,\ncode/census/Git, failed gate/sealed evidence, book/task/facts/Git. No unbounded\nrepository or metadata/blob-byte budget increase.",
+          "review": "All original causal facts, boundaries, authorities and probe/locality obligations retain in this ordered paragraph.",
+          "source": "Actual project-local Git fixtures crossing the old count in both index and\ncommitted trees provide re-derivation, including full independent path membership\nand authenticated store reads. Actual metadata byte overflow in both selectors,\nplus existing hostile/identity/snapshot/gate controls provide falsification.\nExact RED/current tests, code/census/Git identities, failed staged receipt and\nsealed evidence, book/task/facts/Git retain durability. This does not claim an\nunbounded repository or increase the metadata/blob byte budget."
+        }
+      ]
+    }
+  },
+  "sources": {
+    "docs/knowledge/decision-record-exact-retrieval.md": {
+      "bytes": 2407,
+      "lines": 39,
+      "sha256": "557d68c2c7d5ae83025fecea9c622dadcb35b5de773a58fdf0bcf683b565aa1e"
+    },
+    "docs/knowledge/decision-selected-inventory-byte-budget.md": {
+      "bytes": 2382,
+      "lines": 42,
+      "sha256": "5550af40a121dfb6abeb83aaca49edd71be53bef334f94c855c7c3715868524d"
+    }
+  },
+  "supersedes": {
+    "defect": "Default textwrap.fill split the public URL at a hyphen in the first draft.",
+    "identity": {
+      "bytes": 13629,
+      "lines": 151,
+      "sha256": "2d9f9d7757ebc83e5a8c2076b6a26b1edfe7141e1a94c39e488710d1e0a03b57"
+    },
+    "owner": "Current archive transport fact admission leaf; repair before commitment.",
+    "path": "docs/audits/archive-transport-fact-20261009/manifest.json",
+    "repair": "Disable long-word and hyphen breaks; complete URL and tokens conserve. Source archives/descriptors/questions/probes remain unchanged.",
+    "reproduction": "Exact retained first model regenerates both complete first card drafts and omits the intact URL."
+  },
+  "surface": "knowledge_cards"
+}
