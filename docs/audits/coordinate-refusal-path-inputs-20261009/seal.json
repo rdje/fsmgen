@@ -1,0 +1,26 @@
+{
+  "first-indexed-paths.py.txt": {
+    "bytes": 8423,
+    "sha256": "1b717b9eba88bee647d4cc41f004554c52e82d941df1cfe2e0e49c8fe276bd7d"
+  },
+  "first-paths.py.txt": {
+    "bytes": 8356,
+    "sha256": "1dcb9b55f203567391c2e62d6b7e61e44a1428df199fa5b2bf289eb9e0498f0b"
+  },
+  "paths.json": {
+    "bytes": 11679184,
+    "sha256": "f6b98ba1cc5ea1daf9e2c1ae22aeab0cc42d6f226c061e616599172f7df1b5a7"
+  },
+  "paths.py": {
+    "bytes": 8424,
+    "sha256": "fad3e7a66810dff3e37619d4ac2244950a2f60fb99c23a2ccd1f37c6d5f7874e"
+  },
+  "scope.txt": {
+    "bytes": 115,
+    "sha256": "696d8c5b0ec759b0451791221ffd043efafb403e8333a69e3c079d1f74ae2629"
+  },
+  "verify.py": {
+    "bytes": 10091,
+    "sha256": "7a9eaa8c17ac925567a9d03047635eaea9ab992b2ba25c00e529a94e40884ec4"
+  }
+}

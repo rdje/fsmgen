@@ -1,0 +1,154 @@
+"""Source-only refusal path admission. Never execute captures or select coordinates."""
+import copy
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+BASE = Path('docs/audits/coordinate-refusal-path-inputs-20261009')
+REVISION = 'f263d5c8a13b9a31da2b633a103f4575b17ef41c'
+BANK = Path('docs/audits/coordinate-source-sites-20261008')
+FAMILIES = {
+    'helper': 'record-value-original-helper-join-20261005',
+    'value': 'record-value-original-value-frames-20261005',
+    'metadata': 'record-value-original-metadata-frames-20261005',
+    'observer': 'record-value-original-observer-boundaries-20261005',
+    'subtest': 'record-value-own-subtest-boundaries-20261005',
+    'classes': 'record-value-original-class-20261005',
+}
+ROLE = 'Dated source-only refusal path inputs; statement alternatives, original coordinate selections and alias downstream qualification remain successor-owned.'
+
+
+def require(ok, cause):
+    if not ok:
+        raise ValueError(cause)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def equal(left, right):
+    return json.dumps(left, sort_keys=True) == json.dumps(right, sort_keys=True)
+
+
+def fixed(path):
+    result = subprocess.run(['git', '--no-replace-objects', 'show', REVISION + ':' + str(path)],
+                            cwd=ROOT, capture_output=True)
+    require(result.returncode == 0 and not result.stderr, 'complete fixed committed source result')
+    live = ROOT / path
+    require(live.is_file() and not live.is_symlink() and live.stat().st_dev == ROOT.stat().st_dev,
+            'regular same-volume source input')
+    for parent in live.parents:
+        if parent == ROOT:
+            break
+        require(not parent.is_symlink() and parent.stat().st_dev == ROOT.stat().st_dev
+                and not (parent / '.git').exists(), 'own plain input parent boundary')
+    require(live.read_bytes() == result.stdout, 'unchanged whole committed source input')
+    return result.stdout
+
+
+def inputs():
+    authorities = {}
+    models = {}
+    for family, folder in FAMILIES.items():
+        path = Path('docs/audits', folder, 'proofs.json')
+        raw = fixed(path)
+        authorities[str(path)] = pin(raw)
+        # Footprints, observed fields and native raw traces are not selected.
+        models[family] = json.loads(raw)['models']
+    raw = fixed(BANK / 'sites.json')
+    authorities[str(BANK / 'sites.json')] = pin(raw)
+    bank = json.loads(raw)
+    # Authenticate every sealed bank member, including its original qualifier.
+    seal_raw = fixed(BANK / 'seal.json')
+    authorities[str(BANK / 'seal.json')] = pin(seal_raw)
+    for name, identity in json.loads(seal_raw).items():
+        require(pin(fixed(BANK / name)) == identity, 'complete immutable source-site seal')
+    return models, bank, authorities
+
+
+def unique(rows, keys, cause):
+    result = {}
+    for row in rows:
+        key = tuple(row[k] for k in keys)
+        require(all(type(row[k]) is int for k in keys if k in ('index', 'helper')),
+                'discrete source allocation kind')
+        require(key not in result, cause)
+        result[key] = row
+    return result
+
+
+def derive(models, bank, authorities):
+    modes = [row['mode'] for row in models['helper']]
+    require(modes == ['ordinary', 'storable', 'controls'], 'qualified source mode domain')
+    for family in ('value', 'metadata', 'observer', 'classes'):
+        require([row['mode'] for row in models[family]] == modes, 'whole source model mode allocation')
+    require([row['mode'] for row in models['subtest']['modes']] == modes,
+            'whole authored boundary mode allocation')
+    callbacks = [row for row in bank['sites'] if row['role'] == 'helper_callback']
+    bodies = [row for row in bank['sites'] if row['role'] == 'named_subtest_body']
+    allocations = []
+    for position, helper_mode in enumerate(models['helper']):
+        mode = helper_mode['mode']
+        helpers = unique(helper_mode['helpers'], ('index',), 'unique source helper identity')
+        cases = unique(helper_mode['cases'], ('domain', 'index'), 'unique source refusal identity')
+        subtests = unique(models['subtest']['modes'][position]['cases'], ('domain', 'index'),
+                          'unique authored boundary refusal identity')
+        classes = unique(models['classes'][position]['cases'], ('domain', 'index'),
+                         'unique source class refusal identity')
+        require(set(cases) == set(subtests) == set(classes), 'complete disjoint refusal population join')
+        observer = models['observer'][position]
+        operations = {domain: unique(observer[field], ('index',), 'unique observer source operation')
+                      for domain, field in (('api', 'api'), ('parses', 'parses'))}
+        used_helpers = set()
+        for key, case in cases.items():
+            boundary = subtests[key]
+            helper = helpers[(case['helper'],)]
+            require(case['helper'] == boundary['helper'] and case['label'] == helper['label']
+                    and type(case['phases']) is int and case['phases'] == boundary['phases']
+                    and len(case['paths']) == case['phases'], 'whole helper/body/phase allocation')
+            matches = [site for site in callbacks if site['span']['text'] == helper['source_statement']
+                       and site['span']['index'] == case['helper']]
+            require(len(matches) == 1, 'unique source-authored callback statement')
+            callback = matches[0]
+            require(callback['lexical_owner'] == {'kind': 'authored_subtest', 'name': boundary['name']},
+                    'callback authored subtest ownership')
+            matches = [site for site in bodies if site['span']['text'] == boundary['body']]
+            require(len(matches) == 1 and matches[0]['span']['name'] == boundary['name'],
+                    'complete authored named-subtest body identity')
+            operation = operations[case['domain']][(case['index'],)]
+            require(operation['helper'] == case['helper'], 'observer and helper source operation join')
+            membership = helper['api_members' if case['domain'] == 'api' else 'parse_members']
+            require(case['index'] in membership, 'source refusal belongs to its helper operation members')
+            allocations.append({'mode': mode, 'domain': case['domain'], 'index': case['index'],
+                                'helper': copy.deepcopy(helper), 'helper_case': copy.deepcopy(case),
+                                'subtest': copy.deepcopy(boundary), 'source_class': copy.deepcopy(classes[key]),
+                                'observer_operation': copy.deepcopy(operation),
+                                'callback_site_id': callback['id'], 'body_site_id': matches[0]['id'],
+                                'original_selection': None})
+            used_helpers.add(case['helper'])
+        require(used_helpers <= {key[0] for key in helpers}, 'source helper population conservation')
+    owner = (ROOT / BASE / 'scope.txt').read_text().strip()
+    require(owner == bank['owners']['composition'] + '.1', 'exact current input admission owner')
+    return {'role': ROLE, 'revision': REVISION, 'owner': owner, 'authorities': authorities,
+            'source_models': models, 'allocations': allocations,
+            'generation': bank['generation'], 'invocations': bank['invocations'],
+            'unresolved': {'statement_hypotheses': bank['owners']['composition'] + '.2',
+                           'original_coordinates': bank['owners']['original_join'],
+                           'original_private_formatter_toolchain_identity': bank['owners']['original_join'],
+                           'addresses': bank['owners']['addresses'],
+                           'alias_downstream': 'SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.4'}}
+
+
+def main():
+    require(Path.cwd().resolve() == ROOT, 'invoke source input admission from repository root')
+    require(not (BASE / 'seal.json').exists(), 'sealed source input producer cannot run again')
+    product = derive(*inputs())
+    (BASE / 'paths.json').write_text(json.dumps(product, sort_keys=True, indent=2) + '\n')
+    print('PASS complete source-only path input allocation; statement hypotheses and original coordinate selection remain pending.')
+
+
+if __name__ == '__main__':
+    main()

@@ -5353,9 +5353,32 @@ For FSMGen, the analogs are:
   Commit: `parent source-site bank slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Compose and independently qualify complete per-refusal statement and call-path hypotheses.`
   Acceptance: `After .1 commits, join every refusal to source-authored callback/subtest, guard and observer/test/parser call paths using previously qualified source cause/frame models and complete own statement bytes. Select statement-level first/closing and filename alternatives without interpreting original coordinates; keep every equivalent label, generation/invocation association and unresolved original/private dependency with its exact owner. Independent complete source/path allocation and genuine guard/caller/source/owner/line/filename/root/alternative/promotion controls qualify before whole source publication .3. No capture execution or original-coordinate intake.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.1`
+  Status: `done`
+  Goal: `Admit and independently bind whole source-only refusal paths to authored helper/subtest associations.`
+  Acceptance: `Authenticate complete committed source-site, helper-join, value/metadata frame, observer-boundary, own-subtest and class model inputs. Select source-derived models only, excluding footprints/observed/raw/error coordinates and all capture execution. Join complete mode/domain/index/helper/phase populations to whole source-authored callback and named-subtest bodies. Preserve every modeled argument and ordered frame, complete original generation/invocation associations and explicit unresolved owners. Independently rebuild allocations from fixed committed bytes and reject actual omission, duplicate, borrowed mode/helper/body/phase/source/kind and coordinate-promotion controls. This is path-input admission; statement-level alternatives and complete per-refusal source hypotheses remain .2.`
+  Verification: `Whole fixed f263d5c8a source-site seal and complete helper/value/metadata/observer/subtest/class model inputs authenticate. Source-only qualified ordinary/Storable/controls populations join complete helper index, domain/index, phase, callback body, authored subtest and observer operation allocations. Original generation and all invocations conserve; original coordinate selections remain null and alias downstream retains its exact owner. First text-only lookup fails on deliberately repeated loop labels; first indexed lookup exposes the exact parses domain. Both whole programmes and actual failures retain; pure source derivations independently reproduce both failures and corrected allocation. Separate fixed-Git original binary-body/role/member reconstruction agrees; genuine omission/duplicate/mode/helper/body/phase/guard/root/generation/kind/promotion/alias-owner controls reject. Separate actual-result consumer authenticates complete command/status/stream/instrument identity and genuine receipt controls. Shared predecessor cause semantics remain explicitly trusted inputs, not newly independent semantic proof. Focused current/book All tests successful Files3 Tests310; final book/current native, aggregate/claim/staged doctrine and normal hooks qualify commit. Statement-level hypotheses remain the exact successor; no original capture/coordinate/alias/private/native/HIAL/full-CI/push or visual closure follows. Director one-use push authorization persists under .69.3 without waiving qualification.`
+  Commit: `source-only refusal path admission slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S authenticates the sealed bank's repeated-source-label contract in coordinate-refusal-path-input-checks-20261009/root-cause.json. Actual retained first programmes fail at paths.py callback text-only lookup and the renamed parse domain. qualify_repairs.py replays both exact pure-source failures and the corrected result without running producer main or any capture.
+  - [x] **ADDRESSED (verified)** — Complete immutable paths.json/source/programme seal retains all modeled source paths and original generation/invocations. Separate verify.py reconstructs original binary bodies and role allocations; actual genuine member/helper/body/phase/mode/guard/root/generation/kind/coordinate-promotion/alias-owner controls reject. consume_actual.py independently checks complete actual results and genuine status/result/instrument controls. Statement hypotheses and original/alias scopes remain open.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in checks.json focused. Complete immutable source/site conservation and independent actual readers pass. Final source/native mdBook copied bytes, exact measured aggregate/task declarations, fresh claim inventory and staged scripts/check_doctrines.sh plus normal hooks gate commit; ceilings and original evidence remain unchanged.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.2`
+  Status: `pending`
+  Goal: `Compose and independently qualify complete statement-level refusal hypotheses from admitted path inputs.`
+  Acceptance: `After .1 commits, derive every guard and observer/test/parser call-site statement from complete own bytes, retain all first/closing and filename labels and their equivalent alternatives, and bind each ordered refusal phase to the admitted path models. Independent complete source/path allocation and genuine guard/caller/source/owner/line/filename/root/alternative/promotion controls qualify; original coordinates remain unread and whole source publication stays the existing successor.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6103,7 +6126,7 @@ For FSMGen, the analogs are:
   Status: `pending`
   Goal: `Consume the eventual authorized qualified push.`
   Acceptance: `After the required HIAL/full-CI prerequisites or an explicit director-approved policy resolution allow the applicable action, follow COMMIT.md push and exact-SHA hosted qualification. Preserve missing/failing workflows and actual remote state; transport success alone cannot close this leaf.`
-  Verification: `pending`
+  Verification: `2026-10-09 director instruction: if you ever want to push at some point, you have my approval, then once done, resume honoring the push cadence. The verbatim one-use early-push authorization retains in coordinate-refusal-path-input-checks-20261009/push-approval.json. This permits discretionary early transport once required HIAL/full-CI prerequisites qualify; it does not waive those prerequisites, authorize host-security changes, or claim a push. After the qualified push, the standing COMMIT.md cadence resumes.`
   Commit: `pending`
 
 

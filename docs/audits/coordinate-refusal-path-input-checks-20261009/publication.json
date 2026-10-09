@@ -1,0 +1,41 @@
+{
+  "addition": "The source-only path-input admission binds the qualified ordinary, Storable\nand control refusals to their authored callback and named-subtest bodies, whole\nhelper/observer paths and guard-model inputs. Repeated loop statements retain\ntheir distinct helper indexes. Original generation and invocation associations\nconserve, including the separately owned alias run. This does not select\nstatement-level coordinate alternatives or qualify original coordinates:\n\n```sh\npython3 -B docs/audits/coordinate-refusal-path-inputs-20261009/verify.py\n```\n\n",
+  "after": {
+    "bytes": 47071,
+    "sha256": "2a63fe909726f2d309aeb11a2ffcefd6297810d67ce29a18ebc60de225a383ad"
+  },
+  "before": {
+    "bytes": 46527,
+    "sha256": "d5ebd222f4048e8823c622f42725390d552f5f7c76880a432c1d84d98b0361d0"
+  },
+  "book_after": {
+    "bytes_total": 3827619,
+    "files": 64,
+    "lines_total": 68829
+  },
+  "book_before": {
+    "bytes_total": 3827075,
+    "files": 64,
+    "lines_total": 68818
+  },
+  "legs": {
+    "durability": "Versioned source epoch, tracked programmes and complete publication/check receipts; registered maintained-reference and task pressure gates detect current drift.",
+    "falsify": "Unique chapter change and exact removal reconstruction reject borrowed source or unrelated book edits; path-input verify.py independently checks original binary bodies, source allocation and genuine candidate controls.",
+    "rederive": "publish.py reconstructs complete fixed-Git book membership/bytes and current source delta."
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3.2.2.1",
+  "previous_registry": {
+    "bytes": 36381,
+    "sha256": "b74765308cd20fa0707f7e0055038aea7acb5272b1ea27c17096ebbb74da3dd7"
+  },
+  "revision": "f263d5c8a13b9a31da2b633a103f4575b17ef41c",
+  "source": "docs/book/src/90-reference-map.md",
+  "task_metrics": {
+    "bytes_each": 2366453,
+    "bytes_total": 12815452,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 7197,
+    "lines_total": 118336
+  }
+}

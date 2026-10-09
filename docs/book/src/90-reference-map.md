@@ -742,6 +742,17 @@ separate pending steps. Read the saved source-only qualification with:
 python3 -B docs/audits/coordinate-source-sites-checks-20261008/verify_sites.py
 ```
 
+The source-only path-input admission binds the qualified ordinary, Storable
+and control refusals to their authored callback and named-subtest bodies, whole
+helper/observer paths and guard-model inputs. Repeated loop statements retain
+their distinct helper indexes. Original generation and invocation associations
+conserve, including the separately owned alias run. This does not select
+statement-level coordinate alternatives or qualify original coordinates:
+
+```sh
+python3 -B docs/audits/coordinate-refusal-path-inputs-20261009/verify.py
+```
+
 <div id="knowledge-map-architecture"></div>
 
 {{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}
