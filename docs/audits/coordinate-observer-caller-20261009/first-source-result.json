@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-observer-caller-20261009/derive.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-observer-caller-20261009/derive.py": {
+      "bytes": 9438,
+      "sha256": "21c197110d87f092f923d91bc18b53d93ffc3dcef370cc3533cccdf95d805b5a"
+    },
+    "docs/audits/coordinate-observer-caller-checks-20261009/checks.py": {
+      "bytes": 1420,
+      "sha256": "50d10e3636d6cf8725d3a724b311583b192e65306dfbd64acc9d2add9eccf504"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 6090; host 83.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-observer-caller-20261009/derive.py\", line 153, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-observer-caller-20261009/derive.py\", line 131, in main\n    declarations = declare(models, phases, expressions)\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-observer-caller-20261009/derive.py\", line 74, in declare\n    need(delegate_recipe['unit'] == 'observer' and delegate_recipe['text'].startswith(head)\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n         and delegate_recipe['text'].count('[caller]') == 1, 'literal recorded wrapper caller argument')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-observer-caller-20261009/derive.py\", line 22, in need\n    raise ValueError(cause)\nValueError: literal recorded wrapper caller argument\n",
+  "stdout": ""
+}

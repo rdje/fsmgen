@@ -1,0 +1,70 @@
+{
+  "association.json": {
+    "bytes": 7403865,
+    "sha256": "81f59959d2c087993dafe755af575fde717852ff257019cab93251b0a604c3f4"
+  },
+  "caller-inner-shift.pl": {
+    "bytes": 509,
+    "sha256": "bfcc4f85c28e22f25d2a99a8b1e201aca811d161e8794107f6e21752813e2c4b"
+  },
+  "caller-outer-shift.pl": {
+    "bytes": 510,
+    "sha256": "191c522d7692ea2b40ce1136e21e15cea22ff21d271bb551018cdb1031640381"
+  },
+  "caller.pl": {
+    "bytes": 509,
+    "sha256": "f8af6b48006fead138277b99f6263bbc7b0ad29c41da033f5090849ce24a8512"
+  },
+  "derive.py": {
+    "bytes": 9440,
+    "sha256": "3ae20a4ec3804598a7fca1b5e6b946d8b9004ba972b54a862b49c3437aaa66ba"
+  },
+  "first-checks.json": {
+    "bytes": 4074,
+    "sha256": "f92f09bb2f013f05d7efc7cb04824c549eafb6e8c2215d7755497de9b1fbd2a0"
+  },
+  "first-checks.py.txt": {
+    "bytes": 1424,
+    "sha256": "dbba59e42e8d5e32216f9558754376e41e2adf98b30d64f2352ac79966675b6e"
+  },
+  "first-derive.py.txt": {
+    "bytes": 9438,
+    "sha256": "21c197110d87f092f923d91bc18b53d93ffc3dcef370cc3533cccdf95d805b5a"
+  },
+  "first-match.py.txt": {
+    "bytes": 12046,
+    "sha256": "ac98fc699faf406d11aa9d9f5a104fc934cac9c0e8a1ef0b997842cccdc694ff"
+  },
+  "first-result.json": {
+    "bytes": 1929,
+    "sha256": "97fbf3e104f94795e57d75c87b4ba0a68307616f8730407d995c8f125bd3d8b2"
+  },
+  "first-source-result.json": {
+    "bytes": 1941,
+    "sha256": "c0fb74a35f88442e4f4acc9dd68585f933cf259a909b1477dee096daf555b7c8"
+  },
+  "matching-scope.txt": {
+    "bytes": 111,
+    "sha256": "e0ee9f8635281f179cb3dc0efda8f41dafbe499c829b3f9223e3ac2ae03ec851"
+  },
+  "scope.txt": {
+    "bytes": 113,
+    "sha256": "890b2c7a3dd192e286280b632d7817b5d601915f360355099d7a580fa03d5dda"
+  },
+  "second-match.py.txt": {
+    "bytes": 12061,
+    "sha256": "3bff14543c57edfb20b2ab86560f91a473a7cd1f6e904b0a2545c89e76c96612"
+  },
+  "second-result.json": {
+    "bytes": 2003,
+    "sha256": "775591370dfad31cb624f5133ceb5aa0b4dd3f9f7e4ffcc8f8c956aebc6ef66d"
+  },
+  "unexecuted-verify.py.txt": {
+    "bytes": 16662,
+    "sha256": "dc23a1e61c3065fe1755ba1bf0823e92739130b8e5035989e38bb46d827885a5"
+  },
+  "verify.py": {
+    "bytes": 16596,
+    "sha256": "8bb2b711e668a44bd36303095c6ce554ba8667e1573dbc8d5a4f7cd3492c14ee"
+  }
+}

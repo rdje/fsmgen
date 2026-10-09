@@ -865,13 +865,35 @@ tooling card `docs/knowledge/mdbook-build-destination-locality.md`.
 Its current reader consumes the sealed expression qualification. Exact prior
 card bytes remain retrievable, with every prior question/probe preserved
 through non-growing semantic compaction under unchanged collection limits.
-Complete original matching is next. Whole hostile qualification, alias capture
-and downstream, external framework, private formatting/toolchain and address
-meanings retain their separate owners.
+The resumed matcher exposed two draft defects before producing a result: an
+opaque-frame list overwrote the source-candidate lookup, then an inherited
+assertion always associated the recorded caller with the outer operation in
+package `main`. Both complete failed programmes/results remain retained.
 
-Original coordinate selections, opaque framework callers, private runtime
-formatting/toolchain/identity, address lifetimes and alias downstream retain
-their separate owners.
+The recorded observer caller now has a separate complete qualification. Each
+wrapper passes its own `[caller]` value to the recorder. Source operation kind
+selects the matching wrapper before any original coordinate comparison. Nested
+metadata captures therefore retain the inner Value-package caller, while the
+outer scope records retain their own outer caller. A recorded caller snapshot
+must follow its operation, rather than whichever operation is outermost.
+
+Independent source binding and original-frame reconstruction qualify every
+recorded caller, preserving every filename/line alternative and empty/error
+allocation. Controlled public caller examples independently move inner and
+outer calls and verify their packages. Complete recorded-caller replacement in
+the source model leaves both source selectors unchanged. The first parser
+wrapper draft and its source refusal also retain; the actual source cases use
+the `parse_source` delegate. Read the complete fixed-seal qualification with:
+
+```sh
+python3 -B docs/audits/coordinate-observer-caller-checks-20261009/verify_callers.py
+```
+
+Full original-coordinate matching resumes after this observer qualification
+commits. Whole hostile qualification and atomic current publication remain
+next, with their existing owners. Opaque framework callers, original private
+formatting/toolchain/identity, address lifetimes and alias downstream remain
+separately owned.
 
 <div id="knowledge-map-architecture"></div>
 

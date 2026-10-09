@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-original-rematching-20261009/match.py"
+  ],
+  "instruments": {
+    "docs/audits/coordinate-original-rematching-20261009/match.py": {
+      "bytes": 12061,
+      "sha256": "3bff14543c57edfb20b2ab86560f91a473a7cd1f6e904b0a2545c89e76c96612"
+    },
+    "docs/audits/coordinate-original-rematching-checks-20261009/checks.py": {
+      "bytes": 1424,
+      "sha256": "dbba59e42e8d5e32216f9558754376e41e2adf98b30d64f2352ac79966675b6e"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 1,
+  "stderr": "ram-guard: PID 35339; host 51.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-original-rematching-20261009/match.py\", line 183, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-original-rematching-20261009/match.py\", line 174, in main\n    'matches': derive(raw, hypotheses, prior, expressions), 'unresolved': hypotheses['unresolved'],\n               ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-original-rematching-20261009/match.py\", line 144, in derive\n    need(caller == ['main', frames[wrapper]['path'], frames[wrapper]['line']],\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n         'original observer caller snapshot joins outer operation caller')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-original-rematching-20261009/match.py\", line 21, in need\n    raise ValueError(why)\nValueError: original observer caller snapshot joins outer operation caller\n",
+  "stdout": ""
+}
