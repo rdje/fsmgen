@@ -411,13 +411,14 @@ heading. When a new boundary is needed, it is committed before the separate
 rollover; existing node contracts and active limits stay live throughout.
 The semantic task’s completed acceptance body is now retrieved through its
 bounded manifest, including the exact previous source and prior history chain.
-The next rollover boundary precedes the completed implementation notes. Its
-preparatory commit preserves those notes; a separate rollover will authenticate
-their exact committed source. The independent coordinate reader remains
-required before whole coordinate qualification. Verify the boundary checkpoint:
+The completed implementation notes now resolve through the bounded history
+manifest. Its exact predecessor preserves their complete source and prior
+history chain; every task node remains live. Independent coordinate
+qualification is still required. Replay the boundary and rollover proofs:
 
 ```sh
 python3 -B docs/audits/coordinate-task-history-boundary-20261009/verify.py
+python3 -B docs/audits/coordinate-task-history-rollover-20261009/verify.py
 ```
 
 Ownership records belong inside the first `## Task Tree` section and their

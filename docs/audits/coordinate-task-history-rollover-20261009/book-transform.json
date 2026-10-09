@@ -1,0 +1,4 @@
+{
+  "new": "The completed implementation notes now resolve through the bounded history\nmanifest. Its exact predecessor preserves their complete source and prior\nhistory chain; every task node remains live. Independent coordinate\nqualification is still required. Replay the boundary and rollover proofs:\n\n```sh\npython3 -B docs/audits/coordinate-task-history-boundary-20261009/verify.py\npython3 -B docs/audits/coordinate-task-history-rollover-20261009/verify.py\n",
+  "old": "The next rollover boundary precedes the completed implementation notes. Its\npreparatory commit preserves those notes; a separate rollover will authenticate\ntheir exact committed source. The independent coordinate reader remains\nrequired before whole coordinate qualification. Verify the boundary checkpoint:\n\n```sh\npython3 -B docs/audits/coordinate-task-history-boundary-20261009/verify.py\n"
+}
