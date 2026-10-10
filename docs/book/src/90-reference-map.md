@@ -977,6 +977,28 @@ Reproduce the full fixed-seal qualification from the repository root:
 python3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py
 ```
 
+The current-coordinate publication now has a qualified complete proposal.
+It retains the original core, helper, tooling and parser card sources, every
+ordered question and a reviewed paragraph correspondence. The proposed working
+set does not grow, and Knowledge Map collection authority remains unchanged.
+The parser's earlier epoch-current route is distinguished from its unchanged
+historical snapshot and the planned complete maintained current route.
+
+Independent binary Git reconstruction checks complete sources, question/probe
+obligations, physical dimensions and genuine loss, borrowed-role, typed-result
+and scope-promotion controls. This is reviewed semantic correspondence rather
+than a mechanical proof of natural-language equivalence. Live cards and current
+reader behavior have not changed. Replay the dated preparation with:
+
+```sh
+python3 -B docs/audits/coordinate-current-preparation-20261010/verify.py --snapshot
+```
+
+Atomic card/checker/book/source/query/native publication and whole final delivery
+remain the next owned steps. The proposal preserves original private/provider/
+framework/formatter/toolchain/identity/address/alias gaps and visual, HIAL and
+full-CI/push owners.
+
 Atomic current canonical publication remains the next owned step. This dated
 qualification leaves original private formatting/toolchain/identity, external
 framework coordinate rules, address lifetimes and alias downstream with their

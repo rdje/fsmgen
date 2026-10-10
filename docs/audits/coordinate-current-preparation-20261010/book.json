@@ -1,0 +1,24 @@
+{
+  "after": {
+    "bytes": 60801,
+    "sha256": "5a617f675bd69399f7f929d69ecdd988e4c8439979bc45df2420393136cd58d7"
+  },
+  "before": {
+    "bytes": 59603,
+    "sha256": "6ae40ede47e6956f78641fe27474a4ea7d3b32a2f905b8c3cc7183383c6147ae"
+  },
+  "block": "The current-coordinate publication now has a qualified complete proposal.\nIt retains the original core, helper, tooling and parser card sources, every\nordered question and a reviewed paragraph correspondence. The proposed working\nset does not grow, and Knowledge Map collection authority remains unchanged.\nThe parser's earlier epoch-current route is distinguished from its unchanged\nhistorical snapshot and the planned complete maintained current route.\n\nIndependent binary Git reconstruction checks complete sources, question/probe\nobligations, physical dimensions and genuine loss, borrowed-role, typed-result\nand scope-promotion controls. This is reviewed semantic correspondence rather\nthan a mechanical proof of natural-language equivalence. Live cards and current\nreader behavior have not changed. Replay the dated preparation with:\n\n```sh\npython3 -B docs/audits/coordinate-current-preparation-20261010/verify.py --snapshot\n```\n\nAtomic card/checker/book/source/query/native publication and whole final delivery\nremain the next owned steps. The proposal preserves original private/provider/\nframework/formatter/toolchain/identity/address/alias gaps and visual, HIAL and\nfull-CI/push owners.\n\n",
+  "book_after": {
+    "bytes_total": 3841349,
+    "files": 64,
+    "lines_total": 69080
+  },
+  "book_before": {
+    "bytes_total": 3840151,
+    "files": 64,
+    "lines_total": 69058
+  },
+  "marker": "Atomic current canonical publication remains the next owned step.",
+  "revision": "2bcc068255dbf6687ed92f20e8da24cf73351515",
+  "source": "docs/book/src/90-reference-map.md"
+}

@@ -1,0 +1,181 @@
+"""Consume actual preparation, current/native and whole-guide delivery evidence."""
+import copy
+import hashlib
+import json
+import subprocess
+from html.parser import HTMLParser
+from pathlib import Path
+
+BASE = Path('docs/audits/coordinate-current-preparation-20261010')
+REVISION = '2bcc068255dbf6687ed92f20e8da24cf73351515'
+CHAPTER = 'docs/book/src/90-reference-map.md'
+COMMAND = 'python3 -B docs/audits/coordinate-current-preparation-20261010/verify.py --snapshot'
+
+
+def need(ok, cause):
+    if not ok:
+        raise ValueError(cause)
+
+
+def same(left, right):
+    return json.dumps(left, sort_keys=True, allow_nan=False) == json.dumps(right, sort_keys=True, allow_nan=False)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def git(*args):
+    result = subprocess.run(['git', '--no-replace-objects', *args], capture_output=True)
+    need(result.returncode == 0 and not result.stderr, 'complete independent delivery source')
+    return result.stdout
+
+
+def counts(rows):
+    return {'files': len(rows), 'bytes_total': sum(map(len, rows)),
+            'lines_total': sum(r.count(b'\n') for r in rows)}
+
+
+def book_check(product, before, after, old_rows, new_rows):
+    need(product['revision'] == REVISION and product['source'] == CHAPTER,
+         'closed dated preparation book source')
+    need(same(product['before'], pin(before)) and same(product['after'], pin(after)),
+         'complete preparation book identities')
+    block, marker = product['block'], product['marker']
+    need(before.count(marker.encode()) == 1 and after == before.replace(marker.encode(), (block + marker).encode(), 1),
+         'whole reversible preparation book insertion')
+    need(same(product['book_before'], counts(old_rows)) and same(product['book_after'], counts(new_rows)),
+         'whole typed preparation book dimensions')
+    need('Live cards and current\nreader behavior have not changed.' in block
+         and 'mechanical proof of natural-language equivalence' in block and COMMAND in block
+         and 'Atomic card/checker/book/source/query/native publication' in block,
+         'complete honest preparation scope and executable route')
+
+
+def receipt_check(actual, command, output=None):
+    need(type(actual['status']) is int and actual['status'] == 0, 'actual integer preparation success')
+    need(actual['command'] == ['scripts/run_with_ram_guard.sh', '--', *command], 'complete actual preparation command')
+    paths = {str(BASE / 'checks.py'), 'scripts/run_with_ram_guard.sh'} | {p for p in command if Path(p).is_file()}
+    need(actual['instruments'] == {p: pin(Path(p).read_bytes()) for p in paths}, 'complete current preparation instruments')
+    need(type(actual['stdout']) is str and type(actual['stderr']) is str
+         and 'host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s' in actual['stderr'],
+         'complete preparation streams and unchanged guard')
+    if output is not None:
+        need(actual['stdout'] == output, 'complete actual preparation stdout')
+
+
+class Visible(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts, self.codes, self.code = [], [], None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'code':
+            self.code = []
+
+    def handle_data(self, data):
+        self.parts.append(data)
+        if self.code is not None:
+            self.code.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == 'code' and self.code is not None:
+            self.codes.append(''.join(self.code).strip())
+            self.code = None
+
+
+def native_check(html, block):
+    parsed = Visible()
+    parsed.feed(html)
+    need(parsed.codes.count(COMMAND) == 1, 'unique complete native preparation command')
+    text = block.replace('```sh\n', '').replace('```\n', '').replace('`', '')
+    need(' '.join(text.split()) in ' '.join(' '.join(parsed.parts).split()),
+         'complete native preparation scope and gaps')
+
+
+def capacity(book):
+    prior = list(map(json.loads, git('show', REVISION + ':doctrine/live_document_size/surfaces.jsonl').splitlines()))
+    current = list(map(json.loads, Path('doctrine/live_document_size/surfaces.jsonl').read_text().splitlines()))
+    need([r.get('surface_id') for r in prior] == [r.get('surface_id') for r in current], 'whole preparation capacity membership')
+    for old, new in zip(prior, current):
+        expected = copy.deepcopy(old)
+        if new.get('surface_id') == 'shipped_behavior':
+            change = new['reference_contract']['aggregate_change']
+            need(change['authority_id'] == 'COORDINATE-CURRENT-PREPARATION-20261010'
+                 and change['owner'] == (BASE / 'scope.txt').read_text().strip()
+                 and same(change['baseline'], book['book_before'])
+                 and same(change['delta'], {k: book['book_after'][k] - book['book_before'][k] for k in book['book_before']}),
+                 'exact owned preparation book aggregate')
+            expected['reference_contract']['aggregate_change'] = change
+        if new.get('surface_id') == 'task_evidence':
+            paths = sorted({p for pattern in new['targets'] for p in Path('.').glob(pattern)})
+            raw = [p.read_bytes() for p in paths]
+            measured = {**counts(raw), 'bytes_each': max(map(len, raw)),
+                'lines_each': max(r.count(b'\n') for r in raw),
+                'line_bytes_each': max(len(line.rstrip(b'\r')) for r in raw for line in r.split(b'\n'))}
+            product = json.loads((BASE / 'task-metrics.json').read_bytes())
+            need(same(product['actual'], measured) and product['owner'] == (BASE / 'scope.txt').read_text().strip(),
+                 'complete independently measured preparation task evidence')
+            expected['transition']['max_growth'] = {k: max(0, min(v + new['transition']['ratchet_step'][k],
+                new['enforcement_ceilings'][k]) - new['baseline'][k]) for k,v in measured.items()}
+        need(same(expected, new), 'only exact owned preparation book/task allowance changes')
+
+
+def main():
+    paths = sorted(p for p in git('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/book/src').decode().splitlines()
+                   if p.endswith('.md') and Path(p).parent == Path('docs/book/src'))
+    need(paths == sorted(str(p) for p in Path('docs/book/src').glob('*.md')), 'whole preparation book membership')
+    old_rows, new_rows = [git('show', REVISION + ':' + p) for p in paths], [Path(p).read_bytes() for p in paths]
+    need([p for p,a,b in zip(paths, old_rows, new_rows) if a != b] == [CHAPTER], 'unique complete preparation book delta')
+    book = json.loads((BASE / 'book.json').read_bytes())
+    before, after = old_rows[paths.index(CHAPTER)], new_rows[paths.index(CHAPTER)]
+    book_check(book, before, after, old_rows, new_rows)
+    capacity(book)
+    checks = json.loads((BASE / 'checks.json').read_bytes())
+    commands = {
+        'budget': ['python3', '-B', str(BASE / 'check_budget.py'), str(BASE / 'model.py')],
+        'prepare': ['python3', '-B', str(BASE / 'prepare.py'), str(BASE / 'model.py')],
+        'independent-final': ['python3', '-B', str(BASE / 'verify.py')],
+        'snapshot': ['python3', '-B', str(BASE / 'verify.py'), '--snapshot'],
+        'book': ['python3', '-B', str(BASE / 'book.py')],
+        'task-pressure': ['python3', '-B', str(BASE / 'task_pressure.py')],
+        'focused': ['prove', '-Iperl', 't/2066-record-value-current-publication.t', 't/1303-isf-public-live-book-paths-audit.t', 't/1305-isf-book-feature-matrix-audit.t'],
+        'source-write': ['python3', '-B', 'scripts/book_source_references.py', '--write'],
+        'source-current': ['python3', '-B', 'scripts/book_source_references.py', '--check'],
+        'book-build': ['mdbook', 'build', 'docs/book'],
+        'native-staged': ['python3', '-B', 'scripts/book_source_references.py', '--check', '--verify-build', 'docs/book/book'],
+        'current-native': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', 'docs/book/book'],
+        'claim-inventory': ['perl', 'scripts/check_claim_verification_inventory.pl', '--write'],
+    }
+    for name, command in commands.items():
+        receipt_check(checks[name], command)
+    need('All tests successful.' in checks['focused']['stdout'] and 'Files=3, Tests=310' in checks['focused']['stdout'],
+         'complete actual focused preparation regression')
+    for name, role in (('independent-final', 'unchanged live preparation'), ('snapshot', 'dated snapshot')):
+        result = json.loads(checks[name]['stdout'])
+        need(result['role'] == role and result['result'].startswith('PASS complete retained original sources, reviewed proposal/questions/probes')
+             and len(result['controls']) == 8, 'complete actual distinct preparation role and controls')
+    receipt_check(checks['current-native'], commands['current-native'],
+        'PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n')
+    html = Path('docs/book/book/90-reference-map.html').read_text()
+    native_check(html, book['block'])
+    controls = {}
+    cases = [('borrowed-book', lambda: book_check({**book, 'before': book['after']}, before, after, old_rows, new_rows), 'complete preparation book identities'),
+        ('Boolean-status', lambda: receipt_check({**checks['current-native'], 'status': True}, commands['current-native']), 'actual integer preparation success'),
+        ('borrowed-command', lambda: receipt_check(checks['current-native'], commands['source-current']), 'complete actual preparation command'),
+        ('lost-native-scope', lambda: native_check(html.replace('Live cards and current', 'Live cards or current'), book['block']), 'complete native preparation scope and gaps'),
+        ('borrowed-native-route', lambda: native_check(html.replace(COMMAND, 'python3 -B borrowed.py'), book['block']), 'unique complete native preparation command')]
+    for name, run, cause in cases:
+        try:
+            run()
+        except ValueError as error:
+            need(str(error) == cause, 'intended complete preparation delivery refusal: ' + name)
+            controls[name] = cause
+        else:
+            raise ValueError('false-green complete preparation delivery control: ' + name)
+    print(json.dumps({'result': 'PASS whole preparation source/native guide, exact authority, actual roles/receipts and genuine delivery controls.',
+                      'book_before': book['book_before'], 'book_after': book['book_after'], 'controls': controls}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

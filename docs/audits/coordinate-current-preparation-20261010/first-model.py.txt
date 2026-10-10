@@ -1,0 +1,201 @@
+"""Reviewed prospective coordinate facts; no current card writes or recapture."""
+from pathlib import Path
+from textwrap import fill
+
+BASE = Path('docs/audits/coordinate-current-preparation-20261010')
+REVISION = '2bcc068255dbf6687ed92f20e8da24cf73351515'
+CORE = 'docs/knowledge/record-value-finite-copy-probe-reader.md'
+HELPER = 'docs/knowledge/record-value-original-observer-helper-paths.md'
+TOOLING = 'docs/knowledge/mdbook-build-destination-locality.md'
+PARSER = 'docs/knowledge/isf-record-output-source-contexts.md'
+PATHS = (CORE, HELPER, TOOLING, PARSER)
+QUESTION = 'what qualifies original own caller and source coordinates?'
+CURRENT = 'scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py'
+PARSER_OLD = 'docs/audits/record-value-parser-path-publication-20261006/verify.py --current'
+PARSER_SNAPSHOT = PARSER_OLD.removesuffix(' --current')
+READER = 'docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py'
+
+# Correspondence is a reviewed prose claim, not mechanical natural-language proof.
+# Unlisted paragraphs are retained exactly apart from physical line wrapping.
+REPLACEMENTS = {
+    CORE: {
+        2: '''Fresh same-volume replay pins sources, every native record and both streams.
+Addresses have per-capture lifetimes; sealed producers run elsewhere. The finite
+join authenticates completed owners/fresh products. Original Storable/alias trials
+retain unchanged inputs and the full alias run's downstream mutation/abort.
+Independent typed models qualify original copy graphs, genuine trials, readonly
+and detachment; whole API/parser results match source models and private-source
+allocations conserve. Copy-intervention models rebuild whole input/private typed
+graphs, readonly copies and detached outputs. Private range sibling width changes
+string2 to number2; its outer caller stays unchanged through a detached private
+copy. Each copied width joins full raw type, carrier/default/metadata roles,
+ancestor context and compatible sources. Captured-mode input/private joins qualify
+whole graph/field/source/context/raw-kind/detachment meanings. Finite context models
+qualify helper/consumer/parser locations, complete parser texts and operation spans
+separately from cause/operand truth. Each API/helper/parser first cause and
+acceptance derives independently from qualified source inputs. Raw bodies and
+lossless grammar qualify. Source/publisher contracts infer unblessed scalar errors
+for this finite capture; original classes were unmeasured. POD4.05 is stale;
+runtime JSON::PP4.06 owns version identity. Direct Value active-order/source-role
+models bind visible type/scalar footprints. Metadata guards/record recursion,
+including cycles, qualify; list recursion is bound, unexercised. Nested
+Scope/capture/private-root inputs bind the whole source-built interface graph's
+kinds/sharing/cycles. Whole inner scalar forwarding conserves the new outer prefix.
+Public die controls distinguish explicit rethrow, propagation and hook replacement;
+original hook state/provider bytes stay unmeasured. Source models join nested
+Value/capture/Scope eval/wrapper paths and visible operand roles. Every own API
+refusal partitions into source guard/function/visible-role models.
+[Observer/helper source meanings](record-value-original-observer-helper-paths.md)
+are canonical. Full observer/display/private-frame/address, consumer,
+alias/semantic/cold/candidate-parent and hot/host-native meanings stay open.
+Original own coordinates have the separate qualification below.''',
+        4: '''Each original nonempty error joins source-inferred class/guard family to
+whole own/public phase/function/visible-argument roles. Empty allocations,
+contexts and opaque raw bytes conserve. Nested Metadata and new outer Value
+retain distinct class/phase roles and the entire inner operand through
+catch/interpolation/new throw. Source associations precede raw intake.
+Native/private/formatter/encoding/hidden-argument/identity/address meanings
+and external-framework coordinates remain unmeasured or separately owned.''',
+    },
+    HELPER: {
+        0: '''Own observer/callback roles, bodies and allocations inventory. Models join
+every API/parser operation/eval/installed wrapper and source argument role.
+Parser receiver role is declared; identity is unmeasured. Named helpers retain
+whole source graphs/active paths. Compiled callback/refusal/helper-wrapper paths
+bind parameterless operation and source regex-body/label displays; identity/full
+formatting stay open. Every helper allocation's whole supplied/default inputs,
+returned argument-building operations and compiled callback/refusal paths join
+both nested throw phases. Source derivation precedes recorded contiguous function
+order/visible-argument comparison. Returned helpers are separate from active frames.
+Whole model/allocation/phase/member/order/operand corruptions reject.''',
+        1: '''Full observer/display/private-frame/native-class/address,
+subtest/load/framework/quoting/truncation and parser-internal meanings stay open.
+Original provider/hook/class measurements and callback/regex/object/native identity
+stay unmeasured. Consumer/alias/full-semantic/cold/candidate-parent and
+permanent/hot/host-native repairs remain open; visual mdBook QA is pending.
+Own original coordinates qualify separately in the related core fact;
+external-framework coordinate rules remain unmeasured.''',
+        4: '''Whole own source models assign each original refusal to its authored named
+subtest body. Observer saves the public Test::More delegate, receives
+name/body/extras, wraps the callback with the compiled-helper observer, forwards
+callback arguments to the original body and extras to the saved delegate.
+Authored original subtests supply no extras. Every throw-phase header agrees
+with empty visible body/own-observer-callback arguments and authored name/CODE
+kind at public delegate/own entry. Kind proves no callback identity. External
+frames between own roles remain opaque observations.''',
+        5: '''Original observer loads with do './t/1986-isf-record-port-value-gates.t',
+then captures $@, $! and defined($ok). Diagnostics display a require marker for
+that exact file identifier; this neither changes source do to require nor proves
+the formatter. Installed public POD documents named subtest callbacks/extras,
+do-file returns/errors and require's do-file loading mechanism. Captured current
+Perl/Test::More profile is public-interface evidence; original framework version
+remains unmeasured.''',
+        6: '''Each original Test::Builder/Test::More throw-phase header matches authored-name
+prefixes/CODE kinds and body/delegate/entry/do-load order. Independent dated public
+fixtures select them. Receiver tokens/private eval intervals stay opaque;
+wrong name/kind/population/order rejects.''',
+        7: '''Finite source-class/frame joins bind every operation/helper/authored-body/public/
+entry/load and visible operand role per original throw phase. Inherited inner
+operands remain opaque evidence; these predicates supply no formatter/coordinate/
+address oracle. Class/family/phase/order/argument/population/native-promotion
+controls preserve prior meanings; opaque inner-frame byte changes pass prior
+own/public predicates but break whole forwarding.''',
+    },
+    PARSER: {
+        0: '''At baseline 8f31768d, prepared output-only actors bypassed context/sample
+consumers selected solely by actor_has_record_input. The same actual parsed
+declarations projected into output roles accepted literal whole-record targets,
+output member writes and a bus-owned field read from core. Scalar captures lacked
+their new private type declaration. Authored record output syntax already refused;
+these were latent shared-module prerequisites, not shipped output behavior.''',
+        1: '''actor_has_record_port validates whole input/output lists without changing
+legacy input selection or autovivifying malformed callers. Parser context,
+rule/enum scope, shared-module and scalar-sample consumers also select resolved
+output roles. Source callers explicitly choose whole_output_writes_only;
+prepared toolkit retains broader member facts. Exact record copy identity,
+readonly inputs and nearest formal/local/drive masks apply. Output-derived scalar
+captures retain exact width/signedness/state model and cannot overwrite declarations
+or invent layouts. Mixed actors cannot hide malformed output suffixes behind known input.''',
+        2: '''Actual output domain maps mark resolved record roots. Dotted/indexed paths
+reach the ownership validator rather than possible-namespace delegation. Exact
+bus-to-core violations refuse; actual same-domain whole copy passes. No implicit
+crossing/reset is introduced. Failed binary selection predicates are explicitly
+scalar, so malformed policy names its failure rather than an argument-count error.''',
+        5: '''Finite original source inventory binds whole own facade/parser/record-context
+texts. Lexical declarations, selected whole function bodies, supplied parameter
+roles and ordered source call/guard statements regenerate independently. Exact
+committed prerequisites qualify source inputs, primary causes, API/parser boundaries
+and helper context separately.''',
+        6: '''Output-field writes and aggregate actor-port type admission have distinct
+source guards. Source order establishes provenance, not executed branches or
+returned calls remaining active. Native traces do not select intended sources.
+Missing/borrowed bodies/statements/parameters/declaration membership/JSON kinds reject.''',
+        7: '''Default parser replay authenticates original source and historical publication.
+Its earlier --current route checks its dated fact/question/book epoch; current
+publication uses the maintained current reader, retaining direct/cache ownership
+and complete scoped book command/guidance obligations. Earlier command:
+`python3 -B docs/audits/record-value-parser-path-publication-20261006/verify.py --current`.
+Active path/argument models and own joins have separate proofs. Original own
+coordinates have separate core-fact qualification. Framework/display,
+reference/address lifetimes, consumer/alias/cold and permanent/native repairs
+retain separate owners. Visual mdBook QA is pending.''',
+        9: '''Finite source models distinguish original refusals: list actor-port admission
+stops before record contexts; output-field writes reach the write guard. Whole
+positional/named roles identify supplied expressions. Receiver, normalized AST
+and partial-actor payloads remain unmeasured. Returned callees are excluded from
+active own ancestry. Whole nested API allocations reuse dated source-family proofs;
+own native/API/helper matching qualifies separately. Original refusals match
+source-selected own function order/visible arguments across parser/API/observer/
+helper/subtest phases. Core overlap/order, helper/load adjacency and whole own
+frame membership qualify. Completed nested calls retain empty errors/no throw
+frames. False is source predicate truth, not native encoding; reference kinds/
+prefixes prove neither referents nor hidden suffixes. Framework/formatter/external
+coordinates/addresses remain unmeasured.''',
+    },
+}
+
+ADDITIONS = {
+    CORE: '''Original own error origins, throw-frame caller coordinates and inherited
+inner coordinates now match independently declared complete source recipes,
+legitimate filenames, operation-specific wrappers and exact original raw bytes.
+Nested forwarding retains separate inner/outer epochs. Every used recipe/mode
+receives wrong-line/path/source controls: complete prior class/frame/function/
+visible-argument/forwarding predicates pass before both coordinate readers refuse
+the intended changed association. Full independent reconstruction matches the
+sealed whole result and original custody; typed/whole-result controls reject
+borrowed status/commands/output and omissions. Earlier failures and RAM stops
+retain as non-success. Replay unchanged dated qualification:
+`python3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py`.
+This qualifies finite original own source associations, not original private
+formatter/toolchain/identity, external-framework coordinates or address lifetimes.''',
+    TOOLING: '''[Original own-coordinate reader](../audits/coordinate-original-hostile-checks-20261009/verify_hostile.py)
+qualifies the separate finite original/source join; the public fixtures above
+alone do not. Original private/toolchain/identity and external coordinate rules
+remain unmeasured. Current canonical admission checks all affected core/helper/
+parser/tooling sources and queries; dated success supplies no live currency.''',
+}
+
+
+def parts(raw):
+    front, body = raw.decode().rsplit('---\n', 1)
+    return front, body.strip().split('\n\n')
+
+
+def proposal(path, original):
+    front, paragraphs = parts(original)
+    front = front.replace(next(line for line in front.splitlines() if line.startswith('date:')),
+                          'date: 2026-10-10', 1)
+    if path == CORE:
+        front = front.replace('date: 2026-10-10\n',
+                              '  - "' + QUESTION + '"\ndate: 2026-10-10\n', 1)
+        front = front.replace('evidence: >-\n', 'evidence: >-\n  docs/audits/coordinate-original-hostile-20261009/scope.txt;\n', 1)
+    if path == PARSER:
+        if front.count(PARSER_OLD) != 1:
+            raise ValueError('one original parser current route')
+        front = front.replace(PARSER_OLD, PARSER_SNAPSHOT + ' &&\n  ' + CURRENT, 1)
+    paragraphs = [REPLACEMENTS.get(path, {}).get(i, text) for i, text in enumerate(paragraphs)]
+    if path in ADDITIONS:
+        paragraphs.append(ADDITIONS[path])
+    wrapped = [fill(' '.join(p.split()), width=100, break_long_words=False,
+                    break_on_hyphens=False) for p in paragraphs]
+    return (front + '---\n\n' + '\n\n'.join(wrapped) + '\n').encode()
