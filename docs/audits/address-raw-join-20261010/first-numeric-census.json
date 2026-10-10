@@ -1,0 +1,2425 @@
+{
+  "counts": {
+    "distinct": 19179,
+    "equal": 1392,
+    "opaque_CODE": 1749,
+    "outside_prior_held_relation": 120,
+    "visible": 2691
+  },
+  "mismatches": [],
+  "scope": "Exploratory full visible display/source relation census, not independent qualification.",
+  "views": [
+    {
+      "counts": {
+        "distinct": 43,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 7,
+        "visible": 12
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        820,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        877,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        878,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        1150,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        1437,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        1724,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        2020,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        2318,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        2607,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        2909,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        3466,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        4168,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        5030,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        5104,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        5237,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        5347,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        5422,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        5497,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        5572,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        5647,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        6264,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        6491,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        6674,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7035,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 19,
+        "equal": 4,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 4,
+        "visible": 9
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7111,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7281,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 152,
+        "equal": 10,
+        "opaque_CODE": 9,
+        "visible": 19
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7633,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7750,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7750,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7839,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7840,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7840,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7929,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 172,
+        "equal": 9,
+        "opaque_CODE": 9,
+        "visible": 20
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7930,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 103,
+        "equal": 8,
+        "opaque_CODE": 9,
+        "visible": 16
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8045,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 152,
+        "equal": 10,
+        "opaque_CODE": 9,
+        "visible": 19
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8162,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8279,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8279,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8368,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8369,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8369,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8458,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8459,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8459,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8548,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 298,
+        "equal": 13,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8549,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8549,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 298,
+        "equal": 13,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8638,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8639,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8639,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8728,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 43,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 7,
+        "visible": 12
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8729,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 79,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 10,
+        "visible": 15
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8730,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 19,
+        "equal": 4,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 4,
+        "visible": 9
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8870,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 54,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 8,
+        "visible": 13
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8961,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 135,
+        "equal": 9,
+        "opaque_CODE": 9,
+        "visible": 18
+      },
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 116,
+        "equal": 11,
+        "opaque_CODE": 9,
+        "visible": 17
+      },
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 43,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 7,
+        "visible": 12
+      },
+      "domain": [
+        "storable",
+        "api",
+        820,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        877,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        878,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        1150,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        1437,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        1724,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        2020,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        2318,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        2607,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        2909,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        3466,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        4168,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        5030,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        5104,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        5237,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        5347,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        5422,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        5497,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        5572,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        5647,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        6264,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        6491,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "storable",
+        "api",
+        6674,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        7035,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 19,
+        "equal": 4,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 4,
+        "visible": 9
+      },
+      "domain": [
+        "storable",
+        "api",
+        7111,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        7281,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 152,
+        "equal": 10,
+        "opaque_CODE": 9,
+        "visible": 19
+      },
+      "domain": [
+        "storable",
+        "api",
+        7633,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "storable",
+        "api",
+        7750,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "storable",
+        "api",
+        7750,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "storable",
+        "api",
+        7839,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "storable",
+        "api",
+        7840,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "storable",
+        "api",
+        7840,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "storable",
+        "api",
+        7929,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 172,
+        "equal": 9,
+        "opaque_CODE": 9,
+        "visible": 20
+      },
+      "domain": [
+        "storable",
+        "api",
+        7930,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 103,
+        "equal": 8,
+        "opaque_CODE": 9,
+        "visible": 16
+      },
+      "domain": [
+        "storable",
+        "api",
+        8045,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 152,
+        "equal": 10,
+        "opaque_CODE": 9,
+        "visible": 19
+      },
+      "domain": [
+        "storable",
+        "api",
+        8162,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "storable",
+        "api",
+        8279,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "storable",
+        "api",
+        8279,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "storable",
+        "api",
+        8368,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "storable",
+        "api",
+        8369,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "storable",
+        "api",
+        8369,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "storable",
+        "api",
+        8458,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "storable",
+        "api",
+        8459,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "storable",
+        "api",
+        8459,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "storable",
+        "api",
+        8548,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 298,
+        "equal": 13,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "storable",
+        "api",
+        8549,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "storable",
+        "api",
+        8549,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 298,
+        "equal": 13,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "storable",
+        "api",
+        8638,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "storable",
+        "api",
+        8639,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "storable",
+        "api",
+        8639,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "storable",
+        "api",
+        8728,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 43,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 7,
+        "visible": 12
+      },
+      "domain": [
+        "storable",
+        "api",
+        8729,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 79,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 10,
+        "visible": 15
+      },
+      "domain": [
+        "storable",
+        "api",
+        8730,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 19,
+        "equal": 4,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 4,
+        "visible": 9
+      },
+      "domain": [
+        "storable",
+        "api",
+        8870,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 54,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 8,
+        "visible": 13
+      },
+      "domain": [
+        "storable",
+        "api",
+        8961,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 135,
+        "equal": 9,
+        "opaque_CODE": 9,
+        "visible": 18
+      },
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 116,
+        "equal": 11,
+        "opaque_CODE": 9,
+        "visible": 17
+      },
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 43,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 7,
+        "visible": 12
+      },
+      "domain": [
+        "controls",
+        "api",
+        820,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        877,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        878,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        1150,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        1437,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        1724,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        2020,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        2318,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        2607,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        2909,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        3466,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        4168,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        5030,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        5104,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        5237,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        5347,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        5422,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        5497,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        5572,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        5647,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        6264,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        6491,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 29,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 10
+      },
+      "domain": [
+        "controls",
+        "api",
+        6674,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        7035,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 19,
+        "equal": 4,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 4,
+        "visible": 9
+      },
+      "domain": [
+        "controls",
+        "api",
+        7111,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 62,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        7281,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 152,
+        "equal": 10,
+        "opaque_CODE": 9,
+        "visible": 19
+      },
+      "domain": [
+        "controls",
+        "api",
+        7633,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "controls",
+        "api",
+        7750,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "controls",
+        "api",
+        7750,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "controls",
+        "api",
+        7839,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "controls",
+        "api",
+        7840,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "controls",
+        "api",
+        7840,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "controls",
+        "api",
+        7929,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 172,
+        "equal": 9,
+        "opaque_CODE": 9,
+        "visible": 20
+      },
+      "domain": [
+        "controls",
+        "api",
+        7930,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 103,
+        "equal": 8,
+        "opaque_CODE": 9,
+        "visible": 16
+      },
+      "domain": [
+        "controls",
+        "api",
+        8045,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 152,
+        "equal": 10,
+        "opaque_CODE": 9,
+        "visible": 19
+      },
+      "domain": [
+        "controls",
+        "api",
+        8162,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "controls",
+        "api",
+        8279,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "controls",
+        "api",
+        8279,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 299,
+        "equal": 12,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "controls",
+        "api",
+        8368,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "controls",
+        "api",
+        8369,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "controls",
+        "api",
+        8369,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "controls",
+        "api",
+        8458,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "controls",
+        "api",
+        8459,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "controls",
+        "api",
+        8459,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "controls",
+        "api",
+        8548,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 298,
+        "equal": 13,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "controls",
+        "api",
+        8549,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "controls",
+        "api",
+        8549,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 298,
+        "equal": 13,
+        "opaque_CODE": 14,
+        "visible": 26
+      },
+      "domain": [
+        "controls",
+        "api",
+        8638,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "controls",
+        "api",
+        8639,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 89,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "visible": 15
+      },
+      "domain": [
+        "controls",
+        "api",
+        8639,
+        1
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 229,
+        "equal": 10,
+        "opaque_CODE": 14,
+        "visible": 23
+      },
+      "domain": [
+        "controls",
+        "api",
+        8728,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 43,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 7,
+        "visible": 12
+      },
+      "domain": [
+        "controls",
+        "api",
+        8729,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 79,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 10,
+        "visible": 15
+      },
+      "domain": [
+        "controls",
+        "api",
+        8730,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 19,
+        "equal": 4,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 4,
+        "visible": 9
+      },
+      "domain": [
+        "controls",
+        "api",
+        8870,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 54,
+        "equal": 7,
+        "opaque_CODE": 9,
+        "outside_prior_held_relation": 8,
+        "visible": 13
+      },
+      "domain": [
+        "controls",
+        "api",
+        8961,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 135,
+        "equal": 9,
+        "opaque_CODE": 9,
+        "visible": 18
+      },
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ]
+    },
+    {
+      "counts": {
+        "distinct": 116,
+        "equal": 11,
+        "opaque_CODE": 9,
+        "visible": 17
+      },
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ]
+    }
+  ]
+}

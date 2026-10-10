@@ -5949,11 +5949,40 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join original visible addresses to simultaneous source roles.`
   Acceptance: `Conserve the complete admitted and parsed corpus. Independently join every own reference operand to the qualified graph/role view with exact source equality/distinction only inside simultaneous-live domains. Actual borrowed/aliased/wrong-kind/wrong-domain interventions must preserve prior meanings where applicable and reject at intended new contracts. Preserve opaque external/provider/formatter/Regexp/CODE identity and numerical cross-call/capture reuse boundaries; close only the complete raw-join parent after its full unchanged acceptance qualifies.`
+  Verification: `Source-holder completeness defect is fixed by child .1 with complete original-source/phase/holder/relation qualification and26 genuine controls. Child .2 owns full numerical joins; child .3 verifies unchanged complete parent acceptance. Historical products and all opaque CODE/CODE/native boundaries conserve.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.1`
+  Status: `done`
+  Goal: `Qualify active operation CODE argument holders before numerical joining.`
+  Acceptance: `Authenticate the complete original source/view and parsed prerequisites. Reconstruct every existing held member, caller prefix, inactive binding and source distinction; qualify each missing active saved-operation CODE parameter from the whole fixed original call_api source and exact source-frame roles. Independently verify complete source holder/relation conservation plus genuine omitted/borrowed/returned/private/carrier/kind/native controls. Preserve historical products; new retention changes no original payload or CODE/CODE identity. Sync task/book/proposed facts and ordinary gates, commit before numerical joins.`
+  Verification: `docs/audits/address-raw-join-20261010/proof.json qualifies the complete source-holder correction across171 original throw views. Exactly18 saved-operation CODE parameter holders and18 visible argument slots were missing from the prior named-holder union;153 views retain identical holder relations. Whole original call_api source keeps $operation in its outer lexical scope during the invoked throw. The byte producer and separate fixed-Git/named-line/caller-set oracle conserve all prior graph/role/source views, named holders, caller prefixes, inactive/private lifetimes and opaque CODE members, then reconstruct the entire supplemented relation. Per-view held occurrences increase from1218057 to1218075 and finite source distinction pairs from5007992568 to5008134549, adding141981 source pairs; these are source-retention/allocation hypotheses, never unique native objects or a heap census. Independent actual0 qualifies all26 genuine whole member/phase/returned/private/inactive/carrier/kind/source/native controls. Complete original parsed allocation and visible operation parameter positions conserve. Full prior capture/model namespaces, fixed committed source/input identities, function witness, programmes and actual outcomes retain. Initial exploratory native census has no qualified numeric result; J.3.2 still owns all numerical joins. The first copied intake programme mislabeled operand parsing as unqualified; it retains, and source-corrected-scope actual0 replays exactly unchanged immutable inputs with the correct holder/numerical boundary. Focused All tests successful Files3 Tests310 actual0; whole book/source/native omission, unchanged task/book authority, claims, staged doctrines and normal hooks gate same-slice commitment. The P1 source-holder completeness defect is fixed and independently verified without rewriting historical products. Native payload/flags/provider/formatter/CODE/Regexp identity, cross-call reuse, global heap/cold/visual/full-CI/push and governed publication remain owned/open. Child .2 numerical joining and .3 full raw-parent acceptance are next; no parent closes by count or partial proof.`
+  Commit: `this slice`
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S in docs/audits/address-raw-join-20261010/root-cause.json locates original active call_api parameter retention at100f540f56fd5a8209849016ac6874d2d85b7dd1 and the incomplete component named-holder union atc2b2a7f4a006bb267c4b077c37c5a295d24f44a5. Complete source-role census finds18 saved-operation CODE arguments outside that union. The whole original function assigns $operation before eval and retains it during the invoked throw; the prior model resolved those roles but did not add their parameter holders. Initial full numerical exploration is provisional, not a completed semantic join.
+  - [x] **ADDRESSED (verified)** — independent actual0 reconstructs every171 original source view and the complete prior/new named/caller/opaque relation. Exactly18 active CODE parameters add; every prior holder, source graph/role identity, inactive/private lifetime and whole raw/source allocation conserves. All26 genuine omission, borrowed phase/returned invocation, private/inactive/carrier, wrong kind/source and native-promotion controls reject. Fixed original function/parameter/visible-frame evidence, complete source products/programmes/outcomes and proof.json retain. Historical products remain immutable; source retention only is qualified, and numerical joins stay .2-owned.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in focused actual0. Complete corrected operand prerequisite replay and independent fixed-Git/source/caller/original-phase conservation pass. Same-slice whole book/native/source guide and genuine omission, measured owned task/book deltas, claims, staged scripts/check_doctrines.sh and normal hooks gate commitment under unchanged limits. Full raw-parent/native/HIAL/visual/full-CI/push and current canonical publication keep their owners.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.2`
+  Status: `pending`
+  Goal: `Join all original visible numerical operands to the complete simultaneous source roles.`
+  Acceptance: `Conserve the full original parsed corpus and qualified holder supplement. Independently join every own visible reference and preserve hidden/regex/external operands. Check every qualified source alias/distinction inside one simultaneous domain; genuine borrowed/aliased/kind/domain interventions must reject at intended new contracts with prior meanings conserved where applicable. CODE/CODE and provider/formatter/native/cross-call meanings remain opaque. Commit before full parent closure.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.3`
+  Status: `pending`
+  Goal: `Verify complete raw-join parent acceptance and close only qualified nodes.`
+  Acceptance: `Reexecute the whole admitted/parsed/source-holder/numerical join readers and independently audit all parent obligations against complete original bodies, phases and genuine controls. Preserve all earlier source/class/frame/coordinate meanings and missing native scopes; no count-only closure. Sync exact book/source/current pointers and ordinary gates. Close J.3 and its raw-join parent only when their full unchanged acceptance is proved; governed publication and address container remain successors.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4`
   Status: `pending`

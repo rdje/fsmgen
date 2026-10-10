@@ -1,0 +1,27 @@
+# Proposed dated active-operation holder completeness correction
+
+Owner: scope.txt. Proposed only; not a current Knowledge Map card.
+Questions: saved operation CODE active argument lexical parameter holder call_api
+source relation missing direct-operation holder numeric original join.
+
+Earlier component integration associated every original operation role but omitted
+some direct saved-operation CODE parameters from its named-holder union. The whole
+original call_api source retains $operation in its active outer lexical scope while
+the invoked operation throws inside eval. holders.json explicitly supplements the
+complete qualified source relation and conserves all prior meanings/products.
+Exact independently qualified counts and whole genuine controls live in proof.json.
+
+Re-derivation: holders.py binds the whole original function and complete original
+source views, adding only active explicitly forwarded saved CODE arguments.
+Falsification: oracle.py reads fixed Git bytes separately, selects whole named
+source lines, enumerates caller members and reconstructs prior/new relations;
+genuine omission/returned/private/inactive/carrier/kind/phase/native controls reject.
+Durability: full fixed committed inputs, immutable prior products, complete function
+witness/supplement, actual programme/result receipts, owned defect/task/book evidence
+and normal task-scoped Git commit retain. Replay is in guide.md.txt.
+
+Missing legs: numerical source-role joins remain J.3.2 and complete raw-parent
+qualification J.3.3. Native payload/flags/provider/formatter/CODE/Regexp identity,
+cross-call reuse, global heap census, cold replay, visual book QA and governed
+current canonical publication remain unqualified. All existing cards/questions/
+probes and collection authority preserve; no allowance or ceiling increase.

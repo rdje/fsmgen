@@ -1519,6 +1519,45 @@ and flags, provider/formatter/CODE/Regexp identity, cold replay, visual book QA
 and governed current fact publication remain open. Existing canonical facts,
 questions, probes and collection ceilings retain.
 
+Before numerical joining, a completeness review found a source-holder gap in
+the earlier integrated relation. Some saved-operation CODE arguments in active
+`main::call_api` frames were associated with their source roles but absent from
+the named-holder union. The original observer assigns that argument to the
+lexical `$operation` parameter and invokes it inside `eval`. The parameter
+remains active when the invoked operation throws.
+
+For example, a refused copy calls the saved `validate_record_port_copy` handle
+through `$operation`. Its active parameter retains that source CODE handle
+alongside the source and target roles. A returned operation has no such active
+parameter at the later checkpoint. Neither statement measures native CODE
+identity or external retention.
+
+A separate source supplement now qualifies this retention. It conserves every
+whole earlier source view, graph/role identity, named holder, retained caller
+prefix, private lifetime, inactive binding and distinction. Only the missing
+explicitly forwarded saved-operation parameters become additional holders.
+The complete finite distinction relation is recomputed over the supplemented
+source population; CODE/CODE pairs retain their opaque identity boundary.
+Counts describe members and relations per source view, never a native heap.
+
+The byte-based producer binds the entire original observer function. A separate
+reader selects its complete named source lines, independently enumerates caller
+members and reconstructs all prior and supplemented relations. Lost arguments,
+borrowed phases or returned calls, private/inactive roots, symbolic carrier
+promotion, wrong kinds and invented native identity reject. Historical source
+products retain unchanged; the correction is an explicit additional contract:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-join-20261010/verify.py
+```
+
+The holder completeness defect is fixed and independently verified. Original
+numerical equality/distinction joins are next, followed by full raw-parent
+qualification. Private/native payload and flags, provider/formatter/CODE/Regexp
+identity, cross-call reuse, global heap census, cold replay, visual book QA and
+governed current canonical publication remain open. Existing canonical facts,
+questions, probes and collection limits retain.
+
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
 does not establish coordinate meanings or later current currency:

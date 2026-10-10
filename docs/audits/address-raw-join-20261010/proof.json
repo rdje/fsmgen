@@ -1,0 +1,256 @@
+{
+  "controls": [
+    {
+      "name": "unknown-native-field",
+      "refusal": "closed complete holder supplement",
+      "whole_candidate": {
+        "bytes": 987472,
+        "sha256": "e795cf4674f5bdef07ce2f8d6aecd8ca7925c0014a864575f3b5f07c8abc49fe"
+      }
+    },
+    {
+      "name": "native-CODE-promotion",
+      "refusal": "exact source holder owner and native scope",
+      "whole_candidate": {
+        "bytes": 987103,
+        "sha256": "050c35a34e4dfe88acf6088ec240db21293807226d43056edc26e5eff037d4b7"
+      }
+    },
+    {
+      "name": "borrowed-owner",
+      "refusal": "exact source holder owner and native scope",
+      "whole_candidate": {
+        "bytes": 987333,
+        "sha256": "55fdd019b531d74756dbedfefdebfd89fa8a844b22f4ee3c39406edb1ef7014c"
+      }
+    },
+    {
+      "name": "lost-source-input",
+      "refusal": "whole holder input identity",
+      "whole_candidate": {
+        "bytes": 987230,
+        "sha256": "e8b8551d5f0d7d48e9a8fb8d8d15bcd8d0f433a64a4083db340668959ede489e"
+      }
+    },
+    {
+      "name": "lost-whole-function-byte",
+      "refusal": "complete original lexical operation retention witness",
+      "whole_candidate": {
+        "bytes": 987433,
+        "sha256": "51847e7848038e4e5e926ec0d1812c8fa0cbb5fbb795cced2c3fc0a730f12eb4"
+      }
+    },
+    {
+      "name": "borrowed-invocation-span",
+      "refusal": "complete original lexical operation retention witness",
+      "whole_candidate": {
+        "bytes": 987434,
+        "sha256": "9cddfad5cde6f598f3d87d9d10dd8be1df8399d98e58555af5bde7a61911fa06"
+      }
+    },
+    {
+      "name": "lost-mode",
+      "refusal": "complete holder mode population",
+      "whole_candidate": {
+        "bytes": 659904,
+        "sha256": "a32f20ff42c17c3369fd7e9cfd7fe21ea74b905a83f5bea359df1c45dfa9e47a"
+      }
+    },
+    {
+      "name": "lost-view",
+      "refusal": "complete holder view allocation",
+      "whole_candidate": {
+        "bytes": 979763,
+        "sha256": "27f7a80fb14142f76ec65beb485dd9cd20df3fb2a522cb0d066275346d4dbc2f"
+      }
+    },
+    {
+      "name": "borrowed-capture-phase",
+      "refusal": "whole original holder source phase",
+      "whole_candidate": {
+        "bytes": 987434,
+        "sha256": "b87a3f2000c2306ac03eafe3aae407fb18339c4016616da062a9144a87f59da4"
+      }
+    },
+    {
+      "name": "returned-invocation-phase",
+      "refusal": "whole original holder source phase",
+      "whole_candidate": {
+        "bytes": 987434,
+        "sha256": "72f1df0a7eff1a9f51e0f09028b42aad6a6c2750e9ffb1873891b8035c0f3095"
+      }
+    },
+    {
+      "name": "lost-prior-holder",
+      "refusal": "complete prior source holder relation conservation",
+      "whole_candidate": {
+        "bytes": 987416,
+        "sha256": "003d29ef222414807755c92674047405cb3969fcad7d7a72f6ef5b517fe82c3b"
+      }
+    },
+    {
+      "name": "lost-caller-prefix",
+      "refusal": "complete prior source holder relation conservation",
+      "whole_candidate": {
+        "bytes": 987388,
+        "sha256": "4ceb4f7bbface8f3b739de28bbaa74e6b1a5201280626410a09c34abf55417d6"
+      }
+    },
+    {
+      "name": "wrong-prior-distinction",
+      "refusal": "complete prior source holder relation conservation",
+      "whole_candidate": {
+        "bytes": 987429,
+        "sha256": "e63f94def752f4e793057c84e6e9088721aee60bd24a104f7d1d6edc03377db2"
+      }
+    },
+    {
+      "name": "lost-active-operation-holder",
+      "refusal": "complete active saved-operation argument holders",
+      "whole_candidate": {
+        "bytes": 987137,
+        "sha256": "45723d078782787b0f0f3ecae8fb829162bea24b2bc6fbad8499124aaa1230f5"
+      }
+    },
+    {
+      "name": "wrong-operation-reference-kind",
+      "refusal": "complete active saved-operation argument holders",
+      "whole_candidate": {
+        "bytes": 987434,
+        "sha256": "f0db9b7c97ba33976beb94754c2fd0f8f24d614dff4931e4e2e54ca085012774"
+      }
+    },
+    {
+      "name": "borrowed-private-result",
+      "refusal": "complete active saved-operation argument holders",
+      "whole_candidate": {
+        "bytes": 987426,
+        "sha256": "8c1924cd557451df81a186b53b21f2aadbabd92f598a23123e943d58e09deeb9"
+      }
+    },
+    {
+      "name": "borrowed-inactive-root",
+      "refusal": "complete active saved-operation argument holders",
+      "whole_candidate": {
+        "bytes": 987420,
+        "sha256": "2f02f374a7d844729aa10f5efa330dc35904735822c8e8cd45d8254a18e7f89f"
+      }
+    },
+    {
+      "name": "wrong-operation-argument",
+      "refusal": "complete active saved-operation argument holders",
+      "whole_candidate": {
+        "bytes": 987434,
+        "sha256": "f30fbd85b4e2fa43369c564b1e64a1b7e786b7ad9765010b2230c70a6fda46a4"
+      }
+    },
+    {
+      "name": "borrowed-source-origin",
+      "refusal": "complete active saved-operation argument holders",
+      "whole_candidate": {
+        "bytes": 987289,
+        "sha256": "6d3dadea4adf8e640621cc637d139ac807774c4674a18fb5c318ac5a87ce5aee"
+      }
+    },
+    {
+      "name": "invent-native-parameter-field",
+      "refusal": "complete active saved-operation argument holders",
+      "whole_candidate": {
+        "bytes": 987463,
+        "sha256": "aba0f1b59a10a7f998873f155c42022a19b66d2804d5b60e080ccd513e971e6a"
+      }
+    },
+    {
+      "name": "lost-supplemented-held-member",
+      "refusal": "complete supplemented source held members",
+      "whole_candidate": {
+        "bytes": 987391,
+        "sha256": "7275434c04fc23ce9385f08dd761431fe1008ee60a7800c630d8c354b2bf7562"
+      }
+    },
+    {
+      "name": "symbolic-carrier-as-holder",
+      "refusal": "complete supplemented source held members",
+      "whole_candidate": {
+        "bytes": 987461,
+        "sha256": "9033c985b85b188c31d363ce214bfff2a05d6757b7b151ba18f1660bcb2f816e"
+      }
+    },
+    {
+      "name": "Boolean-population",
+      "refusal": "complete supplemented source distinction and opaque CODE relation",
+      "whole_candidate": {
+        "bytes": 987435,
+        "sha256": "648da6fb18f4c0c4cee47b3a9b1fc929bb302bf0b48ed5d0399b8dd161707d94"
+      }
+    },
+    {
+      "name": "lost-new-distinction-pairs",
+      "refusal": "complete supplemented source distinction and opaque CODE relation",
+      "whole_candidate": {
+        "bytes": 987432,
+        "sha256": "7331fb8ffd1f34caddb2ab3d5d29de4b8dd501d52fc75f694d860e5bc0339f8b"
+      }
+    },
+    {
+      "name": "CODE-CODE-distinction-promotion",
+      "refusal": "complete supplemented source distinction and opaque CODE relation",
+      "whole_candidate": {
+        "bytes": 987437,
+        "sha256": "6f8d7a03c3480c52b7cf9cdc62b9b1bad8a75d8c6abefb481806be10b4ad88f7"
+      }
+    },
+    {
+      "name": "lost-opaque-CODE-member",
+      "refusal": "complete supplemented source distinction and opaque CODE relation",
+      "whole_candidate": {
+        "bytes": 987391,
+        "sha256": "3cb0bdb7a0e23905b9ef71b2237d1e1bd09ff0bc68c7da38b919f9937183faf9"
+      }
+    }
+  ],
+  "holder_product": {
+    "bytes": 1348619,
+    "sha256": "0863f5e52f9cbd34d6c1a80a8461dfaa2c5560a0b6b235c076a494604e06abfc"
+  },
+  "legs": {
+    "durability": "Whole fixed original/source/parsed inputs, prior namespaces/products, full function witness and supplement, actual programmes/results, defect ownership and task/book/Git checkpoint retain.",
+    "falsification": "oracle.py separately reads fixed Git bytes, scans whole named source lines, enumerates complete caller sets and reconstructs all prior/new holders and pair relations; genuine complete product controls reject.",
+    "re_derivation": "holders.py conserves whole qualified source views and adds only explicit active call_api saved-operation parameter holders from the complete original source."
+  },
+  "measured": {
+    "additional_distinction_pairs": 141981,
+    "additional_holders": 18,
+    "additional_visible_arguments": 18,
+    "distinction_pairs": 5008134549,
+    "held_population": 1218075,
+    "prior_distinction_pairs": 5007992568,
+    "prior_held_population": 1218057,
+    "unchanged_views": 153,
+    "views": 171
+  },
+  "missing_legs": "Source retention and allocation hypothesis only. Numerical reference-role joins remain J.3.2; full raw parent closure is J.3.3. Native payload/flags/provider/formatter/CODE/Regexp identity, cross-call reuse, global heap, cold replay, visual QA and governed current publication remain open.",
+  "programmes": {
+    "checks.py": {
+      "bytes": 1403,
+      "sha256": "872521a168e3b29fa4eea74d22adf989e340aeed0e96e51ff501a5650f362460"
+    },
+    "holders.py": {
+      "bytes": 5979,
+      "sha256": "82eda1ddd6588c26fb6cbc8937c59b7a7568e832b0fba182c138ccc264214d40"
+    },
+    "oracle.py": {
+      "bytes": 11500,
+      "sha256": "09e898dc8ea5cbd8e54227accd4b0b9712baff7ed6eaed77decbb56d4cbfc5ec"
+    },
+    "source.py": {
+      "bytes": 4795,
+      "sha256": "ace383fba4e9016e19cef469295a1f2fa6d4602813b8bf20d46893b54cfb2e88"
+    },
+    "verify.py": {
+      "bytes": 8835,
+      "sha256": "cd599fef513c1a481c855c65b052ff9fb55d23367f061725f97252e76d0bb852"
+    }
+  },
+  "scope": "Complete dated own source holder relation with active saved-operation CODE parameter retention. Earlier graph/role/caller/inactive meanings conserve. This is source retention and allocation hypothesis only; original numerical joins, native identity/payload/flags, CODE/CODE identity, provider/formatter identity, cross-call reuse, global heap census and cold replay remain open."
+}

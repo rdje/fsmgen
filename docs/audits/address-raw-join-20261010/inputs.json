@@ -1,0 +1,93 @@
+{
+  "classes": {
+    "identity": {
+      "bytes": 17033810,
+      "sha256": "42914fbfd6310d5f9fe62ac68dcb31eba5409f6b857e1cb16aefc46420cc1a47"
+    },
+    "path": "docs/audits/record-value-class-frame-join-20261006/source-models.json"
+  },
+  "coordinates": {
+    "identity": {
+      "bytes": 20331004,
+      "sha256": "5b57a7a5ce8267b4ddf9a3a5ac12f5db33d9f85f13d95b41404bff62ee49dea4"
+    },
+    "path": "docs/audits/coordinate-original-matching-qualified-20261009/matching.json"
+  },
+  "frames": {
+    "identity": {
+      "bytes": 2442971,
+      "sha256": "15d4f2ce858ad814cc227d380aa796ec3b12b17696a45024c715ff920f6b3ffd"
+    },
+    "path": "docs/audits/record-value-class-frame-join-20261006/proofs.json"
+  },
+  "helper_grammar": {
+    "identity": {
+      "bytes": 14365,
+      "sha256": "eb0d42c4e464048b2f82d61ac94054770572daf492e7e96205af741c649f76a2"
+    },
+    "path": "docs/audits/record-value-original-callback-paths-20261005/verify.py"
+  },
+  "observer_source": {
+    "identity": {
+      "bytes": 14362,
+      "sha256": "cf71b6508b67bb8cf651ec118599e9ace41650d5675b91a74aec1567aec57398"
+    },
+    "path": "docs/audits/record-value-original-candidate-20261004/observe.pl"
+  },
+  "operands": {
+    "identity": {
+      "bytes": 12551547,
+      "sha256": "0db2d4eb2eaf571c4c7b831df145e6b91c6c3659ec2d7c73ffe470aa31eaaaf3"
+    },
+    "path": "docs/audits/address-raw-operands-20261010/operands.json"
+  },
+  "original_controls": {
+    "identity": {
+      "bytes": 6749619,
+      "sha256": "ec1b743259796f91d0ae938a453689ae8f839fbde12a73e84823a34d28d6d7fc"
+    },
+    "path": "docs/audits/record-value-original-candidate-20261004/controls.json"
+  },
+  "original_ordinary": {
+    "identity": {
+      "bytes": 6401859,
+      "sha256": "0f0dd5ddd77396ee9b88908fa8b96ea77c235669c21e6b12ea7463b5b41e3615"
+    },
+    "path": "docs/audits/record-value-original-candidate-20261004/ordinary.json"
+  },
+  "original_storable": {
+    "identity": {
+      "bytes": 6403293,
+      "sha256": "e8a53e9664e5e83ff7dbd46e293a59f9abb50c53dd0f2208581b184c21251a9c"
+    },
+    "path": "docs/audits/record-value-original-candidate-20261004/storable.json"
+  },
+  "parser_grammar": {
+    "identity": {
+      "bytes": 16442,
+      "sha256": "13c367ef3cf1ec7c99d49de587492977e973e0f0d7936e6662ef3854770bbdd3"
+    },
+    "path": "docs/audits/record-value-parser-argument-roles-20261006/verify.py"
+  },
+  "raw": {
+    "identity": {
+      "bytes": 3431274,
+      "sha256": "4546b181f99dc17201dbd0a42235f1de324407a3232dd0cb786c6f3b505ad935"
+    },
+    "path": "docs/audits/record-value-class-frame-join-20261006/raw-product.json"
+  },
+  "raw_grammar": {
+    "identity": {
+      "bytes": 1475,
+      "sha256": "e9a3e1ace18c468bd093cefa0241aa379bf0b7d66178b404e7b851041f9ec72e"
+    },
+    "path": "docs/audits/record-value-original-raw-20261005/trace_inventory.py"
+  },
+  "source": {
+    "identity": {
+      "bytes": 11645790,
+      "sha256": "90a32f51fd2e888fe3332d0c8b2990063c154095ff54da9b940b65afce64ec4c"
+    },
+    "path": "docs/audits/address-source-integration-20261010/hypotheses.json"
+  }
+}

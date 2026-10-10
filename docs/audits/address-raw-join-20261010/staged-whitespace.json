@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "disposition": "Only intentional exact two-LF native book insertion fragment EOF warning; no other whitespace warning.",
+  "fragment": {
+    "bytes": 2329,
+    "sha256": "22ebdd3870e20ddd8693e126b6394c64aa29521cdea1d90b9c3f05d0e8c0fafc"
+  },
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-raw-join-20261010/book-addition.md.txt:39: new blank line at EOF.\n"
+}

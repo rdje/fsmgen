@@ -1,0 +1,236 @@
+[
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "ordinary",
+      "api",
+      820,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "ordinary",
+      "api",
+      7111,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_scope}",
+    "domain": [
+      "ordinary",
+      "api",
+      8729,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_scope}",
+    "domain": [
+      "ordinary",
+      "api",
+      8730,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 4
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_reference}",
+    "domain": [
+      "ordinary",
+      "api",
+      8870,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "ordinary",
+      "api",
+      8961,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 4
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "storable",
+      "api",
+      820,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "storable",
+      "api",
+      7111,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_scope}",
+    "domain": [
+      "storable",
+      "api",
+      8729,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_scope}",
+    "domain": [
+      "storable",
+      "api",
+      8730,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 4
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_reference}",
+    "domain": [
+      "storable",
+      "api",
+      8870,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "storable",
+      "api",
+      8961,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 4
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "controls",
+      "api",
+      820,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "controls",
+      "api",
+      7111,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_scope}",
+    "domain": [
+      "controls",
+      "api",
+      8729,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_scope}",
+    "domain": [
+      "controls",
+      "api",
+      8730,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 4
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{record_value_reference}",
+    "domain": [
+      "controls",
+      "api",
+      8870,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 3
+  },
+  {
+    "argument": 1,
+    "binding": "saved:$value{validate_record_port_copy}",
+    "domain": [
+      "controls",
+      "api",
+      8961,
+      0
+    ],
+    "kind": "CODE",
+    "no_active_own_holder": false,
+    "source_frame": 4
+  }
+]

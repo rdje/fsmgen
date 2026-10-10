@@ -1,0 +1,42 @@
+# Complete active-operation source holder correction
+
+Owner: scope.txt, child J.3.1. Run from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-join-20261010/verify.py
+```
+
+The original active operation parameter retains a saved CODE handle that the
+prior component named-holder union omitted in 18 source throw views. Complete
+source roles already associate those arguments correctly; the defect concerns
+holder/relation completeness. No native numerical mismatch caused the repair.
+holder-gap.md.txt records ownership/root cause and initial exploration.
+
+source.py authenticates the full committed operand-parser namespace, complete
+original/source/parsed products and whole original observer at ac21c39a4d85ba6af8ae68bec65ab20927abbe81.
+The complete prerequisite replay is actual0 and retains every prior meaning.
+The first copied intake label incorrectly described lossless parsing as still
+unqualified; its programme/outcome retain, and corrected immutable replay names
+the holder/numerical scope precisely. Original inputs are never overwritten.
+
+holders.py retains whole prior source view identities and all prior named/caller/
+inactive/distinction data, then adds only explicit active call_api operation
+parameters with saved_lookup origins. The complete source function and binding/
+invocation spans prove lexical retention at the already-qualified source throw.
+oracle.py imports no producer. It reads fixed Git bytes, independently selects
+whole named source lines, enumerates full caller member sets, checks original
+visible parameter positions and reconstructs complete prior/new holder relations.
+
+holders.json is the complete supplement; proof.json contains the definitive
+per-view populations/relation counts, 26 genuine controls and three distinct
+verification legs. These are finite source-retention/allocation hypotheses.
+No original numerical role join, native heap/object death or CODE/CODE identity
+is established. Symbolic graph carriers and prior inactive/private lifetimes
+remain separate. Historical source models and capture bytes retain unchanged.
+
+The exploratory holder-membership and numerical census JSONs are provisional
+diagnosis only. Independent source qualification supplies the completed repair;
+numerical joining remains J.3.2, followed by J.3.3 full parent acceptance. The
+fact proposal awaits governed non-growing canonical publication. Focused tests,
+full native source/book delivery, claim/task capacity checks, staged doctrines
+and normal hooks gate this same-slice commit; all limits remain unchanged.

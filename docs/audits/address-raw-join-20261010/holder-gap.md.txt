@@ -1,0 +1,27 @@
+# Owned active-operation source holder gap
+
+Owner: scope.txt, active child J.3.1; numerical joins follow under J.3.2.
+Reproduce: holder-membership-census.json enumerates every original source reference
+occurrence outside named/retained holder sets. All 18 are saved-operation CODE
+arguments in main::call_api frames, with saved_lookup origins. The initial full
+numerical census reports 120 otherwise unclaimed visible pairs and no mismatch.
+These exploratory counts are not independent qualification.
+
+Root cause: the prior integration unions component named/local/private/helper
+holders and retained caller prefixes, but direct operation argument saved handles
+can be absent from that union. The original observer destructures $operation from
+@_ and invokes it inside eval; its lexical parameter remains active at the source
+throw. A complete argument holder relation needs this explicit supplement.
+
+Resolution scheduled now: fixed complete original observer/source/view/parsed
+intake, independent retention and relation qualification, genuine omission/wrong
+phase/returned/private/carrier/kind/native controls and immutable prior products.
+Do not classify the pairs opaque merely because the old holder union omitted them.
+CODE/CODE identity and native/global heap meanings remain unqualified. Commit this
+source correction before numerical equality/distinction qualification.
+
+Resolution: fixed and independently qualified by proof.json/verify.py. The complete
+supplement adds the active parameter holders and recomputes every prior/new source
+relation; historical products remain unchanged. Original numerical qualification
+remains the explicitly owned successor. Fresh focused/book/doctrine/hook gates
+complete the same-slice commit.

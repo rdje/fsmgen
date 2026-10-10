@@ -1,0 +1,34 @@
+{
+  "incomplete-holder-union": {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-1",
+      "-S",
+      "held = {resolve(component, key) for component, key in local_held}",
+      "--",
+      "docs/audits/address-source-integration-20261010/model.py"
+    ],
+    "mechanism": "Prior local/component named-holder union did not add all active operation saved CODE parameters although occurrence role/binding integration retained them.",
+    "status": 0,
+    "stderr": "",
+    "stdout": "c2b2a7f4a006bb267c4b077c37c5a295d24f44a5 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5.2: integrate complete source roles and lifetimes\n"
+  },
+  "original-active-parameter": {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-1",
+      "-S",
+      "my ($kind, $operation, $caller, @args) = @_;",
+      "--",
+      "docs/audits/record-value-original-candidate-20261004/observe.pl"
+    ],
+    "mechanism": "Original call_api outer lexical $operation remains active at the operation throw inside eval.",
+    "status": 0,
+    "stderr": "",
+    "stdout": "100f540f56fd5a8209849016ac6874d2d85b7dd1 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.2: capture original copy candidate and genuine provider failures\n"
+  }
+}

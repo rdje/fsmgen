@@ -1,0 +1,8 @@
+{
+  "disposition": "Exact reviewed template unchanged; no policy import or external runtime dependency.",
+  "external_read_only_source": "pgen/docs/CLAIM_VERIFICATION.md",
+  "identity": {
+    "bytes": 18166,
+    "sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd"
+  }
+}

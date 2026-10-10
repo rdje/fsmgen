@@ -1,0 +1,248 @@
+{
+  "actual_prerequisite": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/address-raw-operands-20261010/verify.py"
+    ],
+    "instruments": {
+      "docs/audits/address-raw-join-20261010/checks.py": {
+        "bytes": 1403,
+        "sha256": "872521a168e3b29fa4eea74d22adf989e340aeed0e96e51ff501a5650f362460"
+      },
+      "docs/audits/address-raw-operands-20261010/verify.py": {
+        "bytes": 11314,
+        "sha256": "72dbe0341d2b635ef87d3c565c350f4f7fc7fe16478bbd2fd6c2e0656d2766e3"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 97181; host 66.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS complete independent original byte/argument/hex partition; genuine separating controls reject; numeric source-role joins and native meanings remain open.\n"
+  },
+  "members": {
+    "docs/audits/address-raw-operands-20261010/before-book-authority.jsonl.txt": {
+      "bytes": 36477,
+      "sha256": "2d8967683690e6df8ac1d4a9ecf808f7104ed61c75c92e80becd3af860aae7b3"
+    },
+    "docs/audits/address-raw-operands-20261010/binding.json": {
+      "bytes": 8178,
+      "sha256": "bf23267a3f0bf88834cf3ac5b7bdbc3af404861712db3d504f38582a15371196"
+    },
+    "docs/audits/address-raw-operands-20261010/book-addition.md.txt": {
+      "bytes": 3018,
+      "sha256": "dbb4e982199a066c598a9941455c8f9fe6fb1f54a30c937077fc53ce07cfede0"
+    },
+    "docs/audits/address-raw-operands-20261010/book-authority.json": {
+      "bytes": 21755,
+      "sha256": "3217b3008f1f8aa43fb4e3f142d5be52cb549a580d2394005a41f89934ebf561"
+    },
+    "docs/audits/address-raw-operands-20261010/book-proof.json": {
+      "bytes": 910,
+      "sha256": "c542dc9e6a019380ee05ce338fa27d3583a3f373efcdbd38bf900476e9c9e82f"
+    },
+    "docs/audits/address-raw-operands-20261010/book-replacements.json": {
+      "bytes": 553,
+      "sha256": "b6993498b0b583ba7611671a8f204dc9b178042259246490ee1ff9939c305664"
+    },
+    "docs/audits/address-raw-operands-20261010/book_authority.py": {
+      "bytes": 4117,
+      "sha256": "7f9645d59a69571023f075976fa9842f66bb57f192d37f65b6f90bba1e54870b"
+    },
+    "docs/audits/address-raw-operands-20261010/book_check.py": {
+      "bytes": 3604,
+      "sha256": "79be3c503c8e907bc9162dff2244332aa90e4bad3966a2dd0f1a9a19941d0ccc"
+    },
+    "docs/audits/address-raw-operands-20261010/bridge-partition-diagnosis.json": {
+      "bytes": 7665,
+      "sha256": "a618e389b526176f200d6ff0bc08b7599220ef61ce696f1e5e033d34e592395a"
+    },
+    "docs/audits/address-raw-operands-20261010/bridge-partition.py.txt": {
+      "bytes": 14736,
+      "sha256": "83a250d00ded9157226399e6bda798c59d20cada60d89c7a5bdb7a8f9d1ca475"
+    },
+    "docs/audits/address-raw-operands-20261010/checks.json": {
+      "bytes": 150747,
+      "sha256": "f022ad068856f144bcd6e77e2d60b1e6782aeb8e5779356899d05b225607ba95"
+    },
+    "docs/audits/address-raw-operands-20261010/checks.py": {
+      "bytes": 1407,
+      "sha256": "f12e70a1174ab5d4285eac63d2acef88d58361a827bd2aa18202e6eba280f217"
+    },
+    "docs/audits/address-raw-operands-20261010/claim-disposition.json": {
+      "bytes": 1594,
+      "sha256": "f94da57e03e2979b0c89d11f815b2ba5a4634d9d31b8de944621f43f73baab24"
+    },
+    "docs/audits/address-raw-operands-20261010/fact-card-proposal.md.txt": {
+      "bytes": 1879,
+      "sha256": "4f7426e3a7ffec1e4f15fedc5b0b8a444c23ee5b9d4a71b0ce9b9c9e1f107999"
+    },
+    "docs/audits/address-raw-operands-20261010/final-proof.json": {
+      "bytes": 20471,
+      "sha256": "9bbacc634fad597e3bb6f8eccd28923c11aea741932d2969959751990297a93d"
+    },
+    "docs/audits/address-raw-operands-20261010/first-claim-disposition.json": {
+      "bytes": 1677,
+      "sha256": "4666c3a09c54b14bb68860c29dccf1d57ce49f3bacb3d03e717d29772473f4cc"
+    },
+    "docs/audits/address-raw-operands-20261010/first-memory.md.txt": {
+      "bytes": 1640,
+      "sha256": "e89a57f9f40aa20eddef9eb6618f2646d495e8f1113300953bc1ece97a6cf01a"
+    },
+    "docs/audits/address-raw-operands-20261010/first-partition-diagnosis.json": {
+      "bytes": 86499,
+      "sha256": "83519df09750d3ce413beae82e15e752c4b4f737672da35f9c6cb332f07ba56a"
+    },
+    "docs/audits/address-raw-operands-20261010/first-partition.py.txt": {
+      "bytes": 14202,
+      "sha256": "25679b624d3a52c2b50eea84cc0a96bdae9e0e63a22db1b30f8ba2df146ce91e"
+    },
+    "docs/audits/address-raw-operands-20261010/first-proof.json": {
+      "bytes": 20471,
+      "sha256": "c22a50de1bbf26b008dd767caea3c6f6ea8e303feb932bd70800c585ae3432b3"
+    },
+    "docs/audits/address-raw-operands-20261010/first-qualification.py.txt": {
+      "bytes": 10801,
+      "sha256": "0b7762ba9f27a794f2270c477fa3e7fb8dc1b49393a9d1c49b6aa6f7728d1212"
+    },
+    "docs/audits/address-raw-operands-20261010/first-qualified-oracle.py.txt": {
+      "bytes": 22712,
+      "sha256": "a720a06a5b689692988d909d55c29a0bc3ec57337dc332c4359bba4b9ed23eec"
+    },
+    "docs/audits/address-raw-operands-20261010/first-qualified-reader.py.txt": {
+      "bytes": 10791,
+      "sha256": "902d3b19ec3ad4ebe8894a492b0c12a7f1b9873de3128defff87f87ec4807bf6"
+    },
+    "docs/audits/address-raw-operands-20261010/first-staged-doctrines.json": {
+      "bytes": 62821,
+      "sha256": "8fda9f662e5dbf4ecf011a4bb604fa2f1f2b9909e82533047a6808f89341f02d"
+    },
+    "docs/audits/address-raw-operands-20261010/first-task-metrics.json.txt": {
+      "bytes": 431,
+      "sha256": "9085e54821aa943a677dd7aa134a5e1ac28249987f25aef72032849c5320d3a6"
+    },
+    "docs/audits/address-raw-operands-20261010/guide.md.txt": {
+      "bytes": 3364,
+      "sha256": "f75d2ddabefc869acba37b01f452e57244948762d4ba523d24a44f1261c609ab"
+    },
+    "docs/audits/address-raw-operands-20261010/inputs.json": {
+      "bytes": 2611,
+      "sha256": "bc113a9cc855a4733b920af692dc79f367610ccfd633e2a5c594ea0ce5643164"
+    },
+    "docs/audits/address-raw-operands-20261010/operands.json": {
+      "bytes": 12551547,
+      "sha256": "0db2d4eb2eaf571c4c7b831df145e6b91c6c3659ec2d7c73ffe470aa31eaaaf3"
+    },
+    "docs/audits/address-raw-operands-20261010/oracle.py": {
+      "bytes": 23247,
+      "sha256": "4b9a95bb769eab8238a75272d74205f91d54a0383ecfac37bdfb0b7d75f9fe03"
+    },
+    "docs/audits/address-raw-operands-20261010/parse.py": {
+      "bytes": 14890,
+      "sha256": "3a5d69e1a58e9c7bb1fd03658ff33044bbdbc52aa27888478a4a7c75db0dd1ff"
+    },
+    "docs/audits/address-raw-operands-20261010/policy-currency.json": {
+      "bytes": 295,
+      "sha256": "43f512353466e501944114227e5068fa77dca8de6604304c02010342a5097091"
+    },
+    "docs/audits/address-raw-operands-20261010/programme-history.json": {
+      "bytes": 1521,
+      "sha256": "b82832c7b2ae4264771642e5795fe50165b61f2af4204fd953aa68e2db824c04"
+    },
+    "docs/audits/address-raw-operands-20261010/proof.json": {
+      "bytes": 20471,
+      "sha256": "c22a50de1bbf26b008dd767caea3c6f6ea8e303feb932bd70800c585ae3432b3"
+    },
+    "docs/audits/address-raw-operands-20261010/root-cause.json": {
+      "bytes": 1808,
+      "sha256": "636f90f1fbe53afaf4d1de5264924154d89ba894d3d27c9b6b39e2e7f25e6c02"
+    },
+    "docs/audits/address-raw-operands-20261010/scope.txt": {
+      "bytes": 107,
+      "sha256": "9660c3b40a57441ef7fa36a8fe5c09038af9b48320f92c8c20a66143c99faeef"
+    },
+    "docs/audits/address-raw-operands-20261010/source.py": {
+      "bytes": 4553,
+      "sha256": "e848889755455f47db04eee244d6d4d10eb3b2e9480351f63a317a3264e75005"
+    },
+    "docs/audits/address-raw-operands-20261010/staged-whitespace.json": {
+      "bytes": 508,
+      "sha256": "3d17fb840a49933f435a5628c1c13cda666226cc6b18fa9149c751a89432fffb"
+    },
+    "docs/audits/address-raw-operands-20261010/staged-workflow-repair.json": {
+      "bytes": 4900,
+      "sha256": "2eacaaa8d311a8ca894f8ea2bdbace9bcb87984eae9fadaf32f02e77200f3810"
+    },
+    "docs/audits/address-raw-operands-20261010/task-metrics.json": {
+      "bytes": 431,
+      "sha256": "e9bba2d0835b19b6caa4a20eadd736ef8d51848f64ffc96be4aa07827d378ff8"
+    },
+    "docs/audits/address-raw-operands-20261010/task_pressure.py": {
+      "bytes": 1917,
+      "sha256": "0e71fcf902e18d7b795616634be99965c6cfbf93fc3e0a268c2a64ce0fbc0e28"
+    },
+    "docs/audits/address-raw-operands-20261010/verify.py": {
+      "bytes": 11314,
+      "sha256": "72dbe0341d2b635ef87d3c565c350f4f7fc7fe16478bbd2fd6c2e0656d2766e3"
+    },
+    "docs/audits/address-source-integration-20261010/hypotheses.json": {
+      "bytes": 11645790,
+      "sha256": "90a32f51fd2e888fe3332d0c8b2990063c154095ff54da9b940b65afce64ec4c"
+    },
+    "docs/audits/coordinate-original-matching-qualified-20261009/matching.json": {
+      "bytes": 20331004,
+      "sha256": "5b57a7a5ce8267b4ddf9a3a5ac12f5db33d9f85f13d95b41404bff62ee49dea4"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/proofs.json": {
+      "bytes": 2442971,
+      "sha256": "15d4f2ce858ad814cc227d380aa796ec3b12b17696a45024c715ff920f6b3ffd"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/raw-product.json": {
+      "bytes": 3431274,
+      "sha256": "4546b181f99dc17201dbd0a42235f1de324407a3232dd0cb786c6f3b505ad935"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/source-models.json": {
+      "bytes": 17033810,
+      "sha256": "42914fbfd6310d5f9fe62ac68dcb31eba5409f6b857e1cb16aefc46420cc1a47"
+    },
+    "docs/audits/record-value-original-callback-paths-20261005/verify.py": {
+      "bytes": 14365,
+      "sha256": "eb0d42c4e464048b2f82d61ac94054770572daf492e7e96205af741c649f76a2"
+    },
+    "docs/audits/record-value-original-candidate-20261004/controls.json": {
+      "bytes": 6749619,
+      "sha256": "ec1b743259796f91d0ae938a453689ae8f839fbde12a73e84823a34d28d6d7fc"
+    },
+    "docs/audits/record-value-original-candidate-20261004/observe.pl": {
+      "bytes": 14362,
+      "sha256": "cf71b6508b67bb8cf651ec118599e9ace41650d5675b91a74aec1567aec57398"
+    },
+    "docs/audits/record-value-original-candidate-20261004/ordinary.json": {
+      "bytes": 6401859,
+      "sha256": "0f0dd5ddd77396ee9b88908fa8b96ea77c235669c21e6b12ea7463b5b41e3615"
+    },
+    "docs/audits/record-value-original-candidate-20261004/storable.json": {
+      "bytes": 6403293,
+      "sha256": "e8a53e9664e5e83ff7dbd46e293a59f9abb50c53dd0f2208581b184c21251a9c"
+    },
+    "docs/audits/record-value-original-raw-20261005/trace_inventory.py": {
+      "bytes": 1475,
+      "sha256": "e9a3e1ace18c468bd093cefa0241aa379bf0b7d66178b404e7b851041f9ec72e"
+    },
+    "docs/audits/record-value-parser-argument-roles-20261006/verify.py": {
+      "bytes": 16442,
+      "sha256": "13c367ef3cf1ec7c99d49de587492977e973e0f0d7936e6662ef3854770bbdd3"
+    }
+  },
+  "prerequisite": {
+    "bytes": 20471,
+    "sha256": "9bbacc634fad597e3bb6f8eccd28923c11aea741932d2969959751990297a93d"
+  },
+  "revision": "ac21c39a4d85ba6af8ae68bec65ab20927abbe81",
+  "scope": "Complete dated admission and whole original/raw/source/class/frame/coordinate products; no original recapture or numeric identity interpretation."
+}
