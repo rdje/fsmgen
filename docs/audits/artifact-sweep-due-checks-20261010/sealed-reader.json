@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/artifact-sweep-due-20261010/verify.py"
+  ],
+  "instruments": {
+    "docs/audits/artifact-sweep-due-20261010/verify.py": {
+      "bytes": 4552,
+      "sha256": "410f9f92452a8f340d24ffe87b45ac0ca5488ed78dc4fee346649c531389563b"
+    },
+    "docs/audits/artifact-sweep-due-checks-20261010/checks.py": {
+      "bytes": 1412,
+      "sha256": "8655f785147bacd11ad17a0e861ed9f8f9309bf38f705f4a0eb5b225340d324f"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 32653; host 59.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"controls\": [{\"cause\": \"independent complete rg/os.walk membership\", \"control\": \"Boolean-rg-status\", \"status\": 1}, {\"cause\": \"complete dated regular-node metadata\", \"control\": \"Boolean-node-size\", \"status\": 1}, {\"cause\": \"independent complete rg/os.walk membership\", \"control\": \"member-omission\", \"status\": 1}, {\"cause\": \"repository-relative artifact scope\", \"control\": \"escaped-path\", \"status\": 1}, {\"cause\": \"read-only sweep cannot claim deletion\", \"control\": \"fabricated-deletion\", \"status\": 1}, {\"cause\": \"daily due interval\", \"control\": \"non-due-time\", \"status\": 1}], \"scope\": \"Dated read-only census; no artifact deletion or byte-hash claim.\", \"status\": 0}\n"
+}

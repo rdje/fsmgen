@@ -323,7 +323,7 @@ dated census records node metadata and independent file membership; it does
 not establish artifact byte identity or future absence. Replay a saved example:
 
 ```sh
-python3 -B docs/audits/artifact-sweep-due-20261009/verify.py
+python3 -B docs/audits/artifact-sweep-due-20261010/verify.py
 ```
 
 Output-bearing CLI options must resolve inside the repository and reject

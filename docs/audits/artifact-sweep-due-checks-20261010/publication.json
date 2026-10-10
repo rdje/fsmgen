@@ -1,0 +1,48 @@
+{
+  "after": {
+    "bytes": 26010,
+    "sha256": "04501f74cc9bc60e0ab7390a6502a1bdff71dda64ae0d33fa92940407c109560"
+  },
+  "before": {
+    "bytes": 26010,
+    "sha256": "95e7a61db07195cd172c223f87f36f8bc186fd254ce7ac35bdc81250f14a6bcf"
+  },
+  "book_after": {
+    "bytes_total": 3895005,
+    "files": 64,
+    "lines_total": 69961
+  },
+  "book_before": {
+    "bytes_total": 3895005,
+    "files": 64,
+    "lines_total": 69961
+  },
+  "current_registry": {
+    "bytes": 36585,
+    "sha256": "517f1873353948b08d27fce29871968b13f49b16fa633e897d6d88cfa0e85c7e"
+  },
+  "legs": {
+    "durability": "Fixed prior revision, whole source hashes, programmes, census seal, complete check receipts and Git.",
+    "falsify": "Exact sole substitution rejects any unrelated source change or aggregate growth; saved/actual census controls independently reject hostile records.",
+    "rederive": "Complete fixed-Git/current book membership and source bytes reconstruct."
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.82",
+  "previous_registry": {
+    "bytes": 36585,
+    "sha256": "5b7c00c148188375ae232d6923a3f658fdb05c33776221e4fef4b189adf3525e"
+  },
+  "revision": "959f8b940d2517696183220ea6bc805f302fa6e6",
+  "source": "docs/book/src/09-generated-hdl-debugging-and-inspection.md",
+  "substitution": {
+    "after": "python3 -B docs/audits/artifact-sweep-due-20261010/verify.py",
+    "before": "python3 -B docs/audits/artifact-sweep-due-20261009/verify.py"
+  },
+  "task_metrics": {
+    "bytes_each": 2366453,
+    "bytes_total": 12979240,
+    "files": 596,
+    "line_bytes_each": 6264,
+    "lines_each": 7096,
+    "lines_total": 118235
+  }
+}

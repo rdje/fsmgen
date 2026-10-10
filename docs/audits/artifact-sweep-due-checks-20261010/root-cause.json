@@ -1,0 +1,17 @@
+{
+  "cause": "The latest committed cleanup will exceed the mandatory24-hour interval at 2026-10-10T15:51:09.758448+00:00. This slice runs its census after that instant; suffix or age alone never establishes disposal authority.",
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S2026-10-09T15:51:09.758448+00:00",
+    "--",
+    "docs/ARTIFACT_CLEANUP.md"
+  ],
+  "prior_record": "# Latest artifact cleanup\n\n2026-10-09T15:51:09.758448+00:00 \u2014 Removed nothing: own log/bin/bytecode/stdout/stderr and Rust locations censused; all artifacts retained because exact safe-disposal authority is unproved. Native/compiler/audit evidence and current book preserved.\n",
+  "revision": "959f8b940d2517696183220ea6bc805f302fa6e6",
+  "status": 0,
+  "stderr": "",
+  "stdout": "f263d5c8a13b9a31da2b633a103f4575b17ef41c SEMANTIC-INTROSPECTION-MCP-FRONTIER.81: retain due daily cleanup census\n"
+}

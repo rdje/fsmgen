@@ -1,0 +1,20 @@
+{
+  "scope": "Read-only source policy currency; source claim policy matches the previously adopted digest. No external writes or build dependency.",
+  "sources": [
+    {
+      "bytes": 18166,
+      "read_only_reference": "/Volumes/SSD/Documents/github/pgen/docs/CLAIM_VERIFICATION.md",
+      "sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd"
+    },
+    {
+      "bytes": 9849,
+      "read_only_reference": "README_POLICY.md",
+      "sha256": "882682fa1ace703ae68726b8532a4ad24fe2c8a271bae4e07b859bd197a621c9"
+    },
+    {
+      "bytes": 21327,
+      "read_only_reference": "docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md",
+      "sha256": "8f77fa39c9bcb9cfc43166259a627a6ced64682030088400b727dccc5d674a53"
+    }
+  ]
+}

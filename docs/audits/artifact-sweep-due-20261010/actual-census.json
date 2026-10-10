@@ -1,0 +1,26 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/artifact-sweep-due-20261010/census.py"
+  ],
+  "instruments": {
+    "docs/audits/artifact-sweep-due-20261010/census.py": {
+      "bytes": 4710,
+      "sha256": "8a52f665cfe674185543decabba94acb16a53bc13c27891df79ff72e4e8f5719"
+    },
+    "docs/audits/artifact-sweep-due-checks-20261010/checks.py": {
+      "bytes": 1412,
+      "sha256": "8655f785147bacd11ad17a0e861ed9f8f9309bf38f705f4a0eb5b225340d324f"
+    },
+    "scripts/run_with_ram_guard.sh": {
+      "bytes": 10663,
+      "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+    }
+  },
+  "status": 0,
+  "stderr": "ram-guard: PID 23940; host 58.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+  "stdout": "{\"artifact_members\": 9764, \"removed\": [], \"status\": 0, \"utc\": \"2026-10-10T15:51:37.875808+00:00\"}\n"
+}
