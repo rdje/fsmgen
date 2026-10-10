@@ -1,0 +1,17 @@
+{
+  "guides": {
+    "docs/audits/address-parser-contexts-20261010/book-addition.md.txt": {
+      "bytes": 3150,
+      "reason": "The exact source-insertion artifact deliberately preserves the final paragraph separator before the unchanged following paragraph.",
+      "sha256": "59b24c5b81186dc61a25a316e62211c124ba264e09d9f94fb516da0372b67e7c",
+      "terminal_bytes_hex": "0a0a"
+    },
+    "docs/audits/address-parser-contexts-20261010/first-book-addition.md.txt.txt": {
+      "bytes": 3127,
+      "reason": "The exact source-insertion artifact deliberately preserves the final paragraph separator before the unchanged following paragraph.",
+      "sha256": "f94cb6f834d6f6089b1ef952c1a053e2f7224afba6c59dbcc16c73eb13711ad7",
+      "terminal_bytes_hex": "0a0a"
+    }
+  },
+  "scope": "Only these exact source-insertion artifacts deliberately end in a paragraph separator; staged whitespace must show no other warnings."
+}

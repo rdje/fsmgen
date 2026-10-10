@@ -1,0 +1,11 @@
+{
+  "step": 2,
+  "observed_step": {
+    "boundary": "return",
+    "index": 0,
+    "kind": "private-copy",
+    "module": "Scopes"
+  },
+  "mismatch": "/4/type_spec/members/flag/width 1 (int) / '1' (str)",
+  "scope": "Read-only path diagnosis of first construction interpreter; actual first guarded failure retains separately."
+}

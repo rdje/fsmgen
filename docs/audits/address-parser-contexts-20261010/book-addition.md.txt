@@ -1,0 +1,53 @@
+The fresh record-context boundary now has complete construction checkpoints and
+an independent source interpreter. Context creation copies port roots, validates
+resolved types, builds separate aggregate-root maps, prepares transaction samples,
+overlays their bindings and resolves the refused write target. The final joint
+graph retains arguments for every instrumented context, value-scope, sample and
+reference call alongside outputs and copy boundaries;
+this retention belongs to the fresh observer, not the original parser.
+
+A public scalar experiment establishes an important representation limit. Two
+fresh widths both encode as JSON integer `1` before copying. Validating one with
+the own positive-integer pattern followed by a numeric comparison before
+published `dclone` makes that copy encode as JSON string `"1"`; the other copy
+remains integer `1`. Equal JSON
+input kinds therefore do not determine copied JSON kinds. This experiment does
+not inspect the provider implementation or recover original Perl scalar flags.
+Replay the bounded public experiment:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/address-parser-contexts-20261010/scalar_representation.pl
+```
+
+The source interpreter checks numeric meaning only at declared finite numeric
+properties outside the conserved facade, AST and actor. Width `1` and canonical
+numeric string `"1"` may denote the same source property; Boolean values, floats,
+leading-zero strings, negative strings and changed numeric values fail. AST
+tokens and conserved actor fields remain strictly typed. Separately, fresh replay
+must match every retained typed observation exactly. No captured graph is
+normalized, and numeric meaning does not establish native flag equality.
+
+The first strict interpreter failed at a copied leaf width. That nonzero result,
+its programmes and all first graphs remain retained. After correcting that
+boundary, the same first graphs admitted a second assurance defect: an empty
+sample-binding map and an equal fresh overlay argument were indistinguishable.
+The repaired final graph includes every instrumented call argument and rejects that
+well-formed alias split, as well as merged contexts, erased private copies,
+missing members or stages, changed values and native-scope promotions.
+
+The actor context, transaction context and returned target reference remain
+active at the refusal. The sample lexical block has already ended before clause
+validation; its output and intermediate contexts/scopes retained by the probe
+are not additional original active holders. Inactive calls establish neither
+object death nor a global heap census. Replay the complete boundary qualification:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-contexts-20261010/verify.py
+```
+
+The representation/probe boundary child is closed. Original context-slot and
+private-protocol joins, full parser/helper/source integration, original raw
+address and native payload/flag/identity qualification, cold replay and governed
+canonical publication remain owned successors. Existing canonical facts,
+questions, probes and every collection ceiling retain.
+

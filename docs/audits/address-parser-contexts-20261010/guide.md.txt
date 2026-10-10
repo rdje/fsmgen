@@ -1,0 +1,43 @@
+# Fresh record-context boundary qualification
+
+`scope.txt` names the owning task leaf. This slice qualifies fresh source numeric
+meaning, full checkpoint graph aliases and exact typed public observations.
+Original context-slot/private-protocol source joins remain the next leaf; no
+native scalar flags, payload or identity are measured here.
+
+Run from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- perl docs/audits/address-parser-contexts-20261010/scalar_representation.pl
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-contexts-20261010/verify.py
+```
+
+`source.py` conserves the complete corrected actor prerequisite and original
+context protocol intake, checks fixed Git bytes and original own source epochs,
+and invokes the public parser. `public_contexts.pl` instruments context scope,
+value scope, transaction samples, value reference and imported public copy
+boundaries. It retains the four instrumented call kinds' arguments jointly;
+its carrier arrays and historical output retention are observer allocations.
+`model.py` publishes the bounded hypothesis; `oracle.py` independently interprets
+own construction semantics and checks complete graph bijections. `verify.py`
+checks exact typed fresh replay, retained failures/admissions and hostile controls.
+`proof.json`, `binding.json` and `checks.json` are the corresponding evidence.
+
+The first strict oracle's representation failure is retained in the original
+`probe-gap` receipt and `probe-gap-first-failure.json`. `first-*` programmes and
+products are frozen first observations; `probe_gap.py` uses the corrected numeric
+boundary to reproduce the first graphs' separate equal-payload alias blind spot.
+It does not claim that the original strict oracle succeeded. The current probe
+repairs that gap by retaining its constructor argument arrays jointly.
+
+`draft-model.py.txt` and `draft-oracle.py.txt` preserve an unqualified broader
+original source-role closure draft. They are not current acceptance evidence and
+do not close the pending original context/source child. `draft-probe_gap.py.txt`
+preserves the actual programme that first failed before reaching its alias test.
+The first book declaration and guide remain retained before wording refinement.
+
+The dated fact proposal names separate re-derivation, falsification and durability
+legs, with every missing scope explicit. Canonical Knowledge Map publication,
+collection rollover, original native qualification and visual book QA remain
+owned successors. Book source conservation and native-text checks are separate
+from visual review.

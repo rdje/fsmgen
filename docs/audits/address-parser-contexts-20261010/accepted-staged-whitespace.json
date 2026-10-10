@@ -1,0 +1,18 @@
+{
+  "actual": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "status": 2,
+    "stdout": "docs/audits/address-parser-contexts-20261010/book-addition.md.txt:53: new blank line at EOF.\ndocs/audits/address-parser-contexts-20261010/first-book-addition.md.txt.txt:52: new blank line at EOF.\n",
+    "stderr": ""
+  },
+  "accepted": [
+    "docs/audits/address-parser-contexts-20261010/book-addition.md.txt:53: new blank line at EOF.",
+    "docs/audits/address-parser-contexts-20261010/first-book-addition.md.txt.txt:52: new blank line at EOF."
+  ],
+  "scope": "Only the exact retained insertion guides have required EOF paragraph separators; no other whitespace warning accepted."
+}

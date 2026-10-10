@@ -1,0 +1,67 @@
+---
+status: proposed; governed non-growing publication remains the address-publication child
+source: docs/audits/address-parser-contexts-20261010/
+date: 2026-10-10
+---
+
+Fresh record-context source construction qualifies across every retained entry,
+return and final checkpoint. Its source interpreter constructs contexts, copied
+port roots, aggregate maps, empty sample preparation, the sample-binding overlay
+and the resolved field target. All members, aliases and finite source numeric
+properties check independently; conserved facade/AST/actor graphs stay typed.
+Original context-slot and private-protocol source joins remain the next child.
+
+The first strict oracle stopped at Scopes private-copy zero's return: a copied
+bit width encoded as string "1", although its source hypothesis used integer 1.
+A bounded public Storable/JSON experiment now reproduces equal pre-copy JSON
+integer widths whose copies encode differently after positive-integer pattern
+validation and numeric comparison. This establishes an input-representation
+ambiguity without inspecting provider implementation or measuring scalar flags.
+Only declared finite numeric fields outside conserved anchors admit equivalent
+canonical numeric strings. Exact captured typed graphs are never normalized;
+independent semantic graphs and exact typed fresh replay are separate checks.
+
+With this boundary corrected, the complete first graphs genuinely admit both
+correct sample/overlay map sharing and an equal fresh empty overlay argument.
+The first probe omitted construction argument arrays from its final joint graph.
+The repaired probe retains every instrumented context, value-scope, sample and
+reference argument jointly and rejects the well-formed alias split. First
+programmes, products, the actual strict failure and later genuine alias admission
+are retained without relabeling the original nonzero result.
+
+The actor context, transaction context and returned target reference are active
+at the refusal. The sample lexical block ends before clause validation; sample
+results and intermediate context/scope outputs retained by instrumentation are
+not original active holders. Probe carriers are observer allocations. Neither
+inactive delegates nor excluded intermediate outputs establish object death,
+provider retention or a global heap census.
+
+Re-derivation: source.py freshly qualifies the full corrected actor/entry/helper/
+private prerequisites, binds every inherited read to fixed Git bytes and checks
+all original own source epochs. The public probe records complete typed graphs;
+model.py publishes the bounded whole hypothesis; oracle.py independently derives
+complete context construction and injective source graph bijections, plus an
+explicit per-checkpoint numeric representation ledger. verify.py requires exact
+typed fresh replay and complete original protocol intake conservation.
+
+Falsification: actual first strict failure and later first-graph alias admission
+both replay. Genuine controls cover other construction steps/phases, Boolean
+coordinates, alias splits/merges, erased copy detachment, lost arguments/members,
+wrong numeric values, noncanonical/negative strings, Boolean/float values,
+semantic-equal typed observation changes, normalized actor/AST kinds, sample
+reactivation, observer-holder promotion and native scope promotion. All final
+controls reject at their declared boundary; exact outcomes are in checks.json.
+
+Durability: whole fixed-Git input custody, original source epochs, public
+command/status/streams, first and final programmes/products/proofs, actual guarded
+receipts, relevant git log -S history and same-slice runnable book retain. The
+first book declaration/guide also retain before wording refinement. External
+claim policy was checked read only against the reviewed template. This proposal
+does not widen the Knowledge Map; all canonical facts/questions/probes and every
+collection ceiling conserve.
+
+Missing legs: original context-slot/private-protocol joins and parser/helper
+closure remain the immediate owned successor. Original native scalar flags,
+payload/identity, provider/formatter/CODE identity, full source/raw integration,
+cold replay, visual book QA and governed non-growing canonical publication stay
+owned by their existing task-tree successors.

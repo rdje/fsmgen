@@ -1,0 +1,68 @@
+"""Reproduce the first probe's genuine equal-payload overlay-alias blind spot."""
+import hashlib
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/address-parser-contexts-20261010')
+
+
+def identity(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def reproduce():
+    original = json.loads((BASE / 'first-inputs.json.txt').read_bytes())
+    namespace = {'__name__': 'first_context_probe_oracle'}
+    path = BASE / 'oracle.py'
+    exec(compile(path.read_bytes(), str(path), 'exec'), namespace)
+    graph, Construction = namespace['graph'], namespace['Construction']
+    anchor = graph(original['construction_model']['profiles'][0]['final']['graph'])
+    roots = [anchor.edges[str(i)] for i in range(3)]
+    correct = Construction(original['public'], roots)
+    correct.joint_arguments = False
+    correct.run()
+    source = next(row for row in correct.protocols if row[:2] == ('scope', 7))
+    if source[2].edges['3'] is not correct.outputs['samples'][0].edges['bindings']:
+        raise ValueError('actual first correct overlay argument setup')
+    operation = Construction.value_scope
+    def split(self, outer, local):
+        if len(self.outputs['scope']) == 7:
+            local = namespace['record']({})
+        return operation(self, outer, local)
+    Construction.value_scope = split
+    try:
+        contrary = Construction(original['public'], roots)
+        contrary.joint_arguments = False
+        contrary.run() # The same complete first fresh graphs admit the wrong source alias.
+    finally:
+        Construction.value_scope = operation
+    changed = next(row for row in contrary.protocols if row[:2] == ('scope', 7))
+    if (changed[2].edges['3'] is contrary.outputs['samples'][0].edges['bindings']
+            or changed[2].edges['3'].edges != {}):
+        raise ValueError('genuine first equal-payload overlay source split')
+    checks = json.loads((BASE / 'checks.json').read_bytes())['first-source']
+    if (type(checks['status']) is not int or checks['status'] != 0
+            or checks['instruments'][str(BASE / 'source.py')] != identity((BASE / 'first-source.py.txt').read_bytes())):
+        raise ValueError('actual first whole context probe source intake')
+    old_binding = json.loads((BASE / 'first-binding.json.txt').read_bytes())
+    if old_binding['public_replay']['programme'] != identity((BASE / 'first-public_contexts.pl.txt').read_bytes()):
+        raise ValueError('complete first public context probe programme custody')
+    return {'first_programme': identity((BASE / 'first-public_contexts.pl.txt').read_bytes()),
+        'first_oracle': identity((BASE / 'first-oracle.py.txt').read_bytes()),
+        'corrected_numeric_oracle': identity(path.read_bytes()),
+        'numeric_scope': 'The original strict first oracle failed on scalar representation. This actual alias admission uses its unchanged first observations with the corrected numeric-field oracle, never relabels the first nonzero outcome.', 'first_inputs': identity((BASE / 'first-inputs.json.txt').read_bytes()),
+        'first_binding': identity((BASE / 'first-binding.json.txt').read_bytes()),
+        'complete_steps_admitted': len(original['public']['steps']),
+        'correct_alias_admitted': True, 'contrary_equal_payload_alias_admitted': True,
+        'cause': 'First step checkpoints show an empty local argument only once; the final carrier omits call arguments, so it cannot link that map to the sample-result binding map.',
+        'repair': 'Retain every original constructor argument in the fresh final joint graph and reject a well-formed equal-payload sample/overlay alias split.',
+        'scope': 'Reproducible first instrumentation/oracle coverage gap; not an original native or product defect.'}
+
+
+if __name__ == '__main__':
+    target = BASE / 'probe-gap.json'
+    result = reproduce()
+    if target.exists():
+        raise ValueError('retain first complete probe gap diagnosis')
+    target.write_text(json.dumps(result, sort_keys=True, indent=2) + '\n')
+    print('PASS reproduced first complete context probe admission of correct and contrary equal-payload overlay aliases; repair required.')

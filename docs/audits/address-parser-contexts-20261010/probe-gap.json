@@ -1,0 +1,29 @@
+{
+  "cause": "First step checkpoints show an empty local argument only once; the final carrier omits call arguments, so it cannot link that map to the sample-result binding map.",
+  "complete_steps_admitted": 154,
+  "contrary_equal_payload_alias_admitted": true,
+  "correct_alias_admitted": true,
+  "corrected_numeric_oracle": {
+    "bytes": 17077,
+    "sha256": "1db7cc44c3c110449fdc38d496f810b3b7f89892e475f4ccd506925060a2cb4d"
+  },
+  "first_binding": {
+    "bytes": 572644,
+    "sha256": "23aa1af491a05a4a08bdf62ae728d5db71b8035d8f81cedaad7687128befecce"
+  },
+  "first_inputs": {
+    "bytes": 10832005,
+    "sha256": "9208c3f65a325d6af84c97dc57cc3ff553502e07c73b6a7030ef9d9472bcefe7"
+  },
+  "first_oracle": {
+    "bytes": 21837,
+    "sha256": "e53565d3b2c99242330c213a9e7471c40b38ec1292920d7a632d0cb60cabd1b3"
+  },
+  "first_programme": {
+    "bytes": 6818,
+    "sha256": "e05f07aa4b862f8056f52db400e56bb0707964091e9921dd6c6ba28df2ba99ec"
+  },
+  "numeric_scope": "The original strict first oracle failed on scalar representation. This actual alias admission uses its unchanged first observations with the corrected numeric-field oracle, never relabels the first nonzero outcome.",
+  "repair": "Retain every original constructor argument in the fresh final joint graph and reject a well-formed equal-payload sample/overlay alias split.",
+  "scope": "Reproducible first instrumentation/oracle coverage gap; not an original native or product defect."
+}
