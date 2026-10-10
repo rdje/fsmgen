@@ -1,0 +1,36 @@
+# Complete original numerical/source join — finite scope
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.2
+
+Read inputs.json and binding.json for complete fixed d63e predecessor custody.
+No original capture is rerun. The fresh prerequisite executes the whole corrected
+holder reader, which retains complete operand/source/class/frame/coordinate
+custody and actual prior semantic outcomes. First successes are immutable.
+
+Run from the repository root:
+
+    scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-numeric-join-20261010/verify.py
+
+join.py uses parsed tokens and source/holder phases. oracle.py independently
+reads original capture bytes, source roles and coordinate positions; manual hex
+accumulation and independent bipartite relations check the result. proof.json
+contains the full measured population, genuine controls, programmes and legs.
+checks.json retains actual commands, statuses, streams and instrument identities.
+The complete joining.json conserves all original empty and nonempty allocations,
+raw body identities, source domains and nested forwarding. It lists every own
+visible reference, hidden interval, regex display, opaque external operand and
+finite source-alias/distinction/opaque-CODE pair. There is no cross-view union.
+
+Numerical control candidates alter derived interpretation, not original capture
+inputs. The reader checks explicit alias agreement and distinct source separation
+before exact operand-byte association, so their intended failures do not depend
+on a generic digest mismatch. A consistent renamed source class can preserve
+relations but must fail original association. Controls explicitly preserve all
+prior complete inputs and nonnumerical source/holder/domain/slot meanings where
+applicable. This is not a claim that changed raw original bytes pass custody.
+
+Counts are occurrences and pairs per simultaneous view, not unique native objects.
+Full raw-parent acceptance is separately owned by the next child. Native/private
+payload/flags, provider/formatter/CODE/Regexp identities, cross-call/capture reuse,
+heap census, cold replay, visual QA and governed fact publication remain open.
+No Knowledge Map allowance, collection cap or old canonical question changes.

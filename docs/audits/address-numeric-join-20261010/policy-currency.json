@@ -1,0 +1,6 @@
+{
+  "bytes": 18166,
+  "external_read_only_source": "/Volumes/SSD/Documents/github/pgen/docs/CLAIM_VERIFICATION.md",
+  "scope": "Read-only comparison equals the policy snapshot fully reviewed and adopted by the preceding unit. No policy delta or foreign write.",
+  "sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd"
+}

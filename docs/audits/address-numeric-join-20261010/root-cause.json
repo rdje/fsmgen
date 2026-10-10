@@ -1,0 +1,17 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=fuller",
+    "-S",
+    "original numerical joins, native identity/payload/flags",
+    "--",
+    "docs/audits/address-raw-join-20261010/holders.py"
+  ],
+  "diagnostic_attempt": "An initial source pickaxe used absent address-source-integration integrate.py and yielded no history. A bounded rg confirmed the actual explicit numerical frontier in committed holders.py; corrected exact pickaxe follows.",
+  "locus": "The prior complete corrected holder supplement explicitly leaves the numerical join unqualified; current work interprets original visible numbers only inside each complete simultaneous source domain.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "commit d63e5ca0f763302668d12ac90b5c07c9c9caa872\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Sat Oct 10 13:55:47 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Sat Oct 10 13:55:47 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.1: qualify active operation CODE holders\n    \n    Repair the source-holder completeness gap: active call_api saved-operation parameters were associated with source roles but omitted from the prior named-holder relation. Preserve every old product and add an explicit whole-source retention supplement.\n    \n    Independent complete source/caller/phase reconstruction qualifies all 171 views, 18 additional holders and 26 genuine controls while preserving opaque CODE/CODE and native boundaries. Focused publication/book checks pass (310 tests); sync book, task frontier, claims and exact owned measurements under unchanged limits. Numerical joins and full raw-parent acceptance remain owned successors.\n"
+}

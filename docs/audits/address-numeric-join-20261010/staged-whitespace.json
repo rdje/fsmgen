@@ -1,0 +1,22 @@
+{
+  "accepted_contract": "Exact book insertion fragment ends in two LF bytes to separate it from the unchanged next paragraph. Its actual LF count determines the reported EOF line; no other whitespace warning is admitted.",
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "first_attempt": {
+    "actual_line": 54,
+    "cause": "AssertionError on manually miscounted EOF line. Exact actual warning retained; corrected validation derives the line from complete fragment bytes. No fragment byte changes.",
+    "expected_line": 53,
+    "status": 1
+  },
+  "fragment": {
+    "bytes": 3024,
+    "sha256": "8aa4b0d9203c36a8c1119199cc85d1bbc4b7a9a082397a6b0e1ebabd994a804f"
+  },
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-numeric-join-20261010/book-addition.md.txt:54: new blank line at EOF.\n"
+}

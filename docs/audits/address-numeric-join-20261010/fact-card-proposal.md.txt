@@ -1,0 +1,13 @@
+# Unadmitted proposed fact — original numerical/source relation
+
+The complete finite original visible own reference displays agree with explicit
+source aliases and differ for qualified distinct source bindings inside each
+corrected simultaneous throw view. This joins numbers to source hypotheses; it
+does not infer native identity from numbers. CODE/CODE and external/regex/hidden,
+provider/formatter, numerical cross-call/capture and heap boundaries remain.
+
+Canonical publication is still owned by the address-container successor. This
+proposal does not enter Knowledge Map capacity or replace any existing question.
+
+Evidence: docs/audits/address-numeric-join-20261010/proof.json
+Reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-numeric-join-20261010/verify.py

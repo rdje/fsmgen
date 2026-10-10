@@ -1,0 +1,493 @@
+{
+  "controls": [
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "unknown-native-field",
+      "refusal": "closed complete numerical join",
+      "whole_candidate": {
+        "bytes": 3624963,
+        "sha256": "96cda5057bf759ad7b8346bf37ce689c814ae0630e3048fb109bb136e869614e"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "native-identity-promotion",
+      "refusal": "exact numerical owner and native/reuse scope",
+      "whole_candidate": {
+        "bytes": 3624486,
+        "sha256": "b7696219f0eec740bb0bfce2eaa09b6c15fe0e4c28b98420d5bd278d67c7155e"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "borrowed-owner",
+      "refusal": "exact numerical owner and native/reuse scope",
+      "whole_candidate": {
+        "bytes": 3624828,
+        "sha256": "5628b3f3f13f21c7ccaf701ab95fcea12e37a8314104931f2e224d43ee2af72a"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-holder-input",
+      "refusal": "whole fixed numerical input identity",
+      "whole_candidate": {
+        "bytes": 3624744,
+        "sha256": "f23274264181a2147d5a0e2d969e75ef5acae98980241ffe83bd90bf9e3d38cd"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "borrowed-binding",
+      "refusal": "whole fixed numerical input identity",
+      "whole_candidate": {
+        "bytes": 3624933,
+        "sha256": "22ea48d89096e64b1fcbc9314fe3743d43959c4de958a8aa942dfebfbfab2719"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-mode",
+      "refusal": "complete original parsed allocation and opaque operand conservation",
+      "whole_candidate": {
+        "bytes": 3518671,
+        "sha256": "7f1b9cf4a5d7e777a0cc5f084ce09b1c7193e2ff265840648ac0f79a4c69c0ff"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-empty-record",
+      "refusal": "complete original parsed allocation and opaque operand conservation",
+      "whole_candidate": {
+        "bytes": 3624923,
+        "sha256": "85ed397ad91b6d42018724dec65c088aad1bdcf5983ae3619b245255d3b6f4bc"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-record-body",
+      "refusal": "complete original parsed allocation and opaque operand conservation",
+      "whole_candidate": {
+        "bytes": 3624817,
+        "sha256": "9ed022ab522241cc91e780d1db000496680bb80b631abdb1ec5d03960dc4ac55"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-nested-forwarding",
+      "refusal": "complete original parsed allocation and opaque operand conservation",
+      "whole_candidate": {
+        "bytes": 3624376,
+        "sha256": "27134251edb78efcb7d26d827568c3f6be930f0fcdb41a68ea6c96e691474934"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-opaque-external-reference",
+      "refusal": "complete original parsed allocation and opaque operand conservation",
+      "whole_candidate": {
+        "bytes": 3624706,
+        "sha256": "a79eb7dd095610126084448169bb1583d0cf7c57a56c184591b17b0174c7e75e"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-view",
+      "refusal": "complete numerical view population",
+      "whole_candidate": {
+        "bytes": 3604609,
+        "sha256": "1ffae56c3979a940c4d3d0b98ca64fee4282e217bb1b8a2feff89eb4f2f9fdc3"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "unknown-view-field",
+      "refusal": "closed complete numerical source view",
+      "whole_candidate": {
+        "bytes": 3624954,
+        "sha256": "89859b46d59d7b078356cac063db5dd416c3e130a907de8bb728dea68fc37e53"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "borrowed-whole-source-view",
+      "refusal": "exact original simultaneous numerical source domain",
+      "whole_candidate": {
+        "bytes": 3624929,
+        "sha256": "c44731c4ab5d614f13cbc6343e8de782c9e11f0c78b06a5cc315637e456c0875"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "borrowed-whole-holder-view",
+      "refusal": "exact original simultaneous numerical source domain",
+      "whole_candidate": {
+        "bytes": 3624929,
+        "sha256": "1ee90f222e0f29973fa0fe868cc74d8eed20b38007eb2264360482b8d44ed3fc"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-reference-slot",
+      "refusal": "complete own numerical reference slot population",
+      "whole_candidate": {
+        "bytes": 3624537,
+        "sha256": "d0d8382a58a600f0f4504a175c6808757946d367670e21aaedbc98d6301aaf4a"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "unknown-reference-field",
+      "refusal": "closed original numerical reference operand",
+      "whole_candidate": {
+        "bytes": 3624953,
+        "sha256": "2902a13f90d8c931db1c90b28db30a5e4207ae2a6dd3cef4be34c13d46a9093b"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-provenance",
+      "refusal": "exact original source slot binding and provenance",
+      "whole_candidate": {
+        "bytes": 3624872,
+        "sha256": "6b8b804042d1e0e5e1f72098c7b8d3a4a15458fc24bda47018f5f6c841653179"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "borrowed-source-binding",
+      "refusal": "exact original source slot binding and provenance",
+      "whole_candidate": {
+        "bytes": 3624929,
+        "sha256": "0e471d29be889267aa3cf27249b2c3863a5f4385c936cf438c595fce926106ee"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "wrong-physical-frame",
+      "refusal": "exact original source slot binding and provenance",
+      "whole_candidate": {
+        "bytes": 3624929,
+        "sha256": "700f104b9f68c632dff588db28bd564d9f35926edf27382bafa0e2bf46260b76"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "wrong-reference-kind",
+      "refusal": "exact original source numerical reference kind",
+      "whole_candidate": {
+        "bytes": 3624930,
+        "sha256": "14399f0b6364d83d889d52fc12050ddc40173abec9c572ce2dc41d4317cbf38b"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "wrong-blessed-class",
+      "refusal": "exact original source numerical reference kind",
+      "whole_candidate": {
+        "bytes": 3624934,
+        "sha256": "eb095867e9c4e82e0a8a9e41638c5ddf0a61599462e870c0873036052d9c72cc"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "decimal-address",
+      "refusal": "complete numerical hexadecimal grammar",
+      "whole_candidate": {
+        "bytes": 3624922,
+        "sha256": "eede658bbf3c39aa20e9f857dbbf5e048aa02a4c6a325b0b90aa5b66f5cee84e"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "Boolean-address",
+      "refusal": "complete numerical hexadecimal grammar",
+      "whole_candidate": {
+        "bytes": 3624919,
+        "sha256": "878510ebefb8168ed139067569ed51de6ae012f275c65d8236a8761577addc15"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "wrong-hex-interpretation",
+      "refusal": "exact numerical hexadecimal interpretation",
+      "whole_candidate": {
+        "bytes": 3624920,
+        "sha256": "e49b35f20ece5a4418ca5af4d22bba568a8b6157122a227302f25c73aea786b0"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-original-byte-span",
+      "refusal": "complete original reference operand byte and number association",
+      "whole_candidate": {
+        "bytes": 3624927,
+        "sha256": "47b117cc52a7feefa30cba1ecabf9bdbb8c4ba991d594155683106cf5d1180c7"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-regex-display",
+      "refusal": "complete unaddressed regex and hidden source conservation",
+      "whole_candidate": {
+        "bytes": 3624511,
+        "sha256": "4801c1acec2ac2f06a53723162f62062c67a35325613749a0c73c731ed2b0226"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "invented-hidden-address",
+      "refusal": "complete unaddressed regex and hidden source conservation",
+      "whole_candidate": {
+        "bytes": 3624954,
+        "sha256": "92a71614ca37e7189ca5f4f2aa9810873ac816d8fd11ad22079d4de1b8ba00f2"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "external-reference-promotion",
+      "refusal": "complete own numerical reference slot population",
+      "whole_candidate": {
+        "bytes": 3625177,
+        "sha256": "53ac14a2d04b4dec3afd32515295e814f22fe734e823fe63f92d9e76caca7d31"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-alias-class",
+      "refusal": "complete source alias class allocation",
+      "whole_candidate": {
+        "bytes": 3624826,
+        "sha256": "90ce100a95e221db10c7e564cff19be22b250a4b76432bc379b825e315f203d9"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "lost-pair",
+      "refusal": "complete numerical pair relation and opaque CODE partition",
+      "whole_candidate": {
+        "bytes": 3624844,
+        "sha256": "c83d7176134709a0f7677f09a4584a10d2b8e2a9fb1ffb112b2f84a8b83a2e46"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "CODE-distinction-promotion",
+      "refusal": "complete numerical pair relation and opaque CODE partition",
+      "whole_candidate": {
+        "bytes": 3624926,
+        "sha256": "b2d4f58d893744ac5d039eb4477678cda7937ba6b983fbee4d98e5c7b1a14b1d"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "ordinary-borrowed-source-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624928,
+        "sha256": "2859d8424649c4c1dbfa1f4b00c6eb78a10b499ea07bb904aa80f1d972da3a9e"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "ordinary-aliased-distinct-source-class",
+      "refusal": "numerical separation for simultaneous source distinctions",
+      "whole_candidate": {
+        "bytes": 3624920,
+        "sha256": "e834c36225a1863a92fd5555f5c3cf2dea97bd59b90707ea5a39b18dc16f4f40"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "ordinary-borrowed-other-capture-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624931,
+        "sha256": "b3567b50ecd80e8a25215bd3b57ba1b91539a2c15cfceb4be6e646c838f0a5be"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "ordinary-borrowed-external-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624931,
+        "sha256": "a5545858ee0c04756cd59434380ef332a02735f972827833950b9e6640aea574"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "ordinary-consistent-other-capture-rename",
+      "refusal": "complete original reference operand byte and number association",
+      "whole_candidate": {
+        "bytes": 3624929,
+        "sha256": "b4c7a534698b1ae1a539841f0ce400117076f45c6cdc70529702a4e28d5e1fb6"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "ordinary-wrong-source-domain",
+      "refusal": "exact original simultaneous numerical source domain",
+      "whole_candidate": {
+        "bytes": 3624928,
+        "sha256": "c5ec36080c466fafc1cbe7a9731415180df66fb898b018a3900294b8b01f9ce9"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "storable-borrowed-source-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624928,
+        "sha256": "b971d3d3e50d19f5f51d0ab4a8c095d59501f8099a43fb67720b4dbf63751227"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "storable-aliased-distinct-source-class",
+      "refusal": "numerical separation for simultaneous source distinctions",
+      "whole_candidate": {
+        "bytes": 3624920,
+        "sha256": "cabb46e93fceeafd3ef139041df75c28cd20962b35393432f51684c8d035bd86"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "storable-borrowed-other-capture-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624931,
+        "sha256": "4c3733b93d658c2a53654b06ed263b7b835c6b90ca5f3527a7582c95444db34f"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "storable-borrowed-external-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624931,
+        "sha256": "5b8a0b5c7718b37aaecfed714e25d92b5709c604489d4cdf64b97321c04e2c2d"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "storable-consistent-other-capture-rename",
+      "refusal": "complete original reference operand byte and number association",
+      "whole_candidate": {
+        "bytes": 3624929,
+        "sha256": "95f4f3da55e09b68ac968cad4fb7ae0b90971071809196145c7590c3b57e13eb"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "storable-wrong-source-domain",
+      "refusal": "exact original simultaneous numerical source domain",
+      "whole_candidate": {
+        "bytes": 3624928,
+        "sha256": "f6f93bd825dc3d7aac0bfef4c8afb770323d8ea512ce8840ff68390f18e03fa0"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "controls-borrowed-source-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624928,
+        "sha256": "1052291ea7df31f8c8f890e080a1e43af4668ca921ca6f8eca86397d6bcd10fd"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "controls-aliased-distinct-source-class",
+      "refusal": "numerical separation for simultaneous source distinctions",
+      "whole_candidate": {
+        "bytes": 3624920,
+        "sha256": "0c7d9688920267c4d0c174f2b99958e58e34b747f998f2f5e64e0bd02a446bde"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "controls-borrowed-other-capture-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624931,
+        "sha256": "4a96467f46f3c34b81217b08e340c380a4f916376f7134766218b4b54b2a7c40"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "controls-borrowed-external-number",
+      "refusal": "numerical agreement for explicit source aliases",
+      "whole_candidate": {
+        "bytes": 3624931,
+        "sha256": "d92e29d3a1ddc83c667644f83e6086213063d9a088746dc6139a224f4e7c91a5"
+      }
+    },
+    {
+      "conserved": "Complete prior input products and nonnumerical source/holder/domain/slot/shape meanings. Only derived numerical interpretation and its aggregates change; no mutated original capture is admitted.",
+      "name": "controls-consistent-other-capture-rename",
+      "refusal": "complete original reference operand byte and number association",
+      "whole_candidate": {
+        "bytes": 3624929,
+        "sha256": "c80133c8ee2c0336884b1e525e5007a6be046981a3f6fc920cf49747db79c048"
+      }
+    },
+    {
+      "conserved": "Fixed original inputs; targeted derived product contract is changed.",
+      "name": "controls-wrong-source-domain",
+      "refusal": "exact original simultaneous numerical source domain",
+      "whole_candidate": {
+        "bytes": 3624928,
+        "sha256": "215989f18a008030cbe8d0442322ced1af74bb35e239afe91174ae98a639a3a4"
+      }
+    }
+  ],
+  "joining": {
+    "bytes": 6757828,
+    "sha256": "43bd023fad0b2471df116be7786d389eb482f098a42b4141199658eb004b3031"
+  },
+  "legs": {
+    "durability": "Whole fixed input registry/custody, original operands, corrected holders, complete numerical product, independent programmes/results and task/book/Git checkpoint retain.",
+    "falsification": "oracle.py independently reads fixed original Git bytes and coordinate/source domains, parses original reference spans, manually interprets hex, then checks source-to-number and number-to-source relations; genuine whole-product controls reject.",
+    "re_derivation": "join.py joins complete original parsed reference operands and exact source roles/holders, exhaustively deriving equality/distinction/opaque pairs per simultaneous view."
+  },
+  "measured": {
+    "body_bytes": 482964,
+    "empty_records": 29805,
+    "forwarding_pairs": 21,
+    "hidden_source_arguments": 423,
+    "nonempty_records": 150,
+    "opaque_reference_operands": 342,
+    "pair_distinct": 19299,
+    "pair_equal": 1392,
+    "pair_opaque_CODE": 1749,
+    "regex_display_operands": 342,
+    "source_alias_classes": 1728,
+    "views": 171,
+    "visible_reference_operands": 2691
+  },
+  "missing_legs": "Full unchanged raw-parent acceptance remains N.3. Provider/formatter/native identity/payload/flags, CODE/CODE and Regexp identities, cross-call/capture reuse, global heap census, cold replay, visual QA and governed canonical publication remain open. No fresh original capture or native observation.",
+  "programmes": {
+    "checks.py": {
+      "bytes": 1407,
+      "sha256": "3cd96774d9cb05179f8ec6af97d262e2a07797fb0ea9dc25cf4b2dd50a2eca71"
+    },
+    "join.py": {
+      "bytes": 7916,
+      "sha256": "c30c50c4c8be62b9b2929d1223fc2a28d9ef7014ef124852891e9f9a9c66e8b3"
+    },
+    "oracle.py": {
+      "bytes": 14537,
+      "sha256": "45d8b25ff07eb6fc9fe306410f900d3599be8146edc5824a48d2d63b9382136c"
+    },
+    "source.py": {
+      "bytes": 4849,
+      "sha256": "ac7ced6af8f48709cdca9394492e51de051975322ca0859eac7bfbf9e64ff39e"
+    },
+    "verify.py": {
+      "bytes": 14565,
+      "sha256": "d3859a8aa3d407c4ccfad65b46bf9b062310bc7fcaa859981dd74f483fe028a7"
+    }
+  },
+  "scope": "Complete finite original visible reference-number agreement with qualified simultaneous source roles and corrected holders, one source throw domain at a time. Source aliases agree numerically and qualified source distinctions have different displays. CODE/CODE identities, opaque external operands, provider/formatter/native identity/payload/flags, cross-call/capture reuse, heap census and cold replay remain unqualified; no original object identity is inferred from a number."
+}

@@ -5952,7 +5952,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Join original visible addresses to simultaneous source roles.`
   Acceptance: `Conserve the complete admitted and parsed corpus. Independently join every own reference operand to the qualified graph/role view with exact source equality/distinction only inside simultaneous-live domains. Actual borrowed/aliased/wrong-kind/wrong-domain interventions must preserve prior meanings where applicable and reject at intended new contracts. Preserve opaque external/provider/formatter/Regexp/CODE identity and numerical cross-call/capture reuse boundaries; close only the complete raw-join parent after its full unchanged acceptance qualifies.`
-  Verification: `Source-holder completeness defect is fixed by child .1 with complete original-source/phase/holder/relation qualification and26 genuine controls. Child .2 owns full numerical joins; child .3 verifies unchanged complete parent acceptance. Historical products and all opaque CODE/CODE/native boundaries conserve.`
+  Verification: `Source-holder completeness defect is fixed by child .1. Child .2 qualifies every original own visible numerical operand and complete simultaneous source equality/distinction relation with49 genuine controls, conserving all prior input and opaque CODE/external/native/reuse meanings. Child .3 remains the full unchanged parent-acceptance frontier.`
   Commit: `pending`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.3`
 
@@ -5970,11 +5970,17 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Join all original visible numerical operands to the complete simultaneous source roles.`
   Acceptance: `Conserve the full original parsed corpus and qualified holder supplement. Independently join every own visible reference and preserve hidden/regex/external operands. Check every qualified source alias/distinction inside one simultaneous domain; genuine borrowed/aliased/kind/domain interventions must reject at intended new contracts with prior meanings conserved where applicable. CODE/CODE and provider/formatter/native/cross-call meanings remain opaque. Commit before full parent closure.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete immutable d63e inputs and corrected source-holder prerequisite qualify. Independent original-byte/coordinate/source reconstruction matches all171 simultaneous views,2691 own visible references,1392 explicit source alias pairs and19299 qualified distinction pairs;1749 CODE/CODE pairs stay opaque. All150 nonempty and29805 empty records,482964 UTF-8 body bytes,21 nested forwarding pairs,342 external reference operands,342 regex displays and423 hidden scalar arguments conserve; no hidden reference is observed.49 genuine whole-product controls reject at intended scope/allocation/source/kind/domain/alias/distinction/original-byte contracts. Numerical-only interventions preserve complete old input products and all nonnumerical source/holder/domain/slot/shape meanings; no mutated original custody passes. Independent hex digit accumulation and bipartite source/number checks do not trust producer pair labels. Consistent whole-class number renaming is separately refused by original-byte association. Actual producer/reader and focused All tests successful Files3 Tests310 retain in address-numeric-join-20261010; exact book delta, copied-source/native omission, fresh claims/staged doctrines and normal hooks gate commit. Re-derivation is full parsed-source joining, falsification is separate original-byte and relation reconstruction with genuine controls, durability is complete fixed inputs/product/programmes/results/task/book/Git. Full unchanged raw-parent acceptance remains child .3; native/provider/formatter/CODE/Regexp/reuse/heap/cold/visual/canonical-publication scopes remain open.`
+  Commit: `this slice`
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S authenticates d63e5ca0f763302668d12ac90b5c07c9c9caa872 and its complete holders.py frontier: corrected source retention explicitly left original numerical joins open. Exact original body/reference spans and whole simultaneous source/coordinate/holder products locate the missing contract. root-cause.json retains the corrected actual pickaxe and the earlier absent-path diagnostic attempt.
+  - [x] **ADDRESSED (verified)** — Complete original numerical product qualifies through an independent original-byte reader, manual hex interpretation and source-to-number/number-to-source checks. Genuine borrowed-number and aliased-class controls separate alias agreement, simultaneous distinction and exact original-byte association while conserving earlier nonnumerical meanings. Full allocation/external/regex/hidden/forwarding boundaries retain. Only this numerical child closes; parent acceptance remains next.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in guarded checks.json focused. Exact whole-book/source conservation and complete new native guide with genuine omission control, fresh claim inventory, unchanged capacities, staged scripts/check_doctrines.sh and normal hooks gate commit. No original/native capture or provider/CODE/Regexp/reuse/heap/cold/full-parent/publication/HIAL/full-CI/push claim is made.
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.3`
   Status: `pending`

@@ -1,0 +1,208 @@
+{
+  "actual_prerequisite": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/address-raw-join-20261010/verify.py"
+    ],
+    "instruments": {
+      "docs/audits/address-numeric-join-20261010/checks.py": {
+        "bytes": 1407,
+        "sha256": "3cd96774d9cb05179f8ec6af97d262e2a07797fb0ea9dc25cf4b2dd50a2eca71"
+      },
+      "docs/audits/address-raw-join-20261010/verify.py": {
+        "bytes": 8835,
+        "sha256": "cd599fef513c1a481c855c65b052ff9fb55d23367f061725f97252e76d0bb852"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 71456; host 59.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS complete independent active-operation source holder retention and relation; genuine separating controls reject; original numerical joins and native meanings remain open.\n"
+  },
+  "members": {
+    "docs/audits/address-raw-join-20261010/before-book-authority.jsonl.txt": {
+      "bytes": 36476,
+      "sha256": "7b558aacc343066a231cbedd6a3e0a88f522389a9f6f2c03eb0de7af730ea10a"
+    },
+    "docs/audits/address-raw-join-20261010/binding.json": {
+      "bytes": 11148,
+      "sha256": "2ef77054005d0c536dcf43584a91c85f79624746e3ca65cae8f0584595c01aaa"
+    },
+    "docs/audits/address-raw-join-20261010/book-addition.md.txt": {
+      "bytes": 2329,
+      "sha256": "22ebdd3870e20ddd8693e126b6394c64aa29521cdea1d90b9c3f05d0e8c0fafc"
+    },
+    "docs/audits/address-raw-join-20261010/book-authority.json": {
+      "bytes": 21752,
+      "sha256": "8bb0d1a72d95f9297ea1560d17f44bbc376c9602e5d3280a73e94561e6f44530"
+    },
+    "docs/audits/address-raw-join-20261010/book-proof.json": {
+      "bytes": 904,
+      "sha256": "c1b6df1b870610bc8d733e5a40322c73ff6e4b1a40ca9b82ecca2b6b6cf685fe"
+    },
+    "docs/audits/address-raw-join-20261010/book-replacements.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "docs/audits/address-raw-join-20261010/book_authority.py": {
+      "bytes": 4128,
+      "sha256": "79e9639b9a343d76dabe698abaf91a87a1b9ae44112b110ac4ec1a8376551b1c"
+    },
+    "docs/audits/address-raw-join-20261010/book_check.py": {
+      "bytes": 3582,
+      "sha256": "66233e3191aaebb921d753441accad9beba2f65d5c51fa0f8eb131e671d2bab0"
+    },
+    "docs/audits/address-raw-join-20261010/checks.json": {
+      "bytes": 74519,
+      "sha256": "703d4466bdac15734d802232283cc877dc46eeb418f713e2ccd6a82cfcac97dc"
+    },
+    "docs/audits/address-raw-join-20261010/checks.py": {
+      "bytes": 1403,
+      "sha256": "872521a168e3b29fa4eea74d22adf989e340aeed0e96e51ff501a5650f362460"
+    },
+    "docs/audits/address-raw-join-20261010/fact-card-proposal.md.txt": {
+      "bytes": 1821,
+      "sha256": "79c844379545319137b6a280589e2bc14baf48e2e330bacfeadcc51026a58d0c"
+    },
+    "docs/audits/address-raw-join-20261010/first-numeric-census.json": {
+      "bytes": 38292,
+      "sha256": "b7cf9e0087a789a83553efe99185b26aa179a4ba72a63bb159bc42a918e62761"
+    },
+    "docs/audits/address-raw-join-20261010/first-source.py.txt": {
+      "bytes": 4708,
+      "sha256": "f42e4c8a4128019c7f1787159ad9505a6ef722e4e519e47daae0c2204cec79fa"
+    },
+    "docs/audits/address-raw-join-20261010/guide.md.txt": {
+      "bytes": 2595,
+      "sha256": "b22e3d9b7d38989789ec228aabf8771f7a8c730c2889724947aea60e0e648949"
+    },
+    "docs/audits/address-raw-join-20261010/holder-gap.md.txt": {
+      "bytes": 1740,
+      "sha256": "9f185446d209ab16d097bf2239d0b6cd108f7d2142815e15ca6f3adf56b95167"
+    },
+    "docs/audits/address-raw-join-20261010/holder-membership-census.json": {
+      "bytes": 4215,
+      "sha256": "7e849b97d07b8534330d60c51aad3a7852b5714dc2a1667f5260b0d9b8651799"
+    },
+    "docs/audits/address-raw-join-20261010/holders.json": {
+      "bytes": 1348619,
+      "sha256": "0863f5e52f9cbd34d6c1a80a8461dfaa2c5560a0b6b235c076a494604e06abfc"
+    },
+    "docs/audits/address-raw-join-20261010/holders.py": {
+      "bytes": 5979,
+      "sha256": "82eda1ddd6588c26fb6cbc8937c59b7a7568e832b0fba182c138ccc264214d40"
+    },
+    "docs/audits/address-raw-join-20261010/inputs.json": {
+      "bytes": 3071,
+      "sha256": "de40c664770b49b6ab620fb0f7c19a9a5090226d221d31ff12792eed183f969c"
+    },
+    "docs/audits/address-raw-join-20261010/oracle.py": {
+      "bytes": 11500,
+      "sha256": "09e898dc8ea5cbd8e54227accd4b0b9712baff7ed6eaed77decbb56d4cbfc5ec"
+    },
+    "docs/audits/address-raw-join-20261010/policy-currency.json": {
+      "bytes": 295,
+      "sha256": "0fd1f0a4e9cd3910048edad29af14ac16fa6aba1d0c6a96d4d35d0f7814b8d97"
+    },
+    "docs/audits/address-raw-join-20261010/programme-continuity.json": {
+      "bytes": 393,
+      "sha256": "9cfc92e2e2258ae3ffe1af1af29767b3a65b7b5c2365c9702e3cba78c1e1ba04"
+    },
+    "docs/audits/address-raw-join-20261010/proof.json": {
+      "bytes": 9406,
+      "sha256": "9c253a96e4e910bd6678d1cca1a1fe7cdf9ffa449421b2ce1787192eceea0141"
+    },
+    "docs/audits/address-raw-join-20261010/root-cause.json": {
+      "bytes": 1353,
+      "sha256": "6b2f5e2172c4dbb03eb9241e15f785bd50206c85fa6d3237d4efaa1f59f349cc"
+    },
+    "docs/audits/address-raw-join-20261010/scope.txt": {
+      "bytes": 109,
+      "sha256": "f8b398020b8128ee94360508b17f8fe8bb98b3fb9c934a4680ac654515b92795"
+    },
+    "docs/audits/address-raw-join-20261010/source.py": {
+      "bytes": 4795,
+      "sha256": "ace383fba4e9016e19cef469295a1f2fa6d4602813b8bf20d46893b54cfb2e88"
+    },
+    "docs/audits/address-raw-join-20261010/staged-whitespace.json": {
+      "bytes": 454,
+      "sha256": "b459ead4ee3d9238205f483df3a9eddb586e118b2fd88e12c8e40e383792556f"
+    },
+    "docs/audits/address-raw-join-20261010/task-metrics.json": {
+      "bytes": 433,
+      "sha256": "7d05346f806552f802f754dcf433664bd1ed53f8bd7b04d258486646c398d6b4"
+    },
+    "docs/audits/address-raw-join-20261010/task_pressure.py": {
+      "bytes": 1913,
+      "sha256": "23b01efb01819b9675f364676ff3460f434bb643a23f03b2012123c761792eb6"
+    },
+    "docs/audits/address-raw-join-20261010/verify.py": {
+      "bytes": 8835,
+      "sha256": "cd599fef513c1a481c855c65b052ff9fb55d23367f061725f97252e76d0bb852"
+    },
+    "docs/audits/address-raw-operands-20261010/operands.json": {
+      "bytes": 12551547,
+      "sha256": "0db2d4eb2eaf571c4c7b831df145e6b91c6c3659ec2d7c73ffe470aa31eaaaf3"
+    },
+    "docs/audits/address-source-integration-20261010/hypotheses.json": {
+      "bytes": 11645790,
+      "sha256": "90a32f51fd2e888fe3332d0c8b2990063c154095ff54da9b940b65afce64ec4c"
+    },
+    "docs/audits/coordinate-original-matching-qualified-20261009/matching.json": {
+      "bytes": 20331004,
+      "sha256": "5b57a7a5ce8267b4ddf9a3a5ac12f5db33d9f85f13d95b41404bff62ee49dea4"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/proofs.json": {
+      "bytes": 2442971,
+      "sha256": "15d4f2ce858ad814cc227d380aa796ec3b12b17696a45024c715ff920f6b3ffd"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/raw-product.json": {
+      "bytes": 3431274,
+      "sha256": "4546b181f99dc17201dbd0a42235f1de324407a3232dd0cb786c6f3b505ad935"
+    },
+    "docs/audits/record-value-class-frame-join-20261006/source-models.json": {
+      "bytes": 17033810,
+      "sha256": "42914fbfd6310d5f9fe62ac68dcb31eba5409f6b857e1cb16aefc46420cc1a47"
+    },
+    "docs/audits/record-value-original-callback-paths-20261005/verify.py": {
+      "bytes": 14365,
+      "sha256": "eb0d42c4e464048b2f82d61ac94054770572daf492e7e96205af741c649f76a2"
+    },
+    "docs/audits/record-value-original-candidate-20261004/controls.json": {
+      "bytes": 6749619,
+      "sha256": "ec1b743259796f91d0ae938a453689ae8f839fbde12a73e84823a34d28d6d7fc"
+    },
+    "docs/audits/record-value-original-candidate-20261004/observe.pl": {
+      "bytes": 14362,
+      "sha256": "cf71b6508b67bb8cf651ec118599e9ace41650d5675b91a74aec1567aec57398"
+    },
+    "docs/audits/record-value-original-candidate-20261004/ordinary.json": {
+      "bytes": 6401859,
+      "sha256": "0f0dd5ddd77396ee9b88908fa8b96ea77c235669c21e6b12ea7463b5b41e3615"
+    },
+    "docs/audits/record-value-original-candidate-20261004/storable.json": {
+      "bytes": 6403293,
+      "sha256": "e8a53e9664e5e83ff7dbd46e293a59f9abb50c53dd0f2208581b184c21251a9c"
+    },
+    "docs/audits/record-value-original-raw-20261005/trace_inventory.py": {
+      "bytes": 1475,
+      "sha256": "e9a3e1ace18c468bd093cefa0241aa379bf0b7d66178b404e7b851041f9ec72e"
+    },
+    "docs/audits/record-value-parser-argument-roles-20261006/verify.py": {
+      "bytes": 16442,
+      "sha256": "13c367ef3cf1ec7c99d49de587492977e973e0f0d7936e6662ef3854770bbdd3"
+    }
+  },
+  "prerequisite": {
+    "bytes": 9406,
+    "sha256": "9c253a96e4e910bd6678d1cca1a1fe7cdf9ffa449421b2ce1787192eceea0141"
+  },
+  "revision": "d63e5ca0f763302668d12ac90b5c07c9c9caa872",
+  "scope": "Complete dated admission and whole original/raw/source/class/frame/coordinate products; no original recapture or numeric identity interpretation."
+}

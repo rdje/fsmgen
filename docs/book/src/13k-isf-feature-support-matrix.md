@@ -1513,8 +1513,8 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-operands-202
 ```
 
 This closes the lossless operand-parser child. Original numerical equality and
-distinction joins inside simultaneous source domains are next. Equal numbers
-across calls or captures establish no identity. Original private/native payload
+distinction joins are qualified separately below. Equal numbers across calls
+or captures establish no identity. Original private/native payload
 and flags, provider/formatter/CODE/Regexp identity, cold replay, visual book QA
 and governed current fact publication remain open. Existing canonical facts,
 questions, probes and collection ceilings retain.
@@ -1552,11 +1552,65 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-join-2026101
 ```
 
 The holder completeness defect is fixed and independently verified. Original
-numerical equality/distinction joins are next, followed by full raw-parent
-qualification. Private/native payload and flags, provider/formatter/CODE/Regexp
+numerical equality/distinction joins are qualified below; full raw-parent
+acceptance remains next. Private/native payload and flags, provider/formatter/CODE/Regexp
 identity, cross-call reuse, global heap census, cold replay, visual book QA and
 governed current canonical publication remain open. Existing canonical facts,
 questions, probes and collection limits retain.
+
+Original numerical joining is now independently qualified for the complete
+finite capture corpus. Each own visible reference keeps its full-body UTF-8
+span, display spelling, reference kind, source role and provenance. Its hex
+lexeme becomes an exact integer key; it never passes through a floating-point
+number or becomes a global object identifier.
+
+The join operates separately inside each qualified simultaneous source throw
+view, using the complete corrected holder relation. Explicit source aliases
+have the same displayed number. Qualified distinct source bindings have
+different displayed numbers. Distinct CODE bindings remain opaque even when
+their observed numbers agree or differ. Regex displays preserve their text;
+hidden arguments preserve their source intervals without invented addresses.
+Framework reference operands stay outside the own-source identity relation.
+
+For example, the following synthetic interpretation illustrates the contract:
+
+```text
+source role, first slot: HASH(0xab)
+source role, forwarded slot: HASH(0xab)
+distinct live target role: HASH(0xcd)
+```
+
+Changing only the forwarded slot to another actual displayed number breaks
+source-alias agreement. Changing every source-role occurrence to the target's
+number preserves source aliasing but breaks simultaneous source distinction.
+Consistently renaming the whole source alias class to an unused number can
+preserve those relations, yet still fails its exact original-byte association.
+These are separate checks. The synthetic illustration establishes no original
+observation; the retained controls intervene on actual saved display numbers.
+
+The producer exhaustively derives the finite relation. A separate reader starts
+from the original capture bytes and qualified source/coordinate views, parses
+reference spans and interprets hex with an independent digit accumulator. It
+checks source-to-number alias agreement and number-to-source separation before
+checking every exact original operand. Genuine whole-product borrowed-number,
+collapsed-distinction, wrong-kind and wrong-domain controls reject at their
+intended contracts. Numerical controls conserve all earlier input products and
+nonnumerical source, holder, slot and domain meanings; no altered original
+capture is admitted through the fixed-byte custody gate.
+
+Complete empty/nonempty allocation, raw bodies, nested forwarding, regex and
+opaque external operands retain. Whole fixed inputs, complete numerical product,
+independent programmes and actual results are replayable:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-numeric-join-20261010/verify.py
+```
+
+This closes the numerical-join child only. Full unchanged raw-parent acceptance
+is next. Provider/formatter/native identity, payload and flags, CODE/CODE and
+Regexp identities, numerical reuse across calls or captures, heap census, cold
+replay, visual book QA and governed canonical fact publication remain open.
+Existing canonical facts, questions, probes and collection limits retain.
 
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
