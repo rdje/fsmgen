@@ -1,0 +1,43 @@
+{
+  "cause": "The maintained current SUCCESS string was changed while the unchanged sealed coordinate-admission specs dynamically import current.SUCCESS to validate saved predecessor stdout. The first atomic current invocation therefore rejected its genuine historical successful result before current-coordinate checks.",
+  "failure": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-admission-checks-20261007/verify_result.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-admission-checks-20261007/verify_result.py": {
+        "bytes": 4686,
+        "sha256": "7260ac858df30dfee56b5fe22be1e574e4146883258187d50517d2e7608c8d27"
+      },
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 1,
+    "stderr": "ram-guard: PID 42405; host 44.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-admission-checks-20261007/verify_result.py\", line 77, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-admission-checks-20261007/verify_result.py\", line 31, in main\n    require(same(load(AUDIT / 'result-proof.json'), namespace['replays'](bound, source, False)),\n                                                    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-coordinate-admission-20261007/verify.py\", line 210, in replays\n    check_actual(actual, spec, bound, source)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-coordinate-admission-20261007/verify.py\", line 173, in check_actual\n    require(actual['command'] == spec['command'] and actual['stdout'] == spec['stdout'] and actual['stderr'] == '',\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'whole actual coordinate prerequisite command and streams')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 32, in require\n    raise ValueError(cause)\nValueError: whole actual coordinate prerequisite command and streams\n",
+    "stdout": ""
+  },
+  "first_reader": {
+    "bytes": 14252,
+    "path": "docs/audits/coordinate-current-publication-20261010/first-current-reader.py.txt",
+    "sha256": "9b3aed5e5ceccef37cc0e6cafa8435fc7127a5c931810573884b4f3c119e7a9e"
+  },
+  "impact": "Current publication CLI cannot complete; no sealed evidence is defective or rewritten.",
+  "repair": "Preserve the existing public success-stream contract while extending semantic checks; independently rerun unchanged historical and maintained current readers.",
+  "reproduction": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/coordinate-admission-checks-20261007/verify_result.py"
+  ]
+}

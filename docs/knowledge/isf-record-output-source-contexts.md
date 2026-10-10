@@ -1,6 +1,6 @@
 ---
 id: isf-record-output-source-contexts
-title: Output-only records require scoped source, sample and clock-domain gates
+title: Output-only record source/sample/clock-domain gates
 answers:
   - "which source checks must run for an output-only record actor?"
   - "do output record scalar samples preserve signed and state traits?"
@@ -9,7 +9,7 @@ answers:
   - "what inventories original parser refusal source bodies?"
   - "does the original parser source inventory qualify active native paths?"
   - "what qualifies original parser function argument and helper context joins?"
-date: 2026-10-01
+date: 2026-10-10
 status: current
 tags: [isf, record, output, contexts, samples, domains, shadows]
 evidence: >-
@@ -29,74 +29,60 @@ reverify: >-
   t/2030-isf-record-output-writer-admission.t
   t/1991-isf-record-port-sample-contexts.t &&
   scripts/run_with_ram_guard.sh -- python3 -B
-  docs/audits/record-value-parser-path-publication-20261006/verify.py --current
+  docs/audits/record-value-parser-path-publication-20261006/verify.py &&
+  scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py
 ---
 
-At baseline 8f31768d, prepared output-only actors bypassed source context/sample
-consumers selected solely by actor_has_record_input. The same actual parsed
-declarations projected into output roles accepted literal whole-record targets,
-output member writes and a bus-owned field read from core. Scalar captures
-lacked their new private type declaration. Authored record output syntax was
-already refused, so these were latent shared-module prerequisites rather than
-shipped output behavior.
+At 8f31768d, actor_has_record_input-only selection bypassed prepared output-only context/sample consumers. Same actual
+parsed declarations projected into outputs accepted literal whole-record targets/member writes/bus-owned field reads
+from core; scalar captures lacked new private type declarations. Authored output syntax already refused: latent
+shared-module prerequisites, not shipped behavior.
 
-actor_has_record_port now validates complete input/output lists without changing
-legacy input selection or autovivifying malformed callers. Parser context,
-rule/enum scope, shared module and scalar sample consumers select resolved
-output roles too. Source callers explicitly choose whole_output_writes_only;
-the prepared toolkit retains its broader member facts. Exact record copy
-identity, readonly inputs and nearest formal/local/drive masks still apply.
-Output-derived scalar captures preserve exact width, signedness and state model
-and cannot overwrite declarations or invent record layouts. Mixed actors cannot
-hide a malformed output suffix behind a known input.
+actor_has_record_port validates whole input/output lists without changing legacy input selection or autovivifying
+malformed callers. Parser context, rule/enum scope, shared-module and scalar-sample consumers also select resolved
+output roles. Source callers explicitly choose whole_output_writes_only; prepared toolkit retains broader member facts.
+Exact record copy identity, readonly inputs and nearest formal/local/drive masks apply. Output-derived scalar captures
+retain exact width/signedness/state model and cannot overwrite declarations or invent layouts. Mixed actors cannot hide
+malformed output suffixes behind known input.
 
-The actual output domain map now marks resolved record roots. Dotted/indexed
-paths therefore reach the existing ownership validator instead of being
-delegated as possible namespaces. Exact bus-to-core violations refuse; an
-actual same-domain whole copy remains valid. No implicit crossing or reset is
-introduced. Failed binary selection predicates are explicitly scalar, so a
-malformed policy names its policy failure rather than an argument-count error.
+Actual output domain maps mark resolved record roots. Dotted/indexed paths reach the ownership validator rather than
+possible-namespace delegation. Exact bus-to-core violations refuse; actual same-domain whole copy passes. No implicit
+crossing/reset is introduced. Failed binary selection predicates are explicitly scalar, so malformed policy names its
+failure rather than an argument-count error.
 
-T2031 uses actual parsed declaration facts plus explicit private prototype
-clauses; the independent full probe additionally retains actual parsed storage
-and input bodies before role projection. Exact baseline module snapshots run
-the same probe/test without changing the worktree. Literal ranges/types,
-readonly/shadow/alias/omission controls, complete caller JSON and the exact
-domain message falsify broader interpretations. Full source/IR/receipts,
-baseline objects, sealed verification, the task tree and Git provide durability.
-Input public/context/sample/carrier/ownership/replay contracts pass current
-checks. SEM .60.4.3.3.4.3 now integrates authored output declarations and whole
-copies; see [source admission](isf-record-output-source-admission.md). Complete
-public/generated/execution and output field qualification remain .3.4.4-.5
-and .60.4.3.4. The original preparation evidence is immutable.
+T2031 uses actual parsed facts/private prototypes; independent whole probe retains parsed storage/inputs before role
+projection. Exact baseline snapshots replay the same probe/test without tree edits. Literal range/type/readonly/shadow/
+alias/omission, full caller JSON/exact domain-message controls falsify broader claims. Full source/IR/receipts/baseline
+objects/sealed verification/task/Git retain durability. Current input public/context/sample/carrier/ownership/replay
+passes. SEM .60.4.3.3.4.3 integrates authored outputs/whole copies; [source
+admission](isf-record-output-source-admission.md). Full public/generated/ execution/output fields remain
+.3.4.4-.5/.60.4.3.4-owned. Original preparation is immutable.
 
 ## Original parser source inventory
 
-The finite original source inventory binds whole own facade, parser and
-record-context texts. Their lexical declarations, selected complete function
-bodies, supplied parameter roles and ordered source call/guard statements
-are independently regenerated. Exact committed prerequisites qualify source
-inputs, primary causes, API/parser boundaries and helper context separately.
+Finite original source inventory binds whole own facade/parser/record-context texts. Lexical declarations, selected
+whole function bodies, supplied parameter roles and ordered source call/guard statements regenerate independently. Exact
+committed prerequisites qualify source inputs, primary causes, API/parser boundaries and helper context separately.
 
-Output-field source writes and aggregate actor-port type admission have distinct
-source guards. Source order records provenance; it does not establish which
-branches ran or whether a returned call remained active. No native trace supplies
-the intended source selection. Missing or borrowed source bodies, statements,
-parameters, declaration membership and JSON kinds reject.
+Output-field writes and aggregate actor-port type admission have distinct source guards. Source order establishes
+provenance, not executed branches or returned calls remaining active. Native traces do not select intended sources.
+Missing/borrowed bodies/statements/parameters/declaration membership/JSON kinds reject.
 
-The default replay authenticates original source and historical publication.
-Explicit current replay also checks this whole fact, actual direct/cache question
-ownership and the scoped book command and guidance. Independent active path and
-argument models and own joins have separate proofs; framework/display contracts,
-raw coordinates, reference/address lifetimes, consumer/alias/cold meanings and
-permanent/native repairs remain separate owners. Visual mdBook QA is pending.
+Default parser replay authenticates original source and historical publication. Its earlier --current route checks its
+dated fact/question/book epoch; current publication uses the maintained current reader, retaining direct/cache ownership
+and complete scoped book command/guidance obligations. Earlier command: `python3 -B
+docs/audits/record-value-parser-path-publication-20261006/verify.py --current`. Active path/argument models and own
+joins have separate proofs. Original own coordinates have separate core-fact qualification. Framework/display,
+reference/address lifetimes, consumer/alias/cold and permanent/native repairs retain separate owners. Visual mdBook QA
+is pending.
 
 Related: [[record-value-original-observer-helper-paths]].
 
-Finite source models distinguish the original refused paths: list actor-port
-admission stops before record contexts; output-field writes reach the write guard.
-Complete positional/named roles identify supplied source expressions. Receiver,
-normalized AST and partial-actor payloads remain unmeasured. Returned callees are
-excluded from active own ancestry. Complete nested API allocations reuse dated
-source-family proofs; own native/API/helper matching is qualified separately.
-Original refusals match source-selected own function order and visible argument roles through every parser/API/observer/helper/subtest phase. Core overlap/order, helper/load adjacency and complete own frame membership qualify. Completed nested calls retain empty errors and no throw frames. False denotes source predicate truth, not native encoding; reference kinds/prefixes do not prove referents or hidden suffixes. Framework/formatter/coordinates/addresses remain unmeasured.
+Finite source models distinguish original refusals: list actor-port admission stops before record contexts; output-field
+writes reach the write guard. Whole positional/named roles identify supplied expressions. Receiver, normalized AST and
+partial-actor payloads remain unmeasured. Returned callees are excluded from active own ancestry. Whole nested API
+allocations reuse dated source-family proofs; own native/API/helper matching qualifies separately. Original refusals
+match source-selected own function order/visible arguments across parser/API/observer/ helper/subtest phases. Core
+overlap/order, helper/load adjacency and whole own frame membership qualify. Completed nested calls retain empty
+errors/no throw frames. False is source predicate truth, not native encoding; reference kinds/ prefixes prove neither
+referents nor hidden suffixes. Framework/formatter/external coordinates/addresses remain unmeasured.

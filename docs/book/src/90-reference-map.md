@@ -791,8 +791,8 @@ payloads and original caller-coordinate snapshots. Read the sealed result with:
 python3 -B docs/audits/coordinate-refusal-phase-checks-20261009/verify_phases.py
 ```
 
-Original-coordinate joining remains pending, with original private runtime
-meanings and alias downstream still owned separately. The binding establishes
+At that source-only checkpoint, original-coordinate joining was still pending.
+Original private runtime meanings and alias downstream remain separately owned. The binding establishes
 source hypotheses, without choosing which line or filename an original
 runtime actually reported.
 
@@ -821,7 +821,7 @@ The governed card compaction retains exact complete original sources and
 ordered semantic correspondence, every existing question and executable probe,
 and unchanged Knowledge Map capacity authority. The first URL-wrapping draft
 and corrected publication both retain. Whole source-hypothesis composition is
-qualified; joining original raw coordinates remains the next owned step.
+qualified at that checkpoint; original raw-coordinate joining is qualified below.
 
 The saved original-coordinate intake authenticates the complete own capture,
 its transitive proof corpus and the sealed source hypotheses. Independent Git
@@ -977,32 +977,39 @@ Reproduce the full fixed-seal qualification from the repository root:
 python3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py
 ```
 
-The current-coordinate publication now has a qualified complete proposal.
-It retains the original core, helper, tooling and parser card sources, every
-ordered question and a reviewed paragraph correspondence. The proposed working
-set does not grow, and Knowledge Map collection authority remains unchanged.
-The parser's earlier epoch-current route is distinguished from its unchanged
-historical snapshot and the planned complete maintained current route.
+Current coordinate meanings are now admitted together in the core, helper,
+parser and tooling facts. Their exact original sources remain retrievable, and
+the reviewed correspondence preserves every original question, probe and locality
+obligation. Knowledge Map collection authority is unchanged; the complete
+working set does not grow. The original private, framework, formatter, toolchain,
+identity and address limits remain explicit.
 
-Independent binary Git reconstruction checks complete sources, question/probe
-obligations, physical dimensions and genuine loss, borrowed-role, typed-result
-and scope-promotion controls. This is reviewed semantic correspondence rather
-than a mechanical proof of natural-language equivalence. Live cards and current
-reader behavior have not changed. Replay the dated preparation with:
+The maintained reader checks all affected current sources and the complete
+global direct and cached question allocation. It authenticates the admitted
+whole original qualification and every fixed input, while retaining distinct
+historical, current, borrowed and unrelated source roles. A successful dated
+snapshot cannot establish current currency. The parser checkpoint keeps its
+sealed earlier epoch-current programme and default historical snapshot; its
+current fact now uses the maintained reader.
+
+Build first, then check the complete native publication from the repository root:
+
+```sh
+mdbook build docs/book
+scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py --build docs/book/book
+```
+
+This checks all current copied canonical sources and the rendered guidance.
+The unchanged dated semantic reconstruction command above remains available.
+The complete preparation also remains replayable in its explicit snapshot role:
 
 ```sh
 python3 -B docs/audits/coordinate-current-preparation-20261010/verify.py --snapshot
 ```
 
-Atomic card/checker/book/source/query/native publication and whole final delivery
-remain the next owned steps. The proposal preserves original private/provider/
-framework/formatter/toolchain/identity/address/alias gaps and visual, HIAL and
-full-CI/push owners.
-
-Atomic current canonical publication remains the next owned step. This dated
-qualification leaves original private formatting/toolchain/identity, external
-framework coordinate rules, address lifetimes and alias downstream with their
-existing owners.
+Final whole-publication closure is the next owned step; original private,
+framework, formatter, toolchain, identity, address and alias meanings, visual QA,
+HIAL repair and full CI/push retain their owners.
 
 <div id="knowledge-map-architecture"></div>
 

@@ -196,9 +196,9 @@ _Whole record outputs require exact types and mandatory realized-module writers_
 
 ### isf-record-output-source-contexts
 
-_Output-only records require scoped source, sample and clock-domain gates_
+_Output-only record source/sample/clock-domain gates_
 
-- **date:** 2026-10-01 · **status:** current
+- **date:** 2026-10-10 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-output-source-contexts.md`](../../docs/knowledge/isf-record-output-source-contexts.md)
 
 ### isf-record-output-target-profiles

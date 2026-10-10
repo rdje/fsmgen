@@ -892,7 +892,25 @@ qualified before the new raw intake. Genuine class/family/phase/order/argument/
 population/native-promotion controls conserve predecessor meanings; changing
 opaque inner-frame bytes passes those local meanings but breaks whole forwarding.
 
-The current route checks all three complete canonical cards, actual direct and
+Original own caller and source coordinates now have a separate complete
+qualification. Source recipes bind every original error origin, own caller and
+inherited inner coordinate without normalizing raw bytes or equivalent labels.
+Nested forwarding preserves its inner and outer phases. Genuine line, filename
+and source-association controls preserve the complete prior class, frame and
+visible-argument meanings before both coordinate procedures reject the changed
+association. Independent reconstruction qualifies the whole result and original
+custody, including genuine omission and borrowed-result controls. Earlier
+construction failures and RAM stops remain non-success evidence.
+
+The maintained reader authenticates that complete admitted qualification and
+every original input. It does not recapture original executions or claim a new
+semantic reconstruction merely from certificate authentication. Core, helper,
+parser and tooling facts retain every prior question, probe and locality rule;
+their reviewed working set does not grow. Original private formatting, toolchain
+and identity, external framework coordinates and address lifetimes retain their
+separate owners. Final whole-publication closure remains separately owned.
+
+The current route checks all four complete canonical cards, actual direct and
 cached question ownership, every collection-capacity dimension, exact source
 budgets and canonical source selection, relative endpoints, current bytes,
 ignore policy and indexed members. Its native variant additionally checks every
@@ -924,7 +942,7 @@ current canonical sources; the saved historical snapshot keeps its exact epoch. 
 widened; every original fact/question retains. This remains reviewed prose
 equivalence rather than unrestricted mechanical natural-language proof.
 Original native class/provider/hooks, private frames, formatter, encoding,
-hidden arguments, identity, coordinates and address/lifetime meanings remain
+hidden arguments, identity, external coordinates and address/lifetime meanings remain
 unmeasured or separately owned. Visual QA, HIAL repair and full CI/push retain
 their owners. Project outputs and scratch remain repository-local.
 
@@ -1228,25 +1246,30 @@ publication snapshot. Current finite-join qualification has its own reader
 below. Historical replay does not supply current semantic currency. Visual
 QA is pending.
 
-The full parser publication now qualifies current facts and question ownership
-for these finite own joins. It preserves the original source inventory and
-source-expression roles, while qualifying visible function/argument footprints,
-complete own operation/helper/subtest phases and completed nested allocations.
-Normalized false remains a source predicate role; reference kinds and visible
-prefixes do not qualify referent identity or hidden suffixes. Framework/provider,
-formatter, scalar encoding, coordinates and addresses remain unmeasured.
-
-Current replay checks the scoped fact, actual direct/cache questions, unchanged
-physical card authority and this complete guide. Default replay authenticates
-the original sources and saved publication snapshot; snapshot success cannot
-supply live semantic currency. Replay the current role from the repository root:
+The parser source and frame publication below is a retained checkpoint.
+It qualifies the original source inventory, source-expression roles, visible
+function and argument footprints, complete own operation/helper/subtest phases
+and completed nested allocations. False denotes a source predicate, while
+reference kinds and prefixes do not establish referents or hidden suffixes.
+Its earlier `--current` role checks its dated card, question and book epoch:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-path-publication-20261006/verify.py --current
 ```
 
-An optional `--build repository-relative-output` additionally checks complete
-current native source copies and rendered guidance. Visual QA remains pending.
+For current parser facts and original own coordinates, use the complete
+maintained current reader above. Its native variant checks every current copied
+source and the rendered guidance. Default parser replay preserves its original
+sources and saved publication snapshot; historical success supplies no current
+currency:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-path-publication-20261006/verify.py
+```
+
+Framework/provider, formatter, scalar encoding, hidden identity, external
+coordinates and addresses remain unmeasured or separately owned. Visual QA
+remains pending.
 
 [portable replay repair](reference-source/docs/audits/record-value-replay-portability-20261004/scope.txt.source.txt)
 now binds each Python process filename to its exact invoked reader. The original

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check current class/frame publication without freezing unrelated fact epochs."""
+"""Check current class/frame/coordinate publication without freezing unrelated facts."""
 
 import argparse
 import hashlib
@@ -12,12 +12,15 @@ import book_source_references as plane
 import record_value_epoch_fact as epoch_fact
 import record_value_public_reference_fact as public_reference_fact
 import record_value_expression_fact as expression_fact
+import record_value_coordinate_fact as coordinate_fact
 from decision_store_git import MAX_TRACKED_PATHS
 
 ROOT = plane.ROOT
 HISTORICAL = Path('docs/audits/record-value-class-frame-publication-20261006')
 COMMAND = 'scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py'
 BUILD = COMMAND + ' --build .artifacts/class-frame-current-book'
+# Dated admission readers import this public stream when validating saved results.
+# Extend the checked semantics without changing their historical stdout contract.
 SUCCESS = 'PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n'
 EPOCH_REVISION = 'f7bcdaf5e9c2b831b79497dbe7c704dd1fd0c1d9'
 EPOCH_CHECKS = Path('docs/audits/coordinate-admission-checks-20261007')
@@ -75,16 +78,17 @@ def expected_cards(prior):
             result[path] = epoch_fact.extend(result[path])
             result[path] = public_reference_fact.extend(result[path])
             result[path] = expression_fact.extend(result[path])
-    return result
+    return coordinate_fact.cards(result)
 
 
 def guide(prior):
     book = prior['book']
     result = book['GUIDE'].replace(book['BUILD'], BUILD).replace(book['COMMAND'], COMMAND)
-    return result.replace('Unrelated book\nprogress is permitted by the current reader.',
+    result = result.replace('Unrelated book\nprogress is permitted by the current reader.',
         'Unrelated book and non-target Knowledge Map progress is permitted. The current\n'
         'reader derives the complete global question allocation and physical census from\n'
         'current canonical sources; the saved historical snapshot keeps its exact epoch.')
+    return coordinate_fact.guide(result)
 
 
 def sources():
@@ -122,7 +126,7 @@ def current_input(prior, canonical):
     registry = plane.local_read(ROOT / prior['REGISTRY'], plane.SOURCE_BYTES)
     book_budget = next(json.loads(s)['enforcement_ceilings']['bytes_each']
                        for s in registry.decode().splitlines() if json.loads(s).get('surface_id') == 'shipped_behavior')
-    return dict(cards={p: canonical[p].decode() for p in prior['PATHS']},
+    return dict(cards={p: canonical[p].decode() for p in expected_cards(prior)},
         chapter=plane.local_read(ROOT / prior['CHAPTER'], book_budget).decode(),
         tooling_chapter=plane.local_read(ROOT / prior['TOOLING_CHAPTER'], book_budget).decode(),
         queries=public['queries'](), census=public['metrics'](physical),
@@ -140,6 +144,9 @@ def check(record, canonical, prior, declared):
             'complete current target meanings questions metadata and replay routes')
     require(record['chapter'].count(guide(prior)) == 1 and record['chapter'].count(prior['book']['EPOCH']) == 1,
             'unique complete current and retained publication guidance')
+    require(record['chapter'].count(coordinate_fact.PARSER_GUIDE) == 1
+            and record['tooling_chapter'].count(coordinate_fact.REFERENCE) == 1,
+            'complete current coordinate parser and tooling guidance')
     pins = record['source_members']
     require(type(pins) is dict and all(type(pin) is dict and set(pin) == {'bytes', 'sha256'}
         and type(pin['bytes']) is int and pin['bytes'] >= 0 and type(pin['sha256']) is str
@@ -161,7 +168,11 @@ def check(record, canonical, prior, declared):
         command = ['knowledge-map/scripts/query_knowledge_map.sh', '--all'] + (['--no-cache'] if role == 'direct' else [])
         require(actual['command'] == command and actual['stderr'] == '' and type(actual['stdout']) is str,
                 'distinct actual current query command and streams')
-        require(prior['target_rows'](actual['stdout']) == target, 'complete current target question ownership')
+        ids = {Path(path).stem for path in expected}
+        queried = [line.split('\t') for line in actual['stdout'].splitlines()]
+        require(all(len(row) == 3 for row in queried), 'complete current target question ownership')
+        rows = sorted('\t'.join(row) for row in queried if ids.intersection(row[1].split(',')))
+        require(rows == target, 'complete current target question ownership')
         require(actual['stdout'] == allocation['rows'], 'complete source-derived current global query allocation')
     require(same(record['source_budget'], declared['source_budget']), 'unchanged current canonical source budget')
     original = prior['load'](Path('docs/audits/book-source-plane-20261005/book-authority.json'))['block'].split('\nThe asset plane is available;', 1)[0]
@@ -177,7 +188,7 @@ def check_native(html, prior):
     require(all(parsed.codes.count(command) == 1 for command in (COMMAND, BUILD, prior['book']['DEFAULT'])),
             'native distinct current build and historical commands')
     visible = ' '.join(' '.join(parsed.parts).split())
-    for block in (guide(prior), prior['book']['EPOCH']):
+    for block in (guide(prior), prior['book']['EPOCH'], coordinate_fact.PARSER_GUIDE):
         text = block.replace('```bash\n', '').replace('```\n', '').replace('`', '')
         require(' '.join(text.split()) in visible, 'native complete current retained scope and gaps')
 
@@ -216,6 +227,7 @@ def main():
         and type(expression.returncode) is int and expression.returncode == 0
         and expression.stdout == admitted['stdout'] and expression.stderr == '',
         'complete actual sealed expression alternative qualification')
+    coordinate_before = coordinate_fact.authenticate()
     canonical = sources()
     check(current_input(prior, canonical), canonical, prior, authority(prior))
     rows = plane.expected_rows()
@@ -226,6 +238,8 @@ def main():
         html = plane.local_read(output / (prior['CHAPTER'].stem + '.html'), plane.SOURCE_BYTES * 4).decode()
         check_native(html, prior)
     require(canonical == sources(), 'whole current canonical source epoch conserved during verification')
+    require(same(coordinate_before, coordinate_fact.authenticate()),
+            'whole original coordinate qualification conserved during current verification')
     print(SUCCESS, end='')
 
 

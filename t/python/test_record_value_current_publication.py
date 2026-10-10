@@ -1,6 +1,8 @@
 """Separate live source currency from immutable class/frame semantic custody."""
 
 import copy
+import json
+import re
 import sys
 import tempfile
 import unittest
@@ -32,11 +34,19 @@ class CurrentPublicationTests(unittest.TestCase):
     def test_complete_actual_current_input(self):
         self.check(self.record)
 
+    def test_historical_admission_success_stream_remains_compatible(self):
+        saved = json.loads(Path(
+            'docs/audits/record-value-coordinate-admission-20261007/actual-current.json'
+        ).read_bytes())
+        self.assertEqual(type(saved['status']), int)
+        self.assertEqual(saved['status'], 0)
+        self.assertEqual(current.SUCCESS, saved['stdout'])
+
     def test_target_meanings_and_routes_remain_exact(self):
         core, observer, tooling = self.prior['PATHS']
         for path, old, new in (
             (core, 'classes were unmeasured', 'classes were measured'),
-            (observer, 'opaque retained evidence', 'formatter evidence'),
+            (observer, 'operands remain opaque evidence', 'operands supply formatter evidence'),
             (tooling, 'replay/factory native copied-byte checks required;',
              'replay/factory native copied-byte checks are optional;'),
             (tooling, current.epoch_fact.QUESTION, 'borrowed historical epoch question?'),
@@ -46,15 +56,25 @@ class CurrentPublicationTests(unittest.TestCase):
             (tooling, 'live guard predicate endings', 'all guard statement starts'),
             (tooling, current.public_reference_fact.QUESTION, 'borrowed public recipe question?'),
             (tooling, '../' + current.public_reference_fact.READER.removeprefix('docs/'), '../audits/borrowed-reader.py'),
-            (tooling, 'original coordinates/identities unmeasured', 'original coordinates/identities qualified'),
+            (tooling, 'alone leaves original coordinates/identities unmeasured', 'alone qualifies original coordinates/identities'),
+            (core, current.coordinate_fact.QUESTION, 'borrowed coordinate question?'),
+            (core, 'address lifetimes remain unmeasured', 'address lifetimes are qualified'),
+            (current.coordinate_fact.PARSER, 'receiver, normalized AST', 'qualified receiver identity and AST'),
+            (current.coordinate_fact.PARSER, current.COMMAND, self.prior['model']['COMMAND']),
             (observer, current.COMMAND, self.prior['model']['COMMAND']),
             (core, '  - "what qualifies finite original exception classes?"\n', '')):
             with self.subTest(path=path, old=old):
-                self.refuse(lambda r: r['cards'].update({path: r['cards'][path].replace(old, new, 1)}),
+                def mutate(record):
+                    text, count = re.subn(r'\s+'.join(re.escape(p) for p in old.split()),
+                                         lambda match: new, record['cards'][path], count=1,
+                                         flags=re.I if old.startswith('receiver,') else 0)
+                    self.assertEqual(count, 1, 'the intended original meaning must be present')
+                    record['cards'][path] = text
+                self.refuse(mutate,
                             'complete current target meanings questions metadata and replay routes')
 
     def test_complete_global_sources_queries_and_kinds(self):
-        target_ids = {Path(p).stem for p in self.prior['PATHS']}
+        target_ids = {Path(p).stem for p in self.record['cards']}
         non_target = next(line for line in self.record['queries']['direct']['stdout'].splitlines()
                          if not target_ids.intersection(line.split('\t')[1].split(',')))
         for role in ('direct', 'cached'):
@@ -80,6 +100,10 @@ class CurrentPublicationTests(unittest.TestCase):
         self.refuse(lambda r: r['source_budget']['targets'].clear(), 'unchanged current canonical source budget')
         self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.COMMAND, self.prior['book']['DEFAULT'])),
                     'unique complete current and retained publication guidance')
+        self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.coordinate_fact.PARSER_GUIDE, '')),
+                    'complete current coordinate parser and tooling guidance')
+        self.refuse(lambda r: r['queries']['direct'].update(stdout='malformed\n'),
+                    'complete current target question ownership')
 
     def test_borrowed_snapshot_cannot_claim_current_currency(self):
         saved = self.prior['load'](current.HISTORICAL / 'publication.json')['snapshot']
@@ -106,7 +130,7 @@ class CurrentPublicationTests(unittest.TestCase):
     def test_unrelated_progress_is_checked_against_current_sources(self):
         canonical = dict(self.canonical)
         non_targets = [p for p in canonical if Path(p).parent == Path('docs/knowledge')
-                       and p not in self.prior['PATHS'] and self.prior['metadata']['metadata'](canonical[p])]
+                       and p not in self.record['cards'] and self.prior['metadata']['metadata'](canonical[p])]
         path = max(non_targets, key=lambda p: len(canonical[p]))
         identifier = self.prior['metadata']['metadata'](canonical[path])[0]
         record = copy.deepcopy(self.record)
@@ -172,12 +196,12 @@ class CurrentPublicationTests(unittest.TestCase):
         # This small HTML fixture isolates the parser; the actual whole native
         # build and every copied source are verified separately by the CLI.
         def html(guide):
-            blocks = guide.split('```bash\n')
+            blocks = (guide + current.coordinate_fact.PARSER_GUIDE).split('```bash\n')
             text = blocks[0]
             for block in blocks[1:]:
                 code, rest = block.split('```\n', 1)
                 text += '<code>' + code + '</code>' + rest
-            return self.prior['book']['EPOCH'] + text
+            return self.prior['book']['EPOCH'] + text.replace('`', '')
         valid = html(current.guide(self.prior))
         current.check_native(valid, self.prior)
         for old, new, cause in (
@@ -212,6 +236,25 @@ class CurrentPublicationTests(unittest.TestCase):
                 foreign = root / 'docs/knowledge/foreign'; foreign.mkdir(); (foreign / '.git').mkdir()
                 with self.assertRaisesRegex(ValueError, '^no foreign repository endpoint$'):
                     current.sources()
+
+    def test_original_coordinate_actual_result_requires_complete_typed_success(self):
+        fact = current.coordinate_fact
+        actual = json.loads(fact.local(fact.CHECKS, current.plane.SOURCE_BYTES))['published-independent']
+        seal = json.loads(fact.local(fact.PRODUCT + '/seal.json', current.plane.SOURCE_BYTES))
+        qualified = json.loads(fact.local(fact.PRODUCT + '/qualification.json', seal['qualification.json']['bytes']))
+        fact.check_actual(actual, qualified)
+        for mutate, cause in (
+                (lambda r: r.update(status=True), 'actual independent coordinate integer success'),
+                (lambda r: r.update(status=0.0), 'actual independent coordinate integer success'),
+                (lambda r: r['command'].append('--foreign'), 'complete actual independent coordinate command'),
+                (lambda r: r.update(stdout='{}'), 'complete independent coordinate result scope'),
+                (lambda r: r.update(stdout=r['stdout'].replace('"points": 2943', '"points": true', 1)),
+                 'complete typed independent coordinate coverage')):
+            changed = copy.deepcopy(actual)
+            mutate(changed)
+            self.assertFalse(current.same(changed, actual))
+            with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
+                fact.check_actual(changed, qualified)
 
 
 if __name__ == '__main__':

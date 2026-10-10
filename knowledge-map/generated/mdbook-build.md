@@ -20,7 +20,7 @@
 
 ### mdbook-build-destination-locality
 
-_mdBook custom destinations resolve from the invocation working directory_
+_mdBook custom destinations resolve from invocation cwd_
 
-- **date:** 2026-10-09 · **status:** current
+- **date:** 2026-10-10 · **status:** current
 - **source and verification:** [`docs/knowledge/mdbook-build-destination-locality.md`](../../docs/knowledge/mdbook-build-destination-locality.md)

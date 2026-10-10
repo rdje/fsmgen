@@ -1,0 +1,260 @@
+"""Independently reconstruct whole publication/history/source/native delivery."""
+import copy
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from html.parser import HTMLParser
+from pathlib import Path
+
+sys.path.insert(0, str(Path('scripts').resolve()))
+import check_record_value_publication as current
+
+BASE = Path('docs/audits/coordinate-current-publication-20261010')
+REVISION = 'ca3dfac9d35b76d0a08fd97161fb0bef6570cd10'
+PROPOSAL = 'docs/audits/coordinate-current-preparation-20261010/proposal.json'
+
+
+def need(ok, cause):
+    if not ok:
+        raise ValueError(cause)
+
+
+def same(left, right):
+    return json.dumps(left, sort_keys=True, allow_nan=False) == json.dumps(right, sort_keys=True, allow_nan=False)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'lines': raw.count(b'\n'), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def git(*args, data=None):
+    result = subprocess.run(['git', '--no-replace-objects', *args], input=data, capture_output=True)
+    need(result.returncode == 0 and not result.stderr, 'whole independent publication Git source')
+    return result.stdout
+
+
+def objects(paths):
+    output = git('cat-file', '--batch', data=''.join(REVISION + ':' + p + '\n' for p in paths).encode())
+    result, offset = {}, 0
+    for path in paths:
+        end = output.index(b'\n', offset)
+        _, kind, length = output[offset:end].split()
+        need(kind == b'blob', 'complete original publication blob kind')
+        offset, length = end + 1, int(length)
+        result[path] = output[offset:offset + length]
+        need(output[offset + length:offset + length + 1] == b'\n', 'whole original publication framing')
+        offset += length + 1
+    need(offset == len(output), 'complete independent original publication consumption')
+    return result
+
+
+def metrics(rows):
+    raw = list(rows.values())
+    return dict(files=len(raw), bytes_total=sum(map(len,raw)), lines_total=sum(r.count(b'\n') for r in raw),
+        bytes_each=max(map(len,raw)), lines_each=max(r.count(b'\n') for r in raw),
+        line_bytes_each=max(len(line.rstrip(b'\r')) for r in raw for line in r.split(b'\n')))
+
+
+def counts(rows):
+    return {key: metrics(rows)[key] for key in ('files', 'bytes_total', 'lines_total')}
+
+
+def source_check(captured, canonical, proposal):
+    record = captured['record']
+    wanted = {p: row['text'] for p,row in proposal['cards'].items()}
+    need(record['cards'] == wanted and all(canonical[p].decode() == text for p,text in wanted.items()),
+         'whole four-card approved source and meaning epoch')
+    expected_pins = {p:{k:pin(raw)[k] for k in ('bytes','sha256')} for p,raw in canonical.items()}
+    need(same(record['source_members'], expected_pins), 'whole independent current canonical population')
+    physical = {p:r for p,r in canonical.items() if Path(p).parent == Path('docs/knowledge')}
+    need(same(record['census'], metrics(physical)), 'whole independently measured current card dimensions')
+    target = []
+    for path, text in wanted.items():
+        front = text.rsplit('---\n',1)[0]
+        identifier = re.findall(r'^id: (.+)$', front, re.M)
+        need(len(identifier) == 1, 'unique independently derived fact identity')
+        for question in re.findall(r'^  - "([^"\n]+)"$', front, re.M):
+            target.append(' '.join(question.lower().split()) + '\t' + identifier[0] + '\t' + path)
+    ids = {Path(p).stem for p in wanted}
+    for role, actual in record['queries'].items():
+        need(role in ('direct','cached') and type(actual['status']) is int and actual['status'] == 0,
+             'actual distinct typed current query success')
+        command = ['knowledge-map/scripts/query_knowledge_map.sh','--all'] + (['--no-cache'] if role == 'direct' else [])
+        need(actual['command'] == command and actual['stderr'] == '', 'actual distinct current query command and streams')
+        rows = actual['stdout'].splitlines()
+        need(all(len(row.split('\t')) == 3 for row in rows), 'complete current query row kinds')
+        owned = sorted(row for row in rows if ids.intersection(row.split('\t')[1].split(',')))
+        need(owned == sorted(target), 'every independently reconstructed current target question')
+    need(set(record['queries']) == {'direct','cached'}
+         and record['queries']['direct']['stdout'] == record['queries']['cached']['stdout'],
+         'complete distinct direct/cache global query conservation')
+    for path, expected in captured['programmes'].items():
+        need({k:pin(Path(path).read_bytes())[k] for k in ('bytes','sha256')} == expected,
+             'complete actual current programme epoch')
+
+
+def receipt(actual, command, stdout=None, saved_sources=None):
+    need(type(actual['status']) is int and actual['status'] == 0, 'actual publication integer success')
+    need(actual['command'] == ['scripts/run_with_ram_guard.sh','--',*command], 'whole actual publication command')
+    instruments = {str(BASE/'checks.py'),'scripts/run_with_ram_guard.sh'} | {p for p in command if Path(p).is_file()}
+    saved_sources = saved_sources or {}
+    need(actual['instruments'] == {p:{k:pin(saved_sources.get(p, Path(p).read_bytes()))[k]
+        for k in ('bytes','sha256')} for p in instruments},
+         'whole actual publication instruments')
+    need(type(actual['stdout']) is str and type(actual['stderr']) is str
+         and 'host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s' in actual['stderr'],
+         'whole actual publication streams and unchanged guard')
+    if stdout is not None:
+        need(actual['stdout'] == stdout, 'whole actual publication stdout')
+
+
+class Visible(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts = []
+
+    def handle_data(self, data):
+        self.parts.append(data)
+
+
+def native(html, blocks):
+    parsed = Visible()
+    parsed.feed(html)
+    visible = ' '.join(' '.join(parsed.parts).split())
+    for block in blocks:
+        text = block.replace('```bash\n','').replace('```sh\n','').replace('```\n','').replace('`','')
+        need(' '.join(text.split()) in visible, 'whole native current scope and remaining gaps')
+
+
+def main():
+    book_paths = sorted(p for p in git('ls-tree','-r','--name-only',REVISION,'--','docs/book/src').decode().splitlines()
+                        if Path(p).parent == Path('docs/book/src') and p.endswith('.md'))
+    canonical_paths = sorted(p.decode() for p in git('ls-files','-z','--','docs/knowledge','docs/decisions').split(b'\0')
+                             if p.endswith(b'.md'))
+    before = objects([*canonical_paths,*book_paths,PROPOSAL,'doctrine/live_document_size/surfaces.jsonl',
+                      'doctrine/live_document_size/archive_descriptors.jsonl'])
+    proposal = json.loads(before[PROPOSAL])
+    need(Path(PROPOSAL).read_bytes() == before[PROPOSAL], 'whole unchanged qualified proposal')
+    canonical = {p:Path(p).read_bytes() for p in canonical_paths}
+    need(sorted(canonical) == sorted(current.sources()), 'whole independently selected current source membership')
+    need([p for p in canonical if canonical[p] != before[p]] == sorted(proposal['cards']),
+         'only complete qualified target canonical sources change')
+    product = json.loads((BASE/'publication.json').read_bytes())
+    need(product['revision'] == REVISION and product['proposal'] == pin(before[PROPOSAL]), 'whole original publication source binding')
+    for path,row in proposal['cards'].items():
+        need(before[path] == Path(row['locator']).read_bytes() and pin(before[path]) == row['original']
+             and canonical[path] == row['text'].encode() and pin(canonical[path]) == product['cards'][path],
+             'every complete retained original and approved current card')
+    descriptors = Path('doctrine/live_document_size/archive_descriptors.jsonl').read_bytes()
+    prior_descriptors = before['doctrine/live_document_size/archive_descriptors.jsonl']
+    need(descriptors == prior_descriptors + ''.join(json.dumps(r,sort_keys=True,separators=(',',':'))+'\n'
+         for r in product['descriptors']).encode(), 'complete exact old descriptor prefix and governed admission')
+    need({r['former_path'] for r in product['descriptors']} == set(proposal['cards']), 'whole original history descriptor scope')
+    for row in product['descriptors']:
+        original = before[row['former_path']]
+        need({k:row[k] for k in ('bytes','lines','sha256')} == pin(original)
+             and Path(row['retrieval_locator']).read_bytes() == original
+             and row['current_pointer'] == row['former_path'] and row['revision'] == proposal['revision'],
+             'whole exact history identity and current navigation')
+    book = {p:Path(p).read_bytes() for p in book_paths}
+    need(book_paths == sorted(str(p) for p in Path('docs/book/src').glob('*.md')), 'whole current book population')
+    need([p for p in book_paths if book[p] != before[p]] == sorted(product['chapters']), 'only complete affected book sources change')
+    for path,row in product['chapters'].items():
+        need(row['original'].encode() == before[path] and row['current'].encode() == book[path]
+             and row['before'] == pin(before[path]) and row['after'] == pin(book[path]), 'whole original/current book source bytes')
+    need(same(product['book_before'], counts({p:before[p] for p in book_paths}))
+         and same(product['book_after'], counts(book)), 'whole independent typed book dimensions')
+    captured = json.loads((BASE/'current-input.json').read_bytes())
+    source_check(captured, canonical, proposal)
+    prior = current.historical()
+    current.check(captured['record'], canonical, prior, current.authority(prior))
+    need(same(captured['qualification'], product['authenticated_qualification'])
+         and same(captured['qualification'], current.coordinate_fact.authenticate()), 'whole original qualification conservation')
+    feature_html = Path('docs/book/book/13k-isf-feature-support-matrix.html').read_text()
+    reference_html = Path('docs/book/book/90-reference-map.html').read_text()
+    native(feature_html,[current.guide(prior),current.coordinate_fact.PARSER_GUIDE])
+    native(reference_html,[current.coordinate_fact.REFERENCE])
+    current.check_native(feature_html,prior)
+    old_registry = list(map(json.loads,before['doctrine/live_document_size/surfaces.jsonl'].splitlines()))
+    registry = list(map(json.loads,Path('doctrine/live_document_size/surfaces.jsonl').read_text().splitlines()))
+    need([r.get('surface_id') for r in old_registry] == [r.get('surface_id') for r in registry], 'whole publication capacity population')
+    for old,new in zip(old_registry,registry):
+        expected = copy.deepcopy(old)
+        if new.get('surface_id') == 'shipped_behavior':
+            change = new['reference_contract']['aggregate_change']
+            need(change['authority_id'] == 'COORDINATE-CURRENT-PUBLICATION-20261010'
+                 and change['owner'] == (BASE/'scope.txt').read_text().strip()
+                 and same(change['baseline'],product['book_before'])
+                 and same(change['delta'],{k:product['book_after'][k]-product['book_before'][k] for k in product['book_before']}),
+                 'exact owned whole-book publication authority')
+            expected['reference_contract']['aggregate_change'] = change
+        if new.get('surface_id') == 'task_evidence':
+            paths = sorted({p for pattern in new['targets'] for p in Path('.').glob(pattern)})
+            measured = metrics({str(p):p.read_bytes() for p in paths})
+            task = json.loads((BASE/'task-metrics.json').read_bytes())
+            need(same(measured,task['actual']) and task['owner'] == (BASE/'scope.txt').read_text().strip(), 'whole exact task measurements')
+            expected['transition']['max_growth'] = {k:max(0,min(v+new['transition']['ratchet_step'][k],new['enforcement_ceilings'][k])-new['baseline'][k]) for k,v in measured.items()}
+        need(same(expected,new), 'only exact owned book/task authority changes')
+    checks = json.loads((BASE/'checks.json').read_bytes())
+    commands = {
+        'publish':['python3','-B',str(BASE/'publish.py'),'scripts/check_record_value_publication.py','scripts/record_value_coordinate_fact.py'],
+        'focused-final':['prove','-Iperl','t/2066-record-value-current-publication.t','t/1303-isf-public-live-book-paths-audit.t','t/1305-isf-book-feature-matrix-audit.t'],
+        'preparation-snapshot':['python3','-B','docs/audits/coordinate-current-preparation-20261010/verify.py','--snapshot'],
+        'capture':['python3','-B',str(BASE/'capture.py')],
+        'task-pressure':['python3','-B',str(BASE/'task_pressure.py')],
+        'source-current':['python3','-B','scripts/book_source_references.py','--check'],
+        'book-build':['mdbook','build','docs/book'],
+        'native-staged':['python3','-B','scripts/book_source_references.py','--check','--verify-build','docs/book/book'],
+        'current-native-final':['python3','-B','scripts/check_record_value_publication.py','--build','docs/book/book'],
+        'epoch-contract-final':['python3','-B','docs/audits/coordinate-admission-checks-20261007/verify_result.py'],
+        'claim-inventory':['perl','scripts/check_claim_verification_inventory.pl','--write']}
+    for name,command in commands.items():
+        saved = {'scripts/check_record_value_publication.py':(BASE/'first-current-reader.py.txt').read_bytes()} if name == 'publish' else None
+        receipt(checks[name],command,current.SUCCESS if name == 'current-native-final' else None,saved)
+    need('All tests successful.' in checks['focused-final']['stdout'] and 'Files=3, Tests=310' in checks['focused-final']['stdout'], 'actual complete focused current regression')
+    failure = json.loads((BASE/'epoch-failure.json').read_bytes())
+    first_source = (BASE/'first-current-reader.py.txt').read_bytes()
+    need({k:pin(first_source)[k] for k in ('bytes','sha256')} == {k:failure['first_reader'][k] for k in ('bytes','sha256')}
+         and same(failure['failure'],checks['epoch-diagnosis'])
+         and type(checks['epoch-diagnosis']['status']) is int and checks['epoch-diagnosis']['status'] == 1
+         and checks['epoch-diagnosis']['stderr'].endswith('ValueError: whole actual coordinate prerequisite command and streams\n'),
+         'complete retained historical public-stream regression')
+    initial = {'__name__':'first_current_contract','__file__':'scripts/check_record_value_publication.py'}
+    exec(compile(first_source,initial['__file__'],'exec'),initial)
+    actual_old = json.loads(Path('docs/audits/record-value-coordinate-admission-20261007/actual-current.json').read_bytes())
+    need(initial['SUCCESS'] != actual_old['stdout'] and current.SUCCESS == actual_old['stdout'],
+         'genuine initial stdout contract break and compatible final contract')
+    controls = {}
+    for name,mutate,cause in (
+        ('lost-parser',lambda p:p['record']['cards'].pop(current.coordinate_fact.PARSER),'whole four-card approved source and meaning epoch'),
+        ('Boolean-census',lambda p:p['record']['census'].update(files=True),'whole independently measured current card dimensions'),
+        ('borrowed-core',lambda p:p['record']['cards'].update({'docs/knowledge/record-value-finite-copy-probe-reader.md':before['docs/knowledge/record-value-finite-copy-probe-reader.md'].decode()}),'whole four-card approved source and meaning epoch'),
+        ('lost-source',lambda p:p['record']['source_members'].pop(next(iter(canonical))),'whole independent current canonical population'),
+        ('borrowed-query-command',lambda p:p['record']['queries']['direct'].update(command=p['record']['queries']['cached']['command']),'actual distinct current query command and streams')):
+        bad = copy.deepcopy(captured)
+        mutate(bad)
+        need(not same(bad,captured),'genuine changed whole publication control')
+        try:
+            source_check(bad,canonical,proposal)
+        except ValueError as error:
+            need(str(error) == cause,'intended whole publication refusal: '+name)
+            controls[name]=cause
+        else:
+            raise ValueError('false-green whole publication control: '+name)
+    for name,html,blocks in (
+        ('lost-native-coordinate-gap',feature_html.replace('external framework coordinates and address lifetimes','qualified native identity'),[current.guide(prior)]),
+        ('lost-native-current-scope',reference_html.replace('A successful dated','An unrelated dated'),[current.coordinate_fact.REFERENCE])):
+        try:
+            native(html,blocks)
+        except ValueError as error:
+            controls[name]=str(error)
+        else:
+            raise ValueError('false-green whole native publication control: '+name)
+    print(json.dumps({'result':'PASS complete atomic current coordinate source/query/history/book/native publication and genuine controls; final whole closure pending.',
+        'cards':product['cards'],'book_before':product['book_before'],'book_after':product['book_after'],'controls':controls},sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

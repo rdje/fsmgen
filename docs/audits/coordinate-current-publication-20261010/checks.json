@@ -1,0 +1,606 @@
+{
+  "book-build": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "mdbook",
+      "build",
+      "docs/book"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 63320; host 39.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15358369 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/docs/book/book`\n",
+    "stdout": ""
+  },
+  "capture": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-current-publication-20261010/capture.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/capture.py": {
+        "bytes": 1562,
+        "sha256": "f5ec736f4abc9e4935e1e7a27a410e73a8bba33d5815cdc2ec5ea1ae84c6784e"
+      },
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 36099; host 40.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS retained complete actual current source/query inputs, programme epoch and original qualification authentication.\n"
+  },
+  "claim-inventory": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "perl",
+      "scripts/check_claim_verification_inventory.pl",
+      "--write"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/check_claim_verification_inventory.pl": {
+        "bytes": 40247,
+        "sha256": "5f0d659dc59c542e8886894ec6b067c66a18ed4bf3961bd4c588a54a3f0136e4"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 48892; host 50.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13407, candidates=1981, quantified=965, conservative=1016, constants=2943, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1981)\n"
+  },
+  "claim-inventory-final": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "perl",
+      "scripts/check_claim_verification_inventory.pl",
+      "--write"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/check_claim_verification_inventory.pl": {
+        "bytes": 40247,
+        "sha256": "5f0d659dc59c542e8886894ec6b067c66a18ed4bf3961bd4c588a54a3f0136e4"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 55146; host 81.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13407, candidates=1981, quantified=965, conservative=1016, constants=2943, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1981)\n"
+  },
+  "current-native": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "scripts/check_record_value_publication.py",
+      "--build",
+      "docs/book/book"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/check_record_value_publication.py": {
+        "bytes": 14252,
+        "sha256": "9b3aed5e5ceccef37cc0e6cafa8435fc7127a5c931810573884b4f3c119e7a9e"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 1,
+    "stderr": "ram-guard: PID 63650; host 39.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/check_record_value_publication.py\", line 245, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/check_record_value_publication.py\", line 217, in main\n    require(type(epoch.returncode) is int and epoch.returncode == 0\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        and epoch.stdout == expected['stdout'] and epoch.stderr == '', 'complete actual historical epoch and native result qualification')\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/scripts/check_record_value_publication.py\", line 45, in require\n    raise ValueError(cause)\nValueError: complete actual historical epoch and native result qualification\n",
+    "stdout": ""
+  },
+  "current-native-final": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "scripts/check_record_value_publication.py",
+      "--build",
+      "docs/book/book"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/check_record_value_publication.py": {
+        "bytes": 14406,
+        "sha256": "4b96640964c3b94965b324fac724aaae4379e46735b7254121a8e85462d7d793"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 98170; host 50.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n"
+  },
+  "epoch-contract-final": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-admission-checks-20261007/verify_result.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-admission-checks-20261007/verify_result.py": {
+        "bytes": 4686,
+        "sha256": "7260ac858df30dfee56b5fe22be1e574e4146883258187d50517d2e7608c8d27"
+      },
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 69821; host 45.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"controls\": [{\"cause\": \"historical epoch actual integer success\", \"control\": \"Boolean-status\"}, {\"cause\": \"historical epoch actual integer success\", \"control\": \"float-status\"}, {\"cause\": \"whole independent historical committed source population\", \"control\": \"lost-historical-source\"}, {\"cause\": \"historical epoch discrete member byte kinds\", \"control\": \"Boolean-member-bytes\"}, {\"cause\": \"whole unchanged historical epoch command and streams\", \"control\": \"wrong-committed-epoch\"}, {\"cause\": \"historical epoch execution cannot establish later currency\", \"control\": \"later-current-promotion\"}, {\"cause\": \"whole unchanged historical epoch command and streams\", \"control\": \"borrowed-current-only-success\"}], \"members\": 31175, \"revision\": \"e0620dd2ffb04c340b91693a04f5885c8abb6595\", \"scope\": \"Whole retained genuine live-epoch failure and independently reconstructed complete unchanged historical execution; original programmes/seals retain and later current currency is separate.\"}\n{\"actual_readers\": 5, \"controls\": [{\"cause\": \"actual coordinate outer integer success\", \"control\": \"outer-status-True\"}, {\"cause\": \"actual coordinate outer integer success\", \"control\": \"outer-status-0.0\"}, {\"cause\": \"actual coordinate outer integer success\", \"control\": \"outer-status-1\"}, {\"cause\": \"whole actual coordinate outer command streams and unchanged guard\", \"control\": \"borrowed-current-success\"}, {\"cause\": \"whole coordinate admission sealed member corpus\", \"control\": \"lost-complete-source-snapshot\"}, {\"cause\": \"whole coordinate admission sealed member corpus\", \"control\": \"changed-whole-admission-programme\"}], \"done_owners\": 84, \"members\": 2634, \"role\": \"Complete committed coordinate predecessor custody and scoped actual reader executions; independent coordinate recipes and original-coordinate join remain pending. Inherited serialized operands remain opaque evidence; dated public profiles do not measure original formatter/provider/toolchain/private identities.\", \"roots\": 134}\n"
+  },
+  "epoch-diagnosis": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-admission-checks-20261007/verify_result.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-admission-checks-20261007/verify_result.py": {
+        "bytes": 4686,
+        "sha256": "7260ac858df30dfee56b5fe22be1e574e4146883258187d50517d2e7608c8d27"
+      },
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 1,
+    "stderr": "ram-guard: PID 42405; host 44.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-admission-checks-20261007/verify_result.py\", line 77, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-admission-checks-20261007/verify_result.py\", line 31, in main\n    require(same(load(AUDIT / 'result-proof.json'), namespace['replays'](bound, source, False)),\n                                                    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-coordinate-admission-20261007/verify.py\", line 210, in replays\n    check_actual(actual, spec, bound, source)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-coordinate-admission-20261007/verify.py\", line 173, in check_actual\n    require(actual['command'] == spec['command'] and actual['stdout'] == spec['stdout'] and actual['stderr'] == '',\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            'whole actual coordinate prerequisite command and streams')\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/record-value-class-frame-admission-20261006/verify.py\", line 32, in require\n    raise ValueError(cause)\nValueError: whole actual coordinate prerequisite command and streams\n",
+    "stdout": ""
+  },
+  "focused": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "prove",
+      "-Iperl",
+      "t/2066-record-value-current-publication.t",
+      "t/1303-isf-public-live-book-paths-audit.t",
+      "t/1305-isf-book-feature-matrix-audit.t"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      },
+      "t/1303-isf-public-live-book-paths-audit.t": {
+        "bytes": 3196,
+        "sha256": "81612f9a721bcedf8b5311fd0e6081601b189f060f94210c8794a11efd44d956"
+      },
+      "t/1305-isf-book-feature-matrix-audit.t": {
+        "bytes": 22769,
+        "sha256": "09a570c4d2f963ba4d4f9e48394398305b455bc0a561bd39a6b44e05ad6a6189"
+      },
+      "t/2066-record-value-current-publication.t": {
+        "bytes": 620,
+        "sha256": "a1b3ceac3e85788f79b1dbb3f93ff4140788b50230ed59220c03449f522959ca"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 62092; host 39.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "t/2066-record-value-current-publication.t .. ok\nt/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nAll tests successful.\nFiles=3, Tests=310,  6 wallclock secs ( 0.01 usr  0.00 sys +  5.14 cusr  0.47 csys =  5.62 CPU)\nResult: PASS\n"
+  },
+  "focused-final": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "prove",
+      "-Iperl",
+      "t/2066-record-value-current-publication.t",
+      "t/1303-isf-public-live-book-paths-audit.t",
+      "t/1305-isf-book-feature-matrix-audit.t"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      },
+      "t/1303-isf-public-live-book-paths-audit.t": {
+        "bytes": 3196,
+        "sha256": "81612f9a721bcedf8b5311fd0e6081601b189f060f94210c8794a11efd44d956"
+      },
+      "t/1305-isf-book-feature-matrix-audit.t": {
+        "bytes": 22769,
+        "sha256": "09a570c4d2f963ba4d4f9e48394398305b455bc0a561bd39a6b44e05ad6a6189"
+      },
+      "t/2066-record-value-current-publication.t": {
+        "bytes": 620,
+        "sha256": "a1b3ceac3e85788f79b1dbb3f93ff4140788b50230ed59220c03449f522959ca"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 95219; host 45.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "t/2066-record-value-current-publication.t .. ok\nt/1303-isf-public-live-book-paths-audit.t .. ok\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nAll tests successful.\nFiles=3, Tests=310,  6 wallclock secs ( 0.02 usr  0.01 sys +  4.99 cusr  0.61 csys =  5.63 CPU)\nResult: PASS\n"
+  },
+  "independent": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-current-publication-20261010/verify.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "docs/audits/coordinate-current-publication-20261010/verify.py": {
+        "bytes": 17077,
+        "sha256": "8c9865eaf55ee684f9a5a17293d5f2326c0a5f754f3ec64e3b933a965b32a91f"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 1,
+    "stderr": "ram-guard: PID 49253; host 44.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-current-publication-20261010/verify.py\", line 260, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-current-publication-20261010/verify.py\", line 170, in main\n    source_check(captured, canonical, proposal)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-current-publication-20261010/verify.py\", line 89, in source_check\n    need(owned == sorted(target), 'every independently reconstructed current target question')\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-current-publication-20261010/verify.py\", line 21, in need\n    raise ValueError(cause)\nValueError: every independently reconstructed current target question\n",
+    "stdout": ""
+  },
+  "independent-corrected": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-current-publication-20261010/verify.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "docs/audits/coordinate-current-publication-20261010/verify.py": {
+        "bytes": 17372,
+        "sha256": "66523846927fce8d2321980b67c8924b933d6b8a078e477e060676a33a2f2771"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 1,
+    "stderr": "ram-guard: PID 53348; host 47.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-current-publication-20261010/verify.py\", line 261, in <module>\n    main()\n    ~~~~^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-current-publication-20261010/verify.py\", line 197, in main\n    need(same(measured,task['actual']) and task['owner'] == (BASE/'scope.txt').read_text().strip(), 'whole exact task measurements')\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/coordinate-current-publication-20261010/verify.py\", line 21, in need\n    raise ValueError(cause)\nValueError: whole exact task measurements\n",
+    "stdout": ""
+  },
+  "independent-final": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-current-publication-20261010/verify.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "docs/audits/coordinate-current-publication-20261010/verify.py": {
+        "bytes": 18008,
+        "sha256": "9b5360f2bb9d130966fe982434f2f9a7676ae2a9b878c588c86e1dcfd12e156e"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 55428; host 43.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"book_after\": {\"bytes_total\": 3842932, \"files\": 64, \"lines_total\": 69110}, \"book_before\": {\"bytes_total\": 3841349, \"files\": 64, \"lines_total\": 69080}, \"cards\": {\"docs/knowledge/isf-record-output-source-contexts.md\": {\"bytes\": 6318, \"lines\": 88, \"sha256\": \"27368f4de09823488bc7acda9eeb1d367e6b6398571002af80a06c77d305c3d4\"}, \"docs/knowledge/mdbook-build-destination-locality.md\": {\"bytes\": 4820, \"lines\": 70, \"sha256\": \"50f78dfc9ca22af03045988535e00daa11ad378a44098d0f9423800d235ad204\"}, \"docs/knowledge/record-value-finite-copy-probe-reader.md\": {\"bytes\": 6137, \"lines\": 79, \"sha256\": \"2960c0bc062fa8e565af2f842e6798c90792add832f70fd06f314ba5139cecac\"}, \"docs/knowledge/record-value-original-observer-helper-paths.md\": {\"bytes\": 4304, \"lines\": 59, \"sha256\": \"f91ee8a2ed7f79c0c52e9433fb77e5deebf29fb7848af5205ecc61363fb74d21\"}}, \"controls\": {\"Boolean-census\": \"whole independently measured current card dimensions\", \"borrowed-core\": \"whole four-card approved source and meaning epoch\", \"borrowed-query-command\": \"actual distinct current query command and streams\", \"case-folded-question\": \"every independently reconstructed current target question\", \"lost-native-coordinate-gap\": \"whole native current scope and remaining gaps\", \"lost-native-current-scope\": \"whole native current scope and remaining gaps\", \"lost-parser\": \"whole four-card approved source and meaning epoch\", \"lost-source\": \"whole independent current canonical population\"}, \"result\": \"PASS complete atomic current coordinate source/query/history/book/native publication and genuine controls; final whole closure pending.\"}\n"
+  },
+  "knowledge-write": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "knowledge-map/scripts/gen_knowledge_map.sh"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "knowledge-map/scripts/gen_knowledge_map.sh": {
+        "bytes": 1118,
+        "sha256": "1b643ebf5f499379b99df7fa01dd6ccf8ed697ddd6700d3e4337b978aae76954"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 61988; host 39.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: wrote KNOWLEDGE_MAP.md plus 185 topic shards (1267 facts, 6983 unique questions, 7160 answer occurrences)\n",
+    "stdout": ""
+  },
+  "native-staged": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "scripts/book_source_references.py",
+      "--check",
+      "--verify-build",
+      "docs/book/book"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/book_source_references.py": {
+        "bytes": 11033,
+        "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 63420; host 40.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+  },
+  "preparation-snapshot": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-current-preparation-20261010/verify.py",
+      "--snapshot"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-preparation-20261010/verify.py": {
+        "bytes": 12802,
+        "sha256": "9e07f633cceb9046216cfb3f292d07b64e7637a59e90710f332296617fb3bef5"
+      },
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 62366; host 39.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "{\"controls\": {\"Boolean-dimension\": \"whole non-growing typed working set\", \"borrowed-authority\": \"unchanged whole Knowledge Map authority\", \"borrowed-probe\": \"every original executable probe obligation\", \"lost-address-gap\": \"complete scoped own-coordinate qualification and gaps\", \"lost-original-question\": \"every ordered original and new scoped question\", \"lost-proposition\": \"complete reviewed proposed paragraph domain\", \"lost-source\": \"complete original identity\", \"promoted-current\": \"closed complete dated proposal scope\"}, \"result\": \"PASS complete retained original sources, reviewed proposal/questions/probes, non-growing authority and genuine controls; current publication pending.\", \"role\": \"dated snapshot\", \"totals\": {\"original\": {\"bytes\": 21587, \"lines\": 313}, \"proposal\": {\"bytes\": 21579, \"lines\": 296}}}\n"
+  },
+  "publish": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-current-publication-20261010/publish.py",
+      "scripts/check_record_value_publication.py",
+      "scripts/record_value_coordinate_fact.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "docs/audits/coordinate-current-publication-20261010/publish.py": {
+        "bytes": 8633,
+        "sha256": "4d14e33894f3e517e8269eb5fccaa26b75430974b0a846b27922be9bdf2c0b54"
+      },
+      "scripts/check_record_value_publication.py": {
+        "bytes": 14252,
+        "sha256": "9b3aed5e5ceccef37cc0e6cafa8435fc7127a5c931810573884b4f3c119e7a9e"
+      },
+      "scripts/record_value_coordinate_fact.py": {
+        "bytes": 12101,
+        "sha256": "1f91a88c3a50d729a11f9358a5d7da84ac5490ceb03aaf5229df6b3b607a0ccc"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 60772; host 39.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS complete atomic coordinate fact/reader/book admission, exact governed history and unchanged Knowledge Map authority.\n"
+  },
+  "source-current": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "scripts/book_source_references.py",
+      "--check"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/book_source_references.py": {
+        "bytes": 11033,
+        "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 62986; host 39.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+  },
+  "source-write": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "scripts/book_source_references.py",
+      "--write"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/book_source_references.py": {
+        "bytes": 11033,
+        "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 62462; host 39.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n"
+  },
+  "staged-doctrines": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "scripts/check_doctrines.sh"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "scripts/check_doctrines.sh": {
+        "bytes": 4133,
+        "sha256": "f6eaf27625b3ada9cd84fd711ff0a606c5a9429d279e5cb223ecac5de63fffda"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 55885; host 42.1%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nknowledge-map: OK (1267 facts, 6983 unique questions, 7160 answer occurrences, 185 bounded topic shards; query parity verified)\ndecision-records: authenticated originals, current records, compatibility and indexes verified\ndecision-records: authenticated originals, current records, compatibility and indexes verified\nretired-changes-history: exact 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md recovery and zero live consumers verified\nretired-achievement-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md recovery and zero live consumers verified\nretired-roadmap-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md recovery and zero live consumers verified\nroadmap-history: exact activation source recovery and bounded live direction verified\nengineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges\nengineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges\nknowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified\nknowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified\nknowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified\nknowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified\nisf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts\nisf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts\nisf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts\nengineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges\nknowledge-map: OK (1267 facts, 6983 unique questions, 7160 answer occurrences, 185 bounded topic shards; query parity verified)\nknowledge-map: OK (1267 facts, 6983 unique questions, 7160 answer occurrences, 185 bounded topic shards; query parity verified)\ndecision-records: authenticated originals, current records, compatibility and indexes verified\ndecision-records: authenticated originals, current records, compatibility and indexes verified\nretired-changes-history: exact 329d7cf1b09319899fb59cc9863cdfffddfa40dc:CHANGES.md recovery and zero live consumers verified\nretired-achievement-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:LIVE_ACHIEVEMENT_STATUS.md recovery and zero live consumers verified\nretired-roadmap-history: exact b4d07fee5ffd6621503007958dcac3af8d44b345:ROADMAP_STATUS.md recovery and zero live consumers verified\nroadmap-history: exact activation source recovery and bounded live direction verified\nengineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges\nengineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges\nknowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified\nknowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified\nknowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified\nknowledge-card-history: exact sources, stable partitions, answer-set equality, boundedness, and current routing verified\nisf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts\nisf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts\nisf-reference-partitions: 3 exact sources map contiguously to 11 bounded semantic parts\nengineering-rationale-ledger: exact immutable source prefix plus 64 post-cutover current entries reconstructed across 2 ranges\nknowledge-map: OK (1267 facts, 6983 unique questions, 7160 answer occurrences, 185 bounded topic shards; query parity verified)\nknowledge-map: OK (1267 facts, 6983 unique questions, 7160 answer occurrences, 185 bounded topic shards; query parity verified)\n",
+    "stdout": "[doctrine] registered checks: 12\n[doctrine] RUN:  DOCTRINE-BOOTSTRAP - Doctrine and toolbox docs, bootstrap pointers, hook, and CI driver wiring exist\n[doctrine-bootstrap] ok:   README.md present\n[doctrine-bootstrap] ok:   COMMIT.md present\n[doctrine-bootstrap] ok:   MEMORY_ARCHITECTURE.md present\n[doctrine-bootstrap] ok:   LIVE_DOCUMENT_SIZE_CONTAINMENT.md present\n[doctrine-bootstrap] ok:   CLAIM_VERIFICATION.md present\n[doctrine-bootstrap] ok:   DOCTRINE_ENFORCEMENT.md present\n[doctrine-bootstrap] ok:   TASK_ACCEPTANCE.md present\n[doctrine-bootstrap] ok:   TOOLBOX.md present\n[doctrine-bootstrap] ok:   AGENTS.md points at TASK_ACCEPTANCE.md\n[doctrine-bootstrap] ok:   COMMIT.md points at TASK_ACCEPTANCE.md\n[doctrine-bootstrap] ok:   DOCTRINE_ENFORCEMENT.md points at TASK_ACCEPTANCE.md\n[doctrine-bootstrap] ok:   TOOLBOX.md points at TASK_ACCEPTANCE.md\n[doctrine-bootstrap] ok:   AGENTS.md points at CLAIM_VERIFICATION.md\n[doctrine-bootstrap] ok:   COMMIT.md points at CLAIM_VERIFICATION.md\n[doctrine-bootstrap] ok:   DOCTRINE_ENFORCEMENT.md points at CLAIM_VERIFICATION.md\n[doctrine-bootstrap] ok:   TOOLBOX.md points at CLAIM_VERIFICATION.md\n[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: ## Mandatory post-push GitHub qualification\n[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: git ls-remote\n[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: gh run list --commit <full-sha>\n[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: gh run watch <run-id> --compact\n[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: gh run view <run-id> --log-failed\n[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: Accept only `status=completed` and `conclusion=success`\n[doctrine-bootstrap] ok:   COMMIT.md retains post-push contract marker: does not silently authorize an early push\n[doctrine-bootstrap] ok:   doctrine registry includes TASK-ACCEPTANCE\n[doctrine-bootstrap] ok:   doctrine registry includes TASK-TREE-INTEGRITY\n[doctrine-bootstrap] ok:   doctrine registry includes LIVE-DOCUMENT-SIZE\n[doctrine-bootstrap] ok:   doctrine registry includes CLAIM-VERIFICATION\n[doctrine-bootstrap] ok:   doctrine/claim_verification/claim_registries.jsonl present\n[doctrine-bootstrap] ok:   doctrine/claim_verification/claims-0002.jsonl present\n[doctrine-bootstrap] ok:   doctrine/claim_verification/claims.jsonl present\n[doctrine-bootstrap] ok:   doctrine/claim_verification/disposition_groups.jsonl present\n[doctrine-bootstrap] ok:   doctrine/claim_verification/dispositions.jsonl present\n[doctrine-bootstrap] ok:   doctrine/claim_verification/fixtures/positive.txt present\n[doctrine-bootstrap] ok:   doctrine/claim_verification/inventory.jsonl present\n[doctrine-bootstrap] ok:   doctrine/claim_verification/inventory_scope.json present\n[doctrine-bootstrap] ok:   scripts/check_claim_verification.pl present\n[doctrine-bootstrap] ok:   scripts/check_claim_verification_dispositions.pl present\n[doctrine-bootstrap] ok:   scripts/check_claim_verification_inventory.pl present\n[doctrine-bootstrap] ok:   t/1636-claim-verification-doctrine.t present\n[doctrine-bootstrap] ok:   t/1637-claim-verification-inventory.t present\n[doctrine-bootstrap] ok:   t/1638-claim-verification-dispositions.t present\n[doctrine-bootstrap] ok:   t/1750-claim-verification-registry-set.t present\n[doctrine-bootstrap] ok:   scripts/check_claim_verification.pl executable\n[doctrine-bootstrap] ok:   scripts/check_claim_verification_inventory.pl executable\n[doctrine-bootstrap] ok:   scripts/check_claim_verification_dispositions.pl executable\n[doctrine-bootstrap] ok:   doctrine registry includes CLAIM-INVENTORY\n[doctrine-bootstrap] ok:   doctrine registry includes CLAIM-DISPOSITIONS\n[doctrine-bootstrap] ok:   live-document-size/LIVE_DOCUMENT_SIZE_CHECKER.md present\n[doctrine-bootstrap] ok:   live-document-size/scripts/check_live_document_size.pl present\n[doctrine-bootstrap] ok:   doctrine/live_document_size/surfaces.jsonl present\n[doctrine-bootstrap] ok:   doctrine/live_document_size/ceiling_increase_authorities.jsonl present\n[doctrine-bootstrap] ok:   doctrine/live_document_size/archive_descriptors.jsonl present\n[doctrine-bootstrap] ok:   doctrine/live_document_size/ledger_manifests.jsonl present\n[doctrine-bootstrap] ok:   doctrine/live_document_size/evidence_maps.jsonl present\n[doctrine-bootstrap] ok:   doctrine/live_document_size/version_retention_contracts.jsonl present\n[doctrine-bootstrap] ok:   doctrine/live_document_size/derived_state_contracts.jsonl present\n[doctrine-bootstrap] ok:   doctrine/live_document_size/isf_reference_partitions.jsonl present\n[doctrine-bootstrap] ok:   doctrine/readme_entrypoint/routed_destinations.jsonl present\n[doctrine-bootstrap] ok:   doctrine/task_tree/index_archives.jsonl present\n[doctrine-bootstrap] ok:   scripts/check_live_document_size.sh present\n[doctrine-bootstrap] ok:   scripts/check_live_document_ceiling_authority.pl present\n[doctrine-bootstrap] ok:   scripts/check_live_document_reference_authority.pl present\n[doctrine-bootstrap] ok:   scripts/check_live_document_route_candidates.pl present\n[doctrine-bootstrap] ok:   scripts/check_live_document_resulting_tree.pl present\n[doctrine-bootstrap] ok:   scripts/run_live_document_adapter_verifiers.pl present\n[doctrine-bootstrap] ok:   scripts/check_isf_reference_partitions.pl present\n[doctrine-bootstrap] ok:   scripts/focused_document_index.pl present\n[doctrine-bootstrap] ok:   KNOWLEDGE_MAP.md present\n[doctrine-bootstrap] ok:   knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md present\n[doctrine-bootstrap] ok:   knowledge-map/scripts/knowledge_map.pl present\n[doctrine-bootstrap] ok:   knowledge-map/scripts/gen_knowledge_map.sh present\n[doctrine-bootstrap] ok:   knowledge-map/scripts/check_knowledge_map.sh present\n[doctrine-bootstrap] ok:   knowledge-map/scripts/query_knowledge_map.sh present\n[doctrine-bootstrap] ok:   scripts/check_isf_reference_partitions.pl executable\n[doctrine-bootstrap] ok:   scripts/focused_document_index.pl executable\n[doctrine-bootstrap] ok:   knowledge-map/scripts/knowledge_map.pl executable\n[doctrine-bootstrap] ok:   knowledge-map/scripts/gen_knowledge_map.sh executable\n[doctrine-bootstrap] ok:   knowledge-map/scripts/check_knowledge_map.sh executable\n[doctrine-bootstrap] ok:   knowledge-map/scripts/query_knowledge_map.sh executable\n[doctrine-bootstrap] ok:   .githooks/pre-commit refreshes the focused-document index\n[doctrine-bootstrap] ok:   doctrine registry includes bounded Knowledge Map verification\n[doctrine-bootstrap] ok:   live-document adapter invokes its verifier runner\n[doctrine-bootstrap] ok:   live-document adapter invokes its route-candidate scanner\n[doctrine-bootstrap] ok:   live-document adapter checks staged/resulting-tree agreement\n[doctrine-bootstrap] ok:   live-document adapter checks maintained-reference aggregate authority\n[doctrine-bootstrap] ok:   live-document adapter and neutral core require retention contracts\n[doctrine-bootstrap] ok:   live-document adapter and neutral core require ledger manifests\n[doctrine-bootstrap] ok:   live-document adapter/core require derived-state contracts\n[doctrine-bootstrap] ok:   hosted CI invokes the doctrine driver without re-enumerating live-document checks\n[doctrine-bootstrap] ok:   AGENTS.md points at README.md\n[doctrine-bootstrap] ok:   AGENTS.md points at MEMORY_ARCHITECTURE.md\n[doctrine-bootstrap] ok:   AGENTS.md points at DOCTRINE_ENFORCEMENT.md\n[doctrine-bootstrap] ok:   AGENTS.md points at TOOLBOX.md\n[doctrine-bootstrap] ok:   CLAUDE.md points at README.md\n[doctrine-bootstrap] ok:   CLAUDE.md points at MEMORY_ARCHITECTURE.md\n[doctrine-bootstrap] ok:   CLAUDE.md points at DOCTRINE_ENFORCEMENT.md\n[doctrine-bootstrap] ok:   CLAUDE.md points at TOOLBOX.md\n[doctrine-bootstrap] ok:   GEMINI.md points at README.md\n[doctrine-bootstrap] ok:   GEMINI.md points at MEMORY_ARCHITECTURE.md\n[doctrine-bootstrap] ok:   GEMINI.md points at DOCTRINE_ENFORCEMENT.md\n[doctrine-bootstrap] ok:   GEMINI.md points at TOOLBOX.md\n[doctrine-bootstrap] ok:   .cursorrules points at README.md\n[doctrine-bootstrap] ok:   .cursorrules points at MEMORY_ARCHITECTURE.md\n[doctrine-bootstrap] ok:   .cursorrules points at DOCTRINE_ENFORCEMENT.md\n[doctrine-bootstrap] ok:   .cursorrules points at TOOLBOX.md\n[doctrine-bootstrap] ok:   .windsurfrules points at README.md\n[doctrine-bootstrap] ok:   .windsurfrules points at MEMORY_ARCHITECTURE.md\n[doctrine-bootstrap] ok:   .windsurfrules points at DOCTRINE_ENFORCEMENT.md\n[doctrine-bootstrap] ok:   .windsurfrules points at TOOLBOX.md\n[doctrine-bootstrap] ok:   .github/copilot-instructions.md points at README.md\n[doctrine-bootstrap] ok:   .github/copilot-instructions.md points at MEMORY_ARCHITECTURE.md\n[doctrine-bootstrap] ok:   .github/copilot-instructions.md points at DOCTRINE_ENFORCEMENT.md\n[doctrine-bootstrap] ok:   .github/copilot-instructions.md points at TOOLBOX.md\n[doctrine-bootstrap] ok:   CHANGES.md retired and absent\n[doctrine-bootstrap] ok:   LIVE_ACHIEVEMENT_STATUS.md retired and absent\n[doctrine-bootstrap] ok:   ROADMAP_STATUS.md retired and absent\n[doctrine-bootstrap] ok:   WARP.md retired and absent\n[doctrine-bootstrap] ok:   .githooks/pre-commit runs scripts/check_doctrines.sh\n[doctrine-bootstrap] ok:   .github/workflows/regression.yml runs scripts/check_doctrines.sh\n[doctrine-bootstrap] all doctrine bootstrap invariants hold\n[doctrine] PASS: DOCTRINE-BOOTSTRAP\n[doctrine] RUN:  MEMORY-ARCH - Durable memory architecture, bounded MEMORY.md, bootstrap pointers, task-tree and decision stores\n[memory-arch] ok:   MEMORY_ARCHITECTURE.md present\n[memory-arch] ok:   MEMORY.md is 15 lines (<= cap 120)\n[memory-arch] ok:   MEMORY.md resume fields are each <= 5 lines\n[memory-arch] ok:   AGENTS.md points at MEMORY_ARCHITECTURE.md\n[memory-arch] ok:   CLAUDE.md points at MEMORY_ARCHITECTURE.md\n[memory-arch] ok:   docs/decisions/ + INDEX.md present\n[memory-arch] ok:   docs/tasks/ + docs/TASK_TREE.md present\n[memory-arch] all memory-architecture invariants hold\n[doctrine] PASS: MEMORY-ARCH\n[doctrine] RUN:  KNOWLEDGE-MAP - Knowledge Map cards, bounded root/shards, freshness, coverage, and query parity hold\n[doctrine] PASS: KNOWLEDGE-MAP\n[doctrine] RUN:  DOC-PATHS - Live docs and Knowledge Map avoid machine-local absolute paths\nt/1414-docs-relative-paths-audit.t .. ok\nAll tests successful.\nFiles=1, Tests=2,  1 wallclock secs ( 0.00 usr  0.01 sys +  0.15 cusr  0.16 csys =  0.32 CPU)\nResult: PASS\n[doctrine] PASS: DOC-PATHS\n[doctrine] RUN:  LIVE-DOCUMENT-SIZE - Every declared live-document surface stays local, covered, lifecycle-valid, and within owned pressure controls\nlive-doc-route-candidates: all emitted author-overflow routes are declared (4 hints)\nlive-doc-resulting-tree: staged result and checked worktree agree on controlled paths\nlive-doc-size: ok:   derived-state contract active_resume_repository_head derives repository_head on read from repository HEAD\nlive-doc-size: ok:   derived-state contract memory_architecture_repository_head derives repository_head on read from repository HEAD\n[task-tree-integrity] all active task-tree invariants hold (trees=8, nodes=2388, segments=3, compact_terminals=46, index_archives=1, migrations=1, acceptance_histories=2)\nlive-doc-size: ok:   derived-state contract active_task_index_frontier core verifier executed: scripts/check_task_tree_integrity.pl\nlive-doc-size: ok:   surface readme_entrypoint: actual files=1, lines_each=240, bytes_each=9922, line_bytes_each=121, lines_total=240, bytes_total=9922; health target files=1, lines_each=275, bytes_each=12288, line_bytes_each=512, lines_total=275, bytes_total=12288; inclusive enforcement ceiling files=1, lines_each=245, bytes_each=9931, line_bytes_each=512, lines_total=245, bytes_total=9931; target peak 87.3%, ceiling peak 99.9% (warning_debt, pinned_deferred)\nlive-doc-size: ok:   surface root_documents: actual files=19, lines_each=1200, bytes_each=73413, line_bytes_each=524, lines_total=4652, bytes_total=268115; health target files=24, lines_each=1200, bytes_each=81920, line_bytes_each=1024, lines_total=8000, bytes_total=524288; inclusive enforcement ceiling files=24, lines_each=1200, bytes_each=81920, line_bytes_each=1024, lines_total=8000, bytes_total=524288; target peak 100.0%, ceiling peak 100.0% (rollover_debt, pinned_deferred)\nlive-doc-size: ok:   surface root_documents collection index declares complete registry-target query\nlive-doc-size: ok:   surface focused_documents: actual files=1010, lines_each=2251, bytes_each=172995, line_bytes_each=789, lines_total=203356, bytes_total=8802503; health target files=1280, lines_each=5000, bytes_each=262144, line_bytes_each=1024, lines_total=250000, bytes_total=12582912; inclusive enforcement ceiling files=1280, lines_each=5000, bytes_each=262144, line_bytes_each=1024, lines_total=210000, bytes_total=9000000; target peak 81.3%, ceiling peak 97.8% (warning_debt, migrated)\nlive-doc-size: ok:   surface ancillary_documents: actual files=16, lines_each=502, bytes_each=21728, line_bytes_each=780, lines_total=1811, bytes_total=93070; health target files=32, lines_each=640, bytes_each=32768, line_bytes_each=1024, lines_total=2000, bytes_total=131072; inclusive enforcement ceiling files=32, lines_each=640, bytes_each=32768, line_bytes_each=1024, lines_total=2000, bytes_total=131072; target peak 90.5%, ceiling peak 90.5% (rollover_debt, steady)\nfocused-document-index: current (1026 members; 1101 lines; 150305 bytes)\nlive-doc-size: ok:   surface focused_document_index freshness core verifier executed: scripts/focused_document_index.pl\nlive-doc-size: ok:   surface focused_document_index: actual files=1, lines_each=1101, bytes_each=150305, line_bytes_each=271, lines_total=1101, bytes_total=150305; health target files=1, lines_each=1400, bytes_each=196608, line_bytes_each=1024, lines_total=1400, bytes_total=196608; inclusive enforcement ceiling files=1, lines_each=1400, bytes_each=196608, line_bytes_each=1024, lines_total=1400, bytes_total=196608; target peak 78.6%, ceiling peak 78.6% (normal, migrated)\nlive-doc-size: ok:   surface isf_reference mandatory read docs/ISF_SPEC.md is 27 lines/1981 bytes; navigation depth 1\nlive-doc-size: ok:   surface isf_reference: maintained reference actual files=14, lines_each=2474, bytes_each=173009, line_bytes_each=318, lines_total=15512, bytes_total=946468; per-part health target lines_each=5000, bytes_each=425984, line_bytes_each=1024; inclusive per-part ceiling lines_each=5000, bytes_each=425984, line_bytes_each=1024; aggregate authority CONDITIONAL-ORIGIN-FILES-20261002-ISF-REFERENCE; target peak 49.5%, ceiling peak 49.5% (normal, migrated)\nlive-doc-size: ok:   surface isf_reference collection index membership checked\nlive-doc-size: ok:   surface shipped_behavior mandatory read docs/book/src/SUMMARY.md is 64 lines/3988 bytes; navigation depth 1\nlive-doc-size: ok:   surface shipped_behavior: maintained reference actual files=64, lines_each=4686, bytes_each=282921, line_bytes_each=7542, lines_total=69110, bytes_total=3842932; per-part health target lines_each=5000, bytes_each=409600, line_bytes_each=1024; inclusive per-part ceiling lines_each=5000, bytes_each=409600, line_bytes_each=8566; aggregate authority COORDINATE-CURRENT-PUBLICATION-20261010; target peak 736.5%, ceiling peak 93.7% (rollover_debt, pinned_deferred)\nlive-doc-size: ok:   surface shipped_behavior collection index membership checked\nlive-doc-size: ok:   surface reported_capabilities: query terminal bin/fsmgen\nlive-doc-size: ok:   surface high_level_direction: actual files=1, lines_each=332, bytes_each=15745, line_bytes_each=182, lines_total=332, bytes_total=15745; health target files=1, lines_each=640, bytes_each=32768, line_bytes_each=512, lines_total=640, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=640, bytes_each=32768, line_bytes_each=512, lines_total=640, bytes_total=32768; target peak 51.9%, ceiling peak 51.9% (normal, migrated)\nlive-doc-size: ok:   surface active_resume: actual files=1, lines_each=15, bytes_each=1570, line_bytes_each=270, lines_total=15, bytes_total=1570; health target files=1, lines_each=150, bytes_each=32768, line_bytes_each=512, lines_total=150, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=150, bytes_each=32768, line_bytes_each=512, lines_total=150, bytes_total=32768; target peak 52.7%, ceiling peak 52.7% (normal, steady)\nlive-doc-size: ok:   surface active_index: actual files=1, lines_each=586, bytes_each=40114, line_bytes_each=779, lines_total=586, bytes_total=40114; health target files=1, lines_each=1200, bytes_each=81920, line_bytes_each=2048, lines_total=1200, bytes_total=81920; inclusive enforcement ceiling files=1, lines_each=1200, bytes_each=81920, line_bytes_each=2048, lines_total=1200, bytes_total=81920; target peak 49.0%, ceiling peak 49.0% (normal, migrated)\n[task-tree-integrity] all active task-tree invariants hold (trees=8, nodes=2388, segments=3, compact_terminals=46, index_archives=1, migrations=1, acceptance_histories=2)\nlive-doc-size: ok:   surface active_index currency active_task_tree_alignment core verifier executed: scripts/check_task_tree_integrity.pl\nlive-doc-size: ok:   surface task_evidence: actual files=596, lines_each=6882, bytes_each=2366453, line_bytes_each=6264, lines_total=117853, bytes_total=12849732; health target files=768, lines_each=8000, bytes_each=4194304, line_bytes_each=8192, lines_total=150000, bytes_total=16777216; inclusive enforcement ceiling files=768, lines_each=8000, bytes_each=4194304, line_bytes_each=8192, lines_total=150000, bytes_total=16777216; target peak 86.0%, ceiling peak 86.0% (warning_debt, migrated)\nlive-doc-size: ok:   surface task_evidence collection index declares complete registry-target query\nlive-doc-size: ok:   surface rationale: actual files=69, lines_each=511, bytes_each=32681, line_bytes_each=705, lines_total=8111, bytes_total=494508; health target files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; inclusive enforcement ceiling files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; target peak 81.1%, ceiling peak 81.1% (warning_debt, migrated)\nlive-doc-size: ok:   surface rationale collection index membership checked\nlive-doc-size: ok:   surface engineering_rationale: actual files=1, lines_each=1200, bytes_each=73413, line_bytes_each=115, lines_total=1200, bytes_total=73413; health target files=1, lines_each=2000, bytes_each=131072, line_bytes_each=1024, lines_total=2000, bytes_total=131072; inclusive enforcement ceiling files=1, lines_each=2000, bytes_each=131072, line_bytes_each=1024, lines_total=2000, bytes_total=131072; target peak 60.0%, ceiling peak 60.0% (normal, migrated)\nlive-doc-size: ok:   surface knowledge_cards: actual files=1260, lines_each=422, bytes_each=31755, line_bytes_each=819, lines_total=53019, bytes_total=3879565; health target files=1536, lines_each=512, bytes_each=32768, line_bytes_each=1024, lines_total=65536, bytes_total=4194304; inclusive enforcement ceiling files=1536, lines_each=512, bytes_each=32768, line_bytes_each=1024, lines_total=65536, bytes_total=4194304; target peak 96.9%, ceiling peak 96.9% (rollover_debt, migrated)\nlive-doc-size: ok:   surface fact_index freshness core verifier executed: knowledge-map/scripts/check_knowledge_map.sh\nlive-doc-size: ok:   surface fact_index: actual files=1, lines_each=203, bytes_each=17600, line_bytes_each=141, lines_total=203, bytes_total=17600; health target files=1, lines_each=512, bytes_each=45056, line_bytes_each=1024, lines_total=512, bytes_total=45056; inclusive enforcement ceiling files=1, lines_each=512, bytes_each=45056, line_bytes_each=1024, lines_total=512, bytes_total=45056; target peak 39.6%, ceiling peak 39.6% (normal, migrated)\nlive-doc-size: ok:   surface fact_index_shards freshness core verifier executed: knowledge-map/scripts/check_knowledge_map.sh\nlive-doc-size: ok:   surface fact_index_shards: actual files=185, lines_each=2583, bytes_each=317593, line_bytes_each=625, lines_total=17517, bytes_total=1957620; health target files=256, lines_each=4096, bytes_each=524288, line_bytes_each=1024, lines_total=50000, bytes_total=4194304; inclusive enforcement ceiling files=256, lines_each=4096, bytes_each=524288, line_bytes_each=1024, lines_total=50000, bytes_total=8388608; target peak 72.3%, ceiling peak 72.3% (normal, migrated)\nlive-doc-size: ok:   surface fact_index_shards collection index membership checked\nlive-doc-size: ok:   surface exact_history: archive terminal .git\nlive-doc-size: ok:   surface diagnostics: actual files=1, lines_each=332, bytes_each=15603, line_bytes_each=506, lines_total=332, bytes_total=15603; health target files=1, lines_each=768, bytes_each=32768, line_bytes_each=1024, lines_total=768, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=768, bytes_each=32768, line_bytes_each=1024, lines_total=768, bytes_total=32768; target peak 49.4%, ceiling peak 49.4% (normal, steady)\nlive-doc-size: ok:   surface enforced_rules: actual files=1, lines_each=277, bytes_each=17041, line_bytes_each=524, lines_total=277, bytes_total=17041; health target files=1, lines_each=576, bytes_each=32768, line_bytes_each=1024, lines_total=576, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=576, bytes_each=32768, line_bytes_each=1024, lines_total=576, bytes_total=32768; target peak 52.0%, ceiling peak 52.0% (normal, steady)\nlive-doc-size: ok:   surface live_document_review: actual files=1, lines_each=76, bytes_each=3997, line_bytes_each=235, lines_total=76, bytes_total=3997; health target files=1, lines_each=100, bytes_each=5120, line_bytes_each=512, lines_total=100, bytes_total=5120; inclusive enforcement ceiling files=1, lines_each=100, bytes_each=5120, line_bytes_each=512, lines_total=100, bytes_total=5120; target peak 78.1%, ceiling peak 78.1% (normal, steady)\nlive-doc-size: ok:   surface external_review_packet: frozen identity checked\nlive-doc-size: ok:   surface vial_reference mandatory read docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md is 18 lines/1156 bytes; navigation depth 1\nlive-doc-size: ok:   surface vial_reference: maintained reference actual files=5, lines_each=456, bytes_each=25114, line_bytes_each=188, lines_total=1512, bytes_total=77724; per-part health target lines_each=512, bytes_each=32768, line_bytes_each=512; inclusive per-part ceiling lines_each=532, bytes_each=34816, line_bytes_each=640; aggregate authority VIAL-EMPTY-READINESS-20260924-SPEC; target peak 89.1%, ceiling peak 85.7% (warning_debt, steady)\nlive-doc-size: ok:   surface vial_reference collection index membership checked\nlive-doc-size: ok:   surface release_readback_plan: actual files=1, lines_each=109, bytes_each=6964, line_bytes_each=237, lines_total=109, bytes_total=6964; health target files=1, lines_each=160, bytes_each=10240, line_bytes_each=512, lines_total=160, bytes_total=10240; inclusive enforcement ceiling files=1, lines_each=160, bytes_each=10240, line_bytes_each=512, lines_total=160, bytes_total=10240; target peak 68.1%, ceiling peak 68.1% (normal, steady)\nlive-doc-size: ok:   surface compiler_census_procedure: actual files=1, lines_each=79, bytes_each=4945, line_bytes_each=147, lines_total=79, bytes_total=4945; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 61.7%, ceiling peak 61.7% (normal, steady)\nlive-doc-size: ok:   surface isf_rule_admission_replay: actual files=1, lines_each=102, bytes_each=6508, line_bytes_each=150, lines_total=102, bytes_total=6508; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 79.7%, ceiling peak 79.7% (normal, steady)\nlive-doc-size: ok:   surface decision_originals: archive terminal docs/decisions/history\nlive-doc-size: ok:   surface decision_archive_view freshness adapter verifier execution proved: surface:decision_archive_view\nlive-doc-size: ok:   surface decision_archive_view: actual files=1, lines_each=3644, bytes_each=180920, line_bytes_each=365, lines_total=3644, bytes_total=180920; health target files=1, lines_each=5120, bytes_each=262144, line_bytes_each=1024, lines_total=5120, bytes_total=262144; inclusive enforcement ceiling files=1, lines_each=5120, bytes_each=262144, line_bytes_each=1024, lines_total=5120, bytes_total=262144; target peak 71.2%, ceiling peak 71.2% (normal, steady)\nlive-doc-size: ok:   surface native_group_discriminator_procedure: actual files=1, lines_each=50, bytes_each=2845, line_bytes_each=121, lines_total=50, bytes_total=2845; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 39.1%, ceiling peak 39.1% (normal, steady)\nlive-doc-size: ok:   surface native_group_witness_procedure: actual files=1, lines_each=102, bytes_each=5882, line_bytes_each=91, lines_total=102, bytes_total=5882; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 79.7%, ceiling peak 79.7% (normal, steady)\nlive-doc-size: ok:   surface decision_compatibility freshness adapter verifier execution proved: surface:decision_compatibility\nlive-doc-size: ok:   surface decision_compatibility: actual files=115, lines_each=131, bytes_each=43224, line_bytes_each=530, lines_total=3271, bytes_total=146593; health target files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; inclusive enforcement ceiling files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; target peak 89.8%, ceiling peak 89.8% (warning_debt, migrated)\nlive-doc-size: ok:   surface decision_compatibility collection index declares complete registry-target query\nlive-doc-size: ok:   surface decision_transition_index: frozen identity checked\nbook-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\nlive-doc-size: ok:   surface book_source_manifest freshness core verifier executed: scripts/book_source_references.py\nlive-doc-size: ok:   surface book_source_manifest: actual files=1, lines_each=127, bytes_each=31020, line_bytes_each=284, lines_total=127, bytes_total=31020; health target files=1, lines_each=256, bytes_each=262400, line_bytes_each=1024, lines_total=256, bytes_total=262400; inclusive enforcement ceiling files=1, lines_each=256, bytes_each=262400, line_bytes_each=1024, lines_total=256, bytes_total=262400; target peak 49.6%, ceiling peak 49.6% (normal, steady)\nbook-source-index: complete indexed directory and checked source projection agree\nlive-doc-size: ok:   surface book_source_manifest currency book_source_git_result core verifier executed: scripts/check_book_source_index.py\nlive-doc-size: ok:   containment pressure migrated: 12 surface(s), target peak 96.9%, ceiling peak 97.8% [active_index,decision_compatibility,engineering_rationale,fact_index,fact_index_shards,focused_document_index,focused_documents,high_level_direction,isf_reference,knowledge_cards,rationale,task_evidence]\nlive-doc-size: ok:   containment pressure pinned_deferred: 3 surface(s), target peak 736.5%, ceiling peak 100.0% [readme_entrypoint,root_documents,shipped_behavior]\nlive-doc-size: ok:   containment pressure steady: 13 surface(s), target peak 90.5%, ceiling peak 90.5% [active_resume,ancillary_documents,book_source_manifest,compiler_census_procedure,decision_archive_view,diagnostics,enforced_rules,isf_rule_admission_replay,live_document_review,native_group_discriminator_procedure,native_group_witness_procedure,release_readback_plan,vial_reference]\nlive-doc-size: ok:   surface focused_documents collection index is generated by surface focused_document_index\nlive-doc-size: ok:   surface ancillary_documents collection index is generated by surface focused_document_index\nlive-doc-size: ok:   surface knowledge_cards collection index is generated by surface fact_index\nlive-doc-size: ok:   evidence map external_review_packet resolves 17 path(s)\nlive-doc-size: ok:   evidence map external_review_disposition resolves 5 path(s)\nlive-doc-size: ok:   archive descriptor changes-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:changes-retired-2026-08-01\nlive-doc-size: ok:   archive descriptor achievement-status-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:achievement-status-retired-2026-08-01\nlive-doc-size: ok:   archive descriptor roadmap-status-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:roadmap-status-retired-2026-08-01\nlive-doc-size: ok:   archive descriptor roadmap-v2-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:roadmap-v2-pre-containment-2026-08-01\nlive-doc-size: ok:   archive descriptor engineering-rationale-source-2026-08-01 version retrieval adapter verifier execution proved: archive:engineering-rationale-source-2026-08-01\nlive-doc-size: ok:   archive descriptor engineering-rationale-range-0001 version retrieval adapter verifier execution proved: archive:engineering-rationale-range-0001\nlive-doc-size: ok:   archive descriptor knowledge-ial2-priority-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-ial2-priority-pre-containment-2026-08-01\nlive-doc-size: ok:   archive descriptor knowledge-ial2-next-slice-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-ial2-next-slice-pre-containment-2026-08-01\nlive-doc-size: ok:   archive descriptor knowledge-direct-vhdl-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-direct-vhdl-pre-containment-2026-08-01\nlive-doc-size: ok:   archive descriptor knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20 version retrieval adapter verifier execution proved: archive:knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20\nlive-doc-size: ok:   archive descriptor isf-spec-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-spec-pre-partition-2026-08-01\nlive-doc-size: ok:   archive descriptor isf-downstream-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-downstream-pre-partition-2026-08-01\nlive-doc-size: ok:   archive descriptor isf-public-interface-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-public-interface-pre-partition-2026-08-01\nlive-doc-size: ok:   ledger engineering_rationale reconstruction adapter verifier execution proved: ledger:engineering_rationale\nlive-doc-size: ok:   ledger engineering_rationale: 2907 ordered whole entries reconstructed across 2 range(s); live sealed 0/0/0\nlive-doc-size: ok:   coverage: 3357/3357 declared document path(s)\nlive-doc-size: all live-document size-containment invariants hold (33 surfaces)\nlive-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode staged)\nlive-doc-ceiling-authority: all ceiling-change invariants hold (0 increase(s), mode staged)\n[doctrine] PASS: LIVE-DOCUMENT-SIZE\n[doctrine] RUN:  README-ENTRYPOINT - README.md and every routed destination stay pressure-controlled discovery surfaces\nreadme-entrypoint: ok:   README.md is 240 lines (<= cap 245)\nreadme-entrypoint: ok:   README.md is 9922 bytes (<= cap 9931)\nreadme-entrypoint: ok:   no line enumerates more than 1 narrated work-unit leaf reference(s)\nreadme-entrypoint: ok:   route shipped_behavior: reader_navigation README.md marker -> shipped_behavior\nreadme-entrypoint: ok:   route reported_capabilities: reader_navigation README.md marker -> reported_capabilities\nreadme-entrypoint: ok:   route high_level_direction: reader_navigation README.md marker -> high_level_direction\nreadme-entrypoint: ok:   route active_resume: reader_navigation README.md marker -> active_resume\nreadme-entrypoint: ok:   route active_index: reader_navigation README.md marker -> active_index\nreadme-entrypoint: ok:   route task_evidence: reader_navigation README.md marker -> task_evidence\nreadme-entrypoint: ok:   route rationale: reader_navigation README.md marker -> rationale\nreadme-entrypoint: ok:   route engineering_rationale: reader_navigation README.md marker -> engineering_rationale\nreadme-entrypoint: ok:   route fact_index: reader_navigation README.md marker -> fact_index\nreadme-entrypoint: ok:   route exact_history: reader_navigation README.md marker -> exact_history\nreadme-entrypoint: ok:   route diagnostics: reader_navigation README.md marker -> diagnostics\nreadme-entrypoint: ok:   route enforced_rules: reader_navigation README.md marker -> enforced_rules\nreadme-entrypoint: ok:   route author_task_evidence: author_overflow scripts/check_readme_entrypoint.sh marker -> task_evidence\nreadme-entrypoint: ok:   route author_rationale: author_overflow scripts/check_readme_entrypoint.sh marker -> rationale\nreadme-entrypoint: ok:   route author_shipped_behavior: author_overflow scripts/check_readme_entrypoint.sh marker -> shipped_behavior\nreadme-entrypoint: ok:   route author_exact_history: author_overflow scripts/check_readme_entrypoint.sh marker -> exact_history\nlive-doc-route-candidates: all emitted author-overflow routes are declared (4 hints)\nlive-doc-resulting-tree: staged result and checked worktree agree on controlled paths\nlive-doc-size: ok:   derived-state contract active_resume_repository_head derives repository_head on read from repository HEAD\nlive-doc-size: ok:   derived-state contract memory_architecture_repository_head derives repository_head on read from repository HEAD\n[task-tree-integrity] all active task-tree invariants hold (trees=8, nodes=2388, segments=3, compact_terminals=46, index_archives=1, migrations=1, acceptance_histories=2)\nlive-doc-size: ok:   derived-state contract active_task_index_frontier core verifier executed: scripts/check_task_tree_integrity.pl\nlive-doc-size: ok:   surface readme_entrypoint: actual files=1, lines_each=240, bytes_each=9922, line_bytes_each=121, lines_total=240, bytes_total=9922; health target files=1, lines_each=275, bytes_each=12288, line_bytes_each=512, lines_total=275, bytes_total=12288; inclusive enforcement ceiling files=1, lines_each=245, bytes_each=9931, line_bytes_each=512, lines_total=245, bytes_total=9931; target peak 87.3%, ceiling peak 99.9% (warning_debt, pinned_deferred)\nlive-doc-size: ok:   surface root_documents: actual files=19, lines_each=1200, bytes_each=73413, line_bytes_each=524, lines_total=4652, bytes_total=268115; health target files=24, lines_each=1200, bytes_each=81920, line_bytes_each=1024, lines_total=8000, bytes_total=524288; inclusive enforcement ceiling files=24, lines_each=1200, bytes_each=81920, line_bytes_each=1024, lines_total=8000, bytes_total=524288; target peak 100.0%, ceiling peak 100.0% (rollover_debt, pinned_deferred)\nlive-doc-size: ok:   surface root_documents collection index declares complete registry-target query\nlive-doc-size: ok:   surface focused_documents: actual files=1010, lines_each=2251, bytes_each=172995, line_bytes_each=789, lines_total=203356, bytes_total=8802503; health target files=1280, lines_each=5000, bytes_each=262144, line_bytes_each=1024, lines_total=250000, bytes_total=12582912; inclusive enforcement ceiling files=1280, lines_each=5000, bytes_each=262144, line_bytes_each=1024, lines_total=210000, bytes_total=9000000; target peak 81.3%, ceiling peak 97.8% (warning_debt, migrated)\nlive-doc-size: ok:   surface ancillary_documents: actual files=16, lines_each=502, bytes_each=21728, line_bytes_each=780, lines_total=1811, bytes_total=93070; health target files=32, lines_each=640, bytes_each=32768, line_bytes_each=1024, lines_total=2000, bytes_total=131072; inclusive enforcement ceiling files=32, lines_each=640, bytes_each=32768, line_bytes_each=1024, lines_total=2000, bytes_total=131072; target peak 90.5%, ceiling peak 90.5% (rollover_debt, steady)\nfocused-document-index: current (1026 members; 1101 lines; 150305 bytes)\nlive-doc-size: ok:   surface focused_document_index freshness core verifier executed: scripts/focused_document_index.pl\nlive-doc-size: ok:   surface focused_document_index: actual files=1, lines_each=1101, bytes_each=150305, line_bytes_each=271, lines_total=1101, bytes_total=150305; health target files=1, lines_each=1400, bytes_each=196608, line_bytes_each=1024, lines_total=1400, bytes_total=196608; inclusive enforcement ceiling files=1, lines_each=1400, bytes_each=196608, line_bytes_each=1024, lines_total=1400, bytes_total=196608; target peak 78.6%, ceiling peak 78.6% (normal, migrated)\nlive-doc-size: ok:   surface isf_reference mandatory read docs/ISF_SPEC.md is 27 lines/1981 bytes; navigation depth 1\nlive-doc-size: ok:   surface isf_reference: maintained reference actual files=14, lines_each=2474, bytes_each=173009, line_bytes_each=318, lines_total=15512, bytes_total=946468; per-part health target lines_each=5000, bytes_each=425984, line_bytes_each=1024; inclusive per-part ceiling lines_each=5000, bytes_each=425984, line_bytes_each=1024; aggregate authority CONDITIONAL-ORIGIN-FILES-20261002-ISF-REFERENCE; target peak 49.5%, ceiling peak 49.5% (normal, migrated)\nlive-doc-size: ok:   surface isf_reference collection index membership checked\nlive-doc-size: ok:   surface shipped_behavior mandatory read docs/book/src/SUMMARY.md is 64 lines/3988 bytes; navigation depth 1\nlive-doc-size: ok:   surface shipped_behavior: maintained reference actual files=64, lines_each=4686, bytes_each=282921, line_bytes_each=7542, lines_total=69110, bytes_total=3842932; per-part health target lines_each=5000, bytes_each=409600, line_bytes_each=1024; inclusive per-part ceiling lines_each=5000, bytes_each=409600, line_bytes_each=8566; aggregate authority COORDINATE-CURRENT-PUBLICATION-20261010; target peak 736.5%, ceiling peak 93.7% (rollover_debt, pinned_deferred)\nlive-doc-size: ok:   surface shipped_behavior collection index membership checked\nlive-doc-size: ok:   surface reported_capabilities: query terminal bin/fsmgen\nlive-doc-size: ok:   surface high_level_direction: actual files=1, lines_each=332, bytes_each=15745, line_bytes_each=182, lines_total=332, bytes_total=15745; health target files=1, lines_each=640, bytes_each=32768, line_bytes_each=512, lines_total=640, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=640, bytes_each=32768, line_bytes_each=512, lines_total=640, bytes_total=32768; target peak 51.9%, ceiling peak 51.9% (normal, migrated)\nlive-doc-size: ok:   surface active_resume: actual files=1, lines_each=15, bytes_each=1570, line_bytes_each=270, lines_total=15, bytes_total=1570; health target files=1, lines_each=150, bytes_each=32768, line_bytes_each=512, lines_total=150, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=150, bytes_each=32768, line_bytes_each=512, lines_total=150, bytes_total=32768; target peak 52.7%, ceiling peak 52.7% (normal, steady)\nlive-doc-size: ok:   surface active_index: actual files=1, lines_each=586, bytes_each=40114, line_bytes_each=779, lines_total=586, bytes_total=40114; health target files=1, lines_each=1200, bytes_each=81920, line_bytes_each=2048, lines_total=1200, bytes_total=81920; inclusive enforcement ceiling files=1, lines_each=1200, bytes_each=81920, line_bytes_each=2048, lines_total=1200, bytes_total=81920; target peak 49.0%, ceiling peak 49.0% (normal, migrated)\n[task-tree-integrity] all active task-tree invariants hold (trees=8, nodes=2388, segments=3, compact_terminals=46, index_archives=1, migrations=1, acceptance_histories=2)\nlive-doc-size: ok:   surface active_index currency active_task_tree_alignment core verifier executed: scripts/check_task_tree_integrity.pl\nlive-doc-size: ok:   surface task_evidence: actual files=596, lines_each=6882, bytes_each=2366453, line_bytes_each=6264, lines_total=117853, bytes_total=12849732; health target files=768, lines_each=8000, bytes_each=4194304, line_bytes_each=8192, lines_total=150000, bytes_total=16777216; inclusive enforcement ceiling files=768, lines_each=8000, bytes_each=4194304, line_bytes_each=8192, lines_total=150000, bytes_total=16777216; target peak 86.0%, ceiling peak 86.0% (warning_debt, migrated)\nlive-doc-size: ok:   surface task_evidence collection index declares complete registry-target query\nlive-doc-size: ok:   surface rationale: actual files=69, lines_each=511, bytes_each=32681, line_bytes_each=705, lines_total=8111, bytes_total=494508; health target files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; inclusive enforcement ceiling files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; target peak 81.1%, ceiling peak 81.1% (warning_debt, migrated)\nlive-doc-size: ok:   surface rationale collection index membership checked\nlive-doc-size: ok:   surface engineering_rationale: actual files=1, lines_each=1200, bytes_each=73413, line_bytes_each=115, lines_total=1200, bytes_total=73413; health target files=1, lines_each=2000, bytes_each=131072, line_bytes_each=1024, lines_total=2000, bytes_total=131072; inclusive enforcement ceiling files=1, lines_each=2000, bytes_each=131072, line_bytes_each=1024, lines_total=2000, bytes_total=131072; target peak 60.0%, ceiling peak 60.0% (normal, migrated)\nlive-doc-size: ok:   surface knowledge_cards: actual files=1260, lines_each=422, bytes_each=31755, line_bytes_each=819, lines_total=53019, bytes_total=3879565; health target files=1536, lines_each=512, bytes_each=32768, line_bytes_each=1024, lines_total=65536, bytes_total=4194304; inclusive enforcement ceiling files=1536, lines_each=512, bytes_each=32768, line_bytes_each=1024, lines_total=65536, bytes_total=4194304; target peak 96.9%, ceiling peak 96.9% (rollover_debt, migrated)\nlive-doc-size: ok:   surface fact_index freshness core verifier executed: knowledge-map/scripts/check_knowledge_map.sh\nlive-doc-size: ok:   surface fact_index: actual files=1, lines_each=203, bytes_each=17600, line_bytes_each=141, lines_total=203, bytes_total=17600; health target files=1, lines_each=512, bytes_each=45056, line_bytes_each=1024, lines_total=512, bytes_total=45056; inclusive enforcement ceiling files=1, lines_each=512, bytes_each=45056, line_bytes_each=1024, lines_total=512, bytes_total=45056; target peak 39.6%, ceiling peak 39.6% (normal, migrated)\nlive-doc-size: ok:   surface fact_index_shards freshness core verifier executed: knowledge-map/scripts/check_knowledge_map.sh\nlive-doc-size: ok:   surface fact_index_shards: actual files=185, lines_each=2583, bytes_each=317593, line_bytes_each=625, lines_total=17517, bytes_total=1957620; health target files=256, lines_each=4096, bytes_each=524288, line_bytes_each=1024, lines_total=50000, bytes_total=4194304; inclusive enforcement ceiling files=256, lines_each=4096, bytes_each=524288, line_bytes_each=1024, lines_total=50000, bytes_total=8388608; target peak 72.3%, ceiling peak 72.3% (normal, migrated)\nlive-doc-size: ok:   surface fact_index_shards collection index membership checked\nlive-doc-size: ok:   surface exact_history: archive terminal .git\nlive-doc-size: ok:   surface diagnostics: actual files=1, lines_each=332, bytes_each=15603, line_bytes_each=506, lines_total=332, bytes_total=15603; health target files=1, lines_each=768, bytes_each=32768, line_bytes_each=1024, lines_total=768, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=768, bytes_each=32768, line_bytes_each=1024, lines_total=768, bytes_total=32768; target peak 49.4%, ceiling peak 49.4% (normal, steady)\nlive-doc-size: ok:   surface enforced_rules: actual files=1, lines_each=277, bytes_each=17041, line_bytes_each=524, lines_total=277, bytes_total=17041; health target files=1, lines_each=576, bytes_each=32768, line_bytes_each=1024, lines_total=576, bytes_total=32768; inclusive enforcement ceiling files=1, lines_each=576, bytes_each=32768, line_bytes_each=1024, lines_total=576, bytes_total=32768; target peak 52.0%, ceiling peak 52.0% (normal, steady)\nlive-doc-size: ok:   surface live_document_review: actual files=1, lines_each=76, bytes_each=3997, line_bytes_each=235, lines_total=76, bytes_total=3997; health target files=1, lines_each=100, bytes_each=5120, line_bytes_each=512, lines_total=100, bytes_total=5120; inclusive enforcement ceiling files=1, lines_each=100, bytes_each=5120, line_bytes_each=512, lines_total=100, bytes_total=5120; target peak 78.1%, ceiling peak 78.1% (normal, steady)\nlive-doc-size: ok:   surface external_review_packet: frozen identity checked\nlive-doc-size: ok:   surface vial_reference mandatory read docs/VIAL_SOURCE_AND_SEMANTIC_IR_V2_CONTRACT.md is 18 lines/1156 bytes; navigation depth 1\nlive-doc-size: ok:   surface vial_reference: maintained reference actual files=5, lines_each=456, bytes_each=25114, line_bytes_each=188, lines_total=1512, bytes_total=77724; per-part health target lines_each=512, bytes_each=32768, line_bytes_each=512; inclusive per-part ceiling lines_each=532, bytes_each=34816, line_bytes_each=640; aggregate authority VIAL-EMPTY-READINESS-20260924-SPEC; target peak 89.1%, ceiling peak 85.7% (warning_debt, steady)\nlive-doc-size: ok:   surface vial_reference collection index membership checked\nlive-doc-size: ok:   surface release_readback_plan: actual files=1, lines_each=109, bytes_each=6964, line_bytes_each=237, lines_total=109, bytes_total=6964; health target files=1, lines_each=160, bytes_each=10240, line_bytes_each=512, lines_total=160, bytes_total=10240; inclusive enforcement ceiling files=1, lines_each=160, bytes_each=10240, line_bytes_each=512, lines_total=160, bytes_total=10240; target peak 68.1%, ceiling peak 68.1% (normal, steady)\nlive-doc-size: ok:   surface compiler_census_procedure: actual files=1, lines_each=79, bytes_each=4945, line_bytes_each=147, lines_total=79, bytes_total=4945; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 61.7%, ceiling peak 61.7% (normal, steady)\nlive-doc-size: ok:   surface isf_rule_admission_replay: actual files=1, lines_each=102, bytes_each=6508, line_bytes_each=150, lines_total=102, bytes_total=6508; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 79.7%, ceiling peak 79.7% (normal, steady)\nlive-doc-size: ok:   surface decision_originals: archive terminal docs/decisions/history\nlive-doc-size: ok:   surface decision_archive_view freshness adapter verifier execution proved: surface:decision_archive_view\nlive-doc-size: ok:   surface decision_archive_view: actual files=1, lines_each=3644, bytes_each=180920, line_bytes_each=365, lines_total=3644, bytes_total=180920; health target files=1, lines_each=5120, bytes_each=262144, line_bytes_each=1024, lines_total=5120, bytes_total=262144; inclusive enforcement ceiling files=1, lines_each=5120, bytes_each=262144, line_bytes_each=1024, lines_total=5120, bytes_total=262144; target peak 71.2%, ceiling peak 71.2% (normal, steady)\nlive-doc-size: ok:   surface native_group_discriminator_procedure: actual files=1, lines_each=50, bytes_each=2845, line_bytes_each=121, lines_total=50, bytes_total=2845; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 39.1%, ceiling peak 39.1% (normal, steady)\nlive-doc-size: ok:   surface native_group_witness_procedure: actual files=1, lines_each=102, bytes_each=5882, line_bytes_each=91, lines_total=102, bytes_total=5882; health target files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; inclusive enforcement ceiling files=1, lines_each=128, bytes_each=8192, line_bytes_each=512, lines_total=128, bytes_total=8192; target peak 79.7%, ceiling peak 79.7% (normal, steady)\nlive-doc-size: ok:   surface decision_compatibility freshness adapter verifier execution proved: surface:decision_compatibility\nlive-doc-size: ok:   surface decision_compatibility: actual files=115, lines_each=131, bytes_each=43224, line_bytes_each=530, lines_total=3271, bytes_total=146593; health target files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; inclusive enforcement ceiling files=128, lines_each=640, bytes_each=65536, line_bytes_each=1024, lines_total=10000, bytes_total=655360; target peak 89.8%, ceiling peak 89.8% (warning_debt, migrated)\nlive-doc-size: ok:   surface decision_compatibility collection index declares complete registry-target query\nlive-doc-size: ok:   surface decision_transition_index: frozen identity checked\nbook-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\nlive-doc-size: ok:   surface book_source_manifest freshness core verifier executed: scripts/book_source_references.py\nlive-doc-size: ok:   surface book_source_manifest: actual files=1, lines_each=127, bytes_each=31020, line_bytes_each=284, lines_total=127, bytes_total=31020; health target files=1, lines_each=256, bytes_each=262400, line_bytes_each=1024, lines_total=256, bytes_total=262400; inclusive enforcement ceiling files=1, lines_each=256, bytes_each=262400, line_bytes_each=1024, lines_total=256, bytes_total=262400; target peak 49.6%, ceiling peak 49.6% (normal, steady)\nbook-source-index: complete indexed directory and checked source projection agree\nlive-doc-size: ok:   surface book_source_manifest currency book_source_git_result core verifier executed: scripts/check_book_source_index.py\nlive-doc-size: ok:   containment pressure migrated: 12 surface(s), target peak 96.9%, ceiling peak 97.8% [active_index,decision_compatibility,engineering_rationale,fact_index,fact_index_shards,focused_document_index,focused_documents,high_level_direction,isf_reference,knowledge_cards,rationale,task_evidence]\nlive-doc-size: ok:   containment pressure pinned_deferred: 3 surface(s), target peak 736.5%, ceiling peak 100.0% [readme_entrypoint,root_documents,shipped_behavior]\nlive-doc-size: ok:   containment pressure steady: 13 surface(s), target peak 90.5%, ceiling peak 90.5% [active_resume,ancillary_documents,book_source_manifest,compiler_census_procedure,decision_archive_view,diagnostics,enforced_rules,isf_rule_admission_replay,live_document_review,native_group_discriminator_procedure,native_group_witness_procedure,release_readback_plan,vial_reference]\nlive-doc-size: ok:   surface focused_documents collection index is generated by surface focused_document_index\nlive-doc-size: ok:   surface ancillary_documents collection index is generated by surface focused_document_index\nlive-doc-size: ok:   surface knowledge_cards collection index is generated by surface fact_index\nlive-doc-size: ok:   evidence map external_review_packet resolves 17 path(s)\nlive-doc-size: ok:   evidence map external_review_disposition resolves 5 path(s)\nlive-doc-size: ok:   archive descriptor changes-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:changes-retired-2026-08-01\nlive-doc-size: ok:   archive descriptor achievement-status-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:achievement-status-retired-2026-08-01\nlive-doc-size: ok:   archive descriptor roadmap-status-retired-2026-08-01 version retrieval adapter verifier execution proved: archive:roadmap-status-retired-2026-08-01\nlive-doc-size: ok:   archive descriptor roadmap-v2-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:roadmap-v2-pre-containment-2026-08-01\nlive-doc-size: ok:   archive descriptor engineering-rationale-source-2026-08-01 version retrieval adapter verifier execution proved: archive:engineering-rationale-source-2026-08-01\nlive-doc-size: ok:   archive descriptor engineering-rationale-range-0001 version retrieval adapter verifier execution proved: archive:engineering-rationale-range-0001\nlive-doc-size: ok:   archive descriptor knowledge-ial2-priority-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-ial2-priority-pre-containment-2026-08-01\nlive-doc-size: ok:   archive descriptor knowledge-ial2-next-slice-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-ial2-next-slice-pre-containment-2026-08-01\nlive-doc-size: ok:   archive descriptor knowledge-direct-vhdl-pre-containment-2026-08-01 version retrieval adapter verifier execution proved: archive:knowledge-direct-vhdl-pre-containment-2026-08-01\nlive-doc-size: ok:   archive descriptor knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20 version retrieval adapter verifier execution proved: archive:knowledge-vial-execution-scale-reachability-pre-partition-2026-08-20\nlive-doc-size: ok:   archive descriptor isf-spec-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-spec-pre-partition-2026-08-01\nlive-doc-size: ok:   archive descriptor isf-downstream-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-downstream-pre-partition-2026-08-01\nlive-doc-size: ok:   archive descriptor isf-public-interface-pre-partition-2026-08-01 version retrieval adapter verifier execution proved: archive:isf-public-interface-pre-partition-2026-08-01\nlive-doc-size: ok:   ledger engineering_rationale reconstruction adapter verifier execution proved: ledger:engineering_rationale\nlive-doc-size: ok:   ledger engineering_rationale: 2907 ordered whole entries reconstructed across 2 range(s); live sealed 0/0/0\nlive-doc-size: ok:   coverage: 3357/3357 declared document path(s)\nlive-doc-size: all live-document size-containment invariants hold (33 surfaces)\nlive-doc-reference-authority: all maintained-reference aggregate invariants hold (3 reference(s), 1 changed, mode staged)\nlive-doc-ceiling-authority: all ceiling-change invariants hold (0 increase(s), mode staged)\nreadme-entrypoint: all README entry-point invariants hold\nreadme-entrypoint: all routed-destination pressure invariants hold\n[doctrine] PASS: README-ENTRYPOINT\n[doctrine] RUN:  PROJECT-DATA-LOCALITY - Project-owned data stays on repository-derived same-volume roots\n[project-data-locality] OK: runtime, test, config, and active public paths are repository-local\n[doctrine] PASS: PROJECT-DATA-LOCALITY\n[doctrine] RUN:  TASK-TREE-INTEGRITY - Active task-tree roots, live and sealed nodes, compact terminals, bounded completed-index archives, child references, statuses, and evidence stay structurally complete and retrievable\n[task-tree-integrity] all active task-tree invariants hold (trees=8, nodes=2388, segments=3, compact_terminals=46, index_archives=1, migrations=1, acceptance_histories=2)\n[doctrine] PASS: TASK-TREE-INTEGRITY\n[doctrine] RUN:  CLAIM-VERIFICATION - Bounded claim records name exact source markers, three non-aliased evidence legs or owned gaps, and tracked local producers, oracles, and watchers\nclaim-verification: all bounded registry-set and record invariants hold (shards=3, records=53, published=52, fixtures=1)\n[doctrine] PASS: CLAIM-VERIFICATION\n[doctrine] RUN:  CLAIM-INVENTORY - Producer-derived current-surface claims and repository constants remain completely partitioned, independently censused, bounded, and task-owned\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13407, candidates=1981, quantified=965, conservative=1016, constants=2943, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1981)\n[doctrine] PASS: CLAIM-INVENTORY\n[doctrine] RUN:  CLAIM-DISPOSITIONS - Every reviewed candidate joins a current inventory identity and one bounded evidence-bearing outcome; required groups cannot retain open candidates\nclaim-dispositions: bounded disposition join holds (candidates=1981, disposed=1981, claim_records=316, gates=1038, reviewed=627, gaps=0, open=0, groups=6)\n[doctrine] PASS: CLAIM-DISPOSITIONS\n[doctrine] RUN:  TASK-ACCEPTANCE - Staged implementation changes carry fresh box-scoped task diagnosis and regression evidence\n[task-acceptance] OK: docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md carries fresh evidence-backed acceptance (root=git_history, no-regression=prove_summary)\n[doctrine] PASS: TASK-ACCEPTANCE\n[doctrine] all doctrine checks passed\n"
+  },
+  "task-pressure": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-current-publication-20261010/task_pressure.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "docs/audits/coordinate-current-publication-20261010/task_pressure.py": {
+        "bytes": 1927,
+        "sha256": "5b584e51ff2da2bf8f030db656abf98aec4a5917929e2c3bdba75a5007764fa4"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 48550; host 46.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS exact complete task measurements and owned allowance; all ceilings and Knowledge Map authority unchanged.\n"
+  },
+  "task-pressure-final": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/coordinate-current-publication-20261010/task_pressure.py"
+    ],
+    "instruments": {
+      "docs/audits/coordinate-current-publication-20261010/checks.py": {
+        "bytes": 1417,
+        "sha256": "1b9cd5adedbfac7c0608389e5a7291a7e41a0672915adaf8fec4394f3c7b1a76"
+      },
+      "docs/audits/coordinate-current-publication-20261010/task_pressure.py": {
+        "bytes": 1927,
+        "sha256": "5b584e51ff2da2bf8f030db656abf98aec4a5917929e2c3bdba75a5007764fa4"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 0,
+    "stderr": "ram-guard: PID 55026; host 74.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n",
+    "stdout": "PASS exact complete task measurements and owned allowance; all ceilings and Knowledge Map authority unchanged.\n"
+  }
+}

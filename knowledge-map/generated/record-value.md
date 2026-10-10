@@ -1,7 +1,7 @@
 # Knowledge Map: `record-value`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **29** uniquely owned question entries.
+> **2** facts · **30** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -27,6 +27,7 @@
 - q="what qualifies original metadata failure recursion frames?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original named helper inputs defaults and active paths?" · facts=[record-value-original-observer-helper-paths](../../docs/knowledge/record-value-original-observer-helper-paths.md)
 - q="what qualifies original observer API and parser operation boundaries?" · facts=[record-value-original-observer-helper-paths](../../docs/knowledge/record-value-original-observer-helper-paths.md)
+- q="what qualifies original own caller and source coordinates?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies original own subtest body and delegate source roles?" · facts=[record-value-original-observer-helper-paths](../../docs/knowledge/record-value-original-observer-helper-paths.md)
 - q="what qualifies original public subtest header and boundary compatibility?" · facts=[record-value-original-observer-helper-paths](../../docs/knowledge/record-value-original-observer-helper-paths.md)
 - q="what qualifies the original do-load source and recorded file marker?" · facts=[record-value-original-observer-helper-paths](../../docs/knowledge/record-value-original-observer-helper-paths.md)
@@ -39,14 +40,14 @@
 
 ### record-value-finite-copy-probe-reader
 
-_Finite record-value copy probes have independent typed graph qualification_
+_Record-value copy probes have independent typed graphs_
 
-- **date:** 2026-10-07 · **status:** current
+- **date:** 2026-10-10 · **status:** current
 - **source and verification:** [`docs/knowledge/record-value-finite-copy-probe-reader.md`](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 
 ### record-value-original-observer-helper-paths
 
-_Original observer/helper source paths have a complete finite join_
+_Original observer/helper source-path join_
 
-- **date:** 2026-10-07 · **status:** current
+- **date:** 2026-10-10 · **status:** current
 - **source and verification:** [`docs/knowledge/record-value-original-observer-helper-paths.md`](../../docs/knowledge/record-value-original-observer-helper-paths.md)
