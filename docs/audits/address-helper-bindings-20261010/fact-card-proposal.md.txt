@@ -1,0 +1,36 @@
+---
+id: record-value-helper-source-bindings
+title: Helper forwarding distinguishes authored and wrapped subtest callbacks
+answers:
+  - "which helper and subtest reference bindings are held at original refusals?"
+  - "which returned named helper results and caller snapshots remain held?"
+date: 2026-10-10
+status: proposed
+tags: [isf, record, helper, callback, subtest, source, lifetime]
+evidence: [docs/audits/address-helper-bindings-20261010/proof.json]
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-helper-bindings-20261010/verify.py
+---
+
+The full finite helper source population conserves every original source recipe,
+refusal record and throw view. The original parameterless refusal callback and
+pattern pass unchanged through observer wrapper and compiled refuses parameters.
+The own subtest entry receives the authored body; the saved public delegate
+receives the observer wrapping closure. The latter invokes the original body.
+Those distinct source roles do not establish native CODE inequality.
+
+Complete runtime source constructors/forwarding preserve the named Scope formal,
+shared scope_for target type and fresh omitted-local hash. Returned reference
+operations in copy argument evaluation are inactive; their results remain held
+by the active outer source/target parameters. The original observer records
+retain their caller ARRAYs in @api and retain the helper caller ARRAY in @helpers.
+Equal graph contents alone never establish cross-call identity. Carrier arrays
+are symbolic packaging, and source checkpoints do not assert later SV flags.
+
+Fresh full predecessors and whole helper recipes provide re-derivation.
+Independent graph bijections, named member walks and semantic slot/holder/phase
+checks with genuine actual-source candidates provide falsification. Complete
+fixed Git custody, programmes, products, proof and actual receipts provide
+durability. Original numeric/provider/formatter/Regexp/CODE identity, external
+framework/global retention, parser/actor/context roles, canonical publication and
+visual QA remain missing legs. Governed non-growing canonical publication stays
+the owned successor; this proposal adds no current Knowledge Map card or allowance.

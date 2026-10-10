@@ -1,0 +1,197 @@
+"""Complete helper source replay with actual-source hostile candidates."""
+import copy
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/address-helper-bindings-20261010')
+
+
+def load(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def module(name):
+    path = BASE / name
+    namespace = {'__name__': 'helper_source_qualification'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), namespace)
+    return namespace
+
+
+def main():
+    source = module('source.py')
+    inputs, custody = source['rebuild']()
+    if not source['same'](inputs, load('inputs.json')) or not source['same'](custody, load('binding.json')):
+        raise ValueError('whole rederived helper source cohort and fixed Git custody')
+    thaw = source['module'](Path('docs/audits/record-value-original-value-frames-20261005/verify.py'))['primary']['graph']['thaw']
+    encode = source['module'](source['NESTED'] / 'model.py')['encode']
+    actual = load('hypotheses.json')
+    if not source['same'](actual, module('model.py')['derive'](inputs, thaw, encode)):
+        raise ValueError('whole retained deterministic helper source hypotheses')
+    qualify = module('oracle.py')['qualify']
+    measured = qualify(actual, inputs)
+    first = load('first-proof.json.txt')
+    for name, pin in first['programmes'].items():
+        retained = 'first-verify.py.txt' if name == 'verify.py' else name
+        if source['identity']((BASE / retained).read_bytes()) != pin:
+            raise ValueError('whole first qualified helper source programme')
+    outcome = load('checks.json')['first-independent']
+    if (type(outcome['status']) is not int or outcome['status'] != 0
+            or outcome['instruments'][str(BASE / 'verify.py')] != first['programmes']['verify.py']
+            or not source['same'](first['measured'], measured)):
+        raise ValueError('actual first complete helper qualification outcome and scope')
+    controls = []
+    def rejects(name, mutate, expected):
+        candidate = copy.deepcopy(actual)
+        mutate(candidate)
+        if source['same'](candidate, actual):
+            raise ValueError('genuine helper source candidate setup: ' + name)
+        try:
+            qualify(candidate, inputs)
+        except ValueError as error:
+            if str(error) != expected:
+                raise ValueError('unintended helper control refusal: ' + name + ': ' + str(error)) from error
+            controls.append({'name': name, 'refusal': str(error),
+                             'whole_candidate_identity': source['identity'](json.dumps(candidate, sort_keys=True).encode())})
+        else:
+            raise ValueError('genuine helper source control admitted: ' + name)
+    def mode(product):
+        return product['modes'][0]
+    def first(product):
+        return mode(product)['cases'][0]
+    def view(product):
+        return first(product)['views'][0]
+    def callback_slot(product):
+        return next(row for row in view(product)['occurrences']
+                    if row['role'] == 'original_compiled_parameterless_callback')
+    def named_profile(product, family):
+        return next(row for row in mode(product)['profiles']
+                    if row['source_recipe']['call_shape']['active']
+                    and row['source_recipe']['call_shape']['active']['function'] == family)
+    rejects('lost-mode', lambda p: p['modes'].pop(), 'complete helper source mode population')
+    rejects('lost-helper-profile', lambda p: mode(p)['profiles'].pop(), 'complete helper recipe population')
+    rejects('lost-refusal-case', lambda p: mode(p)['cases'].pop(), 'complete helper refusal case population')
+    nested = next(row for row in mode(actual)['cases'] if len(row['views']) == 2)
+    nested_index = mode(actual)['cases'].index(nested)
+    rejects('lost-actual-later-view', lambda p: mode(p)['cases'][nested_index]['views'].pop(), 'complete helper throw view population')
+    rejects('lost-source-slot', lambda p: view(p)['occurrences'].pop(), 'every helper reference/pattern slot exactly once')
+    rejects('borrowed-actual-refusal-record', lambda p: first(p).update(index=mode(p)['cases'][1]['index']), 'whole helper case source allocation')
+    rejects('borrowed-actual-helper', lambda p: first(p).update(helper=mode(p)['cases'][1]['helper']), 'whole helper case source allocation')
+    other_subtest = next(case['subtest'] for case in mode(actual)['cases'] if case['subtest'] != first(actual)['subtest'])
+    rejects('borrowed-actual-subtest', lambda p: first(p).update(subtest=other_subtest), 'whole helper case source allocation')
+    rejects('borrowed-actual-later-phase', lambda p: mode(p)['cases'][nested_index]['views'][0]['domain'].__setitem__(3, 1),
+            'exact helper source record/phase domain')
+    rejects('Boolean-actual-later-phase', lambda p: mode(p)['cases'][nested_index]['views'][1]['domain'].__setitem__(3, True),
+            'exact helper source record/phase domain')
+    rejects('Boolean-zero-helper', lambda p: first(p).update(helper=False), 'whole helper case source allocation')
+    rejects('borrowed-actual-callback', lambda p: callback_slot(p).update(binding='helper:1:callback'), 'helper source binding origin/kind')
+    def wrong_kind(product):
+        key = callback_slot(product)['binding']
+        mode(product)['bindings'][key]['reference_kind'] = 'HASH'
+    rejects('wrong-callback-kind', wrong_kind, 'helper source binding origin/kind')
+    def split_callback(product):
+        key = callback_slot(product)['binding']
+        mode(product)['bindings']['split-callback'] = copy.deepcopy(mode(product)['bindings'][key])
+        slots = [row for row in view(product)['occurrences'] if row['binding'] == key]
+        if len(slots) != 2:
+            raise ValueError('actual helper forwarding split control setup')
+        slots[1]['binding'] = 'split-callback'
+    rejects('split-forwarded-refusal-callback', split_callback, 'helper source alias equivalence across views')
+    def wrong_subtest_body(product):
+        row = next(row for row in view(product)['occurrences']
+                   if view(product)['frames'][row['frame']].get('role') == 'saved_public_delegate')
+        row['binding'] = 'subtest:' + str(first(product)['subtest']) + ':body'
+    rejects('authored-body-used-as-wrapped-callback', wrong_subtest_body, 'helper source binding origin/kind')
+    def split_phase(product):
+        case = mode(product)['cases'][nested_index]
+        original = next(row['binding'] for row in case['views'][0]['occurrences']
+                        if row['role'] == 'original_compiled_parameterless_callback')
+        mode(product)['bindings']['split-phase-callback'] = copy.deepcopy(mode(product)['bindings'][original])
+        for occurrence in case['views'][1]['occurrences']:
+            if occurrence['binding'] == original:
+                occurrence['binding'] = 'split-phase-callback'
+    rejects('split-callback-across-throw-phases', split_phase, 'helper source alias equivalence across views')
+    rejects('helper-caller-record-holder-lost', lambda p: view(p)['retained_bindings'].pop(0),
+            'complete helper active/retained/inactive/opaque source holders')
+    def returned_case(product):
+        return next(case for case in mode(product)['cases'] if case['views'][0]['inactive_named_operations'])
+    rejects('returned-operation-reactivated', lambda p: returned_case(p)['views'][0]['active_named_operations'].append(
+            returned_case(p)['views'][0]['inactive_named_operations'][0]), 'complete helper active/retained/inactive/opaque source holders')
+    def returned_caller_lost(product):
+        case = returned_case(product)
+        api = case['views'][0]['inactive_named_operations'][0]
+        case['views'][0]['retained_bindings'].remove('api:' + str(api) + ':caller')
+    rejects('returned-operation-caller-holder-lost', returned_caller_lost,
+            'complete helper active/retained/inactive/opaque source holders')
+    rejects('lost-returned-result-holder', lambda p: named_profile(p, 'copy')['returned_result_holders'].pop(),
+            'complete helper source graph/forwarding/activation profile')
+    def borrowed_returned_result(product):
+        profile = named_profile(product, 'copy')
+        profile['returned_result_holders'][0]['returned_operation'] = profile['returned_result_holders'][1]['returned_operation']
+    rejects('borrowed-actual-returned-reference-operation', borrowed_returned_result,
+            'complete helper source graph/forwarding/activation profile')
+    rejects('lost-named-operation-forwarding', lambda p: named_profile(p, 'reference')['forwarding'].clear(),
+            'complete helper source graph/forwarding/activation profile')
+    def split_scope_target(product):
+        profile = named_profile(product, 'scope_for')
+        outer = profile['graph'][1][1][1][0][1][1][1]
+        # Both target ports must alias the supplied second helper argument.
+        if outer['output'][1]['type_spec'] != ['reference', '/0/1']:
+            raise ValueError('actual scope helper target alias setup')
+        outer['output'][1]['type_spec'] = ['reference', '/0/0']
+    rejects('scope-target-borrowed-source-type', split_scope_target, 'whole nested source graph topology/value/alias')
+    def split_equal_target(product):
+        profile = named_profile(product, 'scope_for')
+        target = copy.deepcopy(profile['graph'][1][0][1][1])
+        def acyclic(encoded):
+            if type(encoded) is list:
+                if len(encoded) == 2 and encoded[0] == 'reference':
+                    return False
+                return all(acyclic(item) for item in encoded)
+            if type(encoded) is dict:
+                return all(acyclic(item) for item in encoded.values())
+            return True
+        if not acyclic(target):
+            raise ValueError('actual whole equal-payload acyclic helper target setup')
+        outer = profile['graph'][1][1][1][0][1][1][1]
+        if outer['output'][1]['type_spec'] != ['reference', '/0/1']:
+            raise ValueError('actual shared helper target alias setup')
+        outer['output'][1]['type_spec'] = target
+    rejects('equal-payload-target-type-alias-split', split_equal_target, 'whole nested source graph topology/value/alias')
+    def break_scope_cycle(product):
+        profile = next(profile for profile in mode(product)['profiles']
+                       if profile['source_recipe']['call_shape']['active']
+                       and profile['source_recipe']['call_shape']['active']['function'] == 'scope_for'
+                       and profile['graph'][1][0][1][0][1].get('members', [None, {}])[1].get('data') == ['reference', '/0/0'])
+        profile['graph'][1][0][1][0][1]['members'][1]['data'] = ['reference', '/0']
+    rejects('helper-cycle-borrowed-existing-carrier', break_scope_cycle, 'whole nested source graph topology/value/alias')
+    rejects('lost-source-distinction', lambda p: view(p)['source_distinct_bindings'].pop(),
+            'complete helper active/retained/inactive/opaque source holders')
+    rejects('native-CODE-inequality-promoted', lambda p: view(p)['opaque_CODE_relations'].clear(),
+            'complete helper active/retained/inactive/opaque source holders')
+    rejects('invented-framework-lifetime', lambda p: view(p).update(public_delegate_activation='all native framework frames qualified'),
+            'complete helper active/retained/inactive/opaque source holders')
+    rejects('borrowed-shared-nested-event', lambda p: mode(p)['cases'][nested_index]['views'][0].update(
+            event=mode(p)['cases'][nested_index]['views'][1]['event']), 'complete helper nested/shared source event')
+    rejects('numeric-native-promotion', lambda p: p.update(scope='Original native callback addresses measured'), 'helper source-only scope')
+    proof = {'binding': custody, 'measured': measured, 'controls': controls,
+             'first_qualification': {name: source['identity']((BASE / name).read_bytes())
+                                     for name in ('first-verify.py.txt', 'first-proof.json.txt')},
+             'actual_borrowed_witnesses': {'other_helper': mode(actual)['cases'][1]['helper'],
+                 'other_record': mode(actual)['cases'][1]['index'], 'other_subtest': other_subtest,
+                 'later_view_domain': nested['views'][1]['domain']},
+             'programmes': {name: source['identity']((BASE / name).read_bytes())
+                            for name in ('source.py', 'model.py', 'oracle.py', 'verify.py')},
+             'legs': {'re_derivation': 'fresh complete prior source readers, full helper recipes and runtime constructor/forwarding graphs',
+                      'falsification': 'independent complete graph bijections, named member walks and semantic source-role/holder checks with actual-source candidates',
+                      'durability': 'whole fixed Git prerequisite/source custody, complete products/programmes/proof/actual receipts'},
+             'missing_legs': 'Original numeric/provider/formatter/Regexp/CODE identity, external framework/global retention, parser/actor/context roles, canonical publication and visual QA.'}
+    target = BASE / 'proof.json'
+    if target.exists() and not source['same'](load('proof.json'), proof):
+        raise ValueError('whole retained dated helper source proof')
+    if not target.exists():
+        target.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    print('PASS complete helper/callback/subtest source bindings, retained holders and genuine controls; native/parser identities remain open.')
+
+
+if __name__ == '__main__':
+    main()

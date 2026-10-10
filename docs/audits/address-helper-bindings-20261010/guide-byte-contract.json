@@ -1,0 +1,7 @@
+{
+  "bytes": 2239,
+  "path": "docs/audits/address-helper-bindings-20261010/book-addition.md.txt",
+  "reason": "Exact inserted Markdown paragraph separator requires two terminal LF bytes; retain the complete owned addition used by book authority and native source guide consumers.",
+  "sha256": "71382dd9b748066ddf90757b3e85ad51919e180f690cc011753f401544f58149",
+  "terminal_bytes_hex": "0a0a"
+}

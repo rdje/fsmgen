@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "scope": "The complete inserted guide intentionally retains its terminal Markdown paragraph separator under guide-byte-contract.json; the whitespace warning is retained and never promoted to a pass.",
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-helper-bindings-20261010/book-addition.md.txt:37: new blank line at EOF.\n"
+}

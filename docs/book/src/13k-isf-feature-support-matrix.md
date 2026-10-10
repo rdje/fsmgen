@@ -1093,6 +1093,43 @@ inequality of saved CODE handles, external/global retention, the actual raw
 address join and governed canonical address publication remain open. Symbolic
 graph carriers and finite clone hypotheses do not establish native allocations.
 
+Helper, callback and own subtest source bindings now cover every qualified
+refusal record and throw view. The original parameterless refusal callback is
+passed unchanged through the observer helper wrapper into compiled `refuses`.
+Its source pattern is also forwarded unchanged. Active named helpers retain
+the supplied formal references selected from their complete source graphs.
+
+The authored subtest body and observer callback have separate source roles.
+The subtest entry receives the authored body. The observer passes its wrapping
+closure to the saved public subtest delegate; that closure later calls the
+authored body. A displayed CODE kind alone cannot distinguish those roles.
+Source forwarding binds each handle, while native CODE inequality remains open.
+The intervening framework frames stay opaque.
+
+For example, `copy($scope, 'packet', 'held')` keeps its Scope formal while the
+read and write reference helpers have returned. Their result objects are held
+by the active copy's source and target arguments. The observer still retains
+the returned operations' caller arrays in `@api`, and the refusal helper's
+caller array in `@helpers`. An inactive activation does not establish object
+death. `scope_for` separately constructs its outer roots: held and output share
+the supplied target type, and the omitted local formal yields a fresh empty
+local hash. These are source checkpoint graphs, not later scalar-flag snapshots.
+
+Runtime construction and forwarding agree with separate graph bijections,
+named member walks and semantic source-role checks. Actual borrowed calls,
+helpers, subtests and phases, lost holders, alias/cycle/kind changes and native
+scope promotions reject. Replay the complete source qualification:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-helper-bindings-20261010/verify.py
+```
+
+The helper/callback/subtest child is closed. Parser receiver, actor, context and
+clause bindings remain its immediate sibling. Original numeric/provider/
+formatter/Regexp/CODE identity, external framework/global retention, complete
+source integration, the raw address join and canonical publication remain open.
+All existing canonical facts, questions, probes and collection limits retain.
+
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
 does not establish coordinate meanings or later current currency:
