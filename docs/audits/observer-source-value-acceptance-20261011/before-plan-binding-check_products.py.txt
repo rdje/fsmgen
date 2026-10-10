@@ -1,0 +1,13 @@
+"""Execute the independent parent join and genuine complete hostile controls."""
+from common import load, save
+import contracts
+import verify
+
+
+if __name__=='__main__':
+    task_contracts=contracts.derive()
+    save('contracts.json',task_contracts)
+    product=load('product.json')
+    save('independent-proof.json',verify.validate(product,task_contracts))
+    save('controls.json',verify.falsify(product,task_contracts))
+    print('PASS complete independent original source-value acceptance and genuine whole hostile candidates.')

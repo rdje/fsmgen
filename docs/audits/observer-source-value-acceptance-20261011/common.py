@@ -1,0 +1,63 @@
+"""Complete source-value parent qualification; no original-header promotion."""
+import hashlib
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/observer-source-value-acceptance-20261011')
+CENSUS = Path('docs/audits/observer-header-source-census-20261010')
+PREDICATE = Path('docs/audits/observer-predicate-values-20261010')
+SCALAR = Path('docs/audits/observer-scalar-values-20261010')
+REGEX = Path('docs/audits/observer-regex-values-20261010')
+BOUNDARY = Path('docs/audits/observer-value-profile-boundaries-20261010')
+REVISION = 'dc2eb7df001c4cf968df31e15d2b4f0784f976bb'
+BOUNDARY_SCOPE = json.loads((BOUNDARY/'source-products.json').read_bytes())['scope']
+SCOPE = ('Complete unchanged source-value parent acceptance only. Whole own-source values, '
+         'ordered census obligations, source-neutral public constructor fixtures and child contracts qualify; '
+         'inherited inner operands remain dated evidence. Original native settings/formatter/flags/encoding, '
+         'reference/referent/receiver identities and private/eval meanings remain unmeasured. '
+         'Source do and diagnostic require retain distinct roles. Full source headers, original raw joining, '
+         'higher observer/private/native and visual acceptance remain separately owned.')
+
+
+def need(condition, cause):
+    if not condition:
+        raise ValueError(cause)
+
+
+def canonical(value):
+    return (json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=True, allow_nan=False)+'\n').encode()
+
+
+def pin(raw):
+    return dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+
+
+def read(path):
+    return json.loads(path.read_bytes())
+
+
+def load(name):
+    return read(BASE/name)
+
+
+def same(left, right):
+    return canonical(left) == canonical(right)
+
+
+def save(name, value):
+    path = BASE/name
+    need(not path.exists(), 'retain first complete evidence: '+name)
+    path.write_bytes(canonical(value))
+
+
+def fixed_inputs():
+    return [CENSUS/n for n in ('source-models.json', 'census.json', 'obligation-plan.json')] + [
+        PREDICATE/n for n in ('predicate-values-qualified.json', 'native-qualified.json',
+            'native-qualified.pl', 'fixture-plan-qualified.json', 'native-control-plan.json', 'public-contracts.json',
+            'qualified-proof.json', 'manifest-final.json')] + [
+        SCALAR/n for n in ('scalars.json', 'plan.json', 'native.json', 'native.pl',
+            'qualified-proof.json', 'manifest-qualified.json')] + [
+        REGEX/n for n in ('regexes.json', 'plan.json', 'native.json', 'native.pl',
+            'public-contracts.json', 'proof.json', 'manifest.json')] + [
+        BOUNDARY/n for n in ('source-products.json', 'source-selection.json', 'opaque-evidence.json',
+            'proof.json', 'task-contracts.json', 'manifest.json')]

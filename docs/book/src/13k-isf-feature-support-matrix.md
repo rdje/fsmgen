@@ -1856,6 +1856,35 @@ source-value parent acceptance, source-generated original headers, the original
 body join and observer publication retain their separate owners. Higher raw,
 native/private and visual scopes remain open.
 
+Complete source-value parent acceptance is now qualified. Independent direct
+source traversal joins every original obligation to a complete value or phase,
+with all schemas, member order, argument roles and inherited inner operands.
+Whole predicate, scalar and authored regex products conserve their qualified
+source and evidence roles.
+
+Every source-neutral public construction retains its complete selected plan,
+driver and actual native receipt. The receipt must authenticate that exact
+plan and driver; an intervention plan cannot substitute for the main fixture
+plan. Current public profiles determine only their qualified construction
+alternatives. They supply no original formatter setting, native flag, encoding,
+identity or private meaning.
+
+The source do operation remains distinct from its diagnostic require marker.
+Whole original receiver/reference, private framework and eval evidence remains
+opaque. Source-first selection and each complete original parent and child
+contract conserve. Fresh prerequisites execute in their qualified current-source
+or fixed committed-publication context, with complete results retained.
+
+Replay the complete source-value parent and genuine whole controls:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-source-value-acceptance-20261011/verify.py
+```
+
+This closes the source-value parent only. Full source-generated original headers
+are the next separately owned step; original raw-header comparison, higher
+observer/private/native and visual acceptance remain open.
+
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
 complete previously committed child contracts. It joins every original empty

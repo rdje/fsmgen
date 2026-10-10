@@ -1,0 +1,1 @@
+{"command":["git","--no-replace-objects","show","dc2eb7df001c4cf968df31e15d2b4f0784f976bb:live-document-size/scripts/check_live_document_size.pl"],"identity":{"bytes":101730,"sha256":"e05bd0f2dfdbbb839e0d98037bdde996755a8af4ae79f8b7b9949812204e3bff"},"status":0}
