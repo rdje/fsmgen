@@ -1881,9 +1881,49 @@ Replay the complete source-value parent and genuine whole controls:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-source-value-acceptance-20261011/verify.py
 ```
 
-This closes the source-value parent only. Full source-generated original headers
-are the next separately owned step; original raw-header comparison, higher
-observer/private/native and visual acceptance remain open.
+The source-value qualification closes its own parent. Complete source-header
+qualification is described below; original raw-header comparison and higher
+observer/private/native and visual acceptance retain their separate owners.
+
+Complete original own source headers now have qualified source expressions.
+A separate direct traversal reconstructs every frame, argument, schema, ordered
+role, phase group and load boundary. Restoring those expressions and their full
+operand bindings reproduces every complete original source mode. Whole inherited
+inner operands keep their dated evidence role.
+
+Every expression retains all source arguments. Current conditional forms apply
+the qualified public fixture grammar and an explicit profile: MaxArgLen 64, MaxArgNums 8, MaxEvalLen 0 and an
+undefined RefArgFormatter. Visible and hidden arguments remain separately
+allocated. The complete scalar and regex construction alternatives remain
+available, including bounded and unlimited cases.
+
+Fully known conditional forms produce whole header text. For example, a source
+body with no supplied arguments has this selected current form:
+
+```json
+{"source_function":"main::__ANON__","source_arguments":[],"conditional_profile":{"MaxArgLen":64,"MaxArgNums":8,"MaxEvalLen":0,"RefArgFormatter":null},"known_conditional_header":"main::__ANON__()"}
+```
+
+Original reference tokens, regex flags and historical settings remain typed
+unmeasured boundaries. Their expression nodes retain complete source values,
+roles and qualified current alternatives. An unresolved slot supplies no guessed
+encoded token or wildcard matcher. The source do operation and diagnostic require
+marker retain their separate full roles. Private framework and eval meanings
+remain unmeasured.
+
+Whole source/header/member/order/role/format/schema/value/encoding/profile and
+native-promotion controls reject. The complete public grammar and actual main
+fixture plan/driver bindings qualify separately. Every prerequisite reexecutes
+in its qualified current-source or dated-publication context. Replay the full
+source-selected qualification before original raw-header comparison:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-source-headers-20261011/verify.py
+```
+
+This closes the unchanged source-header parent only. Original raw-header joining
+is next under its separate owner; observer/raw/native/private and visual
+acceptance retain their scopes.
 
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
