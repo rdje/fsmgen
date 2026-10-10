@@ -1824,6 +1824,38 @@ Original reference/provider identities, private framework intervals, historical
 settings, complete original headers and unchanged parent acceptance retain
 their separate owners. This regex child closes no observer or raw-stack parent.
 
+Complete remaining scalar and regex qualification now joins every original
+source-value and profile-boundary obligation. A separate source traversal
+reconstructs complete operands, schemas, ordered roles, known values, constructor
+qualifications and phase allocations. Guard-derived scalar forms remain distinct
+from declared logical fields; entire inherited inner operands retain their dated
+evidence role.
+
+Each original reference, receiver, private framework interval and eval boundary
+keeps its explicit unmeasured meaning. Complete original records and public
+boundary products retain every captured byte as evidence. Their tokens do not
+supply a new source-constructor oracle. Original formatter settings, native
+flags, encoding and identities remain unmeasured. The source do operation and
+the diagnostic require marker keep separate roles throughout the join.
+
+Every prerequisite executes again in its proper context. Source readers use
+current fixed source inputs; the dated publication reader uses all inputs from
+its exact committed epoch in a repository-local checkpoint. Its rejection of
+later task metadata remains a rejection. The fresh checkpoint execution and
+complete before/after byte conservation qualify the dated result separately.
+
+Whole omitted, borrowed, reordered, wrong-role, schema, value, encoding, profile,
+private-meaning and acceptance controls reject. Replay the complete qualification:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-value-profile-boundaries-20261010/verify.py
+```
+
+This completes only the remaining-value parent and its boundary child. Complete
+source-value parent acceptance, source-generated original headers, the original
+body join and observer publication retain their separate owners. Higher raw,
+native/private and visual scopes remain open.
+
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
 complete previously committed child contracts. It joins every original empty
