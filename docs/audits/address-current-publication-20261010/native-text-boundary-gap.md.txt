@@ -1,0 +1,21 @@
+# Owned native text-boundary extraction defect
+
+Owner: address-current-publication scope.txt. Priority: P1, fixed in this slice.
+The actual current-native command returned 1 at native complete current retained
+scope and gaps. Complete command/status/streams/instruments, exact executed reader,
+first captured current programme epoch and both whole rendered HTML sources retain.
+
+Root cause: the reader joined every HTMLParser text fragment with an artificial
+space. Markdown inline CODE for $operation followed by a period becomes separate
+text data fragments. The source says "$operation." and the rendered text has that
+same punctuation, but the old reader manufactured "$operation ." and rejected it.
+The tooling final-proof.json inline code has the same boundary risk. The existing
+source parser records the correct text fragments; the join was wrong.
+
+Repair: concatenate actual text fragments, then normalize existing whitespace.
+Apply it to maintained feature/reference checks and the independent native reader.
+Actual book HTML and canonical/card/source texts remain unchanged. Unit fixtures
+exercise inline code followed immediately by punctuation. The exact first reader
+must reproduce its refusal on the complete retained HTML; final native CLI and
+independent whole publication must pass on that same rendered input. Original
+false refusal and earlier successful parser repair/capture epochs remain immutable.

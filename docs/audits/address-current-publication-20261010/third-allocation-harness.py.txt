@@ -1,0 +1,74 @@
+"""Reproduce the omitted answer group and qualify complete source-language repair."""
+import copy
+import json
+import runpy
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/address-current-publication-20261010')
+SOURCE = 'docs/knowledge/ci-perl-fsm-regression-jun15-repair.md'
+REVISION = '924a2a1b7236ce2312d79953b1c98511016e6d25'
+
+
+def main():
+    first = runpy.run_path(str(BASE / 'first-verify.py.txt'))
+    final = runpy.run_path(str(BASE / 'verify.py'))
+    need, pin, same = (final[name] for name in ('need', 'pin', 'same'))
+    original = subprocess.check_output(['git', '--no-replace-objects', 'cat-file', 'blob', REVISION + ':' + SOURCE])
+    need(original == Path(SOURCE).read_bytes(), 'unchanged complete multi-declaration source')
+    target = BASE / 'allocation-source.md.txt'
+    need(not target.exists() or target.read_bytes() == original, 'whole immutable allocation source beforeimage')
+    if not target.exists():
+        target.write_bytes(original)
+    captured = json.loads((BASE / 'current-input-final.json').read_bytes())
+    canonical = final['current'].sources()
+    bad_rows, good_rows = first['allocation'](canonical), final['allocation'](canonical)
+    diagnosis = json.loads((BASE / 'allocation-diagnosis.json').read_bytes())
+    need(bad_rows == diagnosis['independent_rows'] and bad_rows != good_rows,
+         'exact actual first parser omission reproduces')
+    need(good_rows == diagnosis['actual_direct_rows'] == diagnosis['actual_cached_rows']
+         == captured['record']['queries']['direct']['stdout'] == captured['record']['queries']['cached']['stdout'],
+         'complete repaired independent source and both actual query streams')
+    # Derive this complete card's answer groups directly from its fixed inline
+    # declaration lines, independently of either allocation parser.
+    declarations = [json.loads(line.split(':', 1)[1]) for line in original.decode().splitlines()
+                    if line.startswith('answers:')]
+    need(len(declarations) == 2 and all(declarations), 'actual complete multiple-answer-declaration fixture')
+    identifier = Path(SOURCE).stem
+    wanted = sorted(question + '\t' + identifier + '\t' + SOURCE
+                    for group in declarations for question in group)
+    need(sorted(final['allocation']({SOURCE: original}).splitlines()) == wanted,
+         'every independently reconstructed answer occurrence from both original declarations')
+    qualified = final['current'].address_fact.authenticate()
+    proposal = final['current'].address_fact.proposal()
+    final['source_check'](captured, canonical, proposal, qualified)
+    controls = []
+    for role in ('direct', 'cached'):
+        candidate = copy.deepcopy(captured)
+        candidate['record']['queries'][role]['stdout'] = bad_rows
+        need(not same(candidate, captured), 'genuine whole repeated-declaration omission challenge')
+        try:
+            final['source_check'](candidate, canonical, proposal, qualified)
+        except ValueError as error:
+            need(str(error) == 'whole independent current global question allocation',
+                 'intended repeated-declaration omission refusal')
+            controls.append({'role': role, 'refusal': str(error),
+                             'whole_candidate': pin(json.dumps(candidate, sort_keys=True).encode())})
+        else:
+            raise ValueError('false-green complete repeated-declaration omission')
+    result = {'scope': 'Actual first independent parser omitted a complete existing answer group; repair conserves both declarations and rejects full incomplete current query streams. No canonical source was changed.',
+              'revision': REVISION, 'source': pin(original),
+              'first_programme': pin((BASE / 'first-verify.py.txt').read_bytes()),
+              'final_programme': pin((BASE / 'verify.py').read_bytes()),
+              'harness': pin(Path(__file__).read_bytes()),
+              'first_rows': pin(bad_rows.encode()), 'complete_rows': pin(good_rows.encode()),
+              'complete_original_card_rows': wanted, 'controls': controls}
+    target = BASE / 'allocation-repair-signoff.json'
+    need(not target.exists() or same(json.loads(target.read_bytes()), result), 'whole immutable actual allocation repair proof')
+    if not target.exists():
+        target.write_text(json.dumps(result, sort_keys=True, indent=2) + '\n')
+    print('PASS exact first answer-group omission reproduces; complete independent source language conserves both declarations and rejects whole incomplete direct/cache streams.')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,21 @@
+{
+  "scope": "Actual independent-signoff1 rejects copied sources after the owned task-index summary changed; no failed result is success.",
+  "stale": [
+    {
+      "actual": {
+        "bytes": 40212,
+        "sha256": "fd251aa6d9e38327cf1103cf9ac1691e7066c02bcd1480af83db8ea6e07fffd2"
+      },
+      "expected": {
+        "bytes": 40172,
+        "sha256": "f7fdb455b13a7f94679c975addd2e90dd572193046935ea9780835463ddb4734"
+      },
+      "row": {
+        "asset": "reference-source/docs/TASK_TREE.markdown.source.txt",
+        "chapter": "90-reference-map",
+        "role": "operational-state-or-direction",
+        "source": "docs/TASK_TREE.md"
+      }
+    }
+  ]
+}

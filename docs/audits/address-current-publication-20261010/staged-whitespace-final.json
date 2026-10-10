@@ -1,0 +1,26 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "contract": "Only these exact immutable executed-programme snapshots retain their original three LF bytes at EOF. The live verifier is normalized to one LF and independently requalified. No other whitespace warning is admitted.",
+  "snapshots": {
+    "docs/audits/address-current-publication-20261010/allocation-qualified-verify.py.txt": {
+      "bytes": 27327,
+      "sha256": "b4e52a320886101684041f4e70125611947341a408e559b5761502c9e9f5cecc"
+    },
+    "docs/audits/address-current-publication-20261010/first-independent-verify.py.txt": {
+      "bytes": 28853,
+      "sha256": "62c3b33b6fd3c5825fb73254399467bee170fd15fd5a571ec1b78a9460b8b956"
+    },
+    "docs/audits/address-current-publication-20261010/first-verify.py.txt": {
+      "bytes": 26787,
+      "sha256": "29db972c1d9012dae6043295e50f7197e9000208545fcce44b9f60c58b747d70"
+    }
+  },
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-current-publication-20261010/allocation-qualified-verify.py.txt:376: new blank line at EOF.\ndocs/audits/address-current-publication-20261010/first-independent-verify.py.txt:397: new blank line at EOF.\ndocs/audits/address-current-publication-20261010/first-verify.py.txt:371: new blank line at EOF.\n"
+}

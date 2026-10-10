@@ -58,6 +58,8 @@ class CurrentPublicationTests(unittest.TestCase):
             (tooling, '../' + current.public_reference_fact.READER.removeprefix('docs/'), '../audits/borrowed-reader.py'),
             (tooling, 'alone leaves original coordinates/identities unmeasured', 'alone qualifies original coordinates/identities'),
             (core, current.coordinate_fact.QUESTION, 'borrowed coordinate question?'),
+            (core, current.address_fact.QUESTION, 'borrowed address question?'),
+            (core, 'cross-call/capture reuse stay opaque', 'cross-call/capture reuse proves native identity'),
             (core, 'address lifetimes remain unmeasured', 'address lifetimes are qualified'),
             (current.coordinate_fact.PARSER, 'receiver, normalized AST', 'qualified receiver identity and AST'),
             (current.coordinate_fact.PARSER, current.COMMAND, self.prior['model']['COMMAND']),
@@ -102,6 +104,8 @@ class CurrentPublicationTests(unittest.TestCase):
                     'unique complete current and retained publication guidance')
         self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.coordinate_fact.PARSER_GUIDE, '')),
                     'complete current coordinate parser and tooling guidance')
+        self.refuse(lambda r: r.update(tooling_chapter=r['tooling_chapter'].replace(current.address_fact.REFERENCE, '')),
+                    'complete current finite address tooling guidance')
         self.refuse(lambda r: r['queries']['direct'].update(stdout='malformed\n'),
                     'complete current target question ownership')
 
@@ -203,6 +207,7 @@ class CurrentPublicationTests(unittest.TestCase):
                 text += '<code>' + code + '</code>' + rest
             return self.prior['book']['EPOCH'] + text.replace('`', '')
         valid = html(current.guide(self.prior))
+        valid = valid.replace('$operation.', '<code>$operation</code>.')
         current.check_native(valid, self.prior)
         for old, new, cause in (
             (current.COMMAND, self.prior['book']['DEFAULT'], 'native distinct current build and historical commands'),
@@ -255,6 +260,86 @@ class CurrentPublicationTests(unittest.TestCase):
             self.assertFalse(current.same(changed, actual))
             with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
                 fact.check_actual(changed, qualified)
+
+    def test_address_admission_authenticates_complete_committed_evidence(self):
+        fact = current.address_fact
+        admitted = fact.authenticate()
+        self.assertEqual(admitted['proposal'], fact.ADMITTED_MEMBERS[fact.PROPOSAL])
+        self.assertEqual(admitted['definitive_proof'], fact.ADMITTED_MEMBERS[fact.PROOF])
+        self.assertEqual(set(admitted['complete_members']), set(fact.ADMITTED_MEMBERS))
+        self.assertIn('no fresh semantic recapture or native identity', admitted['scope'])
+
+    def test_address_actual_roles_require_complete_typed_results(self):
+        fact = current.address_fact
+        checks = json.loads(Path(fact.PREPARATION, 'checks.json').read_bytes())
+        for role in fact.ACTUAL_CONTRACTS:
+            fact.check_actual(checks[role], role)
+            for mutate, cause in (
+                (lambda r: r.update(status=True), 'actual admitted address integer success'),
+                (lambda r: r.update(status=0.0), 'actual admitted address integer success'),
+                (lambda r: r.update(status=1), 'actual admitted address integer success'),
+                (lambda r: r['command'].append('--borrowed'), 'complete admitted address actual command'),
+                (lambda r: r.update(stdout='PASS\n'), 'complete admitted address actual stdout'),
+                (lambda r: r.update(stderr=r['stderr'].replace('cutoff 88%', 'cutoff 99%')),
+                 'complete admitted address guard stream'),
+                (lambda r: r['instruments'].pop('scripts/run_with_ram_guard.sh'),
+                 'complete admitted address actual instruments'),
+                (lambda r: r.update(native_identity=True), 'closed complete admitted address actual result')):
+                with self.subTest(role=role, cause=cause):
+                    changed = copy.deepcopy(checks[role]); mutate(changed)
+                    self.assertFalse(current.same(changed, checks[role]))
+                    with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
+                        fact.check_actual(changed, role)
+
+    def test_address_first_proof_cannot_replace_definitive_qualification(self):
+        fact = current.address_fact
+        original = current.plane.local_read
+        borrowed = Path(fact.PREPARATION, 'proof.json').read_bytes()
+        self.assertNotEqual(fact.pin(borrowed), fact.ADMITTED_MEMBERS[fact.PROOF])
+        def read(path, maximum):
+            return borrowed if path == current.ROOT / fact.PROOF else original(path, maximum)
+        with mock.patch.object(current.plane, 'local_read', side_effect=read):
+            with self.assertRaisesRegex(ValueError, '^complete admitted address member: ' + re.escape(fact.PROOF) + '$'):
+                fact.authenticate()
+
+    def test_address_proposed_native_field_cannot_define_its_own_schema(self):
+        fact = current.address_fact
+        original = current.plane.local_read
+        changed = fact.proposal()
+        changed['original_native_identity'] = 'unsubstantiated first-admission claim'
+        raw = json.dumps(changed, sort_keys=True, indent=2).encode() + b'\n'
+        self.assertNotEqual(fact.pin(raw), fact.ADMITTED_MEMBERS[fact.PROPOSAL])
+        def read(path, maximum):
+            return raw if path == current.ROOT / fact.PROPOSAL else original(path, maximum)
+        with mock.patch.object(current.plane, 'local_read', side_effect=read):
+            with self.assertRaisesRegex(ValueError, '^complete admitted address member: ' + re.escape(fact.PROPOSAL) + '$'):
+                fact.proposal()
+
+    def test_address_complete_dated_input_is_individually_authenticated(self):
+        fact = current.address_fact
+        original = current.plane.local_read
+        member = 'docs/audits/address-source-integration-20261010/verify.py'
+        raw = Path(member).read_bytes() + b'\n# changed complete dated reader\n'
+        def read(path, maximum):
+            return raw if path == current.ROOT / member else original(path, maximum)
+        with mock.patch.object(current.plane, 'local_read', side_effect=read):
+            with self.assertRaisesRegex(ValueError, '^complete admitted address member: ' + re.escape(member) + '$'):
+                fact.authenticate()
+
+    def test_native_tooling_preserves_address_limits_and_checkpoint_roles(self):
+        blocks = current.coordinate_fact.REFERENCE + current.address_fact.REFERENCE
+        html = blocks.replace('```sh\n', '').replace('```\n', '').replace('`', '')
+        html = html.replace('final-proof.json.', '<code>final-proof.json</code>.')
+        current.check_tooling_native(html, self.prior)
+        for old, new in (
+            ('Certificate authentication supplies no fresh semantic recapture.', 'Original executions recaptured.'),
+            ('cross-call/capture\nreuse retain their explicit limits.', 'cross-call/capture reuse proves native identity.'),
+            ('Full address-container\nacceptance remains the next owned step', 'All address-container acceptance is complete')):
+            with self.subTest(old=old):
+                changed = html.replace(old, new)
+                self.assertNotEqual(changed, html)
+                with self.assertRaisesRegex(ValueError, '^native complete current tooling scope and gaps$'):
+                    current.check_tooling_native(changed, self.prior)
 
 
 if __name__ == '__main__':

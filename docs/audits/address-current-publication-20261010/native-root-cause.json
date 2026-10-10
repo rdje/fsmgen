@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "--no-replace-objects",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "visible = ' '.join(' '.join(parsed.parts).split())",
+    "--",
+    "scripts/check_record_value_publication.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "ec5fc5a35a478027621292234fc871fb213a1071 SEMANTIC-INTROSPECTION-MCP-FRONTIER.77.3: derive current publication from current canonical sources\n"
+}

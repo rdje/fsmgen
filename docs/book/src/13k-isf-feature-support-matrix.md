@@ -948,6 +948,40 @@ hidden arguments, identity, external coordinates and address/lifetime meanings r
 unmeasured or separately owned. Visual QA, HIAL repair and full CI/push retain
 their owners. Project outputs and scratch remain repository-local.
 
+Original address roles now have a separate complete finite qualification.
+Every own visible reference number joins its simultaneous source and holder
+domain. Explicit aliases agree; qualified distinctions differ. Active
+`main::call_api` retains the saved CODE handle through lexical `$operation`.
+CODE/CODE comparisons remain opaque. A consistent renaming can preserve the
+finite relation, but still fails the separate original-byte association check.
+
+For example, repeated occurrences of an explicit alias must retain one reference
+number within that source domain. Distinct qualified holders must retain distinct
+numbers there. Equal-looking CODE displays, regex displays and hidden arguments
+provide no missing referent, payload, flag or native identity. The finite join
+does not establish cross-call or cross-capture reuse, heap lifetime or cold cost.
+
+The coordinate-era and preparation paragraphs retain their dated checkpoint
+roles. Current core, helper, parser and tooling cards now admit the reviewed
+address proposal together. Exact beforeimages, every prior question and replay
+command remain retrievable under unchanged collection authority. The maintained
+reader authenticates the complete admitted preparation, source/holder/numerical
+inputs and actual independent results before and after current verification.
+Authentication is not a fresh semantic reconstruction or original recapture.
+
+Replay the complete dated raw/source/numerical parent qualification separately:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parent-acceptance-20261010/verify.py
+```
+
+Current verification still derives every canonical source, direct and cached
+question allocation, physical capacity and copied source. Its native variant
+also checks the rendered current guidance. The original private/provider/
+formatter, external/native/CODE/Regexp identity, cross-call/capture reuse, heap,
+cold and visual scopes remain separately owned. Final address-container
+acceptance follows atomic publication; HIAL and full CI/push gates stay open.
+
 Address/lifetime qualification begins with a separate source-only model of
 operation boundaries. Qualified typed input graphs retain aliases and cycles
 without publishing numeric addresses. Forwarding the same source argument
@@ -1655,6 +1689,8 @@ payload, flags and identity, provider/formatter/CODE/Regexp identity, numerical
 reuse across calls or captures, heap census, cold replay, visual book QA and
 HIAL/full-CI/push qualification retain their separate owners. Existing canonical
 facts, questions, probes and collection limits remain unchanged.
+
+Retained address preparation checkpoint (before current admission):
 
 Governed address publication now has a retained prospective preparation.
 The complete current core, helper, parser and tooling cards remain unchanged.

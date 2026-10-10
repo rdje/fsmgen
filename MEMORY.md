@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.2` (pending)
-- next_action: Use docs/audits/address-publication-preparation-20261010/final-proof.json. Admit exact beforeimages/proposal through governed history and atomically update all four cards/current reader. Qualify whole current source/query/native scopes under unchanged authority; full container acceptance follows.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.3` (pending)
+- next_action: Independently reconstruct whole original/qualified/proposed/current address domains from the committed preparation and publication. Execute complete semantic and current/native readers, qualify unchanged publication/address-container Goal and Acceptance, close only verified parents; full raw-stack joining follows.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

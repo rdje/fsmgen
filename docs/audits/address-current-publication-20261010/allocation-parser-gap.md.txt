@@ -1,0 +1,25 @@
+# Owned independent global allocation parser defect
+
+Owner: address-current-publication scope.txt (current publication leaf).
+Priority: P1 for acceptance; fix in this slice before signing the whole current
+publication. Production current/query allocation is unchanged and complete.
+
+The standalone first independent allocation check actually returned 1 at its
+complete stream equality assertion. Exact first programme, complete first reader,
+full derived/direct/cached streams and missing/extra rows are retained. It missed
+ten questions from ci-perl-fsm-regression-jun15-repair.md and added none.
+
+Root cause: the new independent parser used re.search for only the first answers
+entry. This card has two inline answers declarations. The installed Knowledge
+Map parse_fact accumulates each matching declaration, and the prior independent
+metadata language does so too. The card is valid for that published input
+language; no canonical edit or hypothetical YAML policy is inferred. Fixed Git
+bfeb6d3ff16e63e3749c038ffc0d5f670e6e3932 owns the earlier added answer group.
+
+Repair: independently iterate every answer declaration in source order, retaining
+all complete inline/block groups and every original occurrence. Full current
+source parsing must equal both complete actual query streams. The exact first
+parser must reproduce its omission. Whole current-query candidates substituted
+with those first incomplete rows must reject at the independent full global
+allocation, preserving all cards, sources, kinds and other domains. The complete
+source beforeimage, programme epochs and actual repaired outcomes retain here.

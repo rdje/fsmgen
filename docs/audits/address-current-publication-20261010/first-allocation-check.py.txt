@@ -1,0 +1,8 @@
+import json,runpy
+from pathlib import Path
+v=runpy.run_path('docs/audits/address-current-publication-20261010/verify.py')
+c=v['current'].sources()
+r=json.loads(Path('docs/audits/address-current-publication-20261010/current-input.json').read_bytes())
+rows=v['allocation'](c)
+assert rows==r['record']['queries']['direct']['stdout']==r['record']['queries']['cached']['stdout']
+print('Complete independent global allocation equals both complete actual query streams.')

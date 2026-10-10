@@ -1,0 +1,86 @@
+# Atomic finite address publication
+
+This owned slice admits the exact committed four-card prospective proposal and
+retains every full original card through appended governed archive descriptors.
+All older descriptors remain exact. The working set shrinks without any change
+to Knowledge Map collection authority. Every old question and complete reverify
+chain survives; the core adds the scoped original-address question.
+
+record_value_address_fact.py declares exact committed member identities before
+parsing. It authenticates the entire preparation namespace, definitive final
+proof, original retained beforeimages, complete dated prerequisite inputs and
+actual typed successful source/parent/final-schema/snapshot results. Saved failed
+and limited results retain their actual roles. It neither recaptures execution
+nor replaces semantic reconstruction with certificate authentication.
+
+The maintained reader extends all four expected cards together, preserves its
+historical stdout, permits unrelated qualified canonical progress, and checks
+complete current global direct/cache allocation and physical/source delivery.
+Its native variant checks both feature and reference rendered scopes. The
+complete executed admission reader is retained separately: its exact bytes were
+recovered against the actual receipt before final native-reference checking was
+added. No saved instrument is silently compared to a later version.
+
+From the repository root:
+
+    scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py
+    mdbook build docs/book
+    scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py --build docs/book/book
+
+The first actual current input and programme epoch retain in current-input.json.
+The final authoritative input is current-input-final.json; no first product is
+overwritten.
+verify.py independently reads fixed Git preparation/original sources, reconstructs
+whole beforeimage/history/card/book transformations, parses every canonical
+front-matter question and measures the entire physical/book working set. Complete
+actual receipts and genuine whole input/native/result controls qualify separately.
+Its default role is this current publication epoch; later source progress does not
+make a saved current input current again. Full dated closure belongs to the next
+owned acceptance slice.
+
+    scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-current-publication-20261010/verify.py
+    scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-publication-preparation-20261010/verify.py --snapshot
+
+Distinct fixed/current source reconstruction, independent global language and
+whole candidate falsification, and full source/programme/actual-result/task/book/
+Git durability legs retain. Natural-language proposition equivalence remains a
+manual reviewed claim. Native/provider/formatter/CODE/Regexp/hidden/external
+identity, cross-call/capture reuse, heap/cold/visual/HIAL/full-CI/push meanings
+remain separately owned. Full address-container acceptance follows this commit.
+
+The first independent allocation check omitted a second existing inline answers
+declaration. Full first source/results and the complete card retain. The repaired
+independent language accumulates all declarations, reproduces the old omission,
+and rejects complete direct/cache inputs substituted with the incomplete rows.
+First allocation-repair.json and its exact programme/harness epoch remain; final
+allocation-repair-final.json qualifies the final native/current programme epoch.
+
+The first actual native CLI returned 1 because the reader inserted spaces between
+HTML text fragments. Inline CODE followed by a period then falsely differed from
+its unchanged rendered/source text. Complete failed command/streams, exact reader
+and both full HTML sources retain. Concatenating actual data fragments before
+whitespace normalization fixes feature/reference and independent extraction.
+Unit fixtures cover both inline punctuation boundaries. The exact first refusal
+reproduces on the same full HTML; final native CLI must pass separately. Original
+current success, first capture and every saved instrument use their exact retained
+source epoch. Full native meaning and semantic recapture are never inferred.
+
+The first complete publication proof.json remains immutable. Final programme
+whitespace normalization is separately requalified in final-proof.json, which is
+authoritative. The earlier allocation-repair-final.json and corresponding full
+verifier/harness sources retain; allocation-repair-signoff.json binds the final
+programme. No first proof or executed source is overwritten.
+
+The first staged doctrine gate returned 1 because the updated task-index frontier
+row exceeded the unchanged focused-document line allowance. Its complete first
+index and actual gate streams retain. Shortening only that summary retains the
+same frontier; no focused-document or Knowledge Map limit widens. Final exact
+task measurements, claims and staged gates must pass on the repaired index.
+
+After the owned task-index shortening, independent-signoff actually returned 1
+at the whole copied-source check: the book still held the earlier complete index
+bytes. native-source-diagnosis.json retains exact old/new identities and the
+source-plane row. The final index stays unchanged while the book rebuilds; fresh
+native/current and independent verification must consume those final copies.
+Final allocation-repair-commit.json binds the final programme. Earlier actual
+results, signoff programme and repair products remain immutable.

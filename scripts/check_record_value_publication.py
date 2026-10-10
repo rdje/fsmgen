@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check current class/frame/coordinate publication without freezing unrelated facts."""
+"""Check current class/frame/coordinate/address facts and unrelated source currency."""
 
 import argparse
 import hashlib
@@ -13,6 +13,7 @@ import record_value_epoch_fact as epoch_fact
 import record_value_public_reference_fact as public_reference_fact
 import record_value_expression_fact as expression_fact
 import record_value_coordinate_fact as coordinate_fact
+import record_value_address_fact as address_fact
 from decision_store_git import MAX_TRACKED_PATHS
 
 ROOT = plane.ROOT
@@ -78,7 +79,7 @@ def expected_cards(prior):
             result[path] = epoch_fact.extend(result[path])
             result[path] = public_reference_fact.extend(result[path])
             result[path] = expression_fact.extend(result[path])
-    return coordinate_fact.cards(result)
+    return address_fact.cards(coordinate_fact.cards(result))
 
 
 def guide(prior):
@@ -88,7 +89,7 @@ def guide(prior):
         'Unrelated book and non-target Knowledge Map progress is permitted. The current\n'
         'reader derives the complete global question allocation and physical census from\n'
         'current canonical sources; the saved historical snapshot keeps its exact epoch.')
-    return coordinate_fact.guide(result)
+    return address_fact.guide(coordinate_fact.guide(result))
 
 
 def sources():
@@ -147,6 +148,8 @@ def check(record, canonical, prior, declared):
     require(record['chapter'].count(coordinate_fact.PARSER_GUIDE) == 1
             and record['tooling_chapter'].count(coordinate_fact.REFERENCE) == 1,
             'complete current coordinate parser and tooling guidance')
+    require(record['tooling_chapter'].count(address_fact.REFERENCE) == 1,
+            'complete current finite address tooling guidance')
     pins = record['source_members']
     require(type(pins) is dict and all(type(pin) is dict and set(pin) == {'bytes', 'sha256'}
         and type(pin['bytes']) is int and pin['bytes'] >= 0 and type(pin['sha256']) is str
@@ -187,10 +190,19 @@ def check_native(html, prior):
     parsed.feed(html)
     require(all(parsed.codes.count(command) == 1 for command in (COMMAND, BUILD, prior['book']['DEFAULT'])),
             'native distinct current build and historical commands')
-    visible = ' '.join(' '.join(parsed.parts).split())
+    visible = ' '.join(''.join(parsed.parts).split())
     for block in (guide(prior), prior['book']['EPOCH'], coordinate_fact.PARSER_GUIDE):
         text = block.replace('```bash\n', '').replace('```\n', '').replace('`', '')
         require(' '.join(text.split()) in visible, 'native complete current retained scope and gaps')
+
+
+def check_tooling_native(html, prior):
+    parsed = prior['book']['Visible']()
+    parsed.feed(html)
+    visible = ' '.join(''.join(parsed.parts).split())
+    for block in (coordinate_fact.REFERENCE, address_fact.REFERENCE):
+        text = block.replace('```sh\n', '').replace('```\n', '').replace('`', '')
+        require(' '.join(text.split()) in visible, 'native complete current tooling scope and gaps')
 
 
 def check_public_reference():
@@ -228,6 +240,7 @@ def main():
         and expression.stdout == admitted['stdout'] and expression.stderr == '',
         'complete actual sealed expression alternative qualification')
     coordinate_before = coordinate_fact.authenticate()
+    address_before = address_fact.authenticate()
     canonical = sources()
     check(current_input(prior, canonical), canonical, prior, authority(prior))
     rows = plane.expected_rows()
@@ -237,9 +250,13 @@ def main():
         output = ROOT / plane.relative(args.build)
         html = plane.local_read(output / (prior['CHAPTER'].stem + '.html'), plane.SOURCE_BYTES * 4).decode()
         check_native(html, prior)
+        tooling_html = plane.local_read(output / (prior['TOOLING_CHAPTER'].stem + '.html'), plane.SOURCE_BYTES * 4).decode()
+        check_tooling_native(tooling_html, prior)
     require(canonical == sources(), 'whole current canonical source epoch conserved during verification')
     require(same(coordinate_before, coordinate_fact.authenticate()),
             'whole original coordinate qualification conserved during current verification')
+    require(same(address_before, address_fact.authenticate()),
+            'whole admitted address qualification conserved during current verification')
     print(SUCCESS, end='')
 
 

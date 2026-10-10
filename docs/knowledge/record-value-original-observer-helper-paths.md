@@ -21,39 +21,38 @@ evidence: >-
 reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py
 ---
 
-Own observer/callback roles/bodies/allocations. Models join each API/parser operation/eval/installed wrapper/source
-argument. Parser receiver role is declared, identity unmeasured. Named helpers retain whole source graphs/active paths.
-Compiled callback/refusal/helper-wrapper paths bind parameterless operation and source regex-body/label displays;
-identity/full formatting stay open. Each helper's whole supplied/default inputs, returned argument-builders and compiled
-callback/refusal paths join both nested throw phases. Source derivation precedes recorded contiguous
-function-order/visible-argument comparison. Returned helpers are not active frames. Whole
-model/allocation/phase/member/order/operand corruptions reject.
+Observer/callback whole roles/bodies/allocations join every API/parser operation/eval/installed wrapper/source argument. Parser
+receiver role is declared, native identity unmeasured. Named helpers retain whole source graphs/active paths. Compiled
+callback/refusal/helper-wrapper paths bind parameterless operation/source regex-body/label displays; identity/full formatting stay
+open. Each helper's whole supplied/default inputs, returned argument-builders and compiled callback/refusal paths join both nested
+throw phases. Source derivation precedes contiguous recorded function-order/visible-argument comparison. Returned helpers are
+inactive frames; whole model/allocation/phase/member/order/operand corruptions reject.
 
-Full observer/display/private-frame/native-class/address/subtest/load/framework/ quoting/truncation/parser-internal
-meanings stay open. Original provider/hook/class measurements and callback/regex/object/native identity stay unmeasured.
-Consumer/ alias/full-semantic/cold/candidate-parent/permanent/hot/host-native repairs and visual QA stay open. Related
-core fact qualifies own original coordinates; external framework coordinates remain unmeasured.
+Core qualifies observer/helper/subtest/load source/address roles/active holders. Full
+display/private-frame/native-class/native-address/framework/quoting/truncation/parser-internal meanings stay open. Original
+provider/hook/class measurements/callback/regex/object/native identity stay unmeasured.
+Consumer/alias/full-semantic/cold/candidate-parent/permanent/hot/host-native repairs/visual QA stay open. Core qualifies own
+coordinates; external framework coordinates remain unmeasured.
 
 Related: [[record-value-finite-copy-probe-reader]].
 
 ## Qualified own subtest and do-load source boundaries
 
-Whole own source models assign each original refusal to its authored named subtest body. Observer saves public
-Test::More delegate, receives name/body/extras, wraps callback with compiled-helper observer, forwards callback
-arguments to original body/extras to saved delegate. Authored subtests supply no extras. All throw headers agree with
-empty visible body/own-observer-callback arguments and authored name/CODE kind at public delegate/own entry. Kind proves
-no callback identity; intervening external frames remain opaque observations.
+Whole source models assign every original refusal to its authored named subtest body. Observer saves public Test::More delegate,
+receives name/body/extras, wraps callback with compiled-helper observer, forwards callback arguments to original body/extras to
+saved delegate. Authored subtests supply no extras. Every throw header matches empty visible body/own-observer-callback arguments
+and authored name/CODE kind at public delegate/own entry. Kind proves no callback identity; external frames stay opaque.
 
-Original observer uses do './t/1986-isf-record-port-value-gates.t', then captures $@/$!/defined($ok). Diagnostic require
-marker names that exact file; it neither changes source do to require nor proves formatting. Installed public POD
-documents named subtest callbacks/extras, do-file returns/errors and require's do-file loading mechanism. Captured
-current Perl/Test::More is public-interface evidence; original framework version is unmeasured.
+Original observer uses do './t/1986-isf-record-port-value-gates.t', captures $@/$!/defined($ok). Diagnostic require names that file;
+it neither changes source do to require nor proves formatting. Installed public POD documents named callbacks/extras, do-file
+returns/errors and require's do-file loading mechanism. Captured current Perl/Test::More supplies public-interface evidence;
+original framework version is unmeasured.
 
-Each original Test::Builder/Test::More throw-phase header matches authored-name prefixes/CODE kinds and
-body/delegate/entry/do-load order. Independent dated public fixtures select them. Receiver tokens/private eval intervals
-stay opaque; wrong name/kind/population/order rejects.
+Original Test::Builder/Test::More throw-phase headers match authored-name prefixes/CODE kinds and body/delegate/entry/do-load order.
+Independent dated public fixtures select them; receiver tokens/private eval intervals stay opaque. Wrong name/kind/population/order
+rejects.
 
-Finite source-class/frame joins bind every operation/helper/authored-body/public/ entry/load and visible operand role
-per original throw phase. Inherited inner operands remain opaque evidence; these predicates supply no
-formatter/coordinate/ address oracle. Class/family/phase/order/argument/population/native-promotion controls preserve
-prior meanings; opaque inner-frame byte changes pass prior own/public predicates but break whole forwarding.
+Finite source-class/frame joins bind every operation/helper/authored-body/public/entry/load and visible operand role per original
+throw phase. Inherited operands remain opaque evidence to these predicates, which supply no formatter/coordinate/address oracle.
+Class/family/phase/order/argument/population/native-promotion controls conserve prior meanings; opaque inner-frame changes pass
+prior own/public predicates but break whole forwarding.

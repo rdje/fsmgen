@@ -1,0 +1,72 @@
+{
+  "complete_original_card_rows": [
+    "are IAL2 profile aliases still checked through the CLI by t296?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "can a PPIF pipeline entry artifact filename differ from its HDL module?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "does HDLGenerator accept .ahb .apb or .axi profile-alias paths?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "does HDLGenerator generate_hdl_from_file accept .isf and .ppif?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "does PPIF pipeline HDL contain the public aggregate top?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "how is generated_hdl_entry_artifact checked by the supported-smoke audit?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "how many PPIF smoke entries have distinct pipeline and CLI modules?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "how many supported-smoke profile aliases are CLI-only in t296?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "what does expected_pipeline_module_name mean in RegressionCorpus?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "what is CI-PERL-FSM-REGRESSION-JUN15-REPAIR.1?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "what owns the June 15 Perl FSM Regression CI failure?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "which local gate repaired GitHub run 27531373582?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "why did GitHub run 27531373582 fail?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "why does t296 exclude IAL2 profile aliases from its pipeline loops?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "why does t296 use a different PPIF module oracle for the pipeline and CLI?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "why was HDLGenerator rejecting .isf and .ppif?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md"
+  ],
+  "complete_rows": {
+    "bytes": 1279233,
+    "lines": 6984,
+    "sha256": "5f9384db53bcead8edd092e4f5f817e8b34815a0ac894c94f70721af945be4b0"
+  },
+  "controls": [
+    {
+      "refusal": "whole independent current global question allocation",
+      "role": "direct",
+      "whole_candidate": {
+        "bytes": 3253056,
+        "lines": 0,
+        "sha256": "999728aa55a7e8b96c990483539f2bae494a440d89d3ae30e1fe17056c261468"
+      }
+    },
+    {
+      "refusal": "whole independent current global question allocation",
+      "role": "cached",
+      "whole_candidate": {
+        "bytes": 3253056,
+        "lines": 0,
+        "sha256": "d0a7afc851eb562cb90bac25a22c0429c065c05b7fb94a9459ffb6544b0705c8"
+      }
+    }
+  ],
+  "final_programme": {
+    "bytes": 27327,
+    "lines": 377,
+    "sha256": "b4e52a320886101684041f4e70125611947341a408e559b5761502c9e9f5cecc"
+  },
+  "first_programme": {
+    "bytes": 26787,
+    "lines": 372,
+    "sha256": "29db972c1d9012dae6043295e50f7197e9000208545fcce44b9f60c58b747d70"
+  },
+  "first_rows": {
+    "bytes": 1277662,
+    "lines": 6974,
+    "sha256": "8b7d1ecd57c16a3e6352b3899c185a2e436a4084e9edea3d4f5784dec219f9b2"
+  },
+  "harness": {
+    "bytes": 4602,
+    "lines": 74,
+    "sha256": "f5c5deca9f48ab8baad14827c5ceb3cb928dd78551d52f6a1a0afd2cbee5df09"
+  },
+  "revision": "924a2a1b7236ce2312d79953b1c98511016e6d25",
+  "scope": "Actual first independent parser omitted a complete existing answer group; repair conserves both declarations and rejects full incomplete current query streams. No canonical source was changed.",
+  "source": {
+    "bytes": 3258,
+    "lines": 36,
+    "sha256": "14e93b3ab00030fb871bb5776cb3530d273bab68243fa90ae91687a3051c79d3"
+  }
+}

@@ -977,6 +977,8 @@ Reproduce the full fixed-seal qualification from the repository root:
 python3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py
 ```
 
+Retained original-coordinate publication checkpoint:
+
 Current coordinate meanings are now admitted together in the core, helper,
 parser and tooling facts. Their exact original sources remain retrievable, and
 the reviewed correspondence preserves every original question, probe and locality
@@ -1020,6 +1022,34 @@ current source progress:
 ```sh
 python3 -B docs/audits/coordinate-current-closure-20261010/verify.py
 ```
+
+Current finite address roles are now admitted in all four reviewed facts.
+The preceding coordinate publication is a retained checkpoint; its next-address
+statement describes that earlier frontier. Source/holder alias and distinction
+relations and original reference-number association now qualify together, while
+native lifetime, CODE/CODE, regex/hidden/external identity and cross-call/capture
+reuse retain their explicit limits.
+
+Use the maintained current reader and native build command above. It preserves
+the historical success stream while authenticating every admitted preparation
+member, complete dated prerequisite inputs and actual typed successful results.
+Whole current canonical sources, global direct/cache question ownership, exact
+source history, unchanged capacity and rendered guidance remain distinct checks.
+Certificate authentication supplies no fresh semantic recapture. Unrelated
+qualified canonical progress remains permitted.
+
+The complete prospective preparation remains replayable in its dated role:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-publication-preparation-20261010/verify.py --snapshot
+```
+
+The definitive certificate is `final-proof.json`. The first limited proof,
+actual first-admission schema false green and repaired exact-reader refusals are
+retained without promotion. Explicit independent schema and fixed-source
+authority now reject that challenge before any seal. Full address-container
+acceptance remains the next owned step; private/downstream/alias/cold/visual/HIAL
+and full CI/push work retain their separate owners.
 
 <div id="knowledge-map-architecture"></div>
 
