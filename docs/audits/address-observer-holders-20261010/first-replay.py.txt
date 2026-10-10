@@ -1,0 +1,39 @@
+"""Fresh source-prefix witnesses through the unchanged public test interface."""
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/address-observer-holders-20261010')
+
+
+def pin(path):
+    raw = path.read_bytes()
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def main():
+    receipt = BASE / 'replay.json'
+    if receipt.exists():
+        raise ValueError('one retained fresh replay receipt; never overwrite')
+    outcomes = []
+    for mode in ('ordinary', 'storable', 'controls'):
+        target = BASE / (mode + '.json')
+        if target.exists():
+            raise ValueError('retain each fresh source-only witness')
+        command = ['perl', '-Iperl', str(BASE / 'probe.pl'), mode, str(target)]
+        result = subprocess.run(command, capture_output=True, text=True)
+        outcome = {'mode': mode, 'command': command, 'status': result.returncode,
+                   'stdout': result.stdout, 'stderr': result.stderr,
+                   'programme': pin(BASE / 'probe.pl')}
+        if target.exists():
+            outcome['product'] = pin(target)
+        outcomes.append(outcome)
+        receipt.write_text(json.dumps(outcomes, sort_keys=True, indent=2) + '\n')
+        if result.returncode:
+            raise ValueError('fresh source prefix replay failed: ' + mode)
+    print('PASS fresh complete caller-bearing headers and refusal prefix snapshots in every original mode.')
+
+
+if __name__ == '__main__':
+    main()

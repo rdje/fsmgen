@@ -1,0 +1,29 @@
+{
+  "refusal": "fresh whole native copied source bytes",
+  "root_cause": "Task/frontier documentation was updated after the first mdBook build. Finish all canonical source updates, then rebuild and recheck full native delivery.",
+  "stale": [
+    {
+      "canonical": {
+        "bytes": 1460,
+        "sha256": "62f5bb67f406155324271c12c4142e2d7a7ff45dff0dde8470f00dbd302a7bde"
+      },
+      "native": {
+        "bytes": 1422,
+        "sha256": "4790d8ce680c5d0ccde9ea321d21a6a47a3a3aadb45a00c855049081b1d96c2d"
+      },
+      "source": "MEMORY.md"
+    },
+    {
+      "canonical": {
+        "bytes": 40149,
+        "sha256": "046b2fd6709038ddf26b309707a02becfa79a5301cccba100766a2fe81e89723"
+      },
+      "native": {
+        "bytes": 40100,
+        "sha256": "75d34d3846aa60ecbe7f43e9c77a010be0cdf5f8f88fae51dbd46aebf1daac6c"
+      },
+      "source": "docs/TASK_TREE.md"
+    }
+  ],
+  "status": 1
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "contract": "The immutable inserted book fragment ends with exactly two LF bytes for the paragraph separator; no other whitespace warning is admitted.",
+  "identity": {
+    "bytes": 2680,
+    "sha256": "438e62703abee2bb693f5d64a80ef2020013e5b7a222c53d8d9797078cb8bde4"
+  },
+  "source": "docs/audits/address-observer-holders-20261010/book-addition.md.txt",
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-observer-holders-20261010/book-addition.md.txt:44: new blank line at EOF.\n"
+}

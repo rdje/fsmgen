@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-S",
+      "push @copies, {kind => $kind, caller => $caller",
+      "--",
+      "docs/audits/record-value-original-candidate-20261004/observe.pl"
+    ],
+    "name": "observer retained caller",
+    "status": 0,
+    "stderr": "",
+    "stdout": "100f540f56fd5a8209849016ac6874d2d85b7dd1 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.2: capture original copy candidate and genuine provider failures\n"
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-S",
+      "my $ok = eval { $run->(); 1 };",
+      "--",
+      "t/1986-isf-record-port-value-gates.t"
+    ],
+    "name": "assertions follow evaluated callback",
+    "status": 0,
+    "stderr": "",
+    "stdout": "02827d840254d6cdbfa4020be7910bb7ae9ac4cb SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.2: qualify unwired record value gates\n"
+  }
+]

@@ -1334,6 +1334,50 @@ scalar flags and identity, raw address joins, provider/formatter/CODE identity,
 cold replay, visual book QA and governed canonical publication remain open.
 All current canonical facts, questions, probes and collection ceilings retain.
 
+Complete observer-retained caller membership is now independently qualified at
+every original source refusal view. API and parser wrappers reserve records at
+entry. Copy wrappers append after returning, and the helper records the consumer
+boundary before evaluating its callback. A separate ordering calculation uses
+those original contracts to derive the retained prefix of each caller-bearing
+table at the throw. Fresh catcher checkpoints match every complete original
+caller header and each independently derived prefix.
+
+The held population includes every earlier API, private-copy, test-copy, helper,
+parser and retained assertion caller array. For example, the record-context
+refusal retains the earlier API callers starting at entry index zero; the later
+list refusal retains them too. Nested metadata and caught outer views use their
+qualified source event to select the proper checkpoint. Unwinding to that
+observer catcher adds no caller-bearing record. Each prefix member has its own
+source allocation domain, and a compact relation covers every unordered pair of
+distinct simultaneously retained caller arrays.
+
+The two provider-control trials for a test copy forward the same caller array
+already associated with that copy. They add aliases to the held set. Encoded
+input/result graph carriers do not hold the original payload referents.
+Collections introduced by fresh instrumentation and discarded assertion callers
+are excluded. Source allocation and retention establish neither numerical native
+identity nor object death or a global heap census.
+
+The first replay runner stopped on the recorded Storable failure because it
+incorrectly required every mode to exit zero. Its programme and actual results
+remain preserved. The corrected runner conserves each historical status;
+provider/control failures remain failures. Complete caller membership qualifies
+separately from scalar-copy behavior. Genuine earlier-holder omissions, borrowed
+records and phases, wrong kinds, duplicate prefixes, lost inherited caller
+bridges, false trial allocations and native-scope promotions reject. Replay the
+complete retained qualification from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-observer-holders-20261010/verify.py
+```
+
+This observer-holder dependency is closed. Complete simultaneous source graph
+and reference-role integration is the next owned child. Original raw-address
+joins, native payload/flags/identity, opaque provider/framework/formatter/CODE
+identity, cold replay, visual book QA and governed canonical publication remain
+open. Every existing canonical fact, question, probe and collection ceiling
+retains.
+
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
 does not establish coordinate meanings or later current currency:

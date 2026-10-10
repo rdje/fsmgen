@@ -1,0 +1,55 @@
+---
+status: proposed; governed non-growing publication remains the address-publication child
+source: docs/audits/address-observer-holders-20261010/
+date: 2026-10-10
+---
+
+Complete observer-held caller membership is qualified for every inherited
+original refusal view. The observation unit is one symbolic allocation in one
+original mode and caller-bearing table; prefix occurrences and source-pair
+relations are counted per throw view, not as unique native objects. The complete
+five-table family includes API, copy, helper, parser and consumer callers.
+Fresh checkpoints join every original caller header. An independent ordering
+oracle derives bounds from original helper entry/return, API entry reservation,
+copy completion and consumer-start records. Nested/caught-inner/outer phases use
+qualified source events. Every earlier retained caller is included. Control
+trials forward their test copy's caller array; encoded graph carriers, fresh
+instrumentation and discarded assertion callers do not add original holders.
+
+Re-derivation: source.py freshly executes the complete corrected predecessor and
+conserves every operation/private/Value/Metadata/nested/helper/parser model.
+probe_source.py instruments only observer prefix snapshots and projects complete
+source caller headers; replay.py retains actual fresh mode outcomes. model.py
+publishes typed finite allocation families and complete prefix relations.
+oracle.py independently derives the original event bounds, enumerates every
+held member and sums the pair relation; complete fresh headers and checkpoints
+must match. verify.py independently enumerates every inherited caller origin.
+
+Falsification: verify.py rejects genuine whole mode/family/view omission, earlier
+API/private/test/helper/parser/assertion holder loss, bounded-context population
+substitution, borrowed caller/capture/phase/catcher, wrong kind/holder, duplicate
+prefixes, typed Boolean mutations, missing pair relations, trial alias loss or
+fresh-allocation promotion, missing inherited bridge/model, fresh snapshot/header
+loss and native scope promotion. The first runner's all-zero assumption really
+stopped on the historical Storable status4. Exact first programme and complete
+executed outcomes retain; the repaired runner conserves original mode statuses,
+and promoting that nonzero to zero rejects. These statuses do not establish a
+passing provider test suite.
+
+Durability: durability.py independently reconstructs every original source header
+and inherited source-view intake, authenticates the actual fresh predecessor gate
+and checks all complete input bytes against fixed Git custody. intake.py binds
+complete historical outcomes, trial aliases and predecessor caller origins.
+Whole original sources, first/final programmes, fresh replay witnesses, independent
+proof, actual guarded checks and git log -S history remain committed. The source
+claim policy template is unchanged; current cards/questions/probes and all
+collection ceilings conserve. The same-slice book documents scope and runnable
+qualification. Measurements and observation units are in proof.json; controls
+and input/programme identities are complete there.
+
+Missing legs: complete simultaneous source graph/reference-role integration is
+the next owned child. Original raw addresses, native identity/flags/payload,
+opaque provider/framework/formatter/CODE identity, cold replay, visual book QA
+and governed non-growing canonical publication remain open. Caller allocation
+relations establish neither original numerical identity nor object death or a
+global heap census. This proposal creates no new current Knowledge Map card.

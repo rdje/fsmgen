@@ -1,0 +1,8 @@
+{
+  "identity": {
+    "bytes": 18166,
+    "sha256": "9f99df25209c43afb74d77e348dd2d0cdb68ce96cf17a4f272ede8328f6046bd"
+  },
+  "reference": "User-authorized read-only external claim policy; no project runtime dependency",
+  "review": "Unchanged from the previously reviewed source template; maintained local CLAIM_VERIFICATION.md remains authority."
+}

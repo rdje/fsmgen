@@ -1,0 +1,41 @@
+# Complete observer caller source membership
+
+Owner: scope.txt. Run from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-observer-holders-20261010/verify.py
+```
+
+source.py executes the complete corrected source prerequisite once for this
+slice and binds every inherited read to fixed Git. durability.py checks that
+actual qualification and independently reconstructs the complete new intake
+against original records and all fixed input bytes. This separate durability
+leg does not repeat the same expensive predecessor test without changed inputs.
+
+probe_source.py derives the exact finite observer instrumentation. probe.pl
+outputs only caller-bearing headers and prefix snapshots. All original source
+payload/error/stack bodies are excluded from the new witness. replay.py records
+actual historical statuses and full programme/product custody. These are source
+ordering observations; no original numeric identity or source payload liveness
+is inferred from encoded graphs. Existing original/native products remain exact.
+
+model.py declares complete caller allocation families and retained prefixes;
+oracle.py never imports the producer and derives bounds independently from
+original entry/completion records. Every fresh caller header and catcher bound
+must join. verify.py checks every original view and independently enumerates
+complete inherited caller origins, preserving aliases and full source models.
+All controls and measurements are in proof.json. Compact pair counts represent
+source distinctions across each view, not billions of observed native addresses.
+
+first-replay.py.txt, first-replay.json.txt and first-runner-failure.json preserve
+the false all-zero runner failure. Ordinary completed with zero; the recorded
+Storable/control nonzero statuses remain failures. The corrected runner accepts
+them only as historical membership witnesses. Initial supplemental intake files
+also retain; before qualification its caller bridge selector was completed with
+the original parser callers, independently enumerated by verify.py.
+
+checks.json retains actual guarded gate outcomes. book-proof.json checks complete
+source conservation, every final canonical copy, full native guide text and a
+genuine omission control; visual review remains open. Full source graph/role
+integration and original raw/native/governed-publication scopes remain successors.
+All project paths are repository-relative; fixtures and outputs stay on volume.

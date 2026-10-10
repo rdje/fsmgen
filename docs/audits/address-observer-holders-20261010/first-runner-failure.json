@@ -1,0 +1,6 @@
+{
+  "evidence": "Actual terminal result of the first replay.py invocation; first-replay.json.txt retains both complete executed mode outcomes and first-replay.py.txt the exact runner. Historical execution.json records storable status4.",
+  "scope": "Runner falsely rejected an expected historical nonzero status; original provider behavior is unchanged.",
+  "status": 1,
+  "terminal_message": "ValueError: fresh source prefix replay failed: storable"
+}
