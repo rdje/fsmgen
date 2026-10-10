@@ -1,0 +1,14 @@
+{
+  "actual_receipt": "checks.json:publication-authority",
+  "cause": "Registry record zero is closed control-plane metadata, not a surface; the first reader incorrectly indexed its surface_id.",
+  "impact": "The independent publication verifier refuses before producing a proof; census/source/native/current-publication evidence is unaffected. Commit remains gated until repaired verification passes.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.1",
+  "repair": "Require full unchanged registry metadata separately, reconstruct only actual surface rows and independently preserve all prior book reference fields. Retain failed source/result and original publication report; supersede only refreshed current task measurement.",
+  "reproduce": [
+    "python3",
+    "-B",
+    "docs/audits/observer-header-source-census-20261010/publication_verify.py",
+    "--current"
+  ],
+  "verification": "publication_verify_qualified.py --current"
+}

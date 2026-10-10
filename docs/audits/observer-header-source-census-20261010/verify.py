@@ -1,0 +1,73 @@
+"""Replay whole fixed custody, source census, actual controls and declared limits."""
+import base64
+import gzip
+import json
+from pathlib import Path
+from common import BASE, SOURCE, canonical, load, module, need, pin, same, save
+import custody_qualified as custody
+import falsify
+import oracle
+
+CORE = ('checks.py','common.py','prerequisites.py','derive.py','model.py','produce.py',
+        'oracle.py','custody.py','custody_qualified.py','falsify.py','verify.py','pipeline.py','check_oracle.py','book.py')
+
+
+def main():
+    if (BASE / 'manifest.json').exists():
+        members = {str(p.relative_to(BASE)):pin(p.read_bytes()) for p in BASE.rglob('*')
+                   if p.is_file() and p.name not in ('checks.json','manifest.json')}
+        need(same(load('manifest.json'),members), 'entire immutable census namespace seal')
+    epoch = load('programme-epoch.json')
+    need(epoch == {n:pin((BASE / n).read_bytes()) for n in CORE}, 'entire first complete census programme epoch')
+    original = custody.verify()
+    source, raw = load('source-models.json'), (BASE / 'source-models.json').read_bytes()
+    need(same(source, json.loads((SOURCE / 'source-models.json').read_bytes())),
+         'entire fixed qualified source model retained')
+    classes = module(Path('docs/audits/record-value-original-class-20261005/verify.py'))
+    public = module(Path('docs/audits/record-value-public-boundary-join-20261006/verify.py'))
+    model = module(SOURCE / 'model.py')
+    need(same(source, model['derive'](classes, public, classes['require'], classes['same'])),
+         'whole qualified source independently rederived again')
+    product = oracle.validate(load('census.json'), source, raw)
+    need(same(product,load('independent.json')), 'whole actual independent reconstruction result')
+    for programme in ('derive.py','produce.py','check_oracle.py','falsify.py'):
+        r = load('phase-' + programme + '.json')
+        need(set(r) == {'command','status','stdout','stderr','instruments'}
+             and r['command'] == ['python3','-B',str(BASE / programme)]
+             and type(r['status']) is int and r['status'] == 0 and r['stderr'] == ''
+             and r['stdout'].startswith('PASS ') and r['stdout'].endswith('\n'), 'whole actual source pipeline receipt')
+        for name, identity in r['instruments'].items():
+            # verify.py was invocation context, not executed by these phases.
+            # Retain its complete earlier bytes before the memory-only streaming edit.
+            path = BASE / ('before-streaming-verify.py.txt' if name == 'verify.py' else name)
+            need(pin(path.read_bytes()) == identity, 'whole actual source-only invocation instrument')
+    history = load('root-history.json')
+    need(history['command'] == ['git','--no-pager','log','-1','-S','native_scalar_encoding','--',
+         'docs/audits/record-value-parser-argument-roles-20261006/verify.py']
+         and type(history['status']) is int and history['status'] == 0 and not history['stderr']
+         and 'commit 10e8520d1a0e485693d155c08c48c374ef1e6897' in history['stdout'], 'actual source-encoding root history')
+    saved = load('controls.json')
+    controls = {}
+    for name,cause,candidate in falsify.candidates():
+        r = saved[name]
+        need(set(r) == {'candidate_identity','whole_candidate_gzip_base64','expected_cause','actual'}, 'closed actual whole control receipt')
+        body = gzip.decompress(base64.b64decode(r['whole_candidate_gzip_base64'],validate=True))
+        need(body == canonical(candidate) and pin(body) == r['candidate_identity'], 'entire lossless actual census candidate')
+        actual = falsify.outcome(json.loads(body), source, raw)
+        need(r['expected_cause'] == cause and same(actual, r['actual'])
+             and actual == dict(accepted=False,exception='ValueError',message=cause),
+             'actual intended whole census refusal: ' + name)
+        controls[name] = dict(candidate=pin(body),actual=actual)
+    need(set(saved) == set(controls), 'complete genuine source-census controls')
+    proof = dict(epoch=epoch, custody=original, product=product, controls=controls,
+        source_inputs={n:pin((BASE / n).read_bytes()) for n in ('source-models.json','census.json','controls.json')})
+    path = BASE / 'proof.json'
+    if path.exists():
+        need(same(load('proof.json'),proof), 'entire immutable complete source-census proof')
+    else:
+        save('proof.json',proof)
+    print('PASS complete fixed source/header-prerequisite census, independent reconstruction and genuine whole controls; exact source values/full headers/original join remain pending.')
+
+
+if __name__ == '__main__':
+    main()

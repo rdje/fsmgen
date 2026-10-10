@@ -1,0 +1,16 @@
+Dated source-census fact proposed for governed observer publication; do not
+replace the canonical live card before that owner's full acceptance closes.
+
+The whole original observer source model has two qualified operand schemas.
+Regular false predicates declare only logical false. Context scalar operands
+explicitly leave native_scalar_encoding unmeasured, including a logical source
+value of zero. Neither declaration alone qualifies an exact displayed token.
+Complete source-only census and independent whole controls retain in this audit.
+Exact source-value/regex construction and original unmeasured display-profile
+obligations remain owned by the next source-header child; full headers and the
+original raw join remain pending. No original trace display is a new semantic
+oracle. Inherited serialized inner operands retain their entire evidence role.
+
+Reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-header-source-census-20261010/verify.py
+Canonical destination after governed acceptance:
+docs/knowledge/record-value-original-observer-helper-paths.md

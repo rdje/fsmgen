@@ -1,0 +1,51 @@
+"""Replay whole fixed custody, source census, actual controls and declared limits."""
+import base64
+import gzip
+from common import BASE, SOURCE, canonical, load, module, need, pin, same, save
+import custody
+import falsify
+import oracle
+
+CORE = ('checks.py','common.py','prerequisites.py','derive.py','model.py','produce.py',
+        'oracle.py','custody.py','falsify.py','verify.py')
+
+
+def main():
+    epoch = load('programme-epoch.json')
+    need(epoch == {n:pin((BASE / n).read_bytes()) for n in CORE}, 'entire first complete census programme epoch')
+    original = custody.verify()
+    source, raw = load('source-models.json'), (BASE / 'source-models.json').read_bytes()
+    need(same(source, __import__('json').loads((SOURCE / 'source-models.json').read_bytes())),
+         'entire fixed qualified source model retained')
+    classes = module(__import__('pathlib').Path('docs/audits/record-value-original-class-20261005/verify.py'))
+    public = module(__import__('pathlib').Path('docs/audits/record-value-public-boundary-join-20261006/verify.py'))
+    model = module(SOURCE / 'model.py')
+    need(same(source, model['derive'](classes, public, classes['require'], classes['same'])),
+         'whole qualified source independently rederived again')
+    product = oracle.validate(load('census.json'), source, raw)
+    saved = load('controls.json')
+    expected = list(falsify.candidates())
+    need(set(saved) == {n for n,_,_ in expected}, 'complete genuine source-census controls')
+    controls = {}
+    for name,cause,candidate in expected:
+        r = saved[name]
+        need(set(r) == {'candidate_identity','whole_candidate_gzip_base64','expected_cause','actual'}, 'closed actual whole control receipt')
+        body = gzip.decompress(base64.b64decode(r['whole_candidate_gzip_base64'],validate=True))
+        need(body == canonical(candidate) and pin(body) == r['candidate_identity'], 'entire lossless actual census candidate')
+        actual = falsify.outcome(__import__('json').loads(body), source, raw)
+        need(r['expected_cause'] == cause and same(actual, r['actual'])
+             and actual == dict(accepted=False,exception='ValueError',message=cause),
+             'actual intended whole census refusal: ' + name)
+        controls[name] = dict(candidate=pin(body),actual=actual)
+    proof = dict(epoch=epoch, custody=original, product=product, controls=controls,
+        source_inputs={n:pin((BASE / n).read_bytes()) for n in ('source-models.json','census.json','controls.json')})
+    path = BASE / 'proof.json'
+    if path.exists():
+        need(same(load('proof.json'),proof), 'entire immutable complete source-census proof')
+    else:
+        save('proof.json',proof)
+    print('PASS complete fixed source/header-prerequisite census, independent reconstruction and genuine whole controls; exact source values/full headers/original join remain pending.')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,77 @@
+"""Qualify exact book/guide authority and measured, unchanged-ceiling task growth."""
+import json
+import sys
+from pathlib import Path
+import book
+from common import BASE, load, need, pin, same, save
+
+
+def metrics(paths):
+    data = [p.read_bytes() for p in paths]
+    return dict(files=len(data),lines_total=sum(x.count(b'\n') for x in data),bytes_total=sum(map(len,data)),
+        lines_each=max(x.count(b'\n') for x in data),bytes_each=max(map(len,data)),
+        line_bytes_each=max(len(line.rstrip(b'\r')) for x in data for line in x.split(b'\n')))
+
+
+def main():
+    need(sys.argv[1:] in ([],['--current']), 'declared dated versus current publication mode')
+    report = load('publication-final.json')
+    before = [json.loads(line) for line in (BASE / 'before-surfaces.jsonl.txt').read_bytes().splitlines()]
+    after = report['registry_after']
+    need(len(after) == len(before) + 1 and all(a['surface_id'] == b['surface_id'] for a,b in zip(before,after)),
+         'all prior surface membership/order and one exact guide')
+    for old,new in zip(before,after):
+        need(old['enforcement_ceilings'] == new['enforcement_ceilings'], 'every existing capacity ceiling unchanged')
+        changed = {k for k in old if not same(old[k],new[k])}
+        allowed = {'reference_contract'} if old['surface_id'] == 'shipped_behavior' else {'transition'} if old['surface_id'] == 'task_evidence' else set()
+        need(changed <= allowed and set(old) == set(new), 'sole declared book/task authority changes')
+        if old['surface_id'] == 'task_evidence':
+            need(old['transition']['owner'] == new['transition']['owner']
+                 and old['transition']['ratchet_step'] == new['transition']['ratchet_step'], 'task owner and ratchet unchanged')
+            measured = report['task_metrics']
+            growth = new['transition']['max_growth']
+            for dimension, value in measured.items():
+                expected = old['transition']['max_growth'][dimension]
+                if value > old['baseline'][dimension] + expected:
+                    expected = min(value + new['transition']['ratchet_step'][dimension],
+                                   new['enforcement_ceilings'][dimension]) - old['baseline'][dimension]
+                need(type(value) is int and growth[dimension] == expected
+                     and value <= old['baseline'][dimension] + expected <= old['enforcement_ceilings'][dimension],
+                     'exact measured task allowance inside unchanged ceiling')
+    guide = after[-1]
+    caps = dict(bytes_each=6144,bytes_total=6144,files=1,line_bytes_each=512,lines_each=96,lines_total=96)
+    need(guide['surface_id'] == 'observer_header_source_census_guide'
+         and guide['targets'] == [str(BASE / 'GUIDE.md')] and guide['owner'] == (BASE / 'scope.txt').read_text().strip()
+         and guide['health_targets'] == guide['enforcement_ceilings'] == caps
+         and guide['lifecycle'] == 'bounded_snapshot' and guide['locator'] == 'file', 'one exact bounded source-census guide')
+    raw = (BASE / 'GUIDE.md').read_bytes()
+    measured_guide = dict(bytes=len(raw),lines=raw.count(b'\n'),line_bytes=max(map(len,raw.splitlines())))
+    need(measured_guide['bytes'] <= 6144 and measured_guide['lines'] <= 96 and measured_guide['line_bytes'] <= 512,
+         'whole actual guide inside fixed review envelope')
+    source_before,source_after = book.source()
+    need(report['before'] == {p:pin(raw) for p,raw in source_before.items()}
+         and report['after'] == {p:pin(raw) for p,raw in source_after.items()}, 'entire dated sole book addition')
+    shipped = next(r for r in after if r['surface_id'] == 'shipped_behavior')
+    authority = shipped['reference_contract']['aggregate_change']
+    a,b = book.aggregate(source_before.values()),book.aggregate(source_after.values())
+    need(authority['authority_id'] == 'OBSERVER-HEADER-SOURCE-CENSUS-20261010'
+         and authority['owner'] == guide['owner'] and authority['baseline'] == a
+         and authority['delta'] == {k:b[k]-a[k] for k in a}, 'whole exact fresh book aggregate authority')
+    if sys.argv[1:]:
+        need(after == [json.loads(line) for line in book.REGISTRY.read_bytes().splitlines()], 'whole current publication registry')
+        task = next(r for r in after if r['surface_id'] == 'task_evidence')
+        paths = sorted({p for pattern in task['targets'] for p in Path('.').glob(pattern)})
+        need(metrics(paths) == report['task_metrics'], 'whole actual current task measurement')
+        need({str(p):p.read_bytes() for p in Path('docs/book/src').glob('*.md')} == source_after,
+             'whole current sole source-census book change')
+    proof = dict(guide=guide,measured_guide=measured_guide,book_authority=authority,
+                 task_metrics=report['task_metrics'],scope='All prior surfaces and ceilings conserve; sole book addition, exact guide and measured task allowance only. Canonical Knowledge Map authority unchanged.')
+    if (BASE / 'publication-proof.json').exists():
+        need(same(load('publication-proof.json'),proof), 'whole immutable publication proof')
+    else:
+        save('publication-proof.json',proof)
+    print('PASS exact complete source-census book/guide authority and measured task growth; every prior ceiling and Knowledge Map authority unchanged.')
+
+
+if __name__ == '__main__':
+    main()

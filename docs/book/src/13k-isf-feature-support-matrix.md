@@ -1711,6 +1711,32 @@ This completes the public prerequisite only. Complete source-generated
 original headers, their original-body join and observer publication still
 precede full raw-stack closure. All native/provider/private limits retain.
 
+The complete source-header prerequisite census now retains every qualified
+observer case, throw phase, ordered group, frame, operand and load role. Its
+recursive producer and independent explicit group reconstruction agree on the
+whole source model; original trace display supplies no new semantic oracle.
+
+The census exposes source-value obligations before exact header generation.
+A failed predicate gives logical false without selecting zero, an empty string
+or undef as its displayed token. Context operands explicitly leave scalar
+encoding unmeasured. Regex source patterns retain their complete bodies while
+constructor flags and encoding require separate qualification. Entire inherited
+serialized inner operands remain dated evidence, with their prior scope.
+
+Original display settings, native reference identity, public receiver tokens
+and private framework intervals retain their unmeasured boundaries. Source
+`do` loading and the diagnostic `require` marker remain distinct roles.
+Whole-product omission, borrowing, reordering, role, schema, scope and premature
+header-closure controls reject. Replay the complete source-only census:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-header-source-census-20261010/verify.py
+```
+
+Source-value qualification precedes full source-generated headers, the
+original-body join and observer publication. Their unchanged parent acceptance
+remains open, together with the separately owned native and visual scopes.
+
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
 complete previously committed child contracts. It joins every original empty
