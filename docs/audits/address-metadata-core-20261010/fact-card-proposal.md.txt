@@ -1,0 +1,32 @@
+---
+id: record-value-metadata-core-source-bindings
+title: Metadata recursion shares local bindings in its active capture
+answers:
+  - "which Metadata core referents and recursion locals are live at its inner throw?"
+date: 2026-10-10
+status: proposed
+tags: [isf, record, metadata, source, graph, lifetime]
+evidence: [docs/audits/address-metadata-core-20261010/proof.json]
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-metadata-core-20261010/verify.py
+---
+
+The complete finite Metadata source population retains every original source
+case and nested input pair. The active capture frame retains the supplied
+constructed interface; recursive type arguments select nodes of the detached
+Metadata-private result. One sink and one active-type hash are shared throughout
+that traversal. Active members are symbolic graph nodes, not numeric keys.
+The cyclic member revisits the same root referent; completed earlier scalar
+paths remain in the shared sink.
+
+Recorded qualified-predicate referents and a separate encoded-graph guard walk
+agree on every source slot, alias, active membership and completed path. Genuine
+cycle, alias-split, kind/copy/node, omission, borrowed-domain and false-lifetime
+controls reject. The proof names separate re-derivation, falsification and
+whole fixed-Git durability legs, conserving complete prior Value/private/operation
+hypotheses. Caught Metadata trace frames are inactive in the later Value throw.
+
+Surviving Value ancestor/cross-operation joins are the immediate owned successor.
+Original numeric/private/provider/formatter identity, helper/parser roles and
+canonical address publication remain open. Governed canonical publication must
+conserve every existing fact/question/probe and unchanged collection authority.
+This proposal adds no current address fact or provider identity claim.

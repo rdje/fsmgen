@@ -1,0 +1,5774 @@
+{
+  "cases": [
+    {
+      "bindings": {
+        "copy:537:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7839,
+            "copy_index": 537,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag",
+              ".data"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 7839,
+      "caught_outer_trace": {
+        "api": 7750,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            "call_site": "metadata_type.12",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7839,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "resolved aggregate width disagrees with members"
+            }
+          ],
+          "call_site": "metadata_type.12",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.12",
+      "mode": "ordinary",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:537:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 7750,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:546:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7929,
+            "copy_index": 546,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "copy:546:/inputs/0/type_spec/members/data": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7929,
+            "copy_index": 546,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec/members/data"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec",
+              "/inputs/0/type_spec/members/data"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 7929,
+      "caught_outer_trace": {
+        "api": 7840,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid resolved signed property"
+              }
+            ],
+            "call_site": "metadata_type.5",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        7929,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid resolved signed property"
+            }
+          ],
+          "call_site": "metadata_type.5",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.5",
+      "mode": "ordinary",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:546:/inputs/0/type_spec/members/data",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:546:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 7840,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "copy:546:/inputs/0/type_spec/members/data"
+          ],
+          "reason": "distinct nodes of one qualified Metadata result graph"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:585:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8368,
+            "copy_index": 585,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "copy:585:/inputs/0/type_spec/members/data": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8368,
+            "copy_index": 585,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec/members/data"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec",
+              "/inputs/0/type_spec/members/data"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8368,
+      "caught_outer_trace": {
+        "api": 8279,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid resolved state model"
+              }
+            ],
+            "call_site": "metadata_type.6",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8368,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid resolved state model"
+            }
+          ],
+          "call_site": "metadata_type.6",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.6",
+      "mode": "ordinary",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:585:/inputs/0/type_spec/members/data",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:585:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8279,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "copy:585:/inputs/0/type_spec/members/data"
+          ],
+          "reason": "distinct nodes of one qualified Metadata result graph"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:594:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8458,
+            "copy_index": 594,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8458,
+      "caught_outer_trace": {
+        "api": 8369,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            "call_site": "metadata_type.9",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8458,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid or duplicate record member"
+            }
+          ],
+          "call_site": "metadata_type.9",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.9",
+      "mode": "ordinary",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:594:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8369,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:604:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8548,
+            "copy_index": 604,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": []
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8548,
+      "caught_outer_trace": {
+        "api": 8459,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "record member inventory disagrees"
+              }
+            ],
+            "call_site": "metadata_type.8",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8548,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "record member inventory disagrees"
+            }
+          ],
+          "call_site": "metadata_type.8",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.8",
+      "mode": "ordinary",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:604:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8459,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:613:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8638,
+            "copy_index": 613,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8638,
+      "caught_outer_trace": {
+        "api": 8549,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "cyclic resolved type"
+              }
+            ],
+            "call_site": "metadata_type.2",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8638,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "cyclic resolved type"
+            }
+          ],
+          "call_site": "metadata_type.2",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.2",
+      "mode": "ordinary",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:613:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:613:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8549,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:622:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8728,
+            "copy_index": 622,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": []
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8728,
+      "caught_outer_trace": {
+        "api": 8639,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            "call_site": "metadata_type.unsupported",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "ordinary",
+        "api",
+        8728,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "unsupported resolved type kind"
+            }
+          ],
+          "call_site": "metadata_type.unsupported",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.unsupported",
+      "mode": "ordinary",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:622:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8639,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:537:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7839,
+            "copy_index": 537,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag",
+              ".data"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 7839,
+      "caught_outer_trace": {
+        "api": 7750,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            "call_site": "metadata_type.12",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "storable",
+        "api",
+        7839,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "resolved aggregate width disagrees with members"
+            }
+          ],
+          "call_site": "metadata_type.12",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.12",
+      "mode": "storable",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:537:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 7750,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:546:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7929,
+            "copy_index": 546,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "copy:546:/inputs/0/type_spec/members/data": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7929,
+            "copy_index": 546,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec/members/data"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec",
+              "/inputs/0/type_spec/members/data"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 7929,
+      "caught_outer_trace": {
+        "api": 7840,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid resolved signed property"
+              }
+            ],
+            "call_site": "metadata_type.5",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "storable",
+        "api",
+        7929,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid resolved signed property"
+            }
+          ],
+          "call_site": "metadata_type.5",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.5",
+      "mode": "storable",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:546:/inputs/0/type_spec/members/data",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:546:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 7840,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "copy:546:/inputs/0/type_spec/members/data"
+          ],
+          "reason": "distinct nodes of one qualified Metadata result graph"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:585:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8368,
+            "copy_index": 585,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "copy:585:/inputs/0/type_spec/members/data": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8368,
+            "copy_index": 585,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec/members/data"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec",
+              "/inputs/0/type_spec/members/data"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8368,
+      "caught_outer_trace": {
+        "api": 8279,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid resolved state model"
+              }
+            ],
+            "call_site": "metadata_type.6",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "storable",
+        "api",
+        8368,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid resolved state model"
+            }
+          ],
+          "call_site": "metadata_type.6",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.6",
+      "mode": "storable",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:585:/inputs/0/type_spec/members/data",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:585:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8279,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "copy:585:/inputs/0/type_spec/members/data"
+          ],
+          "reason": "distinct nodes of one qualified Metadata result graph"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:594:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8458,
+            "copy_index": 594,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8458,
+      "caught_outer_trace": {
+        "api": 8369,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            "call_site": "metadata_type.9",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "storable",
+        "api",
+        8458,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid or duplicate record member"
+            }
+          ],
+          "call_site": "metadata_type.9",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.9",
+      "mode": "storable",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:594:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8369,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:604:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8548,
+            "copy_index": 604,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": []
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8548,
+      "caught_outer_trace": {
+        "api": 8459,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "record member inventory disagrees"
+              }
+            ],
+            "call_site": "metadata_type.8",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "storable",
+        "api",
+        8548,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "record member inventory disagrees"
+            }
+          ],
+          "call_site": "metadata_type.8",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.8",
+      "mode": "storable",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:604:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8459,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:613:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8638,
+            "copy_index": 613,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8638,
+      "caught_outer_trace": {
+        "api": 8549,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "cyclic resolved type"
+              }
+            ],
+            "call_site": "metadata_type.2",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "storable",
+        "api",
+        8638,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "cyclic resolved type"
+            }
+          ],
+          "call_site": "metadata_type.2",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.2",
+      "mode": "storable",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:613:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:613:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8549,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:622:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8728,
+            "copy_index": 622,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": []
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8728,
+      "caught_outer_trace": {
+        "api": 8639,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            "call_site": "metadata_type.unsupported",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "storable",
+        "api",
+        8728,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "unsupported resolved type kind"
+            }
+          ],
+          "call_site": "metadata_type.unsupported",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.unsupported",
+      "mode": "storable",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:622:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8639,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:537:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7839,
+            "copy_index": 537,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag",
+              ".data"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 7839,
+      "caught_outer_trace": {
+        "api": 7750,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "resolved aggregate width disagrees with members"
+              }
+            ],
+            "call_site": "metadata_type.12",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "controls",
+        "api",
+        7839,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "resolved aggregate width disagrees with members"
+            }
+          ],
+          "call_site": "metadata_type.12",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.12",
+      "mode": "controls",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:537:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 7750,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:537:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:546:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7929,
+            "copy_index": 546,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "copy:546:/inputs/0/type_spec/members/data": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 7929,
+            "copy_index": 546,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec/members/data"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec",
+              "/inputs/0/type_spec/members/data"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 7929,
+      "caught_outer_trace": {
+        "api": 7840,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid resolved signed property"
+              }
+            ],
+            "call_site": "metadata_type.5",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "controls",
+        "api",
+        7929,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid resolved signed property"
+            }
+          ],
+          "call_site": "metadata_type.5",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.5",
+      "mode": "controls",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:546:/inputs/0/type_spec/members/data",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:546:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 7840,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "copy:546:/inputs/0/type_spec/members/data"
+          ],
+          "reason": "distinct nodes of one qualified Metadata result graph"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:546:/inputs/0/type_spec/members/data",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:585:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8368,
+            "copy_index": 585,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "copy:585:/inputs/0/type_spec/members/data": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8368,
+            "copy_index": 585,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec/members/data"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec",
+              "/inputs/0/type_spec/members/data"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8368,
+      "caught_outer_trace": {
+        "api": 8279,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid resolved state model"
+              }
+            ],
+            "call_site": "metadata_type.6",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "controls",
+        "api",
+        8368,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid resolved state model"
+            }
+          ],
+          "call_site": "metadata_type.6",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.6",
+      "mode": "controls",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:585:/inputs/0/type_spec/members/data",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:585:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8279,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "copy:585:/inputs/0/type_spec/members/data"
+          ],
+          "reason": "distinct nodes of one qualified Metadata result graph"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:585:/inputs/0/type_spec/members/data",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:594:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8458,
+            "copy_index": 594,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8458,
+      "caught_outer_trace": {
+        "api": 8369,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "invalid or duplicate record member"
+              }
+            ],
+            "call_site": "metadata_type.9",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "controls",
+        "api",
+        8458,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "invalid or duplicate record member"
+            }
+          ],
+          "call_site": "metadata_type.9",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.9",
+      "mode": "controls",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:594:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8369,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:594:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:604:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8548,
+            "copy_index": 604,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": []
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8548,
+      "caught_outer_trace": {
+        "api": 8459,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "record member inventory disagrees"
+              }
+            ],
+            "call_site": "metadata_type.8",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "controls",
+        "api",
+        8548,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "record member inventory disagrees"
+            }
+          ],
+          "call_site": "metadata_type.8",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.8",
+      "mode": "controls",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:604:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8459,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:604:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:613:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8638,
+            "copy_index": 613,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": [
+              ".flag"
+            ]
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8638,
+      "caught_outer_trace": {
+        "api": 8549,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "cyclic resolved type"
+              }
+            ],
+            "call_site": "metadata_type.2",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:.data"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ".data"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "member_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "controls",
+        "api",
+        8638,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "cyclic resolved type"
+            }
+          ],
+          "call_site": "metadata_type.2",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:.data"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ".data"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "member_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.2",
+      "mode": "controls",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:613:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:.data"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "copy:613:/inputs/0/type_spec",
+          "frame": 2,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 2,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 2,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 3,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8549,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:613:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    },
+    {
+      "bindings": {
+        "copy:622:/inputs/0/type_spec": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "api": 8728,
+            "copy_index": 622,
+            "kind": "qualified_metadata_private_result",
+            "node": "/inputs/0/type_spec"
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:active": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_active_type_path",
+            "nodes": [
+              "/inputs/0/type_spec"
+            ]
+          },
+          "reference_kind": "HASH"
+        },
+        "fresh:sink": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "fresh_scalar_path_sink",
+            "paths": []
+          },
+          "reference_kind": "ARRAY"
+        },
+        "input:/0": {
+          "lifetime": "held by active Metadata capture/traversal at the inner throw; no later outer-throw identity",
+          "origin": {
+            "kind": "supplied_capture_input",
+            "node": "/0"
+          },
+          "reference_kind": "HASH"
+        }
+      },
+      "capture_api": 8728,
+      "caught_outer_trace": {
+        "api": 8639,
+        "frames": [
+          {
+            "arguments": [
+              {
+                "kind": "false_predicate",
+                "role": "failed_predicate"
+              },
+              {
+                "kind": "scalar",
+                "role": "diagnostic_message",
+                "value": "unsupported resolved type kind"
+              }
+            ],
+            "call_site": "metadata_type.unsupported",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "resolved_type_at:"
+              },
+              {
+                "kind": "scalar",
+                "role": "member_path",
+                "value": ""
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "ARRAY",
+                "role": "scalar_path_sink"
+              },
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "active_type_path"
+              }
+            ],
+            "call_site": "capture_paths",
+            "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+          },
+          {
+            "arguments": [
+              {
+                "kind": "reference",
+                "reference_kind": "HASH",
+                "role": "declared_interface"
+              }
+            ],
+            "call_site": "observer_operation",
+            "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+          }
+        ],
+        "state": "embedded caught trace, inactive before the later Value throw; cross-operation join remains open"
+      },
+      "domain": [
+        "controls",
+        "api",
+        8728,
+        "inner-Metadata-source-throw"
+      ],
+      "frames": [
+        {
+          "arguments": [
+            {
+              "kind": "false_predicate",
+              "role": "failed_predicate"
+            },
+            {
+              "kind": "scalar",
+              "role": "diagnostic_message",
+              "value": "unsupported resolved type kind"
+            }
+          ],
+          "call_site": "metadata_type.unsupported",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_require"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "resolved_type_at:"
+            },
+            {
+              "kind": "scalar",
+              "role": "member_path",
+              "value": ""
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "ARRAY",
+              "role": "scalar_path_sink"
+            },
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "active_type_path"
+            }
+          ],
+          "call_site": "capture_paths",
+          "function": "FSM::Support::ISFInterfacePortMetadata::_collect_scalar_paths"
+        },
+        {
+          "arguments": [
+            {
+              "kind": "reference",
+              "reference_kind": "HASH",
+              "role": "declared_interface"
+            }
+          ],
+          "call_site": "observer_operation",
+          "function": "FSM::Support::ISFInterfacePortMetadata::capture_interface_port_metadata"
+        }
+      ],
+      "guard": "metadata_type.unsupported",
+      "mode": "controls",
+      "occurrences": [
+        {
+          "argument": 0,
+          "binding": "copy:622:/inputs/0/type_spec",
+          "frame": 1,
+          "role": "resolved_type_at:"
+        },
+        {
+          "argument": 2,
+          "binding": "fresh:sink",
+          "frame": 1,
+          "role": "scalar_path_sink"
+        },
+        {
+          "argument": 3,
+          "binding": "fresh:active",
+          "frame": 1,
+          "role": "active_type_path"
+        },
+        {
+          "argument": 0,
+          "binding": "input:/0",
+          "frame": 2,
+          "role": "declared_interface"
+        }
+      ],
+      "scope_api": 8639,
+      "simultaneously_live_distinct": [
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "fresh:active"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "copy:622:/inputs/0/type_spec",
+            "input:/0"
+          ],
+          "reason": "finite detached-copy hypothesis; original provider identity not measured"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "fresh:sink"
+          ],
+          "reason": "different reference kinds"
+        },
+        {
+          "bindings": [
+            "fresh:active",
+            "input:/0"
+          ],
+          "reason": "fresh source local allocation while supplied arguments and active clone nodes live"
+        },
+        {
+          "bindings": [
+            "fresh:sink",
+            "input:/0"
+          ],
+          "reason": "different reference kinds"
+        }
+      ]
+    }
+  ],
+  "scope": "Complete finite Metadata core source bindings and shared recursion-local hypotheses. Original numeric/private/provider/formatter identity, later Value throw joins, helper/parser roles and canonical publication remain open."
+}

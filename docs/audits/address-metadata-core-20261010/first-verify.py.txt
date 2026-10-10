@@ -1,0 +1,127 @@
+"""Dated Metadata source replay and genuine graph/alias/lifetime controls."""
+import copy
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/address-metadata-core-20261010')
+
+
+def load(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def module(name):
+    path = BASE / name
+    namespace = {'__name__': 'metadata_core_qualification'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), namespace)
+    return namespace
+
+
+def main():
+    source = module('source.py')
+    inputs, custody = source['rebuild']()
+    if inputs != load('inputs.json') or custody != load('binding.json'):
+        raise ValueError('whole rederived Metadata cohort and fixed Git custody')
+    metadata = source['module'](source['METADATA'] / 'frame_model.py')
+    thaw = source['module'](Path('docs/audits/record-value-original-value-frames-20261005/verify.py'))['primary']['graph']['thaw']
+    actual = load('hypotheses.json')
+    if actual != module('model.py')['derive'](inputs, metadata, thaw):
+        raise ValueError('whole retained deterministic Metadata source hypotheses')
+    qualify = module('oracle.py')['qualify']
+    measured = qualify(actual, inputs)
+    controls = []
+    def rejects(name, mutate, expected, mutate_inputs=None):
+        candidate = copy.deepcopy(actual)
+        alternative_inputs = copy.deepcopy(inputs) if mutate_inputs else inputs
+        mutate(candidate)
+        if mutate_inputs:
+            mutate_inputs(alternative_inputs)
+        try:
+            qualify(candidate, alternative_inputs)
+        except ValueError as error:
+            if str(error) != expected:
+                raise ValueError('unintended Metadata control refusal: ' + name + ': ' + str(error)) from error
+            controls.append({'name': name, 'refusal': str(error), 'whole_candidate_identity': source['identity'](
+                json.dumps({'product': candidate, 'inputs': alternative_inputs}, sort_keys=True).encode())})
+        else:
+            raise ValueError('genuine Metadata source control admitted: ' + name)
+    def first(product):
+        return product['cases'][0]
+    def find_origin(product, kind):
+        for case in product['cases']:
+            for name, descriptor in case['bindings'].items():
+                if descriptor['origin']['kind'] == kind:
+                    return case, name, descriptor
+        raise ValueError('actual Metadata control origin setup: ' + kind)
+    rejects('lost-Metadata-case', lambda p: p['cases'].pop(), 'complete Metadata case membership')
+    rejects('lost-Metadata-slot', lambda p: first(p)['occurrences'].pop(), 'every Metadata reference slot exactly once')
+    rejects('borrowed-capture', lambda p: first(p)['domain'].__setitem__(2, 999999), 'exact Metadata active capture/throw domain')
+    rejects('borrowed-mode', lambda p: first(p)['domain'].__setitem__(0, 'storable'), 'exact Metadata active capture/throw domain')
+    rejects('boolean-capture', lambda p: first(p)['domain'].__setitem__(2, True), 'exact Metadata active capture/throw domain')
+    rejects('wrong-reference-kind', lambda p: first(p)['bindings']['input:/0'].update(reference_kind='ARRAY'),
+            'Metadata source reference kind')
+    rejects('borrowed-private-copy', lambda p: find_origin(p, 'qualified_metadata_private_result')[2]['origin'].update(copy_index=0),
+            'Metadata source referent/local contents')
+    rejects('borrowed-private-node', lambda p: find_origin(p, 'qualified_metadata_private_result')[2]['origin'].update(node=''),
+            'Metadata source referent/local contents')
+    rejects('private-promoted-to-supplied-interface', lambda p: find_origin(p, 'qualified_metadata_private_result')[2].update(
+            origin={'kind': 'supplied_capture_input', 'node': '/0'}), 'Metadata source referent/local contents')
+    rejects('lost-active-type-node', lambda p: first(p)['bindings']['fresh:active']['origin']['nodes'].pop(),
+            'Metadata source referent/local contents')
+    rejects('lost-completed-scalar-paths', lambda p: first(p)['bindings']['fresh:sink']['origin'].update(paths=[]),
+            'Metadata source referent/local contents')
+    def split_alias(product, binding_name=None, cycle=False):
+        for case in product['cases']:
+            if cycle and case['guard'] != 'metadata_type.2':
+                continue
+            for name, descriptor in list(case['bindings'].items()):
+                if binding_name is not None and name != binding_name:
+                    continue
+                if cycle and descriptor['origin']['kind'] != 'qualified_metadata_private_result':
+                    continue
+                occurrences = [row for row in case['occurrences'] if row['binding'] == name]
+                if len(occurrences) > 1:
+                    case['bindings']['split-Metadata-referent'] = copy.deepcopy(descriptor)
+                    occurrences[0]['binding'] = 'split-Metadata-referent'
+                    return
+        raise ValueError('actual shared Metadata control referent setup')
+    rejects('split-shared-sink', lambda p: split_alias(p, 'fresh:sink'), 'Metadata source alias equivalence')
+    rejects('split-shared-active-map', lambda p: split_alias(p, 'fresh:active'), 'Metadata source alias equivalence')
+    rejects('split-cyclic-type-referent', lambda p: split_alias(p, cycle=True), 'Metadata source alias equivalence')
+    def break_cycle(alternative):
+        row = next(row for row in alternative['cases'] if row['capture']['guard'] == 'metadata_type.2')
+        spec = row['private']['result'][1]['inputs'][1][0][1]['type_spec'][1]
+        members = spec['members'][1]
+        require_alias = members['data']
+        if require_alias[0] != 'reference':
+            raise ValueError('actual cyclic source graph control setup')
+        width = int(spec['width']) - int(members['flag'][1]['width'])
+        if width <= 0:
+            raise ValueError('actual finite cycle-breaking leaf width')
+        members['data'] = ['hash', {'kind': 'bits', 'signed': 0, 'width': width}]
+    rejects('broken-source-cycle', lambda p: None, 'independent Metadata source traversal must fail', break_cycle)
+    rejects('lost-live-distinction', lambda p: first(p)['simultaneously_live_distinct'].pop(),
+            'complete Metadata simultaneous-live distinctions')
+    rejects('later-outer-liveness', lambda p: first(p)['bindings']['fresh:active'].update(lifetime='still active in later Value throw'),
+            'Metadata source active-call lifetime')
+    rejects('caught-trace-promoted-to-active', lambda p: first(p)['caught_outer_trace'].update(state='active later stack'),
+            'Metadata caught outer trace is inactive')
+    rejects('native-identity-promotion', lambda p: p.update(scope='Original numeric/provider identities established'),
+            'Metadata source-only open scopes')
+    proof = {'binding': custody, 'measured': measured, 'controls': controls,
+             'programmes': {name: source['identity']((BASE / name).read_bytes())
+                            for name in ('source.py', 'model.py', 'oracle.py', 'verify.py')},
+             'legs': {'re_derivation': 'complete qualified predicate model with recorded private graph referents and explicit shared Perl recursion locals',
+                      'falsification': 'separate encoded-graph guard/traversal/source-slot oracle and genuine complete graph/alias/copy/kind/domain/lifetime controls',
+                      'durability': 'whole fixed Git source and prerequisite custody plus tracked complete inputs/hypotheses/programmes/proof/results'},
+             'missing_legs': 'Original numeric/private/provider/formatter identity, nested Value ancestor/cross-operation joins, helper/parser roles, canonical publication and visual QA.'}
+    target = BASE / 'proof.json'
+    if target.exists() and load('proof.json') != proof:
+        raise ValueError('whole retained dated Metadata proof')
+    if not target.exists():
+        target.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    print('PASS complete Metadata core source bindings, independent encoded-graph traversal and separating controls; numeric and nested Value joins remain open.')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,27 @@
+Metadata core source bindings are qualified separately from the surviving
+Value ancestors. The public capture argument retains the supplied constructed
+interface. Metadata first clones that interface; its recursive type arguments
+then refer to nodes in the active detached Metadata copy. Recursive calls share
+one scalar-path sink and one active-type hash for the traversal. The source
+model records active type nodes symbolically, without publishing address keys.
+
+For the cyclic-member refusal, the recursive `.data` type refers back to the
+active root type. Those recursive frames must retain one type binding, one sink
+and one active hash. The sink already contains the completed `.flag` path.
+A separate encoded-graph walk checks the first guard, complete ancestry, earlier
+successful leaves, aliases and active membership. Genuine split-cycle, split-sink,
+split-active-hash, broken-cycle, wrong-copy/kind/node, omission, borrowed-domain
+and false-lifetime controls reject. Replay from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-metadata-core-20261010/verify.py
+```
+
+Every original Metadata source case and nested input pair retains. Metadata
+frames embedded in the later caught Value error are inactive; they do not prove
+later liveness of the sink, active hash or detached Metadata copy. The immediate
+nested-join successor must bind the surviving Value roots and operation domains.
+Original numeric/private/provider/formatter identity, helper/parser roles,
+the raw-address join and canonical address publication remain open. Cross-pool
+detachment remains a finite source hypothesis, not measured provider identity.
+

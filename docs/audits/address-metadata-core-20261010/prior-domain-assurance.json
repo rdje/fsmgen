@@ -1,0 +1,15 @@
+{
+  "affected": [
+    "docs/audits/address-source-boundaries-20261010/verify.py",
+    "docs/audits/address-private-topology-20261010/verify.py"
+  ],
+  "impact": "Old exact-domain predicates reject invalid identifiers; actual other source-phase/returned-binding executions were still missing. Preserve all dated baseline models and proof bytes.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3.1",
+  "priority": "P2 assurance",
+  "repair": "Add independent prior-domain controls over whole original hypotheses/inputs and authentic source witnesses as part of Metadata source-prerequisite closure.",
+  "reproduction": [
+    "The first operation is copy call820 at phase0; its borrowed-phase control changes the phase to1, absent from that call. Scope call7750 has actual inner and later outer phase domains.",
+    "The private returned-binding control sets copy index999999. Use a different existing qualified returned-copy namespace. Its separate first copy-call domain+1 control does select actual qualified copy1."
+  ],
+  "status": "owned; fresh actual-source phase and returned-binding witnesses required"
+}

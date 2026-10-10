@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "--format=%H %s",
+    "-S",
+    "local $active->{$address} = 1;",
+    "--",
+    "perl/FSM/Support/ISFInterfacePortMetadata.pm"
+  ],
+  "locus": "Metadata clones the local interface before traversal while public @_ retains its supplied input; recursive calls share $paths and $active, and local active entries unwind before a later caught Value throw. Python predicate-model copied active sets do not establish Perl referent identity.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "7d56bf85736f75d0ff12a52cec0b1639ae668a5c SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.1.1: qualify detached port metadata producer\n"
+}

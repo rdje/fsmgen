@@ -1,0 +1,30 @@
+{
+  "actual_Metadata_witness": {
+    "capture_api": 7929,
+    "mode": "ordinary",
+    "private_copy": 546
+  },
+  "actual_Value_witness": {
+    "borrowed_call": 1150,
+    "kind": "copy",
+    "mode": "ordinary",
+    "original_call": 820,
+    "refusal": "exact active direct core capture/call/throw domain",
+    "whole_candidate_identity": {
+      "bytes": 198255,
+      "sha256": "d56ab8174ac44940646adac5805121d0628c8cca17db8bfd31755cd8a2093dd1"
+    }
+  },
+  "finding": "docs/audits/address-metadata-core-20261010/borrowed-domain-assurance.json",
+  "missing_legs": "Original numeric/private/provider/formatter identity, nested Value ancestor/cross-operation joins, helper/parser roles, canonical publication and visual QA.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3.1",
+  "prior_Value_programme": "docs/audits/address-value-core-20261010/verify.py",
+  "priority": "P2 assurance",
+  "proof": {
+    "bytes": 21016,
+    "path": "docs/audits/address-metadata-core-20261010/proof.json",
+    "sha256": "445d7d7831e7cf58b9f91526f88227beb64cc08d98619f9b03a2195b6e688acd"
+  },
+  "result": "independent actual0 qualifies all Metadata source controls and the actual-source conserved Value borrowed-call companion; first weaker programmes/proofs/results remain unchanged.",
+  "status": "fixed and independently verified"
+}

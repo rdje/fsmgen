@@ -1,0 +1,15 @@
+{
+  "copy_zero_census": {
+    "api": 0,
+    "copy_index": 0,
+    "interpretation": "The initial copy-zero control did select an existing copy; use a nearby finite source-case copy for an explicit witness.",
+    "kind": "metadata-private",
+    "mode": "ordinary"
+  },
+  "impact": "The first successful result is weaker than its genuine borrowed-call control claim. Baseline source models, guards and exact domain predicates remain unchanged.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3.1",
+  "priority": "P2 assurance",
+  "repair": "Retain first Metadata proof/programme/result; use the second actual same-mode capture and its private copy. Add a companion conserved Value control borrowing a different actual same-mode/same-kind source call, preserving all original dated files.",
+  "reproduction": "First Metadata verify.py borrowed-capture sets domain call to 999999; the conserved Value verify.py borrowed-call does the same. Their exact-domain checks reject, but these executions do not exercise a different existing source call.",
+  "status": "owned; fresh actual-source controls required"
+}

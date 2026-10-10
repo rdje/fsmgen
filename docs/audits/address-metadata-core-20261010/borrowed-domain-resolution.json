@@ -1,0 +1,100 @@
+{
+  "actual_Metadata_witness": {
+    "capture_api": 7929,
+    "mode": "ordinary",
+    "private_copy": 546
+  },
+  "actual_Value_witness": {
+    "borrowed_call": 1150,
+    "kind": "copy",
+    "mode": "ordinary",
+    "original_call": 820,
+    "refusal": "exact active direct core capture/call/throw domain",
+    "whole_candidate_identity": {
+      "bytes": 198255,
+      "sha256": "d56ab8174ac44940646adac5805121d0628c8cca17db8bfd31755cd8a2093dd1"
+    }
+  },
+  "actual_operation_private_witnesses": {
+    "operation": {
+      "baseline": {
+        "cases": 150,
+        "distinct_relations": 978,
+        "nested_topology_pending": 42,
+        "occurrences": 1425,
+        "operations": 213,
+        "unresolved_relations": 21
+      },
+      "refusal": "exact per-capture per-phase active-call domain",
+      "source_witness": {
+        "borrowed_domain": [
+          "ordinary",
+          "api",
+          7750,
+          1,
+          0
+        ],
+        "operation_kind": "scope",
+        "original_domain": [
+          "ordinary",
+          "api",
+          7750,
+          0,
+          1
+        ]
+      },
+      "whole_candidate_identity": {
+        "bytes": 856932,
+        "sha256": "6e283be7529fdae6508ed13fa845d7b45d09d927117ed1e1d509de37a0554414"
+      }
+    },
+    "private": {
+      "baseline": {
+        "copies": 2040,
+        "input_nodes": 13644,
+        "result_nodes": 13644,
+        "shared_input_result_nodes": 0
+      },
+      "refusal": "distinct source-private input/result binding domains",
+      "source_witness": {
+        "borrowed_domain": [
+          "ordinary",
+          1
+        ],
+        "borrowed_result_namespace": [
+          "result",
+          "ordinary",
+          1
+        ],
+        "copy_kind": "metadata-private",
+        "original_domain": [
+          "ordinary",
+          0
+        ]
+      },
+      "whole_candidate_identity": {
+        "bytes": 5372030,
+        "sha256": "ff969c75484ade1eebfeb3f3df114e45d3647af5856ed1ed46052e9a13b79b96"
+      }
+    }
+  },
+  "findings": [
+    "docs/audits/address-metadata-core-20261010/borrowed-domain-assurance.json",
+    "docs/audits/address-metadata-core-20261010/prior-domain-assurance.json"
+  ],
+  "missing_legs": "Original numeric/private/provider/formatter identity, nested Value ancestor/cross-operation joins, helper/parser roles, canonical publication and visual QA.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3.1",
+  "priority": "P2 assurance",
+  "proof": {
+    "bytes": 22889,
+    "path": "docs/audits/address-metadata-core-20261010/proof.json",
+    "sha256": "a5b5994de9022895205c915ef42e9ea46077b76e14ed0a84307f2b27cfd02ddc"
+  },
+  "result": "complete-independent actual0 qualifies all Metadata source controls plus real conserved Value-call, same-call operation-phase and returned-private-copy witnesses. All original dated prerequisite files conserve.",
+  "retained_checkpoints": {
+    "first-resolution-proof-location": "docs/audits/address-metadata-core-20261010/value-companion-proof.json.txt",
+    "first-weaker-proof": "docs/audits/address-metadata-core-20261010/first-proof.json.txt",
+    "intermediate-Value-companion-proof": "docs/audits/address-metadata-core-20261010/value-companion-proof.json.txt"
+  },
+  "status": "fixed and independently verified"
+}
