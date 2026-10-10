@@ -1,0 +1,22 @@
+[
+  [
+    "The helper/callback/subtest child is closed. Parser receiver, actor, context and\nclause bindings remain its immediate sibling.",
+    "The helper/callback/subtest child is closed. Parser receiver, actor, context and\nclause source bindings are qualified below."
+  ],
+  [
+    "qualifies later actor graphs; local record contexts remain open.",
+    "qualifies later actor graphs; original context/source joins are qualified below."
+  ],
+  [
+    "qualified below. Local context graphs, the full parser/helper join, original raw/native identity and payload,\nprovider/formatter identity, complete source integration and canonical\npublication remain open.",
+    "qualified below. Original context/source and parser/helper bindings are qualified\nbelow too. Original raw/native identity and payload, provider/formatter identity,\ncomplete source integration and canonical publication remain open."
+  ],
+  [
+    "The actor/type/transaction construction child is closed. Original context-slot\nand private-root joins, full parser/helper/source integration, original raw\naddress joins, native payload and flags, provider/formatter/CODE identity,\ncold replay and governed canonical publication remain open.",
+    "The actor/type/transaction construction child is closed. Original context-slot\nand private-root source joins and parser/helper bindings are qualified below.\nFull source integration, original raw address joins, native payload and flags,\nprovider/formatter/CODE identity, cold replay and governed canonical publication\nremain open."
+  ],
+  [
+    "The representation/probe boundary child is closed. Original context-slot and\nprivate-protocol joins, full parser/helper/source integration, original raw\naddress and native payload/flag/identity qualification, cold replay and governed\ncanonical publication remain owned successors.",
+    "The representation/probe boundary child is closed. Original context-slot and\nprivate-protocol source joins are qualified below. Full source integration,\noriginal raw address and native payload/flag/identity qualification, cold replay\nand governed canonical publication remain owned successors."
+  ]
+]

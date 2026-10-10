@@ -1,0 +1,114 @@
+{
+  "controls": 50,
+  "final_programmes": {
+    "model.py": {
+      "bytes": 7448,
+      "sha256": "653ffbe98c32ebbd3a6ae679e849711b2c5821a4e35d9158c6b833a92d886067"
+    },
+    "oracle.py": {
+      "bytes": 15141,
+      "sha256": "95d4bba11ee1abc4f18cbdf3fc580189474f4e3b4cf0f794adca65d5237ca6c7"
+    },
+    "qualify.py": {
+      "bytes": 1452,
+      "sha256": "5586fb7943691d1099d01d531c0d09cb66999259f01bc6d9c783fc5f788823de"
+    },
+    "runtime.py": {
+      "bytes": 7230,
+      "sha256": "c9c812dfd843f710808531f14a64efeacfba9d48a7e5caabb9701e73a6935245"
+    },
+    "source.py": {
+      "bytes": 5017,
+      "sha256": "686479536cbcd30a202a5d81d275104622548b73b79382b4617ac8c22863c431"
+    },
+    "verify.py": {
+      "bytes": 15594,
+      "sha256": "e0e554c8ebe83cbd888f2943c4083a4fe50f930183fec7af8f37438d8e0f837f"
+    }
+  },
+  "independent_original_recount": {
+    "new_context_slots": 9,
+    "original_api_bridges": 879,
+    "original_private_bridges": 153,
+    "parser_reference_slots": 81,
+    "retained_context_caller_holders": 2064
+  },
+  "next_pending_leaf": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5",
+  "next_source_parent": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2.2",
+  "requirements": [
+    {
+      "acceptance": "Conserve complete representation/probe, actor/entry/helper/private/nested/operation prerequisites. Bind every remaining original context slot and active/returned source holder through complete qualified context/root/sample/private-value graphs. Bridge all original successful context APIs/private joints and retained context caller arrays, preserving source aliases and representation scope. Independently prove every original parser reference exactly once, reject genuine borrowing/alias/kind/phase/omission/native-scope controls, and close actor/context, parser and helper/parser parents only after all full acceptance conditions qualify. Sync book/proposed facts/pointer, then commit before full source integration.",
+      "children": [],
+      "evidence": "Every original context API/private joint and parser reference operand qualifies with complete retained caller/source lifecycle membership.",
+      "goal": "Join qualified context construction to every original context slot and close parser/helper source containers.",
+      "scope": "Source-only closure; full source/raw integration, native flags/payload/identity, cold replay and canonical publication remain open.",
+      "unit": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2.2",
+      "whole_proof": {
+        "bytes": 272714,
+        "sha256": "7657c7074381bbfe997a8f7db31cfc52bda808dc5d14932e235a3248055f975c"
+      }
+    },
+    {
+      "acceptance": "Conserve complete actor/entry and all helper/nested/core/private/operation/parser prerequisites. Construct full local context/root/sample/private-value source graphs at the output-field refusal; qualify every remaining context slot, active ancestor and returned delegate, graph sharing, source-held lifetimes and complete original-source joins. Independently verify every original parser reference exactly once, reject genuine kind/alias/omission/borrowed graph/phase/native-scope controls, and close parser/helper parents only after all full acceptance conditions qualify. Sync book/proposed facts/pointer, then commit before whole source integration.",
+      "children": [
+        "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2.1",
+        "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2.2"
+      ],
+      "evidence": "Both representation/probe and original context/source children qualify; complete graph aliases, numeric boundaries, every source slot and original protocol joins conserve.",
+      "goal": "Qualify complete local record contexts and close the full parser source lifetime model.",
+      "scope": "Source-only closure; full source/raw integration, native flags/payload/identity, cold replay and canonical publication remain open.",
+      "unit": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2",
+      "whole_proof": {
+        "bytes": 272714,
+        "sha256": "7657c7074381bbfe997a8f7db31cfc52bda808dc5d14932e235a3248055f975c"
+      }
+    },
+    {
+      "acceptance": "Conserve receiver/normalization and all helper/nested/core/private/operation/parser prerequisites. Construct complete partially built actor, interface/type-entry, transaction-clause and local-context source graphs at each original refusal stage. Ground every remaining own parser/context reference slot and inactive returned delegate in whole source transformations, preserving all source aliases and lifecycle states without original numeric/native payload inference. Independently check full source membership, graph topology, source expressions and actual borrowed actor/context/receiver/phase/kind/alias/omission controls. Join all complete parser children, close parser and helper/parser parents only after full acceptance, sync book/proposed facts/pointer and commit before whole source integration.",
+      "children": [
+        "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.1",
+        "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2"
+      ],
+      "evidence": "Complete actor/type/interface/clause construction and context/private-root source populations both qualify at each original refusal; receiver and returned-delegate contracts conserve.",
+      "goal": "Qualify complete partial actor context clause and active ancestor source lifetimes.",
+      "scope": "Source-only closure; full source/raw integration, native flags/payload/identity, cold replay and canonical publication remain open.",
+      "unit": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2",
+      "whole_proof": {
+        "bytes": 272714,
+        "sha256": "7657c7074381bbfe997a8f7db31cfc52bda808dc5d14932e235a3248055f975c"
+      }
+    },
+    {
+      "acceptance": "Conserve completed helper/callback/subtest and all prior source models. Bind every remaining own parser source reference and active ancestor using complete qualified source/AST/actor/context/clause graphs, construction and forwarding. Distinguish receiver construction, saved parser delegates, observer caller snapshots, partially built actors and inactive returned delegates. Do not invent receiver payload or external/native object census. Independent whole membership/graph/source-expression/phase checks and genuine omission, wrong kind/role/alias, borrowed receiver/actor/context/capture/phase and native-scope controls reject. Sync book/proposed facts/pointers, close the helper/parser parent only after both children qualify, and commit before whole source integration.",
+      "children": [
+        "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.1",
+        "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2"
+      ],
+      "evidence": "Entry/normalization and actor/context children cover every original parser reference exactly once, all source ancestors, saved delegates and original caller holders without native payload inference.",
+      "goal": "Qualify complete parser actor context and receiver source lifetimes.",
+      "scope": "Source-only closure; full source/raw integration, native flags/payload/identity, cold replay and canonical publication remain open.",
+      "unit": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2",
+      "whole_proof": {
+        "bytes": 272714,
+        "sha256": "7657c7074381bbfe997a8f7db31cfc52bda808dc5d14932e235a3248055f975c"
+      }
+    },
+    {
+      "acceptance": "Model every remaining own source reference slot and call lifetime from qualified source forwarding/construction and helper/AST/actor graphs. Distinguish saved and wrapped callbacks, receiver construction, partially built actor/context/clauses/AST, active ancestors and returned delegates. Explicitly partition original external/private provider/formatter identities; do not invent receiver contents or native object census.",
+      "children": [
+        "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.1",
+        "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2"
+      ],
+      "evidence": "Complete helper/callback/subtest and parser children qualify together; full remaining source integration remains the next sibling.",
+      "goal": "Derive complete helper, callback, subtest and parser source bindings.",
+      "scope": "Source-only closure; full source/raw integration, native flags/payload/identity, cold replay and canonical publication remain open.",
+      "unit": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4",
+      "whole_proof": {
+        "bytes": 272714,
+        "sha256": "7657c7074381bbfe997a8f7db31cfc52bda808dc5d14932e235a3248055f975c"
+      }
+    }
+  ],
+  "scope": "Exact original full parent acceptance retained verbatim and checked against complete source evidence; source integration and every native/publication successor remain open."
+}

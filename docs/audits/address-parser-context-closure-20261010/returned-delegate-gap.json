@@ -1,0 +1,30 @@
+{
+  "first_product": {
+    "bytes": 20738271,
+    "sha256": "e29d4ac4df45d5d823d7239e8698e5fb23c64d79f57bfa3205e4d72810b7be9e"
+  },
+  "first_join_status": 0,
+  "observed_source_api_kinds": {
+    "capture": 17,
+    "range": 10,
+    "reference": 1,
+    "scope": 8,
+    "snapshot": 17,
+    "structured-clone": 240
+  },
+  "returned_delegates": [
+    "record_context_scope",
+    "record_actor_scope",
+    "record_transaction_scope",
+    "record_transaction_samples",
+    "record_value_scope",
+    "record_value_reference",
+    "capture_interface_port_metadata",
+    "snapshot_interface_port_metadata",
+    "resolve_packed_range"
+  ],
+  "missing": "clone_structured_value",
+  "cause": "The first producer and independent oracle duplicated an incomplete constant list, despite qualifying the complete API event population.",
+  "repair": "Derive required returned API delegate names from independently reconstructed API kinds plus the own context constructor/source path delegates; reject removal of the actual clone delegate.",
+  "scope": "A first source-closure assurance defect; no original native identity or product misbehavior is asserted."
+}

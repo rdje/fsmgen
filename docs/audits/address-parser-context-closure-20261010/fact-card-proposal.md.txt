@@ -1,0 +1,70 @@
+---
+status: proposed; governed non-growing publication remains the address-publication child
+source: docs/audits/address-parser-context-closure-20261010/
+date: 2026-10-10
+---
+
+The complete original parser/context source population joins its conserved
+entry/actor and helper/callback/subtest models. Every original parser reference
+operand is assigned once, including the same transaction context forwarded to
+clause, assignment and target-reference validation. The two original refusal
+stages preserve their different actor/type publication states.
+
+All successful original context API calls are independently reconstructed in
+entry order, including recursive structured clones, metadata capture/snapshot,
+packed-range resolution, scopes and the target reference. Complete before/after
+argument graphs, result graphs, kind, source package/site and success status
+qualify. Scalar recursive clone permissions follow the numeric property being
+cloned; textual values and arbitrary array arguments stay typed. Every original
+private joint graph bridges to the corrected context construction. Exact typed
+original observations conserve; original native scalar flags remain unmeasured.
+
+Each original API/private caller array is a fresh observer allocation retained
+in @api/@copies after successful return. All of these context callers remain
+held during the following list refusal, which runs no context APIs. They join
+previous parser holders in complete source-held membership and a compact exact
+relation of every unordered source distinction. This is a bounded source model,
+not a global object census or original native address/identity measurement.
+
+Active actor/transaction contexts and the returned target remain separate from
+sample preparation and old scope intermediates. The sample lexical block ends
+before clause validation. Fresh observer arguments/history never become original
+holders. Existing actor/helper/private-call phase contracts conserve.
+
+Review found a real assurance defect after the first complete source join passed:
+the returned-delegate list omitted clone_structured_value even though every
+recursive clone API event qualified. Producer and oracle duplicated an incomplete
+constant list. First programmes, products and actual successful qualifications
+retain. The corrected oracle derives required API names from independently
+verified event kinds, includes the own source constructors/resolver, and records
+every successful returned API event. Genuine clone-delegate and event omissions
+reject. This does not claim a global call census.
+
+Re-derivation: source.py freshly qualifies the full corrected context boundary
+and all prior source models; every inherited read is bound to fixed Git bytes and
+original own source epochs. runtime.py independently interprets finite source
+construction and each nested API event. oracle.py checks all complete graph
+bijections, numeric-field meaning, original operand expressions, held caller
+allocations, lifecycle states and whole corrected boundary/helper conservation.
+Exact original witness replay and source meaning remain separate legs.
+
+Falsification: verify.py retains and requalifies both complete first admissions,
+then rejects genuine other modes/refusals/contexts/API calls/sites/source events,
+lost parser slots/private bridges/callers/relations, changed graph members, numeric
+values and scalar kinds, sample/observer promotion, returned-delegate omissions,
+partial inherited populations and native scope promotion. The earlier unqualified
+source-string syntax failure also retains; it was fixed before join admission.
+All actual final statuses and full proof/programme hashes are in the evidence.
+
+Durability: whole fixed-Git custody, original own epochs, original typed records,
+first/final programmes/products/proofs, guarded outcomes, root-cause git log -S
+history and same-slice runnable book retain. Exact parent requirements are
+checked against full current evidence before source-container closure. The claim
+policy source was checked read only against the reviewed template. All canonical
+facts/questions/probes and every collection ceiling conserve; this proposal does
+not become a current Knowledge Map card before its governed publication owner.
+
+Missing legs: whole source-role integration remains the next owned sibling.
+Original native scalar flags, payload/identity, raw address joins, opaque provider/
+formatter/CODE/framework identity, cold replay, visual book QA and governed
+non-growing publication remain explicitly owned successors.

@@ -1,0 +1,49 @@
+The complete original parser/context and helper source join now qualifies.
+Every original parser reference operand is assigned once to its source binding,
+including the transaction context forwarded through clause, assignment and target
+reference validation. The two refusal stages preserve their different actor/type
+publication states. Complete receiver, normalization, actor, clause and context
+graphs join the conserved helper/callback/subtest source population.
+
+Every successful original context API call is checked against an independent own
+source interpreter, including metadata capture/snapshot, packed-range resolution
+and each recursive structured-clone invocation. Complete argument graphs before
+and after the call, result graphs, source package/site, order and success status
+qualify. Every original private input/result joint graph bridges to the qualified
+context construction. Typed original witnesses are retained exactly; numeric
+permissions for recursive scalar clone operands follow their source numeric
+fields, rather than arbitrary scalar argument positions.
+
+The original observer retains each API and private-copy caller array in `@api`
+and `@copies` after the call returns. All those context caller holders remain
+held during the later list refusal, which runs no context API calls. They join
+previous parser holders in the complete held membership and its compact relation
+of every unordered source distinction. This is a source allocation relation;
+it does not measure original native identity or a global heap census.
+
+The active record context roots and returned target remain distinct from sample
+preparation and old scope intermediates. The sample lexical block has ended
+before clause validation. Historical outputs and argument arrays kept by fresh
+instrumentation do not become original holders. Prior actor/helper/private-call
+phase contracts remain conserved, including returned predicates and delegates.
+
+Review found an assurance defect after the first complete join passed: its
+returned-delegate list omitted `clone_structured_value` while checking all of
+that function's recursive API events. Producer and oracle had duplicated an
+incomplete constant list. The complete first admission, programmes and products
+retain. Required API delegate names now derive independently from verified event
+kinds, and complete successful-return event membership is explicit. Removing the
+actual clone delegate or an event rejects, alongside borrowed contexts, API
+graphs/sites/domains, lost slots/callers, wrong kinds/values and native promotions.
+Replay the full source closure from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-context-closure-20261010/verify.py
+```
+
+The context, actor/context, parser and helper/parser source children are closed.
+Whole source integration is the next owned sibling. Original native payload,
+scalar flags and identity, raw address joins, provider/formatter/CODE identity,
+cold replay, visual book QA and governed canonical publication remain open.
+All current canonical facts, questions, probes and collection ceilings retain.
+

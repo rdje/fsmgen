@@ -1,0 +1,17 @@
+{
+  "actual": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "status": 2,
+    "stdout": "docs/audits/address-parser-context-closure-20261010/book-addition.md.txt:49: new blank line at EOF.\n",
+    "stderr": ""
+  },
+  "accepted": [
+    "docs/audits/address-parser-context-closure-20261010/book-addition.md.txt:49: new blank line at EOF."
+  ],
+  "scope": "Only the exact paragraph-separator artifact warning is accepted."
+}

@@ -1,0 +1,188 @@
+"""Independent complete original parser/context source join and parent closure."""
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/address-parser-context-closure-20261010')
+BOUNDARY = Path('docs/audits/address-parser-contexts-20261010')
+HELPER = Path('docs/audits/address-helper-bindings-20261010')
+
+
+def module(path):
+    ns = {'__name__': 'original_context_closure_dependency'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+_boundary = module(BOUNDARY / 'oracle.py')
+_helper = module(HELPER / 'oracle.py')
+_runtime = module(BASE / 'runtime.py')
+Node, graph, exact, array, record = (_runtime[k] for k in ('Node', 'graph', 'exact', 'array', 'record'))
+Construction, protocol_bijection = (_runtime[k] for k in ('Construction', 'protocol_bijection'))
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def qualify(product, inputs):
+    boundary = inputs['boundary_inputs']
+    _boundary['source_contract'](boundary)
+    source_checks = {
+        'ISFRecordPortContexts.pm': ['my ($clauses, $scope, $actor, $context) = @_;',
+            '_assignment($clause->[1], $clause->[2], $scope, "$context $head");',
+            'my ($target, $source, $scope, $context) = @_;',
+            'my $to = _reference($target, $scope, \'write\', "$context target");',
+            'my ($token, $scope, $access, $context) = @_;'],
+        'ISFInterfacePortMetadata.pm': ['return snapshot_interface_port_metadata(\\@ports);',
+            "my %copy = (name => $port->{name}, direction => $port->{direction}, width => 0 + $port->{width});",
+            'push @ports, \\%copy;', 'push @copy, \\%entry;'],
+        'AggregatePathSupport.pm': ['map { $_ => $class->clone_structured_value($value->{$_}) } sort keys %$value',
+            'return [ map { $class->clone_structured_value($_) } @$value ];',
+            'path_segments => $class->clone_structured_value(\\@path_segments),',
+            'type_spec => $class->clone_structured_value($current_type_spec),']}
+    for filename, statements in source_checks.items():
+        body = next(value for path, value in boundary['own_sources'].items() if path.endswith('/'+filename))
+        require(all(statement in body for statement in statements), 'whole original context API/slot source contracts')
+    scope = ('Complete own parser context source graphs and source-role closure, with original private protocol '
+        'and retained context caller bridges. Fresh probes do not measure original native identity, payload or '
+        'flags. Provider implementation, framework/global object census, complete source/raw integration, '
+        'cold replay and canonical publication remain open.')
+    require(set(product) == {'scope', 'preserved_boundary', 'preserved_helper', 'public', 'modes', 'closure'}
+            and product['scope'] == scope, 'parser context source-only scope')
+    require(exact(product['preserved_boundary'], inputs['boundary_model']), 'whole corrected construction conservation')
+    construction_metrics = _boundary['qualify'](product['preserved_boundary'], boundary)
+    helper_inputs = inputs['helper_inputs']
+    require(exact(product['preserved_helper'], inputs['helper_model']),
+            'whole corrected helper population conservation')
+    helper_metrics = _helper['qualify'](product['preserved_helper'], helper_inputs)
+    public = product['public']
+    require(set(public) == {'source', 'parse_index', 'primary', 'steps', 'final', 'scope'}
+            and type(public['parse_index']) is int and public['parse_index'] == 2
+            and public['source'] == boundary['construction_inputs']['entry_inputs']['authored'][0]
+            and public['primary'] == boundary['construction_model']['profiles'][0]['primary']
+            and public['scope'] == inputs['boundary_model']['public']['scope'], 'exact context public source/refusal domain')
+    anchor_root = graph(boundary['construction_model']['profiles'][0]['final']['graph'])
+    runtime = Construction(public, [anchor_root.edges[str(i)] for i in range(3)])
+    mapping, source_nodes, live = runtime.run()
+    modes = boundary['construction_model']['modes']
+    require(len(product['modes']) == len(modes), 'complete parser context mode population')
+    measured = {'construction': construction_metrics, 'helper': helper_metrics, 'steps': runtime.cursor,
+        'source_nodes': len(source_nodes), 'active_source_nodes': len(live), 'private_copies': len(runtime.copies),
+        'cases': 0, 'parser_reference_slots': 0, 'new_context_slots': 0, 'original_api_bridges': 0,
+        'original_private_bridges': 0, 'retained_context_caller_holders': 0, 'source_distinctions': 0, 'api_kinds': {}}
+    for mode, old_mode, protocol in zip(product['modes'], modes, inputs['protocols'], strict=True):
+        require(set(mode) == {'mode', 'bindings', 'cases'} and mode['mode'] == old_mode['mode'] == protocol['mode'],
+                'exact original context mode allocation')
+        bindings = dict(old_mode['bindings'])
+        graph_keys = {}
+        old_paths = old_mode['cases'][0]['final_graph_bindings']
+        for path, node in source_nodes.items():
+            key = old_paths.get(path, 'parse:2:context-node:' + path)
+            graph_keys[path] = key
+            if key not in bindings:
+                bindings[key] = {'reference_kind': node.kind, 'origin': {'kind': 'own_context_checkpoint_node',
+                    'mode': mode['mode'], 'parse_index': 2, 'node': path,
+                    'scope': 'Fresh complete source graph; original native payload/flags/identity unmeasured.'}}
+        caller_keys = []
+        for group, rows, holder in (('api', protocol['retained_api_callers'], '@api'),
+                                   ('private', protocol['retained_private_callers'], '@copies')):
+            for row in rows:
+                key = f'parse:2:{group}-caller:{row["index"]}'
+                caller_keys.append(key)
+                bindings[key] = {'reference_kind': 'ARRAY', 'origin': {'kind': 'retained_context_protocol_caller',
+                    'mode': mode['mode'], 'parse_index': 2, 'group': group, 'index': row['index'],
+                    'caller': row['caller'], 'expression': '[caller]', 'holder': holder}}
+        require(len(protocol['all_apis']) == len(runtime.apis), 'every original context API exactly once')
+        api_bridge = []
+        witnesses = mode['cases'][0]['api_witnesses']
+        require(len(witnesses) == len(runtime.apis), 'every original context API witness exactly once')
+        package = {'Scopes': ('FSM::Support::ISFRecordPortScopes', 'perl/FSM/Support/ISFRecordPortScopes.pm'),
+            'Contexts': ('FSM::Support::ISFRecordPortContexts', 'perl/FSM/Support/ISFRecordPortContexts.pm'),
+            'Values': ('FSM::Support::ISFRecordPortValues', 'perl/FSM/Support/ISFRecordPortValues.pm'),
+            'Metadata': ('FSM::Support::ISFInterfacePortMetadata', 'perl/FSM/Support/ISFInterfacePortMetadata.pm'),
+            'Aggregate': ('FSM::Package::AggregatePathSupport', 'perl/FSM/Package/AggregatePathSupport.pm')}
+        for source_index, (original, witness, event) in enumerate(zip(protocol['all_apis'], witnesses, runtime.apis, strict=True)):
+            require(set(witness) == set(original) and exact(witness['index'], original['index']), 'exact original context API witness allocation')
+            require(witness['kind'] == event['kind'] and type(witness['accepted']) is int and witness['accepted'] == 1
+                    and not witness['primary'] and not witness['warnings']
+                    and tuple(witness['caller'][:2]) == package[event['site']], 'whole original context API source order/kind/site/status')
+            scalar = event['numeric_scalar']
+            protocol_bijection(event['arguments'], graph(witness['before']), {'/1'} if scalar else set())
+            protocol_bijection(event['arguments'], graph(witness['after']), {'/1'} if scalar else set())
+            protocol_bijection(event['result'], graph(witness['result']), {''} if scalar else set())
+            api_bridge.append({'kind': event['kind'], 'original_api': original['index'], 'source_event': source_index})
+        copied = [(i, row) for i, row in enumerate(runtime.copies) if row.edges['module'] in ('Values', 'Metadata')]
+        require(len(protocol['copies']) == len(copied), 'complete original context private bridge population')
+        copy_bridge = []
+        for original, (index, row) in zip(protocol['copies'], copied, strict=True):
+            kind = 'value-private' if row.edges['module'] == 'Values' else 'metadata-private'
+            require(original['kind'] == kind and exact(original['qualified']['domain'], [mode['mode'], original['index']]),
+                    'exact original context private domain/kind')
+            protocol_bijection(record({'input': row.edges['input'], 'result': row.edges['result']}),
+                      graph(original['qualified']['qualified_original_joint']))
+            copy_bridge.append({'module': row.edges['module'], 'original_copy': original['index'], 'probe_copy': index})
+        api_names = {'scope': 'record_value_scope', 'reference': 'record_value_reference',
+            'capture': 'capture_interface_port_metadata', 'snapshot': 'snapshot_interface_port_metadata',
+            'range': 'resolve_packed_range', 'structured-clone': 'clone_structured_value'}
+        require(len(mode['cases']) == len(old_mode['cases']), 'complete original parser case population')
+        for case, old in zip(mode['cases'], old_mode['cases'], strict=True):
+            index = old['domain'][2]
+            require(exact(case['domain'], old['domain']), 'exact original parser context record/phase domain')
+            occurrences = old['inherited_occurrences'] + old['occurrences']
+            for item in old['pending']:
+                function = old['frames'][item['frame']]['function']
+                require((function, item['argument']) in {
+                    ('FSM::Support::ISFRecordPortContexts::_reference', 1),
+                    ('FSM::Support::ISFRecordPortContexts::_assignment', 2),
+                    ('FSM::Support::ISFRecordPortContexts::_clauses', 1)}, 'every remaining own context argument source expression')
+                require(old['frames'][item['frame']]['arguments'][item['argument']]['reference_kind']
+                        == bindings[graph_keys['/3/1']]['reference_kind'], 'original context source reference kind')
+                occurrences.append({key: item[key] for key in ('frame', 'argument', 'role')}
+                                   | {'binding': graph_keys['/3/1']})
+            require(exact(case['occurrences'], occurrences) and not case['pending'], 'every original parser source reference exactly once')
+            refs = {(fi, ai) for fi, frame in enumerate(old['frames']) for ai, arg in enumerate(frame['arguments'])
+                    if 'reference_kind' in arg}
+            require(len(occurrences) == len(refs) and {(r['frame'], r['argument']) for r in occurrences} == refs,
+                    'complete original parser reference membership')
+            active_keys = {graph_keys[mapping[node].path] for node in live} if index == 2 else set()
+            held = sorted(set(old['held']) | active_keys | set(caller_keys))
+            wanted = {'frames': old['frames'], 'held': held,
+                'construction_bridge': {key: key for key in old['held']},
+                'final_graph_bindings': graph_keys if index == 2 else {},
+                'original_api_bridge': api_bridge if index == 2 else [],
+                'api_witnesses': protocol['all_apis'] if index == 2 else [],
+                'original_private_bridge': copy_bridge if index == 2 else [],
+                'retained_context_callers': sorted(caller_keys),
+                'source_distinctions': {'relation': 'all_unordered_pairs_of_distinct_members',
+                    'members': held, 'count': len(held) * (len(held) - 1) // 2},
+                'active_roots': ['/0', '/1', '/2', '/3/0', '/3/1', '/6/0'] if index == 2 else [],
+                'returned_context_delegates': [
+                    'record_context_scope', 'record_actor_scope', 'record_transaction_scope', 'record_transaction_samples',
+                    *[api_names[kind] for kind in ('scope', 'reference', 'capture', 'snapshot', 'range', 'structured-clone')
+                      if kind in {event['kind'] for event in runtime.apis}], 'resolve'],
+                'returned_api_events': {'relation': 'all_successful_context_API_events_before_parser_refusal',
+                    'original_apis': [r['index'] for r in protocol['all_apis']]},
+                'returned_context_delegate_scope': 'Recorded original APIs and own context constructors/resolver; prior actor/helper/private-call phase contracts conserve. This is not a global call census.',
+                'inactive_intermediates': {'contexts': [2], 'scopes': [1, 2, 3, 4, 5, 6], 'samples': [0]}
+                    if index == 2 else {'contexts': [0, 1, 2], 'scopes': list(range(8)), 'samples': [0], 'references': [0]},
+                'lifetime_scope': 'The sample lexical block has ended before _clauses. Probe-retained intermediate outputs and carriers are not original holders; no object death or global/native object census is asserted.'}
+            require(set(case) == set(wanted) | {'domain', 'occurrences', 'pending'}
+                    and all(exact(case[key], value) for key, value in wanted.items()),
+                    'complete context holders, lifecycle and original-source bridges')
+            measured['cases'] += 1
+            measured['parser_reference_slots'] += len(refs)
+            measured['new_context_slots'] += len(old['pending'])
+            measured['original_api_bridges'] += len(wanted['original_api_bridge'])
+            measured['original_private_bridges'] += len(wanted['original_private_bridge'])
+            measured['retained_context_caller_holders'] += len(caller_keys)
+            measured['source_distinctions'] += wanted['source_distinctions']['count']
+        require(exact(mode['bindings'], bindings), 'complete parser context binding origins/kinds/membership')
+    require(exact(public, inputs['boundary_model']['public']), 'whole corrected public context observation conservation')
+    measured['api_kinds'] = dict(sorted(__import__('collections').Counter(event['kind'] for event in runtime.apis).items()))
+    expected_closure = {'helper': 'Complete helper/callback/subtest source population conserved and independently qualified.',
+        'parser': 'Every original parser core/operation-boundary reference source slot qualified exactly once; no pending context slot.',
+        'containers': 'Actor/context, parser and helper/parser source containers qualify; full source integration remains the next owned sibling.',
+        'open': 'Original native/provider/formatter/Regexp/CODE/framework/global identity, full source/raw integration, cold replay and canonical publication remain open.'}
+    require(exact(product['closure'], expected_closure), 'complete helper/parser source closure and explicit open scopes')
+    return measured

@@ -1,0 +1,11 @@
+{
+  "guides": {
+    "docs/audits/address-parser-context-closure-20261010/book-addition.md.txt": {
+      "bytes": 3146,
+      "sha256": "c49654f634ae8c322d423614e3b6ba282d1fa3e45228ec74b01e34d3dee5fbb1",
+      "terminal_bytes_hex": "0a0a",
+      "reason": "Exact insertion retains the final paragraph separator before the conserved following paragraph."
+    }
+  },
+  "scope": "Only the exact source-insertion guide deliberately ends with an EOF paragraph separator; no other staged whitespace warning is accepted."
+}

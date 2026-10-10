@@ -1,0 +1,41 @@
+# Complete original parser/context source closure
+
+`scope.txt` names the owner. Run from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-context-closure-20261010/verify.py
+```
+
+`source.py` freshly qualifies the complete corrected context boundary and checks
+all inherited inputs against fixed Git bytes. It retains every successful
+original context API record, all original private protocols and the complete
+helper population. Source epochs and exact typed original observations conserve.
+`model.py` publishes the whole source-join hypothesis. `runtime.py` independently
+interprets own context/API source behavior, including recursive clone calls and
+numeric permissions that follow source numeric fields. `oracle.py` checks every
+API argument/result graph, private joint, original parser reference operand,
+held caller array, compact source distinction and source phase. Original native
+identity, payload and scalar flags are not measured by these source joins.
+
+`qualify.py` and the frozen first-join files retain the complete first admission.
+The first complete verifier and proof also retain. Review identified a real gap:
+the returned-delegate list omitted the recursive clone method despite admitting
+its complete API population. `returned-delegate-gap.json` records the cause.
+The corrected oracle derives required API delegate names from independently
+reconstructed event kinds, records every successful returned API event and
+rejects the actual clone/function-event omissions. The first successful proof is
+not silently replaced or presented as sufficient final acceptance.
+
+`first-oracle.py.txt` and `first-syntax-failure.json` retain an earlier unqualified
+source-assertion quoting error, fixed before the first source join. Its historical
+command records the read-only installed Python executable; replay entrypoints
+use `python3` from PATH and no project workflow depends on that captured path.
+All current code, data, build products and temporary outputs remain repository
+relative and on the repository volume.
+
+`proof.json`, `binding.json` and `checks.json` retain independent qualification,
+whole input custody and actual guarded outcomes. The proposed fact identifies
+separate re-derivation, falsification and durability legs and every missing
+native/integration/publication scope. `parent-acceptance.json` records the exact
+parent requirements and corresponding current evidence before their closure.
+The book source/native-text proof is separate from pending visual review.

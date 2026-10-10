@@ -5772,12 +5772,12 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Derive complete helper, callback, subtest and parser source bindings.`
   Acceptance: `Model every remaining own source reference slot and call lifetime from qualified source forwarding/construction and helper/AST/actor graphs. Distinguish saved and wrapped callbacks, receiver construction, partially built actor/context/clauses/AST, active ancestors and returned delegates. Explicitly partition original external/private provider/formatter identities; do not invent receiver contents or native object census.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2`
-  Verification: `Partition complete remaining own source roles into helper/callback/subtest and parser/actor/context children. Both full child populations must qualify before closure; whole source integration remains the existing next sibling. No original numeric/provider/framework identity is inferred.`
-  Commit: `pending`
+  Verification: `Complete helper/callback/subtest and parser children qualify together; full remaining source integration remains the next sibling. Final-independent actual0 and whole parent acceptance/evidence in docs/audits/address-parser-context-closure-20261010/parent-acceptance.json; first admitted returned-clone omission, full first programmes/products/proof and actual0 retain. Final delegate names derive from verified API kinds, all successful returned events qualify and genuine omission controls reject. Corrected boundary/helper and every original typed protocol conserve. No original native identity, payload/flags, global census or full source integration is claimed.`
+  Commit: `this slice`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.1`
@@ -5795,12 +5795,12 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete parser actor context and receiver source lifetimes.`
   Acceptance: `Conserve completed helper/callback/subtest and all prior source models. Bind every remaining own parser source reference and active ancestor using complete qualified source/AST/actor/context/clause graphs, construction and forwarding. Distinguish receiver construction, saved parser delegates, observer caller snapshots, partially built actors and inactive returned delegates. Do not invent receiver payload or external/native object census. Independent whole membership/graph/source-expression/phase checks and genuine omission, wrong kind/role/alias, borrowed receiver/actor/context/capture/phase and native-scope controls reject. Sync book/proposed facts/pointers, close the helper/parser parent only after both children qualify, and commit before whole source integration.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2`
-  Verification: `Own source inspection confirms unchanged original facade/parser/context modules and source constructor/forwarding contracts. Existing ancestry/argument facts explicitly leave normalized AST and partial actor contents unmeasured. Qualify receiver and normalization bindings first, then complete actor/context construction and full parser closure; never use an authored form projection as a measured native normalized graph.`
-  Commit: `pending`
+  Verification: `Entry/normalization and actor/context children cover every original parser reference exactly once, all source ancestors, saved delegates and original caller holders without native payload inference. Final-independent actual0 and whole parent acceptance/evidence in docs/audits/address-parser-context-closure-20261010/parent-acceptance.json; first admitted returned-clone omission, full first programmes/products/proof and actual0 retain. Final delegate names derive from verified API kinds, all successful returned events qualify and genuine omission controls reject. Corrected boundary/helper and every original typed protocol conserve. No original native identity, payload/flags, global census or full source integration is claimed.`
+  Commit: `this slice`
 
 
 
@@ -5819,12 +5819,12 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete partial actor context clause and active ancestor source lifetimes.`
   Acceptance: `Conserve receiver/normalization and all helper/nested/core/private/operation/parser prerequisites. Construct complete partially built actor, interface/type-entry, transaction-clause and local-context source graphs at each original refusal stage. Ground every remaining own parser/context reference slot and inactive returned delegate in whole source transformations, preserving all source aliases and lifecycle states without original numeric/native payload inference. Independently check full source membership, graph topology, source expressions and actual borrowed actor/context/receiver/phase/kind/alias/omission controls. Join all complete parser children, close parser and helper/parser parents only after full acceptance, sync book/proposed facts/pointer and commit before whole source integration.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2`
-  Verification: `The complete actor/context leaf spans distinct construction and context/private-root dependency graphs. Split into fully owned actor/type/transaction construction and context/full-parser closure children; preserve the full parent acceptance and close it only after both. Receiver-field investigation in docs/audits/address-parser-entry-20261010/receiver-field-scope.json owns the constructor-versus-later-payload boundary. Direct source census locates temporary _proc_synth in returned procedure expansion; both original inputs have no procedures, so the delegate returns before field installation. Verify complete later receiver and actor/context transformations together; do not promote constructor checkpoints to original native payload.`
-  Commit: `pending`
+  Verification: `Complete actor/type/interface/clause construction and context/private-root source populations both qualify at each original refusal; receiver and returned-delegate contracts conserve. Final-independent actual0 and whole parent acceptance/evidence in docs/audits/address-parser-context-closure-20261010/parent-acceptance.json; first admitted returned-clone omission, full first programmes/products/proof and actual0 retain. Final delegate names derive from verified API kinds, all successful returned events qualify and genuine omission controls reject. Corrected boundary/helper and every original typed protocol conserve. No original native identity, payload/flags, global census or full source integration is claimed.`
+  Commit: `this slice`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.1`
@@ -5841,12 +5841,12 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete local record contexts and close the full parser source lifetime model.`
   Acceptance: `Conserve complete actor/entry and all helper/nested/core/private/operation/parser prerequisites. Construct full local context/root/sample/private-value source graphs at the output-field refusal; qualify every remaining context slot, active ancestor and returned delegate, graph sharing, source-held lifetimes and complete original-source joins. Independently verify every original parser reference exactly once, reject genuine kind/alias/omission/borrowed graph/phase/native-scope controls, and close parser/helper parents only after all full acceptance conditions qualify. Sync book/proposed facts/pointer, then commit before whole source integration.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2.2`
-  Verification: `The representation/probe child independently qualifies complete fresh context construction with numeric source semantics, exact typed observations and repaired joint arguments. First strict scalar failure and genuine first-graph alias admission retain. The pending original context-slot/private-protocol child owns every remaining original source join and full parser/helper closure; complete parent acceptance and native flag/identity/global gaps remain unchanged.`
-  Commit: `pending`
+  Verification: `Both representation/probe and original context/source children qualify; complete graph aliases, numeric boundaries, every source slot and original protocol joins conserve. Final-independent actual0 and whole parent acceptance/evidence in docs/audits/address-parser-context-closure-20261010/parent-acceptance.json; first admitted returned-clone omission, full first programmes/products/proof and actual0 retain. Final delegate names derive from verified API kinds, all successful returned events qualify and genuine omission controls reject. Corrected boundary/helper and every original typed protocol conserve. No original native identity, payload/flags, global census or full source integration is claimed.`
+  Commit: `this slice`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2.1`
@@ -5863,11 +5863,17 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4.2.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Join qualified context construction to every original context slot and close parser/helper source containers.`
   Acceptance: `Conserve complete representation/probe, actor/entry/helper/private/nested/operation prerequisites. Bind every remaining original context slot and active/returned source holder through complete qualified context/root/sample/private-value graphs. Bridge all original successful context APIs/private joints and retained context caller arrays, preserving source aliases and representation scope. Independently prove every original parser reference exactly once, reject genuine borrowing/alias/kind/phase/omission/native-scope controls, and close actor/context, parser and helper/parser parents only after all full acceptance conditions qualify. Sync book/proposed facts/pointer, then commit before full source integration.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Every original context API/private joint and parser reference operand qualifies with complete retained caller/source lifecycle membership. Final-independent actual0 and whole parent acceptance/evidence in docs/audits/address-parser-context-closure-20261010/parent-acceptance.json; first admitted returned-clone omission, full first programmes/products/proof and actual0 retain. Final delegate names derive from verified API kinds, all successful returned events qualify and genuine omission controls reject. Corrected boundary/helper and every original typed protocol conserve. No original native identity, payload/flags, global census or full source integration is claimed.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S in docs/audits/address-parser-context-closure-20261010/root-cause.json locates own recursive structured cloning, sample overlay and original observer caller allocations. First-join0 and first complete independent0 admitted complete API graphs but omitted clone_structured_value from their shared constant returned-delegate list. returned-delegate-gap.json reproduces that actual admission against all240 recursive clone events. The earlier unqualified source-assertion quoting error and actual syntax1 retain in first-oracle.py.txt/first-syntax-failure.json; it was corrected before join admission.
+  - [x] **ADDRESSED (verified)** — final-independent actual0 qualifies all81 original parser reference slots exactly once, including9 newly joined context operands, all879 original API joins and153 original private joints across3 modes,2064 retained context caller-holder occurrences and584469 source distinctions across6 refusal views. Complete154-step context graphs,576 source nodes and112 active reachable nodes conserve. All50 genuine controls reject, including actual missing clone delegate/returned event and retained caller omissions. First45-control actual0 proof/product/programmes retain. Required API delegate names derive independently from verified event kinds; every successful returned event remains explicit. Complete corrected boundary/helper and234 full fixed-Git input reads conserve. parent-acceptance.json retains each full original acceptance verbatim and independently recounts every original operand/API/private/caller universe before closing only context, actor/context, parser and helper/parser source containers. Whole source integration and native flags/payload/identity remain owned successors; proposed facts name all three verification legs and missing scopes.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in focused actual0. Focused public-behavior/book tests, complete corrected prerequisite replay, exact whole book source/status conservation, final source copies, native guide/omission control, task pressure, claim inventory and staged scripts/check_doctrines.sh remain mandatory commit gates with actual receipts retained in checks.json. Normal hooks remain enabled. Existing canonical facts/questions/probes and all capacity ceilings conserve; visual book QA and full CI/push retain their existing owners.
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5`

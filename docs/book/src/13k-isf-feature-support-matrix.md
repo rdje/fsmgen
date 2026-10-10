@@ -1125,7 +1125,7 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-helper-bindings-
 ```
 
 The helper/callback/subtest child is closed. Parser receiver, actor, context and
-clause bindings remain its immediate sibling. Original numeric/provider/
+clause source bindings are qualified below. Original numeric/provider/
 formatter/Regexp/CODE identity, external framework/global retention, complete
 source integration, the raw address join and canonical publication remain open.
 All existing canonical facts, questions, probes and collection limits retain.
@@ -1143,7 +1143,7 @@ those contained objects, rather than equal fresh objects. Constructor fields
 do not establish a later heap snapshot. A source-field census also checks the
 temporary procedure-synthesis state: both refused inputs contain no procedures,
 so expansion returns before installing that state. The construction child below
-qualifies later actor graphs; local record contexts remain open.
+qualifies later actor graphs; original context/source joins are qualified below.
 
 Normalization is checked through the published Lispish input boundary and the
 original own normalizer source, without inspecting the provider implementation.
@@ -1179,9 +1179,9 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-entry-202
 ```
 
 The receiver/normalization child is closed. Its construction successor is
-qualified below. Local context graphs, the full parser/helper join, original raw/native identity and payload,
-provider/formatter identity, complete source integration and canonical
-publication remain open. Existing canonical facts, questions, probes and every
+qualified below. Original context/source and parser/helper bindings are qualified
+below too. Original raw/native identity and payload, provider/formatter identity,
+complete source integration and canonical publication remain open. Existing canonical facts, questions, probes and every
 collection ceiling retain.
 
 Complete partial actor construction is independently qualified at each original
@@ -1225,9 +1225,10 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-actor-constructi
 ```
 
 The actor/type/transaction construction child is closed. Original context-slot
-and private-root joins, full parser/helper/source integration, original raw
-address joins, native payload and flags, provider/formatter/CODE identity,
-cold replay and governed canonical publication remain open. Fresh source
+and private-root source joins and parser/helper bindings are qualified below.
+Full source integration, original raw address joins, native payload and flags,
+provider/formatter/CODE identity, cold replay and governed canonical publication
+remain open. Fresh source
 checkpoints are not original native captures. Existing canonical facts,
 questions, probes and collection ceilings retain.
 
@@ -1279,10 +1280,59 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-contexts-
 ```
 
 The representation/probe boundary child is closed. Original context-slot and
-private-protocol joins, full parser/helper/source integration, original raw
-address and native payload/flag/identity qualification, cold replay and governed
-canonical publication remain owned successors. Existing canonical facts,
+private-protocol source joins are qualified below. Full source integration,
+original raw address and native payload/flag/identity qualification, cold replay
+and governed canonical publication remain owned successors. Existing canonical facts,
 questions, probes and every collection ceiling retain.
+
+The complete original parser/context and helper source join now qualifies.
+Every original parser reference operand is assigned once to its source binding,
+including the transaction context forwarded through clause, assignment and target
+reference validation. The two refusal stages preserve their different actor/type
+publication states. Complete receiver, normalization, actor, clause and context
+graphs join the conserved helper/callback/subtest source population.
+
+Every successful original context API call is checked against an independent own
+source interpreter, including metadata capture/snapshot, packed-range resolution
+and each recursive structured-clone invocation. Complete argument graphs before
+and after the call, result graphs, source package/site, order and success status
+qualify. Every original private input/result joint graph bridges to the qualified
+context construction. Typed original witnesses are retained exactly; numeric
+permissions for recursive scalar clone operands follow their source numeric
+fields, rather than arbitrary scalar argument positions.
+
+The original observer retains each API and private-copy caller array in `@api`
+and `@copies` after the call returns. All those context caller holders remain
+held during the later list refusal, which runs no context API calls. They join
+previous parser holders in the complete held membership and its compact relation
+of every unordered source distinction. This is a source allocation relation;
+it does not measure original native identity or a global heap census.
+
+The active record context roots and returned target remain distinct from sample
+preparation and old scope intermediates. The sample lexical block has ended
+before clause validation. Historical outputs and argument arrays kept by fresh
+instrumentation do not become original holders. Prior actor/helper/private-call
+phase contracts remain conserved, including returned predicates and delegates.
+
+Review found an assurance defect after the first complete join passed: its
+returned-delegate list omitted `clone_structured_value` while checking all of
+that function's recursive API events. Producer and oracle had duplicated an
+incomplete constant list. The complete first admission, programmes and products
+retain. Required API delegate names now derive independently from verified event
+kinds, and complete successful-return event membership is explicit. Removing the
+actual clone delegate or an event rejects, alongside borrowed contexts, API
+graphs/sites/domains, lost slots/callers, wrong kinds/values and native promotions.
+Replay the full source closure from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-context-closure-20261010/verify.py
+```
+
+The context, actor/context, parser and helper/parser source children are closed.
+Whole source integration is the next owned sibling. Original native payload,
+scalar flags and identity, raw address joins, provider/formatter/CODE identity,
+cold replay, visual book QA and governed canonical publication remain open.
+All current canonical facts, questions, probes and collection ceilings retain.
 
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it

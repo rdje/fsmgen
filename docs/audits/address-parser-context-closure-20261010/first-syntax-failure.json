@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-c",
+    "from pathlib import Path; p=Path('docs/audits/address-parser-context-closure-20261010/oracle.py'); compile(p.read_bytes(),str(p),'exec')"
+  ],
+  "status": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    from pathlib import Path; p=Path('docs/audits/address-parser-context-closure-20261010/oracle.py'); compile(p.read_bytes(),str(p),'exec')\n                                                                                                       ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/address-parser-context-closure-20261010/oracle.py\", line 35\n    \"my $to = _reference($target, $scope, 'write', \"$context target\");\",\n                                                    ^\nSyntaxError: invalid syntax\n",
+  "programme": {
+    "bytes": 14399,
+    "sha256": "4904172ad3fc8e8919a7b965f44fe476c733c21088633652ed3ee69474b1bc15"
+  },
+  "scope": "Unqualified source-assertion draft quoting failed during compilation; corrected before independent qualification."
+}
