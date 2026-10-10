@@ -1,0 +1,11 @@
+2026-10-10 — Complete authored regex qualification
+
+The source producer reads the entire original statement or supplied helper declaration; the inherited pattern string is checked only for consistency. Independent literal parsing and direct source traversal reconstruct all allocations without borrowing original header tokens. Every authored literal in this fixed corpus has ASCII characters and no authored trailing modifiers. This statement does not measure historical compiled regex encoding or runtime modifiers.
+
+Before new native observation, select current literal, byte-string and explicitly upgraded-string constructions, complete public pattern/normalization hypotheses and bounded/unlimited argument-length profiles. Native values and whole trace bodies are independently checked. The actual paired byte/upgraded construction separates modifiers/display while conserving characters.
+
+The first finite parser omitted hyphen; its complete first failure epoch remains. An earlier stdin exploration rejected the same alphabet omission; the complete saved source-selection replay reproduces it rather than claiming to recover an automatic receipt for that exploratory tool call. The first source-selection replay ran without its own RAM guard; the corrected complete selection and all subsequent heavy validation use the required guard. No unavailable historical resource measurements are invented. The first public POD marker reader assumed a physical line; exact failed source/results remain and the corrected reader normalizes documentation whitespace.
+
+Current public docs and interpreter are necessary read-only external toolchain inputs. No provider implementation or submodule internals are inspected; all project data stays on the repository volume. Original native regex flags/encoding, identities, formatter/settings, full headers/raw join, opaque/private scopes, ancestor acceptance, visual review and full CI/push remain separately owned.
+
+The first native guide reader expected straight prose apostrophes; mdBook smart punctuation produced curly apostrophes. Whole original native HTML/text and expected text retain. The corrected expectation maps the two authored prose possessives without rewriting actual native text or relaxing the full guide comparison. First task/publication metric/proof records retain unchanged beside the final qualification.

@@ -1,0 +1,11 @@
+{
+  "command": "scripts/check_claim_verification_inventory.pl --write && scripts/check_claim_verification_inventory.pl && scripts/check_claim_verification_dispositions.pl",
+  "result_kind": "Complete combined terminal tool result; output streams are merged by the terminal tool.",
+  "result": {
+    "chunk_id": "125b49",
+    "wall_time_seconds": 0.000003042,
+    "exit_code": 0,
+    "original_token_count": 185,
+    "output": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13460, candidates=1988, quantified=966, conservative=1022, constants=3018, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1988)\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13460, candidates=1988, quantified=966, conservative=1022, constants=3018, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1988)\nclaim-dispositions: bounded disposition join holds (candidates=1988, disposed=1988, claim_records=316, gates=1045, reviewed=627, gaps=0, open=0, groups=6)\n"
+  }
+}

@@ -1796,6 +1796,34 @@ intervals, source do versus diagnostic require roles, complete original headers
 and unchanged parent acceptance retain their separate owners. This scalar child
 does not close the original observer or raw-stack contracts.
 
+Authored refusal regexes now have a separate complete source qualification.
+The producer reads each whole literal from its original statement or supplied
+helper declaration, preserving the entire pattern, absent authored modifiers
+and ASCII source characters. A separate parser and source traversal reconstruct
+all helper, case, phase, operand and role allocations.
+
+Current public fixtures compile each complete pattern as a literal, from a byte
+string, and from an explicitly upgraded string. The selected byte and upgraded
+constructions preserve the same characters while producing distinct public
+modifiers and displays. Bounded and unlimited argument-length profiles qualify
+whole values, exact headers and complete trace bodies. These are dated current
+construction results; original native regex encoding, Regexp identity and
+formatter settings remain unmeasured. The public [regex inspection contract](https://perldoc.perl.org/5.34.0/re#regexp_pattern($ref))
+explains the pattern and modifiers returned by the fixture's public API.
+
+Whole source, pattern, modifier, encoding, membership, role, schema, profile
+and native-promotion controls reject their intended defects. The first source
+parser's omitted hyphen remains with its complete failed program and result.
+Replay the complete dated qualification:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-regex-values-20261010/verify.py
+```
+
+Original reference/provider identities, private framework intervals, historical
+settings, complete original headers and unchanged parent acceptance retain
+their separate owners. This regex child closes no observer or raw-stack parent.
+
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
 complete previously committed child contracts. It joins every original empty

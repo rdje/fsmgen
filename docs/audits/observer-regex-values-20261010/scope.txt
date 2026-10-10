@@ -1,0 +1,6 @@
+SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.2
+Complete authored regex literals and finite selected current public constructors only.
+Re-derivation: whole source statements/declarations and independently reconstructed source allocation.
+Falsification: independent whole pattern/flags/encoding/member/role/profile/trace controls.
+Durability: verify.py authenticates whole fixed sources, all prerequisites and immutable evidence.
+Original Regexp/provider/reference identity and native flags/settings, full headers and parent acceptance remain unmeasured/open.
