@@ -1,0 +1,106 @@
+"""Whole fixed source/graph custody for private topology, without raw addresses."""
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+BASE = Path('docs/audits/address-private-topology-20261010')
+REVISION = 'fec14b2d1496b9567e235fc559296c566a4aaee3'
+
+
+def identity(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def module(path):
+    ns = {'__name__': 'private_source_prerequisite'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+def rebuild():
+    original_bytes, original_text, reads = Path.read_bytes, Path.read_text, {}
+    def keep(path):
+        relative = path.resolve().relative_to(Path.cwd())
+        if not relative.is_relative_to(BASE):
+            reads[str(relative)] = identity(original_bytes(path))
+    def read_bytes(path):
+        value = original_bytes(path)
+        keep(path)
+        return value
+    def read_text(path, *args, **kwargs):
+        value = original_text(path, *args, **kwargs)
+        keep(path)
+        return value
+    try:
+        Path.read_bytes, Path.read_text = read_bytes, read_text
+        parent = Path('docs/audits/address-source-boundaries-20261010')
+        admitted = json.loads((parent / 'proof.json').read_bytes())
+        for name, pin in admitted['programmes'].items():
+            if identity((parent / name).read_bytes()) != pin:
+                raise ValueError('whole completed operation-boundary source programme')
+        receipts = json.loads((parent / 'checks.json').read_bytes())
+        actual = receipts['first-independent']
+        if type(actual['status']) is not int or actual['status'] != 0 or not actual['stdout'].endswith(
+                'PASS source-only operation-boundary lifetime hypotheses, independent alias/slot oracle and separating controls; raw address joins remain open.\n'):
+            raise ValueError('actual completed source-only prerequisite outcome')
+        named = module(Path('docs/audits/record-value-original-named-helpers-20261005/verify.py'))
+        primary = named['primary']
+        _, _, _, products = primary['context']['source_models']()
+        _, interventions, _ = primary['graph']['source_interventions']()
+        original_graph_proof = json.loads((primary['graph']['BASE'] / 'proofs.json').read_bytes())
+        if len(original_graph_proof['proofs']) != 3:
+            raise ValueError('whole qualified original graph mode population')
+        observer = Path('docs/audits/record-value-original-candidate-20261004/observe.pl').read_text()
+        candidate = Path('docs/audits/record-value-original-candidate-20261004/candidate.pl').read_text()
+        for text in ('my ($kind, $caller, @args) = @_;', 'my $copy_refs = $ok ? refs($copy) : {};',
+                     "joint_input_result => $ok ? graph({input => $args[0], result => $copy}) : undef,",
+                     'return $copy;'):
+            if text not in observer:
+                raise ValueError('whole own private protocol input/result live capture contract')
+        for text in ('return $copies->{$address} if exists $copies->{$address};',
+                     "my $copy = ref($value) eq 'HASH' ? {} : [];", '$copies->{$address} = $copy;',
+                     'source_value_copy($value->{$_}, $copies)', 'source_value_copy($_, $copies)'):
+            if candidate.count(text) != 1:
+                raise ValueError('whole own finite source-copy memo/allocation/recursion contract')
+        encode = module(parent / 'model.py')['graph']
+        rows = []
+        originals = {r['index']: r for r in products['private']}
+        if len(originals) != len(products['private']):
+            raise ValueError('complete distinct source-private copy membership')
+        for mode in ('ordinary', 'storable', 'controls'):
+            for index, private in sorted(originals.items()):
+                raw = private['whole_native']
+                before = encode(interventions[index]) if mode != 'storable' and index in interventions else raw['before']
+                after = before if mode != 'storable' and index in interventions else raw['after']
+                if raw['accepted'] != 1 or raw['kind'] not in ('value-private', 'metadata-private'):
+                    raise ValueError('whole source-private successful protocol domain')
+                rows.append({'domain': [mode, index], 'kind': raw['kind'], 'api': private['api'],
+                             'before': before, 'after': after, 'result': raw['copy'],
+                             'qualified_original_joint': raw['joint_input_result'],
+                             'source_authority': 'complete previously independently qualified source input/result and joint graph; authored source interventions where declared'})
+    finally:
+        Path.read_bytes, Path.read_text = original_bytes, original_text
+    if any(path.endswith('/raw-product.json') for path in reads):
+        raise ValueError('no new raw-address intake for source-private topology')
+    for path, pin in reads.items():
+        old = subprocess.check_output(['git', 'show', REVISION + ':' + path])
+        if identity(old) != pin or original_bytes(Path(path)) != old:
+            raise ValueError('complete fixed Git private source input: ' + path)
+    return rows, {'revision': REVISION, 'inputs': dict(sorted(reads.items())),
+                  'scope': 'Complete qualified private graph population and own live-copy source protocol; original typed native graph evidence is not a numeric address census.'}
+
+
+def main():
+    inputs, binding = rebuild()
+    hypotheses = module(BASE / 'model.py')['derive'](inputs)
+    for name, value in [('inputs.json', inputs), ('binding.json', binding), ('hypotheses.json', hypotheses)]:
+        path = BASE / name
+        if path.exists():
+            raise ValueError('retain first complete private source product: ' + name)
+        path.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+    print('PASS complete private source-copy topology and live per-copy input/result hypotheses retained before raw-address intake.')
+
+
+if __name__ == '__main__':
+    main()

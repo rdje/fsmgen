@@ -1,0 +1,25 @@
+The private-copy source foundation separately qualifies the complete original
+private graph population. The observer delegates these copies to its saved
+Storable handle. A finite memoized clone model supplies independent topology
+hypotheses; it does not reconstruct that provider. Whole qualified input/result
+and original joint graphs agree through a separate graph-bijection oracle,
+including shared nodes and cycles. Each returned node belongs to a detached
+result pool while input and result are simultaneously live inside `copy_value`.
+Scalar flags and values retain their separate qualified graph evidence.
+
+A copied record may preserve its input payload and internal sharing while every
+returned container has a distinct identity from the input containers. Conversely,
+a returned copy can cease to be live before a later error. The per-copy model
+therefore supplies no cross-copy identity or post-return liveness. Those require
+caller and throw-phase source contracts. Genuine alias, split-sharing, kind,
+omission, borrowed-domain and false-lifetime controls reject. Replay from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-private-topology-20261010/verify.py
+```
+
+This is a dated topology and active-copy lifetime qualification. Original numeric
+addresses, native/provider/formatter identity, later Value/Metadata/helper/parser
+reference roles, the raw-address join and canonical address publication remain
+separately owned. The complete earlier operation-boundary hypotheses remain intact.
+

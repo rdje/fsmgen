@@ -5699,9 +5699,52 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Derive remaining core, helper, parser and nested lifetime roles.`
   Acceptance: `Extend the independent source model to every remaining visible own reference role, nested active operations, returned-before-throw delegates and private-root lifetime constraints. Use complete qualified source graphs/construction/call contracts; partition genuinely opaque external/provider/formatter identities without inventing referents. Retain complete role membership and genuine alias/kind/phase/lifetime separating controls before raw joining.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5`
+  Verification: `Detached copies must remain distinct from supplied roots; returned private graphs cannot be assumed live at later throws. Complete source-role closure follows the private-copy foundation, Value roles, Metadata/nested phases and helper/parser roles.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.1`
+  Status: `done`
+  Goal: `Qualify complete private-copy source topology and per-call lifetimes.`
+  Acceptance: `Bind every previously source-qualified private input/result graph in each original mode to the whole own copy_value protocol and memoized source-copy contract. Independently derive complete container/reference topology, input/result detachment, within-copy sharing/cycles and active per-copy domain. Do not equate supplied roots with detached copies, infer liveness after return or use numerical addresses. Whole omission, sharing-split, alias, kind, borrowed-call/capture and false post-return lifetime controls must reject. Preserve fixed source/graph Git custody and the completed operation-boundary hypotheses. Corpus is the complete qualified private-copy population; no public API/MCP behavior changes, original provider/native identity and remaining role joins stay owned.`
+  Verification: `First source intake refuses missing joint_input_result in the older calibration product; exact first programme/model/refusal retain. Whole source proves private copies delegate to the saved Storable handle, while the memoized finite constructor is an independent topology hypothesis. Corrected complete original candidate private/test partition, source graph interventions and all inherited input/programme bytes bind fixed Git custody. Whole source-derived input/result topologies, explicit per-copy namespaces and active-call lifetimes qualify through an independent graph-bijection and actual joint-reachability oracle; every declared private copy, alias, cycle, kind and input/result detachment conserves. Genuine omission, borrowed call/capture/binding, Boolean domain, split-sharing, wrong-kind, lost correspondence, actual joint input/result alias and false post-return/native-identity controls reject at intended boundaries. Distinct re-derivation/falsification/durability and missing numeric/provider/formatter/post-return/remaining-role/canonical legs are named in docs/audits/address-private-topology-20261010/proof.json. The complete operation-boundary source prerequisite and original sources remain unchanged. Source-only book and deferred fact proposal synchronize; focused checks, exact owned aggregate/task measurements, final copied/native source checks, claims, staged doctrines and normal hooks gate commitment. No original recapture, provider reconstruction, threshold/cap increase, full CI or push executes.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S in docs/audits/address-private-topology-20261010/root-cause.json pins the original copy_value private dispatch. Whole source and retained first actual failure distinguish calibration before/result products from original candidate joint graphs. Private copies use a saved Storable handle; equal payloads and an independent memoized hypothesis cannot identify original provider implementation or prove post-return liveness.
+  - [x] **ADDRESSED (verified)** — source-derivation and first-independent actual0 qualify the complete source-private graph population and active-copy input/result domains. Independent bijections and joint reachability preserve internal sharing/cycles and prove actual qualified joint detachment. Genuine whole-product alias/kind/domain/omission/correspondence/lifetime controls reject; the tracked proof names separate re-derivation, falsification, durability and remaining gaps.
+  - [x] **NO REGRESSION** — All tests successful in focused; final book/native/canonical-copy, exact aggregate/task pressure, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commitment. Whole inherited source/graph/programme and operation-boundary identities conserve. All current cards, questions/probes, capacity limits and Knowledge Map authority remain unchanged; core/helper/parser/nested and numeric address meanings remain owned successors.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.2`
+  Status: `pending`
+  Goal: `Derive complete direct Value core source reference bindings.`
+  Acceptance: `Model every direct Value core reference slot against supplied named arguments, detached source/target/root clones, fresh named hashes and required/optional arrays, qualified type ancestry and source call lifetimes. Preserve source-copy topology and active operation bindings. Independent alias/borrowed-kind/wrong-copy/lifetime controls must separate equal payloads from identity; original numeric addresses remain unread.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3`
+  Status: `pending`
+  Goal: `Derive complete Metadata and nested throw-phase bindings.`
+  Acceptance: `Ground every Metadata recursion referent, shared active-path/sink, detached interface/type node, nested Value private root and constructed interface from qualified whole source graphs. Join all active nested operation domains and distinguish inner capture liveness from the later caught/new Value throw, retaining returned delegates as inactive. Complete cycle/alias/clone/kind/borrowed-phase controls reject without raw-address inference.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4`
+  Status: `pending`
+  Goal: `Derive complete helper, callback, subtest and parser source bindings.`
+  Acceptance: `Model every remaining own source reference slot and call lifetime from qualified source forwarding/construction and helper/AST/actor graphs. Distinguish saved and wrapped callbacks, receiver construction, partially built actor/context/clauses/AST, active ancestors and returned delegates. Explicitly partition original external/private provider/formatter identities; do not invent receiver contents or native object census.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5`
+  Status: `pending`
+  Goal: `Join and close the complete remaining source-role lifetime model.`
+  Acceptance: `Conserve all completed operation/private/Value/Metadata/nested/helper/parser hypotheses and independently prove complete own reference-role membership with source graph equality/distinction in simultaneous-live domains. Genuine whole-product omission, wrong role/kind, borrowed graph/copy/capture/phase and scope controls must reject before source-only closure. Sync book/proposed facts/current pointers under unchanged capacity authority; actual raw address joins and canonical publication remain successors.`
   Verification: `pending`
   Commit: `pending`
 

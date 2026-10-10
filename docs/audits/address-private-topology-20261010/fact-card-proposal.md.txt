@@ -1,0 +1,29 @@
+---
+id: record-value-private-copy-source-lifetimes
+title: Private-copy topology qualifies active input/result detachment
+answers:
+  - "what private-copy topology and lifetime constraints precede core address roles?"
+date: 2026-10-10
+status: proposed
+tags: [isf, record, source, graph, lifetime]
+evidence: [docs/audits/address-private-topology-20261010/proof.json]
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-private-topology-20261010/verify.py
+---
+
+The complete qualified original private input/result population agrees with an
+independent finite clone topology hypothesis, including aliases and cycles.
+A separate graph-bijection/joint-reachability oracle qualifies input/result
+detachment while both are live inside copy_value. Private copies delegate to a
+saved Storable handle; the memoized hypothesis does not reconstruct its provider.
+Scalar flags/values retain their separately qualified whole typed graphs.
+
+Every input/result node has a per-copy/per-capture binding domain. Genuine
+omission, alias/split-sharing, kind, correspondence, borrowed-domain, Boolean
+domain, actual joint alias and false lifetime/scope controls reject. Equal
+payloads or numerical reuse do not establish cross-copy identity. Later caller
+and throw-phase source contracts must establish post-return liveness; original
+numeric/provider/formatter identities and remaining reference roles stay open.
+
+This dated source proposal precedes governed canonical address publication.
+The publication owner must conserve existing facts/questions/probes and unchanged
+collection authority. No raw numeric-address or current canonical claim is made.

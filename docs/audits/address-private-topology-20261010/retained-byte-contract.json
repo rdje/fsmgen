@@ -1,0 +1,7 @@
+{
+  "book-addition.md.txt": {
+    "bytes": 1549,
+    "reason": "Exact source insertion includes the final paragraph separator, compared as whole bytes by the book and aggregate qualifiers.",
+    "sha256": "298be85728f066190d19274ffeea132574eadf1daf58f2daaa2dabcb70cdcab8"
+  }
+}
