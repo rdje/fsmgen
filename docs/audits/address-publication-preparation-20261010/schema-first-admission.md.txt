@@ -1,0 +1,34 @@
+# P1 owned first-admission schema defect
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.1
+
+The exact first successful verify.py compared its root/card field sets and
+scope/review/integration values to the same unqualified original input. Fixed
+member paths and beforeimage allocation were also taken from that input.
+Existing seals could reject later tampering, but they cannot qualify first
+admission. This repeated the earlier source-integration unknown-field failure
+class and was found during final signoff review; no current facts were published.
+
+reproduce_schema.py executes the exact frozen first-qualified reader with one
+extra original_native_identity field at its actual proposal input. Only the new
+proof write is redirected to an owned evidence file, and the ordinary absence of
+an earlier seal is modeled. No predicate, source, status or other input changes.
+Actual first-admission success, complete candidate and generated proof retain in
+schema-first-admission and checks.json first-admission-schema. It is a real false
+green, not a successful negative control.
+
+Repair: declaration.py declares explicit root/card schemas and complete reviewed
+scope/review/integration/leg values independent of proposed input. verify.py
+independently derives all fixed member paths from the fixed predecessor namespace
+and contract, and derives exact beforeimage identities/locators before reading.
+The proposed input cannot set those authorities. The exact original proposal is
+unchanged. first-qualified source/proof and all earlier actual results retain;
+final-proof.json is the repaired qualification, not a rewrite of that first seal.
+
+verify_schema_repair.py challenges the repaired exact reader at first admission,
+without an earlier seal. Unknown root/card fields, native scope/review and borrowed
+beforeimage locators must reject at their declared first contracts with no proof
+write. Full valid preparation and snapshot replay plus all complete controls must
+then pass. This defect is fixed only after those actual outcomes and ordinary
+book/task/claim/staged/hook gates succeed. Native and current-publication scopes
+remain unchanged and separately owned.

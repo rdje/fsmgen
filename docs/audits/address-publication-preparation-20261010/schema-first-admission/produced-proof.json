@@ -1,0 +1,291 @@
+{
+  "controls": [
+    {
+      "name": "native-promotion-field",
+      "refusal": "closed complete prospective publication",
+      "whole_candidate": {
+        "bytes": 2996063,
+        "lines": 0,
+        "sha256": "a32ca2b3c38221b74cacb4f98207907de7eba58548ffb8f3cf3ab024458d9af5"
+      }
+    },
+    {
+      "name": "current-publication-promotion",
+      "refusal": "exact prospective role and missing publication/native legs",
+      "whole_candidate": {
+        "bytes": 2995904,
+        "lines": 0,
+        "sha256": "987f1e16cd6f168f56afd8f41f835d9f4a7f73bc3a8e9ee08fc910ea56cbcfc4"
+      }
+    },
+    {
+      "name": "lost-native-gap",
+      "refusal": "exact prospective role and missing publication/native legs",
+      "whole_candidate": {
+        "bytes": 2995831,
+        "lines": 0,
+        "sha256": "b08518bf982b461f309dcd0207adbffb2905ab0b6e7b5314f706afde5d3c0b2b"
+      }
+    },
+    {
+      "name": "lost-whole-source",
+      "refusal": "whole fixed source and beforeimage allocation",
+      "whole_candidate": {
+        "bytes": 2995852,
+        "lines": 0,
+        "sha256": "0a37d98e94eeb0cdbb81083b5dbdd7d198f441d6ad46453820ce3c3dd0904bed"
+      }
+    },
+    {
+      "name": "lost-beforeimage",
+      "refusal": "whole fixed source and beforeimage allocation",
+      "whole_candidate": {
+        "bytes": 2995714,
+        "lines": 0,
+        "sha256": "3256a07392e5c69ddaf94ce24b982383ddc2451bc649121a20ef6601dd2a5328"
+      }
+    },
+    {
+      "name": "lost-card",
+      "refusal": "complete prospective card population",
+      "whole_candidate": {
+        "bytes": 2974164,
+        "lines": 0,
+        "sha256": "f7d42ffb39ff664d5a25748e897ce6871ce8fc8871b99cae8cf15c9c31754eb5"
+      }
+    },
+    {
+      "name": "lost-old-question",
+      "refusal": "whole original metadata and source identity",
+      "whole_candidate": {
+        "bytes": 2995997,
+        "lines": 0,
+        "sha256": "54a52bf3b7995535c8a06f9d5a791f4afddb590c381315a20c5653966a5677a6"
+      }
+    },
+    {
+      "name": "lost-new-question",
+      "refusal": "complete existing and new question probe metadata",
+      "whole_candidate": {
+        "bytes": 2996008,
+        "lines": 0,
+        "sha256": "b9d21f7e2f3042d6646a6ce1b69ba7a31771882bf1a4b99d56156363ef10d8b8"
+      }
+    },
+    {
+      "name": "native-address-meaning",
+      "refusal": "exact complete reviewed prospective text",
+      "whole_candidate": {
+        "bytes": 2996042,
+        "lines": 0,
+        "sha256": "82b0ad3dc821e9e3315376df1a25bf7c1d09e249e9234078886fcc91514bb192"
+      }
+    },
+    {
+      "name": "borrowed-whole-card",
+      "refusal": "exact complete reviewed prospective text",
+      "whole_candidate": {
+        "bytes": 2993823,
+        "lines": 0,
+        "sha256": "5c42ab07641619d6dbd4511964b0a02d34349d5427e7aef96bd43f6e6b2a1efa"
+      }
+    },
+    {
+      "name": "lost-old-proposition",
+      "refusal": "complete ordered original proposition allocation",
+      "whole_candidate": {
+        "bytes": 2994950,
+        "lines": 0,
+        "sha256": "1f86d66766c315a79b386aa2c3532f437f19103b78a4b57820e10c096165eb50"
+      }
+    },
+    {
+      "name": "borrowed-proposition",
+      "refusal": "complete ordered reviewed proposition correspondence",
+      "whole_candidate": {
+        "bytes": 2996003,
+        "lines": 0,
+        "sha256": "f2e474f6fc7360f5ae6f9c68e87cbe149e466484d6d7f71fde4b0b33cdcfd4f8"
+      }
+    },
+    {
+      "name": "lost-qualified-addition",
+      "refusal": "complete separately qualified address additions",
+      "whole_candidate": {
+        "bytes": 2995641,
+        "lines": 0,
+        "sha256": "e26dfaef5d6989832a3ca3390bcdf3c35ed681630c81666c7a950f5171ad12a3"
+      }
+    },
+    {
+      "name": "Boolean-byte-total",
+      "refusal": "complete measured non-growing prospective working set",
+      "whole_candidate": {
+        "bytes": 2996037,
+        "lines": 0,
+        "sha256": "16064fd181400f054471c8060e2a58bb34a6163f6e376ba910d80ce8430c4031"
+      }
+    },
+    {
+      "name": "widened-card-allowance",
+      "refusal": "whole unchanged Knowledge Map authority",
+      "whole_candidate": {
+        "bytes": 2996039,
+        "lines": 0,
+        "sha256": "58b0e2996eaa74ad6687d0d29724bf1eec0427a80a0f24bee010d8ce427d3296"
+      }
+    },
+    {
+      "name": "lost-global-member",
+      "refusal": "complete original global canonical membership",
+      "whole_candidate": {
+        "bytes": 2995880,
+        "lines": 0,
+        "sha256": "8665fade8af4b74ce61d6263636ec1e7b3a9a367c9c1e4c66be35edb3b704630"
+      }
+    },
+    {
+      "name": "Boolean-query-status",
+      "refusal": "complete actual original query integer success",
+      "whole_candidate": {
+        "bytes": 2996042,
+        "lines": 0,
+        "sha256": "b11a093694a4d135bbdaafb96d97b1f464b441bbba5ce91aea78acc8d4ee627c"
+      }
+    },
+    {
+      "name": "lost-global-query",
+      "refusal": "complete original source-derived query allocation",
+      "whole_candidate": {
+        "bytes": 2995922,
+        "lines": 0,
+        "sha256": "62f2cab5b1b59d54f3c23d20fb0acf5a8794d4cb93a7a6c205dc5ed120287be8"
+      }
+    },
+    {
+      "name": "borrowed-query-command",
+      "refusal": "complete original source-derived query allocation",
+      "whole_candidate": {
+        "bytes": 2996024,
+        "lines": 0,
+        "sha256": "c3cd1aa96a04f78e1c14e925aefaaed18e9464a2b5b3f759af0db5ab3adc3b99"
+      }
+    },
+    {
+      "name": "lost-semantic-reader",
+      "refusal": "complete preparation semantic prerequisite population",
+      "whole_candidate": {
+        "bytes": 2995180,
+        "lines": 0,
+        "sha256": "888d592c345a86f12e1be1758da23c92cfe855209c2b7da57bd746122619a828"
+      }
+    },
+    {
+      "name": "wrong-semantic-status-False",
+      "refusal": "actual preparation prerequisite integer success",
+      "whole_candidate": {
+        "bytes": 2996042,
+        "lines": 0,
+        "sha256": "469785c502557589b4f2aa361644946bdb8e26f8b1debd21f78d83383d96595b"
+      }
+    },
+    {
+      "name": "wrong-semantic-status-1",
+      "refusal": "actual preparation prerequisite integer success",
+      "whole_candidate": {
+        "bytes": 2996038,
+        "lines": 0,
+        "sha256": "7f7435aa4664c465984d703e1cfcb9cf9ef0f1a7d10d5f5c6ac5ab2e63ebcbce"
+      }
+    },
+    {
+      "name": "borrowed-semantic-command",
+      "refusal": "complete preparation prerequisite command",
+      "whole_candidate": {
+        "bytes": 2996039,
+        "lines": 0,
+        "sha256": "6ad5996de7cbea45128492d5e6074b7e9e8bfa5d16958e21dc42df06df49fa0b"
+      }
+    },
+    {
+      "name": "short-semantic-output",
+      "refusal": "complete preparation prerequisite stdout",
+      "whole_candidate": {
+        "bytes": 2995854,
+        "lines": 0,
+        "sha256": "40d4ce2fc92b4f5c71cbfb7b9680306fc90fdcb541654bd637eed7446cf1239c"
+      }
+    },
+    {
+      "name": "lost-semantic-instrument",
+      "refusal": "complete preparation invocation instruments",
+      "whole_candidate": {
+        "bytes": 2995909,
+        "lines": 0,
+        "sha256": "cbdc73c925811539f6fca62d6229ef8d911acf3bfec1d889b1e712c47fbbe6cc"
+      }
+    },
+    {
+      "name": "widened-semantic-guard",
+      "refusal": "complete preparation guard stream",
+      "whole_candidate": {
+        "bytes": 2996038,
+        "lines": 0,
+        "sha256": "b5ddaddf22b209a8501b7f9288ccf25c45e16fbb262ae95b40381bfbe56a8b90"
+      }
+    },
+    {
+      "name": "lost-integration-requirement",
+      "refusal": "complete publication integration requirements and verification legs",
+      "whole_candidate": {
+        "bytes": 2995926,
+        "lines": 0,
+        "sha256": "8cf38383a21f11a222a4078fefdfedc67425e82b1551b17720123b80fbab2c7d"
+      }
+    }
+  ],
+  "legs": {
+    "durability": "Complete original/current/proposed source records, first unadmitted drafts, programmes/actual outcomes and task/book/Git checkpoint before publication.",
+    "falsify": "Independent fixed-source/global-query/metadata/probe/capacity reconstruction and genuine whole-proposal/actual-result interventions; full source and parent readers execute freshly.",
+    "rederive": "Fixed Git sources, exact beforeimages, complete ordered paragraph/metadata correspondence and full measured prospective texts."
+  },
+  "missing_legs": "Natural-language proposition equivalence is a recorded review, not a universal automated proof. Atomic canonical/current/native publication and full address-container acceptance remain successors. Native object identity is unmeasured.",
+  "programmes": {
+    "checks.py": {
+      "bytes": 1418,
+      "lines": 31,
+      "sha256": "7a2dd738b697b48b964889080da95048e60b178d26885738794c09f32ff0f349"
+    },
+    "model.py": {
+      "bytes": 46796,
+      "lines": 507,
+      "sha256": "ab331ad5d3f0c0a1f54317e538525fe7111a816b3efa12c3bd18506f92a55e3f"
+    },
+    "prepare.py": {
+      "bytes": 7466,
+      "lines": 98,
+      "sha256": "12bc467b8a1df1fc47bcfedcfc7b49e9dff9ce4f85b0ffc69397f75a448930f6"
+    },
+    "verify.py": {
+      "bytes": 15322,
+      "lines": 185,
+      "sha256": "a8c753527867d9712136a5d89799d58a28755085521d3be15ce12be5f221d001"
+    }
+  },
+  "proposal": {
+    "bytes": 3046839,
+    "lines": 8870,
+    "sha256": "17ba346d20212739fa4450c71506c08c59f5c2f0bbdb586fdb96e8a00be4c3f6"
+  },
+  "scope": "Prospective retained beforeimages, reviewed complete proposition correspondence and non-growing address publication only; no current canonical write or native recapture.",
+  "totals": {
+    "original": {
+      "bytes": 21579,
+      "lines": 296
+    },
+    "proposal": {
+      "bytes": 21558,
+      "lines": 288
+    }
+  }
+}

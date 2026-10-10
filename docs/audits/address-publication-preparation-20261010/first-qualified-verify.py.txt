@@ -1,0 +1,185 @@
+"""Qualify retained prospective facts; snapshot replay never claims live publication."""
+import argparse
+import copy
+import hashlib
+import json
+import re
+import runpy
+import subprocess
+import sys
+from pathlib import Path
+from textwrap import fill
+
+BASE = Path('docs/audits/address-publication-preparation-20261010')
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / 'scripts'))
+REVISION = 'a6c92162dd8d0cd7ec718423b9756c2f5a2d4193'
+SUCCESS = ('PASS complete retained source/proposition/question/probe/authority and actual-result preparation; '
+           'non-growing proposal only, current canonical publication remains pending.\n')
+
+
+def need(value, cause):
+    if not value:
+        raise ValueError(cause)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'lines': raw.count(b'\n'), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def same(a, b):
+    return json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
+
+
+def fixed(path):
+    r = subprocess.run(['git', '--no-replace-objects', 'cat-file', 'blob', REVISION + ':' + path], capture_output=True)
+    need(r.returncode == 0 and r.stderr == b'', 'whole independent fixed preparation source')
+    return r.stdout
+
+
+def metadata(raw):
+    front, body = raw.decode().rsplit('---\n', 1)
+    return front, body.strip().split('\n\n')
+
+
+def result(actual, role):
+    folder = {'prerequisite': 'address-parent-acceptance-20261010', 'source-model': 'address-source-integration-20261010'}[role]
+    reader = 'docs/audits/' + folder + '/verify.py'; expected = runpy.run_path(reader)['SUCCESS']
+    need(set(actual) == {'command', 'status', 'stdout', 'stderr', 'instruments'}, 'closed complete preparation prerequisite result')
+    need(type(actual['status']) is int and actual['status'] == 0, 'actual preparation prerequisite integer success')
+    need(actual['command'] == ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', reader], 'complete preparation prerequisite command')
+    need(actual['stdout'] == expected, 'complete preparation prerequisite stdout')
+    paths = (str(BASE / 'checks.py'), reader, 'scripts/run_with_ram_guard.sh')
+    instruments = {p: {k: v for k, v in pin(Path(p).read_bytes()).items() if k != 'lines'} for p in paths}
+    need(actual['instruments'] == instruments, 'complete preparation invocation instruments')
+    need(re.fullmatch(r'ram-guard: PID [0-9]+; host [0-9.]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n', actual['stderr']),
+         'complete preparation guard stream')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__); parser.add_argument('--snapshot', action='store_true'); args = parser.parse_args()
+    model = runpy.run_path(str(BASE / 'model.py')); original = json.loads((BASE / 'proposal.json').read_bytes())
+    members = {path: pin(fixed(path)) for path in original['fixed_members']}
+    need(same(members, original['fixed_members']), 'whole independent retained prerequisite sources')
+    for path, spec in original['beforeimages'].items():
+        raw = Path(spec['locator']).read_bytes()
+        need(raw == fixed(path) and pin(raw) == spec['identity'], 'complete original source beforeimage')
+    expected_cards = {}
+    for path in model['PATHS']:
+        raw = fixed(path); front, paragraphs = metadata(raw); header = front
+        if path == model['CORE']:
+            need(header.count('date: 2026-10-10\n') == 1, 'unique original preparation card date')
+            header = header.replace('date: 2026-10-10\n', '  - "' + model['QUESTION'] + '"\ndate: 2026-10-10\n')
+        planned = [model['REPLACEMENTS'].get(path, {}).get(i, p) for i, p in enumerate(paragraphs)]
+        if path == model['CORE']:
+            planned.append(model['ADDITION'])
+        rendered = header + '---\n\n' + '\n\n'.join(fill(re.sub(r'\s+', ' ', p).strip(), width=132,
+            break_long_words=False, break_on_hyphens=False) for p in planned) + '\n'
+        rendered = rendered.replace('[Observer/helper source meanings] (', '[Observer/helper source meanings](').replace('[source admission] (', '[source admission](')
+        expected_cards[path] = (raw, rendered.encode(), paragraphs)
+        if not args.snapshot:
+            need(Path(path).read_bytes() == raw, 'prospective role leaves every current target card unchanged')
+    totals = {role: {key: sum(pin(row[0 if role == 'original' else 1])[key] for row in expected_cards.values())
+                    for key in ('bytes', 'lines')} for role in ('original', 'proposal')}
+    registry = fixed('doctrine/live_document_size/surfaces.jsonl')
+    authority = next(r for r in map(json.loads, registry.splitlines()) if r.get('surface_id') == 'knowledge_cards')
+    current = runpy.run_path('scripts/check_record_value_publication.py'); prior = current['historical']()
+    all_paths = subprocess.check_output(['git', '--no-replace-objects', 'ls-tree', '-r', '--name-only', REVISION,
+                                       '--', 'docs/knowledge', 'docs/decisions'], text=True).splitlines()
+    canonical = {p: fixed(p) for p in all_paths if p.endswith('.md')}
+    canonical_members = {p: pin(raw) for p, raw in canonical.items()}
+    rows = prior['metadata']['allocation'](canonical)['rows']
+    checks = json.loads((BASE / 'checks.json').read_bytes())
+
+    def qualify(p):
+        need(set(p) == set(original), 'closed complete prospective publication')
+        need(p['owner'] == (BASE / 'scope.txt').read_text().strip() and p['revision'] == REVISION and p['scope'] == original['scope']
+             and p['missing_legs'] == original['missing_legs'], 'exact prospective role and missing publication/native legs')
+        need(same(p['fixed_members'], members) and same(p['beforeimages'], original['beforeimages']), 'whole fixed source and beforeimage allocation')
+        need(set(p['cards']) == set(expected_cards), 'complete prospective card population')
+        for path, row in p['cards'].items():
+            raw, planned, paragraphs = expected_cards[path]; old_front, _ = metadata(raw); new_front, proposed = metadata(planned)
+            need(set(row) == set(original['cards'][path]), 'closed complete prospective card')
+            need(row['original'] == original['beforeimages'][path] and row['original_metadata'] == old_front + '---\n', 'whole original metadata and source identity')
+            need(row['proposed_metadata'] == new_front + '---\n', 'complete existing and new question probe metadata')
+            need(row['text'].encode() == planned and row['proposed_identity'] == pin(planned), 'exact complete reviewed prospective text')
+            need(len(row['paragraphs']) == len(paragraphs), 'complete ordered original proposition allocation')
+            for i, mapping in enumerate(row['paragraphs']):
+                need(set(mapping) == {'source', 'proposed', 'review'} and mapping['source'] == paragraphs[i]
+                     and mapping['proposed'] == proposed[i] and mapping['review'] == original['cards'][path]['paragraphs'][i]['review'],
+                     'complete ordered reviewed proposition correspondence')
+            need(row['additions'] == proposed[len(paragraphs):], 'complete separately qualified address additions')
+        need(same(p['totals'], totals) and all(totals['proposal'][k] <= totals['original'][k] for k in ('bytes', 'lines')),
+             'complete measured non-growing prospective working set')
+        need(same(p['authority'], authority), 'whole unchanged Knowledge Map authority')
+        need(same(p['original_canonical_members'], canonical_members), 'complete original global canonical membership')
+        need(set(p['original_queries']) == {'direct', 'cached'}, 'complete original query roles')
+        for role, actual in p['original_queries'].items():
+            need(set(actual) == {'command', 'status', 'stdout', 'stderr'} and type(actual['status']) is int and actual['status'] == 0,
+                 'complete actual original query integer success')
+            command = ['knowledge-map/scripts/query_knowledge_map.sh', '--all'] + (['--no-cache'] if role == 'direct' else [])
+            need(actual['command'] == command and actual['stdout'] == rows and actual['stderr'] == '', 'complete original source-derived query allocation')
+        need(set(p['actual_readers']) == {'prerequisite', 'source-model'}, 'complete preparation semantic prerequisite population')
+        for role, actual in p['actual_readers'].items():
+            result(actual, role)
+            need(same(actual, checks[role]), 'whole actual current preparation prerequisite receipt')
+        need(same(p['integration'], original['integration']) and same(p['legs'], original['legs']), 'complete publication integration requirements and verification legs')
+        return True
+
+    qualify(original)
+    controls = []
+    def reject(name, mutate, cause):
+        candidate = copy.deepcopy(original); mutate(candidate); need(not same(candidate, original), 'genuine complete preparation control: ' + name)
+        try:
+            qualify(candidate)
+        except ValueError as error:
+            need(str(error) == cause, 'intended preparation refusal: ' + name + ': ' + str(error))
+            controls.append({'name': name, 'refusal': cause, 'whole_candidate': pin(json.dumps(candidate, sort_keys=True).encode())})
+        else:
+            raise ValueError('false-green complete preparation control: ' + name)
+
+    core = model['CORE']
+    reject('native-promotion-field', lambda p: p.update(native_identity=True), 'closed complete prospective publication')
+    reject('current-publication-promotion', lambda p: p.update(scope='Current address facts are published'), 'exact prospective role and missing publication/native legs')
+    reject('lost-native-gap', lambda p: p.update(missing_legs='All native objects measured'), 'exact prospective role and missing publication/native legs')
+    reject('lost-whole-source', lambda p: p['fixed_members'].pop(next(iter(p['fixed_members']))), 'whole fixed source and beforeimage allocation')
+    reject('lost-beforeimage', lambda p: p['beforeimages'].pop(core), 'whole fixed source and beforeimage allocation')
+    reject('lost-card', lambda p: p['cards'].pop(core), 'complete prospective card population')
+    reject('lost-old-question', lambda p: p['cards'][core].update(original_metadata=p['cards'][core]['original_metadata'].replace('what qualifies finite original exception classes?', 'borrowed')), 'whole original metadata and source identity')
+    reject('lost-new-question', lambda p: p['cards'][core].update(proposed_metadata=p['cards'][core]['proposed_metadata'].replace(model['QUESTION'], 'borrowed')), 'complete existing and new question probe metadata')
+    reject('native-address-meaning', lambda p: p['cards'][core].update(text=re.sub(r'cross-call/capture\s+reuse\s+stay\s+opaque', 'cross-call/capture reuse proves identity', p['cards'][core]['text'])), 'exact complete reviewed prospective text')
+    reject('borrowed-whole-card', lambda p: p['cards'][core].update(text=p['cards'][model['HELPER']]['text']), 'exact complete reviewed prospective text')
+    reject('lost-old-proposition', lambda p: p['cards'][core]['paragraphs'].pop(), 'complete ordered original proposition allocation')
+    reject('borrowed-proposition', lambda p: p['cards'][core]['paragraphs'][0].update(source=p['cards'][core]['paragraphs'][1]['source']), 'complete ordered reviewed proposition correspondence')
+    reject('lost-qualified-addition', lambda p: p['cards'][core]['additions'].clear(), 'complete separately qualified address additions')
+    reject('Boolean-byte-total', lambda p: p['totals']['proposal'].update(bytes=True), 'complete measured non-growing prospective working set')
+    reject('widened-card-allowance', lambda p: p['authority']['transition']['max_growth'].update(bytes_total=9999999), 'whole unchanged Knowledge Map authority')
+    reject('lost-global-member', lambda p: p['original_canonical_members'].pop(next(iter(p['original_canonical_members']))), 'complete original global canonical membership')
+    reject('Boolean-query-status', lambda p: p['original_queries']['direct'].update(status=False), 'complete actual original query integer success')
+    reject('lost-global-query', lambda p: p['original_queries']['direct'].update(stdout=p['original_queries']['direct']['stdout'].split('\n',1)[1]), 'complete original source-derived query allocation')
+    reject('borrowed-query-command', lambda p: p['original_queries']['direct'].update(command=p['original_queries']['cached']['command']), 'complete original source-derived query allocation')
+    reject('lost-semantic-reader', lambda p: p['actual_readers'].pop('source-model'), 'complete preparation semantic prerequisite population')
+    for value in (False, 1):
+        reject('wrong-semantic-status-' + str(value), lambda p: p['actual_readers']['prerequisite'].update(status=value), 'actual preparation prerequisite integer success')
+    reject('borrowed-semantic-command', lambda p: p['actual_readers']['prerequisite'].update(command=p['actual_readers']['source-model']['command']), 'complete preparation prerequisite command')
+    reject('short-semantic-output', lambda p: p['actual_readers']['prerequisite'].update(stdout='PASS\n'), 'complete preparation prerequisite stdout')
+    reject('lost-semantic-instrument', lambda p: p['actual_readers']['prerequisite']['instruments'].pop('scripts/run_with_ram_guard.sh'), 'complete preparation invocation instruments')
+    reject('widened-semantic-guard', lambda p: p['actual_readers']['prerequisite'].update(stderr=p['actual_readers']['prerequisite']['stderr'].replace('cutoff 88%', 'cutoff 99%')), 'complete preparation guard stream')
+    reject('lost-integration-requirement', lambda p: p['integration']['requirements'].pop(), 'complete publication integration requirements and verification legs')
+    actual = checks['preparation-corrected']; paths = (BASE / 'checks.py', BASE / 'prepare.py', Path('scripts/run_with_ram_guard.sh'))
+    need(set(actual) == {'command', 'status', 'stdout', 'stderr', 'instruments'} and type(actual['status']) is int and actual['status'] == 0 and actual['command'] == ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', str(BASE / 'prepare.py')]
+         and actual['stdout'] == 'PASS complete retained address beforeimages and reviewed non-growing proposal; current canonical publication remains pending.\n'
+         and actual['instruments'] == {str(p): {k:v for k,v in pin(p.read_bytes()).items() if k != 'lines'} for p in paths}
+         and re.fullmatch(r'ram-guard: PID [0-9]+; host [0-9.]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n', actual['stderr']), 'actual complete preparation producer')
+    proof = {'scope': original['scope'], 'proposal': pin((BASE / 'proposal.json').read_bytes()), 'totals': totals, 'controls': controls,
+             'programmes': {n: pin((BASE / n).read_bytes()) for n in ('model.py', 'prepare.py', 'verify.py', 'checks.py')},
+             'legs': original['legs'], 'missing_legs': original['missing_legs']}
+    target = BASE / 'proof.json'
+    if target.exists():
+        need(same(json.loads(target.read_bytes()), proof), 'whole immutable prospective qualification')
+    else:
+        target.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

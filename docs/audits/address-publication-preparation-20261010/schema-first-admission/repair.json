@@ -1,0 +1,55 @@
+{
+  "cases": [
+    {
+      "name": "exact-prior-unknown-native-field",
+      "refusal": "closed complete prospective publication",
+      "whole_candidate": {
+        "bytes": 3046839,
+        "lines": 8870,
+        "sha256": "17ba346d20212739fa4450c71506c08c59f5c2f0bbdb586fdb96e8a00be4c3f6"
+      }
+    },
+    {
+      "name": "unknown-card-native-field",
+      "refusal": "closed complete prospective card",
+      "whole_candidate": {
+        "bytes": 3046799,
+        "lines": 8870,
+        "sha256": "6dce5a6eef6a1a1b51f2b3a4c55ef1585b7f770b9b89868dce2bd4a12653fc7c"
+      }
+    },
+    {
+      "name": "native-scope",
+      "refusal": "exact prospective role and missing publication/native legs",
+      "whole_candidate": {
+        "bytes": 3046656,
+        "lines": 8869,
+        "sha256": "40eb667b77a776c23cc0a48e470c457ce44829bada40941a94d228a1d88f2ccc"
+      }
+    },
+    {
+      "name": "native-review",
+      "refusal": "complete ordered reviewed proposition correspondence",
+      "whole_candidate": {
+        "bytes": 3046509,
+        "lines": 8869,
+        "sha256": "f48c58bd6176025bee1501b12bf6bd2afe7e216fc70f9b9b245b2fb879f9ba2e"
+      }
+    },
+    {
+      "name": "borrowed-beforeimage-locator",
+      "refusal": "whole independent beforeimage membership and schema",
+      "whole_candidate": {
+        "bytes": 3046649,
+        "lines": 8869,
+        "sha256": "f76e92690f771446374ad9f820fc496d15cc9ad7d724e593b3ae553b903783f5"
+      }
+    }
+  ],
+  "programme": {
+    "bytes": 17330,
+    "lines": 204,
+    "sha256": "1183b76c5a80ec28688f65e42f0fb87700e9602465de7a0ccfb9742f23927cd3"
+  },
+  "scope": "Genuine first-admission input interception only; no earlier proof is required and no source or status is changed."
+}

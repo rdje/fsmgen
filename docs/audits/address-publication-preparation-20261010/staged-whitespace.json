@@ -1,0 +1,17 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "contract": "The owned Markdown insertion fragment ends in exactly two LF bytes. Its sole new-blank-line-at-EOF warning is intentional; no other whitespace warning is admitted.",
+  "fragment": {
+    "bytes": 2998,
+    "path": "docs/audits/address-publication-preparation-20261010/book-addition.md.txt",
+    "sha256": "60e6c4285d332aa8ad58b592b21da108a4a4ef150e6fef537d61c40c8fc710ea"
+  },
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-publication-preparation-20261010/book-addition.md.txt:48: new blank line at EOF.\n"
+}

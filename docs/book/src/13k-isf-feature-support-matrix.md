@@ -1656,6 +1656,54 @@ reuse across calls or captures, heap census, cold replay, visual book QA and
 HIAL/full-CI/push qualification retain their separate owners. Existing canonical
 facts, questions, probes and collection limits remain unchanged.
 
+Governed address publication now has a retained prospective preparation.
+The complete current core, helper, parser and tooling cards remain unchanged.
+Their full beforeimages, reader programmes, book sources and capacity authority
+are bound to the committed source epoch. The original global source membership
+and complete direct and cached question allocation also retain.
+
+The reviewed prospective texts preserve every existing question, replay command,
+source obligation and native limit. Their ordered paragraph correspondence keeps
+the exact originals alongside the proposed wording. Separately qualified finite
+source and numerical address roles update the source-only gaps; native object
+identity and address reuse across calls or captures remain unqualified. The
+complete proposed card working set shrinks under unchanged collection authority.
+Natural-language proposition equivalence is a recorded review, not a universal
+automated proof.
+
+Fresh complete integrated-source and raw-parent readers pass. A separate reader
+reconstructs all fixed source bytes, original global metadata and query ownership,
+prospective question/probe metadata, ordered correspondence and measured working
+set. Genuine whole-proposal omissions, borrowed text, native-promotion claims,
+Boolean results, lost questions/probes and widened authority reject. Earlier
+over-budget drafts remain unadmitted. The first audit import-path failure and
+its premature dependent invocation retain their actual nonzero outcomes; the
+corrected sequential producer and verifier pass without editing live cards.
+
+Final review also found an independent-reader schema defect. Before any prior
+proof existed, the saved reader accepted an extra native-identity field because
+it used the proposed input as its own expected schema and value authority. The
+complete actual false green, candidate, source and generated proof retain.
+Explicit independent declarations and fixed Git member/beforeimage reconstruction
+now close that gap. The repaired exact reader rejects unknown fields, native
+scope or review changes and borrowed beforeimage locators before any seal, with
+no proof write. The original proposal stays unchanged; the final qualification
+is separate from the retained first limited proof.
+
+Replay the retained preparation in its explicit snapshot role:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-publication-preparation-20261010/verify.py --snapshot
+```
+
+This proves prospective source retention and reviewed preparation. It does not
+establish current canonical address publication. The next child must admit the
+exact beforeimages through governed history and update cards and the maintained
+current reader atomically, then qualify complete current source, global queries
+and native book delivery. Full unchanged publication/address-container acceptance
+follows separately. Existing native/private/provider/formatter/CODE/Regexp,
+heap/cold/visual/HIAL/full-CI/push limits retain their owners.
+
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
 does not establish coordinate meanings or later current currency:

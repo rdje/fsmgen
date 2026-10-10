@@ -1,0 +1,52 @@
+# Retained governed address publication preparation
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.1
+
+All current canonical cards and production reader code remain unchanged. The
+full fixed beforeimages, prior complete prerequisite namespaces, reviewed full
+prospective texts, ordered paragraph correspondence and actual original global
+source/query allocation retain in proposal.json. model.py declares reviewed
+prose; prepare.py retains whole sources and the working set. verify.py separately
+reconstructs fixed Git sources, original metadata/probes, reviewed correspondence,
+actual results, full original global query allocation and budget. Missing universal
+natural-language equivalence is explicit. Manual review is not an automated proof.
+
+Replay the dated preparation after later current publication:
+
+    scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-publication-preparation-20261010/verify.py --snapshot
+
+Default replay additionally requires current target cards still equal the original
+beforeimages. Snapshot proves dated prospective custody; it never claims current
+canonical source currency. The maintained current reader still owns current
+whole source/query/native scopes and will change atomically in the next child.
+
+All existing questions and full reverify commands stay. Core adds a scoped
+original-address question and links the complete qualified parent reader. The
+prospective helper/parser/tooling wording distinguishes source progress from
+native limits, preserving old checkpoint and current/history roles. Paragraph
+mapping retains every exact original alongside reviewed proposed text; repeated
+scope propositions may also appear in another complete current-check paragraph.
+The complete working set shrinks; no authority or collection allowance changes.
+
+All first unadmitted drafts/programmes remain. First preparation1 failed on the
+new audit import search path after retaining complete beforeimages; premature
+verify1 then failed because no proposal existed. Corrected entrypoints derive
+the own scripts directory, reuse only exactly equal beforeimages, and execute
+producer then verifier only after consuming success. Distinct named guarded
+results retain every actual status and instrument; no failure is promoted.
+
+Governed archive admission and atomic canonical/current/native publication remain
+next, followed by full unchanged address-container acceptance. Native/private/
+provider/formatter/CODE/Regexp identities/payload/flags, cross-call/capture reuse,
+heap/cold/visual/HIAL/full-CI/push scopes remain separately owned.
+
+The definitive preparation certificate is final-proof.json. First proof.json and
+first-qualified verifier/proof remain the exact limited earlier qualification.
+Final review reproduced a real first-admission false green for an unknown native
+field. Independent declarations replace proposed-input schema/value authority;
+fixed Git independently determines complete member/beforeimage allocation before
+reads. verify_schema_repair.py challenges the repaired exact reader without a
+prior seal; full valid and snapshot replay must pass separately. The frozen
+reproducer is dated to the original target-card epoch and restores its exact
+self-source fingerprint; it never overwrites the first proof or result. Current
+canonical cards and source scripts remain unchanged throughout this unit.

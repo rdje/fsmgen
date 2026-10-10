@@ -1,0 +1,17 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=fuller",
+    "-S",
+    "return coordinate_fact.cards(result)",
+    "--",
+    "scripts/check_record_value_publication.py"
+  ],
+  "locus": "The installed maintained reader admits exact complete reviewed coordinate-era target texts. Qualified address source/numerical parents do not establish current canonical currency; retained non-growing reviewed beforeimages/proposals must precede an atomic target-card/reader update.",
+  "read_only_diagnostics": "An initial guessed old current-publication audit path was absent. The actual T2066 public contract identifies scripts/check_record_value_publication.py. Initial surface lookup indexed a registry metadata row without surface_id; the correct discriminant is row.get(surface_id). No repository defect or source change was inferred from these diagnostic errors.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "commit 7efdbf512bfd865220fb13f83fbbded9b42cdcf0\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Sat Oct 10 03:30:21 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Sat Oct 10 03:30:21 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4.2: publish qualified current coordinate facts atomically\n    \n    Admit the complete four-card proposal, retained exact source history, parser/current reader roles and native book/query/source allocation under unchanged collection ceilings.\n    \n    Authenticate the complete original coordinate qualification and all fixed inputs without promoting authentication to fresh semantic reconstruction. Preserve historical stdout compatibility and retain the actual first reader/oracle failures with corrected focused and independent controls.\n    \n    Validation: focused prove (Files=3, Tests=310), unchanged epoch verifier, complete current/native reader, copied-source verification, preparation snapshot and independent whole-publication audit. Fresh claim census, staged doctrines and normal hooks gate this commit. Full original replay and final publication closure remain successor-owned.\n"
+}

@@ -1,0 +1,17 @@
+{
+  "actual_status": 0,
+  "actual_stderr": "",
+  "actual_stdout": "PASS complete retained source/proposition/question/probe/authority and actual-result preparation; non-growing proposal only, current canonical publication remains pending.\n",
+  "candidate": {
+    "bytes": 3046839,
+    "lines": 8870,
+    "sha256": "17ba346d20212739fa4450c71506c08c59f5c2f0bbdb586fdb96e8a00be4c3f6"
+  },
+  "cause": "qualify compares root/card schemas, scope and other declared values to the same unqualified input, allowing an unknown original_native_identity field before any prior seal exists.",
+  "programme": {
+    "bytes": 15322,
+    "lines": 185,
+    "sha256": "a8c753527867d9712136a5d89799d58a28755085521d3be15ce12be5f221d001"
+  },
+  "scope": "Exact saved reader first-admission input interception only; original project inputs and proposal never change."
+}
