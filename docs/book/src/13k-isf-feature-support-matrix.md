@@ -1054,6 +1054,45 @@ Original numeric/private/provider/formatter identity, helper/parser roles,
 the raw-address join and canonical address publication remain open. Cross-pool
 detachment remains a finite source hypothesis, not measured provider identity.
 
+The nested source lifetime join now covers the complete Metadata/Value pair
+population. Each pair has three views: the capture record at the inner Metadata
+throw, the Scope record preserving that same inner throw, and the later new Value
+throw after Metadata unwinds. The first two views share one event; an embedded
+trace is not a second active invocation.
+
+The constructed interface's `type_spec` is the active Value private root's type
+node: `my $checked = $spec` preserves that alias. Metadata clones the interface
+and traverses its detached type graph with shared sink and active-path locals.
+For example, the cyclic `.data` member returns to the Metadata type root while
+the supplied interface still points into the separate Value graph. The join
+resolves every previously pending nested operation domain and preserves the
+original Scope arguments through both wrappers and saved operation calls.
+
+At the later Value throw, Scope and its Value root remain active. Capture and
+both copy delegates have returned. The observer still holds both `[caller]`
+arrays in its `@api` records and retains the saved operation lookups in lexical
+scope. A returned activation therefore does not imply a dead caller snapshot.
+Metadata's sink, active hash and detached result, and the constructed interface
+container have no active own source holder in this view; their absolute death
+or external retention is not measured. The shared Value type node stays held.
+
+Independent graph bijections, semantic member walks and source-expression
+bindings check complete aliases, kinds, recursive cycles and phase lifetimes.
+Genuine other-call/copy/phase, alias-split, omission, false-holder and Boolean
+domain controls reject. The first oracle's Boolean bridge-phase admission is
+retained and reproduced; the corrected bridge comparison checks scalar types.
+Replay the full finite source join from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-nested-lifetimes-20261010/verify.py
+```
+
+The Metadata/nested source container is closed. Helper, callback, subtest and
+parser roles are next. Original numeric/private/provider/formatter identity,
+inequality of saved CODE handles, external/global retention, the actual raw
+address join and governed canonical address publication remain open. Symbolic
+graph carriers and finite clone hypotheses do not establish native allocations.
+
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
 does not establish coordinate meanings or later current currency:

@@ -1,0 +1,42 @@
+---
+id: record-value-nested-source-lifetimes
+title: Returned capture calls retain observer caller snapshots
+answers:
+  - "which nested Value and Metadata bindings survive the later Value throw?"
+  - "does a returned observer API call imply its caller snapshot is dead?"
+date: 2026-10-10
+status: proposed
+tags: [isf, record, metadata, value, source, lifetime]
+evidence: [docs/audits/address-nested-lifetimes-20261010/proof.json]
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-nested-lifetimes-20261010/verify.py
+---
+
+The complete finite source cohort joins every qualified nested pair through
+capture-inner, Scope-inner and Scope-outer views. The inner views share one
+throw event. A whole source constructor aliases the supplied interface's type
+node to the active Value-private type; Metadata traverses a separate detached
+copy. All original pending nested operation domains resolve without numeric
+address intake. Scope arguments, wrapper forwarding, shared Metadata recursion
+locals, graph aliases and cycles retain their complete source contracts.
+
+The original observer pushes each caller ARRAY into its @api record before
+running the saved operation. That record still holds the caller ARRAY after
+capture returns. Saved operation CODE lookups also remain in lexical scope.
+At the later new Value throw, capture and both private-copy delegates are
+inactive, while Scope and the Value-private root remain active. The constructed
+interface container and Metadata locals/result have no active own source holder;
+absolute death or external/provider/global retention is unmeasured.
+
+Fresh complete prior readers and runtime construction rederive the join.
+Independent whole graph bijections, semantic member walks and source-expression
+holder checks provide the falsification axis. Genuine actual other-call/copy,
+later-phase, cycle/alias/kind/omission/holder controls reject. A first Boolean
+bridge-phase admission is preserved, reproduced and repaired by exact typed
+comparison. Full pinned Git custody, programmes, inputs, hypotheses, proofs and
+actual receipts provide durability. Original numeric/private/provider/formatter
+identity, saved CODE inequality, external/global retention, helper/parser roles,
+canonical address publication and visual QA are missing legs.
+
+This proposal is not a new current Knowledge Map card. Publication belongs to
+the governed non-growing successor, preserving all existing facts/questions,
+probes and collection authority.

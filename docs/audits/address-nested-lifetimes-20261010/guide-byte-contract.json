@@ -1,0 +1,7 @@
+{
+  "bytes": 2404,
+  "path": "docs/audits/address-nested-lifetimes-20261010/book-addition.md.txt",
+  "reason": "Exact inserted Markdown paragraph separator requires two terminal LF bytes; retain the complete owned addition used by book authority and source/native guide consumers.",
+  "sha256": "c923c965f224c750c95857c1346e52cf6256f5efeebc05f1ccf09bcab8429686",
+  "terminal_bytes_hex": "0a0a"
+}

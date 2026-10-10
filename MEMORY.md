@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3.2` (pending)
-- next_action: Join every nested Value/Metadata source pair across the inner Metadata throw and later Value throw. Bind constructed-interface aliases to retained Value roots, establish all active operation domains and inactive delegates, and conserve completed source models. Commit and close the Metadata/nested container before helper/parser roles.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4` (pending)
+- next_action: Derive helper, callback, subtest and parser source bindings from the complete qualified own source/AST/actor graphs. Preserve completed nested lifetime models; distinguish active ancestors, returned delegates and observer-held snapshots. Commit the safe source slice before whole source integration and raw-address publication.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

@@ -1,0 +1,25 @@
+{
+  "addition": {
+    "bytes": 2404,
+    "sha256": "c923c965f224c750c95857c1346e52cf6256f5efeebc05f1ccf09bcab8429686"
+  },
+  "control": "Genuine native source-scope omission rejects at complete new source-only native guide.",
+  "current": {
+    "bytes": 222247,
+    "sha256": "00491c94b4e62ab37e18f524a8c6e84d5ca8b5bff56359099f63c7ea0e451387"
+  },
+  "native": {
+    "bytes": 260459,
+    "sha256": "cf6014db7750a36e7e6eea14ebcc49db463f2283e8b031f2069587008fe76400"
+  },
+  "original": {
+    "bytes": 219843,
+    "sha256": "780ccd6be3ed1b15802addb054d2fc7e068c5114cb15f2a11b7173b9a7c1db18"
+  },
+  "programme": {
+    "bytes": 3360,
+    "sha256": "4b762be928b78b13da025724896f321fb925fc7daa4bec862537f156b3735fcc"
+  },
+  "revision": "24bb56b75f9dbd811d846571965da36fe08bec10",
+  "scope": "Complete original chapter conservation, all final source copies and full new source-only native guide; visual QA remains open."
+}

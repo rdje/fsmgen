@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "add",
+    "--",
+    "MEMORY.md",
+    "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+    "docs/book/src/13k-isf-feature-support-matrix.md",
+    "docs/audits/address-nested-lifetimes-20261010",
+    "doctrine/live_document_size/surfaces.jsonl",
+    "doctrine/claim_verification/inventory.jsonl"
+  ],
+  "scope": "Actual initial sandbox refusal; no index write completed. The prematurely invoked staged-doctrines receipt does not qualify this slice. Retry the same authorized staging with Git metadata access, then run fresh final-staged-doctrines.",
+  "status": 128,
+  "stderr": "fatal: Unable to create '/Volumes/SSD/Documents/github/fsmgen/.git/index.lock': Operation not permitted\n"
+}

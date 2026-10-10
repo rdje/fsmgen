@@ -1,0 +1,30 @@
+{
+  "actual_original_domain": [
+    "ordinary",
+    "api",
+    7750,
+    1,
+    0
+  ],
+  "candidate_domain": [
+    "ordinary",
+    "api",
+    7750,
+    true,
+    0
+  ],
+  "candidate_sha256": "f84000cfc2b54b3ac05830c1852628ec00628efa928d0ec6012c5c567f1203f4",
+  "first_oracle_measured": {
+    "distinct_relations": 3957,
+    "operation_views": 105,
+    "pairs": 21,
+    "reference_slots": 957,
+    "resolved_nested_operation_views": 42,
+    "unresolved_relations": 63,
+    "views": 63
+  },
+  "fix": "Require recursively exact JSON types and values for complete operation bridges; add genuine Boolean phase control.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3.2",
+  "priority": "P2",
+  "status": "reproduced first oracle incorrectly admits Boolean bridge phase for actual later integer phase"
+}

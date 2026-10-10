@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "scope": "Exact terminal paragraph separator in book-addition.md.txt is intentionally retained under guide-byte-contract.json; no whitespace result is promoted.",
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-nested-lifetimes-20261010/book-addition.md.txt:39: new blank line at EOF.\n"
+}
