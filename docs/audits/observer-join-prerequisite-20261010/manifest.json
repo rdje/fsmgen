@@ -1,0 +1,54 @@
+{
+  "baseline-prior.json": {
+    "bytes": 1303763,
+    "sha256": "de2b1d283d13c76000207f040b8a9efd431af288b1ca1a536cf2af6a79b73547"
+  },
+  "bind.py": {
+    "bytes": 4395,
+    "sha256": "1aaed3e4bbae0747b8e65ad5d86ff630e1c85425ef4e657a3f433317e2b71318"
+  },
+  "binding.json": {
+    "bytes": 1040029,
+    "sha256": "01a8e9ea2aa57facc68b6cd03a184390f86f8fed2bebde3d8d14b6f8b45bf80d"
+  },
+  "book.py": {
+    "bytes": 8131,
+    "sha256": "118b8ce6a8673a11af7b8de1b25e26699dca619dd095608d7f53592cc95dce7f"
+  },
+  "candidate-prior.json": {
+    "bytes": 1303463,
+    "sha256": "0bcbba68339f5f42b95736010f8d73423fed0e6e56da4c1b3aa89318a3f28ac7"
+  },
+  "candidate.json": {
+    "bytes": 3268860,
+    "sha256": "7956ebb5ad9a30f346f22b4b180871a2a2b729ca45de69a60ca55f1b3f27e92d"
+  },
+  "checks.py": {
+    "bytes": 1413,
+    "sha256": "58ba7c5ddf2b7829d4a4e08e3d65af653a2e728058072c096910f758fb7c4e8f"
+  },
+  "guide.md.txt": {
+    "bytes": 893,
+    "sha256": "ceab1804d51cb66c10c117d909f9020aa04c63c05a54d6482b39317ad241e175"
+  },
+  "history-memory-input.md.txt": {
+    "bytes": 1483,
+    "sha256": "748b56e540ecffbea0d57162002e7c00f438c78f48431683e81c967315e51bf3"
+  },
+  "probe.json": {
+    "bytes": 2038,
+    "sha256": "eb74a608c17ff18334eec3bb7c3d2172b6596aac7797f984e98db9f41e52f4fd"
+  },
+  "probe.py": {
+    "bytes": 5006,
+    "sha256": "4f360ee145d9ae1022b94064576f50eaaeedfa1ad14466ea5c279fd8792a0dd0"
+  },
+  "scope.txt": {
+    "bytes": 109,
+    "sha256": "6dccf7e0fd87ab46382f94b86559a27d044d46cc2942d53689965a3ed41516a3"
+  },
+  "verify.py": {
+    "bytes": 19161,
+    "sha256": "557b6cd60f6143c3938aa5e2b245de9a98908fadd3ed09ca3d049e564b134e1c"
+  }
+}

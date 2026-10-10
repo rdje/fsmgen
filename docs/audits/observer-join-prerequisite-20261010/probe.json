@@ -1,0 +1,44 @@
+{
+  "baseline_prior_status": 0,
+  "candidate_full_cause": "every canonical original raw body allocation context and opaque byte conserves",
+  "candidate_full_status": 1,
+  "candidate_prior_status": 0,
+  "intervention": {
+    "after_body": {
+      "bytes": 2557,
+      "sha256": "2ed1333d00ebc828b01aece2bf4617d23c4510a83c196f46b3cb029bbef206a7"
+    },
+    "after_call": "Test::Builder::subtest(Test::Builder=HASH(0x755d048780), \"r\"..., CODE(0x7560402d08))",
+    "after_display": "\"r\"...",
+    "before_body": {
+      "bytes": 2617,
+      "sha256": "3dd27ff64ddad92bc91619aff70f0b0e7dd0ad2f0c69556dc9f0110632bba93d"
+    },
+    "before_call": "Test::Builder::subtest(Test::Builder=HASH(0x755d048780), \"record copy gates preserve existing scalar and storage-only c\"..., CODE(0x7560402d08))",
+    "before_display": "\"record copy gates preserve existing scalar and storage-only c\"...",
+    "domain": "api",
+    "index": 7035,
+    "mode": "ordinary"
+  },
+  "legacy": "docs/audits/record-value-class-frame-join-20261006/verify.py",
+  "missing": [
+    "Complete original observer full-header/quoting/truncation contract",
+    "Original formatter/settings/provider identity remains unmeasured; current public fixtures establish compatibility only"
+  ],
+  "next": "Complete unchanged observer join under .2, then qualify publication and full parent under .3; raw-stack closure follows.",
+  "products": {
+    "baseline-prior.json": {
+      "bytes": 1303763,
+      "sha256": "de2b1d283d13c76000207f040b8a9efd431af288b1ca1a536cf2af6a79b73547"
+    },
+    "candidate-prior.json": {
+      "bytes": 1303463,
+      "sha256": "0bcbba68339f5f42b95736010f8d73423fed0e6e56da4c1b3aa89318a3f28ac7"
+    },
+    "candidate.json": {
+      "bytes": 3268860,
+      "sha256": "7956ebb5ad9a30f346f22b4b180871a2a2b729ca45de69a60ca55f1b3f27e92d"
+    }
+  },
+  "scope": "Diagnosis only: deliberately limited visible-prefix semantics accept another proper prefix; unchanged full original custody rejects it. This is not a false green of the full historical reader."
+}

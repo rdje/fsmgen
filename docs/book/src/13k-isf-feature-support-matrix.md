@@ -1649,6 +1649,27 @@ Regexp identities, numerical reuse across calls or captures, heap census, cold
 replay, visual book QA and governed canonical fact publication remain open.
 Existing canonical facts, questions, probes and collection limits retain.
 
+Full observer joining remains a prerequisite for complete raw-stack closure.
+The earlier finite class/frame join qualifies visible source prefixes and
+whole-body custody. Complete observer headers and exact quoting/truncation
+remain owned by the still-open original observer join.
+
+A dated diagnosis shortens one actual truncated public subtest-name display
+to another proper source prefix. The limited prefix predicates accept it;
+the full historical reader rejects the changed body at its custody gate.
+Both contracts behave as declared. Neither result qualifies the pending
+full-header contract or measures original formatter/settings identity.
+
+Replay the complete dated source, candidate and actual-result diagnosis:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-join-prerequisite-20261010/verify.py
+```
+
+Full observer repair and publication precede raw-stack closure. Class/frame
+parents and raw-stack acceptance remain open; coordinate/address qualifications
+and all separately owned native, cause, consumer, alias and cold scopes retain.
+
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
 complete previously committed child contracts. It joins every original empty

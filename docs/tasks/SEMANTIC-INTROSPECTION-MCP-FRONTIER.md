@@ -4718,11 +4718,40 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Join complete observer and callback meanings.`
   Acceptance: `Reexecute completed source inventory/API-parser/helper/subtest-require children and the separately owned public framework/display contract .5. Join every complete finite observer/callback/refuses/subtest/require frame and full argument header with exact source membership/order and qualifying quoting/truncation contract. Actual borrowed/omitted/reordered/wrong-role/format controls reject; parser/full class-frame/coordinate/address successors remain owned.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.3`
+  Verification: `P1 prerequisite/continuity defect owned2026-10-10: the pending full observer join was skipped by the later finite class/frame and raw-stack resume frontier. Reproduce by reading this pending predecessor at clean60f6259b7, its active observer/class parents and the done finite class/frame .6 contract; inspect the exact predicates before alleging a semantic false green. Impact: unchanged full raw-parent acceptance cannot close while observer/frame/format obligations remain unqualified. Diagnose .1, implement and independently verify .2, then qualify current publication and complete original parent .3 before raw-stack joining. Original Goal/Acceptance and every historical result retain.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.1`
+  Status: `done`
+  Goal: `Authenticate the unfinished observer join and full-header contract.`
+  Acceptance: `From clean60f6259b7c789d91d6df24c13e0ee1994ca030d7 bind the complete original observer inventory/API-parser/helper/subtest-load/public-framework and finite class/frame source, task and evidence contracts. Independently locate the exact still-pending full-header/order/quoting/truncation obligations, actual implemented predicate boundaries and any live resume claims. Reproduce a genuine whole-candidate distinction where possible, without labeling an explicitly limited successful predicate defective. Retain complete source/commands/streams/results and first failures, a fixed-Git source ledger and independent genuine custody/scope controls. Decide and schedule the full unchanged observer repair under .2/.3; if original facts are unmeasured, name the exact missing evidence instead of narrowing acceptance. Update book with the true prerequisite boundary, pass focused/current/native/staged checks and commit diagnosis before implementation.`
+  Verification: `Complete dated diagnosis independently qualifies whole fixed-Git original source/evidence namespaces through archive and binary-object protocols, exact original task/owner and predicate functions, whole original/candidate results and actual guarded command/source epochs. Actual proper-prefix intervention shortens an existing Test::Builder subtest name display; limited predecessor semantics accept while the unchanged full class/frame reader rejects at original-byte custody. This is the declared limited predicate boundary, not a historical whole-reader false green. Six genuine source omission, premature closure, scope/native-field promotion, Boolean-status and borrowed-output controls reject intended causes. git log -S authenticates959f8b940 resume selection while the observer join remained pending and its parents active. Source, full-header/quoting/truncation qualification and original formatter/settings/provider identity remain distinct; the latter is explicitly unmeasured. Repair .2 and full publication/observer acceptance .3 precede raw-stack closure. Independent re-derivation, genuine semantic/custody/scope/status falsification and complete fixed-Git/source/candidate/result/seal durability name the legs. Focused book checks, exact sole guide/unchanged-ceiling publication, native whole guide/current source copies, claim/staged doctrine and normal hooks gate this diagnosis commit; visual QA remains open. Every old programme/result and original Goal/Acceptance retains.`
+  Commit: `this slice; resolve by work-unit Git subject`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S retains959f8b940 frontier selection in checks.json frontier-history. Fixed60f6259b7 task bodies retain pending observer join and active observer/class parents beside the done finite class/frame join. Complete check_footprint/public_arguments/prior_predicates sources independently locate visible-prefix compatibility and the missing full-header/format obligation; actual changed-prefix acceptance/full-custody refusal reproduces the distinction.
+  - [x] **ADDRESSED (verified)** — Complete independent source/task/whole-candidate/actual-result reconstruction and six genuine controls pass in observer-join-prerequisite-20261010. The live pointer now schedules full observer repair .2, then complete publication/parent acceptance .3 before raw-stack closure. Original acceptance and unmeasured formatter/provider boundaries retain; diagnosis does not claim repair.
+  - [x] **NO REGRESSION** — All tests successful; Files=2, Tests=308 in checks.json focused. Complete historical source predicates/custody behave as declared and independent controls pass. Exact guide/book/current native source and unchanged-ceiling/claim publication, staged scripts/check_doctrines.sh and normal hooks gate commit; every actual result retains and original full observer/raw/native acceptance remains open.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2`
+  Status: `pending`
+  Goal: `Qualify complete original observer headers and their genuine controls.`
+  Acceptance: `After diagnosis .1 commits, implement only its source-qualified finite observer/callback/refuses/subtest/do-load join. Reexecute every complete original source/API-parser/helper/own-boundary/public-framework prerequisite. Derive full own argument headers, member/order/role and required quoting/truncation contract before comparison; preserve original whole raw bodies and every unmeasured provider/native/private boundary. Independent reconstruction and actual borrowed/omitted/reordered/wrong-role/format controls must satisfy the original unchanged parent acceptance; no visible-footprint-only closure or native identity inference. Retain all programmes/products/actual results, synchronize book and focused/native/claim/staged gates, and commit before .3.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.3`
+  Status: `pending`
+  Goal: `Publish and close unchanged complete observer acceptance.`
+  Acceptance: `After .2 commits, qualify complete source and actual-reader products, every original observer parent requirement and all child contracts with independent genuine controls. Admit any canonical fact/reader changes through governed non-growing history, preserving all old meanings/questions/probes and unchanged limits. Qualify whole current allocation, exact book guidance and native copied sources, focused/claim/staged/normal hooks, then close only fully verified observer nodes. Class/frame/full raw-stack/cause/consumer/alias/cold/native successors retain their own unchanged acceptance; commit and resume the full raw-stack frontier.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4`
   Status: `done`
