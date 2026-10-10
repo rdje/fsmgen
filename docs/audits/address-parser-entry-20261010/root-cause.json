@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=fuller",
+      "-S",
+      "my $parser = FSM::Adapter::ISF::Parser->new(debug => $debug);",
+      "--",
+      "perl/FSM/Adapter/ISF.pm"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "commit ab95601d8b140a2f375f5d7a3e37b566c8540a03\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Mon May 11 15:59:27 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Mon May 11 15:59:27 2026 +0200\n\n    R14: .isf parser \u2014 first implementation slice\n    \n    - Created FSM::Adapter::ISF (facade)\n    - Created FSM::Adapter::ISF::Parser (validation, typed AST)\n    - Created FSM::Adapter::ISF::LispishAdapter (normalization)\n    - Fixture: isf/apb_requester.isf\n    - Tests: t/1091 (parser, 23 assertions), t/1092 (adapter, 4 subtests)\n    - All tests pass\n    \n    Co-Authored-By: Pi Coding Agent <pi@earendil.works>\n"
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=fuller",
+      "-S",
+      "my $forms = $self->{adapter}->normalize_multi($raw);",
+      "--",
+      "perl/FSM/Adapter/ISF/Parser.pm"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "commit 220dd8a18353d2b2235db11eed2730f24feb864b\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Fri May 15 00:30:00 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Fri May 15 00:30:00 2026 +0200\n\n    ISF-LIBRARIES.3: implement library import resolution\n    \n    - Resolve actor-scoped ISF library imports and exported actor uses.\n    - Emit specialized library-child scheduled .fsm artifacts and library_uses reports.\n    - Synchronize ISF public contract, task tree, roadmap, live docs, and mdBook.\n"
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=fuller",
+      "-S",
+      "sub normalize_form",
+      "--",
+      "perl/FSM/Adapter/ISF/LispishAdapter.pm"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "commit ab95601d8b140a2f375f5d7a3e37b566c8540a03\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Mon May 11 15:59:27 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Mon May 11 15:59:27 2026 +0200\n\n    R14: .isf parser \u2014 first implementation slice\n    \n    - Created FSM::Adapter::ISF (facade)\n    - Created FSM::Adapter::ISF::Parser (validation, typed AST)\n    - Created FSM::Adapter::ISF::LispishAdapter (normalization)\n    - Fixture: isf/apb_requester.isf\n    - Tests: t/1091 (parser, 23 assertions), t/1092 (adapter, 4 subtests)\n    - All tests pass\n    \n    Co-Authored-By: Pi Coding Agent <pi@earendil.works>\n"
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=fuller",
+      "-S",
+      "my $parse_source = FSM::Adapter::ISF->can('parse_source');",
+      "--",
+      "docs/audits/record-value-original-candidate-20261004/observe.pl"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "commit 100f540f56fd5a8209849016ac6874d2d85b7dd1\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Sun Oct 4 23:48:08 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Sun Oct 4 23:48:08 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.2: capture original copy candidate and genuine provider failures\n    \n    Retain unchanged-source native candidate, Storable and clone-then-alias observations,\n    including every original input, whole joint graphs, raw causes and the alias abort.\n    Exercise both bad providers on each unchanged input before the ordinary candidate\n    returns; preserve all initial instruments and fixture failures without normalization.\n    \n    Authenticate full source/runtime/support/owner/program and fixture afterimages,\n    seal native records, and synchronize the book, Knowledge Map and resume frontier.\n    Independent graph/source/product qualification and cold replay remain open.\n    \n    Validation: original T1986 plus public book audits pass Files=3, Tests=318;\n    mdBook builds, sealed capture/controls and staged doctrines pass.\n"
+  }
+]

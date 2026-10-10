@@ -1,0 +1,853 @@
+{
+  "actual_borrowed_witnesses": {
+    "contained_receiver": {
+      "origin": {
+        "class": "FSM::Adapter::ISF::Parser",
+        "kind": "own_source_constructor",
+        "mode": "ordinary",
+        "node": "/0/parser"
+      },
+      "reference_kind": "FSM::Adapter::ISF::Parser=HASH"
+    },
+    "other_mode": "storable",
+    "other_parse": [
+      "ordinary",
+      "parses",
+      3,
+      0,
+      0
+    ]
+  },
+  "binding": {
+    "fresh_helper_reader_stdout": "PASS complete helper/callback/subtest source bindings, retained holders and genuine controls; native/parser identities remain open.\n",
+    "inputs": {
+      "docs/audits/address-helper-bindings-20261010/binding.json": {
+        "bytes": 20242,
+        "sha256": "1547c53864ef4b42259c4010e6eaa6527b684f634b59165ad11ec9a22a8e9e27"
+      },
+      "docs/audits/address-helper-bindings-20261010/checks.json": {
+        "bytes": 72579,
+        "sha256": "2dbd709ac2e8e7de2f16d37b31c669e046379d633ef45b67ddb4e2b7c82ac1b0"
+      },
+      "docs/audits/address-helper-bindings-20261010/first-proof.json.txt": {
+        "bytes": 30861,
+        "sha256": "03c40ce87f4cd57c7e937dc7f732b464f9e9f66fd26e58176319407b4825247d"
+      },
+      "docs/audits/address-helper-bindings-20261010/first-verify.py.txt": {
+        "bytes": 11702,
+        "sha256": "e227c4305a245a4ae564ef0f6d47322d0ab9ad1ccdf03000ebd42fe64c9217fd"
+      },
+      "docs/audits/address-helper-bindings-20261010/hypotheses.json": {
+        "bytes": 7707022,
+        "sha256": "d8b8491f104ba8c2c54a5ca681c25bff5374b039b93b1d94db7e0751fdfab5cb"
+      },
+      "docs/audits/address-helper-bindings-20261010/inputs.json": {
+        "bytes": 6190833,
+        "sha256": "f877da68ef1360426659879a9d8099bcc7835e0e5030c2e291333b8f70e9e191"
+      },
+      "docs/audits/address-helper-bindings-20261010/model.py": {
+        "bytes": 14286,
+        "sha256": "e7b6b92cf5683566ad0fa0595aabbc008b402d23ad211df22f4fec74d374f441"
+      },
+      "docs/audits/address-helper-bindings-20261010/oracle.py": {
+        "bytes": 19053,
+        "sha256": "a94c4bb6447ffa25e51efcd6e05a67bf67ece652667f70bab5fb680df610bbd8"
+      },
+      "docs/audits/address-helper-bindings-20261010/proof.json": {
+        "bytes": 31465,
+        "sha256": "957bf8c06a9c13f3f49174d09e5d4cc97d419e66dbb9501fbaaf1bf204693cf1"
+      },
+      "docs/audits/address-helper-bindings-20261010/source.py": {
+        "bytes": 5906,
+        "sha256": "dfa136b365b572da9dd44602d635a9ce99cb9f515e6cc33bd90452d064e00597"
+      },
+      "docs/audits/address-helper-bindings-20261010/verify.py": {
+        "bytes": 13583,
+        "sha256": "a28c91aadb9b5fa26fb5696432f26b0b637162e1cb9fe4baeb7ddc88dc0a7d44"
+      },
+      "docs/audits/address-metadata-core-20261010/binding.json": {
+        "bytes": 13328,
+        "sha256": "b7b9e592b95fc003c10175c81254ca2d83bb6b9afcb2c48b09ad10a1e4e7e5c6"
+      },
+      "docs/audits/address-metadata-core-20261010/checks.json": {
+        "bytes": 81223,
+        "sha256": "967aabba6316c778209b4cdc5333cd23be8201c5275035128fd17ff6007288f2"
+      },
+      "docs/audits/address-metadata-core-20261010/first-proof.json.txt": {
+        "bytes": 20348,
+        "sha256": "ea50b440db8407ecdf3511b206886da509816c14add23cd03c6717fdd1aa95b0"
+      },
+      "docs/audits/address-metadata-core-20261010/first-verify.py.txt": {
+        "bytes": 8202,
+        "sha256": "60686d9da774ad3ebed9fe3d28cbfb9f0cbfe463c916de8c91745cbaeb52fd81"
+      },
+      "docs/audits/address-metadata-core-20261010/hypotheses.json": {
+        "bytes": 170456,
+        "sha256": "59c4cfada7b84d798dd870bfb2a12b7433ba26ba8af7113501bdde4f579aa426"
+      },
+      "docs/audits/address-metadata-core-20261010/inputs.json": {
+        "bytes": 546782,
+        "sha256": "f4446cde413b8c04f529faafc84d815fcff8eb79ccae87aeaa805aa931f6c33d"
+      },
+      "docs/audits/address-metadata-core-20261010/model.py": {
+        "bytes": 6880,
+        "sha256": "d5f4ff276019715873116ef09819a83bbedca71f550b539eacbd0cd9bb3e14e2"
+      },
+      "docs/audits/address-metadata-core-20261010/oracle.py": {
+        "bytes": 12613,
+        "sha256": "849b95c0c41873df2925a4bdc7ab1269f2c43bcfd125df537d6429cbac7e1ff7"
+      },
+      "docs/audits/address-metadata-core-20261010/prior_domains.py": {
+        "bytes": 3023,
+        "sha256": "f99a0a381dbc64a6713725d3403cd32147fb6183ddb3421371a3e54ffc786b10"
+      },
+      "docs/audits/address-metadata-core-20261010/proof.json": {
+        "bytes": 22889,
+        "sha256": "a5b5994de9022895205c915ef42e9ea46077b76e14ed0a84307f2b27cfd02ddc"
+      },
+      "docs/audits/address-metadata-core-20261010/source.py": {
+        "bytes": 7428,
+        "sha256": "be5c0ba551906214b3d8f920cf4a5a28e7efc38e19df752b98f5f67b1e4cd8fa"
+      },
+      "docs/audits/address-metadata-core-20261010/value-companion-proof.json.txt": {
+        "bytes": 21016,
+        "sha256": "445d7d7831e7cf58b9f91526f88227beb64cc08d98619f9b03a2195b6e688acd"
+      },
+      "docs/audits/address-metadata-core-20261010/value-companion-verify.py.txt": {
+        "bytes": 10725,
+        "sha256": "460fc9c4dc0189837a39878bd0485074adeaca0d975dd5feb1f88063932aa25b"
+      },
+      "docs/audits/address-metadata-core-20261010/verify.py": {
+        "bytes": 11741,
+        "sha256": "dd94471fd64ba6d4a79484e020423cb0454566b911d42eb3b8494f97f293f48d"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/binding.json": {
+        "bytes": 16417,
+        "sha256": "4c55ccd3c3ee9cfd09a50c6492f8998fb5dc73e55d022406104db10bef3fd64c"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/boolean-bridge-first-admission.json": {
+        "bytes": 870,
+        "sha256": "07496d076097e273f5ba3233d36ccdb80d41f00d6ea43a8ca41053c97d9a4a51"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/checks.json": {
+        "bytes": 137612,
+        "sha256": "0f87c0b4b7f6b18d09bfe97444b952f636009774ea35d17491e27eb000873ec8"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/first-oracle.py.txt": {
+        "bytes": 17985,
+        "sha256": "2f5673fb0106f3748ef80e4637f34e14eb7a9789a5f8053b6c8cb3c90060d132"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/first-proof.json.txt": {
+        "bytes": 30728,
+        "sha256": "a7882b4e9be454d0b35cc27b4f1b718ad9ee4e1e7b34cbfbd442d2da675cd89d"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/first-verify.py.txt": {
+        "bytes": 12104,
+        "sha256": "579c8f14ed2a88aa73876e78832eb45f008f2b22659240abd0390517d125d8b4"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/hypotheses.json": {
+        "bytes": 1873611,
+        "sha256": "d9022f44df9711048d89863aeeeb3a26b0f72fd8d43c837f69af582261da67b2"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/inputs.json": {
+        "bytes": 2674911,
+        "sha256": "8ccf23b7db7ef9aba788e85628effe398ba2c9e34aaa79d970f25ab4216afcca"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/model.py": {
+        "bytes": 11949,
+        "sha256": "a81d51e8531b7fdd9f2aa9162598ba9f7a2bae46176c84e04423631f72be60aa"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/oracle.py": {
+        "bytes": 18438,
+        "sha256": "4b2f1df0bdf8b90fd3bb6878181d171986e1f0f4a7e9814eefd8de54d8dbbb18"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/proof.json": {
+        "bytes": 31641,
+        "sha256": "caec2083611d0774ca06b6044691fce6d831bb0d132567c2696e0d32815ba6a2"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/source.py": {
+        "bytes": 8472,
+        "sha256": "6800cda8298a39feee1b843d79022b13725561411a1099c8da986ad5e0db1db4"
+      },
+      "docs/audits/address-nested-lifetimes-20261010/verify.py": {
+        "bytes": 14289,
+        "sha256": "c26e5d8dd214a6bc41b3bf84ce3550033840839369550458613b450b41924288"
+      },
+      "docs/audits/address-private-topology-20261010/binding.json": {
+        "bytes": 8986,
+        "sha256": "509a0a8d23760a57b303ea4689d7681a4ecd5416c816cb60ab5081ad58f355e7"
+      },
+      "docs/audits/address-private-topology-20261010/checks.json": {
+        "bytes": 73174,
+        "sha256": "7fda17b4bb91ebf8d23d5d24b3c97e4870832c532db160fc0edf3a2b6d74ebaa"
+      },
+      "docs/audits/address-private-topology-20261010/hypotheses.json": {
+        "bytes": 11376073,
+        "sha256": "fc05267f975695568b87baa515d9b939d5763839da0dc22dcd49bf40c5f6b20b"
+      },
+      "docs/audits/address-private-topology-20261010/inputs.json": {
+        "bytes": 21188879,
+        "sha256": "09c308307afd442764f494a65ea53ef5bfffb126e986457d399caaf191c24888"
+      },
+      "docs/audits/address-private-topology-20261010/model.py": {
+        "bytes": 3221,
+        "sha256": "133f420ed28caa6ec832112bc63be403dd86da11114dcd317c770ee979899fd8"
+      },
+      "docs/audits/address-private-topology-20261010/oracle.py": {
+        "bytes": 7396,
+        "sha256": "cbd965184b8303a4f02ab7167084562032d06cf1f2db7e123a37f3af6cb06863"
+      },
+      "docs/audits/address-private-topology-20261010/proof.json": {
+        "bytes": 14623,
+        "sha256": "16ec89d0f66f034a9d9a0b6ff673cba97507a224e75d88f6fac5ab2c2a081f1b"
+      },
+      "docs/audits/address-private-topology-20261010/source.py": {
+        "bytes": 7067,
+        "sha256": "acf1234d983d7081f4c442b74c37d3c67262b04ebe2dfa0a2ca2d557d1df6b22"
+      },
+      "docs/audits/address-private-topology-20261010/verify.py": {
+        "bytes": 6137,
+        "sha256": "473fecea0727c72760158f821798903f7e554620b6218c8ccb881cde23da5f96"
+      },
+      "docs/audits/address-source-boundaries-20261010/checks.json": {
+        "bytes": 142313,
+        "sha256": "194186cb09f4665c1cc072e007a7b0057338ebd3412b6c9236d805e53f3eee3f"
+      },
+      "docs/audits/address-source-boundaries-20261010/derive.py": {
+        "bytes": 4579,
+        "sha256": "adcd2f74d2437c44f5224da5a8c5f9ab3ceaa696a0340228aee518292696b326"
+      },
+      "docs/audits/address-source-boundaries-20261010/hypotheses.json": {
+        "bytes": 2118587,
+        "sha256": "3fabe18d6bf73c95ef9f9a80f17e1e1ac6164121a74de3ed979335a0c24b7ef5"
+      },
+      "docs/audits/address-source-boundaries-20261010/inputs.json": {
+        "bytes": 1614699,
+        "sha256": "04733384141cea673f2d04eaf3122f44c4ddac168266f7fef25565af4e39072d"
+      },
+      "docs/audits/address-source-boundaries-20261010/model.py": {
+        "bytes": 7021,
+        "sha256": "e2af4dac48e99ae1e4ac5048c2235d73d9115464bf0d2a997eabce9561395b43"
+      },
+      "docs/audits/address-source-boundaries-20261010/oracle.py": {
+        "bytes": 8070,
+        "sha256": "90707d773ba3008f2eada3495acdec2251fb66718ea4b0242211e5d06b48e692"
+      },
+      "docs/audits/address-source-boundaries-20261010/proof.json": {
+        "bytes": 21026,
+        "sha256": "170cb640ecfc1f41fc395a3c98deca88fb4fd0bde7d71b6bd62d1a86ee65bcc1"
+      },
+      "docs/audits/address-source-boundaries-20261010/verify.py": {
+        "bytes": 4938,
+        "sha256": "37ec92bfd90e288487c62882641195dd368cbc2e78d68afc6e048bfe785c3867"
+      },
+      "docs/audits/address-value-core-20261010/checks.json": {
+        "bytes": 145208,
+        "sha256": "0ba28586c8c79c4450402edd4458606f4a0f948c1b840bddbe57fd2070e4d535"
+      },
+      "docs/audits/address-value-core-20261010/hypotheses.json": {
+        "bytes": 343453,
+        "sha256": "c5702ee1bda223adaa0d7554a59eeafd789c529357cb6097b6b140b9af5cb172"
+      },
+      "docs/audits/address-value-core-20261010/inputs.json": {
+        "bytes": 3068668,
+        "sha256": "9e08ef3430471b2018f9eaa98bcc818500b4439064b23c766f6c997b4d18768f"
+      },
+      "docs/audits/address-value-core-20261010/model.py": {
+        "bytes": 8116,
+        "sha256": "3d9977d211625283b6dc92670f36c4ca4b7cd3cfd8b1c79a4808d81998af2e83"
+      },
+      "docs/audits/address-value-core-20261010/oracle.py": {
+        "bytes": 13390,
+        "sha256": "15b6794d5a93a7cad0f1809c4b59a3186edf666c8c320eda7f2133a0004e386b"
+      },
+      "docs/audits/address-value-core-20261010/proof.json": {
+        "bytes": 16948,
+        "sha256": "8e829c8ec0f059bb041403de4f00b73d91ec4bddb620454c7ca66f408ae3ed6f"
+      },
+      "docs/audits/address-value-core-20261010/source.py": {
+        "bytes": 6274,
+        "sha256": "3d964739de031ef7fad295f7d6d52df13804bd3c2fde227242b28fb0bd9a0922"
+      },
+      "docs/audits/address-value-core-20261010/verify.py": {
+        "bytes": 6326,
+        "sha256": "76f8ccf94038e6053224d786c50b2d4b3858e83838e47665f46148246b410b0e"
+      },
+      "docs/audits/record-value-actors-20261004/actor-models.json": {
+        "bytes": 37111,
+        "sha256": "cdc661fdde42ffd31bfc56c9fc6acded2875be7a6811e3eb532561e80db23f6a"
+      },
+      "docs/audits/record-value-copy-inputs-20261004/binding.json": {
+        "bytes": 1035856,
+        "sha256": "fdfd1acf303247163b9b6e31d41d7e1e6e2bd753023e9abb26dd8c13ac6cc51e"
+      },
+      "docs/audits/record-value-copy-inputs-20261004/inputs.json": {
+        "bytes": 1482499,
+        "sha256": "d62fa3517e522d76cf47fa424cd6a85837fecb946de3493011b1880e89ee73d0"
+      },
+      "docs/audits/record-value-fields-20261004/authored-models.json": {
+        "bytes": 8950,
+        "sha256": "564f9e80f80307911ea0228e3dc27e216dd06243f630f223f5393d5c7194e0ff"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/verify.py": {
+        "bytes": 11726,
+        "sha256": "812d917a6ba2605c53e77f82be978c7229ab5402869ae6a200749341f7fc2a87"
+      },
+      "docs/audits/record-value-original-callback-paths-20261005/frame_model.py": {
+        "bytes": 1906,
+        "sha256": "976f02b0c56d7f2cfa8816351d031186cb5db29f9177b8c64006598b3eeee20f"
+      },
+      "docs/audits/record-value-original-callback-paths-20261005/verify.py": {
+        "bytes": 14365,
+        "sha256": "eb0d42c4e464048b2f82d61ac94054770572daf492e7e96205af741c649f76a2"
+      },
+      "docs/audits/record-value-original-candidate-20261004/binding.json": {
+        "bytes": 18908469,
+        "sha256": "c01000f5439c9f89b7e73d2ee174bbf36abc931dbf9fbcdf3398b32d180431dd"
+      },
+      "docs/audits/record-value-original-candidate-20261004/candidate.pl": {
+        "bytes": 2749,
+        "sha256": "e10ef526c01fc88fedbaaa8bd7053dbc9cbd5ae10317c753924386d0608eae16"
+      },
+      "docs/audits/record-value-original-candidate-20261004/controls.json": {
+        "bytes": 6749619,
+        "sha256": "ec1b743259796f91d0ae938a453689ae8f839fbde12a73e84823a34d28d6d7fc"
+      },
+      "docs/audits/record-value-original-candidate-20261004/observe.pl": {
+        "bytes": 14362,
+        "sha256": "cf71b6508b67bb8cf651ec118599e9ace41650d5675b91a74aec1567aec57398"
+      },
+      "docs/audits/record-value-original-candidate-20261004/ordinary.json": {
+        "bytes": 6401859,
+        "sha256": "0f0dd5ddd77396ee9b88908fa8b96ea77c235669c21e6b12ea7463b5b41e3615"
+      },
+      "docs/audits/record-value-original-candidate-20261004/storable.json": {
+        "bytes": 6403293,
+        "sha256": "e8a53e9664e5e83ff7dbd46e293a59f9abb50c53dd0f2208581b184c21251a9c"
+      },
+      "docs/audits/record-value-original-class-20261005/verify.py": {
+        "bytes": 12210,
+        "sha256": "b62e3c9ac0f3fe75463f572e1162b9a58963a36d2b6483983b7322efc61e35e2"
+      },
+      "docs/audits/record-value-original-contexts-20261005/source-context-catalog.json": {
+        "bytes": 50698,
+        "sha256": "b8a2486f52a8987177d782d63ea410a9b3bde227fe3d26769a332a50e4bd4564"
+      },
+      "docs/audits/record-value-original-contexts-20261005/source_catalog.py": {
+        "bytes": 9074,
+        "sha256": "25c36491870b59ebb87263de117f418398aa2dcecb0c10d1a06d9f36c0a59ede"
+      },
+      "docs/audits/record-value-original-contexts-20261005/verify.py": {
+        "bytes": 12296,
+        "sha256": "ea22d6bc50ee3acb27acd50ac7f0b9e09a34e20f4281137bb5a5a21983abf846"
+      },
+      "docs/audits/record-value-original-fields-20261005/verify.py": {
+        "bytes": 14480,
+        "sha256": "5bf437303920673e26b76224dd58fe16811153eff4787fa2046afa132444dc69"
+      },
+      "docs/audits/record-value-original-forwarding-20261005/proofs.json": {
+        "bytes": 184925,
+        "sha256": "753233a4734db1ad0fc3b73e88d0fdbcab2cfe67b3824f09328d31a5e914b214"
+      },
+      "docs/audits/record-value-original-forwarding-20261005/verify.py": {
+        "bytes": 13335,
+        "sha256": "367db8772b4256aacd4ffbc476f69617de6241dcc302bf0545ea872230396609"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/proofs.json": {
+        "bytes": 4139187,
+        "sha256": "04301a6c3c33807e1e52830e0dc601b0c0642ac2539828c111fab86960743566"
+      },
+      "docs/audits/record-value-original-helper-join-20261005/verify.py": {
+        "bytes": 12913,
+        "sha256": "0191cddf0b41cbb30118423601ce71f64ca6af8b4376fd1d2e7185021d79cab6"
+      },
+      "docs/audits/record-value-original-inherited-frames-20261005/frame_model.py": {
+        "bytes": 3276,
+        "sha256": "bf9776779da38a30cd11215901c3e33f85446db500344f0a5dc4824059874530"
+      },
+      "docs/audits/record-value-original-inherited-frames-20261005/proofs.json": {
+        "bytes": 412789,
+        "sha256": "39611b0aff33ecfc873aabc63a235fddcfd0e1bd4cc8120f15e439c85600ec5b"
+      },
+      "docs/audits/record-value-original-inherited-frames-20261005/verify.py": {
+        "bytes": 16574,
+        "sha256": "9fd4e4e9613f91892d5f1481630ce836b73897a5b38dc6af1e4a17167802bde3"
+      },
+      "docs/audits/record-value-original-inherited-frames-20261005/verify_receipt.py": {
+        "bytes": 2001,
+        "sha256": "dc03ef5536608c3658b9110ed2a009878663a1036c14c1c3e8ed8abf52332c68"
+      },
+      "docs/audits/record-value-original-input-graphs-20261005/proofs.json": {
+        "bytes": 285786,
+        "sha256": "f79690f4ced38c3eb8746b638ea0d39c19a9d8fbff59abe9550dea8178d7ad9a"
+      },
+      "docs/audits/record-value-original-input-graphs-20261005/verify.py": {
+        "bytes": 18670,
+        "sha256": "1c83ae6db7e81da570eb068657e201c4394ded1c475b4987fb34f323de17014f"
+      },
+      "docs/audits/record-value-original-input-join-20261005/verify.py": {
+        "bytes": 12170,
+        "sha256": "56e8a79639759f7c9ad32449c511607b646d637d8bb846c55c5a02feaea6b9b1"
+      },
+      "docs/audits/record-value-original-metadata-frames-20261005/frame_model.py": {
+        "bytes": 6023,
+        "sha256": "ece49ce94cb5d3eaaec1051130e22f6e620fb7dd4593458a2029bbe9d00f5900"
+      },
+      "docs/audits/record-value-original-metadata-frames-20261005/proofs.json": {
+        "bytes": 166065,
+        "sha256": "254c3c995919b0a042293bd12b1949fb06d5b900c1e80c432461d29e2d739409"
+      },
+      "docs/audits/record-value-original-metadata-frames-20261005/verify.py": {
+        "bytes": 9591,
+        "sha256": "4b03309c4b78374720766cf3b7d3f4b62173f864a1d11d85a12cfa58194a6901"
+      },
+      "docs/audits/record-value-original-named-helpers-20261005/helper_model.py": {
+        "bytes": 2967,
+        "sha256": "de29a4f3ca774f1b887cd3fc16a316357ddc20444cb44423e6b8c0f2e2abea38"
+      },
+      "docs/audits/record-value-original-named-helpers-20261005/verify.py": {
+        "bytes": 18152,
+        "sha256": "41856c64fdb5a27fbd93b031c6048d364c911f3b56bc59d1ea715de5b502f94c"
+      },
+      "docs/audits/record-value-original-nested-inputs-20261005/proofs.json": {
+        "bytes": 94773,
+        "sha256": "5e3cadab2c06e8859a0b2c4696d83ce37762337376016d7b15b18503d82fc64f"
+      },
+      "docs/audits/record-value-original-nested-inputs-20261005/verify.py": {
+        "bytes": 14427,
+        "sha256": "6e887269976909700a88a82e06648f127a42fed9a385fd514e85884e8d3a2055"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/frame_model.py": {
+        "bytes": 4225,
+        "sha256": "efaac79a1afbc20da994b78da0b7b8465867d4b6955aaeba0ef0b9726d3740f2"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/verify.py": {
+        "bytes": 19196,
+        "sha256": "b17a0a9fee7fcdeadd14ce5a1eef91a26369d8535736960b463de5052a7b606c"
+      },
+      "docs/audits/record-value-original-observer-sources-20261005/proofs.json": {
+        "bytes": 160238,
+        "sha256": "12e21cd793f15a75e0ac969400731b637be70a202bdc0a4832835137e3ec8522"
+      },
+      "docs/audits/record-value-original-observer-sources-20261005/recipes.py": {
+        "bytes": 4031,
+        "sha256": "719c4168b2dc23d43993b7578a13a8219eacfec0707a83521a4238725ede8eea"
+      },
+      "docs/audits/record-value-original-observer-sources-20261005/verify.py": {
+        "bytes": 10126,
+        "sha256": "beae11dcf2477a91f406d8a9be9e378f9078d45bc8fbdf15bdb18b81409b4d96"
+      },
+      "docs/audits/record-value-original-parser-sources-20261005/proofs.json": {
+        "bytes": 626350,
+        "sha256": "ebfc16413e86f1978c907c193f50f753bb9f1075ec286d6fd24a3a46f3e77e02"
+      },
+      "docs/audits/record-value-original-parser-sources-20261005/verify.py": {
+        "bytes": 12235,
+        "sha256": "ca733ab3f770c9d9fa8519ebeba416210a8f3ac0fc563236c880486481713f0b"
+      },
+      "docs/audits/record-value-original-primary-20261005/cause_model.py": {
+        "bytes": 11115,
+        "sha256": "b430bae52bed26f48c5d6f7d5b45b3d563e62fc2a993b72b7689bb3521a87095"
+      },
+      "docs/audits/record-value-original-primary-20261005/proofs.json": {
+        "bytes": 13378310,
+        "sha256": "70b95beab625761c354b6ccc36dd403fe9de3d54e36fd281f863e989b907cdf4"
+      },
+      "docs/audits/record-value-original-primary-20261005/verify.py": {
+        "bytes": 11441,
+        "sha256": "9451cb58ed8055c528bbdc9fe39328be12074547ea1053053d5dc7ecd4ebccc2"
+      },
+      "docs/audits/record-value-original-products-20261005/verify.py": {
+        "bytes": 13680,
+        "sha256": "7e6e49516ee2b5f46e016ccb902fba9cb70504bfc94815ea220a8db979a0a7a3"
+      },
+      "docs/audits/record-value-original-raw-20261005/trace_inventory.py": {
+        "bytes": 1475,
+        "sha256": "e9a3e1ace18c468bd093cefa0241aa379bf0b7d66178b404e7b851041f9ec72e"
+      },
+      "docs/audits/record-value-original-raw-20261005/verify.py": {
+        "bytes": 8109,
+        "sha256": "9eda39f96bc12f97f663598fc59d810a66bbec2c5d0a4c6600c297c34bc71653"
+      },
+      "docs/audits/record-value-original-value-frames-20261005/frame_model.py": {
+        "bytes": 8762,
+        "sha256": "843c6122e1f76f051620f612371c919078c97ea804eb2306429adb44f1e6c41f"
+      },
+      "docs/audits/record-value-original-value-frames-20261005/proofs.json": {
+        "bytes": 408306,
+        "sha256": "83609589d8a9bc72655a27eb5865d732feae000851ed80cda38f0bf69e42e3b4"
+      },
+      "docs/audits/record-value-original-value-frames-20261005/verify.py": {
+        "bytes": 11741,
+        "sha256": "2201ff122d558ea732d624f1bb4f96a973361ab0607499a1262294bba3c70ff5"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/model.py": {
+        "bytes": 3325,
+        "sha256": "ceaf8ea72faa7cdd86aa3bbeebb4a53cab23449250a10b189228c71be21f5fe7"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/proofs.json": {
+        "bytes": 1133265,
+        "sha256": "b4ffee9372564e04439f67f4e779eaf4bbd30afa348b995e3e2e5b7bac265f4b"
+      },
+      "docs/audits/record-value-own-subtest-boundaries-20261005/verify.py": {
+        "bytes": 11130,
+        "sha256": "e722b2bb29dfa3d42a6fd01a4831a7862bb6a249ac09708a1f23c3c9aa6507a5"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/proofs.json": {
+        "bytes": 146508,
+        "sha256": "841ec2f296c85044892ae48e5434379d450dae20a9c8b49318d061c2a2308c40"
+      },
+      "docs/audits/record-value-parser-argument-roles-20261006/verify.py": {
+        "bytes": 16442,
+        "sha256": "13c367ef3cf1ec7c99d49de587492977e973e0f0d7936e6662ef3854770bbdd3"
+      },
+      "docs/audits/record-value-parser-function-order-20261006/verify.py": {
+        "bytes": 15090,
+        "sha256": "782ce7fd60a48a83b3250b7b8a1a3adcba57b42482027de2e1839a85f35568c2"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/model.py": {
+        "bytes": 9629,
+        "sha256": "6755f91b8b2d98d9dc71e9433b6a302b79d68301229dfd4e4149cde27e21c80d"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/proofs.json": {
+        "bytes": 960445,
+        "sha256": "356ebd6f71dfee1abb8c849f44430121f51e988b75977e7bce04827fdf981e8d"
+      },
+      "docs/audits/record-value-parser-path-models-20261006/verify.py": {
+        "bytes": 14067,
+        "sha256": "e07aab4a3503d67800742a678b9689997853f6967209b96149a80d8fe2c2196f"
+      },
+      "docs/audits/record-value-products-20261004/products.json": {
+        "bytes": 57282351,
+        "sha256": "b039b1014d1428b6ee066cd43cc2e56bf094b423ef64f13f4e703411e4d01a22"
+      },
+      "docs/audits/record-value-references-20261004/reference-products.json": {
+        "bytes": 6835309,
+        "sha256": "e360ca145d30511604cb9a4be3ba1d5017563b90a6044fd9987a1c04e32ca7b5"
+      },
+      "docs/audits/record-value-scopes-20261004/scope-products.json": {
+        "bytes": 1177859,
+        "sha256": "17acbd6077ec7dfea4b8036f40f215da2d50d4e940ed2200f60d9f35ddeeb18b"
+      },
+      "docs/audits/record-value-semantic-join-20261004/semantics.json": {
+        "bytes": 93379242,
+        "sha256": "13bf7edb2d05e76bcf1681c6f16c5c435f1fb949ae909e5e02c07f524687eb2f"
+      },
+      "perl/FSM/Adapter/ISF.pm": {
+        "bytes": 3268,
+        "sha256": "96f0a2089ea9445621a574699624ce6b816c277dd73bc6e02175925d74e314d4"
+      },
+      "perl/FSM/Adapter/ISF/LispishAdapter.pm": {
+        "bytes": 3593,
+        "sha256": "2c31afb99d77ec3adf144f738765854376ae94c67d5a5573b1be6be85c40b30a"
+      },
+      "perl/FSM/Adapter/ISF/Parser.pm": {
+        "bytes": 463805,
+        "sha256": "dae320318b2c07fe3e98f0a3406ac2fe09ef75390badb1d50872b3347408dd57"
+      },
+      "perl/FSM/Support/ISFRecordPortContexts.pm": {
+        "bytes": 14414,
+        "sha256": "8888309905e4f2a3c5257dee2c25bf7c7e4e5d8ecf7f1fd272c059c1929bf6e0"
+      }
+    },
+    "public_replay": {
+      "command": [
+        "perl",
+        "-Iperl",
+        "docs/audits/address-parser-entry-20261010/public_normalization.pl"
+      ],
+      "programme": {
+        "bytes": 2621,
+        "sha256": "3953f2e69bb75c4530eb8ab83deeace0876a36e34de63a73de19aae9aeaecf39"
+      },
+      "scope": "Fresh public source-boundary replay, not original native receiver/AST capture or Lispish implementation reconstruction.",
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\"cases\":[{\"source\":\"(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))\",\"stages\":[\"array\",[[\"array\",[[\"array\",[\"actor\",[\"array\",[\"refused\",[\"array\",[\"types\",[\"array\",[[\"array\",[\"type\",[\"array\",[\"frame\",[\"array\",[\"record\",[\"array\",[[\"array\",[\"flag\",[\"array\",[\"bit\"]]]]]]]]]]]],[\"array\",[\"type\",[\"array\",[\"lanes\",[\"array\",[\"list\",[\"array\",[\"bit\",\"bit\"]]]]]]]]]]]],[\"array\",[\"interface\",[\"array\",[[\"array\",[\"output\",[\"array\",[\"value\",[\"array\",[\"type\",[\"array\",[\"frame\"]]]]]]]],[\"array\",[\"output\",[\"array\",[\"done\"]]]]]]]],[\"array\",[\"transaction\",[\"array\",[\"main\",[\"array\",[\"set\",[\"array\",[\"value.flag\",\"1\"]]]]]]]]]]]]]],[\"array\",[[\"array\",[\"actor\",\"refused\",[\"array\",[\"types\",[\"array\",[\"type\",\"frame\",[\"array\",[\"record\",[\"array\",[\"flag\",\"bit\"]]]]]],[\"array\",[\"type\",\"lanes\",[\"array\",[\"list\",\"bit\",\"bit\"]]]]]],[\"array\",[\"interface\",[\"array\",[\"output\",\"value\",[\"array\",[\"type\",\"frame\"]]]],[\"array\",[\"output\",\"done\"]]]],[\"array\",[\"transaction\",\"main\",[\"array\",[\"set\",\"value.flag\",\"1\"]]]]]]]],[\"reference\",\"/1/0\"]]]},{\"source\":\"(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))\",\"stages\":[\"array\",[[\"array\",[[\"array\",[\"actor\",[\"array\",[\"refused\",[\"array\",[\"types\",[\"array\",[[\"array\",[\"type\",[\"array\",[\"frame\",[\"array\",[\"record\",[\"array\",[[\"array\",[\"flag\",[\"array\",[\"bit\"]]]]]]]]]]]],[\"array\",[\"type\",[\"array\",[\"lanes\",[\"array\",[\"list\",[\"array\",[\"bit\",\"bit\"]]]]]]]]]]]],[\"array\",[\"interface\",[\"array\",[[\"array\",[\"input\",[\"array\",[\"value\",[\"array\",[\"type\",[\"array\",[\"lanes\"]]]]]]]],[\"array\",[\"output\",[\"array\",[\"done\"]]]]]]]],[\"array\",[\"transaction\",[\"array\",[\"main\",[\"array\",[\"complete\",[\"array\",[\"done\"]]]]]]]]]]]]]],[\"array\",[[\"array\",[\"actor\",\"refused\",[\"array\",[\"types\",[\"array\",[\"type\",\"frame\",[\"array\",[\"record\",[\"array\",[\"flag\",\"bit\"]]]]]],[\"array\",[\"type\",\"lanes\",[\"array\",[\"list\",\"bit\",\"bit\"]]]]]],[\"array\",[\"interface\",[\"array\",[\"input\",\"value\",[\"array\",[\"type\",\"lanes\"]]]],[\"array\",[\"output\",\"done\"]]]],[\"array\",[\"transaction\",\"main\",[\"array\",[\"complete\",\"done\"]]]]]]]],[\"reference\",\"/1/0\"]]]}],\"classes\":{\"/0\":\"FSM::Adapter::ISF\",\"/0/parser\":\"FSM::Adapter::ISF::Parser\",\"/0/parser/adapter\":\"FSM::Adapter::ISF::LispishAdapter\"},\"factory\":[\"array\",[[\"hash\",{\"debug\":0,\"parser\":[\"hash\",{\"adapter\":[\"hash\",{\"debug\":0}],\"debug\":0}]}],[\"reference\",\"/0/parser\"],[\"reference\",\"/0/parser/adapter\"]]],\"scope\":\"Fresh public source constructor and normalization boundary only; original heap identity and payload/flags unmeasured.\"}\n"
+    },
+    "revision": "551b659fb9196ae8bf5dceca599114624f9a63e2",
+    "scope": "Whole original own source epochs, complete fresh prior source qualification and public boundary; original receiver/AST heap contents and native identity remain unmeasured."
+  },
+  "controls": [
+    {
+      "name": "lost-original-mode",
+      "refusal": "complete parser entry mode population",
+      "whole_candidate_identity": {
+        "bytes": 70836,
+        "sha256": "59c1e1fc7bcdde8306608a81edc038e9b470fb25f2bc08904c0389c20de4a419"
+      }
+    },
+    {
+      "name": "lost-original-refusal",
+      "refusal": "complete parser entry refusal population",
+      "whole_candidate_identity": {
+        "bytes": 90609,
+        "sha256": "7b326fedb6671c294b60d990eeb9a7ca8984466b6adc2d9b381fd15415413afe"
+      }
+    },
+    {
+      "name": "lost-source-normalization-profile",
+      "refusal": "complete normalization profile population",
+      "whole_candidate_identity": {
+        "bytes": 102739,
+        "sha256": "a9a43a443b3a0bf905bd1ab1b8814f2f08b05fddaa1d5cad035c7006fbd01b62"
+      }
+    },
+    {
+      "name": "lost-own-adapter-field",
+      "refusal": "nested qualified prior graph alias",
+      "whole_candidate_identity": {
+        "bytes": 104281,
+        "sha256": "7f07c204b133d7f6839760d6d1eddd76ef3cd782e1772b29f2d1d8cb12f10556"
+      }
+    },
+    {
+      "name": "wrong-own-adapter-class",
+      "refusal": "complete own constructor class map",
+      "whole_candidate_identity": {
+        "bytes": 104308,
+        "sha256": "b4a08a49f063158a1cc0cc6a276e721d28f36166fe3fea73a15fd3bfca61fbd8"
+      }
+    },
+    {
+      "name": "equal-payload-contained-parser-alias-split",
+      "refusal": "whole nested source graph topology/value/alias",
+      "whole_candidate_identity": {
+        "bytes": 104347,
+        "sha256": "fa8cebd30e606ebf65172930914b292d86f858531f8dfcca0a7c55a1df1d7f5f"
+      }
+    },
+    {
+      "name": "equal-payload-selected-actor-alias-split",
+      "refusal": "whole nested source graph topology/value/alias",
+      "whole_candidate_identity": {
+        "bytes": 104688,
+        "sha256": "6362952bd9a3c1c463a4d9e33cd5cc5fb26c856019038d9c213710ee537a837d"
+      }
+    },
+    {
+      "name": "borrowed-other-source-normalized-graph",
+      "refusal": "whole nested source graph topology/value/alias",
+      "whole_candidate_identity": {
+        "bytes": 104302,
+        "sha256": "1836a6f3d8895472bd323378bf2586784350a62947c5f1b856a93e11b517a1f7"
+      }
+    },
+    {
+      "name": "lost-actual-normalized-type-member",
+      "refusal": "whole nested source graph topology/value/alias",
+      "whole_candidate_identity": {
+        "bytes": 104251,
+        "sha256": "72f586603e0b5d84b1b79809ba3fd39e964e6cd9425e8cbe19a95ad0e02d732f"
+      }
+    },
+    {
+      "name": "projection-promoted-to-native-checkpoint",
+      "refusal": "whole normalization checkpoint source allocation",
+      "whole_candidate_identity": {
+        "bytes": 104278,
+        "sha256": "7158804ba4cfa67070763c6e6c3083f5c6366ff20207fa8464ff2d470b3f63d1"
+      }
+    },
+    {
+      "name": "borrowed-actual-other-parse",
+      "refusal": "exact original parser record/phase domain",
+      "whole_candidate_identity": {
+        "bytes": 104316,
+        "sha256": "c8c848d8e978c92fb6ec47dbf9219452cb3eec9f706543a732104595c34efe5d"
+      }
+    },
+    {
+      "name": "Boolean-original-phase",
+      "refusal": "exact original parser record/phase domain",
+      "whole_candidate_identity": {
+        "bytes": 104320,
+        "sha256": "39c43fb91a4950ad40437bf45e2ef66270934a598de82c56ba517db9b75dbafb"
+      }
+    },
+    {
+      "name": "lost-original-parser-frame",
+      "refusal": "complete original parser core/boundary frame membership",
+      "whole_candidate_identity": {
+        "bytes": 103810,
+        "sha256": "afe8647f665bb2455975807bccce180399b76360f481cd29350e1d18772f25fb"
+      }
+    },
+    {
+      "name": "lost-actor-context-pending-slot",
+      "refusal": "complete explicitly pending actor/context reference membership",
+      "whole_candidate_identity": {
+        "bytes": 104188,
+        "sha256": "701b505931d57e53cabd0705a8b04bd1f3c8590f91c274a28b55fc9d232297c3"
+      }
+    },
+    {
+      "name": "lost-qualified-entry-slot",
+      "refusal": "every qualified parser entry source slot exactly once",
+      "whole_candidate_identity": {
+        "bytes": 104229,
+        "sha256": "23af780f5b524e3e5ef08d5cecd5ec59733d7633c4740d0486f2a7fdbb5c2e8a"
+      }
+    },
+    {
+      "name": "borrowed-existing-contained-receiver",
+      "refusal": "parser entry source binding origin/kind",
+      "whole_candidate_identity": {
+        "bytes": 104316,
+        "sha256": "42f5a137f3acdc797ac51901d009bf2d8f59c66b7b340411ced9cff3663a73e4"
+      }
+    },
+    {
+      "name": "borrowed-existing-other-parse-AST",
+      "refusal": "parser entry source binding origin/kind",
+      "whole_candidate_identity": {
+        "bytes": 104316,
+        "sha256": "ada8d610964990a0c396245855187cfcd5b4f00423e703263c1ddc13c55cbe61"
+      }
+    },
+    {
+      "name": "borrowed-existing-other-parse-caller",
+      "refusal": "parser entry source binding origin/kind",
+      "whole_candidate_identity": {
+        "bytes": 104316,
+        "sha256": "e371fef5a77c90a2dd38c924ac3e0921911a84f147ef6848e8e91c7f4ec67dab"
+      }
+    },
+    {
+      "name": "borrowed-existing-other-mode-constructor",
+      "refusal": "parser entry source binding origin/kind",
+      "whole_candidate_identity": {
+        "bytes": 104316,
+        "sha256": "dfff9f799606ba3c4eff102bc26b97f7ab67432df620257de3e0340169d04160"
+      }
+    },
+    {
+      "name": "wrong-delegate-reference-kind",
+      "refusal": "parser entry source binding origin/kind",
+      "whole_candidate_identity": {
+        "bytes": 104316,
+        "sha256": "170432c16d926ef59140d4542ecb4b77b13c6c61190e35017b292aa2923b67f8"
+      }
+    },
+    {
+      "name": "equal-origin-forwarded-facade-split",
+      "refusal": "parser entry source alias equivalence across calls",
+      "whole_candidate_identity": {
+        "bytes": 104494,
+        "sha256": "8aecb632997c4ec5b03d9982b580c9ccf964fd7548f27290fec919586c560af5"
+      }
+    },
+    {
+      "name": "equal-origin-mode-lexical-facade-split",
+      "refusal": "parser entry source alias equivalence across calls",
+      "whole_candidate_identity": {
+        "bytes": 104506,
+        "sha256": "d5be13ee589fc9919201854f1690f602f6ba8557afb0b2b7f775093e6ede242d"
+      }
+    },
+    {
+      "name": "hidden-adapter-holder-lost",
+      "refusal": "complete parser entry source holders/activation/operation bridge",
+      "whole_candidate_identity": {
+        "bytes": 104305,
+        "sha256": "54ebcec3de527d528cfd6a78a900cc0705e15323d7ed4c2e39d07b216beadb71"
+      }
+    },
+    {
+      "name": "previous-refusal-caller-record-lost",
+      "refusal": "complete parser entry source holders/activation/operation bridge",
+      "whole_candidate_identity": {
+        "bytes": 104298,
+        "sha256": "ecf43076ced68943a782a01748d2f8ca47b95a70fcc4e81c7464c90f2353655c"
+      }
+    },
+    {
+      "name": "returned-normalizer-reactivated",
+      "refusal": "complete parser entry source holders/activation/operation bridge",
+      "whole_candidate_identity": {
+        "bytes": 104335,
+        "sha256": "15282fbdd9a52264167ec7269bcf3f3488aab98206736ce89c5320737806ac3a"
+      }
+    },
+    {
+      "name": "Boolean-operation-bridge-phase",
+      "refusal": "complete parser entry source holders/activation/operation bridge",
+      "whole_candidate_identity": {
+        "bytes": 104320,
+        "sha256": "021480a708cd4e6a8d579bfacace56b23edde0667c32b7f1731c2d3eee151642"
+      }
+    },
+    {
+      "name": "borrowed-other-parse-operation-bridge",
+      "refusal": "complete parser entry source holders/activation/operation bridge",
+      "whole_candidate_identity": {
+        "bytes": 104304,
+        "sha256": "c95dbe90f4fe17554625986d75fb8536805d6103ae7f85ecb415f910fbf19515"
+      }
+    },
+    {
+      "name": "lost-held-source-distinction",
+      "refusal": "complete parser entry source holders/activation/operation bridge",
+      "whole_candidate_identity": {
+        "bytes": 104282,
+        "sha256": "636ee38ef84c29445ab97485e08bce9d07e7963ce6daa42ec6f9cd979e8f545a"
+      }
+    },
+    {
+      "name": "unqualified-original-native-promotion",
+      "refusal": "parser entry source-only checkpoint scope",
+      "whole_candidate_identity": {
+        "bytes": 104024,
+        "sha256": "17cd67593ed007be4f7e0ca337f75b7c4f418e470d29bf2110cb5752e731d264"
+      }
+    }
+  ],
+  "first_refusal": {
+    "cause": "Removing the sole adapter definition leaves its carrier alias dangling; graph grammar rejects before topology comparison.",
+    "programme": {
+      "bytes": 8389,
+      "sha256": "af3daf831e221ec6152728824d911e3be98a042f8061c18489388de5b36d3db1"
+    },
+    "repair": "Expect the genuine earlier alias-grammar refusal without weakening the candidate or graph checks."
+  },
+  "measured": {
+    "cases": 6,
+    "checkpoint_nodes": 82,
+    "distinct_source_relations": 168,
+    "modes": 3,
+    "operation_bindings": 18,
+    "pending_slots": 27,
+    "qualified_slots": 54,
+    "retained_caller_holders": 9
+  },
+  "programmes": {
+    "model.py": {
+      "bytes": 6186,
+      "sha256": "c5857ca8b5ada954016c422eaeb28ed0da399821fe1bc3fd585b28f54424ab48"
+    },
+    "oracle.py": {
+      "bytes": 14516,
+      "sha256": "9ee6781caa8f382a077e4c8c2d8d1f7f735f37ef6c1c37c6eb0195e4dea694e9"
+    },
+    "public_normalization.pl": {
+      "bytes": 2621,
+      "sha256": "3953f2e69bb75c4530eb8ab83deeace0876a36e34de63a73de19aae9aeaecf39"
+    },
+    "source.py": {
+      "bytes": 7222,
+      "sha256": "78ca1d3e30771fb1dd384ff05f651071f17fcb2d19923db4e0e84773bfde3ac0"
+    },
+    "verify.py": {
+      "bytes": 10463,
+      "sha256": "d96c9fba53fb607033c4b69be1e9aac96dbca97c90146db2d102dd66daad28ec"
+    }
+  },
+  "second_refusal": {
+    "cause": "The producer reused an in-memory domain list for separate JSON fields; deep-copy controls preserved that host alias and also changed the outer record domain.",
+    "programme": {
+      "bytes": 9307,
+      "sha256": "0b1d3964253fdb6b4b37dd3f11d06e0d40b9a15dffca42c104c7eaa1dd198b5d"
+    },
+    "repair": "Qualify the retained JSON product after whole deterministic derivation comparison, then mutate independent JSON fields."
+  }
+}

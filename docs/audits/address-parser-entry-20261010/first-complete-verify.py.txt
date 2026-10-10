@@ -1,0 +1,151 @@
+"""Whole fresh parser-entry qualification and separating source candidates."""
+import copy
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/address-parser-entry-20261010')
+SUCCESS = ('PASS complete parser-entry receiver/delegate/caller source bindings and independent '
+           'normalization graphs; partial actor/context and native identity remain open.\n')
+
+
+def module(name):
+    path = BASE / name
+    namespace = {'__name__': 'parser_entry_qualification'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), namespace)
+    return namespace
+
+
+def load(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def main():
+    source = module('source.py')
+    inputs, custody = source['rebuild']()
+    if not source['same'](inputs, load('inputs.json')) or not source['same'](custody, load('binding.json')):
+        raise ValueError('whole fresh original parser source custody and public boundary')
+    actual = module('model.py')['derive'](inputs)
+    retained = BASE / 'hypotheses.json'
+    if retained.exists():
+        if not source['same'](actual, load('hypotheses.json')):
+            raise ValueError('whole retained deterministic parser entry source hypotheses')
+    else:
+        retained.write_text(json.dumps(actual, sort_keys=True, indent=2) + '\n')
+    # The contract is JSON. Container aliasing inside its Python producer is
+    # not part of that contract and must not couple otherwise separate controls.
+    actual = load('hypotheses.json')
+    qualify = module('oracle.py')['qualify']
+    measured = qualify(actual, inputs)
+    first_outcome = load('checks.json')['first-independent']
+    first_path = BASE / 'first-verify.py.txt'
+    if (type(first_outcome['status']) is not int or first_outcome['status'] != 1
+            or first_outcome['instruments'][str(BASE / 'verify.py')] != source['identity'](first_path.read_bytes())
+            or 'lost-own-adapter-field: nested qualified prior graph alias' not in first_outcome['stderr']):
+        raise ValueError('whole first parser control programme and actual dangling-alias refusal')
+    second_outcome = load('checks.json')['independent']
+    second_path = BASE / 'second-verify.py.txt'
+    if (type(second_outcome['status']) is not int or second_outcome['status'] != 1
+            or second_outcome['instruments'][str(BASE / 'verify.py')] != source['identity'](second_path.read_bytes())
+            or 'Boolean-operation-bridge-phase: exact original parser record/phase domain' not in second_outcome['stderr']):
+        raise ValueError('whole second parser control programme and actual shared-container refusal')
+    controls = []
+    def rejects(name, mutate, expected):
+        candidate = copy.deepcopy(actual)
+        mutate(candidate)
+        if source['same'](candidate, actual):
+            raise ValueError('genuine parser entry candidate setup: ' + name)
+        try:
+            qualify(candidate, inputs)
+        except ValueError as error:
+            if str(error) != expected:
+                raise ValueError('unintended parser entry control refusal: ' + name + ': ' + str(error)) from error
+            controls.append({'name': name, 'refusal': str(error),
+                'whole_candidate_identity': source['identity'](json.dumps(candidate, sort_keys=True).encode())})
+        else:
+            raise ValueError('genuine parser entry control admitted: ' + name)
+    def mode(p):
+        return p['modes'][0]
+    def case(p):
+        return mode(p)['cases'][0]
+    graph_error = 'whole nested source graph topology/value/alias'
+    holder_error = 'complete parser entry source holders/activation/operation bridge'
+    rejects('lost-original-mode', lambda p: p['modes'].pop(), 'complete parser entry mode population')
+    rejects('lost-original-refusal', lambda p: mode(p)['cases'].pop(), 'complete parser entry refusal population')
+    rejects('lost-source-normalization-profile', lambda p: p['profiles'].pop(), 'complete normalization profile population')
+    rejects('lost-own-adapter-field', lambda p: p['factory'][1][0][1]['parser'][1].pop('adapter'),
+            'nested qualified prior graph alias')
+    rejects('wrong-own-adapter-class', lambda p: p['classes'].update({'/0/parser/adapter': p['classes']['/0/parser']}),
+            'complete own constructor class map')
+    def duplicate_parser(p):
+        p['factory'][1][1] = copy.deepcopy(p['factory'][1][0][1]['parser'])
+    rejects('equal-payload-contained-parser-alias-split', duplicate_parser, graph_error)
+    def duplicate_root(p):
+        stages = p['profiles'][0]['stages'][1]
+        stages[2] = copy.deepcopy(stages[1][1][0])
+    rejects('equal-payload-selected-actor-alias-split', duplicate_root, graph_error)
+    rejects('borrowed-other-source-normalized-graph', lambda p: p['profiles'][0].update(stages=copy.deepcopy(p['profiles'][1]['stages'])), graph_error)
+    def missing_normalized_type(p):
+        p['profiles'][0]['stages'][1][1][1][0][1][2][1].pop()
+    rejects('lost-actual-normalized-type-member', missing_normalized_type, graph_error)
+    rejects('projection-promoted-to-native-checkpoint', lambda p: p['profiles'][0].update(checkpoint='Original heap payload measured'),
+            'whole normalization checkpoint source allocation')
+    rejects('borrowed-actual-other-parse', lambda p: case(p)['domain'].__setitem__(2, mode(p)['cases'][1]['domain'][2]),
+            'exact original parser record/phase domain')
+    rejects('Boolean-original-phase', lambda p: case(p)['domain'].__setitem__(3, False), 'exact original parser record/phase domain')
+    rejects('lost-original-parser-frame', lambda p: case(p)['frames'].pop(), 'complete original parser core/boundary frame membership')
+    rejects('lost-actor-context-pending-slot', lambda p: case(p)['pending'].pop(), 'complete explicitly pending actor/context reference membership')
+    rejects('lost-qualified-entry-slot', lambda p: case(p)['occurrences'].pop(), 'every qualified parser entry source slot exactly once')
+    def slot(p, binding):
+        return next(row for row in case(p)['occurrences'] if row['binding'] == binding)
+    rejects('borrowed-existing-contained-receiver', lambda p: slot(p, 'facade').update(binding='parser'),
+            'parser entry source binding origin/kind')
+    rejects('borrowed-existing-other-parse-AST', lambda p: slot(p, 'parse:2:ast').update(binding='parse:3:ast'),
+            'parser entry source binding origin/kind')
+    rejects('borrowed-existing-other-parse-caller', lambda p: slot(p, 'parse:2:caller').update(binding='parse:3:caller'),
+            'parser entry source binding origin/kind')
+    rejects('borrowed-existing-other-mode-constructor', lambda p: mode(p)['bindings'].update(facade=copy.deepcopy(p['modes'][1]['bindings']['facade'])),
+            'parser entry source binding origin/kind')
+    rejects('wrong-delegate-reference-kind', lambda p: mode(p)['bindings']['saved-parse-source'].update(reference_kind='HASH'),
+            'parser entry source binding origin/kind')
+    def split_facade(p):
+        mode(p)['bindings']['split-facade'] = copy.deepcopy(mode(p)['bindings']['facade'])
+        rows = [row for row in case(p)['occurrences'] if row['binding'] == 'facade']
+        if len(rows) != 3:
+            raise ValueError('actual facade forwarding split setup')
+        rows[-1]['binding'] = 'split-facade'
+    rejects('equal-origin-forwarded-facade-split', split_facade, 'parser entry source alias equivalence across calls')
+    def split_across_calls(p):
+        mode(p)['bindings']['split-facade'] = copy.deepcopy(mode(p)['bindings']['facade'])
+        for row in mode(p)['cases'][1]['occurrences']:
+            if row['binding'] == 'facade':
+                row['binding'] = 'split-facade'
+    rejects('equal-origin-mode-lexical-facade-split', split_across_calls, 'parser entry source alias equivalence across calls')
+    rejects('hidden-adapter-holder-lost', lambda p: case(p)['held'].remove('adapter'), holder_error)
+    rejects('previous-refusal-caller-record-lost', lambda p: mode(p)['cases'][1]['retained_callers'].remove('parse:2:caller'), holder_error)
+    rejects('returned-normalizer-reactivated', lambda p: case(p)['active_own_parser_ancestors'].append('normalize_multi'), holder_error)
+    rejects('Boolean-operation-bridge-phase', lambda p: case(p)['operation_bridge']['domain'].__setitem__(3, False), holder_error)
+    rejects('borrowed-other-parse-operation-bridge', lambda p: case(p).update(operation_bridge=copy.deepcopy(mode(p)['cases'][1]['operation_bridge'])), holder_error)
+    rejects('lost-held-source-distinction', lambda p: case(p)['simultaneously_held_distinct'].pop(), holder_error)
+    rejects('unqualified-original-native-promotion', lambda p: p.update(scope='Original native parser/AST identities measured'),
+            'parser entry source-only checkpoint scope')
+    proof = {'binding': custody, 'measured': measured, 'controls': controls,
+             'first_refusal': {'programme': source['identity'](first_path.read_bytes()),
+                 'cause': 'Removing the sole adapter definition leaves its carrier alias dangling; graph grammar rejects before topology comparison.',
+                 'repair': 'Expect the genuine earlier alias-grammar refusal without weakening the candidate or graph checks.'},
+             'second_refusal': {'programme': source['identity'](second_path.read_bytes()),
+                 'cause': 'The producer reused an in-memory domain list for separate JSON fields; deep-copy controls preserved that host alias and also changed the outer record domain.',
+                 'repair': 'Qualify the retained JSON product after whole deterministic derivation comparison, then mutate independent JSON fields.'},
+             'actual_borrowed_witnesses': {'other_parse': mode(actual)['cases'][1]['domain'],
+                 'other_mode': actual['modes'][1]['mode'], 'contained_receiver': mode(actual)['bindings']['parser']},
+             'programmes': {name: source['identity']((BASE / name).read_bytes())
+                            for name in ('source.py', 'model.py', 'oracle.py', 'verify.py', 'public_normalization.pl')}}
+    target = BASE / 'proof.json'
+    if target.exists() and not source['same'](proof, load('proof.json')):
+        raise ValueError('whole final parser entry source proof; never overwrite')
+    if not target.exists():
+        target.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

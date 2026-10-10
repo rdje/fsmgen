@@ -1,0 +1,80 @@
+"""Symbolic parser-entry bindings; fresh public graphs are source checkpoints."""
+import copy
+import itertools
+
+SCOPE = ('Complete parser-entry receiver/delegate/caller source bindings and fresh public normalization '
+         'checkpoints for both refused inputs in every original mode. Original heap identity, payload/flags, '
+         'provider implementation, later AST contents, partial actor/context graphs, complete source/raw '
+         'integration and canonical publication remain open.')
+LIFETIME = ('One lexical facade constructor per original mode holds its contained parser and adapter. '
+            'Saved parse_source lookup remains held by the observer; @parses retains each fresh caller ARRAY. '
+            'Raw/forms/root graphs describe the normalization checkpoint; their source roots remain held '
+            'by the active parse call, without asserting unchanged later payload or scalar flags.')
+
+
+def derive(inputs):
+    profiles = []
+    for arguments, path, public in zip(inputs['arguments'], inputs['paths'], inputs['public']['cases'], strict=True):
+        profiles.append({'parse_index': arguments['parse_index'], 'source': public['source'],
+                         'stages': copy.deepcopy(public['stages']),
+                         'authored_projection': path['source_form_projection'],
+                         'checkpoint': 'After normalize_multi and actor-root selection, before _build_actor.'})
+    modes = []
+    for mode in dict.fromkeys(row['mode'] for row in inputs['operation_inputs']):
+        bindings = {key: {'reference_kind': kind, 'origin': {'kind': 'own_source_constructor', 'mode': mode,
+                      'node': path, 'class': cls}}
+                    for key, kind, path, cls in (
+                        ('facade', 'FSM::Adapter::ISF=HASH', '/0', 'FSM::Adapter::ISF'),
+                        ('parser', 'FSM::Adapter::ISF::Parser=HASH', '/0/parser', 'FSM::Adapter::ISF::Parser'),
+                        ('adapter', 'FSM::Adapter::ISF::LispishAdapter=HASH', '/0/parser/adapter',
+                         'FSM::Adapter::ISF::LispishAdapter'))}
+        bindings['saved-parse-source'] = {'reference_kind': 'CODE', 'origin': {
+            'kind': 'saved_lookup', 'mode': mode, 'expression': "$parse_source = FSM::Adapter::ISF->can('parse_source')"}}
+        cases = []
+        for source in (row for row in inputs['operation_inputs'] if row['mode'] == mode):
+            index = source['index']
+            core = next(row for row in inputs['arguments'] if row['parse_index'] == index)
+            previous = next(row for row in inputs['operation_hypotheses'] if row['mode'] == mode and row['index'] == index)
+            operation = previous['operations'][0]
+            frames = copy.deepcopy(core['frames'] + operation['frames'][1:])
+            prefix = 'parse:' + str(index) + ':'
+            bindings[prefix + 'caller'] = {'reference_kind': 'ARRAY', 'origin': {
+                'kind': 'observer_caller_snapshot', 'mode': mode, 'parse_index': index,
+                'expression': '[caller]', 'holder': '@parses'}}
+            for key, node in (('raw', '/0'), ('forms', '/1'), ('ast', '/1/0')):
+                bindings[prefix + key] = {'reference_kind': 'ARRAY', 'origin': {
+                    'kind': 'normalization_checkpoint_node', 'mode': mode, 'parse_index': index, 'node': node,
+                    'authority': 'Fresh public boundary plus original own normalizer source; original native payload unmeasured.'}}
+            occurrences, pending = [], []
+            for fi, frame in enumerate(frames):
+                for ai, arg in enumerate(frame['arguments']):
+                    if 'reference_kind' not in arg:
+                        continue
+                    role = arg['role']
+                    key = {'facade receiver': 'facade', 'declared_facade_receiver': 'facade',
+                           'contained parser receiver': 'parser', 'normalized actor AST': prefix + 'ast',
+                           'original_operation': 'saved-parse-source', 'source_caller_snapshot': prefix + 'caller'}.get(role)
+                    item = {'frame': fi, 'argument': ai, 'role': role}
+                    if key is None:
+                        pending.append({**item, 'reference_kind': arg['reference_kind'], 'owner': 'partial-actor-context-child'})
+                    else:
+                        occurrences.append({**item, 'binding': key})
+            held = sorted({'facade', 'parser', 'adapter', 'saved-parse-source', prefix + 'caller',
+                           prefix + 'raw', prefix + 'forms', prefix + 'ast'})
+            bridge = {key: {'forwarded_receiver': 'facade', 'saved_lookup': 'saved-parse-source',
+                           'fresh_caller_array': prefix + 'caller'}[old['origin']['kind']]
+                      for key, old in operation['bindings'].items()}
+            cases.append({'domain': operation['domain'], 'frames': frames, 'occurrences': occurrences,
+                          'pending': pending, 'held': held, 'retained_callers': ['parse:' + str(i) + ':caller'
+                              for i in (2, 3) if i <= index],
+                          'inactive_delegates': ['Lispish::multi', 'normalize_multi', 'normalize_form', '_forms_by_head'],
+                          'active_own_parser_ancestors': ['FSM::Adapter::ISF::parse_source',
+                              'FSM::Adapter::ISF::Parser::parse_source', 'FSM::Adapter::ISF::Parser::_build_actor'],
+                          'operation_bridge': {'domain': operation['domain'], 'bindings': bridge,
+                                               'preserved_operation': operation,
+                                               'overlap': 'Original facade call is the final core frame; appended operation frames start at eval.'},
+                          'simultaneously_held_distinct': [list(pair) for pair in itertools.combinations(held, 2)],
+                          'lifetime': LIFETIME})
+        modes.append({'mode': mode, 'bindings': bindings, 'cases': cases})
+    return {'scope': SCOPE, 'factory': inputs['public']['factory'], 'classes': inputs['public']['classes'],
+            'profiles': profiles, 'modes': modes}

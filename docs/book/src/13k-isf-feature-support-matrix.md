@@ -1130,6 +1130,60 @@ formatter/Regexp/CODE identity, external framework/global retention, complete
 source integration, the raw address join and canonical publication remain open.
 All existing canonical facts, questions, probes and collection limits retain.
 
+Parser-entry source bindings now qualify the receiver chain for both original
+refused inputs in every original mode. One lexical constructor creates the
+facade, its contained parser and that parser's normalization adapter. Calls
+forward the same facade through the installed wrapper, saved operation and
+original facade method; the facade then forwards its contained parser. These
+are source construction and forwarding claims, not measured native addresses.
+
+The default constructor checkpoint is `facade(debug=0, parser=P)`, with
+`P(debug=0, adapter=N)` and `N(debug=0)`. The parser and adapter entries alias
+those contained objects, rather than equal fresh objects. Constructor fields
+do not establish a later heap snapshot. A source-field census also checks the
+temporary procedure-synthesis state: both refused inputs contain no procedures,
+so expansion returns before installing that state. Complete later actor/context
+construction remains the next child.
+
+Normalization is checked through the published Lispish input boundary and the
+original own normalizer source, without inspecting the provider implementation.
+For example, raw `[actor, [refused, body...]]` becomes the canonical
+`[actor, refused, body...]` form. The actor selector returns the existing actor
+node within the normalized forms array. The complete raw/forms/selected-root
+checkpoint graph agrees with an independent normalizer and graph bijection,
+including member values, node kinds and aliases. Both normalized actor contents
+also agree with their earlier authored form projections. A fresh replay does
+not recover the original heap payload, scalar flags or any later AST mutations.
+
+The observer saves the original `parse_source` lookup before installing its
+wrapper. Its input snapshot deliberately excludes the facade. Each wrapper
+call allocates a caller array; `@parses` retains it after that call ends, including
+the earlier refusal's caller during the next refusal. The saved delegate remains
+held by the observer. Normalization and root-selection delegates have returned
+at either refusal, while parser receiver fields and active parse locals retain
+their source referents. Inactive calls do not establish object death.
+
+Independent checks cover every receiver, AST, saved-delegate and caller argument
+in the qualified parser core and operation boundary. Other actor, interface,
+clause and local-context arguments remain explicitly enumerated for the next
+child. A retained-caller review also repaired an assurance gap: an earlier
+caller was listed as retained but omitted from the later held set. The complete
+first oracle admission remains reproducible; the repair includes that caller
+in held membership and every simultaneous source distinction. A genuine
+holder-loss control now rejects. Actual borrowed modes, parse records, receivers,
+ASTs and callers, split aliases, missing members/holders and native-scope
+promotions reject. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-entry-20261010/verify.py
+```
+
+The receiver/normalization child is closed. Complete partial actor/context
+graphs, the full parser/helper join, original raw/native identity and payload,
+provider/formatter identity, complete source integration and canonical
+publication remain open. Existing canonical facts, questions, probes and every
+collection ceiling retain.
+
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
 does not establish coordinate meanings or later current currency:

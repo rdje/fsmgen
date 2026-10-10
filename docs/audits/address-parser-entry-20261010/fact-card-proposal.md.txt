@@ -1,0 +1,59 @@
+---
+status: proposed; governed non-growing publication remains the address-publication child
+source: docs/audits/address-parser-entry-20261010/
+date: 2026-10-10
+---
+
+Original own constructor source builds one lexical facade per original mode,
+containing a parser and normalization adapter. Original source forwarding binds
+the facade and contained parser throughout each refused call. Saved parse_source
+lookup precedes observer wrapper installation; the observer input snapshot
+excludes the receiver, while @parses retains each caller ARRAY after return.
+
+Fresh public Lispish boundary graphs, checked by an independent interpretation
+of the original own normalizer, qualify complete raw/forms/selected-root source
+checkpoints for both original refused inputs. Their actor payloads equal the
+earlier authored projections, and selected actor roots alias existing forms
+members. This does not measure original native payload, identity or flags, nor
+prove unchanged later AST contents. Provider implementation remains opaque.
+
+Constructor payload is an initialization checkpoint. A whole own-source direct
+self-field census finds procedure synthesis state, but both procedure-free
+inputs return from expansion before that temporary state is installed. Complete
+later receiver/partial actor/context qualification is owned by the next child.
+
+Re-derivation: source.py freshly replays the complete corrected helper/nested/
+core/private/operation chain and original parser paths/arguments, compares every
+inherited read to fixed Git bytes, verifies whole original own source epochs,
+and replays only the published constructor and normalization boundary. model.py
+derives complete source bindings; oracle.py independently walks all graph nodes,
+interprets own normalization and chooses reference origins by source expressions.
+
+Falsification: verify.py mutates actual existing source modes, records, receivers,
+ASTs, callers, forwarding aliases, node members, active/inactive/retained holders,
+phase scalar kinds, complete membership and native-scope boundaries. The first
+omission assertion expected a topology error after deleting a node definition;
+the graph grammar correctly rejected its dangling alias first. The original
+programme and actual nonzero result retain, and the corrected expectation keeps
+that same genuine hostile candidate. A second invocation found a Python-only
+shared domain-list alias in control setup; reading the retained JSON contract
+separates the two fields and preserves the intended bridge-specific Boolean
+control. Both original programmes and exact nonzero receipts retain. The first complete
+oracle also admitted the previous refusal caller outside the later held set;
+holder_gap.py reproduces all three actual mode gaps. The repaired union includes
+all retained refusal callers in simultaneous held membership and distinctions,
+with an explicit genuine holder-loss control. The whole first complete product,
+programmes, proof and actual successful outcome retain alongside the repair.
+
+Resource boundary: one final replay was stopped at host89.3% by the unchanged
+88% RAM guard. The actual137 receipt and read-only pressure census retain; only
+a subsequent completed guarded replay may qualify the repair.
+
+Durability: fixed-Git binding, original own source epoch bodies, exact public
+command/status/streams, full input/hypothesis/proof/programme pins, actual guarded
+outcomes, root-cause history, task evidence and same-slice mdBook guide retain.
+
+Missing legs: original receiver/AST native heap measurements, later AST mutation
+and partial actor/context graphs, full parser/helper/source/raw integration,
+provider/formatter/CODE identity, cold replay and governed canonical publication.
+Existing current facts, unique questions, probes and capacity authority conserve.

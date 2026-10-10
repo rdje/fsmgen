@@ -1,0 +1,11 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-parser-entry-20261010/book-addition.md.txt:54: new blank line at EOF.\n"
+}

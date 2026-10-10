@@ -1,0 +1,74 @@
+{
+  "admitted_missing_holders": [
+    {
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0,
+        0
+      ],
+      "missing_held": [
+        "parse:2:caller"
+      ]
+    },
+    {
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0,
+        0
+      ],
+      "missing_held": [
+        "parse:2:caller"
+      ]
+    },
+    {
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0,
+        0
+      ],
+      "missing_held": [
+        "parse:2:caller"
+      ]
+    }
+  ],
+  "first_measured": {
+    "cases": 6,
+    "checkpoint_nodes": 82,
+    "distinct_source_relations": 168,
+    "modes": 3,
+    "operation_bindings": 18,
+    "pending_slots": 27,
+    "qualified_slots": 54,
+    "retained_caller_holders": 9
+  },
+  "first_programmes": {
+    "model.py": {
+      "bytes": 6186,
+      "sha256": "c5857ca8b5ada954016c422eaeb28ed0da399821fe1bc3fd585b28f54424ab48"
+    },
+    "oracle.py": {
+      "bytes": 14516,
+      "sha256": "9ee6781caa8f382a077e4c8c2d8d1f7f735f37ef6c1c37c6eb0195e4dea694e9"
+    },
+    "public_normalization.pl": {
+      "bytes": 2621,
+      "sha256": "3953f2e69bb75c4530eb8ab83deeace0876a36e34de63a73de19aae9aeaecf39"
+    },
+    "source.py": {
+      "bytes": 7222,
+      "sha256": "78ca1d3e30771fb1dd384ff05f651071f17fcb2d19923db4e0e84773bfde3ac0"
+    },
+    "verify.py": {
+      "bytes": 10463,
+      "sha256": "d96c9fba53fb607033c4b69be1e9aac96dbca97c90146db2d102dd66daad28ec"
+    }
+  },
+  "mechanism": "Retained caller membership was checked separately but omitted from the expected held union and its simultaneous-source distinctions.",
+  "scope": "P2 qualification assurance defect in this source slice; no production parser defect or original native identity claim."
+}

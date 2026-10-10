@@ -1,0 +1,69 @@
+{
+  "authored_procedures_present": [
+    false,
+    false
+  ],
+  "evidence": "Whole source _build_actor calls _expand_procedure_calls before type/context validation. _expand_procedure_calls returns unless the procs hash is nonempty, before local _proc_synth installation. Original source_form_projection and fresh independently checked normalization contain no proc forms.",
+  "own_source_field_census": [
+    {
+      "self_field_access_lines": [
+        {
+          "line": 63,
+          "source": "    my $result = $self->{parser}->parse_file($isf_path);"
+        },
+        {
+          "line": 72,
+          "source": "    my $result = $self->{parser}->parse_source($source_text, $source_label);"
+        }
+      ],
+      "unit": "facade"
+    },
+    {
+      "self_field_access_lines": [
+        {
+          "line": 116,
+          "source": "    my $forms = $self->{adapter}->normalize_multi($raw);"
+        },
+        {
+          "line": 479,
+          "source": "    local $self->{_proc_synth} = \\%synth;"
+        },
+        {
+          "line": 1674,
+          "source": "    $self->{_proc_synth}{$name} = 1;   # request a synthesized child transaction"
+        },
+        {
+          "line": 1833,
+          "source": "    my $parser = FSM::Package::Parser->new(debug => ($self->{debug} ? 1 : 0));"
+        },
+        {
+          "line": 1836,
+          "source": "        debug => ($self->{debug} ? 1 : 0),"
+        },
+        {
+          "line": 1849,
+          "source": "        debug => ($self->{debug} ? 1 : 0),"
+        },
+        {
+          "line": 1923,
+          "source": "        debug_level => ($self->{debug} ? 1 : 0),"
+        },
+        {
+          "line": 1937,
+          "source": "        push @package_roots, $self->{adapter}->normalize_form($spec->raw_ast)"
+        },
+        {
+          "line": 7825,
+          "source": "        my $forms = $self->{adapter}->normalize_multi($raw);"
+        }
+      ],
+      "unit": "parser"
+    }
+  ],
+  "procedure_expansion_body": "sub _expand_procedure_calls($self, $result) {\n    my $procs = $result->{procs} || {};\n    return unless %$procs;\n    my %synth;   # proc-name -> 1 : procs reached via a handshake `(call ... as INST)`\n    local $self->{_proc_synth} = \\%synth;\n    for my $tx (@{$result->{transactions} || []}) {\n        $tx->{clauses} = $self->_expand_calls_in_list(\n            $tx->{clauses}, $procs, [], \"transaction '$tx->{name}'\");\n    }\n    # Synthesize a child transaction for each proc invoked via the handshake call.\n    # A synthesized body may itself reach further handshake calls, so drain a\n    # worklist until no new synthesis target appears.\n    my %synthesized;\n    while (1) {\n        my @pending = grep { !$synthesized{$_} } sort keys %synth;\n        last unless @pending;\n        for my $pname (@pending) {\n            $synthesized{$pname} = 1;\n            $self->_synthesize_proc_transaction($result, $procs, $procs->{$pname});\n        }\n    }\n}\n",
+  "scope": "Source constructor graphs are initialization checkpoints. The only direct parser receiver writes are local synthesis state in procedure expansion and its synthesis helper; both refused authored ASTs contain no procedures, so expansion returns before installing that state. Full later actor/context/source-field lifecycle qualification remains the next owned child. This is not a measured native receiver payload.",
+  "whole_body_identity": {
+    "bytes": 949,
+    "sha256": "66bd1e3fe1e9390408af7a669eb0401937f6e99aa1169c3da5b92665eb032e3f"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "census": [
+    {
+      "command": [
+        "vm_stat"
+      ],
+      "scope": "Read-only host pressure diagnosis; ps output limited to largest resident processes, no process changed.",
+      "status": 0,
+      "stderr": "",
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   169020.\nPages active:                                 455463.\nPages inactive:                               443027.\nPages speculative:                             14743.\nPages throttled:                                   0.\nPages wired down:                             183430.\nPages purgeable:                                5369.\n\"Translation faults\":                    11351299301.\nPages copy-on-write:                      1624581986.\nPages zero filled:                        3936483245.\nPages reactivated:                         115138617.\nPages purged:                                3363538.\nFile-backed pages:                            413078.\nAnonymous pages:                              500155.\nPages stored in compressor:                   578029.\nPages occupied by compressor:                 273382.\nDecompressions:                             92504128.\nCompressions:                              130759885.\nPageins:                                    83856490.\nPageouts:                                      17011.\nSwapins:                                      379048.\nSwapouts:                                     754125.\n"
+    },
+    {
+      "command": [
+        "sysctl",
+        "hw.memsize"
+      ],
+      "scope": "Read-only host pressure diagnosis; ps output limited to largest resident processes, no process changed.",
+      "status": 0,
+      "stderr": "",
+      "stdout": "hw.memsize: 25769803776\n"
+    },
+    {
+      "command": [
+        "ps",
+        "-ax",
+        "-o",
+        "pid,ppid,rss,comm"
+      ],
+      "scope": "Read-only host pressure diagnosis; ps output limited to largest resident processes, no process changed.",
+      "status": 0,
+      "stderr": "",
+      "stdout": "  PID  PPID    RSS COMM\n68402 68264 5352576 /Users/richarddje/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rustc\n15505 14681 250880 claude\n21950     1 236064 /Applications/ChatGPT.app/Contents/MacOS/ChatGPT\n37419  1003 227104 claude\n  854     1 202560 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds_stores\n22110 21950 202112 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n31710  8048 191472 /Users/richarddje/.codex/packages/app-server-daemon/releases/0.162.1-aarch64-apple-darwin/bin/codex\n72972     1 156432 /Applications/iTerm.app/Contents/MacOS/iTerm2\n  696     1 140304 /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge\n11127 11040 133728 /Applications/Claude.app/Contents/Frameworks/Claude Helper (Renderer).app/Contents/MacOS/Claude Helper (Renderer)\n 1243   696 118976 /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/154.0.4258.62/Helpers/Microsoft Edge Helper (Renderer).app/Contents/MacOS/Microsoft Edge Helper (Renderer)\n11040     1 116032 /Applications/Claude.app/Contents/MacOS/Claude\n22108 21950 107296 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n22276 21950  98464 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/155.0.8059.40/Helpers/Codex (Renderer).app/Contents/MacOS/Codex (Renderer)\n69387 69372  89936 /usr/bin/perl\n34122     1  84272 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome\n"
+    }
+  ],
+  "guard_outcome": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/address-parser-entry-20261010/verify.py"
+    ],
+    "instruments": {
+      "docs/audits/address-parser-entry-20261010/checks.py": {
+        "bytes": 1407,
+        "sha256": "d026d01d3461dc1cb8c6e29f321e66e3dc68c5fb880a89e2781740e8b8f98753"
+      },
+      "docs/audits/address-parser-entry-20261010/verify.py": {
+        "bytes": 10862,
+        "sha256": "d0265dbe1808a23217b924f532313395a3d72736ccb40d266962f071f929e334"
+      },
+      "scripts/run_with_ram_guard.sh": {
+        "bytes": 10663,
+        "sha256": "0af775e059ce409f24b9c853b4cd8b097941472fff70c700d4715adbd0c62541"
+      }
+    },
+    "status": 137,
+    "stderr": "ram-guard: PID 63703; host 78.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nram-guard: host memory 89.3% reached cutoff 88%\nram-guard: terminating PID tree: 63703 \n",
+    "stdout": ""
+  }
+}

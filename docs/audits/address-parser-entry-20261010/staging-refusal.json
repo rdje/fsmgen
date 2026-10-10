@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "add",
+    "docs/audits/address-parser-entry-20261010/staged-whitespace.json",
+    "docs/audits/address-parser-entry-20261010/guide-byte-contract.json"
+  ],
+  "scope": "Actual attempted receipt stage after the earlier whitespace assertion failed, before the guide contract existed. Initial staged-doctrines is not final-snapshot qualification; fully stage the corrected snapshot and rerun.",
+  "status": 128,
+  "stderr": "fatal: pathspec 'docs/audits/address-parser-entry-20261010/guide-byte-contract.json' did not match any files\n",
+  "stdout": ""
+}
