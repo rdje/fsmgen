@@ -1,0 +1,106 @@
+"""Dated complete Value core source replay and genuine referent controls."""
+import copy
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/address-value-core-20261010')
+
+
+def load(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def module(name):
+    path = BASE / name
+    ns = {'__name__': 'value_core_qualification'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+def main():
+    source = module('source.py')
+    inputs, binding = source['rebuild']()
+    if inputs != load('inputs.json') or binding != load('binding.json'):
+        raise ValueError('whole independently rederived direct core source cohort and fixed Git custody')
+    direct = source['module'](Path('docs/audits/record-value-original-value-frames-20261005/verify.py'))
+    actual = load('hypotheses.json')
+    if actual != module('model.py')['derive'](inputs, direct['frame_model'], direct['primary']['graph']['thaw']):
+        raise ValueError('whole retained deterministic direct core hypotheses')
+    qualify = module('oracle.py')['qualify']
+    measured = qualify(actual, inputs)
+    controls = []
+    def rejects(name, mutate, expected):
+        candidate = copy.deepcopy(actual)
+        mutate(candidate)
+        try:
+            qualify(candidate, inputs)
+        except ValueError as error:
+            if str(error) != expected:
+                raise ValueError('unintended core control refusal: ' + name + ': ' + str(error)) from error
+            controls.append({'name': name, 'refusal': str(error),
+                             'whole_candidate_identity': source['identity'](json.dumps(candidate, sort_keys=True).encode())})
+        else:
+            raise ValueError('genuine complete core hypothesis control admitted: ' + name)
+    def first(p):
+        return p['cases'][0]
+    def find_binding(p, origin):
+        for case in p['cases']:
+            for name, row in case['bindings'].items():
+                if row['origin']['kind'] == origin:
+                    return case, name, row
+        raise ValueError('genuine core control origin setup: ' + origin)
+    rejects('lost-core-case', lambda p: p['cases'].pop(), 'complete direct core case membership')
+    rejects('lost-reference-slot', lambda p: first(p)['occurrences'].pop(), 'every direct core reference slot exactly once')
+    rejects('borrowed-capture', lambda p: first(p)['domain'].__setitem__(0, 'storable'),
+            'exact active direct core capture/call/throw domain')
+    rejects('borrowed-call', lambda p: first(p)['domain'].__setitem__(2, 999999),
+            'exact active direct core capture/call/throw domain')
+    rejects('boolean-call', lambda p: first(p)['domain'].__setitem__(2, True),
+            'exact active direct core capture/call/throw domain')
+    rejects('wrong-reference-kind', lambda p: next(iter(first(p)['bindings'].values())).update(reference_kind='ARRAY'),
+            'core source reference kind')
+    rejects('borrowed-private-copy', lambda p: find_binding(p, 'qualified_private_result')[2]['origin'].update(copy_index=0),
+            'core source referent origin')
+    rejects('borrowed-private-node', lambda p: find_binding(p, 'qualified_private_result')[2]['origin'].update(node=''),
+            'core source referent origin')
+    def supplied_is_copy(p):
+        _, _, row = find_binding(p, 'qualified_private_result')
+        row['origin'] = {'kind': 'supplied_input_node', 'node': '/1'}
+    rejects('detached-copy-promoted-to-supplied-input', supplied_is_copy, 'core source referent origin')
+    rejects('wrong-key-array-source', lambda p: find_binding(p, 'fresh_key_array')[2]['origin'].update(source_values=[]),
+            'core source referent origin')
+    rejects('wrong-named-hash-source', lambda p: find_binding(p, 'fresh_named_arguments')[2]['origin'].update(keys=[]),
+            'core source referent origin')
+    def split(p):
+        for case in p['cases']:
+            for name, row in case['bindings'].items():
+                occurrences = [r for r in case['occurrences'] if r['binding'] == name]
+                if len(occurrences) > 1:
+                    case['bindings']['split-source-alias'] = copy.deepcopy(row)
+                    occurrences[0]['binding'] = 'split-source-alias'
+                    return
+        raise ValueError('actual repeated core source referent setup')
+    rejects('split-one-core-referent', split, 'core source alias equivalence')
+    rejects('lost-live-distinction', lambda p: first(p)['simultaneously_live_distinct'].pop(),
+            'complete core simultaneous-live distinction allocation')
+    rejects('post-return-liveness', lambda p: next(iter(first(p)['bindings'].values())).update(lifetime='same object in all later calls'),
+            'core source active-call lifetime')
+    rejects('native-identity-promotion', lambda p: p.update(scope='Original numeric and private-provider identities established'),
+            'core source-only open scopes')
+    proof = {'binding': binding, 'measured': measured, 'controls': controls,
+             'programmes': {name: source['identity']((BASE / name).read_bytes()) for name in
+                            ('source.py', 'model.py', 'oracle.py', 'verify.py')},
+             'legs': {'re_derivation': 'complete qualified direct source predicates/frames with tagged runtime-model referents and pinned copy allocations',
+                      'falsification': 'separate source-slot, clone-order and closed-type graph traversal oracle plus genuine complete-product controls',
+                      'durability': 'whole fixed Git source/operation/private custody and tracked full inputs/hypotheses/programmes/proof/results'},
+             'missing_legs': 'Original numeric/private/provider/formatter identities, cross-call/post-return liveness, Metadata/nested/helper/parser role joins and canonical publication.'}
+    target = BASE / 'proof.json'
+    if target.exists() and load('proof.json') != proof:
+        raise ValueError('whole retained dated core proof')
+    if not target.exists():
+        target.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    print('PASS complete direct Value core source bindings, independent source-expression/closed-type oracle and separating controls; original numeric/native identity remains open.')
+
+
+if __name__ == '__main__':
+    main()

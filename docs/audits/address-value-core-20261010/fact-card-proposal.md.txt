@@ -1,0 +1,30 @@
+---
+id: record-value-direct-core-source-bindings
+title: Direct Value core source slots retain supplied, copied and fresh referents
+answers:
+  - "how do direct Value core frames distinguish supplied arguments from detached copies?"
+date: 2026-10-10
+status: proposed
+tags: [isf, record, source, graph, lifetime]
+evidence: [docs/audits/address-value-core-20261010/proof.json]
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-value-core-20261010/verify.py
+---
+
+Complete finite direct Value core source bindings retain original public-call
+argument slots while local validators can hold detached source/target/root
+copies. Deep type paths select qualified descendants of the active root. Fresh
+named-argument hashes and required/optional key arrays have separate allocations.
+No earlier returned root is presumed live at a later throw.
+
+An independent source-slot/clone-order/closed-type traversal oracle qualifies all
+retained reference slots, aliases, active domains and declared distinctions.
+Genuine omission, wrong-copy/node/kind, alias-split, borrowed-domain, wrong fresh
+allocation and false post-return/native-scope controls reject. Full fixed Git
+custody conserves operation/private inputs and programmes. The proof names
+separate re-derivation, falsification and durability legs.
+
+Cross-pool freshness remains a finite source hypothesis; original numeric,
+private/provider/formatter identity, cross-call/post-return lifetime and
+Metadata/nested/helper/parser joins remain open. Canonical publication must use
+its governed successor, conserving all existing facts/questions/probes and
+unchanged collection authority. This proposal adds no current address fact.

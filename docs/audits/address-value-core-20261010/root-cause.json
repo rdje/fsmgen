@@ -1,0 +1,15 @@
+{
+  "command": [
+    "git",
+    "log",
+    "--format=%H %s",
+    "-S",
+    "$source = dclone($source)",
+    "--",
+    "perl/FSM/Support/ISFRecordPortValues.pm"
+  ],
+  "locus": "Value public @_ retains supplied references while named local source/target/root variables are reassigned to dclone results; _keys receives fresh %args and key arrays. First verifier helper named binding shadowed the full custody dictionary; find_binding removes that collision without changing source or oracle semantics.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "48da7b698141e13a6c57eddca810a641e0baae9c SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.2.3.2.2: prepare record value contexts\n"
+}

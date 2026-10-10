@@ -1,0 +1,397 @@
+{
+  "binding": {
+    "inputs": {
+      "docs/audits/address-private-topology-20261010/checks.json": {
+        "bytes": 73174,
+        "sha256": "7fda17b4bb91ebf8d23d5d24b3c97e4870832c532db160fc0edf3a2b6d74ebaa"
+      },
+      "docs/audits/address-private-topology-20261010/hypotheses.json": {
+        "bytes": 11376073,
+        "sha256": "fc05267f975695568b87baa515d9b939d5763839da0dc22dcd49bf40c5f6b20b"
+      },
+      "docs/audits/address-private-topology-20261010/model.py": {
+        "bytes": 3221,
+        "sha256": "133f420ed28caa6ec832112bc63be403dd86da11114dcd317c770ee979899fd8"
+      },
+      "docs/audits/address-private-topology-20261010/oracle.py": {
+        "bytes": 7396,
+        "sha256": "cbd965184b8303a4f02ab7167084562032d06cf1f2db7e123a37f3af6cb06863"
+      },
+      "docs/audits/address-private-topology-20261010/proof.json": {
+        "bytes": 14623,
+        "sha256": "16ec89d0f66f034a9d9a0b6ff673cba97507a224e75d88f6fac5ab2c2a081f1b"
+      },
+      "docs/audits/address-private-topology-20261010/source.py": {
+        "bytes": 7067,
+        "sha256": "acf1234d983d7081f4c442b74c37d3c67262b04ebe2dfa0a2ca2d557d1df6b22"
+      },
+      "docs/audits/address-private-topology-20261010/verify.py": {
+        "bytes": 6137,
+        "sha256": "473fecea0727c72760158f821798903f7e554620b6218c8ccb881cde23da5f96"
+      },
+      "docs/audits/address-source-boundaries-20261010/checks.json": {
+        "bytes": 142313,
+        "sha256": "194186cb09f4665c1cc072e007a7b0057338ebd3412b6c9236d805e53f3eee3f"
+      },
+      "docs/audits/address-source-boundaries-20261010/derive.py": {
+        "bytes": 4579,
+        "sha256": "adcd2f74d2437c44f5224da5a8c5f9ab3ceaa696a0340228aee518292696b326"
+      },
+      "docs/audits/address-source-boundaries-20261010/hypotheses.json": {
+        "bytes": 2118587,
+        "sha256": "3fabe18d6bf73c95ef9f9a80f17e1e1ac6164121a74de3ed979335a0c24b7ef5"
+      },
+      "docs/audits/address-source-boundaries-20261010/inputs.json": {
+        "bytes": 1614699,
+        "sha256": "04733384141cea673f2d04eaf3122f44c4ddac168266f7fef25565af4e39072d"
+      },
+      "docs/audits/address-source-boundaries-20261010/model.py": {
+        "bytes": 7021,
+        "sha256": "e2af4dac48e99ae1e4ac5048c2235d73d9115464bf0d2a997eabce9561395b43"
+      },
+      "docs/audits/address-source-boundaries-20261010/oracle.py": {
+        "bytes": 8070,
+        "sha256": "90707d773ba3008f2eada3495acdec2251fb66718ea4b0242211e5d06b48e692"
+      },
+      "docs/audits/address-source-boundaries-20261010/proof.json": {
+        "bytes": 21026,
+        "sha256": "170cb640ecfc1f41fc395a3c98deca88fb4fd0bde7d71b6bd62d1a86ee65bcc1"
+      },
+      "docs/audits/address-source-boundaries-20261010/verify.py": {
+        "bytes": 4938,
+        "sha256": "37ec92bfd90e288487c62882641195dd368cbc2e78d68afc6e048bfe785c3867"
+      },
+      "docs/audits/record-value-copy-inputs-20261004/binding.json": {
+        "bytes": 1035856,
+        "sha256": "fdfd1acf303247163b9b6e31d41d7e1e6e2bd753023e9abb26dd8c13ac6cc51e"
+      },
+      "docs/audits/record-value-copy-inputs-20261004/inputs.json": {
+        "bytes": 1482499,
+        "sha256": "d62fa3517e522d76cf47fa424cd6a85837fecb946de3493011b1880e89ee73d0"
+      },
+      "docs/audits/record-value-fields-20261004/authored-models.json": {
+        "bytes": 8950,
+        "sha256": "564f9e80f80307911ea0228e3dc27e216dd06243f630f223f5393d5c7194e0ff"
+      },
+      "docs/audits/record-value-original-api-paths-20261005/verify.py": {
+        "bytes": 11726,
+        "sha256": "812d917a6ba2605c53e77f82be978c7229ab5402869ae6a200749341f7fc2a87"
+      },
+      "docs/audits/record-value-original-candidate-20261004/binding.json": {
+        "bytes": 18908469,
+        "sha256": "c01000f5439c9f89b7e73d2ee174bbf36abc931dbf9fbcdf3398b32d180431dd"
+      },
+      "docs/audits/record-value-original-candidate-20261004/candidate.pl": {
+        "bytes": 2749,
+        "sha256": "e10ef526c01fc88fedbaaa8bd7053dbc9cbd5ae10317c753924386d0608eae16"
+      },
+      "docs/audits/record-value-original-candidate-20261004/controls.json": {
+        "bytes": 6749619,
+        "sha256": "ec1b743259796f91d0ae938a453689ae8f839fbde12a73e84823a34d28d6d7fc"
+      },
+      "docs/audits/record-value-original-candidate-20261004/observe.pl": {
+        "bytes": 14362,
+        "sha256": "cf71b6508b67bb8cf651ec118599e9ace41650d5675b91a74aec1567aec57398"
+      },
+      "docs/audits/record-value-original-candidate-20261004/ordinary.json": {
+        "bytes": 6401859,
+        "sha256": "0f0dd5ddd77396ee9b88908fa8b96ea77c235669c21e6b12ea7463b5b41e3615"
+      },
+      "docs/audits/record-value-original-candidate-20261004/storable.json": {
+        "bytes": 6403293,
+        "sha256": "e8a53e9664e5e83ff7dbd46e293a59f9abb50c53dd0f2208581b184c21251a9c"
+      },
+      "docs/audits/record-value-original-class-20261005/verify.py": {
+        "bytes": 12210,
+        "sha256": "b62e3c9ac0f3fe75463f572e1162b9a58963a36d2b6483983b7322efc61e35e2"
+      },
+      "docs/audits/record-value-original-contexts-20261005/source-context-catalog.json": {
+        "bytes": 50698,
+        "sha256": "b8a2486f52a8987177d782d63ea410a9b3bde227fe3d26769a332a50e4bd4564"
+      },
+      "docs/audits/record-value-original-contexts-20261005/source_catalog.py": {
+        "bytes": 9074,
+        "sha256": "25c36491870b59ebb87263de117f418398aa2dcecb0c10d1a06d9f36c0a59ede"
+      },
+      "docs/audits/record-value-original-contexts-20261005/verify.py": {
+        "bytes": 12296,
+        "sha256": "ea22d6bc50ee3acb27acd50ac7f0b9e09a34e20f4281137bb5a5a21983abf846"
+      },
+      "docs/audits/record-value-original-fields-20261005/verify.py": {
+        "bytes": 14480,
+        "sha256": "5bf437303920673e26b76224dd58fe16811153eff4787fa2046afa132444dc69"
+      },
+      "docs/audits/record-value-original-forwarding-20261005/verify.py": {
+        "bytes": 13335,
+        "sha256": "367db8772b4256aacd4ffbc476f69617de6241dcc302bf0545ea872230396609"
+      },
+      "docs/audits/record-value-original-inherited-frames-20261005/frame_model.py": {
+        "bytes": 3276,
+        "sha256": "bf9776779da38a30cd11215901c3e33f85446db500344f0a5dc4824059874530"
+      },
+      "docs/audits/record-value-original-inherited-frames-20261005/verify.py": {
+        "bytes": 16574,
+        "sha256": "9fd4e4e9613f91892d5f1481630ce836b73897a5b38dc6af1e4a17167802bde3"
+      },
+      "docs/audits/record-value-original-inherited-frames-20261005/verify_receipt.py": {
+        "bytes": 2001,
+        "sha256": "dc03ef5536608c3658b9110ed2a009878663a1036c14c1c3e8ed8abf52332c68"
+      },
+      "docs/audits/record-value-original-input-graphs-20261005/proofs.json": {
+        "bytes": 285786,
+        "sha256": "f79690f4ced38c3eb8746b638ea0d39c19a9d8fbff59abe9550dea8178d7ad9a"
+      },
+      "docs/audits/record-value-original-input-graphs-20261005/verify.py": {
+        "bytes": 18670,
+        "sha256": "1c83ae6db7e81da570eb068657e201c4394ded1c475b4987fb34f323de17014f"
+      },
+      "docs/audits/record-value-original-input-join-20261005/verify.py": {
+        "bytes": 12170,
+        "sha256": "56e8a79639759f7c9ad32449c511607b646d637d8bb846c55c5a02feaea6b9b1"
+      },
+      "docs/audits/record-value-original-metadata-frames-20261005/frame_model.py": {
+        "bytes": 6023,
+        "sha256": "ece49ce94cb5d3eaaec1051130e22f6e620fb7dd4593458a2029bbe9d00f5900"
+      },
+      "docs/audits/record-value-original-metadata-frames-20261005/verify.py": {
+        "bytes": 9591,
+        "sha256": "4b03309c4b78374720766cf3b7d3f4b62173f864a1d11d85a12cfa58194a6901"
+      },
+      "docs/audits/record-value-original-named-helpers-20261005/helper_model.py": {
+        "bytes": 2967,
+        "sha256": "de29a4f3ca774f1b887cd3fc16a316357ddc20444cb44423e6b8c0f2e2abea38"
+      },
+      "docs/audits/record-value-original-named-helpers-20261005/verify.py": {
+        "bytes": 18152,
+        "sha256": "41856c64fdb5a27fbd93b031c6048d364c911f3b56bc59d1ea715de5b502f94c"
+      },
+      "docs/audits/record-value-original-nested-inputs-20261005/verify.py": {
+        "bytes": 14427,
+        "sha256": "6e887269976909700a88a82e06648f127a42fed9a385fd514e85884e8d3a2055"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/frame_model.py": {
+        "bytes": 4225,
+        "sha256": "efaac79a1afbc20da994b78da0b7b8465867d4b6955aaeba0ef0b9726d3740f2"
+      },
+      "docs/audits/record-value-original-observer-boundaries-20261005/verify.py": {
+        "bytes": 19196,
+        "sha256": "b17a0a9fee7fcdeadd14ce5a1eef91a26369d8535736960b463de5052a7b606c"
+      },
+      "docs/audits/record-value-original-observer-sources-20261005/recipes.py": {
+        "bytes": 4031,
+        "sha256": "719c4168b2dc23d43993b7578a13a8219eacfec0707a83521a4238725ede8eea"
+      },
+      "docs/audits/record-value-original-observer-sources-20261005/verify.py": {
+        "bytes": 10126,
+        "sha256": "beae11dcf2477a91f406d8a9be9e378f9078d45bc8fbdf15bdb18b81409b4d96"
+      },
+      "docs/audits/record-value-original-primary-20261005/cause_model.py": {
+        "bytes": 11115,
+        "sha256": "b430bae52bed26f48c5d6f7d5b45b3d563e62fc2a993b72b7689bb3521a87095"
+      },
+      "docs/audits/record-value-original-primary-20261005/proofs.json": {
+        "bytes": 13378310,
+        "sha256": "70b95beab625761c354b6ccc36dd403fe9de3d54e36fd281f863e989b907cdf4"
+      },
+      "docs/audits/record-value-original-primary-20261005/verify.py": {
+        "bytes": 11441,
+        "sha256": "9451cb58ed8055c528bbdc9fe39328be12074547ea1053053d5dc7ecd4ebccc2"
+      },
+      "docs/audits/record-value-original-products-20261005/verify.py": {
+        "bytes": 13680,
+        "sha256": "7e6e49516ee2b5f46e016ccb902fba9cb70504bfc94815ea220a8db979a0a7a3"
+      },
+      "docs/audits/record-value-original-raw-20261005/trace_inventory.py": {
+        "bytes": 1475,
+        "sha256": "e9a3e1ace18c468bd093cefa0241aa379bf0b7d66178b404e7b851041f9ec72e"
+      },
+      "docs/audits/record-value-original-raw-20261005/verify.py": {
+        "bytes": 8109,
+        "sha256": "9eda39f96bc12f97f663598fc59d810a66bbec2c5d0a4c6600c297c34bc71653"
+      },
+      "docs/audits/record-value-original-value-frames-20261005/frame_model.py": {
+        "bytes": 8762,
+        "sha256": "843c6122e1f76f051620f612371c919078c97ea804eb2306429adb44f1e6c41f"
+      },
+      "docs/audits/record-value-original-value-frames-20261005/proofs.json": {
+        "bytes": 408306,
+        "sha256": "83609589d8a9bc72655a27eb5865d732feae000851ed80cda38f0bf69e42e3b4"
+      },
+      "docs/audits/record-value-original-value-frames-20261005/verify.py": {
+        "bytes": 11741,
+        "sha256": "2201ff122d558ea732d624f1bb4f96a973361ab0607499a1262294bba3c70ff5"
+      },
+      "docs/audits/record-value-products-20261004/products.json": {
+        "bytes": 57282351,
+        "sha256": "b039b1014d1428b6ee066cd43cc2e56bf094b423ef64f13f4e703411e4d01a22"
+      },
+      "docs/audits/record-value-references-20261004/reference-products.json": {
+        "bytes": 6835309,
+        "sha256": "e360ca145d30511604cb9a4be3ba1d5017563b90a6044fd9987a1c04e32ca7b5"
+      },
+      "docs/audits/record-value-scopes-20261004/scope-products.json": {
+        "bytes": 1177859,
+        "sha256": "17acbd6077ec7dfea4b8036f40f215da2d50d4e940ed2200f60d9f35ddeeb18b"
+      },
+      "docs/audits/record-value-semantic-join-20261004/semantics.json": {
+        "bytes": 93379242,
+        "sha256": "13bf7edb2d05e76bcf1681c6f16c5c435f1fb949ae909e5e02c07f524687eb2f"
+      }
+    },
+    "revision": "229c2410ac5416decf342bc06e03ee006231e9a7",
+    "scope": "Whole source-only direct Value cohort and complete operation/private source prerequisites; original numeric addresses and native provider identities unmeasured."
+  },
+  "controls": [
+    {
+      "name": "lost-core-case",
+      "refusal": "complete direct core case membership",
+      "whole_candidate_identity": {
+        "bytes": 195813,
+        "sha256": "af0c199214581f6d36deb87d04d0ea50dbb7776849126160f1977d94d31825ae"
+      }
+    },
+    {
+      "name": "lost-reference-slot",
+      "refusal": "every direct core reference slot exactly once",
+      "whole_candidate_identity": {
+        "bytes": 198184,
+        "sha256": "623c48be203c41428de883e8689ac1125e01c0e2bf57c6898bae5ce35b264f4f"
+      }
+    },
+    {
+      "name": "borrowed-capture",
+      "refusal": "exact active direct core capture/call/throw domain",
+      "whole_candidate_identity": {
+        "bytes": 198254,
+        "sha256": "ee9be7dab6c7c5123df1c47ce9fa4739f77656f301042a2d0ae3206bbd0fb6ef"
+      }
+    },
+    {
+      "name": "borrowed-call",
+      "refusal": "exact active direct core capture/call/throw domain",
+      "whole_candidate_identity": {
+        "bytes": 198257,
+        "sha256": "d513b06eca4976c6b6a2b2d3f97901ea56f4b6e8dd512a6d43ee8f3c2d43d60a"
+      }
+    },
+    {
+      "name": "boolean-call",
+      "refusal": "exact active direct core capture/call/throw domain",
+      "whole_candidate_identity": {
+        "bytes": 198255,
+        "sha256": "f1c6f8f1e357a6ca3f60810411005c5366100d4591c66b6a48c36441fc47217d"
+      }
+    },
+    {
+      "name": "wrong-reference-kind",
+      "refusal": "core source reference kind",
+      "whole_candidate_identity": {
+        "bytes": 198255,
+        "sha256": "fbe14c7ed6b2c1d76c16952672fcdfed6a139c48e608e48b5b62206313b41027"
+      }
+    },
+    {
+      "name": "borrowed-private-copy",
+      "refusal": "core source referent origin",
+      "whole_candidate_identity": {
+        "bytes": 198252,
+        "sha256": "618f11c3ef4366a1c7ad0eb0d56ca55255f10180c03348e9969b17af23551359"
+      }
+    },
+    {
+      "name": "borrowed-private-node",
+      "refusal": "core source referent origin",
+      "whole_candidate_identity": {
+        "bytes": 198244,
+        "sha256": "380d396794f6daac043d44910a0fd597a6e51fc4cc5e1a93a5383cf90dab905d"
+      }
+    },
+    {
+      "name": "detached-copy-promoted-to-supplied-input",
+      "refusal": "core source referent origin",
+      "whole_candidate_identity": {
+        "bytes": 198178,
+        "sha256": "ffe545d87f02d4b7709a2d70950bb00e9508b3e84cf4ce14deb4b22233a31e30"
+      }
+    },
+    {
+      "name": "wrong-key-array-source",
+      "refusal": "core source referent origin",
+      "whole_candidate_identity": {
+        "bytes": 198202,
+        "sha256": "81d0ea7791eb65c4ada9addd97089a5c31e847e017982010fd1a898465810ea9"
+      }
+    },
+    {
+      "name": "wrong-named-hash-source",
+      "refusal": "core source referent origin",
+      "whole_candidate_identity": {
+        "bytes": 198226,
+        "sha256": "0c189e0f67403394b4c52d560af0d18539e929d340e05a7b5a9229ed7caee0f9"
+      }
+    },
+    {
+      "name": "split-one-core-referent",
+      "refusal": "core source alias equivalence",
+      "whole_candidate_identity": {
+        "bytes": 198528,
+        "sha256": "c6f4fa5a0ec815a5318ba6787a11af260311e1c8dcfd716ab0ff4a52133ec52a"
+      }
+    },
+    {
+      "name": "lost-live-distinction",
+      "refusal": "complete core simultaneous-live distinction allocation",
+      "whole_candidate_identity": {
+        "bytes": 198149,
+        "sha256": "41cd35c4eaed225a98a983671ca2c39f5357c586147790d58ec8ab9218b15a81"
+      }
+    },
+    {
+      "name": "post-return-liveness",
+      "refusal": "core source active-call lifetime",
+      "whole_candidate_identity": {
+        "bytes": 198208,
+        "sha256": "fd9037247060310a9f550c9a823877b3ce9c8da151ee3bb16d1e1916271cefcc"
+      }
+    },
+    {
+      "name": "native-identity-promotion",
+      "refusal": "core source-only open scopes",
+      "whole_candidate_identity": {
+        "bytes": 197988,
+        "sha256": "6ef26d181efe7f99d76e549fce447af4300734deea54bf76b7794aa082fca681"
+      }
+    }
+  ],
+  "legs": {
+    "durability": "whole fixed Git source/operation/private custody and tracked full inputs/hypotheses/programmes/proof/results",
+    "falsification": "separate source-slot, clone-order and closed-type graph traversal oracle plus genuine complete-product controls",
+    "re_derivation": "complete qualified direct source predicates/frames with tagged runtime-model referents and pinned copy allocations"
+  },
+  "measured": {
+    "cases": 102,
+    "distinct_relations": 192,
+    "fresh_slots": 27,
+    "private_result_slots": 39,
+    "reference_slots": 225
+  },
+  "missing_legs": "Original numeric/private/provider/formatter identities, cross-call/post-return liveness, Metadata/nested/helper/parser role joins and canonical publication.",
+  "programmes": {
+    "model.py": {
+      "bytes": 8116,
+      "sha256": "3d9977d211625283b6dc92670f36c4ca4b7cd3cfd8b1c79a4808d81998af2e83"
+    },
+    "oracle.py": {
+      "bytes": 13390,
+      "sha256": "15b6794d5a93a7cad0f1809c4b59a3186edf666c8c320eda7f2133a0004e386b"
+    },
+    "source.py": {
+      "bytes": 6274,
+      "sha256": "3d964739de031ef7fad295f7d6d52df13804bd3c2fde227242b28fb0bd9a0922"
+    },
+    "verify.py": {
+      "bytes": 6326,
+      "sha256": "76f8ccf94038e6053224d786c50b2d4b3858e83838e47665f46148246b410b0e"
+    }
+  }
+}

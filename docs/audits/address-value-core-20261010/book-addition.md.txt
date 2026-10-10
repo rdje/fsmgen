@@ -1,0 +1,25 @@
+Direct Value core frames now have a separate source binding model. An operation's
+original argument slots keep the supplied references even after a local variable
+is assigned a detached copy. For example, a copy-width refusal passes a detached
+source record to `_validate_reference`, while the enclosing copy operation still
+exposes its original source and target arguments. Equal payloads do not merge
+those bindings. Deep type failures follow the qualified active root and its
+record/list descendants; earlier returned roots are not presumed live.
+
+The model also distinguishes fresh named-argument hashes from supplied records,
+and fresh required/optional key arrays from type nodes. A separate oracle follows
+source argument slots, clone assignment order and closed-type traversal. Genuine
+wrong-copy, wrong-node, alias-splitting, kind, omission, borrowed-domain and false
+post-return lifetime controls reject. The complete operation/private source
+prerequisites remain exact. Replay from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-value-core-20261010/verify.py
+```
+
+This is a dated finite source hypothesis. Cross-pool freshness remains a source
+hypothesis, not a measurement of original provider identity. Original numeric
+addresses, private/provider/formatter identity, cross-call and post-return
+lifetimes, Metadata/nested/helper/parser bindings, the raw-address join and
+canonical address publication retain their separate owners.
+

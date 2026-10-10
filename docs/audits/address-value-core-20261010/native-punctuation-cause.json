@@ -1,0 +1,14 @@
+{
+  "configured_mechanism": "docs/book/book.toml: output.html.smart-punctuation = true",
+  "native": {
+    "bytes": 256179,
+    "sha256": "04c3cab1e3e0a7716b5cc9fb94ea9c54ab923466f811d488b51e813bbeb05c19"
+  },
+  "rendered_apostrophe": "An operation\u2019s",
+  "repair": "Fold rendered typographic apostrophe for text comparison only; omit the unchanged first sentence for a genuine whole-guide refusal. Exact original/source byte conservation remains separate.",
+  "retained_first_programme": {
+    "bytes": 3332,
+    "sha256": "5efe59e45ac7e2ec9d9ac0364652012ac50405bbd57e8f7f627275dd6d4f7667"
+  },
+  "source_apostrophe": "An operation's"
+}

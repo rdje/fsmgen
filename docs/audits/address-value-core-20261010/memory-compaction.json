@@ -1,0 +1,14 @@
+{
+  "after": {
+    "bytes": 1507,
+    "longest_line": 348,
+    "sha256": "b6747a10a230ee631c5ed034022ef270d46a339608442f2e36eb2e9986603593"
+  },
+  "before": {
+    "bytes": 1603,
+    "longest_line": 444,
+    "sha256": "625115237d431f34f5802bc9aa5cdb87080d2b3b21ad6ed130c67d82c7104e69"
+  },
+  "mechanism": "The sole next_action line grew from the prior 399-byte maximum to 444 bytes, crossing the active_resume 80% warning on its unchanged 512-byte line target. Shorten only that pointer; detailed successor acceptance remains in the owning task tree.",
+  "unchanged_authority": "active_resume targets, warning/rollover milestones and all ceilings remain exact."
+}

@@ -1,0 +1,6 @@
+{
+  "bytes": 1492,
+  "path": "docs/audits/address-value-core-20261010/book-addition.md.txt",
+  "reason": "Exact complete source insertion retains the required blank paragraph separator before the original marker; the trailing blank line is intentional evidence.",
+  "sha256": "fd970cca60e0289e9c9b7d53f1e242069cfcc10ca7f103b02dc6255f630d56b1"
+}
