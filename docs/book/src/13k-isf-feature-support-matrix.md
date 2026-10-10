@@ -1770,6 +1770,32 @@ Remaining scalar and regex constructors, full original source headers,
 the original-body join and parent publication retain their unchanged
 acceptance. Native/private meanings and visual review remain separately open.
 
+Non-predicate scalar operands now have their own complete source qualification.
+The source producer and a separate direct traversal preserve every supplied or
+default value, ordered role and operand schema. Entire inherited inner error
+strings remain dated evidence; exercising those strings does not establish an
+independent semantic source for their original native contents.
+
+The current public fixtures construct each complete selected string from its
+codepoints, each selected integer numerically, and each undefined value as
+undef. Explicit argument-length profiles of 64 and 0 qualify bounded displays
+and complete displays respectively. The separate checker compares complete
+values, headers and trace bodies. A displayed prefix never replaces the full
+source value, and original native scalar flags and formatter settings remain
+unmeasured. Whole membership, role, schema, constructor, tail, profile and
+scope controls reject their intended defects.
+
+Replay the complete dated scalar qualification:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-scalar-values-20261010/verify.py
+```
+
+Regex construction, original receiver and referent identity, private framework
+intervals, source do versus diagnostic require roles, complete original headers
+and unchanged parent acceptance retain their separate owners. This scalar child
+does not close the original observer or raw-stack contracts.
+
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
 complete previously committed child contracts. It joins every original empty

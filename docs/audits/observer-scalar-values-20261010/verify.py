@@ -1,0 +1,159 @@
+"""Replay complete scalar products, independent controls and immutable evidence."""
+import copy
+import subprocess
+from pathlib import Path
+from common import BASE, CENSUS, REVISION, SCOPE, canonical, load, need, pin, read, same, save
+import derive
+import oracle
+import scope_verify
+import transport_verify
+
+
+def validation(product, selected, native):
+    source = read(CENSUS / 'source-models.json')
+    result = oracle.verify_source(source, product, selected)
+    receipt = native
+    need(receipt['command'] == ['perl', '-Iperl', str(BASE / 'native.pl')], 'exact selected native command')
+    need(receipt['inputs'] == {str(BASE / n):pin((BASE / n).read_bytes()) for n in ('native.pl','plan.json')},
+         'entire native driver and corpus identity')
+    result['native'] = oracle.verify_native(selected, receipt, (BASE / 'native.pl').read_bytes())
+    return result
+
+
+def falsify(product, selected, native):
+    import json
+    controls = []
+    def trial(name, mutate, cause):
+        p, s, n = copy.deepcopy((product, selected, native))
+        mutate(p, s, n)
+        need(not same([p,s,n], [product,selected,native]), 'genuine whole hostile candidate')
+        try:
+            validation(p, s, n)
+        except ValueError as error:
+            need(str(error) == cause, 'intended independent scalar control cause: ' + name + ': ' + str(error))
+            controls.append(dict(name=name, cause=cause, candidate=dict(product=p, selected=s, native=n), status='rejected'))
+        else:
+            raise ValueError('accepted hostile scalar candidate: ' + name)
+
+    members = 'complete independent scalar member/order/role/value allocation'
+    trial('omitted-member', lambda p,s,n:p['members'].pop(), members)
+    trial('reordered-member', lambda p,s,n:p['members'].reverse(), members)
+    trial('borrowed-value-allocation', lambda p,s,n:p['members'][0].update(value=p['members'][1]['value']), members)
+    trial('wrong-role', lambda p,s,n:p['members'][0]['operand'].update(role='borrowed'), members)
+    trial('wrong-schema', lambda p,s,n:p['members'][0].update(schema='context_scalar'), members)
+    trial('inherited-evidence-promotion', lambda p,s,n:next(r for r in p['members'] if r['evidence_role']=='inherited serialized evidence').update(evidence_role='qualified own-source value'), members)
+    key = next(k for k,v in product['values'].items() if type(v['value']) is str and len(v['value']) > 64)
+    trial('lost-complete-value-tail', lambda p,s,n:p['values'][key].update(value=p['values'][key]['value'][:61]), 'entire independently typed scalar value dictionary')
+    trial('wrong-constructor', lambda p,s,n:p['values'][key].update(constructor='numeric literal'), 'entire independently typed scalar value dictionary')
+    trial('original-flag-promotion', lambda p,s,n:p.update(scope=SCOPE+' Original flags measured.'), 'source versus inherited/native scope')
+    trial('wrong-profile-hypothesis', lambda p,s,n:s['profile'].update(MaxArgNums=8), 'explicit selected public profile')
+    trial('wrong-complete-token', lambda p,s,n:s['cases'][0]['display'].update(token='borrowed'), 'independent complete constructor and display hypotheses')
+    def native_change(n, action):
+        data=json.loads(n['stdout']);action(data);n['stdout']=canonical(data).decode()
+    trial('boolean-status', lambda p,s,n:n.update(status=False), 'actual typed public capture success')
+    trial('omitted-native-case', lambda p,s,n:native_change(n,lambda d:d['rows'].pop()), 'complete ordered public scalar corpus')
+    trial('native-profile-borrowing', lambda p,s,n:native_change(n,lambda d:d['rows'][0]['profile'].update(MaxArgLen=1)), 'actual explicit current profile')
+    trial('native-source-value-change', lambda p,s,n:native_change(n,lambda d:d['rows'][0]['value']['codepoints'].append(88)), 'complete native constructed scalar value')
+    trial('native-whole-tail-change', lambda p,s,n:native_change(n,lambda d:d['rows'][0].update(trace=d['rows'][0]['trace']+'borrowed\n')), 'whole source-generated public scalar header and trace')
+    # Keep whole candidates compact without dropping a byte or using their
+    # count as evidence of correct allocation. Replay expands and reruns each.
+    import gzip, base64
+    return [dict(name=r['name'], cause=r['cause'], status=r['status'],
+                 candidate_gzip_base64=base64.b64encode(gzip.compress(canonical(r['candidate']), mtime=0)).decode()) for r in controls]
+
+
+def main():
+    need(same(scope_verify.derive(),load('task-contracts.json')), 'complete unchanged source scalar acceptance')
+    from common import PREDICATE, module
+    custody_command=['python3','-B',str(PREDICATE/'verify.py')]
+    custody=subprocess.run(custody_command,capture_output=True,text=True)
+    need(type(custody.returncode) is int and custody.returncode==0 and custody.stderr==''
+         and custody.stdout.startswith('PASS '), 'complete current committed prerequisite custody and replay')
+    current_custody=dict(command=custody_command,status=custody.returncode,stdout=custody.stdout,
+        stderr=custody.stderr,program=pin((PREDICATE/'verify.py').read_bytes()))
+    product, selected, native = load('scalars.json'), load('plan.json'), load('native.json')
+    prerequisites = load('prerequisites.json')
+    need(prerequisites['revision'] == REVISION and prerequisites['scope'] == SCOPE, 'whole fixed prerequisite scope')
+    fixed_paths = {str(CENSUS/'census.json'), str(CENSUS/'source-models.json'),
+        'docs/audits/observer-predicate-values-20261010/manifest-final.json',
+        'docs/audits/observer-predicate-values-20261010/predicate-values-qualified.json'}
+    need(set(prerequisites['fixed']) == fixed_paths, 'complete fixed scalar input domain')
+    for name, item in prerequisites['fixed'].items():
+        command=['git','--no-replace-objects','show',REVISION+':'+name]
+        actual=subprocess.run(command,capture_output=True)
+        need(actual.returncode==0 and not actual.stderr and actual.stdout==Path(name).read_bytes()
+             and item['command']==command and pin(actual.stdout) == item['identity']
+             and type(item['status']) is int and item['status']==0,
+             'whole fixed/current scalar input freshness')
+    receipts = {}
+    for path in sorted(BASE.glob('actual-prerequisite-*.json')):
+        record=read(path)
+        need(type(record['status']) is int and record['status']==0 and record['stderr']==''
+             and record['stdout'].endswith('\n') and 'PASS ' in record['stdout'], 'complete actual prerequisite result')
+        name=path.stem[len('actual-prerequisite-'):-2]
+        need(name not in receipts, 'unique prerequisite execution')
+        receipts[name]=pin(canonical(record))
+    need(same(receipts,prerequisites['readers']), 'whole actual prerequisite population and result pins')
+    expected_readers=dict(module(PREDICATE/'common.py')['READERS'])
+    expected_readers['predicate-values']=[str(PREDICATE/'verify.py')]
+    need(set(receipts)==set(expected_readers), 'complete declared prerequisite reader domain')
+    for name,arguments in expected_readers.items():
+        need(load('actual-prerequisite-'+name+'-1.json')['command']==['python3','-B',*arguments],
+             'exact complete prerequisite command')
+    pre=load('pre-observation.json')
+    epoch=load('actual-source-selection-1.json')['programs']
+    need(pre['native_present'] is False and pre['scope']==SCOPE, 'actual pre-observation selection scope')
+    for name,identity in pre['inputs'].items():
+        raw=epoch[name]['body'].encode() if name in epoch else Path(name).read_bytes()
+        need(pin(raw)==identity,'complete pre-observation source epoch, including superseded reader programs')
+    need(same(derive.collect(read(CENSUS/'census.json')),product)
+         and same(derive.plan(product),selected), 'complete source product and preselected corpus rederive')
+    result=validation(product,selected,native)
+    need(same({k:v for k,v in result.items() if k!='native'},load('source-proof.json')),
+         'complete independent hypotheses established before native observation')
+    need(same(result['native'],load('native-proof.json')), 'entire separate current native proof')
+    history=load('actual-root-history-1.json')
+    need(history['command']==['git','--no-pager','log','-1','-S','source_scalar_constructor_encoding','--',
+         'docs/audits/observer-header-source-census-20261010/model.py']
+         and type(history['status']) is int and history['status']==0 and history['stderr']==''
+         and history['stdout'].startswith('commit 6715ce66cf7b8a63c3a7f3125d722b578b29ad87\n'),
+         'complete actual original scalar-obligation history')
+    controls=falsify(product,selected,native)
+    if (BASE/'controls.json').exists():
+        need(same(controls,load('controls.json')), 'whole independently replayed negative controls')
+    else:
+        save('controls.json',controls)
+    for path in BASE.glob('actual-*.json'):
+        record=read(path)
+        need(type(record['status']) is int and type(record['stdout']) is str and type(record['stderr']) is str,
+             'whole typed actual result, including failures')
+        for body in record['programs'].values():
+            need(pin(body['body'].encode())==body['identity'],'complete actual program epoch')
+    seal='manifest-qualified.json' if (BASE/'manifest-qualified.json').exists() else 'manifest.json'
+    if (BASE/seal).exists():
+        need(load(seal)=={str(p.relative_to(BASE)):pin(p.read_bytes()) for p in BASE.rglob('*')
+             if p.is_file() and p.name not in (seal,'checks.json')}, 'whole immutable scalar qualification namespace')
+    if seal=='manifest-qualified.json':
+        for name,identity in load('manifest.json').items():
+            raw=(BASE/name).read_bytes()
+            if pin(raw)!=identity:
+                need(name=='verify.py' and pin((BASE/'verify-before-claim-declaration-repair.py.txt').read_bytes())==identity,
+                     'entire retained first-seal program before-image')
+    proof=dict(result=result, controls=pin(canonical(controls)), custody=current_custody, scope=SCOPE)
+    if (BASE/'proof.json').exists():
+        need(same(proof,load('proof.json')), 'whole immutable scalar qualification proof')
+    else:
+        save('proof.json',proof)
+    transport=transport_verify.verify(load('transport-control.json'))
+    need(same(transport,load('transport-proof.json')),'actual original/corrected receipt conservation')
+    qualified=dict(scalar_proof=pin(canonical(proof)),transport=transport,
+        observation=pin((BASE/'transport-observation.json').read_bytes()),scope=SCOPE)
+    if (BASE/'qualified-proof.json').exists():
+        need(same(qualified,load('qualified-proof.json')),'whole immutable scalar and transport qualification')
+    else:
+        save('qualified-proof.json',qualified)
+    print('PASS complete source scalars, independently reconstructed members/values/constructors, whole current public headers and genuine controls; inherited evidence and original opaque scopes retain.')
+
+
+if __name__ == '__main__':
+    main()

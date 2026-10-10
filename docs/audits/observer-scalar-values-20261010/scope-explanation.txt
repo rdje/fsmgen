@@ -1,0 +1,17 @@
+Dated explanatory evidence record, sealed by the audit manifest. Current user guidance lives in docs/book/src/13k-isf-feature-support-matrix.md.
+
+Complete source scalar qualification
+
+Owner and evidence legs: scope.txt.
+Replay from the repository root:
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-scalar-values-20261010/verify.py
+
+The whole qualified own-source model is independently rebuilt before selection. A separate direct traversal reconstructs every non-predicate scalar member, schema, role, full value and current constructor recipe. Failed predicates retain their separately qualified product. Entire inherited serialized inner errors remain dated evidence.
+
+The complete selected constructor corpus and explicit public profiles precede native observation. The public driver observes longmess before explicit scalar coercion. The independent reader compares every full value, header and trace body. Complete compressed controls preserve and reject wrong membership, borrowing, order, schema, value tails, constructors, profiles, scope promotion and native results.
+
+Actual command receipts retain complete programs and streams. Fixed Git inputs, original task contracts and the entire committed predicate/source custody remain executable checks; the final manifest authenticates the complete dated namespace. checks.json is the explicit evolving verification transport.
+
+No original execution is recaptured. Original runtime flags/settings/formatter, reference/receiver/referent identity and private framework intervals remain unmeasured. Regex, complete original headers, original-body joining, canonical fact publication and unchanged parent closure retain their existing owners. Visual mdBook QA remains open.
+
+Transport correction: the first automatic source-copy/publication receipt metadata was overwritten by a stale-dictionary race. Exact before-images and transcribed observed tool outputs retain. transport-control.json reproduces the original loss and independently qualifies the corrected locked merge; fresh final gates supersede the lost automatic metadata.
