@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "log",
+    "-1",
+    "--format=fuller",
+    "-S",
+    "Full unchanged raw-parent acceptance remains N.3.",
+    "--",
+    "docs/audits/address-numeric-join-20261010/verify.py"
+  ],
+  "locus": "The committed complete numerical qualification explicitly leaves full unchanged parent acceptance open. Parent closure must join every original record/source phase, complete earlier contracts and fresh actual semantic readers, rather than rely on endpoint counts.",
+  "status": 0,
+  "stderr": "",
+  "stdout": "commit 556b9d5f9cd09b981a462619701d9032e5c0657e\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Sat Oct 10 14:16:25 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Sat Oct 10 14:16:25 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.2: qualify complete original numerical source joins\n    \n    Join every original own visible reference display to its corrected simultaneous source role and holder domain. Conserve complete allocation, bytes, forwarding, regex, hidden and opaque external operands; preserve CODE/CODE, native and cross-call/capture boundaries.\n    \n    An independent original-byte/coordinate/source reader and manual hex accumulator qualify the complete finite relation. Genuine whole-product alias, distinction, byte-association, kind and domain controls reject while prior nonnumerical meanings conserve. Focused publication/book checks pass (310 tests); exact book/native/source-copy, claim and staged doctrine gates synchronize the checkpoint. Full unchanged raw-parent acceptance remains the next leaf.\n"
+}

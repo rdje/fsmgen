@@ -1,0 +1,356 @@
+{
+  "acceptance": {
+    "bytes": 3239157,
+    "sha256": "9ec0edf34d78cd901eb88ce8371db13997ee414489ab95e1980809c5819f3dbd"
+  },
+  "controls": [
+    {
+      "name": "native-identity-field",
+      "refusal": "closed complete parent witness",
+      "whole_candidate": {
+        "bytes": 1652849,
+        "sha256": "799494eadb2bdb8a09499ff7ed21b5219973e0c020ae27821e2f053a9bc78d60"
+      }
+    },
+    {
+      "name": "count-only-closure",
+      "refusal": "closed complete parent witness",
+      "whole_candidate": {
+        "bytes": 1653058,
+        "sha256": "2391cf8d4b16c6fed95d79091b6521ad79b71641d43518d39c576a62ae8387f8"
+      }
+    },
+    {
+      "name": "borrowed-owner",
+      "refusal": "exact finite parent and remaining scopes",
+      "whole_candidate": {
+        "bytes": 1652723,
+        "sha256": "cf9407e0766a5e6b3be34926b02013385869a9b8315baf76628f35e2f6cd1fb8"
+      }
+    },
+    {
+      "name": "lost-native-boundary",
+      "refusal": "exact finite parent and remaining scopes",
+      "whole_candidate": {
+        "bytes": 1652791,
+        "sha256": "8a972127e4354612a46301e13f6f16f42973b33dbdec71c33c0406b3ed95b09b"
+      }
+    },
+    {
+      "name": "cross-capture-identity-promotion",
+      "refusal": "exact finite parent and remaining scopes",
+      "whole_candidate": {
+        "bytes": 1652504,
+        "sha256": "72ab0bf2e10c977047d567283112caf1c375fa2f94b62b22e0cc66b0fab71203"
+      }
+    },
+    {
+      "name": "lost-prerequisite-input",
+      "refusal": "whole parent input identity",
+      "whole_candidate": {
+        "bytes": 1652619,
+        "sha256": "fe4a9d2519c744c7f1555e977e3c748df1218e56c8135d98894cf4ee712114e2"
+      }
+    },
+    {
+      "name": "weakened-parent-acceptance",
+      "refusal": "complete unchanged parent and prerequisite contracts",
+      "whole_candidate": {
+        "bytes": 1652329,
+        "sha256": "136199e90d8b0f7987a2e174c5d8b948192fe4b648376243caa221b2c4efbe90"
+      }
+    },
+    {
+      "name": "lost-completed-prerequisite",
+      "refusal": "complete unchanged parent and prerequisite contracts",
+      "whole_candidate": {
+        "bytes": 1646626,
+        "sha256": "779c535eb9dc06c85a5771d57544ad501de7538c106c2107b805fd7d5967dc0a"
+      }
+    },
+    {
+      "name": "lost-original-mode",
+      "refusal": "complete original parent record body phase allocation",
+      "whole_candidate": {
+        "bytes": 1575409,
+        "sha256": "caf6a936e756d9a9fc29ea3bf43201352e115744a86f814f6e81fedbdb427e4d"
+      }
+    },
+    {
+      "name": "lost-original-empty",
+      "refusal": "complete original parent record body phase allocation",
+      "whole_candidate": {
+        "bytes": 1652818,
+        "sha256": "38c6f29fbb60223db09c9ec3dacbe58f4fe9f2d82f46f98a606dcf812a063ec2"
+      }
+    },
+    {
+      "name": "Boolean-original-population",
+      "refusal": "complete original parent record body phase allocation",
+      "whole_candidate": {
+        "bytes": 1652827,
+        "sha256": "dc2872d057f0677911fade8808f75e3aafc4ce75c5f050da13add595a3bc142b"
+      }
+    },
+    {
+      "name": "borrowed-original-body",
+      "refusal": "complete original parent record body phase allocation",
+      "whole_candidate": {
+        "bytes": 1652824,
+        "sha256": "b90a02012dce5f52da2e08c048939feeb07f1aeb8beb3533626dd1c0a2bec4e3"
+      }
+    },
+    {
+      "name": "lost-nested-forwarding",
+      "refusal": "complete original parent record body phase allocation",
+      "whole_candidate": {
+        "bytes": 1652271,
+        "sha256": "5e0c7b9e75e14f3cf0d05c0c5ba2b301516429be17c5f7b2b4789ea0c0274550"
+      }
+    },
+    {
+      "name": "lost-source-view",
+      "refusal": "complete parent view population",
+      "whole_candidate": {
+        "bytes": 1644287,
+        "sha256": "66ab2638fbb014226a1b88dd36b0dd42c2fc5262b3afb77f47b41527554b5f44"
+      }
+    },
+    {
+      "name": "unknown-source-view-field",
+      "refusal": "closed complete parent source view",
+      "whole_candidate": {
+        "bytes": 1652849,
+        "sha256": "a93619773651d9e2765b96958a1f3097e018a2f631999e461b90763bbf44d5eb"
+      }
+    },
+    {
+      "name": "borrowed-source-domain",
+      "refusal": "whole parent original source holder numerical association",
+      "whole_candidate": {
+        "bytes": 1652824,
+        "sha256": "796ceb3359cb4f56d18b117698d3aaa0b5bad4473fb7142e6c55eb257959d479"
+      }
+    },
+    {
+      "name": "borrowed-source-model",
+      "refusal": "whole parent original source holder numerical association",
+      "whole_candidate": {
+        "bytes": 1652824,
+        "sha256": "0e25137a760e6f5add4a07e16aa7a083e94a30f53962c22dcdbc9899f5204bb3"
+      }
+    },
+    {
+      "name": "borrowed-holder-model",
+      "refusal": "whole parent original source holder numerical association",
+      "whole_candidate": {
+        "bytes": 1652824,
+        "sha256": "eb8ced70487e3fc8e49c9562684b30b28edf688e121fd42d56e61bf050957e6e"
+      }
+    },
+    {
+      "name": "borrowed-numerical-view",
+      "refusal": "whole parent original source holder numerical association",
+      "whole_candidate": {
+        "bytes": 1652823,
+        "sha256": "8f0093529386c7685c30b1da7d5d05ff61abe7680cb19cdb0475e076f068f70f"
+      }
+    },
+    {
+      "name": "lost-visible-source-slot",
+      "refusal": "complete parent visible source numerical operands",
+      "whole_candidate": {
+        "bytes": 1652432,
+        "sha256": "e7bb471f476fda22459b46bd5f1abc313850b16253504ddb23bc46876d67c2cb"
+      }
+    },
+    {
+      "name": "borrowed-visible-number",
+      "refusal": "complete parent visible source numerical operands",
+      "whole_candidate": {
+        "bytes": 1652824,
+        "sha256": "c35669df299f320f5452e0588c76201f43577a31abb5174f8fa7a37d6e5ca50a"
+      }
+    },
+    {
+      "name": "lost-source-provenance",
+      "refusal": "complete parent visible source numerical operands",
+      "whole_candidate": {
+        "bytes": 1652767,
+        "sha256": "9e3e0aa8d88ad80b581952d57278fcb83fda6ae3a6222172aca49f0708a1aee5"
+      }
+    },
+    {
+      "name": "lost-unaddressed-regex",
+      "refusal": "complete parent unaddressed and hidden conservation",
+      "whole_candidate": {
+        "bytes": 1652406,
+        "sha256": "8eb8405c318fb999f27211304e55f86b7370c38cf5ff82a7f55f280b81d90dc8"
+      }
+    },
+    {
+      "name": "hidden-address-promotion",
+      "refusal": "complete parent unaddressed and hidden conservation",
+      "whole_candidate": {
+        "bytes": 1652838,
+        "sha256": "3a21d75ed656eef9ee37b846acf44852d17180b6e7d4837e484d57fa00fe106e"
+      }
+    },
+    {
+      "name": "lost-admission-semantic-control",
+      "refusal": "complete prior semantic separating controls",
+      "whole_candidate": {
+        "bytes": 1652621,
+        "sha256": "4b4ca439c505872682ec8afb997068af536ff49392b291dbb28cff70ac70bcd4"
+      }
+    },
+    {
+      "name": "lost-operand-semantic-control",
+      "refusal": "complete prior semantic separating controls",
+      "whole_candidate": {
+        "bytes": 1652597,
+        "sha256": "e0f572e8f1159dba1598b00fa6563f4bff1b837a51a194bd446ffa86b0508371"
+      }
+    },
+    {
+      "name": "lost-holder-semantic-control",
+      "refusal": "complete prior semantic separating controls",
+      "whole_candidate": {
+        "bytes": 1652591,
+        "sha256": "fc56c63974168eb403016aaf12fa541195b3dcf37c846b1faba76811d55a3ee2"
+      }
+    },
+    {
+      "name": "lost-numerical-semantic-control",
+      "refusal": "complete prior semantic separating controls",
+      "whole_candidate": {
+        "bytes": 1652514,
+        "sha256": "9d206ef51d75bc5e1c2d02056998c43a90678065e087faa25668bbb9783bab8b"
+      }
+    },
+    {
+      "name": "lost-actual-reader",
+      "refusal": "complete actual parent prerequisite population",
+      "whole_candidate": {
+        "bytes": 1651935,
+        "sha256": "660354ebcfa68607cf5986b1a8022d05e008837f9fcc6e8b0614dd0d9ca0916c"
+      }
+    },
+    {
+      "name": "unknown-actual-field",
+      "refusal": "closed complete actual parent prerequisite result",
+      "whole_candidate": {
+        "bytes": 1652849,
+        "sha256": "20464fb3384a1ba3015d0ca9aa9526a841860ae3de395bda805d445392b782e0"
+      }
+    },
+    {
+      "name": "Boolean-actual-status",
+      "refusal": "actual parent prerequisite integer success",
+      "whole_candidate": {
+        "bytes": 1652828,
+        "sha256": "538a1817a6adfa009434672295fa37fb0c60cb8b994c8e1f8fe491cdefc15009"
+      }
+    },
+    {
+      "name": "nonzero-actual-status",
+      "refusal": "actual parent prerequisite integer success",
+      "whole_candidate": {
+        "bytes": 1652824,
+        "sha256": "fc87f703db8ca74107d4babec3127bd8075db2a685ac3458157b545ca48e5870"
+      }
+    },
+    {
+      "name": "borrowed-actual-command",
+      "refusal": "exact actual parent prerequisite command",
+      "whole_candidate": {
+        "bytes": 1652820,
+        "sha256": "bf59b9e64f7a0bb1cefa41c723216f9441078c870fc4df2f5c6c9f7576958257"
+      }
+    },
+    {
+      "name": "short-actual-output",
+      "refusal": "complete actual parent prerequisite stdout",
+      "whole_candidate": {
+        "bytes": 1652660,
+        "sha256": "ecc9a143bdebc7c2eef9f69d8126e387ac909b116bf1adeb41726ef21f9ae1a2"
+      }
+    },
+    {
+      "name": "lost-actual-instrument",
+      "refusal": "complete actual parent prerequisite instruments",
+      "whole_candidate": {
+        "bytes": 1652695,
+        "sha256": "37cf253bcc55ef553d903b5de71a9286876a7fb01bc42d28b23b84a74caf1dd0"
+      }
+    },
+    {
+      "name": "widened-actual-guard",
+      "refusal": "complete actual parent prerequisite guard stream",
+      "whole_candidate": {
+        "bytes": 1652824,
+        "sha256": "ef098214ef49980ae1c45660d355e358c2639dbb0f7082c5c0a950c9859fc222"
+      }
+    },
+    {
+      "name": "borrowed-actual-PID",
+      "refusal": "whole current actual parent prerequisite receipt",
+      "whole_candidate": {
+        "bytes": 1652825,
+        "sha256": "6f7b80027c78f826ba812ef86c2a6380b536e6619e2f72b96fce1f653ddd601c"
+      }
+    }
+  ],
+  "legs": {
+    "durability": "Complete fixed predecessor namespaces/semantic products/task bodies, full acceptance witness, actual four reader commands/results/instruments, independent programmes/controls and task/book/Git retain.",
+    "falsification": "oracle.py independently enumerates original captures, matches every complete body/phase/source/holder/numerical association, consumes fresh whole semantic readers and checks genuine whole-contract/result interventions. The prior numerical reader remains the independently qualified numerical semantic authority.",
+    "re_derivation": "audit.py joins the complete qualified operand/numerical/source/holder products and unchanged full contracts to every original record and source view."
+  },
+  "measured": {
+    "admission_controls": 24,
+    "body_bytes": 482964,
+    "empty_records": 29805,
+    "holder_controls": 26,
+    "nonempty_records": 150,
+    "numerical_controls": 49,
+    "operand_controls": 33,
+    "views": 171,
+    "visible_reference_operands": 2691
+  },
+  "missing_legs": "Only finite raw/numerical parents qualify; all listed open scopes remain. No fresh original capture, native identity or canonical currency is established.",
+  "open": [
+    "native identity/payload/flags",
+    "provider/formatter identity",
+    "CODE/CODE and Regexp identity",
+    "cross-call/capture numerical reuse",
+    "global heap census",
+    "cold replay",
+    "visual book QA",
+    "governed canonical publication",
+    "address/lifetime container",
+    "HIAL/full-CI/push qualification"
+  ],
+  "programmes": {
+    "audit.py": {
+      "bytes": 4234,
+      "sha256": "f5eca9b35a5fbb50b595e9e9c347ab449c552684c1254cf54ec065d1fcb28cef"
+    },
+    "checks.py": {
+      "bytes": 1412,
+      "sha256": "a09f4fb775bd37b822513626102362d72b02bbcdd4fd1a028c7cc1d4604ebfd3"
+    },
+    "oracle.py": {
+      "bytes": 12062,
+      "sha256": "308c27426cd96bcdb24014b6a7998598fd2e7fad87f284489467298f1f989655"
+    },
+    "source.py": {
+      "bytes": 5228,
+      "sha256": "c7ddd0a26a9bd9f28a2d3c331672c658441c530a8a0e857ace04da06bbfe68be"
+    },
+    "verify.py": {
+      "bytes": 9987,
+      "sha256": "4768b6a8368c0a4642ee42d85ebc6aad82f2ab7b27abae2570a68efe0ceee0a7"
+    }
+  },
+  "scope": "Complete unchanged finite raw-address and numerical/source parent acceptance. Whole original bodies, lossless operands, source/class/frame/coordinate prerequisites, corrected holders and simultaneous source-number relations conserve. No numerical reuse across calls/captures establishes identity. Address container and governed canonical publication remain open."
+}

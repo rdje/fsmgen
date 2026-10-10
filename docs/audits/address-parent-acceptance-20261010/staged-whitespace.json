@@ -1,0 +1,16 @@
+{
+  "accepted_contract": "Exact book insertion fragment ends with two LF bytes before the unchanged next paragraph; reported EOF line is derived from its complete bytes. No other warning is allowed.",
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "fragment": {
+    "bytes": 2607,
+    "sha256": "1900ce0b83d6094f089a74e750040dc2b7b230065a4d9c856b7d54bcf8e10054"
+  },
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-parent-acceptance-20261010/book-addition.md.txt:43: new blank line at EOF.\n"
+}

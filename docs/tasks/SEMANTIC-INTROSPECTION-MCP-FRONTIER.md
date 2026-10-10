@@ -5681,7 +5681,7 @@ For FSMGen, the analogs are:
   Goal: `Qualify raw address roles and per-capture lifetimes.`
   Acceptance: `Model each opaque address argument role and simultaneous-live equality/distinction from independently qualified source graphs and call lifetimes. Do not infer object identity from numerical reuse across calls/captures. Borrowed or aliased addresses and wrong reference kinds must reject at intended role/lifetime contracts.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4`
-  Verification: `Source role/lifetime decomposition precedes raw address intake. Numeric address joins and original private/provider/formatter/native identity remain open.`
+  Verification: `Source role/lifetime decomposition, original operand/numerical joins and full raw-parent acceptance are qualified. Governed canonical publication is child .4 and remains pending before container closure. Original private/provider/formatter/native identity, reuse and cold-replay scopes retain.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.1`
@@ -5913,12 +5913,12 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3`
-  Status: `active`
+  Status: `done`
   Goal: `Join complete original raw addresses to qualified lifetime roles.`
   Acceptance: `Authenticate original whole raw bodies and complete qualified class/frame/coordinate prerequisites. Parse every visible reference operand with full byte coverage and distinguish quoted embedded traces/scalar hex text/external opaque operands. Join qualified source equivalence/distinction only inside simultaneously-live domains; borrowed/aliased/wrong-kind/wrong-domain controls must reject at intended contracts while prior meanings conserve. No numerical reuse across calls/captures establishes identity.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3`
-  Verification: `Complete input admission qualifies in address-raw-admission-20261010/proof.json; complete byte/argument/hex parsing qualifies in address-raw-operands-20261010/final-proof.json. Original numerical source-role joins are next; governed publication remains open. The full parent acceptance remains unchanged; numerical reuse never establishes cross-domain identity.`
-  Commit: `pending`
+  Verification: `Full unchanged raw-join acceptance qualifies through address-parent-acceptance-20261010/proof.json. Complete original raw bodies/allocation and source/class/frame/coordinate products conserve; fresh admission/operand/holder/numerical readers and independent full-domain joins pass. Every original source operand and genuine prior control remains associated; no endpoint-count-only or cross-domain/native identity closure. Only this parent and its numerical parent close; address container and governed canonical publication remain open.`
+  Commit: `this slice`
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.1`
@@ -5949,11 +5949,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Join original visible addresses to simultaneous source roles.`
   Acceptance: `Conserve the complete admitted and parsed corpus. Independently join every own reference operand to the qualified graph/role view with exact source equality/distinction only inside simultaneous-live domains. Actual borrowed/aliased/wrong-kind/wrong-domain interventions must preserve prior meanings where applicable and reject at intended new contracts. Preserve opaque external/provider/formatter/Regexp/CODE identity and numerical cross-call/capture reuse boundaries; close only the complete raw-join parent after its full unchanged acceptance qualifies.`
-  Verification: `Source-holder completeness defect is fixed by child .1. Child .2 qualifies every original own visible numerical operand and complete simultaneous source equality/distinction relation with49 genuine controls, conserving all prior input and opaque CODE/external/native/reuse meanings. Child .3 remains the full unchanged parent-acceptance frontier.`
-  Commit: `pending`
+  Verification: `Full unchanged numerical/source and raw-parent acceptance qualifies in address-parent-acceptance-20261010/proof.json after fresh complete prerequisite executions and independent whole original body/source/holder/numerical association. All49 numerical,26 holder,33 operand and24 admission controls retain their exact meanings;37 genuine new complete-contract/result controls reject. No native/CODE/Regexp/provider/formatter/reuse/heap/cold/publication scope is promoted.`
+  Commit: `this slice`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.1`
@@ -5983,11 +5983,17 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Verify complete raw-join parent acceptance and close only qualified nodes.`
   Acceptance: `Reexecute the whole admitted/parsed/source-holder/numerical join readers and independently audit all parent obligations against complete original bodies, phases and genuine controls. Preserve all earlier source/class/frame/coordinate meanings and missing native scopes; no count-only closure. Sync exact book/source/current pointers and ordinary gates. Close J.3 and its raw-join parent only when their full unchanged acceptance is proved; governed publication and address container remain successors.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete fixed556b9d5f9 predecessor namespaces, semantic products and full original parent/prerequisite task bodies authenticate. Fresh guarded admission0, operands0, holders0 and numerical0 retain every command/status/stream/instrument and immutable prior proof. Independent original-capture enumeration reconstructs every150 nonempty/29805 empty record,482964 body bytes,171 source views and2691 visible source operands; every whole body, phase, source occurrence/provenance, corrected holder and numerical product associates exactly. All prior24 admission/33 operand/26 holder/49 numerical genuine controls conserve;37 new complete acceptance/allocation/model/operand/opaque-scope/result controls reject at intended contracts. Closed result schemas reject Boolean/nonzero status, borrowed commands/PIDs, short outputs, lost instruments and widened guards. Distinct re-derivation joins complete qualified products; falsification independently reads original allocations and whole associations plus genuine intervention and actual complete semantic reader execution; durability retains full fixed input/task/programme/product/result/book/Git evidence. Focused All tests successful Files3 Tests310; exact whole book/source/native omission, unchanged task/book capacities, fresh claims/staged doctrines and normal hooks gate commit. Only full unchanged raw/numerical parent acceptance closes. Governed canonical publication/address container, native/private/provider/formatter/CODE/Regexp identities/payload/flags, numerical reuse, heap/cold/visual/HIAL/full-CI/push remain open.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S authenticates556b9d5f9cd09b981a462619701d9032e5c0657e and the complete numerical verifier missing-leg statement: full unchanged parent acceptance remained open after child qualification. Whole original task/source/input records locate the missing cross-product acceptance association; endpoint totals or historical success labels cannot close it.
+  - [x] **ADDRESSED (verified)** — Fresh complete admission, operand, holder and numerical readers pass. Independent parent reconstruction consumes every original record and full source/holder/numerical association, conserves all prerequisite semantic controls and qualifies37 genuine whole-contract/association/result refusals. Exact original acceptance and completed child contracts retain; only the verified raw/numerical parents close. The address container and governed publication remain successors.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in checks.json focused. Complete prior semantic readers retain unchanged scopes and historical failures. Exact book/source conservation and full native guide with genuine omission, unchanged capacities/current Knowledge Map authority, fresh claims, staged scripts/check_doctrines.sh and normal hooks gate commitment. No original/native recapture, canonical currency, HIAL/full-CI/push closure is inferred.
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4`

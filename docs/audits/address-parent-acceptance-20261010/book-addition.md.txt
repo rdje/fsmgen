@@ -1,0 +1,43 @@
+The complete finite raw-address and numerical/source parent acceptance is now
+qualified. The audit preserves the full unchanged parent requirements and the
+complete previously committed child contracts. It joins every original empty
+and nonempty record, whole raw body, source throw phase, lossless operand,
+corrected holder and numerical source association to its complete evidence.
+Matching endpoint totals alone cannot satisfy this contract.
+
+The admission, operand, holder and numerical readers each execute again. Their
+complete commands, integer statuses, output streams, guard settings and
+invocation instruments are qualified separately. Historical failures retain
+their original results. Older readers still report their own dated successor
+boundaries; a successful prerequisite result does not silently widen its scope.
+The parent audit establishes the combined finite contract explicitly.
+
+A separate reader enumerates the original captures directly and matches every
+body and source phase to the complete parsed, source, holder and numerical
+products. Every source occurrence remains in its visible or unaddressed slot;
+original reference bytes and source provenance retain. All earlier genuine
+semantic controls stay associated with their qualified products. New complete
+witness controls reject lost or borrowed bodies, phases, source models,
+operands and controls, weakened acceptance, omitted opaque scopes, Boolean or
+nonzero statuses, borrowed commands, shortened outputs and widened guards.
+
+For example, borrowing an otherwise valid numerical view from another throw
+fails its original body/source/holder association. A success line from the
+holder reader cannot stand in for the numerical reader: its full command,
+programme identities and expected output belong to a different contract.
+None of these checks creates native object identity or merges source domains.
+
+Whole fixed prerequisite namespaces, semantic products, task contracts and
+actual results retain with the independent replayable parent witness:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parent-acceptance-20261010/verify.py
+```
+
+Only the raw-join and numerical/source parents close. The address/lifetime
+container remains active until governed canonical publication qualifies. Native
+payload, flags and identity, provider/formatter/CODE/Regexp identity, numerical
+reuse across calls or captures, heap census, cold replay, visual book QA and
+HIAL/full-CI/push qualification retain their separate owners. Existing canonical
+facts, questions, probes and collection limits remain unchanged.
+

@@ -1,0 +1,13 @@
+# Unadmitted proposal — finite raw-parent acceptance
+
+Complete unchanged raw-address and numerical/source parent acceptance qualifies
+through full original-body/source-phase/holder/numerical associations and fresh
+complete prerequisite readers. All earlier controls retain. No numerical reuse
+across calls/captures establishes identity. Native/provider/formatter/CODE/Regexp,
+heap/cold/visual/current-publication scopes remain separate.
+
+Evidence: docs/audits/address-parent-acceptance-20261010/proof.json
+Reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parent-acceptance-20261010/verify.py
+
+This proposal is unadmitted. The next governed publication leaf owns canonical
+compaction/current-reader integration and complete address-container acceptance.

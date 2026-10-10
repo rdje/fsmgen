@@ -1,0 +1,37 @@
+# Full unchanged finite raw-parent acceptance
+
+Owner: SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3.3
+
+Reverify from the repository root:
+
+    scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parent-acceptance-20261010/verify.py
+
+The four named admission/operand/holder/numerical readers execute freshly and
+retain complete commands, statuses, streams and instrument identities. Their
+saved complete proofs remain immutable. The admission reader consumes the whole
+previous original/source/class/frame/coordinate custody and semantic outcomes;
+it does not repeat the long hostile coordinate exploration or recapture native
+objects. Historical RAM/refusal results keep their actual scopes and statuses.
+
+source.py and oracle.py independently bind fixed556b complete predecessor
+namespaces and semantic products. Complete original parent/prerequisite nodes
+retain; current Goal/Acceptance/Children contracts must remain exactly equal.
+Closure changes only verified status/evidence and preserves the original goal.
+
+audit.py builds acceptance.json from the whole qualified products. oracle.py
+starts with every original capture record and joins all whole bodies/phases to
+parsed/source/holder/numerical witnesses. Every source occurrence is preserved
+in its addressed/unaddressed slot. Fixed whole numerical-view identities and
+actual fresh numerical qualification preserve its full relations and opaque
+external/CODE/regex/hidden boundaries; parent checks do not replace that semantic
+oracle with counts. Whole earlier controls and their candidate/refusal identities
+retain. Genuine whole-product controls challenge complete contracts, original
+allocations, associations, visible/unaddressed operands, boundaries and actual
+results. Complete original bytes, fixed prerequisite namespaces, proof and
+programmes/results retain; no existing file in those namespaces is rewritten.
+
+proof.json names distinct re-derivation/falsification/durability legs and every
+missing native/current-publication scope. Only the numerical and raw-join parents
+qualify. Address/lifetime container closure belongs to governed publication next.
+Counts describe record/view occurrences, not native heap objects. No Knowledge
+Map allowance, current canonical question or collection ceiling changes.

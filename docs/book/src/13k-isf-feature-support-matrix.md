@@ -1126,8 +1126,9 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-helper-bindings-
 
 The helper/callback/subtest child is closed. Parser receiver, actor, context and
 clause source bindings are qualified below. Original numeric/provider/
-formatter/Regexp/CODE identity, external framework/global retention, the raw address join and canonical
-publication remain open. Complete source integration is qualified below.
+formatter/Regexp/CODE identity, external framework/global retention and canonical
+publication remain open. Complete source integration and the finite raw-address
+join are qualified below.
 All existing canonical facts, questions, probes and collection limits retain.
 
 Parser-entry source bindings now qualify the receiver chain for both original
@@ -1226,10 +1227,9 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-actor-constructi
 
 The actor/type/transaction construction child is closed. Original context-slot
 and private-root source joins and parser/helper bindings are qualified below.
-Full source integration is qualified below. Original raw address joins, native
-payload and flags,
-provider/formatter/CODE identity, cold replay and governed canonical publication
-remain open. Fresh source
+Full source integration and finite original raw-address joins are qualified
+below. Native payload and flags, provider/formatter/CODE identity, cold replay
+and governed canonical publication remain open. Fresh source
 checkpoints are not original native captures. Existing canonical facts,
 questions, probes and collection ceilings retain.
 
@@ -1282,8 +1282,9 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-contexts-
 
 The representation/probe boundary child is closed. Original context-slot and
 private-protocol source joins and full source integration are qualified below.
-Original raw address and native payload/flag/identity qualification, cold replay
-and governed canonical publication remain owned successors. Existing canonical facts,
+Finite original raw-address qualification is documented below. Native
+payload/flag/identity qualification, cold replay and governed canonical
+publication remain owned successors. Existing canonical facts,
 questions, probes and every collection ceiling retain.
 
 The complete original parser/context and helper source join now qualifies.
@@ -1330,8 +1331,8 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-context-c
 ```
 
 The context, actor/context, parser and helper/parser source children are closed.
-Whole source integration is qualified below. Original native payload,
-scalar flags and identity, raw address joins, provider/formatter/CODE identity,
+Whole source integration and finite raw-address joins are qualified below.
+Original native payload, scalar flags and identity, provider/formatter/CODE identity,
 cold replay, visual book QA and governed canonical publication remain open.
 All current canonical facts, questions, probes and collection ceilings retain.
 
@@ -1552,8 +1553,8 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-join-2026101
 ```
 
 The holder completeness defect is fixed and independently verified. Original
-numerical equality/distinction joins are qualified below; full raw-parent
-acceptance remains next. Private/native payload and flags, provider/formatter/CODE/Regexp
+numerical equality/distinction joins and full raw-parent acceptance are
+qualified below. Private/native payload and flags, provider/formatter/CODE/Regexp
 identity, cross-call reuse, global heap census, cold replay, visual book QA and
 governed current canonical publication remain open. Existing canonical facts,
 questions, probes and collection limits retain.
@@ -1607,10 +1608,53 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-numeric-join-202
 ```
 
 This closes the numerical-join child only. Full unchanged raw-parent acceptance
-is next. Provider/formatter/native identity, payload and flags, CODE/CODE and
+is qualified separately below. Provider/formatter/native identity, payload and flags, CODE/CODE and
 Regexp identities, numerical reuse across calls or captures, heap census, cold
 replay, visual book QA and governed canonical fact publication remain open.
 Existing canonical facts, questions, probes and collection limits retain.
+
+The complete finite raw-address and numerical/source parent acceptance is now
+qualified. The audit preserves the full unchanged parent requirements and the
+complete previously committed child contracts. It joins every original empty
+and nonempty record, whole raw body, source throw phase, lossless operand,
+corrected holder and numerical source association to its complete evidence.
+Matching endpoint totals alone cannot satisfy this contract.
+
+The admission, operand, holder and numerical readers each execute again. Their
+complete commands, integer statuses, output streams, guard settings and
+invocation instruments are qualified separately. Historical failures retain
+their original results. Older readers still report their own dated successor
+boundaries; a successful prerequisite result does not silently widen its scope.
+The parent audit establishes the combined finite contract explicitly.
+
+A separate reader enumerates the original captures directly and matches every
+body and source phase to the complete parsed, source, holder and numerical
+products. Every source occurrence remains in its visible or unaddressed slot;
+original reference bytes and source provenance retain. All earlier genuine
+semantic controls stay associated with their qualified products. New complete
+witness controls reject lost or borrowed bodies, phases, source models,
+operands and controls, weakened acceptance, omitted opaque scopes, Boolean or
+nonzero statuses, borrowed commands, shortened outputs and widened guards.
+
+For example, borrowing an otherwise valid numerical view from another throw
+fails its original body/source/holder association. A success line from the
+holder reader cannot stand in for the numerical reader: its full command,
+programme identities and expected output belong to a different contract.
+None of these checks creates native object identity or merges source domains.
+
+Whole fixed prerequisite namespaces, semantic products, task contracts and
+actual results retain with the independent replayable parent witness:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parent-acceptance-20261010/verify.py
+```
+
+Only the raw-join and numerical/source parents close. The address/lifetime
+container remains active until governed canonical publication qualifies. Native
+payload, flags and identity, provider/formatter/CODE/Regexp identity, numerical
+reuse across calls or captures, heap census, cold replay, visual book QA and
+HIAL/full-CI/push qualification retain their separate owners. Existing canonical
+facts, questions, probes and collection limits remain unchanged.
 
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
