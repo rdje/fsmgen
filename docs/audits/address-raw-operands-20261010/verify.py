@@ -1,0 +1,141 @@
+"""Qualify the whole partition and genuine omission, confusion and scope controls."""
+import copy
+import json
+import re
+import runpy
+from pathlib import Path
+
+BASE = Path('docs/audits/address-raw-operands-20261010')
+SUCCESS = ('PASS complete independent original byte/argument/hex partition; genuine separating controls reject; '
+           'numeric source-role joins and native meanings remain open.\n')
+
+
+def main():
+    oracle = runpy.run_path(str(BASE / 'oracle.py'))
+    need, same, pin = (oracle[k] for k in ('need', 'same', 'pin'))
+    source = runpy.run_path(str(BASE / 'source.py'))
+    source_registry, source_binding = source['rebuild']()
+    need(same(source_registry, json.loads((BASE / 'inputs.json').read_bytes()))
+         and same(source_binding, json.loads((BASE / 'binding.json').read_bytes())), 'whole closed current operand source binding')
+    registry, data = oracle['inputs']()
+    expected, counts = oracle['reconstruct'](data)
+    need(all(counts.get('hex_' + kind, 0) == 0 for kind in
+             ('quoted_scalar', 'quoted_embedded_trace', 'regex_display', 'opaque_text')), 'exact finite original zero hex categories')
+    product = json.loads((BASE / 'operands.json').read_bytes())
+    qualify = lambda candidate: oracle['qualify'](candidate, registry, expected)
+    qualify(product)
+    controls = []
+
+    def reject(name, mutate, cause):
+        candidate = copy.deepcopy(product)
+        mutate(candidate)
+        need(not same(candidate, product), 'genuine complete operand control: ' + name)
+        try:
+            qualify(candidate)
+        except ValueError as error:
+            need(str(error) == cause, 'intended operand refusal: ' + name + ': ' + str(error))
+            controls.append({'name': name, 'refusal': cause, 'whole_candidate': pin(json.dumps(candidate, sort_keys=True).encode())})
+        else:
+            raise ValueError('false-green complete operand control: ' + name)
+
+    def first(p):
+        return p['modes'][0]['domains']['api']['records'][0]
+
+    def frame(p):
+        return next(s for s in first(p)['segments'] if s['kind'] == 'frame' and any(a['kind'] == 'reference' for a in s['arguments']))
+
+    def reference(p):
+        return next(a for a in frame(p)['arguments'] if a['kind'] == 'reference')
+
+    def quoted(p):
+        return next(a for s in first(p)['segments'] if s['kind'] == 'frame' for a in s['arguments'] if a['kind'] == 'quoted')
+
+    reject('unknown-native-field', lambda p: p.update(original_native_identity='proved'), 'closed complete operand product')
+    reject('numeric-reuse-claim', lambda p: p.update(scope='Equal hex establishes identity across calls'), 'exact finite operand owner and scope')
+    reject('borrowed-owner', lambda p: p.update(owner='foreign'), 'exact finite operand owner and scope')
+    reject('lost-input', lambda p: p['inputs'].pop('source'), 'whole independent operand input binding')
+    reject('lost-mode', lambda p: p['modes'].pop(), 'complete operand mode population')
+    reject('lost-domain', lambda p: p['modes'][0]['domains'].pop('copies'), 'complete operand domain allocation')
+    reject('lost-empty-record', lambda p: p['modes'][0]['domains']['api']['empty'].pop(), 'complete original empty nonempty operand allocation')
+    reject('lost-nonempty-record', lambda p: p['modes'][0]['domains']['api']['records'].pop(), 'complete original empty nonempty operand allocation')
+    reject('Boolean-population', lambda p: p['modes'][0]['domains']['api'].update(population=True), 'complete original empty nonempty operand allocation')
+    reject('borrowed-whole-body', lambda p: first(p).update(body_identity=copy.deepcopy(p['modes'][1]['domains']['api']['records'][0]['body_identity'])),
+           'whole original operand record identity')
+    reject('lost-body-byte', lambda p: first(p)['segments'][0].update(raw=first(p)['segments'][0]['raw'][1:]), 'complete original body byte coverage')
+    reject('lost-physical-frame', lambda p: first(p)['segments'].pop(2), 'complete original body byte coverage')
+    reject('borrowed-physical-frame', lambda p: first(p)['segments'].__setitem__(3, copy.deepcopy(p['modes'][1]['domains']['api']['records'][0]['segments'][3])),
+           'complete original body byte coverage')
+    reject('wrong-UTF8-offset', lambda p: reference(p).update(start=reference(p)['start'] + 1), 'complete independent argument token grammar')
+    reject('lost-byte-piece', lambda p: frame(p)['pieces'].pop(1), 'complete lossless byte piece partition')
+    reject('changed-argument-separator', lambda p: next(x for x in frame(p)['pieces'] if x['kind'] == 'separator').update(raw=','),
+           'complete lossless byte piece partition')
+    reject('wrong-reference-kind', lambda p: reference(p).update(reference_kind='ARRAY'), 'complete independent argument token grammar')
+    reject('quoted-scalar-as-reference', lambda p: quoted(p).update(kind='reference'), 'complete independent argument token grammar')
+    reject('reference-as-quoted-scalar', lambda p: reference(p).update(kind='quoted'), 'complete independent argument token grammar')
+    reject('invent-native-token-field', lambda p: reference(p).update(native_identity='proved'), 'complete independent argument token grammar')
+    reject('lost-source-phase', lambda p: first(p)['phases'].pop(), 'complete own public source phase association')
+    reject('borrowed-source-phase', lambda p: first(p)['phases'].__setitem__(0, copy.deepcopy(p['modes'][1]['domains']['api']['records'][0]['phases'][0])),
+           'complete own public source phase association')
+    reject('borrowed-source-domain', lambda p: first(p)['phases'][0]['domain'].__setitem__(0, 'storable'), 'complete own public source phase association')
+    reject('wrong-source-argument-population', lambda p: first(p)['phases'][0]['frames'][1].update(source_arguments=999),
+           'complete own public source phase association')
+    reject('lost-hex', lambda p: first(p)['hex'].pop(), 'complete independent hex category partition')
+    reject('borrowed-hex', lambda p: first(p)['hex'][0].update(raw=p['modes'][1]['domains']['api']['records'][0]['hex'][0]['raw']),
+           'complete independent hex category partition')
+    reject('external-hex-promoted-to-own', lambda p: next(h for h in first(p)['hex'] if h['kind'] == 'reference_external').update(kind='reference_own'),
+           'complete independent hex category partition')
+    reject('reference-hex-as-quoted-trace', lambda p: first(p)['hex'][0].update(kind='quoted_embedded_trace'), 'complete independent hex category partition')
+
+    def nested(p):
+        return next(r for r in p['modes'][0]['domains']['api']['records'] if r['forwarded'])
+
+    reject('lost-forwarded-child', lambda p: nested(p).update(forwarded=None), 'complete original nested forwarding association')
+    reject('borrowed-forwarded-child', lambda p: nested(p)['forwarded'].update(capture_api=820), 'complete original nested forwarding association')
+    reject('lost-capture-eval-bridge', lambda p: nested(p)['phases'][0]['frames'].pop(6), 'complete own public source phase association')
+    reject('borrowed-nested-throw', lambda p: nested(p)['phases'].__setitem__(1, copy.deepcopy(nested(p)['phases'][0])),
+           'complete own public source phase association')
+
+    def hidden(p):
+        return next(a for s in first(p)['segments'] if s['kind'] == 'frame' for a in s['arguments'] if a['kind'] == 'remaining_arguments')
+
+    reject('hidden-remainder-promoted-to-reference', lambda p: hidden(p).update(kind='reference', reference_kind='HASH', hex='0x123'),
+           'complete independent argument token grammar')
+    parser = runpy.run_path(str(BASE / 'parse.py'))
+    # These separate lexical challenges are synthetic, never original observations.
+    fixtures = [
+        'message café 0xbeef\n at own/é.pm line 1.\n\tmain::f("HASH(0xcafe)", HASH(0xab), "quote \\\" CODE(0x12) \\\\") called at own/é.pm line 2\n',
+        '\tmain::f(qr(0xcafe), Foo::Bar=ARRAY(0xABC), undef, -2, ...) called at own/path line 3\n',
+        '\tmain::f("inner\\n\\tmain::g(HASH(0xcafe)) called at own/path line 1\\n", CODE(0xd)) called at own/path line 4\n',
+    ]
+    fixture_results = []
+    for body in fixtures:
+        independent, _ = oracle['read_body'](body)
+        byte_partition = parser['segments'](body)
+        need(same(byte_partition, independent), 'independent synthetic Unicode quote regex trace grammar')
+        fixture_results.append({'body': body, 'partition': byte_partition, 'scope': 'Synthetic lexical separator only; no original/source/native observation.'})
+    actual = json.loads((BASE / 'checks.json').read_bytes())['partition-with-source-dialects']
+    instruments = {str(BASE / 'checks.py'), str(BASE / 'parse.py'), 'scripts/run_with_ram_guard.sh'}
+    need(set(actual) == {'command', 'status', 'stdout', 'stderr', 'instruments'} and type(actual['status']) is int
+         and actual['status'] == 0 and actual['command'] == ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', str(BASE / 'parse.py')]
+         and actual['stdout'] == 'PASS complete finite original byte/argument/hex partition produced; independent qualification and numeric joins remain required.\n'
+         and actual['instruments'] == {p: pin(Path(p).read_bytes()) for p in instruments}
+         and re.fullmatch(r'ram-guard: PID [0-9]+; host [0-9.]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n', actual['stderr']),
+         'actual corrected complete operand producer')
+    proof = {'scope': product['scope'], 'operand_product': pin((BASE / 'operands.json').read_bytes()),
+             'measured': counts, 'controls': controls, 'synthetic_lexical_challenges': fixture_results,
+             'original_zero_categories': ['quoted_scalar', 'quoted_embedded_trace', 'regex_display', 'opaque_text'],
+             'programmes': {name: pin((BASE / name).read_bytes()) for name in ('parse.py', 'oracle.py', 'verify.py', 'source.py', 'checks.py')},
+             'legs': {'re_derivation': 'parse.py uses a complete UTF-8 byte grammar over every admitted whole raw record and source/public phase.',
+                      'falsification': 'oracle.py separately scans character nesting/quotes and reconstructs all allocation from the original captures; whole product controls and explicitly synthetic lexical challenges separate loss and confusion.',
+                      'durability': 'Fixed Git inputs, full partition, immutable complete products/programmes, actual outcomes, failed first assumptions and diagnoses, task and book evidence; normal owned commit.'},
+             'missing_legs': 'Semantic numerical equality/distinction joins remain J.3. No original hex occurs inside a quoted scalar, embedded quoted trace, regex display or other opaque text in this finite corpus. Synthetic examples do not fill that original-observation gap. Private/native payload/flags/provider/formatter/CODE/Regexp identity, cross-call reuse, heap census, cold replay and current publication remain unqualified.'}
+    target = BASE / 'final-proof.json'
+    if target.exists():
+        need(same(json.loads(target.read_bytes()), proof), 'whole immutable operand qualification')
+    else:
+        target.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

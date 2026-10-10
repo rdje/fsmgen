@@ -1,0 +1,653 @@
+{
+  "controls": [
+    {
+      "name": "unknown-native-field",
+      "refusal": "closed complete operand product",
+      "whole_candidate": {
+        "bytes": 5737920,
+        "sha256": "e9509f78b20608bf95ae47b238589ff131f9ada1b826b0121e4a6b05d05320c1"
+      }
+    },
+    {
+      "name": "numeric-reuse-claim",
+      "refusal": "exact finite operand owner and scope",
+      "whole_candidate": {
+        "bytes": 5737681,
+        "sha256": "0ecc8fad65cf24c250cd7abff679a953386c082668d4a277d71d1f1970e69a71"
+      }
+    },
+    {
+      "name": "borrowed-owner",
+      "refusal": "exact finite operand owner and scope",
+      "whole_candidate": {
+        "bytes": 5737783,
+        "sha256": "dde304c0f93dfd6cf3ce22938011f9ec1d3b4f0aaa855dc9facf17378b2e650b"
+      }
+    },
+    {
+      "name": "lost-input",
+      "refusal": "whole independent operand input binding",
+      "whole_candidate": {
+        "bytes": 5737684,
+        "sha256": "2d350bb83440f646e52d2ec44e0310956ffb9ec4767fa67be167b51734f4368a"
+      }
+    },
+    {
+      "name": "lost-mode",
+      "refusal": "complete operand mode population",
+      "whole_candidate": {
+        "bytes": 3826175,
+        "sha256": "d09858a54f570034c0048e06988019233ee8f8fbd7d0ecac88bef91dbd58b694"
+      }
+    },
+    {
+      "name": "lost-domain",
+      "refusal": "complete operand domain allocation",
+      "whole_candidate": {
+        "bytes": 5734450,
+        "sha256": "f06ebff7d208bdff95b514252aaa0e43850fbbe163ffcdabcd42b5a5bb3d4086"
+      }
+    },
+    {
+      "name": "lost-empty-record",
+      "refusal": "complete original empty nonempty operand allocation",
+      "whole_candidate": {
+        "bytes": 5737876,
+        "sha256": "184c4b2d78b91611ea5311428d05eca8237e29a95043c9728b710a2e6ef4ab9a"
+      }
+    },
+    {
+      "name": "lost-nonempty-record",
+      "refusal": "complete original empty nonempty operand allocation",
+      "whole_candidate": {
+        "bytes": 5708605,
+        "sha256": "292e3d79972ec9b31eb8304b60f3d0f010d33af7236528cac5f0ddeb4317d92e"
+      }
+    },
+    {
+      "name": "Boolean-population",
+      "refusal": "complete original empty nonempty operand allocation",
+      "whole_candidate": {
+        "bytes": 5737882,
+        "sha256": "296e286f673aac97719e976183747561884fb5d7e546d96c06a1c499622800d1"
+      }
+    },
+    {
+      "name": "borrowed-whole-body",
+      "refusal": "whole original operand record identity",
+      "whole_candidate": {
+        "bytes": 5737882,
+        "sha256": "2c198466aef25c8462896ca3a6883f5576c31ee7681f09f4e5b7188506e94bf4"
+      }
+    },
+    {
+      "name": "lost-body-byte",
+      "refusal": "complete original body byte coverage",
+      "whole_candidate": {
+        "bytes": 5737881,
+        "sha256": "1cf2acb5854659001a1605fb9624864d67642c8563168b718d69091eb3d19c22"
+      }
+    },
+    {
+      "name": "lost-physical-frame",
+      "refusal": "complete original body byte coverage",
+      "whole_candidate": {
+        "bytes": 5736604,
+        "sha256": "abbd1495658ab65449dfdf57cffbdf03ee88b757ffc7df4efd90c75fc460ea6e"
+      }
+    },
+    {
+      "name": "borrowed-physical-frame",
+      "refusal": "complete original body byte coverage",
+      "whole_candidate": {
+        "bytes": 5737882,
+        "sha256": "4a8eff18cedf6baa42688b3a2a1efa1aaa3d37c3b1671ba4d84ba9bf888d6696"
+      }
+    },
+    {
+      "name": "wrong-UTF8-offset",
+      "refusal": "complete independent argument token grammar",
+      "whole_candidate": {
+        "bytes": 5737882,
+        "sha256": "fc78ee034629ac19143c8d53c817297bc7c80e876a291f2dc1a2e1865450bab9"
+      }
+    },
+    {
+      "name": "lost-byte-piece",
+      "refusal": "complete lossless byte piece partition",
+      "whole_candidate": {
+        "bytes": 5737813,
+        "sha256": "e5d481b18182f41b95e4556904dd9b99806f72a975f191bda4badcd0d6022ce6"
+      }
+    },
+    {
+      "name": "changed-argument-separator",
+      "refusal": "complete lossless byte piece partition",
+      "whole_candidate": {
+        "bytes": 5737881,
+        "sha256": "2049d7613ed8d4a49e975e6ca8fd3e981658d54c83316e3bd72b4882963f0f1a"
+      }
+    },
+    {
+      "name": "wrong-reference-kind",
+      "refusal": "complete independent argument token grammar",
+      "whole_candidate": {
+        "bytes": 5737883,
+        "sha256": "b3ed04eeca707dfaadd4d4183fbb57d3a6cd19e7c664796cfc73455ce6544cfd"
+      }
+    },
+    {
+      "name": "quoted-scalar-as-reference",
+      "refusal": "complete independent argument token grammar",
+      "whole_candidate": {
+        "bytes": 5737885,
+        "sha256": "5de3b9093a5e40af38d3d12cffc996c68b45619cc64f92ce9ce05600130fd2a8"
+      }
+    },
+    {
+      "name": "reference-as-quoted-scalar",
+      "refusal": "complete independent argument token grammar",
+      "whole_candidate": {
+        "bytes": 5737879,
+        "sha256": "7d7a7205114624c8d0ce2d9886eda2add049d22c991e3f2675c24a87df1be090"
+      }
+    },
+    {
+      "name": "invent-native-token-field",
+      "refusal": "complete independent argument token grammar",
+      "whole_candidate": {
+        "bytes": 5737911,
+        "sha256": "593542635f05955507c0bdc9e230adf27cb2a7e7a691cb01da1e84c38c4cd359"
+      }
+    },
+    {
+      "name": "lost-source-phase",
+      "refusal": "complete own public source phase association",
+      "whole_candidate": {
+        "bytes": 5733464,
+        "sha256": "bb63cf786207634213c4d59f9f4c74ffea8058b6314b8cc9eac49f7d8efef52c"
+      }
+    },
+    {
+      "name": "borrowed-source-phase",
+      "refusal": "complete own public source phase association",
+      "whole_candidate": {
+        "bytes": 5737882,
+        "sha256": "a5a12d78eb54be7de29128a0e7693835f3d6f49d4cb242fe6661eb75733b4876"
+      }
+    },
+    {
+      "name": "borrowed-source-domain",
+      "refusal": "complete own public source phase association",
+      "whole_candidate": {
+        "bytes": 5737882,
+        "sha256": "8ef4b5f264307eae695a64296e91d3c6d712b07a69250fe87c7a0dec979aa170"
+      }
+    },
+    {
+      "name": "wrong-source-argument-population",
+      "refusal": "complete own public source phase association",
+      "whole_candidate": {
+        "bytes": 5737884,
+        "sha256": "d71172fce11a33cdff00bbc96f82d62065e8e938415f672ff931cb82ae129ff2"
+      }
+    },
+    {
+      "name": "lost-hex",
+      "refusal": "complete independent hex category partition",
+      "whole_candidate": {
+        "bytes": 5737758,
+        "sha256": "c96e30a10c704fd4c3b6c84ce6473ad507113101683ce0514bad954b94653afa"
+      }
+    },
+    {
+      "name": "borrowed-hex",
+      "refusal": "complete independent hex category partition",
+      "whole_candidate": {
+        "bytes": 5737882,
+        "sha256": "fd0153c4e0132ee500b1aa211ee8a88f9755bb0ac9efbdb2f8adcebe8bd47892"
+      }
+    },
+    {
+      "name": "external-hex-promoted-to-own",
+      "refusal": "complete independent hex category partition",
+      "whole_candidate": {
+        "bytes": 5737877,
+        "sha256": "3b7d93c970e52ec77cb1d7212c2a85ee6da76ff2a9397dbc8a8c2ba9625a88a8"
+      }
+    },
+    {
+      "name": "reference-hex-as-quoted-trace",
+      "refusal": "complete independent hex category partition",
+      "whole_candidate": {
+        "bytes": 5737890,
+        "sha256": "8c77e8b22ea40fa1c8a6fa36ccb40019014365d97916c23d809aea69c6bf0db8"
+      }
+    },
+    {
+      "name": "lost-forwarded-child",
+      "refusal": "complete original nested forwarding association",
+      "whole_candidate": {
+        "bytes": 5737329,
+        "sha256": "1d5000a58568d83a9618e65cdcc25236c413c657ae304359e6ab750c9e95d631"
+      }
+    },
+    {
+      "name": "borrowed-forwarded-child",
+      "refusal": "complete original nested forwarding association",
+      "whole_candidate": {
+        "bytes": 5737881,
+        "sha256": "d9b17d0ac55a5bc002deb0e7035a44d1f2b537431e580d76923e28e22df20d89"
+      }
+    },
+    {
+      "name": "lost-capture-eval-bridge",
+      "refusal": "complete own public source phase association",
+      "whole_candidate": {
+        "bytes": 5737655,
+        "sha256": "7017053b73f6a8d5490842e625b18aa6ad7c29f00f6bf995070685894c25759d"
+      }
+    },
+    {
+      "name": "borrowed-nested-throw",
+      "refusal": "complete own public source phase association",
+      "whole_candidate": {
+        "bytes": 5739264,
+        "sha256": "420370198154afd13071b20712427d81a350483cffca036d79405af5194aa3de"
+      }
+    },
+    {
+      "name": "hidden-remainder-promoted-to-reference",
+      "refusal": "complete independent argument token grammar",
+      "whole_candidate": {
+        "bytes": 5737914,
+        "sha256": "3e0e847986bbefbb2b1609e195003f90c163095cb469ea7fb088963a539dc5d9"
+      }
+    }
+  ],
+  "legs": {
+    "durability": "Fixed Git inputs, full partition, immutable complete products/programmes, actual outcomes, failed first assumptions and diagnoses, task and book evidence; normal owned commit.",
+    "falsification": "oracle.py separately scans character nesting/quotes and reconstructs all allocation from the original captures; whole product controls and explicitly synthetic lexical challenges separate loss and confusion.",
+    "re_derivation": "parse.py uses a complete UTF-8 byte grammar over every admitted whole raw record and source/public phase."
+  },
+  "measured": {
+    "body_bytes": 482964,
+    "empty_records": 29805,
+    "forwarding_pairs": 21,
+    "frame_call": 2517,
+    "frame_eval": 597,
+    "frame_load": 171,
+    "frames": 3285,
+    "hex_reference_external": 342,
+    "hex_reference_own": 2691,
+    "hidden_source_arguments": 423,
+    "nonempty_records": 150,
+    "segments": 3627,
+    "source_views": 171,
+    "token_integer": 150,
+    "token_quoted": 3333,
+    "token_reference": 3033,
+    "token_regex_display": 342,
+    "token_remaining_arguments": 171,
+    "token_undef": 30
+  },
+  "missing_legs": "Semantic numerical equality/distinction joins remain J.3. No original hex occurs inside a quoted scalar, embedded quoted trace, regex display or other opaque text in this finite corpus. Synthetic examples do not fill that original-observation gap. Private/native payload/flags/provider/formatter/CODE/Regexp identity, cross-call reuse, heap census, cold replay and current publication remain unqualified.",
+  "operand_product": {
+    "bytes": 12551547,
+    "sha256": "0db2d4eb2eaf571c4c7b831df145e6b91c6c3659ec2d7c73ffe470aa31eaaaf3"
+  },
+  "original_zero_categories": [
+    "quoted_scalar",
+    "quoted_embedded_trace",
+    "regex_display",
+    "opaque_text"
+  ],
+  "programmes": {
+    "checks.py": {
+      "bytes": 1407,
+      "sha256": "f12e70a1174ab5d4285eac63d2acef88d58361a827bd2aa18202e6eba280f217"
+    },
+    "oracle.py": {
+      "bytes": 23247,
+      "sha256": "4b9a95bb769eab8238a75272d74205f91d54a0383ecfac37bdfb0b7d75f9fe03"
+    },
+    "parse.py": {
+      "bytes": 14890,
+      "sha256": "3a5d69e1a58e9c7bb1fd03658ff33044bbdbc52aa27888478a4a7c75db0dd1ff"
+    },
+    "source.py": {
+      "bytes": 4553,
+      "sha256": "e848889755455f47db04eee244d6d4d10eb3b2e9480351f63a317a3264e75005"
+    },
+    "verify.py": {
+      "bytes": 11314,
+      "sha256": "72dbe0341d2b635ef87d3c565c350f4f7fc7fe16478bbd2fd6c2e0656d2766e3"
+    }
+  },
+  "scope": "Complete finite original byte/argument/hex partition and qualified own/public source-phase positions only. Numeric equality, native identity, payload, flags, provider/formatter identity, cross-call reuse and Regexp/CODE identity are not proved.",
+  "synthetic_lexical_challenges": [
+    {
+      "body": "message caf\u00e9 0xbeef\n at own/\u00e9.pm line 1.\n\tmain::f(\"HASH(0xcafe)\", HASH(0xab), \"quote \\\" CODE(0x12) \\\\\") called at own/\u00e9.pm line 2\n",
+      "partition": [
+        {
+          "end": 21,
+          "kind": "message",
+          "pieces": [
+            {
+              "end": 21,
+              "kind": "message",
+              "raw": "message caf\u00e9 0xbeef\n",
+              "start": 0
+            }
+          ],
+          "raw": "message caf\u00e9 0xbeef\n",
+          "start": 0
+        },
+        {
+          "end": 43,
+          "kind": "origin",
+          "line": 1,
+          "path": "own/\u00e9.pm",
+          "pieces": [
+            {
+              "end": 43,
+              "kind": "origin",
+              "raw": " at own/\u00e9.pm line 1.\n",
+              "start": 21
+            }
+          ],
+          "raw": " at own/\u00e9.pm line 1.\n",
+          "start": 21
+        },
+        {
+          "arguments": [
+            {
+              "end": 66,
+              "kind": "quoted",
+              "raw": "\"HASH(0xcafe)\"",
+              "start": 52,
+              "truncated": false,
+              "value": "HASH(0xcafe)"
+            },
+            {
+              "display_class": null,
+              "end": 78,
+              "hex": "0xab",
+              "hex_span": [
+                73,
+                77
+              ],
+              "kind": "reference",
+              "raw": "HASH(0xab)",
+              "reference_kind": "HASH",
+              "start": 68
+            },
+            {
+              "end": 104,
+              "kind": "quoted",
+              "raw": "\"quote \\\" CODE(0x12) \\\\\"",
+              "start": 80,
+              "truncated": false,
+              "value": "quote \" CODE(0x12) \\"
+            }
+          ],
+          "call": "main::f(\"HASH(0xcafe)\", HASH(0xab), \"quote \\\" CODE(0x12) \\\\\")",
+          "end": 133,
+          "form": "call",
+          "frame_index": 0,
+          "function": "main::f",
+          "kind": "frame",
+          "line": 2,
+          "path": "own/\u00e9.pm",
+          "pieces": [
+            {
+              "end": 52,
+              "kind": "call_header",
+              "raw": "\tmain::f(",
+              "start": 43
+            },
+            {
+              "end": 66,
+              "kind": "argument",
+              "raw": "\"HASH(0xcafe)\"",
+              "start": 52
+            },
+            {
+              "end": 68,
+              "kind": "separator",
+              "raw": ", ",
+              "start": 66
+            },
+            {
+              "end": 78,
+              "kind": "argument",
+              "raw": "HASH(0xab)",
+              "start": 68
+            },
+            {
+              "end": 80,
+              "kind": "separator",
+              "raw": ", ",
+              "start": 78
+            },
+            {
+              "end": 104,
+              "kind": "argument",
+              "raw": "\"quote \\\" CODE(0x12) \\\\\"",
+              "start": 80
+            },
+            {
+              "end": 133,
+              "kind": "call_suffix",
+              "raw": ") called at own/\u00e9.pm line 2\n",
+              "start": 104
+            }
+          ],
+          "raw": "\tmain::f(\"HASH(0xcafe)\", HASH(0xab), \"quote \\\" CODE(0x12) \\\\\") called at own/\u00e9.pm line 2\n",
+          "start": 43
+        }
+      ],
+      "scope": "Synthetic lexical separator only; no original/source/native observation."
+    },
+    {
+      "body": "\tmain::f(qr(0xcafe), Foo::Bar=ARRAY(0xABC), undef, -2, ...) called at own/path line 3\n",
+      "partition": [
+        {
+          "arguments": [
+            {
+              "end": 19,
+              "kind": "regex_display",
+              "raw": "qr(0xcafe)",
+              "start": 9,
+              "value": "0xcafe"
+            },
+            {
+              "display_class": "Foo::Bar",
+              "end": 42,
+              "hex": "0xABC",
+              "hex_span": [
+                36,
+                41
+              ],
+              "kind": "reference",
+              "raw": "Foo::Bar=ARRAY(0xABC)",
+              "reference_kind": "ARRAY",
+              "start": 21
+            },
+            {
+              "end": 49,
+              "kind": "undef",
+              "raw": "undef",
+              "start": 44
+            },
+            {
+              "end": 53,
+              "kind": "integer",
+              "raw": "-2",
+              "start": 51,
+              "value": "-2"
+            },
+            {
+              "end": 58,
+              "kind": "remaining_arguments",
+              "raw": "...",
+              "start": 55
+            }
+          ],
+          "call": "main::f(qr(0xcafe), Foo::Bar=ARRAY(0xABC), undef, -2, ...)",
+          "end": 86,
+          "form": "call",
+          "frame_index": 0,
+          "function": "main::f",
+          "kind": "frame",
+          "line": 3,
+          "path": "own/path",
+          "pieces": [
+            {
+              "end": 9,
+              "kind": "call_header",
+              "raw": "\tmain::f(",
+              "start": 0
+            },
+            {
+              "end": 19,
+              "kind": "argument",
+              "raw": "qr(0xcafe)",
+              "start": 9
+            },
+            {
+              "end": 21,
+              "kind": "separator",
+              "raw": ", ",
+              "start": 19
+            },
+            {
+              "end": 42,
+              "kind": "argument",
+              "raw": "Foo::Bar=ARRAY(0xABC)",
+              "start": 21
+            },
+            {
+              "end": 44,
+              "kind": "separator",
+              "raw": ", ",
+              "start": 42
+            },
+            {
+              "end": 49,
+              "kind": "argument",
+              "raw": "undef",
+              "start": 44
+            },
+            {
+              "end": 51,
+              "kind": "separator",
+              "raw": ", ",
+              "start": 49
+            },
+            {
+              "end": 53,
+              "kind": "argument",
+              "raw": "-2",
+              "start": 51
+            },
+            {
+              "end": 55,
+              "kind": "separator",
+              "raw": ", ",
+              "start": 53
+            },
+            {
+              "end": 58,
+              "kind": "argument",
+              "raw": "...",
+              "start": 55
+            },
+            {
+              "end": 86,
+              "kind": "call_suffix",
+              "raw": ") called at own/path line 3\n",
+              "start": 58
+            }
+          ],
+          "raw": "\tmain::f(qr(0xcafe), Foo::Bar=ARRAY(0xABC), undef, -2, ...) called at own/path line 3\n",
+          "start": 0
+        }
+      ],
+      "scope": "Synthetic lexical separator only; no original/source/native observation."
+    },
+    {
+      "body": "\tmain::f(\"inner\\n\\tmain::g(HASH(0xcafe)) called at own/path line 1\\n\", CODE(0xd)) called at own/path line 4\n",
+      "partition": [
+        {
+          "arguments": [
+            {
+              "end": 69,
+              "kind": "quoted",
+              "raw": "\"inner\\n\\tmain::g(HASH(0xcafe)) called at own/path line 1\\n\"",
+              "start": 9,
+              "truncated": false,
+              "value": "inner\n\tmain::g(HASH(0xcafe)) called at own/path line 1\n"
+            },
+            {
+              "display_class": null,
+              "end": 80,
+              "hex": "0xd",
+              "hex_span": [
+                76,
+                79
+              ],
+              "kind": "reference",
+              "raw": "CODE(0xd)",
+              "reference_kind": "CODE",
+              "start": 71
+            }
+          ],
+          "call": "main::f(\"inner\\n\\tmain::g(HASH(0xcafe)) called at own/path line 1\\n\", CODE(0xd))",
+          "end": 108,
+          "form": "call",
+          "frame_index": 0,
+          "function": "main::f",
+          "kind": "frame",
+          "line": 4,
+          "path": "own/path",
+          "pieces": [
+            {
+              "end": 9,
+              "kind": "call_header",
+              "raw": "\tmain::f(",
+              "start": 0
+            },
+            {
+              "end": 69,
+              "kind": "argument",
+              "raw": "\"inner\\n\\tmain::g(HASH(0xcafe)) called at own/path line 1\\n\"",
+              "start": 9
+            },
+            {
+              "end": 71,
+              "kind": "separator",
+              "raw": ", ",
+              "start": 69
+            },
+            {
+              "end": 80,
+              "kind": "argument",
+              "raw": "CODE(0xd)",
+              "start": 71
+            },
+            {
+              "end": 108,
+              "kind": "call_suffix",
+              "raw": ") called at own/path line 4\n",
+              "start": 80
+            }
+          ],
+          "raw": "\tmain::f(\"inner\\n\\tmain::g(HASH(0xcafe)) called at own/path line 1\\n\", CODE(0xd)) called at own/path line 4\n",
+          "start": 0
+        }
+      ],
+      "scope": "Synthetic lexical separator only; no original/source/native observation."
+    }
+  ]
+}

@@ -1,0 +1,362 @@
+[
+  {
+    "domain": [
+      "ordinary",
+      "parses",
+      2,
+      0
+    ],
+    "frame": 9,
+    "physical": 9,
+    "argument": 3,
+    "actual": {
+      "start": 1933,
+      "end": 1969,
+      "raw": "FSM::Adapter::ISF=HASH(0x755fedc1b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x755fedc1b0",
+      "hex_span": [
+        1956,
+        1968
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "ordinary",
+      "parses",
+      2,
+      0
+    ],
+    "frame": 10,
+    "physical": 10,
+    "argument": 0,
+    "actual": {
+      "start": 2159,
+      "end": 2195,
+      "raw": "FSM::Adapter::ISF=HASH(0x755fedc1b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x755fedc1b0",
+      "hex_span": [
+        2182,
+        2194
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "ordinary",
+      "parses",
+      3,
+      0
+    ],
+    "frame": 6,
+    "physical": 6,
+    "argument": 3,
+    "actual": {
+      "start": 1469,
+      "end": 1505,
+      "raw": "FSM::Adapter::ISF=HASH(0x755fedc1b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x755fedc1b0",
+      "hex_span": [
+        1492,
+        1504
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "ordinary",
+      "parses",
+      3,
+      0
+    ],
+    "frame": 7,
+    "physical": 7,
+    "argument": 0,
+    "actual": {
+      "start": 1695,
+      "end": 1731,
+      "raw": "FSM::Adapter::ISF=HASH(0x755fedc1b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x755fedc1b0",
+      "hex_span": [
+        1718,
+        1730
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "storable",
+      "parses",
+      2,
+      0
+    ],
+    "frame": 9,
+    "physical": 9,
+    "argument": 3,
+    "actual": {
+      "start": 1933,
+      "end": 1969,
+      "raw": "FSM::Adapter::ISF=HASH(0x7620f121b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x7620f121b0",
+      "hex_span": [
+        1956,
+        1968
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "storable",
+      "parses",
+      2,
+      0
+    ],
+    "frame": 10,
+    "physical": 10,
+    "argument": 0,
+    "actual": {
+      "start": 2159,
+      "end": 2195,
+      "raw": "FSM::Adapter::ISF=HASH(0x7620f121b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x7620f121b0",
+      "hex_span": [
+        2182,
+        2194
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "storable",
+      "parses",
+      3,
+      0
+    ],
+    "frame": 6,
+    "physical": 6,
+    "argument": 3,
+    "actual": {
+      "start": 1469,
+      "end": 1505,
+      "raw": "FSM::Adapter::ISF=HASH(0x7620f121b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x7620f121b0",
+      "hex_span": [
+        1492,
+        1504
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "storable",
+      "parses",
+      3,
+      0
+    ],
+    "frame": 7,
+    "physical": 7,
+    "argument": 0,
+    "actual": {
+      "start": 1695,
+      "end": 1731,
+      "raw": "FSM::Adapter::ISF=HASH(0x7620f121b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x7620f121b0",
+      "hex_span": [
+        1718,
+        1730
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "controls",
+      "parses",
+      2,
+      0
+    ],
+    "frame": 9,
+    "physical": 9,
+    "argument": 3,
+    "actual": {
+      "start": 1933,
+      "end": 1969,
+      "raw": "FSM::Adapter::ISF=HASH(0x79ff0ec1b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x79ff0ec1b0",
+      "hex_span": [
+        1956,
+        1968
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "controls",
+      "parses",
+      2,
+      0
+    ],
+    "frame": 10,
+    "physical": 10,
+    "argument": 0,
+    "actual": {
+      "start": 2159,
+      "end": 2195,
+      "raw": "FSM::Adapter::ISF=HASH(0x79ff0ec1b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x79ff0ec1b0",
+      "hex_span": [
+        2182,
+        2194
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "controls",
+      "parses",
+      3,
+      0
+    ],
+    "frame": 6,
+    "physical": 6,
+    "argument": 3,
+    "actual": {
+      "start": 1469,
+      "end": 1505,
+      "raw": "FSM::Adapter::ISF=HASH(0x79ff0ec1b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x79ff0ec1b0",
+      "hex_span": [
+        1492,
+        1504
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  },
+  {
+    "domain": [
+      "controls",
+      "parses",
+      3,
+      0
+    ],
+    "frame": 7,
+    "physical": 7,
+    "argument": 0,
+    "actual": {
+      "start": 1695,
+      "end": 1731,
+      "raw": "FSM::Adapter::ISF=HASH(0x79ff0ec1b0)",
+      "kind": "reference",
+      "reference_kind": "HASH",
+      "display_class": "FSM::Adapter::ISF",
+      "hex": "0x79ff0ec1b0",
+      "hex_span": [
+        1718,
+        1730
+      ]
+    },
+    "expected": {
+      "kind": "reference",
+      "reference_kind": "FSM::Adapter::ISF=HASH",
+      "role": "declared_facade_receiver"
+    },
+    "cause": "qualified source reference display kind"
+  }
+]

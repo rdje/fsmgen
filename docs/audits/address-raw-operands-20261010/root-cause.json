@@ -1,0 +1,50 @@
+{
+  "coordinate-bridge": {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-1",
+      "-S",
+      "nested_capture_eval",
+      "--",
+      "docs/audits/coordinate-original-matching-qualified-20261009/match.py"
+    ],
+    "mechanism": "Nested Value capture eval has a separately qualified coordinate frame between component lists.",
+    "status": 0,
+    "stderr": "",
+    "stdout": "32c5f718528c9ca38b72ef0333e26703663674ab SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.2.3.2: match complete original own coordinates\n"
+  },
+  "raw-inventory": {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-1",
+      "-S",
+      "opaque_lexemes",
+      "--",
+      "docs/audits/record-value-original-raw-20261005/trace_inventory.py"
+    ],
+    "mechanism": "Whole raw inventory was lossless but did not partition actual argument display semantics.",
+    "status": 0,
+    "stderr": "",
+    "stdout": "506b80e7c59be4f5b13556c5e234b94e6c804fee SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1: qualify lossless original raw-error inventory\n"
+  },
+  "source-parser-dialect": {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-1",
+      "-S",
+      "display_class",
+      "--",
+      "docs/audits/record-value-parser-argument-roles-20261006/verify.py"
+    ],
+    "mechanism": "Parser descriptors split display class and reference kind; observer/helper descriptors can combine them.",
+    "status": 0,
+    "stderr": "",
+    "stdout": "10e8520d1a0e485693d155c08c48c374ef1e6897 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4.3.2: qualify visible parser argument roles\n"
+  }
+}

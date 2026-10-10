@@ -1,0 +1,46 @@
+{
+  "first-qualified-oracle": {
+    "authority": "complete first proof programme digest; helper invocation records only explicit file arguments",
+    "identity": {
+      "bytes": 22712,
+      "sha256": "a720a06a5b689692988d909d55c29a0bc3ec57337dc332c4359bba4b9ed23eec"
+    },
+    "snapshot": "first-qualified-oracle.py.txt"
+  },
+  "partition-with-qualified-bridge:parse.py": {
+    "actual_status": 1,
+    "authority": "exact explicit invocation instrument",
+    "identity": {
+      "bytes": 14736,
+      "sha256": "83a250d00ded9157226399e6bda798c59d20cada60d89c7a5bdb7a8f9d1ca475"
+    },
+    "snapshot": "bridge-partition.py.txt"
+  },
+  "partition:parse.py": {
+    "actual_status": 1,
+    "authority": "exact explicit invocation instrument",
+    "identity": {
+      "bytes": 14202,
+      "sha256": "25679b624d3a52c2b50eea84cc0a96bdae9e0e63a22db1b30f8ba2df146ce91e"
+    },
+    "snapshot": "first-partition.py.txt"
+  },
+  "qualification-genuine-borrow:verify.py": {
+    "actual_status": 0,
+    "authority": "exact explicit invocation instrument",
+    "identity": {
+      "bytes": 10791,
+      "sha256": "902d3b19ec3ad4ebe8894a492b0c12a7f1b9873de3128defff87f87ec4807bf6"
+    },
+    "snapshot": "first-qualified-reader.py.txt"
+  },
+  "qualification:verify.py": {
+    "actual_status": 1,
+    "authority": "exact explicit invocation instrument",
+    "identity": {
+      "bytes": 10801,
+      "sha256": "0b7762ba9f27a794f2270c477fa3e7fb8dc1b49393a9d1c49b6aa6f7728d1212"
+    },
+    "snapshot": "first-qualification.py.txt"
+  }
+}

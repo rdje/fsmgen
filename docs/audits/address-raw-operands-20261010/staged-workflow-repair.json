@@ -1,0 +1,74 @@
+{
+  "claim": {
+    "after": {
+      "candidate_id": "published-b611036d38a0ed94ea6917ab",
+      "disposition": "derived_gate",
+      "durability": {
+        "evidence": "Fixed complete committed inputs, entire operands.json and final-proof.json, exact invocation programmes/results and failed assumptions retain; current book guide/source and normal task-scoped commit conserve the dated scope.",
+        "producer_paths": [
+          "docs/audits/address-raw-operands-20261010/source.py"
+        ],
+        "watcher_paths": [
+          "docs/audits/address-raw-operands-20261010/book_check.py",
+          "docs/audits/address-raw-operands-20261010/verify.py"
+        ]
+      },
+      "falsify": {
+        "competing_hypothesis": "A quoted or external operand, byte span, nested phase, hidden argument or complete record could be omitted, borrowed or promoted without rejection.",
+        "evidence": "Separate original-capture character/nesting scanner reconstructs every byte and prior physical segment; genuine whole product controls reject, and explicit synthetic Unicode/quote/trace challenges agree.",
+        "oracle_paths": [
+          "docs/audits/address-raw-operands-20261010/oracle.py"
+        ]
+      },
+      "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+      "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.3",
+      "record_type": "disposition",
+      "rederive": {
+        "evidence": "Complete finite original bodies partition without UTF-8 byte loss into physical segments, headers, tokens, separators and suffixes; source/public phases and hidden arguments conserve.",
+        "producer_paths": [
+          "docs/audits/address-raw-operands-20261010/parse.py"
+        ]
+      },
+      "schema_version": 1
+    },
+    "before": {
+      "candidate_id": "published-b611036d38a0ed94ea6917ab",
+      "disposition": "derived_gate",
+      "durability": {
+        "evidence": "Fixed complete committed inputs, entire operands.json and final-proof.json, exact invocation programmes/results and failed assumptions retain; current book guide/source and normal task-scoped commit conserve the dated scope.",
+        "producer_paths": [
+          "docs/audits/address-raw-operands-20261010/source.py"
+        ],
+        "watcher_paths": [
+          "docs/audits/address-raw-operands-20261010/verify.py",
+          "docs/audits/address-raw-operands-20261010/book_check.py"
+        ]
+      },
+      "falsify": {
+        "competing_hypothesis": "A quoted or external operand, byte span, nested phase, hidden argument or complete record could be omitted, borrowed or promoted without rejection.",
+        "evidence": "Separate original-capture character/nesting scanner reconstructs every byte and prior physical segment; genuine whole product controls reject, and explicit synthetic Unicode/quote/trace challenges agree.",
+        "oracle_paths": [
+          "docs/audits/address-raw-operands-20261010/oracle.py"
+        ]
+      },
+      "owner_path": "docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md",
+      "owner_task": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.2",
+      "record_type": "disposition",
+      "rederive": {
+        "evidence": "Complete finite original bodies partition without UTF-8 byte loss into physical segments, headers, tokens, separators and suffixes; source/public phases and hidden arguments conserve.",
+        "producer_paths": [
+          "docs/audits/address-raw-operands-20261010/parse.py"
+        ]
+      },
+      "schema_version": 1
+    }
+  },
+  "failure": "First staged doctrine actual1: active_resume line at484 bytes crosses90-percent rollover threshold of unchanged512-byte capacity; new general_book claim has wrong group owner and unsorted watchers.",
+  "pointer": {
+    "after_line": "- next_action: From clean HEAD activate child .3 of active_work_unit. Conserve the complete corpus; join visible own addresses to simultaneous source roles and reject borrowed/aliased/kind/domain controls. Preserve external/provider/formatter/CODE/Regexp and cross-call limits; close the raw parent only after full acceptance.",
+    "after_maximum_bytes": 326,
+    "before_line": "- next_action: From clean HEAD activate SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.3. Conserve the whole admitted/parsed corpus and independently join visible own hexadecimal operands to qualified simultaneous source equality/distinction roles. Reject genuine borrowed/aliased/wrong-kind/wrong-domain interventions; preserve external, provider, formatter, CODE/Regexp and cross-call reuse limits before raw-parent closure.",
+    "before_maximum_bytes": 484
+  },
+  "scope": "Only resume wording and claim owner/order metadata repair. Canonical task acceptance, book/operand/source meanings, all capacity limits and existing claim records preserve."
+}

@@ -1,0 +1,240 @@
+"""Lossless byte grammar for the complete admitted finite original corpus."""
+import hashlib
+import json
+import re
+import runpy
+from pathlib import Path
+
+BASE = Path('docs/audits/address-raw-operands-20261010')
+OWNER = (BASE / 'scope.txt').read_text().strip()
+SCOPE = ('Complete finite original byte/argument/hex partition and qualified own/public '
+         'source-phase positions only. Numeric equality, native identity, payload, flags, '
+         'provider/formatter identity, cross-call reuse and Regexp/CODE identity are not proved.')
+FRAME = re.compile(rb'\t(?P<call>.+) called at (?P<path>.+) line (?P<line>[0-9]+)\Z')
+ORIGIN = re.compile(rb' at (?P<path>.+) line (?P<line>[0-9]+)\.\Z')
+CALL = re.compile(rb'(?P<function>[A-Za-z_][A-Za-z_0-9:]*)\((?P<arguments>.*)\)\Z')
+TOKEN = re.compile(rb'(?:(?:[A-Za-z_][A-Za-z_0-9]*(?:::[A-Za-z_][A-Za-z_0-9]*)*)=)?'
+                   rb'(?:HASH|ARRAY|CODE)\(0x[0-9a-fA-F]+\)|qr\([^()]*\)|undef|-?[0-9]+'
+                   rb'|"(?:\\.|[^"\\])*"(?:\.\.\.)?|\.\.\.')
+REFERENCE = re.compile(rb'(?:(?P<class>[^=]+)=)?(?P<kind>HASH|ARRAY|CODE)\((?P<hex>0x[0-9a-fA-F]+)\)\Z')
+HEX = re.compile(rb'0x[0-9a-fA-F]+')
+
+
+def need(test, cause):
+    if not test:
+        raise ValueError(cause)
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def span(raw, start, end, kind):
+    return {'start': start, 'end': end, 'raw': raw.decode(), 'kind': kind}
+
+
+def argument(raw, start):
+    token = span(raw, start, start + len(raw), '')
+    ref = REFERENCE.fullmatch(raw)
+    if ref:
+        token.update(kind='reference', reference_kind=ref['kind'].decode(),
+                     display_class=ref['class'].decode() if ref['class'] else None,
+                     hex=ref['hex'].decode(), hex_span=[start + ref.start('hex'), start + ref.end('hex')])
+    elif raw.startswith(b'"'):
+        truncated = raw.endswith(b'...')
+        token.update(kind='quoted', truncated=truncated,
+                     value=json.loads(raw[:-3] if truncated else raw))
+    elif raw.startswith(b'qr('):
+        token.update(kind='regex_display', value=raw[3:-1].decode())
+    elif raw == b'...':
+        token['kind'] = 'remaining_arguments'
+    elif raw == b'undef':
+        token['kind'] = 'undef'
+    else:
+        token.update(kind='integer', value=raw.decode())
+    return token
+
+
+def segments(body):
+    result, offset, frame_index = [], 0, 0
+    for raw in body.encode().splitlines(keepends=True):
+        text = raw[:-1] if raw.endswith(b'\n') else raw
+        item = span(raw, offset, offset + len(raw), 'blank' if not text.strip() else 'message')
+        match, origin = FRAME.fullmatch(text), ORIGIN.fullmatch(text)
+        pieces, args = [], []
+        if match:
+            call = match['call']; begin = offset + match.start('call')
+            item.update(kind='frame', frame_index=frame_index, call=call.decode(),
+                        path=match['path'].decode(), line=int(match['line']))
+            frame_index += 1
+            function = CALL.fullmatch(call)
+            if function:
+                item.update(form='call', function=function['function'].decode())
+                at = begin + function.start('arguments')
+                pieces.append(span(body.encode()[offset:at], offset, at, 'call_header'))
+                source, pos = function['arguments'], 0
+                while pos < len(source):
+                    token = TOKEN.match(source, pos)
+                    need(token is not None, 'complete finite byte argument grammar')
+                    arg = argument(token[0], at + pos); args.append(arg)
+                    pieces.append(span(token[0], at + pos, at + token.end(), 'argument'))
+                    pos = token.end()
+                    if pos < len(source):
+                        need(source[pos:pos + 2] == b', ', 'exact byte argument separator')
+                        pieces.append(span(b', ', at + pos, at + pos + 2, 'separator')); pos += 2
+                        need(pos < len(source), 'no trailing byte argument separator')
+                end = at + len(source)
+                pieces.append(span(body.encode()[end:offset + len(raw)], end, offset + len(raw), 'call_suffix'))
+            elif call == b'eval {...}':
+                item.update(form='eval', function='eval {...}')
+            elif call.startswith(b'require '):
+                need(call == b'require ./t/1986-isf-record-port-value-gates.t', 'finite original load marker')
+                item.update(form='load', function=call.decode())
+            else:
+                raise ValueError('complete finite frame call grammar')
+            item['arguments'] = args
+        elif origin:
+            item.update(kind='origin', path=origin['path'].decode(), line=int(origin['line']))
+        item['pieces'] = pieces or [span(raw, offset, offset + len(raw), item['kind'])]
+        result.append(item); offset += len(raw)
+    need(offset == len(body.encode()), 'whole original byte segmentation')
+    return result
+
+
+def positions(phase, coordinate):
+    p = phase['complete_own_positions']
+    # The class component lists do not own the intervening Value capture eval.
+    # Its separate coordinate contract supplies that already-qualified frame.
+    bridge = [c['frame_index'] for c in coordinate['callers_inner_to_outer']
+              if c['source_binding']['role'] == 'nested_capture_eval']
+    return sorted(set(p['core_positions'] + p['helper_positions'] + p['body_positions']
+                      + p['entry_positions'] + [i for operation in p['operations'] for i in operation] + bridge))
+
+
+def source_argument(actual, expected):
+    kind = expected.get('kind')
+    if kind == 'reference' or 'reference_kind' in expected:
+        display_class, separator, reference_kind = expected['reference_kind'].rpartition('=')
+        expected_class = display_class if separator else expected.get('display_class')
+        need(actual['kind'] == 'reference' and actual['reference_kind'] == reference_kind
+             and actual['display_class'] == expected_class, 'qualified source reference display kind')
+    elif kind == 'regex_source':
+        need(actual['kind'] == 'regex_display' and actual['value'] == expected['display_body'],
+             'qualified source regex display only')
+    elif kind == 'false_predicate' or expected.get('source_value') == 0:
+        need(actual['kind'] == 'undef' or actual['kind'] in ('integer', 'quoted') and actual['value'] in ('', '0'),
+             'qualified source false predicate display')
+    else:
+        value = expected.get('value') if kind == 'scalar' else expected['source_value']
+        if actual['kind'] == 'quoted':
+            need(isinstance(value, str) and (value.startswith(actual['value']) and 0 < len(actual['value']) < len(value)
+                 if actual['truncated'] else value == actual['value']), 'qualified source quoted scalar display')
+        else:
+            need(actual['kind'] == 'undef' and value is None or actual['kind'] == 'integer' and str(value) == actual['value'],
+                 'qualified source scalar token display')
+
+
+def produce(inputs):
+    data = {name: json.loads(Path(spec['path']).read_bytes()) for name, spec in inputs.items()
+            if spec['path'].endswith('.json')}
+    cases = {(m['mode'], c['domain'], c['index']): c for m in data['frames']['modes'] for c in m['cases']}
+    views = {tuple(v['domain']): v for m in data['source']['modes'] for v in m['views']}
+    coords = {(m['mode'], m['domain'], m['index']): m for m in data['coordinates']['matches']}
+    modes = []
+    for mode in data['raw']['inventories']:
+        domains = {}
+        for name, domain in mode['domains'].items():
+            records = []
+            for original in domain['nonempty']:
+                key = (mode['mode'], name, original['index']); case, coord = cases[key], coords[key]
+                body = original['body']; parts = segments(body)
+                frames = [s for s in parts if s['kind'] == 'frame']
+                phases, ownership, scalar_sources = [], {}, {}
+                forwarded = case['forwarded']
+                child = None
+                if forwarded:
+                    child = next(r['body'] for r in mode['domains']['api']['nonempty'] if r['index'] == forwarded['capture_api'])
+                    prefix = 'Invalid ISF record value: ' + forwarded['context'] + ' has invalid resolved type: ' + child + '\n'
+                    need(body.startswith(prefix) and pin(prefix.encode()) == forwarded['entire_outer_prefix'],
+                         'complete original nested forwarding')
+                for phase in case['phases']:
+                    number = phase['phase']; view = views[key + (number,)]; own = positions(phase, coord['phases'][number])
+                    need(own == [c['frame_index'] for c in coord['phases'][number]['callers_inner_to_outer']],
+                         'complete class components plus coordinate capture-eval bridge')
+                    need(len(own) == len(view['frames']), 'complete own source frame positions')
+                    associated = []
+                    for source_index, physical in enumerate(own):
+                        frame, model = frames[physical], view['frames'][source_index]
+                        need(frame['function'] == model['function'], 'complete own source frame function')
+                        ownership[physical] = (number, source_index)
+                        args, expected = frame['arguments'], model['arguments']
+                        remaining = bool(args and args[-1]['kind'] == 'remaining_arguments')
+                        visible = args[:-1] if remaining else args
+                        need(all(a['kind'] != 'remaining_arguments' for a in visible)
+                             and (len(visible) < len(expected) if remaining else len(visible) == len(expected)),
+                             'complete visible and hidden source argument allocation')
+                        for argument_index, (actual, wanted) in enumerate(zip(visible, expected)):
+                            source_argument(actual, wanted)
+                            value = wanted.get('value', wanted.get('source_value'))
+                            if child and isinstance(value, str) and child in value:
+                                scalar_sources[(physical, argument_index)] = (value.index(child), value.index(child) + len(child))
+                        associated.append({'source_frame': source_index, 'frame_index': physical,
+                                           'whole_source_frame': pin(json.dumps(model, sort_keys=True).encode()),
+                                           'visible_arguments': len(visible), 'source_arguments': len(expected),
+                                           'hidden_arguments': [len(visible), len(expected)] if remaining else None})
+                    phases.append({'phase': number, 'domain': list(key + (number,)), 'frames': associated,
+                                   'whole_source_view': pin(json.dumps(view, sort_keys=True).encode()),
+                                   'complete_own_positions': phase['complete_own_positions'],
+                                   'whole_class_phase': pin(json.dumps(phase, sort_keys=True).encode()),
+                                   'whole_coordinate_phase': pin(json.dumps(coord['phases'][number], sort_keys=True).encode()),
+                                   'whole_public_phase': pin(json.dumps(case['public']['phases'][number], sort_keys=True).encode())})
+                lexemes = []
+                for match in HEX.finditer(body.encode()):
+                    start, end = match.span(); category, physical, argument_index, phase_number = 'opaque_text', None, None, None
+                    for frame in frames:
+                        if not frame['start'] <= start < frame['end']:
+                            continue
+                        physical = frame['frame_index']
+                        phase_number = next(p['phase'] for p in phases if physical <= p['complete_own_positions']['load_position'])
+                        for i, token in enumerate(frame['arguments']):
+                            if token['start'] <= start and end <= token['end']:
+                                argument_index = i
+                                if token['kind'] == 'reference':
+                                    need(token['hex_span'] == [start, end], 'one complete reference hex operand')
+                                    category = 'reference_own' if physical in ownership else 'reference_external'
+                                elif token['kind'] == 'quoted':
+                                    category = 'quoted_scalar'
+                                    if (physical, i) in scalar_sources:
+                                        before = body.encode()[token['start'] + 1:start]
+                                        decoded = json.loads(b'"' + before + b'"')
+                                        lo, hi = scalar_sources[(physical, i)]
+                                        if lo <= len(decoded) < hi:
+                                            category = 'quoted_embedded_trace'
+                                elif token['kind'] == 'regex_display':
+                                    category = 'regex_display'
+                                break
+                        break
+                    lexemes.append({'start': start, 'end': end, 'raw': match[0].decode(), 'kind': category,
+                                    'frame_index': physical, 'argument': argument_index, 'phase': phase_number})
+                records.append({'index': original['index'], 'wire_kind': original['wire_kind'], 'context': original['context'],
+                                'body_identity': pin(body.encode()), 'segments': parts, 'phases': phases, 'hex': lexemes,
+                                'forwarded': forwarded})
+            domains[name] = {'population': domain['population'], 'empty': domain['empty_string_members'], 'records': records}
+        modes.append({'mode': mode['mode'], 'domains': domains})
+    return {'owner': OWNER, 'scope': SCOPE, 'inputs': inputs, 'binding': pin((BASE / 'binding.json').read_bytes()), 'modes': modes}
+
+
+def main():
+    source = runpy.run_path(str(BASE / 'source.py'))
+    inputs, binding = source['rebuild']()
+    need(inputs == json.loads((BASE / 'inputs.json').read_bytes())
+         and binding == json.loads((BASE / 'binding.json').read_bytes()), 'whole admitted operand input binding')
+    product = produce(inputs)
+    target = BASE / 'operands.json'
+    need(not target.exists(), 'retain first complete operand partition')
+    target.write_text(json.dumps(product, sort_keys=True, indent=2) + '\n')
+    print('PASS complete finite original byte/argument/hex partition produced; independent qualification and numeric joins remain required.')
+
+
+if __name__ == '__main__':
+    main()

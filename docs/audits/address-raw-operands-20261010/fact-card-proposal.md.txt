@@ -1,0 +1,29 @@
+# Proposed dated complete original operand parsing fact
+
+Owner: scope.txt. Proposed only; not a current Knowledge Map card.
+
+Question words: original raw reference operand quoted trace scalar hexadecimal
+UTF-8 byte partition source throw phase hidden argument blessed display.
+
+The complete admitted original corpus has a lossless finite byte/argument/hex
+partition. Original empty/nonempty allocation, own/public physical positions,
+source throw views, nested forwarding, regex/quoted scalar displays and hidden
+argument markers conserve. Exact counters and complete proof live in final-proof.json.
+Every original hex is a displayed reference operand: quoted scalar, quoted
+embedded-trace, regex-display and other opaque hex categories are originally absent.
+Separate synthetic lexical examples do not fill that observation gap.
+
+Re-derivation: parse.py partitions whole UTF-8 bodies and associates every own
+frame with complete source/public/coordinate phase contracts.
+Falsification: oracle.py separately scans characters/nesting/quotes from original
+captures, reconstructs allocation and full prior segmentation; verify.py rejects
+33 genuine whole-product controls and checks three explicitly synthetic challenges.
+Durability: fixed complete committed input products, full partition and proofs,
+actual failed/corrected programmes/results and diagnoses, task/book source and
+normal task-scoped Git commit preserve the dated result. Replay is in guide.md.txt.
+
+Missing legs: original numeric equality/distinction joins inside simultaneous source
+domains remain J.3. Original private/native payload/flags/provider/formatter/CODE/
+Regexp identity, cross-call/capture identity, heap census, cold replay, visual book
+QA and governed current canonical publication remain unqualified. Existing cards,
+questions, probes and collection authority conserve; no capacity widening occurs.

@@ -1,0 +1,31 @@
+{
+  "candidate_id": "published-b611036d38a0ed94ea6917ab",
+  "disposition": "derived_gate",
+  "durability": {
+    "evidence": "Fixed complete committed inputs, entire operands.json and final-proof.json, exact invocation programmes/results and failed assumptions retain; current book guide/source and normal task-scoped commit conserve the dated scope.",
+    "producer_paths": [
+      "docs/audits/address-raw-operands-20261010/source.py"
+    ],
+    "watcher_paths": [
+      "docs/audits/address-raw-operands-20261010/book_check.py",
+      "docs/audits/address-raw-operands-20261010/verify.py"
+    ]
+  },
+  "falsify": {
+    "competing_hypothesis": "A quoted or external operand, byte span, nested phase, hidden argument or complete record could be omitted, borrowed or promoted without rejection.",
+    "evidence": "Separate original-capture character/nesting scanner reconstructs every byte and prior physical segment; genuine whole product controls reject, and explicit synthetic Unicode/quote/trace challenges agree.",
+    "oracle_paths": [
+      "docs/audits/address-raw-operands-20261010/oracle.py"
+    ]
+  },
+  "owner_path": "docs/tasks/CLAIM-VERIFICATION-ADOPTION.md",
+  "owner_task": "CLAIM-VERIFICATION-ADOPTION.5.3",
+  "record_type": "disposition",
+  "rederive": {
+    "evidence": "Complete finite original bodies partition without UTF-8 byte loss into physical segments, headers, tokens, separators and suffixes; source/public phases and hidden arguments conserve.",
+    "producer_paths": [
+      "docs/audits/address-raw-operands-20261010/parse.py"
+    ]
+  },
+  "schema_version": 1
+}

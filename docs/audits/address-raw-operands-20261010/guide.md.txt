@@ -1,0 +1,52 @@
+# Complete finite original operand partition
+
+Owner: scope.txt. Run from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-operands-20261010/verify.py
+```
+
+source.py binds the whole committed predecessor admission and complete original,
+raw, class/frame, coordinate and source-view products at b58aa218a437c543d46d68457b04f3c4f249545e.
+The prerequisite replay checks saved actual semantic outcomes and fixed complete
+inputs; it does not recapture originals or repeat the earlier long coordinate run.
+parse.py uses an anchored byte grammar; oracle.py imports no producer and scans
+character nesting/quotes directly from every original capture. It reconstructs
+empty/nonempty allocation, prior physical segmentation, source/public phases and
+the complete hexadecimal inventory, then qualifies every product field.
+
+operands.json is the full byte/token/phase partition. Each physical segment and
+argument has UTF-8 byte endpoints in the original whole body. Piece boundaries
+preserve headers, separators and suffixes. Every source frame retains an explicit
+physical position and whole model identity; hidden argument intervals never invent
+visible addresses. Full input products remain fixed committed files. The numerical
+meaning of reference displays remains successor J.3, not this parser's result.
+
+Nested whole child exceptions and new outer traces conserve their original phases.
+An already-qualified nested capture eval is owned by the coordinate contract rather
+than the class component lists. Complete public positions and opaque framework
+operands remain distinct. Class/kind display spelling accepts both existing source
+descriptor dialects without asserting native object or class identity.
+
+final-proof.json contains the definitive counters, 33 genuine whole-product controls,
+three explicitly synthetic lexical challenges and distinct verification legs.
+proof.json and first-proof.json retain the first successful reader before the added
+complete binding and prior-segment conservation checks. checks.json retains every
+actual command, status, full stream and invocation instrument. First failed parser
+and control-harness programmes and their complete diagnoses retain; no failed run
+is promoted to success. The first borrowed-frame control was byte-identical across
+modes and stopped at its genuine-change guard; a genuinely different complete
+reference frame replaces it and rejects at body conservation.
+
+Evidence boundary for review: every original hexadecimal lexeme is a displayed
+reference operand. Original quoted scalar/embedded-trace, regex and other opaque
+hex populations are zero. Synthetic examples exercise Unicode, escaped quotes,
+regex displays and quoted inner traces, but supply no original/native observation.
+This absence does not weaken whole-corpus coverage or authorize invented evidence.
+
+The ordinary focused publication/book tests, full native source-copy/new-guide
+checks, exact task/book measurements, claim inventory, staged doctrines and normal
+hooks gate the same-slice commit. No capacity ceiling or Knowledge Map allowance
+changes. The fact proposal awaits governed publication. Semantic numeric roles,
+private/native payload/flags, provider/formatter/CODE/Regexp identity, cross-call
+reuse, heap census, cold replay, visual QA and full CI/push retain their own owners.

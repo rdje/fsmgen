@@ -1465,13 +1465,59 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-admission-20
 ```
 
 This dated admission qualifies input custody and prerequisite replay only.
-Lossless reference-operand parsing and original numeric role/lifetime joins
-remain owned successors. Scalar hex text, quoted embedded traces and external
-opaque operands still need their complete partition before reference meanings
-can join. Equal numerical addresses across calls or captures establish no
+The complete lossless operand partition is qualified below; original numeric
+role/lifetime joins remain the next owned successor. Equal numerical addresses across calls or captures establish no
 identity. Original private/native/provider/formatter/CODE/Regexp identity,
 cold replay, visual book QA and governed current publication remain open.
 Existing canonical facts, questions, probes and collection ceilings retain.
+
+Complete lossless parsing of the original operands is now qualified. Each body
+retains its exact UTF-8 bytes, physical segments, frame headers, argument tokens,
+separators and coordinates. Empty error records remain in the complete original
+allocation. Function calls, block-eval markers and the original load marker have
+separate finite grammars; the displayed `require` marker retains its qualified
+source `do` operator rather than acquiring a new execution meaning.
+
+Own arguments associate with their complete qualified source throw view and
+public-frame positions. The nested Value capture eval has a separate coordinate
+contract between the component frame lists and is conserved explicitly. Both
+existing source reference-description dialects retain: a blessed class can be
+separate from the reference kind or included in its display spelling. Neither
+spelling proves native class, payload or object identity.
+
+Every hexadecimal lexeme has a full-body byte span and an operand category.
+Own reference displays and opaque framework reference displays remain separate.
+Quoted strings retain escapes and truncation, regex displays retain their text,
+and a final `...` preserves hidden arguments without inventing their addresses.
+For example, a displayed `HASH(0xab)` is a reference token; the synthetic quoted
+string `"HASH(0xab)"` is scalar text, and `qr(0xab)` is a regex display. Separate
+synthetic Unicode, escaped-quote and embedded-trace challenges check the grammar.
+They are explicitly separate from the original capture evidence.
+
+In this finite original corpus every hexadecimal lexeme occurs in a visible
+reference display. No original hexadecimal lexeme occurs inside a quoted
+scalar, quoted embedded trace, regex display or other opaque text. Nested raw
+child exceptions and their new outer throws remain whole, with source messages
+and visible truncated quoted arguments conserved. The synthetic challenges do
+not establish original observations in the absent categories.
+
+The producer partitions bytes; a separate reader scans character nesting and
+quotes directly from the original captures, reconstructs allocation and checks
+the complete prior physical segmentation. Whole omissions, borrowed bodies,
+frames, phases and hex operands, quoted/reference confusion, hidden-argument
+promotion, wrong kinds, lost nested forwarding and invented native claims reject.
+Fixed committed inputs, actual failed/corrected runs and complete proofs retain:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-operands-20261010/verify.py
+```
+
+This closes the lossless operand-parser child. Original numerical equality and
+distinction joins inside simultaneous source domains are next. Equal numbers
+across calls or captures establish no identity. Original private/native payload
+and flags, provider/formatter/CODE/Regexp identity, cold replay, visual book QA
+and governed current fact publication remain open. Existing canonical facts,
+questions, probes and collection ceilings retain.
 
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
