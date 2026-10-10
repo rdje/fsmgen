@@ -1,0 +1,76 @@
+# Complete failed-predicate source values
+
+Owner: the work unit in `scope.txt`. The unchanged parent still owns complete
+source values, original headers, the original-body join and publication.
+
+This dated child qualifies every failed-predicate operand in the committed source census. It retains both
+schemas, whole inputs and alias edges, each guard expression, helper normalization and the selected short-
+circuit branch. Original trace display is not a new semantic oracle or native recapture.
+
+## Reproduce
+
+From the repository root:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-predicate-values-20261010/verify.py
+```
+
+The producer derives complete inputs from qualified source products and own guard statements. Its tagged causal
+model supplies branch facts. The independent reader executes the unmodified causal source with a separate frame-
+local interceptor, independently binds inputs and alias relationships, and checks closed whole guard
+expressions. Neither substitutes logical false for its physical scalar construction.
+
+Literal zero and explicit `? 1 : 0` helpers produce numeric zero. A failed comparison or negation produces a
+defined empty string with numeric-zero behavior. Short circuits preserve the selected operand. The resolver's
+complete failure constructor and every detail call are checked: no detail overrides `ok`. See `public-
+contracts.json` for the necessary public language references.
+
+## Current public qualification
+
+The selected source-neutral fixtures cover literal/helper zero, comparisons, negation, existence, grep and both
+short-circuit positions. Complete source, predicted values, headers and public profile precede their native
+capture. The driver observes public `longmess` before explicitly coercing the scalar. Its versions and entire
+results are retained; all complete headers and trace bodies are checked. A real normalization source
+intervention changes the comparison's empty-string value/token to zero; every other result is checked.
+
+This establishes the selected current public construction/display contract. It does not measure the original
+execution's flags, versions, settings, formatter, provider/private intervals or reference identity.
+
+## Falsification and durability
+
+`controls.json` retains complete compressed source/native counterexamples. Replay executes each independently
+and requires the same intended rejection. Omission, reordering, borrowing, schema, source input, branch,
+encoding, helper, resolver override, profile, native tail and native-promotion controls retain. `native-control-
+plan.json` precedes the actual genuine source intervention.
+
+Fixed Git objects, complete current prerequisite namespaces and all actual completed prerequisite readers are
+independently checked. Each pipeline epoch retains exact source bytes plus complete command, status, stdout and
+stderr. The final manifest seals every member except the evolving check transport. The first proof is retained;
+the qualified proof excludes its own command's later-written receipt to avoid a self-referential durability
+assertion.
+
+## First hypotheses and repairs
+
+The first derivation parser omitted inline helper declarations, a right negation and trailing call commas. Each
+failed program/result is retained. The independent reader then rejected the first value product: it incorrectly
+let a leading negation override the right normalized operand of false `or`. `predicate-values.json` is that
+withdrawn product; only `predicate-values-qualified.json` supplies the qualified values.
+
+The first public fixture called `longmess` directly and supplied no intended boundary frame. Its complete plan,
+source, native result and failed reader remain. The qualified fixture adds an inner public call, selects fresh
+complete hypotheses, and then captures them. No original execution was recaptured.
+
+Both failed book reader epochs retain. Complete text diagnosis identifies Markdown link labels and smart
+apostrophes; the repaired reader translates both source forms before checking the entire unique rendered guide.
+A premature task status was corrected to active until this full check passed.
+
+The first broader publication gate found stale copied Memory/task-index views: the build preceded their final
+updates. Both complete byte pairs retain in `current-copy-failure.json`; final documentation precedes the
+repaired rebuild.
+
+## Explicit successors
+
+Remaining scalar/regex constructors and profile boundaries belong to sibling `.2`; aggregate unchanged source-
+value acceptance belongs to sibling `.3`. Full source headers, original-body joining, parent publication and
+canonical Knowledge Map admission retain their existing owners. Visual and native/private qualification remains
+open. No ancestor closes merely because this child passes.

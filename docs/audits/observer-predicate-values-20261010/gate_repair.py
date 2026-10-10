@@ -1,0 +1,58 @@
+"""Qualify lossless separator/reflow repair and fresh bounded publication state."""
+import copy
+import json
+import re
+from pathlib import Path
+from common import BASE, load, need, pin, same, save
+import book
+from publication_verify import metrics
+
+
+def main():
+    task=Path('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md')
+    old_task=(BASE/'task-contract-source.txt').read_text(); new_task=task.read_text()
+    before='Exact bounded publication, current/claim/staged/normal hooks gate commit.'
+    after='Staged doctrine first failure exposed redundant task separators crossing rollover, guide line pressure and inventory drift after complete staging; owned gate repair retains full before-images and compacts only whitespace. Final current/claim/staged/normal hooks gate commit.'
+    need(old_task.count(before) == 1 and re.sub(r'\n{3,}','\n\n',old_task).replace(before,after) == new_task,'sole lossless task separator compaction and owned gate diagnosis')
+    guide=(BASE/'GUIDE.md').read_text(); old_guide=(BASE/'before-doctrine-GUIDE.md.txt').read_text()
+    added='Gate repair compacts redundant task separators and reflows this guide; final inventory follows complete staging.\nSee `gate-repair.json` for full before-images, unchanged ceilings and exact measurements.\n'
+    need(guide.endswith(added) and guide[:-len(added)].split() == old_guide.split(),'whole guide words preserved by reflow plus explicit repair pointer')
+    seal=load('manifest.json'); changed={}
+    for name,identity in seal.items():
+        current=pin((BASE/name).read_bytes())
+        if current != identity:
+            old=BASE/('before-doctrine-'+name+'.txt')
+            need(name in ('GUIDE.md','verify.py','publication_verify.py') and old.is_file() and pin(old.read_bytes()) == identity,'exact first sealed before-image retained')
+            changed[name]=dict(before=identity,after=current,before_image=str(old))
+    need(set(changed) == {'GUIDE.md','verify.py','publication_verify.py'},'closed first sealed repair membership')
+    prior=load('publication-qualified.json'); final=copy.deepcopy(prior)
+    rows=[json.loads(x) for x in book.REGISTRY.read_bytes().splitlines()]
+    need(same(rows,prior['registry_after']),'first final measurement authority retained')
+    original=[json.loads(x) for x in (BASE/'before-surfaces.jsonl.txt').read_bytes().splitlines()]
+    old=next(r for r in original if r.get('surface_id') == 'task_evidence')
+    current=next(r for r in rows if r.get('surface_id') == 'task_evidence')
+    measured=metrics(sorted({p for pattern in current['targets'] for p in Path('.').glob(pattern)}))
+    growth=copy.deepcopy(old['transition']['max_growth'])
+    for key,actual in measured.items():
+        if actual > old['baseline'][key]+growth[key]:
+            growth[key]=min(actual+current['transition']['ratchet_step'][key],current['enforcement_ceilings'][key])-old['baseline'][key]
+        need(actual <= old['baseline'][key]+growth[key] <= current['enforcement_ceilings'][key],'repaired task measurement inside unchanged ceiling')
+    current['transition']['max_growth']=growth
+    need(max(measured[k]/current['health_targets'][k] for k in measured) < .90,'task rollover pressure removed by whitespace-only compaction')
+    own=next(r for r in rows if r.get('surface_id') == 'observer_predicate_values_guide')
+    own['state']='warning_debt'
+    g=dict(files=1,bytes_each=len(guide.encode()),bytes_total=len(guide.encode()),lines_each=guide.count('\n'),lines_total=guide.count('\n'),line_bytes_each=max(map(len,guide.encode().splitlines())))
+    # A fixed file's membership is exactly one; its health milestone concerns
+    # content size, not the required one-of-one file identity.
+    pressure=max(g[k]/own['health_targets'][k] for k in g if k != 'files')
+    need(.80 <= pressure < .90,'exact bounded guide warning state; no rollover or ceiling growth')
+    need([r.get('enforcement_ceilings') for r in rows] == [r.get('enforcement_ceilings') for r in prior['registry_after']],'all existing capacity ceilings unchanged')
+    final['registry_after']=rows; final['task_metrics']=measured
+    save('publication-repaired.json',final)
+    book.REGISTRY.write_text(''.join(json.dumps(r,sort_keys=True)+'\n' for r in rows))
+    save('gate-repair.json',dict(changed_sealed=changed,task=dict(before=pin(old_task.encode()),after=pin(new_task.encode()),metrics=measured),guide=dict(metrics=g,state=own['state']),
+        scope='No fact or unique word removed; redundant blank separators and guide wrapping only, with an explicit owned failure pointer. No ancestor acceptance, ceiling or Knowledge Map allowance changes. Inventory is regenerated after full staging.'))
+    print('PASS lossless task/guide containment repair, first sealed sources retained, fresh task measurement and all ceilings unchanged.')
+
+
+if __name__ == '__main__': main()

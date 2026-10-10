@@ -1,0 +1,28 @@
+"""Independent complete public constructor values and full header reader."""
+import json
+from common import BASE, ROLE, load, need, pin
+
+
+def verify(plan,native):
+    need(plan['role'] == ROLE and plan['original_runtime'] == 'not measured','complete current/original fixture scope')
+    need(native['status'] == 0 and not native['stderr'] and native['driver'] == plan['driver']
+        and native['plan'] == pin((BASE/'fixture-plan-qualified.json').read_bytes()),'actual preselected native fixture custody')
+    product=json.loads(native['stdout']); rows=product['rows']
+    need(product['profile'] == plan['profile'] and set(product['runtime']) == {'perl','carp','json_pp'}
+        and all(type(v) is str and v for v in product['runtime'].values()),'complete selected public profile and current versions')
+    need(len(rows) == len(plan['fixtures']),'whole native fixture membership')
+    for actual,wanted in zip(rows,plan['fixtures']):
+        kind=wanted['value_class']; need(kind in ('numeric_zero','boolean_false'),'closed constructor value class')
+        string='0' if kind == 'numeric_zero' else ''; token='0' if kind == 'numeric_zero' else '""'
+        need(wanted['expected'] == dict(string=string,number=0,defined=True) and wanted['display_token'] == token,'independent complete value/token hypothesis')
+        need(actual['name'] == wanted['name'] and actual['string'] == string and type(actual['number']) is int and actual['number'] == 0
+            and type(actual['defined']) is bool and actual['defined'],'complete current native value')
+        # No prefix or wildcard stands in for the observed argument header.
+        lines=actual['trace'].splitlines(); headers=[x.strip() for x in lines if 'main::boundary(' in x]
+        need(headers == [wanted['header']],'exact complete current public boundary header')
+    return product
+
+
+if __name__ == '__main__':
+    verify(load('fixture-plan-qualified.json'),load('native-qualified.json'))
+    print('PASS complete current public constructor values, exact full headers and selected profile; original flags/settings remain unmeasured.')

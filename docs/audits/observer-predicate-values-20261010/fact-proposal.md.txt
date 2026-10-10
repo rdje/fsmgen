@@ -1,0 +1,14 @@
+Pending canonical admission under the original observer publication owner.
+
+Every finite failed-predicate source location has a qualified whole guard,
+source input and branch. Explicit helper normalization/literal zero differs
+from comparison/negation false in string value; both have numeric-zero behavior.
+Short circuit returns the selected operand, so source branch selection matters.
+The selected current public constructor corpus renders zero as 0 and empty
+false as ""; the complete headers and traces are checked. All original native
+flags/settings/provider/reference/private meanings remain unmeasured.
+
+Reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-predicate-values-20261010/verify.py
+Evidence: complete source inputs, qualified values, preselected fixture plan,
+actual native corpus, genuine controls, fixed custody and qualified proof in
+this namespace. No Knowledge Map collection allowance is widened.

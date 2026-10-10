@@ -1,0 +1,76 @@
+"""Select full source-neutral constructor expressions before public capture."""
+from common import BASE, ROLE, canonical, load, need, pin, save
+
+CASES = [
+ ('numeric_zero','0','numeric_zero'),
+ ('helper_zero','normalized(0)','numeric_zero'),
+ ('numeric_comparison','1 == 2','boolean_false'),
+ ('string_comparison','"x" ne "x"','boolean_false'),
+ ('not_true','!1','boolean_false'),
+ ('missing_exists','exists($empty->{missing})','boolean_false'),
+ ('grep_negation','!grep($_, (1))','boolean_false'),
+ ('or_normalized','!exists($present->{value}) || normalized(0)','numeric_zero'),
+ ('or_comparison','0 || "x" ne "x"','boolean_false'),
+ ('or_negation','0 || !1','boolean_false'),
+ ('and_helper_first','normalized(0) && 1 == 2','numeric_zero'),
+ ('and_helper_second','normalized(1) && normalized(0)','numeric_zero'),
+ ('and_comparison','normalized(1) && 1 == 2','boolean_false'),
+ ('and_duplicate','normalized(1) && !$seen->{value}++ && exists($present->{value})','boolean_false'),
+ ('and_missing_member','normalized(1) && !0 && exists($empty->{missing})','boolean_false'),
+ ('resolver_zero','$failure->{ok}','numeric_zero'),
+]
+
+PREFIX = '''use v5.20;
+use strict;
+use warnings;
+use Carp ();
+use JSON::PP ();
+local $Carp::MaxArgLen = 64;
+local $Carp::MaxArgNums = 8;
+local $Carp::RefArgFormatter = undef;
+sub normalized { $_[0] ? 1 : 0 }
+sub boundary {
+    my ($name, $value) = @_;
+    my $trace = Carp::longmess('predicate source fixture');
+    # Public observation precedes all explicit value coercion in this driver.
+    return {name => $name, trace => $trace, string => "$value",
+        number => 0 + $value, defined => defined($value) ? JSON::PP::true : JSON::PP::false};
+}
+my $empty = {};
+my $present = {value => 1};
+my $seen = {value => 1};
+my $failure = {ok => 0, code => 'source_neutral'};
+my @rows;
+'''
+SUFFIX = '''print JSON::PP->new->canonical->encode({rows => \\@rows,
+    profile => {MaxArgLen => $Carp::MaxArgLen, MaxArgNums => $Carp::MaxArgNums,
+        RefArgFormatter => undef},
+    runtime => {perl => "$^V", carp => "$Carp::VERSION", json_pp => "$JSON::PP::VERSION"}}), "\\n";
+'''
+
+
+def select():
+    rows=[]; text=PREFIX
+    for name,expression,kind in CASES:
+        line=text.count('\n')+1
+        text+='push @rows, boundary("'+name+'", scalar('+expression+'));\n'
+        token='0' if kind == 'numeric_zero' else '""'
+        rows.append(dict(name=name,expression=expression,value_class=kind,
+            expected=dict(string='0' if kind == 'numeric_zero' else '',number=0,defined=True),
+            header='main::boundary("'+name+'", '+token+') called at '+str(BASE/'native.pl')+' line '+str(line),
+            display_token=token))
+    text+=SUFFIX
+    return text.encode(),dict(role=ROLE,fixtures=rows,profile=load('predicate-values-qualified.json')['current_profile'],
+        boundary='One source-neutral scalar, string name and public longmess; trace captured before explicit numeric/string coercion.',
+        original_runtime='not measured',source_values=pin((BASE/'predicate-values-qualified.json').read_bytes()))
+
+
+def main():
+    raw,plan=select()
+    need(not (BASE/'native.pl').exists(),'select one source-neutral driver before capture')
+    (BASE/'native.pl').write_bytes(raw)
+    save('fixture-plan.json',dict(**plan,driver=pin(raw)))
+    print('PASS complete source-neutral constructor expressions, values, display headers and profile selected before capture.')
+
+
+if __name__ == '__main__': main()

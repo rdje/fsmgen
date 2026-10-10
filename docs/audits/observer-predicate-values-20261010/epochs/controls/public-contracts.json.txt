@@ -1,0 +1,12 @@
+{
+  "authority": "Official versioned public Perl operator documentation; public contracts only, no provider implementation",
+  "url": "https://perldoc.perl.org/5.34.0/perlop",
+  "sections": ["Relational Operators", "C-style Logical And", "C-style Logical Or", "Conditional Operator", "Symbolic Unary Operators"],
+  "facts": {
+    "comparison_false": "False comparison results are defined empty-string values with numeric-zero behavior.",
+    "short_circuit": "Logical AND and OR preserve the last evaluated operand value, rather than normalizing it.",
+    "conditional": "The selected conditional branch supplies the expression value.",
+    "logical_not": "Unary negation computes logical negation. Its selected false-value representation is qualified separately by current public fixtures."
+  },
+  "scope": "This versioned public contract is not proof of original Perl/provider/version/settings/native scalar flags. Own source ternary/literal and qualified inputs determine the source value classes; current public fixtures qualify their finite display behavior."
+}

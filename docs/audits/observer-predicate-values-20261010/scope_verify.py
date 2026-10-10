@@ -1,0 +1,41 @@
+"""Preserve original ancestor goals/acceptance and complete child contracts."""
+import subprocess
+import sys
+from pathlib import Path
+from common import BASE, REVISION, load, need, same, save
+
+TASK=Path('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md')
+
+
+def contract(text,owner):
+    start=text.index('- ID: `'+owner+'`'); end=text.find('\n- ID: `',start+1)
+    block=text[start:end if end >= 0 else None]
+    result={}
+    for name in ('Goal','Acceptance'):
+        prefix='  '+name+': `'; rows=[line[len(prefix):-1] for line in block.splitlines() if line.startswith(prefix) and line.endswith('`')]
+        need(len(rows) == 1,'unique complete task contract field'); result[name]=rows[0]
+    return result
+
+
+def derive(current=None):
+    owner=(BASE/'scope.txt').read_text().strip(); parent=owner.rsplit('.',1)[0]
+    current=(BASE/'task-contract-source.txt').read_text() if current is None else current
+    fixed=subprocess.check_output(['git','--no-replace-objects','show',REVISION+':'+str(TASK)]).decode()
+    ancestors={}
+    for node in (parent,parent.rsplit('.',1)[0],parent.rsplit('.',2)[0],parent.rsplit('.',3)[0]):
+        a,b=contract(fixed,node),contract(current,node); need(a == b,'unchanged full original ancestor goal and acceptance'); ancestors[node]=a
+    children={node:contract(current,node) for node in (owner,parent+'.2',parent+'.3',parent.rsplit('.',1)[0]+'.3')}
+    return dict(revision=REVISION,owner=owner,ancestors=ancestors,children=children,
+        scope='This predicate child alone; remaining whole scalar/regex, aggregate value acceptance, full source headers and original raw join remain separately owned.')
+
+
+def main():
+    need(sys.argv[1:] in ([],['--current']),'dated versus current task-contract mode')
+    value=derive()
+    if sys.argv[1:]: need(same(value,derive(TASK.read_text())),'whole current ancestor and successor contracts')
+    if (BASE/'task-contracts.json').exists(): need(same(load('task-contracts.json'),value),'complete immutable task contracts')
+    else: save('task-contracts.json',value)
+    print('PASS unchanged complete ancestor acceptance and exact remaining scalar/regex/aggregate/header ownership.')
+
+
+if __name__ == '__main__': main()

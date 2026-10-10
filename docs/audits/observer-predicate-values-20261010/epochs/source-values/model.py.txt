@@ -1,0 +1,111 @@
+"""Source-only false values; select constructor probes before native observation."""
+import re
+from common import BASE, ROLE, canonical, load, need, save
+
+
+def arguments(text, start):
+    """Split a Perl call with balanced containers and quoted source literals."""
+    stack, quote, escape, parts, begin = ['('], None, False, [], start
+    pairs = {')':'(', ']':'[', '}':'{'}
+    for i in range(start,len(text)):
+        c = text[i]
+        if quote:
+            if escape:
+                escape = False
+            elif c == '\\':
+                escape = True
+            elif c == quote:
+                quote = None
+            continue
+        if c in ('"',"'"):
+            quote = c
+        elif c in '([{':
+            stack.append(c)
+        elif c in ')]}':
+            need(stack and stack[-1] == pairs[c], 'balanced whole own call source')
+            stack.pop()
+            if not stack:
+                parts.append(text[begin:i].strip())
+                return parts, i+1
+        elif c == ',' and len(stack) == 1:
+            parts.append(text[begin:i].strip()); begin=i+1
+    raise ValueError('incomplete whole source call')
+
+
+def failure_contract(source):
+    body = source['sources']['perl/FSM/Package/AggregatePathSupport.pm']['body']
+    constructor = 'sub _failure ($class, $code, %details) {\n    return {\n        ok => 0,\n        code => $code,\n        %details,\n    };\n}'
+    need(body.count(constructor) == 1, 'whole failure constructor')
+    calls = []
+    for match in re.finditer(r'->_failure\(',body):
+        args,end = arguments(body,match.end())
+        need(re.fullmatch(r"'[a-z_]+'",args[0]) is not None, 'closed failure code')
+        keys = []
+        for arg in args[1:]:
+            # Each detail is a complete literal-key => expression pair. A spread
+            # or dynamic key could override ok and must fail this qualification.
+            pair = re.fullmatch(r'([a-z_]+)\s*=>\s*(.+)',arg,re.S)
+            need(pair is not None and pair[1] != 'ok', 'no failure detail overrides constructor ok')
+            keys.append(pair[1])
+        calls.append(dict(start=match.start(),source=body[match.start():end],keys=keys))
+    need(calls and body.count('return $resolved_path unless $resolved_path->{ok};') == 1,
+         'packed resolver preserves complete failed resolve result')
+    return dict(constructor=constructor,calls=calls,
+                meaning='Every own resolver failure call has literal non-ok detail keys; ok is numeric literal zero, including the propagated resolve result.')
+
+
+def classification(site, expression, facts):
+    text = ' '.join(expression.split())
+    if text == '0':
+        return 'numeric_zero', 'literal zero'
+    if text.startswith('!') or re.search(r'\s(?:==|ne)\s',text) and '&&' not in text:
+        return 'boolean_false', 'failed negation/comparison; or returns its false right comparison'
+    if site in ('values.4','values.8','values.15','metadata_type.5','metadata_type.6'):
+        return 'numeric_zero', 'own helper explicitly returns ? 1 : 0; short circuit preserves that false operand'
+    if site == 'values.12':
+        return 'numeric_zero', 'whole resolver failure constructor and non-overriding detail calls'
+    if site == 'reference_value.2':
+        return ('boolean_false','positive helper true, width comparison false') if facts['positive'] else ('numeric_zero','positive helper false before comparison')
+    if site == 'metadata_type.9':
+        return ('boolean_false','identifier helper true; duplicate/member test false') if facts['identifier'] else ('numeric_zero','identifier helper false before duplicate/member test')
+    raise ValueError('unqualified complete failed guard: '+site+' '+expression)
+
+
+def derive():
+    source = load('source-inputs.json')
+    cases = {tuple(c['key']):c for c in source['cases']}
+    helpers = {}
+    for path,names in (
+        ('perl/FSM/Support/ISFRecordPortValues.pm',('_whole_record','_role','_positive','_binary')),
+        ('perl/FSM/Support/ISFInterfacePortMetadata.pm',('_identifier','_binary','_state_model'))):
+        body = source['sources'][path]['body']
+        for name in names:
+            begin = body.index('sub '+name+' {')
+            end = body.index('\n}',begin)+2
+            whole = body[begin:end]
+            need(re.search(r'\?\s*1\s*:\s*0;',whole) is not None,'whole helper numeric normalization')
+            helpers[path+'::'+name] = whole
+    rows = []
+    for operand in source['operands']:
+        statement = operand['guard']['statement']
+        begin = statement.index('_require(')+len('_require(')
+        args,_ = arguments(statement,begin)
+        need(len(args) == 2, 'complete two-operand own guard')
+        case = cases[tuple(operand['key'])]
+        value,reason = classification(operand['site'],args[0],case['event']['facts'])
+        rows.append(dict(**operand,source_expression=args[0],source_case=case,
+            value_class=value,string_value='0' if value == 'numeric_zero' else '',numeric_value=0,
+            defined=True,reason=reason,original_native_scalar_flags='not measured',
+            current_public_fixture=value))
+    return dict(role=ROLE,rows=rows,helpers=helpers,resolver=failure_contract(source),
+                current_profile=dict(MaxArgLen=64,MaxArgNums=8,RefArgFormatter=None),
+                original_observer_settings='not measured',original_display_hypothesis='not selected by this source-value unit')
+
+
+def main():
+    save('predicate-values.json',derive())
+    print('PASS all complete failed-predicate source expressions classified before native observation.')
+
+
+if __name__ == '__main__':
+    main()

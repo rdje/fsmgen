@@ -1,0 +1,1 @@
+{"before": "before-doctrine-GUIDE.md.txt", "candidate": "first-reflow-candidate.md.txt", "cause": "Default textwrap split a long hyphenated token; the lossless word assertion rejected the first candidate before write. Repair disables long-word and hyphen breaking."}

@@ -1,0 +1,1 @@
+{"driver":{"bytes":2117,"sha256":"0b857c2760e20c30fcf51794d45772837851092333910b53ac90a33473006793"},"expected":{"defined":true,"number":0,"string":"0","token":"0"},"original_runtime":"not measured","source_change":{"after":"boundary(\"numeric_comparison\", scalar(normalized(1 == 2)))","before":"boundary(\"numeric_comparison\", scalar(1 == 2))"}}

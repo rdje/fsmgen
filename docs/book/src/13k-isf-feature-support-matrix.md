@@ -1737,6 +1737,39 @@ Source-value qualification precedes full source-generated headers, the
 original-body join and observer publication. Their unchanged parent acceptance
 remains open, together with the separately owned native and visual scopes.
 
+The failed-predicate source values now have a separate complete qualification.
+Own helpers that explicitly select `? 1 : 0` supply numeric zero on failure.
+Comparison and negation failures supply a defined empty string with numeric
+zero behavior. A failed `&&` or `||` preserves the operand selected by its
+short circuit; the whole guard and qualified input determine that operand.
+These language rules use the [public Perl operator contract](https://perldoc.perl.org/5.34.0/perlop).
+
+| Source constructor | Qualified false value | Current selected display |
+| --- | --- | --- |
+| Literal zero or helper normalization | String `0`, numeric zero | `0` |
+| Failed comparison or negation | Empty string, numeric zero | `""` |
+| Short circuit | Selected operand's complete value | Selected operand's token |
+
+The source reader covers every failed-predicate location and both operand
+schemas, retaining whole inputs, aliases, guards and branch facts. Independent
+reconstruction rejects wrong values, branches, membership, source inputs,
+encoding and promotion of original native flags. Source-neutral public
+fixtures select their expressions and display hypotheses before capture;
+the complete current headers agree under their explicit public profile.
+A real normalization intervention separates the empty-string and zero forms.
+The original capture's flags, runtime and display settings remain unmeasured.
+
+First parser, precedence and fixture-boundary failures retain their complete
+programs and results. Replay the complete source and public qualification:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-predicate-values-20261010/verify.py
+```
+
+Remaining scalar and regex constructors, full original source headers,
+the original-body join and parent publication retain their unchanged
+acceptance. Native/private meanings and visual review remain separately open.
+
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
 complete previously committed child contracts. It joins every original empty
