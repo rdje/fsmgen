@@ -1,0 +1,12 @@
+{
+  "book-addition.md.txt": {
+    "bytes": 1777,
+    "reason": "Exact source insertion includes its final paragraph separator; book_check and book_authority compare the entire insertion bytes.",
+    "sha256": "ae355daff970ad6ecc94551466691d41d626297453ec4b90e1da5ee3f29ad3b9"
+  },
+  "first-staged-task.md.txt": {
+    "bytes": 3836,
+    "reason": "Exact first staged owner section includes its section separator; retained unchanged before correction.",
+    "sha256": "86007361645d9d7917ac17a4d6d52546117b7bd04bc8b223d683d1ec43f82b73"
+  }
+}

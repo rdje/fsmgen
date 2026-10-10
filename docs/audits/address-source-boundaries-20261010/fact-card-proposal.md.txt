@@ -1,0 +1,30 @@
+---
+id: record-value-operation-boundary-source-lifetimes
+title: Original operation boundaries have source binding and lifetime hypotheses
+answers:
+  - "what source bindings precede the original raw address join?"
+date: 2026-10-10
+status: proposed
+tags: [isf, record, source, graph, lifetime]
+evidence: [docs/audits/address-source-boundaries-20261010/proof.json]
+reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-source-boundaries-20261010/verify.py
+---
+
+Qualified original typed input graphs retain aliases and cycles without publishing
+numeric addresses. Complete source operation boundaries preserve forwarded reference
+bindings through wrapper, observer and original operation. Distinct supplied graph
+nodes remain distinct while simultaneously live; the caller array is freshly
+allocated while supplied arguments remain live. Saved operation lookups retain CODE
+roles. Every hypothesis is scoped to an active call and throw phase in one capture;
+numerical reuse across domains does not establish identity.
+
+The separate oracle checks complete source slots, graph topology, alias equivalence,
+distinctions and explicitly unresolved relations. Whole borrowed-role, split-binding,
+wrong-kind, omission and domain controls reject. Source input custody and programme
+identities are retained. Original parser receiver contents were excluded from graph
+publication. Nested inputs, core/private/helper/parser-internal roles, original raw
+addresses and private/framework/provider/formatter identities remain successor-owned.
+
+This proposal is retained before canonical address publication. The publication leaf
+must conserve existing facts/questions/probes and unchanged collection authority;
+this dated source-only replay supplies no current canonical or raw-address claim.

@@ -948,6 +948,35 @@ hidden arguments, identity, external coordinates and address/lifetime meanings r
 unmeasured or separately owned. Visual QA, HIAL repair and full CI/push retain
 their owners. Project outputs and scratch remain repository-local.
 
+Address/lifetime qualification begins with a separate source-only model of
+operation boundaries. Qualified typed input graphs retain aliases and cycles
+without publishing numeric addresses. Forwarding the same source argument
+through the installed wrapper, observer and original operation preserves its
+binding. Distinct graph nodes remain distinct while live, even when their
+payloads are equal. The observer allocates a fresh caller array while supplied
+arguments remain live. A saved operation lookup retains its declared CODE role.
+These constraints belong to an active call and throw phase in one capture;
+numeric reuse across calls or captures establishes no object identity.
+
+For example, two separately allocated source and target reference records can
+contain the same type payload without sharing their root identity. Conversely,
+when the qualified graph aliases an input node, repeated source slots must
+retain that alias. The model checks complete source slots and graph topology,
+plus a separate relation oracle and genuine borrowed-role, split-binding,
+wrong-kind, omission and lifetime-domain controls. Replay from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-source-boundaries-20261010/verify.py
+```
+
+This is a dated source hypothesis, not a raw-address match. The original parser
+observer excludes the receiver from graph publication; its forwarded role does
+not supply a receiver census. Nested input topology, core/private/helper and
+parser-internal lifetimes remain source-model successors. The original raw
+address join, external/framework/provider/formatter identities and current
+canonical address publication remain open. Existing coordinate and class/frame
+qualifications keep their separate meanings.
+
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
 does not establish coordinate meanings or later current currency:

@@ -5677,9 +5677,45 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify raw address roles and per-capture lifetimes.`
   Acceptance: `Model each opaque address argument role and simultaneous-live equality/distinction from independently qualified source graphs and call lifetimes. Do not infer object identity from numerical reuse across calls/captures. Borrowed or aliased addresses and wrong reference kinds must reject at intended role/lifetime contracts.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4`
+  Verification: `Source role/lifetime decomposition precedes raw address intake. Numeric address joins and original private/provider/formatter/native identity remain open.`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.1`
+  Status: `done`
+  Goal: `Qualify complete original operation-boundary source reference lifetimes.`
+  Acceptance: `Before new raw-address intake, derive every retained operation boundary from complete qualified source frames and source-input graph topology. Model source binding equality, simultaneously-live distinctions and per-call/per-phase/per-capture domains. Bind whole original observer source, graph authority and fixed Git inputs; qualify genuine lost/borrowed/aliased/wrong-kind/domain controls. Parser receiver contents, core/private/helper roles and all actual address joins remain successor-owned; no original native/provider capture. Corpus is the complete existing finite refusal source population; public API applies through its named operation contracts, MCP has no new behavior.`
+  Verification: `Complete source-only derivation precedes new raw-address intake. Fixed Git custody binds all inherited reads; complete previously qualified graphs and authored interventions preserve reference topology. Every retained operation boundary models source bindings, forwarding, fresh caller arrays, active-call/phase/capture domains, simultaneous-live distinctions and explicitly unresolved nested relations. Independent slot/graph relation oracle and genuine whole-product omission, borrowed-root, split-binding, wrong-kind, lost-distinction, borrowed-domain and invented-identity controls pass. Re-derivation, separating controls and durability are distinct named legs in docs/audits/address-source-boundaries-20261010/proof.json, with full programmes/inputs/hypotheses/fresh command streams and fixed input identities retained. Initial native helper passed a Path object to the public bounded-scalar build argument and refused before publication; exact first programme/result retain. Corrected scalar input and no-overwrite proof contract pass fresh native replay. Initial staged doctrine gate refused reuse of the previous book aggregate authority after the new paragraph; exact first gate streams and rejected registry retain. Whole original/current book member/source conservation now derives a distinct owned aggregate declaration, preserving every capacity limit and Knowledge Map authority. Source-only book and deferred fact-card proposal preserve missing raw/core/private/helper/parser/nested/native/current-publication legs. Focused All tests successful Files3 Tests310; final pointer book/copy, task pressure, claims, staged doctrines and normal hooks gate commitment. No original native/provider recapture, threshold/cap increase, full CI or push executes.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S in docs/audits/address-source-boundaries-20261010/root-cause.json identifies original observer construction at 100f540f56fd5a8209849016ac6874d2d85b7dd1. The complete observer forwards supplied arguments through call_api/parse and freshly allocates caller arrays; typed source graphs retain aliases but omit numeric addresses. Complete committed source and source graph custody locate the missing lifetime model without reconstructing an old receiver census.
+  - [x] **ADDRESSED (verified)** — first-source-derivation and first-independent actual0 retain complete source-only operation hypotheses and independently compare every source slot/alias/distinction/domain. Genuine borrowed-role, split-binding, wrong-kind, omission and domain controls reject at intended contracts. Full proof names distinct re-derivation, falsification and durability legs; nested/core/private/helper/parser-internal/raw/current-canonical gaps remain explicit owned successors.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in focused. Final pointer book build/canonical copies, task pressure, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commitment. Whole inherited inputs remain exact fixed Git bytes; original class/frame/coordinate programmes, all current canonical cards and Knowledge Map collection authority conserve.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2`
+  Status: `pending`
+  Goal: `Derive remaining core, helper, parser and nested lifetime roles.`
+  Acceptance: `Extend the independent source model to every remaining visible own reference role, nested active operations, returned-before-throw delegates and private-root lifetime constraints. Use complete qualified source graphs/construction/call contracts; partition genuinely opaque external/provider/formatter identities without inventing referents. Retain complete role membership and genuine alias/kind/phase/lifetime separating controls before raw joining.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3`
+  Status: `pending`
+  Goal: `Join complete original raw addresses to qualified lifetime roles.`
+  Acceptance: `Authenticate original whole raw bodies and complete qualified class/frame/coordinate prerequisites. Parse every visible reference operand with full byte coverage and distinguish quoted embedded traces/scalar hex text/external opaque operands. Join qualified source equivalence/distinction only inside simultaneously-live domains; borrowed/aliased/wrong-kind/wrong-domain controls must reject at intended contracts while prior meanings conserve. No numerical reuse across calls/captures establishes identity.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4`
+  Status: `pending`
+  Goal: `Publish address/lifetime qualification and close its complete container.`
+  Acceptance: `Conserve every existing canonical fact/question/probe/history and unchanged collection authority while publishing the exact qualified roles, original joins, controls and open scopes. Sync current reader and full native book/source routes, reconstruct whole dated evidence independently, run focused checks/claims/doctrines/hooks, and close only verified address nodes before the full raw-stack successor.`
   Verification: `pending`
   Commit: `pending`
 
