@@ -1,0 +1,367 @@
+"""Reconstruct the complete dated coordinate closure without freezing later live progress."""
+import ast
+import copy
+import hashlib
+import json
+import re
+import runpy
+import subprocess
+from html.parser import HTMLParser
+from pathlib import Path, PurePosixPath
+
+BASE = Path('docs/audits/coordinate-current-closure-20261010')
+REVISION = '7efdbf512bfd865220fb13f83fbbded9b42cdcf0'
+PUBLICATION = Path('docs/audits/coordinate-current-publication-20261010')
+MODULE = 'scripts/record_value_coordinate_fact.py'
+TASK = 'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md'
+REGISTRY = 'doctrine/live_document_size/surfaces.jsonl'
+FEATURE = 'docs/book/src/13k-isf-feature-support-matrix.md'
+REFERENCE = 'docs/book/src/90-reference-map.md'
+READER = 'docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py'
+PRODUCT = 'docs/audits/coordinate-original-hostile-20261009'
+ROOT = Path.cwd().resolve()
+GUIDE_END = '''Whole current publication is independently qualified after a fresh complete
+semantic replay. Exact source history, all questions, native guidance and
+unchanged capacities conserve; broader private and downstream owners stay open.'''
+REFERENCE_END = '''Whole current-coordinate publication is independently qualified after a fresh
+complete original semantic replay. Exact prior/proposed/current sources, every
+question and probe, whole book/native guidance and unchanged capacities join.
+Only completed coordinate nodes close. Original private, framework, formatter,
+toolchain, identity, address and alias meanings, visual QA, HIAL repair and full
+CI/push retain their owners. Raw address roles are the next owned scope.
+
+The dated whole-publication proof remains replayable independently of later
+current source progress:
+
+```sh
+python3 -B docs/audits/coordinate-current-closure-20261010/verify.py
+```
+
+'''
+
+
+def need(condition, cause):
+    if not condition:
+        raise ValueError(cause)
+
+
+def same(left, right):
+    return json.dumps(left, sort_keys=True, allow_nan=False) == json.dumps(right, sort_keys=True, allow_nan=False)
+
+
+def read(path, maximum=134217728):
+    path = Path(path)
+    need(not path.is_absolute() and not {'..', '.git'}.intersection(path.parts), 'own relative closure input')
+    full = ROOT / path
+    need(full.resolve() == full and full.is_file() and full.stat().st_dev == ROOT.stat().st_dev,
+         'plain same-volume closure input')
+    for parent in full.parents:
+        if parent == ROOT:
+            break
+        need(not (parent / '.git').exists(), 'own closure repository boundary')
+    with full.open('rb') as stream:
+        raw = stream.read(maximum + 1)
+    need(len(raw) <= maximum, 'bounded complete closure input')
+    return raw
+
+
+def load(path):
+    return json.loads(read(path))
+
+
+def pin(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
+def dimensions(rows):
+    raw = list(rows.values())
+    return dict(files=len(raw), bytes_total=sum(map(len, raw)), lines_total=sum(r.count(b'\n') for r in raw),
+                bytes_each=max(map(len, raw)), lines_each=max(r.count(b'\n') for r in raw),
+                line_bytes_each=max(len(line.rstrip(b'\r')) for r in raw for line in r.split(b'\n')))
+
+
+def git(*args, data=None):
+    run = subprocess.run(['git', '--no-replace-objects', *args], input=data, capture_output=True)
+    need(run.returncode == 0 and not run.stderr, 'complete immutable closure Git source')
+    return run.stdout
+
+
+def objects(paths):
+    stream = git('cat-file', '--batch', data=''.join(REVISION + ':' + p + '\n' for p in paths).encode())
+    bodies, offset = {}, 0
+    for path in paths:
+        end = stream.index(b'\n', offset)
+        _, kind, size = stream[offset:end].split()
+        need(kind == b'blob', 'original closure blob kind')
+        offset, size = end + 1, int(size)
+        bodies[path] = stream[offset:offset + size]
+        need(stream[offset + size:offset + size + 1] == b'\n', 'complete binary closure framing')
+        offset += size + 1
+    need(offset == len(stream), 'whole original closure population consumed')
+    return bodies
+
+
+def literal(raw, name):
+    found = [ast.literal_eval(node.value) for node in ast.parse(raw).body if isinstance(node, ast.Assign)
+             and any(isinstance(target, ast.Name) and target.id == name for target in node.targets)]
+    need(len(found) == 1, 'unique original closure guide')
+    return found[0]
+
+
+def swap(text, old, new):
+    need(text.count(old) == 1, 'whole exact closure guide seam')
+    return text.replace(old, new, 1)
+
+
+def allocation(canonical):
+    answers = {}
+    for path, raw in canonical.items():
+        text = raw.decode()
+        if not text.startswith('---\n'):
+            continue
+        front = text.split('\n---', 1)[0] + '\n'
+        entry = re.search(r'^answers:[ \t]*(.*)\n((?:[ \t]+.*\n)*)', front, re.M)
+        if entry is None:
+            continue
+        questions = json.loads(entry[1]) if entry[1] else [q.strip().removeprefix('"').removesuffix('"')
+            for q in re.findall(r'^ +\- +(.*)$', entry[2], re.M)]
+        if not questions:
+            continue
+        identifiers = re.findall(r'^id: +(.+)$', front, re.M)
+        need(len(identifiers) == 1, 'unique complete source question identity')
+        identifier = identifiers[0].strip().strip('"')
+        for question in questions:
+            answers.setdefault(question, []).append((identifier, path))
+    return ''.join(question + '\t' + ','.join(i for i, _ in sorted(rows)) + '\t'
+                   + ','.join(p for _, p in sorted(rows)) + '\n' for question, rows in sorted(answers.items()))
+
+
+def semantic(actual, expected_stdout):
+    need(type(actual['status']) is int and actual['status'] == 0, 'fresh complete semantic integer success')
+    need(actual['command'] == ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', READER]
+         and actual['stdout'] == expected_stdout, 'whole fresh original semantic command and result')
+    need(re.fullmatch(r'ram-guard: PID [0-9]+; host [0-9.]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n',
+                     actual['stderr']) is not None, 'whole fresh original semantic guard streams')
+    paths = {str(BASE / 'checks.py'), 'scripts/run_with_ram_guard.sh', READER}
+    need(actual['instruments'] == {p: pin(read(p) if p.startswith(str(BASE) + '/') else git('show', REVISION + ':' + p))
+                                  for p in paths}, 'whole fresh original semantic instruments')
+
+
+def source_snapshot(snapshot, canonical, chapters, wanted_module, before):
+    need(snapshot['role'] == 'Complete dated final coordinate publication; saved current inputs do not establish later currency.',
+         'dated closure cannot establish later currency')
+    record = snapshot['record']
+    old = json.loads(before[str(PUBLICATION / 'current-input.json')])['record']
+    need(set(record) == set(old), 'closed whole final publication input')
+    need(record['cards'] == old['cards'] and all(canonical[p].decode() == text for p, text in record['cards'].items()),
+         'whole unchanged qualified four-card meanings questions and probes')
+    need(record['chapter'] == chapters[FEATURE].decode() and record['tooling_chapter'] == chapters[REFERENCE].decode(),
+         'whole final current book source inputs')
+    need(same(record['source_members'], {p: pin(raw) for p, raw in canonical.items()}), 'whole final canonical source population')
+    measured = dimensions({p: raw for p, raw in canonical.items() if Path(p).parent == Path('docs/knowledge')})
+    need(all(type(value) is int for value in record['census'].values()) and same(record['census'], measured),
+         'whole typed unchanged current physical census')
+    need(same(record['surface'], old['surface']) and same(record['source_budget'], old['source_budget']),
+         'whole unchanged current card and source authority')
+    rows = allocation(canonical)
+    need(set(record['queries']) == {'direct', 'cached'}, 'complete current query roles')
+    for role, actual in record['queries'].items():
+        need(type(actual['status']) is int and actual['status'] == 0, 'actual final query integer success')
+        need(actual['command'] == ['knowledge-map/scripts/query_knowledge_map.sh', '--all'] +
+             (['--no-cache'] if role == 'direct' else []) and actual['stdout'] == rows and actual['stderr'] == '',
+             'whole independently source-derived exact-case current allocation')
+    programmes = snapshot['programmes']
+    need(set(programmes) == {MODULE, 'scripts/check_record_value_publication.py', 'scripts/book_source_references.py',
+                            't/python/test_record_value_current_publication.py', str(BASE / 'capture.py')},
+         'whole final programme population')
+    need(programmes[MODULE] == pin(wanted_module.encode()), 'whole final maintained coordinate programme')
+    for path in ('scripts/check_record_value_publication.py', 'scripts/book_source_references.py',
+                 't/python/test_record_value_current_publication.py'):
+        need(programmes[path] == pin(before[path]), 'whole preserved current checker factory and regression programme')
+    need(programmes[str(BASE / 'capture.py')] == pin(read(BASE / 'capture.py')), 'whole actual final capture programme')
+
+
+class Visible(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts = []
+
+    def handle_data(self, text):
+        self.parts.append(text)
+
+
+def native(raw, blocks):
+    parsed = Visible()
+    parsed.feed(raw.decode())
+    visible = ' '.join(' '.join(parsed.parts).split())
+    for block in blocks:
+        wanted = block.replace('```bash\n', '').replace('```sh\n', '').replace('```\n', '').replace('`', '')
+        need(' '.join(wanted.split()) in visible, 'whole final native coordinate scope and retained gaps')
+
+
+def task_nodes(raw):
+    return {match[1]: match[0] for match in re.finditer(r'^- ID: `([^`]+)`\n.*?(?=^- ID: |\Z)', raw.decode(), re.M | re.S)}
+
+
+def main():
+    need(Path(__file__).resolve().parents[3] == ROOT, 'invoke dated closure from repository root')
+    canonical_paths = sorted(p for p in git('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/knowledge', 'docs/decisions').decode().splitlines() if p.endswith('.md'))
+    book_paths = sorted(p for p in git('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/book/src').decode().splitlines()
+                        if Path(p).parent == Path('docs/book/src') and p.endswith('.md'))
+    extra = [MODULE, TASK, REGISTRY, 'doctrine/live_document_size/archive_descriptors.jsonl',
+             str(PUBLICATION / 'current-input.json'), str(PUBLICATION / 'publication.json'), str(PUBLICATION / 'checks.json'),
+             'scripts/check_record_value_publication.py', 'scripts/book_source_references.py', 't/python/test_record_value_current_publication.py',
+             'docs/audits/book-reference-selection-20261005/selected-routes.json']
+    before = objects([*canonical_paths, *book_paths, *extra])
+    canonical = {p: before[p] for p in canonical_paths}
+    original_module = before[MODULE].decode()
+    old_guide, old_reference = (literal(original_module, name) for name in ('GUIDE', 'REFERENCE'))
+    guide = swap(old_guide, 'Final whole-publication closure remains separately owned.', GUIDE_END)
+    reference = swap(old_reference, '''Final whole-publication closure is the next owned step; original private,
+framework, formatter, toolchain, identity, address and alias meanings, visual QA,
+HIAL repair and full CI/push retain their owners.
+
+''', REFERENCE_END)
+    wanted_module = swap(swap(original_module, old_guide, guide), old_reference, reference)
+    chapters = {p: before[p] for p in book_paths}
+    chapters[FEATURE] = swap(chapters[FEATURE].decode(), old_guide, guide).encode()
+    chapters[REFERENCE] = swap(chapters[REFERENCE].decode(), old_reference, reference).encode()
+    product, snapshot = load(BASE / 'publication.json'), load(BASE / 'snapshot.json')
+    need(product['revision'] == REVISION and product['owner'] == read(BASE / 'scope.txt').decode().strip(), 'complete closure epoch and ownership')
+    for path in (FEATURE, REFERENCE):
+        row = product['chapters'][path]
+        need(row['original'].encode() == before[path] and row['current'].encode() == chapters[path]
+             and {k: row['before'][k] for k in ('bytes', 'sha256')} == pin(before[path])
+             and {k: row['after'][k] for k in ('bytes', 'sha256')} == pin(chapters[path]), 'whole exact original and final book changes')
+    for key, values in (('book_before', {p: before[p] for p in book_paths}), ('book_after', chapters)):
+        need(same(product[key], {k: dimensions(values)[k] for k in ('files', 'bytes_total', 'lines_total')}), 'whole independent book dimensions')
+    need({k: product['module']['after'][k] for k in ('bytes', 'sha256')} == pin(wanted_module.encode()), 'exact complete current module change')
+    source_snapshot(snapshot, canonical, chapters, wanted_module, before)
+    publisher = runpy.run_path(str(ROOT / READER))
+    need(read(READER) == git('show', REVISION + ':' + READER), 'unchanged complete published original reader')
+    publisher['authenticate'](Path(PRODUCT))
+    qualified = load(PRODUCT + '/qualification.json')
+    for path, expected in qualified['inputs'].items():
+        need(pin(read(path, expected['bytes'])) == expected, 'whole original semantic source and matching inputs')
+    custody_path = 'docs/audits/coordinate-original-intake-20261009/admission.json'
+    custody_bytes = git('show', REVISION + ':' + custody_path)
+    need(read(custody_path) == custody_bytes, 'whole fixed original custody source')
+    custody = json.loads(custody_bytes)['custody']
+    need(pin(json.dumps(custody, sort_keys=True).encode()) == qualified['original_custody'], 'whole original custody allocation')
+    for path, row in custody['members'].items():
+        need(pin(read(path, row['identity']['bytes'])) == row['identity'], 'every conserved original custody member')
+    old_checks = json.loads(git('show', REVISION + ':docs/audits/coordinate-original-hostile-independent-checks-20261009/checks.json'))
+    actual = load(BASE / 'original-semantic.json')
+    semantic(actual, old_checks['published-independent']['stdout'])
+    need(pin(read(BASE / 'original-semantic.json')) == {k: product['fresh_semantic'][k] for k in ('bytes', 'sha256')}, 'whole retained fresh original result')
+    routes = sorted([{k: row[k] for k in ('chapter', 'source', 'asset', 'role')}
+                     for row in json.loads(before['docs/audits/book-reference-selection-20261005/selected-routes.json'])['routes']], key=lambda row: row['source'])
+    need(snapshot['routes'] == routes and set(snapshot['copied_sources']) == {r['source'] for r in routes}, 'whole unchanged native source selection and membership')
+    for row in routes:
+        need(snapshot['copied_sources'][row['source']] == pin(git('show', REVISION + ':' + row['source'])), 'every complete dated native copied source')
+    for path, blocks in ((FEATURE, [guide, literal(original_module, 'PARSER_GUIDE')]), (REFERENCE, [reference])):
+        row = snapshot['native'][path]
+        raw = read(row['path'])
+        need(pin(raw) == {k: row[k] for k in ('bytes', 'sha256')}, 'whole captured native input')
+        native(raw, blocks)
+    registry = list(map(json.loads, snapshot['registry'].splitlines()))
+    original_registry = list(map(json.loads, before[REGISTRY].splitlines()))
+    need([r.get('surface_id') for r in registry] == [r.get('surface_id') for r in original_registry], 'whole final authority population')
+    for original, final in zip(original_registry, registry):
+        expected = copy.deepcopy(original)
+        if final.get('surface_id') == 'shipped_behavior':
+            change = final['reference_contract']['aggregate_change']
+            need(change['authority_id'] == 'COORDINATE-CURRENT-CLOSURE-20261010' and change['owner'] == product['owner']
+                 and same(change['baseline'], product['book_before']) and same(change['delta'], {k: product['book_after'][k] - product['book_before'][k] for k in product['book_before']}), 'exact final whole-book authority')
+            expected['reference_contract']['aggregate_change'] = change
+        if final.get('surface_id') == 'task_evidence':
+            paths = [p for p in git('ls-tree', '-r', '--name-only', REVISION, '--', 'docs/tasks').decode().splitlines()
+                     if any(PurePosixPath(p).match(pattern) for pattern in final['targets'])]
+            task_sources = {p: (read(BASE / 'task-final.md.txt') if p == TASK else git('show', REVISION + ':' + p)) for p in paths}
+            measured = dimensions(task_sources)
+            task = load(BASE / 'task-metrics.json')
+            need(same(task['actual'], measured) and task['owner'] == product['owner'], 'whole independently reconstructed final task dimensions')
+            expected['transition']['max_growth'] = {k: max(0, min(v + original['transition']['ratchet_step'][k],
+                original['enforcement_ceilings'][k]) - original['baseline'][k]) for k, v in measured.items()}
+        need(same(expected, final), 'unchanged full authority except exact owned book and task allowance')
+    old_nodes, final_nodes = task_nodes(before[TASK]), task_nodes(read(BASE / 'task-final.md.txt'))
+    need(before[TASK].split(b'- ID:', 1)[0] == read(BASE / 'task-final.md.txt').split(b'- ID:', 1)[0], 'whole task metadata prefix conserves')
+    owner = product['owner']; publication = owner.rsplit('.', 1)[0]; execution = publication.rsplit('.', 1)[0]
+    coordinate = execution.rsplit('.', 1)[0]
+    closed = {owner, publication, execution, coordinate, execution + '.2'}
+    need(set(old_nodes) == set(final_nodes), 'whole unchanged task population')
+    for ident, old in old_nodes.items():
+        final = final_nodes[ident]
+        if ident not in closed:
+            need(final == old, 'whole unrelated task body conserves')
+        else:
+            need(re.search(r'Status: `([^`]+)`', final)[1] == 'done', 'only fully qualified coordinate nodes close')
+            for field in ('Goal', 'Acceptance', 'Children'):
+                need(re.findall(r'^  ' + field + r':.*$', final, re.M) == re.findall(r'^  ' + field + r':.*$', old, re.M), 'whole closed task contract and children conserve')
+    need(all(re.search(r'Status: `([^`]+)`', block)[1] == 'done' for ident, block in final_nodes.items()
+             if ident == coordinate or ident.startswith(coordinate + '.')), 'every closed coordinate descendant done')
+    checks = load(BASE / 'checks.json')
+    commands = {
+        'close': ['python3', '-B', str(BASE / 'close.py')],
+        'focused': ['prove', '-Iperl', 't/2066-record-value-current-publication.t', 't/1303-isf-public-live-book-paths-audit.t', 't/1305-isf-book-feature-matrix-audit.t'],
+        'book-build': ['mdbook', 'build', 'docs/book'],
+        'native': ['python3', '-B', 'scripts/book_source_references.py', '--check', '--verify-build', 'docs/book/book'],
+        'current-native': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', 'docs/book/book'],
+        'capture': ['python3', '-B', str(BASE / 'capture.py')],
+        'task-pressure': ['python3', '-B', str(BASE / 'task_pressure.py')],
+        'claim-inventory': ['perl', 'scripts/check_claim_verification_inventory.pl', '--write']}
+    for name, command in commands.items():
+        run = checks[name]
+        need(type(run['status']) is int and run['status'] == 0 and run['command'] == ['scripts/run_with_ram_guard.sh', '--', *command], 'whole actual final publication command and integer result')
+        need('host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s' in run['stderr'], 'unchanged final publication RAM guard')
+        paths = {str(BASE / 'checks.py'), 'scripts/run_with_ram_guard.sh'} | {
+            p for p in command if p.startswith(('scripts/', 't/', str(BASE) + '/'))}
+        need(run['instruments'] == {p: pin(read(p) if p.startswith(str(BASE) + '/') else git('show', REVISION + ':' + p))
+                                    for p in paths}, 'whole exact final invocation programme identities')
+    need('All tests successful.' in checks['focused']['stdout'] and 'Files=3, Tests=310' in checks['focused']['stdout'], 'whole focused final regression success')
+    controls = {}
+    for name, candidate, procedure, cause in (
+        ('Boolean-semantic', {**actual, 'status': True}, lambda value: semantic(value, old_checks['published-independent']['stdout']), 'fresh complete semantic integer success'),
+        ('borrowed-current-result', {**actual, 'stdout': checks['current-native']['stdout']}, lambda value: semantic(value, old_checks['published-independent']['stdout']), 'whole fresh original semantic command and result')):
+        need(not same(candidate, actual), 'genuine final semantic intervention')
+        try:
+            procedure(candidate)
+        except ValueError as error:
+            need(str(error) == cause, 'intended final semantic refusal')
+            controls[name] = cause
+        else:
+            raise ValueError('false-green final semantic control: ' + name)
+    for name, mutate, cause in (
+        ('lost-parser', lambda s: s['record']['cards'].pop('docs/knowledge/isf-record-output-source-contexts.md'), 'whole unchanged qualified four-card meanings questions and probes'),
+        ('Boolean-census', lambda s: s['record']['census'].update(files=True), 'whole typed unchanged current physical census'),
+        ('lost-source', lambda s: s['record']['source_members'].pop(next(iter(canonical))), 'whole final canonical source population'),
+        ('widened-card-authority', lambda s: s['record']['surface']['transition']['max_growth'].update(bytes_total=s['record']['surface']['transition']['max_growth']['bytes_total'] + 1), 'whole unchanged current card and source authority'),
+        ('borrowed-query-role', lambda s: s['record']['queries']['direct'].update(command=s['record']['queries']['cached']['command']), 'whole independently source-derived exact-case current allocation'),
+        ('later-currency-promotion', lambda s: s.update(role='Proves every later live publication.'), 'dated closure cannot establish later currency')):
+        changed = copy.deepcopy(snapshot); mutate(changed)
+        need(not same(changed, snapshot), 'genuine final source intervention')
+        try:
+            source_snapshot(changed, canonical, chapters, wanted_module, before)
+        except ValueError as error:
+            need(str(error) == cause, 'intended final source refusal: ' + name)
+            controls[name] = cause
+        else:
+            raise ValueError('false-green final source control: ' + name)
+    html = read(snapshot['native'][REFERENCE]['path'])
+    changed = html.replace(b'Raw address roles are the next owned scope.', b'Raw address roles are fully measured.')
+    need(changed != html, 'genuine final native address-gap intervention')
+    try:
+        native(changed, [reference])
+    except ValueError as error:
+        controls['native-address-promotion'] = str(error)
+    else:
+        raise ValueError('false-green final native address promotion')
+    publisher['authenticate'](Path(PRODUCT))
+    print(json.dumps({'result': 'PASS complete dated coordinate closure, fresh whole original semantic replay and final source/query/history/book/native/capacity publication.',
+                      'whole_qualification': json.loads(actual['stdout'])['whole_qualification'], 'closed_nodes': sorted(closed),
+                      'book': product['book_after'], 'controls': controls,
+                      'scope': 'Only completed coordinate nodes close. Original private/framework/formatter/toolchain/identity/address/alias/visual/HIAL/full-CI/push remain separately owned; later currency needs the maintained current reader.'}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

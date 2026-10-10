@@ -4951,11 +4951,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete raw frame coordinate recipes.`
   Acceptance: `Join every frame and origin to exact own source statements, observer generation and pinned external public toolchain contract. Bind only legitimate invocation-root recipes, preserve all argument/error text and raw coordinates, and reject wrong caller/line/borrowed source without broad normalization.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete history rollover and raw-coordinate execution children qualify. Whole pre-intake own/public/expression hypotheses, original matching and hostile controls, exact raw/error/argument conservation and current publication join without coordinate normalization. Fresh complete original semantic replay and separate final source/query/book/native/capacity snapshot qualify the finished own-coordinate scope. Pinned finite public contracts retain their dated role; original private/framework/provider/formatter/toolchain/identity, addresses, alias, visual/HIAL/full-CI/push retain separate owners. See final publication child and its complete actual proof.`
+  Commit: `this slice; completed child history retains`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.1`
@@ -4966,11 +4966,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.1: retain exact task history before coordinate admission`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Scope and execute all remaining raw coordinate-source qualification.`
   Acceptance: `Preserve the parent obligation to join every frame/origin to exact own source statements, observer generation and pinned external public toolchain contracts. After history rollover, read complete predecessors and distinguish legitimate invocation-root recipes from unmeasured original formatter/private/toolchain identities. Decompose bounded independent source derivation, complete intake/control joins and current publication before execution; preserve all arguments/errors/raw coordinates and genuine wrong-caller/line/borrowed-source refusals. No inferred original measurement or broad normalization.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `All complete predecessor custody, independent source recipes, original intake/matching/hostile and current publication children qualify. Every original own coordinate and source association, forwarding phase, opaque operand and raw allocation conserves; genuine line/file/source controls preserve predecessor meanings before refusal. Fresh unchanged original semantic execution and independently reconstructed final current publication require actual success before commit. Original private/framework/provider/formatter/toolchain/identity/address/alias and native/visual/HIAL/full-CI/push owners remain open.`
+  Commit: `this slice; completed child history retains`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4`
 
@@ -5007,11 +5007,11 @@ For FSMGen, the analogs are:
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.1.2: retain historical result epoch fact without collection growth`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Derive complete independent raw-coordinate source recipes before intake.`
   Acceptance: `Select all coordinate hypotheses from qualified complete own call/guard/observer/generated-source statements and the pinned public caller/eval/Carp/subtest contracts, never from raw coordinates or opaque inherited operands. Bind exact legitimate invocation-root/line recipes; partition any unmeasured original/private/formatter dependency explicitly. Run independent source/generation/public finite controls before new original-coordinate intake.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Every own catalog, pinned public caller/eval/Carp/subtest contract and composed source-only hypothesis child is done. Fixed hypotheses precede original-coordinate intake; complete used and unused expression alternatives and legitimate invocation-root recipes retain. Fresh full matching/hostile replay consumes the complete source closure and original custody. Original formatter/private/provider/toolchain identities remain unmeasured; no opaque inherited operand establishes a referent. Final publication child records whole actual proof.`
+  Commit: `this slice; completed child history retains`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.2.3`
 
@@ -5627,11 +5627,11 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 is required from focused current-publication and public book checks. Complete source/native copies, current catalog/probe joins, whole delivery/receipt controls, unchanged capacity/source authority, fresh claim inventory, scripts/check_doctrines.sh and normal hooks gate commit. Canonical admission and all original private/framework/address/alias/native/visual/HIAL/full-CI/push scopes stay open.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Retain and publish the qualified current coordinate meanings atomically.`
   Acceptance: `After complete joined source/coordinate proofs commit, retain every prior fact/question/probe/locality obligation under unchanged collection authority. Update all affected current cards/checkers/book and exact source/query/native routes together, qualifying historical/current/borrowed/unrelated roles. Close the coordinate container only after full scope is proven; original provider/private/formatter/identity/address/visual/HIAL/full-CI/push gaps retain owners.`
-  Verification: `Current class/frame routes govern core/helper/tooling cards; the parser card has a separate sealed epoch-current route. Children first qualify the complete non-growing proposed source and reviewed proposition/route mapping, then atomically publish every affected current card/checker/book/source/query/native role, then verify whole delivery and close only the finished coordinate container. No sealed historical programme or corpus changes.`
-  Commit: `pending`
+  Verification: `Qualified non-growing retention, atomic four-card current publication and final whole delivery children qualify. Every earlier question/probe/locality obligation and exact original source remains retrievable; source-derived complete current allocation and native guidance preserve unchanged collection ceilings. Fresh original semantic replay and whole dated final publication proof qualify only completed coordinate nodes. All original private/framework/address/identity/alias/visual/HIAL/full-CI/push scopes retain separate owners.`
+  Commit: `this slice; completed child history retains`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4.1`
@@ -5663,11 +5663,17 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.4.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Qualify whole canonical coordinate publication and close its completed container.`
   Acceptance: `Consume .2 actual complete current source/query/native publication and unchanged dated semantic qualification. Independently verify complete original/proposed/current sources, question ownership, whole book and native guidance, all real controls and exact capacities before closing only finished coordinate nodes. Preserve original private/provider/framework/formatter/toolchain/identity/address/visual/HIAL/full-CI/push owners and commit before address work.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Fresh unchanged full original-coordinate semantic reader succeeds with the exact complete admitted result, predecessor class/frame/visible-argument preservation, all original custody and source/matching inputs, genuine coordinate interventions and whole-result controls. First failures and RAM-stopped prefixes remain non-success evidence. The final current guide and complete source/query/history/book/native/capacity publication are independently reconstructed from the committed atomic epoch and exact retained final inputs. Default dated replay uses fixed Git sources and saved native/query inputs, preserving later unrelated current progress as a separate role. Initial allocation preflight omitted a second answers block: exact first source/actual failure and complete row difference retain, corrected full source allocation equals both actual query streams, and genuine later-block omission refuses. Every prior card/question/probe remains exact; only final guide endings, owned task closure and navigation change. Final pointer rebuild preserves complete rendered guidance and refreshes every copied source including Memory. Re-derivation: independent complete Git/source/query/history/census/native/task reconstruction and fresh full semantic execution. Falsification: complete genuine coordinate/predecessor/result controls plus typed status, borrowed current success, source/card/query/authority/late-answer/scope/native-address controls. Durability: unchanged sealed corpus, complete dated programmes, original/final sources, full actual results and task/Git. Guarded focused All tests successful; Files=3, Tests=310 and complete final current/native readers pass. Successful independent snapshot, fresh claims/staged doctrines and normal hooks are required before commit. Only proved coordinate nodes close; original private/framework/provider/formatter/toolchain/identity/address/alias/visual/HIAL/full-CI/push remain open. Raw-address/lifetime qualification is next.`
+  Commit: `this slice; completed child history retains`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S in root-cause.json pins atomic publication at 7efdbf512bfd865220fb13f83fbbded9b42cdcf0, while the final container remains open. Complete committed task/source/publication records identify every remaining closure obligation. First preflight actual failure and exact first oracle reproduce omission of the second answers block; the existing parser accumulates all blocks and complete actual query rows expose the assumption.
+  - [x] **ADDRESSED (verified)** — Fresh original-semantic actual0 reconstructs the whole sealed qualification and every original source/custody/predecessor/control result. Final current-native actual0 and complete source/query/native capture qualify current publication. Separate dated snapshot reconstruction must pass every original/final source, question/probe/history, full book/native/capacity and task contract plus genuine typed/borrowed/omission/authority/scope controls before commitment. Only finished coordinate nodes close; address and all private/native owners remain open.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in focused. Final pointer build and every copied-source check, complete current reader, independent whole dated snapshot, fresh claims, staged scripts/check_doctrines.sh and normal hooks gate commit. Historical programmes/seals, all four current cards and every collection ceiling conserve; no broader runtime/identity/address/visual/HIAL/full-CI/push closure is inferred.
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4`

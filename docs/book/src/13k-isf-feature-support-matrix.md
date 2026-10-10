@@ -908,7 +908,9 @@ semantic reconstruction merely from certificate authentication. Core, helper,
 parser and tooling facts retain every prior question, probe and locality rule;
 their reviewed working set does not grow. Original private formatting, toolchain
 and identity, external framework coordinates and address lifetimes retain their
-separate owners. Final whole-publication closure remains separately owned.
+separate owners. Whole current publication is independently qualified after a fresh complete
+semantic replay. Exact source history, all questions, native guidance and
+unchanged capacities conserve; broader private and downstream owners stay open.
 
 The current route checks all four complete canonical cards, actual direct and
 cached question ownership, every collection-capacity dimension, exact source

@@ -1,0 +1,1329 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Reference Map - FSMGen Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Progressive, example-rich documentation for FSMGen and the .fsm language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-ba6475dd.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-7727513f.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">FSMGen Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="reference-map"><a class="header" href="#reference-map">Reference Map</a></h1>
+<p>This chapter helps you navigate between the new book and the older focused
+reference docs.</p>
+<h2 id="what-the-book-is-for"><a class="header" href="#what-the-book-is-for">What The Book Is For</a></h2>
+<p>Use the book when you want:</p>
+<ul>
+<li>progressive learning</li>
+<li>example-rich explanations</li>
+<li>topic-based navigation</li>
+<li>a friendlier path from beginner to advanced use</li>
+</ul>
+<p>Start here:</p>
+<ul>
+<li><a href="00-introduction.html">Introduction</a></li>
+<li><a href="01-first-fsm.html">Your First FSM</a></li>
+<li><a href="12-cookbook.html">Cookbook</a></li>
+<li><a href="15-implementation-blueprint.html">Implementation Blueprint</a></li>
+</ul>
+<h2 id="canonical-source-views"><a class="header" href="#canonical-source-views">Canonical Source Views</a></h2>
+<p>The build carries bounded raw source views for the selected repository
+references. Each view contains the complete canonical source text at the latest
+book build. Markdown links within a source view remain text; use the native
+book chapters for rendered narrative and navigation. Source views also keep
+focused guidance, policy, operational state and retained engineering evidence
+distinct from shipped behavior.</p>
+<p>The selected references in this chapter and the feature-support matrix open
+these source views. Their labels identify the canonical repository documents;
+the served text reflects the latest book build. Native source refresh requires
+the source and its endpoint to be admitted by the ignore policy; build success
+alone does not establish that. Links inside a raw source view remain text.</p>
+<h2 id="what-still-lives-outside-the-book"><a class="header" href="#what-still-lives-outside-the-book">What Still Lives Outside The Book</a></h2>
+<p>Some docs are intentionally still focused references:</p>
+<ul>
+<li><a href="reference-source/docs/COMPOSITION_SCOPE.markdown.source.txt">../../COMPOSITION_SCOPE.md</a></li>
+<li><a href="reference-source/docs/EXTENSION_MODEL.markdown.source.txt">../../EXTENSION_MODEL.md</a></li>
+<li><a href="reference-source/docs/REGRESSION_CORPUS.markdown.source.txt">../../REGRESSION_CORPUS.md</a></li>
+<li><a href="reference-source/docs/FEATURE_BACKLOG.markdown.source.txt">../../FEATURE_BACKLOG.md</a></li>
+<li><a href="reference-source/docs/INTENT_CAPTURE_AXI_CASE_STUDY.markdown.source.txt">../../INTENT_CAPTURE_AXI_CASE_STUDY.md</a></li>
+<li><a href="reference-source/docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.markdown.source.txt">../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md</a></li>
+<li><a href="reference-source/docs/ISF_SPEC.markdown.source.txt">../../ISF_SPEC.md</a></li>
+<li><a href="reference-source/docs/ISF_PUBLIC_INTERFACE_CONTRACT.markdown.source.txt">../../ISF_PUBLIC_INTERFACE_CONTRACT.md</a></li>
+<li><a href="reference-source/docs/BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.markdown.source.txt">../../BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md</a></li>
+<li><a href="reference-source/docs/BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.markdown.source.txt">../../BACKEND_LANGUAGE_PORTABLE_IN_MEMORY_API_CONTRACT_SELECTION.md</a></li>
+<li><a href="reference-source/docs/BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.markdown.source.txt">../../BACKEND_LANGUAGE_PORTABLE_HOST_ABSTRACTION_SELECTION.md</a></li>
+<li><a href="reference-source/docs/BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.markdown.source.txt">../../BACKEND_LANGUAGE_PORTABLE_PARITY_HARNESS_SELECTION.md</a></li>
+<li><a href="reference-source/docs/BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.markdown.source.txt">../../BACKEND_LANGUAGE_TYPED_EXTENSION_PORTABILITY_AUDIT.md</a></li>
+<li><a href="reference-source/docs/BIN_FSMGEN_IMPORT_TREE.markdown.source.txt">../../BIN_FSMGEN_IMPORT_TREE.md</a></li>
+<li><a href="reference-source/docs/TASK_TREE.markdown.source.txt">../../TASK_TREE.md</a></li>
+<li><a href="reference-source/docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.markdown.source.txt">../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md</a></li>
+<li><a href="reference-source/docs/COMPOSITION_LEGACY_MAPPING.markdown.source.txt">../../COMPOSITION_LEGACY_MAPPING.md</a></li>
+<li><a href="reference-source/MEMORY.markdown.source.txt">../../../MEMORY.md</a></li>
+<li><a href="reference-source/ROADMAP_V2.markdown.source.txt">../../../ROADMAP_V2.md</a></li>
+<li><a href="reference-source/README_POLICY.markdown.source.txt">../../../README_POLICY.md</a></li>
+<li><a href="reference-source/LIVE_DOCUMENT_SIZE_CONTAINMENT.markdown.source.txt">../../../LIVE_DOCUMENT_SIZE_CONTAINMENT.md</a></li>
+<li><a href="reference-source/CLAIM_VERIFICATION.markdown.source.txt">../../../CLAIM_VERIFICATION.md</a></li>
+<li><a href="91-live-document-containment-adoption.html">Live-Document Containment Adoption</a></li>
+<li><a href="reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.markdown.source.txt">../../LIVE_DOCUMENT_SIZE_CONTAINMENT_AUDIT.md</a></li>
+<li><a href="reference-source/docs/audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.markdown.source.txt">../../audits/LIVE_ACHIEVEMENT_STATUS_VALUE_AUDIT.md</a></li>
+<li><a href="reference-source/docs/audits/ROADMAP_STATUS_VALUE_AUDIT.markdown.source.txt">../../audits/ROADMAP_STATUS_VALUE_AUDIT.md</a></li>
+<li><a href="reference-source/TASK_ACCEPTANCE.markdown.source.txt">../../../TASK_ACCEPTANCE.md</a></li>
+<li><a href="reference-source/COMMIT.markdown.source.txt">../../../COMMIT.md</a></li>
+</ul>
+<p>These should stay precise and sometimes narrower than the book.</p>
+<p>The Knowledge Map checks each fact card against its configured line, encoded
+byte and line-width bounds. Both generation and validation count the original
+UTF-8 bytes; a non-ASCII character can occupy several bytes. Invalid UTF-8 is
+rejected. Query-cache fingerprints include the complete generated shard bytes,
+so a byte change invalidates a cached projection even when its questions stay
+the same. The collection’s containment allowance is a separate gate; passing
+one card’s bounds does not authorize collection growth. An authoring script’s
+local precondition does not establish an enforcement limit: use the checker,
+configuration and actual accepted and refused boundary cases. See
+<a href="#knowledge-map-architecture">the Knowledge Map architecture</a>
+and its public checker, <code>knowledge-map/scripts/check_knowledge_map.sh</code>.</p>
+<p>A collection rollover keeps each reader question at a bounded current card and
+provides authenticated retrieval of its complete dated predecessor. Current
+rules use canonical doctrine and registries; historical measurements keep their
+capture boundary. Preserving counts alone cannot prove that question ownership
+or unique information survived a move.</p>
+<p>For eligible transition debt, the declared allowance covers measured actual plus
+one declared step, clamped at the enforcement ceiling, with a live owner. At
+rollover debt, perform the declared rollover; widening its allowance is forbidden.
+Card limits, aggregate limits and the transition allowance are independent.
+A compliant line width or an unchanged question count does not establish whole
+surface health or preserved question ownership.</p>
+<p>The containment cards now separate current rules from complete dated sources.
+Retrieve a predecessor by its existing card ID from the repository root:</p>
+<pre><code class="language-sh">python3 -B docs/audits/knowledge-card-rollover-selection-20261005/read_source.py live-document-size-containment
+</code></pre>
+<p>The same reader accepts <code>live-document-surface-growth-procedure</code>,
+<code>knowledge-card-sizing-and-partition</code> and
+<code>live-document-transition-allowance-headroom</code>. It checks the complete retained
+file digest before returning the original bytes. The doctrine gate also checks
+these file archives. Earlier measurements and superseded instructions keep their
+capture boundary; current writing follows the canonical doctrine and registries.</p>
+<p>Captured metadata must retain its declared field kind and the recorded producer
+form. A Boolean does not become an integer field because a host language compares
+them equal. A public schema may admit equivalent integral numeric forms, while an
+exact capture reader must still preserve the original producer representation.
+Check these boundaries separately; a private comparison defect does not make
+correctly captured source values wrong. Rollover records now use a superseding
+reader that pins original source, programme, proof and receipt bytes to their
+publication revision before checking their recorded metadata kinds.</p>
+<p><code>CLAIM_VERIFICATION.md</code> defines what earns an actionable quantitative claim:
+re-derive it from its source, attempt to falsify it with a separating oracle,
+and keep a tracked producer plus a watcher that detects staleness. A missing
+leg is published explicitly rather than hidden behind repeated checks of the
+same kind. <code>scripts/check_claim_verification.pl</code> gates exact bounded records and
+tracked local paths. Decision <code>0094</code> makes a finite manifest-addressed
+registry set the repository default while retaining one global claim namespace;
+explicit <code>--registry</code> remains for bounded single-file fixtures. The separately bounded current-surface inventory derives
+its scope from the live-document registry and sends every open candidate to a
+task owner. Its bounded disposition registry then joins each reviewed current
+candidate to a published claim record, a three-leg derived gate, a reviewed
+incidental reason, or an explicit owned gap; a completed source group cannot
+retain an open candidate. Run the five-group report with
+<code>scripts/check_claim_verification_dispositions.pl --report</code>. Decision <code>0074</code>
+keeps semantic truth and oracle independence outside those structural gates’
+claims.</p>
+<p>The reviewed policy also requires evidence at the level being claimed. State
+its unit, population, predicate and input revision. A suite or group result
+cannot establish each member’s property without evidence connecting the two.
+For an absence, uniqueness or completeness claim, retain the scoped enumeration
+and its command. Classify search hits before calling them defects.</p>
+<p>For example, finding a validation word in several tests identifies candidates
+to inspect; it does not prove that each test checks the same behavior. Conversely,
+finding no match for that word does not prove the behavior is untested. The
+assertions and the public behavior they exercise provide the relevant evidence.
+A claim naming one test must identify that test and its actual checked property.</p>
+<p>Consult earlier adjudications before reporting a conflicting result, and name
+any difference in source revision, contract, scope or evidence. An earlier ruling
+can be wrong, but another search result alone does not overturn it. Attribute
+a change through a safe controlled comparison or isolated reconstruction when
+possible; preserve first-failure evidence, unrelated user work and existing
+admission gates. A spent or prohibited capture stays prohibited. Publish a
+missing attribution leg and its repair owner if the comparison is unavailable.</p>
+<p>Review a challenged claim’s prose, quantity and named instance separately under
+its recorded conditions. A fixed-input census should reproduce exactly; a
+contract value or named identity requires an exact match. A runtime measurement
+can vary even when a command produces it, so report its sampling method and
+interval instead of implying precision from one run. Any judgment tolerance
+must be justified before comparison. Honest rechecking and correction remain
+part of verification; confidence alone is not evidence. Decision <code>0104</code> records
+these adaptations, and incidental numerals keep their existing semantic
+contracts without becoming claim records merely because they contain digits.</p>
+<p>The regenerated inventory also consumes the canonical disposition identities:
+closed candidates carry no residual migration owner, while a new candidate
+remains visibly task-owned until it receives a disposition. A compact
+original-cohort manifest names the exact adoption commit, then reconstructs
+per-source identity sets from that versioned source and checks their counts and
+digests. Current files must retain every original identity, but later numeric
+fields remain current-only even when nested on a historical JSONL line. Current
+derived constants retain re-derivation, falsification, and durability legs;
+configured policy values and schema versions retain explicit input-identity,
+falsification, and durability gates. Run the reconciliation report with
+<code>scripts/check_claim_verification_inventory.pl --report</code>.</p>
+<p>The first root-document review repaired stale README-policy wording that had
+described ratcheted enforcement ceilings as still pinned to their adoption
+baseline. Every current non-rationale root policy, index, navigation, and
+structural candidate now resolves to either a live derived gate or a reviewed
+policy, history, structure, or identifier disposition. The rationale-ledger
+measurements are likewise closed by the evidence-coherent reviews below;
+derive current counts with the report command above instead of copying them
+into this inventoried surface.</p>
+<p>The foundational rationale review separates live gates from immutable context.
+Ledger reconstruction, the complete roadmap archive, and qualified provider
+source ordering use executable producer, separating-oracle, and watcher chains.
+Book-partition and earlier roadmap-occupancy statements remain explicitly
+historical. Unsupported precision in an experimental host-resource observation
+was removed while retaining the checked guarded-envelope outcome and
+lower-memory compilation control.</p>
+<p>The bridge and execution rationale review also keeps independently selected
+scale axes independent in the evidence. Bridge source-map calibration is
+reconstructed with differential real semantic builds, while exact boundary
+cases retain their ordinary builder outcome. The earlier scenario-map collision
+is historical context watched by the repaired global-map invariant. Total and
+live fibers use distinct generated tree shapes and mutation oracles, and an
+execution type counts only when a real public binding exercises its semantic
+shape. Rejected wide-tree and unbound-alias examples remain reviewed structural
+references rather than being promoted into evidence.</p>
+<p>The checking-scale review closes the root-document group without treating one
+large aggregate as proof of another. The foundation oracle derives the owned
+and rejected shape sets from the catalog. Model evidence separately checks
+authored definitions, instances, declarations, and exercised cells; scoreboard,
+coverage, and fault evidence reconstruct storage, order, and lifecycle
+identities with targeted mutations. Random-replay evidence distinguishes
+semantic preflight, bridge materialization, execution-plan rejection, and the
+adjacent semantic diagnostic. These exact boundary suites run through the
+ordinary generators and builders under the repository RAM guard.</p>
+<p>The first general-book review applies the same separation to core language and
+tooling prose. Parser boundaries, inferred widths, literal normalization,
+declarative state models, composition inference, expression factorization,
+hosted-test partitioning, target-language emission, and repeat lowering remain
+attached to their ordinary producers and focused behavior oracles. Syntax
+operands, boolean option values, protocol-version tokens, test bands, and linked
+test filenames remain reviewed non-claims. The LTE expected-failure count is
+also reconstructed from the active source entries independently of its catalog
+diagnostic.</p>
+<p>The intent, actor, and transaction review ties entry, drive, sample, await,
+completion, control, data, loop, and latency timing to their ordinary lowering
+and reporting paths. Published repeat timing now accounts for initialization
+and every check transition, while request and target-derived payload widths
+remain distinct. Lowered states carry exact transaction ownership so injected
+latency checks remain attributable in schedule reports.</p>
+<p>The control, data, composition, rule, lowering, and type review keeps loop and
+temporal edges, expression widths, storage packing, generated-child routes,
+rule conflicts, structural costs, and type packing on distinct executable
+evidence. Instructional ordinals and an example clamp threshold remain
+examples rather than capability measurements. The lowering reference now
+matches check-first repeat behavior and separates request width, per-formal
+signal count, and target-derived payload width.</p>
+<p>The support-matrix and non-protocol backlog review separates current generated
+behavior from test filenames, recipe ordinals, task identifiers,
+implementation-language names, and illustrative literals. SourceHIR fixture
+identity, VHDL generic maps, ATL and FIFO lowering, IAL2 response boundaries,
+and VIAL profile evidence remain independently executable. The complete book-
+example total now follows the lowering audit instead of a stale hand copy.</p>
+<p><code>16dd-vial-portable-vhdl-runtime-measurement.md</code> is the user-facing selection
+contract for sampled portable-VHDL runtime scale. It explains why the existing
+v1 trace cannot scale by reset count, the versioned compact snapshot design,
+exact authored candidate equation, one shared staged GHDL lifecycle, unchanged
+earlier-cap authority, and the boundary from IASIM, OSVVM, support, and
+capacity claims.</p>
+<p>The implementation-blueprint, platform-intent, and reference review keeps the
+single Rust parity smoke and the current bounded AHB map on executable
+evidence. Chapter coordinates, declared policy caps, and immutable activation
+measurements remain explicit non-current context. Archive, ledger, task
+segment, evidence-map, ISF-partition, and roadmap recovery each retain their
+own checker; activation occupancy is now consistently written in the past
+tense rather than resembling current repository state.</p>
+<p><code>MEMORY.md</code> is the bounded resume pointer and <code>TASK_TREE.md</code> indexes the live
+work frontier. <code>ROADMAP_V2.md</code> carries high-level direction.
+Decision 0049 retires the former roadmap-status board after its independent
+<code>.11</code> audit found no unique current authority; the exact March-June 2026
+chronology and R0-R14 snapshot remain version-retrievable. Decision 0046
+retains the conditional rationale ledger. Its bounded current view is
+<code>DEVELOPMENT_NOTES.md</code>; <code>DEVELOPMENT_NOTES_INDEX.md</code> lists every ordered range
+and its exact retrieval. Add a whole <code>## </code> entry only for durable engineering
+rationale with no better decision, fact, task, user-document, source-comment,
+or commit home. The ledger verifier reconstructs all 2,843 pre-cutover entries
+from the immutable source at <code>d3c22e003</code>, then proves the bounded current range
+is a real ordered suffix. Decision 0047 retires the duplicate per-slice
+changelog after exact current-value and consumer proof: high-level
+direction stays in <code>ROADMAP_V2.md</code>, active work and evidence in task trees,
+resume state in <code>MEMORY.md</code>, shipped behavior in the mdBook, and exact change
+history in work-unit-bearing Git commits. The exact former changelog object is
+version-retained; no replacement status blob or generated changelog is added.
+Decision 0048 likewise retires the former achievement journal after the
+independent <code>.11</code> audit found no executable/content consumer or current
+recovery/status role. Its exact frozen 23-day digest remains version-
+retrievable; task evidence, this book, bounded Memory, and Git answer its
+former current questions.</p>
+<p><code>README_POLICY.md</code> is the project- and harness-neutral landing-page maintenance
+standard. Adopting projects keep their authoritative tracked copy at repository
+root beside <code>README.md</code>; the originating template is not an upstream. Local
+owner/date, decision, and empirically derived cap metadata stays in a fenced
+adoption note above the neutral body. The policy defines stable content, routes
+proven duplicate detail to its canonical home, and requires independent line
+and byte budgets unconditionally on every commit and CI tree. FSMGen’s reviewed
+local limits are 275 lines and 12,288 bytes. Decision 0040 closes the next
+boundary: moving detail is not enough unless the destination is also
+pressure-controlled. Top-level <code>README.md</code> is also the rendered GitHub project
+landing page, not just a bootstrap file: its purpose, minimal first-use path,
+architecture summary, and canonical navigation remain visible there. FSMGen’s
+data-only route registry maps changing detail and chronology into the common
+surface graph without off-loading that landing function. The unconditional
+guards check per-file/aggregate ceilings, freshness ownership, terminal
+lifecycle, or exact frozen identity. Current legacy ceilings are stop-growth
+debt boundaries, not reusable recommendations.</p>
+<p><code>LIVE_DOCUMENT_SIZE_CONTAINMENT.md</code> is the broader reusable lifecycle
+doctrine. Its normative body is project-neutral, project-agnostic, and
+harness-neutral; FSMGen authority, measurements, 80/90 pressure
+milestones, repository-local storage rule, and migration paths remain in a
+fenced local adoption note and the focused audit. The architecture separates
+bounded current views from role-appropriate durable stores: user-facing
+reference stays in navigable semantic book partitions, generated indexes
+shard from smaller canonical sources, and exact engineering chronology can
+leave the working tree only after digest-verified retrieval exists. Per-part
+sharding never substitutes for file-count and aggregate containment. Decision
+0041 selects this contract and the
+<code>LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION</code> tree owns implementation. Clean
+selection commit <code>139efbf90</code> completes <code>.1</code> continuity activation and leaves
+<code>.2</code> as the common-enforcement owner. <code>.2</code> now ships a neutral checker plus
+local JSONL data: one named object per line, path and route arrays, nested
+target/ceiling/milestone/baseline objects, and strict rejection of malformed,
+missing, or unknown fields. Every common registry now starts with declared
+record-count, file-byte, and maximum-record-byte limits; field byte bounds and
+array cardinalities make the control plane finite. This retains line-oriented
+diffs and streaming without the positional ambiguity of the discarded
+22-column TSV prototype. The resulting unconditional census covers every tracked Markdown path, including README
+itself, broad root/focused/ancillary collections, and canonical knowledge
+cards; no family topology or established limit changes in the enforcement
+slice.</p>
+<p><code>LIVE_DOCUMENT_SIZE_CONTAINMENT_ADOPTION_GUIDE.md</code> is the non-normative,
+forwardable bridge for projects that already adopted durable memory but still
+experience bounded-pointer or routed-destination pressure. It keeps
+<code>MEMORY.md</code> bounded, separates immediate pointer stabilization from the wider
+lifecycle migration, and tells adopters to derive their own utility decisions,
+measurements, thresholds, registries, checks, and retention contracts rather
+than copying FSMGen’s local data.</p>
+<p>Decision 0042 and <code>.6</code> define optional sealed task-subtree segments and
+compact completed terminals. At the <code>.7</code> migration, the live IAL2 file kept its
+active root while one exact-source segment reconstructed all 844 terminal
+children, and the cross-tree index kept only three active plus eleven proposed
+rows while 540 unique terminal rows became digest-proved query history.</p>
+<p><code>TASK_ACCEPTANCE.md</code> is the project-neutral evidence-backed code-slice
+standard. FSMGen’s registered checker reads data-only staged-path and evidence
+registries, requires fresh one-file ROOT CAUSE / ADDRESSED / NO REGRESSION
+boxes for matching implementation changes, and leaves actual behavioral proof
+to the cited focused and CI oracles.</p>
+<p><code>ISF_DOWNSTREAM_INTEGRATION_SPEC.md</code> is the canonical human handoff landing
+for every downstream consumer. The book downstream integration chapter includes
+its four contract parts, so edits to those parts and the published chapter
+cannot drift apart.</p>
+<p><code>BACKEND_LANGUAGE_MDBOOK_BLUEPRINT_SELECTION.md</code> records the selected
+implementation-blueprint structure for future backend-language variants. The
+book-facing entry point is Chapter 15, which links to the portable API, host
+abstraction, and parity-harness selectors instead of duplicating their full
+maintainer detail.</p>
+<p><code>BIN_FSMGEN_IMPORT_TREE.md</code> is the live maintainer-facing architecture map for
+the <code>bin/fsmgen</code> runtime spine. It is not a tutorial chapter, but it is the
+right place to verify whether the saved CLI/import-tree picture still matches
+the source at the start of an engineering session.</p>
+<p>Keep detailed static measurements in that focused doc; the book should point to
+the current maintainer map rather than duplicate volatile line-count tables.</p>
+<p><code>COMMIT.md</code> is the process safety reference: every completed task, slice, lane,
+or task-scoped activity must close with that workflow before the next work
+starts, so crash recovery and agent handoff can resume from task-scoped
+commits instead of a dirty worktree.</p>
+<p>The standing publish interval is 500 accumulated local commits beyond the
+configured upstream. Git is the sole counter; every slice is still committed
+immediately, an explicitly directed early push resets the interval without
+changing its standing length, and every successful transport remains open
+until exact hosted qualification is consumed. This separates local recovery
+from less frequent remote publication without shadow state. <a href="reference-source/docs/decisions/0102-push-cadence-is-500-commits.markdown.source.txt">Decision
+0102</a> records the rationale
+and supersedes the former 300-commit interval.</p>
+<p>Tracked raw standards PDFs under <code>docs/vendor/</code> are local reference artifacts
+for future task-tree-owned evidence or design probes. The current set includes
+the Arm AMBA AXI specification plus Accellera SystemRDL 2.0, Portable Test and
+Stimulus 3.0, and UVM 1.2 references. These PDFs do not by themselves ship
+standard extraction, parser, lowering, scheduler, or HDL behavior.</p>
+<p><code>TASK_TREE.md</code> is the active-tree and PNT frontier reference. For ISF feature
+work, it points to the reusable synchronization checklist in
+<code>docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md</code> so public specs, book chapters,
+contracts, manifests, tests, live docs, and commit hygiene stay aligned without
+duplicating the checklist in every feature tree. Its live-doc routing follows
+<code>COMMIT.md</code>: task nodes and Git own history, Memory holds the resume pointer,
+engineering rationale is conditional, and README stays a stable landing page. Long-running task trees may
+keep only metadata, the root, and the nonterminal ancestor/frontier graph in
+their live file while decision 0042’s bounded JSONL manifest addresses
+content-digested completed subtree segments copied from an exact source
+revision. A compact completed terminal is valid only when the integrity checker
+retrieves, digest-checks, counts, and reconstructs its full terminal subtree
+from an exact version object. PNT still selects entirely from the live file;
+the optional forms add no migration requirement for ordinary trees. The first
+migration reduces the live IAL2 file from 21,726 to 85 lines and the task index
+from 1,078 to 558 lines. Completed task files remain directly browsable; only
+duplicated cross-tree terminal narration becomes query-first. User-directed
+leaf <code>.14</code> published a self-contained external review packet before the next
+migration.</p>
+<p>Closed acceptance history uses an exact committed source and a unique legal
+heading. When a new boundary is needed, it is committed before the separate
+rollover; existing node contracts and active limits stay live throughout.
+The semantic task’s completed acceptance body is now retrieved through its
+bounded manifest, including the exact previous source and prior history chain.
+The completed implementation notes now resolve through the bounded history
+manifest. Its exact predecessor preserves their complete source and prior
+history chain; every task node remains live. Independent coordinate
+qualification is still required. Replay the boundary and rollover proofs:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-task-history-boundary-20261009/verify.py
+python3 -B docs/audits/coordinate-task-history-rollover-20261009/verify.py
+</code></pre>
+<p>Ownership records belong inside the first <code>## Task Tree</code> section and their
+parent child list. Matching IDs elsewhere in a file does not establish live
+registration. Completed semantic reset-question, reset-grammar and historical
+view records now retain their original contracts in that authoritative graph;
+optional historical views keep decision 0019’s separate historical role.</p>
+<p>The bounded <a href="reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_REVIEW.markdown.source.txt">review front door</a>
+summarizes the current architecture and routes forensic readers to the
+content-identified
+<a href="reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_PACKET.markdown.source.txt">external review packet</a>.
+That detailed packet explains the doctrine, schemas, pressure model, route and
+archive checks, task-history migration, measured results, limitations, and 31
+review questions. It is now immutable retained evidence rather than an
+append-only review page. New review rounds receive new task-tree-owned
+artifacts and dispositions.</p>
+<p>PGEN and ANVIL returned independent reviews. The tracked
+<a href="reference-source/docs/LIVE_DOCUMENT_SIZE_CONTAINMENT_EXTERNAL_REVIEW_DISPOSITION.markdown.source.txt">disposition</a>
+checks every finding against exact FSMGen evidence. It corrects two easy-to-
+misread claims: <code>2,780 / 2,780</code> path coverage proves classification, not healthy
+size or currency, and the IAL2 live root plus task segment are overlapping views
+rather than a line partition. The complete former 21,726-line source remains an
+exact Git object while the segment independently preserves all 844 task nodes.</p>
+<p>Decision <code>0044</code> accepts explicit health targets plus inclusive transition
+ceilings, removal of inert <code>hard_pct</code>, mechanically proved verifier execution,
+lifecycle-scoped currency without a global date heuristic, typed author versus
+reader routes, complete collection indexes, declared version-object retention,
+maximum line/record bytes, and utility outcome <code>re-form</code>. Leaves <code>.15</code>-<code>.23</code>
+keep each correction atomic. No review suggestion changes a threshold,
+lifecycle, frozen file, or product behavior merely by being accepted.
+Clean disposition commit <code>3b782fc10</code> activates <code>.18</code> alone to implement the
+health-target versus enforcement-ceiling correction without widening a limit.
+The completed implementation gives every measured surface separate six-axis
+<code>health_targets</code> and inclusive <code>enforcement_ceilings</code>. Warning and rollover are
+health signals; equality at the ceiling passes and any excess fails. Debt
+baselines cannot increase across revisions but may ratchet downward after an
+atomic content reduction, owned allowances fit below the ceiling, and a banded
+downward ratchet rejects stale headroom after pressure falls.
+<code>hard_pct</code> is gone. A ceiling increase cannot authorize itself: it requires an
+exact new append-only authority row plus a new decision in the same Git change,
+while lowering is free. Checker output shows actual/target/ceiling values and
+separates migrated, pinned/deferred, and steady surface pressure. This first
+schema migration raises no predecessor ceiling. The sixth axis measures the
+largest raw content line in bytes, excluding LF and optional CR; it catches
+dense generated/table rows that can hide beneath total-line and total-byte
+limits.
+Leaf <code>.19</code> now requires generated freshness and version-object retrieval to
+declare <code>core:</code>, <code>adapter:</code>, or <code>external:</code> execution. Core programs execute
+from the repository root. The registry-driven local runner executes every
+adapter program and supplies an exact one-use proof to the neutral checker;
+missing or unused proofs fail. External contracts are visible fail-closed
+degradation, never a green presence check. The bootstrap gate proves hosted CI
+reaches this path through the single unconditional doctrine driver.
+The rereferenced PGEN and ANVIL files exactly match the hashes already recorded
+by <code>.17</code>, so they add no new review scope. Leaf <code>.20</code> now separates boundedness,
+currency, and semantic truth. Currency is opt-in: a current surface names one
+local contract and an executed core/adapter verifier. The active task index
+uses task-tree integrity as its source-alignment oracle. No universal newest-
+date, distinct-date, or file-age rule exists; legitimate closure dates and
+undeclared surfaces are not scanned, while archive/frozen lifecycles are
+structurally exempt.
+Clean <code>.20</code> commit <code>8cf8263a2</code> activates <code>.21</code> alone to type author-overflow
+versus reader-navigation routes and prove collection-index and review-evidence
+membership. This activation changes no checker, registry, or document content.
+Leaf <code>.21</code> now implements that boundary. Fifteen README navigation rows remain
+reader routes; four author-overflow destinations are derived from the guard’s
+emitted hints and matched exactly to governed surfaces. Literal book/decision
+indexes prove member links, other collection front doors declare query or
+generated contracts, and fenced packet/disposition maps resolve 17 plus 5
+evidence paths. A staged-result adapter prevents the neutral worktree check
+from validating different controlled content than the commit tree.
+Leaf <code>.22</code> closes the migration/retention ambiguity. A bounded migration
+manifest independently verifies the IAL2 former source at 21,726 lines and
+4,662,385 bytes, all 844 sealed semantic nodes, and the 6,002-line / 2,438,733-
+byte live root-plus-manifest-plus-segment working set. It declares those
+products <code>overlapping_non_partition</code> and records zero unretained residue;
+false partition arithmetic, identity/cardinality drift, and unproved residue
+fail closed. Every task-tree or generic archive <code>version_object</code> names a
+bounded retention contract with an owner, guarantee, and recovery action.
+Missing history diagnostics identify that action, while evidence that must not
+depend on history uses content-addressed repository files. At <code>.22</code> closure,
+the review front door was 79 lines. Its independent caps remain
+100 lines / 5 KiB, and its typed route leads to the
+SHA-256-frozen 1,311-line detailed packet.</p>
+<p>Decision <code>0045</code> and leaf <code>.23</code> now select <code>maintained_reference</code> for unique
+product or specification prose whose legitimate aggregate scope follows the
+product. This is an information lifecycle, not a replacement name for the
+<code>partitioned_canonical</code> storage topology. Both use stable semantic files and a
+complete index, but only the ordinary partitioned collection claims that a
+fixed aggregate ceiling is meaningful.</p>
+<p>The distinction matters whenever a new supported feature needs a new chapter
+or more accurate examples. A timeless aggregate cap would have only two
+outcomes: maintainers repeatedly raise it, making the cap decorative, or they
+delete/displace unique explanation to satisfy a number unrelated to user
+value. Maintained reference instead fixes the costs a reader and reviewer must
+pay while making aggregate change explicit:</p>
+<ul>
+<li>one complete mandatory index has independent line and byte ceilings;</li>
+<li>every part is linked directly from that index, bounding navigation depth;</li>
+<li>every part retains fixed line and byte health targets and inclusive ceilings;</li>
+<li>aggregate files, lines, and bytes are measured against an exact prior
+baseline plus the signed change authorized by the current work unit; and</li>
+<li>unrecorded, inexact, reused, or pre-banked aggregate authority fails the
+doctrine gate.</li>
+</ul>
+<p>The ordinary aggregate pressure keys are present as JSON <code>null</code>. That spelling
+means “a fixed product-size cap is inapplicable,” not “this dimension is
+ignored.” The separate aggregate-change contract still accounts for the exact
+files, lines, and bytes on every revision that changes the collection.</p>
+<p>The mdBook is FSMGen’s first <code>maintained_reference</code>. Its <code>SUMMARY.md</code> mandatory
+read is capped at 64 lines and 4 KiB, and every chapter remains one direct link
+away. Activation commit <code>b88b37323</code> fixes the former 18,697-line Chapter 14
+source. Leaf <code>.8</code> maps all of it exactly once into thirteen direct pages by
+stable language/data, composition, actor, IAL2, verification, protocol, ISF,
+backend, validation, and API topics. At that activation the mandatory read was
+51 lines. The largest new page was
+2,726 lines / 192,166 bytes. Examples remain executable,
+and the former backend deep-link routes through the bounded landing page.</p>
+<p>The ISF reference is the second <code>maintained_reference</code>. Leaf <code>.13</code> preserves the
+exact 6,254-line language specification, 4,485-line downstream contract, and
+3,759-line public-interface contract at activation revision <code>322d81fac3ce</code>,
+then re-forms them as three bounded landing pages and eleven stable semantic
+parts under <code>docs/isf-spec/</code>. The main <code>docs/ISF_SPEC.md</code> landing directly links
+every member, so no reference topic is more than one step away. The largest
+part is 2,453 lines / 171,378 bytes, and the exact transformed activation
+content passes an executable equality check.</p>
+<p>Clean <code>.10</code> commit <code>3b71cb0b1</code> activates <code>.13</code> alone against 1,005 focused
+documents and 12 ancillary documents. The 6,254-line ISF specification and the
+independent 7,536-byte import-tree line are separate containment questions;
+activation records them without changing content, paths, indexes, or limits.
+The implementation retains <code>docs/BIN_FSMGEN_IMPORT_TREE.md</code> as the live
+runtime-spine architecture map while wrapping its pathological lines. At that
+activation, a generated index classified all 1,005 focused and 12 ancillary
+documents by audience, lifecycle, owner, and role; its checker rejects stale, missing,
+duplicate, or unclassified membership.</p>
+<p>The roadmap has a different role: it is a bounded current-direction snapshot,
+not shipped-behavior reference or exact chronology. Clean commit <code>dc1c64afb</code>
+fixes the exact 10,451-line activation source. Leaf <code>.9</code> retains product
+objective, principles, <code>R8</code>–<code>R14</code> strategy, dependency policy, concise
+milestone outcomes, and <code>H1</code>–<code>H6</code> intent in a 317-line activation view. The
+complete
+source remains digest-checked through descriptor
+<code>roadmap-v2-pre-containment-2026-08-01</code>; active state routes to Memory and task
+trees, shipped behavior to this book, and exact chronology to Git.</p>
+<p>Clean <code>.9</code> commit <code>a20d38afc</code> activates <code>.10</code> alone against 1,097 canonical
+knowledge-card files and the exact 15,637-line / 6,152,312-byte generated map.
+The activation changes no fact boundary, projection topology, generator,
+query/cache behavior, or pressure limit; those remain the active frontier.</p>
+<p>Leaf <code>.15</code> closes the neighboring control-plane gap. Each common JSONL
+registry has a schema-versioned metadata record declaring positive maximum
+data records, whole-file bytes, and raw JSON bytes per record. The neutral
+checker also applies portable fail-safe bounds of 10,000 records, 16 MiB per
+registry, and 64 KiB per record; FSMGen’s declarations are tighter. Identifiers
+use closed domains, scalar strings have field-specific byte limits, and arrays
+stop at 128 entries. Focused fixtures reject missing/incoherent metadata,
+record/file overflow, oversized fields and arrays, over-wide Markdown lines,
+and CRLF mismeasurement. No predecessor pressure ceiling is widened.</p>
+<h2 id="completed-guide-migration"><a class="header" href="#completed-guide-migration">Completed Guide Migration</a></h2>
+<p>The former user-guide and book-plan waypoints are superseded. Their unique
+accurate content now lives in the book, decision <code>0006</code>, or the focused links
+above; leaf <code>.24</code> records exact identities, residue and consumer proofs, planted
+negative controls, and Git recovery. Use this map and <code>SUMMARY.md</code> as the
+current entry points.</p>
+<h2 id="old-guide-to-book-map"><a class="header" href="#old-guide-to-book-map">Old Guide To Book Map</a></h2>
+<ul>
+<li><code>1) What FSMGen is</code> -&gt; <a href="00-introduction.html">Introduction</a></li>
+<li><code>2) Core concepts</code> -&gt; <a href="02-language-basics.html">Language Basics</a></li>
+<li><code>2.1) Currently supported .fsm constructs</code> -&gt; split across Chapters 02-08</li>
+<li><code>3) Basic usage</code> -&gt; <a href="01-first-fsm.html">Your First FSM</a> and
+<a href="09-generated-hdl-debugging-and-inspection.html">Generated HDL, Debugging, and Inspection</a></li>
+<li><code>4) Useful options</code> -&gt;
+<a href="09-generated-hdl-debugging-and-inspection.html">Generated HDL, Debugging, and Inspection</a></li>
+<li><code>5) Input resolution and FSMLIB</code> -&gt; <a href="07-packages-and-sharing.html">Packages and Sharing</a></li>
+<li><code>6) Debug workflow</code> -&gt;
+<a href="09-generated-hdl-debugging-and-inspection.html">Generated HDL, Debugging, and Inspection</a></li>
+<li><code>7) Typed extensions</code> -&gt; <a href="11-extensions-and-embedding.html">Extensions and Embedding</a></li>
+<li><code>8) External compatibility flow</code> -&gt; <a href="11-extensions-and-embedding.html">Extensions and Embedding</a></li>
+<li><code>9) Troubleshooting</code> -&gt; <a href="10-errors-strict-mode-and-troubleshooting.html">Errors, Strict Mode, and Troubleshooting</a></li>
+<li><code>10) Practical authoring guidelines</code> -&gt; spread through the chapter intros and
+<a href="12-cookbook.html">Cookbook</a></li>
+</ul>
+<h2 id="migration-status"><a class="header" href="#migration-status">Migration Status</a></h2>
+<p>The mdBook scaffold is real and buildable now.</p>
+<p>The old guide’s major section families now have book homes:</p>
+<ul>
+<li><code>1) What FSMGen is</code> -&gt; Chapter 00</li>
+<li><code>2) Core concepts</code> and <code>2.1) Currently supported .fsm constructs</code> -&gt;
+Chapters 02-08 and Chapter 10</li>
+<li><code>3) Basic usage</code>, <code>4) Useful options</code>, <code>5) Input resolution and FSMLIB</code>, and
+<code>6) Debug workflow</code> -&gt; Chapter 09</li>
+<li><code>7) Typed extensions</code> and <code>8) External compatibility flow</code> -&gt; Chapter 11</li>
+<li><code>9) Troubleshooting</code> -&gt; Chapter 10</li>
+<li><code>10) Practical authoring guidelines</code> -&gt; Chapter 02</li>
+</ul>
+<p>The migration discipline remains active:</p>
+<ul>
+<li>the book is the progressive learning surface and primary normative target</li>
+<li>runtime diagnostics now use book-owned documentation hints for the current
+supported, strict-mode, and package boundaries</li>
+<li>Chapter 09 now owns the operational CLI/options, report-only JSON mode,
+source-resolution, and trace/debug workflow material from the old guide</li>
+<li>Chapter 02 now owns the practical authoring guidance for assignment
+operator choice, guard readability, and bring-up checks</li>
+<li>Chapter 11 now explicitly owns the typed-extension definition, non-goals,
+and CLI/config loading prerequisites</li>
+<li>focused docs may still carry narrow maintainer or machine-contract detail</li>
+<li>the old guide remains a migration checklist and compatibility reference, not
+a place to leave user-facing contract stranded or to introduce new normative
+wording without updating the owning book chapter</li>
+<li>sections 3-10 of the old guide have already been reduced to chapter pointers
+so operational and extension/troubleshooting prose does not drift in two
+places</li>
+<li>sections 1-2.1 of the old guide have also been reduced to chapter pointers
+so product, direct-language, declaration/import, aggregate, composition, and
+diagnostic contract prose does not drift in two places</li>
+<li><code>.24</code> owns final consumer replacement and proof-based waypoint retirement;
+no new normative wording belongs in the old guide</li>
+</ul>
+<h2 id="reading-sealed-decision-records"><a class="header" href="#reading-sealed-decision-records">Reading Sealed Decision Records</a></h2>
+<p>Use <code>docs/decisions/INDEX.md</code> to find a decision. Sealed records keep their
+existing paths as forwarding pages to the complete readable archive entry.
+Storage does not change a record’s authority or supersession status; follow
+later decisions named by the record and index when a policy has changed.</p>
+<p>For exact original text, run from the repository root:</p>
+<pre><code class="language-sh">scripts/decision_records.py read 0014
+scripts/decision_records.py read 0014 0015 | rg 'IAL2|profile'
+scripts/decision_records.py check
+</code></pre>
+<p>The reader uses the repository’s immutable archive without requiring a Git
+history fetch. The readable view has relocated relative links; the reader
+returns the original bytes. The check rejects altered originals, stale views,
+missing forwarding/index links and obsolete Knowledge Map body searches.
+These checks run through the live-document doctrine’s projection verifier.
+The archive is read on demand, not loaded as part of every session bootstrap.</p>
+<p>Selected Git verification captures modes, object IDs and complete raw paths before
+reading source bytes. The default whole-inventory API retains its byte bound.
+Selected Git decision authentication captures the complete decision namespace, transition
+source census and caller control files. The installed store also captures trusted
+legacy link targets and Knowledge Map command consumers.</p>
+<p>The fixed published legacy census determines that extra scope. Bootstrap verifies
+its digest; final capture must retain its exact mode and object ID. Committed
+selection resolves once to a SHA. Index selection reads all final metadata in one
+native query. Ancestor metadata rejects files, symlinks and gitlinks in source
+directory positions. Source reads cannot use unrelated objects. Scope declarations,
+aggregate inventory bytes and individual blobs retain bounded contracts.</p>
+<p>Check the selected current store and its continuity with the committed predecessor:</p>
+<pre><code class="language-sh">scripts/decision_records.py --snapshot index check
+scripts/decision_records.py --snapshot index --prior-snapshot HEAD \
+  --bind-file doctrine/live_document_size/surfaces.jsonl check-continuity
+</code></pre>
+<p>The dated stock fixture refused authentication solely because unrelated evidence
+exceeded the whole-inventory budget. The real scoped production constructor now
+authenticates the same complete store. Relevant overflow, missing membership,
+conflicting stages, bad modes and changed bootstrap/final census objects still
+refuse. Run the saved stock and repaired-source checks from the repository root:</p>
+<pre><code class="language-sh">scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-scope-20261008/verify.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-repair-20261008/verify.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/decision-index-integration-20261008/verify.py
+</code></pre>
+<p>The repair reader reconstructs every native object, selected source and unchanged
+semantic product from complete inputs. T2003 also exercises real index races,
+advancing HEAD, special path bytes and shared aggregate limits. Installed index,
+committed-tree, catalog and control integration is qualified; original-coordinate,
+HIAL, visual, full CI and push gates remain open.</p>
+<p>Saved checks that deliberately freeze canonical sources require their committed
+source epoch. Fixture recovery declares exact input files or dependency namespaces;
+it does not copy the whole historical tree or create another Git repository.
+The preparation check qualifies regular and executable sources, a published book
+alias, same-volume recovery, a private alternative index and read-only original
+object access. The unchanged dated public route, complete reference and qualification
+now pass with only declared dependencies. Independently check the full source/result
+evidence and retained controls:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-public-final-preparation-20261008/verify.py
+python3 -B docs/audits/coordinate-public-final-replay-20261008/verify.py
+</code></pre>
+<p>Source-coordinate composition first admits the complete own statement catalog,
+ordered observer generation and invocation custody together with the qualified
+finite-public recipes. Its unchanged readers and independent source/blob/span
+checks conserve every declared role and unresolved private identity. This input
+admission does not interpret original coordinates or execute original captures:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-source-admission-20261008/verify.py
+</code></pre>
+<p>The source-site bank preserves each named owner, guard/call statement and
+observer, test and parser association with its complete source span. First and
+closing line labels remain distinct, including equivalent labels on one line.
+Invocation roots and observer generation stay tied to their admitted sources.
+Function and wrapper extents establish lexical ownership; they do not predict
+runtime call-site coordinates. Dated public recipes remain examples, while
+per-refusal statement/path composition and original-coordinate selection are
+separate pending steps. Read the saved source-only qualification with:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-source-sites-checks-20261008/verify_sites.py
+</code></pre>
+<p>The source-only path-input admission binds the qualified ordinary, Storable
+and control refusals to their authored callback and named-subtest bodies, whole
+helper/observer paths and guard-model inputs. Repeated loop statements retain
+their distinct helper indexes. Original generation and invocation associations
+conserve, including the separately owned alias run. This does not select
+statement-level coordinate alternatives or qualify original coordinates:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-refusal-path-inputs-20261009/verify.py
+</code></pre>
+<p>The executable statement recipes extend that lexical bank with complete own
+observer, helper, callback, subtest, nested capture and parser call statements.
+The parser’s <code>confess</code> expression includes its trailing conditional guard in
+the executable recipe. Independent original-source reconstruction checks byte
+offsets, ownership, first/closing equivalents and filename alternatives.
+These recipes preserve alternatives without selecting original runtime coordinates:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-statement-recipe-checks-20261009/verify_recipes.py
+</code></pre>
+<p>The source-only refusal-phase binding joins each admitted ordinary, Storable
+and control refusal to its ordered guard, observer, helper, body and entry
+callers. Each own caller cites an exact executable statement, retaining both
+first/closing labels, equivalent alternatives and legitimate filenames. The
+nested metadata capture includes its observer wrapper and Value eval before
+the outer Value guard; these remain separate throw phases. Framework-owned
+caller intervals remain opaque. The lexical test loader is <code>do</code>; its qualified
+model label is retained separately.</p>
+<p>The independent reader reconstructs the complete allocation from fixed Git
+inputs and checks genuine guard, caller, phase, source, role, alternative and
+promotion controls. It selects source topology only, excluding argument/error
+payloads and original caller-coordinate snapshots. Read the sealed result with:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-refusal-phase-checks-20261009/verify_phases.py
+</code></pre>
+<p>At that source-only checkpoint, original-coordinate joining was still pending.
+Original private runtime meanings and alias downstream remain separately owned. The binding establishes
+source hypotheses, without choosing which line or filename an original
+runtime actually reported.</p>
+<p>The complete source-hypothesis qualification joins the original own-source
+catalogue, lexical bank, executable statements, ordered refusal phases and
+dated finite-public examples. Complete fixed input membership and bytes retain
+their Git modes and source authorities. Separate original-source and call-path
+reconstruction checks every hypothesis, while actual source-only readers and
+genuine scope, identity, caller, guard and receipt controls qualify the join.
+The published reader requires the exact complete seal:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-source-hypothesis-checks-20261009/verify_hypotheses.py
+</code></pre>
+<p>Archive permissions follow Git’s transport mask independently of tracked
+file modes. The canonical retrieval fact and its <code>umask</code> query now retain this
+rule. Controlled explicit masks qualify regular and executable payloads,
+including the original failed mode assumption, without configuration writes:</p>
+<pre><code class="language-sh">python3 -B docs/audits/archive-transport-fact-20261009/archive.py
+</code></pre>
+<p>The governed card compaction retains exact complete original sources and
+ordered semantic correspondence, every existing question and executable probe,
+and unchanged Knowledge Map capacity authority. The first URL-wrapping draft
+and corrected publication both retain. Whole source-hypothesis composition is
+qualified at that checkpoint; original raw-coordinate joining is qualified below.</p>
+<p>The saved original-coordinate intake authenticates the complete own capture,
+its transitive proof corpus and the sealed source hypotheses. Independent Git
+archive and blob streams conserve membership, tracked modes and every byte.
+A separate walker rebuilds all empty/error allocations, whole error bodies,
+physical caller coordinates, contexts and opaque argument/address lexemes from
+the original capture JSON. Complete actual source/class-frame readers also
+regenerate; the original captures are retained without recapture.</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-original-intake-checks-20261009/verify_intake.py
+</code></pre>
+<p>Intake preserves every original coordinate without selecting its meaning.
+The first complete match rejects the first/closing-only source alternatives:
+some helper calls and guards report interior expression lines. A complete
+census retains every observation and mismatch, the first failed matcher and
+its separately marked unexecuted verifier draft. No original alternative has
+been widened.</p>
+<p>Finite public caller and compiler fixtures reproduce callback/pattern and
+live-operand guard attribution. Moving the relevant expression changes its
+reported line; moving a later constant message does not. Constant-only guard
+probes remain as counterexamples. The first ambiguous fixture selector and
+its corrected producer both retain. These are finite current public results;
+original private formatter/toolchain meanings remain unmeasured.</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-original-matching-checks-20261009/verify_diagnosis.py
+</code></pre>
+<p>Source-only superseding candidates now retain every prior statement, label,
+filename and source identity, adding exact predicate-expression endings and
+helper-pattern starts. Their literal UTF8 spans are independently reconstructed
+from the complete original own source. <code>predicate_expression_closing</code> names
+the final byte of a guard predicate; <code>pattern_expression_first</code> names the first
+byte of a helper’s pattern argument. The original statement first/closing
+labels remain available, including equivalent labels on the same line.</p>
+<p>The independent reader replays finite public caller/compiler examples and
+unchanged source-only prerequisites. These are conditional candidates, with
+no universal line-formatting prediction and every original selection empty:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-expression-alternative-checks-20261009/verify_alternatives.py
+</code></pre>
+<p>Canonical expression-attribution facts and the public probe now live in the
+tooling card <code>docs/knowledge/mdbook-build-destination-locality.md</code>.
+Its current reader consumes the sealed expression qualification. Exact prior
+card bytes remain retrievable, with every prior question/probe preserved
+through non-growing semantic compaction under unchanged collection limits.
+The resumed matcher exposed two draft defects before producing a result: an
+opaque-frame list overwrote the source-candidate lookup, then an inherited
+assertion always associated the recorded caller with the outer operation in
+package <code>main</code>. Both complete failed programmes/results remain retained.</p>
+<p>The recorded observer caller now has a separate complete qualification. Each
+wrapper passes its own <code>[caller]</code> value to the recorder. Source operation kind
+selects the matching wrapper before any original coordinate comparison. Nested
+metadata captures therefore retain the inner Value-package caller, while the
+outer scope records retain their own outer caller. A recorded caller snapshot
+must follow its operation, rather than whichever operation is outermost.</p>
+<p>Independent source binding and original-frame reconstruction qualify every
+recorded caller, preserving every filename/line alternative and empty/error
+allocation. Controlled public caller examples independently move inner and
+outer calls and verify their packages. Complete recorded-caller replacement in
+the source model leaves both source selectors unchanged. The first parser
+wrapper draft and its source refusal also retain; the actual source cases use
+the <code>parse_source</code> delegate. Read the complete fixed-seal qualification with:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-observer-caller-checks-20261009/verify_callers.py
+</code></pre>
+<p>Complete dated original own-coordinate matching now joins every error origin,
+own caller/eval and lexical-load position to the independently declared source
+candidates. Operation-specific observer snapshots join the same matched phase.
+A separate sequential walker checks the complete original frame intervals,
+including every explicitly opaque framework frame.</p>
+<p>Each selection retains its reported filename/line, all source alternatives and
+every matching label. Labels that share a line remain equivalent possibilities.
+For example, this original guard call matches both source labels at line 107,
+while the distinct statement-closing alternative remains available:</p>
+<pre><code class="language-json">{
+  "recipe_id": "admitted/guard-call/value/GUARDS.values.16",
+  "reported_filename": "perl/FSM/Support/ISFRecordPortValues.pm",
+  "reported_line": 107,
+  "matching_line_labels": ["first", "predicate_expression_closing"],
+  "all_line_alternatives": {"closing": 108, "first": 107, "predicate_expression_closing": 107}
+}
+</code></pre>
+<p>Read the complete fixed-seal matching qualification with:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-original-matching-qualified-checks-20261009/verify_matching.py
+</code></pre>
+<p>The product retains complete original error/argument/context bytes, empty
+allocations, full used and unused source candidates and explicit opaque owners.
+Fresh original-intake, expression and observer readers independently regenerate
+complete results. This dated own-coordinate match does not measure original
+private formatting/toolchain/identity or external framework coordinate rules.
+The complete dated producer now executes original own-coordinate controls.
+It enumerates every recorded own coordinate and selects a representative of
+each observed source recipe in each admitted mode. The controls replace a
+terminal reported line or filename, or borrow a source declaration from a
+different file. Every completed producer control passes the complete predecessor
+class, frame, function, visible-argument and forwarding predicates before both
+coordinate procedures reject the changed coordinate or source association.</p>
+<p>Nested interventions change the child body and its complete forwarded parent
+together. Every nonempty original record and every admitted forwarding pair
+receives line and filename interventions. Untargeted records, complete function
+and argument text, and recorded context remain unchanged. The producer retains
+the whole original/source/matching replay and reauthenticates every immutable
+original custody member after its controls.</p>
+<p>Separate geometry reconstruction agrees on the complete source-linked point and
+forwarding allocation. Independent byte-interval examples cover origins,
+callers, loads and forwarded errors. Positive adjacent-line controls also pass
+for the parser facade in every mode. The first duplicate-allocation and exhausted
+candidate-line constructor failures retain beside their verified corrections.
+The complete producer is sealed; genuine copied missing, borrowed, extra,
+resealed and symlinked corpora are rejected while the originals conserve.</p>
+<p>Full independent reconstruction now qualifies the complete dated product.
+The reader rebuilds every source-linked coordinate and forwarding interval,
+then constructs every observed recipe/mode intervention using separate byte
+intervals. Each intervention passes the complete unchanged predecessor
+predicates before both coordinate procedures reject its changed coordinate or
+source association. The complete result matches the sealed producer product.</p>
+<p>The independent run freshly replays the complete original/source/matching
+reader chain and reauthenticates every original custody member before and after
+its interventions. Whole-result controls reject missing points, recipes,
+forwarded pairs and empty allocations, borrowed intervention data, false
+predecessor results, Boolean statuses and borrowed reader commands or output.
+It also reproduces the first duplicate-allocation and exhausted-line failures,
+and verifies the retained interrupted producer prefix against the whole result.</p>
+<p>Every stopped RAM-guarded attempt retains its non-success status and original
+streams. Those attempts do not supply independent success; the completed replay
+does. The original seal, programmes, products and guard cutoffs remain unchanged.
+Reproduce the full fixed-seal qualification from the repository root:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py
+</code></pre>
+<p>Current coordinate meanings are now admitted together in the core, helper,
+parser and tooling facts. Their exact original sources remain retrievable, and
+the reviewed correspondence preserves every original question, probe and locality
+obligation. Knowledge Map collection authority is unchanged; the complete
+working set does not grow. The original private, framework, formatter, toolchain,
+identity and address limits remain explicit.</p>
+<p>The maintained reader checks all affected current sources and the complete
+global direct and cached question allocation. It authenticates the admitted
+whole original qualification and every fixed input, while retaining distinct
+historical, current, borrowed and unrelated source roles. A successful dated
+snapshot cannot establish current currency. The parser checkpoint keeps its
+sealed earlier epoch-current programme and default historical snapshot; its
+current fact now uses the maintained reader.</p>
+<p>Build first, then check the complete native publication from the repository root:</p>
+<pre><code class="language-sh">mdbook build docs/book
+scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py --build docs/book/book
+</code></pre>
+<p>This checks all current copied canonical sources and the rendered guidance.
+The unchanged dated semantic reconstruction command above remains available.
+The complete preparation also remains replayable in its explicit snapshot role:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-current-preparation-20261010/verify.py --snapshot
+</code></pre>
+<p>Whole current-coordinate publication is independently qualified after a fresh
+complete original semantic replay. Exact prior/proposed/current sources, every
+question and probe, whole book/native guidance and unchanged capacities join.
+Only completed coordinate nodes close. Original private, framework, formatter,
+toolchain, identity, address and alias meanings, visual QA, HIAL repair and full
+CI/push retain their owners. Raw address roles are the next owned scope.</p>
+<p>The dated whole-publication proof remains replayable independently of later
+current source progress:</p>
+<pre><code class="language-sh">python3 -B docs/audits/coordinate-current-closure-20261010/verify.py
+</code></pre>
+<div id="knowledge-map-architecture"></div>
+
+<h1 id="knowledge-map-km--a-derived-question-keyed-retrieval-layer"><a class="header" href="#knowledge-map-km--a-derived-question-keyed-retrieval-layer">Knowledge Map (KM) — a derived, question-keyed retrieval layer</a></h1>
+<p>A portable, <strong>harness-agnostic</strong> extension to the Durable Memory Architecture that makes
+sure an AI/LLM (or a human) <strong>never has to do archaeology</strong> — re-deriving a fact from code
+or runtime — to rediscover something that was <em>already logged once</em>.</p>
+<p>This file is intentionally <strong>project-agnostic</strong>: it names no nouns from any one codebase.
+Drop the <code>knowledge-map/</code> bundle into any repository that already uses <strong>task-trees</strong> +
+<code>MEMORY_ARCHITECTURE.md</code> and it applies as-is.</p>
+<blockquote>
+<p>One-line thesis: <strong>durable facts become findable when each is a small, self-describing,
+front-mattered file, and a machine derives a bounded question-keyed index plus
+topic shards from them — so retrieval is one query, not an excavation.</strong></p>
+</blockquote>
+<hr>
+<h2 id="0-the-problem-this-solves-and-the-one-it-does-not"><a class="header" href="#0-the-problem-this-solves-and-the-one-it-does-not">0. The problem this solves (and the one it does not)</a></h2>
+<p>Teams that already write things down still watch a fresh agent <strong>re-derive facts from
+code</strong>. That is <em>archaeology</em>, and it is a <strong>retrieval</strong> failure, not a recording failure:
+the fact existed (in a task leaf, a commit message, a decision record) but the next session
+could not <em>find</em> it, so it dug it out of the source again and — worse — sometimes dressed
+the re-derivation up as diligence.</p>
+<p>Be honest about the ceiling. There are <strong>two</strong> kinds of “finding a fact”:</p>
+<ul>
+<li><strong>Re-deriving a fact that was already established</strong> (a root cause, an architectural
+decision, a gotcha). This is the archaeology the KM <strong>eliminates</strong>.</li>
+<li><strong>Measuring the current state of a living system for the first time</strong> (today’s metric,
+which case fails right now). You <em>cannot</em> pre-write a measurement you have not taken;
+this is legitimate <strong>diagnostics</strong>, not a failure. The KM’s job there is narrow: once
+measured, its durable <strong>conclusion</strong> becomes a fact card so nobody measures it twice.</li>
+</ul>
+<p>Target: <strong>zero archaeology for structural/causal facts; diagnostics only for genuinely-new
+state, whose conclusions then become facts.</strong></p>
+<hr>
+<h2 id="1-why-a-derived-index-and-not-a-hand-curated-one"><a class="header" href="#1-why-a-derived-index-and-not-a-hand-curated-one">1. Why a derived index (and not a hand-curated one)</a></h2>
+<p>A hand-maintained index is the very anti-pattern <code>MEMORY_ARCHITECTURE.md</code> forbids
+(“prefer derived over hand-written … so it cannot drift”; “hand-maintained current-state
+that drifts” is an explicit anti-pattern). It also costs time at every commit. So the KM
+splits the two costs and keeps only the cheap one:</p>
+<ul>
+<li><strong>Curation cost</strong> — a human/agent deciding what to index and phrasing the keys. This is
+the expensive, rot-prone part. The KM <strong>eliminates</strong> it: the keys live <em>inside</em> each
+fact file, authored once, when you write the fact you were recording anyway.</li>
+<li><strong>Generation cost</strong> — a script scanning files and emitting the map. The
+<strong>machine</strong> pays it (in the pre-commit hook), never the workflow, never the agent.</li>
+</ul>
+<p>The map is a <strong>build artifact</strong>, never hand-edited, <strong>deterministic</strong> (sorted, no
+timestamps) so “regenerate-and-diff” is a valid sync gate. Because the facts are atomic and
+front-mattered, an agent can also <strong>skip the map entirely</strong> and grep the fact files
+directly — the map is a convenience cache, not a load-bearing dependency. (Contrast a
+hand-index, where staleness breaks everything.)</p>
+<hr>
+<h2 id="2-what-a-fact-is"><a class="header" href="#2-what-a-fact-is">2. What a fact is</a></h2>
+<p>A <strong>fact</strong> is one <code>.md</code> file whose YAML front-matter has a <strong>non-empty <code>answers:</code> list</strong>.
+The presence of <code>answers:</code> <em>is</em> the marker — no separate flag. Required and optional
+fields:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Req?</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td><code>id</code></td><td>✅</td><td>stable, unique, kebab-case identifier (used as the map anchor)</td></tr>
+<tr><td><code>title</code></td><td>✅</td><td>one-line human title</td></tr>
+<tr><td><code>answers</code></td><td>✅</td><td>the <strong>questions a future agent will search for</strong>, in <em>their</em> words (this is the retrieval surface — list synonyms)</td></tr>
+<tr><td><code>date</code></td><td>✅</td><td>when the fact was established (absolute, <code>YYYY-MM-DD</code>)</td></tr>
+<tr><td><code>evidence</code> <em>or</em> <code>reverify</code></td><td>✅ (≥1)</td><td>what proves it / the cheap command to re-confirm it</td></tr>
+<tr><td><code>reverify</code></td><td>⬚</td><td>a single cheap command that re-establishes the fact (so an agent trusts it, or runs ONE command — never full archaeology)</td></tr>
+<tr><td><code>tags</code></td><td>⬚</td><td>topical tags</td></tr>
+<tr><td><code>status</code></td><td>⬚</td><td><code>current</code> (default) · <code>superseded</code> · <code>deprecated</code></td></tr>
+<tr><td><code>supersedes</code></td><td>⬚</td><td>id of the fact this replaces</td></tr>
+</tbody>
+</table>
+</div>
+<p>Front-matter format is a <strong>constrained YAML subset</strong> parsed without third-party
+modules: scalars <code>key: value</code>; inline lists <code>key: [a, b]</code>; block lists (<code>key:</code>
+then <code>  - item</code>); and folded <code>&gt;-</code> scalars for long <code>evidence</code>, <code>reverify</code>, or
+<code>answer</code> values. Folded continuation lines use at least two spaces and are
+joined with one space. Use <strong>plain or double-quoted</strong> scalars, never tabs;
+questions containing a comma use the block-list form. Copy
+<code>templates/FACT_TEMPLATE.md</code> to start.</p>
+<hr>
+<h2 id="3-the-six-properties-llms-need-why-the-format-is-shaped-this-way"><a class="header" href="#3-the-six-properties-llms-need-why-the-format-is-shaped-this-way">3. The six properties LLMs need (why the format is shaped this way)</a></h2>
+<p>Humans <em>browse and recognize</em>; LLMs <em>query (grep/semantic) and follow pointers</em>. So:</p>
+<ol>
+<li><strong>Query-shaped keys.</strong> <code>answers:</code> are phrased as the questions you’d actually grep —
+not topics a human would skim. Include synonyms and the literal error string.</li>
+<li><strong>Canonical vocabulary.</strong> One canonical term per concept; list aliases in <code>answers:</code> so
+any search term routes to the one home. (Grep is lexical — drift loses half the hits.)</li>
+<li><strong>Atomic, titled units.</strong> One fact per file; the <code>title</code> <em>is</em> the index entry. (A fact
+buried at line 480 of a 600-line chapter is grep-findable but expensive to read.)</li>
+<li><strong>Self-dating + self-verifying.</strong> <code>date</code> + <code>evidence</code> + <code>reverify</code> let an agent <em>trust</em>
+a fact, or re-confirm with <strong>one</strong> command — instead of re-deriving “to be safe.”</li>
+<li><strong>Stable anchors + cross-links.</strong> <code>id</code> is a stable anchor; link related facts with
+<code>[[other-id]]</code> so one lookup leads to its neighbors.</li>
+<li><strong>Pointer, not copy.</strong> A fact card <em>points to</em> the canonical home (book chapter, code,
+decision record). The full story stays there; the card makes it findable.</li>
+</ol>
+<hr>
+<h2 id="4-what-to-index--and-what-never-to-convert"><a class="header" href="#4-what-to-index--and-what-never-to-convert">4. What to index — and what NEVER to convert</a></h2>
+<p><strong>The KM is additive. You convert nothing.</strong> It is a retrieval layer <em>on top of</em> your
+existing docs, not a replacement. Each existing layer keeps its job; the KM points into it.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Layer</th><th>Role</th><th>KM relationship</th></tr>
+</thead>
+<tbody>
+<tr><td>mdBook</td><td>narrative / teaching</td><td><strong>destination</strong> — a card’s body links to the chapter</td></tr>
+<tr><td>live status / changelog</td><td>current state</td><td>not indexed — changes too fast (it’s not a durable fact)</td></tr>
+<tr><td>task-trees</td><td>work frontier (layer B)</td><td>not indexed — a fact that <em>emerges</em> from a task is promoted to a card on conclusion</td></tr>
+<tr><td>decision records (layer C)</td><td>durable ADR facts</td><td><strong>optionally</strong> add <code>answers:</code> front-matter in place to fold one into the map (zero duplication)</td></tr>
+<tr><td><strong>Knowledge Map</strong></td><td>retrieval index</td><td><strong>derived</strong> from the cards above</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>DO</strong> write a card when:</p>
+<ul>
+<li>you establish a <strong>durable, structural/causal fact</strong> (a root cause, an architectural
+constraint, a gotcha, where-something-lives) — i.e. the kind that would otherwise need
+archaeology; or</li>
+<li>you <strong>catch yourself re-deriving</strong> a fact that should already have been written down
+(write the card <em>then</em>, so it never recurs).</li>
+</ul>
+<p><strong>DON’T</strong>:</p>
+<ul>
+<li>❌ Convert prose docs/the book/task-trees into cards (destroys narrative, duplicates
+content, goes stale — the §12 anti-pattern).</li>
+<li>❌ Hand-edit the generated map. It is derived.</li>
+<li>❌ Card a <strong>measurement that changes every run</strong> (a metric, today’s count). Card the
+durable <strong>conclusion</strong>, not the reading.</li>
+<li>❌ Card narrative/teaching (book’s job), current status (live-docs’ job), history
+(git’s job).</li>
+<li>❌ Duplicate a fact across cards. One canonical card per fact; <code>supersedes</code> when it
+changes (don’t silently rewrite).</li>
+<li>❌ Omit <code>evidence</code>/<code>reverify</code> — without them an agent re-derives anyway, defeating the
+purpose.</li>
+<li>❌ Put nondeterminism (timestamps) into the map — it breaks the sync gate.</li>
+</ul>
+<p>There is <strong>no migration project.</strong> The map grows one cheap card at a time; each card
+permanently retires one future archaeology.</p>
+<hr>
+<h2 id="5-the-scripts-and-bounded-projection"><a class="header" href="#5-the-scripts-and-bounded-projection">5. The scripts and bounded projection</a></h2>
+<p>The shell entrypoints use one dependency-free Perl core (Perl 5 core modules
+only, on BSD/macOS and GNU/Linux):</p>
+<ul>
+<li><strong><code>scripts/gen_knowledge_map.sh</code></strong> scans <code>KM_SCAN_DIRS</code> and writes a small
+<code>KM_OUTPUT</code> landing page plus deterministic topic shards under
+<code>KM_SHARD_DIR</code>. A topic is the first two kebab-case fact-ID components. Each
+fact appears in one topic catalog; each unique question appears in one shard
+and may point to multiple facts when the source cards deliberately share it.</li>
+<li><strong><code>scripts/query_knowledge_map.sh</code></strong> performs a case-insensitive fixed-
+substring search over question rows. Its default cache lives beneath
+<code>KM_QUERY_CACHE_DIR</code>; <code>--no-cache</code> reads the committed shards directly and
+<code>--all</code> returns every question row. Cache data is disposable and never owns a
+fact.</li>
+<li><strong><code>scripts/check_knowledge_map.sh</code></strong> rejects missing fields, duplicate IDs,
+oversized cards/root/shards/aggregate, missing/extra/stale shards, missing or
+duplicated projected facts/questions, and cached/direct result drift.</li>
+</ul>
+<p><code>gen_knowledge_map.sh --print-map-path</code>, <code>--print-shard-dir</code>, and
+<code>--print-generated-paths</code> expose hook-safe paths. Config precedence
+(<code>scripts/knowledge_map.conf</code>, all <code>:=</code> assignments) is <strong>environment &gt;
+repo-root <code>.knowledge_map.conf</code> &gt; bundle default</strong>. Main knobs are
+<code>KM_SCAN_DIRS</code>, <code>KM_OUTPUT</code>, <code>KM_SHARD_DIR</code>, <code>KM_QUERY_CACHE_DIR</code>, and
+<code>KM_TITLE</code>; finite card/projection caps also have <code>KM_*_MAX_*</code> overrides for
+fixture testing and deliberate adoption calibration.</p>
+<hr>
+<h2 id="6-enforcement--so-the-map-cannot-rot"><a class="header" href="#6-enforcement--so-the-map-cannot-rot">6. Enforcement — so the map cannot rot</a></h2>
+<p>Mirror the four-layer defense from <code>MEMORY_ARCHITECTURE.md</code> §9 (a rule nothing checks is a
+rule nothing follows):</p>
+<ul>
+<li><strong>Pre-commit hook</strong> regenerates the root and shards, stages both paths with
+deletion awareness, then runs the check — so the agent spends <strong>zero</strong> time
+indexing and the projection is always in sync. See <code>hooks/pre-commit.snippet</code>.</li>
+<li><strong>CI</strong> runs <code>check_knowledge_map.sh</code> (same script) — catches a bypassed hook; a stale map
+or invalid fact <strong>fails the build</strong>. See <code>ci/knowledge-map-gate.yml</code>.</li>
+</ul>
+<p>Because generation is deterministic, the hook’s “regenerate + stage” makes drift
+structurally impossible: the committed map always equals what the facts produce.</p>
+<hr>
+<h2 id="7-read-path--how-a-future-agent-uses-it-no-archaeology"><a class="header" href="#7-read-path--how-a-future-agent-uses-it-no-archaeology">7. Read path — how a future agent uses it (no archaeology)</a></h2>
+<ol>
+<li>From the bootstrap entrypoint, run
+<code>knowledge-map/scripts/query_knowledge_map.sh 'question words'</code>.</li>
+<li>Follow the returned repository-relative canonical card path. Use
+<code>KNOWLEDGE_MAP.md</code> to browse topic counts or a whole shard when needed.</li>
+<li>Trust the fact (it is dated + evidenced), or run its one <code>reverify</code> command.</li>
+<li>Only if the fact is genuinely absent is new investigation warranted — and
+its conclusion becomes a new card before the turn ends.</li>
+</ol>
+<hr>
+<h2 id="8-adoption-checklist-any-repo-already-using-task-trees--memory_architecture"><a class="header" href="#8-adoption-checklist-any-repo-already-using-task-trees--memory_architecture">8. Adoption checklist (any repo already using task-trees + MEMORY_ARCHITECTURE)</a></h2>
+<ol>
+<li>Copy the <code>knowledge-map/</code> bundle into the repo root; commit it.</li>
+<li><code>bash knowledge-map/install.sh</code> (creates <code>docs/knowledge/</code>, generates the first map,
+prints the hook + CI wiring) — or do those steps by hand from §6.</li>
+<li>Add the hook snippet (<code>hooks/pre-commit.snippet</code>) to <code>.githooks/pre-commit</code>; ensure
+<code>git config core.hooksPath .githooks</code> is set.</li>
+<li>Add the CI step (<code>ci/knowledge-map-gate.yml</code>) to your pipeline.</li>
+<li>Seed it: write a card for each fact you have recently had to re-derive. Going forward,
+add a card whenever you establish a durable fact or catch archaeology.</li>
+<li><em>(Optional)</em> fold high-traffic <code>docs/decisions/</code> records into the map by adding
+<code>answers:</code> front-matter in place.</li>
+</ol>
+<hr>
+<h2 id="9-anti-patterns-quick-reference"><a class="header" href="#9-anti-patterns-quick-reference">9. Anti-patterns (quick reference)</a></h2>
+<ul>
+<li>❌ Hand-editing the generated map.</li>
+<li>❌ A big-bang “convert all docs to the KM” project.</li>
+<li>❌ Letting a root map, topic shard, individual card, or aggregate grow without
+an independent finite bound.</li>
+<li>❌ Cards that duplicate book/prose instead of pointing to it.</li>
+<li>❌ Carding volatile metrics instead of durable conclusions.</li>
+<li>❌ Cards with no <code>evidence</code>/<code>reverify</code> (agent re-derives anyway).</li>
+<li>❌ Nondeterministic map output (breaks the sync gate).</li>
+<li>❌ Treating the projection or disposable query cache as load-bearing — facts
+must stay greppable without either.</li>
+<li>❌ An index with no enforcement — it rots.</li>
+</ul>
+<hr>
+<p><em>This bundle is itself an instance of what it describes: small, structured, in-repo,
+git-tracked, self-describing, and backed by a derive-and-diff gate so it is hard to let it
+drift. It composes with — and does not replace — <code>MEMORY_ARCHITECTURE.md</code>.</em></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="16e-nexsim-api-mcp-consumer-requirements.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="91-live-document-containment-adoption.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="16e-nexsim-api-mcp-consumer-requirements.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="91-live-document-containment-adoption.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

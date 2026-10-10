@@ -40,7 +40,9 @@ semantic reconstruction merely from certificate authentication. Core, helper,
 parser and tooling facts retain every prior question, probe and locality rule;
 their reviewed working set does not grow. Original private formatting, toolchain
 and identity, external framework coordinates and address lifetimes retain their
-separate owners. Final whole-publication closure remains separately owned.
+separate owners. Whole current publication is independently qualified after a fresh complete
+semantic replay. Exact source history, all questions, native guidance and
+unchanged capacities conserve; broader private and downstream owners stay open.
 
 '''
 
@@ -101,9 +103,19 @@ The complete preparation also remains replayable in its explicit snapshot role:
 python3 -B docs/audits/coordinate-current-preparation-20261010/verify.py --snapshot
 ```
 
-Final whole-publication closure is the next owned step; original private,
-framework, formatter, toolchain, identity, address and alias meanings, visual QA,
-HIAL repair and full CI/push retain their owners.
+Whole current-coordinate publication is independently qualified after a fresh
+complete original semantic replay. Exact prior/proposed/current sources, every
+question and probe, whole book/native guidance and unchanged capacities join.
+Only completed coordinate nodes close. Original private, framework, formatter,
+toolchain, identity, address and alias meanings, visual QA, HIAL repair and full
+CI/push retain their owners. Raw address roles are the next owned scope.
+
+The dated whole-publication proof remains replayable independently of later
+current source progress:
+
+```sh
+python3 -B docs/audits/coordinate-current-closure-20261010/verify.py
+```
 
 '''
 

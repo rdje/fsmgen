@@ -1,0 +1,15 @@
+{
+  "missing": [],
+  "unexpected": [
+    "are IAL2 profile aliases still checked through the CLI by t296?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "can a PPIF pipeline entry artifact filename differ from its HDL module?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "does HDLGenerator accept .ahb .apb or .axi profile-alias paths?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "does PPIF pipeline HDL contain the public aggregate top?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "how is generated_hdl_entry_artifact checked by the supported-smoke audit?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "how many PPIF smoke entries have distinct pipeline and CLI modules?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "how many supported-smoke profile aliases are CLI-only in t296?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "what does expected_pipeline_module_name mean in RegressionCorpus?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "why does t296 exclude IAL2 profile aliases from its pipeline loops?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md",
+    "why does t296 use a different PPIF module oracle for the pipeline and CLI?\tci-perl-fsm-regression-jun15-repair\tdocs/knowledge/ci-perl-fsm-regression-jun15-repair.md"
+  ]
+}
