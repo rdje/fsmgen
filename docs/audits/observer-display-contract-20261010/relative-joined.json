@@ -1,0 +1,31 @@
+{
+  "error": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/observer-display-contract-20261010/join_relative.py\", line 34, in main\n    result['products'] = module['join'](hypotheses, json.loads(record['stdout']))\n                         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/observer-display-contract-20261010/model.py\", line 170, in join\n    require(actual == header, 'complete source-generated public argument header and format')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"docs/audits/observer-display-contract-20261010/model.py\", line 16, in require\n    raise ValueError(cause)\nValueError: complete source-generated public argument header and format\n",
+  "inputs": {
+    "hypotheses.json": {
+      "bytes": 585829,
+      "sha256": "6413d10f1c958a4d7087e6c66a95cf0c817ddb83d8e41781463d4639b1f2fb8b"
+    },
+    "join_relative.py": {
+      "bytes": 2888,
+      "sha256": "adadbc4d98254321c1589ba5ce986a547a67428aa07a03ae2695ed4f42006bf8"
+    },
+    "model.py": {
+      "bytes": 9637,
+      "sha256": "78c12f53194af56339950c6360ca8aa376171508ab94ebbaef68679ac7db1f5f"
+    },
+    "qualify-catalogue.json": {
+      "bytes": 270524,
+      "sha256": "f9f1b910a51a6f467748b7f6209ccd0e38ef297be7693fc28b9cce0a30b017eb"
+    },
+    "relative-native.json": {
+      "bytes": 335780,
+      "sha256": "23bfa3c61bfa0f21e9a9410e5e5308013555a04189cb75f918c03acb427f8679"
+    },
+    "relative-pre-native.json": {
+      "bytes": 1435,
+      "sha256": "f1b626a9c0f7545642d88a1cc971b11ac6d073ecc97012677b5ac126b302a686"
+    }
+  },
+  "role": "Current finite public fixtures only; no original formatter/settings identity or general parser contract.",
+  "status": 1
+}

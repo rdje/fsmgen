@@ -1,0 +1,68 @@
+"""Select the full finite qualifying corpus and hypotheses before capture."""
+import hashlib
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/observer-display-contract-20261010')
+
+
+def string(value, upgraded=False):
+    return {'kind': 'string', 'codepoints': list(map(ord, value)), 'utf8': upgraded}
+
+
+def catalogue():
+    cases = []
+    def add(name, arguments, limit=64, count=8, formatter=False):
+        cases.append({'id': name, 'arguments': arguments,
+                      'profile': {'arg_len': limit, 'arg_nums': count, 'formatter': formatter}})
+    for code in range(256):
+        add('byte-' + str(code), [string('V' + chr(code) + 'W')])
+    for code in (0, 9, 10, 13, 31, 32, 34, 65, 92, 126, 127, 128, 233, 255, 256, 9731, 128578):
+        add('upgraded-' + str(code), [string('U' + chr(code) + 'Z', True)])
+    for limit in (-1, 0, 1, 2, 3, 4, 5, 8, 16, 64):
+        for size in (0, 1, 2, 3, 4, 5, 6, 7, 8, 15, 16, 63, 64, 65, 66):
+            value = ('A"\\\n\u2603' * 20)[:size]
+            add(f'boundary-{limit}-{size}', [string(value)], limit=limit)
+    for i, value in enumerate(['', '0', '007', '-9', '1.5', '3.', '.75', '-.75',
+                               '4e+2', '5E-2', '+8', ' 14 ', 'NaN', 'Inf', '.',
+                               '9' * 65, '8' * 66, '7' * 64, '1..2', 'a"\\b']):
+        add('scalar-' + str(i), [string(value)])
+    add('undefined', [{'kind': 'undef'}])
+    for value in ('0', '12', '-7', '1.5'):
+        add('numeric-constructor-' + value, [{'kind': 'number', 'value': value}])
+    add('dual-constructor', [{'kind': 'dual', 'number': 42, 'codepoints': list(map(ord, 'qualified-dual')), 'utf8': False}])
+    kinds = ('HASH', 'ARRAY', 'CODE', 'plain', 'traced', 'overloaded')
+    for formatter in (False, True):
+        for kind in kinds:
+            add('reference-' + kind + '-' + str(formatter), [{'kind': kind, 'id': 'held'}], formatter=formatter)
+        for i, value in enumerate(['qualified[a-z]+', r'\d+\s?', 'R' * 64, 'S' * 65, 'a"b', 'a\nb', 'a\u2603b']):
+            add('regex-' + str(i) + '-' + str(formatter), [{'kind': 'REGEXP', 'id': 'held',
+                'codepoints': list(map(ord, value)), 'utf8': False}], formatter=formatter)
+    add('held-alias-and-distinction', [{'kind': 'HASH', 'id': 'left'}, {'kind': 'HASH', 'id': 'right'},
+                                    {'kind': 'alias', 'target': 'left'}, {'kind': 'alias', 'target': 'right'}])
+    for count in (-1, 0, 1, 2, 8):
+        for size in (0, 1, 2, 3, 7, 8, 9, 10):
+            add(f'arity-{count}-{size}', [string('argument-' + str(i)) for i in range(size)], count=count)
+    return {'role': 'Complete source-neutral finite qualifying corpus selected before native capture; no original header intake.',
+            'cases': cases}
+
+
+def main():
+    ns = {'__name__': 'display_hypotheses'}
+    exec(compile((BASE / 'model.py').read_bytes(), str(BASE / 'model.py'), 'exec'), ns)
+    selected = catalogue()
+    for name, value in [('qualify-catalogue.json', selected), ('hypotheses.json', ns['plan'](selected))]:
+        p = BASE / name
+        assert not p.exists(), 'one pre-observation qualifying epoch'
+        p.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+    sources = ['select_cases.py', 'model.py', 'fixtures.pl', 'capture.py', 'qualify-catalogue.json', 'hypotheses.json']
+    pins = {}
+    for name in sources:
+        raw = (BASE / name).read_bytes()
+        pins[name] = {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+    (BASE / 'pre-native.json').write_text(json.dumps({'inputs': pins, 'role': selected['role']}, sort_keys=True, indent=2) + '\n')
+    print('PASS complete finite source catalogue and full token/loss/header hypotheses selected before qualifying native capture.')
+
+
+if __name__ == '__main__':
+    main()

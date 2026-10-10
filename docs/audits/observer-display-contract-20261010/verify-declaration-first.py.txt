@@ -1,0 +1,306 @@
+"""Replay independent full finite public contracts and complete immutable custody."""
+import base64
+import copy
+import gzip
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+import oracle_repaired as oracle
+import falsify
+import gate_repair_verify
+
+BASE = oracle.BASE
+REVISION = '4b170801ddceb148da52df769f7a53b4dda93d05'
+PRIOR = Path('docs/audits/observer-join-prerequisite-20261010')
+MUTABLE = {'checks.json', 'proof.json', 'publication.json', 'native.html.txt', 'native-proof.json', 'manifest.json', 'final-proof.json'}
+
+
+def pin(raw):
+    return dict(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+
+
+def load(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def need(ok, cause):
+    oracle.must(ok, cause)
+
+
+def git(*args):
+    command = ['git', '--no-replace-objects', *args]
+    r = subprocess.run(command, capture_output=True)
+    need(type(r.returncode) is int and r.returncode == 0 and not r.stderr, 'actual fixed Git command')
+    return r.stdout
+
+
+def originals():
+    saved = load('prerequisites.json')
+    need(saved['revision'] == REVISION and saved['custody']['revision'] == REVISION, 'fixed prerequisite revision')
+    before = json.loads(git('show', REVISION + ':' + str(PRIOR / 'binding.json')))
+    selected = set(before['custody']['roots']) | {str(PRIOR)}
+    roots = sorted(p for p in selected if not any(p.startswith(q + '/') for q in selected if p != q))
+    need(roots == saved['custody']['roots'], 'entire original source prerequisite domain')
+    tree = git('ls-tree', '-rz', '--full-tree', REVISION, '--', *roots)
+    inventory = {}
+    for entry in tree.split(b'\0'):
+        if not entry:
+            continue
+        header, path = entry.split(b'\t', 1)
+        mode, kind, oid = header.decode().split()
+        path = path.decode()
+        need(mode in ('100644', '100755') and kind == 'blob' and path not in inventory, 'regular unique fixed source members')
+        inventory[path] = dict(mode=mode, oid=oid)
+    need(set(inventory) == set(saved['custody']['members']), 'complete fixed source membership')
+    command = ['git', '--no-replace-objects', 'cat-file', '--batch']
+    child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    members = {}
+    try:
+        for path, entry in sorted(inventory.items()):
+            child.stdin.write((entry['oid'] + '\n').encode())
+            child.stdin.flush()
+            header = child.stdout.readline().decode().rstrip('\n').split()
+            need(len(header) == 3 and header[:2] == [entry['oid'], 'blob'], 'full binary object header')
+            size = int(header[2])
+            sha = hashlib.sha256()
+            object_sha = hashlib.sha1(('blob ' + str(size) + '\0').encode())
+            file = Path(path)
+            need(file.is_file() and not file.is_symlink()
+                 and ('100755' if file.stat().st_mode & 0o111 else '100644') == entry['mode'], 'regular current original source member')
+            with file.open('rb') as current:
+                left = size
+                while left:
+                    raw = child.stdout.read(min(left, 1024 * 1024))
+                    need(bool(raw) and current.read(len(raw)) == raw, 'whole fixed/current source bytes')
+                    sha.update(raw)
+                    object_sha.update(raw)
+                    left -= len(raw)
+                need(current.read(1) == b'', 'complete current source boundary')
+            need(child.stdout.read(1) == b'\n' and object_sha.hexdigest() == entry['oid'], 'whole binary Git object identity')
+            members[path] = dict(**entry, identity=dict(bytes=size, sha256=sha.hexdigest()))
+        child.stdin.close()
+        need(child.stdout.read() == b'', 'complete binary Git stream boundary')
+        error = child.stderr.read()
+        status = child.wait()
+        need(type(status) is int and status == 0 and not error, 'actual binary Git process success')
+    finally:
+        if child.poll() is None:
+            child.kill()
+            child.wait()
+    need(oracle.identical(members, saved['custody']['members']), 'whole original fixed member products')
+    readers = {
+        'observer-diagnosis': str(PRIOR / 'verify.py'),
+        'public-documentation': 'docs/audits/record-value-public-framework-profile-20261006/verify.py',
+        'public-native-fixtures': 'docs/audits/record-value-public-native-fixtures-20261006/verify.py',
+    }
+    need(set(saved['actual_readers']) == set(readers), 'complete prerequisite reader population')
+    for name, programme in readers.items():
+        r = saved['actual_readers'][name]
+        need(set(r) == {'command', 'status', 'stdout', 'stderr', 'programme'} and r['command'] == ['python3', '-B', programme]
+             and type(r['status']) is int and r['status'] == 0 and r['stderr'] == '' and type(r['stdout']) is str
+             and r['stdout'].startswith('PASS ') and r['programme'] == pin(Path(programme).read_bytes()), 'whole genuine prerequisite reader result')
+    return dict(revision=REVISION, members=members, inventory_identity=pin(tree),
+                commands=[['git', '--no-replace-objects', 'ls-tree', '-rz', '--full-tree', REVISION, '--', *roots], command],
+                scope='Independent complete binary fixed/current member equality; fresh original readers are the separately retained actual prerequisite executions, not recaptured original runs.')
+
+
+def sources():
+    for name in ['pre-native.json', 'relative-pre-native.json', 'repaired-pre-native.json']:
+        pre = load(name)
+        need(pre['inputs'] == {n: pin((BASE / n).read_bytes()) for n in pre['inputs']}, 'entire pre-observation source epoch')
+    need(load('repaired-catalogue.json')['cases'][:len(load('qualify-catalogue.json')['cases'])] == load('qualify-catalogue.json')['cases'], 'all original cases retain before added root cases')
+
+
+def native_record(record, phase, catalogue, driver):
+    need(set(record) == {'phase', 'command', 'status', 'stdout', 'stderr', 'stdout_identity', 'stderr_identity', 'inputs', 'role'}, 'closed actual native record')
+    need(type(record['status']) is int and record['status'] == 0 and record['stderr'] == '', 'typed actual native success')
+    need(record['phase'] == phase and record['command'] == ['perl', '-Iperl', str(BASE / 'fixtures.pl'), str(BASE / catalogue)], 'declared actual native invocation')
+    need(record['role'] == 'Own current public native observations only; original execution and provider identity are not measured.', 'current native versus original execution scope')
+    need(type(record['stdout']) is str and record['stdout_identity'] == pin(record['stdout'].encode()) and record['stderr_identity'] == pin(b''), 'whole actual native streams')
+    need(record['inputs'] == {str(BASE / n): pin((BASE / n).read_bytes()) for n in ['fixtures.pl', catalogue, driver]}, 'whole actual relative native inputs')
+
+
+def repaired():
+    native = load('repaired-native.json')
+    native_record(native, 'repaired', 'repaired-catalogue.json', 'capture_repaired.py')
+    packet = falsify.baseline()
+    products = oracle.validate(**packet)
+    for name, programme in [('repaired-joined.json', 'join_repaired.py'), ('repaired-independent.json', 'check_oracle_repaired.py')]:
+        r = load(name)
+        need(type(r['status']) is int and r['status'] == 0 and r['error'] == '' and oracle.identical(r['products'], products), 'whole successful independent/producer products')
+        need(r['inputs'] == {n: pin((BASE / n).read_bytes()) for n in r['inputs']}
+             and programme in r['inputs'], 'complete whole product source epoch')
+    return products
+
+
+def failures():
+    first = load('first-selector-failure/result.json')
+    need(type(first['status']) is int and first['status'] == 1 and first['stdout'] == ''
+         and "AttributeError: module 'select' has no attribute 'select'" in first['stderr'], 'first actual selector import failure')
+    for name, identity in first['sources_after_failure'].items():
+        need(pin((BASE / 'first-selector-failure' / (name + '.txt')).read_bytes()) == identity, 'complete first failed selector source copies')
+    for name, cause in [('joined.json', 'source-selected native inputs'),
+                        ('relative-joined.json', 'complete source-generated public argument header and format'),
+                        ('independent.json', 'AssertionError')]:
+        r = load(name)
+        need(type(r['status']) is int and r['status'] == 1 and cause in r['error'] and 'products' not in r,
+             'first failures never promoted to successful products')
+        need(r['inputs'] == {n: pin((BASE / n).read_bytes()) for n in r['inputs']}, 'whole unchanged first failed source/native epoch')
+    native_record(load('relative-native.json'), 'relative', 'qualify-catalogue.json', 'capture_relative.py')
+    hypotheses = load('hypotheses.json')
+    wire = json.loads(load('relative-native.json')['stdout'])
+    differences = []
+    for case, got in zip(hypotheses, wire['observations'], strict=True):
+        tokens = []
+        for n in case['visible_slots']:
+            slot = case['slots'][n]
+            d = slot['display']
+            if 'token' in d:
+                tokens.append(d['token'])
+            else:
+                ref = slot['reference']
+                tokens.append((ref['class'] + '=' if ref['class'] else '') + ref['type'] + '(' + got['before'][slot['source_slot']]['address_hex'] + ')')
+        if case['remaining_arguments']:
+            tokens.append('...')
+        expected = 'ObserverDisplayFixture::boundary(' + ', '.join(tokens) + ')'
+        line, = [s for s in got['text'].splitlines() if s.startswith('\tObserverDisplayFixture::boundary(')]
+        actual = line[1:line.rindex(' called at ')]
+        if expected != actual:
+            differences.append(dict(case=case, observation=got, expected=expected, actual=actual))
+    need(oracle.identical(differences, load('first-format-differences.json')) and bool(differences), 'all first failed format hypotheses independently reconstruct')
+    edge = next(r for r in json.loads(load('edges-native.json')['stdout'])['observations'] if r['id'] == 'numeric-edge-9')
+    source = ''.join(map(chr, edge['before'][0]['codepoints']))
+    line, = [s for s in edge['text'].splitlines() if s.startswith('\tObserverDisplayFixture::boundary(')]
+    displayed = line.split('boundary(', 1)[1].split(') called at ', 1)[0]
+    need(source == displayed and len(source) == 65 and all(c == '1' for c in source), 'withdrawn numeric-loss claim rederived from whole saved source and display')
+    return dict(first_differences=differences, numeric_correction=dict(source=source, displayed=displayed,
+        source_characters=len(source), display_characters=len(displayed),
+        scope='Earlier61-digit assertion was an unmeasured counting error; saved and fresh65-digit cases are complete. No global numeric, provider or original-settings claim.'))
+
+
+def controls():
+    actual = load('native-controls.json')
+    need(set(actual) == {'length', 'count', 'formatter'}, 'complete actual profile control population')
+    declarations = dict(length=('boundary-64-65', 'arg_len', 63), count=('arity-8-9', 'arg_nums', 7),
+                        formatter=('reference-plain-False', 'formatter', True))
+    for name, (identifier, key, replacement) in declarations.items():
+        record = actual[name]
+        need(set(record) == {'case', 'changed_key', 'replacement', 'command', 'status', 'stdout', 'stderr', 'stdout_identity', 'stderr_identity', 'inputs'}, 'closed actual profile control record')
+        need(record['case'] == identifier and record['changed_key'] == key and oracle.identical(record['replacement'], replacement), 'declared actual profile change')
+        expected = copy.deepcopy(load('repaired-catalogue.json'))
+        next(r for r in expected['cases'] if r['id'] == identifier)['profile'][key] = replacement
+        catalogue = 'control-' + name + '-catalogue.json'
+        need(oracle.identical(expected, load(catalogue)), 'whole genuine changed-profile source')
+        need(type(record['status']) is int and record['status'] == 0 and record['stderr'] == ''
+             and record['command'] == ['perl', '-Iperl', str(BASE / 'fixtures.pl'), str(BASE / catalogue)]
+             and record['stdout_identity'] == pin(record['stdout'].encode()) and record['stderr_identity'] == pin(b''), 'complete genuine profile command and streams')
+        need(record['inputs'] == {str(BASE / n): pin((BASE / n).read_bytes()) for n in [catalogue, 'repaired-catalogue.json', 'fixtures.pl', 'capture_controls.py']}, 'whole actual control input epoch')
+    saved = load('falsification.json')
+    need(saved['inputs'] == {n: pin((BASE / n).read_bytes()) for n in saved['inputs']}, 'whole negative-control source epoch')
+    expected = falsify.candidates()
+    need(set(saved['controls']) == {name for name, _, _ in expected}, 'complete required independent control population')
+    for name, cause, candidate in expected:
+        record = saved['controls'][name]
+        raw = gzip.decompress(base64.b64decode(record['whole_candidate_gzip_base64'], validate=True))
+        need(pin(raw) == record['candidate_identity'] and raw == falsify.canonical(candidate), 'complete lossless candidate reconstruction')
+        need(record['expected_cause'] == cause and record['actual'] == falsify.outcome(json.loads(raw))
+             == dict(accepted=False, exception='ValueError', message=cause), 'actual intended independent candidate rejection')
+    outcomes = {}
+    for name, change, cause in [
+        ('boolean-status', lambda r: r.update(status=False), 'typed actual native success'),
+        ('float-status', lambda r: r.update(status=0.0), 'typed actual native success'),
+        ('borrowed-stdout', lambda r: r.update(stdout=load('relative-native.json')['stdout']), 'whole actual native streams'),
+        ('unknown-native-field', lambda r: r.update(original_provider=True), 'closed actual native record')]:
+        record = copy.deepcopy(load('repaired-native.json'))
+        change(record)
+        try:
+            native_record(record, 'repaired', 'repaired-catalogue.json', 'capture_repaired.py')
+            raise AssertionError('accepted bad native receipt')
+        except ValueError as error:
+            need(str(error) == cause, 'native receipt control cause')
+            outcomes[name] = dict(candidate=record, actual=dict(exception='ValueError', message=str(error)))
+    return dict(semantic_controls=len(expected), receipt_controls=outcomes)
+
+
+def seal():
+    saved = load('manifest.json')
+    files = {str(p.relative_to(BASE)): pin(p.read_bytes()) for p in BASE.rglob('*') if p.is_file() and str(p.relative_to(BASE)) not in MUTABLE}
+    need(saved == files and all(not p.is_symlink() for p in BASE.rglob('*')), 'entire immutable public-display namespace')
+    first = load('first-manifest.json')
+    for name, identity in first.items():
+        previous = {'book.py': 'book-first.py.txt', 'verify.py': 'verify-first.py.txt', 'GUIDE.md': 'GUIDE-first.md.txt'}.get(name, name)
+        need(pin((BASE / previous).read_bytes()) == identity, 'entire first successful source/proof epoch retains')
+    need(load('first-complete-proof.json') == load('proof.json'), 'complete first successful independent products conserve')
+
+
+
+def query_correction():
+    path = Path('docs/audits/record-value-class-frame-join-20261006/source-models.json')
+    raw = path.read_bytes()
+    source = json.loads(raw)
+    found, initial = [], []
+    stack = [(source['modes'], '/modes')]
+    while stack:
+        value, locus = stack.pop()
+        if type(value) is dict:
+            v = value.get('value')
+            if value.get('kind') == 'scalar' and type(v) in [str, int, float]:
+                spelling = str(v)
+                if oracle.numeric(spelling):
+                    found.append(dict(path=locus, source_kind=type(v).__name__, value=v, spelling=spelling))
+                if type(v) is str and v.lstrip('-').isdigit():
+                    initial.append(v)
+            stack.extend((child, locus + '/' + key) for key, child in reversed(list(value.items())))
+        elif type(value) is list:
+            stack.extend((child, locus + '/' + str(n)) for n, child in reversed(list(enumerate(value))))
+    expected = dict(source=str(path), identity=pin(raw), initial_string_only_max=max(map(len, initial), default=0),
+        initial_query_locus='The string-only selector omitted integer-valued scalar source fields; its zero is not evidence of absence.',
+        complete_selected_numeric_fields=found, corrected_max=max((len(r['spelling']) for r in found), default=0),
+        scope='Only scalar numeric source fields in the complete qualified class/frame modes. No global input, native numeric identity, provider/settings or unmodeled-source absence claim.')
+    need(oracle.identical(expected, load('source-impact.json')), 'independent complete selected query correction without global absence promotion')
+    return expected
+
+
+def receipts():
+    checks = load('checks.json')
+    required = {'explore-select': 0, 'explore-native': 0, 'limits-native': 0, 'edges-native': 0, 'grammar-native': 0,
+                'prerequisites': 0, 'qualify-select-repaired': 0, 'qualify-native': 0, 'join': 1,
+                'relative-prepare': 0, 'relative-native': 0, 'relative-join': 1, 'independent': 1,
+                'repair-probe': 0, 'regex-suffix': 0, 'repaired-select': 0, 'repaired-native': 0,
+                'repaired-join': 0, 'repaired-independent': 0, 'native-controls': 0, 'falsification': 0, 'staged-doctrines': 1, 'claim-dispositions-final': 1, 'claims-dispositions-refresh': 1}
+    for name, status in required.items():
+        record = checks[name]
+        need(set(record) == {'command', 'status', 'stdout', 'stderr', 'instruments'} and type(record['status']) is int and record['status'] == status
+             and record['command'][:2] == ['scripts/run_with_ram_guard.sh', '--'], 'genuine typed complete command receipts')
+        need(record['instruments'] == {p: pin(Path(p).read_bytes()) for p in record['instruments']}, 'whole direct receipt instrument epoch')
+    for name, record in checks.items():
+        need(set(record) == {'command', 'status', 'stdout', 'stderr', 'instruments'}
+             and type(record['status']) is int and record['status'] == required.get(name, 0)
+             and record['command'][:2] == ['scripts/run_with_ram_guard.sh', '--']
+             and type(record['stdout']) is str and type(record['stderr']) is str, 'every complete typed actual receipt')
+        for path, identity in record['instruments'].items():
+            possible = [Path(path)]
+            if path == str(BASE / 'book.py'):
+                possible.append(BASE / 'book-first.py.txt')
+            elif path == str(BASE / 'verify.py'):
+                possible.extend([BASE / 'verify-first.py.txt', BASE / 'verify-publication-first.py.txt'])
+            need(any(pin(p.read_bytes()) == identity for p in possible), 'every direct instrument belongs to a retained exact source epoch')
+    return dict(required=required, scope='Complete actual wrapper streams and direct argv instrument pins; transitive custody comes from independent full-source and capture/product input epochs, not these wrapper pins.')
+
+
+def main():
+    seal()
+    sources()
+    product = dict(originals=originals(), products=repaired(), first_failures=failures(), controls=controls(),
+                   query_correction=query_correction(), receipts=receipts(), gate_repair=gate_repair_verify.derive())
+    proof = BASE / 'final-proof.json'
+    if proof.exists():
+        need(oracle.identical(json.loads(proof.read_bytes()), product), 'whole dated independent replay products')
+    else:
+        proof.write_bytes(falsify.canonical(product))
+    print('PASS entire finite public source/display/body/loss/lifetime contracts, genuine controls, all first failures and whole fixed/current source custody; original observer/settings identity remains unmeasured.')
+
+
+if __name__ == '__main__':
+    main()

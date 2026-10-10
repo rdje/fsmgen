@@ -1,0 +1,39 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/observer-display-contract-20261010/checks.py",
+    "qualify-select",
+    "python3",
+    "-B",
+    "docs/audits/observer-display-contract-20261010/select.py"
+  ],
+  "repair": "Rename source-only selection to select_cases.py; preserve first sources here as non-importable text.",
+  "role": "Complete terminal tool observation; wrapper failed during imports before creating any receipt or qualifying input. Source copies measured after failure; no pre-execution source attestation is claimed.",
+  "root_cause": "select.py in the script directory shadows the standard-library select extension while subprocess imports selectors.",
+  "sources_after_failure": {
+    "capture.py": {
+      "bytes": 1565,
+      "sha256": "25a7d5876c73105202cbe401a23559c67eeccdf7be12296a697f254ed6972539"
+    },
+    "checks.py": {
+      "bytes": 1412,
+      "sha256": "e86ed6b733b3e73fd6fe35e404166a0b581367a8c92a8ff30340e8b3d24b8f16"
+    },
+    "fixtures.pl": {
+      "bytes": 4028,
+      "sha256": "a306c67e40ace89373ef6936319d0a3a0722bc454d87ad2a225588c345791342"
+    },
+    "model.py": {
+      "bytes": 9637,
+      "sha256": "78c12f53194af56339950c6360ca8aa376171508ab94ebbaef68679ac7db1f5f"
+    },
+    "select.py": {
+      "bytes": 3801,
+      "sha256": "50ce5f1aa96f53b4882bd8ef895a515695fe798366c21b2765dadce2274a9367"
+    }
+  },
+  "status": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/observer-display-contract-20261010/checks.py\", line 4, in <module>\n    import subprocess\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 125, in <module>\n    import selectors\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/selectors.py\", line 281, in <module>\n    class SelectSelector(_BaseSelectorImpl):\n    ...<45 lines>...\n            return ready\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/selectors.py\", line 308, in SelectSelector\n    _select = select.select\n              ^^^^^^^^^^^^^\nAttributeError: module 'select' has no attribute 'select' (consider renaming '/Volumes/SSD/Documents/github/fsmgen/docs/audits/observer-display-contract-20261010/select.py' since it has the same name as the standard library module named 'select' and prevents importing that standard library module)\n",
+  "stdout": ""
+}

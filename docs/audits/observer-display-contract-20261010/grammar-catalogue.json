@@ -1,0 +1,566 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            46,
+            53
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-0",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            45,
+            46,
+            53
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-1",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            101,
+            43,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-2",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            69,
+            43,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-3",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            101,
+            45,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-4",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            69,
+            45,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-5",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            69,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-6",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            45,
+            49,
+            101,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-7",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            43,
+            49,
+            101,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-8",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            48,
+            48,
+            49,
+            46,
+            50,
+            48
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-9",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            45,
+            45,
+            49
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-10",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            46,
+            46,
+            50
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-scalar-11",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [],
+      "id": "grammar-count--1-0",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": -1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count--1-1",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": -1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count--1-2",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": -1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            99
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count--1-3",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": -1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [],
+      "id": "grammar-count-0-0",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 0,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-0-1",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 0,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-0-2",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 0,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            99
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-0-3",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 0,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [],
+      "id": "grammar-count-1-0",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-1-1",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-1-2",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            99
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-1-3",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [],
+      "id": "grammar-count-2-0",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 2,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-2-1",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 2,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-2-2",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 2,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            99
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "grammar-count-2-3",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 2,
+        "formatter": false
+      }
+    }
+  ],
+  "role": "Remaining selected public grammar boundary exploration only; no qualification."
+}

@@ -1,0 +1,35 @@
+{
+  "error": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/observer-display-contract-20261010/check_oracle.py\", line 26, in main\n    assert type(joined['status']) is int and joined['status'] == 0 and joined['error'] == ''\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "inputs": {
+    "check_oracle.py": {
+      "bytes": 1822,
+      "sha256": "4023880038227fd0df625351a768363e845558dd60ed5248878cd082585f4654"
+    },
+    "fixtures.pl": {
+      "bytes": 4028,
+      "sha256": "a306c67e40ace89373ef6936319d0a3a0722bc454d87ad2a225588c345791342"
+    },
+    "hypotheses.json": {
+      "bytes": 585829,
+      "sha256": "6413d10f1c958a4d7087e6c66a95cf0c817ddb83d8e41781463d4639b1f2fb8b"
+    },
+    "oracle.py": {
+      "bytes": 12716,
+      "sha256": "5654c2227732b561a04becab45bad51a5a47e6cf0f27044c8b8756ef4be3f6c6"
+    },
+    "qualify-catalogue.json": {
+      "bytes": 270524,
+      "sha256": "f9f1b910a51a6f467748b7f6209ccd0e38ef297be7693fc28b9cce0a30b017eb"
+    },
+    "relative-joined.json": {
+      "bytes": 1805,
+      "sha256": "c7e873b363bd07d9a3e99c00d1194a3498e759bb5f0cf05acdeaa4d7a6545671"
+    },
+    "relative-native.json": {
+      "bytes": 335780,
+      "sha256": "23bfa3c61bfa0f21e9a9410e5e5308013555a04189cb75f918c03acb427f8679"
+    }
+  },
+  "role": "Independent complete finite source/token/header/body/loss reconstruction. No producer renderer is imported; public engine flags, cross-call identity and original settings remain unmeasured.",
+  "status": 1
+}

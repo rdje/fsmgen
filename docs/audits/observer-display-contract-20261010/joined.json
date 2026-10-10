@@ -1,0 +1,31 @@
+{
+  "error": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/observer-display-contract-20261010/join.py\", line 28, in main\n    assert record['inputs'] == {str(BASE / name): pre['inputs'][name] for name in ('fixtures.pl', 'qualify-catalogue.json', 'capture.py')}, 'source-selected native inputs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: source-selected native inputs\n",
+  "inputs": {
+    "hypotheses.json": {
+      "bytes": 585829,
+      "sha256": "6413d10f1c958a4d7087e6c66a95cf0c817ddb83d8e41781463d4639b1f2fb8b"
+    },
+    "join.py": {
+      "bytes": 2841,
+      "sha256": "6d33b8919d61c0b7e9194383b5343015a108d54e379b04bd74db17787c55d655"
+    },
+    "model.py": {
+      "bytes": 9637,
+      "sha256": "78c12f53194af56339950c6360ca8aa376171508ab94ebbaef68679ac7db1f5f"
+    },
+    "pre-native.json": {
+      "bytes": 953,
+      "sha256": "d498e9d602c68a6f4b2d0eb1a1cf472e3f8d3529d8fe602661016e59b9454985"
+    },
+    "qualify-catalogue.json": {
+      "bytes": 270524,
+      "sha256": "f9f1b910a51a6f467748b7f6209ccd0e38ef297be7693fc28b9cce0a30b017eb"
+    },
+    "qualify-native.json": {
+      "bytes": 335807,
+      "sha256": "0c38d7b0dc00be279863be34337afb648bf534cdc0e4b2218f654bb3c2f02948"
+    }
+  },
+  "role": "Current finite public fixtures only; no original formatter/settings identity or general parser contract.",
+  "status": 1
+}

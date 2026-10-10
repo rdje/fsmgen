@@ -1,0 +1,1407 @@
+[
+  {
+    "actual": "ObserverDisplayFixture::boundary(\"V\\$W\")",
+    "case": {
+      "hidden_slots": [],
+      "id": "byte-36",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "display_prefix": "V$W",
+            "numeric_display": false,
+            "source": "V$W",
+            "token": "\"V$W\"",
+            "token_is_complete_source_value": true,
+            "truncated": false,
+            "visible_ellipsis": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              86,
+              36,
+              87
+            ],
+            "kind": "string",
+            "utf8": false
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(\"V$W\")",
+    "observation": {
+      "after": [
+        {
+          "codepoints": [
+            86,
+            36,
+            87
+          ],
+          "kind": "scalar",
+          "utf8": false
+        }
+      ],
+      "before": [
+        {
+          "codepoints": [
+            86,
+            36,
+            87
+          ],
+          "kind": "scalar",
+          "utf8": false
+        }
+      ],
+      "id": "byte-36",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(\"V\\$W\") called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(\"V\\@W\")",
+    "case": {
+      "hidden_slots": [],
+      "id": "byte-64",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "display_prefix": "V@W",
+            "numeric_display": false,
+            "source": "V@W",
+            "token": "\"V@W\"",
+            "token_is_complete_source_value": true,
+            "truncated": false,
+            "visible_ellipsis": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              86,
+              64,
+              87
+            ],
+            "kind": "string",
+            "utf8": false
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(\"V@W\")",
+    "observation": {
+      "after": [
+        {
+          "codepoints": [
+            86,
+            64,
+            87
+          ],
+          "kind": "scalar",
+          "utf8": false
+        }
+      ],
+      "before": [
+        {
+          "codepoints": [
+            86,
+            64,
+            87
+          ],
+          "kind": "scalar",
+          "utf8": false
+        }
+      ],
+      "id": "byte-64",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(\"V\\@W\") called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(99999999999999999999999999999999999999999999999999999999999999999)",
+    "case": {
+      "hidden_slots": [],
+      "id": "scalar-15",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "display_prefix": "9999999999999999999999999999999999999999999999999999999999999",
+            "numeric_display": true,
+            "source": "99999999999999999999999999999999999999999999999999999999999999999",
+            "token": "9999999999999999999999999999999999999999999999999999999999999",
+            "token_is_complete_source_value": false,
+            "truncated": true,
+            "visible_ellipsis": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57,
+              57
+            ],
+            "kind": "string",
+            "utf8": false
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(9999999999999999999999999999999999999999999999999999999999999)",
+    "observation": {
+      "after": [
+        {
+          "codepoints": [
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57
+          ],
+          "kind": "scalar",
+          "utf8": false
+        }
+      ],
+      "before": [
+        {
+          "codepoints": [
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57,
+            57
+          ],
+          "kind": "scalar",
+          "utf8": false
+        }
+      ],
+      "id": "scalar-15",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(99999999999999999999999999999999999999999999999999999999999999999) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(888888888888888888888888888888888888888888888888888888888888888888)",
+    "case": {
+      "hidden_slots": [],
+      "id": "scalar-16",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "display_prefix": "8888888888888888888888888888888888888888888888888888888888888",
+            "numeric_display": true,
+            "source": "888888888888888888888888888888888888888888888888888888888888888888",
+            "token": "8888888888888888888888888888888888888888888888888888888888888",
+            "token_is_complete_source_value": false,
+            "truncated": true,
+            "visible_ellipsis": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56,
+              56
+            ],
+            "kind": "string",
+            "utf8": false
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(8888888888888888888888888888888888888888888888888888888888888)",
+    "observation": {
+      "after": [
+        {
+          "codepoints": [
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56
+          ],
+          "kind": "scalar",
+          "utf8": false
+        }
+      ],
+      "before": [
+        {
+          "codepoints": [
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56,
+            56
+          ],
+          "kind": "scalar",
+          "utf8": false
+        }
+      ],
+      "id": "scalar-16",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(888888888888888888888888888888888888888888888888888888888888888888) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(qr(a\\x{2603}b)u)",
+    "case": {
+      "hidden_slots": [],
+      "id": "regex-6-False",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "display_prefix": "a\u2603b",
+            "numeric_display": false,
+            "source": "a\u2603b",
+            "token": "qr(a\\x{2603}b)",
+            "token_is_complete_source_value": true,
+            "truncated": false,
+            "visible_ellipsis": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              97,
+              9731,
+              98
+            ],
+            "id": "held",
+            "kind": "REGEXP",
+            "utf8": false
+          },
+          "reference": {
+            "class": "Regexp",
+            "source_slot": 0,
+            "type": "REGEXP"
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(qr(a\\x{2603}b))",
+    "observation": {
+      "after": [
+        {
+          "address_hex": "0x795ae810a8",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae810a8)",
+          "kind": "reference",
+          "text": "(?^u:a\u2603b)",
+          "type": "REGEXP"
+        }
+      ],
+      "before": [
+        {
+          "address_hex": "0x795ae810a8",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae810a8)",
+          "kind": "reference",
+          "text": "(?^u:a\u2603b)",
+          "type": "REGEXP"
+        }
+      ],
+      "id": "regex-6-False",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "undef"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(qr(a\\x{2603}b)u) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(qr(qualified[a-z]+))",
+    "case": {
+      "hidden_slots": [],
+      "id": "regex-0-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "token": "own-reference-formatter-token",
+            "token_is_complete_source_value": false,
+            "truncated": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              113,
+              117,
+              97,
+              108,
+              105,
+              102,
+              105,
+              101,
+              100,
+              91,
+              97,
+              45,
+              122,
+              93,
+              43
+            ],
+            "id": "held",
+            "kind": "REGEXP",
+            "utf8": false
+          },
+          "reference": {
+            "class": "Regexp",
+            "source_slot": 0,
+            "type": "REGEXP"
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(own-reference-formatter-token)",
+    "observation": {
+      "after": [
+        {
+          "address_hex": "0x795ae7cc60",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae7cc60)",
+          "kind": "reference",
+          "text": "(?^:qualified[a-z]+)",
+          "type": "REGEXP"
+        }
+      ],
+      "before": [
+        {
+          "address_hex": "0x795ae7cc60",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae7cc60)",
+          "kind": "reference",
+          "text": "(?^:qualified[a-z]+)",
+          "type": "REGEXP"
+        }
+      ],
+      "id": "regex-0-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(qr(qualified[a-z]+)) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(qr(\\d+\\s?))",
+    "case": {
+      "hidden_slots": [],
+      "id": "regex-1-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "token": "own-reference-formatter-token",
+            "token_is_complete_source_value": false,
+            "truncated": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              92,
+              100,
+              43,
+              92,
+              115,
+              63
+            ],
+            "id": "held",
+            "kind": "REGEXP",
+            "utf8": false
+          },
+          "reference": {
+            "class": "Regexp",
+            "source_slot": 0,
+            "type": "REGEXP"
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(own-reference-formatter-token)",
+    "observation": {
+      "after": [
+        {
+          "address_hex": "0x795ae8e090",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae8e090)",
+          "kind": "reference",
+          "text": "(?^:\\d+\\s?)",
+          "type": "REGEXP"
+        }
+      ],
+      "before": [
+        {
+          "address_hex": "0x795ae8e090",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae8e090)",
+          "kind": "reference",
+          "text": "(?^:\\d+\\s?)",
+          "type": "REGEXP"
+        }
+      ],
+      "id": "regex-1-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(qr(\\d+\\s?)) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(qr(RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR))",
+    "case": {
+      "hidden_slots": [],
+      "id": "regex-2-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "token": "own-reference-formatter-token",
+            "token_is_complete_source_value": false,
+            "truncated": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82,
+              82
+            ],
+            "id": "held",
+            "kind": "REGEXP",
+            "utf8": false
+          },
+          "reference": {
+            "class": "Regexp",
+            "source_slot": 0,
+            "type": "REGEXP"
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(own-reference-formatter-token)",
+    "observation": {
+      "after": [
+        {
+          "address_hex": "0x795ae83198",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae83198)",
+          "kind": "reference",
+          "text": "(?^:RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR)",
+          "type": "REGEXP"
+        }
+      ],
+      "before": [
+        {
+          "address_hex": "0x795ae83198",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae83198)",
+          "kind": "reference",
+          "text": "(?^:RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR)",
+          "type": "REGEXP"
+        }
+      ],
+      "id": "regex-2-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(qr(RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR)) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(qr(SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS)...)",
+    "case": {
+      "hidden_slots": [],
+      "id": "regex-3-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "token": "own-reference-formatter-token",
+            "token_is_complete_source_value": false,
+            "truncated": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83,
+              83
+            ],
+            "id": "held",
+            "kind": "REGEXP",
+            "utf8": false
+          },
+          "reference": {
+            "class": "Regexp",
+            "source_slot": 0,
+            "type": "REGEXP"
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(own-reference-formatter-token)",
+    "observation": {
+      "after": [
+        {
+          "address_hex": "0x795ae83900",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae83900)",
+          "kind": "reference",
+          "text": "(?^:SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS)",
+          "type": "REGEXP"
+        }
+      ],
+      "before": [
+        {
+          "address_hex": "0x795ae83900",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae83900)",
+          "kind": "reference",
+          "text": "(?^:SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS)",
+          "type": "REGEXP"
+        }
+      ],
+      "id": "regex-3-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(qr(SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS)...) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(qr(a\"b))",
+    "case": {
+      "hidden_slots": [],
+      "id": "regex-4-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "token": "own-reference-formatter-token",
+            "token_is_complete_source_value": false,
+            "truncated": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              97,
+              34,
+              98
+            ],
+            "id": "held",
+            "kind": "REGEXP",
+            "utf8": false
+          },
+          "reference": {
+            "class": "Regexp",
+            "source_slot": 0,
+            "type": "REGEXP"
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(own-reference-formatter-token)",
+    "observation": {
+      "after": [
+        {
+          "address_hex": "0x795ae83d08",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae83d08)",
+          "kind": "reference",
+          "text": "(?^:a\"b)",
+          "type": "REGEXP"
+        }
+      ],
+      "before": [
+        {
+          "address_hex": "0x795ae83d08",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae83d08)",
+          "kind": "reference",
+          "text": "(?^:a\"b)",
+          "type": "REGEXP"
+        }
+      ],
+      "id": "regex-4-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(qr(a\"b)) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(qr(a\\x{a}b))",
+    "case": {
+      "hidden_slots": [],
+      "id": "regex-5-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "token": "own-reference-formatter-token",
+            "token_is_complete_source_value": false,
+            "truncated": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              97,
+              10,
+              98
+            ],
+            "id": "held",
+            "kind": "REGEXP",
+            "utf8": false
+          },
+          "reference": {
+            "class": "Regexp",
+            "source_slot": 0,
+            "type": "REGEXP"
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(own-reference-formatter-token)",
+    "observation": {
+      "after": [
+        {
+          "address_hex": "0x795ae8e348",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae8e348)",
+          "kind": "reference",
+          "text": "(?^:a\nb)",
+          "type": "REGEXP"
+        }
+      ],
+      "before": [
+        {
+          "address_hex": "0x795ae8e348",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae8e348)",
+          "kind": "reference",
+          "text": "(?^:a\nb)",
+          "type": "REGEXP"
+        }
+      ],
+      "id": "regex-5-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(qr(a\\x{a}b)) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  },
+  {
+    "actual": "ObserverDisplayFixture::boundary(qr(a\\x{2603}b)u)",
+    "case": {
+      "hidden_slots": [],
+      "id": "regex-6-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "remaining_arguments": false,
+      "slots": [
+        {
+          "display": {
+            "token": "own-reference-formatter-token",
+            "token_is_complete_source_value": false,
+            "truncated": false
+          },
+          "index": 0,
+          "recipe": {
+            "codepoints": [
+              97,
+              9731,
+              98
+            ],
+            "id": "held",
+            "kind": "REGEXP",
+            "utf8": false
+          },
+          "reference": {
+            "class": "Regexp",
+            "source_slot": 0,
+            "type": "REGEXP"
+          },
+          "source_slot": 0
+        }
+      ],
+      "visible_slots": [
+        0
+      ]
+    },
+    "expected": "ObserverDisplayFixture::boundary(own-reference-formatter-token)",
+    "observation": {
+      "after": [
+        {
+          "address_hex": "0x795ae8e648",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae8e648)",
+          "kind": "reference",
+          "text": "(?^u:a\u2603b)",
+          "type": "REGEXP"
+        }
+      ],
+      "before": [
+        {
+          "address_hex": "0x795ae8e648",
+          "class": "Regexp",
+          "fallback": "Regexp=REGEXP(0x795ae8e648)",
+          "kind": "reference",
+          "text": "(?^u:a\u2603b)",
+          "type": "REGEXP"
+        }
+      ],
+      "id": "regex-6-True",
+      "profile": {
+        "arg_len": 64,
+        "arg_nums": 8,
+        "eval_len": 0,
+        "formatter": "defined"
+      },
+      "text": "observer-display-message\n at docs/audits/observer-display-contract-20261010/fixtures.pl line 21.\n\tObserverDisplayFixture::boundary(qr(a\\x{2603}b)u) called at docs/audits/observer-display-contract-20261010/fixtures.pl line 90\n"
+    }
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "inputs": {
+    "capture.py": {
+      "bytes": 1565,
+      "sha256": "25a7d5876c73105202cbe401a23559c67eeccdf7be12296a697f254ed6972539"
+    },
+    "capture_relative.py": {
+      "bytes": 1569,
+      "sha256": "c88af2aec43aba3f83ad906c7708c1320dcb6319de992db4033ac602a1ca9a39"
+    },
+    "fixtures.pl": {
+      "bytes": 4028,
+      "sha256": "a306c67e40ace89373ef6936319d0a3a0722bc454d87ad2a225588c345791342"
+    },
+    "hypotheses.json": {
+      "bytes": 585829,
+      "sha256": "6413d10f1c958a4d7087e6c66a95cf0c817ddb83d8e41781463d4639b1f2fb8b"
+    },
+    "model.py": {
+      "bytes": 9637,
+      "sha256": "78c12f53194af56339950c6360ca8aa376171508ab94ebbaef68679ac7db1f5f"
+    },
+    "pre-native.json": {
+      "bytes": 953,
+      "sha256": "d498e9d602c68a6f4b2d0eb1a1cf472e3f8d3529d8fe602661016e59b9454985"
+    },
+    "prepare_relative.py": {
+      "bytes": 1175,
+      "sha256": "b64b7e105e4f8b8d06da30ee821fbdaf2be25f465795c937920cec8b1ec2526f"
+    },
+    "qualify-catalogue.json": {
+      "bytes": 270524,
+      "sha256": "f9f1b910a51a6f467748b7f6209ccd0e38ef297be7693fc28b9cce0a30b017eb"
+    },
+    "select_cases.py": {
+      "bytes": 3807,
+      "sha256": "cc968b6de22a069d2d17794ad8a8c51eec6874460d58e5973addbb48cd6cde1d"
+    }
+  },
+  "role": "Unchanged complete first pre-observation source hypotheses. Fresh capture repairs only absolute driver source keys; it does not learn formatting from the first native output."
+}

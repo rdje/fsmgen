@@ -1,0 +1,49 @@
+{
+  "inputs": {
+    "capture_repaired.py": {
+      "bytes": 1570,
+      "sha256": "6d76711a6c032dbf80237377842899d74adabbb6ca83d1427d2d19ca58cf21dd"
+    },
+    "fixtures.pl": {
+      "bytes": 4028,
+      "sha256": "a306c67e40ace89373ef6936319d0a3a0722bc454d87ad2a225588c345791342"
+    },
+    "model_repaired.py": {
+      "bytes": 9843,
+      "sha256": "e704899daeb10dfb682f7880ba93cf166b973d4fafd323d62092944f63c8dfb1"
+    },
+    "oracle_repaired.py": {
+      "bytes": 13808,
+      "sha256": "35003db8e9fe90cdf4e50f4da8a45c642519cb9640012dd65fb2348783434d84"
+    },
+    "qualify-catalogue.json": {
+      "bytes": 270524,
+      "sha256": "f9f1b910a51a6f467748b7f6209ccd0e38ef297be7693fc28b9cce0a30b017eb"
+    },
+    "regex-suffix-catalogue.json": {
+      "bytes": 10961,
+      "sha256": "7e10155c734a5230aadf096fb6e9a2548db6cda396adf6929a9520998d293afc"
+    },
+    "repair-probe-catalogue.json": {
+      "bytes": 15545,
+      "sha256": "7ff0b0be31ef1197a966fe0390f12ee21c761eda6b0124848482da7c79d841cc"
+    },
+    "repaired-catalogue.json": {
+      "bytes": 297290,
+      "sha256": "f21468a3cf298d10abc206ae057a3feea76bef76616443d34d24227a472db48b"
+    },
+    "repaired-hypotheses.json": {
+      "bytes": 632962,
+      "sha256": "1381f58c3911e7e31ba7c056abc97069485716a17e3ac7c674bff19a3b083332"
+    },
+    "select_cases.py": {
+      "bytes": 3807,
+      "sha256": "cc968b6de22a069d2d17794ad8a8c51eec6874460d58e5973addbb48cd6cde1d"
+    },
+    "select_repaired.py": {
+      "bytes": 2010,
+      "sha256": "4dfbe9b426c421b3affb1cf49b1ec77b8f563d33f90c7165744a10ee653b57e0"
+    }
+  },
+  "role": "Fresh source-only repaired hypotheses before fresh native; all first cases conserve and complete additional root-cause cases are preselected. First failed hypotheses and captures remain immutable."
+}

@@ -1,0 +1,1939 @@
+{
+  "complete_selected_numeric_fields": [
+    {
+      "path": "/modes/0/cases/1/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/1/phases/0/own/helper/0/arguments/3",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/1/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/1/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/1/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/1/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/1/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/1/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/2/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/2/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/2/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/2/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/2/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/2/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/2/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/12/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/12/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/12/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/12/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/12/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/12/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/12/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/13/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/13/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/13/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/13/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/13/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/13/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/13/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/14/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/14/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/14/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/14/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/14/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/14/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/14/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/15/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/15/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/15/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/15/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/15/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/15/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/15/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/16/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/16/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/16/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/16/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/16/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/16/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/16/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/17/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/17/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/17/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/17/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/17/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/17/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/17/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/18/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/18/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/18/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/18/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/18/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/18/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/18/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/19/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/19/phases/0/own/helper/0/arguments/3",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/19/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/19/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/19/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/19/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/19/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/19/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/20/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/20/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/20/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/20/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/20/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/20/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/20/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/21/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/21/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/21/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/21/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/21/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/21/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/21/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/22/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/22/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/22/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/22/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/22/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/22/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/22/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/0/cases/45/phases/0/own/core/2/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/45/phases/0/own/operations/0/frames/0/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/45/phases/0/own/operations/0/frames/2/arguments/8",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/45/phases/0/own/operations/0/frames/3/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/45/phases/0/public/own_eval_boundaries/0/0/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/45/phases/0/public/own_eval_boundaries/0/2/arguments/8",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/45/phases/0/public/own_eval_boundaries/0/3/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/0/cases/46/phases/0/own/core/1/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/0/cases/46/phases/0/own/operations/0/frames/0/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/0/cases/46/phases/0/own/operations/0/frames/2/arguments/12",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/0/cases/46/phases/0/own/operations/0/frames/3/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/0/cases/46/phases/0/public/own_eval_boundaries/0/0/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/0/cases/46/phases/0/public/own_eval_boundaries/0/2/arguments/12",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/0/cases/46/phases/0/public/own_eval_boundaries/0/3/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/1/cases/1/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/1/phases/0/own/helper/0/arguments/3",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/1/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/1/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/1/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/1/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/1/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/1/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/2/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/2/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/2/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/2/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/2/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/2/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/2/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/12/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/12/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/12/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/12/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/12/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/12/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/12/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/13/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/13/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/13/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/13/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/13/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/13/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/13/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/14/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/14/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/14/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/14/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/14/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/14/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/14/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/15/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/15/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/15/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/15/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/15/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/15/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/15/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/16/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/16/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/16/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/16/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/16/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/16/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/16/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/17/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/17/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/17/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/17/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/17/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/17/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/17/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/18/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/18/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/18/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/18/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/18/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/18/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/18/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/19/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/19/phases/0/own/helper/0/arguments/3",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/19/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/19/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/19/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/19/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/19/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/19/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/20/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/20/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/20/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/20/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/20/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/20/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/20/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/21/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/21/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/21/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/21/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/21/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/21/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/21/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/22/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/22/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/22/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/22/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/22/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/22/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/22/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/1/cases/45/phases/0/own/core/2/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/45/phases/0/own/operations/0/frames/0/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/45/phases/0/own/operations/0/frames/2/arguments/8",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/45/phases/0/own/operations/0/frames/3/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/45/phases/0/public/own_eval_boundaries/0/0/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/45/phases/0/public/own_eval_boundaries/0/2/arguments/8",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/45/phases/0/public/own_eval_boundaries/0/3/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/1/cases/46/phases/0/own/core/1/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/1/cases/46/phases/0/own/operations/0/frames/0/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/1/cases/46/phases/0/own/operations/0/frames/2/arguments/12",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/1/cases/46/phases/0/own/operations/0/frames/3/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/1/cases/46/phases/0/public/own_eval_boundaries/0/0/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/1/cases/46/phases/0/public/own_eval_boundaries/0/2/arguments/12",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/1/cases/46/phases/0/public/own_eval_boundaries/0/3/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/2/cases/1/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/1/phases/0/own/helper/0/arguments/3",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/1/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/1/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/1/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/1/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/1/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/1/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/2/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/2/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/2/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/2/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/2/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/2/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/2/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/12/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/12/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/12/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/12/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/12/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/12/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/12/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/13/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/13/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/13/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/13/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/13/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/13/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/13/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/14/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/14/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/14/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/14/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/14/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/14/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/14/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/15/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/15/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/15/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/15/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/15/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/15/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/15/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/16/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/16/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/16/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/16/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/16/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/16/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/16/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/17/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/17/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/17/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/17/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/17/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/17/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/17/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/18/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/18/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/18/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/18/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/18/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/18/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/18/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/19/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/19/phases/0/own/helper/0/arguments/3",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/19/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/19/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/19/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/19/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/19/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/19/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/20/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/20/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/20/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/20/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/20/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/20/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/20/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/21/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/21/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/21/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/21/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/21/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/21/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/21/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/22/phases/0/own/core/1/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/22/phases/0/own/operations/0/frames/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/22/phases/0/own/operations/0/frames/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/22/phases/0/own/operations/0/frames/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/22/phases/0/public/own_eval_boundaries/0/0/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/22/phases/0/public/own_eval_boundaries/0/2/arguments/10",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/22/phases/0/public/own_eval_boundaries/0/3/arguments/7",
+      "source_kind": "int",
+      "spelling": "0",
+      "value": 0
+    },
+    {
+      "path": "/modes/2/cases/45/phases/0/own/core/2/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/45/phases/0/own/operations/0/frames/0/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/45/phases/0/own/operations/0/frames/2/arguments/8",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/45/phases/0/own/operations/0/frames/3/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/45/phases/0/public/own_eval_boundaries/0/0/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/45/phases/0/public/own_eval_boundaries/0/2/arguments/8",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/45/phases/0/public/own_eval_boundaries/0/3/arguments/5",
+      "source_kind": "int",
+      "spelling": "1",
+      "value": 1
+    },
+    {
+      "path": "/modes/2/cases/46/phases/0/own/core/1/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/2/cases/46/phases/0/own/operations/0/frames/0/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/2/cases/46/phases/0/own/operations/0/frames/2/arguments/12",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/2/cases/46/phases/0/own/operations/0/frames/3/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/2/cases/46/phases/0/public/own_eval_boundaries/0/0/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/2/cases/46/phases/0/public/own_eval_boundaries/0/2/arguments/12",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    },
+    {
+      "path": "/modes/2/cases/46/phases/0/public/own_eval_boundaries/0/3/arguments/9",
+      "source_kind": "int",
+      "spelling": "2",
+      "value": 2
+    }
+  ],
+  "corrected_max": 1,
+  "identity": {
+    "bytes": 17033810,
+    "sha256": "42914fbfd6310d5f9fe62ac68dcb31eba5409f6b857e1cb16aefc46420cc1a47"
+  },
+  "initial_query_locus": "The string-only selector omitted integer-valued scalar source fields; its zero is not evidence of absence.",
+  "initial_string_only_max": 0,
+  "scope": "Only scalar numeric source fields in the complete qualified class/frame modes. No global input, native numeric identity, provider/settings or unmodeled-source absence claim.",
+  "source": "docs/audits/record-value-class-frame-join-20261006/source-models.json"
+}

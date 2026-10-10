@@ -1,0 +1,1869 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        {
+          "codepoints": [],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "empty",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            108,
+            112,
+            104,
+            97,
+            32,
+            98,
+            101,
+            116,
+            97
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "plain",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            50
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "integer-string",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            48,
+            49,
+            50
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "leading-zero",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            45,
+            55
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "negative-string",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            46,
+            53
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "decimal-string",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            49,
+            101,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "exponent-string",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            34,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "quote",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            92,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "slash",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            10,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "newline",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            9,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "tab",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            13,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "return",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            0,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "nul",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            127,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "delete",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            233,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "latin",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            9731,
+            98
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "wide",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "length-0",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            120
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "length-1",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "length-63",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "length-64",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "length-65",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120,
+            120
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "length-66",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92,
+            92
+          ],
+          "kind": "string",
+          "utf8": true
+        }
+      ],
+      "id": "escaped-boundary",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731,
+            9731
+          ],
+          "kind": "string",
+          "utf8": true
+        }
+      ],
+      "id": "wide-boundary",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            98,
+            99
+          ],
+          "kind": "string",
+          "utf8": true
+        }
+      ],
+      "id": "upgraded-ascii",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            233
+          ],
+          "kind": "string",
+          "utf8": true
+        }
+      ],
+      "id": "upgraded-latin",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "kind": "undef"
+        }
+      ],
+      "id": "undef",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "kind": "number",
+          "value": "0"
+        }
+      ],
+      "id": "number-0",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "kind": "number",
+          "value": "12"
+        }
+      ],
+      "id": "number-12",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "kind": "number",
+          "value": "-7"
+        }
+      ],
+      "id": "number--7",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "kind": "number",
+          "value": "1.5"
+        }
+      ],
+      "id": "number-1.5",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            100,
+            117,
+            97,
+            108,
+            45,
+            116,
+            101,
+            120,
+            116
+          ],
+          "kind": "dual",
+          "number": 42,
+          "utf8": false
+        }
+      ],
+      "id": "dual",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "id": "held",
+          "kind": "HASH"
+        }
+      ],
+      "id": "reference-HASH",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "id": "held",
+          "kind": "ARRAY"
+        }
+      ],
+      "id": "reference-ARRAY",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "id": "held",
+          "kind": "CODE"
+        }
+      ],
+      "id": "reference-CODE",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "id": "held",
+          "kind": "plain"
+        }
+      ],
+      "id": "reference-plain",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "id": "held",
+          "kind": "traced"
+        }
+      ],
+      "id": "reference-traced",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "id": "held",
+          "kind": "overloaded"
+        }
+      ],
+      "id": "reference-overloaded",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            108,
+            112,
+            104,
+            97,
+            43
+          ],
+          "id": "held",
+          "kind": "REGEXP",
+          "utf8": false
+        }
+      ],
+      "id": "regex",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "id": "held",
+          "kind": "HASH"
+        },
+        {
+          "kind": "alias",
+          "target": "held"
+        }
+      ],
+      "id": "aliases",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [],
+      "id": "count-0",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            48
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "count-1",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            48
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            49
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            50
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            52
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            53
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            54
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "count-7",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            48
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            49
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            50
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            52
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            53
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            54
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            55
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "count-8",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            48
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            49
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            50
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            52
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            53
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            54
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            55
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            56
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "count-9",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            48
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            49
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            50
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            52
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            53
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            54
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            55
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            56
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            57
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "count-10",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122,
+            122
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "length-unlimited",
+      "profile": {
+        "arg_len": 0,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            97,
+            98,
+            99,
+            100,
+            101,
+            102
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "length-one",
+      "profile": {
+        "arg_len": 1,
+        "arg_nums": null,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            48
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            49
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            50
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            51
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            52
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            53
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            54
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            55
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            56
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            115,
+            108,
+            111,
+            116,
+            45,
+            57
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "count-unlimited",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": 0,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            111,
+            110,
+            101
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            116,
+            119,
+            111
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "count-one",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": 1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "codepoints": [
+            111,
+            110,
+            101
+          ],
+          "kind": "string",
+          "utf8": false
+        },
+        {
+          "codepoints": [
+            116,
+            119,
+            111
+          ],
+          "kind": "string",
+          "utf8": false
+        }
+      ],
+      "id": "count-suppressed",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": -1,
+        "formatter": false
+      }
+    },
+    {
+      "arguments": [
+        {
+          "id": "held",
+          "kind": "HASH"
+        }
+      ],
+      "id": "reference-formatter",
+      "profile": {
+        "arg_len": null,
+        "arg_nums": null,
+        "formatter": true
+      }
+    }
+  ],
+  "role": "Source-neutral public exploration only; no semantic qualification."
+}
