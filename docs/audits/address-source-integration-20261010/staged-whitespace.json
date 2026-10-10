@@ -1,0 +1,17 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exact_fragment": {
+    "bytes": 4157,
+    "contract": "Immutable insertion fragment ends exactly two LF bytes to conserve chapter separation.",
+    "path": "docs/audits/address-source-integration-20261010/book-addition.md.txt",
+    "sha256": "203531a34d56dd9a9160ad7fdc1af194cb317022d3828395dcbfbbb09ef29934"
+  },
+  "status": 2,
+  "stderr": "",
+  "stdout": "docs/audits/address-source-integration-20261010/book-addition.md.txt:64: new blank line at EOF.\n"
+}

@@ -1,0 +1,185 @@
+{
+  "models": {
+    "actor": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 3879308,
+          "sha256": "5d7a04d3885c1250a16ed2d1d37ad3319f4745b2a37a08be6f192ea1f32707e2"
+        },
+        "path": "docs/audits/address-actor-construction-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 2628268,
+          "sha256": "a406deccc98edc5b9762f1d9ddd6a16e80983388ab8453c30a901db0d465f50f"
+        },
+        "path": "docs/audits/address-actor-construction-20261010/inputs.json"
+      }
+    },
+    "contexts": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 6448151,
+          "sha256": "e711bb45446874f4638e57a04cd74e8c500baff7caf7f2e273a4f1e530a97a15"
+        },
+        "path": "docs/audits/address-parser-contexts-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 10841220,
+          "sha256": "9357237c407425723c22f856a439ebc8643ab0acd8931524ad5f8a2fe4c08ff0"
+        },
+        "path": "docs/audits/address-parser-contexts-20261010/inputs.json"
+      }
+    },
+    "entry": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 200367,
+          "sha256": "bc4f6f9c2d6f1e90df520f386789daaac3ffad95911902cd2ed7ec84754b088d"
+        },
+        "path": "docs/audits/address-parser-entry-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 757112,
+          "sha256": "1e11e43d498e414104a4affc23101ba451642e6253b3f8a843785fc3c89a0093"
+        },
+        "path": "docs/audits/address-parser-entry-20261010/inputs.json"
+      }
+    },
+    "helper": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 7707022,
+          "sha256": "d8b8491f104ba8c2c54a5ca681c25bff5374b039b93b1d94db7e0751fdfab5cb"
+        },
+        "path": "docs/audits/address-helper-bindings-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 6190833,
+          "sha256": "f877da68ef1360426659879a9d8099bcc7835e0e5030c2e291333b8f70e9e191"
+        },
+        "path": "docs/audits/address-helper-bindings-20261010/inputs.json"
+      }
+    },
+    "holders": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 5349554,
+          "sha256": "2a911dd8bdc5a538cf258b9ef081ac49ad825cdf4452d748a919360b6d086e2f"
+        },
+        "path": "docs/audits/address-observer-holders-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 9562570,
+          "sha256": "cc15a5d299b54984ea1bde3faaa217521a6d3d1a321b831ace8c1e900745f407"
+        },
+        "path": "docs/audits/address-observer-holders-20261010/inputs.json"
+      }
+    },
+    "metadata": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 170456,
+          "sha256": "59c4cfada7b84d798dd870bfb2a12b7433ba26ba8af7113501bdde4f579aa426"
+        },
+        "path": "docs/audits/address-metadata-core-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 546782,
+          "sha256": "f4446cde413b8c04f529faafc84d815fcff8eb79ccae87aeaa805aa931f6c33d"
+        },
+        "path": "docs/audits/address-metadata-core-20261010/inputs.json"
+      }
+    },
+    "nested": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 1873611,
+          "sha256": "d9022f44df9711048d89863aeeeb3a26b0f72fd8d43c837f69af582261da67b2"
+        },
+        "path": "docs/audits/address-nested-lifetimes-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 2674911,
+          "sha256": "8ccf23b7db7ef9aba788e85628effe398ba2c9e34aaa79d970f25ab4216afcca"
+        },
+        "path": "docs/audits/address-nested-lifetimes-20261010/inputs.json"
+      }
+    },
+    "operation": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 2118587,
+          "sha256": "3fabe18d6bf73c95ef9f9a80f17e1e1ac6164121a74de3ed979335a0c24b7ef5"
+        },
+        "path": "docs/audits/address-source-boundaries-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 1614699,
+          "sha256": "04733384141cea673f2d04eaf3122f44c4ddac168266f7fef25565af4e39072d"
+        },
+        "path": "docs/audits/address-source-boundaries-20261010/inputs.json"
+      }
+    },
+    "parser": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 20776059,
+          "sha256": "69b59a23ef1af9046610d00455bef1539b7727e5a4b2d51af0637ff01e45d3d2"
+        },
+        "path": "docs/audits/address-parser-context-closure-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 35738693,
+          "sha256": "dd7e7cb15d1063c109b6042eeacfaa5fa5133dc6a8b7ce786045ba30493d128e"
+        },
+        "path": "docs/audits/address-parser-context-closure-20261010/inputs.json"
+      }
+    },
+    "private": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 11376073,
+          "sha256": "fc05267f975695568b87baa515d9b939d5763839da0dc22dcd49bf40c5f6b20b"
+        },
+        "path": "docs/audits/address-private-topology-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 21188879,
+          "sha256": "09c308307afd442764f494a65ea53ef5bfffb126e986457d399caaf191c24888"
+        },
+        "path": "docs/audits/address-private-topology-20261010/inputs.json"
+      }
+    },
+    "value": {
+      "hypotheses": {
+        "identity": {
+          "bytes": 343453,
+          "sha256": "c5702ee1bda223adaa0d7554a59eeafd789c529357cb6097b6b140b9af5cb172"
+        },
+        "path": "docs/audits/address-value-core-20261010/hypotheses.json"
+      },
+      "inputs": {
+        "identity": {
+          "bytes": 3068668,
+          "sha256": "9e08ef3430471b2018f9eaa98bcc818500b4439064b23c766f6c997b4d18768f"
+        },
+        "path": "docs/audits/address-value-core-20261010/inputs.json"
+      }
+    }
+  },
+  "source_contracts": [
+    "perl/FSM/Support/ISFRecordPortValues.pm",
+    "docs/audits/record-value-original-candidate-20261004/observe.pl",
+    "t/1986-isf-record-port-value-gates.t"
+  ]
+}

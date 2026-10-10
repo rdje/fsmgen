@@ -1,0 +1,623 @@
+{
+  "after_task": {
+    "bytes": 1548836,
+    "sha256": "a6233a11530e24aa72b87e80b6b1953ed6471e442da16da23dd5b5e484f052dc"
+  },
+  "before_task": {
+    "bytes": 1548325,
+    "sha256": "37f407706e2a81965917d06665be11f1413bcc1b5969e99370c881c1b5a5d657"
+  },
+  "contracts": [
+    {
+      "acceptance": "Satisfy the full parent acceptance verbatim: conserve every completed operation/private/Value/Metadata/nested/helper/parser hypothesis, incorporate complete observer caller prefixes, and independently prove every own reference role exactly once with equality/distinction in simultaneous-live source domains. Reject genuine whole omissions, wrong role/kind, borrowed graph/copy/capture/phase and scope controls. Close source parents only after complete graph/role integration, while preserving raw-address and governed canonical publication successors.",
+      "complete_before": {
+        "bytes": 1974,
+        "sha256": "b4f2fa3bb724bc124b6da0d486a0ab8372e05fd78123e24b3a04226272a61fe4"
+      },
+      "evidence": {
+        "full_source_scope": "Complete finite visible own source reference roles, qualified private-root holders and observer caller prefixes at every original source throw view. Graph equality follows qualified source forwarding/construction, never equal payload alone. Source distinctions remain finite allocation/copy hypotheses. Original raw addresses, native identity/flags/payload, opaque provider/framework/formatter/Regexp/CODE identity, global heap census, cold replay and governed canonical publication remain open.",
+        "independently_recounted_reference_operands": 3033,
+        "proof": {
+          "bytes": 72725,
+          "sha256": "e7e0a636b0874e0db621e92e74a9b8753af8491f7dd7d31d5706aca95598e641"
+        },
+        "source_domains": 171,
+        "whole_model_registry": {
+          "actor": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 3879308,
+                "sha256": "5d7a04d3885c1250a16ed2d1d37ad3319f4745b2a37a08be6f192ea1f32707e2"
+              },
+              "path": "docs/audits/address-actor-construction-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 2628268,
+                "sha256": "a406deccc98edc5b9762f1d9ddd6a16e80983388ab8453c30a901db0d465f50f"
+              },
+              "path": "docs/audits/address-actor-construction-20261010/inputs.json"
+            }
+          },
+          "contexts": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 6448151,
+                "sha256": "e711bb45446874f4638e57a04cd74e8c500baff7caf7f2e273a4f1e530a97a15"
+              },
+              "path": "docs/audits/address-parser-contexts-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 10841220,
+                "sha256": "9357237c407425723c22f856a439ebc8643ab0acd8931524ad5f8a2fe4c08ff0"
+              },
+              "path": "docs/audits/address-parser-contexts-20261010/inputs.json"
+            }
+          },
+          "entry": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 200367,
+                "sha256": "bc4f6f9c2d6f1e90df520f386789daaac3ffad95911902cd2ed7ec84754b088d"
+              },
+              "path": "docs/audits/address-parser-entry-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 757112,
+                "sha256": "1e11e43d498e414104a4affc23101ba451642e6253b3f8a843785fc3c89a0093"
+              },
+              "path": "docs/audits/address-parser-entry-20261010/inputs.json"
+            }
+          },
+          "helper": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 7707022,
+                "sha256": "d8b8491f104ba8c2c54a5ca681c25bff5374b039b93b1d94db7e0751fdfab5cb"
+              },
+              "path": "docs/audits/address-helper-bindings-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 6190833,
+                "sha256": "f877da68ef1360426659879a9d8099bcc7835e0e5030c2e291333b8f70e9e191"
+              },
+              "path": "docs/audits/address-helper-bindings-20261010/inputs.json"
+            }
+          },
+          "holders": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 5349554,
+                "sha256": "2a911dd8bdc5a538cf258b9ef081ac49ad825cdf4452d748a919360b6d086e2f"
+              },
+              "path": "docs/audits/address-observer-holders-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 9562570,
+                "sha256": "cc15a5d299b54984ea1bde3faaa217521a6d3d1a321b831ace8c1e900745f407"
+              },
+              "path": "docs/audits/address-observer-holders-20261010/inputs.json"
+            }
+          },
+          "metadata": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 170456,
+                "sha256": "59c4cfada7b84d798dd870bfb2a12b7433ba26ba8af7113501bdde4f579aa426"
+              },
+              "path": "docs/audits/address-metadata-core-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 546782,
+                "sha256": "f4446cde413b8c04f529faafc84d815fcff8eb79ccae87aeaa805aa931f6c33d"
+              },
+              "path": "docs/audits/address-metadata-core-20261010/inputs.json"
+            }
+          },
+          "nested": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 1873611,
+                "sha256": "d9022f44df9711048d89863aeeeb3a26b0f72fd8d43c837f69af582261da67b2"
+              },
+              "path": "docs/audits/address-nested-lifetimes-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 2674911,
+                "sha256": "8ccf23b7db7ef9aba788e85628effe398ba2c9e34aaa79d970f25ab4216afcca"
+              },
+              "path": "docs/audits/address-nested-lifetimes-20261010/inputs.json"
+            }
+          },
+          "operation": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 2118587,
+                "sha256": "3fabe18d6bf73c95ef9f9a80f17e1e1ac6164121a74de3ed979335a0c24b7ef5"
+              },
+              "path": "docs/audits/address-source-boundaries-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 1614699,
+                "sha256": "04733384141cea673f2d04eaf3122f44c4ddac168266f7fef25565af4e39072d"
+              },
+              "path": "docs/audits/address-source-boundaries-20261010/inputs.json"
+            }
+          },
+          "parser": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 20776059,
+                "sha256": "69b59a23ef1af9046610d00455bef1539b7727e5a4b2d51af0637ff01e45d3d2"
+              },
+              "path": "docs/audits/address-parser-context-closure-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 35738693,
+                "sha256": "dd7e7cb15d1063c109b6042eeacfaa5fa5133dc6a8b7ce786045ba30493d128e"
+              },
+              "path": "docs/audits/address-parser-context-closure-20261010/inputs.json"
+            }
+          },
+          "private": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 11376073,
+                "sha256": "fc05267f975695568b87baa515d9b939d5763839da0dc22dcd49bf40c5f6b20b"
+              },
+              "path": "docs/audits/address-private-topology-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 21188879,
+                "sha256": "09c308307afd442764f494a65ea53ef5bfffb126e986457d399caaf191c24888"
+              },
+              "path": "docs/audits/address-private-topology-20261010/inputs.json"
+            }
+          },
+          "value": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 343453,
+                "sha256": "c5702ee1bda223adaa0d7554a59eeafd789c529357cb6097b6b140b9af5cb172"
+              },
+              "path": "docs/audits/address-value-core-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 3068668,
+                "sha256": "9e08ef3430471b2018f9eaa98bcc818500b4439064b23c766f6c997b4d18768f"
+              },
+              "path": "docs/audits/address-value-core-20261010/inputs.json"
+            }
+          }
+        }
+      },
+      "goal": "Integrate every qualified source graph and close complete source-role lifetimes.",
+      "unit": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5.2"
+    },
+    {
+      "acceptance": "Conserve all completed operation/private/Value/Metadata/nested/helper/parser hypotheses and independently prove complete own reference-role membership with source graph equality/distinction in simultaneous-live domains. Genuine whole-product omission, wrong role/kind, borrowed graph/copy/capture/phase and scope controls must reject before source-only closure. Sync book/proposed facts/current pointers under unchanged capacity authority; actual raw address joins and canonical publication remain successors.",
+      "complete_before": {
+        "bytes": 1229,
+        "sha256": "51a3d87076ec8097258c646718001e2dd80468543b16bb59423b5c836ba2efc9"
+      },
+      "evidence": {
+        "full_source_scope": "Complete finite visible own source reference roles, qualified private-root holders and observer caller prefixes at every original source throw view. Graph equality follows qualified source forwarding/construction, never equal payload alone. Source distinctions remain finite allocation/copy hypotheses. Original raw addresses, native identity/flags/payload, opaque provider/framework/formatter/Regexp/CODE identity, global heap census, cold replay and governed canonical publication remain open.",
+        "independently_recounted_reference_operands": 3033,
+        "proof": {
+          "bytes": 72725,
+          "sha256": "e7e0a636b0874e0db621e92e74a9b8753af8491f7dd7d31d5706aca95598e641"
+        },
+        "source_domains": 171,
+        "whole_model_registry": {
+          "actor": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 3879308,
+                "sha256": "5d7a04d3885c1250a16ed2d1d37ad3319f4745b2a37a08be6f192ea1f32707e2"
+              },
+              "path": "docs/audits/address-actor-construction-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 2628268,
+                "sha256": "a406deccc98edc5b9762f1d9ddd6a16e80983388ab8453c30a901db0d465f50f"
+              },
+              "path": "docs/audits/address-actor-construction-20261010/inputs.json"
+            }
+          },
+          "contexts": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 6448151,
+                "sha256": "e711bb45446874f4638e57a04cd74e8c500baff7caf7f2e273a4f1e530a97a15"
+              },
+              "path": "docs/audits/address-parser-contexts-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 10841220,
+                "sha256": "9357237c407425723c22f856a439ebc8643ab0acd8931524ad5f8a2fe4c08ff0"
+              },
+              "path": "docs/audits/address-parser-contexts-20261010/inputs.json"
+            }
+          },
+          "entry": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 200367,
+                "sha256": "bc4f6f9c2d6f1e90df520f386789daaac3ffad95911902cd2ed7ec84754b088d"
+              },
+              "path": "docs/audits/address-parser-entry-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 757112,
+                "sha256": "1e11e43d498e414104a4affc23101ba451642e6253b3f8a843785fc3c89a0093"
+              },
+              "path": "docs/audits/address-parser-entry-20261010/inputs.json"
+            }
+          },
+          "helper": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 7707022,
+                "sha256": "d8b8491f104ba8c2c54a5ca681c25bff5374b039b93b1d94db7e0751fdfab5cb"
+              },
+              "path": "docs/audits/address-helper-bindings-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 6190833,
+                "sha256": "f877da68ef1360426659879a9d8099bcc7835e0e5030c2e291333b8f70e9e191"
+              },
+              "path": "docs/audits/address-helper-bindings-20261010/inputs.json"
+            }
+          },
+          "holders": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 5349554,
+                "sha256": "2a911dd8bdc5a538cf258b9ef081ac49ad825cdf4452d748a919360b6d086e2f"
+              },
+              "path": "docs/audits/address-observer-holders-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 9562570,
+                "sha256": "cc15a5d299b54984ea1bde3faaa217521a6d3d1a321b831ace8c1e900745f407"
+              },
+              "path": "docs/audits/address-observer-holders-20261010/inputs.json"
+            }
+          },
+          "metadata": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 170456,
+                "sha256": "59c4cfada7b84d798dd870bfb2a12b7433ba26ba8af7113501bdde4f579aa426"
+              },
+              "path": "docs/audits/address-metadata-core-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 546782,
+                "sha256": "f4446cde413b8c04f529faafc84d815fcff8eb79ccae87aeaa805aa931f6c33d"
+              },
+              "path": "docs/audits/address-metadata-core-20261010/inputs.json"
+            }
+          },
+          "nested": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 1873611,
+                "sha256": "d9022f44df9711048d89863aeeeb3a26b0f72fd8d43c837f69af582261da67b2"
+              },
+              "path": "docs/audits/address-nested-lifetimes-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 2674911,
+                "sha256": "8ccf23b7db7ef9aba788e85628effe398ba2c9e34aaa79d970f25ab4216afcca"
+              },
+              "path": "docs/audits/address-nested-lifetimes-20261010/inputs.json"
+            }
+          },
+          "operation": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 2118587,
+                "sha256": "3fabe18d6bf73c95ef9f9a80f17e1e1ac6164121a74de3ed979335a0c24b7ef5"
+              },
+              "path": "docs/audits/address-source-boundaries-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 1614699,
+                "sha256": "04733384141cea673f2d04eaf3122f44c4ddac168266f7fef25565af4e39072d"
+              },
+              "path": "docs/audits/address-source-boundaries-20261010/inputs.json"
+            }
+          },
+          "parser": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 20776059,
+                "sha256": "69b59a23ef1af9046610d00455bef1539b7727e5a4b2d51af0637ff01e45d3d2"
+              },
+              "path": "docs/audits/address-parser-context-closure-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 35738693,
+                "sha256": "dd7e7cb15d1063c109b6042eeacfaa5fa5133dc6a8b7ce786045ba30493d128e"
+              },
+              "path": "docs/audits/address-parser-context-closure-20261010/inputs.json"
+            }
+          },
+          "private": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 11376073,
+                "sha256": "fc05267f975695568b87baa515d9b939d5763839da0dc22dcd49bf40c5f6b20b"
+              },
+              "path": "docs/audits/address-private-topology-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 21188879,
+                "sha256": "09c308307afd442764f494a65ea53ef5bfffb126e986457d399caaf191c24888"
+              },
+              "path": "docs/audits/address-private-topology-20261010/inputs.json"
+            }
+          },
+          "value": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 343453,
+                "sha256": "c5702ee1bda223adaa0d7554a59eeafd789c529357cb6097b6b140b9af5cb172"
+              },
+              "path": "docs/audits/address-value-core-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 3068668,
+                "sha256": "9e08ef3430471b2018f9eaa98bcc818500b4439064b23c766f6c997b4d18768f"
+              },
+              "path": "docs/audits/address-value-core-20261010/inputs.json"
+            }
+          }
+        }
+      },
+      "goal": "Join and close the complete remaining source-role lifetime model.",
+      "unit": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5"
+    },
+    {
+      "acceptance": "Extend the independent source model to every remaining visible own reference role, nested active operations, returned-before-throw delegates and private-root lifetime constraints. Use complete qualified source graphs/construction/call contracts; partition genuinely opaque external/provider/formatter identities without inventing referents. Retain complete role membership and genuine alias/kind/phase/lifetime separating controls before raw joining.",
+      "complete_before": {
+        "bytes": 1515,
+        "sha256": "4fda3cd42ba58cd999ae9399f20eeb5c355bdc1d3727c212315278767ffc4122"
+      },
+      "evidence": {
+        "full_source_scope": "Complete finite visible own source reference roles, qualified private-root holders and observer caller prefixes at every original source throw view. Graph equality follows qualified source forwarding/construction, never equal payload alone. Source distinctions remain finite allocation/copy hypotheses. Original raw addresses, native identity/flags/payload, opaque provider/framework/formatter/Regexp/CODE identity, global heap census, cold replay and governed canonical publication remain open.",
+        "independently_recounted_reference_operands": 3033,
+        "proof": {
+          "bytes": 72725,
+          "sha256": "e7e0a636b0874e0db621e92e74a9b8753af8491f7dd7d31d5706aca95598e641"
+        },
+        "source_domains": 171,
+        "whole_model_registry": {
+          "actor": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 3879308,
+                "sha256": "5d7a04d3885c1250a16ed2d1d37ad3319f4745b2a37a08be6f192ea1f32707e2"
+              },
+              "path": "docs/audits/address-actor-construction-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 2628268,
+                "sha256": "a406deccc98edc5b9762f1d9ddd6a16e80983388ab8453c30a901db0d465f50f"
+              },
+              "path": "docs/audits/address-actor-construction-20261010/inputs.json"
+            }
+          },
+          "contexts": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 6448151,
+                "sha256": "e711bb45446874f4638e57a04cd74e8c500baff7caf7f2e273a4f1e530a97a15"
+              },
+              "path": "docs/audits/address-parser-contexts-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 10841220,
+                "sha256": "9357237c407425723c22f856a439ebc8643ab0acd8931524ad5f8a2fe4c08ff0"
+              },
+              "path": "docs/audits/address-parser-contexts-20261010/inputs.json"
+            }
+          },
+          "entry": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 200367,
+                "sha256": "bc4f6f9c2d6f1e90df520f386789daaac3ffad95911902cd2ed7ec84754b088d"
+              },
+              "path": "docs/audits/address-parser-entry-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 757112,
+                "sha256": "1e11e43d498e414104a4affc23101ba451642e6253b3f8a843785fc3c89a0093"
+              },
+              "path": "docs/audits/address-parser-entry-20261010/inputs.json"
+            }
+          },
+          "helper": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 7707022,
+                "sha256": "d8b8491f104ba8c2c54a5ca681c25bff5374b039b93b1d94db7e0751fdfab5cb"
+              },
+              "path": "docs/audits/address-helper-bindings-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 6190833,
+                "sha256": "f877da68ef1360426659879a9d8099bcc7835e0e5030c2e291333b8f70e9e191"
+              },
+              "path": "docs/audits/address-helper-bindings-20261010/inputs.json"
+            }
+          },
+          "holders": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 5349554,
+                "sha256": "2a911dd8bdc5a538cf258b9ef081ac49ad825cdf4452d748a919360b6d086e2f"
+              },
+              "path": "docs/audits/address-observer-holders-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 9562570,
+                "sha256": "cc15a5d299b54984ea1bde3faaa217521a6d3d1a321b831ace8c1e900745f407"
+              },
+              "path": "docs/audits/address-observer-holders-20261010/inputs.json"
+            }
+          },
+          "metadata": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 170456,
+                "sha256": "59c4cfada7b84d798dd870bfb2a12b7433ba26ba8af7113501bdde4f579aa426"
+              },
+              "path": "docs/audits/address-metadata-core-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 546782,
+                "sha256": "f4446cde413b8c04f529faafc84d815fcff8eb79ccae87aeaa805aa931f6c33d"
+              },
+              "path": "docs/audits/address-metadata-core-20261010/inputs.json"
+            }
+          },
+          "nested": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 1873611,
+                "sha256": "d9022f44df9711048d89863aeeeb3a26b0f72fd8d43c837f69af582261da67b2"
+              },
+              "path": "docs/audits/address-nested-lifetimes-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 2674911,
+                "sha256": "8ccf23b7db7ef9aba788e85628effe398ba2c9e34aaa79d970f25ab4216afcca"
+              },
+              "path": "docs/audits/address-nested-lifetimes-20261010/inputs.json"
+            }
+          },
+          "operation": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 2118587,
+                "sha256": "3fabe18d6bf73c95ef9f9a80f17e1e1ac6164121a74de3ed979335a0c24b7ef5"
+              },
+              "path": "docs/audits/address-source-boundaries-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 1614699,
+                "sha256": "04733384141cea673f2d04eaf3122f44c4ddac168266f7fef25565af4e39072d"
+              },
+              "path": "docs/audits/address-source-boundaries-20261010/inputs.json"
+            }
+          },
+          "parser": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 20776059,
+                "sha256": "69b59a23ef1af9046610d00455bef1539b7727e5a4b2d51af0637ff01e45d3d2"
+              },
+              "path": "docs/audits/address-parser-context-closure-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 35738693,
+                "sha256": "dd7e7cb15d1063c109b6042eeacfaa5fa5133dc6a8b7ce786045ba30493d128e"
+              },
+              "path": "docs/audits/address-parser-context-closure-20261010/inputs.json"
+            }
+          },
+          "private": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 11376073,
+                "sha256": "fc05267f975695568b87baa515d9b939d5763839da0dc22dcd49bf40c5f6b20b"
+              },
+              "path": "docs/audits/address-private-topology-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 21188879,
+                "sha256": "09c308307afd442764f494a65ea53ef5bfffb126e986457d399caaf191c24888"
+              },
+              "path": "docs/audits/address-private-topology-20261010/inputs.json"
+            }
+          },
+          "value": {
+            "hypotheses": {
+              "identity": {
+                "bytes": 343453,
+                "sha256": "c5702ee1bda223adaa0d7554a59eeafd789c529357cb6097b6b140b9af5cb172"
+              },
+              "path": "docs/audits/address-value-core-20261010/hypotheses.json"
+            },
+            "inputs": {
+              "identity": {
+                "bytes": 3068668,
+                "sha256": "9e08ef3430471b2018f9eaa98bcc818500b4439064b23c766f6c997b4d18768f"
+              },
+              "path": "docs/audits/address-value-core-20261010/inputs.json"
+            }
+          }
+        }
+      },
+      "goal": "Derive remaining core, helper, parser and nested lifetime roles.",
+      "unit": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2"
+    }
+  ],
+  "measured": {
+    "categories": {
+      "direct": 102,
+      "nested": 63,
+      "parser": 6
+    },
+    "graph_alias_classes": 7632,
+    "graph_nodes": 12051,
+    "private_lifetime_occurrences": 285,
+    "reference_operands": 3033,
+    "source_distinctions": 5007992568,
+    "source_held_occurrences": 1218057,
+    "source_provenance_operands": 3936,
+    "successful_returned_api_occurrences": 16845,
+    "views": 171
+  },
+  "next_raw_child": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3",
+  "raw_parent": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4",
+  "recount": {
+    "reference_operands": 3033,
+    "source_domains": 171
+  },
+  "scope": "Close exactly the source integration leaf, its integration parent and remaining-source-role parent; preserve every raw/native/publication successor."
+}

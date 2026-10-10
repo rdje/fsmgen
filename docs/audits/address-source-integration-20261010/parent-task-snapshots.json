@@ -1,0 +1,17 @@
+{
+  "after": {
+    "identity": {
+      "bytes": 1548836,
+      "sha256": "a6233a11530e24aa72b87e80b6b1953ed6471e442da16da23dd5b5e484f052dc"
+    },
+    "path": "docs/audits/address-source-integration-20261010/after-source-closure-task.md.txt"
+  },
+  "before": {
+    "identity": {
+      "bytes": 1548325,
+      "sha256": "37f407706e2a81965917d06665be11f1413bcc1b5969e99370c881c1b5a5d657"
+    },
+    "path": "docs/audits/address-source-integration-20261010/before-source-closure-task.md.txt"
+  },
+  "scope": "Whole exact pre/post source-closure task bytes recovered and verified against the already retained parent acceptance identities; all full literal contracts and live nodes conserve."
+}

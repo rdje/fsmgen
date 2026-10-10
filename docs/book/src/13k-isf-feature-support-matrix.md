@@ -1126,8 +1126,8 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-helper-bindings-
 
 The helper/callback/subtest child is closed. Parser receiver, actor, context and
 clause source bindings are qualified below. Original numeric/provider/
-formatter/Regexp/CODE identity, external framework/global retention, complete
-source integration, the raw address join and canonical publication remain open.
+formatter/Regexp/CODE identity, external framework/global retention, the raw address join and canonical
+publication remain open. Complete source integration is qualified below.
 All existing canonical facts, questions, probes and collection limits retain.
 
 Parser-entry source bindings now qualify the receiver chain for both original
@@ -1181,7 +1181,7 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-entry-202
 The receiver/normalization child is closed. Its construction successor is
 qualified below. Original context/source and parser/helper bindings are qualified
 below too. Original raw/native identity and payload, provider/formatter identity,
-complete source integration and canonical publication remain open. Existing canonical facts, questions, probes and every
+canonical publication remain open. Complete source integration is qualified below. Existing canonical facts, questions, probes and every
 collection ceiling retain.
 
 Complete partial actor construction is independently qualified at each original
@@ -1226,7 +1226,8 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-actor-constructi
 
 The actor/type/transaction construction child is closed. Original context-slot
 and private-root source joins and parser/helper bindings are qualified below.
-Full source integration, original raw address joins, native payload and flags,
+Full source integration is qualified below. Original raw address joins, native
+payload and flags,
 provider/formatter/CODE identity, cold replay and governed canonical publication
 remain open. Fresh source
 checkpoints are not original native captures. Existing canonical facts,
@@ -1280,8 +1281,8 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-contexts-
 ```
 
 The representation/probe boundary child is closed. Original context-slot and
-private-protocol source joins are qualified below. Full source integration,
-original raw address and native payload/flag/identity qualification, cold replay
+private-protocol source joins and full source integration are qualified below.
+Original raw address and native payload/flag/identity qualification, cold replay
 and governed canonical publication remain owned successors. Existing canonical facts,
 questions, probes and every collection ceiling retain.
 
@@ -1329,7 +1330,7 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-context-c
 ```
 
 The context, actor/context, parser and helper/parser source children are closed.
-Whole source integration is the next owned sibling. Original native payload,
+Whole source integration is qualified below. Original native payload,
 scalar flags and identity, raw address joins, provider/formatter/CODE identity,
 cold replay, visual book QA and governed canonical publication remain open.
 All current canonical facts, questions, probes and collection ceilings retain.
@@ -1372,11 +1373,75 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-observer-holders
 ```
 
 This observer-holder dependency is closed. Complete simultaneous source graph
-and reference-role integration is the next owned child. Original raw-address
+and reference-role integration is qualified below. Original raw-address
 joins, native payload/flags/identity, opaque provider/framework/formatter/CODE
 identity, cold replay, visual book QA and governed canonical publication remain
 open. Every existing canonical fact, question, probe and collection ceiling
 retains.
+
+Complete source graph, reference-role and lifetime integration now qualifies.
+Every original source view joins the conserved operation, private-copy, Value,
+Metadata, nested, helper, parser and retained-caller models. Overlapping public
+frames appear once in the combined path, with complete provenance for each
+original role. Parser operands retain their source-expression grammar; finite
+Value and helper operands retain their typed grammar. Neither is rewritten into
+native scalar or address evidence.
+
+Graph joins follow explicit source expressions. Active named helper arguments
+forward to the public operation, and direct callbacks retain their returned
+reference arguments. Private-copy inputs join their selected source variables;
+results remain separate copy domains. A second reader constructs full object
+correspondences and connected components, independently checking every member,
+reference kind, alias and cycle. Equal payloads alone establish no identity.
+For example, the first refused copy has equal source and target descriptor
+payloads from separate reference constructions; substituting one source role
+for the other rejects. Merging its private input and result also rejects.
+
+Private-copy delegates have returned before these guards. Copy validation still
+holds both completed source and target copies, reference validation holds its
+selected root, and a failing scope iteration holds its current private root.
+Earlier scope-copy results acquire no post-iteration private holder merely from
+having been observed. Nested metadata roots and recursion locals remain active
+at the inner throw and lose their own active holders before the new outer Value
+throw. Retained caller arrays persist independently of those payload lifetimes.
+Returned calls establish neither object death nor external/provider retention.
+
+Every successful API return reached inside the current helper is recorded as
+inactive call state, including recursive clone delegates. Qualified helper
+result holders preserve the returned references actually forwarded into active
+operations. Complete parser source frames, receiver/context roots, returned
+delegates and original protocol bridges remain conserved. Original observer
+caller prefixes cover all earlier API, copy, helper, parser and retained
+assertion records. Trial records alias their test-copy caller arrays.
+
+Argument and checkpoint carrier arrays are symbolic graph packaging. They do
+not become additional original source holders, and encoded payload graphs do
+not retain their original referents. The compact distinction relation covers
+all qualified simultaneous source members while preserving opaque CODE/CODE
+relations. Fresh source allocation/copy hypotheses do not measure native
+addresses, scalar flags, provider identity or a global heap census.
+
+The first reader stopped because it applied the Value/helper argument grammar
+to parser operands. The failed programme and actual result retain; the corrected
+census covers both canonical grammars. Review then reproduced a real assurance
+gap: the first successful reader ignored an extra field claiming original native
+identity. Complete first admission and programme retain. Exact allowed fields
+are now enforced for captures, views, bindings and operands; adding that native
+claim rejects. Genuine whole omissions, equal-payload substitutions, borrowed
+copies/captures/phases, lost provenance/callers/holders, inactive-root or carrier
+promotion, wrong kinds and native-scope claims reject. Replay the complete source
+qualification from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-source-integration-20261010/verify.py
+```
+
+The complete source integration and remaining-source-role parents are closed.
+The next owned child joins original raw reference operands to these qualified
+roles inside simultaneous source domains. Original raw/native identity, payload
+and flags, opaque provider/framework/formatter/Regexp/CODE identity, cold replay,
+visual book QA and governed non-growing canonical publication remain open.
+Every existing canonical fact, question, probe and collection ceiling retains.
 
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it

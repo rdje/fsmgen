@@ -1,0 +1,176 @@
+"""Full integration qualification, genuine separating controls and durability."""
+import copy
+import json
+from pathlib import Path
+
+BASE = Path('docs/audits/address-source-integration-20261010')
+SUCCESS = 'PASS complete source role/graph/lifetime integration; original raw/native and governed publication remain open.\n'
+
+
+def module(name):
+    path = BASE / name
+    ns = {'__name__': 'whole_source_integration_verifier'}
+    exec(compile(path.read_bytes(), str(path), 'exec'), ns)
+    return ns
+
+
+def load(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def main():
+    source, oracle = module('source.py'), module('oracle.py')
+    spec, binding, product = load('inputs.json'), load('binding.json'), load('hypotheses.json')
+    data = source['data'](spec)
+    measured = oracle['qualify'](product, data, spec)
+    initial = load('first-programmes.json')
+    if (initial['model.py'] != source['pin']((BASE / 'first-model.py.txt').read_bytes())
+            or initial['model.py'] != source['pin']((BASE / 'model.py').read_bytes())):
+        raise ValueError('whole first complete source derivation programme custody')
+    if not oracle['exact'](module('model.py')['derive'](data, spec), product):
+        raise ValueError('whole deterministic source integration product')
+    checks = load('checks.json')
+    if checks['first-derivation']['status'] != 0:
+        raise ValueError('actual complete first source derivation')
+    old = module('first-oracle.py.txt')
+    try:
+        old['qualify'](product, data, spec)
+    except KeyError as error:
+        if str(error) != "'kind'":
+            raise
+    else:
+        raise ValueError('first parser grammar failure must reproduce')
+    failed = checks['first-independent-join']
+    if type(failed['status']) is not int or failed['status'] != 1 or "KeyError: 'kind'" not in failed['stderr']:
+        raise ValueError('actual first independent source grammar failure')
+    corrected = load('corrected-join-proof.json')
+    corrected_oracle = module('corrected-oracle.py.txt')
+    if (corrected['oracle'] != source['pin']((BASE / 'corrected-oracle.py.txt').read_bytes())
+            or corrected['product'] != source['pin']((BASE / 'hypotheses.json').read_bytes())
+            or not oracle['exact'](corrected_oracle['qualify'](product, data, spec), corrected['measured'])
+            or not oracle['exact'](measured, corrected['measured'])):
+        raise ValueError('whole first corrected independent source admission custody')
+    joined = checks['corrected-independent-join']
+    if type(joined['status']) is not int or joined['status'] != 0 or joined['stdout'] != 'PASS complete independent source role/graph/lifetime join; separating controls and durability remain required.\n':
+        raise ValueError('actual first corrected independent source join')
+    gap = load('scope-field-gap.json')
+    if (gap['actual_status'] != 0 or gap['oracle'] != corrected['oracle']
+            or gap['unknown_field'] != 'original_native_identity'
+            or checks['scope-field-gap']['status'] != 0):
+        raise ValueError('actual first unknown native-field admission custody')
+    first_control = checks['independent']
+    if (first_control['status'] != 1 or 'genuine equal-payload source/target graph control setup' not in first_control['stderr']
+            or first_control['instruments'][str(BASE/'verify.py')] != source['pin']((BASE/'first-verify.py.txt').read_bytes())):
+        raise ValueError('actual first control canonical-name setup failure custody')
+    controls = []
+    def reject(name, mutate, expected):
+        candidate = copy.deepcopy(product)
+        mutate(candidate)
+        if oracle['exact'](candidate, product):
+            raise ValueError('genuine source integration control setup: ' + name)
+        try:
+            oracle['qualify'](candidate, data, spec)
+        except ValueError as error:
+            if str(error) != expected:
+                raise ValueError('unintended source integration refusal: ' + name + ': ' + str(error)) from error
+            controls.append({'name': name, 'refusal': str(error),
+                             'candidate': source['pin'](json.dumps(candidate, sort_keys=True).encode())})
+        else:
+            raise ValueError('source integration control admitted: ' + name)
+    def view(p, category='direct', ordinal=0, mode=0):
+        return [v for v in p['modes'][mode]['views'] if v['category'] == category][ordinal]
+    def outer(p):
+        return next(v for v in p['modes'][0]['views'] if v['category'] == 'nested'
+                    and v['lifetime']['qualified_source_phase_facts']['inactive_invocations'])
+    reject('lost-capture', lambda p:p['modes'].pop(), 'complete integration capture population')
+    reject('borrowed-other-capture', lambda p:p['modes'].__setitem__(0,copy.deepcopy(p['modes'][1])), 'exact integration capture allocation')
+    reject('lost-view', lambda p:p['modes'][0]['views'].pop(), 'complete integration throw-view population')
+    reject('borrowed-existing-other-view', lambda p:p['modes'][0]['views'].__setitem__(0,copy.deepcopy(p['modes'][0]['views'][1])), 'exact source integration record/event/phase domain')
+    reject('Boolean-phase', lambda p:view(p)['domain'].__setitem__(3,False), 'exact source integration record/event/phase domain')
+    reject('borrowed-inner-event-at-outer-throw', lambda p:outer(p).update(event=copy.deepcopy(view(p,'nested')['event'])), 'exact source integration record/event/phase domain')
+    reject('lost-private-model', lambda p:p['conserved_models'].pop('private'), 'every complete source prerequisite model conserved')
+    reject('lost-Metadata-model', lambda p:p['conserved_models'].pop('metadata'), 'every complete source prerequisite model conserved')
+    reject('native-scope-promoted', lambda p:p.update(scope='Original native address identities proved'), 'complete integration source-only scope')
+    reject('unknown-native-view-field', lambda p:view(p).update(original_native_identity='proved'), 'closed source integration view schema')
+    reject('unknown-native-mode-field', lambda p:p['modes'][0].update(native_addresses=[]), 'closed source integration capture schema')
+    reject('wrong-case-partition', lambda p:view(p).update(category='parser'), 'complete source integration case partition')
+    reject('borrowed-existing-other-graph', lambda p:view(p)['graphs'].update(operation=copy.deepcopy(view(p,ordinal=1)['graphs']['operation'])), 'complete source integration graph population/values')
+    reject('lost-source-graph', lambda p:view(p)['graphs'].pop('operation'), 'complete source integration graph population/values')
+    anchored = next(i for i,v in enumerate(product['modes'][0]['views']) if v['graph_anchors'])
+    reject('lost-forwarding-anchor', lambda p:p['modes'][0]['views'][anchored]['graph_anchors'].pop(), 'complete explicit source forwarding anchors')
+    reject('borrowed-source-anchor-node', lambda p:p['modes'][0]['views'][anchored]['graph_anchors'][0]['right'].__setitem__(1,''), 'complete explicit source forwarding anchors')
+    group = next(k for k,v in view(product)['graph_groups'].items() if len(v)>1)
+    reject('lost-whole-graph-alias-member', lambda p:view(p)['graph_groups'][group].pop(), 'whole source node alias/distinction partition')
+    groups = view(product)['graph_groups']
+    left = next(k for k,members in groups.items() if ['operation','/1'] in members)
+    right = next(k for k,members in groups.items() if ['operation','/3'] in members)
+    if left == right:
+        raise ValueError('genuine equal-payload source/target graph source separation')
+    # The original first case has independently constructed equal source/target
+    # descriptors. Explicit source roots, rather than their payload, select them.
+    operation = data['operation']['hypotheses']['cases'][0]['source_input_graph'][1]
+    if not oracle['exact'](operation[1], operation[3]):
+        raise ValueError('actual equal-payload source/target separator')
+    reject('equal-payload-source-target-graph-merged', lambda p:view(p)['graph_groups'][left].extend(view(p)['graph_groups'].pop(right)), 'whole source node alias/distinction partition')
+    reject('wrong-frame-function', lambda p:view(p)['frames'][0].update(function='main::other'), 'whole source frame functions/arguments/roles')
+    reject('wrong-source-frame-role', lambda p:view(p)['frames'][-2]['arguments'][1].update(role='other'), 'whole source frame functions/arguments/roles')
+    reject('lost-operation-overlap-map', lambda p:view(p)['component_frame_maps'].pop('operation:0'), 'complete source component frame overlap maps')
+    reject('lost-reference-operand', lambda p:view(p)['occurrences'].pop(), 'every integrated reference operand exactly once')
+    reject('duplicated-reference-operand', lambda p:view(p)['occurrences'].append(copy.deepcopy(view(p)['occurrences'][0])), 'every integrated reference operand exactly once')
+    reject('Boolean-reference-frame', lambda p:view(p)['occurrences'][0].update(frame=False), 'typed unique integrated reference slot')
+    reject('unknown-native-operand-field', lambda p:view(p)['occurrences'][0].update(native_address='unmeasured'), 'closed source integration operand schema')
+    reject('wrong-reference-role', lambda p:view(p)['occurrences'][0].update(role='borrowed'), 'exact integrated source operand role/referent')
+    reject('equal-payload-target-borrowed-for-source', lambda p:next(r for r in view(p)['occurrences'] if r['binding']==left).update(binding=right), 'exact integrated source operand role/referent')
+    reject('lost-original-overlap-provenance', lambda p:next(r for r in view(p)['occurrences'] if len(r['provenance'])>1)['provenance'].pop(), 'every original source role provenance conserved')
+    alias = next(k for k,v in view(product)['source_binding_aliases'].items() if v == left)
+    reject('equal-payload-source-binding-alias-split', lambda p:view(p)['source_binding_aliases'].update({alias:right}), 'complete source binding origin/alias allocation')
+    binding_key = next(iter(view(product)['bindings']))
+    reject('lost-complete-binding', lambda p:view(p)['bindings'].pop(binding_key), 'complete integrated binding and held graph membership')
+    reject('wrong-joined-reference-kind', lambda p:view(p)['bindings'][binding_key].update(reference_kind='Regexp'), 'complete integrated binding reference kinds')
+    reject('unknown-native-binding-field', lambda p:view(p)['bindings'][binding_key].update(native_identity='proved'), 'closed source integration binding schema')
+    reject('lost-source-binding-origin', lambda p:view(p)['bindings'][binding_key]['origins'].pop(), 'complete integrated source binding origins')
+    copy_results = view(product)['lifetime']['private_results']
+    first_copy, other_copy = copy_results[0]['copy_index'], copy_results[1]['copy_index']
+    first_result = next(k for k,members in groups.items() if ['copy-result:'+str(first_copy),''] in members)
+    other_result = next(k for k,members in groups.items() if ['copy-result:'+str(other_copy),''] in members)
+    reject('actual-private-input-result-merged', lambda p:view(p)['graph_groups'][left].extend(view(p)['graph_groups'].pop(first_result)), 'whole source node alias/distinction partition')
+    reject('borrowed-actual-other-private-copy-domain', lambda p:view(p)['lifetime']['private_results'][0].update(copy_index=other_copy), 'complete source call/private/result lifetime contracts')
+    # Use the actual existing result pools even when this guard has no internal
+    # private-result argument: their active root holders remain a contract.
+    reject('borrowed-actual-other-private-result-holder', lambda p:view(p)['held_source_bindings'].remove(first_result), 'complete active source holders and inactive private phase')
+    reject('earlier-observer-callers-omitted', lambda p:view(p,'parser',ordinal=-1)['retained_caller_prefixes'][0].update(first=8990), 'complete retained caller population and trial aliases conserved')
+    reject('control-trial-caller-alias-lost', lambda p:view(p,mode=2)['trial_caller_aliases'].pop(), 'complete retained caller population and trial aliases conserved')
+    reject('lost-reachable-held-source-node', lambda p:view(p)['held_source_bindings'].pop(), 'complete active source holders and inactive private phase')
+    unheld = outer(product)['no_active_own_holder'][0]
+    reject('returned-Metadata-node-promoted-at-outer-throw', lambda p:outer(p)['held_source_bindings'].append(unheld), 'complete active source holders and inactive private phase')
+    reject('lost-inactive-private-holder-boundary', lambda p:outer(p)['no_active_own_holder'].clear(), 'complete active source holders and inactive private phase')
+    reject('CODE-identity-promoted-to-distinct', lambda p:view(p)['source_distinctions']['opaque_CODE_members'].pop(), 'complete simultaneous source distinction and opaque CODE partition')
+    reject('Boolean-source-pair-count', lambda p:view(p)['source_distinctions'].update(pairs=True), 'complete simultaneous source distinction and opaque CODE partition')
+    reject('lost-source-pair', lambda p:view(p)['source_distinctions'].update(pairs=view(p)['source_distinctions']['pairs']-1), 'complete simultaneous source distinction and opaque CODE partition')
+    reject('active-private-root-deactivated', lambda p:view(p)['lifetime']['private_results'][0].update(active_source_holder=False), 'complete source call/private/result lifetime contracts')
+    reject('inactive-private-root-reactivated', lambda p:outer(p)['lifetime']['private_results'][1].update(active_source_holder=True), 'complete source call/private/result lifetime contracts')
+    successful = next(i for i,v in enumerate(product['modes'][0]['views']) if v['lifetime']['successful_returned_api_invocations'])
+    reject('lost-returned-successful-API', lambda p:p['modes'][0]['views'][successful]['lifetime']['successful_returned_api_invocations'].pop(), 'complete source call/private/result lifetime contracts')
+    reject('failed-capture-reactivated-at-outer-throw', lambda p:outer(p)['lifetime']['active_api_invocations'].append(outer(p)['lifetime']['inactive_failed_api_invocations'][0]), 'complete source call/private/result lifetime contracts')
+    factory = next(i for i,v in enumerate(product['modes'][0]['views']) if v['lifetime']['helper_result_holders'])
+    reject('lost-returned-helper-result-holder', lambda p:p['modes'][0]['views'][factory]['lifetime']['helper_result_holders'].pop(), 'complete source call/private/result lifetime contracts')
+    reject('lost-parser-returned-clone-delegate', lambda p:view(p,'parser')['lifetime']['qualified_source_phase_facts']['returned_context_delegates'].remove('clone_structured_value'), 'complete source call/private/result lifetime contracts')
+    reject('opaque-framework-boundary-erased', lambda p:view(p)['external_interval'].update(scope='all framework referents known'), 'complete opaque external framework boundary')
+    durability = module('durability.py')['qualify'](spec,binding)
+    proof = {'measured':measured, 'controls':controls, 'binding':binding, 'durability':durability,
+        'corrected_first_join':corrected, 'scope_field_gap':gap, 'first_grammar_failure':source['pin']((BASE/'first-frame-shape-gap.json').read_bytes()),
+        'first_durability_shadow_failure': {'status':checks['final-independent']['status'],
+            'programme':source['pin']((BASE/'before-durability-verify.py.txt').read_bytes()),
+            'scope':'Actual final-independent1 reached durability after controls; binding-key local shadowed the custody object. Repaired before full acceptance.'},
+        'programmes':{name:source['pin']((BASE/name).read_bytes()) for name in ('source.py','model.py','oracle.py','derive.py','qualify.py','verify.py','durability.py','scope_gap.py')},
+        'scope':product['scope']}
+    target = BASE/'proof.json'
+    if target.exists() and not oracle['exact'](proof,load('proof.json')):
+        raise ValueError('whole retained source integration proof; never overwrite')
+    if not target.exists():
+        target.write_text(json.dumps(proof,sort_keys=True,indent=2)+'\n')
+    print(SUCCESS,end='')
+
+
+if __name__ == '__main__':
+    main()

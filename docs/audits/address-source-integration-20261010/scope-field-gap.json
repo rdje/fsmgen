@@ -1,0 +1,31 @@
+{
+  "actual_status": 0,
+  "candidate": {
+    "bytes": 6042897,
+    "sha256": "07be70f484ad03a6bac3ec85206742e0b3bfacdb0934674e6d18cb0db87b7c89"
+  },
+  "measured": {
+    "categories": {
+      "direct": 102,
+      "nested": 63,
+      "parser": 6
+    },
+    "graph_alias_classes": 7632,
+    "graph_nodes": 12051,
+    "private_lifetime_occurrences": 285,
+    "reference_operands": 3033,
+    "source_distinctions": 5007992568,
+    "source_held_occurrences": 1218057,
+    "source_provenance_operands": 3936,
+    "successful_returned_api_occurrences": 16845,
+    "views": 171
+  },
+  "oracle": {
+    "bytes": 26366,
+    "sha256": "bda279f000421973c5da73f97a78e7d4f4164f535b900c27d80bff2e44e5df28"
+  },
+  "repair": "Require exact source-only field membership at each integrated schema boundary and genuine unknown native-claim controls.",
+  "root_cause": "The first successful oracle checked known view fields but did not enforce a closed view/descriptor/operand grammar. The unknown native assertion was ignored.",
+  "unknown_field": "original_native_identity",
+  "value": "proved"
+}

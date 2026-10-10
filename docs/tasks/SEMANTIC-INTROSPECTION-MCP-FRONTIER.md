@@ -5699,12 +5699,12 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2`
-  Status: `active`
+  Status: `done`
   Goal: `Derive remaining core, helper, parser and nested lifetime roles.`
   Acceptance: `Extend the independent source model to every remaining visible own reference role, nested active operations, returned-before-throw delegates and private-root lifetime constraints. Use complete qualified source graphs/construction/call contracts; partition genuinely opaque external/provider/formatter identities without inventing referents. Retain complete role membership and genuine alias/kind/phase/lifetime separating controls before raw joining.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5`
-  Verification: `Detached copies must remain distinct from supplied roots; returned private graphs cannot be assumed live at later throws. Complete source-role closure follows the private-copy foundation, Value roles, Metadata/nested phases and helper/parser roles.`
-  Commit: `pending`
+  Verification: `Complete source integration qualifies in docs/audits/address-source-integration-20261010/proof.json and parent-acceptance.json. Full literal acceptance and every child conserve; independent canonical frame/domain recount and final actual0 qualify every source role, graph alias, private/caller holder, returned-call state and opaque CODE boundary. All54 genuine controls reject, including actual native-field admission repair, borrowed equal-payload/private copies, parser/nested grammar omissions and carrier promotions. Full current book/proposed fact and focused/doctrine/hook gates qualify same-slice commitment. Only source nodes close; raw/native identity and governed publication remain successors.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.1`
   Status: `done`
@@ -5877,12 +5877,12 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5`
-  Status: `active`
+  Status: `done`
   Goal: `Join and close the complete remaining source-role lifetime model.`
   Acceptance: `Conserve all completed operation/private/Value/Metadata/nested/helper/parser hypotheses and independently prove complete own reference-role membership with source graph equality/distinction in simultaneous-live domains. Genuine whole-product omission, wrong role/kind, borrowed graph/copy/capture/phase and scope controls must reject before source-only closure. Sync book/proposed facts/current pointers under unchanged capacity authority; actual raw address joins and canonical publication remain successors.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5.2`
-  Verification: `Whole integration retains its full acceptance. First qualify complete observer-retained caller populations at every original throw view, then join all source-role models; no source parent closes at the dependency commit.`
-  Commit: `pending`
+  Verification: `Complete source integration qualifies in docs/audits/address-source-integration-20261010/proof.json and parent-acceptance.json. Full literal acceptance and every child conserve; independent canonical frame/domain recount and final actual0 qualify every source role, graph alias, private/caller holder, returned-call state and opaque CODE boundary. All54 genuine controls reject, including actual native-field admission repair, borrowed equal-payload/private copies, parser/nested grammar omissions and carrier promotions. Full current book/proposed fact and focused/doctrine/hook gates qualify same-slice commitment. Only source nodes close; raw/native identity and governed publication remain successors.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5.1`
   Status: `done`
@@ -5899,11 +5899,18 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate every qualified source graph and close complete source-role lifetimes.`
   Acceptance: `Satisfy the full parent acceptance verbatim: conserve every completed operation/private/Value/Metadata/nested/helper/parser hypothesis, incorporate complete observer caller prefixes, and independently prove every own reference role exactly once with equality/distinction in simultaneous-live source domains. Reject genuine whole omissions, wrong role/kind, borrowed graph/copy/capture/phase and scope controls. Close source parents only after complete graph/role integration, while preserving raw-address and governed canonical publication successors.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete-final-independent actual0 in docs/audits/address-source-integration-20261010/checks.json qualifies all171 source views:102 direct,63 nested and6 parser. Independent object-correspondence components agree with union-find source anchors over12051 registered graph nodes and7632 alias classes, including symbolic carriers excluded from held members. All3033 visible own reference operands appear exactly once with3936 conserved component provenance operands. Source-held and pair counts are per view, never unique native objects:1218057 holder occurrences and5007992568 qualified source distinctions, with CODE/CODE relations opaque. All16845 successful-return API occurrences and285 private lifetime occurrences retain exact source phase/root contracts. Every11 whole prerequisite models and282 complete fixed-Git inputs conserve. All54 genuine controls reject, including actual equal-payload source/target substitution, private input/result merger, borrowed existing copy/result/capture/phase, parser/nested omissions, carrier/inactive Metadata promotion, lost provenance/callers/delegates and unknown native fields. First parser-grammar failure reproduces; original external-interval guess is corrected by canonical own parser descriptors. First successful oracle really admitted an extra native-identity assertion; exact frozen oracle/candidate/status0 retain and closed mode/view/binding/operand schemas repair it. Initial canonical-name control setup and custody-variable shadow failures retain with full programmes/actual nonzero outcomes; both repaired before closure. First complete successful proof/programme retain before stronger actual borrowed-result and carrier/parser/nested controls. Parent-acceptance checks full literal goals/acceptances, every child and independently recounts all original domains/reference roles before closing exactly this leaf, integration and remaining-source-role source parents. Exact whole before/after task snapshots match original closure identities. Focused All tests successful Files3 Tests310; final same-slice book statuses/examples, full canonical copies/native guide/omission control, task/book metrics, claims, staged doctrines and normal hooks gate commitment. Current cards/questions/probes and all ceilings/Knowledge Map authority conserve. Raw address/native identity/flags/payload, opaque provider/framework/formatter/Regexp/CODE identity, cold replay, visual book QA and governed canonical publication remain explicit successors.`
+  Commit: `this slice`
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S in docs/audits/address-source-integration-20261010/root-cause.json locates original wrapper entry/retention at100f540f56fd5a8209849016ac6874d2d85b7dd1, private source assignments at48da7b698141e13a6c57eddca810a641e0baae9c and the canonical parser grammar atdb3712f8a8f01219b256f07741afcfdfc83bdb2b. Full component models lacked one simultaneous source alias/role join. First oracle KeyError treated parser descriptors as kind-tagged operands; canonical reader proves their reference_kind/source_value grammar. After that repair the first successful oracle admitted an unknown original_native_identity field; scope-field-gap.json reproduces actual0 against its frozen complete programme. Missing closed field membership caused this assurance gap. Initial control canonical-name and custody-variable-shadow errors retain and are corrected.
+  - [x] **ADDRESSED (verified)** — complete-final-independent actual0 qualifies every171 original source view and3033 own reference operands exactly once, conserving3936 component provenance entries and all whole graph aliases/roots, returned API/private/helper/parser contracts, retained caller prefixes and opaque CODE relations. Independent union-find and object-correspondence/connected-component legs agree; full original own frame/domain recount verifies parent acceptance. Every54 genuine control rejects, including actual equal-payload/private-copy substitutions and native-field promotion. First grammar failure, successful incomplete-schema admission, harness failures and first complete proof retain exactly. Full11 model and282 fixed-Git inputs conserve. Source integration and remaining-source-role parents close under their unchanged full acceptance; raw/native/governed publication stay open. Book/proposed fact and exact task-closure snapshots align.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in focused actual0. Complete corrected predecessor source qualification and distinct whole fixed-Git/source assignment durability pass. Same-slice full book source/status conservation, final canonical copies/native guide and genuine omission, exact owned task/book measurements, claims, staged scripts/check_doctrines.sh and normal hooks gate commitment. Existing facts/questions/probes, every capacity ceiling and Knowledge Map authority retain. Full CI/push and visual QA keep their existing owners.
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3`
   Status: `pending`

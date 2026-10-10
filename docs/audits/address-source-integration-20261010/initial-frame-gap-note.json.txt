@@ -1,0 +1,2629 @@
+{
+  "exception": "KeyError: kind",
+  "scope": "First oracle treated every argument as typed source data, including qualified opaque external framework operands; fix the census to preserve their explicit grammar and external scope.",
+  "source_arguments": [
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Support::ISFRecordPortContexts::_require",
+      "value": {
+        "expression": "!output_field_write",
+        "match": "logical false compatible with visible false scalar; no literal or flag inference",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "guard predicate",
+        "source_value": 0
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Support::ISFRecordPortContexts::_require",
+      "value": {
+        "expression": "$message",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "guard message",
+        "source_value": "transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "$target",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "target token",
+        "source_value": "value.flag"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "'write'",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "access",
+        "source_value": "write"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "$context target",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "reference context",
+        "source_value": "transaction 'main' set target"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$clause->[1]",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "write target",
+        "source_value": "value.flag"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$clause->[2]",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source operand",
+        "source_value": "1"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$context set",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "assignment context",
+        "source_value": "transaction 'main' set"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$tx->{clauses}",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "transaction clauses"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "expression": "transaction 'main'",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "transaction context",
+        "source_value": "transaction 'main'"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "actor",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "option key",
+        "source_value": "actor"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "whole_output_writes_only",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "option key",
+        "source_value": "whole_output_writes_only"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "1",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "option value",
+        "source_value": 1
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": null,
+        "expression": "$actor_ast",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "normalized actor AST"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "facade receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": null,
+        "expression": "$port",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "interface port entry"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "$context",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "admission context",
+        "source_value": "actor 'refused' interface port 'value'"
+      }
+    },
+    {
+      "argument": 4,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "allow_record",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 4,
+        "role": "option key",
+        "source_value": "allow_record"
+      }
+    },
+    {
+      "argument": 5,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "1",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 5,
+        "role": "option value",
+        "source_value": 1
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": null,
+        "expression": "$actor_ast",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "normalized actor AST"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "facade receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "ordinary",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Support::ISFRecordPortContexts::_require",
+      "value": {
+        "expression": "!output_field_write",
+        "match": "logical false compatible with visible false scalar; no literal or flag inference",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "guard predicate",
+        "source_value": 0
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Support::ISFRecordPortContexts::_require",
+      "value": {
+        "expression": "$message",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "guard message",
+        "source_value": "transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "$target",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "target token",
+        "source_value": "value.flag"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "'write'",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "access",
+        "source_value": "write"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "$context target",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "reference context",
+        "source_value": "transaction 'main' set target"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$clause->[1]",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "write target",
+        "source_value": "value.flag"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$clause->[2]",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source operand",
+        "source_value": "1"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$context set",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "assignment context",
+        "source_value": "transaction 'main' set"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$tx->{clauses}",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "transaction clauses"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "expression": "transaction 'main'",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "transaction context",
+        "source_value": "transaction 'main'"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "actor",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "option key",
+        "source_value": "actor"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "whole_output_writes_only",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "option key",
+        "source_value": "whole_output_writes_only"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "1",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "option value",
+        "source_value": 1
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": null,
+        "expression": "$actor_ast",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "normalized actor AST"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "facade receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": null,
+        "expression": "$port",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "interface port entry"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "$context",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "admission context",
+        "source_value": "actor 'refused' interface port 'value'"
+      }
+    },
+    {
+      "argument": 4,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "allow_record",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 4,
+        "role": "option key",
+        "source_value": "allow_record"
+      }
+    },
+    {
+      "argument": 5,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "1",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 5,
+        "role": "option value",
+        "source_value": 1
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": null,
+        "expression": "$actor_ast",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "normalized actor AST"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "facade receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "storable",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Support::ISFRecordPortContexts::_require",
+      "value": {
+        "expression": "!output_field_write",
+        "match": "logical false compatible with visible false scalar; no literal or flag inference",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "guard predicate",
+        "source_value": 0
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Support::ISFRecordPortContexts::_require",
+      "value": {
+        "expression": "$message",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "guard message",
+        "source_value": "transaction 'main' set target record output field writes are not yet admitted; target 'value.flag' requires output-field writer qualification"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "$target",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "target token",
+        "source_value": "value.flag"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "'write'",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "access",
+        "source_value": "write"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Support::ISFRecordPortContexts::_reference",
+      "value": {
+        "expression": "$context target",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "reference context",
+        "source_value": "transaction 'main' set target"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$clause->[1]",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "write target",
+        "source_value": "value.flag"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$clause->[2]",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source operand",
+        "source_value": "1"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Support::ISFRecordPortContexts::_assignment",
+      "value": {
+        "expression": "$context set",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "assignment context",
+        "source_value": "transaction 'main' set"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$tx->{clauses}",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "transaction clauses"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$local / $scope",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "transaction record context"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Support::ISFRecordPortContexts::_clauses",
+      "value": {
+        "expression": "transaction 'main'",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "transaction context",
+        "source_value": "transaction 'main'"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "actor",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 0,
+        "role": "option key",
+        "source_value": "actor"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "whole_output_writes_only",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "option key",
+        "source_value": "whole_output_writes_only"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Support::ISFRecordPortContexts::validate_actor_record_contexts",
+      "value": {
+        "expression": "1",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "option value",
+        "source_value": 1
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": null,
+        "expression": "$actor_ast",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "normalized actor AST"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 5,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 6,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "facade receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (output value (type frame)) (output done)) (transaction main (set value.flag 1)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        2,
+        0
+      ],
+      "frame": 7,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "display_class": null,
+        "expression": "$port",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 2,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "interface port entry"
+      }
+    },
+    {
+      "argument": 3,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "$context",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 3,
+        "role": "admission context",
+        "source_value": "actor 'refused' interface port 'value'"
+      }
+    },
+    {
+      "argument": 4,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "allow_record",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 4,
+        "role": "option key",
+        "source_value": "allow_record"
+      }
+    },
+    {
+      "argument": 5,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 0,
+      "function": "FSM::Adapter::ISF::Parser::_resolve_typed_width_entry",
+      "value": {
+        "expression": "1",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 5,
+        "role": "option value",
+        "source_value": 1
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 1,
+      "function": "FSM::Adapter::ISF::Parser::_finalize_actor_type_references",
+      "value": {
+        "display_class": null,
+        "expression": "$result / $actor",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "partially built actor"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "display_class": null,
+        "expression": "$actor_ast",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 1,
+        "reference_kind": "ARRAY",
+        "referent_contents": "not measured",
+        "role": "normalized actor AST"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 2,
+      "function": "FSM::Adapter::ISF::Parser::_build_actor",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF::Parser",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "contained parser receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 3,
+      "function": "FSM::Adapter::ISF::Parser::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    },
+    {
+      "argument": 0,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "display_class": "FSM::Adapter::ISF",
+        "expression": "$self",
+        "match": "source reference role / visible kind only",
+        "native_identity": "not measured",
+        "position": 0,
+        "reference_kind": "HASH",
+        "referent_contents": "not measured",
+        "role": "facade receiver"
+      }
+    },
+    {
+      "argument": 1,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_text",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 1,
+        "role": "source text",
+        "source_value": "(actor refused (types (type frame (record (flag bit))) (type lanes (list bit bit))) (interface (input value (type lanes)) (output done)) (transaction main (complete done)))"
+      }
+    },
+    {
+      "argument": 2,
+      "domain": [
+        "controls",
+        "parses",
+        3,
+        0
+      ],
+      "frame": 4,
+      "function": "FSM::Adapter::ISF::parse_source",
+      "value": {
+        "expression": "$source_label",
+        "match": "source expression glyphs / visible scalar or proper nonempty prefix",
+        "native_scalar_encoding": "not measured",
+        "position": 2,
+        "role": "source label",
+        "source_value": "still-refused.isf"
+      }
+    }
+  ],
+  "status": 1
+}

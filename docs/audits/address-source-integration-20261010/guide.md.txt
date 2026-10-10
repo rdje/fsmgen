@@ -1,0 +1,50 @@
+# Complete source role/graph/lifetime integration
+
+Owner: scope.txt. Run from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-source-integration-20261010/verify.py
+```
+
+source.py qualifies the complete corrected predecessor and binds every inherited
+input to fixed Git. inputs.json is a whole-model registry, not another recursive
+copy of all ancestors. model.py unifies complete source graphs only at explicit
+forwarding/construction/private-input anchors and joins all source-role views.
+oracle.py never imports the producer: it reconstructs object correspondences,
+connected components, complete frame/role provenance, graph aliases, source-held
+roots, caller prefixes, opaque CODE relations and complete source lifetime state.
+Both canonical source argument grammars remain exact. Whole native bodies and
+numeric addresses are not new inputs; their join is the next owned child.
+
+Graph groups include symbolic checkpoint/argument carrier nodes for complete
+traversal. Only qualified active source roots and their reachable referents enter
+the source-held set. Carrier arrays cannot acquire an original native referent.
+Counts are per registered pool/view and may repeat the same nested event; no
+count is a unique global native-object census. Private-copy results are finite
+source hypotheses; original provider identity and scalar flags stay unmeasured.
+
+qualify.py and the first/corrected oracle snapshots retain the initial grammar
+failure and first corrected source admission. scope_gap.py reproduces the actual
+unknown native-claim field that the first successful reader ignored. The final
+oracle closes each source schema; exact native-field controls reject. The initial
+frame-gap note's external-framework interpretation was superseded by inspection
+of the canonical own parser grammar, with both notes retained. The first control
+assumed a canonical representative spelling; the repaired control selects actual
+equivalence-class membership. A later local binding-key name shadowed the custody
+object after controls; the full nonzero receipt and programme retain. The final
+reader repairs both, preserving the first complete successful proof before its
+additional borrowed-result/carrier/parser/nested controls.
+
+durability.py verifies complete fixed-Git inputs and the actual prerequisite
+outcome independently. proof.json/checks.json retain every final measurement,
+control, programme identity and actual guarded result. close_parents.py checks
+literal full parent contracts, all child states and independently recounts every
+operation domain/reference operand before closing only source nodes. Exact whole
+pre/post task snapshots match the identities in parent-acceptance.json; current
+checklists/pointers may advance afterward without rewriting those historical
+closure bytes. Raw/native and governed publication parents remain open.
+
+book-proof.json separately checks exact whole-source/status conservation, every
+final canonical copy, native guide text and a genuine omission control. Visual
+review remains pending. Current Knowledge Map cards/questions/probes and all
+capacity ceilings remain unchanged; the proposed fact awaits governed publication.

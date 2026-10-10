@@ -1,0 +1,367 @@
+"""Independent source-expression joins and whole role/alias/lifetime membership.
+
+This reader builds object graphs and a correspondence adjacency graph, then
+computes connected components. It does not import the union-find producer.
+"""
+import hashlib
+import json
+import re
+
+
+def exact(a, b):
+    return json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+class Node:
+    def __init__(self, pool, path, kind):
+        self.pool, self.path, self.kind, self.edges = pool, path, kind, {}
+
+
+class Correspondence:
+    def __init__(self):
+        self.nodes, self.roots, self.links, self.identities, self.anchors = {}, {}, {}, {}, []
+
+    def decode(self, pool, encoded):
+        found = {}
+        def walk(item, pointer):
+            if type(item) in (str, int, type(None)):
+                return item
+            require(type(item) is list and len(item) == 2, 'integration typed source graph grammar')
+            tag, value = item
+            if tag == 'reference':
+                require(type(value) is str and value in found, 'integration graph alias target')
+                return found[value]
+            require(tag in ('array', 'hash') and type(value) is (list if tag == 'array' else dict),
+                    'integration source graph reference kind')
+            node = Node(pool, pointer, 'ARRAY' if tag == 'array' else 'HASH')
+            found[pointer] = node
+            self.nodes[pool, pointer] = node
+            self.links[node] = set()
+            entries = value.items() if tag == 'hash' else enumerate(value)
+            for key, child in entries:
+                node.edges[str(key)] = walk(child, pointer + '/' + str(key).replace('~', '~0').replace('/', '~1'))
+            return node
+        self.roots[pool] = walk(encoded, '')
+        raw = json.dumps(encoded, sort_keys=True, separators=(',', ':')).encode()
+        self.identities[pool] = {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+    def select(self, pool, pointer):
+        value = self.roots[pool]
+        for part in pointer.split('/')[1:]:
+            require(isinstance(value, Node), 'complete source expression graph selection')
+            value = value.edges[part.replace('~1', '/').replace('~0', '~')]
+        require(isinstance(value, Node), 'source expression selects a reference')
+        return value
+
+    def correspond(self, a, b, statement):
+        self.anchors.append({'left': [a.pool, a.path], 'right': [b.pool, b.path], 'source': statement})
+        forward, reverse = {}, {}
+        def compare(x, y):
+            if not isinstance(x, Node) or not isinstance(y, Node):
+                require(not isinstance(x, Node) and not isinstance(y, Node) and exact(x, y),
+                        'independent complete source forwarding scalar/reference agreement')
+                return
+            if x in forward or y in reverse:
+                require(forward.get(x) is y and reverse.get(y) is x, 'independent complete source forwarding alias agreement')
+                return
+            forward[x], reverse[y] = y, x
+            require(x.kind == y.kind and set(x.edges) == set(y.edges),
+                    'independent complete source forwarding members/kinds')
+            self.links[x].add(y); self.links[y].add(x)
+            for key in sorted(x.edges):
+                compare(x.edges[key], y.edges[key])
+        compare(a, b)
+
+    def components(self):
+        self.names, result, seen = {}, {}, set()
+        for start in self.nodes.values():
+            if start in seen:
+                continue
+            todo, members = [start], set()
+            while todo:
+                node = todo.pop()
+                if node in members:
+                    continue
+                members.add(node); todo.extend(self.links[node] - members)
+            seen |= members
+            pairs = sorted([node.pool, node.path] for node in members)
+            require(len({p[0] for p in pairs}) == len(pairs), 'independent source pool distinction conservation')
+            key = 'graph:' + json.dumps(pairs[0], separators=(',', ':'))
+            result[key] = pairs
+            for node in members:
+                self.names[node] = key
+        return result
+
+    def key(self, pool, pointer):
+        return self.names[self.select(pool, pointer)]
+
+    def reached(self, roots):
+        found, todo = set(), list(roots)
+        while todo:
+            node = todo.pop()
+            if node in found:
+                continue
+            found.add(node)
+            todo.extend(child for child in node.edges.values() if isinstance(child, Node))
+        return {self.names[node] for node in found}
+
+
+def qualify(product, data, spec):
+    d = lambda name: data[name]['hypotheses']
+    inp = lambda name: data[name]['inputs']
+    expected_scope = ('Complete finite visible own source reference roles, qualified private-root holders and '
+        'observer caller prefixes at every original source throw view. Graph equality follows '
+        'qualified source forwarding/construction, never equal payload alone. Source distinctions '
+        'remain finite allocation/copy hypotheses. Original raw addresses, native identity/flags/payload, '
+        'opaque provider/framework/formatter/Regexp/CODE identity, global heap census, cold replay '
+        'and governed canonical publication remain open.')
+    require(set(product) == {'modes', 'scope', 'conserved_models'} and product['scope'] == expected_scope,
+            'complete integration source-only scope')
+    require(exact(product['conserved_models'], {n: row['hypotheses'] for n, row in spec['models'].items()}),
+            'every complete source prerequisite model conserved')
+    require(len(product['modes']) == len(d('helper')['modes']), 'complete integration capture population')
+    measured = {'views': 0, 'reference_operands': 0, 'source_provenance_operands': 0,
+                'graph_nodes': 0, 'graph_alias_classes': 0, 'source_distinctions': 0,
+                'source_held_occurrences': 0, 'successful_returned_api_occurrences': 0,
+                'private_lifetime_occurrences': 0, 'categories': {}}
+    operations = {(r['mode'], r['domain'], r['index']): r for r in d('operation')['cases']}
+    value_cases = {(r['mode'], r['index']): r for r in d('value')['cases']}
+    source_values = {(r['mode'], r['index']): r for r in inp('value')['cases']}
+    nested_cases = {(r['mode'], v['record_api'], v['phase']): (r, v) for r in d('nested')['cases'] for v in r['views']}
+    parser_cases = {(m['mode'], r['domain'][2]): (m, r) for m in d('parser')['modes'] for r in m['cases']}
+    for current, helper_mode in zip(product['modes'], d('helper')['modes'], strict=True):
+        mode = helper_mode['mode']
+        require(current['mode'] == mode, 'exact integration capture allocation')
+        expected_views = [(case, v) for case in helper_mode['cases'] for v in case['views']]
+        require(len(current['views']) == len(expected_views), 'complete integration throw-view population')
+        holder = next(m for m in d('holders')['modes'] if m['mode'] == mode)
+        original = next(m['headers'] for m in inp('holders')['modes'] if m['mode'] == mode)
+        for actual, (case, helper) in zip(current['views'], expected_views, strict=True):
+            require(exact(actual['domain'], helper['domain']) and exact(actual['event'], helper['event']),
+                    'exact source integration record/event/phase domain')
+            domain, index, phase = helper['domain'][1:]
+            operation = operations[mode, domain, index]
+            profile = helper_mode['profiles'][case['helper']]
+            kernel = Correspondence(); kernel.decode('helper', profile['graph'])
+            components, frame_maps, roots, local_held, inactive, private_lifetimes = {}, {}, [], [], [], []
+            if (mode, index) in value_cases and domain == 'api':
+                category = 'direct'
+                core, source = value_cases[mode, index], source_values[mode, index]
+                require(phase == 0 and len(operation['operations']) == 1, 'complete direct integration phase')
+                boundary = operation['operations'][0]
+                require(core['frames'][-1]['function'] == boundary['frames'][0]['function']
+                        and exact(core['frames'][-1]['arguments'], boundary['frames'][0]['arguments']),
+                        'independent public source frame overlap')
+                frames = core['frames'][:-1] + boundary['frames']
+                components['value'] = (core['frames'], core['occurrences'], core['bindings'])
+                frame_maps['value'] = list(range(len(core['frames'])))
+                local_held = [('value', key) for key in core['bindings']]
+                kernel.decode('operation', source['arguments'])
+                named = {source['arguments'][1][i]: i + 1 for i in range(0, len(source['arguments'][1]), 2)}
+                for ordinal, item in enumerate(source['private']):
+                    copy_index = item['domain'][1]
+                    require(item['api'] == index and item['kind'] == 'value-private' and item['domain'][0] == mode,
+                            'private result belongs to exact source API/capture')
+                    before, result = 'copy-input:' + str(copy_index), 'copy-result:' + str(copy_index)
+                    kernel.decode(before, item['before']); kernel.decode(result, item['result'])
+                    if core['kind'] == 'reference':
+                        token = source['arguments'][1][named['token']]
+                        root = re.match('[A-Za-z_]\\w*', token)[0]
+                        selected = '/' + str(named['scope']) + '/' + root
+                    elif core['kind'] == 'scope':
+                        reached = source['scope_stages'][ordinal]
+                        require(reached['copy_index'] == copy_index, 'complete scope private assignment order')
+                        selected = '/' + str(named[reached['layer']]) + '/' + reached['name']
+                    else:
+                        choices = [role for role in ('source', 'target') if isinstance(kernel.select('operation', '').edges[str(named[role])], Node)]
+                        selected = '/' + str(named[choices[ordinal]])
+                    kernel.correspond(kernel.select(before, ''), kernel.select('operation', selected), 'dclone input from ' + selected)
+                    holds = core['kind'] in ('copy', 'reference') or ordinal + 1 == len(source['private'])
+                    if holds:
+                        roots.append(kernel.select(result, ''))
+                    private_lifetimes.append({'copy_index': copy_index, 'input_anchor': selected, 'result_pool': result,
+                        'active_source_holder': holds,
+                        'activation': 'copy delegate returned; source variable holds result' if holds else
+                                      'earlier scope iteration ended; no private result holder asserted'})
+                phase_facts = {'guard': core['guard'], 'private_scope': 'Complete original Value private calls; copy delegates inactive. Current copy/reference variables or final failing scope root establish result holders; no external object death claimed.'}
+            elif domain == 'api':
+                category = 'nested'
+                pair, view = nested_cases[mode, index, phase]
+                frames = list(view['frames'])
+                components['nested'] = (view['frames'], view['occurrences'], pair['bindings'])
+                frame_maps['nested'] = list(range(len(view['frames'])))
+                kernel.decode('nested', pair['joint_source_graph'])
+                local_held = [('nested', key) for key in view['active_bindings'] + view['source_retained_bindings']]
+                inactive = [('nested', key) for key in view['no_active_own_holder']]
+                private_lifetimes = view['returned_copy_delegates']
+                phase_facts = {key: view[key] for key in ('active_invocations', 'inactive_invocations', 'event')}
+            else:
+                category = 'parser'
+                parser_mode, parser = parser_cases[mode, index]
+                frames = list(parser['frames'])
+                components['parser'] = (parser['frames'], parser['occurrences'], parser_mode['bindings'])
+                frame_maps['parser'] = list(range(len(parser['frames'])))
+                local_held = [('parser', key) for key in parser['held']]
+                phase_facts = {key: parser[key] for key in ('active_roots', 'inactive_intermediates',
+                    'returned_context_delegates', 'returned_api_events', 'lifetime_scope', 'pending')}
+                require(not parser['pending'], 'complete parser references have no unresolved roles')
+            require(actual['category'] == category, 'complete source integration case partition')
+            # Independent anchor selector: qualified active helper events and held
+            # returned-reference arguments, rather than the producer's recipe branch.
+            if category != 'parser':
+                outer = pair['scope_api'] if category == 'nested' else index
+                supplied = kernel.select('nested', '/0') if category == 'nested' else kernel.select('operation', '')
+                if helper['active_named_operations']:
+                    require(helper['active_named_operations'] == [outer], 'complete active outer helper operation')
+                    normalized = next(i for i, row in enumerate(profile['source_recipe']['named_operations']) if row['index'] == outer)
+                    kernel.correspond(supplied, kernel.select('helper', '/1/' + str(normalized)), 'active named helper operation arguments')
+                elif any(r['holder_operation'] == outer for r in profile['returned_result_holders']):
+                    kernel.correspond(supplied, kernel.select('helper', '/3'), 'direct callback arguments and retained returned reference')
+            graph_groups = kernel.components()
+            require(exact(actual['graphs'], kernel.identities), 'complete source integration graph population/values')
+            require(exact(actual['graph_anchors'], kernel.anchors), 'complete explicit source forwarding anchors')
+            require(exact(actual['graph_groups'], graph_groups), 'whole source node alias/distinction partition')
+            offset = len(frames)
+            components['helper'] = (helper['frames'], helper['occurrences'], helper_mode['bindings'])
+            frame_maps['helper'] = list(range(offset, offset + len(helper['frames'])))
+            frames += helper['frames']
+            local_held += [('helper', key) for key in helper['held_bindings']]
+            for ordinal, boundary in enumerate(operation['operations']):
+                if boundary['domain'][3] != phase:
+                    continue
+                matches = [i for i in range(len(frames) - 3) if [f['function'] for f in frames[i:i+4]] == [f['function'] for f in boundary['frames']]]
+                require(len(matches) == 1, 'every original operation boundary exactly once')
+                label = 'operation:' + str(ordinal)
+                components[label] = (boundary['frames'], boundary['occurrences'], boundary['bindings'])
+                frame_maps[label] = list(range(matches[0], matches[0] + 4))
+            require(exact(actual['frames'], frames), 'whole source frame functions/arguments/roles')
+            require(exact(actual['component_frame_maps'], frame_maps), 'complete source component frame overlap maps')
+            aliases, origins, kinds = {}, {}, {}
+            def expression(label, binding):
+                token = label + '/' + binding
+                if token in aliases:
+                    return aliases[token]
+                descriptor = components[label][2][binding]
+                source, ref_kind = descriptor['origin'], descriptor['reference_kind']
+                role = source['kind']
+                if label.startswith('operation:'):
+                    source_slots = [r for r in components[label][1] if r['binding'] == binding]
+                    overlapped = set()
+                    for old in source_slots:
+                        slot = (frame_maps[label][old['frame']], old['argument'])
+                        for other, (_, occurrences, _) in components.items():
+                            if other.startswith('operation:'):
+                                continue
+                            for occurrence in occurrences:
+                                if (frame_maps[other][occurrence['frame']], occurrence['argument']) == slot:
+                                    overlapped.add(expression(other, occurrence['binding']))
+                    if overlapped:
+                        require(len(overlapped) == 1, 'independent original operation referent overlap')
+                        canonical = next(iter(overlapped))
+                    else:
+                        require(category == 'direct', 'complete operation source role resolution')
+                        if role == 'saved_lookup':
+                            canonical = 'saved:' + source['expression']
+                        elif role == 'fresh_caller_array':
+                            canonical = 'caller:api:' + str(index)
+                        else:
+                            require(role == 'qualified_input_node', 'complete direct operation reference source')
+                            canonical = kernel.key('operation', source['path'])
+                elif label == 'value':
+                    canonical = kernel.key('operation', source['node']) if role == 'supplied_input_node' else kernel.key('copy-result:' + str(source['copy_index']), source['node']) if role == 'qualified_private_result' else 'value:' + binding
+                elif label == 'nested':
+                    canonical = kernel.key('nested', source['node']) if role == 'joint_source_node' else 'caller:api:' + str(source['api']) if role == 'observer_caller_snapshot' else 'saved:' + source['expression'] if role == 'saved_lookup' else 'nested:' + binding
+                elif label == 'parser':
+                    if role in ('retained_context_protocol_caller', 'observer_caller_snapshot'):
+                        table = source['holder'][1:]
+                        canonical = 'caller:' + table + ':' + str(source.get('index', source.get('parse_index')))
+                    else:
+                        canonical = 'saved:' + source['expression'] if role == 'saved_lookup' else 'parser:' + binding
+                else:
+                    if role == 'qualified_helper_source_node':
+                        canonical = kernel.key('helper', source['node'])
+                    elif role in ('observer_helper_caller_snapshot', 'observer_api_caller_snapshot'):
+                        table = source['holder'][1:]
+                        canonical = 'caller:' + table + ':' + str(source.get('api', source.get('helper')))
+                    elif binding.startswith('saved-api:'):
+                        canonical = 'saved:' + source['expression']
+                    elif binding == 'saved-public-subtest':
+                        canonical = 'saved:$subtest'
+                    else:
+                        canonical = 'helper:' + binding
+                aliases[token] = canonical
+                require(kinds.setdefault(canonical, ref_kind) == ref_kind, 'joined source referent kind agreement')
+                origins.setdefault(canonical, []).append({'component': label, 'binding': binding, 'source': source})
+                return canonical
+            expected_slots = {}
+            for label, (_, occurrences, _) in components.items():
+                for occurrence in occurrences:
+                    fi, ai = frame_maps[label][occurrence['frame']], occurrence['argument']
+                    canonical = expression(label, occurrence['binding'])
+                    slot = expected_slots.setdefault((fi, ai), {'binding': canonical, 'provenance': []})
+                    require(slot['binding'] == canonical, 'source frame overlap has one referent')
+                    slot['provenance'].append({'component': label, 'frame': occurrence['frame'], 'argument': ai})
+            held = {expression(label, key) for label, key in local_held}
+            unheld = sorted(expression(label, key) for label, key in inactive)
+            for key in held:
+                if key in graph_groups:
+                    pool, pointer = graph_groups[key][0]
+                    roots.append(kernel.select(pool, pointer))
+            held |= kernel.reached(roots)
+            require(exact(actual['source_binding_aliases'], aliases), 'complete source binding origin/alias allocation')
+            all_slots = {(fi, ai) for fi, f in enumerate(frames) for ai, a in enumerate(f['arguments']) if a['kind'] in ('reference', 'regex_source')}
+            require(set(expected_slots) == all_slots, 'independent complete own reference-role source census')
+            require(len(actual['occurrences']) == len(all_slots), 'every integrated reference operand exactly once')
+            seen = set()
+            for row in actual['occurrences']:
+                key = (row['frame'], row['argument'])
+                require(type(row['frame']) is int and type(row['argument']) is int and key not in seen and key in expected_slots,
+                        'typed unique integrated reference slot')
+                seen.add(key); expected = expected_slots[key]
+                require(row['binding'] == expected['binding'] and row['role'] == frames[key[0]]['arguments'][key[1]]['role'],
+                        'exact integrated source operand role/referent')
+                require(exact(row['provenance'], expected['provenance']), 'every original source role provenance conserved')
+            require(set(actual['bindings']) == set(kinds) | held, 'complete integrated binding and held graph membership')
+            for key, descriptor in actual['bindings'].items():
+                expected_kind = kinds.get(key, kernel.nodes[tuple(graph_groups[key][0])].kind if key in graph_groups else None)
+                require(descriptor['reference_kind'] == expected_kind, 'complete integrated binding reference kinds')
+                require(exact(descriptor['origins'], origins.get(key, [])), 'complete integrated source binding origins')
+            prefix = next(row for row in holder['views'] if exact(row['domain'], helper['domain']))
+            require(exact(actual['retained_caller_prefixes'], prefix['held_prefixes']) and exact(actual['trial_caller_aliases'], prefix['trial_aliases']),
+                    'complete retained caller population and trial aliases conserved')
+            caller_keys = {key for key in held if key.startswith('caller:')}
+            for key in caller_keys:
+                _, table, number = key.split(':')
+                require(any(r['table'] == table and r['first'] <= int(number) < r['end'] for r in prefix['held_prefixes']),
+                        'every caller role belongs to simultaneous retained source prefix')
+            extra = sorted(held - caller_keys)
+            require(exact(actual['held_source_bindings'], extra) and exact(actual['no_active_own_holder'], unheld)
+                    and not (set(extra) & set(unheld)), 'complete active source holders and inactive private phase')
+            codes = sorted(key for key in extra if actual['bindings'][key]['reference_kind'] == 'CODE')
+            population = prefix['population'] + len(extra)
+            pairs = sum(range(population)) - sum(range(len(codes)))
+            require(exact(actual['source_distinctions'], {'relation': 'all distinct held member pairs except CODE/CODE',
+                'population': population, 'pairs': pairs, 'opaque_CODE_members': codes}), 'complete simultaneous source distinction and opaque CODE partition')
+            start, end = original['helpers'][case['helper']]['api_start'], original['helpers'][case['helper']]['api_end']
+            success = [i for i in range(start, end) if original['api'][i]['accepted'] == 1]
+            failed = [i for i in range(start, end) if original['api'][i]['accepted'] == 0]
+            active = [pair['scope_api'], pair['capture_api']] if category == 'nested' and view['name'] != 'scope-outer' else [pair['scope_api']] if category == 'nested' else [index] if category == 'direct' else []
+            lifetime = {'active_api_invocations': active, 'inactive_failed_api_invocations': [i for i in failed if i not in active],
+                'successful_returned_api_invocations': success, 'private_results': private_lifetimes,
+                'qualified_source_phase_facts': phase_facts, 'helper_result_holders': profile['returned_result_holders'],
+                'scope': 'Own source holders and call state at this event; returned calls do not establish payload death or external/provider retention.'}
+            require(exact(actual['lifetime'], lifetime), 'complete source call/private/result lifetime contracts')
+            require(exact(actual['external_interval'], helper['opaque_framework_interval']), 'complete opaque external framework boundary')
+            measured['views'] += 1; measured['reference_operands'] += len(all_slots)
+            measured['source_provenance_operands'] += sum(len(row['provenance']) for row in actual['occurrences'])
+            measured['graph_nodes'] += len(kernel.nodes); measured['graph_alias_classes'] += len(graph_groups)
+            measured['source_held_occurrences'] += population; measured['source_distinctions'] += pairs
+            measured['successful_returned_api_occurrences'] += len(success); measured['private_lifetime_occurrences'] += len(private_lifetimes)
+            measured['categories'][category] = measured['categories'].get(category, 0) + 1
+    require(measured['views'] == sum(len(m['views']) for m in d('holders')['modes']), 'whole original integration view population')
+    return measured
