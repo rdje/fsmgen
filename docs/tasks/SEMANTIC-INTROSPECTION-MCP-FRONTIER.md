@@ -4768,9 +4768,38 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Post-book focused audit: `All tests successful. Files=2, Tests=308` (checks.json). mdBook build, full native guide and complete generated source-copy checks pass. Bounded guide/book authority and measured task growth preserve prior ceilings and Knowledge Map allowance; current publication, claim inventory, staged doctrines and normal hooks gate commit. All unchanged ancestor/native/CI/visual scopes remain open.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify remaining complete source scalar and regex values and profile boundaries.`
   Acceptance: `After .1 commits, resolve every remaining census scalar/encoding/regex/source-value obligation from whole own expressions and qualified supplied/default inputs, including full inherited inner operands with their unchanged evidence role. Select necessary source-neutral public constructors before native capture and independently qualify every complete value and exact source-determined display alternative. Preserve genuinely unmeasured original settings/formatter, reference/referent/receiver identity, private framework intervals and source do versus diagnostic require roles explicitly; no ambiguity becomes a convenient scalar, prefix or wildcard. Whole input/constructor/regex/profile/schema/scope/member/encoding controls must reject at intended contracts. Retain actual full sources/products/results and failures, exact remaining obligations, book and required gates; commit before .3.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.3`
+  Verification: `Source-only startup recovery at c1d3866cea8998b3df22a3ba9ff3ff3b8356c5a2 confirms distinct scalar, regex and opaque-profile obligations. Split before artifact changes into complete scalar qualification .1, whole regex construction .2 and explicit runtime boundaries/unchanged parent acceptance .3. Predicate verify.py reexecutes successfully under the required RAM guard after process-inspection access is granted. Preserve every original Goal/Acceptance and inherited evidence role; no source-value/header/native closure is asserted by decomposition.`
+  Commit: `pending`
+
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S for the remaining scalar/regex Goal locates its original combined contract. Source census obligation-plan.json independently assigns scalar construction, regex construction and original-profile boundaries. One implementation would mix separately falsifiable contracts; the committed failed-predicate reader passes without closing them.
+  - [x] **ADDRESSED (verified)** — Exact original parent Goal/Acceptance remains unchanged. Three ordered children separately own complete scalar qualification, whole regex qualification and complete opaque-boundary/parent acceptance. MEMORY.md selects scalar .1; no artifact or runtime claim is promoted. The measured task allowance follows LIVE_DOCUMENT_SIZE_CONTAINMENT.md inside every unchanged ceiling; book behavior is unchanged.
+  - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl: all active task-tree invariants hold. The committed observer-predicate-values verify.py passes under the RAM guard; focused staged acceptance and scripts/check_doctrines.sh gate this decomposition commit.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.1`
+  Status: `pending`
+  Goal: `Qualify complete remaining scalar source values and their finite public construction.`
+  Acceptance: `Authenticate the complete committed source census, predicate/display products and every completed prerequisite reader. Independently rederive every non-predicate scalar operand from the qualified whole own source model and supplied/default paths; retain entire inherited serialized inner operands as dated evidence rather than a new semantic oracle. Select complete source-neutral scalar constructor/value/display hypotheses before public native capture, qualify whole values and source-determined alternatives with separate reconstruction and genuine member/order/role/schema/input/value/encoding/profile controls. Preserve original scalar flags/settings and every reference/private/load boundary. Retain full programs, input products, actual results and first failures; synchronize the book and required focused/current/claim/staged gates and commit before regex .2. No full original header or parent closure follows.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.2`
+  Status: `pending`
+  Goal: `Qualify whole original source regex constructors and finite public alternatives.`
+  Acceptance: `After .1 commits, authenticate and reexecute complete source/callback/helper/public-display prerequisites. Derive each whole authored regex expression, pattern body, constructor flags/encoding and source allocation before new native observation. Select source-neutral public regex hypotheses first, then independently qualify every complete selected value/display alternative with genuine source/pattern/flags/encoding/member/role/profile controls. Original Regexp/provider/reference identity and historical formatter/settings remain explicitly unmeasured. Retain all inputs, first failures and actual results; synchronize book and required gates and commit before .3.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.3`
+  Status: `pending`
+  Goal: `Qualify original opaque profile boundaries and complete remaining-value acceptance.`
+  Acceptance: `After .1/.2 commits, reexecute every completed prerequisite and independently join their complete products to every original scalar/regex/profile census obligation and this unchanged parent Acceptance. Preserve full inherited operands, all private framework/eval intervals, original receiver/referent/reference identity and original settings/formatter uncertainty, with explicit source do versus diagnostic require roles. Genuine omitted/borrowed/reordered/wrong-role/schema/encoding/profile/native-promotion/acceptance controls reject. Close this remaining-value parent only when its complete original Acceptance and all children qualify; retain full programs/products/results, synchronize book and required gates, commit before aggregate source-value sibling .3.`
   Verification: `pending`
   Commit: `pending`
 
