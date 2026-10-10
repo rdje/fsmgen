@@ -1921,9 +1921,43 @@ source-selected qualification before original raw-header comparison:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-source-headers-20261011/verify.py
 ```
 
-This closes the unchanged source-header parent only. Original raw-header joining
-is next under its separate owner; observer/raw/native/private and visual
-acceptance retain their scopes.
+The source-header qualification closes its own parent. The original raw-header
+join is described below; full observer publication and higher raw/native/private
+and visual acceptance retain their separate owners.
+
+Complete original own encoded headers now join their qualified source expressions.
+Every core, operation wrapper, named helper, callback, subtest body, delegate and
+entry view retains its complete source role and original frame allocation.
+Overlapping views remain explicit aliases of the same captured frame. The public
+subtest expression retains the full authored name and callback kind with its
+whole opaque receiver interval.
+
+Known argument values use the previously qualified explicit public grammar.
+Whole quotes, escapes, truncation suffixes, argument separators, hidden arguments
+and the remaining-argument marker qualify together. Full authored regex values
+retain all qualified constructor alternatives. Encoded compatibility does not
+measure the original formatter settings, flags, encoding or provider identity.
+
+Every reference token and remaining private/framework interval retains its whole
+original bytes. Source-declared display classes and reference kinds qualify the
+visible spelling; native class, referent contents and identity remain unmeasured.
+The source do operator and diagnostic require marker keep their distinct roles.
+The complete original raw, address, coordinate and source domains conserve.
+
+An actual different proper subtest-name prefix still passes the deliberately
+limited predecessor predicate and now fails the complete known-token contract.
+Borrowed, omitted, reordered, wrong-role, quote, truncation, count, whole-token,
+source-profile and scope controls reject their intended contracts. Independent
+lexing and source rendering reconstruct every complete result. All complete
+prerequisites reexecute in their qualified current or dated contexts:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-original-header-join-20261011/verify.py
+```
+
+This closes only the unchanged header-repair acceptance. Complete observer
+publication and parent acceptance are next under their separate owner; higher
+raw, consumer, alias, cold, native/private and visual scopes remain open.
 
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the
