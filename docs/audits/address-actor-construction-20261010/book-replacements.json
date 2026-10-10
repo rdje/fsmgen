@@ -1,0 +1,14 @@
+[
+  [
+    "so expansion returns before installing that state. Complete later actor/context\nconstruction remains the next child.",
+    "so expansion returns before installing that state. The construction child below\nqualifies later actor graphs; local record contexts remain open."
+  ],
+  [
+    "in the qualified parser core and operation boundary. Other actor, interface,\nclause and local-context arguments remain explicitly enumerated for the next\nchild.",
+    "in the qualified parser core and operation boundary. That entry model explicitly\nenumerates actor, interface, clause and local-context arguments for its successor\nchildren."
+  ],
+  [
+    "The receiver/normalization child is closed. Complete partial actor/context\ngraphs, the full parser/helper join, original raw/native identity and payload,",
+    "The receiver/normalization child is closed. Its construction successor is\nqualified below. Local context graphs, the full parser/helper join, original raw/native identity and payload,"
+  ]
+]

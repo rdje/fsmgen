@@ -1,0 +1,6 @@
+{
+  "scope": "Complete staged whitespace output contains exactly the two documented paragraph-separator artifacts; no other staged whitespace warning.",
+  "receipt": "staged-whitespace.json",
+  "contract": "guide-byte-contract.json",
+  "expected_stdout": "docs/audits/address-actor-construction-20261010/book-addition.md.txt:47: new blank line at EOF.\ndocs/audits/address-actor-construction-20261010/first-book-addition.md.txt.txt:45: new blank line at EOF.\n"
+}

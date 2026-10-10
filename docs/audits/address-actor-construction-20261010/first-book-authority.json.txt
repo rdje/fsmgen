@@ -1,0 +1,664 @@
+{
+  "after": {
+    "bytes_total": 3860942,
+    "files": 64,
+    "lines_total": 69403
+  },
+  "before": {
+    "bytes_total": 3858055,
+    "files": 64,
+    "lines_total": 69358
+  },
+  "registry_after": {
+    "bytes": 36568,
+    "sha256": "5a72cabf03ea7d23114aa43cb7df9e8d4eaaa11ac932e290ae092348138faebc"
+  },
+  "registry_before": {
+    "bytes": 36582,
+    "sha256": "f180d388da4470c9180d51980a9ddc5030c6e0a5a5a78432d0c98eb8ce3ce876"
+  },
+  "revision": "993b9bf4a2e6d7f50380fc9c8922ec8dff345109",
+  "scope": "Exact complete owned source addition and aggregate declaration only; no capacity limit or Knowledge Map authority changes.",
+  "whole_book": {
+    "docs/book/src/00-introduction.md": {
+      "after": {
+        "bytes": 5041,
+        "sha256": "c26b38ae405bc00a51dd13c070be2fe6ea2d21ee72973c8643caa673d67dd5fc"
+      },
+      "before": {
+        "bytes": 5041,
+        "sha256": "c26b38ae405bc00a51dd13c070be2fe6ea2d21ee72973c8643caa673d67dd5fc"
+      }
+    },
+    "docs/book/src/01-first-fsm.md": {
+      "after": {
+        "bytes": 3712,
+        "sha256": "5f6f1e456275f7f833151075d725d10f8702221d0951561fa6b7bc0fad569a02"
+      },
+      "before": {
+        "bytes": 3712,
+        "sha256": "5f6f1e456275f7f833151075d725d10f8702221d0951561fa6b7bc0fad569a02"
+      }
+    },
+    "docs/book/src/02-language-basics.md": {
+      "after": {
+        "bytes": 20650,
+        "sha256": "3ed49404a610fce6f89ef8ac880c5bc78646748c953507779207dea03978f0d6"
+      },
+      "before": {
+        "bytes": 20650,
+        "sha256": "3ed49404a610fce6f89ef8ac880c5bc78646748c953507779207dea03978f0d6"
+      }
+    },
+    "docs/book/src/03-decision-trees-and-fsms.md": {
+      "after": {
+        "bytes": 20515,
+        "sha256": "6e59766582d16a35a44ac779aff60583c0ed1cd7e1a0b1fca442ece524b09aba"
+      },
+      "before": {
+        "bytes": 20515,
+        "sha256": "6e59766582d16a35a44ac779aff60583c0ed1cd7e1a0b1fca442ece524b09aba"
+      }
+    },
+    "docs/book/src/04-symbols-types-and-imports.md": {
+      "after": {
+        "bytes": 19059,
+        "sha256": "16f569b322bf0b183ec975fca7dc83f9566f9caf44849740dc8ffa4652fb62aa"
+      },
+      "before": {
+        "bytes": 19059,
+        "sha256": "16f569b322bf0b183ec975fca7dc83f9566f9caf44849740dc8ffa4652fb62aa"
+      }
+    },
+    "docs/book/src/05-composition-basics.md": {
+      "after": {
+        "bytes": 25032,
+        "sha256": "4473588d208986aef58b17e5cc1abd0f52cf0446254205e151b720ed776ed4bb"
+      },
+      "before": {
+        "bytes": 25032,
+        "sha256": "4473588d208986aef58b17e5cc1abd0f52cf0446254205e151b720ed776ed4bb"
+      }
+    },
+    "docs/book/src/06-composition-advanced.md": {
+      "after": {
+        "bytes": 29564,
+        "sha256": "e91e18dce69fa73a73913aab2e901e9e35343cc26d96e3ef42cb20d59a34c5af"
+      },
+      "before": {
+        "bytes": 29564,
+        "sha256": "e91e18dce69fa73a73913aab2e901e9e35343cc26d96e3ef42cb20d59a34c5af"
+      }
+    },
+    "docs/book/src/07-packages-and-sharing.md": {
+      "after": {
+        "bytes": 3633,
+        "sha256": "24f0e1aefe4fb2212dd9df23297f93943440a0c3ffc6ef214798423355ba20c7"
+      },
+      "before": {
+        "bytes": 3633,
+        "sha256": "24f0e1aefe4fb2212dd9df23297f93943440a0c3ffc6ef214798423355ba20c7"
+      }
+    },
+    "docs/book/src/08-type-inference-and-aggregate-data.md": {
+      "after": {
+        "bytes": 15172,
+        "sha256": "df96a34822e1b2a8464d95db8ac6f2d0b4f76adf80365ef7a8f3bae5bb1c5a8b"
+      },
+      "before": {
+        "bytes": 15172,
+        "sha256": "df96a34822e1b2a8464d95db8ac6f2d0b4f76adf80365ef7a8f3bae5bb1c5a8b"
+      }
+    },
+    "docs/book/src/09-generated-hdl-debugging-and-inspection.md": {
+      "after": {
+        "bytes": 26010,
+        "sha256": "95e7a61db07195cd172c223f87f36f8bc186fd254ce7ac35bdc81250f14a6bcf"
+      },
+      "before": {
+        "bytes": 26010,
+        "sha256": "95e7a61db07195cd172c223f87f36f8bc186fd254ce7ac35bdc81250f14a6bcf"
+      }
+    },
+    "docs/book/src/10-errors-strict-mode-and-troubleshooting.md": {
+      "after": {
+        "bytes": 45414,
+        "sha256": "3ef8e32bce63db97371d41ff79c6f06b840261998e835152a7dd828a3e1de82b"
+      },
+      "before": {
+        "bytes": 45414,
+        "sha256": "3ef8e32bce63db97371d41ff79c6f06b840261998e835152a7dd828a3e1de82b"
+      }
+    },
+    "docs/book/src/10a-downstream-issue-reporting.md": {
+      "after": {
+        "bytes": 49,
+        "sha256": "25f239eb669527079699235311c4773c887098c4732069e1e86f45e7ec654e52"
+      },
+      "before": {
+        "bytes": 49,
+        "sha256": "25f239eb669527079699235311c4773c887098c4732069e1e86f45e7ec654e52"
+      }
+    },
+    "docs/book/src/11-extensions-and-embedding.md": {
+      "after": {
+        "bytes": 209023,
+        "sha256": "2b4be4eb11b426451ab143f6ec342cf20ac6b0df76436b7ed039f0a6bf1d4e9f"
+      },
+      "before": {
+        "bytes": 209023,
+        "sha256": "2b4be4eb11b426451ab143f6ec342cf20ac6b0df76436b7ed039f0a6bf1d4e9f"
+      }
+    },
+    "docs/book/src/12-cookbook.md": {
+      "after": {
+        "bytes": 11727,
+        "sha256": "c731f563a485ba7a94dd8b44c755ec3a7e77fde6c31bbe5f6410d3fa91eedac8"
+      },
+      "before": {
+        "bytes": 11727,
+        "sha256": "c731f563a485ba7a94dd8b44c755ec3a7e77fde6c31bbe5f6410d3fa91eedac8"
+      }
+    },
+    "docs/book/src/13-intent-scheduling.md": {
+      "after": {
+        "bytes": 58737,
+        "sha256": "8793384473e5d3863d3e0699f9b4b2c58adfc9216ad0b112523a7065beb5491f"
+      },
+      "before": {
+        "bytes": 58737,
+        "sha256": "8793384473e5d3863d3e0699f9b4b2c58adfc9216ad0b112523a7065beb5491f"
+      }
+    },
+    "docs/book/src/13a-actor-interface.md": {
+      "after": {
+        "bytes": 52456,
+        "sha256": "cc95ada3ea39692653a8da40d4258180fb21579ab84a579cbd3b7cff58a9bdfe"
+      },
+      "before": {
+        "bytes": 52456,
+        "sha256": "cc95ada3ea39692653a8da40d4258180fb21579ab84a579cbd3b7cff58a9bdfe"
+      }
+    },
+    "docs/book/src/13b-transactions.md": {
+      "after": {
+        "bytes": 111910,
+        "sha256": "516854418f23701046bcfcef1eb2ba6989dc96ad56f0e103276b562d4539525c"
+      },
+      "before": {
+        "bytes": 111910,
+        "sha256": "516854418f23701046bcfcef1eb2ba6989dc96ad56f0e103276b562d4539525c"
+      }
+    },
+    "docs/book/src/13c-drive-blocks.md": {
+      "after": {
+        "bytes": 6686,
+        "sha256": "43bd9388eb62ab30ed8231b3840af37309165987b0ccb5140a518559e0c058e7"
+      },
+      "before": {
+        "bytes": 6686,
+        "sha256": "43bd9388eb62ab30ed8231b3840af37309165987b0ccb5140a518559e0c058e7"
+      }
+    },
+    "docs/book/src/13d-control-flow.md": {
+      "after": {
+        "bytes": 77019,
+        "sha256": "232ca286db700d4687f7fb5141980d0f0cee284ccdc61035e4fbef72dbe8d3ae"
+      },
+      "before": {
+        "bytes": 77019,
+        "sha256": "232ca286db700d4687f7fb5141980d0f0cee284ccdc61035e4fbef72dbe8d3ae"
+      }
+    },
+    "docs/book/src/13e-data-manipulation.md": {
+      "after": {
+        "bytes": 33731,
+        "sha256": "56ad8ab34daa9fadb9d8fa1e6f339f0cfb048da2679b484178ea3f2cf45c3d79"
+      },
+      "before": {
+        "bytes": 33731,
+        "sha256": "56ad8ab34daa9fadb9d8fa1e6f339f0cfb048da2679b484178ea3f2cf45c3d79"
+      }
+    },
+    "docs/book/src/13f-composition.md": {
+      "after": {
+        "bytes": 99007,
+        "sha256": "17d46128090e1414ded8338ab8290aedd417174efbda25c3ca116862e18dea8d"
+      },
+      "before": {
+        "bytes": 99007,
+        "sha256": "17d46128090e1414ded8338ab8290aedd417174efbda25c3ca116862e18dea8d"
+      }
+    },
+    "docs/book/src/13g-rules.md": {
+      "after": {
+        "bytes": 34036,
+        "sha256": "bad913d5bd8e602316c9e67ed82e19b12c51b0fa7ab9eda6b7a10603ec3b8b0d"
+      },
+      "before": {
+        "bytes": 34036,
+        "sha256": "bad913d5bd8e602316c9e67ed82e19b12c51b0fa7ab9eda6b7a10603ec3b8b0d"
+      }
+    },
+    "docs/book/src/13h-lowering-reference.md": {
+      "after": {
+        "bytes": 100025,
+        "sha256": "50bd2e5a9ae5c63d27e4f68e0cff9ba975ba7c55ee8e34dd8dc8c4743447ad6c"
+      },
+      "before": {
+        "bytes": 100025,
+        "sha256": "50bd2e5a9ae5c63d27e4f68e0cff9ba975ba7c55ee8e34dd8dc8c4743447ad6c"
+      }
+    },
+    "docs/book/src/13i-downstream-integration.md": {
+      "after": {
+        "bytes": 1549,
+        "sha256": "a302fc6300929adbc2fe0bda81b37c16f1369583a47cd61e8a0397cc7d6a0a06"
+      },
+      "before": {
+        "bytes": 1549,
+        "sha256": "a302fc6300929adbc2fe0bda81b37c16f1369583a47cd61e8a0397cc7d6a0a06"
+      }
+    },
+    "docs/book/src/13j-type-enum-aggregate.md": {
+      "after": {
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      },
+      "before": {
+        "bytes": 51300,
+        "sha256": "c9d490386579d7979c08fc78b9b50fc48b342a456d2049f7862e3b32da02414f"
+      }
+    },
+    "docs/book/src/13k-isf-feature-support-matrix.md": {
+      "after": {
+        "bytes": 230744,
+        "sha256": "cf393317769ccda73a76db5e23661477ebe1f696102f0bd42e6520d22daeaf00"
+      },
+      "before": {
+        "bytes": 227857,
+        "sha256": "61e3b8e4dd06ce74aa16fbd96344acf50df068a36b6fef1b0c27b584ca4a14f0"
+      }
+    },
+    "docs/book/src/13l-procedures.md": {
+      "after": {
+        "bytes": 9032,
+        "sha256": "d1105356eb94df2f817e7ebbd3ee552759d893748c0f1d47711948b5325947c5"
+      },
+      "before": {
+        "bytes": 9032,
+        "sha256": "d1105356eb94df2f817e7ebbd3ee552759d893748c0f1d47711948b5325947c5"
+      }
+    },
+    "docs/book/src/13m-local-variables.md": {
+      "after": {
+        "bytes": 6636,
+        "sha256": "e11014d31f5ac2c2ac5f9a1771da1c8f66fc524ba74120b2ee684daaf7739407"
+      },
+      "before": {
+        "bytes": 6636,
+        "sha256": "e11014d31f5ac2c2ac5f9a1771da1c8f66fc524ba74120b2ee684daaf7739407"
+      }
+    },
+    "docs/book/src/14-feature-backlog.md": {
+      "after": {
+        "bytes": 5836,
+        "sha256": "5163a9415e964f32f20842aa1f7ba9f67cf8d77caf5de16865bccc4c82b0e35a"
+      },
+      "before": {
+        "bytes": 5836,
+        "sha256": "5163a9415e964f32f20842aa1f7ba9f67cf8d77caf5de16865bccc4c82b0e35a"
+      }
+    },
+    "docs/book/src/14a-language-and-data.md": {
+      "after": {
+        "bytes": 11336,
+        "sha256": "0ba9a3c7ce8150bb6178ec2af01dc388269381a696adefc0920fca9ca7ce09ea"
+      },
+      "before": {
+        "bytes": 11336,
+        "sha256": "0ba9a3c7ce8150bb6178ec2af01dc388269381a696adefc0920fca9ca7ce09ea"
+      }
+    },
+    "docs/book/src/14b-composition-backlog.md": {
+      "after": {
+        "bytes": 69078,
+        "sha256": "787616f8317ed81931cded3bde2600510568c8a370af9c67528c52887d50b525"
+      },
+      "before": {
+        "bytes": 69078,
+        "sha256": "787616f8317ed81931cded3bde2600510568c8a370af9c67528c52887d50b525"
+      }
+    },
+    "docs/book/src/14c-actor-network-orchestration.md": {
+      "after": {
+        "bytes": 45073,
+        "sha256": "4e7cf51b793acb21f790930f2099c51a1564e361b0fe6de368ac321f1e29c430"
+      },
+      "before": {
+        "bytes": 45073,
+        "sha256": "4e7cf51b793acb21f790930f2099c51a1564e361b0fe6de368ac321f1e29c430"
+      }
+    },
+    "docs/book/src/14d-ial2-foundations.md": {
+      "after": {
+        "bytes": 96802,
+        "sha256": "e3935c98ef9f451cd5fba8fd2e7fe2190432f3a3f583bfdadd5de4a802a3bd07"
+      },
+      "before": {
+        "bytes": 96802,
+        "sha256": "e3935c98ef9f451cd5fba8fd2e7fe2190432f3a3f583bfdadd5de4a802a3bd07"
+      }
+    },
+    "docs/book/src/14e-hial-vial-verification.md": {
+      "after": {
+        "bytes": 8918,
+        "sha256": "cca430d70b3e6302143bcb4715961688ffb2cdcebc832bde8bd54cd0269b5bbe"
+      },
+      "before": {
+        "bytes": 8918,
+        "sha256": "cca430d70b3e6302143bcb4715961688ffb2cdcebc832bde8bd54cd0269b5bbe"
+      }
+    },
+    "docs/book/src/14f-axi-manager-core.md": {
+      "after": {
+        "bytes": 138950,
+        "sha256": "a4f5d73a22aac62319d72f78484d3014d32eeecd9caaa9013f58a846661600d2"
+      },
+      "before": {
+        "bytes": 138950,
+        "sha256": "a4f5d73a22aac62319d72f78484d3014d32eeecd9caaa9013f58a846661600d2"
+      }
+    },
+    "docs/book/src/14g-axi-dynamic-identity.md": {
+      "after": {
+        "bytes": 192166,
+        "sha256": "9ed15765e68bd415e67a9a888da013e609f7d40eef587212956fa3614d5fe882"
+      },
+      "before": {
+        "bytes": 192166,
+        "sha256": "9ed15765e68bd415e67a9a888da013e609f7d40eef587212956fa3614d5fe882"
+      }
+    },
+    "docs/book/src/14h-protocol-profiles-and-apb.md": {
+      "after": {
+        "bytes": 152610,
+        "sha256": "7a1d64ca2c64957dfcfffa7b35586a1aec1c43111aaeee84ad12fe55b7e14f74"
+      },
+      "before": {
+        "bytes": 152610,
+        "sha256": "7a1d64ca2c64957dfcfffa7b35586a1aec1c43111aaeee84ad12fe55b7e14f74"
+      }
+    },
+    "docs/book/src/14i-ahb-and-integration.md": {
+      "after": {
+        "bytes": 158657,
+        "sha256": "a56cc2d1d153022ddc2f4d1ac338d05d3ab074ddd05ddcec03067339caa22d81"
+      },
+      "before": {
+        "bytes": 158657,
+        "sha256": "a56cc2d1d153022ddc2f4d1ac338d05d3ab074ddd05ddcec03067339caa22d81"
+      }
+    },
+    "docs/book/src/14j-extended-axi.md": {
+      "after": {
+        "bytes": 117158,
+        "sha256": "3d96081c6b0ae7db2609ff12b449540d06b4807e2908dc435e0f11e7a81165ca"
+      },
+      "before": {
+        "bytes": 117158,
+        "sha256": "3d96081c6b0ae7db2609ff12b449540d06b4807e2908dc435e0f11e7a81165ca"
+      }
+    },
+    "docs/book/src/14k-isf-language-and-scheduling.md": {
+      "after": {
+        "bytes": 91187,
+        "sha256": "bcfd67845f2e38c09c60d7d6a41f1f606fd74bb9a1d004906135414e13bef024"
+      },
+      "before": {
+        "bytes": 91187,
+        "sha256": "bcfd67845f2e38c09c60d7d6a41f1f606fd74bb9a1d004906135414e13bef024"
+      }
+    },
+    "docs/book/src/14l-backends-validation-and-apis.md": {
+      "after": {
+        "bytes": 66399,
+        "sha256": "4e8c19c1cf84c2bc9e066a4ff062a50e81f96b70fb1f1e49f97c4f597bf49600"
+      },
+      "before": {
+        "bytes": 66399,
+        "sha256": "4e8c19c1cf84c2bc9e066a4ff062a50e81f96b70fb1f1e49f97c4f597bf49600"
+      }
+    },
+    "docs/book/src/15-implementation-blueprint.md": {
+      "after": {
+        "bytes": 7759,
+        "sha256": "a34a450863e98455c727903d59bb06a56192e80a53c1834af30ed1db5bd344c2"
+      },
+      "before": {
+        "bytes": 7759,
+        "sha256": "a34a450863e98455c727903d59bb06a56192e80a53c1834af30ed1db5bd344c2"
+      }
+    },
+    "docs/book/src/15a-ial2-new-protocol-support.md": {
+      "after": {
+        "bytes": 4595,
+        "sha256": "c0faab38c3baa2390680b1d4c576adbe52681bf064019b5db924ae347e64e127"
+      },
+      "before": {
+        "bytes": 4595,
+        "sha256": "c0faab38c3baa2390680b1d4c576adbe52681bf064019b5db924ae347e64e127"
+      }
+    },
+    "docs/book/src/16-ial2-protocol-platform-intent.md": {
+      "after": {
+        "bytes": 9906,
+        "sha256": "0bb65656f9d1cf3967e896dad427e7a0512f12bb823cfeba1998dcc6621aa7d5"
+      },
+      "before": {
+        "bytes": 9906,
+        "sha256": "0bb65656f9d1cf3967e896dad427e7a0512f12bb823cfeba1998dcc6621aa7d5"
+      }
+    },
+    "docs/book/src/16a-ial2-axi.md": {
+      "after": {
+        "bytes": 56488,
+        "sha256": "10df20f3c064e668320bc4dec24f8cf276b15cf9abcdf766d89192db06764539"
+      },
+      "before": {
+        "bytes": 56488,
+        "sha256": "10df20f3c064e668320bc4dec24f8cf276b15cf9abcdf766d89192db06764539"
+      }
+    },
+    "docs/book/src/16aa-ial2-axi-manager-capacity-status.md": {
+      "after": {
+        "bytes": 31521,
+        "sha256": "42f8c0ba93053c109d096712f817821602b562d8a2b7c840e16464b8b8b8d9a2"
+      },
+      "before": {
+        "bytes": 31521,
+        "sha256": "42f8c0ba93053c109d096712f817821602b562d8a2b7c840e16464b8b8b8d9a2"
+      }
+    },
+    "docs/book/src/16b-ial2-apb.md": {
+      "after": {
+        "bytes": 7996,
+        "sha256": "4022e973d742c64ed3db1114103dea8475279806bd65036ffc5f2fcbc70fdc69"
+      },
+      "before": {
+        "bytes": 7996,
+        "sha256": "4022e973d742c64ed3db1114103dea8475279806bd65036ffc5f2fcbc70fdc69"
+      }
+    },
+    "docs/book/src/16c-ial2-ahb.md": {
+      "after": {
+        "bytes": 204855,
+        "sha256": "7dafd876bd921fff77bcda84652a82801a2feeb060f4ac6b4b1b8a0c56b008aa"
+      },
+      "before": {
+        "bytes": 204855,
+        "sha256": "7dafd876bd921fff77bcda84652a82801a2feeb060f4ac6b4b1b8a0c56b008aa"
+      }
+    },
+    "docs/book/src/16d-hial-vial-verification-architecture.md": {
+      "after": {
+        "bytes": 271790,
+        "sha256": "7f3aedb8369d7dc381ecffe02765d74be4c739542c6c8e976cc8cc22806614e9"
+      },
+      "before": {
+        "bytes": 271790,
+        "sha256": "7f3aedb8369d7dc381ecffe02765d74be4c739542c6c8e976cc8cc22806614e9"
+      }
+    },
+    "docs/book/src/16da-vial-balanced-portable-composition.md": {
+      "after": {
+        "bytes": 22690,
+        "sha256": "04b9a890cd354da08afbcfd8b0da8a5cc69dabb09970264ff86b4ece1227489e"
+      },
+      "before": {
+        "bytes": 22690,
+        "sha256": "04b9a890cd354da08afbcfd8b0da8a5cc69dabb09970264ff86b4ece1227489e"
+      }
+    },
+    "docs/book/src/16db-vial-structural-backend-emission-matrix.md": {
+      "after": {
+        "bytes": 8442,
+        "sha256": "a300077e88794e4fba3bf5b59a27d1d136b903a349209316f54a5c5edc2c6231"
+      },
+      "before": {
+        "bytes": 8442,
+        "sha256": "a300077e88794e4fba3bf5b59a27d1d136b903a349209316f54a5c5edc2c6231"
+      }
+    },
+    "docs/book/src/16dc-vial-portable-verilator-runtime-measurement.md": {
+      "after": {
+        "bytes": 282921,
+        "sha256": "e5bf78696704ab64ae9b0882d0f183cdc3579ffaa4064d766b6bcea6cf482bdc"
+      },
+      "before": {
+        "bytes": 282921,
+        "sha256": "e5bf78696704ab64ae9b0882d0f183cdc3579ffaa4064d766b6bcea6cf482bdc"
+      }
+    },
+    "docs/book/src/16dd-vial-portable-vhdl-runtime-measurement.md": {
+      "after": {
+        "bytes": 35607,
+        "sha256": "217e5eeabd3a2d919e6a1b624bf57bfc2c8a80d0e9ab5463ef8ff99a0032a040"
+      },
+      "before": {
+        "bytes": 35607,
+        "sha256": "217e5eeabd3a2d919e6a1b624bf57bfc2c8a80d0e9ab5463ef8ff99a0032a040"
+      }
+    },
+    "docs/book/src/16de-vial-osvvm-runtime-execution-plan.md": {
+      "after": {
+        "bytes": 38193,
+        "sha256": "a8336ea1d3daf3eeaf3dbf8caa8700d641645835eca04565a4af63e06b0b017d"
+      },
+      "before": {
+        "bytes": 38193,
+        "sha256": "a8336ea1d3daf3eeaf3dbf8caa8700d641645835eca04565a4af63e06b0b017d"
+      }
+    },
+    "docs/book/src/16df-vial-architecture-scale-cap-closeout.md": {
+      "after": {
+        "bytes": 166901,
+        "sha256": "342fec14b8b2a8ed4ae505fc6a9bcbf5c2e7dd19532796963be54dd845d923e9"
+      },
+      "before": {
+        "bytes": 166901,
+        "sha256": "342fec14b8b2a8ed4ae505fc6a9bcbf5c2e7dd19532796963be54dd845d923e9"
+      }
+    },
+    "docs/book/src/16dg-vial-public-lifecycle-reference.md": {
+      "after": {
+        "bytes": 30965,
+        "sha256": "bb1c2575c16fc9c76683610272602a5bae7bf534134fa0790db9fa231069459e"
+      },
+      "before": {
+        "bytes": 30965,
+        "sha256": "bb1c2575c16fc9c76683610272602a5bae7bf534134fa0790db9fa231069459e"
+      }
+    },
+    "docs/book/src/16dh-vial-ahb-end-to-end-tutorial.md": {
+      "after": {
+        "bytes": 14631,
+        "sha256": "a52fdfc0f4d10ef37ed7fccbba330e4c034316257a4ace942f770d9b800961ba"
+      },
+      "before": {
+        "bytes": 14631,
+        "sha256": "a52fdfc0f4d10ef37ed7fccbba330e4c034316257a4ace942f770d9b800961ba"
+      }
+    },
+    "docs/book/src/16di-vial-legacy-migration.md": {
+      "after": {
+        "bytes": 16873,
+        "sha256": "aca41cdb29b4764ffcc0af705e9b40ac7d5463451eaf3ce49e8c788cbb5de71b"
+      },
+      "before": {
+        "bytes": 16873,
+        "sha256": "aca41cdb29b4764ffcc0af705e9b40ac7d5463451eaf3ce49e8c788cbb5de71b"
+      }
+    },
+    "docs/book/src/16dj-vial-capability-support-reference.md": {
+      "after": {
+        "bytes": 18062,
+        "sha256": "26f17b238c449eed44c8656829959e9dbe21549dcd7bb3a75dcfcfd0f4da3ddf"
+      },
+      "before": {
+        "bytes": 18062,
+        "sha256": "26f17b238c449eed44c8656829959e9dbe21549dcd7bb3a75dcfcfd0f4da3ddf"
+      }
+    },
+    "docs/book/src/16dk-inactive-proxy-lifetimes.md": {
+      "after": {
+        "bytes": 102984,
+        "sha256": "3075d64e8852ec3c9fba143cd3c6119fc7c3914f633e370cb847f855e17d7220"
+      },
+      "before": {
+        "bytes": 102984,
+        "sha256": "3075d64e8852ec3c9fba143cd3c6119fc7c3914f633e370cb847f855e17d7220"
+      }
+    },
+    "docs/book/src/16e-nexsim-api-mcp-consumer-requirements.md": {
+      "after": {
+        "bytes": 65,
+        "sha256": "931f3534651bd89f42febafff4a8352624ce01e723c51a4ebdcfb81aee14e577"
+      },
+      "before": {
+        "bytes": 65,
+        "sha256": "931f3534651bd89f42febafff4a8352624ce01e723c51a4ebdcfb81aee14e577"
+      }
+    },
+    "docs/book/src/90-reference-map.md": {
+      "after": {
+        "bytes": 61538,
+        "sha256": "282edfe92b6495383dc708df7a5c90bf0e5ca8481f694e16a124258e4b0bc7ab"
+      },
+      "before": {
+        "bytes": 61538,
+        "sha256": "282edfe92b6495383dc708df7a5c90bf0e5ca8481f694e16a124258e4b0bc7ab"
+      }
+    },
+    "docs/book/src/91-live-document-containment-adoption.md": {
+      "after": {
+        "bytes": 533,
+        "sha256": "7c3d049f57c43e39d757a76d6a1b2dbd7d16bcf68d6526fdc5e78744c8f7d506"
+      },
+      "before": {
+        "bytes": 533,
+        "sha256": "7c3d049f57c43e39d757a76d6a1b2dbd7d16bcf68d6526fdc5e78744c8f7d506"
+      }
+    },
+    "docs/book/src/SUMMARY.md": {
+      "after": {
+        "bytes": 3988,
+        "sha256": "db6fd112545899db52b60357940a2a4a82e2aa9c8fb38bfc509b14d1f889d67b"
+      },
+      "before": {
+        "bytes": 3988,
+        "sha256": "db6fd112545899db52b60357940a2a4a82e2aa9c8fb38bfc509b14d1f889d67b"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "guides": {
+    "docs/audits/address-actor-construction-20261010/book-addition.md.txt": {
+      "bytes": 3022,
+      "sha256": "6f41b99baa3cea1ce9ebfb82be770b84bde6adaa40c186197c88b7562e6e617b",
+      "terminal_bytes_hex": "0a0a",
+      "reason": "Exact insertion programme requires a complete final paragraph separator before the conserved following paragraph. The first guide is retained byte-for-byte with its original successful book declaration."
+    },
+    "docs/audits/address-actor-construction-20261010/first-book-addition.md.txt.txt": {
+      "bytes": 2817,
+      "sha256": "6f3f8dd13e08335e902de2787bb0acbf21ea9d37f9420017e4aedfd43631d5aa",
+      "terminal_bytes_hex": "0a0a",
+      "reason": "Exact insertion programme requires a complete final paragraph separator before the conserved following paragraph. The first guide is retained byte-for-byte with its original successful book declaration."
+    }
+  },
+  "scope": "Only these two exact retained source-insertion artifacts deliberately end with a blank paragraph separator. Staged whitespace output must contain no other warning."
+}

@@ -1,0 +1,58 @@
+---
+status: proposed; governed non-growing publication remains the address-publication child
+source: docs/audits/address-actor-construction-20261010/
+date: 2026-10-10
+---
+
+The complete partial actor source graph differs at the two original refusals.
+List input admission rejects before width/type_spec publication. Record output
+admission publishes its width and a detached own-cloned record type before
+record-context validation rejects a field write. Later final interface metadata
+and timing defaults are not reached. Local context/private-root graphs remain
+the next independently owned child.
+
+Type declarations are detached own recursive clones of normalized AST entries.
+Transaction clauses initially share the authored normalized clause nodes. The
+let pass recursively copies clauses even with no let clause, while subsequent
+ordinary expansion passes replace their outer list and preserve copied clause
+nodes. The procedure-free pass returns before replacing that list or installing
+its temporary receiver state. Resolved symbol types, record port types and list
+admission clones retain independently checked source graph boundaries.
+
+The fresh type probe runs at aggregate-predicate entry. Whole original source
+shows that predicate is a pure read; it has returned at the original refusal.
+The explicit bridge keeps record publication and list pre-publication separate.
+Old clauses retained only by fresh instrumentation are excluded from original
+source holders. Active source roots retain all their reachable nodes, and every
+previous refusal caller still held by @parses remains in simultaneous held
+membership and distinctions. Returned delegates do not imply object death.
+
+Re-derivation: source.py freshly qualifies the complete corrected entry and all
+prior source models, checks each inherited read against fixed Git bytes and all
+loaded own module epochs against original capture bytes, then invokes the public
+facade with original source inputs. model.py derives whole fresh checkpoints and
+original reference bindings. oracle.py independently constructs actor defaults,
+declaration clones, interface/transaction nodes, reached expansion semantics,
+resolved type contracts and detached publication graphs. Injective graph
+bijections check every member, scalar kind and alias at every checkpoint; source
+expressions independently select original argument slots and phase holders.
+
+Falsification: verify.py uses genuine other sources, types, passes, checkpoints,
+modes, parse records and argument referents, equal-payload alias splits/merges,
+erased let/type copies, premature list publication, missing node/slot/holder
+membership, Boolean phases and native-scope promotion. The original positional
+source-signature expectation failed against the original named context call;
+its programme and actual nonzero receipt retain. The first complete successful
+product, programmes and proof also retain. Final qualification makes the pure
+predicate probe-to-refusal bridge explicit and adds borrowed AST/phase controls.
+
+Durability: complete fixed-Git custody, original own epoch pins, exact fresh
+command/status/streams, whole products, programme/proof hashes, actual guarded
+outcomes, relevant git log -S history, task evidence and the same-slice runnable
+book retain. External claim policy source matches its reviewed retained template;
+other repositories were read only. Every prior fact/question/probe and capacity
+ceiling conserves; this proposal does not become a current Knowledge Map card.
+
+Missing legs: original native identity, payload and scalar flags, local record
+context/private-root graphs, full parser/helper/source/raw joins, provider/
+formatter/CODE identity, cold replay and governed non-growing publication.

@@ -1142,8 +1142,8 @@ The default constructor checkpoint is `facade(debug=0, parser=P)`, with
 those contained objects, rather than equal fresh objects. Constructor fields
 do not establish a later heap snapshot. A source-field census also checks the
 temporary procedure-synthesis state: both refused inputs contain no procedures,
-so expansion returns before installing that state. Complete later actor/context
-construction remains the next child.
+so expansion returns before installing that state. The construction child below
+qualifies later actor graphs; local record contexts remain open.
 
 Normalization is checked through the published Lispish input boundary and the
 original own normalizer source, without inspecting the provider implementation.
@@ -1164,9 +1164,9 @@ at either refusal, while parser receiver fields and active parse locals retain
 their source referents. Inactive calls do not establish object death.
 
 Independent checks cover every receiver, AST, saved-delegate and caller argument
-in the qualified parser core and operation boundary. Other actor, interface,
-clause and local-context arguments remain explicitly enumerated for the next
-child. A retained-caller review also repaired an assurance gap: an earlier
+in the qualified parser core and operation boundary. That entry model explicitly
+enumerates actor, interface, clause and local-context arguments for its successor
+children. A retained-caller review also repaired an assurance gap: an earlier
 caller was listed as retained but omitted from the later held set. The complete
 first oracle admission remains reproducible; the repair includes that caller
 in held membership and every simultaneous source distinction. A genuine
@@ -1178,11 +1178,58 @@ promotions reject. Replay:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-parser-entry-20261010/verify.py
 ```
 
-The receiver/normalization child is closed. Complete partial actor/context
-graphs, the full parser/helper join, original raw/native identity and payload,
+The receiver/normalization child is closed. Its construction successor is
+qualified below. Local context graphs, the full parser/helper join, original raw/native identity and payload,
 provider/formatter identity, complete source integration and canonical
 publication remain open. Existing canonical facts, questions, probes and every
 collection ceiling retain.
+
+Complete partial actor construction is independently qualified at each original
+refusal boundary. Fresh public-facade instrumentation checkpoints every reached
+expansion and finalization pass, its complete actor/AST graph and receiver fields,
+and entry to the aggregate-type predicate. Whole original own dependency sources
+match the captured source epoch. That predicate only reads its argument and has
+returned before either original refusal. Source checks bridge its probe to the
+later guard and keep the intervening record publication explicit. Published type resolver contracts are interpreted from
+own source; external Lispish and clone-provider implementations remain opaque.
+
+The two inputs stop at different stages. The rejected list input still has its
+initial port width and no published `type_spec`; its active resolver local holds
+a detached resolved list type. The record output has already received its
+resolved width and a separate cloned record `type_spec` before the field-write
+context guard refuses `value.flag`. Neither input reaches final interface
+metadata publication or the later timing defaults.
+
+Construction preserves more than equal values. Type declarations are own
+recursive copies of normalized AST declarations. Transaction clauses initially
+refer to the normalized AST clause nodes. The `let` expansion pass recursively
+copies those clauses even when no `let` appears; subsequent ordinary expansion
+passes retain the copied clause nodes while replacing their outer list. The
+procedure pass returns without changing that list when no procedures exist.
+Resolved symbol types, port types and the active admission clone have separately
+qualified graph boundaries. Equal payloads do not collapse those source nodes.
+
+An independent construction interpreter checks complete members, scalar kinds,
+node aliases and every reached pass entry/return against the fresh graphs.
+Original actor, interface-entry and clause reference slots join the conserved
+entry model in each original mode. The held sets include all current reachable
+source nodes, saved delegates and retained caller arrays, including the earlier
+refusal caller. Old clause lists retained by fresh instrumentation are excluded
+from original holders. Returned delegates establish call state, not object death.
+Genuine borrowed source graphs, types, stages, modes and argument bindings,
+erased copies, split/merged aliases, missing members/holders and native-scope
+promotions reject. Replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-actor-construction-20261010/verify.py
+```
+
+The actor/type/transaction construction child is closed. Local record context
+and private-root graphs, full parser/helper/source integration, original raw
+address joins, native payload and flags, provider/formatter/CODE identity,
+cold replay and governed canonical publication remain open. Fresh source
+checkpoints are not original native captures. Existing canonical facts,
+questions, probes and collection ceilings retain.
 
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it

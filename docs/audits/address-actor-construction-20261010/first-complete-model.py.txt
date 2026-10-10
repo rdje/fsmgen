@@ -1,0 +1,80 @@
+"""Complete fresh actor checkpoints and original source-reference bindings."""
+import copy
+import itertools
+
+SCOPE = ('Complete partial actor construction and reached pass checkpoints for both refused sources. '
+         'Bindings are original own-source hypotheses; fresh graph probes do not measure original native '
+         'identity, payload, flags or stack capture. Local record contexts, complete source/raw integration '
+         'and canonical publication remain open.')
+OBSERVER = ('Old clause arrays in return checkpoints are held only by fresh instrumentation. '
+            'They are not added to original source holders; returned delegates do not imply object death.')
+
+
+def nodes(encoded, path=''):
+    if type(encoded) is not list or encoded[0] == 'reference':
+        return
+    kind, body = encoded
+    yield path, kind.upper()
+    items = body.items() if kind == 'hash' else enumerate(body)
+    for key, value in items:
+        escaped = str(key).replace('~', '~0').replace('/', '~1')
+        yield from nodes(value, path + '/' + escaped)
+
+
+def key_for(index, path):
+    return {'/0': 'facade', '/0/parser': 'parser', '/0/parser/adapter': 'adapter',
+            '/1': f'parse:{index}:ast'}.get(path, f'parse:{index}:node:{path}')
+
+
+def derive(inputs):
+    entry = inputs['entry_model']
+    profiles = copy.deepcopy(inputs['public']['cases'])
+    modes = []
+    for old_mode in entry['modes']:
+        mode_name = old_mode['mode']
+        bindings, cases = copy.deepcopy(old_mode['bindings']), []
+        for old in old_mode['cases']:
+            index = old['domain'][2]
+            public = next(row for row in profiles if row['parse_index'] == index)
+            graph_nodes = list(nodes(public['final']['graph']))[1:]
+            graph_keys = []
+            for path, kind in graph_nodes:
+                key = key_for(index, path)
+                graph_keys.append(key)
+                if key not in bindings:
+                    bindings[key] = {'reference_kind': kind, 'origin': {
+                        'kind': 'own_construction_checkpoint_node', 'mode': mode_name,
+                        'parse_index': index, 'checkpoint': public['final']['point'], 'node': path,
+                        'scope': 'Whole fresh source graph; original native identity and payload unmeasured.'}}
+            occurrences, pending = [], []
+            for item in old['pending']:
+                role = item['role']
+                path = {'partially built actor': '/2', 'transaction clauses': '/2/transactions/0/clauses',
+                        'interface port entry': '/2/interface/inputs/0'}.get(role)
+                if path is None:
+                    pending.append({**item, 'owner': 'local-record-context-child'})
+                else:
+                    occurrences.append({key: item[key] for key in ('frame', 'argument', 'role')}
+                                       | {'binding': key_for(index, path)})
+            held = sorted(set(old['held']) | set(graph_keys))
+            returned = [event['pass'] for event in public['events'] if event['boundary'] == 'return']
+            active = [row['function'] for row in old['frames']
+                      if row['function'].startswith(('FSM::Adapter::ISF', 'FSM::Support::ISFRecordPortContexts'))]
+            cases.append({'domain': copy.deepcopy(old['domain']), 'frames': copy.deepcopy(old['frames']),
+                'inherited_occurrences': copy.deepcopy(old['occurrences']), 'occurrences': occurrences,
+                'pending': pending, 'entry_bridge': {key: key for key in old['held']},
+                'final_graph_bindings': {path: key_for(index, path) for path, _ in graph_nodes},
+                'held': held, 'retained_callers': copy.deepcopy(old['retained_callers']),
+                'simultaneously_held_distinct': [list(pair) for pair in itertools.combinations(held, 2)],
+                'returned_passes': returned, 'active_own_calls': active,
+                'returned_construction_delegates': ['_parse_actor_types', '_parse_interface', '_parse_transaction',
+                    '_resolve_actor_package_symbols', '_resolve_actor_local_symbols',
+                    'FSM::Package::Parser::resolve_pending_package_types', 'FSM::Package::Symbols::as_hashref',
+                    '_resolve_actor_type_spec'] + (['_resolve_typed_width_entry'] if index == 2 else []),
+                'resolved_type_holder': ('The record admission clone has returned; the output entry holds a '
+                    'separate own clone. No original active own holder for that intermediate clone is asserted.'
+                    if index == 2 else 'The rejected list admission clone is held by the active '
+                    '_resolve_typed_width_entry local $type_spec; width/type_spec publication has not run.'),
+                'observer_scope': OBSERVER})
+        modes.append({'mode': mode_name, 'bindings': bindings, 'cases': cases})
+    return {'scope': SCOPE, 'preserved_entry': copy.deepcopy(entry), 'profiles': profiles, 'modes': modes}

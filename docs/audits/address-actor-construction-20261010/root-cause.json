@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=fuller",
+      "-S",
+      "return [ map { $self->_substitute_proc_body($_, $subst) } @$node ];",
+      "--",
+      "perl/FSM/Adapter/ISF/Parser.pm"
+    ],
+    "status": 0,
+    "stdout": "commit e680f9670257c6d6e9ad0c46d222e96697ea2304\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Mon Jun 1 01:42:37 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Mon Jun 1 01:42:37 2026 +0200\n\n    ISF-PROCEDURES.2: inline (proc)/(call) reusable procedures (in-params)\n    \n    Leaf: ISF-PROCEDURES.2\n    Lane: R14 (ISF \u2014 high-level language richness, theme #3)\n    \n    A (proc NAME (params (P (width N))...) BODY...) defines a reusable parameterized\n    block; an inline (call NAME actuals...) calls it. The lightweight \"callable block of\n    code with its own actual arguments\", realized by pure macro-expansion.\n    \n    Implementation (parse-time, in the adapter \u2014 the scheduler is untouched)\n    - New `proc` branch in FSM::Adapter::ISF::Parser::_build_actor parses the definition\n      into $actor->{procs}.\n    - New pass _expand_procedure_calls (after the clause loop, before the finalizers)\n      rewrites each inline (call NAME actuals) into the proc body with each in-param name\n      substituted by its actual (a signal OR a whole expression). Recurses into\n      when/switch/while/until/repeat bodies and the substituted body; a recursion stack\n      rejects direct/transitive recursion (no hardware call stack).\n    - proc/call never reach LoweringIR; the emitted .fsm is BYTE-IDENTICAL to writing the\n      substituted clauses by hand (asserted in t/1390 vs a hand-written actor).\n    \n    Fail-closed: unknown proc, arity mismatch, recursion, handshake form (call ... as\n    INST) (deferred .4), out-params (deferred .3), malformed (proc ...) (no name / no\n    (params ...) / empty body). Empty (params) lisp-parse trailing-undef quirk filtered.\n    \n    Verified: --check-json SUCCEEDS; --verify-hdl PASS (verilator_lint + yosys_synthesis).\n    \n    Book: 13b \"Reusable Procedures\" section (4 runnable examples); 13k row; ISF_SPEC\n    registers t/1390.\n    \n    Validation\n    - prove -Iperl t/1390 (6 subtests) t/1250 t/1376 t/1305 t/1303 t/1304 t/1307 PASS.\n    - identical-.fsm + when/while-body + --check-json + --verify-hdl + all fail-closed verified.\n    - full ./bin/ci-regression isf --no-book PASS.\n    - perl -c; mdbook build; git diff --check clean.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=fuller",
+      "-S",
+      "type_declarations => [],",
+      "--",
+      "perl/FSM/Adapter/ISF/Parser.pm"
+    ],
+    "status": 0,
+    "stdout": "commit 6dce0d9a34acaa813fa1ef1bbc791121674e074f\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Sat May 16 06:18:11 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Sat May 16 06:18:11 2026 +0200\n\n    ISF-TYPE-AGGREGATE-PARITY.3: ship scalar type aliases\n    \n    - accept actor-local ISF types, package imports, and scalar (type NAME) width declarations\n    - preserve +types/+enums/+import, typed +size entries, and embedded package roots in lowered .fsm\n    - add focused local/package alias coverage plus public contract and docs synchronization\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=fuller",
+      "-S",
+      "$entry->{type_spec} = _clone_isf_value($type_spec);",
+      "--",
+      "perl/FSM/Adapter/ISF/Parser.pm"
+    ],
+    "status": 0,
+    "stdout": "commit 6dce0d9a34acaa813fa1ef1bbc791121674e074f\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Sat May 16 06:18:11 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Sat May 16 06:18:11 2026 +0200\n\n    ISF-TYPE-AGGREGATE-PARITY.3: ship scalar type aliases\n    \n    - accept actor-local ISF types, package imports, and scalar (type NAME) width declarations\n    - preserve +types/+enums/+import, typed +size entries, and embedded package roots in lowered .fsm\n    - add focused local/package alias coverage plus public contract and docs synchronization\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "--format=fuller",
+      "-S",
+      "sub as_hashref",
+      "--",
+      "perl/FSM/Package/Symbols.pm"
+    ],
+    "status": 0,
+    "stdout": "commit c147c7f19150e581d1c14859f4a45ccfa743a889\nAuthor:     Richard DJE <richard.dje@gmail.com>\nAuthorDate: Mon Apr 6 22:30:04 2026 +0200\nCommit:     Richard DJE <richard.dje@gmail.com>\nCommitDate: Mon Apr 6 22:30:04 2026 +0200\n\n    R11: export direct-root symbol contracts\n",
+    "stderr": ""
+  }
+]
