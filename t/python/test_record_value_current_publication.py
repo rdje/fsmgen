@@ -334,7 +334,7 @@ class CurrentPublicationTests(unittest.TestCase):
         for old, new in (
             ('Certificate authentication supplies no fresh semantic recapture.', 'Original executions recaptured.'),
             ('cross-call/capture\nreuse retain their explicit limits.', 'cross-call/capture reuse proves native identity.'),
-            ('Full address-container\nacceptance remains the next owned step', 'All address-container acceptance is complete')):
+            ('Full raw-stack joining is next;', 'All raw-stack acceptance is complete;')):
             with self.subTest(old=old):
                 changed = html.replace(old, new)
                 self.assertNotEqual(changed, html)

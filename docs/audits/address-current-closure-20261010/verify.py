@@ -1,0 +1,384 @@
+"""Independently qualify the whole dated finite address/container publication."""
+import copy
+import json
+import re
+import runpy
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from contracts import (ADDRESS, ARCHIVES, BASE, CLOSED, FEATURE, MODULE, NAMESPACES,
+                       NEXT, OPEN, OWNER, PARENT, PREPARATION, PUBLICATION, READERS,
+                       REFERENCE, REGISTRY, REVISION, ROLE, SCOPE, SUCCESS, TASK, TEST,
+                       aggregate, baseline, contract, git, literal, load, metrics,
+                       navigation, need, nodes, objects, paths, pin, read, same, test_source, wanted)
+
+
+def receipt(actual, command, stdout=None, exact_guard=True, expected_sources=None):
+    need(type(actual) is dict and set(actual) == {'command', 'status', 'stdout', 'stderr', 'instruments'}
+         and type(actual['status']) is int and actual['status'] == 0, 'closed actual integer success')
+    need(actual['command'] == ['scripts/run_with_ram_guard.sh', '--', *command], 'whole exact actual command')
+    names = {str(BASE / 'checks.py'), 'scripts/run_with_ram_guard.sh'} | {
+        p for p in command if p.startswith(('scripts/', 'docs/audits/', 't/'))}
+    originals = expected_sources or {}
+    def instrument(path):
+        if path in originals:
+            return originals[path]
+        return read(path) if path.startswith(str(BASE) + '/') else git('show', REVISION + ':' + path)
+    need(same(actual['instruments'], {p: pin(instrument(p)) for p in names}), 'whole actual invocation instruments')
+    need(type(actual['stdout']) is str and type(actual['stderr']) is str, 'complete actual string streams')
+    if stdout is not None:
+        need(actual['stdout'] == stdout, 'whole exact actual stdout')
+    guard = r'ram-guard: PID [0-9]+; host [0-9.]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n'
+    need((re.fullmatch(guard, actual['stderr']) if exact_guard else re.match(guard, actual['stderr'])) is not None,
+         'complete actual unchanged guard stream')
+
+
+def historical():
+    names = sorted(p for folder in NAMESPACES for p in paths('docs/audits/' + folder + '-20261010'))
+    fixed = objects(names)
+    for folder in NAMESPACES:
+        prefix = Path('docs/audits') / (folder + '-20261010')
+        need(sorted(str(p) for p in prefix.rglob('*') if p.is_file() or p.is_symlink()) == paths(str(prefix)),
+             'whole immutable historical namespace population')
+    need(all(read(p) == raw for p, raw in fixed.items()), 'whole immutable historical namespace bytes')
+    return fixed
+
+
+def semantic_stdout(name, command, fixed):
+    if name == 'source-boundaries-approved':
+        return json.loads(fixed['docs/audits/address-source-boundaries-20261010/checks.json'])['first-independent']['stdout']
+    if name in ('class-frame', 'coordinate'):
+        return json.loads(fixed['docs/audits/address-raw-admission-20261010/checks.json'])[name]['stdout']
+    return runpy.run_path(command[2])['SUCCESS']
+
+
+def qualify_acceptance(product, fixed, before, raw_expected, checks):
+    need(type(product) is dict and set(product) == {'revision', 'owner', 'scope', 'open', 'contracts',
+         'completed', 'historical_members', 'source_products', 'raw_parent', 'actual_readers', 'canonical', 'archives'},
+         'closed complete address acceptance witness')
+    need(product['revision'] == REVISION and product['owner'] == OWNER and product['scope'] == SCOPE
+         and same(product['open'], OPEN), 'complete finite address owner epoch scope and open successors')
+    original_nodes = nodes(before[TASK])
+    need(same(product['contracts'], {key: contract(original_nodes[key]) for key in sorted(CLOSED)}),
+         'complete unchanged original address and publication contracts')
+    completed = {key: block for key, block in original_nodes.items() if key.startswith(ADDRESS + '.')
+                 and key not in CLOSED and '  Status: `done`\n' in block}
+    need(same(product['completed'], completed), 'whole completed address descendant prerequisites')
+    need(same(product['historical_members'], {p: pin(raw) for p, raw in fixed.items()}),
+         'whole original qualified historical input population')
+    need(same(product['source_products'], {p: pin(raw) for p, raw in fixed.items() if p.endswith('/hypotheses.json')}),
+         'whole qualified source graph and call lifetime products')
+    need(same(product['raw_parent'], raw_expected), 'whole independently reconstructed original source holder numerical parent')
+    canonical = {p: raw for p, raw in before.items() if p.startswith(('docs/knowledge/', 'docs/decisions/'))}
+    need(same(product['canonical'], {p: pin(raw) for p, raw in canonical.items()})
+         and product['archives'] == pin(before[ARCHIVES]), 'whole exact original current facts and governed history')
+    need(type(product['actual_readers']) is dict and set(product['actual_readers']) == set(READERS),
+         'complete fresh semantic reader population')
+    for name, command in READERS.items():
+        receipt(product['actual_readers'][name], command, semantic_stdout(name, command, fixed))
+        need(same(product['actual_readers'][name], checks[name]), 'whole fresh actual semantic receipt association')
+
+
+def publication(fixed, before, canonical):
+    proposal = json.loads(fixed[PREPARATION + '/proposal.json'])
+    admitted = json.loads(fixed[PUBLICATION + '/publication.json'])
+    certificate = json.loads(fixed[PUBLICATION + '/final-proof.json'])
+    saved = json.loads(fixed[PUBLICATION + '/current-input-final.json'])
+    originals = objects(sorted(proposal['fixed_members']), proposal['revision'])
+    need(same(proposal['fixed_members'], {p: {**pin(raw), 'lines': raw.count(b'\n')} for p, raw in originals.items()}),
+         'whole independently reconstructed original address input allocation')
+    for path, raw in originals.items():
+        retained = proposal['beforeimages'].get(path)
+        need(read(retained['locator'] if retained else path) == raw, 'every complete original beforeimage and input source conserves')
+    need(certificate['publication'] == {**pin(fixed[PUBLICATION + '/publication.json']),
+         'lines': fixed[PUBLICATION + '/publication.json'].count(b'\n')}
+         and certificate['current_input'] == {**pin(fixed[PUBLICATION + '/current-input-final.json']),
+         'lines': fixed[PUBLICATION + '/current-input-final.json'].count(b'\n')}, 'whole original atomic publication and actual input certificate')
+    for p, identity in certificate['programmes'].items():
+        raw = git('show', REVISION + ':' + p)
+        need(identity == {**pin(raw), 'lines': raw.count(b'\n')}, 'whole original atomic publication programme epoch')
+    prior_actual = json.loads(fixed[PUBLICATION + '/checks.json'])
+    for name, command, stdout in (
+        ('independent-commit', ['python3', '-B', PUBLICATION + '/verify.py'],
+         'PASS complete atomic finite address current source/query/history/book/native publication and genuine controls; full container acceptance remains pending.\n'),
+        ('current-native-commit', ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', 'docs/book/book'],
+         'PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n')):
+        actual = prior_actual[name]
+        need(type(actual['status']) is int and actual['status'] == 0 and actual['command'] ==
+             ['scripts/run_with_ram_guard.sh', '--', *command] and actual['stdout'] == stdout,
+             'whole committed atomic qualification actual result')
+        need(actual['instruments'][command[2]] == pin(git('show', REVISION + ':' + command[2])),
+             'whole committed atomic qualification instrument')
+    descriptors = list(map(json.loads, before[ARCHIVES].splitlines()))
+    for path, row in proposal['cards'].items():
+        original = read(row['original']['locator'])
+        need(row['original']['identity'] == {**pin(original), 'lines': original.count(b'\n')}
+             and canonical[path] == row['text'].encode() and saved['record']['cards'][path] == row['text'],
+             'whole original proposed and admitted current card correspondence')
+        retained = [r for r in admitted['descriptors'] if r['former_path'] == path]
+        need(len(retained) == 1 and retained[0] in descriptors
+             and retained[0]['retrieval_locator'] == row['original']['locator']
+             and {k: retained[0][k] for k in ('bytes', 'sha256')} == pin(original),
+             'whole governed original card history and retrieval')
+    old_descriptors = git('show', admitted['revision'] + ':' + ARCHIVES)
+    need(before[ARCHIVES] == old_descriptors + ''.join(json.dumps(r, sort_keys=True, separators=(',', ':')) + '\n'
+         for r in admitted['descriptors']).encode(), 'all prior archive descriptor bytes conserve')
+    for path, row in admitted['chapters'].items():
+        original = git('show', admitted['revision'] + ':' + path).decode()
+        need(original == row['original'], 'whole original atomic book source')
+        for old, new in admitted['book_replacements'][path]:
+            need(original.count(old) == 1, 'unique whole atomic book seam')
+            original = original.replace(old, new, 1)
+        need(original.encode() == before[path] and original == row['current'], 'whole qualified atomic book transformation')
+    return proposal, certificate['qualification'], saved
+
+
+def current_snapshot(snapshot, canonical, before, module, books, proposal, qualification, allocation):
+    need(type(snapshot) is dict and set(snapshot) == {'role', 'record', 'qualification', 'native', 'routes',
+         'copied_sources', 'registry', 'navigation', 'task_index', 'programmes'} and snapshot['role'] == ROLE,
+         'closed dated current snapshot without later currency')
+    record = snapshot['record']
+    need(type(record) is dict and set(record) == {'cards', 'chapter', 'tooling_chapter', 'queries', 'census',
+         'surface', 'source_members', 'source_budget'}, 'closed complete final current record')
+    need(record['cards'] == {p: row['text'] for p, row in proposal['cards'].items()}
+         and all(canonical[p].decode() == text for p, text in record['cards'].items()), 'whole unchanged final approved facts questions and probes')
+    need(record['chapter'].encode() == books[FEATURE] and record['tooling_chapter'].encode() == books[REFERENCE],
+         'whole exact final current feature and tooling chapters')
+    need(same(record['source_members'], {p: pin(raw) for p, raw in canonical.items()}), 'whole final canonical source population')
+    physical = {p: raw for p, raw in canonical.items() if Path(p).parent == Path('docs/knowledge')}
+    need(type(record['census']) is dict and all(type(v) is int for v in record['census'].values())
+         and same(record['census'], metrics(physical)), 'whole independently derived typed final census')
+    saved = load(PUBLICATION + '/current-input-final.json')['record']
+    need(same(record['surface'], saved['surface']) and same(record['source_budget'], saved['source_budget']),
+         'whole unchanged final knowledge and source capacity authority')
+    need(type(record['queries']) is dict and set(record['queries']) == {'direct', 'cached'}, 'complete final query roles')
+    rows = allocation(canonical)
+    for role, actual in record['queries'].items():
+        need(type(actual) is dict and set(actual) == {'command', 'status', 'stdout', 'stderr'}
+             and type(actual['status']) is int and actual['status'] == 0, 'closed actual final query integer success')
+        need(actual['command'] == ['knowledge-map/scripts/query_knowledge_map.sh', '--all'] +
+             (['--no-cache'] if role == 'direct' else []) and actual['stderr'] == '' and actual['stdout'] == rows,
+             'whole independently reconstructed final query ownership and command')
+    need(same(snapshot['qualification'], qualification), 'whole original admitted finite qualification conserves')
+    production = {p: module if p == MODULE else test_source(before) if p == TEST else before[p] for p in (MODULE, 'scripts/check_record_value_publication.py',
+                  'scripts/record_value_coordinate_fact.py', 'scripts/book_source_references.py', 't/python/test_record_value_current_publication.py')}
+    own = {str(BASE / name): read(BASE / name) for name in ('checks.py', 'contracts.py', 'close.py', 'capture_final.py', 'verify.py', 'task_pressure_final.py', 'finish_tasks.py', 'reproduce_frontier_probe.py')}
+    need(same(snapshot['programmes'], {p: pin(raw) for p, raw in {**production, **own}.items()}),
+         'whole complete final programme epoch')
+
+
+def final_tasks(raw, original):
+    first, final = nodes(original), nodes(raw)
+    need(set(first) == set(final) and original.split(b'- ID:', 1)[0] == raw.split(b'- ID:', 1)[0],
+         'whole unchanged final task population and metadata')
+    for key, block in first.items():
+        if key not in CLOSED:
+            need(final[key] == block, 'whole unrelated final task body conserves')
+        else:
+            need(contract(final[key]) == contract(block), 'whole unchanged final Goal Acceptance and Children')
+            need('  Status: `done`\n' in final[key], 'only verified address nodes close')
+    need(all('  Status: `done`\n' in block for key, block in final.items() if key == ADDRESS or key.startswith(ADDRESS + '.')),
+         'every completed address descendant before parent closure')
+    need('  Status: `pending`\n' in final[NEXT], 'full raw-stack successor remains pending')
+
+
+def main():
+    canonical_paths, _, before = baseline(); fixed = historical()
+    canonical = {p: before[p] for p in canonical_paths}
+    old_publication = runpy.run_path(PUBLICATION + '/verify.py')
+    proposal, qualification, saved = publication(fixed, before, canonical)
+    need(old_publication['allocation'](canonical) == saved['record']['queries']['direct']['stdout']
+         == saved['record']['queries']['cached']['stdout'], 'whole original atomic global question ownership')
+    oracle = runpy.run_path(PARENT + '/oracle.py'); registry, binding, data = oracle['fixed_inputs']()
+    records, views, controls, measured = oracle['reconstruct'](data)
+    raw = load(PARENT + '/acceptance.json')
+    oracle['qualify'](raw, registry, binding, records, views, controls, load(PARENT + '/checks.json'))
+    checks = load(BASE / 'checks.json'); product = load(BASE / 'acceptance.json')
+    qualify = lambda value: qualify_acceptance(value, fixed, before, raw, checks)
+    qualify(product)
+    module, books, guide, reference = wanted(before)
+    snapshot = load(BASE / 'snapshot-final.json')
+    source = lambda value: current_snapshot(value, canonical, before, module, books, proposal, qualification, old_publication['allocation'])
+    source(snapshot)
+    final_raw = read(BASE / 'task-qualified-final.md.txt'); final_tasks(final_raw, before[TASK])
+    old_rows = list(map(json.loads, before[REGISTRY].splitlines()))
+    rows = list(map(json.loads, snapshot['registry'].splitlines()))
+    need([r.get('surface_id') for r in rows] == [r.get('surface_id') for r in old_rows], 'whole unchanged final authority population')
+    for old, final in zip(old_rows, rows, strict=True):
+        expected = copy.deepcopy(old)
+        if old.get('surface_id') == 'shipped_behavior':
+            expected['reference_contract']['aggregate_change'] = aggregate(before, books)
+        if old.get('surface_id') == 'task_evidence':
+            task_paths = sorted({p for pattern in old['targets'] for p in paths('docs/tasks') if Path(p).match(pattern)})
+            task_sources = objects(task_paths); task_sources[TASK] = final_raw
+            actual = metrics(task_sources); task = load(BASE / 'task-metrics-final.json')
+            need(same(actual, task['actual']) and task['owner'] == OWNER, 'whole independently reconstructed task dimensions')
+            expected['transition']['max_growth'] = {k: max(0, min(v + old['transition']['ratchet_step'][k],
+                old['enforcement_ceilings'][k]) - old['baseline'][k]) for k, v in actual.items()}
+        need(same(final, expected), 'only exact owned aggregate and measured task allowance change')
+    routes = sorted([{k: row[k] for k in ('chapter', 'source', 'asset', 'role')} for row in
+        json.loads(before['docs/audits/book-reference-selection-20261005/selected-routes.json'])['routes']], key=lambda row: row['source'])
+    need(snapshot['routes'] == routes and set(snapshot['copied_sources']) == {r['source'] for r in routes}, 'whole unchanged current native routes and membership')
+    memory, index = navigation(before)
+    need(snapshot['navigation'] == memory and snapshot['task_index'] == index,
+         'whole exact final navigation pointer index and unrelated state')
+    for row in routes:
+        p = row['source']
+        raw_source = snapshot['navigation'].encode() if p == 'MEMORY.md' else snapshot['task_index'].encode() if p == 'docs/TASK_TREE.md' else git('show', REVISION + ':' + p)
+        need(snapshot['copied_sources'][p] == pin(raw_source), 'every complete dated canonical copied source')
+    need(set(snapshot['native']) == {FEATURE, REFERENCE}, 'complete final native chapter roles')
+    for chapter, blocks in ((FEATURE, [guide, literal(before['scripts/record_value_coordinate_fact.py'], 'PARSER_GUIDE')]),
+                            (REFERENCE, [reference, literal(before['scripts/record_value_coordinate_fact.py'], 'REFERENCE')])):
+        row = snapshot['native'][chapter]
+        need(set(row) == {'path', 'bytes', 'sha256'} and row['path'] == str(BASE / (Path(chapter).stem + '.final.html.txt')),
+             'whole owned final native input route')
+        raw_html = read(row['path']); need(pin(raw_html) == {k: row[k] for k in ('bytes', 'sha256')}, 'whole captured final native bytes')
+        old_publication['native'](raw_html.decode(), blocks)
+    current_success = 'PASS current class/frame facts, complete current source/query allocation and unchanged capacity/source contracts.\n'
+    final_commands = {
+        'close': ['python3', '-B', str(BASE / 'close.py')],
+        'focused-repaired': ['prove', '-Iperl', 't/2066-record-value-current-publication.t', 't/1303-isf-public-live-book-paths-audit.t', 't/1305-isf-book-feature-matrix-audit.t'],
+        'source-current': ['python3', '-B', 'scripts/book_source_references.py', '--check'],
+        'book-build': ['mdbook', 'build', 'docs/book'],
+        'current': ['python3', '-B', 'scripts/check_record_value_publication.py'],
+        'current-native-final': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', 'docs/book/book'],
+        'capture-final': ['python3', '-B', str(BASE / 'capture_final.py')],
+        'finish-tasks': ['python3', '-B', str(BASE / 'finish_tasks.py')],
+        'task-pressure-final': ['python3', '-B', str(BASE / 'task_pressure_final.py')],
+        'claims-final': ['perl', 'scripts/check_claim_verification_inventory.pl', '--write']}
+    final_stdout = {
+        'close': 'PASS complete closure witness and exact finite address book/reader status change; independent whole acceptance remains required.\n',
+        'source-current': 'book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n',
+        'capture-final': 'PASS complete dated final address source/query/history/native/copied-source capture; later currency remains the maintained reader responsibility.\n',
+        'finish-tasks': 'PASS unchanged complete finite address/publication task contracts and final raw-stack frontier prepared; final independent/staged/hook qualification gates commitment.\n',
+        'task-pressure-final': 'PASS exact complete task measurements and owned allowance; all ceilings and Knowledge Map authority unchanged.\n',
+        'current': current_success, 'current-native-final': current_success}
+    for name, command in final_commands.items():
+        receipt(checks[name], command, final_stdout.get(name),
+                name not in ('focused-repaired', 'book-build'), {MODULE: module, TEST: test_source(before)})
+    need('All tests successful.' in checks['focused-repaired']['stdout'] and 'Files=3, Tests=310' in checks['focused-repaired']['stdout'], 'complete focused regression success')
+    first_focused = checks['focused']
+    need(type(first_focused) is dict and set(first_focused) == {'command', 'status', 'stdout', 'stderr', 'instruments'}
+         and type(first_focused['status']) is int and first_focused['status'] == 1
+         and first_focused['command'] == ['scripts/run_with_ram_guard.sh', '--', *final_commands['focused-repaired']]
+         and first_focused['instruments'] == {p: pin(read(p) if p.startswith(str(BASE) + '/') else git('show', REVISION + ':' + p))
+             for p in {str(BASE / 'checks.py'), 'scripts/run_with_ram_guard.sh', *final_commands['focused-repaired'][2:]}}
+         and "(old='Full address-container\\nacceptance remains the next owned step')" in first_focused['stderr']
+         and 'self.assertNotEqual(changed, html)' in first_focused['stderr'] and 'Result: FAIL' in first_focused['stdout'],
+         'complete actual first non-genuine native frontier mutation failure')
+    need(read(BASE / 'first-focused-fact.py.txt') == module, 'whole first failed native frontier fact epoch')
+    repair = runpy.run_path(str(BASE / 'reproduce_frontier_probe.py'))
+    need(same(load(BASE / 'frontier-probe-repair.json'), repair['reconstruct']()), 'whole independent retained frontier probe reproduction')
+    receipt(checks['frontier-probe-repair'], ['python3', '-B', str(BASE / 'reproduce_frontier_probe.py')], repair['SUCCESS'])
+    first_actual = checks['independent']
+    missing = "KeyError: 't/python/test_record_value_current_publication.py'\n"
+    need(type(first_actual['status']) is int and first_actual['status'] == 1
+         and first_actual['command'] == ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', str(BASE / 'verify.py')]
+         and first_actual['instruments'][str(BASE / 'verify.py')] == pin(read(BASE / 'first-verify.py.txt'))
+         and first_actual['stdout'] == '' and first_actual['stderr'].endswith(missing),
+         'complete actual first indirect-instrument assumption refusal')
+    initial = {'__name__': 'retained_first_address_closure', '__file__': str(BASE / 'verify.py')}
+    exec(compile(read(BASE / 'first-verify.py.txt'), initial['__file__'], 'exec'), initial)
+    initial_read = initial['read']
+    initial['read'] = lambda path, maximum=134217728: initial_read(
+        BASE / 'first-verify.py.txt' if str(path) == str(BASE / 'verify.py') else path, maximum)
+    try:
+        initial['main']()
+    except KeyError as error:
+        need(str(error) == "'t/python/test_record_value_current_publication.py'", 'exact whole first reader instrument failure reproduces')
+    else:
+        raise ValueError('first missing indirect instrument unexpectedly accepted')
+    failed = checks['source-boundaries']
+    need(type(failed) is dict and set(failed) == {'command', 'status', 'stdout', 'stderr', 'instruments'}
+         and type(failed['status']) is int and failed['status'] == 2 and failed['command'] ==
+         ['scripts/run_with_ram_guard.sh', '--', *READERS['source-boundaries-approved']] and failed['stdout'] == ''
+         and failed['stderr'] == 'ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval\n',
+         'actual sandbox guard refusal retained without promotion')
+    failed_paths = {str(BASE / 'checks.py'), 'scripts/run_with_ram_guard.sh', READERS['source-boundaries-approved'][2]}
+    need(failed['instruments'] == {p: pin(read(p) if p.startswith(str(BASE) + '/') else git('show', REVISION + ':' + p))
+                                  for p in failed_paths}, 'whole retained sandbox refusal instruments')
+    root = load(BASE / 'root-cause.json')
+    need(type(root) is dict and set(root) == {'command', 'status', 'stdout', 'stderr'}
+         and type(root['status']) is int and root['status'] == 0 and root['stderr'] == ''
+         and root['command'] == ['git', '--no-replace-objects', 'log', '-1', '--format=%H %s', '-S',
+                                 'Final address-container', '--', MODULE]
+         and root['stdout'] == git('log', '-1', '--format=%H %s', '-S', 'Final address-container', REVISION, '--', MODULE).decode()
+         and root['stdout'].startswith(REVISION + ' '), 'whole actual predecessor acceptance and publication history')
+    challenges = []
+    def reject(name, original, mutate, procedure, cause):
+        candidate = copy.deepcopy(original); mutate(candidate)
+        need(not same(candidate, original), 'genuine whole closure control: ' + name)
+        try:
+            procedure(candidate)
+        except ValueError as error:
+            need(str(error) == cause, 'intended complete closure refusal: ' + name + ': ' + str(error))
+            challenges.append({'name': name, 'refusal': cause, 'whole_candidate': pin(json.dumps(candidate, sort_keys=True).encode())})
+        else:
+            raise ValueError('false-green whole closure control: ' + name)
+    for name, mutate, cause in (
+        ('unknown-native-field', lambda p: p.update(native_identity=True), 'closed complete address acceptance witness'),
+        ('borrowed-owner', lambda p: p.update(owner=NEXT), 'complete finite address owner epoch scope and open successors'),
+        ('cross-capture-identity', lambda p: p.update(scope='Numerical reuse proves native identity'), 'complete finite address owner epoch scope and open successors'),
+        ('lost-native-gap', lambda p: p['open'].pop(), 'complete finite address owner epoch scope and open successors'),
+        ('weakened-original-acceptance', lambda p: p['contracts'][ADDRESS].update(Acceptance=['Counted addresses match.']), 'complete unchanged original address and publication contracts'),
+        ('lost-completed-child', lambda p: p['completed'].pop(next(iter(p['completed']))), 'whole completed address descendant prerequisites'),
+        ('lost-original-source', lambda p: p['historical_members'].pop(next(iter(p['historical_members']))), 'whole original qualified historical input population'),
+        ('lost-source-graph', lambda p: p['source_products'].pop(next(iter(p['source_products']))), 'whole qualified source graph and call lifetime products'),
+        ('count-only-parent', lambda p: p.update(raw_parent=measured), 'whole independently reconstructed original source holder numerical parent'),
+        ('lost-original-body', lambda p: p['raw_parent']['original_allocation'].pop(), 'whole independently reconstructed original source holder numerical parent'),
+        ('borrowed-whole-domain', lambda p: p['raw_parent']['views'].__setitem__(0, copy.deepcopy(p['raw_parent']['views'][1])), 'whole independently reconstructed original source holder numerical parent'),
+        ('lost-current-fact', lambda p: p['canonical'].pop(next(iter(p['canonical']))), 'whole exact original current facts and governed history'),
+        ('lost-semantic-reader', lambda p: p['actual_readers'].pop('coordinate'), 'complete fresh semantic reader population'),
+        ('Boolean-semantic-status', lambda p: p['actual_readers']['numerical'].update(status=True), 'closed actual integer success'),
+        ('nonzero-semantic-status', lambda p: p['actual_readers']['numerical'].update(status=1), 'closed actual integer success'),
+        ('borrowed-semantic-command', lambda p: p['actual_readers']['numerical'].update(command=p['actual_readers']['holders']['command']), 'whole exact actual command'),
+        ('lost-semantic-instrument', lambda p: p['actual_readers']['numerical']['instruments'].pop('scripts/run_with_ram_guard.sh'), 'whole actual invocation instruments'),
+        ('short-semantic-stdout', lambda p: p['actual_readers']['numerical'].update(stdout='PASS\n'), 'whole exact actual stdout'),
+        ('widened-semantic-guard', lambda p: p['actual_readers']['numerical'].update(stderr=p['actual_readers']['numerical']['stderr'].replace('cutoff 88%', 'cutoff 99%')), 'complete actual unchanged guard stream')):
+        reject(name, product, mutate, qualify, cause)
+    for name, mutate, cause in (
+        ('later-currency-promotion', lambda p: p.update(role='Every later current publication qualifies.'), 'closed dated current snapshot without later currency'),
+        ('lost-approved-parser-card', lambda p: p['record']['cards'].pop('docs/knowledge/isf-record-output-source-contexts.md'), 'whole unchanged final approved facts questions and probes'),
+        ('lost-final-canonical-source', lambda p: p['record']['source_members'].pop(next(iter(canonical))), 'whole final canonical source population'),
+        ('Boolean-final-census', lambda p: p['record']['census'].update(files=True), 'whole independently derived typed final census'),
+        ('widened-card-authority', lambda p: p['record']['surface']['transition']['max_growth'].update(bytes_total=p['record']['surface']['transition']['max_growth']['bytes_total'] + 1), 'whole unchanged final knowledge and source capacity authority'),
+        ('borrowed-query-command', lambda p: p['record']['queries']['direct'].update(command=p['record']['queries']['cached']['command']), 'whole independently reconstructed final query ownership and command'),
+        ('lost-question-owner', lambda p: p['record']['queries']['cached'].update(stdout=''.join(p['record']['queries']['cached']['stdout'].splitlines(keepends=True)[1:])), 'whole independently reconstructed final query ownership and command'),
+        ('Boolean-query-status', lambda p: p['record']['queries']['direct'].update(status=False), 'closed actual final query integer success'),
+        ('borrowed-native-qualification', lambda p: p['qualification'].update(scope='Fresh native identity'), 'whole original admitted finite qualification conserves')):
+        reject(name, snapshot, mutate, source, cause)
+    command = final_commands['current-native-final']; actual = checks['current-native-final']
+    for name, mutate, cause in (
+        ('Boolean-current-native-status', lambda p: p.update(status=False), 'closed actual integer success'),
+        ('borrowed-current-native-command', lambda p: p.update(command=checks['current']['command']), 'whole exact actual command'),
+        ('short-current-native-stdout', lambda p: p.update(stdout='PASS\n'), 'whole exact actual stdout'),
+        ('unknown-current-native-field', lambda p: p.update(native_identity=True), 'closed actual integer success')):
+        reject(name, actual, mutate, lambda p: receipt(p, command, current_success), cause)
+    html = read(snapshot['native'][REFERENCE]['path']).decode()
+    changed = html.replace('Neither mode recaptures original executions or supplies native object identity.', 'Both modes prove original native object identity.')
+    need(changed != html, 'genuine complete native identity intervention')
+    try:
+        old_publication['native'](changed, [reference])
+    except ValueError as error:
+        need(str(error) == 'whole native current scope and remaining gaps', 'intended native identity refusal')
+        challenges.append({'name': 'native-identity-promotion', 'refusal': str(error), 'whole_candidate': pin(changed.encode())})
+    else:
+        raise ValueError('false-green whole native identity promotion')
+    proof = {'revision': REVISION, 'owner': OWNER, 'scope': SCOPE, 'open': OPEN, 'closed_nodes': sorted(CLOSED),
+             'acceptance': pin(read(BASE / 'acceptance.json')), 'snapshot': pin(read(BASE / 'snapshot-final.json')),
+             'original_relations': measured, 'controls': challenges,
+             'programmes': snapshot['programmes'],
+             'legs': {'re_derivation': 'Whole fixed Git source/graph/lifetime and original-body allocation reconstructs independently through the qualified parent oracle; fresh complete semantic readers execute with whole typed actual results.',
+                      'falsification': 'Independent original raw/source/holder/numerical reconstruction, complete source-derived question allocation and native interpretation plus genuine whole source/owner/scope/receipt controls.',
+                      'durability': 'Exact complete immutable prerequisite namespaces, original/proposed/current card history, dated final source/native/task snapshot and actual programme/receipt epochs; normal task-scoped Git commit.'},
+             'missing_legs': 'Manual reviewed natural-language conservation is not a universal equivalence theorem. No original native recapture, cross-call/capture identity, hidden referent, global heap, cold replay, visual QA or broader raw-stack/host-native/full-CI/push closure.'}
+    destination = BASE / 'proof.json'
+    need(not destination.exists() or same(load(destination), proof), 'whole immutable dated address closure proof')
+    if not destination.exists():
+        destination.write_text(json.dumps(proof, sort_keys=True, indent=2) + '\n')
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

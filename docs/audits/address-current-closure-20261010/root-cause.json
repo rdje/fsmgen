@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "--no-replace-objects",
+    "log",
+    "-1",
+    "--format=%H %s",
+    "-S",
+    "Final address-container",
+    "--",
+    "scripts/record_value_address_fact.py"
+  ],
+  "status": 0,
+  "stderr": "",
+  "stdout": "d82d1ef6620796b9c191a9a191b42a76e17f453d SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.2: publish finite address facts atomically\n"
+}

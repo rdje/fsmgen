@@ -5677,12 +5677,12 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify raw address roles and per-capture lifetimes.`
   Acceptance: `Model each opaque address argument role and simultaneous-live equality/distinction from independently qualified source graphs and call lifetimes. Do not infer object identity from numerical reuse across calls/captures. Borrowed or aliased addresses and wrong reference kinds must reject at intended role/lifetime contracts.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4`
-  Verification: `Source role/lifetime decomposition, original operand/numerical joins and full raw-parent acceptance are qualified. Governed canonical publication is child .4 and remains pending before container closure. Original private/provider/formatter/native identity, reuse and cold-replay scopes retain.`
-  Commit: `pending`
+  Verification: `Full unchanged finite address/lifetime container acceptance qualifies in docs/audits/address-current-closure-20261010/proof.json. Every source/core/helper/parser/nested/raw/numerical/publication descendant is done. Whole original bodies, source graphs, active holders and simultaneous numerical relations join complete fresh readers and genuine separating controls. Cross-call/capture/native/provider/formatter/hidden identities remain opaque; full raw-stack joining and downstream scopes retain their owners.`
+  Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.1`
   Status: `done`
@@ -5997,11 +5997,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Publish address/lifetime qualification and close its complete container.`
   Acceptance: `Conserve every existing canonical fact/question/probe/history and unchanged collection authority while publishing the exact qualified roles, original joins, controls and open scopes. Sync current reader and full native book/source routes, reconstruct whole dated evidence independently, run focused checks/claims/doctrines/hooks, and close only verified address nodes before the full raw-stack successor.`
-  Verification: `Retained non-growing complete preparation and atomic governed card/current-reader/native publication qualify through children .1/.2. Full unchanged publication and address-container acceptance remains child .3. Raw/numerical parents and current finite publication are qualified; native identity and broader original raw-stack joining remain separately owned.`
-  Commit: `pending`
+  Verification: `Complete unchanged governed publication acceptance qualifies in docs/audits/address-current-closure-20261010/proof.json. Whole original/proposed/current cards, all questions/probes/history and exact book/native/copied-source domains conserve under unchanged collection authority. Fresh complete semantic/current/native results, genuine scope/ownership/receipt controls and focused/task/claim/staged/hook gates qualify. Only finite address nodes close; full raw-stack joining remains next.`
+  Commit: `this slice`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.1`
@@ -6031,12 +6031,19 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Verify full unchanged address-publication and address-container acceptance.`
   Acceptance: `After atomic publication commits, independently reconstruct complete original/qualified/proposed/current domains and all unchanged parent obligations, freshly execute complete semantic and current/native readers with typed actual outcomes, preserve every prior question/probe/history and open scope, and reject genuine whole-source/scope/ownership/receipt controls. Close only full verified publication/address parents after book/task/claim/capacity/staged gates and normal hooks. The full raw-stack successor remains next; no count-only or native identity closure.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Independent complete dated closure is docs/audits/address-current-closure-20261010/proof.json. Fixed whole prerequisite namespaces, unchanged original Goal/Acceptance/Children, complete original source/holder/numerical reconstruction and all fresh typed semantic results join exact original/proposed/current source, global question/probe/history, book/native/copied-source and capacity domains. Genuine whole controls reject count-only closure, borrowed domains/owners/commands, scope promotion, omissions and malformed results. Sandbox process inspection first refused actual2; approved complete replay passed. Final task/book/claim/staged doctrines and normal hooks gate commitment; full raw-stack joining is next, native and broader successors remain open.`
+  Commit: `this slice`
 
+  **Resolved defects (same leaf):** The first focused run returned actual1 after the closure text removed the old frontier phrase. Its hostile replacement did not change the HTML, and assertNotEqual correctly stopped the test. Reproduce with first-focused-test.py.txt, first-focused-fact.py.txt and reproduce_frontier_probe.py in docs/audits/address-current-closure-20261010; the corrected whole-native raw-stack-open mutation now rejects and focused-repaired passes. The first independent run returned actual1 at a nonexistent indirect-test instrument key: checks.py records direct CLI file arguments, while the Python test loads through the Perl driver. Preserve the original receipt and first-verify.py.txt; the repaired verifier authenticates the full declared direct set, the frozen indirect source epoch, the complete original failure, and the current test programme separately. Resolution is gated by final independent/staged qualification; no source evidence or assertion is weakened.
+
+  ## Acceptance Checklist (enforced)
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S in docs/audits/address-current-closure-20261010/root-cause.json identifies d82d1ef as the exact atomic publication predecessor. Its complete maintained guidance and original address/publication Goal, Acceptance and Children leave final container acceptance open. Fixed complete prerequisite namespaces and original/proposed/current source domains establish that boundary without inferring native identity.
+  - [x] **ADDRESSED (verified)** — docs/audits/address-current-closure-20261010/proof.json independently reconstructs whole original bodies, source/holder/numerical associations and every unchanged parent obligation. Fresh complete semantic receipts join whole reviewed cards, every question/probe/history, current/native guidance and canonical copied sources. Genuine whole owner/scope/source/receipt interventions reject; only verified finite address nodes close. Re-derivation, falsification and durability remain distinct; full raw-stack/native/cold/visual/HIAL successors stay owned.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in focused-repaired. Fresh complete source, class/frame, coordinate, admission, operand, holder, numerical, raw-parent, preparation, current and current-native readers pass with typed actual outcomes. Whole final book/source copies, unchanged Knowledge Map authority, task measurements, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commitment. The sandbox process-inspection refusal remains actual2, never success. No original native recapture, allowance widening, full CI or push occurs.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5`
   Status: `pending`

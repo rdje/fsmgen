@@ -1,0 +1,367 @@
+{
+  "acceptance": {
+    "bytes": 4037502,
+    "sha256": "eac0c9450cd8e033761636836fc777f7de462d2bcdfd53ea7c7f243e544b39cd"
+  },
+  "closed_nodes": [
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4",
+    "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.3"
+  ],
+  "controls": [
+    {
+      "name": "unknown-native-field",
+      "refusal": "closed complete address acceptance witness",
+      "whole_candidate": {
+        "bytes": 2143124,
+        "sha256": "2d9dcdfdb7432eaf2e92cfda96c62b5b887b118f40a1c99094e6bbc1ae12f320"
+      }
+    },
+    {
+      "name": "borrowed-owner",
+      "refusal": "complete finite address owner epoch scope and open successors",
+      "whole_candidate": {
+        "bytes": 2143095,
+        "sha256": "0a8631cd0184292c1b11086a6efab5a0396e42c0f7b7fd35c8581876f1ba6c85"
+      }
+    },
+    {
+      "name": "cross-capture-identity",
+      "refusal": "complete finite address owner epoch scope and open successors",
+      "whole_candidate": {
+        "bytes": 2142735,
+        "sha256": "cb21d6c4ed594329d3fbd21ae7a2c00c0260f4d794819fca9cef1ebeaf07e2e7"
+      }
+    },
+    {
+      "name": "lost-native-gap",
+      "refusal": "complete finite address owner epoch scope and open successors",
+      "whole_candidate": {
+        "bytes": 2143064,
+        "sha256": "266c52f0ec9dfcc830b8044d840a96573ce496dda23db86ae33880a279d01064"
+      }
+    },
+    {
+      "name": "weakened-original-acceptance",
+      "refusal": "complete unchanged original address and publication contracts",
+      "whole_candidate": {
+        "bytes": 2142784,
+        "sha256": "e398b0035686b9f23fed13a494f4b22e0a8d150f3b9df89c815212decb8bb46f"
+      }
+    },
+    {
+      "name": "lost-completed-child",
+      "refusal": "whole completed address descendant prerequisites",
+      "whole_candidate": {
+        "bytes": 2138795,
+        "sha256": "65b5502be06960bf8a165a6780b61d19f016da40c07cf278d9334861ebf8fff0"
+      }
+    },
+    {
+      "name": "lost-original-source",
+      "refusal": "whole original qualified historical input population",
+      "whole_candidate": {
+        "bytes": 2142919,
+        "sha256": "549cfac2ab23819d672b0bf146aaa15a8c551235bdbc213f4b55ea85436dd221"
+      }
+    },
+    {
+      "name": "lost-source-graph",
+      "refusal": "whole qualified source graph and call lifetime products",
+      "whole_candidate": {
+        "bytes": 2142935,
+        "sha256": "237666d3d53a62f210d1033090bbfd8e11f74b7da37a016704b1aa43070ea4d4"
+      }
+    },
+    {
+      "name": "count-only-parent",
+      "refusal": "whole independently reconstructed original source holder numerical parent",
+      "whole_candidate": {
+        "bytes": 490495,
+        "sha256": "537c3c85bb99b655654e527fd6b81a9fdef4af419292e7fd32a972afb15b9353"
+      }
+    },
+    {
+      "name": "lost-original-body",
+      "refusal": "whole independently reconstructed original source holder numerical parent",
+      "whole_candidate": {
+        "bytes": 2065684,
+        "sha256": "4d70891002dbac4689c2e4c2fc1a4d6417e14b8f2daccef0a2d985da791d1947"
+      }
+    },
+    {
+      "name": "borrowed-whole-domain",
+      "refusal": "whole independently reconstructed original source holder numerical parent",
+      "whole_candidate": {
+        "bytes": 2142609,
+        "sha256": "5d2bdbd77b436a7bb66648e1b72e2366ea34e414d4c5a38c71873d492dcbcede"
+      }
+    },
+    {
+      "name": "lost-current-fact",
+      "refusal": "whole exact original current facts and governed history",
+      "whole_candidate": {
+        "bytes": 2142954,
+        "sha256": "fe089b02f3c5ac9b69835699b811c6a64d0be6dcc7dc8a424121ffb257377364"
+      }
+    },
+    {
+      "name": "lost-semantic-reader",
+      "refusal": "complete fresh semantic reader population",
+      "whole_candidate": {
+        "bytes": 2084436,
+        "sha256": "aa3ee2df3df643f963582371a05c99e1d2aa8b3276cc149e503ce72b5e133dea"
+      }
+    },
+    {
+      "name": "Boolean-semantic-status",
+      "refusal": "closed actual integer success",
+      "whole_candidate": {
+        "bytes": 2143102,
+        "sha256": "185f74f7114d7e842b4003273f9f1955d3e70dc3dac25ee8d4b20ef11d9fdc14"
+      }
+    },
+    {
+      "name": "nonzero-semantic-status",
+      "refusal": "closed actual integer success",
+      "whole_candidate": {
+        "bytes": 2143099,
+        "sha256": "15127a5b7a9c374dbd9f32389b1df900da5958d6cf36baee32f7a2529dc49aed"
+      }
+    },
+    {
+      "name": "borrowed-semantic-command",
+      "refusal": "whole exact actual command",
+      "whole_candidate": {
+        "bytes": 2143095,
+        "sha256": "1cf6a78595b073781171817199e8ff8ec7a6ce4802844d045d3bc536053e619c"
+      }
+    },
+    {
+      "name": "lost-semantic-instrument",
+      "refusal": "whole actual invocation instruments",
+      "whole_candidate": {
+        "bytes": 2142970,
+        "sha256": "6d338559e98ac6fb0a81ad067f5e2ae8b5ed55312cb6eadeed88e25d43562dc5"
+      }
+    },
+    {
+      "name": "short-semantic-stdout",
+      "refusal": "whole exact actual stdout",
+      "whole_candidate": {
+        "bytes": 2142935,
+        "sha256": "47ad58f3221b2c94ad10d1e73bf3c3e98a591a7cc48bc51c63796f64e089f80c"
+      }
+    },
+    {
+      "name": "widened-semantic-guard",
+      "refusal": "complete actual unchanged guard stream",
+      "whole_candidate": {
+        "bytes": 2143099,
+        "sha256": "7819c1dc01871659abf3ad7034ce09fd64b6ffb5e687d3c5602d20cefaceef88"
+      }
+    },
+    {
+      "name": "later-currency-promotion",
+      "refusal": "closed dated current snapshot without later currency",
+      "whole_candidate": {
+        "bytes": 3391340,
+        "sha256": "eb7663c61af4678e5da38264ebdc618fe9ad4791ea4c46d1dd1986e68a57ca75"
+      }
+    },
+    {
+      "name": "lost-approved-parser-card",
+      "refusal": "whole unchanged final approved facts questions and probes",
+      "whole_candidate": {
+        "bytes": 3385159,
+        "sha256": "dad2d964159181170cb8792299bde15f92b4b812302383ebd13209cd8c1fb71a"
+      }
+    },
+    {
+      "name": "lost-final-canonical-source",
+      "refusal": "whole final canonical source population",
+      "whole_candidate": {
+        "bytes": 3391245,
+        "sha256": "3cf837021dadc73ed7b83a2efecc4050c261be50b40d6764b2ec48bf7bcea95b"
+      }
+    },
+    {
+      "name": "Boolean-final-census",
+      "refusal": "whole independently derived typed final census",
+      "whole_candidate": {
+        "bytes": 3391390,
+        "sha256": "b48a471dfa5284c0a855ba288d8906776a75f45296af0a6aa9b7f26e1952b52a"
+      }
+    },
+    {
+      "name": "widened-card-authority",
+      "refusal": "whole unchanged final knowledge and source capacity authority",
+      "whole_candidate": {
+        "bytes": 3391390,
+        "sha256": "0b19b5c6db3167cef2409a0618ebd276d863da0a46e67cd457113d13d31d98c0"
+      }
+    },
+    {
+      "name": "borrowed-query-command",
+      "refusal": "whole independently reconstructed final query ownership and command",
+      "whole_candidate": {
+        "bytes": 3391376,
+        "sha256": "8b2fa0a007229e4ed1fdc6fe980bd01565020ad75bf70b7b8ed3a451bf89e48c"
+      }
+    },
+    {
+      "name": "lost-question-owner",
+      "refusal": "whole independently reconstructed final query ownership and command",
+      "whole_candidate": {
+        "bytes": 3391274,
+        "sha256": "0ef7688edd77c953252a6e639aa46ffe45d7f9a11d84b02348a2e94fda4b419e"
+      }
+    },
+    {
+      "name": "Boolean-query-status",
+      "refusal": "closed actual final query integer success",
+      "whole_candidate": {
+        "bytes": 3391394,
+        "sha256": "f638a46ba91b0cf70e56874d86246cb75f9aa94e582fa662a3ae401c360f0571"
+      }
+    },
+    {
+      "name": "borrowed-native-qualification",
+      "refusal": "whole original admitted finite qualification conserves",
+      "whole_candidate": {
+        "bytes": 3391270,
+        "sha256": "d49cbde35de4e24a913463e91e54e5896c8f2e28716ba9de1684c21b801a5921"
+      }
+    },
+    {
+      "name": "Boolean-current-native-status",
+      "refusal": "closed actual integer success",
+      "whole_candidate": {
+        "bytes": 834,
+        "sha256": "5697c80443ab1bf790723c3152ea9901929f88c31cb6a2f43ae298f958bbf780"
+      }
+    },
+    {
+      "name": "borrowed-current-native-command",
+      "refusal": "whole exact actual command",
+      "whole_candidate": {
+        "bytes": 801,
+        "sha256": "5030aad85f044eda9b417bd96d09ed7809e9b4fd92d249dad0feca4b08eace07"
+      }
+    },
+    {
+      "name": "short-current-native-stdout",
+      "refusal": "whole exact actual stdout",
+      "whole_candidate": {
+        "bytes": 721,
+        "sha256": "d9268b836bcc6e6f76103f94b780906ef8f5104048c6af19ee35c34c1e04b1ae"
+      }
+    },
+    {
+      "name": "unknown-current-native-field",
+      "refusal": "closed actual integer success",
+      "whole_candidate": {
+        "bytes": 855,
+        "sha256": "4defd8eb4df82bacc10be9c3c11178995beb2e55b65c7c0614850ba7241f6a80"
+      }
+    },
+    {
+      "name": "native-identity-promotion",
+      "refusal": "whole native current scope and remaining gaps",
+      "whole_candidate": {
+        "bytes": 105964,
+        "sha256": "670f9096ff5f6d61e23e35cb56d5946bb020fdb637b8f81041a50529bbf753ee"
+      }
+    }
+  ],
+  "legs": {
+    "durability": "Exact complete immutable prerequisite namespaces, original/proposed/current card history, dated final source/native/task snapshot and actual programme/receipt epochs; normal task-scoped Git commit.",
+    "falsification": "Independent original raw/source/holder/numerical reconstruction, complete source-derived question allocation and native interpretation plus genuine whole source/owner/scope/receipt controls.",
+    "re_derivation": "Whole fixed Git source/graph/lifetime and original-body allocation reconstructs independently through the qualified parent oracle; fresh complete semantic readers execute with whole typed actual results."
+  },
+  "missing_legs": "Manual reviewed natural-language conservation is not a universal equivalence theorem. No original native recapture, cross-call/capture identity, hidden referent, global heap, cold replay, visual QA or broader raw-stack/host-native/full-CI/push closure.",
+  "open": [
+    "complete raw-stack joining",
+    "original private/provider/formatter identity",
+    "external/native/CODE/Regexp identity and hidden referents",
+    "native payload/flags",
+    "cross-call/capture numerical reuse",
+    "global heap census",
+    "cause/consumer/alias successors",
+    "cold replay and permanent/hot/host-native successors",
+    "visual book QA",
+    "HIAL/full-CI/push qualification"
+  ],
+  "original_relations": {
+    "admission_controls": 24,
+    "body_bytes": 482964,
+    "empty_records": 29805,
+    "holder_controls": 26,
+    "nonempty_records": 150,
+    "numerical_controls": 49,
+    "operand_controls": 33,
+    "views": 171,
+    "visible_reference_operands": 2691
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.4.3",
+  "programmes": {
+    "docs/audits/address-current-closure-20261010/capture_final.py": {
+      "bytes": 2595,
+      "sha256": "5ca245cefd0590cf21082593cf799998a3f41043d1252cc3cbbeef19115c22d6"
+    },
+    "docs/audits/address-current-closure-20261010/checks.py": {
+      "bytes": 1410,
+      "sha256": "c6099fdec6ce168c7032f8a6df4c7e1dfae90236370c7d9a2625d137304b6680"
+    },
+    "docs/audits/address-current-closure-20261010/close.py": {
+      "bytes": 4114,
+      "sha256": "36dd60f4963d85b529415c79dc28b349fbf3d2ee67bc2a8dbf07cd408a4b2c43"
+    },
+    "docs/audits/address-current-closure-20261010/contracts.py": {
+      "bytes": 12084,
+      "sha256": "25f2518ab5101402ed3921d16c7213f68b441e0661319e5244a3ba95a794b3b4"
+    },
+    "docs/audits/address-current-closure-20261010/finish_tasks.py": {
+      "bytes": 5484,
+      "sha256": "47bf15d603be8bbe5636caf10d074279fb170efbadf646b68457b77645349818"
+    },
+    "docs/audits/address-current-closure-20261010/reproduce_frontier_probe.py": {
+      "bytes": 4187,
+      "sha256": "0c809b207e96462c9515c98d890c3b8ff4d3168d6f89c36d879be94494fb4674"
+    },
+    "docs/audits/address-current-closure-20261010/task_pressure_final.py": {
+      "bytes": 2033,
+      "sha256": "672e5ec01d4881e2153f7675254384c45ae04d001d20c5986029bc5824a52b8a"
+    },
+    "docs/audits/address-current-closure-20261010/verify.py": {
+      "bytes": 33098,
+      "sha256": "406e7f0a7b5fbd98ea3f10a2228d0813648740b0ad6d57dfd187d8c597639256"
+    },
+    "scripts/book_source_references.py": {
+      "bytes": 11033,
+      "sha256": "7009312dd262516eeed1ed1fe90036551e1a786baed5d7e54a2d029b9ad92ff3"
+    },
+    "scripts/check_record_value_publication.py": {
+      "bytes": 15418,
+      "sha256": "6b0064cff6625c3e520f75d117e70a78052fefde0c99bbab53945a70c52d3139"
+    },
+    "scripts/record_value_address_fact.py": {
+      "bytes": 37285,
+      "sha256": "1981b4d5f06ea9d7508d7302a5c50e75ba20ca2851f1cc9f5b82e25761e9a318"
+    },
+    "scripts/record_value_coordinate_fact.py": {
+      "bytes": 12717,
+      "sha256": "848cc8ce10a3a6de53f266e656988ea6ab07d9c63a5150a47f8807f521b2e41b"
+    },
+    "t/python/test_record_value_current_publication.py": {
+      "bytes": 22956,
+      "sha256": "38755183db06f4c15255a660beea51c496871efb1f5f928e3a48d237bb654041"
+    }
+  },
+  "revision": "d82d1ef6620796b9c191a9a191b42a76e17f453d",
+  "scope": "Complete unchanged finite address/lifetime and governed publication acceptance. Original source graphs, active holders, whole raw bodies and simultaneous numerical relations join the exact reviewed original/proposed/current facts, history, questions, book and native sources. Only completed finite address nodes close. This dated closure does not establish later current publication or native identity.",
+  "snapshot": {
+    "bytes": 3453749,
+    "sha256": "efdf8dc72bb802b76e65fc3be0b2ad1501f045285c94009d4b9ae3545a5a4a7c"
+  }
+}

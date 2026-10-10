@@ -979,8 +979,10 @@ Current verification still derives every canonical source, direct and cached
 question allocation, physical capacity and copied source. Its native variant
 also checks the rendered current guidance. The original private/provider/
 formatter, external/native/CODE/Regexp identity, cross-call/capture reuse, heap,
-cold and visual scopes remain separately owned. Final address-container
-acceptance follows atomic publication; HIAL and full CI/push gates stay open.
+cold and visual scopes remain separately owned. Full unchanged address-container
+acceptance now qualifies through fresh complete semantic readers and independent
+whole original/proposed/current reconstruction. Only finite address nodes close;
+full raw-stack joining is next. HIAL and full CI/push gates stay open.
 
 Address/lifetime qualification begins with a separate source-only model of
 operation boundaries. Qualified typed input graphs retain aliases and cycles

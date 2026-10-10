@@ -280,8 +280,10 @@ Current verification still derives every canonical source, direct and cached
 question allocation, physical capacity and copied source. Its native variant
 also checks the rendered current guidance. The original private/provider/
 formatter, external/native/CODE/Regexp identity, cross-call/capture reuse, heap,
-cold and visual scopes remain separately owned. Final address-container
-acceptance follows atomic publication; HIAL and full CI/push gates stay open.
+cold and visual scopes remain separately owned. Full unchanged address-container
+acceptance now qualifies through fresh complete semantic readers and independent
+whole original/proposed/current reconstruction. Only finite address nodes close;
+full raw-stack joining is next. HIAL and full CI/push gates stay open.
 
 '''
 
@@ -309,9 +311,24 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-publication-prep
 The definitive certificate is `final-proof.json`. The first limited proof,
 actual first-admission schema false green and repaired exact-reader refusals are
 retained without promotion. Explicit independent schema and fixed-source
-authority now reject that challenge before any seal. Full address-container
-acceptance remains the next owned step; private/downstream/alias/cold/visual/HIAL
-and full CI/push work retain their separate owners.
+authority now reject that challenge before any seal. Full unchanged finite
+address-container and publication acceptance now qualify together. Fresh complete
+source, class/frame, coordinate, operand, holder, numerical and parent readers
+join independent original/proposed/current source, question, history, scope and
+native reconstruction. Every descendant is complete before its parent closes.
+Earlier address paragraphs describe retained checkpoints; their then-open scopes
+do not replace this current frontier. Full raw-stack joining is next;
+private/downstream/alias/cold/visual/HIAL and full CI/push retain their owners.
+
+Replay the complete dated closure independently of later current progress:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-current-closure-20261010/verify.py
+```
+
+The dated replay authenticates its complete retained actual results. Run the
+maintained current reader above to establish current source and native currency.
+Neither mode recaptures original executions or supplies native object identity.
 
 '''
 
