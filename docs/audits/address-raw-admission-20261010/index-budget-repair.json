@@ -1,0 +1,100 @@
+{
+  "after": {
+    "identity": {
+      "bytes": 40155,
+      "sha256": "734b729f479a0342f06920435ceb91ba8d845fb03ae4d72e98a72d159056e9f2"
+    },
+    "max_line_bytes": 820,
+    "path": "docs/TASK_TREE.md"
+  },
+  "allowed_line_bytes": 862,
+  "before": {
+    "identity": {
+      "bytes": 40205,
+      "sha256": "daa6a509a49b60f508a7a1b3d598d967d9951c6c2ce43145b694232ab36abe6f"
+    },
+    "max_line_bytes": 870,
+    "snapshot": "docs/audits/address-raw-admission-20261010/first-task-index.md.txt"
+  },
+  "defect": "The new task-index frontier summary exceeded its unchanged focused-document line allowance.",
+  "exact_replacement": [
+    "complete original/source prerequisite admission done; lossless whole reference operands next; semantic address/lifetime join remains active.",
+    "raw/source admission done; lossless reference operands next; address/lifetime join active."
+  ],
+  "first_actual_gate": "docs/audits/address-raw-admission-20261010/first-staged-doctrines.json",
+  "focused_surface": {
+    "baseline": {
+      "bytes_each": 172995,
+      "bytes_total": 8587847,
+      "files": 1005,
+      "line_bytes_each": 790,
+      "lines_each": 1774,
+      "lines_total": 199211
+    },
+    "canonical_inputs": [],
+    "classification": {
+      "audience": "maintainers and specification readers",
+      "rationale": "Every focused root document is classified in the generated complete index. Large maintained ISF contracts use a separate semantic-part surface; work-unit evidence remains directly addressable under its encoded owner, and live architecture references retain their distinct current roles.",
+      "role": "classified_focused_documents"
+    },
+    "containment_status": "migrated",
+    "enforcement_ceilings": {
+      "bytes_each": 262144,
+      "bytes_total": 9000000,
+      "files": 1280,
+      "line_bytes_each": 1024,
+      "lines_each": 5000,
+      "lines_total": 210000
+    },
+    "health_targets": {
+      "bytes_each": 262144,
+      "bytes_total": 12582912,
+      "files": 1280,
+      "line_bytes_each": 1024,
+      "lines_each": 5000,
+      "lines_total": 250000
+    },
+    "index": "docs/index/FOCUSED_DOCUMENTS.md",
+    "index_contract": {
+      "kind": "generated",
+      "verifier": "surface:focused_document_index"
+    },
+    "lifecycle": "partitioned_canonical",
+    "locator": "collection",
+    "milestones": {
+      "rollover_pct": 90,
+      "warning_pct": 80
+    },
+    "owner": "LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.13",
+    "routes_to": [],
+    "state": "warning_debt",
+    "surface_id": "focused_documents",
+    "targets": [
+      "docs/*.md"
+    ],
+    "transition": {
+      "max_growth": {
+        "bytes_each": 0,
+        "bytes_total": 230173,
+        "files": 5,
+        "line_bytes_each": 72,
+        "lines_each": 477,
+        "lines_total": 4228
+      },
+      "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER",
+      "ratchet_step": {
+        "bytes_each": 16384,
+        "bytes_total": 16384,
+        "files": 1,
+        "line_bytes_each": 64,
+        "lines_each": 100,
+        "lines_total": 100
+      }
+    },
+    "verifier": "builtin:budget"
+  },
+  "impact": "Required pre-commit doctrine signoff blocked.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3.1",
+  "reproduction": "Compute maximum UTF-8 physical line bytes in first-task-index.md.txt and compare with the saved focused_surface baseline plus transition allowance. The saved actual staged gate fails at this same contract.",
+  "result": "Whole index retains except exact shortened current-frontier phrase. All authority and allowance values remain unchanged; final staged requalification gates closure."
+}

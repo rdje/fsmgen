@@ -1,0 +1,53 @@
+{
+  "coordinate-original": {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-1",
+      "-S",
+      "def custody():",
+      "--",
+      "docs/audits/coordinate-original-intake-20261009/admit.py"
+    ],
+    "mechanism": "Opaque hexadecimal inventory and prior source-only custody do not qualify original numeric source roles; complete prerequisite admission must precede that semantic join.",
+    "path": "docs/audits/coordinate-original-intake-20261009/admit.py",
+    "status": 0,
+    "stderr": "",
+    "stdout": "39249cb445399c2318275829e5c7f10e0094d0c4 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.1: admit complete original raw coordinate inputs\n"
+  },
+  "raw-lexeme-inventory": {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-1",
+      "-S",
+      "opaque_lexemes",
+      "--",
+      "docs/audits/record-value-original-raw-20261005/trace_inventory.py"
+    ],
+    "mechanism": "Opaque hexadecimal inventory and prior source-only custody do not qualify original numeric source roles; complete prerequisite admission must precede that semantic join.",
+    "path": "docs/audits/record-value-original-raw-20261005/trace_inventory.py",
+    "status": 0,
+    "stderr": "",
+    "stdout": "506b80e7c59be4f5b13556c5e234b94e6c804fee SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.1: qualify lossless original raw-error inventory\n"
+  },
+  "source-custody": {
+    "command": [
+      "git",
+      "log",
+      "--format=%H %s",
+      "-1",
+      "-S",
+      "whole fixed Git source input custody",
+      "--",
+      "docs/audits/address-source-boundaries-20261010/derive.py"
+    ],
+    "mechanism": "Opaque hexadecimal inventory and prior source-only custody do not qualify original numeric source roles; complete prerequisite admission must precede that semantic join.",
+    "path": "docs/audits/address-source-boundaries-20261010/derive.py",
+    "status": 0,
+    "stderr": "",
+    "stdout": "fec14b2d1496b9567e235fc559296c566a4aaee3 SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.1: qualify operation-boundary source lifetimes\n"
+  }
+}

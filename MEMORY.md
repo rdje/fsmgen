@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4` (active)
-- next_action: After the clean source-integration commit, activate the pending raw-address/lifetime join child. Authenticate complete original raw bodies and class/frame/coordinate prerequisites, then join every visible reference operand to qualified source equivalence/distinction only within simultaneous-live domains.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.4.3` (active)
+- next_action: After the clean admission commit, activate the pending lossless reference-operand parser child. Consume the complete admitted original/source corpus, partition every raw byte and hex lexeme into visible references, quoted embedded traces, scalar text and external opaque material, then qualify genuine omission/borrowed-frame/phase/kind controls before semantic address joins.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: none
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

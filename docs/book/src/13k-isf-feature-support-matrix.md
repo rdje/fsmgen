@@ -1443,6 +1443,36 @@ and flags, opaque provider/framework/formatter/Regexp/CODE identity, cold replay
 visual book QA and governed non-growing canonical publication remain open.
 Every existing canonical fact, question, probe and collection ceiling retains.
 
+The original-address join now has a separate whole-input admission checkpoint.
+It authenticates every declared original capture and transitive raw, class,
+frame, coordinate and source-model audit member against the committed source
+frontier. Complete audit namespaces retain, including historical failures and
+empty error records. Every nonempty raw body keeps its exact bytes and original
+capture association; source views retain their complete throw-phase allocation.
+
+Fresh executions recheck the complete source graph/lifetime reader, the original
+class/frame join and the independent hostile coordinate qualification. Their
+actual commands, integer statuses, full output and invocation programmes retain.
+These are saved-corpus semantic replays; they do not execute the original test
+capture again. A second reader uses a separate binary Git transport, reconstructs
+error membership directly from complete original captures, checks completed task
+owners and qualifies the whole actual results. Lost members, empty records,
+phases, programmes, borrowed bodies/successes, Boolean statuses, widened guards
+and invented native scope reject.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-admission-20261010/verify.py
+```
+
+This dated admission qualifies input custody and prerequisite replay only.
+Lossless reference-operand parsing and original numeric role/lifetime joins
+remain owned successors. Scalar hex text, quoted embedded traces and external
+opaque operands still need their complete partition before reference meanings
+can join. Equal numerical addresses across calls or captures establish no
+identity. Original private/native/provider/formatter/CODE/Regexp identity,
+cold replay, visual book QA and governed current publication remain open.
+Existing canonical facts, questions, probes and collection ceilings retain.
+
 Raw-coordinate qualification first admits the complete predecessor source and
 actual-result evidence. Its saved admission checks the dated source epoch; it
 does not establish coordinate meanings or later current currency:

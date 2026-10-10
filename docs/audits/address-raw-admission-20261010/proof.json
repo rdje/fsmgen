@@ -1,0 +1,233 @@
+{
+  "admission": {
+    "bytes": 1782311,
+    "sha256": "4ef6c143bbf283eaed54934a09b9a91aba32526acc6beb673d4913cbc321df5e"
+  },
+  "controls": [
+    {
+      "name": "unknown-native-identity",
+      "refusal": "closed complete admission product",
+      "whole_candidate": {
+        "bytes": 1093434,
+        "sha256": "55f6a7f720c1fbcceb286a48c642c4b156b0e917924d3107dd6f62bac2bc3dea"
+      }
+    },
+    {
+      "name": "numeric-reuse-scope",
+      "refusal": "exact admission owner and successor scope",
+      "whole_candidate": {
+        "bytes": 1093205,
+        "sha256": "43adf040ad78fae3a600c2022531bb7cc816376f38675a1808364bbb7536a48c"
+      }
+    },
+    {
+      "name": "borrowed-owner",
+      "refusal": "exact admission owner and successor scope",
+      "whole_candidate": {
+        "bytes": 1093297,
+        "sha256": "0b5bb832f8376d561f76dbe598077cde4e25c64dc3e623b827351269df57d170"
+      }
+    },
+    {
+      "name": "lost-whole-input-root",
+      "refusal": "whole independent admission custody",
+      "whole_candidate": {
+        "bytes": 1093356,
+        "sha256": "b221f85a557e231319b461e7e1e1bf4d93e66d069a45888b29db53f5a3e02349"
+      }
+    },
+    {
+      "name": "lost-whole-input-member",
+      "refusal": "whole independent admission custody",
+      "whole_candidate": {
+        "bytes": 1093136,
+        "sha256": "adea4ba28bb325e14b292a15e1e54f9bad1f5d176533b32787645bb40596dd33"
+      }
+    },
+    {
+      "name": "borrowed-whole-input-member",
+      "refusal": "whole independent admission custody",
+      "whole_candidate": {
+        "bytes": 1093398,
+        "sha256": "935763ed746d29306825e1e0ae256825fd2dae1e00eadc373e46ba825af32afb"
+      }
+    },
+    {
+      "name": "borrowed-input-revision",
+      "refusal": "whole independent admission custody",
+      "whole_candidate": {
+        "bytes": 1093360,
+        "sha256": "0a55a70b24e3c64a94bbcd02e256f873a634da59b99c8eb471a5033866b5c7b0"
+      }
+    },
+    {
+      "name": "Boolean-archive-status",
+      "refusal": "whole independent admission custody",
+      "whole_candidate": {
+        "bytes": 1093400,
+        "sha256": "fefbb4b93378d0dafd8f94d421007c17c6dd8f1f2578ab13f1e88c8b65f946e0"
+      }
+    },
+    {
+      "name": "lost-empty-member",
+      "refusal": "whole independent original/source allocation",
+      "whole_candidate": {
+        "bytes": 1093391,
+        "sha256": "6d70f158a480af509df75ebd46ef4b7bfc4bb716c3a0c77ea1c1e0cc883580a1"
+      }
+    },
+    {
+      "name": "lost-nonempty-member",
+      "refusal": "whole independent original/source allocation",
+      "whole_candidate": {
+        "bytes": 1093128,
+        "sha256": "b86d91e0debbdd029a8039e0c9b32eabcc8cd00bf87600ddb7f07ee0c4997e97"
+      }
+    },
+    {
+      "name": "Boolean-original-population",
+      "refusal": "whole independent original/source allocation",
+      "whole_candidate": {
+        "bytes": 1093399,
+        "sha256": "9704f51d48c2e7279b8d0b73bfe8c2f9d8ac6080d9364ac3629d47a1e654e334"
+      }
+    },
+    {
+      "name": "borrowed-raw-body",
+      "refusal": "whole independent original/source allocation",
+      "whole_candidate": {
+        "bytes": 1093396,
+        "sha256": "5f52e457226692c612a0ecbdaf733e0f89e35c60c4efc2f4fcb747235866a815"
+      }
+    },
+    {
+      "name": "lost-source-view",
+      "refusal": "whole independent original/source allocation",
+      "whole_candidate": {
+        "bytes": 1093366,
+        "sha256": "e5f55774e8b411df1fddb5e18192d75c2b9702657e1fe1e0d45412ca68e05d94"
+      }
+    },
+    {
+      "name": "borrowed-source-phase",
+      "refusal": "whole independent original/source allocation",
+      "whole_candidate": {
+        "bytes": 1093396,
+        "sha256": "8d7f6281de9671ae9089b916ec63bc98acf75d98200c09e5f87bc6c2f644eeef"
+      }
+    },
+    {
+      "name": "lost-qualified-product",
+      "refusal": "whole independent original/source allocation",
+      "whole_candidate": {
+        "bytes": 1093230,
+        "sha256": "c3883c52cacced8814c0fe5544fe902bc3cebf276fb716a53e836e61b1ba6cfc"
+      }
+    },
+    {
+      "name": "lost-completed-owner",
+      "refusal": "whole independent completed prerequisite owners",
+      "whole_candidate": {
+        "bytes": 1087287,
+        "sha256": "1049140082cce857499ce636f86b417884f93fb3beba9ad02e15f32ef6a14c9c"
+      }
+    },
+    {
+      "name": "lost-reader",
+      "refusal": "complete actual admission reader population",
+      "whole_candidate": {
+        "bytes": 1034735,
+        "sha256": "8e43dda6df21a834a5ec21827ed21cba887e44ab9a4f77436e38da2384c12158"
+      }
+    },
+    {
+      "name": "Boolean-reader-status",
+      "refusal": "actual admission integer success",
+      "whole_candidate": {
+        "bytes": 1093399,
+        "sha256": "ba81aacd2101cf70c96d203640945013b008561ae78501d5bc454fe801b3cf5c"
+      }
+    },
+    {
+      "name": "nonzero-reader-status",
+      "refusal": "actual admission integer success",
+      "whole_candidate": {
+        "bytes": 1093396,
+        "sha256": "b2460a218590b807b317601e065634c6f56106837c0e651ce35a21ff39e6199a"
+      }
+    },
+    {
+      "name": "borrowed-success",
+      "refusal": "complete actual admission reader command",
+      "whole_candidate": {
+        "bytes": 1093492,
+        "sha256": "9e1c950108c90d65dee4296ba5ebf99c518083dd0b1842ef42d524b5f22bf76c"
+      }
+    },
+    {
+      "name": "short-reader-output",
+      "refusal": "complete actual admission reader stdout",
+      "whole_candidate": {
+        "bytes": 1093289,
+        "sha256": "926b1c733cc7b63e9f89f3fd2ef8c4ab77df2ec87404e39701a127ad5a6182ca"
+      }
+    },
+    {
+      "name": "lost-actual-instrument",
+      "refusal": "complete actual invocation instruments",
+      "whole_candidate": {
+        "bytes": 1093267,
+        "sha256": "732bdbade970e34858c0168e2d91e6b6bd378672c8526426d7095a9e55206685"
+      }
+    },
+    {
+      "name": "widened-host-cutoff",
+      "refusal": "complete actual admission guard stream",
+      "whole_candidate": {
+        "bytes": 1093396,
+        "sha256": "dd0d17c76af2321ae43de0f2976e244b9d04bfc85f3955a0d935902ab90910d5"
+      }
+    },
+    {
+      "name": "unknown-reader-native-field",
+      "refusal": "closed actual admission result",
+      "whole_candidate": {
+        "bytes": 1093421,
+        "sha256": "42b38942d412093c949d0c344767ab9d21e48d2f77eb4035afffca582c061979"
+      }
+    }
+  ],
+  "legs": {
+    "durability": "Complete fixed committed input/member and task-owner identities, original captures, actual fresh prerequisite outcomes and invocation programmes retain; normal task-scoped commit.",
+    "falsification": "oracle.py separately streams exact Git blobs, reconstructs allocation from original captures and qualifies whole actual results; genuine complete-product controls reject.",
+    "re_derivation": "admit.py streams the complete fixed Git archive and conserves whole raw/source products and phases."
+  },
+  "measured": {
+    "complete_roots": 210,
+    "empty_records": 29805,
+    "nonempty_records": 150,
+    "raw_body_bytes": 482964,
+    "regular_members": 3102,
+    "source_views": 171
+  },
+  "missing_legs": "Original numeric reference-role/lifetime joins and lossless operand grammar remain successors; private/native flags/payload/provider/formatter/CODE/Regexp identity, cross-call identity, global heap census, cold replay and governed current publication remain unqualified.",
+  "programmes": {
+    "admit.py": {
+      "bytes": 10236,
+      "sha256": "897d2e734b193284643ed1e03351235afa82dc01fcd5d6effbe79dc9135f8bf4"
+    },
+    "checks.py": {
+      "bytes": 1408,
+      "sha256": "2b16ab78642580d6a886fe80aa64abcdd6d1307777f3490cd43918a079bf2124"
+    },
+    "oracle.py": {
+      "bytes": 13893,
+      "sha256": "6d62702f1c1a9a1e91a6f481421811012e9478814b70fdc462e0aa70e2e1ca3b"
+    },
+    "verify.py": {
+      "bytes": 7935,
+      "sha256": "c1963d0e132f535283bbcb1cda4a07e322b8ffb56c6ef4ede7407029f34fa607"
+    }
+  },
+  "role": "Complete dated original/raw/source prerequisite custody and actual replay only; reference-operand parsing, original numeric role/lifetime joins and governed canonical publication remain successor-owned. No original execution is recaptured."
+}

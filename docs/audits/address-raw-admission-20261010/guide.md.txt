@@ -1,0 +1,37 @@
+# Complete original/raw/source prerequisite admission
+
+Owner: scope.txt. Run from the repository root:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-raw-admission-20261010/verify.py
+```
+
+admit.py authenticates every declared whole audit namespace and own source member
+at committed c2b2a7f4a006bb267c4b077c37c5a295d24f44a5, streaming a fixed Git archive.
+It conserves every empty/nonempty original capture allocation, complete raw body
+identity and source/class/frame throw-phase population. Completed source, class/
+frame and coordinate task owners retain their exact committed whole node bodies.
+Actual fresh full prerequisite reader commands, outputs, integer statuses and
+invocation instruments remain separate from semantic products.
+
+oracle.py never imports the producer. It independently reconstructs the complete
+root population and streams exact Git blobs through a second binary protocol,
+checks same-volume own-repository paths and complete namespace membership, derives
+error allocation directly from every original capture, and checks the whole actual
+reader results. Candidate field, member, byte, empty/nonempty, phase, owner, Boolean
+status, borrowed-success, instrumentation, guard and unsupported-native controls
+exercise the new admission boundary. proof.json names distinct derivation,
+falsification and durability legs; checks.json retains actual guarded outcomes.
+
+Default replay authenticates this complete dated input domain and checks its saved
+fresh actual prerequisite results. It does not execute the original test capture,
+repeat prerequisite processes, establish current canonical publication or supply
+reference-operand/address semantics. Lossless whole operand parsing and numeric
+source-role/lifetime joins remain active parent successors. Original private/native
+payload/flags, provider/formatter/CODE/Regexp identity, numerical cross-call/capture
+identity, global heap census and cold replay remain unqualified.
+
+Book source copies, complete added native guide and genuine rendered omission are
+checked separately. Visual review remains open. Current Knowledge Map cards,
+questions and probes retain; the proposed fact awaits governed non-growing
+publication. All data stays on the repository volume and no capacity ceiling changes.
