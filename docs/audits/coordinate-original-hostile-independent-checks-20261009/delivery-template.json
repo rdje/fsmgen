@@ -1,0 +1,7 @@
+{
+  "bytes": 14638,
+  "revision": "1626bd7ca68741492d1b5bc9377f32dd9f64d334",
+  "scope": "New delivery oracle uses the committed post-containment baseline, separately retained full independent receipt and exact predecessor checkpoint evidence. It never treats the prior published137 as success.",
+  "sha256": "f903daeddeab9b6f49f63d80effb813b36fbb8fa6320f01602351c985f8ad0ac",
+  "source_path": "docs/audits/coordinate-original-hostile-checks-20261009/full-verify-delivery.py.txt"
+}

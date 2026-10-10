@@ -953,21 +953,34 @@ candidate-line constructor failures retain beside their verified corrections.
 The complete producer is sealed; genuine copied missing, borrowed, extra,
 resealed and symlinked corpora are rejected while the originals conserve.
 
-Full independent reconstruction remains unfinished. Its first published attempt
-stopped at the unchanged host-memory cutoff before reconstructing the controls.
-An earlier producer attempt also retains its full partial-control journal and
-matching replay with its non-success status. These stopped attempts do not
-supply the missing independent leg. Retry the required complete reader from the
-repository root when host headroom permits:
+Full independent reconstruction now qualifies the complete dated product.
+The reader rebuilds every source-linked coordinate and forwarding interval,
+then constructs every observed recipe/mode intervention using separate byte
+intervals. Each intervention passes the complete unchanged predecessor
+predicates before both coordinate procedures reject its changed coordinate or
+source association. The complete result matches the sealed producer product.
+
+The independent run freshly replays the complete original/source/matching
+reader chain and reauthenticates every original custody member before and after
+its interventions. Whole-result controls reject missing points, recipes,
+forwarded pairs and empty allocations, borrowed intervention data, false
+predecessor results, Boolean statuses and borrowed reader commands or output.
+It also reproduces the first duplicate-allocation and exhausted-line failures,
+and verifies the retained interrupted producer prefix against the whole result.
+
+Every stopped RAM-guarded attempt retains its non-success status and original
+streams. Those attempts do not supply independent success; the completed replay
+does. The original seal, programmes, products and guard cutoffs remain unchanged.
+Reproduce the full fixed-seal qualification from the repository root:
 
 ```sh
 python3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py
 ```
 
-Complete independent qualification precedes atomic current canonical
-publication. Original private formatting/toolchain/identity, external framework
-coordinate rules, address lifetimes and alias downstream retain their existing
-owners.
+Atomic current canonical publication remains the next owned step. This dated
+qualification leaves original private formatting/toolchain/identity, external
+framework coordinate rules, address lifetimes and alias downstream with their
+existing owners.
 
 <div id="knowledge-map-architecture"></div>
 

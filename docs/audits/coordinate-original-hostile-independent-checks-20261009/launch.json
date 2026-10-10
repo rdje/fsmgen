@@ -1,0 +1,1 @@
+{"command":["python3","-B","docs/audits/coordinate-original-hostile-independent-checks-20261009/checks.py","published-independent","python3","-B","docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py"],"native_launch":{"chunk_id":"6949be","wall_time_seconds":1.002029042,"session_id":97785,"original_token_count":0,"output":""}}

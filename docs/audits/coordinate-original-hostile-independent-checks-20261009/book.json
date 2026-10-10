@@ -1,0 +1,30 @@
+{
+  "after": {
+    "bytes": 59603,
+    "sha256": "6ae40ede47e6956f78641fe27474a4ea7d3b32a2f905b8c3cc7183383c6147ae"
+  },
+  "before": {
+    "bytes": 58725,
+    "sha256": "37db56616c1cf0f4e4ba71ed196eebe97a3eba8763fc6f94549a20a750ec7de6"
+  },
+  "book_after": {
+    "bytes_total": 3840151,
+    "files": 64,
+    "lines_total": 69058
+  },
+  "book_before": {
+    "bytes_total": 3839273,
+    "files": 64,
+    "lines_total": 69045
+  },
+  "current_block": "Full independent reconstruction now qualifies the complete dated product.\nThe reader rebuilds every source-linked coordinate and forwarding interval,\nthen constructs every observed recipe/mode intervention using separate byte\nintervals. Each intervention passes the complete unchanged predecessor\npredicates before both coordinate procedures reject its changed coordinate or\nsource association. The complete result matches the sealed producer product.\n\nThe independent run freshly replays the complete original/source/matching\nreader chain and reauthenticates every original custody member before and after\nits interventions. Whole-result controls reject missing points, recipes,\nforwarded pairs and empty allocations, borrowed intervention data, false\npredecessor results, Boolean statuses and borrowed reader commands or output.\nIt also reproduces the first duplicate-allocation and exhausted-line failures,\nand verifies the retained interrupted producer prefix against the whole result.\n\nEvery stopped RAM-guarded attempt retains its non-success status and original\nstreams. Those attempts do not supply independent success; the completed replay\ndoes. The original seal, programmes, products and guard cutoffs remain unchanged.\nReproduce the full fixed-seal qualification from the repository root:\n\n```sh\npython3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py\n```\n\nAtomic current canonical publication remains the next owned step. This dated\nqualification leaves original private formatting/toolchain/identity, external\nframework coordinate rules, address lifetimes and alias downstream with their\nexisting owners.\n",
+  "legs": {
+    "durability": "Fixed source revision, exact blocks and identities, tracked measurements and actual receipts; normal staged doctrines and Git hooks.",
+    "falsify": "Independent whole-book reversal, actual source/native receipts and genuine product/receipt controls in verify_delivery.py.",
+    "rederive": "Whole fixed-Git chapter membership and source bytes measured before/after the unique replacement."
+  },
+  "original_block": "Full independent reconstruction remains unfinished. Its first published attempt\nstopped at the unchanged host-memory cutoff before reconstructing the controls.\nAn earlier producer attempt also retains its full partial-control journal and\nmatching replay with its non-success status. These stopped attempts do not\nsupply the missing independent leg. Retry the required complete reader from the\nrepository root when host headroom permits:\n\n```sh\npython3 -B docs/audits/coordinate-original-hostile-checks-20261009/verify_hostile.py\n```\n\nComplete independent qualification precedes atomic current canonical\npublication. Original private formatting/toolchain/identity, external framework\ncoordinate rules, address lifetimes and alias downstream retain their existing\nowners.\n",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.3.2.3.3.2.3",
+  "revision": "1626bd7ca68741492d1b5bc9377f32dd9f64d334",
+  "source": "docs/book/src/90-reference-map.md"
+}

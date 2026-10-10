@@ -1,0 +1,1 @@
+{"command":["sysctl","-n","hw.memsize"],"native_result":{"chunk_id":"c2b5e2","wall_time_seconds":0,"exit_code":1,"original_token_count":14,"output":"sysctl: sysctl fmt -1 1024 1: Operation not permitted\n"}}
