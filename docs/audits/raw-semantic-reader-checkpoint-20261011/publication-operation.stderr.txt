@@ -1,0 +1,14 @@
+ram-guard: PID 65529; host 56.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-reader-checkpoint-20261011/publish.py", line 103, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-reader-checkpoint-20261011/publish.py", line 22, in main
+    declared = gzip.decompress(local(BASE / 'declared-task.md.gz').read_bytes())
+                               ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-reader-completion-20261011/common.py", line 64, in local
+    need(path.is_file() and stat.S_ISREG(path.lstat().st_mode), 'complete ordinary admission member')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-reader-completion-20261011/common.py", line 42, in need
+    raise ValueError(message)
+ValueError: complete ordinary admission member

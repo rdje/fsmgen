@@ -1,0 +1,111 @@
+"""Close only the original-reader checkpoint and replace its own bounded book notice."""
+import re
+import sys
+sys.path.insert(0, 'docs/audits/raw-semantic-reader-completion-20261011')
+from common import *
+import verify
+sys.path.insert(0, 'docs/audits/raw-semantic-reader-checkpoint-20261011')
+import witness
+from witness import OUT, save
+BASE = OUT
+
+ADDITION = (b'Complete original readers now qualify in their dated/source roles. All\n'
+    b'earlier RAM interruptions remain failures. Association replay still needs\n'
+    b'ignored-stream recovery before raw-parent closure. Interrupted peak RSS\n'
+    b'and the first outer launch diagnostic remain unknown.\n\n'
+    b'```bash\nscripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-reader-checkpoint-20261011/witness.py\n```\n\n')
+
+
+def main():
+    witness.core()
+    index = local('docs/TASK_TREE.md').read_text()
+    need(index.count('partial replay committed; reader completion active.') == 1, 'exact current task frontier index before writes')
+    memory_before = local('MEMORY.md').read_text()
+    need(memory_before.count(LEAF + '` (active)') == 1, 'exact active resume leaf before writes')
+    task = local(TASK).read_bytes()
+    declared = gzip.decompress(local(verify.BASE / 'declared-task.md.gz').read_bytes())
+    start, current = verify.nodes(declared), verify.nodes(task)
+    need(set(start) == set(current), 'whole declared task graph before checkpoint closure')
+    for key in start:
+        if key != LEAF:
+            need(start[key] == current[key], 'every unrelated prepublication task node conserves')
+        else:
+            authorized = start[key].replace(b'  Commit: `pending`\n',
+                b'  Commit: `pending`\n' + ('  Authorization: `' + load('push-authorization.json')['task_authorization'] + '`\n').encode(), 1)
+            expected = authorized.rstrip() + ('\n  Findings: `' + witness.read('publication-finding-v3.json')['finding'] + '`\n').encode()
+            need(current[key].rstrip() == expected.rstrip(),
+                'only explicit user authorization and owned actual preflight defect supplement activation')
+    evidence = ('Every original declared prerequisite reader now has a complete actual typed successful result in its unchanged original source or dated role. '
+        'Whole source/native/product bytes, modes and file/directory membership conserve across the retained A/B and isolated C epochs. '
+        'Separate independent qualification joins every original whole specification, direct programme body and native/guard stream; genuine Boolean-status, omitted-terminal, changed-command, borrowed-source, missing-source and omitted-reader candidates reject. '
+        'All earlier unchanged host guard failures, missing old terminals and full available first streams remain non-success. '
+        'The final C address-coordinate guard failure retains whole; one isolated unchanged D replay passes under lower observed host occupancy and the same guard, with passive own-subtree observations and no inferred peak RSS or external attribution. '
+        'The unchanged original partial-retention default freshly qualifies original fixed-context positive/refusal/restoration and inherited missing-stream refusal. '
+        'Complete predecessor defaults pass before and after current corpus qualification; the first after-construction137 remains a failure, with separately admitted successful E continuations explicitly selected. '
+        'Interrupted peak RSS and first outer A launch diagnostic remain unmeasured. '
+        'Only first-checkpoint parent and this leaf close; ignored-stream recovery .5.2.3.2 and unchanged full parent closure .5.2.3.3 remain pending. '
+        'Both separate publisher failures retain whole native receipts and exact source snapshots; the second partial write was restored exactly before a fully preflighted successful publication. Original native/private/canonical/higher/visual/HIAL/full-CI/push uncertainties and qualifications retain. Focused/book/native/size/claim/staged/normal gates accompany this commit.')
+    for key in (OWNER, LEAF):
+        block = verify.nodes(task)[key]
+        final = block.replace(b'  Status: `active`\n', b'  Status: `done`\n', 1)
+        final = final.replace(b'  Verification: `' + verify.field(block, 'Verification') + b'`\n',
+                              ('  Verification: `' + evidence + '`\n').encode(), 1)
+        final = final.replace(b'  Commit: `pending`\n',
+                              ('  Commit: `' + LEAF + ': complete unchanged original reader checkpoint`\n').encode(), 1)
+        final = re.sub(rb'^  Blocker: `.*`\n', b'', final, flags=re.M)
+        if key == LEAF:
+            final = final.rstrip() + (
+                '\n  Acceptance Checklist (enforced):\n'
+                '  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S def core in the sealed first checks.json locates the inherited association stream reader at raw-association-acceptance-20261011/verify.py:77. Four actual host guard cutoffs interrupted original prerequisites or the later default sequence; the complete first failed sequence remains unqualified and unchanged.\n'
+                '  - [x] **ADDRESSED (verified)** — witness.py independently qualifies every complete original A/B/C/D reader result and separate successful E default continuations and whole source/programme/native/guard-stream custody under unchanged limits and original Goal/Acceptance. Real changed status, command, source and corpus candidates reject; every first interruption retains. Only this complete reader checkpoint closes; immediately owned stream repair and full raw parent acceptance remain open.\n'
+                '  - [x] **NO REGRESSION** — All tests successful in checks.json checkpoint-focused. Whole predecessor defaults before/after, retained original fixed-context/missing-stream controls, current book/native/size/claim/inventory and complete source custody pass. Staged scripts/check_doctrines.sh and normal hooks additionally gate commit.\n\n').encode()
+        task = task.replace(block, final, 1)
+    verify.contracts(task)
+    book_before = git('show', REVISION + ':' + verify.BOOK)
+    old_notice = verify.read(PRIOR / 'book-size-correction-plan.json')['addition'].encode()
+    need(local(verify.BOOK).read_bytes() == book_before and book_before.count(old_notice) == 1,
+         'whole unique prior own partial-reader book notice')
+    book_after = book_before.replace(old_notice, ADDITION, 1)
+    need(len(ADDITION) <= len(old_notice), 'bounded own notice replacement without book allowance growth')
+    names = git('ls-tree', '-r', '--name-only', REVISION).decode().splitlines()
+    task_names = sorted(n for n in names if re.fullmatch(r'docs/tasks/(?:[^/]+|segments/[^/]+/[^/]+)\.md', n))
+    book_names = sorted(n for n in names if re.fullmatch(r'docs/book/src/[^/]+\.md', n))
+    fixed = fixed_sources(task_names + book_names + [verify.SURFACES])
+    tasks = {n: local(n).read_bytes() for n in task_names}
+    need(all(raw == fixed[n] for n, raw in tasks.items() if n != TASK),
+         'whole unrelated task collection bytes conserve')
+    need(sorted(str(p) for pattern in ('docs/tasks/*.md', 'docs/tasks/segments/*/*.md')
+                for p in Path('.').glob(pattern)) == task_names, 'whole task collection membership')
+    tasks[TASK] = task
+    need(local(verify.SURFACES).read_bytes() == fixed[verify.SURFACES], 'whole prior authority before measured replacement')
+    registry = verify.authority(fixed[verify.SURFACES], tasks,
+        {n: fixed[n] for n in book_names}, book_after)
+    targets = ('task-census-v3.json', 'qualified-task-v3.md.gz', 'book-before-v3.md.gz', 'book-after-v3.md.gz', 'registry-before-v3.txt', 'registry-after-v3.txt', 'publication-v3.json')
+    need(all(not local(BASE / name, exists=False).exists() for name in targets), 'all fresh v3 publication targets before any write')
+    need(sys.argv[1:] in ([], ['--preflight']), 'explicit publication or complete no-write preflight')
+    if sys.argv[1:] == ['--preflight']:
+        print('PASS complete checkpoint publication preflight; no writes.')
+        return
+    save('task-census-v3.json', metrics(tasks))
+    for name, raw in (('qualified-task-v3.md.gz', task), ('book-before-v3.md.gz', book_before), ('book-after-v3.md.gz', book_after)):
+        path = local(BASE / name, exists=False)
+        need(not path.exists(), 'retain first whole checkpoint publication source')
+        path.write_bytes(gzip.compress(raw, mtime=0))
+    for name, raw in (('registry-before-v3.txt', fixed[verify.SURFACES]), ('registry-after-v3.txt', registry)):
+        local(BASE / name, exists=False).write_bytes(raw)
+    save('publication-v3.json', dict(owner=LEAF, revision=REVISION, task_names=task_names, book_names=book_names,
+        book_before=pin(book_before), book_after=pin(book_after), registry_after=pin(registry)))
+    local(TASK).write_bytes(task)
+    local(verify.BOOK).write_bytes(book_after)
+    local(verify.SURFACES).write_bytes(registry)
+    memory = memory_before.replace(LEAF + '` (active)', RAW + '.5.2.3.2` (pending)', 1)
+    memory = re.sub(r'^- next_action:.*$', '- next_action: Activate ignored-stream recovery .5.2.3.2 from clean committed state using the independently sealed original-reader checkpoint. Preserve every first epoch and original raw-parent contract; full closure follows as .5.2.3.3.', memory, flags=re.M)
+    memory = re.sub(r'^- in_flight_background:.*$', '- in_flight_background: None after the checkpoint delivery and commit workflow finish; derive any actual current gate state from docs/audits/raw-semantic-reader-completion-20261011/checks.json.', memory, flags=re.M)
+    local('MEMORY.md').write_text(memory)
+    local('docs/TASK_TREE.md').write_text(index.replace('partial replay committed; reader completion active.',
+        'original reader checkpoint done; stream recovery next.', 1))
+    print('Prepared complete original-reader checkpoint only; stream recovery and full raw acceptance remain open.')
+
+
+if __name__ == '__main__':
+    main()

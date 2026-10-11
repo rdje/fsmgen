@@ -1,0 +1,44 @@
+"""Capture the exact checkpoint publication mutation outside its standard guard."""
+import subprocess
+from common import *
+import verify
+
+SOURCES = [TASK, verify.BOOK, verify.SURFACES, 'MEMORY.md', 'docs/TASK_TREE.md']
+
+
+def snapshot(phase):
+    rows = {}
+    for ordinal, name in enumerate(SOURCES):
+        raw = local(name).read_bytes()
+        path = local(BASE / ('operation-' + phase + '-' + str(ordinal) + '.gz'), exists=False)
+        need(not path.exists(), 'retain first complete publication source snapshot')
+        path.write_bytes(gzip.compress(raw, mtime=0))
+        rows[name] = dict(snapshot=str(path), identity=identity(name))
+        need(pin(raw) == {k: rows[name]['identity'][k] for k in ('bytes', 'sha256')},
+             'complete publication snapshot source epoch')
+    return rows
+
+
+def main():
+    body = local(BASE / 'operation.py').read_bytes()
+    command = ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', str(BASE / 'publish.py')]
+    started = dict(owner=LEAF, command=command, programmes=verify.instruments(),
+        programme=dict(body=body.decode(), identity=pin(body)), sources_before=snapshot('before'),
+        condition='One exact owned publication operation. The complete terminal writer is outside the standard guard. Every first source, programme, result and stream retains before judgment; only declared task/book/authority/resume/index sources may change.')
+    save('publication-operation-started.json', started)
+    stdout = local(BASE / 'publication-operation.stdout.txt', exists=False)
+    stderr = local(BASE / 'publication-operation.stderr.txt', exists=False)
+    with stdout.open('xb', buffering=0) as out, stderr.open('xb', buffering=0) as err:
+        result = subprocess.run(command, stdout=out, stderr=err)
+    actual = dict(**started, status=result.returncode, stdout_path=str(stdout), stderr_path=str(stderr),
+        stdout=stdout.read_text(), stderr=stderr.read_text(), sources_after=snapshot('after'),
+        programmes_after=verify.instruments(), programme_after=pin(local(BASE / 'operation.py').read_bytes()))
+    save('publication-operation-actual.json', actual)
+    print('publication operation actual status', result.returncode, flush=True)
+    need(type(result.returncode) is int and result.returncode == 0
+         and actual['programmes'] == actual['programmes_after'] == load('qualification-plan.json')['programmes']
+         and actual['programme_after'] == pin(body), 'actual successful unchanged owned publication operation')
+
+
+if __name__ == '__main__':
+    main()

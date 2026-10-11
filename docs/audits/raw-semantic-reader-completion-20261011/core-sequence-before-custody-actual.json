@@ -1,0 +1,1 @@
+{"command":["python3","-B","docs/audits/raw-semantic-reader-completion-20261011/checks.py","before-custody","python3","-B","docs/audits/raw-semantic-archive-durability-20261011/verify.py"],"name":"before-custody","status":0,"stderr":"","stdout":"before-custody actual status 0\n"}

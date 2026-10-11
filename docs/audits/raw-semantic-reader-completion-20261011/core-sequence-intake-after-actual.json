@@ -1,0 +1,1 @@
+{"command":["python3","-B","docs/audits/raw-semantic-reader-completion-20261011/checks.py","intake-after","python3","-B","docs/audits/raw-semantic-reader-completion-20261011/intake.py","--after"],"name":"intake-after","status":0,"stderr":"","stdout":"intake-after actual status 0\n"}

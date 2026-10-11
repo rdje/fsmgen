@@ -1,0 +1,1 @@
+{"command":["python3","-B","docs/audits/raw-semantic-reader-completion-20261011/checks.py","corpus","python3","-B","docs/audits/raw-semantic-reader-completion-20261011/verify.py","--corpus"],"name":"corpus","status":0,"stderr":"","stdout":"corpus actual status 0\n"}

@@ -1,0 +1,1 @@
+{"command":["python3","-B","docs/audits/raw-semantic-reader-completion-20261011/checks.py","before-association","python3","-B","docs/audits/raw-association-acceptance-20261011/verify.py"],"name":"before-association","status":0,"stderr":"","stdout":"before-association actual status 0\n"}

@@ -1194,12 +1194,13 @@ requires the complete fixed source and instrument context:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
 ```
 
-Raw-parent replay is incomplete. Both guard interruptions and successful
-results retain. Association replay needs ignored streams; recovery is owned.
-Interrupted peak RSS and the first outer launch diagnostic remain unknown.
+Complete original readers now qualify in their dated/source roles. All
+earlier RAM interruptions remain failures. Association replay still needs
+ignored-stream recovery before raw-parent closure. Interrupted peak RSS
+and the first outer launch diagnostic remain unknown.
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B -c 'import json,sys;exec(json.load(open(sys.argv[1]))["read_only_programme"])' docs/audits/raw-semantic-acceptance-20261011/retention-verification.json
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-reader-checkpoint-20261011/witness.py
 ```
 
 Retained observer and class/frame checkpoint (before raw association):

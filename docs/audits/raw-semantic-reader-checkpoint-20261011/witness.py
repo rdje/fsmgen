@@ -1,0 +1,210 @@
+"""Qualify separate successful continuations without rewriting the failed first sequence."""
+import argparse
+import sys
+
+sys.path.insert(0, 'docs/audits/raw-semantic-reader-completion-20261011')
+from common import *
+import verify as first
+import sequence
+
+OUT = Path('docs/audits/raw-semantic-reader-checkpoint-20261011')
+SUCCESS = 'PASS complete original-reader checkpoint; stream recovery and raw parent acceptance remain open.\n'
+CORE_SUCCESS = 'PASS separate complete original-reader checkpoint core; publication remains required.\n'
+
+
+def read(name):
+    return first.read(OUT / name)
+
+
+def save(name, value):
+    path = local(OUT / name, exists=False)
+    need(not path.exists(), 'retain first separate checkpoint record: ' + name)
+    path.write_bytes(canonical(value))
+
+
+def instruments():
+    return {str(p): dict(body=(raw := local(p).read_bytes()).decode(), identity=pin(raw))
+            for p in [OUT / n for n in ('witness.py', 'publish.py', 'operation.py', 'continue.py')]}
+
+
+def epoch():
+    plan = read('plan.json')
+    need(first.instruments() == plan['first_programmes'] == load('qualification-plan.json')['programmes']
+         and instruments() == plan['programmes'], 'whole unchanged first and separate checkpoint instruments')
+    return plan
+
+
+def continuation(logical, command, success):
+    plan = epoch()
+    name = plan['selection'][logical]
+    row = first.gate(name, command, success)
+    actual = read(name + '-actual.json')
+    programme = instruments()[str(OUT / 'continue.py')]
+    need(actual['owner'] == LEAF and actual['logical'] == logical and actual['name'] == name
+         and actual['command'] == ['python3', '-B', str(BASE / 'checks.py'), name, *command]
+         and type(actual['status']) is int and actual['status'] == 0
+         and actual['stdout'] == name + ' actual status 0\n' and actual['stderr'] == ''
+         and actual['programmes'] == actual['programmes_after'] == first.instruments()
+         and actual['programme'] == programme and actual['programme_after'] == programme['identity']
+         and actual['plan'] == plan['continuation_plan_identity'],
+         'whole actual separate successful original default and unchanged external writer')
+    first.resource_record(actual['admission'])
+    need(actual['admission']['occupied_percent'] <= plan['admission_ceiling_percent'] == 67.0,
+         'fresh lower per-step occupied-capacity admission; no fit or peak claim')
+    for stream in ('stdout', 'stderr'):
+        need(local(actual[stream + '_path']).read_bytes() == actual[stream].encode(),
+             'whole separate continuation native stream')
+    return dict(logical=logical, selected=name, gate=pin(canonical(row)), actual=identity(OUT / (name + '-actual.json')))
+
+
+def retained_failure():
+    plan = epoch()
+    ordered = load('core-sequence-actual.json')
+    failed = load('checks.json')['after-construction']
+    expected = [[name, command] for name, command in sequence.steps()]
+    need(identity(BASE / 'core-sequence-actual.json') == plan['first_sequence']
+         and pin(canonical(failed)) == plan['first_failed_gate']
+         and ordered['steps'] == expected and len(ordered['outcomes']) == 11
+         and ordered['programmes'] == ordered['programmes_after'] == first.instruments()
+         and ordered['programme'] == dict(body=local(BASE / 'sequence.py').read_text(),
+                                          identity=pin(local(BASE / 'sequence.py').read_bytes()))
+         and ordered['programme_after'] == ordered['programme']['identity']
+         and type(ordered['failure']) is str and ordered['failure'].endswith(
+             'ValueError: actual successful core sequence step: after-construction\n'),
+         'complete immutable failed first ordered sequence remains non-success')
+    for index, outcome in enumerate(ordered['outcomes']):
+        name, command = expected[index]
+        status = 1 if index == 10 else 0
+        need(outcome['name'] == name and outcome['command'] == ['python3', '-B', str(BASE / 'checks.py'), name, *command]
+             and type(outcome['status']) is int and outcome['status'] == status
+             and outcome['stdout'] == name + (' actual status 137\n' if index == 10 else ' actual status 0\n')
+             and (outcome['stderr'].endswith('ValueError: actual successful external gate: after-construction\n')
+                  if index == 10 else outcome['stderr'] == ''),
+             'whole actual successful prefix and failed terminal of the first sequence')
+    need(type(failed['status']) is int and failed['status'] == 137 and failed['epoch_conserved'] is True
+         and failed['command'] == ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', str(CONSTRUCTION / 'verify.py')]
+         and failed['programmes'] == failed['programmes_after'] == first.instruments()
+         and failed['inputs'] == failed['inputs_after'] and failed['stdout'] == ''
+         and failed['stderr'] == 'ram-guard: PID 35117; host 82.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nram-guard: host memory 90.8% reached cutoff 88%\nram-guard: terminating PID tree: 35117 \n',
+         'complete actual fourth unchanged host cutoff retained without success substitution')
+    return dict(sequence=plan['first_sequence'], gate=plan['first_failed_gate'])
+
+
+def core():
+    plan = epoch()
+    corpus = first.corpus()
+    need(load('source-after-core-cutoff.json') == load('intake-before.json'),
+         'whole original source custody independently retained after fourth cutoff')
+    results = {}
+    for timing in ('before', 'after'):
+        for role, path, success in first.defaults():
+            logical = timing + '-' + role
+            command = ['python3', '-B', str(path)]
+            results[logical] = (continuation(logical, command, success) if logical in plan['selection']
+                else dict(logical=logical, selected=logical, gate=pin(canonical(first.gate(logical, command, success)))))
+    results['original-retention'] = continuation('original-retention', first.RETAIN_COMMAND,
+        'PASS complete dated partial-reader evidence preservation; full original corpus, stream recovery and raw parent acceptance remain open.\n')
+    return dict(owner=LEAF, corpus=corpus, contracts=first.contracts(), defaults=results,
+        first_failed_sequence=retained_failure(),
+        limits='Admission observations are dated host snapshots, not fit guarantees or continuous/peak descendant measurements. Every original reader and default uses unchanged 88% host / 4096-MiB descendant / 2s limits. First A launch diagnostic, interrupted peak RSS and external-process attribution remain unmeasured.', condition=SCOPE)
+
+
+def publication():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('checkpoint_publisher', OUT / 'publish.py')
+    publisher = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(publisher)
+    refused = read('publication-operation-actual.json')
+    need(identity(OUT / 'publication-operation-actual.json') == read('plan.json')['first_publication_refusal']
+         and type(refused['status']) is int and refused['status'] == 1 and refused['stdout'] == ''
+         and all(refused['sources_before'][n]['identity'] == refused['sources_after'][n]['identity'] for n in refused['sources_before'])
+         and "local(BASE / 'declared-task.md.gz')" in refused['stderr'],
+         'whole first publisher path refusal and all unchanged before/after source identities retain')
+    second = read('publication-operation-v2-actual.json')
+    recovery = read('publication-v2-recovery.json')
+    need(identity(OUT / 'publication-operation-v2-actual.json') == read('plan.json')['second_publication_refusal']
+         and type(second['status']) is int and second['status'] == 1
+         and 'ValueError: owned current task frontier index' in second['stderr']
+         and recovery['members'] == recovery['expected'] == {n:e['identity'] for n,e in second['sources_before'].items()},
+         'whole second partial publication refusal and exact five-source recovery remain non-success')
+    actual = read('publication-operation-v3-actual.json')
+    need(type(actual['status']) is int and actual['status'] == 0
+         and actual['command'] == ['scripts/run_with_ram_guard.sh', '--', 'python3', '-B', str(OUT / 'publish.py')]
+         and actual['programmes'] == actual['programmes_after'] == instruments()
+         and actual['first_programmes'] == actual['first_programmes_after'] == first.instruments()
+         and actual['stdout'] == 'Prepared complete original-reader checkpoint only; stream recovery and full raw acceptance remain open.\n'
+         and first.re.fullmatch(r'ram-guard: PID [0-9]+; host [0-9]+\.[0-9]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n', actual['stderr']) is not None,
+         'whole actual separate successful publication outside original guard')
+    snapshots = {}
+    names = {TASK, first.BOOK, first.SURFACES, 'MEMORY.md', 'docs/TASK_TREE.md'}
+    for phase in ('before', 'after'):
+        need(set(actual['sources_' + phase]) == names, 'whole declared publication source population')
+        snapshots[phase] = {}
+        for name, entry in actual['sources_' + phase].items():
+            body = gzip.decompress(local(entry['snapshot']).read_bytes())
+            need(pin(body) == {k: entry['identity'][k] for k in ('bytes', 'sha256')}
+                 and entry['identity']['executable'] is False, 'whole actual publication snapshot body/mode')
+            snapshots[phase][name] = body
+    for stream in ('stdout', 'stderr'):
+        need(local(actual[stream + '_path']).read_bytes() == actual[stream].encode(), 'whole actual publication stream')
+    row = read('publication-v3.json')
+    before = git('show', REVISION + ':' + first.BOOK)
+    old = first.read(PRIOR / 'book-size-correction-plan.json')['addition'].encode()
+    after = before.replace(old, publisher.ADDITION, 1)
+    task = gzip.decompress(local(OUT / 'qualified-task-v3.md.gz').read_bytes())
+    need(before.count(old) == 1 and snapshots['before'][first.BOOK] == before
+         and snapshots['after'][first.BOOK] == after and local(first.BOOK).read_bytes() == after
+         and len(publisher.ADDITION) <= len(old) and snapshots['after'][TASK] == task
+         and local(TASK).read_bytes() == task, 'exact sole bounded notice replacement and unchanged task contracts')
+    tasks = fixed_sources(row['task_names'])
+    tasks[TASK] = task
+    books = fixed_sources(row['book_names'])
+    registry = git('show', REVISION + ':' + first.SURFACES)
+    need(read('task-census-v3.json') == metrics(tasks)
+         and snapshots['before'][first.SURFACES] == registry
+         and snapshots['after'][first.SURFACES] == first.authority(registry, tasks, books, after)
+         and local(first.SURFACES).read_bytes() == snapshots['after'][first.SURFACES],
+         'measured task and book authority; unchanged enforcement ceilings')
+    return dict(contracts=first.contracts(task), actual=identity(OUT / 'publication-operation-v3-actual.json'),
+                book=pin(after), task=pin(task), registry=pin(snapshots['after'][first.SURFACES]))
+
+
+def catalog():
+    return {p.name: identity(p) for p in sorted(OUT.iterdir()) if p.name not in ('proof.json', 'manifest.json')}
+
+
+def full():
+    external = {}
+    for name, command in {'focused': first.FOCUSED, 'book-build': ['mdbook', 'build', 'docs/book'],
+        'current-native': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', 'docs/book/book'],
+        'size': ['scripts/check_live_document_size.sh'], 'claims': ['scripts/check_claim_verification.pl'],
+        'inventory': ['scripts/check_claim_verification_inventory.pl']}.items():
+        row = first.gate(read('plan.json')['external_selection'][name], command)
+        if name == 'focused':
+            need('All tests successful.' in row['stdout'], 'actual focused checkpoint regression success')
+        external[name] = pin(canonical(row))
+    return dict(checkpoint=core(), publication=publication(), external=external,
+        first_namespace=first.catalog(), separate_instruments=instruments(),
+        legs=dict(rederive='Fresh whole-source custody; original independent complete role, programme, native-stream and successful-default predicates; unchanged Goal/Acceptance contracts.',
+            falsify='Genuine changed Boolean/omitted status, command, source and corpus candidates use the same original predicates. All four actual cutoff failures and inherited missing-stream/fixed-context refusals remain non-success.',
+            durability='Whole tracked native/guard receipts, complete immutable first instruments and failed sequence; separate current successful continuations and exact publication snapshots. Strict namespace manifests exclude only mutable external gate storage. Missing interrupted peak and first A launch diagnostic remain explicit.'), condition=SCOPE)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--core', action='store_true')
+    parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    need(not (args.core and args.seal), 'one explicit separate checkpoint mode')
+    if args.core:
+        core()
+        print(CORE_SUCCESS, end='')
+    else:
+        proof = full()
+        if args.seal:
+            save('proof.json', proof)
+            save('manifest.json', catalog())
+        else:
+            need(read('proof.json') == proof and read('manifest.json') == catalog(),
+                 'whole exact independent checkpoint proof and retained namespaces')
+        print(SUCCESS, end='')

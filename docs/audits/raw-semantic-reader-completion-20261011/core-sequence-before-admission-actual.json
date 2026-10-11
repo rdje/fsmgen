@@ -1,0 +1,1 @@
+{"command":["python3","-B","docs/audits/raw-semantic-reader-completion-20261011/checks.py","before-admission","python3","-B","docs/audits/raw-semantic-admission-20261011/verify.py"],"name":"before-admission","status":0,"stderr":"","stdout":"before-admission actual status 0\n"}

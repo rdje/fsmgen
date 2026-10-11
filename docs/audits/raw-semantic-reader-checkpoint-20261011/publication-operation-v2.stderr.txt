@@ -1,0 +1,11 @@
+ram-guard: PID 13269; host 60.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-reader-checkpoint-20261011/publish.py", line 103, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-reader-checkpoint-20261011/publish.py", line 96, in main
+    need('association done; raw semantic acceptance active.' in index, 'owned current task frontier index')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-reader-completion-20261011/common.py", line 42, in need
+    raise ValueError(message)
+ValueError: owned current task frontier index
