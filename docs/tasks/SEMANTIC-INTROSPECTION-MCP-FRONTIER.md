@@ -5242,9 +5242,36 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful in checks.json focused; current source/native/book publication, independent input/result controls, exact saved reader, source/claim/staged scripts/check_doctrines.sh and normal hooks require actual success before commit.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Independently join every full original raw error body and separating control.`
   Acceptance: `After admission commits, independently reconstruct every whole original error class/message/frame/argument/source-coordinate/address role, visible/opaque/private boundary and nested inner/outer cause association from qualified source models. No byte normalization or invented identity. Genuine full-stack/first-cause/wrong-caller/borrowed-address/order/argument/opaque/scope/omission mutations must reach intended new assertions while all prior meanings conserve. Retain full positive/hostile candidate bodies, exact inherited source/native custody and actual independent readers before source/book/current/native/focused/claim/staged/normal qualification and commit.`
+  Verification: `Whole admission committed clean at cb5d85b9aca85d0fee374627b392c12708848df6. Original Goal and Acceptance stay unchanged. Construct complete source-bound bodies first, independently qualify all semantic associations and separating controls next, then close only this unchanged acceptance under current publication gates.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2.2.1`
+  Status: `done`
+  Goal: `Construct complete source-bound raw-body association candidates.`
+  Acceptance: `From clean committed admission, bind and conserve the whole admitted source/native/product namespace and original raw contracts. Construct every complete mode/domain/error body including empty membership, first cause, ordered source/class/frame/header/argument/coordinate/address roles, visible and opaque boundaries and nested whole inner/outer forwarding. Retain all complete inputs and deterministic product bytes; independently census original native body bytes and test lossless full-body conservation. Publish only construction and custody; independent semantic qualification remains owned by .2. Run source/book/current/native/focused/claim/staged/normal gates and commit.`
+  Verification: `Whole cb5d85b9 source/native/product and admission namespace conserve byte for byte with exact directory closure. Deterministic complete candidates retain original bodies and empty allocation, source class/frame/header/argument/coordinate/address roles, opaque boundaries and whole nested forwarding. A separate Perl reader independently extracts every complete original captured body and qualifies whole UTF-8/physical-byte custody with genuine full candidate controls and actual intended diagnostic streams. Constructor replay shares qualified source models; independent complete semantic reconstruction and separating controls remain .5.2.2.2. Original acceptance and native/private gaps conserve; all current/book/native/focused/claim/staged/normal gates require actual success before commit.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2.2.1: construct complete raw-body candidates`
+  Findings: `Owned gate repairs: wrong unittest module (publication-tests), index width (size) and unclassified Markdown snapshots (size-index) retain actual refusals in checks.json. Discovery and complete dated index/archive repairs must pass; full first epochs retain. Original Goal/Acceptance and native/private scopes conserve.`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual whole-body tail mutation refuses at docs/audits/raw-semantic-association-product-20261011/native.pl line 78; control-changed-body-tail-actual.json retains the complete programme epoch and both streams, and the compressed control retains the entire candidate. A source-bound complete association candidate was missing before independent semantic qualification.
+  - [x] **ADDRESSED (verified)** — Complete original/candidate membership, whole UTF-8 bodies and lossless physical reconstruction qualify through a separate native reader and genuine complete candidate controls. Full source-bound roles and nested forwarding retain; independent semantic reconstruction remains .5.2.2.2.
+  - [x] **NO REGRESSION** — All tests successful in checks.json focused; complete original source custody, whole saved construction replay, current/book/native/claim/staged scripts/check_doctrines.sh and normal hooks require actual success before commit.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2.2.2`
+  Status: `pending`
+  Goal: `Independently qualify full raw associations and genuine separating controls.`
+  Acceptance: `After .1 commits, independently reconstruct the complete association product and qualify every original whole raw meaning. Full-stack/first-cause/wrong-caller/borrowed-address/order/argument/opaque/scope/omission and nested-cause mutations retain whole candidate bodies and actual intended refusals while inherited sources and meanings conserve. State shared source assumptions and original native/private gaps, qualify current source/book/native/focused/claim/staged/normal gates and commit.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2.2.3`
+  Status: `pending`
+  Goal: `Close unchanged complete raw-body association acceptance.`
+  Acceptance: `After independent qualification commits, rederive every original .5.2.2 Goal and Acceptance obligation and complete child custody without narrowing. Qualify all complete current source/book/native/focused/claim/staged/normal gates, close only this association container and commit. Parent .5.2.3 and distinct full raw publication .5.3 remain separately owned.`
   Verification: `pending`
   Commit: `pending`
 

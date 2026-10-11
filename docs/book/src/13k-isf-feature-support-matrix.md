@@ -1110,6 +1110,21 @@ dated checkpoint; this result supplies no later native/current currency:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-admission-20261011/verify.py
 ```
 
+A complete source-bound raw-body candidate now retains every original error
+body and empty-member allocation with its ordered source class, frame, full
+header, argument, coordinate and visible-address roles. Whole opaque allocations
+and nested inner/outer bodies retain their qualified boundaries. A separate
+Perl reader checks captured UTF-8 bytes and lossless physical reconstruction;
+whole candidate byte-conservation mutations reach their intended refusals.
+
+This is construction and byte custody. Independent complete semantic
+reconstruction and separating controls remain pending. Replay requires the
+whole admitted source instruments to match the fixed construction context:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-association-product-20261011/verify.py
+```
+
 Only the finite observer and class/frame predecessor containers close here.
 The complete raw-stack semantic join and its publication remain separately
 owned. Original native class, provider, hooks, settings, flags, encoding,
