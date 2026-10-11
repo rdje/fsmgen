@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 265, in <module>
+    qualify(value)
+    ~~~~~~~^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 254, in qualify
+    need(same(ap[field], ep[field]), cause)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/common.py", line 39, in need
+    raise ValueError(message)
+ValueError: semantic whole source guard class and phase

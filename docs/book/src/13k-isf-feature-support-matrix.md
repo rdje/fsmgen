@@ -1171,6 +1171,31 @@ separate. Replay requires the complete fixed source/instrument context:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-links-20261011/verify.py
 ```
 
+The complete raw-body association container is now qualified under its
+unchanged original acceptance. The closure joins every original obligation
+to the complete source products and independent semantic reconstruction.
+All completed construction, archive-custody, semantic and typed-repair
+descendants retain their full contracts and evidence.
+
+Both readers freshly execute on every saved complete positive and hostile
+candidate. The body reader accepts their unchanged inherited meanings;
+the source-first reader accepts the positive and refuses each intended
+semantic intervention. Separate native JSON-kind checks retain the typed
+coordinate boundary. Whole construction, recovery-layout, Git-custody and
+semantic defaults pass before and after the group in their dated roles.
+
+This closes the finite association container only. Complete raw semantic
+parent acceptance and governed canonical raw publication remain separate.
+The shared source assumptions and all original native/private, identity,
+cold replay, visual and host qualification gaps remain explicit. Replay
+requires the complete fixed source and instrument context:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
+```
+
+Retained observer and class/frame checkpoint (before raw association):
+
 Only the finite observer and class/frame predecessor containers close here.
 The complete raw-stack semantic join and its publication remain separately
 owned. Original native class, provider, hooks, settings, flags, encoding,

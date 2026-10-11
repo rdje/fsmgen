@@ -1,0 +1,1 @@
+PASS independent original UTF-8 body, empty membership and lossless physical byte conservation; semantics remain pending.
