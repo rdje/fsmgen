@@ -1195,10 +1195,10 @@ python3 -B scripts/restore_record_value_gate_streams.py --receipts docs/audits/r
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
 ```
 
-Raw semantic acceptance joins original readers, source custody, nested causes
-and controls. Fixed-source replay preserves the accepted source epoch.
-Recovery refuses unsafe paths/conflicts. Earlier failures, unknown interrupted
-peak RSS/first launch diagnostic retain. Native/private and canonical stay open.
+Canonical raw facts qualify finite source joins, nested causes, whole bodies
+and controls. Fixed-source replay preserves earlier epochs; full raw closure
+remains separate. Recovery refuses unsafe paths/conflicts. Earlier failures and
+unknown interrupted peak RSS/first launch diagnostic retain; native/private stay open.
 
 Retained observer and class/frame checkpoint (before raw association):
 

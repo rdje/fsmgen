@@ -61,6 +61,7 @@ class CurrentPublicationTests(unittest.TestCase):
             (core, current.address_fact.QUESTION, 'borrowed address question?'),
             (core, 'cross-call/capture reuse stay opaque', 'cross-call/capture reuse proves native identity'),
             (core, 'address lifetimes remain unmeasured', 'address lifetimes are qualified'),
+            (core, 'lossless grammar/source joins qualify', 'lossless grammar/native identities qualify'),
             (current.coordinate_fact.PARSER, 'receiver, normalized AST', 'qualified receiver identity and AST'),
             (current.coordinate_fact.PARSER, current.COMMAND, self.prior['model']['COMMAND']),
             (observer, current.COMMAND, self.prior['model']['COMMAND']),
@@ -110,6 +111,8 @@ class CurrentPublicationTests(unittest.TestCase):
                     'unique complete current and retained publication guidance')
         self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.coordinate_fact.PARSER_GUIDE, '')),
                     'complete current coordinate parser and tooling guidance')
+        self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.raw_fact.GUIDE, '')),
+                    'unique complete admitted raw source guidance')
         self.refuse(lambda r: r.update(tooling_chapter=r['tooling_chapter'].replace(current.address_fact.REFERENCE, '')),
                     'complete current finite address tooling guidance')
         self.refuse(lambda r: r['queries']['direct'].update(stdout='malformed\n'),
@@ -206,7 +209,7 @@ class CurrentPublicationTests(unittest.TestCase):
         # This small HTML fixture isolates the parser; the actual whole native
         # build and every copied source are verified separately by the CLI.
         def html(guide):
-            blocks = (guide + current.coordinate_fact.PARSER_GUIDE).split('```bash\n')
+            blocks = (guide + current.coordinate_fact.PARSER_GUIDE + current.raw_fact.GUIDE).split('```bash\n')
             text = blocks[0]
             for block in blocks[1:]:
                 code, rest = block.split('```\n', 1)
@@ -221,12 +224,48 @@ class CurrentPublicationTests(unittest.TestCase):
             ('unmeasured or separately owned', 'fully measured and qualified', 'native complete current retained scope and gaps'),
             ('Only the unchanged finite observer parent', 'All native and private parents', 'native complete current retained scope and gaps'),
             ('Authentication does not freshly reconstruct original executions.',
-             'Authentication freshly reconstructs original executions.', 'native complete current retained scope and gaps')):
+             'Authentication freshly reconstructs original executions.', 'native complete current retained scope and gaps'),
+            ('Fixed-source replay preserves earlier epochs', 'Historical receipts prove later live code',
+             'native complete current retained scope and gaps')):
             with self.subTest(old=old):
                 changed = valid.replace(old, new)
                 self.assertNotEqual(valid, changed)
                 with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
                     current.check_native(changed, self.prior)
+
+    def test_raw_checkpoint_requires_exact_typed_original_source_role(self):
+        fact = current.raw_fact
+        actual = json.loads(Path(fact.PREPARATION, 'parent-checkpoint-v3-actual.json').read_bytes())
+        source = actual['source']
+        fact.check_checkpoint(actual, source)
+        for mutate, cause in (
+                (lambda r: r.update(status=False), 'actual admitted raw checkpoint integer success'),
+                (lambda r: r.update(status=0.0), 'actual admitted raw checkpoint integer success'),
+                (lambda r: r.update(status=1), 'actual admitted raw checkpoint integer success'),
+                (lambda r: r['command'].append('--current'), 'complete original raw checkpoint source role and command'),
+                (lambda r: r.update(revision='later-live-code'), 'complete original raw checkpoint source role and command'),
+                (lambda r: r['after'].update(sha256='borrowed'), 'whole conserved original raw checkpoint source'),
+                (lambda r: r.update(stdout='PASS\n'), 'complete actual original raw checkpoint terminal'),
+                (lambda r: r.update(stderr='warning\n'), 'complete actual original raw checkpoint terminal'),
+                (lambda r: r.update(native_identity=True), 'closed complete admitted raw checkpoint')):
+            with self.subTest(cause=cause):
+                changed = copy.deepcopy(actual)
+                mutate(changed)
+                with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
+                    fact.check_checkpoint(changed, source)
+
+    def test_raw_admission_preserves_old_meanings_and_cannot_grow(self):
+        fact = current.raw_fact
+        candidate = fact.admission()
+        result = fact.published(candidate)
+        self.assertEqual(len(result.encode()), len(candidate['before'].encode()) - 1)
+        self.assertIn('date: 2026-10-11\n', result)
+        self.assertIn('Native-class copy/structured-clone cycles stay unqualified', result)
+        self.assertIn('runtime version is JSON::PP4.06', result)
+        changed = copy.deepcopy(candidate)
+        changed['proposed']['bytes_total'] = changed['previous']['bytes_total'] + 1
+        with self.assertRaisesRegex(ValueError, '^non-growing admitted raw candidate$'):
+            fact.published(changed)
 
     def test_observer_authentication_requires_whole_same_volume_members(self):
         workspace = Path('.artifacts/observer-publication-tests')

@@ -25,7 +25,7 @@ answers:
   - "are all original own API refusal paths joined?"
   - "what qualifies original own caller and source coordinates?"
   - "what qualifies original address roles?"
-date: 2026-10-10
+date: 2026-10-11
 status: current
 tags: [isf, record, copy, native, graph, qualification]
 evidence: >-
@@ -43,7 +43,7 @@ and detachment. Genuine Storable/alias/split-sharing/cycle-alias/input-kind/resu
 non-target records conserve.
 
 Native refusals retain whole causes, class, HASH shape and within-capture identity for both observed empty blessed classes.
-Native-class copying/structured-clone cycles stay unqualified; graph/cause/identity/whole-programme mutations reject.
+Native-class copy/structured-clone cycles stay unqualified; graph/cause/identity/whole-programme mutations reject.
 
 Fresh same-volume replay pins sources/all native records/both streams; addresses have per-capture lifetimes, sealed producers run
 elsewhere. Finite joins authenticate completed owners/fresh products. Original Storable/alias trials keep unchanged inputs/full
@@ -53,8 +53,8 @@ copies/detached outputs. Private range sibling width changes string2 to number2;
 copied width binds raw type, carrier/default/metadata, ancestor context/compatible sources. Captured input/private joins qualify
 whole graph/field/source/context/raw-kind/detachment. Finite contexts qualify helper/consumer/parser locations and whole parser
 texts/operation spans separately from cause/operand truth; qualified inputs independently derive API/helper/parser first
-causes/acceptance. Raw bodies/lossless grammar qualify. Source/publisher contracts infer unblessed scalar errors; original classes
-were unmeasured. POD4.05 is stale; runtime JSON::PP4.06 owns version identity. Direct Value active-order/source roles bind visible
+causes/acceptance. Raw bodies/lossless grammar/source joins qualify. Source/publisher contracts infer unblessed scalar errors; original classes
+were unmeasured. POD4.05 is stale; runtime version is JSON::PP4.06. Direct Value active-order/source roles bind visible
 type/scalar footprints. Metadata guards/record recursion/cycles qualify; list recursion is bound, unexercised. Nested
 Scope/capture/private-root inputs bind whole source-built interface kinds/sharing/cycles. Whole inner scalar forwards with new outer
 prefix. Public die controls separate explicit rethrow/propagation/hook replacement; original hook state/provider bytes stay

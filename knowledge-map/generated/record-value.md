@@ -44,7 +44,7 @@
 
 _Record-value copy probes have independent typed graphs_
 
-- **date:** 2026-10-10 · **status:** current
+- **date:** 2026-10-11 · **status:** current
 - **source and verification:** [`docs/knowledge/record-value-finite-copy-probe-reader.md`](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 
 ### record-value-original-observer-helper-paths

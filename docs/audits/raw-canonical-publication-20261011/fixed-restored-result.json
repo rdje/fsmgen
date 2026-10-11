@@ -1,0 +1,1 @@
+{"command":["python3","-B","docs/audits/raw-semantic-parent-closure-20261011/verify.py"],"cwd":".artifacts/raw-canonical-preparation-20261011/source-view-v3","status":0,"stderr":"","stdout":"PASS complete unchanged raw semantic parent acceptance; canonical and higher native/private scopes remain open.\n"}
