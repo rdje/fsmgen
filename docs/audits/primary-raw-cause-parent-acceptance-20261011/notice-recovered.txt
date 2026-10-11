@@ -1,0 +1,8 @@
+The preceding publication is a dated checkpoint. Full unchanged finite
+cause/canonical parent acceptance now joins exact primary/coordinate/address
+reexecutions, independent source associations and current facts/questions/probes.
+Original assumptions/failures/native/private limits and higher owners retain:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-parent-acceptance-20261011/complete.py
+```

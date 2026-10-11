@@ -1091,70 +1091,63 @@ Replay this complete dated prerequisite qualification:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-stack-prerequisites-20261011/verify.py
 ```
 
-Complete raw-semantic admission now authenticates the whole source/native/product
-domain again before independent raw-body association. Every prerequisite runs
-in its declared source or dated-instrument role. Child stdout and stderr are
-saved while each command runs, so interruption leaves recoverable streams. A
-separate native filesystem census checks every member, byte digest, executable
-mode and directory. Missing members, changed tails, unlisted files, empty
-directories, links, foreign paths and borrowed or Boolean results reject.
+Before independent raw-body association, admission authenticates the whole
+source/native/product domain again. Every prerequisite runs in its declared source
+or dated-instrument role. Live child stdout/stderr remain recoverable after
+interruption. A separate native filesystem census checks all members, byte digests,
+executable modes and directories. Missing/extra members, changed tails, empty
+directories, links, foreign paths and borrowed/Boolean results reject.
 
-This reader requires its admitted source instruments to remain byte-identical
-to the fixed predecessor. Later publication changes require an explicit whole
-dated checkpoint; this result supplies no later native/current currency:
+Admitted source instruments must match the fixed predecessor byte for byte.
+Later publication changes need an explicit whole dated checkpoint; this result
+proves no later native/current currency:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-admission-20261011/verify.py
 ```
 
-A complete source-bound raw-body candidate now retains every original error
-body and empty-member allocation with its ordered source class, frame, full
-header, argument, coordinate and visible-address roles. Whole opaque allocations
-and nested inner/outer bodies retain their qualified boundaries. A separate
+The complete source-bound candidate retains all original raw errors/empty members,
+ordered source class/frame/full-header/argument/coordinate/visible-address roles,
+whole opaque allocations and qualified nested inner/outer bodies. A separate
 Perl reader checks captured UTF-8 bytes and lossless physical reconstruction;
-whole candidate byte-conservation mutations reach their intended refusals.
+whole-candidate byte-conservation mutations reach intended refusals.
 
-This is construction and byte custody. Independent complete semantic
-reconstruction and separating controls remain pending. Replay requires the
-whole admitted source instruments to match the fixed construction context:
+Construction/byte custody only; independent complete semantic reconstruction and
+separating controls remain pending. Replay needs whole admitted source instruments
+matching the fixed construction context:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-association-product-20261011/verify.py
 ```
 
-The required recovery archive is explicitly tracked in Git. The custody gate
-compares every complete construction and repair member, executable mode,
-directory and whole staged blob with source bytes. Its default freshly checks
-current Git custody; complete semantic and original native/private meanings
-remain open:
+Git tracks the required recovery archive. The custody gate compares every complete
+construction/repair member, executable mode, directory and whole staged blob with
+source bytes. Its default freshly checks current Git custody; complete semantic
+and original native/private meanings remain open:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-archive-durability-20261011/verify.py
 ```
 
-The construction checkpoint above retains its dated pending semantic label.
-The independent successor now reconstructs the entire association product
-from the qualified original raw, class, frame, header, argument, coordinate
-and address source products. Explicit links bind complete ordered bodies,
-first causes, source callers, visible operands and simultaneous holders.
-Nested errors retain the whole inner cause, new outer prefix and outer trace.
+The construction checkpoint retains its dated pending-semantic label. The
+independent successor reconstructs the entire association from qualified original
+raw/class/frame/header/argument/coordinate/address products. Links bind complete
+ordered bodies/first causes/source callers/visible operands/simultaneous holders;
+nested errors retain the whole inner cause/new outer prefix/outer trace.
 
-For example, assigning a valid visible address to another source argument
-leaves the inherited body intact and passes the namespace-adapted body reader, but
-fails the new address/holder association. Whole-stack, first-cause, caller,
-header-order, argument, opaque, scope, omission, phase and nested-cause
-interventions similarly reach their intended semantic assertions. Complete
-positive and hostile products, programmes and actual streams are retained.
+Assigning a valid visible address to another source argument preserves the inherited
+body and passes the namespace-adapted body reader but fails address/holder
+association. Whole-stack/first-cause/caller/header-order/argument/opaque/scope/
+omission/phase/nested-cause interventions reach intended semantic assertions.
+Complete positive/hostile products/programmes/actual streams retain.
 
-The first semantic checker accepted Boolean false as integer phase zero.
-That complete false-green epoch remains saved. Typed canonical coordinate
-comparisons now refuse it, and a separate Perl reader rejects its Boolean
-JSON kind. Every original semantic control reexecutes with the corrected
+The first checker accepted Boolean false as integer phase zero; its full false-
+green epoch retains. Typed canonical coordinates and a separate Perl JSON-kind
+reader now reject it. Every original semantic control reexecutes with corrected
 programmes before signoff.
 
-The interrupted host-memory attempt remains non-success. Complete control
-execution and proof replay now use separate processes under the unchanged
-RAM guard.
+The interrupted host-memory attempt remains non-success. Complete controls and
+proof replay use separate processes under the unchanged RAM guard.
 
 Path repair keeps whole candidates; reconstruction assumes qualified source
 products. Native class/hooks/provider/settings/flags/encoding, hidden arguments
@@ -1199,6 +1192,15 @@ acceptance remains open:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-canonical-publication-20261011/verify.py
+```
+
+The preceding publication is a dated checkpoint. Full unchanged finite
+cause/canonical parent acceptance now joins exact primary/coordinate/address
+reexecutions, independent source associations and current facts/questions/probes.
+Original assumptions/failures/native/private limits and higher owners retain:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-parent-acceptance-20261011/complete.py
 ```
 
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
