@@ -1,0 +1,1 @@
+{"case":"symlink","diagnostic":"own ordinary repository boundary","entries":[{"directory":false,"path":"source.txt","symlink":true}],"manifest":"{\"directories\":[],\"members\":{\"source.txt\":{\"bytes\":13,\"sha256\":\"38acfbda5a960552aa8cdbedc03a706b3d2adcd03b044d628b0cbe88c7273108\"}},\"mutable\":[\"checks.json\"],\"schema\":1}\n","source":"exact source\n"}

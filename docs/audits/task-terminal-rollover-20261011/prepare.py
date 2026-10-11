@@ -1,0 +1,80 @@
+"""Apply the owned exact-provenance rollover once, preserving all original bytes."""
+import argparse
+import gzip
+import re
+from pathlib import Path
+from common import *
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--recover', action='store_true')
+    args = parser.parse_args()
+    need(git('rev-parse', 'HEAD').decode().strip() == REVISION, 'fixed clean predecessor')
+    changed = git('diff', '--name-only').decode().splitlines()
+    need(set(changed) == {'MEMORY.md', 'docs/TASK_TREE.md', TASK}, 'ownership declaration only')
+    declared = (gzip.decompress(local(BASE / 'declared-task.md.gz').read_bytes())
+                if args.recover else local(TASK).read_bytes())
+    need(field(nodes(declared)[OWNER], 'Status') == 'active', 'live owner before writes')
+    names = git('ls-tree', '-r', '--name-only', REVISION).decode().splitlines()
+    task_names = sorted(name for name in names if re.fullmatch(r'docs/tasks/(?:[^/]+|segments/[^/]+/[^/]+)\.md', name))
+    doctrine_names = sorted(name for name in names if name.startswith('doctrine/') and name.endswith(('.json', '.jsonl')))
+    book_names = sorted(name for name in names if re.fullmatch(r'docs/book/src/[^/]+\.md', name))
+    source_names = sorted(set(task_names + doctrine_names + book_names + [CARD, CHECKER, HISTORY, RETENTION]))
+    sources = frozen_sources(source_names)
+    need(all(local(name).read_bytes() == raw for name, raw in sources.items() if name != TASK),
+         'complete unchanged source intake')
+    owners = owner_census(sources)
+    graph = nodes(sources[TASK])
+    # A completed policy owner remains directly readable even when its children are closed.
+    excluded = None
+    try:
+        eligible(graph, TREE + '.51', owners)
+    except ValueError as error:
+        excluded = str(error)
+    need(excluded == 'live registry owner would be hidden', 'policy-owner exclusion independently enforced')
+    after = compact(declared, sources[TASK], owners)
+    census = canonical(dict(revision=REVISION, task_names=task_names,
+        doctrine_names=doctrine_names, book_names=book_names, sources={name: pin(raw) for name, raw in sources.items()},
+        owners=owners, excluded_candidate=dict(root=TREE + '.51', reason=excluded)))
+    old = sources[CARD]
+    new = old.replace(b'date: 2026-10-04\n', b'date: 2026-10-11\n').replace(
+        b'The semantic-introspection tree retains its complete live node graph. Its\ncurrent exact predecessor, suffix boundary and historical source chain are\n',
+        b'Semantic introspection keeps active nodes live; closed subtrees stay retrievable.\nIts predecessor, suffix boundary and historical source chain are\n')
+    need(new != old and len(new) <= len(old) and new.count(b'\n') <= old.count(b'\n'),
+         'non-growing canonical correction')
+    card = new
+    old = sources[BOOK]
+    new = old.replace(b'history chain; every task node remains live. Independent coordinate\nqualification is still required. Replay the boundary and rollover proofs:',
+        b'history chain. Active nodes and registry owners stay directly readable;\nclosed subtrees may use exact version objects. Replay the history proofs:')
+    marker = b'Ownership records belong inside the first `## Task Tree` section and their\n'
+    addition = (b'The semantic tree also retains completed subtrees `.49.2.2` and `.60.4.3.2`\n'
+        b'through compact version objects. Each live descriptor names the exact full\n'
+        b'Git revision, original task path, whole-file digest, subtree node count and\n'
+        b'retention contract. The checker retrieves every original goal, acceptance,\n'
+        b'child relationship, verification and commit. Active raw-stack contracts and\n'
+        b'all registry owner references remain directly readable. The saved proof\n'
+        b'separates complete source, reconstructed semantics, live working set and\n'
+        b'unretained residue; overlapping products are never added together. Replay:\n\n'
+        b'```sh\npython3 -B docs/audits/task-terminal-rollover-20261011/verify.py\n```\n\n')
+    need(new.count(marker) == 1 and new != old, 'exact book correction boundary')
+    book = new.replace(marker, addition + marker, 1)
+    snapshots = {'complete-source.json.gz': pack(sources),
+                 'declared-task.md.gz': gzip.compress(declared, mtime=0),
+                 'compacted-task.md.gz': gzip.compress(after, mtime=0), 'source-census.json': census}
+    if args.recover:
+        need(local(TASK).read_bytes() == after, 'exact first projection before recovery')
+        need(all(local(BASE / name).read_bytes() == raw for name, raw in snapshots.items()),
+             'all first snapshot bytes conserved before recovery')
+    else:
+        for name, raw in snapshots.items():
+            save(BASE / name, raw)
+    # Validate all source and wording contracts before any maintained-file write.
+    local(TASK).write_bytes(after)
+    local(CARD).write_bytes(card)
+    local(BOOK).write_bytes(book)
+    print('Prepared complete-source retention and exact flat terminal descriptors; active raw forest unchanged.')
+
+
+if __name__ == '__main__':
+    main()

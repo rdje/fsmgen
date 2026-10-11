@@ -413,12 +413,25 @@ The semantic task’s completed acceptance body is now retrieved through its
 bounded manifest, including the exact previous source and prior history chain.
 The completed implementation notes now resolve through the bounded history
 manifest. Its exact predecessor preserves their complete source and prior
-history chain; every task node remains live. Independent coordinate
-qualification is still required. Replay the boundary and rollover proofs:
+history chain. Active nodes and registry owners stay directly readable;
+closed subtrees may use exact version objects. Replay the history proofs:
 
 ```sh
 python3 -B docs/audits/coordinate-task-history-boundary-20261009/verify.py
 python3 -B docs/audits/coordinate-task-history-rollover-20261009/verify.py
+```
+
+The semantic tree also retains completed subtrees `.49.2.2` and `.60.4.3.2`
+through compact version objects. Each live descriptor names the exact full
+Git revision, original task path, whole-file digest, subtree node count and
+retention contract. The checker retrieves every original goal, acceptance,
+child relationship, verification and commit. Active raw-stack contracts and
+all registry owner references remain directly readable. The saved proof
+separates complete source, reconstructed semantics, live working set and
+unretained residue; overlapping products are never added together. Replay:
+
+```sh
+python3 -B docs/audits/task-terminal-rollover-20261011/verify.py
 ```
 
 Ownership records belong inside the first `## Task Tree` section and their
