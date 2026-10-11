@@ -1207,6 +1207,14 @@ acceptance stay open:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-source-contracts-20261011/verify.py
 ```
 
+Original helper truth derives negated-eval and first-line regex operands from
+own source causes. Independent comparisons reject forced flags and stack
+echoes; nonhelper/full consumer acceptance stays open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/helper-consumer-truth-20261011/verify.py
+```
+
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
 Semantic/association replay needs its complete fixed source context:
 
@@ -1230,34 +1238,30 @@ private meanings and referent identities remain unmeasured. Cause, consumer,
 alias, cold, permanent, host-native and visual qualification remain open;
 HIAL and full CI/push gates retain their own prerequisites.
 
-Address/lifetime qualification begins with a separate source-only model of
-operation boundaries. Qualified typed input graphs retain aliases and cycles
-without publishing numeric addresses. Forwarding the same source argument
-through the installed wrapper, observer and original operation preserves its
-binding. Distinct graph nodes remain distinct while live, even when their
-payloads are equal. The observer allocates a fresh caller array while supplied
-arguments remain live. A saved operation lookup retains its declared CODE role.
-These constraints belong to an active call and throw phase in one capture;
-numeric reuse across calls or captures establishes no object identity.
+Source-only address/lifetime models bind operation boundaries. Qualified typed
+graphs retain aliases/cycles; numeric addresses stay unpublished. The installed
+wrapper/observer/original operation forwards each supplied source binding. Live
+distinct nodes stay distinct despite equal payloads. Observer caller arrays are
+fresh while supplied arguments live; saved operation lookup keeps its declared
+CODE role. These constraints cover one capture's active call/throw phase; cross-
+call/capture numeric reuse proves no identity.
 
-For example, two separately allocated source and target reference records can
-contain the same type payload without sharing their root identity. Conversely,
-when the qualified graph aliases an input node, repeated source slots must
-retain that alias. The model checks complete source slots and graph topology,
-plus a separate relation oracle and genuine borrowed-role, split-binding,
-wrong-kind, omission and lifetime-domain controls. Replay from the repository root:
+Separately allocated source/target reference records can have equal type payloads
+and distinct root identities. Qualified aliased input nodes must keep aliases in
+repeated source slots. Complete slots/topology, a separate relation oracle and
+genuine borrowed-role/split-binding/wrong-kind/omission/lifetime-domain controls
+qualify the model. Replay from the repository root:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-source-boundaries-20261010/verify.py
 ```
 
-This is a dated source hypothesis, not a raw-address match. The original parser
-observer excludes the receiver from graph publication; its forwarded role does
-not supply a receiver census. Nested input topology, core/private/helper and
-parser-internal lifetimes remain source-model successors. The original raw
-address join, external/framework/provider/formatter identities and current
-canonical address publication remain open. Existing coordinate and class/frame
-qualifications keep their separate meanings.
+This dated source hypothesis supplies no raw-address match. The original parser
+observer excludes its receiver from graph publication; forwarding supplies no
+receiver census. Nested topology, core/private/helper/parser-internal lifetimes
+remain source-model successors. Original raw-address joining, external/framework/
+provider/formatter identities and current canonical address publication stay open.
+Coordinate and class/frame qualifications keep their separate meanings.
 
 The private-copy source foundation separately qualifies the complete original
 private graph population. The observer delegates these copies to its saved
@@ -1279,10 +1283,10 @@ omission, borrowed-domain and false-lifetime controls reject. Replay from the re
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-private-topology-20261010/verify.py
 ```
 
-This is a dated topology and active-copy lifetime qualification. Original numeric
-addresses, native/provider/formatter identity, later Value/Metadata/helper/parser
-reference roles, the raw-address join and canonical address publication remain
-separately owned. The complete earlier operation-boundary hypotheses remain intact.
+This dated topology/active-copy lifetime proof preserves all earlier operation-
+boundary hypotheses. Original numeric addresses, native/provider/formatter identity,
+later Value/Metadata/helper/parser reference roles, raw-address joining and canonical
+publication stay separately owned.
 
 Direct Value core frames now have a separate source binding model. An operation's
 original argument slots keep the supplied references even after a local variable

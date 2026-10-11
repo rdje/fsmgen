@@ -1,0 +1,23 @@
+{
+  "after_bytes": 292477,
+  "before_bytes": 292485,
+  "book_compactions": [
+    [
+      "Address/lifetime qualification begins with a separate source-only model of\noperation boundaries. Qualified typed input graphs retain aliases and cycles\nwithout publishing numeric addresses. Forwarding the same source argument\nthrough the installed wrapper, observer and original operation preserves its\nbinding. Distinct graph nodes remain distinct while live, even when their\npayloads are equal. The observer allocates a fresh caller array while supplied\narguments remain live. A saved operation lookup retains its declared CODE role.\nThese constraints belong to an active call and throw phase in one capture;\nnumeric reuse across calls or captures establishes no object identity.\n",
+      "Source-only address/lifetime models bind operation boundaries. Qualified typed\ngraphs retain aliases/cycles; numeric addresses stay unpublished. The installed\nwrapper/observer/original operation forwards each supplied source binding. Live\ndistinct nodes stay distinct despite equal payloads. Observer caller arrays are\nfresh while supplied arguments live; saved operation lookup keeps its declared\nCODE role. These constraints cover one capture's active call/throw phase; cross-\ncall/capture numeric reuse proves no identity.\n"
+    ],
+    [
+      "For example, two separately allocated source and target reference records can\ncontain the same type payload without sharing their root identity. Conversely,\nwhen the qualified graph aliases an input node, repeated source slots must\nretain that alias. The model checks complete source slots and graph topology,\nplus a separate relation oracle and genuine borrowed-role, split-binding,\nwrong-kind, omission and lifetime-domain controls. Replay from the repository root:\n",
+      "Separately allocated source/target reference records can have equal type payloads\nand distinct root identities. Qualified aliased input nodes must keep aliases in\nrepeated source slots. Complete slots/topology, a separate relation oracle and\ngenuine borrowed-role/split-binding/wrong-kind/omission/lifetime-domain controls\nqualify the model. Replay from the repository root:\n"
+    ],
+    [
+      "This is a dated source hypothesis, not a raw-address match. The original parser\nobserver excludes the receiver from graph publication; its forwarded role does\nnot supply a receiver census. Nested input topology, core/private/helper and\nparser-internal lifetimes remain source-model successors. The original raw\naddress join, external/framework/provider/formatter identities and current\ncanonical address publication remain open. Existing coordinate and class/frame\nqualifications keep their separate meanings.\n",
+      "This dated source hypothesis supplies no raw-address match. The original parser\nobserver excludes its receiver from graph publication; forwarding supplies no\nreceiver census. Nested topology, core/private/helper/parser-internal lifetimes\nremain source-model successors. Original raw-address joining, external/framework/\nprovider/formatter identities and current canonical address publication stay open.\nCoordinate and class/frame qualifications keep their separate meanings.\n"
+    ],
+    [
+      "This is a dated topology and active-copy lifetime qualification. Original numeric\naddresses, native/provider/formatter identity, later Value/Metadata/helper/parser\nreference roles, the raw-address join and canonical address publication remain\nseparately owned. The complete earlier operation-boundary hypotheses remain intact.\n",
+      "This dated topology/active-copy lifetime proof preserves all earlier operation-\nboundary hypotheses. Original numeric addresses, native/provider/formatter identity,\nlater Value/Metadata/helper/parser reference roles, raw-address joining and canonical\npublication stay separately owned.\n"
+    ]
+  ],
+  "condition": "Explicit whole-paragraph engineering review preserves every original source/lifetime/example/relation/control/native/private limitation and every existing runnable command. Complete earlier hypotheses retain dated roles; only helper consumer truth is added. Native/provider identity, nonhelper/full consumer/canonical/higher acceptance and existing allowances retain."
+}

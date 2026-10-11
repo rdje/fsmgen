@@ -1,0 +1,7 @@
+Original helper truth derives negated-eval and first-line regex operands from
+own source causes. Independent comparisons reject forced flags and stack
+echoes; nonhelper/full consumer acceptance stays open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/helper-consumer-truth-20261011/verify.py
+```
