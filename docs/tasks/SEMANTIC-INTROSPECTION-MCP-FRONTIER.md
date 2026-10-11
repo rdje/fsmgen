@@ -5508,12 +5508,46 @@ For FSMGen, the analogs are:
   Finding F1 resolution: `Restore the whole originally reviewed encoding line and its independently rederived candidate ID without changing its reviewed-incidental meaning, disposition, verifier or authority. The final complete.py entry retains the initial partial verifier and every original native/source/control epoch, separately authenticates recovery snapshots and qualifies complete corrected delivery. Both the failed initial epoch and successful correction remain committed; no original failure is normalized.`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Independently qualify every original consumer operand and outcome.`
   Acceptance: `Reconstruct all original consumer operands/truth from own authored actor/type/path/API/helper/cause models and exact source assertions, preserving primitive kinds and structural properties. Qualify every ordinary/Storable/unchanged-input-control original assertion rather than accepting native passed flags; actual false-green/wrong operand/source/helper/primary/omission controls reject. Full alias downstream consumers remain sibling .4 of the product parent.`
+  Verification: `Complete cause/canonical acceptance is committed at c7916ce. Preserve the original Goal/Acceptance without narrowing while independently preparing source contracts, deriving all consumer operands/truth, publishing only admitted canonical meanings and closing complete acceptance. Original source-model/native/private boundaries and full alias downstream sibling retain.`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.4`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.1`
+  Status: `done`
+  Goal: `Prepare whole original consumer source and operand contracts.`
+  Acceptance: `Authenticate the complete committed original/current source/native/product/cause input graph and unchanged consumer parent. Independently enumerate every exact source assertion, expanded loop/helper context, argument expression and required actor/type/path/API/helper/cause source operand role across ordinary/Storable/unchanged-input-control. Preserve typed operand and native/private/opaque boundaries. Genuine omitted/borrowed/wrong-expression/helper/source contract controls reject. Source contracts do not close consumer operand or outcome truth.`
+  Verification: `The first copied capture route refused before native launch; its complete original programme/tool terminal retain. BASE-derived routing and a separate actual native exclusive-route reproduction qualify the correction without touching prior evidence. Complete fixed original/current source/native/product/cause custody and the unchanged consumer parent authenticate. A producer extracts every whole finite authored assertion and argument span; a separate statement/quote-masked traversal reconstructs every expression, expanded helper/loop context and full actor/type/path/API/mutation dataflow scope. Every original mode consumer context joins its exact source owner. Typed scalar/graph roles and the synthetic trace/native/private boundaries retain; no native passed flag supplies operand or outcome truth. Complete genuine omitted/borrowed/expression/span/helper/loop/source/Boolean/native-promotion candidates execute the independent native reader and reject at their intended first assertions. Distinct claim legs are independent full source/context/operand-contract rederivation, whole genuine native separating controls, and committed complete original/current source/programme/command/terminal/candidate/publication custody with saved replay. Current book/native/source/query/capacity/focused/size/claim/inventory/staged/normal checks qualify only this source-contract leaf. Consumer operands/truth, canonical publication and complete original parent acceptance remain separately owned, with full alias downstream and higher scopes unchanged.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.1: prepare complete original consumer source contracts`
+  Finding F1: `First external capture pre-launch status1: copied wrapper retained previous artifact namespace; exclusive directory creation refused before any guarded child/start receipt/stream write. Impact: required source verification did not launch; prior evidence remains unchanged. Own current BASE-derived artifact routing, retain full failed programme/terminal and qualify corrected source/native/book/staged/normal delivery. Evidence: docs/audits/consumer-source-contracts-20261011/capture-route-recovery.json.`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — First external capture FileExistsError pins the copied artifact-route locus; capture-route-recovery.json and the separate native reproduction retain it. git log -S Independently qualify every original consumer operand and outcome. locates the unchanged original consumer obligation. Qualified original source contexts and cause acceptance do not establish consumer operand or outcome truth; exact source expressions and dataflow roles must precede that derivation.
+  - [x] **ADDRESSED (verified)** — Complete original/current source/native/product/cause custody authenticates. Independent finite statement traversal admits every authored assertion/argument and full helper/loop/dataflow/typed operand role; genuine complete native source-expression/span/helper/loop/source/Boolean/boundary controls reject. Original Goal/Acceptance, facts, questions, probes, native/private limits and higher scopes retain.
+  - [x] **NO REGRESSION** — All tests successful in focused current-publication, stream recovery, task/claim/disposition and book audits. Current source/query/capacity/book/native, saved cause-parent and source-contract readers, claim/inventory, staged scripts/check_doctrines.sh and normal hooks qualify delivery. Consumer operand/outcome and canonical/parent acceptance remain open.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2`
+  Status: `pending`
+  Goal: `Independently derive complete original consumer operands and truth.`
+  Acceptance: `After source-contract preparation commits, reconstruct every original assertion operand and outcome from exact authored actor/type/path/API/helper/cause models and source expressions across all original ordinary/Storable/unchanged-input-control runs. Preserve primitive kinds, complete structure and original native/private/opaque limits; derive assertion truth separately from native passed flags. Actual false-green, wrong operand/source/helper/primary/kind/structural/omission controls reject. No full alias downstream or canonical/parent closure is inferred.`
   Verification: `pending`
   Commit: `pending`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.3`
+  Status: `pending`
+  Goal: `Publish only admitted source-bound consumer canonical meanings.`
+  Acceptance: `After complete independent consumer meanings commit, preserve every existing canonical fact/question/probe/source authority and original limitation while publishing only independently admitted source-bound consumer meanings without collection or allowance growth. Qualify current source/query/capacity/book/native and meaningful permanent admission controls without changing historical helpers or oracles; complete consumer parent acceptance remains separate.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.4`
+  Status: `pending`
+  Goal: `Close unchanged complete original consumer acceptance.`
+  Acceptance: `After independent consumer meanings and governed publication commit, qualify every unchanged original consumer Goal/Acceptance and complete descendant contract. Join all source contracts, complete original/current source/native/product/cause custody, every source-derived typed operand/outcome and genuine native separating controls. Qualify whole current source/query/capacity/book/native/focused/claim/staged/normal and committed-only replay before closing only this original consumer parent. Full alias downstream and higher product/semantic/cold/permanent/host-native/private/visual/HIAL/full-CI/push successors retain.`
+  Verification: `pending`
+  Commit: `pending`
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4`
   Status: `pending`
   Goal: `Join complete original source context, cause, coordinate and consumer semantics.`

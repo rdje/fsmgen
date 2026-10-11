@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3` (pending)
-- next_action: Activate independent original consumer semantics .3.3 from clean committed complete finite cause/canonical parent acceptance. Reconstruct every original consumer operand and outcome from authored actor/type/path/API/helper/cause models and exact source assertions; native passed flags are insufficient. Preserve full source/native/private boundaries; alias downstream remains separately owned.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2` (pending)
+- next_action: Activate independent complete consumer operands/truth .3.3.2 from clean committed source contracts. Derive every original typed operand and assertion outcome from own authored actor/type/path/API/helper/cause models and exact expressions; native passed flags are insufficient. Preserve synthetic trace/native/private limits and full alias downstream ownership.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
-- in_flight_background: None after complete finite cause/canonical parent acceptance verification and commit; derive later gates under docs/audits/primary-raw-cause-parent-acceptance-20261011.
+- in_flight_background: None after complete consumer source-contract verification and commit; derive later gates under docs/audits/consumer-source-contracts-20261011.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
   Historical startup/parent qualification and full CI/push remain gated; Push whenever useful is explicitly authorized by user steering on 2026-10-11; required HIAL/full-CI qualifications still gate it. Visual mdBook QA remains pending.

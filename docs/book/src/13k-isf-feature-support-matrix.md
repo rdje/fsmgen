@@ -1078,12 +1078,10 @@ committed catalog but absent from Git. Catalog authentication restored exact
 whole bytes/all named members to Git. Missing/changed archive bytes reject;
 original failed intake/diagnosis retain.
 
-The dated display receipt rejects today's legitimately extended publication
-programme. Its dated adapter reconstructs the full source/native/instrument
-context and freshly runs the unchanged reader with the exact original Git
-programme; all input bytes conserve before/after. The display recipe below uses
-this adapter. Complete current/native verification stays separate. The first
-current-context refusal retains its full programme/streams.
+Dated display rejects the validly extended publisher. Its adapter freshly runs the unchanged original Git reader in full source/native/
+instrument context; all inputs conserve before/after. The display recipe uses it.
+Full current/native verification stays separate; the first current-context
+refusal keeps full programme/streams.
 
 Replay this complete dated prerequisite qualification:
 
@@ -1091,11 +1089,10 @@ Replay this complete dated prerequisite qualification:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-stack-prerequisites-20261011/verify.py
 ```
 
-Before independent raw-body association, admission authenticates the whole
-source/native/product domain again. Every prerequisite runs in its declared source
-or dated-instrument role. Live child stdout/stderr remain recoverable after
-interruption. A separate native filesystem census checks all members, byte digests,
-executable modes and directories. Missing/extra members, changed tails, empty
+Raw-body admission reauthenticates the whole source/native/product domain. Each
+prerequisite uses its declared source or dated-instrument role; child stdout/stderr
+survive interruption. A separate native filesystem census checks every member/
+digest/executable mode/directory. Missing/extra members, changed tails, empty
 directories, links, foreign paths and borrowed/Boolean results reject.
 
 Admitted source instruments must match the fixed predecessor byte for byte.
@@ -1120,43 +1117,42 @@ matching the fixed construction context:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-association-product-20261011/verify.py
 ```
 
-Git tracks the required recovery archive. The custody gate compares every complete
-construction/repair member, executable mode, directory and whole staged blob with
-source bytes. Its default freshly checks current Git custody; complete semantic
-and original native/private meanings remain open:
+Recovery is Git-tracked. Custody compares every construction/repair member,
+executable mode, directory and whole staged blob with source bytes. Default freshly checks current Git custody; complete semantic and original
+native/private meanings stay open:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-archive-durability-20261011/verify.py
 ```
 
-The construction checkpoint retains its dated pending-semantic label. The
-independent successor reconstructs the entire association from qualified original
-raw/class/frame/header/argument/coordinate/address products. Links bind complete
-ordered bodies/first causes/source callers/visible operands/simultaneous holders;
-nested errors retain the whole inner cause/new outer prefix/outer trace.
+The construction checkpoint keeps its dated pending-semantic label. The independent
+successor rebuilds the entire association from qualified original raw/class/frame/
+header/argument/coordinate/address products. Links bind complete ordered bodies/
+first causes/source callers/visible operands/simultaneous holders; nested errors
+keep whole inner cause/new outer prefix/outer trace.
 
-Assigning a valid visible address to another source argument preserves the inherited
-body and passes the namespace-adapted body reader but fails address/holder
+A valid visible address moved to another source argument preserves the inherited
+body and passes the namespace-adapted body reader, but fails address/holder
 association. Whole-stack/first-cause/caller/header-order/argument/opaque/scope/
-omission/phase/nested-cause interventions reach intended semantic assertions.
-Complete positive/hostile products/programmes/actual streams retain.
+omission/phase/nested-cause controls fail at intended semantic assertions. Full
+positive/hostile products/programmes/actual streams retain.
 
-The first checker accepted Boolean false as integer phase zero; its full false-
-green epoch retains. Typed canonical coordinates and a separate Perl JSON-kind
-reader now reject it. Every original semantic control reexecutes with corrected
-programmes before signoff.
+The first checker accepted Boolean false as integer phase zero; its full false-green
+epoch retains. Typed canonical coordinates and a separate Perl JSON-kind reader
+reject it. Every original semantic control reruns with corrected programmes before
+signoff.
 
-The interrupted host-memory attempt remains non-success. Complete controls and
-proof replay use separate processes under the unchanged RAM guard.
+Host-memory interruption remains non-success. Full controls/proof replay use
+separate processes under the unchanged RAM guard.
 
 Path repair keeps whole candidates; reconstruction assumes qualified source
 products. Native class/hooks/provider/settings/flags/encoding, hidden arguments
 and private/referent identities stay unmeasured.
 
 Construction/custody/semantic/typed-repair descendants qualify both readers on whole
-positive/hostile candidates: bodies pass; source semantics accepts only the
-positive. Typed JSON coordinates and dated construction/recovery-layout/
-Git-custody/semantic defaults retain.
+positive/hostile candidates: all bodies pass; only positive source semantics passes.
+Typed JSON coordinates and dated construction/recovery-layout/Git-custody/semantic
+defaults retain.
 
 Full raw acceptance joins inventory/class/frame/coordinate/address, source/native
 custody, semantic/native-body controls and canonical publication. Failures/unknowns
@@ -1201,6 +1197,14 @@ Original assumptions/failures/native/private limits and higher owners retain:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-parent-acceptance-20261011/complete.py
+```
+
+Consumer contracts bind every expression/helper/loop/dataflow/typed
+operand roles. Passed flags prove no truth; operands/outcomes/canonical/parent
+acceptance stay open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-source-contracts-20261011/verify.py
 ```
 
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.

@@ -1,0 +1,42 @@
+{
+  "after": {
+    "bytes": 3466,
+    "sha256": "73e555dab63512b70dc2327e435624bc355835d9bf7a7c4acca8196e998d9097"
+  },
+  "before": {
+    "bytes": 3495,
+    "sha256": "a6332471e7153ee2a8d2712494e233afaec6665039f547cdc0b895b48572aad7"
+  },
+  "child_launched": false,
+  "command": [
+    "python3",
+    "-B",
+    "docs/audits/consumer-source-contracts-20261011/capture.py",
+    "source-before",
+    "python3",
+    "-B",
+    "docs/audits/consumer-source-contracts-20261011/intake.py",
+    "--before"
+  ],
+  "condition": "Pre-launch capture failure remains actual non-success; subsequent corrected source/native verification is a distinct epoch. Historical absolute traceback paths are opaque evidence, not persisted runtime routes.",
+  "fix": "Derive the same-volume repository-relative artifact directory from current BASE.name. Keep exclusive creation and all guard/evidence rules unchanged.",
+  "mechanism": "Copied external capture wrapper retained the previous artifact directory literal. exist_ok=False refused before saving a started receipt or opening streams; no guarded child launched. Prior complete recorded source-before stdout/stderr still equal their original committed actual receipt.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.1",
+  "phase": "external capture pre-launch directory creation",
+  "prior_streams": {
+    "stderr": {
+      "bytes": 91,
+      "sha256": "acc7aa58f16c44a5984af76b3b18b94dc999e4724f3baa80b15184439bd290d4"
+    },
+    "stdout": {
+      "bytes": 105,
+      "sha256": "5653939fb13a7e9357787b8e4dd1783a9a95a0781e4f16cc2eea87daa0ae90b3"
+    }
+  },
+  "receipt_origin": "Exact exec tool terminal transcribed after the pre-launch refusal; no guarded actual receipt exists because exclusive directory creation failed before launching the child.",
+  "retained_programme": "docs/audits/consumer-source-contracts-20261011/initial-capture.py.txt",
+  "started_receipt_created": false,
+  "status": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/consumer-source-contracts-20261011/capture.py\", line 60, in <module>\n    folder.mkdir(parents=True, exist_ok=False)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 1011, in mkdir\n    os.mkdir(self, mode)\n    ~~~~~~~~^^^^^^^^^^^^\nFileExistsError: [Errno 17] File exists: '.artifacts/primary-raw-cause-parent-acceptance-20261011/checks/source-before'\n",
+  "stdout": ""
+}

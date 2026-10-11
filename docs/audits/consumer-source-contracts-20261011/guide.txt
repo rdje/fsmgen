@@ -1,0 +1,7 @@
+Consumer contracts bind every expression/helper/loop/dataflow/typed
+operand roles. Passed flags prove no truth; operands/outcomes/canonical/parent
+acceptance stay open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-source-contracts-20261011/verify.py
+```
