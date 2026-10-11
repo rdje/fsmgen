@@ -1159,42 +1159,45 @@ The interrupted host-memory attempt remains non-success. Complete control
 execution and proof replay now use separate processes under the unchanged
 RAM guard.
 
-Path repair preserves the whole candidate; independent reconstruction uses
-qualified source products as assumptions. Native class, hooks/provider/
-settings/flags/encoding, hidden arguments and private/referent identities remain
-unmeasured.
+Path repair keeps whole candidates; independent reconstruction assumes
+qualified source products. Native class/hooks/provider/settings/flags/encoding,
+hidden arguments and private/referent identities stay unmeasured.
 
-Construction, custody, semantic and typed-repair descendants qualify the
-association. Both readers execute positive/hostile candidates:
-inherited bodies pass; source semantics accepts only the positive. Typed JSON
-coordinates conserve. Construction, recovery-layout, Git-custody and semantic
-defaults pass in their dated roles.
+Construction/custody/semantic/typed-repair descendants qualify both readers on
+whole positive/hostile candidates: bodies pass; source semantics accepts only
+the positive. Typed JSON coordinates and dated construction/recovery-layout/
+Git-custody/semantic defaults conserve.
 
-Finite raw acceptance joins inventory, class/frame, coordinate/address and
-raw obligations with source/native custody, semantic/native-body controls and
-canonical publication. Failures and unknowns retain; no ignored checkpoint or
-native recapture needed:
+Full raw acceptance joins inventory/class/frame/coordinate/address,
+source/native custody, semantic/native-body controls and canonical publication.
+Failures/unknowns retain; no ignored checkpoint/native recapture needed:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-full-acceptance-20261011/verify.py
 ```
 
-Primary and coordinate/address prerequisites qualify in source or dated roles:
+Primary/coordinate/address prerequisites qualify in source or dated roles:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-preparation-20261011/verify.py
 ```
 
 Cause association joins every source cause/acceptance, empty/raw member,
-helper/parser, coordinate/address and whole nested role.
-Canonical and cause-parent acceptance remain open:
+helper/parser, coordinate/address and whole nested role:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-association-20261011/verify.py
 ```
 
-Consumer/alias/cold/permanent/host-native, visual, HIAL and full-CI/push stay
-owned. Semantic/association replay requires its complete fixed source context:
+A reviewed non-growing canonical proposal is prepared. Live publication and
+cause-parent acceptance remain open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-canonical-preparation-20261011/verify.py
+```
+
+Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
+Semantic/association replay requires its complete fixed source context:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-links-20261011/verify.py
