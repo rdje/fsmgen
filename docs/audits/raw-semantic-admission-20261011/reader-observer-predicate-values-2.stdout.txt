@@ -1,0 +1,1 @@
+PASS complete predicate source values, independent branches, public constructor/header fixtures, genuine controls, first failures and fixed source custody; original native/settings and all successor scopes stay open.

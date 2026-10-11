@@ -1,0 +1,1 @@
+PASS complete original remaining-value acceptance, independently reconstructed source obligations and explicit original opaque/profile boundaries, whole inherited bodies and genuine controls; higher header/raw/native/private scopes retain.

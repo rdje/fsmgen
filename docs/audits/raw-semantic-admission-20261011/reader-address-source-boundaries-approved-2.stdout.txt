@@ -1,0 +1,1 @@
+PASS source-only operation-boundary lifetime hypotheses, independent alias/slot oracle and separating controls; raw address joins remain open.

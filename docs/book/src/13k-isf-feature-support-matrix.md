@@ -1094,6 +1094,22 @@ Replay this complete dated prerequisite qualification:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-stack-prerequisites-20261011/verify.py
 ```
 
+Complete raw-semantic admission now authenticates the whole source/native/product
+domain again before independent raw-body association. Every prerequisite runs
+in its declared source or dated-instrument role. Child stdout and stderr are
+saved while each command runs, so interruption leaves recoverable streams. A
+separate native filesystem census checks every member, byte digest, executable
+mode and directory. Missing members, changed tails, unlisted files, empty
+directories, links, foreign paths and borrowed or Boolean results reject.
+
+This reader requires its admitted source instruments to remain byte-identical
+to the fixed predecessor. Later publication changes require an explicit whole
+dated checkpoint; this result supplies no later native/current currency:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-admission-20261011/verify.py
+```
+
 Only the finite observer and class/frame predecessor containers close here.
 The complete raw-stack semantic join and its publication remain separately
 owned. Original native class, provider, hooks, settings, flags, encoding,

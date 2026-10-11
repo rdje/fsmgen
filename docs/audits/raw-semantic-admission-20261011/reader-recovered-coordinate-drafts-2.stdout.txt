@@ -1,0 +1,1 @@
+PASS exact draft/gate archive members hashes and retrieval; original file bytes retained under unchanged limits.

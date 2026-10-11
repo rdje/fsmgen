@@ -1,0 +1,1 @@
+PASS complete fixed/current raw-semantic input source/native/product graph and whole binary Git custody; no semantic or native promotion.
