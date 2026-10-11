@@ -1,0 +1,1 @@
+Prepared verified available replay preservation only; complete corpus, stream recovery and raw parent remain open.

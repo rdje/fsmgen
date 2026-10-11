@@ -1,0 +1,1 @@
+PASS complete strict original/current namespace repair, unchanged observer semantics and current/native/source epoch; all genuine whole graph and actual-result controls qualify. Higher raw/native/private/visual scopes retain their owners.

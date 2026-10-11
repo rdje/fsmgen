@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import json,sys;exec(json.load(open(sys.argv[1]))["read_only_programme"])
+                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 34, in <module>
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/raw-semantic-acceptance-20261011/clarity-fixed-view/docs/audits/raw-association-acceptance-20261011/common.py", line 40, in need
+    raise ValueError(message)
+ValueError: complete current corrected book/task/authority delivery; later changes require a dated role

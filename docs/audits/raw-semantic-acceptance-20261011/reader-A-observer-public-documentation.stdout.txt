@@ -1,0 +1,1 @@
+PASS complete dated public framework/profile clauses and raw-output replay; original framework/native meanings remain open.

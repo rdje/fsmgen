@@ -1,0 +1,7 @@
+ram-guard: PID 55631; host 50.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import json,sys;exec(json.load(open(sys.argv[1]))["programme"])
+                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 9, in <module>
+TypeError: can't concat str to bytes

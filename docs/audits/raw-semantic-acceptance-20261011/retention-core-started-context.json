@@ -1,0 +1,1 @@
+{"condition":"Actual later guard launch observation only; does not recover first interrupted peak or authorize wider limits.","guard_launch_tool_output":"ram-guard: PID 23874; host 45.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n","prior_guard_launch_tool_output":"ram-guard: PID 19749; host 43.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n"}

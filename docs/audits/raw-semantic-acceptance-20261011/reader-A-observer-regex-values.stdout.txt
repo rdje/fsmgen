@@ -1,0 +1,1 @@
+PASS whole authored regex expressions/source allocations, independent public constructors/flags/encoding/headers and genuine controls; original native identity/settings and parent scopes retain.
