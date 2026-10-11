@@ -1,0 +1,8 @@
+Remaining consumer truth derives typed JSON/actor/type/path/API/copy operands
+and scalar/structural comparisons. Synthetic trace details stay opaque.
+The first actor/copy-kind failure stays reproducible; its repair uses the
+qualified Storable witness. Helper/full join/parent scopes retain:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/remaining-consumer-truth-20261011/verify.py
+```

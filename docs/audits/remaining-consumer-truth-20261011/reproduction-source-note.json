@@ -1,0 +1,9 @@
+{
+  "condition": "The old-reader reproduction compiles complete first captured source bodies under their original relative filenames. Its terminal code excerpts can show later disk text at those filenames; stored compiled source bodies and actual intended exception are authoritative for this finite reproduction. No source-line excerpt equality, native code/class/coordinate identity or fresh original execution is claimed.",
+  "first_source": "independent-actual.json:programmes",
+  "later_disk_line": "    data = inputs.inputs()",
+  "old_reader_line": "            need(same(operand, expected['operand']) and truth == expected['outcome'], 'whole source-derived remaining typed consumer operand and truth')",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.2",
+  "reproduced_terminal": "reproduce-first-v2-actual.json",
+  "scope": "Own compiled source/terminal custody only; original native/private/source-coordinate unknown boundaries retain."
+}

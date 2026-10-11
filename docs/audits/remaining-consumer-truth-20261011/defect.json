@@ -1,0 +1,34 @@
+{
+  "description": "Remaining actor-copy consumer model incorrectly equated primitive kinds in source actor and Storable detached copy.",
+  "diagnosis": "diagnosis-actual.json",
+  "first_actual_status": 1,
+  "first_declared_status": 0,
+  "first_terminal": "independent-actual.json",
+  "impact": "Independent source-operand qualification rejected before proof/publication. Current production sources and every original witness remain unchanged.",
+  "mechanism": "Expected Storable actor-copy operand inherits independently qualified original provider-copy primitive kinds; semantic structural string equality does not imply exact operand kind equality.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.2",
+  "priority": "blocking current slice; repair now",
+  "recovery_episode": {
+    "actual": "reproduce-first-actual.json: status1/declared1 with wrong first cause; core-actual.json: status1/declared0",
+    "description": "First failure reproduction validator counted the external RAM-guard launcher as an authored command-file programme.",
+    "diagnosis": "diagnosis-reproduction-actual.json proves that dropping the two launcher-prefix arguments yields exact programme membership for every original command.",
+    "impact": "Full qualification rejected; corrected operand/native comparison/separating controls had passed independently. No publication or acceptance completed.",
+    "priority": "blocking current qualification; fix now",
+    "reproduction": [
+      "python3",
+      "-B",
+      "docs/audits/remaining-consumer-truth-20261011/recovery.py",
+      "--reproduce-first"
+    ],
+    "resolution": "pending exact launcher-prefix correction, separate original-reader native reproduction and final full qualification."
+  },
+  "reproduction": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/remaining-consumer-truth-20261011/reader.py",
+    "--save"
+  ],
+  "resolution": "pending corrected qualified copy-witness binding, genuine kind control, old-programme failure reproduction and full delivery."
+}

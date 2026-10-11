@@ -1,0 +1,12 @@
+{
+  "ceiling": 292485,
+  "corrected_bytes": 292482,
+  "corrected_guide": "Remaining consumer truth derives typed JSON/actor/type/path/API/copy operands\nand scalar/structural comparisons. Synthetic trace details stay opaque.\nThe first actor/copy-kind failure stays reproducible; its repair uses the\nqualified Storable witness. Helper/full join/parent scopes retain:\n\n```bash\nscripts/run_with_ram_guard.sh -- python3 -B docs/audits/remaining-consumer-truth-20261011/verify.py\n```\n",
+  "first_draft_bytes": 292495,
+  "first_guide": "Remaining consumer truth derives typed JSON/actor/type/path/API/copy operands\nand scalar/structural comparisons. Synthetic trace details stay opaque;\nthe first actor/copy-kind model failure remains reproducible, and its repair\nbinds the qualified Storable witness. Helper/full join/parent scopes retain:\n\n```bash\nscripts/run_with_ram_guard.sh -- python3 -B docs/audits/remaining-consumer-truth-20261011/verify.py\n```\n",
+  "kind": "static draft assertion; no guarded publication/build executed",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.2",
+  "resolution": "Shortened only duplicate model/failure wording before publication; same retained first failure, qualified witness and higher scopes.",
+  "terminal": "AssertionError: 292495",
+  "tool_status": 1
+}

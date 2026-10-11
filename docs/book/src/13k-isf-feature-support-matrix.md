@@ -1215,6 +1215,15 @@ echoes; nonhelper/full consumer acceptance stays open:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/helper-consumer-truth-20261011/verify.py
 ```
 
+Remaining consumer truth derives typed JSON/actor/type/path/API/copy operands
+and scalar/structural comparisons. Synthetic trace details stay opaque.
+The first actor/copy-kind failure stays reproducible; its repair uses the
+qualified Storable witness. Helper/full join/parent scopes retain:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/remaining-consumer-truth-20261011/verify.py
+```
+
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
 Semantic/association replay needs its complete fixed source context:
 
@@ -1307,18 +1316,16 @@ prerequisites remain exact. Replay from the repository root:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-value-core-20261010/verify.py
 ```
 
-This is a dated finite source hypothesis. Cross-pool freshness remains a source
-hypothesis, not a measurement of original provider identity. Original numeric
-addresses, private/provider/formatter identity, cross-call and post-return
-lifetimes, Metadata/nested/helper/parser bindings, the raw-address join and
-canonical address publication retain their separate owners.
+This dated finite source hypothesis leaves cross-pool freshness unmeasured as
+original provider identity. Original numeric addresses, private/provider/formatter
+identity, cross-call/post-return lifetimes, Metadata/nested/helper/parser bindings,
+raw-address joining and canonical publication stay separately owned.
 
-Metadata core source bindings are qualified separately from the surviving
-Value ancestors. The public capture argument retains the supplied constructed
-interface. Metadata first clones that interface; its recursive type arguments
-then refer to nodes in the active detached Metadata copy. Recursive calls share
-one scalar-path sink and one active-type hash for the traversal. The source
-model records active type nodes symbolically, without publishing address keys.
+Metadata core bindings qualify separately from surviving Value ancestors. Public
+capture retains the supplied constructed interface; Metadata clones it. Recursive
+type arguments bind active detached Metadata nodes, sharing one scalar-path sink
+and active-type hash per traversal. Active nodes are symbolic; address keys stay
+unpublished.
 
 For the cyclic-member refusal, the recursive `.data` type refers back to the
 active root type. Those recursive frames must retain one type binding, one sink
@@ -1332,19 +1339,17 @@ and false-lifetime controls reject. Replay from the repository root:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-metadata-core-20261010/verify.py
 ```
 
-Every original Metadata source case and nested input pair retains. Metadata
-frames embedded in the later caught Value error are inactive; they do not prove
-later liveness of the sink, active hash or detached Metadata copy. The immediate
-nested-join successor must bind the surviving Value roots and operation domains.
-Original numeric/private/provider/formatter identity, helper/parser roles,
-the raw-address join and canonical address publication remain open. Cross-pool
-detachment remains a finite source hypothesis, not measured provider identity.
+Every original Metadata case/nested input pair retains. Inactive Metadata frames
+embedded in the later caught Value error prove no later sink/active-hash/detached-
+copy liveness. The nested successor must bind surviving Value roots/operation
+domains. Original numeric/private/provider/formatter identity, helper/parser roles,
+raw-address joining and canonical publication stay open. Cross-pool detachment
+remains a finite source hypothesis; provider identity stays unmeasured.
 
-The nested source lifetime join now covers the complete Metadata/Value pair
-population. Each pair has three views: the capture record at the inner Metadata
-throw, the Scope record preserving that same inner throw, and the later new Value
-throw after Metadata unwinds. The first two views share one event; an embedded
-trace is not a second active invocation.
+The nested lifetime join covers every Metadata/Value pair in three views: capture
+at the inner Metadata throw, Scope preserving that throw, and a new Value throw
+after Metadata unwinds. Capture/Scope share one event; an embedded trace adds no
+active invocation.
 
 The constructed interface's `type_spec` is the active Value private root's type
 node: `my $checked = $spec` preserves that alias. Metadata clones the interface
@@ -1385,12 +1390,11 @@ passed unchanged through the observer helper wrapper into compiled `refuses`.
 Its source pattern is also forwarded unchanged. Active named helpers retain
 the supplied formal references selected from their complete source graphs.
 
-The authored subtest body and observer callback have separate source roles.
-The subtest entry receives the authored body. The observer passes its wrapping
-closure to the saved public subtest delegate; that closure later calls the
-authored body. A displayed CODE kind alone cannot distinguish those roles.
-Source forwarding binds each handle, while native CODE inequality remains open.
-The intervening framework frames stay opaque.
+Authored subtest bodies and observer callbacks have separate source roles.
+Subtest entry receives the authored body; the observer supplies its wrapping
+closure to the saved public subtest delegate. That closure later calls the body.
+CODE display cannot distinguish these roles. Source forwarding binds each handle;
+native CODE inequality stays open and framework frames stay opaque.
 
 For example, `copy($scope, 'packet', 'held')` keeps its Scope formal while the
 read and write reference helpers have returned. Their result objects are held
