@@ -1060,6 +1060,47 @@ adds no native identity or original recapture, and changes no observer meaning,
 question, probe, collection allowance or separately owned raw/native/private/
 visual acceptance. Complete raw-stack joining remains next.
 
+The raw-stack prerequisite reader now qualifies the unchanged broader observer
+and class/frame contracts together. Every completed child retains its original
+acceptance. Complete primary, source, parser, public framework, observer, header,
+coordinate and address readers execute in their declared source or dated role.
+The source class, guard, first cause and each ordered throw phase join every
+complete source function, argument and original full header role.
+
+For example, a borrowed whole frame can preserve plausible call syntax while
+belonging to another caller. The source/phase/header association rejects it.
+Missing children, narrowed acceptance, changed first causes, wrong argument
+roles and native-class promotion also reject. The separate full-header lexical
+reader supplies quoting and truncation controls; these checks share qualified
+source models and do not claim a universal or native identity oracle.
+
+A prerequisite census also found an earlier coordinate draft archive required
+by its committed catalog but absent from Git. Its exact whole bytes and every
+named member now retain in Git after catalog authentication. Missing or changed
+archive bytes reject. The original failed intake and diagnosis remain available.
+
+The dated display reader also retains a receipt for an earlier publication
+programme. Comparing that historical receipt with today's legitimately extended
+programme fails. Its explicit dated adapter now reconstructs the complete
+source/native/instrument context and freshly executes the unchanged reader with
+the exact original programme from Git. Every input byte conserves before and
+after execution. The earlier display recipe below uses this adapter; complete
+current/native verification remains a separate obligation. The first actual
+current-context refusal retains its full programme and streams.
+
+Replay this complete dated prerequisite qualification:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-stack-prerequisites-20261011/verify.py
+```
+
+Only the finite observer and class/frame predecessor containers close here.
+The complete raw-stack semantic join and its publication remain separately
+owned. Original native class, provider, hooks, settings, flags, encoding,
+private meanings and referent identities remain unmeasured. Cause, consumer,
+alias, cold, permanent, host-native and visual qualification remain open;
+HIAL and full CI/push gates retain their own prerequisites.
+
 Address/lifetime qualification begins with a separate source-only model of
 operation boundaries. Qualified typed input graphs retain aliases and cycles
 without publishing numeric addresses. Forwarding the same source argument
@@ -1780,7 +1821,7 @@ of a genuinely truncated value to a complete source value.
 Replay the whole finite qualification, independent controls and source custody:
 
 ```sh
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-display-contract-20261010/verify.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-stack-prerequisites-20261011/display_checkpoint.py --replay
 ```
 
 This completes the public prerequisite only. Complete source-generated

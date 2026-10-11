@@ -1,0 +1,10 @@
+{
+  "chapter": {
+    "bytes": 327761,
+    "sha256": "bfa3d76ce902be2bb369e2b3582cd8f201e12ec9a08d6ac185565a779b584e82"
+  },
+  "failure": "actual-native-guide-final-1.json",
+  "mechanism": "mdBook smart punctuation changes the authored apostrophe in the new guide; all other normalized text matches exactly. This is a book renderer contract only, never raw-error normalization.",
+  "native": "today\u2019s",
+  "source": "today's"
+}

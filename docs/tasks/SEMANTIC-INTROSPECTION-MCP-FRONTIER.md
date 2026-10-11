@@ -4515,11 +4515,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete raw exception class and source-derived frame paths.`
   Acceptance: `Derive every expected own source/observer/callback/wrapper/eval/nested-parser and public test-framework frame from completed source/context/primary inputs and the pinned host contract. Wire strings alone are not proof of native exception class. Preserve nested cause precedence, order and truncation/quoting; wider host-native causality remains owned.`
-  Verification: `Divide source-derived class/frame qualification into literal exception contracts, own API frames, observer/callback frames, parser frames, pinned public framework contracts and final join. Raw serialized inventory remains done; no native class or intended call graph is inferred from grammar alone.`
-  Commit: `pending`
+  Verification: `Complete unchanged original acceptance and every descendant contract independently qualify in raw-stack-prerequisites-20261011. Fresh complete source/primary/context/inventory/API/parser/public/observer/header/coordinate/address readers retain their source or dated roles. Every source class/guard/first-cause/ordered phase joins complete function/argument/header membership and whole original raw bytes. Genuine missing/narrowed/borrowed/wrong-caller/first-cause/argument/native-promotion/typed-actual controls reject. Only finite observer/class-frame predecessors close; full raw semantics, original native/provider/private/settings/identity and higher successors remain open.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6`
 
@@ -4593,11 +4593,11 @@ For FSMGen, the analogs are:
   Commit: `this slice`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify original observer and callback frame paths.`
   Acceptance: `Derive every wrapper/eval/compiled original callback/refuses/subtest/require frame and argument header from pinned observer transformation and source catalog. Validate exact source call membership/order and quoting/truncation contract; native trace grammar alone cannot supply intended authority.`
-  Verification: `Split complete source recipe inventory, observer API/parser boundaries, own helper/refusal/callback paths, own subtest/require boundaries and final observer join before artifacts. Exact public quoting/truncation/framework dependencies remain under the separately owned .5 and must complete before final observer signoff; no historical identity invented.`
-  Commit: `pending`
+  Verification: `Complete unchanged original acceptance and every descendant contract independently qualify in raw-stack-prerequisites-20261011. Fresh complete source/primary/context/inventory/API/parser/public/observer/header/coordinate/address readers retain their source or dated roles. Every source class/guard/first-cause/ordered phase joins complete function/argument/header membership and whole original raw bytes. Genuine missing/narrowed/borrowed/wrong-caller/first-cause/argument/native-promotion/typed-actual controls reject. Only finite observer/class-frame predecessors close; full raw semantics, original native/provider/private/settings/identity and higher successors remain open.`
+  Commit: `this commit`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5`
 
@@ -6140,11 +6140,39 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=310 in focused-repaired. Fresh complete source, class/frame, coordinate, admission, operand, holder, numerical, raw-parent, preparation, current and current-native readers pass with typed actual outcomes. Whole final book/source copies, unchanged Knowledge Map authority, task measurements, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commitment. The sandbox process-inspection refusal remains actual2, never success. No original native recapture, allowance widening, full CI or push occurs.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Join all complete raw-stack meanings and hostile controls.`
   Acceptance: `Reexecute all completed inventory/class/frame/coordinate/address readers and complete primary/source/context prerequisites. Join every whole own body without byte normalization; exact full-stack/first-cause/wrong-caller/borrowed-address controls must reject before closing the parent. Cause/consumer/alias/cold/permanent and host-native successors remain separately open.`
+  Verification: `Clean e42845fc43a61b2da76d5ad3fb5b4158c80765ff closes complete finite observer publication and strict namespace repair. Preserve this unchanged raw Goal and Acceptance. First qualify whole inventory/primary/source/context/class/frame/observer/header/coordinate/address prerequisites and remaining observer/class-frame container contracts; then independently join every whole raw body and genuine controls; finally qualify current canonical/book/native and commit gates before any raw parent closes.`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.1`
+  Status: `done`
+  Goal: `Qualify complete raw-stack prerequisites and predecessor acceptance.`
+  Acceptance: `Bind the entire e42845fc43a61b2da76d5ad3fb5b4158c80765ff source/task/native/product domain and original unchanged raw/observer/class-frame contracts before new joining. Reexecute every completed primary/source/context/inventory/class/API/parser/framework/observer/header/coordinate/address reader in its proper source or dated-publication role. Independently qualify every full observer and class/frame container requirement and all child contracts with genuine missing/narrowed/borrowed/first-cause/actual-result controls before closing either predecessor. Preserve raw bytes and every original private/provider/native/settings/identity uncertainty. Complete current/book/native/focused/claim/staged/normal gates and commit before aggregate raw joining.`
+  Verification: `Complete unchanged original acceptance and every descendant contract independently qualify in raw-stack-prerequisites-20261011. Fresh complete source/primary/context/inventory/API/parser/public/observer/header/coordinate/address readers retain their source or dated roles. Every source class/guard/first-cause/ordered phase joins complete function/argument/header membership and whole original raw bytes. Genuine missing/narrowed/borrowed/wrong-caller/first-cause/argument/native-promotion/typed-actual controls reject. Only finite observer/class-frame predecessors close; full raw semantics, original native/provider/private/settings/identity and higher successors remain open. Complete input directory/file topology rejects unexpected empty directories, nested files and symlinks; exact original false green and corrected actual controls retain. Dated checkpoint preflight separately rejects before alias writes, with whole original/corrected actual controls. Exact intake found a P1 ignored required coordinate drafts archive absent from Git. Fixed committed catalog authenticates its whole bytes and every member; real positive/missing/changed-tail executions qualify before forced retention. Original failed intake, introducing git log -S and complete member diagnosis retain. P1 dated display-reader/current-instrument refusal is fixed by complete authenticated original-instrument source checkpoint execution; book recipe and current/native roles remain separate. First local failures retain; first-local-failure-boundaries.json names unrecoverable first nested fixture and source-race gate stream gaps without promotion. Corrected runners save actual child/gate results before assertions. Corrected focused All tests successful Files=3 Tests=318 and Python17 tests/current/native/book/source/claim gates pass; staged and normal hooks complete this commit. Aggregate raw joining follows after clean handoff and required task containment. Final staged doctrine refused task_evidence aggregate lines/bytes: finish.py adjusted only lines_each. This still-uncommitted leaf owns exact independent aggregate measurement, preserved first failure and original sealed epoch, unchanged-ceiling correction and final current/source/claim/staged qualification in raw-stack-prerequisite-gate-repair-20261011 before commit.`
+  Commit: `this commit`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S drafts.tar.gz identifies a2840582fc1722c29da808713d6f3c06bd42cd78; actual-intake-1.json and intake-member-diagnosis.json prove a required ignored archive absent from Git. Original e428 task contracts separately leave broader observer/class-frame containers active despite completed children; whole original contracts retain in predecessors.json.
+  - [x] **ADDRESSED (verified)** — Complete fixed source/native/product intake and directory/file topology, exact fixed-catalog/member recovery and real missing/changed archive refusals qualify. Fresh declared readers and independent complete source/class/phase/full-header/argument association controls qualify every unchanged predecessor acceptance and child contract. First local failure boundaries stay explicit; full raw/native/private successors remain open.
+  - [x] **NO REGRESSION** — All tests successful Files=3 Tests=318; Python17 publication tests pass. Complete current/native/book/source/claim results retain in checks.json; strict saved replay, staged scripts/check_doctrines.sh and normal hooks complete this slice without a capacity ceiling or Knowledge Map change.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2`
+  Status: `pending`
+  Goal: `Join every complete original raw-stack meaning and genuine hostile control.`
+  Acceptance: `After .1 commits, bind and reexecute all complete primary/source/context/inventory/class/frame/observer/header/coordinate/address products. Independently join each original whole own error class/message/frame/argument/source-coordinate/address role and nested inner/outer cause association without byte normalization. Actual full-stack/first-cause/wrong-caller/borrowed-address/order/argument/opaque/scope/omission controls reject their intended contracts while prior meanings conserve. Close only this raw semantic repair after complete unchanged acceptance, source/book/current/native/focused/claim/staged/normal qualification and commit; full raw publication and higher cause/consumer/alias/cold/native successors remain separately owned.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.3`
+  Status: `pending`
+  Goal: `Publish and close unchanged complete raw-stack acceptance.`
+  Acceptance: `After .2 commits, independently qualify the original full raw Goal/Acceptance, every completed child and the complete raw-container contract. Preserve every old canonical meaning/question/probe and all original uncertainty through governed non-growing publication. Whole current source/query/capacity/book/native-copy, genuine first-admission/current controls, focused/claim/staged/normal hooks gate closure. Commit before cause joining; cause/consumer/alias/cold/permanent/host-native/private/visual/HIAL/full-CI/push successors retain their unchanged owners.`
+  Verification: `Preserve the committed prerequisite reader in its declared e428 fixed/current-source role. When maintained publication instruments advance, qualify an explicit complete fixed-source checkpoint or retain the earlier source condition; do not compare a historical receipt with a legitimately changed current programme or imply later currency. The existing first display boundary refusal, complete dated adapter and all original source/native uncertainties remain authoritative.`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.3`
   Status: `pending`

@@ -1,0 +1,97 @@
+"""Publish only the complete prerequisite and predecessor acceptance guide."""
+import argparse
+import gzip
+import json
+from html.parser import HTMLParser
+from pathlib import Path
+from common import BASE, OWNER, REVISION, need, pin, save
+from intake import git
+
+CHAPTER=Path('docs/book/src/13k-isf-feature-support-matrix.md')
+REGISTRY=Path('doctrine/live_document_size/surfaces.jsonl')
+ANCHOR='visual acceptance. Complete raw-stack joining remains next.\n\n'
+ADDITION='''The raw-stack prerequisite reader now qualifies the unchanged broader observer
+and class/frame contracts together. Every completed child retains its original
+acceptance. Complete primary, source, parser, public framework, observer, header,
+coordinate and address readers execute in their declared source or dated role.
+The source class, guard, first cause and each ordered throw phase join every
+complete source function, argument and original full header role.
+
+For example, a borrowed whole frame can preserve plausible call syntax while
+belonging to another caller. The source/phase/header association rejects it.
+Missing children, narrowed acceptance, changed first causes, wrong argument
+roles and native-class promotion also reject. The separate full-header lexical
+reader supplies quoting and truncation controls; these checks share qualified
+source models and do not claim a universal or native identity oracle.
+
+A prerequisite census also found an earlier coordinate draft archive required
+by its committed catalog but absent from Git. Its exact whole bytes and every
+named member now retain in Git after catalog authentication. Missing or changed
+archive bytes reject. The original failed intake and diagnosis remain available.
+
+Replay this complete dated prerequisite qualification:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-stack-prerequisites-20261011/verify.py
+```
+
+Only the finite observer and class/frame predecessor containers close here.
+The complete raw-stack semantic join and its publication remain separately
+owned. Original native class, provider, hooks, settings, flags, encoding,
+private meanings and referent identities remain unmeasured. Cause, consumer,
+alias, cold, permanent, host-native and visual qualification remain open;
+HIAL and full CI/push gates retain their own prerequisites.
+
+'''
+
+
+def aggregate(rows):
+    return dict(files=len(rows),lines_total=sum(raw.count(b'\n') for raw in rows.values()),
+                bytes_total=sum(map(len,rows.values())))
+
+
+def source():
+    names=[name for name in git('ls-tree','-r','--name-only',REVISION,'--','docs/book/src').decode().splitlines()
+           if Path(name).parent==Path('docs/book/src') and name.endswith('.md')]
+    before={name:git('show',REVISION+':'+name) for name in names};after=dict(before)
+    text=before[str(CHAPTER)].decode();need(text.count(ANCHOR)==1 and ADDITION not in text,'unique original prerequisite book seam')
+    after[str(CHAPTER)]=text.replace(ANCHOR,ANCHOR+ADDITION,1).encode()
+    return before,after
+
+
+def authority(before,after):
+    a,b=aggregate(before),aggregate(after)
+    return dict(authority_id='RAW-STACK-PREREQUISITES-20261011',owner=OWNER,baseline=a,
+                delta={key:b[key]-a[key] for key in a},
+                rationale='Document complete unchanged observer/class-frame predecessor and raw prerequisite acceptance, exact required archive recovery and genuine controls; complete raw semantics and original native/private identities remain open.')
+
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--publish',action='store_true');parser.add_argument('--native',action='store_true');args=parser.parse_args()
+    before,after=source();current={str(path):path.read_bytes() for path in Path('docs/book/src').glob('*.md')}
+    if args.publish:
+        need(current==before,'sole owned prerequisite guide mutation')
+        CHAPTER.write_bytes(after[str(CHAPTER)])
+        rows=[json.loads(line) for line in REGISTRY.read_bytes().splitlines()]
+        selected=next(row for row in rows if row.get('surface_id')=='shipped_behavior')
+        selected['reference_contract']['aggregate_change']=authority(before,after)
+        REGISTRY.write_text(''.join(json.dumps(row,sort_keys=True)+'\n' for row in rows))
+        save('book-publication.json',dict(revision=REVISION,before={k:pin(v) for k,v in before.items()},
+             after={k:pin(v) for k,v in after.items()},authority=authority(before,after),addition=ADDITION))
+        print('PASS sole whole prerequisite book addition and exact fresh aggregate authority; ceilings unchanged.')
+    else:
+        need(current==after,'complete prerequisite book and unchanged source peers')
+        if args.native:
+            class Text(HTMLParser):
+                def __init__(self):super().__init__();self.parts=[]
+                def handle_data(self,value):self.parts.append(value)
+            raw=Path('docs/book/book/13k-isf-feature-support-matrix.html').read_bytes();reader=Text();reader.feed(raw.decode())
+            rendered=' '.join(line for line in ADDITION.splitlines() if not line.startswith('```'))
+            need(' '.join(''.join(reader.parts).split()).count(' '.join(rendered.split()))==1,'whole unique rendered prerequisite guide')
+            need(not (BASE/'book-native.html.gz').exists(),'retain complete first prerequisite native guide')
+            (BASE/'book-native.html.gz').write_bytes(gzip.compress(raw,mtime=0))
+            save('book-native.json',dict(chapter=pin(raw),addition=pin(ADDITION.encode()),scope='Whole native guidance and source custody; visual QA remains open.'))
+        print('PASS complete whole prerequisite book/source/native guide; visual QA remains separately owned.')
+
+
+if __name__=='__main__':main()

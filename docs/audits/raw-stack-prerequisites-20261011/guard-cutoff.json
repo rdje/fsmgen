@@ -1,0 +1,94 @@
+{
+  "capture": "Exact tool session92721 completion, recorded immediately after consumption. Live programme pins are a post-interruption observation, not an invented pre-execution epoch.",
+  "combined_tool_output": "ram-guard: host memory 88.0% reached cutoff 88%\nram-guard: terminating PID tree: 26386 26405 88725 \n",
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/raw-stack-prerequisites-20261011/run.py",
+    "replay",
+    "python3",
+    "-B",
+    "docs/audits/raw-stack-prerequisites-20261011/replay.py"
+  ],
+  "completed_receipts": [
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-census-book-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-census-obligations-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-census-publication-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-class-frame-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-complete-original-header-repair-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-observer-diagnosis-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-own-source-chain-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-predicate-values-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-public-boundary-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-public-display-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-public-display-2.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-public-documentation-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-public-fixtures-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-regex-dated-publication-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-regex-values-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-remaining-value-boundaries-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-remaining-value-dated-publication-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-scalar-values-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-source-census-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-source-header-dated-final-repair-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-source-header-dated-publication-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-source-header-parent-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-source-value-dated-final-repair-1.json",
+    "docs/audits/raw-stack-prerequisites-20261011/actual-reader-observer-source-value-dated-publication-1.json"
+  ],
+  "interrupted_next_reader": "observer-source-value-parent",
+  "live_programmes_after_interruption": {
+    "docs/audits/raw-stack-prerequisites-20261011/book.py": {
+      "bytes": 7698,
+      "sha256": "6859ef0a62c783c68a12273c41b20061571ada9de32ee7046d5db401c5ddad0e"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/checks.py": {
+      "bytes": 2419,
+      "sha256": "4dbe2d342b0c9fa597d85a83e1ca2b5c37b82ea4916ba3ed0fd3df06d438a8b0"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/common.py": {
+      "bytes": 1381,
+      "sha256": "5f72f3e1512106ab360e6c5f75abcd00eea0e386629f67d9493b3a447a561ca9"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/display_checkpoint.py": {
+      "bytes": 5502,
+      "sha256": "4ccde03f236376724b3c2e4e739f78dac800e5a7ae5c5e4bc772c2c8e663e43d"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/finish.py": {
+      "bytes": 6954,
+      "sha256": "d49fee90af20a425684f056e3c300f0206c096cb1d76b600d728a935c766d2b1"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/intake.py": {
+      "bytes": 7353,
+      "sha256": "93878342f58a51cae7e3b2d67c886c23c3e9c2eb58776736681bd5153d92f413"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/namespace_controls.py": {
+      "bytes": 4110,
+      "sha256": "cdca815a1b17fc2ac71e10fdb05e22a69d2fe5667b2923517d3021e25b2cf018"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/predecessors.py": {
+      "bytes": 13406,
+      "sha256": "c838c349aeb5aa240a872fde24add42c8a84bd138137bfb5771129e791aa155f"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/recovery_controls.py": {
+      "bytes": 3052,
+      "sha256": "af577081ed0da12468bb0436fb72d02849517dc6ced1e78f2722c6ca0130c7ec"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/replay.py": {
+      "bytes": 6223,
+      "sha256": "5a71dea2d9635c6cf089b48f03c6db45070871582e7d76cfa7967b4a86a3c2d8"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/run.py": {
+      "bytes": 1114,
+      "sha256": "64ce69bc05fc64b5f0cff0bcb61c2665c94fdc7080ca038a5d5ce602828a381e"
+    },
+    "docs/audits/raw-stack-prerequisites-20261011/verify.py": {
+      "bytes": 12762,
+      "sha256": "be92b02a2609247009851dd54c6c344e6054debfc8a1ef58bee025d3e3f9d742"
+    }
+  },
+  "scope": "No successful result exists for the interrupted reader. All complete earlier receipts retain. No cutoff is raised and no original execution is recaptured. Required fresh reader qualification remains incomplete.",
+  "status": 137
+}

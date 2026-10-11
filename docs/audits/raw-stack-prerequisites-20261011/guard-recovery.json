@@ -1,0 +1,6 @@
+{
+  "combined_tool_output": "ram-guard: PID 70568; host 70.8%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nPASS guarded host recovery check; no threshold changed.\n",
+  "retry": "tool session15303, durable started-replay-3.json and started-reader-observer-source-value-parent-1.json; consume actual completion before signoff.",
+  "role": "Dated unchanged-guard recovery probe only. Retry itself performs fresh live admission at unchanged cutoffs; no sustained future memory claim.",
+  "status": 0
+}
