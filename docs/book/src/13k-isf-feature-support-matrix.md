@@ -1159,38 +1159,37 @@ The interrupted host-memory attempt remains non-success. Complete control
 execution and proof replay now use separate processes under the unchanged
 RAM guard.
 
-The body reader changes only its own candidate-path boundary.
-The producer reads the complete candidate; the independent checker reads
-the original qualified source products. Their shared source models remain
-explicit assumptions. The original native class, hooks, provider, settings,
-flags, encoding, hidden arguments and private or referent identities remain
-unmeasured. Parent acceptance and full raw canonical publication remain
-separate. Replay requires the complete fixed source/instrument context:
+The body reader changes only its candidate-path boundary. The producer reads
+the whole candidate; the independent checker uses original qualified source
+products. Shared source models remain assumptions. Original native class,
+hooks/provider/settings/flags/encoding, hidden arguments and private/referent
+identities remain unmeasured.
+
+The unchanged association contract and every construction, archive-custody,
+semantic and typed-repair descendant are qualified. Both readers execute every
+saved complete positive and hostile candidate: inherited bodies pass;
+source-first semantics accepts the positive and refuses each intended change.
+Separate native JSON-kind checks preserve typed coordinates. Construction,
+recovery-layout, Git-custody and semantic defaults pass before and after the
+group in their dated roles.
+
+At that checkpoint, full raw acceptance and canonical publication were
+separate. Complete finite raw acceptance now joins every original inventory,
+class/frame, coordinate/address and raw-container obligation and descendant
+with original source/native custody, fresh semantic/native-body controls and
+current canonical publication. First failures and original unknowns retain.
+This proof needs no ignored checkpoint and performs no native recapture:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-full-acceptance-20261011/verify.py
+```
+
+Cause/consumer/alias/cold/permanent/host-native, visual, HIAL and full-CI/push
+qualification remain separately owned. Original semantic and association replay
+still requires the complete fixed source/instrument context:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-links-20261011/verify.py
-```
-
-The complete raw-body association container is now qualified under its
-unchanged original acceptance. The closure joins every original obligation
-to the complete source products and independent semantic reconstruction.
-All completed construction, archive-custody, semantic and typed-repair
-descendants retain their full contracts and evidence.
-
-Both readers freshly execute on every saved complete positive and hostile
-candidate. The body reader accepts their unchanged inherited meanings;
-the source-first reader accepts the positive and refuses each intended
-semantic intervention. Separate native JSON-kind checks retain the typed
-coordinate boundary. Whole construction, recovery-layout, Git-custody and
-semantic defaults pass before and after the group in their dated roles.
-
-At the association checkpoint, only the finite association container closed.
-Complete raw semantic acceptance and canonical raw publication were separate.
-The shared source assumptions and all original native/private, identity,
-cold replay, visual and host qualification gaps remain explicit. Replay
-requires the complete fixed source and instrument context:
-
-```bash
 python3 -B scripts/restore_record_value_gate_streams.py --receipts docs/audits/raw-association-acceptance-20261011/checks.json
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
 ```

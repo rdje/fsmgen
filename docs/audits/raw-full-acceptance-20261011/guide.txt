@@ -1,0 +1,35 @@
+The body reader changes only its candidate-path boundary. The producer reads
+the whole candidate; the independent checker uses original qualified source
+products. Shared source models remain assumptions. Original native class,
+hooks/provider/settings/flags/encoding, hidden arguments and private/referent
+identities remain unmeasured.
+
+The unchanged association contract and every construction, archive-custody,
+semantic and typed-repair descendant are qualified. Both readers execute every
+saved complete positive and hostile candidate: inherited bodies pass;
+source-first semantics accepts the positive and refuses each intended change.
+Separate native JSON-kind checks preserve typed coordinates. Construction,
+recovery-layout, Git-custody and semantic defaults pass before and after the
+group in their dated roles.
+
+At that checkpoint, full raw acceptance and canonical publication were
+separate. Complete finite raw acceptance now joins every original inventory,
+class/frame, coordinate/address and raw-container obligation and descendant
+with original source/native custody, fresh semantic/native-body controls and
+current canonical publication. First failures and original unknowns retain.
+This proof needs no ignored checkpoint and performs no native recapture:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-full-acceptance-20261011/verify.py
+```
+
+Cause/consumer/alias/cold/permanent/host-native, visual, HIAL and full-CI/push
+qualification remain separately owned. Original semantic and association replay
+still requires the complete fixed source/instrument context:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-links-20261011/verify.py
+python3 -B scripts/restore_record_value_gate_streams.py --receipts docs/audits/raw-association-acceptance-20261011/checks.json
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
+```
+
