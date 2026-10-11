@@ -1,0 +1,174 @@
+"""Reconstruct and run the unchanged complete parent at its committed source epoch."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import stat
+import subprocess
+import sys
+
+from capture import BASE, canonical, pin, save
+
+sys.path.insert(0, 'scripts')
+import restore_record_value_gate_streams as boundary
+
+PLAN = json.loads((BASE / 'plan.json').read_bytes())
+REVISION = PLAN['revision']
+PARENT = Path(PLAN['raw_parent'])
+VIEW = Path('.artifacts/raw-canonical-preparation-20261011/source-view-v2')
+SUCCESS = 'PASS complete ordinary committed-source parent checkpoint; earlier source currency only.\n'
+
+
+def need(value, message):
+    if not value:
+        raise ValueError(message)
+
+
+def git(*args):
+    result = subprocess.run(['git', '--no-replace-objects', '--literal-pathspecs', *args], capture_output=True)
+    need(result.returncode == 0 and result.stderr == b'', 'complete read-only fixed Git result')
+    return result.stdout
+
+
+def selection():
+    original = json.loads(git('show', REVISION + ':' + str(PARENT / 'intake-first.json')))
+    publication = json.loads(git('show', REVISION + ':' + str(PARENT / 'publication.json')))
+    selected = set(original['roots']) | {str(PARENT)} | set(publication['task_names'])
+    selected.update(publication['book_names'])
+    selected.update(publication['snapshots'])
+    selected.update({'scripts/restore_record_value_gate_streams.py', 't/python/test_record_value_gate_streams.py'})
+    roots = sorted(n for n in selected if not any(n.startswith(other + '/') for other in selected if n != other))
+    records = git('ls-tree', '-r', '-z', REVISION, '--', *roots)
+    entries = {}
+    for record in records.rstrip(b'\0').split(b'\0'):
+        header, raw_name = record.split(b'\t', 1)
+        mode, kind, oid = header.decode().split()
+        name = raw_name.decode()
+        boundary.relative(name)
+        need(mode in ('100644', '100755') and kind == 'blob' and name not in entries,
+             'unique ordinary committed checkpoint member')
+        entries[name] = dict(mode=mode, oid=oid)
+    need(all(any(n == root or n.startswith(root + '/') for n in entries) for root in roots),
+         'every declared checkpoint root has complete committed membership')
+    need(all(entries.get(name) == {k: row[k] for k in ('mode', 'oid')}
+             for name, row in original['members'].items()), 'whole original source Git objects conserve at parent commit')
+    return roots, entries
+
+
+def derive(install=False):
+    roots, entries = selection()
+    if install:
+        target = boundary.local(VIEW)
+        need(not target.exists(), 'fresh checkpoint only; never repair or overwrite earlier evidence')
+        target.mkdir(parents=True)
+    process = subprocess.Popen(['git', '--no-replace-objects', 'cat-file', '--batch'],
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    members = {}
+    try:
+        for name, entry in sorted(entries.items()):
+            process.stdin.write(entry['oid'].encode() + b'\n')
+            process.stdin.flush()
+            header = process.stdout.readline().split()
+            need(len(header) == 3 and header[0].decode() == entry['oid'] and header[1] == b'blob',
+                 'complete declared committed blob header')
+            remaining = size = int(header[2])
+            digest = hashlib.sha256()
+            output = None
+            if install:
+                path = boundary.local(VIEW / name)
+                path.parent.mkdir(parents=True, exist_ok=True)
+                output = path.open('xb')
+            try:
+                while remaining:
+                    chunk = process.stdout.read(min(remaining, 1048576))
+                    need(chunk, 'complete committed checkpoint blob body')
+                    digest.update(chunk)
+                    if output:
+                        output.write(chunk)
+                    remaining -= len(chunk)
+                need(process.stdout.read(1) == b'\n', 'exact committed checkpoint blob EOF')
+            finally:
+                if output:
+                    output.close()
+            if install:
+                path.chmod(0o755 if entry['mode'] == '100755' else 0o644)
+            members[name] = dict(**entry, bytes=size, sha256=digest.hexdigest())
+        process.stdin.close()
+        need(process.stderr.read() == b'' and process.wait() == 0 and process.stdout.read(1) == b'',
+             'complete successful committed Git stream terminal')
+    finally:
+        if process.poll() is None:
+            process.kill()
+            process.wait()
+    directories = sorted({str(p) for name in members for p in Path(name).parents if str(p) != '.'})
+    return dict(revision=REVISION, roots=roots, members=members, directories=directories,
+                condition='Complete original source plus complete parent namespace and publication task/book graph at the parent commit. No later current-source, original native/private or full-CI qualification.')
+
+
+def census(expected):
+    root = boundary.local(VIEW)
+    need(root.is_dir(), 'existing ordinary same-volume complete checkpoint')
+    members, directories = {}, set()
+    for directory, children, files in os.walk(root, followlinks=False):
+        relative = Path(directory).relative_to(root)
+        boundary.local(VIEW / relative)
+        if relative != Path('.'):
+            directories.add(str(relative))
+        for child in children:
+            boundary.local(VIEW / relative / child)
+        for name in files:
+            relative_name = relative / name
+            path = boundary.local(VIEW / relative_name)
+            before = path.stat()
+            need(stat.S_ISREG(before.st_mode) and before.st_nlink == 1, 'ordinary unshared checkpoint file')
+            digest = hashlib.sha256()
+            with path.open('rb') as stream:
+                while chunk := stream.read(1048576):
+                    digest.update(chunk)
+            after = path.stat()
+            need((before.st_ino, before.st_dev, before.st_size, before.st_mtime_ns) ==
+                 (after.st_ino, after.st_dev, after.st_size, after.st_mtime_ns), 'stable complete checkpoint body')
+            key = str(relative_name)
+            need(key in expected['members'], 'unexpected complete checkpoint member refused')
+            row = expected['members'][key]
+            need(before.st_size == row['bytes'] and digest.hexdigest() == row['sha256']
+                 and bool(before.st_mode & 0o111) == (row['mode'] == '100755'), 'exact complete checkpoint bytes and mode')
+            members[key] = row
+    need(members == expected['members'] and sorted(directories) == expected['directories'],
+         'whole complete checkpoint file and directory population')
+    return pin(canonical(expected))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--prepare', action='store_true')
+    args = parser.parse_args()
+    expected = derive(install=args.prepare)
+    if args.prepare:
+        save('source-v2.json', expected)
+    else:
+        need(json.loads((BASE / 'source-v2.json').read_bytes()) == expected, 'whole immutable committed source catalogue')
+    before = census(expected)
+    environment = os.environ.copy()
+    # Absolute process paths are derived at runtime; persisted paths remain relative.
+    environment.update(GIT_DIR=str(Path('.git').resolve()), GIT_WORK_TREE=str(VIEW.resolve()))
+    prefix = subprocess.run(['git', 'rev-parse', '--show-prefix'], cwd=VIEW, env=environment, capture_output=True)
+    need(prefix.returncode == 0 and prefix.stdout == b'\n' and prefix.stderr == b'', 'fixed checkpoint is the runtime Git worktree root')
+    command = ['python3', '-B', str(PARENT / 'verify.py')]
+    result = subprocess.run(command, cwd=VIEW, env=environment, capture_output=True, text=True)
+    actual = dict(revision=REVISION, cwd=str(VIEW), command=command, source=before,
+                  status=result.returncode, stdout=result.stdout, stderr=result.stderr, after=census(expected),
+                  condition=expected['condition'])
+    if args.prepare:
+        save('parent-checkpoint-v2-actual.json', actual)
+    need(type(result.returncode) is int and result.returncode == 0 and result.stderr == ''
+         and result.stdout == 'PASS complete unchanged raw semantic parent acceptance; canonical and higher native/private scopes remain open.\n'
+         and actual['source'] == actual['after'], 'actual unchanged complete parent and whole checkpoint conservation')
+    if not args.prepare:
+        need(json.loads((BASE / 'parent-checkpoint-v2-actual.json').read_bytes()) == actual, 'whole original committed-source checkpoint result')
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.3` (pending)
-- next_action: Activate governed complete raw canonical publication .5.3 from clean committed parent acceptance. Preserve every original fact/question/probe and source/native uncertainty through non-growing publication; higher cause/consumer/alias/cold/permanent/native/HIAL/full-CI/push scopes retain.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.3.2` (pending)
+- next_action: Activate raw canonical publication .5.3.2 from clean committed source preparation. Extend only the governed finite raw meaning and maintained factory within unchanged capacity; preserve original e428/parent source conditions through the complete committed checkpoint. Full raw acceptance .5.3.3 follows its commit.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
-- in_flight_background: None after parent acceptance delivery and commit; derive new gate state under docs/audits/raw-semantic-parent-closure-20261011.
+- in_flight_background: None after source preparation delivery and commit; derive new qualification state under docs/audits/raw-canonical-preparation-20261011.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
   Historical startup/parent qualification and full CI/push remain gated; Push whenever useful is explicitly authorized by user steering on 2026-10-11; required HIAL/full-CI qualifications still gate it. Visual mdBook QA remains pending.

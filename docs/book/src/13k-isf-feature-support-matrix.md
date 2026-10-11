@@ -1195,10 +1195,10 @@ python3 -B scripts/restore_record_value_gate_streams.py --receipts docs/audits/r
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
 ```
 
-Full raw semantic acceptance joins original readers, source custody, nested
-causes and separating controls. Recovery refuses unsafe paths and conflicts.
-Earlier failures retain; interrupted peak RSS and the first outer launch
-diagnostic remain unknown. Native/private gaps and canonical publication stay open.
+Raw semantic acceptance joins original readers, source custody, nested causes
+and controls. Fixed-source replay preserves the accepted source epoch.
+Recovery refuses unsafe paths/conflicts. Earlier failures, unknown interrupted
+peak RSS/first launch diagnostic retain. Native/private and canonical stay open.
 
 Retained observer and class/frame checkpoint (before raw association):
 
