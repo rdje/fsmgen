@@ -61,7 +61,7 @@ class CurrentPublicationTests(unittest.TestCase):
             (core, current.address_fact.QUESTION, 'borrowed address question?'),
             (core, 'cross-call/capture reuse stay opaque', 'cross-call/capture reuse proves native identity'),
             (core, 'address lifetimes remain unmeasured', 'address lifetimes are qualified'),
-            (core, 'lossless grammar/source joins qualify', 'lossless grammar/native identities qualify'),
+            (core, 'source joins/lossless grammar qualify', 'native identities/lossless grammar qualify'),
             (current.coordinate_fact.PARSER, 'receiver, normalized AST', 'qualified receiver identity and AST'),
             (current.coordinate_fact.PARSER, current.COMMAND, self.prior['model']['COMMAND']),
             (observer, current.COMMAND, self.prior['model']['COMMAND']),
@@ -113,6 +113,8 @@ class CurrentPublicationTests(unittest.TestCase):
                     'complete current coordinate parser and tooling guidance')
         self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.raw_fact.GUIDE, '')),
                     'unique complete admitted raw source guidance')
+        self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.cause_fact.GUIDE, '')),
+                    'unique complete admitted cause source guidance')
         self.refuse(lambda r: r.update(tooling_chapter=r['tooling_chapter'].replace(current.address_fact.REFERENCE, '')),
                     'complete current finite address tooling guidance')
         self.refuse(lambda r: r['queries']['direct'].update(stdout='malformed\n'),
@@ -209,7 +211,8 @@ class CurrentPublicationTests(unittest.TestCase):
         # This small HTML fixture isolates the parser; the actual whole native
         # build and every copied source are verified separately by the CLI.
         def html(guide):
-            blocks = (guide + current.coordinate_fact.PARSER_GUIDE + current.raw_fact.GUIDE).split('```bash\n')
+            blocks = (guide + current.coordinate_fact.PARSER_GUIDE + current.raw_fact.GUIDE
+                      + current.cause_fact.GUIDE).split('```bash\n')
             text = blocks[0]
             for block in blocks[1:]:
                 code, rest = block.split('```\n', 1)
@@ -226,6 +229,8 @@ class CurrentPublicationTests(unittest.TestCase):
             ('Authentication does not freshly reconstruct original executions.',
              'Authentication freshly reconstructs original executions.', 'native complete current retained scope and gaps'),
             ('Fixed-source replay preserves earlier epochs', 'Historical receipts prove later live code',
+             'native complete current retained scope and gaps'),
+            ('Cause-parent\nacceptance remains open', 'Cause-parent acceptance is complete',
              'native complete current retained scope and gaps')):
             with self.subTest(old=old):
                 changed = valid.replace(old, new)
@@ -266,6 +271,72 @@ class CurrentPublicationTests(unittest.TestCase):
         changed['proposed']['bytes_total'] = changed['previous']['bytes_total'] + 1
         with self.assertRaisesRegex(ValueError, '^non-growing admitted raw candidate$'):
             fact.published(changed)
+
+    def test_cause_admission_preserves_every_predecessor_meaning_and_route(self):
+        fact = current.cause_fact
+        candidate = fact.admission()
+        after = fact.published(candidate)
+        self.assertEqual(len(after.encode()), len(candidate['before'].encode()))
+        self.assertEqual(after.split('---\n', 2)[:2], candidate['before'].split('---\n', 2)[:2])
+        self.assertIn('Whole cause/raw/empty/nested source joins/lossless grammar qualify.', after)
+        self.assertIn('Native-class copy/structured-clone cycles stay unqualified', after)
+        self.assertEqual(fact.cards({fact.CARD: candidate['before']})[fact.CARD], after)
+        with self.assertRaisesRegex(ValueError, '^whole predecessor cause meanings and routes$'):
+            fact.cards({fact.CARD: after})
+
+    def test_cause_first_admission_rejects_proposed_schema_and_native_authority(self):
+        fact = current.cause_fact
+        original_read = current.plane.local_read
+        for mutate in (lambda r: r.update(native_identity=True),
+                       lambda r: r.update(schema_version=True),
+                       lambda r: r.update(revision='later-current-source')):
+            candidate = fact.admission()
+            mutate(candidate)
+            changed = json.dumps(candidate, sort_keys=True, separators=(',', ':')).encode() + b'\n'
+            def read(path, maximum):
+                return changed if path == current.ROOT / fact.PREPARATION / 'candidate.json' else original_read(path, maximum)
+            with mock.patch.object(current.plane, 'local_read', side_effect=read):
+                with self.assertRaisesRegex(ValueError, '^whole fixed cause candidate before first admission$'):
+                    fact.admission()
+
+    def test_cause_proposal_cannot_borrow_meanings_grow_or_promote_scope(self):
+        fact = current.cause_fact
+        candidate = fact.admission()
+        for mutate, cause in (
+            (lambda r: r.update(schema_version=True), 'exact admitted cause source role'),
+            (lambda r: r.update(revision='later-live-code'), 'exact admitted cause source role'),
+            (lambda r: r.update(before=r['after']), 'whole admitted cause predecessor meanings and routes'),
+            (lambda r: r.update(after=r['after'].replace('source joins/lossless grammar', 'native identities/lossless grammar')),
+             'whole admitted cause meanings questions metadata and probes'),
+            (lambda r: r['proposed'].update(bytes_total=r['previous']['bytes_total'] + 1), 'non-growing admitted cause capacity'),
+            (lambda r: r['proposed'].update(files=True), 'non-growing admitted cause capacity'),
+            (lambda r: r['scope'].update(native_identity=True), 'whole admitted cause source native private boundary'),
+            (lambda r: r['canonical_members'].pop(next(iter(r['canonical_members']))),
+             'whole admitted cause authority source review and query custody'),
+            (lambda r: r['queries']['direct'].update(command=r['queries']['cached']['command']),
+             'whole admitted cause authority source review and query custody')):
+            changed = copy.deepcopy(candidate)
+            mutate(changed)
+            self.assertFalse(current.same(changed, candidate))
+            with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
+                fact.published(changed)
+
+    def test_cause_actual_requires_its_complete_typed_source_role(self):
+        fact = current.cause_fact
+        for role in fact.ACTUALS:
+            actual = json.loads(Path(fact.PREPARATION, role + '-actual.json').read_bytes())
+            fact.check_actual(actual, role)
+            for mutate, cause in (
+                (lambda r: r.update(status=False), 'actual admitted cause integer success'),
+                (lambda r: r.update(expected_status=True), 'actual admitted cause integer success'),
+                (lambda r: r['command'].append('--current'), 'exact admitted cause actual source command'),
+                (lambda r: r.update(stdout='PASS\n'), 'whole admitted cause actual terminal'),
+                (lambda r: r['programmes'].pop(next(iter(r['programmes']))),
+                 'whole admitted cause actual programme and source custody')):
+                changed = copy.deepcopy(actual)
+                mutate(changed)
+                with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
+                    fact.check_actual(changed, role)
 
     def test_observer_authentication_requires_whole_same_volume_members(self):
         workspace = Path('.artifacts/observer-publication-tests')

@@ -1,0 +1,54 @@
+Path repair keeps whole candidates; reconstruction assumes qualified source
+products. Native class/hooks/provider/settings/flags/encoding, hidden arguments
+and private/referent identities stay unmeasured.
+
+Construction/custody/semantic/typed-repair children qualify both readers on whole
+positive/hostile candidates: bodies pass; source semantics accepts only the
+positive. Typed JSON coordinates and dated construction/recovery-layout/
+Git-custody/semantic defaults retain.
+
+Full raw acceptance joins inventory/class/frame/coordinate/address, source/native
+custody, semantic/native-body controls and canonical publication. Failures/unknowns
+retain; no ignored checkpoint/native recapture needed:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-full-acceptance-20261011/verify.py
+```
+
+Primary/coordinate/address prerequisites qualify in source or dated roles:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-preparation-20261011/verify.py
+```
+
+Cause association joins all source causes/acceptance, empty/raw members,
+helper/parser, coordinate/address and whole nested roles:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-association-20261011/verify.py
+```
+
+The reviewed non-growing canonical preparation replays:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-canonical-preparation-20261011/verify.py
+```
+
+Canonical cause publication admits this reviewed non-growing proposal. The
+current reader authenticates its full preparation and fixed source roles;
+original assumptions/failures/native/private limits retain. Cause-parent
+acceptance remains open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-canonical-publication-20261011/verify.py
+```
+
+Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
+Semantic/association replay needs its complete fixed source context:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-links-20261011/verify.py
+python3 -B scripts/restore_record_value_gate_streams.py --receipts docs/audits/raw-association-acceptance-20261011/checks.json
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
+```
+

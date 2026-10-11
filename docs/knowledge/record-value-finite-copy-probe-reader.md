@@ -49,11 +49,11 @@ Fresh same-volume replay pins sources/all native records/both streams; addresses
 elsewhere. Finite joins authenticate completed owners/fresh products. Original Storable/alias trials keep unchanged inputs/full
 downstream alias mutation/abort. Independent typed models qualify original graphs/trials/readonly/detachment and whole API/parser
 source-model results; private-source allocations conserve. Copy interventions rebuild whole input/private typed graphs, readonly
-copies/detached outputs. Private range sibling width changes string2 to number2; detached private copy preserves outer caller. Every
+copies/detached outputs. Private range sibling width changes string2 to number2; detached private copy keeps outer caller. Every
 copied width binds raw type, carrier/default/metadata, ancestor context/compatible sources. Captured input/private joins qualify
-whole graph/field/source/context/raw-kind/detachment. Finite contexts qualify helper/consumer/parser locations and whole parser
-texts/operation spans separately from cause/operand truth; qualified inputs independently derive API/helper/parser first
-causes/acceptance. Raw bodies/lossless grammar/source joins qualify. Source/publisher contracts infer unblessed scalar errors; original classes
+whole graph/field/source/context/raw-kind/detachment. Finite contexts bind helper/consumer/parser locations and whole parser
+texts/operation spans apart from cause/operand truth; qualified inputs independently derive API/helper/parser first
+causes/acceptance. Whole cause/raw/empty/nested source joins/lossless grammar qualify. Source/publisher contracts infer unblessed scalar errors; original classes
 were unmeasured. POD4.05 is stale; runtime version is JSON::PP4.06. Direct Value active-order/source roles bind visible
 type/scalar footprints. Metadata guards/record recursion/cycles qualify; list recursion is bound, unexercised. Nested
 Scope/capture/private-root inputs bind whole source-built interface kinds/sharing/cycles. Whole inner scalar forwards with new outer
@@ -63,7 +63,7 @@ guard/function/visible roles. [Observer/helper source meanings](record-value-ori
 display/private-frame/native-address, consumer/alias/semantic/cold/candidate-parent/hot/host-native stay open. Own
 coordinates/finite address roles qualify below.
 
-Complete source-chain/separate probe replay required.
+Full source-chain/separate probe replay needed.
 
 Every original nonempty error joins source-inferred class/guard family to whole own/public phase/function/visible-argument roles;
 empty allocations/contexts/opaque raw bytes conserve. Nested Metadata/new outer Value retain distinct class/phase roles and whole

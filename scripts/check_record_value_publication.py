@@ -17,6 +17,7 @@ import record_value_address_fact as address_fact
 import record_value_observer_fact as observer_fact
 import record_value_observer_namespace_fact as observer_namespace_fact
 import record_value_raw_fact as raw_fact
+import record_value_cause_fact as cause_fact
 from decision_store_git import MAX_TRACKED_PATHS
 
 ROOT = plane.ROOT
@@ -82,7 +83,7 @@ def expected_cards(prior):
             result[path] = epoch_fact.extend(result[path])
             result[path] = public_reference_fact.extend(result[path])
             result[path] = expression_fact.extend(result[path])
-    return raw_fact.cards(observer_fact.cards(address_fact.cards(coordinate_fact.cards(result))))
+    return cause_fact.cards(raw_fact.cards(observer_fact.cards(address_fact.cards(coordinate_fact.cards(result)))))
 
 
 def guide(prior):
@@ -155,6 +156,8 @@ def check(record, canonical, prior, declared):
             'complete current coordinate parser and tooling guidance')
     require(record['tooling_chapter'].count(address_fact.REFERENCE) == 1,
             'complete current finite address tooling guidance')
+    require(record['chapter'].count(cause_fact.GUIDE) == 1,
+            'unique complete admitted cause source guidance')
     pins = record['source_members']
     require(type(pins) is dict and all(type(pin) is dict and set(pin) == {'bytes', 'sha256'}
         and type(pin['bytes']) is int and pin['bytes'] >= 0 and type(pin['sha256']) is str
@@ -196,7 +199,7 @@ def check_native(html, prior):
     require(all(parsed.codes.count(command) == 1 for command in (COMMAND, BUILD, prior['book']['DEFAULT'])),
             'native distinct current build and historical commands')
     visible = ' '.join(''.join(parsed.parts).split())
-    for block in (guide(prior), prior['book']['EPOCH'], coordinate_fact.PARSER_GUIDE, raw_fact.GUIDE):
+    for block in (guide(prior), prior['book']['EPOCH'], coordinate_fact.PARSER_GUIDE, raw_fact.GUIDE, cause_fact.GUIDE):
         text = block.replace('```bash\n', '').replace('```\n', '').replace('`', '')
         require(' '.join(text.split()) in visible, 'native complete current retained scope and gaps')
 
@@ -249,6 +252,7 @@ def main():
     observer_before = observer_fact.authenticate()
     namespace_before = observer_namespace_fact.authenticate()
     raw_before = raw_fact.authenticate()
+    cause_before = cause_fact.authenticate()
     canonical = sources()
     check(current_input(prior, canonical), canonical, prior, authority(prior))
     rows = plane.expected_rows()
@@ -271,6 +275,8 @@ def main():
             'whole original publication namespace conserved during current verification')
     require(same(raw_before, raw_fact.authenticate()),
             'whole original raw admission and dated source evidence conserved during current verification')
+    require(same(cause_before, cause_fact.authenticate()),
+            'whole original cause admission and fixed source evidence conserved during current verification')
     print(SUCCESS, end='')
 
 

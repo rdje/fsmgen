@@ -1060,33 +1060,30 @@ adds no native identity or original recapture, and changes no observer meaning,
 question, probe, collection allowance or separately owned raw/native/private/
 visual acceptance. Complete raw-stack joining remains next.
 
-The raw-stack prerequisite reader now qualifies the unchanged broader observer
-and class/frame contracts together. Every completed child retains its original
-acceptance. Complete primary, source, parser, public framework, observer, header,
-coordinate and address readers execute in their declared source or dated role.
-The source class, guard, first cause and each ordered throw phase join every
-complete source function, argument and original full header role.
+The raw-stack prerequisite reader joins the unchanged broader observer and
+class/frame contracts; completed children retain original acceptance. Complete
+primary/source/parser/public-framework/observer/header/coordinate/address readers
+run in declared source or dated roles. Source class/guard/first cause and each
+ordered throw phase join every complete source function/argument/original full
+header role.
 
-For example, a borrowed whole frame can preserve plausible call syntax while
-belonging to another caller. The source/phase/header association rejects it.
-Missing children, narrowed acceptance, changed first causes, wrong argument
-roles and native-class promotion also reject. The separate full-header lexical
-reader supplies quoting and truncation controls; these checks share qualified
-source models and do not claim a universal or native identity oracle.
+A borrowed whole frame can preserve plausible call syntax but belong to another
+caller: source/phase/header association rejects it. Missing children, narrowed
+acceptance, changed first causes, wrong argument roles and native-class promotion
+also reject. Separate full-header lexical quoting/truncation controls share
+qualified source models; no universal/native identity oracle is claimed.
 
-A prerequisite census also found an earlier coordinate draft archive required
-by its committed catalog but absent from Git. Its exact whole bytes and every
-named member now retain in Git after catalog authentication. Missing or changed
-archive bytes reject. The original failed intake and diagnosis remain available.
+The prerequisite census found a coordinate draft archive required by its
+committed catalog but absent from Git. Catalog authentication restored exact
+whole bytes/all named members to Git. Missing/changed archive bytes reject;
+original failed intake/diagnosis retain.
 
-The dated display reader also retains a receipt for an earlier publication
-programme. Comparing that historical receipt with today's legitimately extended
-programme fails. Its explicit dated adapter now reconstructs the complete
-source/native/instrument context and freshly executes the unchanged reader with
-the exact original programme from Git. Every input byte conserves before and
-after execution. The earlier display recipe below uses this adapter; complete
-current/native verification remains a separate obligation. The first actual
-current-context refusal retains its full programme and streams.
+The dated display receipt rejects today's legitimately extended publication
+programme. Its dated adapter reconstructs the full source/native/instrument
+context and freshly runs the unchanged reader with the exact original Git
+programme; all input bytes conserve before/after. The display recipe below uses
+this adapter. Complete current/native verification stays separate. The first
+current-context refusal retains its full programme/streams.
 
 Replay this complete dated prerequisite qualification:
 
@@ -1159,18 +1156,18 @@ The interrupted host-memory attempt remains non-success. Complete control
 execution and proof replay now use separate processes under the unchanged
 RAM guard.
 
-Path repair keeps whole candidates; independent reconstruction assumes
-qualified source products. Native class/hooks/provider/settings/flags/encoding,
-hidden arguments and private/referent identities stay unmeasured.
+Path repair keeps whole candidates; reconstruction assumes qualified source
+products. Native class/hooks/provider/settings/flags/encoding, hidden arguments
+and private/referent identities stay unmeasured.
 
-Construction/custody/semantic/typed-repair descendants qualify both readers on
-whole positive/hostile candidates: bodies pass; source semantics accepts only
-the positive. Typed JSON coordinates and dated construction/recovery-layout/
-Git-custody/semantic defaults conserve.
+Construction/custody/semantic/typed-repair descendants qualify both readers on whole
+positive/hostile candidates: bodies pass; source semantics accepts only the
+positive. Typed JSON coordinates and dated construction/recovery-layout/
+Git-custody/semantic defaults retain.
 
-Full raw acceptance joins inventory/class/frame/coordinate/address,
-source/native custody, semantic/native-body controls and canonical publication.
-Failures/unknowns retain; no ignored checkpoint/native recapture needed:
+Full raw acceptance joins inventory/class/frame/coordinate/address, source/native
+custody, semantic/native-body controls and canonical publication. Failures/unknowns
+retain; no ignored checkpoint/native recapture needed:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-full-acceptance-20261011/verify.py
@@ -1182,22 +1179,30 @@ Primary/coordinate/address prerequisites qualify in source or dated roles:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-preparation-20261011/verify.py
 ```
 
-Cause association joins every source cause/acceptance, empty/raw member,
-helper/parser, coordinate/address and whole nested role:
+Cause association joins all source causes/acceptance, empty/raw members,
+helper/parser, coordinate/address and whole nested roles:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-association-20261011/verify.py
 ```
 
-A reviewed non-growing canonical proposal is prepared. Live publication and
-cause-parent acceptance remain open:
+The reviewed non-growing canonical preparation replays:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-canonical-preparation-20261011/verify.py
 ```
 
+Canonical cause publication admits this reviewed non-growing proposal. The
+current reader authenticates its full preparation and fixed source roles;
+original assumptions/failures/native/private limits retain. Cause-parent
+acceptance remains open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-canonical-publication-20261011/verify.py
+```
+
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
-Semantic/association replay requires its complete fixed source context:
+Semantic/association replay needs its complete fixed source context:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-links-20261011/verify.py
