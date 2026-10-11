@@ -1,0 +1,148 @@
+"""Publish only the owned stream repair, preserving original task contracts."""
+import ast
+import gzip
+import json
+from pathlib import Path
+import re
+import subprocess
+
+from capture import BASE, canonical, pin, save
+
+TASK = Path('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md')
+BOOK = Path('docs/book/src/13k-isf-feature-support-matrix.md')
+REGISTRY = Path('doctrine/live_document_size/surfaces.jsonl')
+PLAN = json.loads((BASE / 'plan.json').read_bytes())
+OWNER = PLAN['owner']
+REVISION = PLAN['revision']
+NOTICE = (b'Original readers qualify in their dated/source roles. Committed receipts\n'
+          b'restore missing association streams; unsafe paths and byte conflicts refuse.\n'
+          b'Earlier RAM interruptions remain failures. Interrupted peak RSS and the\n'
+          b'first launch diagnostic remain unknown. Raw-parent acceptance remains open.\n\n')
+PREPARE = (b'python3 -B scripts/restore_record_value_gate_streams.py --receipts '
+           b'docs/audits/raw-association-acceptance-20261011/checks.json\n')
+
+
+def need(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def git(*args):
+    result = subprocess.run(['git', '--no-replace-objects', *args], capture_output=True)
+    need(result.returncode == 0 and result.stderr == b'', 'complete own read-only Git protocol')
+    return result.stdout
+
+
+def nodes(raw):
+    matches = list(re.finditer(rb'^- ID: `([^`]+)`\n', raw, re.M))
+    return {m[1].decode(): raw[m.start():matches[i+1].start() if i+1 < len(matches) else len(raw)]
+            for i, m in enumerate(matches)}
+
+
+def metrics(sources):
+    rows = [dict(bytes=len(raw), lines=raw.count(b'\n'),
+                 width=max((len(line.removesuffix(b'\r')) for line in raw.split(b'\n')), default=0))
+            for raw in sources.values()]
+    return dict(files=len(rows), bytes_total=sum(r['bytes'] for r in rows),
+                lines_total=sum(r['lines'] for r in rows),
+                bytes_each=max(r['bytes'] for r in rows), lines_each=max(r['lines'] for r in rows),
+                line_bytes_each=max(r['width'] for r in rows))
+
+
+def main():
+    before = {str(p): p.read_bytes() for p in (TASK, BOOK, REGISTRY, Path('MEMORY.md'), Path('docs/TASK_TREE.md'))}
+    activation = gzip.decompress((BASE / 'activation-task.md.gz').read_bytes())
+    current = before[str(TASK)]
+    original_nodes, current_nodes = nodes(activation), nodes(current)
+    need(original_nodes.keys() == current_nodes.keys(), 'whole original task graph membership')
+    need(all(current_nodes[k] == original_nodes[k] for k in original_nodes if k != OWNER),
+         'every unrelated original task node conserves')
+    block = current_nodes[OWNER]
+    need(b'  Status: `active`\n' in block and b'  Commit: `pending`\n' in block,
+         'exact active owner before publication')
+    evidence = ('The unchanged complete association reader actually refuses missing ignored streams at verify.py:77 '
+        'and succeeds after safe reconstruction from whole committed receipt text. Complete original source bytes, '
+        'modes, membership, direct programmes and native streams conserve before/after. Permanent filesystem and '
+        'receipt controls reject unsafe paths, duplicate contradictions, existing conflicts and racing replacement; '
+        'matching bytes conserve. First harness failures remain failures, independently diagnosed and fixed; '
+        'no original source/oracle edits. Book preparation uses the public helper. Only this repair closes; '
+        'full unchanged raw-parent acceptance .5.2.3.3 and all native/private/canonical/HIAL/full-CI/push gaps retain. '
+        'Distinct claim legs: complete source/native re-derivation, permanent hostile filesystem/receipt controls '
+        'and committed-state-only independent qualification. Focused/book/native/size/claim/inventory, staged '
+        'doctrines and normal hooks gate delivery.')
+    final = block.replace(b'  Status: `active`\n', b'  Status: `done`\n', 1)
+    final = re.sub(rb'^  Verification: `.*`$', ('  Verification: `' + evidence + '`').encode(), final, count=1, flags=re.M)
+    final = final.replace(b'  Commit: `pending`\n', ('  Commit: `' + OWNER + ': restore committed gate streams safely`\n').encode(), 1)
+    final = final.rstrip() + (
+        '\n  Acceptance Checklist (enforced):\n'
+        '  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual git log -S whole external gate streams in root-history-actual.json identifies the original association verify.py:77 physical ignored-stream dependency. reader-before-actual.json preserves the genuine native missing-stream refusal. First view harness failures are separately retained and diagnosed, not counted as original-reader execution.\n'
+        '  - [x] **ADDRESSED (verified)** — reader-after-actual.json is actual native zero under the unchanged complete original reader/source epoch following missing-only committed-text recovery. Permanent hostile filesystem and receipt controls reject before writes; complete texts and earlier failures conserve. verify.py independently qualifies whole source and committed evidence without requiring the ignored view.\n'
+        '  - [x] **NO REGRESSION** — All tests successful in focused-v2-actual.json including permanent stream-recovery integration and existing task/claim/book contracts. Book/native/size/claims/inventory and committed-state-only qualification pass; staged scripts/check_doctrines.sh and normal commit hooks gate this slice.\n\n').encode()
+    for field in ('Goal', 'Acceptance'):
+        pattern = rb'^  ' + field.encode() + rb': `(.*)`$'
+        need(re.search(pattern, final, re.M)[1] == re.search(pattern, original_nodes[OWNER], re.M)[1],
+             'unchanged original owning ' + field)
+    task_after = current.replace(block, final, 1)
+    book_before = before[str(BOOK)]
+    need(book_before == git('show', REVISION + ':' + str(BOOK)), 'whole committed book before own replacement')
+    prior = ast.parse(Path('docs/audits/raw-semantic-reader-checkpoint-20261011/publish.py').read_text())
+    old = next(ast.literal_eval(n.value) for n in prior.body if isinstance(n, ast.Assign)
+               and any(isinstance(t, ast.Name) and t.id == 'ADDITION' for t in n.targets))
+    command = b'scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py\n'
+    need(book_before.count(old) == 1 and book_before.count(command) == 1, 'unique own notice and original book command')
+    book_after = book_before.replace(old, NOTICE, 1).replace(command, PREPARE + command, 1)
+    need(len(book_after) <= 292485, 'unchanged actual book byte allowance')
+    names = git('ls-tree', '-r', '--name-only', REVISION).decode().splitlines()
+    task_names = sorted(n for n in names if re.fullmatch(r'docs/tasks/(?:[^/]+|segments/[^/]+/[^/]+)\.md', n))
+    book_names = sorted(n for n in names if re.fullmatch(r'docs/book/src/[^/]+\.md', n))
+    tasks = {n: Path(n).read_bytes() for n in task_names}
+    books = {n: Path(n).read_bytes() for n in book_names}
+    need(sorted(str(p) for pattern in ('docs/tasks/*.md', 'docs/tasks/segments/*/*.md')
+                for p in Path('.').glob(pattern)) == task_names, 'complete task collection membership')
+    tasks[str(TASK)] = task_after
+    registry = before[str(REGISTRY)]
+    need(registry == git('show', REVISION + ':' + str(REGISTRY)), 'whole committed authority before measured replacement')
+    rows = [json.loads(line) for line in registry.splitlines()]
+    for row in rows:
+        if row.get('surface_id') == 'task_evidence':
+            measured = metrics(tasks)
+            need(measured['lines_each'] < 7200, 'bounded current task evidence')
+            for k, v in measured.items():
+                need(v <= row['enforcement_ceilings'][k], 'unchanged task ceiling')
+                row['transition']['max_growth'][k] = max(0, v + row['transition']['ratchet_step'][k] - row['baseline'][k])
+        elif row.get('surface_id') == 'shipped_behavior':
+            keys = ('files', 'bytes_total', 'lines_total')
+            baseline = metrics(books)
+            books[str(BOOK)] = book_after
+            measured = metrics(books)
+            row['reference_contract']['aggregate_change'] = dict(
+                authority_id='RAW-GATE-STREAM-RECOVERY-20261011', owner=OWNER,
+                baseline={k: baseline[k] for k in keys}, delta={k: measured[k] - baseline[k] for k in keys},
+                rationale='Replace only the owned checkpoint notice and add missing committed-stream replay preparation. Full raw-parent and native/private acceptance remain open; no ceilings widen.')
+    registry_after = b''.join(canonical(row) for row in rows)
+    memory = before['MEMORY.md'].decode().replace(OWNER + '` (active)', OWNER[:-1] + '3` (pending)', 1)
+    memory = re.sub(r'^- next_action:.*$', '- next_action: Activate full unchanged raw-parent acceptance .5.2.3.3 from the clean committed stream repair. Independently join every original contract and complete retained source/native/control evidence; preserve canonical and higher native/private/HIAL/full-CI/push boundaries.', memory, flags=re.M)
+    memory = re.sub(r'^- in_flight_background:.*$', '- in_flight_background: None after repair delivery and commit; derive any new gate state from docs/audits/raw-gate-stream-recovery-20261011.', memory, flags=re.M)
+    index = before['docs/TASK_TREE.md'].decode()
+    old_index = 'original reader checkpoint committed; stream recovery active.'
+    need(index.count(old_index) == 1 and OWNER + '` (active)' not in memory, 'exact frontier replacements before writes')
+    after = {str(TASK): task_after, str(BOOK): book_after, str(REGISTRY): registry_after,
+             'MEMORY.md': memory.encode(), 'docs/TASK_TREE.md': index.replace(old_index, 'stream recovery done; full raw-parent acceptance next.', 1).encode()}
+    need(not (BASE / 'delivery.json').exists() and all(not (BASE / (role + '-' + str(i) + '.gz')).exists()
+         for role in ('before', 'after') for i in range(len(before))), 'fresh complete delivery targets')
+    snapshots = {}
+    for i, name in enumerate(before):
+        snapshots[name] = {}
+        for role, raw in (('before', before[name]), ('after', after[name])):
+            path = BASE / (role + '-' + str(i) + '.gz')
+            path.write_bytes(gzip.compress(raw, mtime=0))
+            snapshots[name][role] = dict(snapshot=str(path), identity=pin(raw))
+    save('delivery.json', dict(owner=OWNER, snapshots=snapshots, task_names=task_names,
+                               book_names=book_names, old_notice=old.decode(), notice=NOTICE.decode(), prepare=PREPARE.decode()))
+    for name, raw in after.items():
+        Path(name).write_bytes(raw)
+    print('Prepared only the owned committed-stream repair; full raw-parent acceptance remains open.')
+
+
+if __name__ == '__main__':
+    main()

@@ -243,6 +243,10 @@ scripts/check_task_tree_integrity.pl
 scripts/check_doctrines.sh
 ```
 
+For dated association replay, restore missing gate streams from the committed
+receipt with `python3 -B scripts/restore_record_value_gate_streams.py --receipts docs/audits/raw-association-acceptance-20261011/checks.json`.
+The helper preflights every target and preserves matching existing bytes.
+
 The default mdBook destination is repository-local; for an explicit disposable path use `mdbook build docs/book -d .artifacts/mdbook` because `-d` resolves from the invoking directory, not `docs/book/`.
 Expected signals:
 

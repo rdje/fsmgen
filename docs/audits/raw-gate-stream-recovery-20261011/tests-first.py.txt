@@ -1,0 +1,175 @@
+"""Permanent filesystem and receipt controls for missing-only stream recovery."""
+import copy
+import importlib.util
+import json
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+import unittest
+
+REPO = Path(__file__).resolve().parents[2]
+spec = importlib.util.spec_from_file_location('stream_recovery', REPO / 'scripts/restore_record_value_gate_streams.py')
+recovery = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(recovery)
+SOURCE = 'docs/audits/test-gates/checks.json'
+
+
+def records(label='one', text='exact\n'):
+    return {label: dict(status=0, stdout=text, stderr='',
+        stdout_path='.artifacts/test-gates/checks/' + label + '/stdout.txt',
+        stderr_path='.artifacts/test-gates/checks/' + label + '/stderr.txt')}
+
+
+class StreamRecovery(unittest.TestCase):
+    def setUp(self):
+        base = recovery.local(Path('.artifacts/gate-stream-tests'))
+        base.mkdir(exist_ok=True)
+        self.temporary = tempfile.TemporaryDirectory(prefix='case-', dir=base)
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name).relative_to(REPO).as_posix()
+        self.folder = REPO / self.root
+
+    def census(self):
+        return {p.relative_to(self.folder).as_posix(): (p.read_bytes() if p.is_file() else None)
+                for p in self.folder.rglob('*') if not p.is_symlink()}
+
+    def refused(self, candidate, reason, sources=None):
+        before = self.census()
+        with self.assertRaisesRegex(ValueError, reason):
+            recovery.plan(sources or [(SOURCE, candidate)], self.root)
+        self.assertEqual(self.census(), before)
+
+    def test_exact_empty_stream_and_idempotence(self):
+        source = records(text='unicode: \u03bb\r\nterminal space \n')
+        rows = recovery.plan([(SOURCE, source)], self.root)
+        self.assertEqual(len(recovery.install(rows)), 2)
+        self.assertTrue(all(r['present'] for r in recovery.plan([(SOURCE, source)], self.root)))
+        before = self.census()
+        self.assertEqual(recovery.install(recovery.plan([(SOURCE, source)], self.root)), [])
+        self.assertEqual(self.census(), before)
+        self.assertEqual((self.folder / source['one']['stdout_path']).read_bytes(), source['one']['stdout'].encode())
+        self.assertEqual((self.folder / source['one']['stderr_path']).read_bytes(), b'')
+        self.assertFalse(any('.restore-stream-' in p.name for p in self.folder.rglob('*')))
+
+    def test_conflict_is_refused_before_creating_other_targets(self):
+        source = records('aaa') | records('zzz')
+        target = self.folder / source['zzz']['stdout_path']
+        target.parent.mkdir(parents=True)
+        target.write_bytes(b'conflict')
+        self.refused(source, 'existing stream bytes conflict')
+        self.assertFalse((self.folder / source['aaa']['stdout_path']).parent.exists())
+
+    def test_identical_duplicates_conserve(self):
+        source = records()
+        rows = recovery.plan([(SOURCE, source), (SOURCE, copy.deepcopy(source))], self.root)
+        self.assertEqual(len(rows), 2)
+
+    def test_contradictory_duplicates_refuse(self):
+        source = records()
+        self.refused(source, 'contradictory duplicate', [(SOURCE, source), (SOURCE, records(text='different'))])
+
+    def test_missing_stream_text(self):
+        source = records()
+        del source['one']['stderr']
+        self.refused(source, 'complete stream text')
+
+    def test_missing_terminal(self):
+        source = records()
+        del source['one']['status']
+        self.refused(source, 'complete typed terminal')
+
+    def test_boolean_terminal(self):
+        source = records()
+        source['one']['status'] = False
+        self.refused(source, 'complete typed terminal')
+
+    def test_nonzero_terminal_is_preserved_as_text(self):
+        source = records()
+        source['one']['status'] = 255
+        source['one']['stderr'] = 'actual original refusal\n'
+        recovery.install(recovery.plan([(SOURCE, source)], self.root))
+        self.assertEqual((self.folder / source['one']['stderr_path']).read_text(), 'actual original refusal\n')
+        self.assertEqual(source['one']['status'], 255)
+
+    def test_unsafe_paths_refuse(self):
+        for path in ('/outside/stdout.txt', '../stdout.txt', '.git/stdout.txt',
+                     '.artifacts//test-gates/checks/one/stdout.txt',
+                     '.artifacts/test-gates/checks/one/../stdout.txt',
+                     '.artifacts/foreign/checks/one/stdout.txt',
+                     '.artifacts/test-gates/checks/another/stdout.txt'):
+            with self.subTest(path=path):
+                source = records()
+                source['one']['stdout_path'] = path
+                self.refused(source, 'relative path|declared audit gate')
+
+    def test_symlink_ancestor_refuses(self):
+        destination = self.folder / 'elsewhere'
+        destination.mkdir()
+        (self.folder / '.artifacts').symlink_to(destination, target_is_directory=True)
+        self.refused(records(), 'symlink boundary')
+
+    def test_symlink_target_refuses(self):
+        source = records()
+        target = self.folder / source['one']['stdout_path']
+        target.parent.mkdir(parents=True)
+        target.symlink_to(self.folder / 'absent')
+        self.refused(source, 'symlink boundary')
+
+    def test_nested_git_marker_refuses(self):
+        # A dummy marker is sufficient; no second Git repository is created or modified.
+        target = self.folder / '.artifacts'
+        target.mkdir()
+        (target / '.git').write_text('fixture boundary marker\n')
+        self.refused(records(), 'nested Git boundary')
+
+    def test_non_directory_ancestor_refuses_before_writes(self):
+        (self.folder / '.artifacts').write_bytes(b'ordinary file')
+        self.refused(records(), 'ordinary directory ancestor')
+
+    def test_existing_hardlink_refuses(self):
+        source = records()
+        target = self.folder / source['one']['stdout_path']
+        target.parent.mkdir(parents=True)
+        original = self.folder / 'shared'
+        original.write_text(source['one']['stdout'])
+        os.link(original, target)
+        self.refused(source, 'ordinary unshared file')
+
+    def test_install_never_replaces_a_racing_target(self):
+        source = records()
+        rows = recovery.plan([(SOURCE, source)], self.root)
+        target = self.folder / rows[0]['path'].relative_to(self.root)
+        target.parent.mkdir(parents=True)
+        target.write_bytes(b'concurrent writer')
+        with self.assertRaises(FileExistsError):
+            recovery.install(rows)
+        self.assertEqual(target.read_bytes(), b'concurrent writer')
+        self.assertFalse(any('.restore-stream-' in p.name for p in self.folder.rglob('*')))
+
+    def test_duplicate_json_keys_refuse(self):
+        with self.assertRaisesRegex(ValueError, 'duplicate receipt object key'):
+            json.loads('{"status":0,"status":255}', object_pairs_hook=recovery.unique_object)
+
+    def test_real_committed_receipt_cli_check_and_replay(self):
+        command = ['python3', '-B', str(REPO / 'scripts/restore_record_value_gate_streams.py'),
+                   '--receipts', 'docs/audits/raw-association-acceptance-20261011/checks.json', '--root', self.root]
+        before = subprocess.run(command + ['--check'], capture_output=True, text=True)
+        self.assertEqual(before.returncode, 1)
+        self.assertIn('complete streams not yet materialized', before.stderr)
+        self.assertEqual(self.census(), {})
+        first = subprocess.run(command, capture_output=True, text=True)
+        self.assertEqual((first.returncode, first.stderr), (0, ''))
+        result = json.loads(first.stdout)
+        self.assertTrue(result['created'])
+        source = recovery.committed_receipts(['docs/audits/raw-association-acceptance-20261011/checks.json'])
+        expected = recovery.plan(source, self.root)
+        self.assertEqual(len(result['streams']), len(expected))
+        second = subprocess.run(command + ['--check'], capture_output=True, text=True)
+        third = subprocess.run(command, capture_output=True, text=True)
+        self.assertEqual((second.returncode, second.stderr, third.returncode, third.stderr), (0, '', 0, ''))
+        self.assertEqual(json.loads(third.stdout)['created'], [])
+
+
+if __name__ == '__main__':
+    unittest.main()

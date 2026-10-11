@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/raw-gate-stream-recovery-20261011/source-view/docs/audits/raw-association-acceptance-20261011/verify.py", line 196, in <module>
+    qualified = core()
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/raw-gate-stream-recovery-20261011/source-view/docs/audits/raw-association-acceptance-20261011/verify.py", line 112, in core
+    row = actual(timing + '-' + role, ['python3', '-B', str(path)], success)
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/raw-gate-stream-recovery-20261011/source-view/docs/audits/raw-association-acceptance-20261011/verify.py", line 77, in actual
+    need(local(row['stdout_path']).read_bytes() == row['stdout'].encode()
+         ~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/raw-gate-stream-recovery-20261011/source-view/docs/audits/raw-association-acceptance-20261011/common.py", line 62, in local
+    need(path.is_file() and stat.S_ISREG(path.lstat().st_mode), 'complete ordinary admission member')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/.artifacts/raw-gate-stream-recovery-20261011/source-view/docs/audits/raw-association-acceptance-20261011/common.py", line 40, in need
+    raise ValueError(message)
+ValueError: complete ordinary admission member

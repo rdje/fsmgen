@@ -1,0 +1,206 @@
+"""Qualify the committed recovery evidence without an ignored source view."""
+import argparse
+import copy
+import gzip
+import json
+from pathlib import Path
+import re
+
+from capture import BASE, canonical, pin, save
+import deliver
+import view
+
+SUCCESS = 'PASS unchanged original association recovery, retained failures and committed-state-only evidence; full raw-parent and native/private acceptance remain open.\n'
+FINAL_LABELS = ('verify-seal', 'verify-default', 'staged-doctrines')
+EXCLUDED = {'seal.json'} | {n + suffix for n in FINAL_LABELS for suffix in ('-started.json', '-actual.json')}
+
+
+def need(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def read(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def gate(label, status, command=None, expected=None):
+    row = read(label + '-actual.json')
+    started = read(label + '-started.json')
+    need(all(row[k] == v for k, v in started.items()), 'whole started native declaration ' + label)
+    need(type(row['status']) is int and row['status'] == status
+         and row['expected_status'] == (status if expected is None else expected), 'typed actual and declared gate terminal ' + label)
+    need(row['programmes'] == row['programmes_after'], 'whole instrument epoch ' + label)
+    need(command is None or row['command'] == ['scripts/run_with_ram_guard.sh', '--', *command], 'exact native gate command ' + label)
+    for name, entry in row['programmes'].items():
+        raw = entry['body'].encode()
+        need(pin(raw) == entry['identity'], 'whole actual programme body ' + label)
+        if name == str(BASE / 'view.py'):
+            need(raw in (Path(name).read_bytes(), (BASE / 'view-first.py.txt').read_bytes()), 'explicit first or repaired view body')
+        elif name == str(BASE / 'verify.py'):
+            need(raw in [Path(name).read_bytes(), *[(BASE / ('verify-' + role + '.py.txt')).read_bytes()
+                         for role in ('first', 'second', 'third')]], 'explicit retained qualifier body')
+        elif name == str(BASE / 'deliver.py'):
+            need(raw in (Path(name).read_bytes(), (BASE / 'deliver-first.py.txt').read_bytes()), 'explicit first or corrected delivery body')
+        elif name in ('scripts/restore_record_value_gate_streams.py', 't/python/test_record_value_gate_streams.py'):
+            first = 'recovery-first.py.txt' if name.startswith('scripts/') else 'tests-first.py.txt'
+            need(raw in (Path(name).read_bytes(), (BASE / first).read_bytes()), 'explicit dated or strengthened source boundary')
+        else:
+            need(Path(name).read_bytes() == raw, 'unchanged direct programme ' + name)
+    if status == 0 or label == 'original-before-v2':
+        need(re.match(r'ram-guard: PID [0-9]+; host [0-9]+\.[0-9]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n', row['stderr']) is not None,
+             'unchanged complete RAM guard diagnostic ' + label)
+    return row
+
+
+def native(row, role, members):
+    need(type(row['status']) is int and row['status'] == (0 if role == 'after' else 1), 'typed original native terminal')
+    need(row['command'] == ['python3', '-B', str(view.ASSOCIATION / 'verify.py')]
+         and row['cwd'] == row['git_work_tree'] == str(view.VIEW) and row['git_directory'] == '.git',
+         'whole unchanged original reader command and explicit own Git context')
+    need(row['inputs'] == row['inputs_after'], 'whole original before/after source epoch')
+    expected = dict(members)
+    receipt = json.loads((view.ASSOCIATION / 'checks.json').read_bytes())
+    if role == 'after':
+        for gate_row in receipt.values():
+            for stream in ('stdout', 'stderr'):
+                name = gate_row[stream + '_path']
+                need(name not in expected, 'disjoint original source and recovered streams')
+                expected[name] = dict(**pin(gate_row[stream].encode()), executable=False)
+    directories = {'.'} | {str(p) for name in expected for p in Path(name).parents}
+    need(row['inputs'] == dict(members=expected, directories=sorted(directories)), 'whole exact source population and stream bodies')
+    programmes = {name: dict(body=Path(name).read_text(), identity=pin(Path(name).read_bytes()))
+                  for name in members if name.startswith(str(view.ASSOCIATION) + '/') and name.endswith('.py')}
+    need(row['programmes'] == programmes, 'whole original direct reader programme population')
+    for stream in ('stdout', 'stderr'):
+        need(Path(row[stream + '_path']).read_bytes() == row[stream].encode(), 'whole tracked original native stream')
+    if role == 'after':
+        need(row['stdout'] == 'PASS unchanged complete original raw-body association acceptance; full raw semantic parent, canonical publication and original native/private scopes remain open.\n'
+             and row['stderr'] == '', 'actual unchanged original reader success')
+    else:
+        need(row['stdout'] == '' and 'line 77, in actual' in row['stderr']
+             and row['stderr'].endswith('ValueError: complete ordinary admission member\n'), 'actual intended missing-stream refusal')
+
+
+def core():
+    source = read('source.json')
+    need(source == view.source(), 'complete original committed source graph declaration')
+    for name, entry in source['members'].items():
+        need(view.file_identity(Path(name)) == entry, 'whole original source bytes and mode ' + name)
+    for role in ('before', 'after'):
+        row = read('reader-' + role + '-actual.json')
+        started = read('reader-' + role + '-started.json')
+        need(all(row[k] == v for k, v in started.items()), 'whole original started declaration')
+        native(row, role, source['members'])
+    for label in ('original-before', 'original-after'):
+        row = gate(label, 1, expected=1 if label == 'original-before' else 0)
+        need(row['stdout'] == '' and 'explicit ordinary work-tree root' in row['stderr'], 'first harness failure retains as non-success')
+    for role, status in (('before', 1), ('after', 0)):
+        row = gate('original-' + role + '-v2', status, ['python3', '-B', str(BASE / 'view.py'), '--reader', role])
+        need(row['stdout'] == 'Original complete association reader native status ' + str(status) + '\n', 'outer and inner actual terminal agreement')
+    streams = read('reader-after-actual.json')['inputs']['members']
+    created = sorted(str(view.VIEW / n) for n in streams if n not in source['members'])
+    for label in ('restore-view', 'restore-view-v2', 'restore-view-again', 'check-view'):
+        row = gate(label, 0)
+        result = json.loads(row['stdout'])
+        need(result['root'] == str(view.VIEW) and result['sources'] == [str(view.ASSOCIATION / 'checks.json')]
+             and result['created'] == (created if label in ('restore-view', 'restore-view-v2') else []), 'actual exact recovery/idempotence result')
+        need(result['streams'] == [dict(path=str(view.VIEW / n), **{k: streams[n][k] for k in ('bytes', 'sha256')})
+                                  for n in sorted(streams) if n not in source['members']], 'whole actual reconstructed stream census')
+    unit = gate('unit-first', 0)
+    need('Ran 17 tests in ' in unit['stderr'] and '\nOK\n' in unit['stderr'], 'complete permanent controls native success')
+    current_unit = gate('unit-v2', 0)
+    need('Ran 18 tests in ' in current_unit['stderr'] and '\nOK\n' in current_unit['stderr'],
+         'complete strengthened source-file and original recovery controls native success')
+    history = gate('root-history', 0)
+    need(re.fullmatch(r'[a-f0-9]{40} .+\n', history['stdout']) is not None, 'actual Git pickaxe root cause')
+    for label, message in (('recovery-core', 'typed actual gate terminal original-after'),
+                           ('recovery-core-v2', 'unchanged complete RAM guard diagnostic unit-first')):
+        failed = gate(label, 1, expected=0)
+        need(failed['stdout'] == '' and failed['stderr'].endswith('ValueError: ' + message + '\n'),
+             'first actual qualifier failure remains non-success')
+    qualified = gate('recovery-core-v3', 0)
+    need(qualified['stdout'] == 'PASS unchanged original reader before/after, complete source custody and permanent controls.\n',
+         'separate complete corrected qualifier result')
+    failed_delivery = gate('delivery', 1, expected=0)
+    need(failed_delivery['stdout'] == '' and failed_delivery['stderr'].endswith("KeyError: 'surface_id'\n"),
+         'first delivery preflight remains non-success')
+    first_size = gate('size', 1, expected=0)
+    need('surface task_evidence transition debt exceeded its owned allowance' in first_size['stderr'],
+         'first prepublication task-growth refusal remains non-success')
+    # Same original native qualifier, genuine metadata interventions. The
+    # filesystem and CLI falsification leg is the separately executed unit suite.
+    positive = read('reader-after-actual.json')
+    mutations = [('Boolean status', lambda r: r.update(status=False)),
+                 ('changed command', lambda r: r['command'].append('--borrowed')),
+                 ('omitted source', lambda r: r['inputs']['members'].pop(next(iter(source['members']))))]
+    for name, mutate in mutations:
+        candidate = copy.deepcopy(positive)
+        mutate(candidate)
+        try:
+            native(candidate, 'after', source['members'])
+        except ValueError:
+            pass
+        else:
+            raise ValueError('hostile native candidate accepted: ' + name)
+    return source
+
+
+def delivery():
+    row = read('delivery.json')
+    sources = {}
+    for name, epochs in row['snapshots'].items():
+        sources[name] = {}
+        for role, entry in epochs.items():
+            body = gzip.decompress(Path(entry['snapshot']).read_bytes())
+            need(pin(body) == entry['identity'], 'whole retained delivery snapshot')
+            sources[name][role] = body
+        need(Path(name).read_bytes() == sources[name]['after'], 'whole current delivered source ' + name)
+    before = sources[str(deliver.BOOK)]['before']
+    command = b'scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py\n'
+    need(before == deliver.git('show', deliver.REVISION + ':' + str(deliver.BOOK))
+         and sources[str(deliver.BOOK)]['after'] == before.replace(row['old_notice'].encode(), row['notice'].encode(), 1).replace(command, row['prepare'].encode() + command, 1), 'exact bounded own book replacement and public preparation')
+    original = deliver.nodes(gzip.decompress((BASE / 'activation-task.md.gz').read_bytes()))
+    final = deliver.nodes(sources[str(deliver.TASK)]['after'])
+    need(original.keys() == final.keys(), 'complete original task graph after repair')
+    for key in original:
+        if key != deliver.OWNER:
+            need(original[key] == final[key], 'whole unrelated task node conserves')
+        for field in ('Goal', 'Acceptance'):
+            pattern = rb'^  ' + field.encode() + rb': `(.*)`$'
+            a, b = re.search(pattern, original[key], re.M), re.search(pattern, final[key], re.M)
+            need((a[1] if a else None) == (b[1] if b else None), 'every original task contract conserves')
+    need(b'  Status: `done`\n' in final[deliver.OWNER], 'only owning repair closes')
+    for label in ('delivery-v2', 'book-prepare-v2', 'focused-v2', 'book-v2', 'native-copy-v2', 'size-v2', 'claims-v2', 'inventory-write-v2', 'inventory-v2'):
+        actual = gate(label, 0)
+        if label == 'focused-v2':
+            need('All tests successful' in actual['stdout'], 'actual permanent integration and focused regression success')
+
+
+def catalogue():
+    return {str(p): dict(**pin(p.read_bytes()), executable=bool(p.stat().st_mode & 0o111))
+            for p in sorted(BASE.iterdir()) if p.is_file() and p.name not in EXCLUDED}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--core', action='store_true')
+    parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    need(not (args.core and args.seal), 'one explicit qualification role')
+    source = core()
+    if args.core:
+        print('PASS unchanged original reader before/after, complete source custody and permanent controls.')
+        return
+    delivery()
+    seal = dict(owner=deliver.OWNER, files=catalogue(), original_source=pin(canonical(source)),
+                scope='Committed recovery evidence only; no ignored view required, no original reader reexecution, full raw-parent/native/private scopes remain open.')
+    if args.seal:
+        save('seal.json', seal)
+    else:
+        need(read('seal.json') == seal, 'complete committed recovery evidence and source mode custody')
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

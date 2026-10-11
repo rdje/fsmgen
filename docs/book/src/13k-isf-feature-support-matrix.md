@@ -1191,17 +1191,14 @@ cold replay, visual and host qualification gaps remain explicit. Replay
 requires the complete fixed source and instrument context:
 
 ```bash
+python3 -B scripts/restore_record_value_gate_streams.py --receipts docs/audits/raw-association-acceptance-20261011/checks.json
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
 ```
 
-Complete original readers now qualify in their dated/source roles. All
-earlier RAM interruptions remain failures. Association replay still needs
-ignored-stream recovery before raw-parent closure. Interrupted peak RSS
-and the first outer launch diagnostic remain unknown.
-
-```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-reader-checkpoint-20261011/witness.py
-```
+Original readers qualify in their dated/source roles. Committed receipts
+restore missing association streams; unsafe paths and byte conflicts refuse.
+Earlier RAM interruptions remain failures. Interrupted peak RSS and the
+first launch diagnostic remain unknown. Raw-parent acceptance remains open.
 
 Retained observer and class/frame checkpoint (before raw association):
 
