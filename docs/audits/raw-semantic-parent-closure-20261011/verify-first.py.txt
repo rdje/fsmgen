@@ -1,0 +1,212 @@
+"""Join complete original raw semantic contracts and retained native evidence."""
+import argparse
+import copy
+import gzip
+import json
+from pathlib import Path
+import re
+import subprocess
+
+from capture import BASE, canonical, pin, save
+import intake
+
+PLAN = json.loads((BASE / 'plan.json').read_bytes())
+OWNER, RAW, REVISION = (PLAN[k] for k in ('owner', 'raw', 'revision'))
+TASK = 'docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md'
+BOOK = 'docs/book/src/13k-isf-feature-support-matrix.md'
+REGISTRY = 'doctrine/live_document_size/surfaces.jsonl'
+CLOSE = (RAW + '.5.2', RAW + '.5.2.3', OWNER)
+SUCCESS = 'PASS complete unchanged raw semantic parent acceptance; canonical and higher native/private scopes remain open.\n'
+READERS = {
+    'checkpoint-core': (['python3', '-B', PLAN['checkpoint'] + '/witness.py', '--core'],
+        'PASS separate complete original-reader checkpoint core; publication remains required.\n'),
+    'recovery-core': (['python3', '-B', PLAN['recovery'] + '/verify.py', '--core'],
+        'PASS unchanged original reader before/after, complete source custody and permanent controls.\n'),
+    'semantic-positive-v2': (['python3', '-B', 'docs/audits/raw-semantic-links-20261011/reader.py',
+        'docs/audits/raw-semantic-links-20261011/candidate.json.gz'],
+        'PASS independent complete original raw semantic links; inherited bodies and native/private limits conserve.\n')}
+EXCLUDED = {'proof.json', 'manifest.json'} | {n + suffix for n in ('seal', 'default', 'staged-doctrines')
+                                             for suffix in ('-started.json', '-actual.json')}
+
+
+def need(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def read(name):
+    return json.loads((BASE / name).read_bytes())
+
+
+def git(*args):
+    result = subprocess.run(['git', '--no-replace-objects', *args], capture_output=True)
+    need(result.returncode == 0 and result.stderr == b'', 'complete own read-only Git protocol')
+    return result.stdout
+
+
+def nodes(raw):
+    matches = list(re.finditer(rb'^- ID: `([^`]+)`\n', raw, re.M))
+    result = {m[1].decode(): raw[m.start():matches[i+1].start() if i+1 < len(matches) else len(raw)]
+              for i, m in enumerate(matches)}
+    need(len(result) == len(matches), 'unique complete original task node population')
+    return result
+
+
+def field(block, name):
+    match = re.search(rb'^  ' + name.encode() + rb': `(.*)`$', block, re.M)
+    return match[1].decode() if match else None
+
+
+def obligations():
+    original = git('show', REVISION + ':' + TASK)
+    fixed = nodes(original)
+    targets = {k: v for k, v in fixed.items() if k == RAW + '.5.2' or k.startswith(RAW + '.5.2.')}
+    need(all(field(v, 'Status') == 'done' and field(v, 'Commit') not in (None, 'pending')
+             for k, v in targets.items() if k not in CLOSE), 'every original completed descendant is committed')
+    need(all(field(fixed[k], 'Status') == 'active' for k in CLOSE[:-1])
+         and field(fixed[OWNER], 'Status') == 'pending', 'exact remaining original parent closure frontier')
+    return dict(original=pin(original), nodes={k: {name: field(v, name) for name in ('Goal', 'Acceptance', 'Children')}
+                                              for k, v in targets.items()})
+
+
+def qualify_gate(row, label, command, stdout=None):
+    need(type(row['status']) is int and row['status'] == 0 and type(row['expected_status']) is int
+         and row['expected_status'] == 0, 'typed successful current gate ' + label)
+    need(row['command'] == ['scripts/run_with_ram_guard.sh', '--', *command], 'exact current gate command ' + label)
+    need(row['programmes'] == row['programmes_after'], 'complete current instrument epoch ' + label)
+    for name, entry in row['programmes'].items():
+        need(('body' in entry) != ('body_hex' in entry), 'lossless text or binary programme/input body')
+        body = entry['body'].encode() if 'body' in entry else bytes.fromhex(entry['body_hex'])
+        need(pin(body) == entry['identity'], 'complete actual programme/input bytes')
+        if name == str(BASE / 'capture.py'):
+            need(body in (Path(name).read_bytes(), (BASE / 'capture-first.py.txt').read_bytes()), 'explicit original or binary-safe writer epoch')
+        else:
+            need(Path(name).read_bytes() == body, 'whole unchanged direct gate programme/input')
+    need(re.match(r'ram-guard: PID [0-9]+; host [0-9]+\.[0-9]+%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n', row['stderr']) is not None
+         and 'ram-guard: terminating PID tree' not in row['stderr'], 'unchanged successful RAM guard')
+    if stdout is not None:
+        need(row['stdout'] == stdout and row['stderr'].count('\n') == 1, 'whole intended current gate success ' + label)
+
+
+def gate(label, command, stdout=None):
+    row = read(label + '-actual.json')
+    started = read(label + '-started.json')
+    need(all(row[k] == value for k, value in started.items()), 'whole actual started declaration')
+    qualify_gate(row, label, command, stdout)
+    return row
+
+
+def join(candidate, source, contracts):
+    need(candidate['source'] == source, 'complete original source join')
+    need(candidate['contracts'] == contracts, 'every unchanged original parent and descendant obligation')
+    need(candidate['native'].keys() == READERS.keys(), 'complete current qualification role allocation')
+    for name, (command, stdout) in READERS.items():
+        qualify_gate(candidate['native'][name], name, command, stdout)
+
+
+def core():
+    source = intake.derive()
+    need(source == read('intake-first.json') == read('intake-after.json'), 'whole original source/native/product Git custody before and after reconstruction')
+    contracts = obligations()
+    rows = {name: gate(name, *spec) for name, spec in READERS.items()}
+    for role in ('first', 'after'):
+        gate('source-' + role, ['python3', '-B', str(BASE / 'intake.py'), '--' + role],
+             'PASS complete unchanged original source, mode, file/directory and committed evidence custody.\n')
+    history = gate('root-history', ['git', 'log', '-1', '-S', 'Join every complete original raw-stack meaning',
+                                  '--format=%H %s', '--', TASK])
+    need(re.fullmatch(r'[0-9a-f]{40} .+\n', history['stdout']) is not None, 'actual original acceptance history locus')
+    first = read('binary-capture-finding.json')
+    need(type(first['outer_status']) is int and first['outer_status'] == 1 and first['started'] is False
+         and first['reader_terminal'] is None and not (BASE / 'semantic-positive-started.json').exists(),
+         'binary writer preflight refusal retains without invented reader execution')
+    normal = read('recovery-normal-commit.json')
+    need(type(normal['status']) is int and normal['status'] == 0
+         and '[doctrine] all doctrine checks passed' in normal['stdout'] + normal['stderr'], 'complete committed recovery normal-hook prerequisite')
+    candidate = dict(source=source, contracts=contracts, native=rows)
+    join(candidate, source, contracts)
+    mutations = [
+        ('omitted original obligation', lambda c: c['contracts']['nodes'].pop(RAW + '.5.2'), 'every unchanged original parent and descendant obligation'),
+        ('Boolean native terminal', lambda c: c['native']['checkpoint-core'].update(status=False), 'typed successful current gate checkpoint-core'),
+        ('borrowed source', lambda c: c['source']['members'].pop(next(iter(source['members']))), 'complete original source join')]
+    controls = []
+    for name, mutation, cause in mutations:
+        changed = copy.deepcopy(candidate)
+        mutation(changed)
+        try:
+            join(changed, source, contracts)
+        except ValueError as error:
+            need(str(error) == cause, 'actual intended complete parent join refusal')
+            controls.append(dict(name=name, cause=str(error)))
+        else:
+            raise ValueError('changed complete parent join accepted: ' + name)
+    return dict(owner=OWNER, source=pin(canonical(source)), contracts=contracts,
+                native={n: pin(canonical(r)) for n, r in rows.items()}, controls=controls,
+                condition=PLAN['condition'],
+                legs=dict(rederive='Complete fixed Git/source custody, original whole checkpoint/recovery predicates, and actual source-first semantic reconstruction.',
+                          falsify='Original complete semantic/context/recovery counterexamples retain under unchanged source bodies; genuine whole parent obligation/status/source interventions reach their intended predicates.',
+                          durability='Whole committed native products and first failures, strict complete source modes/membership, unchanged original contracts and separately captured current metadata terminals. No ignored view or original native reexecution is required.'))
+
+
+def publication():
+    row = read('publication.json')
+    snapshots = {}
+    for name, epochs in row['snapshots'].items():
+        snapshots[name] = {}
+        for role, entry in epochs.items():
+            body = gzip.decompress(Path(entry['snapshot']).read_bytes())
+            need(pin(body) == entry['identity'], 'whole parent publication snapshot')
+            snapshots[name][role] = body
+        need(Path(name).read_bytes() == snapshots[name]['after'], 'whole current parent publication source')
+    old = nodes(git('show', REVISION + ':' + TASK))
+    final = nodes(snapshots[TASK]['after'])
+    need(old.keys() == final.keys(), 'whole original task population after parent acceptance')
+    for key in old:
+        need(all(field(old[key], name) == field(final[key], name) for name in ('Goal', 'Acceptance', 'Children')), 'every whole original task contract conserves')
+        if key in CLOSE:
+            need(field(final[key], 'Status') == 'done', 'only selected complete raw semantic owners close')
+        else:
+            need(old[key] == final[key], 'all unrelated original nodes conserve whole')
+    before = snapshots[BOOK]['before']
+    need(before == git('show', REVISION + ':' + BOOK)
+         and snapshots[BOOK]['after'] == before.replace(row['old_notice'].encode(), row['notice'].encode(), 1).replace(row['old_association'].encode(), row['association'].encode(), 1),
+         'exact bounded own status and historical association wording changes')
+    need(len(snapshots[BOOK]['after']) <= 292485, 'unchanged actual book allowance')
+    return {name: pin(epochs['after']) for name, epochs in snapshots.items()}
+
+
+def catalogue():
+    return {p.name: dict(**pin(p.read_bytes()), executable=bool(p.stat().st_mode & 0o111))
+            for p in sorted(BASE.iterdir()) if p.is_file() and p.name not in EXCLUDED}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--core', action='store_true')
+    parser.add_argument('--seal', action='store_true')
+    args = parser.parse_args()
+    need(not (args.core and args.seal), 'one explicit original acceptance qualification role')
+    result = core()
+    if args.core:
+        print('PASS complete original parent contract/source/native join and genuine separating controls.')
+        return
+    result['publication'] = publication()
+    commands = {'publication': ['python3', '-B', str(BASE / 'publish.py')],
+                'focused': ['prove', '-v', 't/2067-record-value-gate-streams.t', 't/1549-task-tree-integrity-doctrine.t',
+                            't/1636-claim-verification-doctrine.t', 't/1303-isf-public-live-book-paths-audit.t', 't/1305-isf-book-feature-matrix-audit.t'],
+                'book': ['mdbook', 'build', 'docs/book'],
+                'native': ['python3', '-B', 'scripts/check_record_value_publication.py', '--build', 'docs/book/book'],
+                'size': ['scripts/check_live_document_size.sh'], 'claims': ['scripts/check_claim_verification.pl'],
+                'inventory-write': ['scripts/check_claim_verification_inventory.pl', '--write'],
+                'inventory': ['scripts/check_claim_verification_inventory.pl']}
+    result['external'] = {n: pin(canonical(gate(n, cmd))) for n, cmd in commands.items()}
+    need('All tests successful' in read('focused-actual.json')['stdout'], 'complete focused regression native success')
+    if args.seal:
+        save('proof.json', result)
+        save('manifest.json', catalogue())
+    else:
+        need(read('proof.json') == result and read('manifest.json') == catalogue(), 'complete committed-state-only parent qualification')
+    print(SUCCESS, end='')
+
+
+if __name__ == '__main__':
+    main()

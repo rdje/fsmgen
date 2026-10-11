@@ -1184,8 +1184,8 @@ semantic intervention. Separate native JSON-kind checks retain the typed
 coordinate boundary. Whole construction, recovery-layout, Git-custody and
 semantic defaults pass before and after the group in their dated roles.
 
-This closes the finite association container only. Complete raw semantic
-parent acceptance and governed canonical raw publication remain separate.
+At the association checkpoint, only the finite association container closed.
+Complete raw semantic acceptance and canonical raw publication were separate.
 The shared source assumptions and all original native/private, identity,
 cold replay, visual and host qualification gaps remain explicit. Replay
 requires the complete fixed source and instrument context:
@@ -1195,10 +1195,10 @@ python3 -B scripts/restore_record_value_gate_streams.py --receipts docs/audits/r
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-association-acceptance-20261011/verify.py
 ```
 
-Original readers qualify in their dated/source roles. Committed receipts
-restore missing association streams; unsafe paths and byte conflicts refuse.
-Earlier RAM interruptions remain failures. Interrupted peak RSS and the
-first launch diagnostic remain unknown. Raw-parent acceptance remains open.
+Full raw semantic acceptance joins original readers, source custody, nested
+causes and separating controls. Recovery refuses unsafe paths and conflicts.
+Earlier failures retain; interrupted peak RSS and the first outer launch
+diagnostic remain unknown. Native/private gaps and canonical publication stay open.
 
 Retained observer and class/frame checkpoint (before raw association):
 
