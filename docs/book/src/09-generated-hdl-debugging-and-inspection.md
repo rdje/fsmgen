@@ -318,12 +318,23 @@ The latest cleanup is recorded in `docs/ARTIFACT_CLEANUP.md`. Cleanup removes
 verified generated outputs while preserving failed-run evidence needed by open
 investigations.
 
-A sweep may retain every candidate when disposal has not been proved. Its
-dated census records node metadata and independent file membership; it does
-not establish artifact byte identity or future absence. Replay a saved example:
+A sweep retains candidates without disposal authority. Its ordinary census
+records dated node metadata and independent file membership; it does not prove
+artifact byte identity or future absence. Duplicate Git-source checkpoints need
+separate complete source, byte, mode, member and immediate node checks before
+removal. Original evidence and the current book remain protected. Verify a saved
+cleanup without repeating deletion:
 
 ```sh
-python3 -B docs/audits/artifact-sweep-due-20261010/verify.py
+python3 -B docs/audits/artifact-sweep-due-20261011/verify.py
+```
+
+Legitimate replay can reconstruct a removed checkpoint from committed Git
+source. This example recreates the raw preparation view and runs its unchanged
+dated parent verifier; it creates project-local generated data:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-canonical-preparation-20261011/restore.py
 ```
 
 Output-bearing CLI options must resolve inside the repository and reject
