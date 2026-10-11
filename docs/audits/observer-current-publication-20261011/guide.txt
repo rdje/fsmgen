@@ -1,0 +1,51 @@
+Complete finite observer acceptance now joins every source expression and whole
+encoded header with its observer, callback, refusal, subtest or do-load role.
+The completed source, class/frame, public grammar, scalar, regex, hidden-value
+and original-header children reexecute before this publication. Each original
+frame and full argument header retains its exact membership and order.
+
+Full literal, quote, escape, truncation and count-marker compatibility uses the
+qualified current grammar. Authored regex constructor alternatives remain
+explicit. Whole reference tokens, receiver parameters and private framework/eval
+intervals conserve their original bytes without supplying native identity.
+Original provider, formatter settings, flags, encoding and native identities
+remain unmeasured. Source-selected meaning and encoded compatibility retain
+separate evidence roles.
+
+For example, a different proper prefix of an authored public subtest name can
+pass a dated predecessor that checks only a prefix. It fails the complete token
+contract here. Removing a required ellipsis, changing a quote or count marker,
+borrowing a frame, changing a role, omitting an argument or reordering a frame
+also fails its distinct full contract. Complete original and altered products,
+actual outcomes and the independent lexical/source/allocation reader remain
+available in the dated original-header qualification.
+
+The canonical observer fact now admits this complete finite result through a
+non-growing review. Every earlier meaning, question and probe retains its role;
+the previous full-format uncertainty is refined only by the explicitly
+conditional grammar. The first growing drafts and their actual refusals remain
+retained. Genuine lost-meaning, lost-question, lost-probe, wrong-owner, wrong-root,
+narrowed-scope and native-promotion proposals reject before any admission seal.
+The review is an engineering judgment, not an automated language-equivalence
+oracle.
+
+The maintained current reader authenticates the complete admitted preparation,
+whole original-header namespace and actual prerequisite receipts. It still
+checks all current canonical sources, global direct and cached question
+ownership, exact physical capacity, canonical source copies and rendered
+guidance. Authentication does not freshly reconstruct original executions.
+Its historical success stream remains compatible. Unrelated qualified canonical
+progress remains permitted under the unchanged collection authority.
+
+Replay the complete dated publication independently of later current progress:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-current-publication-20261011/verify.py
+```
+
+The earlier observer and address paragraphs retain their checkpoint roles.
+Only the unchanged finite observer parent and its completed children close here.
+Complete raw-stack joining is next. First-cause, consumer, alias, cold, permanent,
+host-native, private and visual acceptance retain their own unchanged owners;
+HIAL and full CI/push gates remain open.
+

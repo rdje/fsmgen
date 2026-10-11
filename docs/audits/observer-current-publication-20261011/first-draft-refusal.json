@@ -1,0 +1,1 @@
+{"before_bytes": 4272, "before_lines": 58, "command_role": "Actual exec_command Python draft generation; live card untouched", "draft_bytes": 4404, "draft_lines": 70, "output": "before 4272 58 draft_after 4404 70\nTraceback (most recent call last):\n  File \"<stdin>\", line 54, in <module>\nAssertionError\n", "status": 1}

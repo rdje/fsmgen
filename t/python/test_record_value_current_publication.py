@@ -64,6 +64,12 @@ class CurrentPublicationTests(unittest.TestCase):
             (current.coordinate_fact.PARSER, 'receiver, normalized AST', 'qualified receiver identity and AST'),
             (current.coordinate_fact.PARSER, current.COMMAND, self.prior['model']['COMMAND']),
             (observer, current.COMMAND, self.prior['model']['COMMAND']),
+            (observer, current.observer_fact.QUESTION, 'borrowed observer question?'),
+            (observer, 'Qualified current literal/quote/escape/truncation/count grammar',
+             'Measured original literal/quote/escape/truncation/count grammar'),
+            (observer, 'original bytes without native identity', 'original bytes with qualified native identity'),
+            (observer, 'Model/population/member/order/phase/role/kind/family/operand',
+             'Selected prefix-only controls'),
             (core, '  - "what qualifies finite original exception classes?"\n', '')):
             with self.subTest(path=path, old=old):
                 def mutate(record):
@@ -212,12 +218,44 @@ class CurrentPublicationTests(unittest.TestCase):
         for old, new, cause in (
             (current.COMMAND, self.prior['book']['DEFAULT'], 'native distinct current build and historical commands'),
             ('It cannot establish current currency', 'It establishes current currency', 'native complete current retained scope and gaps'),
-            ('unmeasured or separately owned', 'fully measured and qualified', 'native complete current retained scope and gaps')):
+            ('unmeasured or separately owned', 'fully measured and qualified', 'native complete current retained scope and gaps'),
+            ('Only the unchanged finite observer parent', 'All native and private parents', 'native complete current retained scope and gaps'),
+            ('Authentication does not freshly reconstruct original executions.',
+             'Authentication freshly reconstructs original executions.', 'native complete current retained scope and gaps')):
             with self.subTest(old=old):
                 changed = valid.replace(old, new)
                 self.assertNotEqual(valid, changed)
                 with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
                     current.check_native(changed, self.prior)
+
+    def test_observer_authentication_requires_whole_same_volume_members(self):
+        workspace = Path('.artifacts/observer-publication-tests')
+        workspace.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=workspace) as name:
+            root = Path(name).resolve()
+            member = root / 'member.json'
+            member.write_bytes(b'{"first":"unchanged","tail":"original"}\n')
+            expected = current.observer_fact.identity(member.read_bytes())
+            with mock.patch.object(current.plane, 'ROOT', root):
+                self.assertEqual(current.observer_fact.fingerprint('member.json', expected), expected)
+                changed = member.read_bytes().replace(b'original', b'borrowed')
+                self.assertEqual(len(changed), expected['bytes'])
+                member.write_bytes(changed)
+                with self.assertRaisesRegex(ValueError, '^whole admitted observer bytes conserved$'):
+                    current.observer_fact.fingerprint('member.json', expected)
+                boolean = dict(expected, bytes=True)
+                with self.assertRaisesRegex(ValueError, '^closed admitted observer identity$'):
+                    current.observer_fact.fingerprint('member.json', boolean)
+                link = root / 'borrowed.json'
+                link.symlink_to('member.json')
+                with self.assertRaisesRegex(ValueError, '^ordinary admitted observer input$'):
+                    current.observer_fact.fingerprint('borrowed.json', expected)
+                foreign = root / 'foreign'
+                foreign.mkdir()
+                (foreign / '.git').mkdir()
+                (foreign / 'member.json').write_bytes(changed)
+                with self.assertRaisesRegex(ValueError, '^no foreign repository endpoint$'):
+                    current.observer_fact.fingerprint('foreign/member.json', expected)
 
     def test_source_enumerator_refuses_nonlocal_and_oversized_inputs(self):
         workspace = Path('.artifacts/record-value-current-tests')

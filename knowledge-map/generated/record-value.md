@@ -1,7 +1,7 @@
 # Knowledge Map: `record-value`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **2** facts · **31** uniquely owned question entries.
+> **2** facts · **32** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -15,6 +15,7 @@
 - q="how can the finite copy probes be replayed without changing sealed evidence?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what inventories original observer and callback source roles?" · facts=[record-value-original-observer-helper-paths](../../docs/knowledge/record-value-original-observer-helper-paths.md)
 - q="what joins nested original Scope and capture inputs?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
+- q="what qualifies complete original observer argument headers?" · facts=[record-value-original-observer-helper-paths](../../docs/knowledge/record-value-original-observer-helper-paths.md)
 - q="what qualifies current original T1986 copied fields and source candidates?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies direct original Value failure frames?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
 - q="what qualifies finite original exception classes?" · facts=[record-value-finite-copy-probe-reader](../../docs/knowledge/record-value-finite-copy-probe-reader.md)
@@ -50,5 +51,5 @@ _Record-value copy probes have independent typed graphs_
 
 _Original observer/helper source-path join_
 
-- **date:** 2026-10-10 · **status:** current
+- **date:** 2026-10-11 · **status:** current
 - **source and verification:** [`docs/knowledge/record-value-original-observer-helper-paths.md`](../../docs/knowledge/record-value-original-observer-helper-paths.md)

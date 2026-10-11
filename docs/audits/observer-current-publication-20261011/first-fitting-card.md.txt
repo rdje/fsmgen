@@ -1,0 +1,58 @@
+---
+id: record-value-original-observer-helper-paths
+title: Original observer/helper source-path join
+answers:
+  - "what inventories original observer and callback source roles?"
+  - "what qualifies original observer API and parser operation boundaries?"
+  - "what qualifies original named helper inputs defaults and active paths?"
+  - "what qualifies original compiled callback and refusal wrapper paths?"
+  - "are all original helper input and callback paths joined?"
+  - "what qualifies original own subtest body and delegate source roles?"
+  - "what qualifies the original do-load source and recorded file marker?"
+  - "what qualifies original public subtest header and boundary compatibility?"
+  - "what qualifies complete original observer argument headers?"
+date: 2026-10-11
+status: current
+tags: [isf, record, helper, observer, qualification]
+evidence: >-
+  docs/audits/record-value-original-helper-join-20261005/scope.txt;
+  docs/audits/record-value-own-subtest-boundaries-20261005/scope.txt;
+  docs/audits/record-value-own-boundary-publication-20261005/scope.txt; docs/audits/record-value-public-boundary-join-20261006/scope.txt; docs/audits/record-value-public-boundary-publication-20261006/scope.txt;
+  docs/audits/observer-original-header-join-20261011/proof.json;
+  docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
+reverify: scripts/run_with_ram_guard.sh -- python3 -B scripts/check_record_value_publication.py
+---
+
+Full observer/callback bodies/roles/allocations join every API/parser operation, eval, installed wrapper and source argument.
+Parser receiver roles are declared, native identity unmeasured. Named helper graphs/active paths retain supplied/default inputs
+and returned argument-builders. Compiled parameterless callback/refusal/helper wrappers bind source regex bodies/labels and both
+nested throw phases. Returned helpers are inactive frames. Source derivation precedes contiguous recorded function/argument order.
+
+Each refusal retains its authored named subtest. Observer saves Test::More delegate, receives name/body/extras, wraps the body
+with the compiled-helper observer, forwards callback arguments to the body and extras to the saved delegate. Authored subtests
+supply no extras; body/own-callback visible arguments are empty. Public/own entry retains authored names and CODE kind without
+callback identity.
+
+Original do './t/1986-isf-record-port-value-gates.t' captures $@/$!/defined($ok). Diagnostic require names that file without
+changing source do or proving formatter identity. Public POD documents named callbacks/extras, do-file returns/errors and
+require's do-file mechanism. Dated current Perl/Test::More supplies public interface evidence; original framework version remains
+unmeasured.
+
+Finite operation/helper/body/public/entry/load class/guard/phase/operand roles join. Inherited operands remain opaque evidence to
+prior predicates, without formatter/coordinate/address oracles; an opaque inner-frame change passes those own/public predicates
+but breaks whole forwarding.
+
+Complete encoded headers join full source expressions and overlapping frame allocations, including Test::Builder/Test::More
+body/delegate/entry/do-load order. Qualified current literal/quote/escape/truncation/count grammar and full hidden source values
+retain; authored regex constructor alternatives stay explicit. Reference class/kind spellings and private intervals conserve whole
+original bytes without native identity. Independent lexical/source/allocation reconstruction and fresh complete prerequisites
+qualify. A different proper public name prefix passes the limited predecessor but fails the full token contract.
+Model/member/order/role/kind/operand/quote/truncation/count/opaque/scope/native-promotion controls reject; prior meanings
+conserve.
+
+Core qualifies source/address roles, active holders and own coordinates; external framework coordinates remain unmeasured.
+Original provider/hooks/classes/native addresses, callback/regex/object/referent/receiver identities, private
+framework/eval/parser internals and formatter settings/flags/encoding remain unmeasured.
+Consumer/alias/full-semantic/cold/candidate-parent/permanent/hot/host-native repairs and visual QA remain open.
+
+Related: [[record-value-finite-copy-probe-reader]].

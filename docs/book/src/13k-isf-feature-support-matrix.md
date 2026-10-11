@@ -984,6 +984,82 @@ acceptance now qualifies through fresh complete semantic readers and independent
 whole original/proposed/current reconstruction. Only finite address nodes close;
 full raw-stack joining is next. HIAL and full CI/push gates stay open.
 
+Complete finite observer acceptance now joins every source expression and whole
+encoded header with its observer, callback, refusal, subtest or do-load role.
+The completed source, class/frame, public grammar, scalar, regex, hidden-value
+and original-header children reexecute before this publication. Each original
+frame and full argument header retains its exact membership and order.
+
+Full literal, quote, escape, truncation and count-marker compatibility uses the
+qualified current grammar. Authored regex constructor alternatives remain
+explicit. Whole reference tokens, receiver parameters and private framework/eval
+intervals conserve their original bytes without supplying native identity.
+Original provider, formatter settings, flags, encoding and native identities
+remain unmeasured. Source-selected meaning and encoded compatibility retain
+separate evidence roles.
+
+For example, a different proper prefix of an authored public subtest name can
+pass a dated predecessor that checks only a prefix. It fails the complete token
+contract here. Removing a required ellipsis, changing a quote or count marker,
+borrowing a frame, changing a role, omitting an argument or reordering a frame
+also fails its distinct full contract. Complete original and altered products,
+actual outcomes and the independent lexical/source/allocation reader remain
+available in the dated original-header qualification.
+
+The canonical observer fact now admits this complete finite result through a
+non-growing review. Every earlier meaning, question and probe retains its role;
+the previous full-format uncertainty is refined only by the explicitly
+conditional grammar. The first growing drafts and their actual refusals remain
+retained. Genuine lost-meaning, lost-question, lost-probe, wrong-owner, wrong-root,
+narrowed-scope and native-promotion proposals reject before any admission seal.
+The review is an engineering judgment, not an automated language-equivalence
+oracle.
+
+The maintained current reader authenticates the complete admitted preparation,
+whole original-header namespace and actual prerequisite receipts. It still
+checks all current canonical sources, global direct and cached question
+ownership, exact physical capacity, canonical source copies and rendered
+guidance. Authentication does not freshly reconstruct original executions.
+Its historical success stream remains compatible. Unrelated qualified canonical
+progress remains permitted under the unchanged collection authority.
+
+Replay the complete dated publication independently of later current progress:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-current-publication-20261011/verify.py
+```
+
+The earlier observer and address paragraphs retain their checkpoint roles.
+Only the unchanged finite observer parent and its completed children close here.
+Complete raw-stack joining is next. First-cause, consumer, alias, cold, permanent,
+host-native, private and visual acceptance retain their own unchanged owners;
+HIAL and full CI/push gates remain open.
+
+The first observer publication above is a retained checkpoint. Its complete
+semantic products remain qualified, but its first saved reader counted only
+flat ordinary files. An actual unexpected nested file left that reader green.
+The full first epoch, exact programme and actual result remain unchanged.
+
+The maintained current reader now authenticates the complete original namespace
+with a strict recursive graph and whole member bytes. Unexpected directories,
+nested files, symlinks, missing members and changed tails reject; Boolean byte
+sizes also reject. An independent recursive reader checks complete positive and
+hostile candidate archives. The full original semantic reader reexecutes after
+the strict boundary qualifies. Mutable gate receipts retain their explicitly
+separate role, while every required final actual result stays source-bound.
+
+Use the repaired complete dated reader for this stronger namespace guarantee:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-publication-namespace-repair-20261011/verify.py
+```
+
+The earlier dated reader remains replayable in its original flat-member role.
+The repaired reader also authenticates its own complete namespace. This repair
+adds no native identity or original recapture, and changes no observer meaning,
+question, probe, collection allowance or separately owned raw/native/private/
+visual acceptance. Complete raw-stack joining remains next.
+
 Address/lifetime qualification begins with a separate source-only model of
 operation boundaries. Qualified typed input graphs retain aliases and cycles
 without publishing numeric addresses. Forwarding the same source argument
@@ -1955,9 +2031,9 @@ prerequisites reexecute in their qualified current or dated contexts:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-original-header-join-20261011/verify.py
 ```
 
-This closes only the unchanged header-repair acceptance. Complete observer
-publication and parent acceptance are next under their separate owner; higher
-raw, consumer, alias, cold, native/private and visual scopes remain open.
+The unchanged header-repair acceptance is complete. The current observer
+publication above closes its own finite parent; higher raw, consumer, alias,
+cold, native/private and visual scopes retain their separate owners.
 
 The complete finite raw-address and numerical/source parent acceptance is now
 qualified. The audit preserves the full unchanged parent requirements and the

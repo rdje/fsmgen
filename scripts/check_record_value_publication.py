@@ -14,6 +14,8 @@ import record_value_public_reference_fact as public_reference_fact
 import record_value_expression_fact as expression_fact
 import record_value_coordinate_fact as coordinate_fact
 import record_value_address_fact as address_fact
+import record_value_observer_fact as observer_fact
+import record_value_observer_namespace_fact as observer_namespace_fact
 from decision_store_git import MAX_TRACKED_PATHS
 
 ROOT = plane.ROOT
@@ -79,7 +81,7 @@ def expected_cards(prior):
             result[path] = epoch_fact.extend(result[path])
             result[path] = public_reference_fact.extend(result[path])
             result[path] = expression_fact.extend(result[path])
-    return address_fact.cards(coordinate_fact.cards(result))
+    return observer_fact.cards(address_fact.cards(coordinate_fact.cards(result)))
 
 
 def guide(prior):
@@ -89,7 +91,7 @@ def guide(prior):
         'Unrelated book and non-target Knowledge Map progress is permitted. The current\n'
         'reader derives the complete global question allocation and physical census from\n'
         'current canonical sources; the saved historical snapshot keeps its exact epoch.')
-    return address_fact.guide(coordinate_fact.guide(result))
+    return observer_namespace_fact.guide(observer_fact.guide(address_fact.guide(coordinate_fact.guide(result))))
 
 
 def sources():
@@ -241,6 +243,8 @@ def main():
         'complete actual sealed expression alternative qualification')
     coordinate_before = coordinate_fact.authenticate()
     address_before = address_fact.authenticate()
+    observer_before = observer_fact.authenticate()
+    namespace_before = observer_namespace_fact.authenticate()
     canonical = sources()
     check(current_input(prior, canonical), canonical, prior, authority(prior))
     rows = plane.expected_rows()
@@ -257,6 +261,10 @@ def main():
             'whole original coordinate qualification conserved during current verification')
     require(same(address_before, address_fact.authenticate()),
             'whole admitted address qualification conserved during current verification')
+    require(same(observer_before, observer_fact.authenticate()),
+            'whole admitted observer qualification conserved during current verification')
+    require(same(namespace_before, observer_namespace_fact.authenticate()),
+            'whole original publication namespace conserved during current verification')
     print(SUCCESS, end='')
 
 

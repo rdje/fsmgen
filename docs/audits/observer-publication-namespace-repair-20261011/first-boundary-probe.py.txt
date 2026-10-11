@@ -1,0 +1,23 @@
+"""Challenge the exact first saved reader with a genuine nested extra member."""
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+base=Path('docs/audits/observer-current-publication-20261011')
+fixture=base/'nested-hostile-control'
+fixture.mkdir()
+member=fixture/'unexpected.txt';raw=b'Owned whole-namespace intervention; no original semantic product changes.\n'
+member.write_bytes(raw)
+try:
+    command=['python3','-B',str(base/'verify.py')]
+    result=subprocess.run(command,capture_output=True,text=True)
+    record=dict(command=command,status=result.returncode,stdout=result.stdout,stderr=result.stderr,
+        actual_nested_member=str(member),whole_member=raw.decode(),programme=Path(__file__).read_text(),
+        reader_source=(base/'verify.py').read_text(),reader_sha256=hashlib.sha256((base/'verify.py').read_bytes()).hexdigest(),
+        scope='Whole first saved namespace census only. All original semantic products and their historical predicates remain unchanged.')
+    Path('.artifacts/observer-current-publication-20261011/nested-probe.json').write_text(json.dumps(record,sort_keys=True)+'\n')
+    print(json.dumps({key:record[key] for key in ('status','stdout','stderr','scope')}))
+finally:
+    if member.read_bytes()!=raw:raise ValueError('owned nested fixture changed unexpectedly')
+    member.unlink();fixture.rmdir()

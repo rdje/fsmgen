@@ -1,0 +1,25 @@
+The first observer publication above is a retained checkpoint. Its complete
+semantic products remain qualified, but its first saved reader counted only
+flat ordinary files. An actual unexpected nested file left that reader green.
+The full first epoch, exact programme and actual result remain unchanged.
+
+The maintained current reader now authenticates the complete original namespace
+with a strict recursive graph and whole member bytes. Unexpected directories,
+nested files, symlinks, missing members and changed tails reject; Boolean byte
+sizes also reject. An independent recursive reader checks complete positive and
+hostile candidate archives. The full original semantic reader reexecutes after
+the strict boundary qualifies. Mutable gate receipts retain their explicitly
+separate role, while every required final actual result stays source-bound.
+
+Use the repaired complete dated reader for this stronger namespace guarantee:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/observer-publication-namespace-repair-20261011/verify.py
+```
+
+The earlier dated reader remains replayable in its original flat-member role.
+The repaired reader also authenticates its own complete namespace. This repair
+adds no native identity or original recapture, and changes no observer meaning,
+question, probe, collection allowance or separately owned raw/native/private/
+visual acceptance. Complete raw-stack joining remains next.
+
