@@ -1125,6 +1125,16 @@ whole admitted source instruments to match the fixed construction context:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-association-product-20261011/verify.py
 ```
 
+The required recovery archive is explicitly tracked in Git. The custody gate
+compares every complete construction and repair member, executable mode,
+directory and whole staged blob with source bytes. Its default freshly checks
+current Git custody; complete semantic and original native/private meanings
+remain open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-archive-durability-20261011/verify.py
+```
+
 Only the finite observer and class/frame predecessor containers close here.
 The complete raw-stack semantic join and its publication remain separately
 owned. Original native class, provider, hooks, settings, flags, encoding,
