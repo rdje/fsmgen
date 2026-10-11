@@ -1135,6 +1135,42 @@ remain open:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-archive-durability-20261011/verify.py
 ```
 
+The construction checkpoint above retains its dated pending semantic label.
+The independent successor now reconstructs the entire association product
+from the qualified original raw, class, frame, header, argument, coordinate
+and address source products. Explicit links bind complete ordered bodies,
+first causes, source callers, visible operands and simultaneous holders.
+Nested errors retain the whole inner cause, new outer prefix and outer trace.
+
+For example, assigning a valid visible address to another source argument
+leaves the inherited body intact and passes the namespace-adapted body reader, but
+fails the new address/holder association. Whole-stack, first-cause, caller,
+header-order, argument, opaque, scope, omission, phase and nested-cause
+interventions similarly reach their intended semantic assertions. Complete
+positive and hostile products, programmes and actual streams are retained.
+
+The first semantic checker accepted Boolean false as integer phase zero.
+That complete false-green epoch remains saved. Typed canonical coordinate
+comparisons now refuse it, and a separate Perl reader rejects its Boolean
+JSON kind. Every original semantic control reexecutes with the corrected
+programmes before signoff.
+
+The interrupted host-memory attempt remains non-success. Complete control
+execution and proof replay now use separate processes under the unchanged
+RAM guard.
+
+The body reader changes only its own candidate-path boundary.
+The producer reads the complete candidate; the independent checker reads
+the original qualified source products. Their shared source models remain
+explicit assumptions. The original native class, hooks, provider, settings,
+flags, encoding, hidden arguments and private or referent identities remain
+unmeasured. Parent acceptance and full raw canonical publication remain
+separate. Replay requires the complete fixed source/instrument context:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-links-20261011/verify.py
+```
+
 Only the finite observer and class/frame predecessor containers close here.
 The complete raw-stack semantic join and its publication remain separately
 owned. Original native class, provider, hooks, settings, flags, encoding,

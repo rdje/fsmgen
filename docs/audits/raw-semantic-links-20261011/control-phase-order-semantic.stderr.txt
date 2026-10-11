@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 265, in <module>
+    qualify(value)
+    ~~~~~~~^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 246, in qualify
+    need([p['domain'] for p in a['phases']] == [p['domain'] for p in e['phases']], 'semantic complete ordered throw-phase allocation')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/common.py", line 38, in need
+    raise ValueError(message)
+ValueError: semantic complete ordered throw-phase allocation

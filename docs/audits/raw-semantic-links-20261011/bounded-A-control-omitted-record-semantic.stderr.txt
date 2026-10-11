@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 265, in <module>
+    qualify(value)
+    ~~~~~~~^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 238, in qualify
+    need(same(actual['allocation'], expected['allocation'])
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and same([r['record'] for r in actual['records']], [r['record'] for r in expected['records']]), 'semantic complete original member allocation')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/common.py", line 39, in need
+    raise ValueError(message)
+ValueError: semantic complete original member allocation

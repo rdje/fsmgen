@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 265, in <module>
+    qualify(value)
+    ~~~~~~~^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 236, in qualify
+    need(same(actual['scope'], expected['scope']) and same(actual['original_unknowns'], expected['original_unknowns'])
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and same(actual['inherited_scopes'], expected['inherited_scopes']), 'semantic scope and original native/private boundary')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/common.py", line 39, in need
+    raise ValueError(message)
+ValueError: semantic scope and original native/private boundary

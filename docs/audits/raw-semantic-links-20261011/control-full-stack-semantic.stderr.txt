@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 265, in <module>
+    qualify(value)
+    ~~~~~~~^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/reader.py", line 245, in qualify
+    need(same(a[field], e[field]), cause)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/docs/audits/raw-semantic-links-20261011/common.py", line 38, in need
+    raise ValueError(message)
+ValueError: semantic full stack and complete ordered body
