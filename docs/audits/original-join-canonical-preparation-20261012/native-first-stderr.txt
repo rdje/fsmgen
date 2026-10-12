@@ -1,0 +1,18 @@
+ram-guard: PID 71798; host 73.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "/Volumes/SSD/Documents/github/fsmgen/scripts/check_record_value_publication.py", line 290, in <module>
+    main()
+    ~~~~^^
+  File "/Volumes/SSD/Documents/github/fsmgen/scripts/check_record_value_publication.py", line 264, in main
+    plane.check_index(rows)
+    ~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py", line 197, in check_index
+    check_object(path,mode,local_read(ROOT/path,max(SOURCE_BYTES,MANIFEST_BYTES)))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py", line 191, in check_object
+    require(indexed[path] == (mode,wanted), 'checked bytes/mode agree with Git result: '+path)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/SSD/Documents/github/fsmgen/scripts/book_source_references.py", line 32, in require
+    if not condition: raise ValueError(message)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: checked bytes/mode agree with Git result: MEMORY.md
