@@ -24,21 +24,17 @@ work awaiting implementation.
 | Record interface ports | Local/imported packed actor record inputs, live scalar field reads and exact-type input-to-storage copies are admitted. Frontend/generated/domain source, carriers and complete public products are qualified; direct/generated binary behavior passes both emitter options with SystemVerilog parsing. Current ISF Verilog and selected VHDL profiles refuse precisely. Selected input delivery is qualified; full output-dependent consumer delivery remains open. | Record outputs and exact-type whole copies now have bounded source/carrier admission with conservative physical writer checks; bounded public source/profile/corpus products are qualified; generated/execution qualification and output member writes remain open. Root-list ports and variants are optional. The complete request is owned by SEM `.60.4` and is not finished. |
 | Transaction phase groups | Membership cannot be carried as checked transaction metadata. | Checked phase/member/role facts without invented values, order or behavior. |
 
-Default and strict native/API/MCP queries reject unknown or malformed port options;
-optional-port support remains open. Inputs and outputs retain their interface roles
-even when unused or undriven. Output preservation adds no value assignment.
-An explicitly reset output without a data writer now resets and holds under
-the module hardware-reset contract. Its semantic drive family has no data-driver
-blocks. Inspect realized semantic/HDL interfaces and behavior when evaluating
-presence or reset semantics.
+Default/strict native/API/MCP queries reject unknown or malformed port options;
+optional ports remain open. Unused/undriven inputs and outputs retain interface
+roles without added assignments. Reset-only outputs reset and hold under the
+module hardware-reset contract, with no semantic data-driver blocks. Evaluate
+presence/reset through realized semantic/HDL interfaces and behavior.
 
-Derived-width requests depend on generic-width support and retain their distinct
-scope. Request scopes, repair order, current reproductions and owners are in
-[SPECFORGE feedback response](reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt), including
-its current delivery status and complete unstated-reset answer. Reset omission
-selects the documented legacy default; a clock-only domain means no reset,
-without guaranteed initialization. No current form defers reset policy to
-instantiation.
+Derived-width requests require generic-width support but retain distinct scope.
+[SPECFORGE feedback response](reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt)
+records scopes, repair order, reproductions, owners, delivery status and reset
+answers. Omitted resets use the legacy default; clock-only domains have no reset
+or guaranteed initialization. No form defers reset policy to instantiation.
 
 ## Status Vocabulary
 
@@ -1197,6 +1193,14 @@ same finite source-model and native/private limits. The higher join stays open.
 
 Context/cause/consumer admission preserves each qualified meaning and limit;
 independent association and parent acceptance stay open.
+
+Independent source-first associations bind context memberships, complete
+causes/coordinates and typed consumer truth. Native/private limits retain;
+parent acceptance and full alias stay open.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-context-cause-consumer-association-20261012/verify.py
+```
 
 Consumer contracts bind all expression/helper/loop/dataflow/typed operand roles.
 Passed flags prove no truth; operand/outcome/canonical/parent acceptance stays open:

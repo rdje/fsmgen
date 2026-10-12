@@ -1,0 +1,7 @@
+Independent source-first associations bind context memberships, complete
+causes/coordinates and typed consumer truth. Native/private limits retain;
+parent acceptance and full alias stay open.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-context-cause-consumer-association-20261012/verify.py
+```
