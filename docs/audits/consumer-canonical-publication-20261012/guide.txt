@@ -1,0 +1,13 @@
+Proposal:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-preparation-20261012/verify.py
+```
+
+Canonical consumer publication admits only reviewed source-derived typed operands
+and independent truth. Storable/synthetic/native/private limits retain; complete
+canonical/original consumer acceptance remains separate:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-publication-20261012/verify.py
+```

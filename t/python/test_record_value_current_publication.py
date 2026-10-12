@@ -45,7 +45,7 @@ class CurrentPublicationTests(unittest.TestCase):
     def test_target_meanings_and_routes_remain_exact(self):
         core, observer, tooling = self.prior['PATHS']
         for path, old, new in (
-            (core, 'classes were unmeasured', 'classes were measured'),
+            (core, 'classes unmeasured', 'classes measured'),
             (observer, 'operands remain opaque evidence', 'operands supply formatter evidence'),
             (tooling, 'replay/factory native copied-byte checks required;',
              'replay/factory native copied-byte checks are optional;'),
@@ -115,6 +115,8 @@ class CurrentPublicationTests(unittest.TestCase):
                     'unique complete admitted raw source guidance')
         self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.cause_fact.GUIDE, '')),
                     'unique complete admitted cause source guidance')
+        self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.consumer_fact.GUIDE, '')),
+                    'unique complete admitted consumer source guidance')
         self.refuse(lambda r: r.update(tooling_chapter=r['tooling_chapter'].replace(current.address_fact.REFERENCE, '')),
                     'complete current finite address tooling guidance')
         self.refuse(lambda r: r['queries']['direct'].update(stdout='malformed\n'),
@@ -212,7 +214,7 @@ class CurrentPublicationTests(unittest.TestCase):
         # build and every copied source are verified separately by the CLI.
         def html(guide):
             blocks = (guide + current.coordinate_fact.PARSER_GUIDE + current.raw_fact.GUIDE
-                      + current.cause_fact.GUIDE).split('```bash\n')
+                      + current.cause_fact.GUIDE + current.consumer_fact.GUIDE).split('```bash\n')
             text = blocks[0]
             for block in blocks[1:]:
                 code, rest = block.split('```\n', 1)
@@ -231,6 +233,9 @@ class CurrentPublicationTests(unittest.TestCase):
             ('Fixed-source replay preserves earlier epochs', 'Historical receipts prove later live code',
              'native complete current retained scope and gaps'),
             ('Cause-parent\nacceptance remains open', 'Cause-parent acceptance is complete',
+             'native complete current retained scope and gaps'),
+            ('canonical/original consumer acceptance remains separate',
+             'canonical/original consumer acceptance is complete',
              'native complete current retained scope and gaps')):
             with self.subTest(old=old):
                 changed = valid.replace(old, new)
@@ -337,6 +342,91 @@ class CurrentPublicationTests(unittest.TestCase):
                 mutate(changed)
                 with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
                     fact.check_actual(changed, role)
+
+    def test_consumer_admission_preserves_every_predecessor_meaning_and_route(self):
+        fact = current.consumer_fact
+        candidate = fact.admission()
+        after = fact.published(candidate)
+        self.assertEqual(len(after.encode()), len(candidate['before'].encode()) - 6)
+        self.assertEqual(after.split('---\n', 2)[:2], candidate['before'].split('---\n', 2)[:2])
+        self.assertIn('Whole cause/raw/empty/nested source joins/lossless grammar qualify.', after)
+        self.assertIn('Native-class copy/structured-clone cycles unqualified', after)
+        self.assertIn('operands/truth, never\npassed flags; Storable kinds/synthetic trace opacity retain.', after)
+        self.assertEqual(fact.cards({fact.CARD: candidate['before']})[fact.CARD], after)
+        with self.assertRaisesRegex(ValueError, '^whole predecessor consumer meanings and routes$'):
+            fact.cards({fact.CARD: after})
+
+    def test_consumer_first_admission_rejects_proposed_schema_and_native_authority(self):
+        fact = current.consumer_fact
+        original_read = current.plane.local_read
+        for mutate in (lambda r: r.update(native_identity=True),
+                       lambda r: r.update(schema_version=True),
+                       lambda r: r.update(revision='later-current-source')):
+            candidate = fact.admission()
+            mutate(candidate)
+            changed = json.dumps(candidate, sort_keys=True, separators=(',', ':')).encode() + b'\n'
+            def read(path, maximum):
+                return changed if path == current.ROOT / fact.PREPARATION / 'candidate.json' else original_read(path, maximum)
+            with mock.patch.object(current.plane, 'local_read', side_effect=read):
+                with self.assertRaisesRegex(ValueError, '^whole fixed consumer candidate before first admission$'):
+                    fact.admission()
+
+    def test_consumer_proposal_cannot_borrow_meanings_grow_or_promote_scope(self):
+        fact = current.consumer_fact
+        candidate = fact.admission()
+        for mutate, consumer in (
+            (lambda r: r.update(schema_version=True), 'exact admitted consumer source role'),
+            (lambda r: r.update(revision='later-live-code'), 'exact admitted consumer source role'),
+            (lambda r: r.update(before=r['after']), 'whole admitted consumer predecessor meanings and routes'),
+            (lambda r: r.update(after=r['after'].replace('source joins/lossless grammar', 'native identities/lossless grammar')),
+             'whole admitted consumer meanings questions metadata and probes'),
+            (lambda r: r['proposed'].update(bytes_total=r['previous']['bytes_total'] + 1), 'non-growing admitted consumer capacity'),
+            (lambda r: r['proposed'].update(files=True), 'non-growing admitted consumer capacity'),
+            (lambda r: r['scope'].update(native_identity=True), 'whole admitted consumer source native private boundary'),
+            (lambda r: r['canonical_members'].pop(next(iter(r['canonical_members']))),
+             'whole admitted consumer authority source review and query custody'),
+            (lambda r: r['queries']['direct'].update(command=r['queries']['cached']['command']),
+             'whole admitted consumer authority source review and query custody')):
+            changed = copy.deepcopy(candidate)
+            mutate(changed)
+            self.assertFalse(current.same(changed, candidate))
+            with self.assertRaisesRegex(ValueError, '^' + consumer + '$'):
+                fact.published(changed)
+
+    def test_consumer_actual_requires_its_complete_typed_source_role(self):
+        fact = current.consumer_fact
+        for role in fact.ACTUALS:
+            actual = json.loads(Path(fact.PREPARATION, role + '-actual.json').read_bytes())
+            fact.check_actual(actual, role)
+            for mutate, consumer in (
+                (lambda r: r.update(status=False), 'actual admitted consumer integer success'),
+                (lambda r: r.update(expected_status=True), 'actual admitted consumer integer success'),
+                (lambda r: r['command'].append('--current'), 'exact admitted consumer actual source command'),
+                (lambda r: r.update(stdout='PASS\n'), 'whole admitted consumer actual terminal'),
+                (lambda r: r['programmes'].pop(next(iter(r['programmes']))),
+                 'whole admitted consumer actual programme and source custody')):
+                changed = copy.deepcopy(actual)
+                mutate(changed)
+                with self.assertRaisesRegex(ValueError, '^' + consumer + '$'):
+                    fact.check_actual(changed, role)
+
+    def test_consumer_original_size_failure_requires_its_distinct_native_role(self):
+        fact = current.consumer_fact
+        actual = json.loads(Path(fact.PREPARATION, 'size-actual.json').read_bytes())
+        fact.check_failed_size(actual)
+        for mutate, cause in (
+            (lambda r: r.update(status=0), 'typed original unexpected consumer size refusal'),
+            (lambda r: r.update(status=True), 'typed original unexpected consumer size refusal'),
+            (lambda r: r.update(expected_status=False), 'typed original unexpected consumer size refusal'),
+            (lambda r: r['command'].append('--current'), 'exact original consumer size failure command'),
+            (lambda r: r.update(stderr=''), 'whole original consumer size failure programme and terminal custody'),
+            (lambda r: r['programmes'].pop(next(iter(r['programmes']))),
+             'whole original consumer size failure programme and terminal custody')):
+            changed = copy.deepcopy(actual)
+            mutate(changed)
+            self.assertFalse(current.same(changed, actual))
+            with self.assertRaisesRegex(ValueError, '^' + cause + '$'):
+                fact.check_failed_size(changed)
 
     def test_observer_authentication_requires_whole_same_volume_members(self):
         workspace = Path('.artifacts/observer-publication-tests')

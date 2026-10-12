@@ -1,0 +1,45 @@
+from pathlib import Path
+import json
+B=Path('docs/audits/consumer-canonical-publication-20261012')
+book=Path('docs/book/src/13k-isf-feature-support-matrix.md').read_text()
+pairs=[('''The private-copy source foundation separately qualifies the complete original
+private graph population. The observer delegates these copies to its saved
+Storable handle. A finite memoized clone model supplies independent topology
+hypotheses; it does not reconstruct that provider. Whole qualified input/result
+and original joint graphs agree through a separate graph-bijection oracle,
+including shared nodes and cycles. Each returned node belongs to a detached
+result pool while input and result are simultaneously live inside `copy_value`.
+Scalar flags and values retain their separate qualified graph evidence.''','''The private-copy foundation qualifies the whole original private graph population.
+The observer uses its saved Storable handle; the finite memoized clone supplies
+independent topology hypotheses, without reconstructing the provider. A separate
+graph-bijection oracle agrees on whole qualified input/result and original joint
+graphs, including sharing/cycles. Returned nodes occupy a detached result pool
+while both graphs live inside `copy_value`. Scalar flags/values retain separate
+qualified graph evidence.'''),('''A copied record may preserve its input payload and internal sharing while every
+returned container has a distinct identity from the input containers. Conversely,
+a returned copy can cease to be live before a later error. The per-copy model
+therefore supplies no cross-copy identity or post-return liveness. Those require
+caller and throw-phase source contracts. Genuine alias, split-sharing, kind,
+omission, borrowed-domain and false-lifetime controls reject. Replay from the repository root:''','''Copied records may preserve input payload/internal sharing while every returned
+container differs in identity from input containers. A returned copy may die
+before a later error; cross-copy identity/post-return liveness require caller and
+throw-phase contracts. Genuine alias, split-sharing, kind, omission,
+borrowed-domain and false-lifetime controls reject. Replay from the repository root:'''),('''Direct Value core frames now have a separate source binding model. An operation's
+original argument slots keep the supplied references even after a local variable
+is assigned a detached copy. For example, a copy-width refusal passes a detached
+source record to `_validate_reference`, while the enclosing copy operation still
+exposes its original source and target arguments. Equal payloads do not merge
+those bindings. Deep type failures follow the qualified active root and its
+record/list descendants; earlier returned roots are not presumed live.''','''Direct Value core frames have a separate source binding model. Original argument
+slots retain supplied references after local assignment of a detached copy. A
+copy-width refusal passes that detached source to `_validate_reference`; the
+enclosing copy operation exposes its original source/target arguments. Equal
+payloads do not merge bindings. Deep type failures follow the qualified active
+root and record/list descendants; earlier returned roots are not presumed live.''')]
+oldguide=Path('docs/audits/consumer-canonical-preparation-20261012/guide.txt').read_text()
+after=book.replace(oldguide,(B/'guide.txt').read_text(),1)
+for old,new in pairs:
+ assert after.count(old)==1
+ after=after.replace(old,new,1)
+assert len(after.encode())<=len(book.encode())
+(B/'book-review.json').write_text(json.dumps(dict(before_bytes=len(book.encode()),after_bytes=len(after.encode()),book_compactions=pairs,review='Explicit whole-paragraph engineering equivalence: all original private population, Storable/provider boundary, finite independent clone/bijection, input/result/joint graph sharing/cycle/detachment, simultaneous-copy and post-return lifetime limits, scalar qualification, original operation argument vs detached validation source, active deep traversal and genuine controls retain. Every runnable example and quantitative/encoding claim line remains exact. No automated language equivalence is claimed.'),sort_keys=True,separators=(',',':'))+'\n')

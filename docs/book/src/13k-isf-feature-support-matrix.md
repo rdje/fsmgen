@@ -1244,6 +1244,15 @@ Proposal:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-preparation-20261012/verify.py
 ```
 
+Canonical consumer publication admits only reviewed source-derived typed operands
+and independent truth. Storable/synthetic/native/private limits retain; complete
+canonical/original consumer acceptance remains separate:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-publication-20261012/verify.py
+```
+
+
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
 Semantic/association replay needs its complete fixed source context:
 
@@ -1292,21 +1301,19 @@ remain source-model successors. Original raw-address joining, external/framework
 provider/formatter identities and current canonical address publication stay open.
 Coordinate and class/frame qualifications keep their separate meanings.
 
-The private-copy source foundation separately qualifies the complete original
-private graph population. The observer delegates these copies to its saved
-Storable handle. A finite memoized clone model supplies independent topology
-hypotheses; it does not reconstruct that provider. Whole qualified input/result
-and original joint graphs agree through a separate graph-bijection oracle,
-including shared nodes and cycles. Each returned node belongs to a detached
-result pool while input and result are simultaneously live inside `copy_value`.
-Scalar flags and values retain their separate qualified graph evidence.
+The private-copy foundation qualifies the whole original private graph population.
+The observer uses its saved Storable handle; the finite memoized clone supplies
+independent topology hypotheses, without reconstructing the provider. A separate
+graph-bijection oracle agrees on whole qualified input/result and original joint
+graphs, including sharing/cycles. Returned nodes occupy a detached result pool
+while both graphs live inside `copy_value`. Scalar flags/values retain separate
+qualified graph evidence.
 
-A copied record may preserve its input payload and internal sharing while every
-returned container has a distinct identity from the input containers. Conversely,
-a returned copy can cease to be live before a later error. The per-copy model
-therefore supplies no cross-copy identity or post-return liveness. Those require
-caller and throw-phase source contracts. Genuine alias, split-sharing, kind,
-omission, borrowed-domain and false-lifetime controls reject. Replay from the repository root:
+Copied records may preserve input payload/internal sharing while every returned
+container differs in identity from input containers. A returned copy may die
+before a later error; cross-copy identity/post-return liveness require caller and
+throw-phase contracts. Genuine alias, split-sharing, kind, omission,
+borrowed-domain and false-lifetime controls reject. Replay from the repository root:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-private-topology-20261010/verify.py
@@ -1317,13 +1324,12 @@ boundary hypotheses. Original numeric addresses, native/provider/formatter ident
 later Value/Metadata/helper/parser reference roles, raw-address joining and canonical
 publication stay separately owned.
 
-Direct Value core frames now have a separate source binding model. An operation's
-original argument slots keep the supplied references even after a local variable
-is assigned a detached copy. For example, a copy-width refusal passes a detached
-source record to `_validate_reference`, while the enclosing copy operation still
-exposes its original source and target arguments. Equal payloads do not merge
-those bindings. Deep type failures follow the qualified active root and its
-record/list descendants; earlier returned roots are not presumed live.
+Direct Value core frames have a separate source binding model. Original argument
+slots retain supplied references after local assignment of a detached copy. A
+copy-width refusal passes that detached source to `_validate_reference`; the
+enclosing copy operation exposes its original source/target arguments. Equal
+payloads do not merge bindings. Deep type failures follow the qualified active
+root and record/list descendants; earlier returned roots are not presumed live.
 
 The model also distinguishes fresh named-argument hashes from supplied records,
 and fresh required/optional key arrays from type nodes. A separate oracle follows
@@ -1379,13 +1385,12 @@ the supplied interface still points into the separate Value graph. The join
 resolves every previously pending nested operation domain and preserves the
 original Scope arguments through both wrappers and saved operation calls.
 
-At the later Value throw, Scope and its Value root remain active. Capture and
-both copy delegates have returned. The observer still holds both `[caller]`
-arrays in its `@api` records and retains the saved operation lookups in lexical
-scope. A returned activation therefore does not imply a dead caller snapshot.
-Metadata's sink, active hash and detached result, and the constructed interface
-container have no active own source holder in this view; their absolute death
-or external retention is not measured. The shared Value type node stays held.
+At the later Value throw, Scope/Value root remain active; capture/copy delegates
+have returned. Observer `@api` records retain both `[caller]` arrays and lexical
+saved-operation lookups: returned activation implies no dead caller snapshot.
+Metadata sink/active hash/detached result and the constructed interface container
+have no active own holder here; absolute death/external retention remain
+unmeasured. The shared Value type node stays held.
 
 Independent graph bijections, semantic member walks and source-expression
 bindings check complete aliases, kinds, recursive cycles and phase lifetimes.
