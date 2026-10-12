@@ -1224,6 +1224,15 @@ qualified Storable witness. Helper/full join/parent scopes retain:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/remaining-consumer-truth-20261011/verify.py
 ```
 
+Complete consumer join maps every original assertion to its own freshly
+rederived helper/remaining meaning, typed operands and comparison truth.
+Storable/synthetic/private limits retain. Meaning/canonical/parent acceptance
+remains separate:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-meaning-join-20261011/final.py
+```
+
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
 Semantic/association replay needs its complete fixed source context:
 
@@ -2158,12 +2167,11 @@ body with no supplied arguments has this selected current form:
 {"source_function":"main::__ANON__","source_arguments":[],"conditional_profile":{"MaxArgLen":64,"MaxArgNums":8,"MaxEvalLen":0,"RefArgFormatter":null},"known_conditional_header":"main::__ANON__()"}
 ```
 
-Original reference tokens, regex flags and historical settings remain typed
-unmeasured boundaries. Their expression nodes retain complete source values,
-roles and qualified current alternatives. An unresolved slot supplies no guessed
-encoded token or wildcard matcher. The source do operation and diagnostic require
-marker retain their separate full roles. Private framework and eval meanings
-remain unmeasured.
+Reference tokens/regex flags/historical settings retain typed unmeasured
+bounds; expression nodes keep whole source values/roles/qualified
+current alternatives. Unresolved slots supply no guessed encoded token or wildcard. Source do
+and diagnostic require keep distinct full roles; private framework/eval
+meanings unmeasured.
 
 Whole source/header/member/order/role/format/schema/value/encoding/profile and
 native-promotion controls reject. The complete public grammar and actual main
@@ -2213,12 +2221,11 @@ The unchanged header-repair acceptance is complete. The current observer
 publication above closes its own finite parent; higher raw, consumer, alias,
 cold, native/private and visual scopes retain their separate owners.
 
-The complete finite raw-address and numerical/source parent acceptance is now
-qualified. The audit preserves the full unchanged parent requirements and the
-complete previously committed child contracts. It joins every original empty
-and nonempty record, whole raw body, source throw phase, lossless operand,
-corrected holder and numerical source association to its complete evidence.
-Matching endpoint totals alone cannot satisfy this contract.
+Finite raw-address/numerical-source parent acceptance preserves every unchanged
+parent requirement and committed child contract. Every original empty/nonempty
+record, whole raw body, source throw phase, lossless operand, corrected holder
+and numerical source association joins its complete evidence; matching endpoint
+totals alone cannot satisfy the contract.
 
 The admission, operand, holder and numerical readers each execute again. Their
 complete commands, integer statuses, output streams, guard settings and
@@ -2258,11 +2265,11 @@ facts, questions, probes and collection limits remain unchanged.
 
 Retained address preparation checkpoint (before current admission):
 
-Governed address publication now has a retained prospective preparation.
-The complete current core, helper, parser and tooling cards remain unchanged.
-Their full beforeimages, reader programmes, book sources and capacity authority
-are bound to the committed source epoch. The original global source membership
-and complete direct and cached question allocation also retain.
+Governed address publication retains prospective preparation. Complete current
+core/helper/parser/tooling cards stay unchanged; full beforeimages, reader
+programmes, book sources and capacity authority bind the committed epoch.
+Original global source membership and complete direct/cached question allocation
+retain.
 
 The reviewed prospective texts preserve every existing question, replay command,
 source obligation and native limit. Their ordered paragraph correspondence keeps
@@ -2565,13 +2572,12 @@ reference identity retain separate owners. Replay from the repository root:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/record-value-parser-function-order-20261006/verify.py
 ```
 
-The original parser source inventory binds complete own facade, parser and
-record-context source units, lexical declarations, selected whole function bodies,
-parameter roles and ordered call/guard statements. Output-field source admission
-and aggregate actor-port admission have distinct source boundaries. This inventory
-does not establish active failure paths or native argument meanings. The finite
-source models below qualify own ancestry and argument roles; complete
-own frame joins have their separate replay above.
+The original parser inventory binds complete own facade/parser/record-context
+source units, lexical declarations, selected whole functions, parameter roles
+and ordered calls/guards. Output-field and aggregate actor-port admission keep
+distinct source boundaries. Active failure paths and native argument meanings
+remain unproved here. Finite source models below qualify own ancestry/argument
+roles; complete own frame joins replay separately above.
 
 The initial new-card proposal exceeded the collection file allowance and was
 withdrawn. Its complete source proof and candidate publication remain immutable.
@@ -2595,11 +2601,11 @@ record-context validation. Output-field admission reaches the transaction write
 guard before assignment RHS validation or actor publication. Both models retain
 every supplied positional and named argument role as a source expression.
 
-Receiver, normalized AST and whole partial-actor payloads remain unmeasured.
-The independently evaluated original Perl guards agree with the finite model.
-Complete nested API membership reuses the dated qualified source-family models;
-it does not establish a new native stack. Own frame joins are qualified above;
-public formatter, coordinate and address contracts remain separate work.
+Receiver/normalized-AST/whole partial-actor payloads stay unmeasured. Independent
+original Perl guards agree with the finite model. Complete nested API membership
+reuses dated qualified source-family models without proving a new native stack.
+Own frame joins qualify above; public formatter/coordinate/address work remains
+separate.
 
 The source-model reader preserves its qualified source meanings and dated
 publication snapshot. Current finite-join qualification has its own reader

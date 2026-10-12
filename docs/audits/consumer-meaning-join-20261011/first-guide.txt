@@ -1,0 +1,8 @@
+Complete consumer join maps every original assertion to its own freshly
+rederived helper/remaining meaning, typed operands and comparison truth.
+Storable/synthetic/private limits retain. Meaning/canonical/parent acceptance
+remains separate:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-meaning-join-20261011/verify.py
+```
