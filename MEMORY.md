@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.3` (pending)
-- next_action: Activate governed consumer canonical publication .3.3.3 from clean committed complete independent meanings. Preserve every old fact/question/probe and retained helper, non-growing collection authority, full source/native/private/Storable/synthetic boundaries and genuine controls. Original consumer-parent acceptance and all higher owners remain separate.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.3.2` (pending)
+- next_action: Activate maintained consumer canonical publication .2 from the committed proposal; preserve original facts, probes, limits and authority. Canonical/original consumer acceptance follows separately.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
-- in_flight_background: None after complete independent consumer-meaning acceptance verification and commit; derive later receipts under docs/audits/consumer-meaning-parent-acceptance-20261012.
+- in_flight_background: None after consumer canonical preparation verification and commit; derive later receipts under docs/audits/consumer-canonical-preparation-20261012.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
   Historical startup/parent qualification and full CI/push remain gated; Push whenever useful is explicitly authorized by user steering on 2026-10-11; required HIAL/full-CI qualifications still gate it. Visual mdBook QA remains pending.

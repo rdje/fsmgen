@@ -1,0 +1,5 @@
+Proposal:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-preparation-20261012/verify.py
+```

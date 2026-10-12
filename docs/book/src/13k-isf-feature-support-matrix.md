@@ -1103,9 +1103,9 @@ proves no later native/current currency:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-admission-20261011/verify.py
 ```
 
-The complete source-bound candidate retains all original raw errors/empty members,
-ordered source class/frame/full-header/argument/coordinate/visible-address roles,
-whole opaque allocations and qualified nested inner/outer bodies. A separate
+The source-bound candidate retains every original raw error/empty member,
+ordered source class/frame/full-header/argument/coordinate/visible-address role,
+whole opaque allocation and qualified nested inner/outer body. A separate
 Perl reader checks captured UTF-8 bytes and lossless physical reconstruction;
 whole-candidate byte-conservation mutations reach intended refusals.
 
@@ -1117,44 +1117,43 @@ matching the fixed construction context:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-association-product-20261011/verify.py
 ```
 
-Recovery is Git-tracked. Custody compares every construction/repair member,
-executable mode, directory and whole staged blob with source bytes. Default freshly checks current Git custody; complete semantic and original
-native/private meanings stay open:
+Git-tracked custody compares all construction/repair members, executable modes,
+directories and whole staged blobs to source bytes. Default freshly checks Git
+custody; complete semantic and original native/private meanings stay open:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/raw-semantic-archive-durability-20261011/verify.py
 ```
 
-The construction checkpoint keeps its dated pending-semantic label. The independent
-successor rebuilds the entire association from qualified original raw/class/frame/
-header/argument/coordinate/address products. Links bind complete ordered bodies/
-first causes/source callers/visible operands/simultaneous holders; nested errors
-keep whole inner cause/new outer prefix/outer trace.
+Construction retains its dated pending-semantic label. The independent
+successor rebuilds the whole qualified original raw/class/frame/header/argument/
+coordinate/address association. Links bind complete ordered bodies/first causes/
+source callers/visible operands/simultaneous holders; nested errors retain whole
+inner cause/new outer prefix/outer trace.
 
-A valid visible address moved to another source argument preserves the inherited
+Moving a valid visible address to another source argument preserves the inherited
 body and passes the namespace-adapted body reader, but fails address/holder
 association. Whole-stack/first-cause/caller/header-order/argument/opaque/scope/
 omission/phase/nested-cause controls fail at intended semantic assertions. Full
 positive/hostile products/programmes/actual streams retain.
 
-The first checker accepted Boolean false as integer phase zero; its full false-green
-epoch retains. Typed canonical coordinates and a separate Perl JSON-kind reader
-reject it. Every original semantic control reruns with corrected programmes before
-signoff.
+The first checker accepted Boolean false as integer phase zero; that full
+false-green epoch retains. Typed coordinates and a separate Perl JSON-kind reader
+reject it. All original semantic controls rerun corrected programmes before signoff.
 
 Host-memory interruption remains non-success. Full controls/proof replay use
 separate processes under the unchanged RAM guard.
 
-Path repair keeps whole candidates; reconstruction assumes qualified source
+Path repair retains whole candidates; reconstruction assumes qualified source
 products. Native class/hooks/provider/settings/flags/encoding, hidden arguments
-and private/referent identities stay unmeasured.
+and private/referent identities remain unmeasured.
 
-Construction/custody/semantic/typed-repair descendants qualify both readers on whole
-positive/hostile candidates: all bodies pass; only positive source semantics passes.
-Typed JSON coordinates and dated construction/recovery-layout/Git-custody/semantic
-defaults retain.
+Construction/custody/semantic/typed-repair descendants qualify both readers on
+whole positive/hostile candidates: bodies pass; only positive source semantics
+passes. Typed JSON coordinates and dated construction/recovery-layout/Git-custody/
+semantic defaults retain.
 
-Full raw acceptance joins inventory/class/frame/coordinate/address, source/native
+Full raw acceptance joins inventory/class/frame/coordinate/address/source/native
 custody, semantic/native-body controls and canonical publication. Failures/unknowns
 retain; no ignored checkpoint/native recapture needed:
 
@@ -1199,35 +1198,33 @@ Original assumptions/failures/native/private limits and higher owners retain:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-parent-acceptance-20261011/complete.py
 ```
 
-Consumer contracts bind every expression/helper/loop/dataflow/typed
-operand roles. Passed flags prove no truth; operands/outcomes/canonical/parent
-acceptance stay open:
+Consumer contracts bind all expression/helper/loop/dataflow/typed operand roles.
+Passed flags prove no truth; operand/outcome/canonical/parent acceptance stays open:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-source-contracts-20261011/verify.py
 ```
 
-Original helper truth derives negated-eval and first-line regex operands from
-own source causes. Independent comparisons reject forced flags and stack
-echoes; nonhelper/full consumer acceptance stays open:
+Helper truth derives negated-eval/first-line regex operands from own source
+causes. Independent comparisons reject forced flags/stack echoes; nonhelper/full
+consumer acceptance stays open:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/helper-consumer-truth-20261011/verify.py
 ```
 
-Remaining consumer truth derives typed JSON/actor/type/path/API/copy operands
-and scalar/structural comparisons. Synthetic trace details stay opaque.
-The first actor/copy-kind failure stays reproducible; its repair uses the
-qualified Storable witness. Helper/full join/parent scopes retain:
+Remaining truth derives typed JSON/actor/type/path/API/copy operands and
+scalar/structural comparisons. Synthetic trace details stay opaque. The first
+actor/copy-kind failure replays; its repair uses the qualified Storable witness.
+Helper/full join/parent scopes retain:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/remaining-consumer-truth-20261011/verify.py
 ```
 
-Complete consumer join maps every original assertion to its own freshly
-rederived helper/remaining meaning, typed operands and comparison truth.
-Storable/synthetic/private limits retain. Meaning/canonical/parent acceptance
-remains separate:
+Consumer join binds each original assertion to freshly rederived own
+helper/remaining meaning, typed operands and comparison truth. Storable/
+synthetic/private limits retain; meaning/canonical/parent acceptance is separate:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-meaning-join-20261011/final.py
@@ -1239,6 +1236,12 @@ consumer-parent acceptance stay open:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-meaning-parent-acceptance-20261012/verify.py
+```
+
+Proposal:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-preparation-20261012/verify.py
 ```
 
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
