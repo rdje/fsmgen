@@ -1,10 +1,7 @@
 # ISF Shipped Feature Matrix
 
-This chapter is the book-facing checklist for the `.isf` surface that is
-currently shipped. It does not replace the detailed chapters, the live spec,
-or the downstream handoff. It gives reviewers one place to confirm which
-feature families are supported, where to find examples, and where the explicit
-backlog boundary starts.
+This checklist covers shipped `.isf` families, examples and explicit backlog
+boundaries. It complements the detailed chapters, live spec and downstream handoff.
 
 A feature is "shipped" here only when the source shape, scheduled `.fsm`
 lowering, runtime meaning, diagnostics, reports or review artifacts, and
@@ -1197,6 +1194,9 @@ Original assumptions/failures/native/private limits and higher owners retain:
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-parent-acceptance-20261011/complete.py
 ```
+
+The containing primary/raw task now accepts all completed children under these
+same finite source-model and native/private limits. The higher join stays open.
 
 Consumer contracts bind all expression/helper/loop/dataflow/typed operand roles.
 Passed flags prove no truth; operand/outcome/canonical/parent acceptance stays open:

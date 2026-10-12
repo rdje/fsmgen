@@ -1,0 +1,24 @@
+from pathlib import Path
+import gzip,hashlib,json,subprocess
+b=Path('docs/audits/primary-raw-cause-container-acceptance-20261012');b.mkdir()
+old=json.loads(Path('docs/audits/original-consumer-parent-acceptance-20261012/plan.json').read_bytes())
+family=old['parent'].rsplit('.',1)[0]
+p=dict(revision=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),owner=family+'.2.4',parent=family+'.2',higher_join=old['next_join'],full_alias=old['full_alias'],cause_join='docs/audits/primary-raw-cause-parent-acceptance-20261011',consumer='docs/audits/original-consumer-parent-acceptance-20261012',condition='Complete unchanged original primary/raw cause container acceptance only. Preserve complete original contracts, source/native/product/cause/coordinate/address roles, every genuine control and first failure/repair. Qualified source-model and dated primary/coordinate/address native epochs remain assumptions; no original recapture or later historical-programme currency, native/private/provider/formatter/encoding/hidden-identity assurance, higher context/cause/coordinate/consumer join, full alias, product/semantic/cold/permanent/host-native/visual/HIAL/full-CI/push closure.')
+canonical=lambda d:(json.dumps(d,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False)+'\n').encode()
+(b/'plan.json').write_bytes(canonical(p))
+for name,source in [('task','docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md'),('memory','MEMORY.md'),('index','docs/TASK_TREE.md')]:
+ (b/('activation-'+name+'.gz')).write_bytes(gzip.compress(Path(source).read_bytes(),mtime=0))
+(b/'consumer-normal-commit.json').write_bytes(Path('.artifacts/original-consumer-parent-acceptance-20261012/normal-commit.json').read_bytes())
+(b/'integration-contract.json').write_bytes(Path(p['consumer']+'/integration-contract.json').read_bytes())
+book=Path('docs/book/src/13k-isf-feature-support-matrix.md').read_bytes()
+first=book.split(b'\n\n',2)[1]
+replacement=b'This checklist covers shipped `.isf` families, examples and explicit backlog\nboundaries. It complements the detailed chapters, live spec and downstream handoff.'
+guide=b'The containing primary/raw task now accepts all completed children under these\nsame finite source-model and native/private limits. The higher join stays open.\n'
+anchor=Path('docs/audits/primary-raw-cause-parent-acceptance-20261011/notice.txt').read_bytes()+b'\n'
+assert book.count(anchor)==1 and book.count(first)==1
+proposed=book.replace(first,replacement,1).replace(anchor,anchor+b'\n'+guide,1)
+print('Book proposal',len(book),'->',len(proposed),'old/new introduction',len(first),len(replacement),'guide',len(guide))
+assert len(proposed)<=len(book)<=292485
+(b/'guide.txt').write_bytes(guide)
+(b/'book-review.json').write_bytes(canonical(dict(before_bytes=len(book),after_bytes=len(proposed),book_compactions=[[first.decode(),replacement.decode()]],condition='One equivalent introduction compaction retains shipped-family/examples/backlog navigation and the detailed-chapter/live-spec/downstream complement. All runnable commands, numeric claim lines, helper guidance, protected UTF-8 disposition and native/private boundaries retain. New prose records container tracking acceptance, not product capability.')))
+print('Owned cause-container plan, activation snapshots and prior complete normal terminal saved.')

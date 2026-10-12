@@ -1,0 +1,2 @@
+The containing primary/raw task now accepts all completed children under these
+same finite source-model and native/private limits. The higher join stays open.
