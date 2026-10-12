@@ -1,0 +1,33 @@
+from pathlib import Path
+import json
+b=Path('docs/audits/original-context-cause-consumer-prerequisites-20261012');p=json.loads((b/'plan.json').read_bytes());old=Path(p['cause'])
+book=Path('docs/book/src/13k-isf-feature-support-matrix.md').read_text()
+guide='Context/cause/consumer admission preserves each qualified meaning and limit;\nindependent association and parent acceptance stay open.\n'
+changes=[
+('This checklist covers shipped `.isf` families, examples and explicit backlog\nboundaries. It complements the detailed chapters, live spec and downstream handoff.','Shipped `.isf` families, examples and backlog boundaries complement the detailed\nchapters, live spec and downstream handoff.'),
+('A feature is "shipped" here only when the source shape, scheduled `.fsm`\nlowering, runtime meaning, diagnostics, reports or review artifacts, and\nfocused regression evidence exist. Parser acceptance alone is not a support\nclaim.','A shipped feature has source shape, scheduled `.fsm` lowering, runtime meaning,\ndiagnostics, reports/review artifacts and focused regressions. Parser acceptance\nalone establishes no support claim.'),
+("SPECFORGE's configuration, verification and phase-membership requests are\nowned implementation work; they are not shipped capabilities yet.","SPECFORGE's configuration, verification and phase-membership requests are owned\nwork awaiting implementation."),
+('The earlier derived-width request depends on genuine generic-width support;\nit is distinct from it. Exact request scopes, repair order, current\nreproductions and bounded owners are recorded in','Derived-width requests depend on generic-width support and retain their distinct\nscope. Request scopes, repair order, current reproductions and owners are in')]
+anchor=(old/'guide.txt').read_text();assert book.count(anchor)==1
+proposal=book.replace(anchor,anchor+'\n'+guide,1)
+for first,last in changes:
+ assert proposal.count(first)==1
+ proposal=proposal.replace(first,last,1)
+assert len(proposal.encode())<=len(book.encode())
+review=dict(anchor=anchor,book_compactions=changes,before_bytes=len(book.encode()),after_bytes=len(proposal.encode()),condition='Equivalent introduction, shipped-evidence, requested-extension and derived-width navigation compactions retain meaning. Every existing command, numeric claim line, encoding disposition, helper guidance and canonical authority retains. Admission adds no cross-semantic or native/private assurance.')
+def put(name,body):
+ assert not (b/name).exists()
+ (b/name).write_bytes(body)
+put('book-review.json',(json.dumps(review,sort_keys=True,separators=(',',':'))+'\n').encode());put('guide.txt',guide.encode())
+common=(old/'container_common.py').read_text().replace('Original cause-container declarations','Original join-prerequisite declarations').replace('fixed_cause_container_current_factory','fixed_join_admission_current_factory')
+put('admission_common.py',common.encode())
+capture=(old/'capture.py').read_text().replace(str(old),str(b)).replace("'consumer-normal-commit.json', plan['activation_task'],","'cause-normal-commit.json', 'activation-task.gz',").replace("'activation-index.gz', 'development-phase.json'","'activation-index.gz', 'reader-contracts.json'")
+capture=capture.replace("    names.update(str(path) for path in Path('docs/audits/primary-raw-cause-parent-acceptance-20261011').glob('*.py'))","    for role in ('context', 'cause', 'consumer'):\n        names.update(str(path) for path in Path(plan[role]).glob('*.py'))")
+put('capture.py',capture.encode())
+intake=(old/'intake.py').read_text().replace("PLAN['activation_task']","'activation-task.gz'").replace("Path(PLAN['consumer']) / 'source-roles.json'","Path(PLAN['cause']) / 'source-roles.json'").replace("{PLAN['consumer'], PLAN['cause_join'], 'scripts/record_value_consumer_fact.py'}","{PLAN['context'], PLAN['cause'], PLAN['consumer'], 'scripts/record_value_consumer_fact.py'}").replace('cause-container','join-prerequisite').replace('clean complete original consumer acceptance commit','clean complete cause-container acceptance commit')
+put('intake.py',intake.encode())
+current=(old/'current_snapshot.py').read_text().replace('from container_common import *','from admission_common import *')
+put('current_snapshot.py',current.encode())
+native=(old/'book_native.py').read_text().replace('from container_common import *','from admission_common import *').replace('bounded container notice','bounded admission notice').replace('whole native container notice','whole native admission notice').replace('cause-container guidance','join-prerequisite guidance')
+put('book_native.py',native.encode())
+print('Prepared five programme bodies and reviewed non-growing book proposal:',review['before_bytes'],'->',review['after_bytes'])

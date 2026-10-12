@@ -1,0 +1,24 @@
+from pathlib import Path
+import json,hashlib,gzip
+b=Path('docs/audits/original-context-cause-consumer-prerequisites-20261012');src=(b/'preparation-first-source.txt').read_bytes()
+r=dict(command=['python3','-B','-'],status=1,expected_status=None,stdout='',stderr='Traceback (most recent call last):\n  File "<stdin>", line 16, in <module>\nAssertionError\n',source=dict(path=str(b/'preparation-first-source.txt'),bytes=len(src),sha256=hashlib.sha256(src).hexdigest()),condition='Full source reconstructed after invocation from tool input; no prelaunch source census or predeclared native expected status. The proposal capacity assertion stops before all put calls; no proposal/programme/target file was written. This is an unwrapped preparation failure, not an original semantic replay.')
+(b/'preparation-first.json').write_text(json.dumps(r,sort_keys=True,separators=(',',':'))+'\n')
+# Compute the failed proposal without rerunning any preparation writes.
+namespace={};exec(compile(src.split(b'assert len(proposal.encode())')[0],'<retained static proposal>','exec'),namespace)
+first=namespace['proposal'];book=namespace['book'];guide=namespace['guide'];changes=namespace['changes']
+changes.append(('Unknown or malformed interface-port options are rejected in default and strict\nmodes through native/API/MCP queries. This validation boundary does not add\noptional-port support. Declared inputs and outputs now retain their interface\nroles even when unused or undriven. Output preservation adds no value assignment.','Default and strict native/API/MCP queries reject unknown or malformed port options;\noptional-port support remains open. Inputs and outputs retain their interface roles\neven when unused or undriven. Output preservation adds no value assignment.'))
+last=first
+old,new=changes[-1];assert last.count(old)==1;last=last.replace(old,new,1)
+assert len(last.encode())<=len(book.encode())
+review=dict(anchor=namespace['anchor'],book_compactions=changes,before_bytes=len(book.encode()),first_bytes=len(first.encode()),after_bytes=len(last.encode()),condition='Five equivalent navigation/evidence/extension/interface prose compactions retain their complete meanings. All existing runnable commands, numeric claim lines, encoding dispositions, helper guidance and canonical authority retain. The first unwrapped over-capacity proposal remains failed; no production source was changed.')
+for name,body in [('book-review.json',(json.dumps(review,sort_keys=True,separators=(',',':'))+'\n').encode()),('guide.txt',guide.encode())]:
+ assert not (b/name).exists();(b/name).write_bytes(body)
+# Reuse only the source-creation tail, after the corrected metadata was checked.
+tail=src[src.index(b'common=(old/'):];scope=dict(namespace);scope['old']=Path(scope['p']['cause']);scope['put']=lambda name,body:(b/name).open('xb').write(body)
+exec(compile(tail,'<reviewed programme preparation tail>','exec'),scope)
+task=Path('docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md');body=task.read_text();marker='- ID: `'+scope['p']['owner']+'`';s=body.index(marker);e=body.index('\n- ID:',s+1);block=body[s:e]
+block=block.rstrip()+'\n  Finding F1 (P3; owned): `The first unwrapped metadata preparation exited1 at its static whole-book capacity assertion before any proposal/programme/target writes; no expected native status was declared. Complete terminal and after-invocation source reconstruction retain. Five equivalent prose compactions now project within the unchanged chapter allowance; complete development/formal/current book gates must verify the correction before closure.`\n'
+body=body[:s]+block+'\n'+body[e:];task.write_text(body)
+# This is the admitted activation snapshot; retain the initial activation separately.
+(b/'activation-task-first.gz').write_bytes((b/'activation-task.gz').read_bytes());(b/'activation-task.gz').write_bytes(gzip.compress(body.encode(),mtime=0))
+print('Static first/corrected/old bytes:',review['first_bytes'],review['after_bytes'],review['before_bytes'])

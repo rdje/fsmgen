@@ -1,17 +1,16 @@
 # ISF Shipped Feature Matrix
 
-This checklist covers shipped `.isf` families, examples and explicit backlog
-boundaries. It complements the detailed chapters, live spec and downstream handoff.
+Shipped `.isf` families, examples and backlog boundaries complement the detailed
+chapters, live spec and downstream handoff.
 
-A feature is "shipped" here only when the source shape, scheduled `.fsm`
-lowering, runtime meaning, diagnostics, reports or review artifacts, and
-focused regression evidence exist. Parser acceptance alone is not a support
-claim.
+A shipped feature has source shape, scheduled `.fsm` lowering, runtime meaning,
+diagnostics, reports/review artifacts and focused regressions. Parser acceptance
+alone establishes no support claim.
 
 ## Requested Extensions And Current Gaps
 
-SPECFORGE's configuration, verification and phase-membership requests are
-owned implementation work; they are not shipped capabilities yet.
+SPECFORGE's configuration, verification and phase-membership requests are owned
+work awaiting implementation.
 
 | Area | Current boundary | Requested extension |
 | --- | --- | --- |
@@ -25,18 +24,16 @@ owned implementation work; they are not shipped capabilities yet.
 | Record interface ports | Local/imported packed actor record inputs, live scalar field reads and exact-type input-to-storage copies are admitted. Frontend/generated/domain source, carriers and complete public products are qualified; direct/generated binary behavior passes both emitter options with SystemVerilog parsing. Current ISF Verilog and selected VHDL profiles refuse precisely. Selected input delivery is qualified; full output-dependent consumer delivery remains open. | Record outputs and exact-type whole copies now have bounded source/carrier admission with conservative physical writer checks; bounded public source/profile/corpus products are qualified; generated/execution qualification and output member writes remain open. Root-list ports and variants are optional. The complete request is owned by SEM `.60.4` and is not finished. |
 | Transaction phase groups | Membership cannot be carried as checked transaction metadata. | Checked phase/member/role facts without invented values, order or behavior. |
 
-Unknown or malformed interface-port options are rejected in default and strict
-modes through native/API/MCP queries. This validation boundary does not add
-optional-port support. Declared inputs and outputs now retain their interface
-roles even when unused or undriven. Output preservation adds no value assignment.
+Default and strict native/API/MCP queries reject unknown or malformed port options;
+optional-port support remains open. Inputs and outputs retain their interface roles
+even when unused or undriven. Output preservation adds no value assignment.
 An explicitly reset output without a data writer now resets and holds under
 the module hardware-reset contract. Its semantic drive family has no data-driver
 blocks. Inspect realized semantic/HDL interfaces and behavior when evaluating
 presence or reset semantics.
 
-The earlier derived-width request depends on genuine generic-width support;
-it is distinct from it. Exact request scopes, repair order, current
-reproductions and bounded owners are recorded in
+Derived-width requests depend on generic-width support and retain their distinct
+scope. Request scopes, repair order, current reproductions and owners are in
 [SPECFORGE feedback response](reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt), including
 its current delivery status and complete unstated-reset answer. Reset omission
 selects the documented legacy default; a clock-only domain means no reset,
@@ -1197,6 +1194,9 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/primary-raw-cause-parent
 
 The containing primary/raw task now accepts all completed children under these
 same finite source-model and native/private limits. The higher join stays open.
+
+Context/cause/consumer admission preserves each qualified meaning and limit;
+independent association and parent acceptance stay open.
 
 Consumer contracts bind all expression/helper/loop/dataflow/typed operand roles.
 Passed flags prove no truth; operand/outcome/canonical/parent acceptance stays open:
