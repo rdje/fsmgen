@@ -1233,6 +1233,14 @@ remains separate:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-meaning-join-20261011/final.py
 ```
 
+Independent meaning acceptance qualifies all unchanged parent and child
+contracts. Original limits retain; canonical publication and original
+consumer-parent acceptance stay open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-meaning-parent-acceptance-20261012/verify.py
+```
+
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
 Semantic/association replay needs its complete fixed source context:
 
@@ -1864,13 +1872,11 @@ span, display spelling, reference kind, source role and provenance. Its hex
 lexeme becomes an exact integer key; it never passes through a floating-point
 number or becomes a global object identifier.
 
-The join operates separately inside each qualified simultaneous source throw
-view, using the complete corrected holder relation. Explicit source aliases
-have the same displayed number. Qualified distinct source bindings have
-different displayed numbers. Distinct CODE bindings remain opaque even when
-their observed numbers agree or differ. Regex displays preserve their text;
-hidden arguments preserve their source intervals without invented addresses.
-Framework reference operands stay outside the own-source identity relation.
+Each qualified simultaneous source throw view uses the complete corrected
+holder relation. Explicit aliases share displayed numbers; qualified distinct
+source bindings differ. Distinct CODE bindings stay opaque for any observed numbers. Regex displays keep their text; hidden arguments
+keep source intervals without invented addresses. Framework references stay
+outside the own-source identity relation.
 
 For example, the following synthetic interpretation illustrates the contract:
 
@@ -2234,14 +2240,13 @@ their original results. Older readers still report their own dated successor
 boundaries; a successful prerequisite result does not silently widen its scope.
 The parent audit establishes the combined finite contract explicitly.
 
-A separate reader enumerates the original captures directly and matches every
-body and source phase to the complete parsed, source, holder and numerical
-products. Every source occurrence remains in its visible or unaddressed slot;
-original reference bytes and source provenance retain. All earlier genuine
-semantic controls stay associated with their qualified products. New complete
-witness controls reject lost or borrowed bodies, phases, source models,
-operands and controls, weakened acceptance, omitted opaque scopes, Boolean or
-nonzero statuses, borrowed commands, shortened outputs and widened guards.
+A separate reader directly joins every original captured body and source phase
+to complete parsed, source, holder and numerical products. Every occurrence
+keeps its visible or unaddressed slot, original reference bytes and provenance.
+Earlier genuine semantic controls retain their qualified products. Complete
+witness controls reject lost or borrowed bodies, phases, source models, operands
+and controls; weakened acceptance; missing opaque scopes; Boolean or nonzero
+statuses; borrowed commands; shortened outputs; and widened guards.
 
 For example, borrowing an otherwise valid numerical view from another throw
 fails its original body/source/holder association. A success line from the
@@ -2271,13 +2276,12 @@ programmes, book sources and capacity authority bind the committed epoch.
 Original global source membership and complete direct/cached question allocation
 retain.
 
-The reviewed prospective texts preserve every existing question, replay command,
-source obligation and native limit. Their ordered paragraph correspondence keeps
-the exact originals alongside the proposed wording. Separately qualified finite
-source and numerical address roles update the source-only gaps; native object
-identity and address reuse across calls or captures remain unqualified. The
-complete proposed card working set shrinks under unchanged collection authority.
-Natural-language proposition equivalence is a recorded review, not a universal
+Reviewed prospective texts preserve every question, replay command, source
+obligation and native limit, with exact original and proposed paragraphs in
+order. Qualified finite source and numerical address roles refine source-only
+gaps; native object identity and address reuse across calls or captures stay
+unqualified. The whole proposed card set shrinks under unchanged collection
+authority. Proposition equivalence is a recorded review, not a universal
 automated proof.
 
 Fresh complete integrated-source and raw-parent readers pass. A separate reader

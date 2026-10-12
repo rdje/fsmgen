@@ -1,0 +1,7 @@
+Independent meaning acceptance qualifies all unchanged parent and child
+contracts. Original limits retain; canonical publication and original
+consumer-parent acceptance stay open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-meaning-parent-acceptance-20261012/verify.py
+```
