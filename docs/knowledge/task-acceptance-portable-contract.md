@@ -8,27 +8,24 @@ answers:
   - "how does task acceptance prevent an old checklist from passing new work?"
   - "why was PGEN TASK-ACCEPTANCE not copied directly?"
   - "is TASK-ACCEPTANCE enforced in FSMGen?"
-date: 2026-07-30
+  - "how do same-repository task-acceptance index probes work?"
+date: 2026-10-12
 status: current
 tags: [doctrine, task-acceptance, evidence, checklist, portability]
-evidence: TASK_ACCEPTANCE.md; docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md; docs/tasks/TASK-ACCEPTANCE-PORTABLE-DOCTRINE.md
+evidence: t/lib/FSM/Test/TaskAcceptanceIndexRuntime.pm; t/2068-task-acceptance-index-runtime.t; TASK_ACCEPTANCE.md; docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md; docs/tasks/TASK-ACCEPTANCE-PORTABLE-DOCTRINE.md
 reverify: (scripts/decision_records.py read 0026 && cat TASK_ACCEPTANCE.md) | rg -n 'change_paths.tsv|evidence_signatures.tsv|Current-Slice Freshness|ROOT CAUSE|NO REGRESSION'
 ---
 
-Decision `0026` and `TASK_ACCEPTANCE.md` select a neutral data-driven contract.
-The checker embeds no PGEN or FSMGen tool names. An adopting project declares
-implementation-path EREs in `doctrine/task_acceptance/change_paths.tsv` and
-root-cause/no-regression evidence families in
-`doctrine/task_acceptance/evidence_signatures.tsv`.
+`0026` and `TASK_ACCEPTANCE.md` define a neutral checker; no project tool names. Projects declare path EREs in `doctrine/task_acceptance/change_paths.tsv`
+and scoped signature families in `doctrine/task_acceptance/evidence_signatures.tsv`.
 
-A matching staged change must carry fresh checked ROOT CAUSE, ADDRESSED, and NO
-REGRESSION boxes in one staged task file. Root-cause and no-regression evidence
-must match a declared signature inside the corresponding box body. Each
-required box header must be added or changed in the current staged diff, so an
-old completed checklist cannot satisfy a later slice merely because its task
-file changed.
+Matching staged changes need fresh checked ROOT CAUSE, ADDRESSED and NO
+REGRESSION boxes in one staged task file. Root-cause/no-regression signatures
+must match inside their own boxes. Every required header must change in the
+staged diff; other task edits cannot reuse old checklists.
 
-The checker establishes presence, freshness, box scope, and declared evidence
-shape. FSMGen registers it in `scripts/check_doctrines.sh`, so the existing
-pre-commit hook and hosted workflow run it. Existing deterministic test/CI
-commands remain the truth oracle.
+`scripts/check_doctrines.sh` supplies pre-commit/hosted enforcement of evidence
+presence, freshness, scope and shape. Tests/CI establish truth.
+
+`FSM::Test::TaskAcceptanceIndexRuntime` uses bounded fixed cases and an alternate
+index in this repository. T2068 checks native status, evidence and cleanup.

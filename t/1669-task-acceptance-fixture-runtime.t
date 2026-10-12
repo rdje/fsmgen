@@ -1001,6 +1001,7 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
             t/lib/FSM/Test/RustParityRuntime.pm
             t/lib/FSM/Test/RustProxyFixture.pm
             t/lib/FSM/Test/TaskAcceptanceFixtureRuntime.pm
+            t/lib/FSM/Test/TaskAcceptanceIndexRuntime.pm
             t/lib/FSM/Test/VerilatorRuntime.pm
         )],
         'only sealed policy adapters call the low-level supervisor',

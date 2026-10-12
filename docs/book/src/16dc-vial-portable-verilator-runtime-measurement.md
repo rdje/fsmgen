@@ -486,6 +486,47 @@ emitted after return, so its PID is historical evidence, not authority to
 signal a process or a live stack sample. Bash's own PID, unmodified checker
 output, and an independently held pre-exec child qualify these distinctions.
 
+Same-repository acceptance cases use
+`FSM::Test::TaskAcceptanceIndexRuntime::run_index_case`. This sealed adapter
+admits fixed case names, with no caller command, path, index or limit arguments.
+It stages literal fixture blobs in an alternate index of this repository;
+Git objects stay in this repository's object database. It creates no other
+repository and records the main index before and after each case.
+
+```perl
+use FSM::Test::TaskAcceptanceIndexRuntime qw(run_index_case);
+my $case = run_index_case('existing_source');
+die $case->{diagnostic} unless defined $case->{checker};
+print $case->{checker}{exit_code}, "\n";
+```
+
+`existing_source` deliberately lacks an owning task and returns native checker
+exit 1. `fresh_owner`, `unchecked_owner`, `stale_owner` and `documentation`
+exercise the real evidence and exemption boundaries. The record separates
+fixture Git stages from the checker result: `checker_returned` means that the
+checker ran, without promoting a nonzero result. It retains admitted commands,
+literal staged inputs and identities, staged paths and whether the worktree
+registry differs from HEAD. A co-staged registry requires evidence itself;
+committed-only coverage must separately establish source-path classification.
+
+Canonical Git/Bash selection, a sanitized child environment and fixed bounds
+prevent caller redirects. Each stage has a ten-second wall; Git capture is one
+MiB and checker capture four MiB. Settled process groups permit removal of the
+owned fixture; an unsettled receipt retains it. T2068's retention control uses
+a synthetic receipt and does not claim native child survival.
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
+  t/2068-task-acceptance-index-runtime.t
+```
+
+This checkpoint qualifies the index adapter. Audit-source declaration repair
+remains open in `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2`. The first shared
+policy-owner watcher failed on pre-existing direct GHDL test supervision;
+`.1.1.2` owns that repair before parent acceptance or full-CI qualification.
+The first failure and its incomplete source-census boundary remain recorded;
+the passing index cases do not qualify the whole ownership watcher or HDL.
+
 RAM-guard metric fixtures now use `FSM::Test::RamGuardFixtureRuntime` over the
 same shared process mechanism. T1595 preserves its healthy, pressured and
 malformed-sample metric assertions. The adapter invokes the exact repository

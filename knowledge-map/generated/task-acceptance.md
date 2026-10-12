@@ -1,10 +1,11 @@
 # Knowledge Map: `task-acceptance`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **6** uniquely owned question entries.
+> **1** facts · **7** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="how do same-repository task-acceptance index probes work?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="how does task acceptance prevent an old checklist from passing new work?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="how is TASK-ACCEPTANCE made project-neutral?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="is TASK-ACCEPTANCE enforced in FSMGen?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
@@ -18,5 +19,5 @@
 
 _Portable task acceptance uses project-declared evidence registries_
 
-- **date:** 2026-07-30 · **status:** current
+- **date:** 2026-10-12 · **status:** current
 - **source and verification:** [`docs/knowledge/task-acceptance-portable-contract.md`](../../docs/knowledge/task-acceptance-portable-contract.md)
