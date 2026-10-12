@@ -1252,6 +1252,14 @@ canonical/original consumer acceptance remains separate:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-publication-20261012/verify.py
 ```
 
+Canonical acceptance joins the complete admitted source meanings and publication
+with unchanged contracts, questions and controls. Original consumer acceptance and
+all higher owners remain open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-parent-acceptance-20261012/verify.py
+```
+
 
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
 Semantic/association replay needs its complete fixed source context:
@@ -1294,12 +1302,11 @@ qualify the model. Replay from the repository root:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/address-source-boundaries-20261010/verify.py
 ```
 
-This dated source hypothesis supplies no raw-address match. The original parser
-observer excludes its receiver from graph publication; forwarding supplies no
-receiver census. Nested topology, core/private/helper/parser-internal lifetimes
-remain source-model successors. Original raw-address joining, external/framework/
-provider/formatter identities and current canonical address publication stay open.
-Coordinate and class/frame qualifications keep their separate meanings.
+This dated hypothesis supplies no raw-address match or parser receiver census:
+the observer excludes that receiver; forwarding adds no census. Nested topology
+and core/private/helper/parser-internal lifetimes remain source-model successors.
+Original raw-address joining, external/framework/provider/formatter identities
+and canonical address publication stay open. Coordinate/class-frame scopes retain.
 
 The private-copy foundation qualifies the whole original private graph population.
 The observer uses its saved Storable handle; the finite memoized clone supplies
@@ -1347,11 +1354,10 @@ original provider identity. Original numeric addresses, private/provider/formatt
 identity, cross-call/post-return lifetimes, Metadata/nested/helper/parser bindings,
 raw-address joining and canonical publication stay separately owned.
 
-Metadata core bindings qualify separately from surviving Value ancestors. Public
-capture retains the supplied constructed interface; Metadata clones it. Recursive
-type arguments bind active detached Metadata nodes, sharing one scalar-path sink
-and active-type hash per traversal. Active nodes are symbolic; address keys stay
-unpublished.
+Metadata core bindings qualify separately from surviving Value ancestors. Capture
+retains the supplied constructed interface; Metadata clones it. Recursive type
+arguments bind active detached Metadata nodes with one scalar-path sink and active-
+type hash per traversal. Nodes are symbolic; address keys remain unpublished.
 
 For the cyclic-member refusal, the recursive `.data` type refers back to the
 active root type. Those recursive frames must retain one type binding, one sink
@@ -1372,10 +1378,9 @@ domains. Original numeric/private/provider/formatter identity, helper/parser rol
 raw-address joining and canonical publication stay open. Cross-pool detachment
 remains a finite source hypothesis; provider identity stays unmeasured.
 
-The nested lifetime join covers every Metadata/Value pair in three views: capture
-at the inner Metadata throw, Scope preserving that throw, and a new Value throw
-after Metadata unwinds. Capture/Scope share one event; an embedded trace adds no
-active invocation.
+The nested lifetime join covers every Metadata/Value pair: capture at the inner
+Metadata throw, Scope preserving it, and a new Value throw after Metadata unwinds.
+Capture/Scope share one event; embedded traces add no active invocation.
 
 The constructed interface's `type_spec` is the active Value private root's type
 node: `my $checked = $spec` preserves that alias. Metadata clones the interface
@@ -1421,14 +1426,12 @@ closure to the saved public subtest delegate. That closure later calls the body.
 CODE display cannot distinguish these roles. Source forwarding binds each handle;
 native CODE inequality stays open and framework frames stay opaque.
 
-For example, `copy($scope, 'packet', 'held')` keeps its Scope formal while the
-read and write reference helpers have returned. Their result objects are held
-by the active copy's source and target arguments. The observer still retains
-the returned operations' caller arrays in `@api`, and the refusal helper's
-caller array in `@helpers`. An inactive activation does not establish object
-death. `scope_for` separately constructs its outer roots: held and output share
-the supplied target type, and the omitted local formal yields a fresh empty
-local hash. These are source checkpoint graphs, not later scalar-flag snapshots.
+For example, `copy($scope, 'packet', 'held')` retains its Scope formal and returned
+read/write objects in active source/target arguments. The observer retains returned
+caller arrays in `@api` and the refusal caller in `@helpers`; inactivity proves no
+object death. `scope_for` constructs outer roots: held/output share the supplied
+target type; an omitted local formal yields a fresh empty local hash. These source
+checkpoint graphs supply no later scalar-flag snapshot.
 
 Runtime construction and forwarding agree with separate graph bijections,
 named member walks and semantic source-role checks. Actual borrowed calls,
@@ -1461,15 +1464,13 @@ temporary procedure-synthesis state: both refused inputs contain no procedures,
 so expansion returns before installing that state. The construction child below
 qualifies later actor graphs; original context/source joins are qualified below.
 
-Normalization is checked through the published Lispish input boundary and the
-original own normalizer source, without inspecting the provider implementation.
-For example, raw `[actor, [refused, body...]]` becomes the canonical
-`[actor, refused, body...]` form. The actor selector returns the existing actor
-node within the normalized forms array. The complete raw/forms/selected-root
-checkpoint graph agrees with an independent normalizer and graph bijection,
-including member values, node kinds and aliases. Both normalized actor contents
-also agree with their earlier authored form projections. A fresh replay does
-not recover the original heap payload, scalar flags or any later AST mutations.
+Normalization uses the published Lispish boundary and original own normalizer
+source; provider implementation is uninspected. Raw `[actor, [refused, body...]]`
+becomes `[actor, refused, body...]`; selection returns the existing actor node
+in normalized forms. Complete raw/forms/selected-root graphs agree with an
+independent normalizer and graph bijection on values, kinds and aliases. Both
+actors also match earlier authored projections. Replay recovers no original heap
+payload, scalar flags or later AST mutations.
 
 The observer saves the original `parse_source` lookup before installing its
 wrapper. Its input snapshot deliberately excludes the facade. Each wrapper

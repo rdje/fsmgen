@@ -1,0 +1,7 @@
+Canonical acceptance joins the complete admitted source meanings and publication
+with unchanged contracts, questions and controls. Original consumer acceptance and
+all higher owners remain open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-parent-acceptance-20261012/verify.py
+```
