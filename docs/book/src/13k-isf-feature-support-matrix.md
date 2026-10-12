@@ -1260,6 +1260,14 @@ all higher owners remain open:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/consumer-canonical-parent-acceptance-20261012/verify.py
 ```
 
+Original finite consumer acceptance joins all unchanged descendants and source-
+derived typed operands/truth. Earlier checkpoints keep dated scopes; full alias
+downstream and higher owners remain open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-consumer-parent-acceptance-20261012/verify.py
+```
+
 
 Consumer/alias/cold/permanent/host-native/visual/HIAL/full-CI/push retain owners.
 Semantic/association replay needs its complete fixed source context:
@@ -1414,17 +1422,16 @@ inequality of saved CODE handles, external/global retention, the actual raw
 address join and governed canonical address publication remain open. Symbolic
 graph carriers and finite clone hypotheses do not establish native allocations.
 
-Helper, callback and own subtest source bindings now cover every qualified
-refusal record and throw view. The original parameterless refusal callback is
-passed unchanged through the observer helper wrapper into compiled `refuses`.
-Its source pattern is also forwarded unchanged. Active named helpers retain
-the supplied formal references selected from their complete source graphs.
+Helper/callback/own-subtest bindings cover every qualified refusal record and throw
+view. The original parameterless callback and source pattern pass unchanged through
+the observer helper wrapper into compiled `refuses`. Active named helpers retain
+supplied formal references selected from complete source graphs.
 
-Authored subtest bodies and observer callbacks have separate source roles.
-Subtest entry receives the authored body; the observer supplies its wrapping
-closure to the saved public subtest delegate. That closure later calls the body.
-CODE display cannot distinguish these roles. Source forwarding binds each handle;
-native CODE inequality stays open and framework frames stay opaque.
+Authored bodies and observer callbacks have separate source roles. Subtest entry
+receives the body; the observer supplies a wrapping closure to the saved public
+delegate. That closure later calls the body. Source forwarding binds each handle;
+CODE display cannot distinguish roles. Native CODE inequality remains open;
+framework frames stay opaque.
 
 For example, `copy($scope, 'packet', 'held')` retains its Scope formal and returned
 read/write objects in active source/target arguments. The observer retains returned
@@ -1449,20 +1456,18 @@ publication remain open. Complete source integration and the finite raw-address
 join are qualified below.
 All existing canonical facts, questions, probes and collection limits retain.
 
-Parser-entry source bindings now qualify the receiver chain for both original
-refused inputs in every original mode. One lexical constructor creates the
-facade, its contained parser and that parser's normalization adapter. Calls
-forward the same facade through the installed wrapper, saved operation and
-original facade method; the facade then forwards its contained parser. These
-are source construction and forwarding claims, not measured native addresses.
+Parser entry qualifies the receiver chain for both original refused inputs in
+every original mode. One lexical constructor creates the facade, contained parser
+and its normalization adapter. The installed wrapper, saved operation and original
+facade method forward the same facade; it forwards its contained parser. These
+source construction/forwarding bindings measure no native addresses.
 
 The default constructor checkpoint is `facade(debug=0, parser=P)`, with
 `P(debug=0, adapter=N)` and `N(debug=0)`. The parser and adapter entries alias
-those contained objects, rather than equal fresh objects. Constructor fields
-do not establish a later heap snapshot. A source-field census also checks the
-temporary procedure-synthesis state: both refused inputs contain no procedures,
-so expansion returns before installing that state. The construction child below
-qualifies later actor graphs; original context/source joins are qualified below.
+the contained objects. Constructor fields establish no later heap snapshot.
+A source-field census finds no procedures in either refused input: expansion
+returns before installing temporary procedure-synthesis state. Later actor graphs
+and original context/source joins qualify below.
 
 Normalization uses the published Lispish boundary and original own normalizer
 source; provider implementation is uninspected. Raw `[actor, [refused, body...]]`
@@ -1472,13 +1477,12 @@ independent normalizer and graph bijection on values, kinds and aliases. Both
 actors also match earlier authored projections. Replay recovers no original heap
 payload, scalar flags or later AST mutations.
 
-The observer saves the original `parse_source` lookup before installing its
-wrapper. Its input snapshot deliberately excludes the facade. Each wrapper
-call allocates a caller array; `@parses` retains it after that call ends, including
-the earlier refusal's caller during the next refusal. The saved delegate remains
-held by the observer. Normalization and root-selection delegates have returned
-at either refusal, while parser receiver fields and active parse locals retain
-their source referents. Inactive calls do not establish object death.
+Before installing its wrapper, the observer saves the original `parse_source`
+lookup. Its input snapshot excludes the facade. Each call allocates a caller array;
+`@parses` holds it after return, including the earlier refusal's caller during the
+next refusal. The observer holds the saved delegate. Normalization/root-selection
+delegates have returned at either refusal; parser fields and active parse locals
+retain source referents. Inactivity establishes no object death.
 
 Independent checks cover every receiver, AST, saved-delegate and caller argument
 in the qualified parser core and operation boundary. That entry model explicitly

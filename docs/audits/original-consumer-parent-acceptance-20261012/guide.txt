@@ -1,0 +1,7 @@
+Original finite consumer acceptance joins all unchanged descendants and source-
+derived typed operands/truth. Earlier checkpoints keep dated scopes; full alias
+downstream and higher owners remain open:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-consumer-parent-acceptance-20261012/verify.py
+```
