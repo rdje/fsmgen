@@ -1,3 +1,3 @@
 # Latest artifact cleanup
 
-2026-10-11T16:23:57.359251+00:00 — Removed four authenticated duplicate Git-source checkpoint trees; retained other censused artifacts, original/native/compiler evidence and the current book.
+2026-10-16T22:01:32.780927+00:00 — Removed one authenticated byte-identical redundant historical book render; retained its complete peer, the current book and original native/compiler evidence. Rust log/bin paths censused.
