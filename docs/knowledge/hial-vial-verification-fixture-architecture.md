@@ -2,43 +2,43 @@
 id: hial-vial-verification-fixture-architecture
 title: VIAL uses one public source, two private IRs, and a versioned HIAL bridge
 answers:
-  - "what do HIAL and VIAL mean in FSMGen?"
-  - "does FSMGen plan a Verification IAL?"
-  - "where is powerful verification fixture generation tracked?"
-  - "should HIAL lower to SystemVerilog and VHDL?"
-  - "should VIAL lower to SV UVM and VHDL verification code?"
-  - "will VIAL have VIAL0 VIAL1 and VIAL2 layers?"
-  - "what is VIALSemanticIR?"
-  - "what is VIALExecutionIR?"
-  - "what is HIALVIALBridgeManifest?"
-  - "how do HIAL designs connect to VIAL fixtures?"
-  - "how can VIAL use native SV UVM or VHDL power?"
-  - "how is portable VIAL backend parity judged?"
-  - "what are VIAL drive sample react check phases?"
-  - "what is the first runnable VIAL backend?"
-  - "is Verilator enough to validate full SystemVerilog and UVM VIAL output?"
-  - "what simulator capability profiles does VIAL require?"
-  - "is Verilator a traditional event-driven simulator?"
-  - "does Verilator support events with timing enabled?"
-  - "what is the VIAL version 2 source and migration contract?"
-  - "is the VIAL v2 common envelope implemented?"
-  - "is public VIAL v2 tooling available?"
-  - "how do I migrate a VIAL v1 catalog to v2?"
-  - "can public VIAL v2 run a backend?"
-  - "where is the VIAL semantic family registry and profile negotiation?"
-  - "where is the common VIAL backend adapter preflight?"
-  - "how is target-free VIAL author usability checked?"
-  - "where is VIAL generated artifact quality checked?"
-  - "how does VIAL require absent backend components to be elided?"
-  - "which VIAL backend profiles have compile runtime result parity maturity?"
-  - "what is the next HIAL VIAL task?"
-  - "is a mixed-language HIAL VIAL simulator available?"
-  - "why is mixed-language qualification not active?"
-  - "where should I start reading about HIAL and VIAL?"
-  - "how is the HIAL VIAL mdBook being organized?"
-  - "how do I run the checked AHB HIAL VIAL tutorial?"
-  - "how do I migrate observe metadata and legacy verification skeletons to VIAL?"
-  - "where is the exact VIAL capability support parity and troubleshooting matrix?"
+  - what do HIAL and VIAL mean in FSMGen?
+  - does FSMGen plan a Verification IAL?
+  - where is powerful verification fixture generation tracked?
+  - should HIAL lower to SystemVerilog and VHDL?
+  - should VIAL lower to SV UVM and VHDL verification code?
+  - will VIAL have VIAL0 VIAL1 and VIAL2 layers?
+  - what is VIALSemanticIR?
+  - what is VIALExecutionIR?
+  - what is HIALVIALBridgeManifest?
+  - how do HIAL designs connect to VIAL fixtures?
+  - how can VIAL use native SV UVM or VHDL power?
+  - how is portable VIAL backend parity judged?
+  - what are VIAL drive sample react check phases?
+  - what is the first runnable VIAL backend?
+  - is Verilator enough to validate full SystemVerilog and UVM VIAL output?
+  - what simulator capability profiles does VIAL require?
+  - is Verilator a traditional event-driven simulator?
+  - does Verilator support events with timing enabled?
+  - what is the VIAL version 2 source and migration contract?
+  - is the VIAL v2 common envelope implemented?
+  - is public VIAL v2 tooling available?
+  - how do I migrate a VIAL v1 catalog to v2?
+  - can public VIAL v2 run a backend?
+  - where is the VIAL semantic family registry and profile negotiation?
+  - where is the common VIAL backend adapter preflight?
+  - how is target-free VIAL author usability checked?
+  - where is VIAL generated artifact quality checked?
+  - how does VIAL require absent backend components to be elided?
+  - which VIAL backend profiles have compile runtime result parity maturity?
+  - what is the next HIAL VIAL task?
+  - is a mixed-language HIAL VIAL simulator available?
+  - why is mixed-language qualification not active?
+  - where should I start reading about HIAL and VIAL?
+  - how is the HIAL VIAL mdBook being organized?
+  - how do I run the checked AHB HIAL VIAL tutorial?
+  - how do I migrate observe metadata and legacy verification skeletons to VIAL?
+  - where is the exact VIAL capability support parity and troubleshooting matrix?
 date: 2026-09-04
 status: current
 tags: [hial, vial, ial0, ial1, ial2, verification, semantic-ir, execution-ir, bridge, simulator-profile, architecture, task-tree]

@@ -2,60 +2,60 @@
 id: live-document-size-containment
 title: Live documents use bounded views over durable stores
 answers:
-  - "how are live-document sizes contained project-wide?"
-  - "what happens when a live document reaches its size warning?"
-  - "where does old changelog or task-tree history go?"
-  - "does sharding alone contain documentation growth?"
-  - "how is archived document content proved retrievable?"
-  - "is the live-document doctrine project neutral?"
-  - "is the live-document doctrine harness neutral?"
-  - "where are FSMGen live-document measurements recorded?"
-  - "what format does the live-document registry use?"
-  - "why does the live-document registry use JSONL instead of TSV?"
-  - "does the project-wide checker cover README.md itself?"
-  - "which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?"
-  - "where is the external review packet for live-document containment?"
-  - "should an obsolete live document be partitioned or retired?"
-  - "which FSMGen live documents are retirement candidates?"
-  - "are the common JSONL control-plane registries independently bounded?"
-  - "does hard_pct currently enforce the hard pressure threshold?"
-  - "what did PGEN and ANVIL find in the live-document review?"
-  - "were 15727 IAL2 task lines lost during task-tree sealing?"
-  - "does tracked-document coverage prove that documents are healthy?"
-  - "is neutral live-document checker identity mechanically tested?"
-  - "how are health targets different from transition ceilings?"
-  - "how is an enforcement ceiling increase authorized?"
-  - "which live-document families are migrated versus pinned or deferred?"
-  - "are declared live-document freshness verifiers actually executed?"
-  - "how are adapter live-document verifiers proved reachable from CI?"
-  - "does live-document size compliance prove that a document is current?"
-  - "how are live-document currency contracts declared?"
-  - "does FSMGen use a global newest-date or distinct-date staleness check?"
-  - "are author overflow routes different from reader navigation routes?"
-  - "how are live-document collection indexes checked for completeness?"
-  - "are external review evidence-map paths mechanically checked?"
-  - "does the live-document doctrine inspect the staged resulting tree?"
-  - "how does a live-document migration prove that no content was lost?"
-  - "why are migration products not added as disjoint line counts?"
-  - "what retention contract is required for a version object?"
-  - "where is the bounded live-document architecture review front door?"
-  - "how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?"
-  - "how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?"
-  - "how is the Knowledge Map kept bounded?"
-  - "how do I query the Knowledge Map?"
-  - "where does the Knowledge Map query cache live?"
-  - "does a generated projection support deterministic shard collections?"
-  - "where is the complete focused and ancillary document index?"
-  - "how is the ISF reference partitioned?"
-  - "why did T1569 fail after a maintained ISF reference edit?"
-  - "how are mechanically exact current-state fields contained?"
-  - "when must a live-document value be derived on read?"
-  - "how is a deliberately retained derived-state copy verified?"
-  - "is immutable task evidence the same as mutable current derived state?"
-  - "what is the main downstream entry point for containment doctrine updates?"
-  - "how are repeated task-tree acceptance checklists contained?"
-  - "should integration tests hard-code the live-document surface count?"
-  - "why can T1554 hang in a core verifier before startup?"
+  - how are live-document sizes contained project-wide?
+  - what happens when a live document reaches its size warning?
+  - where does old changelog or task-tree history go?
+  - does sharding alone contain documentation growth?
+  - how is archived document content proved retrievable?
+  - is the live-document doctrine project neutral?
+  - is the live-document doctrine harness neutral?
+  - where are FSMGen live-document measurements recorded?
+  - what format does the live-document registry use?
+  - why does the live-document registry use JSONL instead of TSV?
+  - does the project-wide checker cover README.md itself?
+  - which tasks own the large roadmap, task, book, changelog, development notes, and knowledge map migrations?
+  - where is the external review packet for live-document containment?
+  - should an obsolete live document be partitioned or retired?
+  - which FSMGen live documents are retirement candidates?
+  - are the common JSONL control-plane registries independently bounded?
+  - does hard_pct currently enforce the hard pressure threshold?
+  - what did PGEN and ANVIL find in the live-document review?
+  - were 15727 IAL2 task lines lost during task-tree sealing?
+  - does tracked-document coverage prove that documents are healthy?
+  - is neutral live-document checker identity mechanically tested?
+  - how are health targets different from transition ceilings?
+  - how is an enforcement ceiling increase authorized?
+  - which live-document families are migrated versus pinned or deferred?
+  - are declared live-document freshness verifiers actually executed?
+  - how are adapter live-document verifiers proved reachable from CI?
+  - does live-document size compliance prove that a document is current?
+  - how are live-document currency contracts declared?
+  - does FSMGen use a global newest-date or distinct-date staleness check?
+  - are author overflow routes different from reader navigation routes?
+  - how are live-document collection indexes checked for completeness?
+  - are external review evidence-map paths mechanically checked?
+  - does the live-document doctrine inspect the staged resulting tree?
+  - how does a live-document migration prove that no content was lost?
+  - why are migration products not added as disjoint line counts?
+  - what retention contract is required for a version object?
+  - where is the bounded live-document architecture review front door?
+  - how does maintained_reference bound reads and authorize product-sized mdBook or ISF_SPEC change without a fixed aggregate cap?
+  - how does a bounded rolling ledger preserve whole-entry history and exact reconstruction?
+  - how is the Knowledge Map kept bounded?
+  - how do I query the Knowledge Map?
+  - where does the Knowledge Map query cache live?
+  - does a generated projection support deterministic shard collections?
+  - where is the complete focused and ancillary document index?
+  - how is the ISF reference partitioned?
+  - why did T1569 fail after a maintained ISF reference edit?
+  - how are mechanically exact current-state fields contained?
+  - when must a live-document value be derived on read?
+  - how is a deliberately retained derived-state copy verified?
+  - is immutable task evidence the same as mutable current derived state?
+  - what is the main downstream entry point for containment doctrine updates?
+  - how are repeated task-tree acceptance checklists contained?
+  - should integration tests hard-code the live-document surface count?
+  - why can T1554 hang in a core verifier before startup?
 date: 2026-10-05
 status: current
 tags: [documentation, doctrine, continuity, size, derived-state, sharding, rollover, archive, harness-neutral]

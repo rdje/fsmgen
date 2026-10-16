@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2` (pending)
-- next_action: Repair the demonstrated audit-source declaration gap using fixed native format/evidence controls; preserve the first source-only false green and qualify committed-only coverage afterward.
+- next_action: Repair the demonstrated audit-source declaration gap with committed fixed profiles; leave adapters/checker unchanged and qualify committed-only coverage separately in .2.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; consume delivery/normal-commit receipts before selecting any successor.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

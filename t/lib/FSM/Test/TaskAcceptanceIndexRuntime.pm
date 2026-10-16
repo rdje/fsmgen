@@ -31,8 +31,27 @@ my %CASES = (
     fresh_owner => ['perl/TaskAcceptanceIndexFixture.pm', 'fresh'],
     unchecked_owner => ['perl/TaskAcceptanceIndexFixture.pm', 'unchecked'],
     stale_owner => ['perl/TaskAcceptanceIndexFixture.pm', 'stale'],
-    map { ('audit_' . $_) => ['docs/audits/acceptance-index-fixture/source.' . $_, 'unchecked'] }
-        qw(py pl pm sh c t),
+    (map { ('audit_' . $_) => ['docs/audits/acceptance-index-fixture/source.' . $_, 'unchecked'] }
+        qw(py pl pm sh c t)),
+    (map {
+        my $extension = $_;
+        map {
+            ('audit_' . $extension . '_' . $_) =>
+                ['docs/audits/acceptance-index-fixture/source.' . $extension, $_]
+        } qw(fresh none stale)
+    } qw(py pl pm sh c t)),
+    audit_document_md => ['docs/audits/acceptance-index-fixture/notes.md', 'none'],
+    audit_document_json => ['docs/audits/acceptance-index-fixture/receipt.json', 'none'],
+    audit_document_txt => ['docs/audits/acceptance-index-fixture/notes.txt', 'none'],
+    audit_source_suffix_md => ['docs/audits/acceptance-index-fixture/source.py.md', 'none'],
+    audit_neighbor_prefix => ['docs/audit-notes/source.py', 'none'],
+    audit_nested_py => ['docs/audits/acceptance-index-fixture/nested/source.py', 'none'],
+    audit_document_md_unchecked => ['docs/audits/acceptance-index-fixture/notes.md', 'unchecked'],
+    audit_document_json_unchecked => ['docs/audits/acceptance-index-fixture/receipt.json', 'unchecked'],
+    audit_document_txt_unchecked => ['docs/audits/acceptance-index-fixture/notes.txt', 'unchecked'],
+    audit_source_suffix_md_unchecked => ['docs/audits/acceptance-index-fixture/source.py.md', 'unchecked'],
+    audit_neighbor_prefix_unchecked => ['docs/audit-notes/source.py', 'unchecked'],
+    audit_nested_py_unchecked => ['docs/audits/acceptance-index-fixture/nested/source.py', 'unchecked'],
 );
 
 sub run_index_case {

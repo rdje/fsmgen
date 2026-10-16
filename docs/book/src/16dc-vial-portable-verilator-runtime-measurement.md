@@ -459,6 +459,8 @@ literal staged inputs and identities, staged paths and whether the worktree
 registry differs from HEAD. A co-staged registry requires evidence itself;
 committed-only coverage must separately establish source-path classification.
 
+Use `run_index_case('audit_py_fresh')`, `audit_py_none` or `audit_py_stale` for pure audit evidence; the same suffixes apply to `pl`, `pm`, `sh`, `c` and `t`, while `audit_py` retains unchecked evidence. `audit_document_md`, `audit_document_json`, `audit_document_txt`, `audit_source_suffix_md` and `audit_neighbor_prefix` select neighboring documents; `audit_nested_py` selects nested source. Append `_unchecked` to a neighbor profile to expose classified paths when the registry is co-staged. These names admit literal fixture paths only. The fixture watcher preserves native exemption or refusal truth; it does not qualify the open audit-source declaration. Delivery checks preserve indexed content and revision while retaining raw stat-cache observations; native fixtures still pin exact index bytes.
+
 Canonical Git/Bash selection, a sanitized child environment and fixed bounds
 prevent caller redirects. Each stage has a ten-second wall; Git capture is one
 MiB and checker capture four MiB. Settled process groups permit removal of the
@@ -467,7 +469,8 @@ a synthetic receipt and does not claim native child survival.
 
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
-  t/2068-task-acceptance-index-runtime.t
+  t/2068-task-acceptance-index-runtime.t \
+  t/2070-audit-index-fixture-policy.t
 ```
 
 The index adapter qualifies bounded checker/evidence cases and current

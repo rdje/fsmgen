@@ -2,83 +2,83 @@
 id: semantic-introspection-mcp-frontier
 title: Deep semantic introspection is an active first-class FSMGen feature
 answers:
-  - "does FSMGen have an MCP task tree?"
-  - "does VIAL semantic inspection expose lifecycle conditions and action bodies?"
-  - "what owns semantic introspection for AI automation?"
-  - "should FSMGen be MCP-first?"
-  - "what can FSMGen apply from an RTL simulator MCP design?"
-  - "what is the first MCP-related FSMGen task?"
-  - "is deep semantic introspection a first-class FSMGen feature?"
-  - "what is the next semantic introspection leaf?"
-  - "which MCP resources are selected for FSMGen introspection?"
-  - "which MCP tools are selected for FSMGen introspection?"
-  - "where is FSMGen semantic introspection advertised?"
-  - "is the FSMGen MCP adapter implemented?"
-  - "how do I configure the FSMGen MCP adapter?"
-  - "which read-only MCP workflow examples are documented?"
-  - "where are FSMGen MCP schema snapshots?"
-  - "which MCP client modes are compatible with FSMGen?"
-  - "does FSMGen MCP stdio use Content-Length framing?"
-  - "is FSMGen MCP stdio newline delimited?"
-  - "does FSMGen consume MCP client roots?"
-  - "what is the FSMGen MCP workspace-root authority?"
-  - "does FSMGen advertise MCP prompts?"
-  - "are FSMGen MCP prompt templates implemented?"
-  - "does FSMGen support MCP resource subscriptions?"
-  - "does FSMGen emit MCP resources/list_changed notifications?"
-  - "does FSMGen support MCP completion/complete?"
-  - "does FSMGen advertise MCP completions?"
-  - "does FSMGen advertise MCP logging?"
-  - "does FSMGen support MCP logging/setLevel?"
-  - "does FSMGen support MCP pagination?"
-  - "does FSMGen emit MCP nextCursor?"
-  - "how does FSMGen handle MCP cursor params?"
-  - "does FSMGen support MCP sampling/createMessage?"
-  - "does FSMGen support MCP elicitation/create?"
-  - "does FSMGen initiate MCP model calls or user-input requests?"
-  - "does FSMGen support MCP Streamable HTTP?"
-  - "does FSMGen MCP run as a service?"
-  - "which MCP transports does FSMGen ship?"
-  - "does FSMGen MCP return structuredContent?"
-  - "does FSMGen MCP advertise tool outputSchema?"
-  - "are FSMGen MCP tool results still available as text JSON?"
-  - "which FSMGen MCP tool annotations are shipped?"
-  - "does FSMGen MCP advertise readOnlyHint?"
-  - "does FSMGen MCP advertise openWorldHint?"
-  - "does FSMGen MCP advertise destructiveHint or idempotentHint?"
-  - "does FSMGen MCP annotate resources or resource templates?"
-  - "does FSMGen MCP annotate tool result content?"
-  - "does FSMGen MCP return resource_link tool content?"
-  - "does FSMGen MCP emit progress notifications?"
-  - "how does FSMGen MCP handle progressToken?"
-  - "does FSMGen MCP handle notifications/cancelled?"
-  - "does FSMGen MCP support JSON-RPC batch requests?"
-  - "how does FSMGen MCP handle non-object JSON-RPC envelopes?"
-  - "which MCP protocol version does FSMGen initialize return?"
-  - "does FSMGen MCP echo unsupported protocol versions?"
-  - "can client capabilities widen FSMGen MCP server capabilities?"
-  - "does FSMGen MCP return JSON-RPC error.data?"
-  - "does MCP preserve failed source check and semantic diagnostics?"
-  - "why do ISF width diagnostics name the authored source?"
-  - "what blocks strict multi-clock ISF qualification?"
-  - "how are embedded absolute paths removed from MCP errors?"
-  - "does MCP discover axi apb ahb protocol aliases?"
-  - "where is the public source query applicability map?"
-  - "are FSMGen MCP error messages sanitized?"
-  - "does MCP preserve quoted division operators in diagnostics?"
-  - "why did large MCP reports exceed the RAM guard?"
-  - "why did concatenation factorization change APB HDL across hash seeds?"
-  - "what serverInfo title does FSMGen MCP expose?"
-  - "what do FSMGen MCP initialize instructions advertise?"
-  - "is the immediate FSMGen MCP protocol-hardening pass exhausted?"
-  - "what is the next semantic-introspection frontier after MCP protocol hardening?"
-  - "what source discovery boundary is selected for FSMGen MCP?"
-  - "does FSMGen MCP expose catalog-backed source discovery?"
-  - "which FSMGen MCP tool discovers source identities?"
-  - "does FSMGen MCP source discovery scan the workspace?"
-  - "is the immediate FSMGen MCP semantic-introspection pass complete?"
-  - "what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?"
-  - "what is the active priority after FSMGen MCP source discovery?"
+  - does FSMGen have an MCP task tree?
+  - does VIAL semantic inspection expose lifecycle conditions and action bodies?
+  - what owns semantic introspection for AI automation?
+  - should FSMGen be MCP-first?
+  - what can FSMGen apply from an RTL simulator MCP design?
+  - what is the first MCP-related FSMGen task?
+  - is deep semantic introspection a first-class FSMGen feature?
+  - what is the next semantic introspection leaf?
+  - which MCP resources are selected for FSMGen introspection?
+  - which MCP tools are selected for FSMGen introspection?
+  - where is FSMGen semantic introspection advertised?
+  - is the FSMGen MCP adapter implemented?
+  - how do I configure the FSMGen MCP adapter?
+  - which read-only MCP workflow examples are documented?
+  - where are FSMGen MCP schema snapshots?
+  - which MCP client modes are compatible with FSMGen?
+  - does FSMGen MCP stdio use Content-Length framing?
+  - is FSMGen MCP stdio newline delimited?
+  - does FSMGen consume MCP client roots?
+  - what is the FSMGen MCP workspace-root authority?
+  - does FSMGen advertise MCP prompts?
+  - are FSMGen MCP prompt templates implemented?
+  - does FSMGen support MCP resource subscriptions?
+  - does FSMGen emit MCP resources/list_changed notifications?
+  - does FSMGen support MCP completion/complete?
+  - does FSMGen advertise MCP completions?
+  - does FSMGen advertise MCP logging?
+  - does FSMGen support MCP logging/setLevel?
+  - does FSMGen support MCP pagination?
+  - does FSMGen emit MCP nextCursor?
+  - how does FSMGen handle MCP cursor params?
+  - does FSMGen support MCP sampling/createMessage?
+  - does FSMGen support MCP elicitation/create?
+  - does FSMGen initiate MCP model calls or user-input requests?
+  - does FSMGen support MCP Streamable HTTP?
+  - does FSMGen MCP run as a service?
+  - which MCP transports does FSMGen ship?
+  - does FSMGen MCP return structuredContent?
+  - does FSMGen MCP advertise tool outputSchema?
+  - are FSMGen MCP tool results still available as text JSON?
+  - which FSMGen MCP tool annotations are shipped?
+  - does FSMGen MCP advertise readOnlyHint?
+  - does FSMGen MCP advertise openWorldHint?
+  - does FSMGen MCP advertise destructiveHint or idempotentHint?
+  - does FSMGen MCP annotate resources or resource templates?
+  - does FSMGen MCP annotate tool result content?
+  - does FSMGen MCP return resource_link tool content?
+  - does FSMGen MCP emit progress notifications?
+  - how does FSMGen MCP handle progressToken?
+  - does FSMGen MCP handle notifications/cancelled?
+  - does FSMGen MCP support JSON-RPC batch requests?
+  - how does FSMGen MCP handle non-object JSON-RPC envelopes?
+  - which MCP protocol version does FSMGen initialize return?
+  - does FSMGen MCP echo unsupported protocol versions?
+  - can client capabilities widen FSMGen MCP server capabilities?
+  - does FSMGen MCP return JSON-RPC error.data?
+  - does MCP preserve failed source check and semantic diagnostics?
+  - why do ISF width diagnostics name the authored source?
+  - what blocks strict multi-clock ISF qualification?
+  - how are embedded absolute paths removed from MCP errors?
+  - does MCP discover axi apb ahb protocol aliases?
+  - where is the public source query applicability map?
+  - are FSMGen MCP error messages sanitized?
+  - does MCP preserve quoted division operators in diagnostics?
+  - why did large MCP reports exceed the RAM guard?
+  - why did concatenation factorization change APB HDL across hash seeds?
+  - what serverInfo title does FSMGen MCP expose?
+  - what do FSMGen MCP initialize instructions advertise?
+  - is the immediate FSMGen MCP protocol-hardening pass exhausted?
+  - what is the next semantic-introspection frontier after MCP protocol hardening?
+  - what source discovery boundary is selected for FSMGen MCP?
+  - does FSMGen MCP expose catalog-backed source discovery?
+  - which FSMGen MCP tool discovers source identities?
+  - does FSMGen MCP source discovery scan the workspace?
+  - is the immediate FSMGen MCP semantic-introspection pass complete?
+  - what did SEMANTIC-INTROSPECTION-MCP-FRONTIER.30 select?
+  - what is the active priority after FSMGen MCP source discovery?
 date: 2026-09-27
 status: current
 tags: [mcp, ai, llm, semantic-json, embedding, public-api, task-tree]
