@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1267** facts · **6986** unique questions · **7163** answer occurrences · **185** topic shards.
+> **1267** facts · **6987** unique questions · **7164** answer occurrences · **185** topic shards.
 
 Query first:
 
@@ -176,7 +176,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `sv-intermediate` | 1 | 4 | [`sv-intermediate.md`](knowledge-map/generated/sv-intermediate.md) |
 | `task-acceptance` | 1 | 7 | [`task-acceptance.md`](knowledge-map/generated/task-acceptance.md) |
 | `task-tree` | 6 | 37 | [`task-tree.md`](knowledge-map/generated/task-tree.md) |
-| `test-subprocess` | 1 | 165 | [`test-subprocess.md`](knowledge-map/generated/test-subprocess.md) |
+| `test-subprocess` | 1 | 166 | [`test-subprocess.md`](knowledge-map/generated/test-subprocess.md) |
 | `trial2-legacy` | 1 | 5 | [`trial2-legacy.md`](knowledge-map/generated/trial2-legacy.md) |
 | `vhdl-backend` | 1 | 5 | [`vhdl-backend.md`](knowledge-map/generated/vhdl-backend.md) |
 | `vhdl-deferred` | 1 | 20 | [`vhdl-deferred.md`](knowledge-map/generated/vhdl-deferred.md) |

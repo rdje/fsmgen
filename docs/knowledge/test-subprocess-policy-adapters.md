@@ -2,174 +2,182 @@
 id: test-subprocess-policy-adapters
 title: Test subprocesses share one mechanism behind sealed policy adapters
 answers:
-  - "how does the original root execution release work?"
-  - "what happens when a reserved process group reservation dies?"
-  - "why can reserved cleanup miss an unjoined command?"
-  - "how do I decode a stopped child native wait status?"
-  - "how are genuine omitted release closes selected?"
-  - "how do equal-reference release compositions preserve ownership?"
-  - "how do ordinary release compositions preserve primary errors?"
-  - "how are release error compositions selected?"
-  - "what survives last-observation close reports?"
-  - "how do active-runtime close reports preserve runtime state?"
-  - "how are equal-reference release close reports verified?"
-  - "how are ordinary release close reports verified?"
-  - "how are release close reports selected?"
-  - "how is complete release call readback fault coverage verified?"
-  - "how is selected release readback syscall evidence joined?"
-  - "how are release unlink absence reports verified?"
-  - "how does last-observation readback preserve an unreferenced image?"
-  - "how do active-runtime readback controls preserve runtime state?"
-  - "how do equal-reference readback controls preserve source identity?"
-  - "how are ordinary release readback failures and cleanup verified?"
-  - "can successful Perl sysopen leave nonzero errno?"
-  - "how do readback syscall hooks preserve compiled calls and aliases?"
-  - "why can altered census read bytes leave release successful?"
-  - "what is the selected release readback failure domain?"
-  - "what survives last-observation release after-call faults?"
-  - "what survives last-observation release before-call faults?"
-  - "what survives active-runtime release after-call faults?"
-  - "what survives active-runtime release before-call faults?"
-  - "what survives equal-reference release after-call faults?"
-  - "what survives equal-reference release before-call faults?"
-  - "what survives ordinary release after-call faults?"
-  - "what survives ordinary release before-call faults?"
-  - "why cannot release faults reuse a saved numeric call ID?"
-  - "how are healthy release call and handle boundaries verified?"
-  - "is the native Rust proxy written in Rust or C?"
-  - "how are release interruption boundaries selected?"
-  - "what does an inactive observation release attempt report?"
-  - "what do closed observation work records validate?"
-  - "what does final inactive archive signoff prove?"
-  - "how are FSMGen test subprocesses bounded?"
-  - "how are native Rust proxy fixtures built and qualified?"
-  - "why must native-birth field sets use explicit membership?"
-  - "what does the inactive runtime-reference codec validate?"
-  - "how does the inactive reference census retain stale owners?"
-  - "how does inactive acquisition order global and private references?"
-  - "how must tests wrap a caller-sealed function?"
-  - "which cleanup receipts must settle before proxy retirement?"
-  - "how does inactive private workspace retirement retain image pins?"
-  - "when can inactive maintenance remove a canonical image?"
-  - "what does the inactive observation-reference codec validate?"
-  - "how are runtime and observation references counted together?"
-  - "how does fresh observation acquisition retain source snapshots?"
-  - "how does stable observation reuse preserve the original hold?"
-  - "why must fixture clones preserve byte flags and JSON numeric types?"
-  - "why do inactive source and writer handoffs close explicitly?"
-  - "what do inactive observation snapshot interruption cuts prove?"
-  - "what survives inactive observation publication failures?"
-  - "how does inactive namespace enumeration reject read errors?"
-  - "how does inactive image membership reject enumeration errors?"
-  - "what do inactive coordinator interruption cuts prove?"
-  - "what do inactive semantic-census interruption cuts prove?"
-  - "how do census close errors preserve the primary failure?"
-  - "why must snapshot cut selectors identify unique occurrences?"
-  - "which remaining acquisition close reports are qualified?"
-  - "how is the complete inactive acquisition matrix joined?"
-  - "why can an observer settled event leave a helper running?"
-  - "what must settle before an observation hold is released?"
-  - "how do archive records preserve all retained source identities?"
-  - "can retained snapshots be archived after the workspace is retired?"
-  - "how are repeated archive boundaries and handle lifetimes distinguished?"
-  - "what survives ordinary fresh archive call interruptions?"
-  - "what survives existing archive verification interruptions?"
-  - "how do equal-content archive failures preserve original identities?"
-  - "what survives equal-content existing archive interruptions?"
-  - "how can archive evidence be revalidated from a fresh checkout?"
-  - "how do partial archive writes preserve bytes and cleanup?"
-  - "how do archive close errors preserve primary errors and cleanup?"
-  - "how are genuine omitted archive closes detected and recovered?"
-  - "how are archive close domains joined against unchanged sources?"
-  - "why can archive aggregate excess be unreachable after earlier guards?"
-  - "how do archive namespace and symlink controls preserve owned files?"
-  - "how are byte-identical archive replacements detected after admission?"
-  - "why must a lower-reader observer retain only weak handle aliases?"
-  - "how do lower-reader admission failures close before source handoff?"
-  - "how is lower-reader custody joined to archive cleanup?"
-  - "how is complete archive evidence authenticated before final signoff?"
-  - "why did integrated proxy qualification fail?"
-  - "why does t1545 not use IPC Cmd?"
-  - "where does T1545 preserve empty-output checker failure diagnostics?"
-  - "where does T1545 retain actual checker PID and startup observations?"
-  - "can native thread state replace kernel sampling of fixture startup?"
-  - "how do I start an authenticated fixture sampling session?"
-  - "how are passive fixture identities and sources tracked?"
-  - "why does fixture capture need repeated authentication?"
-  - "why did T1669 admission miss its workspace?"
-  - "how are fixture command-query exit races handled?"
-  - "how are queued-only fixture policy tokens attributed?"
-  - "how is fixture calibration preflight checked?"
-  - "how does the fixed daemon capture caller work?"
-  - "how can I observe daemon context without kernel authentication?"
-  - "how does the finite daemon sequence preserve its budget and helper?"
-  - "how are fixture policy publication receipts verified?"
-  - "why can shortened PST tokens stop daemon publication?"
-  - "why does a saturated daemon capture need bounded archive pages?"
-  - "how are calibrated archive pages built without losing metadata?"
-  - "how does policy publication handle replaced directories?"
-  - "how will policy diagnostics avoid private paths?"
-  - "which fixture bands wrongly ran live collectors?"
-  - "which call delayed the native library load?"
-  - "why must fixture clock domains stay separate?"
-  - "where does T1669 retain failed legacy main entry diagnostics?"
-  - "what does the AppleSystemPolicy fixture startup capture establish?"
-  - "what does exec_handoff_monotonic_ns prove about child startup?"
-  - "why does the task-acceptance fixture invoke Bash directly?"
-  - "who may call the low-level test process supervisor?"
-  - "why can T1595 stall before measuring host memory?"
-  - "can a nested supervised child survive an outer timeout?"
-  - "how does the supervisor reject failed setpgid before exec?"
-  - "can post-KILL leader reaping bypass the cleanup deadline?"
-  - "which ownership model is selected for nested supervision?"
-  - "how does the private coordinator preserve execution bytes?"
-  - "why can Python invocation and native executable paths differ on macOS?"
-  - "why does macOS report Python instead of python3.14?"
-  - "how does coordination admit a Python framework worker?"
-  - "why does inactive retirement reject the real Rust proxy wrapper?"
-  - "why does the closed compiler census Git preflight see local Claude settings?"
-  - "why can guarded stdin Python exit successfully without running its program?"
-  - "why can terminal worker recovery fail before native admission?"
-  - "how is unadmitted populated-worker recovery repaired?"
-  - "how are fixed populated-worker commands qualified?"
-  - "why does actual-wrapper observation still need a mode repair?"
-  - "how are empty-store and populated-worker results joined?"
-  - "where does real compiler receipt ownership stop?"
-  - "how does the inactive receipt adapter reject a copied cleanup hash?"
-  - "why cannot retained compiler journals settle the receipt adapter?"
-  - "what does the closed compiler-only receipt admission require?"
-  - "why does the receipt adapter reject a real supervisor group?"
-  - "how does the inactive receipt adapter accept a supervisor own-group identity?"
-  - "why cannot a public supervisor result settle the receipt adapter?"
-  - "how does the caller-sealed supervisor return private receipt identity?"
-  - "why must a public supervisor result copy its cleanup hash?"
-  - "why cannot a sealed supervisor launch preserve a private receipt?"
-  - "how does a sealed caller receive the finished private supervisor job?"
-  - "why does the sealed supervisor launch still omit the private receipt?"
-  - "how does the sealed supervisor launch return a private job before a process?"
-  - "how does a missing program return a private supervisor job?"
-  - "how does an executable program return a private job before fork?"
-  - "how does one proof process return a private supervisor job?"
-  - "why does receipt admission still issue no permit?"
-  - "how does one receipt permit name the sealed private return?"
-  - "how is the issued receipt permit consumed?"
-  - "why does a consumed receipt permit still refuse execution?"
-  - "when does a consumed receipt permit admit one finished job?"
-  - "why does the public compiler request omit the private receipt?"
-  - "why cannot one compiler receipt bind?"
-  - "why does the sealed supervisor accept no compiler environment?"
-  - "why does the sealed private job carry no receipt role?"
-  - "how does the sealed supervisor accept one environment?"
-  - "why cannot one retained compiler job bind?"
-  - "how does one finished compiler receipt bind?"
-  - "how does a compiler stage carry its receipt role?"
-  - "why does the public compiler fixture still discard the private job?"
-  - "how is compiler launch admission separated from finished-job review?"
-  - "why must a receipt accept zero microseconds?"
-  - "where is the first actual compiler receipt retained?"
-  - "how does a shared service retain its endpoint through close?"
-date: 2026-09-30
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1865-process-request-execution.t t/1864-process-closed-execution-outcome.t t/1863-process-execution-lifetime.t t/1862-process-native-execution-report.t t/1861-process-nested-execution-admission.t t/1860-process-native-custody.t t/1859-process-root-execution.t t/1858-process-aggregate-owners.t t/1857-process-reserved-execution-admission.t t/1856-process-service-execution-report.t t/1855-process-service-execution-admission.t t/1852-process-gated-accept.t t/1851-process-request-association.t t/1850-process-aggregate-context.t t/1839-process-coordinator-lifecycle.t t/1842-process-coordinator-accepted-peers.t t/1827-process-reserved-job.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
+  - how does the original root execution release work?
+  - what happens when a reserved process group reservation dies?
+  - why can reserved cleanup miss an unjoined command?
+  - how do I decode a stopped child native wait status?
+  - how are genuine omitted release closes selected?
+  - how do equal-reference release compositions preserve ownership?
+  - how do ordinary release compositions preserve primary errors?
+  - how are release error compositions selected?
+  - what survives last-observation close reports?
+  - how do active-runtime close reports preserve runtime state?
+  - how are equal-reference release close reports verified?
+  - how are ordinary release close reports verified?
+  - how are release close reports selected?
+  - how is complete release call readback fault coverage verified?
+  - how is selected release readback syscall evidence joined?
+  - how are release unlink absence reports verified?
+  - how does last-observation readback preserve an unreferenced image?
+  - how do active-runtime readback controls preserve runtime state?
+  - how do equal-reference readback controls preserve source identity?
+  - how are ordinary release readback failures and cleanup verified?
+  - can successful Perl sysopen leave nonzero errno?
+  - how do readback syscall hooks preserve compiled calls and aliases?
+  - why can altered census read bytes leave release successful?
+  - what is the selected release readback failure domain?
+  - what survives last-observation release after-call faults?
+  - what survives last-observation release before-call faults?
+  - what survives active-runtime release after-call faults?
+  - what survives active-runtime release before-call faults?
+  - what survives equal-reference release after-call faults?
+  - what survives equal-reference release before-call faults?
+  - what survives ordinary release after-call faults?
+  - what survives ordinary release before-call faults?
+  - why cannot release faults reuse a saved numeric call ID?
+  - how are healthy release call and handle boundaries verified?
+  - is the native Rust proxy written in Rust or C?
+  - how are release interruption boundaries selected?
+  - what does an inactive observation release attempt report?
+  - what do closed observation work records validate?
+  - what does final inactive archive signoff prove?
+  - how are FSMGen test subprocesses bounded?
+  - how are native Rust proxy fixtures built and qualified?
+  - why must native-birth field sets use explicit membership?
+  - what does the inactive runtime-reference codec validate?
+  - how does the inactive reference census retain stale owners?
+  - how does inactive acquisition order global and private references?
+  - how must tests wrap a caller-sealed function?
+  - which cleanup receipts must settle before proxy retirement?
+  - how does inactive private workspace retirement retain image pins?
+  - when can inactive maintenance remove a canonical image?
+  - what does the inactive observation-reference codec validate?
+  - how are runtime and observation references counted together?
+  - how does fresh observation acquisition retain source snapshots?
+  - how does stable observation reuse preserve the original hold?
+  - why must fixture clones preserve byte flags and JSON numeric types?
+  - why do inactive source and writer handoffs close explicitly?
+  - what do inactive observation snapshot interruption cuts prove?
+  - what survives inactive observation publication failures?
+  - how does inactive namespace enumeration reject read errors?
+  - how does inactive image membership reject enumeration errors?
+  - what do inactive coordinator interruption cuts prove?
+  - what do inactive semantic-census interruption cuts prove?
+  - how do census close errors preserve the primary failure?
+  - why must snapshot cut selectors identify unique occurrences?
+  - which remaining acquisition close reports are qualified?
+  - how is the complete inactive acquisition matrix joined?
+  - why can an observer settled event leave a helper running?
+  - what must settle before an observation hold is released?
+  - how do archive records preserve all retained source identities?
+  - can retained snapshots be archived after the workspace is retired?
+  - how are repeated archive boundaries and handle lifetimes distinguished?
+  - what survives ordinary fresh archive call interruptions?
+  - what survives existing archive verification interruptions?
+  - how do equal-content archive failures preserve original identities?
+  - what survives equal-content existing archive interruptions?
+  - how can archive evidence be revalidated from a fresh checkout?
+  - how do partial archive writes preserve bytes and cleanup?
+  - how do archive close errors preserve primary errors and cleanup?
+  - how are genuine omitted archive closes detected and recovered?
+  - how are archive close domains joined against unchanged sources?
+  - why can archive aggregate excess be unreachable after earlier guards?
+  - how do archive namespace and symlink controls preserve owned files?
+  - how are byte-identical archive replacements detected after admission?
+  - why must a lower-reader observer retain only weak handle aliases?
+  - how do lower-reader admission failures close before source handoff?
+  - how is lower-reader custody joined to archive cleanup?
+  - how is complete archive evidence authenticated before final signoff?
+  - why did integrated proxy qualification fail?
+  - why does t1545 not use IPC Cmd?
+  - where does T1545 preserve empty-output checker failure diagnostics?
+  - where does T1545 retain actual checker PID and startup observations?
+  - can native thread state replace kernel sampling of fixture startup?
+  - how do I start an authenticated fixture sampling session?
+  - how are passive fixture identities and sources tracked?
+  - why does fixture capture need repeated authentication?
+  - why did T1669 admission miss its workspace?
+  - how are fixture command-query exit races handled?
+  - how are queued-only fixture policy tokens attributed?
+  - how is fixture calibration preflight checked?
+  - how does the fixed daemon capture caller work?
+  - how can I observe daemon context without kernel authentication?
+  - how does the finite daemon sequence preserve its budget and helper?
+  - how are fixture policy publication receipts verified?
+  - why can shortened PST tokens stop daemon publication?
+  - why does a saturated daemon capture need bounded archive pages?
+  - how are calibrated archive pages built without losing metadata?
+  - how does policy publication handle replaced directories?
+  - how will policy diagnostics avoid private paths?
+  - which fixture bands wrongly ran live collectors?
+  - which call delayed the native library load?
+  - why must fixture clock domains stay separate?
+  - where does T1669 retain failed legacy main entry diagnostics?
+  - what does the AppleSystemPolicy fixture startup capture establish?
+  - what does exec_handoff_monotonic_ns prove about child startup?
+  - why does the task-acceptance fixture invoke Bash directly?
+  - who may call the low-level test process supervisor?
+  - why can T1595 stall before measuring host memory?
+  - can a nested supervised child survive an outer timeout?
+  - how does the supervisor reject failed setpgid before exec?
+  - can post-KILL leader reaping bypass the cleanup deadline?
+  - which ownership model is selected for nested supervision?
+  - how does the private coordinator preserve execution bytes?
+  - why can Python invocation and native executable paths differ on macOS?
+  - why does macOS report Python instead of python3.14?
+  - how does coordination admit a Python framework worker?
+  - why does inactive retirement reject the real Rust proxy wrapper?
+  - why does the closed compiler census Git preflight see local Claude settings?
+  - why can guarded stdin Python exit successfully without running its program?
+  - why can terminal worker recovery fail before native admission?
+  - how is unadmitted populated-worker recovery repaired?
+  - how are fixed populated-worker commands qualified?
+  - why does actual-wrapper observation still need a mode repair?
+  - how are empty-store and populated-worker results joined?
+  - where does real compiler receipt ownership stop?
+  - how does the inactive receipt adapter reject a copied cleanup hash?
+  - why cannot retained compiler journals settle the receipt adapter?
+  - what does the closed compiler-only receipt admission require?
+  - why does the receipt adapter reject a real supervisor group?
+  - how does the inactive receipt adapter accept a supervisor own-group identity?
+  - why cannot a public supervisor result settle the receipt adapter?
+  - how does the caller-sealed supervisor return private receipt identity?
+  - why must a public supervisor result copy its cleanup hash?
+  - why cannot a sealed supervisor launch preserve a private receipt?
+  - how does a sealed caller receive the finished private supervisor job?
+  - why does the sealed supervisor launch still omit the private receipt?
+  - how does the sealed supervisor launch return a private job before a process?
+  - how does a missing program return a private supervisor job?
+  - how does an executable program return a private job before fork?
+  - how does one proof process return a private supervisor job?
+  - why does receipt admission still issue no permit?
+  - how does one receipt permit name the sealed private return?
+  - how is the issued receipt permit consumed?
+  - why does a consumed receipt permit still refuse execution?
+  - when does a consumed receipt permit admit one finished job?
+  - why does the public compiler request omit the private receipt?
+  - why cannot one compiler receipt bind?
+  - why does the sealed supervisor accept no compiler environment?
+  - why does the sealed private job carry no receipt role?
+  - how does the sealed supervisor accept one environment?
+  - why cannot one retained compiler job bind?
+  - how does one finished compiler receipt bind?
+  - how does a compiler stage carry its receipt role?
+  - why does the public compiler fixture still discard the private job?
+  - how is compiler launch admission separated from finished-job review?
+  - why must a receipt accept zero microseconds?
+  - where is the first actual compiler receipt retained?
+  - how does a shared service retain its endpoint through close?
+  - how are GHDL and Verilator lint bounded?
+date: 2026-10-16
+reverify: >-
+  scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/1865-process-request-execution.t t/1864-process-closed-execution-outcome.t
+  t/1863-process-execution-lifetime.t t/1862-process-native-execution-report.t t/1861-process-nested-execution-admission.t
+  t/1860-process-native-custody.t t/1859-process-root-execution.t t/1858-process-aggregate-owners.t
+  t/1857-process-reserved-execution-admission.t t/1856-process-service-execution-report.t t/1855-process-service-execution-admission.t
+  t/1852-process-gated-accept.t t/1851-process-request-association.t t/1850-process-aggregate-context.t
+  t/1839-process-coordinator-lifecycle.t t/1842-process-coordinator-accepted-peers.t t/1827-process-reserved-job.t
+  t/2069-hdl-behavior-runtime.t && python3 -B docs/audits/native-proxy-receipt-capture-20260923/review.py --verify-saved
 ---
 History: `b9f98e2fc5c49ad7b3ffc672fc6a5f159fc08033:docs/knowledge/test-subprocess-policy-adapters.md` retains outcome/effect/lifetime contracts. Coordinator release_request queues the ready child once after full ACCEPT and fresh Service admission. Partial publication/input defers without consuming intent or leaving ready; final E checks remain fresh. Pre-mask winners survive later refusals. Queue failures retain first job/peer causes before signals or unavailable cleanup; native confirmation/uncertainty survives lost E returns. T1865 qualifies binary invocation, exec context/mask, sockets, parent loss and exact cleanup. Ordinary adapters remain unchanged. Streaming, fair composition, routing, original producers, Linux and browser qualification remain open.
 
@@ -178,3 +186,7 @@ qualified under `.51.3.3.2.4`; see
 [the current RAM-guard contract](agent-runtime-ram-guard.md). Historical empty
 captures remain rejected evidence; this launcher repair does not qualify native
 startup or compiler receipt work.
+
+`FSM::Test::HDLBehaviorRuntime` seals GHDL/storage-name lint: fixed profiles,
+60-second/one-MiB stages, `.artifacts/tmp` admission. T2069 checks API/tool,
+native failure and cleanup; real callers qualify HDL semantics separately.

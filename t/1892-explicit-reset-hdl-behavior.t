@@ -2,14 +2,13 @@
 use strict;
 use warnings;
 use Test::More;
-use Cwd qw(abs_path);
 use File::Temp qw(tempdir);
 use IPC::Cmd qw(can_run);
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
 use FSM::Test::VerilatorRuntime qw(darwin_verilator_runtime_qualified run_verilator_compile run_generated_binary);
-use FSM::Test::ProcessSupervisor qw(supervise_process);
+use FSM::Test::HDLBehaviorRuntime qw(ghdl_behavior_provider run_ghdl_analysis run_ghdl_behavior);
 
 my $work = tempdir(CLEANUP => 1);
 my $capture = \&FSM::Test::SourceQueryRunner::_capture;
@@ -42,9 +41,9 @@ for my $format (qw(fsm isf)) {
                 plan skip_all => 'Verilator runtime provider unavailable or not qualified'
                     unless can_run('verilator') && darwin_verilator_runtime_qualified();
             }
-            my $ghdl = $ENV{FSMGEN_RESET_GHDL} // 'ghdl';
+            my $ghdl;
             if ($language eq 'vhdl') {
-                $ghdl = $ghdl =~ m{/} ? abs_path($ghdl) : can_run($ghdl);
+                $ghdl = ghdl_behavior_provider('reset_behavior');
                 plan skip_all => 'GHDL runtime provider unavailable' unless defined($ghdl) && -x $ghdl;
             }
             my $dir = "$work/$format/$language";
@@ -61,10 +60,10 @@ for my $format (qw(fsm isf)) {
             if ($language eq 'vhdl') {
                 my $tb = "$dir/reset_tb.vhd";
                 write_file($tb, read_file('t/data/explicit_reset_behavior_tb.vhd'));
-                my $compile = ghdl_stage([$ghdl, '-a', '--std=08', '--workdir='.$dir, @hdl, $tb], $dir);
+                my $compile = run_ghdl_analysis('reset_behavior', $dir, [@hdl, $tb]);
                 ok($compile->{ok}, 'GHDL analyzes the generated modules and independent oracle') or diag($compile->{diagnostic},substr($compile->{stderr},0,8192));
                 return unless $compile->{ok};
-                my $r = ghdl_stage([$ghdl, '--elab-run', '--std=08', '--workdir='.$dir, 'reset_tb', '--assert-level=error', '--stop-time=100ns'], $dir);
+                my $r = run_ghdl_behavior('reset_behavior', $dir);
                 ok($r->{ok}, 'GHDL reset behavior passes') or diag($r->{diagnostic},substr($r->{stderr},0,8192),$r->{stdout});
                 like($r->{stdout}.$r->{stderr}, qr/RESET_BEHAVIOR_PASS/, 'independent VHDL oracle reaches completion');
             } else {
@@ -91,12 +90,6 @@ sub read_file {
     my $text = do { local $/; <$fh> };
     close $fh or die $!;
     return $text;
-}
-sub ghdl_stage {
-    my ($argv, $cwd) = @_;
-    return supervise_process(schema => 'fsmgen.test.reset_behavior.v1', stage => 'ghdl',
-        bounds => {timeout_seconds => 60, capture_limit_bytes => 1_048_576},
-        containment => 'test_runtime_process_group', cwd => $cwd, argv => $argv);
 }
 sub write_file {
     open my $fh, '>', $_[0] or die $!;

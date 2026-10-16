@@ -13,9 +13,8 @@ one validation plus five measured qualification runs. The immutable matrix
 publisher and its default hostile watcher are implemented; clean-revision
 capture and separate fresh-process reload are the remaining closure step.
 
-This “execution” means external execution of generated portable SystemVerilog
-with the already qualified Verilator profile. It is not IASIM execution and it
-does not change IASIM's separately owned reference-semantics role.
+This “execution” means external execution of generated portable SystemVerilog with the already qualified Verilator profile. It is not IASIM execution and it does not change
+IASIM's separately owned reference-semantics role.
 
 <!-- CLAIM-VERIFICATION:BEGIN vial-portable-runtime-materialization-v1 -->
 - Claim: The two tracked portable-SystemVerilog runtime sources produce exact 10,000- and 15,000-record semantic traces through the qualified public Runner; each complete graph contains 19 artifacts totaling 32,098,531 and 47,505,049 bytes respectively, and qualification remains 2,826,599 bytes below the selected three-quarter admission ceiling.
@@ -26,19 +25,13 @@ does not change IASIM's separately owned reference-semantics role.
 
 ## Why contract selection came first
 
-The shipped public Runner is an atomic transaction: it validates the exact
-tool, materializes inputs, compiles, runs, validates the trace, produces the
-normalized result, assembles artifacts, and removes its private stage. That is
-the right public behavior. Measurement, however, must report those operations
-as distinct stages while preserving one compiled executable and one coherent
-evidence chain across isolated measurement workers.
+The shipped public Runner is an atomic transaction: it validates the exact tool, materializes inputs, compiles, runs, validates the trace, produces the normalized result,
+assembles artifacts, and removes its private stage. That is the right public behavior. Measurement, however, must report those operations as distinct stages while preserving
+one compiled executable and one coherent evidence chain across isolated measurement workers.
 
-The runtime-stream family also selects semantic activity counts rather than a
-larger source file. A production-grade implementation therefore needs a
-canonical runtime schedule whose identity is carried by emission, trace, and
-result evidence. Editing generated source text after emission, padding output,
-truncating a trace, or introducing a second tool runner would make the measured
-work differ from the qualified work and is forbidden.
+The runtime-stream family also selects semantic activity counts rather than a larger source file. A production-grade implementation therefore needs a canonical runtime
+schedule whose identity is carried by emission, trace, and result evidence. Editing generated source text after emission, padding output, truncating a trace, or introducing a
+second tool runner would make the measured work differ from the qualified work and is forbidden.
 
 Decision `0083` closes both contracts before implementation:
 
@@ -61,10 +54,8 @@ SystemVerilog scenario task called the two generated tasks directly, so the
 real Verilator trace contained cycle-4 check followed by cycle-4 react. The
 unchanged deterministic-order validator correctly rejected that regression.
 
-The completed repair keeps static partial evaluation. It does not introduce a
-target interpreter or phase-sort the source. The emitter has one independently
-qualified compatibility table that pairs each supported action's ExecutionIR
-eligible phase with the last logical phase consumed by its generated task:
+The completed repair keeps static partial evaluation. It does not introduce a target interpreter or phase-sort the source. The emitter has one independently qualified
+compatibility table that pairs each supported action's ExecutionIR eligible phase with the last logical phase consumed by its generated task:
 
 | Lowering returns after | Actions |
 | --- | --- |
@@ -72,10 +63,8 @@ eligible phase with the last logical phase consumed by its generated task:
 | `react` | `start`, `repeat`, `scoreboard_expect`, `inject` |
 | `check` | `reset`, `await`, `parallel`, `expect`, `scoreboard_check` |
 
-The scheduler walks immutable root-operation/static-rank order and retains that
-last phase as a cursor. Equal or forward phase ranks stay in the same cycle;
-same-phase checks therefore remain in authored order without an idle cycle. A
-backward crossing advances exactly once:
+The scheduler walks immutable root-operation/static-rank order and retains that last phase as a cursor. Equal or forward phase ranks stay in the same cycle; same-phase checks
+therefore remain in authored order without an idle cycle. A backward crossing advances exactly once:
 
 | Crossing | Generated action | Why |
 | --- | --- | --- |
@@ -83,12 +72,9 @@ backward crossing advances exactly once:
 | `react -> drive` | one logical-cycle increment | selects the next drive phase without an extra sample |
 | `check -> drive` | one logical-cycle increment | selects the next drive phase without an extra sample |
 
-A direct slot update returns in `drive`. Another root direct drive therefore
-runs in the same phase and retains authored/static-rank order. A later react or
-check action is a forward rank numerically, but it cannot consume a post-edge
-snapshot until the current cycle has crossed the real inactive-edge sample
-barrier. The scheduler inserts exactly that one barrier; it also traverses it
-before scenario finalization when drive is the last operation.
+A direct slot update returns in `drive`. Another root direct drive therefore runs in the same phase and retains authored/static-rank order. A later react or check action is a
+forward rank numerically, but it cannot consume a post-edge snapshot until the current cycle has crossed the real inactive-edge sample barrier. The scheduler inserts exactly
+that one barrier; it also traverses it before scenario finalization when drive is the last operation.
 
 There is no sample-eligible version-1 action and no possible backward target at
 check. `start` no longer increments the cycle unconditionally inside its own
@@ -96,12 +82,9 @@ task: a first start may use cycle-zero drive, and the common successor boundary
 advances it only when required. Negotiation now rejects a changed phase order
 or action/eligible-phase pair before emitting any artifact.
 
-This division is deliberate. ExecutionIR owns topology, ranks, and eligible
-phases; the backend owns how far each of its blocking lowerings advances before
-return. Combining those authorities preserves dynamic waits and reset
-intervals without guessing their completion cycle. Sorting actions, adding a
-barrier after every task, rejecting legal source, or rewriting trace time would
-all change semantics rather than implement them.
+This division is deliberate. ExecutionIR owns topology, ranks, and eligible phases; the backend owns how far each of its blocking lowerings advances before return. Combining
+those authorities preserves dynamic waits and reset intervals without guessing their completion cycle. Sorting actions, adding a barrier after every task, rejecting legal
+source, or rewriting trace time would all change semantics rather than implement them.
 
 The structural proof covers every possible backward pair, same-phase
 retention, blocking reset, and fail-closed phase drift. The public Runner proof
@@ -112,11 +95,9 @@ byte-identical results and artifacts on a repeated repaired run. Decision
 
 ## Completed prerequisite: direct `drive`
 
-The phase-table signoff exposed a separate pre-existing defect rather than
-hiding it in the rollover change. Ordinary VIAL could bind a public DUT input
-and retain a `drive` operation with typed endpoint/value inputs, yet the effect
-target was null and the generated task contained only a barrier. It neither
-assigned the endpoint nor emitted a drive record.
+The phase-table signoff exposed a separate pre-existing defect rather than hiding it in the rollover change. Ordinary VIAL could bind a public DUT input and retain a `drive`
+operation with typed endpoint/value inputs, yet the effect target was null and the generated task contained only a barrier. It neither assigned the endpoint nor emitted a
+drive record.
 
 Completed task `.17.3.5.1.2` repairs the entire semantic chain. For example,
 the checked source can add this endpoint declaration and action:
@@ -126,34 +107,22 @@ the checked source can add this endpoint declaration and action:
 ...
 (drive select #b1)
 ```
-
-The builder now produces one exact `update_driver` target and one drive
-representation relation. The backend independently requires that effect,
-binding, relation, normalized known scalar, public input carrier, and declared
-SystemVerilog port before emitting anything. Its generated operation is
-equivalent to:
+ The builder now produces one exact `update_driver` target and one drive representation relation. The backend independently requires that effect, binding, relation, normalized
+known scalar, public input carrier, and declared SystemVerilog port before emitting anything. Its generated operation is equivalent to:
 
 ```systemverilog
 vial_transaction_static_rank = 1;
 HSEL = 1'h1;
 vial_emit("drives", /* exact endpoint, operation, logical time, and value */);
 ```
+ This is a zero-duration drive-phase update: the task itself has no barrier. Same-fiber updates stay ordered in one phase; drive-to-react/check traverses one real sample
+barrier. Live sibling writes to the same slot fail once with a stable scenario/endpoint conflict rather than choosing by simulator order. After the terminal fiber record,
+scenario finalization restores each directly used slot once to safe zero before `scenario_end`; that lifecycle assignment is not a second authored drive and has its own exact
+source-map provenance.
 
-This is a zero-duration drive-phase update: the task itself has no barrier.
-Same-fiber updates stay ordered in one phase; drive-to-react/check traverses one
-real sample barrier. Live sibling writes to the same slot fail once with a
-stable scenario/endpoint conflict rather than choosing by simulator order.
-After the terminal fiber record, scenario finalization restores each directly
-used slot once to safe zero before `scenario_end`; that lifecycle assignment is
-not a second authored drive and has its own exact source-map provenance.
-
-Trace validation does not trust a plausible runtime line. For a direct record
-it rechecks the immutable operation, exact bound bridge endpoint, null
-transaction field, canonical effective value, drive-phase/static/local ranks,
-and semantic endpoint identity. Endpoint, value, or phase forgery fails before
-result production. A real qualified-Verilator public run observes exactly one
-`endpoint/HSEL` drive and returns byte-equal results and artifacts on its
-focused replay.
+Trace validation does not trust a plausible runtime line. For a direct record it rechecks the immutable operation, exact bound bridge endpoint, null transaction field,
+canonical effective value, drive-phase/static/local ranks, and semantic endpoint identity. Endpoint, value, or phase forgery fails before result production. A real
+qualified-Verilator public run observes exactly one `endpoint/HSEL` drive and returns byte-equal results and artifacts on its focused replay.
 
 The portable support boundary is deliberately narrower than generic
 ExecutionIR: only a public `input` carrier in the scenario root fiber is
@@ -375,29 +344,18 @@ test callsite
   -> private ProcessSupervisor (fork/exec, streams, deadline, cleanup)
   -> one closed result
 ```
+ `FSM::Test::ProcessSupervisor` is private test infrastructure. It accepts a scalar argument vector without a shell, validates a repository-contained same-volume working
+directory, captures stdout and stderr separately under one aggregate byte ceiling, and retains `chdir`, descriptor, containment, and `exec` errors through a close-on-exec
+control pipe. Monotonic timestamps record spawn, observed control-pipe closure, first output, and completion. The legacy `exec_handoff_monotonic_ns` field records that
+observed closure; it does not prove entry into the program's `main`. Abrupt child death can also close the pipe before `exec`. If capture ends without observing closure, the
+handoff timestamp and dependent durations remain null, including after timeout cleanup. Completion time never substitutes for missing launch evidence. Every child owns one
+process group; timeout, overflow, handoff failure, or a surviving descendant triggers TERM, bounded grace, KILL when required, leader reaping, and a final group-disappearance
+check.
 
-`FSM::Test::ProcessSupervisor` is private test infrastructure. It accepts a
-scalar argument vector without a shell, validates a repository-contained
-same-volume working directory, captures stdout and stderr separately under one
-aggregate byte ceiling, and retains `chdir`, descriptor, containment, and
-`exec` errors through a close-on-exec control pipe. Monotonic timestamps record
-spawn, observed control-pipe closure, first output, and completion.
-The legacy `exec_handoff_monotonic_ns` field records that observed closure;
-it does not prove entry into the program's `main`. Abrupt child death can also
-close the pipe before `exec`. If capture ends without observing closure,
-the handoff timestamp and dependent durations remain null, including after
-timeout cleanup. Completion time never substitutes for missing launch evidence.
-Every child owns one process group; timeout, overflow, handoff failure, or a
-surviving descendant triggers TERM, bounded grace, KILL when required, leader
-reaping, and a final group-disappearance check.
-
-Before executing the command, the child checks both the process-group call's
-return value and its actual group identity. A failed call or a child outside
-its intended group returns `exec_error` without executing the command. The
-parent's parallel group-creation attempt does not replace this child check.
-After KILL, leader reaping uses nonblocking polling within the existing cleanup
-grace. If the leader or group remains, the result retains incomplete cleanup
-evidence; sending a signal alone never proves that the process has disappeared.
+Before executing the command, the child checks both the process-group call's return value and its actual group identity. A failed call or a child outside its intended group
+returns `exec_error` without executing the command. The parent's parallel group-creation attempt does not replace this child check. After KILL, leader reaping uses nonblocking
+polling within the existing cleanup grace. If the leader or group remains, the result retains incomplete cleanup evidence; sending a signal alone never proves that the process
+has disappeared.
 
 The low-level module deliberately does not pick a command or a safety budget.
 Only sealed policy adapters in `t/lib/FSM/Test/` may call it, and
@@ -406,13 +364,10 @@ Only sealed policy adapters in `t/lib/FSM/Test/` may call it, and
 guard, 10/120/30-second stages, capture limits, result schema, and callsite
 behavior are unchanged after the extraction.
 
-The helper's hostile watcher does not re-enter the env boundary while creating
-test programs. Each generated program embeds the canonical already-running
-Perl interpreter in its shebang. This is mechanically watched: the portable
-`#!/usr/bin/env perl` form may appear only on the watcher entrypoint that
-`prove` launches through Perl. The boundary is evidence-driven—a combined run
-completed exec handoff for the former env-Perl success fixture but received no
-first output before the fixed runtime wall, and that failure was not retried.
+The helper's hostile watcher does not re-enter the env boundary while creating test programs. Each generated program embeds the canonical already-running Perl interpreter in
+its shebang. This is mechanically watched: the portable `#!/usr/bin/env perl` form may appear only on the watcher entrypoint that `prove` launches through Perl. The boundary
+is evidence-driven—a combined run completed exec handoff for the former env-Perl success fixture but received no first output before the fixed runtime wall, and that failure
+was not retried.
 
 `FSM::Test::TaskAcceptanceFixtureRuntime` is the separate `t/1545` policy. It
 accepts only repositories created below
@@ -428,10 +383,8 @@ The adapter resolves `git` once from absolute inherited `PATH` entries and
 retains its canonical executable; changing `PATH` later cannot substitute a
 different tool for an already admitted Git operation.
 
-The checker still begins with `#!/usr/bin/env bash`, but the adapter does not
-execute that shebang. It similarly resolves `bash` once from absolute entries in the
-inherited `PATH`, canonicalizes the selected executable, validates it, and
-passes the repository-local checker path directly:
+The checker still begins with `#!/usr/bin/env bash`, but the adapter does not execute that shebang. It similarly resolves `bash` once from absolute entries in the inherited
+`PATH`, canonicalizes the selected executable, validates it, and passes the repository-local checker path directly:
 
 ```perl
 use FSM::Test::TaskAcceptanceFixtureRuntime qw(
@@ -486,11 +439,8 @@ emitted after return, so its PID is historical evidence, not authority to
 signal a process or a live stack sample. Bash's own PID, unmodified checker
 output, and an independently held pre-exec child qualify these distinctions.
 
-Same-repository acceptance cases use
-`FSM::Test::TaskAcceptanceIndexRuntime::run_index_case`. This sealed adapter
-admits fixed case names, with no caller command, path, index or limit arguments.
-It stages literal fixture blobs in an alternate index of this repository;
-Git objects stay in this repository's object database. It creates no other
+Same-repository acceptance cases use `FSM::Test::TaskAcceptanceIndexRuntime::run_index_case`. This sealed adapter admits fixed case names, with no caller command, path, index
+or limit arguments. It stages literal fixture blobs in an alternate index of this repository; Git objects stay in this repository's object database. It creates no other
 repository and records the main index before and after each case.
 
 ```perl
@@ -520,12 +470,65 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
   t/2068-task-acceptance-index-runtime.t
 ```
 
-This checkpoint qualifies the index adapter. Audit-source declaration repair
-remains open in `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2`. The first shared
-policy-owner watcher failed on pre-existing direct GHDL test supervision;
-`.1.1.2` owns that repair before parent acceptance or full-CI qualification.
-The first failure and its incomplete source-census boundary remain recorded;
-the passing index cases do not qualify the whole ownership watcher or HDL.
+The index adapter qualifies bounded checker/evidence cases. Audit-source
+coverage remains open in `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2`.
+The first shared policy-owner watcher failed on pre-existing direct HDL test
+supervision; `.1.1.2` owns the sealed repair below. That first failure and its
+incomplete source-census boundary remain recorded. Index cases alone do not
+qualify the whole ownership watcher or HDL. Parent acceptance and full CI
+retain separate owners.
+
+### HDL behavior test policy
+
+`FSM::Test::HDLBehaviorRuntime` owns the existing GHDL behavior tests and
+storage-name Verilator lint. It reuses the shared supervisor, preserving each
+caller's schema, stage, analysis/runtime options, top, stop time and assertions.
+Each native stage retains its fixed 60-second wall and one-MiB aggregate capture.
+These are safety budgets, not runtime-performance measurements.
+
+| Profile | Existing contract |
+| --- | --- |
+| `reset_behavior` | Reset kind and polarity |
+| `reset_only` | Reset-only outputs and hold |
+| `internal_role` | Internal reset/write/hold ownership |
+| `storage_ownership` | Actor storage reset/write/read/hold |
+| `child_storage_reads` | Live parent storage reads |
+| `dynamic_count` | Wait-count timing and sampling |
+| `unsigned_comparison` | Integer truth-table comparison |
+| `extract_runtime` | Extraction capture, hold and reset |
+| `storage_identifier` | GHDL analysis and fixed Verilator lint |
+
+Inside a generated fixture, call `run_ghdl_analysis($profile, $directory,
+\@sources)` before `run_ghdl_behavior($profile, $directory)`. The latter uses
+the sealed top and stop time; `storage_identifier` has no runtime stage.
+`run_storage_identifier_lint($directory, $source, $objects)` admits only its
+fixed lint command. Arbitrary command, flag, bound and top substitutions fail
+before process creation.
+
+Directories must be below `.artifacts/tmp`; sources and object paths remain inside their fixture. Symlink ancestry, traversal and nested Git metadata are refused. Marker
+controls create no Git repository. The first read-only namespace probe exposed overly broad artifact admission; its native failure remains recorded alongside the corrected
+public-API controls.
+
+Each GHDL profile caches its canonical provider. Existing `FSMGEN_RESET_GHDL` selection remains available except for `storage_identifier`, which retains PATH-only selection.
+Verilator lint also caches its canonical tool. Later PATH/startup-variable changes cannot redirect admitted commands; child scratch stays fixture-local and the caller
+environment stays unchanged. Missing providers retain explicit skips in the original tests.
+
+Run the native policy controls and an original comparison bench with:
+
+```bash
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
+  t/2069-hdl-behavior-runtime.t
+scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
+  t/1910-vhdl-unsigned-comparison-literals.t
+```
+
+T2069 uses generated fake providers to observe admitted commands and challenge
+native nonzero exit, signal, overflow and a TERM-resistant leader/descendant
+at the sealed deadline. It preserves each closed result and performs no retry.
+Those controls qualify policy and cleanup; actual HDL semantics require the
+original benches with their real providers. A skipped bench supplies no native
+HDL qualification. The shared ownership watcher permits the adapter and keeps
+direct test supervision restricted to its hostile-process oracle.
 
 RAM-guard metric fixtures now use `FSM::Test::RamGuardFixtureRuntime` over the
 same shared process mechanism. T1595 preserves its healthy, pressured and
@@ -554,15 +557,10 @@ bash scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
   t/1811-ram-guard-fixture-runtime.t \
   t/1669-task-acceptance-fixture-runtime.t
 ```
-
-The tracked controls retain an exact legacy capture counterexample, independently
-record producer progress, and qualify concurrent capture, signal truth, input
-admission, caller rejection, overflow and bounded TERM/KILL cleanup. Test-private
-producer injection exercises the real engine through the adapter's fixed policy;
-actual guard fixtures separately qualify metric behavior and startup cleanup.
-Source policy re-derives the limits, independent boundary and hostile controls
-challenge them, and task-owned tests/book/Git preserve the evidence. This fixes
-the fixture harness; it does not identify the historical Darwin startup cause.
+ The tracked controls retain an exact legacy capture counterexample, independently record producer progress, and qualify concurrent capture, signal truth, input admission,
+caller rejection, overflow and bounded TERM/KILL cleanup. Test-private producer injection exercises the real engine through the adapter's fixed policy; actual guard fixtures
+separately qualify metric behavior and startup cleanup. Source policy re-derives the limits, independent boundary and hostile controls challenge them, and task-owned
+tests/book/Git preserve the evidence. This fixes the fixture harness; it does not identify the historical Darwin startup cause.
 
 The observation qualification exposed fresh timeouts in the unchanged Rust
 proxy controls and Verilator Perl fixtures. A live OS sample placed one

@@ -11,7 +11,7 @@ use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
 use FSM::Test::VerilatorRuntime qw(darwin_verilator_runtime_qualified run_verilator_compile run_generated_binary);
-use FSM::Test::ProcessSupervisor qw(supervise_process);
+use FSM::Test::HDLBehaviorRuntime qw(ghdl_behavior_provider run_ghdl_analysis run_ghdl_behavior);
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Support::SemanticIntrospectionMCPAdapter;
@@ -228,8 +228,7 @@ SV
             my $r=run_generated_binary(["$obj/Vread_tb"]); ok($r->{ok},'live and repeated reads pass') or diag($r->{diagnostic},$r->{stdout},$r->{stderr});
             like($r->{stdout},qr/CHILD_STORAGE_READ_PASS/,'independent oracle completes');
         } else {
-            my $ghdl=$ENV{FSMGEN_RESET_GHDL}//'ghdl';
-            $ghdl=$ghdl =~ m{/}?abs_path($ghdl):can_run($ghdl);
+            my $ghdl=ghdl_behavior_provider('child_storage_reads');
             plan skip_all=>'GHDL provider unavailable' unless $ghdl && -x $ghdl;
             my $tb="$dir/read_tb.vhd";
             write_file($tb,<<'VHDL');
@@ -255,15 +254,14 @@ begin
  end process;
 end;
 VHDL
-            my $c=ghdl_stage([$ghdl,'-a','--std=08','--workdir='.$dir,@$hdl,$tb],$dir);
+            my $c=run_ghdl_analysis('child_storage_reads',$dir,[@$hdl,$tb]);
             ok($c->{ok},'GHDL analysis') or diag($c->{diagnostic},$c->{stderr});
             return unless $c->{ok};
-            my $r=ghdl_stage([$ghdl,'--elab-run','--std=08','--workdir='.$dir,'read_tb','--assert-level=error','--stop-time=1000ns'],$dir);
+            my $r=run_ghdl_behavior('child_storage_reads',$dir);
             ok($r->{ok},'live and repeated reads pass') or diag($r->{diagnostic},$r->{stdout},$r->{stderr});
             like($r->{stdout}.$r->{stderr},qr/CHILD_STORAGE_READ_PASS/,'independent oracle completes');
         }
     };
 }
-sub ghdl_stage { my ($argv,$cwd)=@_; return supervise_process(schema=>'fsmgen.test.child_storage_reads.v1',stage=>'ghdl',bounds=>{timeout_seconds=>60,capture_limit_bytes=>1_048_576},containment=>'test_runtime_process_group',cwd=>$cwd,argv=>$argv); }
 sub read_file { open my $f,'<',$_[0] or die $!; local $/; return <$f>; }
 sub write_file { open my $f,'>',$_[0] or die $!; print {$f} $_[1] or die $!; close $f or die $!; }

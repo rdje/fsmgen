@@ -8,7 +8,7 @@ use File::Temp qw(tempdir);
 use IPC::Cmd qw(can_run);
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
-use FSM::Test::ProcessSupervisor qw(supervise_process);
+use FSM::Test::HDLBehaviorRuntime qw(ghdl_behavior_provider run_ghdl_analysis run_ghdl_behavior);
 use FSM::Test::SourceQueryRunner;
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 use FSM::Test::VerilatorRuntime qw(darwin_verilator_runtime_qualified run_verilator_compile run_generated_binary);
@@ -125,8 +125,7 @@ sub public_parity {
 sub vhdl_runtime {
     my ($dir, $source) = @_;
     subtest 'VHDL scalar count timing' => sub {
-        my $ghdl = $ENV{FSMGEN_RESET_GHDL} // 'ghdl';
-        $ghdl = $ghdl =~ m{/} ? abs_path($ghdl) : can_run($ghdl);
+        my $ghdl = ghdl_behavior_provider('dynamic_count');
         plan skip_all => 'GHDL provider unavailable' unless $ghdl && -x $ghdl;
         my $hdl = FSM::Pipeline::HDLGenerator->new(quiet => 1, target_language => 'vhdl')->generate_hdl_from_file($source)->{hdl_code};
         my $dut = write_file("$dir/dut.vhd", $hdl);
@@ -160,13 +159,10 @@ begin
  end process;
 end;
 VHDL
-        my $run = sub { supervise_process(schema => 'fsmgen.test.dynamic_count.v1', stage => 'ghdl',
-            bounds => {timeout_seconds => 60, capture_limit_bytes => 1_048_576},
-            containment => 'test_runtime_process_group', cwd => $dir, argv => $_[0]) };
-        my $compile = $run->([$ghdl, '-a', '--std=08', '--workdir='.$dir, $dut, $tb]);
+        my $compile = run_ghdl_analysis('dynamic_count', $dir, [$dut, $tb]);
         ok($compile->{ok}, 'GHDL analysis') or diag($compile->{diagnostic}, $compile->{stderr});
         return unless $compile->{ok};
-        my $result = $run->([$ghdl, '--elab-run', '--std=08', '--workdir='.$dir, 'count_tb', '--assert-level=error', '--stop-time=10000ns']);
+        my $result = run_ghdl_behavior('dynamic_count', $dir);
         ok($result->{ok}, 'VHDL independent count and sampling oracle passes') or diag($result->{diagnostic}, $result->{stdout}, $result->{stderr});
         like($result->{stdout}.$result->{stderr}, qr/DYNAMIC_COUNT_PASS/, 'VHDL bounded range completed');
     };

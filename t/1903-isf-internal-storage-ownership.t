@@ -11,7 +11,7 @@ use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
 use FSM::Test::VerilatorRuntime qw(darwin_verilator_runtime_qualified run_verilator_compile run_generated_binary);
-use FSM::Test::ProcessSupervisor qw(supervise_process);
+use FSM::Test::HDLBehaviorRuntime qw(ghdl_behavior_provider run_ghdl_analysis run_ghdl_behavior);
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Support::SemanticIntrospectionMCPAdapter;
@@ -140,8 +140,7 @@ sub simulate {
     my ($language, $hdl, $dir, $case) = @_;
     subtest "$language independent CSR runtime" => sub {
         if ($language eq 'vhdl') {
-            my $ghdl = $ENV{FSMGEN_RESET_GHDL} // 'ghdl';
-            $ghdl = $ghdl =~ m{/} ? abs_path($ghdl) : can_run($ghdl);
+            my $ghdl = ghdl_behavior_provider('storage_ownership');
             plan skip_all => 'GHDL provider unavailable' unless defined($ghdl) && -x $ghdl;
             my $tb = "$dir/storage_tb.vhd";
             write_file($tb, <<'VHDL');
@@ -168,10 +167,10 @@ begin
  end process;
 end;
 VHDL
-            my $compile = ghdl_stage([$ghdl, '-a', '--std=08', '--workdir='.$dir, $hdl, $tb], $dir);
+            my $compile = run_ghdl_analysis('storage_ownership', $dir, [$hdl, $tb]);
             ok($compile->{ok}, 'GHDL analyzes the generated actor and independent oracle') or diag($compile->{diagnostic}, $compile->{stderr});
             return unless $compile->{ok};
-            my $r = ghdl_stage([$ghdl, '--elab-run', '--std=08', '--workdir='.$dir, 'storage_tb', '--assert-level=error', '--stop-time=300ns'], $dir);
+            my $r = run_ghdl_behavior('storage_ownership', $dir);
             ok($r->{ok}, 'GHDL storage reset/write/read/hold passes') or diag($r->{diagnostic},$r->{stdout},$r->{stderr});
             like($r->{stdout}.$r->{stderr}, qr/STORAGE_PASS/, 'VHDL oracle completes');
         } else {
@@ -213,12 +212,6 @@ SV
             like($r->{stdout}, qr/STORAGE_PASS/, 'Verilog-family oracle completes');
         }
     };
-}
-sub ghdl_stage {
-    my ($argv, $cwd) = @_;
-    return supervise_process(schema => 'fsmgen.test.storage_ownership.v1', stage => 'ghdl',
-        bounds => {timeout_seconds => 60, capture_limit_bytes => 1_048_576},
-        containment => 'test_runtime_process_group', cwd => $cwd, argv => $argv);
 }
 sub widths { return {map {$_->{name} => $_->{width}} @{$_[0] || []}}; }
 sub read_file { open my $fh, '<', $_[0] or die $!; local $/; return <$fh>; }

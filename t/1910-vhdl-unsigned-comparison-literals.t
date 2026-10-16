@@ -2,12 +2,10 @@
 use strict;
 use warnings;
 use Test::More;
-use Cwd qw(abs_path);
 use File::Temp qw(tempdir);
-use IPC::Cmd qw(can_run);
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
-use FSM::Test::ProcessSupervisor qw(supervise_process);
+use FSM::Test::HDLBehaviorRuntime qw(ghdl_behavior_provider run_ghdl_analysis run_ghdl_behavior);
 use FSM::Pipeline::HDLGenerator;
 
 my $dir = tempdir(CLEANUP => 1);
@@ -34,8 +32,7 @@ my $source = "(?dt:unsigned_comparisons (+size (DATA 4) (FLAG 1) "
 my $file = write_file("$dir/source.fsm", $source);
 my $hdl = FSM::Pipeline::HDLGenerator->new(quiet => 1, target_language => 'vhdl')->generate_hdl_from_file($file)->{hdl_code};
 like($hdl, qr/entity unsigned_comparisons is/, 'public pipeline emits unsigned comparison design');
-my $ghdl = $ENV{FSMGEN_RESET_GHDL} // 'ghdl';
-$ghdl = $ghdl =~ m{/} ? abs_path($ghdl) : can_run($ghdl);
+my $ghdl = ghdl_behavior_provider('unsigned_comparison');
 SKIP: {
     skip 'GHDL provider unavailable', 3 unless $ghdl && -x $ghdl;
     my $dut = write_file("$dir/dut.vhd", $hdl);
@@ -68,14 +65,11 @@ $assertions
  end process;
 end;
 VHDL
-    my $run = sub { supervise_process(schema => 'fsmgen.test.unsigned_comparison.v1', stage => 'ghdl',
-        bounds => {timeout_seconds => 60, capture_limit_bytes => 1_048_576},
-        containment => 'test_runtime_process_group', cwd => $dir, argv => $_[0]) };
-    my $compile = $run->([$ghdl, '-a', '--std=08', '--workdir='.$dir, $dut, $tb]);
+    my $compile = run_ghdl_analysis('unsigned_comparison', $dir, [$dut, $tb]);
     ok($compile->{ok}, 'GHDL analysis of comparison types') or diag($compile->{diagnostic}, $compile->{stderr});
     if (!$compile->{ok}) { fail('runtime compilation failed'); fail('runtime observation absent'); }
     else {
-        my $result = $run->([$ghdl, '--elab-run', '--std=08', '--workdir='.$dir, 'comparison_tb', '--assert-level=error', '--stop-time=100ns']);
+        my $result = run_ghdl_behavior('unsigned_comparison', $dir);
         ok($result->{ok}, 'independent integer truth table matches') or diag($result->{diagnostic}, $result->{stdout}, $result->{stderr});
         like($result->{stdout}.$result->{stderr}, qr/COMPARISON_TRUTH_PASS/, 'every comparison observation completed');
     }

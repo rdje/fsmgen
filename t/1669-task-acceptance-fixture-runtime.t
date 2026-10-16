@@ -997,6 +997,7 @@ subtest 'policy adapters exclusively own low-level test supervision' => sub {
     is_deeply(
         [sort @owner],
         [qw(
+            t/lib/FSM/Test/HDLBehaviorRuntime.pm
             t/lib/FSM/Test/RamGuardFixtureRuntime.pm
             t/lib/FSM/Test/RustParityRuntime.pm
             t/lib/FSM/Test/RustProxyFixture.pm

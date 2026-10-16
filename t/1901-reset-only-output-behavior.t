@@ -11,7 +11,7 @@ use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
 use FSM::Test::VerilatorRuntime qw(darwin_verilator_runtime_qualified run_verilator_compile run_generated_binary);
-use FSM::Test::ProcessSupervisor qw(supervise_process);
+use FSM::Test::HDLBehaviorRuntime qw(ghdl_behavior_provider run_ghdl_analysis run_ghdl_behavior);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 
 my $work = tempdir(CLEANUP => 1);
@@ -71,7 +71,7 @@ for my $format (qw(fsm isf)) {
                         is_deeply($families{$name}, {
                             signal_name => $name, width => $width{$name},
                             multiplexer_type => 'flop', default_value => $name,
-                            reset_value => $reset{$name}, driver_count => 0,
+                            reset_value => $reset{$name}, pulse_delay_cycles => undef, driver_count => 0,
                             driver_blocks => [], driver_enable_signals => [],
                             family_enable_signals => [], rhs_enable_families => [], rhs_values => [],
                         }, "$name exposes reset/hold without fabricated data drivers");
@@ -101,15 +101,14 @@ for my $format (qw(fsm isf)) {
             }
             subtest 'independent runtime oracle' => sub {
                 if ($language eq 'vhdl') {
-                    my $ghdl = $ENV{FSMGEN_RESET_GHDL} // 'ghdl';
-                    $ghdl = $ghdl =~ m{/} ? abs_path($ghdl) : can_run($ghdl);
+                    my $ghdl = ghdl_behavior_provider('reset_only');
                     plan skip_all => 'GHDL provider unavailable' unless defined($ghdl) && -x $ghdl;
                     my $tb = "$dir/reset_only_tb.vhd";
                     write_file($tb, vhdl_tb($format));
-                    my $compile = ghdl_stage([$ghdl, '-a', '--std=08', '--workdir='.$dir, @hdl, $tb], $dir);
+                    my $compile = run_ghdl_analysis('reset_only', $dir, [@hdl, $tb]);
                     ok($compile->{ok}, 'GHDL analyzes generated modules and independent oracle') or diag($compile->{diagnostic},substr($compile->{stderr},0,8192));
                     return unless $compile->{ok};
-                    my $r = ghdl_stage([$ghdl, '--elab-run', '--std=08', '--workdir='.$dir, 'reset_only_tb', '--assert-level=error', '--stop-time=100ns'], $dir);
+                    my $r = run_ghdl_behavior('reset_only', $dir);
                     ok($r->{ok}, 'GHDL reset timing and hold pass') or diag($r->{diagnostic},$r->{stdout},$r->{stderr});
                     like($r->{stdout}.$r->{stderr}, qr/RESET_ONLY_PASS/, 'VHDL oracle completes');
                 } else {
@@ -220,12 +219,6 @@ begin
 end process;
 end;
 VHDL
-}
-sub ghdl_stage {
-    my ($argv, $cwd) = @_;
-    return supervise_process(schema => 'fsmgen.test.reset_only.v1', stage => 'ghdl',
-        bounds => {timeout_seconds => 60, capture_limit_bytes => 1_048_576},
-        containment => 'test_runtime_process_group', cwd => $cwd, argv => $argv);
 }
 sub read_file { open my $fh, '<', $_[0] or die $!; local $/; return <$fh>; }
 sub write_file { open my $fh, '>', $_[0] or die $!; print {$fh} $_[1] or die $!; close $fh or die $!; }

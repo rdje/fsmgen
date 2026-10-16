@@ -10,7 +10,7 @@ use JSON::PP;
 use lib 'perl', 't/lib';
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner;
-use FSM::Test::ProcessSupervisor qw(supervise_process);
+use FSM::Test::HDLBehaviorRuntime qw(ghdl_behavior_provider run_ghdl_analysis run_storage_identifier_lint);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
@@ -98,21 +98,16 @@ subtest 'legal variable and keyword-bank controls compile independently' => sub 
             ok(length($hdl), "$kind $name emits $language");
             if ($language eq 'vhdl') {
                 SKIP: {
-                    skip 'GHDL unavailable', 1 unless can_run('ghdl');
+                    skip 'GHDL unavailable', 1 unless ghdl_behavior_provider('storage_identifier');
                     my $file = write_file("$dir/dut.vhd", $hdl);
-                    my $result = supervise_process(schema=>'fsmgen.test.storage_identifier.v1',stage=>'ghdl',
-                        bounds=>{timeout_seconds=>60,capture_limit_bytes=>1_048_576},containment=>'test_runtime_process_group',
-                        cwd=>$dir,argv=>['ghdl','-a','--std=08',File::Spec->rel2abs($file)]);
+                    my $result = run_ghdl_analysis('storage_identifier',$dir,[File::Spec->rel2abs($file)]);
                     ok($result->{ok}, 'independent VHDL analysis accepts legal names') or diag($result->{diagnostic},$result->{stdout},$result->{stderr});
                 }
             } else {
                 SKIP: {
                     skip 'Verilator unavailable', 1 unless can_run('verilator');
                     my $file = write_file("$dir/$language.sv", $hdl);
-                    my $result = supervise_process(schema=>'fsmgen.test.storage_identifier.v1',stage=>'verilator_lint',cwd=>$root,
-                        bounds=>{timeout_seconds=>60,capture_limit_bytes=>1_048_576},containment=>'test_runtime_process_group',
-                        argv=>['verilator','--lint-only','-Wno-fatal','--top-module','storage_identifier',
-                            '--Mdir',"$dir/obj_$language",$file]);
+                    my $result = run_storage_identifier_lint($dir,$file,"$dir/obj_$language");
                     ok($result->{ok}, 'independent Verilog-family analysis accepts legal names') or diag($result->{diagnostic},$result->{stderr});
                 }
             }
