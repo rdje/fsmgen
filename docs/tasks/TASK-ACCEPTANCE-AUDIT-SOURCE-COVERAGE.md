@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `infra/continuity / doctrine enforcement`
 - Created: `2026-10-12`
-- Last updated: `2026-10-16`
+- Last updated: `2026-10-17`
 - Owner: repo-local workflow
 - Priority: P2
 
@@ -55,12 +55,12 @@ before classifying the suspected coverage defect, then fix it if reproduced.
   Commit: `pending`
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Provide bounded same-repository alternate-index acceptance probes.`
   Acceptance: `Reuse the shared process supervisor through a narrow sealed adapter; select canonical Git/Bash once, admit only repository-local alternate indexes and fixed fixture operations in this same Git repository, reject main-index/symlink/other-repository or command substitution, and preserve fixed deadlines/capture/native/cleanup truth. Meaningful positive and hostile controls, source-owner watcher, book/knowledge/live-doc sync, focused tests, staged doctrines and normal hooks must pass. The confirmed registry defect remains open in .1.2.`
-  Verification: `Decision 0087 requires sealed adapters for permanent test subprocesses. Existing TaskAcceptanceFixtureRuntime admits separate fixture repositories; its scope remains unchanged. A distinct same-repository index adapter preserves the user's Git-boundary requirement.`
+  Verification: `Original .1.1 contract accepted by .1.1.3 after committed adapter and HDL supervision repair: current native index/API/evidence/environment/cleanup cases and the unchanged selected policy-owner subtest pass with complete current source epochs and primary-index conservation. Decision 0087 mechanics, fixed safety budgets and canonical tools retain. Existing separate-repository fixture policy is unchanged and was not exercised. Every first failure/source-custody gap and the synthetic retention boundary remain recorded; no audit-source declaration, full T1669, HDL/HIAL or full-CI/push qualification is inferred.`
   Children: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1.1, TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1.2, TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1.3`
-  Commit: `pending`
+  Commit: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1.3: accept bounded index policy contract`
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1.1`
   Status: `done`
@@ -98,11 +98,18 @@ before classifying the suspected coverage defect, then fix it if reproduced.
   - [x] **NO REGRESSION** — For .1.1.2: All tests successful in native T2069 (Files=1 Tests=8) and corrected t1901 (Files=1 Tests=9), with complete source epochs and real stage receipts. Eight unchanged original caller files reported passing in the retained failed collection. owner-final-20261016 passes the unchanged selected shared ownership subtest with complete current input conservation; the whole T1669 Git-fixture suite was not run. Final preservation/query review is native0; syntax is warning-free. Book/claim/size checks, staged scripts/check_doctrines.sh and normal hooks must qualify delivery before commit. Original index-parent acceptance, audit scope, HIAL, full CI/push and visual book QA remain separately owned.
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Accept bounded index probes and the repaired source-owner dependency.`
   Acceptance: `After committed adapter and GHDL repair, qualify the complete unchanged .1.1 contract, current native cases and full policy-owner source census. Preserve every first failure, assumption and measured-versus-reconstructed boundary; update book/live docs and commit before closing only this leaf and .1.1. Audit scope .1.2 and original canonical publication remain separate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `index-final native0 reports All tests successful (Files=1 Tests=7); owner-final native0 reports Files=1 Tests=1 for only the unchanged ownership subtest. Complete selected source-domain snapshots and full primary-index/Git observations conserve around both calls. Original API/path/bounds refusal, canonical-tool/environment resistance, documentation exemption, native missing/fresh/unchecked/stale evidence, stage bounds and settled retirement pass. The retained-workspace control is explicitly synthetic; no native child-survival claim. First index/owner results also pass; A1 corrects only the subsequent receipt publication race. The prior normal cleanup commit0 survives in previous-normal-commit.json.gz. Claim legs are unchanged original source/schema/budget rederivation, genuine native evidence/environment controls plus explicit synthetic retention boundary, and complete source/native/command/raw-stream custody with permanent watcher and Git. Original first ownership failures and measured-versus-reconstructed boundaries remain historical failures. Book and full delivery gates must pass before commit; audit scope, HIAL, full CI/push and visual QA remain open.`
+  Commit: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1.3: accept bounded index policy contract`
+  Finding A1 resolution: `The first index and selected-owner native checks pass with complete source and main-index conservation. Post-run review identifies a latent race in the new receipt writer: parallel actions could see a content-addressed archive before its writer closes it. No incomplete archive or native failure was observed. The writer now closes an owned same-volume temporary file before atomic link publication; an existing object must match every byte, and scratch/audit parents reject symlink or nested Git boundaries. Separately named index-final and owner-final native0 qualify the corrected programme with source and primary-index/Git conservation. Original runtime/checker/fixture policy bodies and every first result remain unchanged.`
+
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — For .1.1.3: git log -S evidence retained in the committed shared-owner dependency and HDL repair records locates the pre-existing direct caller blocker. The original checker first-source-only false green remains separately owned. Current complete selected-domain source snapshots and native results now prove the repaired owner set; they do not reconstruct the unavailable first full census. A1's first source body exposes incomplete-file publication risk; closed temporary-file/atomic-link publication fixes that latent receipt defect without changing runtime policy or promoting any first result.
+  - [x] **ADDRESSED (verified)** — For .1.1.3: the committed index/HDL repairs meet the unchanged original bounded .1.1 contract. Native fixed index cases preserve main-index identity, schemas, original stage ceilings, canonical tool selection, caller environment and failure truth. Current ownership permits sealed adapters and only the hostile-process oracle's direct test call. Final native index and selected-owner calls pass with complete source/Git conservation, and atomic source publication/reuse retains exact archived bytes. Close only .1.1.3/.1.1; audit-source declaration and committed-only source coverage remain pending.
+  - [x] **NO REGRESSION** — For .1.1.3: All tests successful in current index-final (Files=1 Tests=7) and owner-final (Files=1 Tests=1), with complete selected-domain source snapshots, actual native records and primary-index/Git conservation. Original fixture Git-repository suites were not run; the retained-workspace control remains synthetic. The prior qualified HDL stages and corrected reset-only report retain their separate passing/failing collection boundaries. Book, claim/size checks, staged doctrines and normal hooks remain mandatory before commit; no HIAL/full-CI/push/visual qualification is promoted.
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2`
   Status: `pending`
@@ -126,9 +133,8 @@ before classifying the suspected coverage defect, then fix it if reproduced.
 
 ## Blockers
 
-- The direct HDL ownership dependency is repaired and focused qualification
-  passes. Original index-parent acceptance remains open in .1.1.3; audit scope
-  .1.2 and committed-only .2 still precede canonical publication. Original HIAL,
+- Original bounded index/owner acceptance is complete. Audit scope .1.2 and
+  committed-only .2 still precede canonical publication. Original HIAL,
   full-CI/push and visual qualification owners retain.
 
 ## Acceptance Checklist (enforced)

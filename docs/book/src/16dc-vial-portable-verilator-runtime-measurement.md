@@ -470,13 +470,13 @@ scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
   t/2068-task-acceptance-index-runtime.t
 ```
 
-The index adapter qualifies bounded checker/evidence cases. Audit-source
-coverage remains open in `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2`.
-The first shared policy-owner watcher failed on pre-existing direct HDL test
-supervision; `.1.1.2` owns the sealed repair below. That first failure and its
-incomplete source-census boundary remain recorded. Index cases alone do not
-qualify the whole ownership watcher or HDL. Parent acceptance and full CI
-retain separate owners.
+The index adapter qualifies bounded checker/evidence cases and current
+source ownership after the sealed HDL repair below. Its original bounded
+contract is accepted. The first ownership failure and incomplete source-census
+boundary remain recorded; later passing cases cannot promote that failure.
+Audit-source coverage remains open in
+`TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2`; committed audit-source-only and
+full-CI qualification retain separate owners.
 
 ### HDL behavior test policy
 
