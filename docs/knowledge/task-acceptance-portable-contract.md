@@ -11,10 +11,11 @@ answers:
   - how do same-repository task-acceptance index probes work?
   - how do audit index evidence profiles work?
   - why can a gate change raw Git index bytes?
+  - which audit sources require task acceptance?
 date: 2026-10-17
 status: current
 tags: [doctrine, task-acceptance, evidence, checklist, portability]
-evidence: docs/audits/task-acceptance-audit-fixtures-20261017/stale-index-cache-reproduction.json.gz; t/2070-audit-index-fixture-policy.t; t/lib/FSM/Test/TaskAcceptanceIndexRuntime.pm; t/2068-task-acceptance-index-runtime.t; TASK_ACCEPTANCE.md; docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md; docs/tasks/TASK-ACCEPTANCE-PORTABLE-DOCTRINE.md
+evidence: t/2071-audit-source-acceptance.t; docs/audits/task-acceptance-audit-fixtures-20261017/stale-index-cache-reproduction.json.gz; t/2070-audit-index-fixture-policy.t; t/lib/FSM/Test/TaskAcceptanceIndexRuntime.pm; t/2068-task-acceptance-index-runtime.t; TASK_ACCEPTANCE.md; docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md; docs/tasks/TASK-ACCEPTANCE-PORTABLE-DOCTRINE.md
 reverify: (scripts/decision_records.py read 0026 && cat TASK_ACCEPTANCE.md) | rg -n 'change_paths.tsv|evidence_signatures.tsv|Current-Slice Freshness|ROOT CAUSE|NO REGRESSION'
 ---
 
@@ -35,3 +36,5 @@ index in this repository. T2068 checks native status, evidence and cleanup.
 `audit_*` adds fixed evidence/doc cases. T2070 checks fixtures; declaration coverage remains separate.
 
 Delivery gates may refresh Git stat-cache metadata without changing staged entries. Retain raw observations; native fixtures still require exact index bytes.
+
+`docs/audits/` `.py/.pl/.pm/.sh/.c/.t` changes require fresh evidence. Document neighbors are unclassified.

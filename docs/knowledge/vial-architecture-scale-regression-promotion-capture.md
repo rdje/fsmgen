@@ -2,61 +2,61 @@
 id: vial-architecture-scale-regression-promotion-capture
 title: VIAL regression promotion captures eleven current profiles through isolated v2 publication
 answers:
-  - "when do paired-busy HDL checks skip the hosted Yosys deadline?"
-  - "how will the VIAL architecture scale regression corpus be captured?"
-  - "why does the VIAL current promotion corpus use eleven workers instead of 44 workers?"
-  - "what does 44 invocations mean in the VIAL regression promotion policy?"
-  - "which existing measurement adapters feed the VIAL v2 promotion corpus?"
-  - "does the structural OSVVM promotion route execute GHDL?"
-  - "how are VIAL promotion dispatch paths content addressed?"
-  - "how does one VIAL regression-promotion profile run in isolation?"
-  - "how is the VIAL v2 current corpus resumed and published?"
-  - "how are regression-promotion report coordinates authenticated separately from policy selection?"
-  - "did the repaired VIAL regression-promotion current corpus complete?"
-  - "what is the current VIAL regression-promotion corpus identity and how can it be independently verified?"
-  - "why is current VIAL regression-promotion corpus loading CPU bound?"
-  - "why is balanced VIAL report validation expensive?"
-  - "how is VIAL canonicalization cost measured without changing returned values?"
-  - "why does VIAL complete-corpus validation separate capture and execution revisions?"
-  - "why does VIAL complete-corpus validation isolate each whole profile operation?"
-  - "how is the current VIAL regression-promotion budget qualification stored atomically?"
-  - "how is the current VIAL regression-promotion budget qualification published or validated explicitly?"
-  - "what is the real current VIAL regression-promotion budget qualification publication identity?"
-  - "how is the current VIAL regression-promotion budget qualification independently verified?"
-  - "how are copied VIAL current-budget qualification mutations and later-run applicability falsified?"
-  - "how is VIAL current-budget qualification closed?"
-  - "what is the VIAL regression-promotion gate contract?"
-  - "when does a VIAL regression-promotion gate enforce performance?"
-  - "does a VIAL regression gate recalibrate its own qualification?"
-  - "where does the VIAL regression gate publish its latest observation?"
-  - "how does one VIAL regression gate profile execute without publishing calibration evidence?"
-  - "why does the VIAL regression gate use an anonymous report spool?"
-  - "how does the VIAL regression gate distinguish provider absence from provider drift?"
-  - "how are all eleven VIAL regression gate profiles coordinated in memory?"
-  - "what is the VIAL regression gate aggregate precedence?"
-  - "how is the latest VIAL regression gate result replaced atomically?"
-  - "can a prior VIAL gate result influence qualification or execution?"
-  - "how do I run or validate the latest VIAL regression gate result?"
-  - "does the VIAL regression gate CLI run work by default?"
-  - "how do I run the authenticated VIAL regression gate through local CI?"
-  - "how will VIAL regression gate evidence reach hosted CI?"
-  - "how is the tracked VIAL regression gate evidence bundle authenticated?"
-  - "how do I materialize the tracked VIAL regression gate evidence?"
-  - "how does VIAL regression gate evidence cleanup avoid deleting pre-existing evidence?"
-  - "which VIAL regression gate profiles run in hosted CI?"
-  - "why does hosted VIAL regression CI not install substitute HDL tools?"
-  - "why did VIAL regression gate ordinals 8-10 report correctness changed?"
-  - "which VIAL lifecycle correctness fields are stable?"
-  - "does the VIAL gate ignore process telemetry or recalibrate?"
-  - "did the exact-pinned VIAL regression promotion gate pass?"
-  - "what is the final independently closed VIAL regression gate observation?"
-  - "where is the machine-readable VIAL architecture-scale regression capability?"
-  - "where is the human VIAL architecture-scale regression operator guide?"
-  - "how is VIAL architecture-scale regression public truth closed independently?"
-  - "why did the first hosted VIAL regression gate fail its real command?"
-  - "calibration closure publication root is absent"
-  - "where does public VIAL regression-promotion policy derivation load its seal?"
-  - "what failed in the hosted Perl-file shards beside the VIAL gate?"
+  - when do paired-busy HDL checks skip the hosted Yosys deadline?
+  - how will the VIAL architecture scale regression corpus be captured?
+  - why does the VIAL current promotion corpus use eleven workers instead of 44 workers?
+  - what does 44 invocations mean in the VIAL regression promotion policy?
+  - which existing measurement adapters feed the VIAL v2 promotion corpus?
+  - does the structural OSVVM promotion route execute GHDL?
+  - how are VIAL promotion dispatch paths content addressed?
+  - how does one VIAL regression-promotion profile run in isolation?
+  - how is the VIAL v2 current corpus resumed and published?
+  - how are regression-promotion report coordinates authenticated separately from policy selection?
+  - did the repaired VIAL regression-promotion current corpus complete?
+  - what is the current VIAL regression-promotion corpus identity and how can it be independently verified?
+  - why is current VIAL regression-promotion corpus loading CPU bound?
+  - why is balanced VIAL report validation expensive?
+  - how is VIAL canonicalization cost measured without changing returned values?
+  - why does VIAL complete-corpus validation separate capture and execution revisions?
+  - why does VIAL complete-corpus validation isolate each whole profile operation?
+  - how is the current VIAL regression-promotion budget qualification stored atomically?
+  - how is the current VIAL regression-promotion budget qualification published or validated explicitly?
+  - what is the real current VIAL regression-promotion budget qualification publication identity?
+  - how is the current VIAL regression-promotion budget qualification independently verified?
+  - how are copied VIAL current-budget qualification mutations and later-run applicability falsified?
+  - how is VIAL current-budget qualification closed?
+  - what is the VIAL regression-promotion gate contract?
+  - when does a VIAL regression-promotion gate enforce performance?
+  - does a VIAL regression gate recalibrate its own qualification?
+  - where does the VIAL regression gate publish its latest observation?
+  - how does one VIAL regression gate profile execute without publishing calibration evidence?
+  - why does the VIAL regression gate use an anonymous report spool?
+  - how does the VIAL regression gate distinguish provider absence from provider drift?
+  - how are all eleven VIAL regression gate profiles coordinated in memory?
+  - what is the VIAL regression gate aggregate precedence?
+  - how is the latest VIAL regression gate result replaced atomically?
+  - can a prior VIAL gate result influence qualification or execution?
+  - how do I run or validate the latest VIAL regression gate result?
+  - does the VIAL regression gate CLI run work by default?
+  - how do I run the authenticated VIAL regression gate through local CI?
+  - how will VIAL regression gate evidence reach hosted CI?
+  - how is the tracked VIAL regression gate evidence bundle authenticated?
+  - how do I materialize the tracked VIAL regression gate evidence?
+  - how does VIAL regression gate evidence cleanup avoid deleting pre-existing evidence?
+  - which VIAL regression gate profiles run in hosted CI?
+  - why does hosted VIAL regression CI not install substitute HDL tools?
+  - why did VIAL regression gate ordinals 8-10 report correctness changed?
+  - which VIAL lifecycle correctness fields are stable?
+  - does the VIAL gate ignore process telemetry or recalibrate?
+  - did the exact-pinned VIAL regression promotion gate pass?
+  - what is the final independently closed VIAL regression gate observation?
+  - where is the machine-readable VIAL architecture-scale regression capability?
+  - where is the human VIAL architecture-scale regression operator guide?
+  - how is VIAL architecture-scale regression public truth closed independently?
+  - why did the first hosted VIAL regression gate fail its real command?
+  - calibration closure publication root is absent
+  - where does public VIAL regression-promotion policy derivation load its seal?
+  - what failed in the hosted Perl-file shards beside the VIAL gate?
 date: 2026-09-23
 status: current
 tags: [hial, vial, scalability, regression, measurement, publication]

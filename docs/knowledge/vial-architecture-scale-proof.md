@@ -2,63 +2,63 @@
 id: vial-architecture-scale-proof
 title: VIAL architecture scale is proved by orthogonal families with stage-local oracles, not capacity claims
 answers:
-  - "how will VIAL architecture scalability be proved?"
-  - "what are the VIAL scale workload families?"
-  - "are VIAL scale gate and qualification candidates supported capacity?"
-  - "how are VIAL scale performance budgets selected?"
-  - "does VIAL architecture scale prove whole product big and really big designs?"
-  - "which execution graph scale limits are reachable before earlier caps?"
-  - "what exact workloads prove VIAL backend emission scale?"
-  - "where are the VIAL portable backend source byte boundaries?"
-  - "why does native UVM reject the portable backend scale ladder?"
-  - "how are VIAL runtime-stream measurement inputs constructed without tools?"
-  - "how was the balanced portable bridge blocker resolved?"
-  - "what closes deterministic VIAL scale generation before measurement?"
-  - "how does VIAL architecture scale measurement work?"
-  - "how does VIAL measure Linux logical cores without a Perl POSIX constant?"
-  - "where are VIAL scale measurement artifacts staged and published?"
-  - "does the VIAL measurement foundation execute external tools?"
-  - "which VIAL scale families are measured first?"
-  - "what does semantic and bridge scale measurement claim?"
-  - "how does semantic bridge measurement preserve semantic paths without allowing host paths?"
-  - "how is the semantic bridge scale matrix resumed and published?"
-  - "how are legacy semantic bridge and execution checking matrix publications byte bounded?"
-  - "does semantic bridge matrix validation require profile isolation?"
-  - "how does semantic bridge measurement preserve a failed stage diagnostic?"
-  - "how does the exact combined source byte profile stay below its timeout?"
-  - "how are VIAL execution and checking stages measured?"
-  - "why does source-free VIAL scale have no measurement record?"
-  - "how is the execution checking scale matrix resumed without borrowing identity?"
-  - "why did execution checking matrix resume stop before profile twenty?"
-  - "how is execution checking matrix validation memory bounded?"
-  - "why cannot the nineteen pre-repair scale reports enter the repaired revision seal?"
-  - "why does the isolated execution checking matrix still stop at operations total over limit?"
-  - "where must the VIAL total operation cap be enforced?"
-  - "where is the revision e4b95dbd execution checking prefix archived?"
-  - "how is the VIAL serialized plan cap enforced before random decision materialization?"
-  - "how is structural backend emission measured without executing an HDL tool?"
-  - "is OSVVM provider verification an external verification tool run?"
-  - "how is the structural backend emission matrix resumed and published?"
-  - "why does the backend emission matrix isolate every profile in a child?"
-  - "what do the backend emission publication and IPC ceilings mean?"
-  - "how will portable Verilator runtime scale measurement reuse the qualified runner?"
-  - "why did portable Verilator runtime reachability expose a phase-order defect?"
-  - "how does portable SystemVerilog schedule a check-to-react successor?"
-  - "why is portable SystemVerilog direct drive a separate prerequisite?"
-  - "how does portable SystemVerilog implement a direct endpoint drive?"
-  - "why are portable direct drives limited to input carriers and root fibers?"
-  - "what Runner timeout risk was found before portable runtime measurement?"
-  - "why did the portable SystemVerilog scale oracle move to revision 2?"
-  - "why must backend emission measurement use a revision 2 publication namespace?"
-  - "what is the portable SystemVerilog 16 MiB boundary after scheduler repair?"
-  - "how does portable runtime-stream activity reach exactly 10,000 records?"
-  - "why is portable qualification 15,000 records instead of 100,000?"
-  - "where are the authored portable runtime qualification sources and structural oracle?"
-  - "what are the final tracked portable runtime artifact graph sizes?"
-  - "how is balanced portable measurement scoped?"
-  - "which immutable VIAL calibration files need current revalidation or explicit versioning?"
-  - "how is the immutable VIAL calibration publication dispositioned?"
-  - "what must happen before VIAL architecture scale regression budgets are promoted?"
+  - how will VIAL architecture scalability be proved?
+  - what are the VIAL scale workload families?
+  - are VIAL scale gate and qualification candidates supported capacity?
+  - how are VIAL scale performance budgets selected?
+  - does VIAL architecture scale prove whole product big and really big designs?
+  - which execution graph scale limits are reachable before earlier caps?
+  - what exact workloads prove VIAL backend emission scale?
+  - where are the VIAL portable backend source byte boundaries?
+  - why does native UVM reject the portable backend scale ladder?
+  - how are VIAL runtime-stream measurement inputs constructed without tools?
+  - how was the balanced portable bridge blocker resolved?
+  - what closes deterministic VIAL scale generation before measurement?
+  - how does VIAL architecture scale measurement work?
+  - how does VIAL measure Linux logical cores without a Perl POSIX constant?
+  - where are VIAL scale measurement artifacts staged and published?
+  - does the VIAL measurement foundation execute external tools?
+  - which VIAL scale families are measured first?
+  - what does semantic and bridge scale measurement claim?
+  - how does semantic bridge measurement preserve semantic paths without allowing host paths?
+  - how is the semantic bridge scale matrix resumed and published?
+  - how are legacy semantic bridge and execution checking matrix publications byte bounded?
+  - does semantic bridge matrix validation require profile isolation?
+  - how does semantic bridge measurement preserve a failed stage diagnostic?
+  - how does the exact combined source byte profile stay below its timeout?
+  - how are VIAL execution and checking stages measured?
+  - why does source-free VIAL scale have no measurement record?
+  - how is the execution checking scale matrix resumed without borrowing identity?
+  - why did execution checking matrix resume stop before profile twenty?
+  - how is execution checking matrix validation memory bounded?
+  - why cannot the nineteen pre-repair scale reports enter the repaired revision seal?
+  - why does the isolated execution checking matrix still stop at operations total over limit?
+  - where must the VIAL total operation cap be enforced?
+  - where is the revision e4b95dbd execution checking prefix archived?
+  - how is the VIAL serialized plan cap enforced before random decision materialization?
+  - how is structural backend emission measured without executing an HDL tool?
+  - is OSVVM provider verification an external verification tool run?
+  - how is the structural backend emission matrix resumed and published?
+  - why does the backend emission matrix isolate every profile in a child?
+  - what do the backend emission publication and IPC ceilings mean?
+  - how will portable Verilator runtime scale measurement reuse the qualified runner?
+  - why did portable Verilator runtime reachability expose a phase-order defect?
+  - how does portable SystemVerilog schedule a check-to-react successor?
+  - why is portable SystemVerilog direct drive a separate prerequisite?
+  - how does portable SystemVerilog implement a direct endpoint drive?
+  - why are portable direct drives limited to input carriers and root fibers?
+  - what Runner timeout risk was found before portable runtime measurement?
+  - why did the portable SystemVerilog scale oracle move to revision 2?
+  - why must backend emission measurement use a revision 2 publication namespace?
+  - what is the portable SystemVerilog 16 MiB boundary after scheduler repair?
+  - how does portable runtime-stream activity reach exactly 10,000 records?
+  - why is portable qualification 15,000 records instead of 100,000?
+  - where are the authored portable runtime qualification sources and structural oracle?
+  - what are the final tracked portable runtime artifact graph sizes?
+  - how is balanced portable measurement scoped?
+  - which immutable VIAL calibration files need current revalidation or explicit versioning?
+  - how is the immutable VIAL calibration publication dispositioned?
+  - what must happen before VIAL architecture scale regression budgets are promoted?
 date: 2026-09-02
 status: current
 tags: [hial, vial, scalability, execution-ir, semantic-ir, task-tree]

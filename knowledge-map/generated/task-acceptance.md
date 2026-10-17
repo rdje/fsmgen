@@ -1,7 +1,7 @@
 # Knowledge Map: `task-acceptance`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **9** uniquely owned question entries.
+> **1** facts · **10** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -12,6 +12,7 @@
 - q="is TASK-ACCEPTANCE enforced in FSMGen?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="what checklist does a code-changing task need?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="where are task-acceptance evidence tokens declared?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
+- q="which audit sources require task acceptance?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="why can a gate change raw Git index bytes?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="why was PGEN TASK-ACCEPTANCE not copied directly?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 

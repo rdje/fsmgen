@@ -47,12 +47,12 @@ before classifying the suspected coverage defect, then fix it if reproduced.
   Children: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1, TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.2`
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1`
-  Status: `active`
+  Status: `done`
   Goal: `Reproduce and repair executable audit path coverage.`
   Acceptance: `Retain the unchanged-checker first source-only outcome and complete scope records; repair only the demonstrated project declaration gap. Meaningful native source-format, neighboring documentation and task-evidence controls must distinguish intended paths. Preserve all evidence and limits, declare any co-staged registry effect, synchronize the book and live docs, and pass focused checks, staged doctrines and normal hooks.`
-  Verification: `Confirmed P2 defect: first-source-only-native.json retains unchanged native actual0/declared1 and explicit documentation-only exemption with exactly one audit Python path staged, no owner or registry delta, conserved programme/alternate/main-index identities. Decision 0026 locates the missing project declaration. Repair follows bounded same-repository probes; original publication stays pending.`
+  Verification: `Confirmed P2 defect: first-source-only-native.json retains unchanged native actual0/declared1 and explicit documentation-only exemption with exactly one audit Python path staged, no owner or registry delta, conserved programme/alternate/main-index identities. Decision 0026 locates the missing project declaration. The original index/owner contract and fixed profile prerequisites are committed; .1.2 repairs the declaration with genuine before/after native classification, evidence and neighbor controls. Registry co-staging is explicit and committed-only .2 remains open; original publication stays pending.`
   Children: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1, TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.3, TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2`
-  Commit: `pending`
+  Commit: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2: require acceptance for audit source changes`
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.1`
   Status: `done`
@@ -130,11 +130,19 @@ before classifying the suspected coverage defect, then fix it if reproduced.
   - [x] **NO REGRESSION** — For .1.3: All tests successful in policy-complete (Files=1 Tests=3) and final original index regression (Files=1 Tests=7), with complete source and primary-index/Git conservation. Original selected ownership checks and fresh owner-complete pass, binding the final watcher with complete source and primary-index/Git conservation. Native byte/shape/capture/deadline/cleanup assertions pass; synthetic retention remains separately identified. Book build and all old/new Knowledge Map routes pass. book-ready native0 verifies the corrected root and final cache documentation. knowledge-complete-routes.json.gz proves every prior query row survives quote-only compaction and only the new causal cache fact adds a row; all old prose/probes remain. Final claim/size, corrected staged doctrines and normal hooks remain required; no audit-source-scope, full T1669, HDL/HIAL, full-CI/push or visual qualification is inferred.
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Repair the demonstrated audit declaration gap and qualify native source-path controls.`
   Acceptance: `Preserve the first actual0/declared1 false green. Add only governed project audit-source scope; native format, documentation boundary and fresh/stale/unchecked/absent task-evidence controls must distinguish real classified paths. Declare co-staged registry context, keep the neutral checker and existing adapters unchanged, synchronize the book/knowledge/live docs, and pass focused checks, staged doctrines and normal hooks before committed-only .2 acceptance.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `scope-before retains genuine native1/expected1 with every audit case exempted by the unchanged registry; capture success does not promote that failed regression. A single project path row now covers py/pl/pm/sh/c/t under docs/audits. scope-after native0 (Files=1 Tests=4) uses native classified-path diagnostics to prove every source itself matched and document/near-prefix/suffix controls did not, independent of a co-staged registry. Fresh owners reach required-evidence acceptance; missing, unchecked and stale evidence fail. Complete source snapshots and raw primary-index/Git state conserve around native scope, original index (Files=1 Tests=7), fixture policy (Files=1 Tests=3) and selected owner (Files=1 Tests=1) checks. repair-source-and-native-review.json.gz proves the neutral checker, shared engine and every adapter byte identical to committed HEAD. Book build and preserved old/cached/direct retrieval routes pass inside unchanged allowances; quote-only mutable VIAL card formatting funds the new declaration fact without loss; exact direct-VHDL history replacement is restored. Claim legs are exact old/new registry/source rederivation, genuine unchanged-before/freshness/format/neighbor native falsifiers, and full source/command/raw-stream/native records with permanent watcher and Git. All after cases explicitly include a registry delta; .2 must still prove committed-only source/document outcomes. First failures and HIAL/full-CI/push/visual boundaries retain. Final staged doctrines and normal hooks remain mandatory before commit.`
+  Commit: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1.2: require acceptance for audit source changes`
+
+
+  Finding S1 resolution: `The first complete staged gate native1 passes task acceptance and the scope/runtime checks but rejects quote formatting on the exact history-backed direct-vhdl-scaffold replacement. Full first streams/source epochs and the rejected card bodies retain. Restore that page exactly from HEAD; recover space through quote-only formatting of mutable VIAL architecture-scale cards outside the stable replacement producer. Preserve all question values, bodies, evidence and probes, and reverify the unchanged history adapter, public projection parity and final doctrines. No archive/source equality or allowance rule is weakened. history-repaired native0 verifies the exact restoration; final retrieval and complete staged/normal checks must still qualify delivery.`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — For .1.2: git log -S history and exact registry-before bytes in before-cause-review.json.gz locate the missing project calibration. scope-before genuinely fails (native1/expected1), while its captured checker cases all return native0 documentation exemption, including unchecked/missing/stale source owners. This reproduces the original first-source-only false green without treating an expected-failure recorder as a passing scope regression.
+  - [x] **ADDRESSED (verified)** — For .1.2: add only the anchored executable audit path ERE for py/pl/pm/sh/c/t. The neutral checker and every existing adapter/shared engine match HEAD byte for byte. scope-after native0 reaches checked fresh evidence and refuses missing/unchecked/stale evidence; actual error diagnostics list each source path and omit neighboring documents despite the separately declared registry delta. No signature, freshness, containment, command or budget rule changes. Committed-only acceptance remains .2.
+  - [x] **NO REGRESSION** — For .1.2: All tests successful in scope-after (Files=1 Tests=4), original index regression (Files=1 Tests=7), fixed fixture policy (Files=1 Tests=3) and selected owner (Files=1 Tests=1), with complete source and exact raw primary-index/Git conservation. Book build and every previous retrieval row pass; cached/direct projections agree with only the declaration fact added. All old fact prose/probes survive quote-only formatting. Final claim/size checks, staged doctrines and normal hooks remain mandatory; no whole Git-fixture suite, committed-only .2, HIAL/full-CI/push or visual qualification is promoted.
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.2`
   Status: `pending`
@@ -151,9 +159,9 @@ before classifying the suspected coverage defect, then fix it if reproduced.
 
 ## Blockers
 
-- Original bounded index/owner acceptance is complete. Audit scope .1.2 and
-  committed-only .2 still precede canonical publication. Original HIAL,
-  full-CI/push and visual qualification owners retain.
+- The project declaration is repaired; committed-only .2 still precedes
+  canonical publication. Original HIAL, full-CI/push and visual qualification
+  owners retain.
 
 ## Acceptance Checklist (enforced)
 
