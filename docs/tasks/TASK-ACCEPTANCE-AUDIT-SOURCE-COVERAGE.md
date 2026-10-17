@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / doctrine enforcement`
 - Created: `2026-10-12`
 - Last updated: `2026-10-17`
@@ -42,7 +42,7 @@ before classifying the suspected coverage defect, then fix it if reproduced.
 ## Task Tree
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce fresh evidence for executable audit changes and qualify the committed source-only boundary.`
   Children: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.1, TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.2`
 
@@ -145,11 +145,16 @@ before classifying the suspected coverage defect, then fix it if reproduced.
   - [x] **NO REGRESSION** — For .1.2: All tests successful in scope-after (Files=1 Tests=4), original index regression (Files=1 Tests=7), fixed fixture policy (Files=1 Tests=3) and selected owner (Files=1 Tests=1), with complete source and exact raw primary-index/Git conservation. Book build and every previous retrieval row pass; cached/direct projections agree with only the declaration fact added. All old fact prose/probes survive quote-only formatting. Final claim/size checks, staged doctrines and normal hooks remain mandatory; no whole Git-fixture suite, committed-only .2, HIAL/full-CI/push or visual qualification is promoted.
 
 - ID: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Accept committed source-only audit coverage and restore the semantic frontier.`
   Acceptance: `Using only committed checker and registry inputs, genuine alternate-index source-only cases must fail without fresh owning evidence and pass with fresh checked evidence; ordinary documentation-only cases remain exempt. Preserve full native commands, statuses, streams and source identities. Verify clean continuity and empty commit brief before resuming original canonical publication; close only this leaf and its coverage tree.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `scope-committed native0 reports All tests successful (Files=1 Tests=4), with complete selected source-domain snapshots and exact raw primary-index/Git conservation. committed-source-and-native-review.json.gz binds all native cases to exact committed checker, declarations, adapters/shared engine and watcher bytes; no case co-stages a registry delta. Every executable format requires checked fresh evidence, missing/stale/unchecked owners fail, nested source is classified and neighboring documents receive explicit native exemption. All stage groups settle and fixtures retire. Current selected owner native0 (Files=1 Tests=1) and book build pass with conserved source/index epochs. Claim legs are exact committed source/registry and original git log -S cause rederivation, genuine native evidence/format/neighbor falsifiers, and complete programme/source/native/stream records with permanent T2071 and normal hooks. Prior false greens, failed aggregates, custody gaps and synthetic retention boundaries remain unchanged. Final size/claim, staged doctrines and normal hooks must qualify delivery. Close only this coverage tree; original canonical publication, parent/full-alias, HIAL/full-CI/push and visual qualification remain open.`
+  Commit: `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.2: accept committed audit source coverage`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — For .2: original git log -S and first-source-only-native.json retain the missing declaration and native actual0/declared1. The committed registry repair needs independent source-only acceptance because .1.2 explicitly co-staged a registry delta. Current exact HEAD/body review binds checker, declarations, adapters/shared engine and permanent watcher before accepting the native result; no historical failed result is promoted.
+  - [x] **ADDRESSED (verified)** — For .2: scope-committed native0 exercises source-only alternate indexes with no registry delta in any case. Fresh evidence is actually checked, each executable format and nested source requires it, missing/stale/unchecked owners return native1, and ordinary document/suffix/near-prefix controls return native0 with explicit exemption. Full native command, input, status, stream, source and settled cleanup records retain; the primary index stays byte-identical.
+  - [x] **NO REGRESSION** — For .2: All tests successful in committed scope (Files=1 Tests=4) and the unchanged selected ownership subtest (Files=1 Tests=1), with complete selected source-domain and exact primary-index/Git conservation. The synchronized book builds and only its committed-only checkpoint changes. Size/claim inventory, staged scripts/check_doctrines.sh and normal hooks remain mandatory before commit; no whole Git-fixture suite, HIAL/full-CI/push, visual or broader product qualification is inferred.
 
 ## Decisions
 
@@ -159,9 +164,9 @@ before classifying the suspected coverage defect, then fix it if reproduced.
 
 ## Blockers
 
-- The project declaration is repaired; committed-only .2 still precedes
-  canonical publication. Original HIAL, full-CI/push and visual qualification
-  owners retain.
+- No coverage blocker remains. Original canonical publication resumes after
+  this leaf is committed clean with an empty brief. HIAL, full-CI/push and
+  visual qualification owners retain.
 
 ## Acceptance Checklist (enforced)
 

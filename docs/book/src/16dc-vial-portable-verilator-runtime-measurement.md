@@ -477,8 +477,8 @@ The index adapter qualifies bounded checker/evidence cases and current
 source ownership after the sealed HDL repair below. Its original bounded
 contract is accepted. The first ownership failure and incomplete source-census
 boundary remain recorded; later passing cases cannot promote that failure.
-Audit-source declaration covers the listed executable formats; committed-only
-acceptance remains open in `TASK-ACCEPTANCE-AUDIT-SOURCE-COVERAGE.2`;
+Audit-source declaration covers the listed executable formats. Committed-only
+source/evidence and document controls pass without a registry delta;
 full-CI qualification retains its separate owner.
 
 ### HDL behavior test policy
