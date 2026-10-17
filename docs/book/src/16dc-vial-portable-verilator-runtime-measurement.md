@@ -441,7 +441,7 @@ output, and an independently held pre-exec child qualify these distinctions.
 
 Same-repository acceptance cases use `FSM::Test::TaskAcceptanceIndexRuntime::run_index_case`. This sealed adapter admits fixed case names, with no caller command, path, index
 or limit arguments. It stages literal fixture blobs in an alternate index of this repository; Git objects stay in this repository's object database. It creates no other
-repository and records the main index before and after each case.
+repository and records the main index before and after each case. `box_regression_sibling` requires refusal; `box_wrapped` and `box_tab_wrapped` accept contained evidence.
 
 ```perl
 use FSM::Test::TaskAcceptanceIndexRuntime qw(run_index_case);
@@ -459,7 +459,7 @@ literal staged inputs and identities, staged paths and whether the worktree
 registry differs from HEAD. A co-staged registry requires evidence itself;
 committed-only coverage must separately establish source-path classification.
 
-Use `run_index_case('audit_py_fresh')`, `audit_py_none` or `audit_py_stale` for pure audit evidence; the same suffixes apply to `pl`, `pm`, `sh`, `c` and `t`, while `audit_py` retains unchecked evidence. `audit_document_md`, `audit_document_json`, `audit_document_txt`, `audit_source_suffix_md` and `audit_neighbor_prefix` select neighboring documents; `audit_nested_py` selects nested source. Append `_unchecked` to a neighbor profile to expose classified paths when the registry is co-staged. These names admit literal fixture paths only. Audit source in `.py`, `.pl`, `.pm`, `.sh`, `.c` or `.t` below `docs/audits/` requires fresh task evidence; document neighbors remain unclassified. Native diagnostics distinguish each source from any co-staged registry; committed-only acceptance remains separate. Delivery checks preserve indexed content and revision while retaining raw stat-cache observations; native fixtures still pin exact index bytes.
+Use `run_index_case('audit_py_fresh')`, `audit_py_none` or `audit_py_stale` for pure audit evidence; the same suffixes apply to `pl`, `pm`, `sh`, `c` and `t`, while `audit_py` retains unchecked evidence. `audit_document_md`, `audit_document_json`, `audit_document_txt`, `audit_source_suffix_md` and `audit_neighbor_prefix` select neighboring documents; `audit_nested_py` selects nested source. Append `_unchecked` to a neighbor profile to expose classified paths when the registry is co-staged. These names admit literal fixture paths only. Audit source in `.py`, `.pl`, `.pm`, `.sh`, `.c` or `.t` below `docs/audits/` requires fresh task evidence; document neighbors remain unclassified. Native diagnostics distinguish each source from any co-staged registry; committed-only acceptance remains separate. Delivery checks preserve indexed content and revision while retaining raw stat-cache observations; native fixtures still pin exact index bytes. Outdented siblings end boxes; tabs use four-column stops.
 
 Canonical Git/Bash selection, a sanitized child environment and fixed bounds
 prevent caller redirects. Each stage has a ten-second wall; Git capture is one
@@ -470,7 +470,7 @@ a synthetic receipt and does not claim native child survival.
 ```bash
 scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib \
   t/2068-task-acceptance-index-runtime.t \
-  t/2070-audit-index-fixture-policy.t t/2071-audit-source-acceptance.t
+  t/2070-audit-index-fixture-policy.t t/2071-audit-source-acceptance.t t/2072-task-acceptance-box-boundaries.t
 ```
 
 The index adapter qualifies bounded checker/evidence cases and current
@@ -479,7 +479,7 @@ contract is accepted. The first ownership failure and incomplete source-census
 boundary remain recorded; later passing cases cannot promote that failure.
 Audit-source declaration covers the listed executable formats. Committed-only
 source/evidence and document controls pass without a registry delta;
-full-CI qualification retains its separate owner.
+Boundary repair is a checkpoint; original regression requires qualified failure-only observation. Full CI retains its owner.
 
 ### HDL behavior test policy
 

@@ -31,6 +31,8 @@ my %CASES = (
     fresh_owner => ['perl/TaskAcceptanceIndexFixture.pm', 'fresh'],
     unchecked_owner => ['perl/TaskAcceptanceIndexFixture.pm', 'unchecked'],
     stale_owner => ['perl/TaskAcceptanceIndexFixture.pm', 'stale'],
+    (map { ('box_' . $_) => ['perl/TaskAcceptanceIndexFixture.pm', $_] }
+        qw(root_sibling regression_sibling indented_sibling wrapped blank_wrapped nested tab_wrapped peer_checkbox heading)),
     (map { ('audit_' . $_) => ['docs/audits/acceptance-index-fixture/source.' . $_, 'unchecked'] }
         qw(py pl pm sh c t)),
     (map {
@@ -52,6 +54,76 @@ my %CASES = (
     audit_source_suffix_md_unchecked => ['docs/audits/acceptance-index-fixture/source.py.md', 'unchecked'],
     audit_neighbor_prefix_unchecked => ['docs/audit-notes/source.py', 'unchecked'],
     audit_nested_py_unchecked => ['docs/audits/acceptance-index-fixture/nested/source.py', 'unchecked'],
+);
+
+my %BOX_TASKS = (
+    root_sibling => <<'MARKDOWN',
+# Box boundary fixture
+- [x] **ROOT CAUSE (WHY + WHERE)** — This box has no diagnostic signature.
+- Unrelated sibling: git log -S old-context
+- [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.
+- [x] **NO REGRESSION** — All tests successful (fixture signature).
+MARKDOWN
+    regression_sibling => <<'MARKDOWN',
+# Box boundary fixture
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S fixture
+- [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.
+- [x] **NO REGRESSION** — This box has no regression signature.
+- ID: `UNRELATED-SIBLING`
+  Verification: `All tests successful`
+MARKDOWN
+    indented_sibling => <<'MARKDOWN',
+# Box boundary fixture
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S fixture
+  - [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.
+  - [x] **NO REGRESSION** — This box has no regression signature.
+  - Unrelated sibling: All tests successful
+MARKDOWN
+    wrapped => <<'MARKDOWN',
+# Box boundary fixture
+- [x] **ROOT CAUSE (WHY + WHERE)** — Evidence follows.
+  git log -S fixture
+- [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.
+- [x] **NO REGRESSION** — Evidence follows.
+  All tests successful (fixture signature).
+MARKDOWN
+    blank_wrapped => <<'MARKDOWN',
+# Box boundary fixture
+- [x] **ROOT CAUSE (WHY + WHERE)** — Evidence follows.
+
+  git log -S fixture
+- [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.
+- [x] **NO REGRESSION** — Evidence follows.
+
+  All tests successful (fixture signature).
+MARKDOWN
+    nested => <<'MARKDOWN',
+# Box boundary fixture
+- [x] **ROOT CAUSE (WHY + WHERE)** — Evidence follows.
+  - [x] Diagnostic: git log -S fixture
+- [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.
+- [x] **NO REGRESSION** — Evidence follows.
+  - [x] Native result: All tests successful (fixture signature).
+MARKDOWN
+    tab_wrapped => "# Box boundary fixture\n"
+        . "  - [x] **ROOT CAUSE (WHY + WHERE)** — Evidence follows.\n\tgit log -S fixture\n"
+        . "  - [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.\n"
+        . "  - [x] **NO REGRESSION** — Evidence follows.\n\tAll tests successful (fixture signature).\n",
+    peer_checkbox => <<'MARKDOWN',
+# Box boundary fixture
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S fixture
+- [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.
+- [x] **NO REGRESSION** — This box has no regression signature.
+- [x] Unrelated result: All tests successful
+MARKDOWN
+    heading => <<'MARKDOWN',
+# Box boundary fixture
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S fixture
+- [x] **ADDRESSED (verified)** — Fixed fixture exercises scope only.
+- [x] **NO REGRESSION** — This box has no regression signature.
+## Unrelated result
+All tests successful
+MARKDOWN
 );
 
 sub run_index_case {
@@ -149,7 +221,10 @@ sub run_index_case {
         $stage->($registry_path, $registry);
         my ($candidate, $owner) = @{$CASES{$case}};
         $stage->($candidate, "# owned index fixture\n");
-        if ($owner eq 'fresh' || $owner eq 'unchecked') {
+        if (exists $BOX_TASKS{$owner}) {
+            $stage->('docs/tasks/INDEX-ACCEPTANCE-FIXTURE.md', $BOX_TASKS{$owner});
+        }
+        elsif ($owner eq 'fresh' || $owner eq 'unchecked') {
             my $checked = $owner eq 'fresh' ? 'x' : ' ';
             my $task = "# Index acceptance fixture\n\n"
                 . "- [$checked] **ROOT CAUSE (WHY + WHERE)** — git log -S fixture locates the fixture.\n"

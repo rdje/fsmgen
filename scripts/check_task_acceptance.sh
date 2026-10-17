@@ -215,15 +215,22 @@ box_body() {
   local start_line="$1" file="$2"
   awk -v start="${start_line}" '
     function isbox(line) { return match(line, /^[ \t]*[-*][ \t]*\[[ xX]\][ \t]/) }
-    function indent(line, first) {
-      first = match(line, /[^ \t]/)
-      return first == 0 ? 0 : first - 1
+    function indent(line, i, character, column) {
+      column = 0
+      for (i = 1; i <= length(line); i++) {
+        character = substr(line, i, 1)
+        if (character == " ") column++
+        else if (character == "\t") column += 4 - column % 4
+        else break
+      }
+      return column
     }
     NR < start { next }
     NR == start { box_indent = indent($0); print; next }
     {
       if (isbox($0) && indent($0) <= box_indent) exit
       if ($0 ~ /^#/) exit
+      if ($0 ~ /[^[:space:]]/ && indent($0) <= box_indent) exit
       print
     }
   ' "${file}"

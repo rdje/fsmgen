@@ -2,32 +2,32 @@
 id: vial-portable-vhdl-runtime-scale
 title: Portable VHDL runtime scale uses compact sample snapshots and one staged GHDL lifecycle
 answers:
-  - "how will portable VHDL reach 10,000 and 100,000 runtime trace records?"
-  - "why can portable VHDL not copy the portable SystemVerilog reset recipe?"
-  - "what does portable VHDL trace version 2 record?"
-  - "how will exact GHDL qualification and scale measurement share execution?"
-  - "what exact portable VHDL profiles have been measured with GHDL?"
-  - "does portable VHDL runtime measurement mean IASIM execution?"
-  - "which diagnostic wins when a portable VHDL phase and cleanup both fail?"
-  - "which diagnostic wins when the separate GHDL probe and its abort both fail?"
-  - "how does the GHDL lifecycle admit normalized result bytes?"
-  - "how are GHDL result fixture and random decisions bound to plan authority?"
-  - "how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?"
-  - "how is the GHDL scenario logical-time domain bound to plan authority?"
-  - "how are GHDL result scenario boundary times bound to the authenticated trace?"
-  - "how are GHDL passing diagnostic codes and logical times bound to VHDL emitter behavior?"
-  - "how is GHDL diagnostic cardinality bound to authenticated expectation trace counts?"
-  - "how are GHDL fault applications and scoreboard comparisons bound to trace records?"
-  - "how do fake GHDL lifecycle providers avoid host executable admission?"
-  - "how does GHDL resume authenticate portable and OSVVM capture evidence?"
-  - "how does GHDL resume authenticate command trace result and assembly evidence?"
-  - "how does GHDL resume semantically authenticate terminal trace result and assembly payloads?"
-  - "why must GHDL lifecycle object descriptors be append-only across states?"
-  - "how does GHDL resume bind lifecycle authority version and OSVVM settings object bytes?"
-  - "how does GHDL authenticate object descriptor JSON types and file modes?"
-  - "how does GHDL authenticate lifecycle state and owner marker file size and mode?"
-  - "how does GHDL authenticate handle and state scalar JSON types?"
-  - "how does GHDL authenticate caller request storage and command-plan JSON integer types?"
+  - how will portable VHDL reach 10,000 and 100,000 runtime trace records?
+  - why can portable VHDL not copy the portable SystemVerilog reset recipe?
+  - what does portable VHDL trace version 2 record?
+  - how will exact GHDL qualification and scale measurement share execution?
+  - what exact portable VHDL profiles have been measured with GHDL?
+  - does portable VHDL runtime measurement mean IASIM execution?
+  - which diagnostic wins when a portable VHDL phase and cleanup both fail?
+  - which diagnostic wins when the separate GHDL probe and its abort both fail?
+  - how does the GHDL lifecycle admit normalized result bytes?
+  - how are GHDL result fixture and random decisions bound to plan authority?
+  - how are GHDL scenario expectation diagnostic and cancelled fiber identities admitted?
+  - how is the GHDL scenario logical-time domain bound to plan authority?
+  - how are GHDL result scenario boundary times bound to the authenticated trace?
+  - how are GHDL passing diagnostic codes and logical times bound to VHDL emitter behavior?
+  - how is GHDL diagnostic cardinality bound to authenticated expectation trace counts?
+  - how are GHDL fault applications and scoreboard comparisons bound to trace records?
+  - how do fake GHDL lifecycle providers avoid host executable admission?
+  - how does GHDL resume authenticate portable and OSVVM capture evidence?
+  - how does GHDL resume authenticate command trace result and assembly evidence?
+  - how does GHDL resume semantically authenticate terminal trace result and assembly payloads?
+  - why must GHDL lifecycle object descriptors be append-only across states?
+  - how does GHDL resume bind lifecycle authority version and OSVVM settings object bytes?
+  - how does GHDL authenticate object descriptor JSON types and file modes?
+  - how does GHDL authenticate lifecycle state and owner marker file size and mode?
+  - how does GHDL authenticate handle and state scalar JSON types?
+  - how does GHDL authenticate caller request storage and command-plan JSON integer types?
 date: 2026-09-01
 status: current
 tags: [vial, vhdl, ghdl, runtime, trace, scalability]

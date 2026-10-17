@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3` (pending)
-- next_action: After publication closeout and the normal commit are complete with a clean tree and empty brief, create/activate the P1 checklist-body boundary repair owned by publication finding P4 before original .4.3.3.
+- active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2` (pending)
+- next_action: After the lexical checkpoint is committed clean with an empty brief, qualify the fixed failure-only index observer in .1.2 before consuming the genuinely required original regression in .1.3.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; consume delivery/normal-commit receipts before selecting any successor.
 - blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.

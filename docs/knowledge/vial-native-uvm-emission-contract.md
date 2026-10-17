@@ -2,32 +2,32 @@
 id: vial-native-uvm-emission-contract
 title: Native VIAL UVM is simulator-neutral Accellera 2020-3.1 emission, not runtime support
 answers:
-  - "which UVM revision does native VIAL target?"
-  - "will FSMGen require Xcelium VCS or Questa for UVM?"
-  - "what is sv_uvm_emit.accellera_2020_3_1?"
-  - "what native UVM foundation has FSMGen emitted?"
-  - "what native UVM topology lifecycle and notification structures has FSMGen emitted?"
-  - "what native UVM stimulus and service structures has FSMGen emitted?"
-  - "what native UVM coverage model scoreboard and fault structures has FSMGen emitted?"
-  - "does native UVM result collection mean a result was produced?"
-  - "how are short known scalar notification predicates emitted?"
-  - "does generated native UVM rerandomize portable VIAL decisions?"
-  - "are RAL and factory overrides publicly authored VIAL?"
-  - "who owns objections in generated VIAL UVM?"
-  - "how are generated VIAL UVM interceptors ordered?"
-  - "how does generated VIAL UVM handle recursive notifications?"
-  - "are native VIAL interceptor tables publicly authorable?"
-  - "where is the native UVM review gallery?"
-  - "what does the native UVM selected mapping matrix contain?"
-  - "how do I regenerate or check the native UVM review gallery?"
-  - "has the native VIAL UVM gallery been parsed or compiled?"
-  - "how will PGEN and NEXSIM qualify VIAL UVM runtime?"
-  - "what can FSMGen do with NEXSIM semantic introspection through MCP?"
-  - "how will NEXSIM MCP help compare IASIM and generated UVM?"
-  - "does NEXSIM semantic introspection define VIAL meaning?"
-  - "may generated UVM syntax change while VIAL meaning stays stable?"
-  - "what native UVM operation shape does backend negotiation accept?"
-  - "does native UVM emission accept more than 21 operations?"
+  - which UVM revision does native VIAL target?
+  - will FSMGen require Xcelium VCS or Questa for UVM?
+  - what is sv_uvm_emit.accellera_2020_3_1?
+  - what native UVM foundation has FSMGen emitted?
+  - what native UVM topology lifecycle and notification structures has FSMGen emitted?
+  - what native UVM stimulus and service structures has FSMGen emitted?
+  - what native UVM coverage model scoreboard and fault structures has FSMGen emitted?
+  - does native UVM result collection mean a result was produced?
+  - how are short known scalar notification predicates emitted?
+  - does generated native UVM rerandomize portable VIAL decisions?
+  - are RAL and factory overrides publicly authored VIAL?
+  - who owns objections in generated VIAL UVM?
+  - how are generated VIAL UVM interceptors ordered?
+  - how does generated VIAL UVM handle recursive notifications?
+  - are native VIAL interceptor tables publicly authorable?
+  - where is the native UVM review gallery?
+  - what does the native UVM selected mapping matrix contain?
+  - how do I regenerate or check the native UVM review gallery?
+  - has the native VIAL UVM gallery been parsed or compiled?
+  - how will PGEN and NEXSIM qualify VIAL UVM runtime?
+  - what can FSMGen do with NEXSIM semantic introspection through MCP?
+  - how will NEXSIM MCP help compare IASIM and generated UVM?
+  - does NEXSIM semantic introspection define VIAL meaning?
+  - may generated UVM syntax change while VIAL meaning stays stable?
+  - what native UVM operation shape does backend negotiation accept?
+  - does native UVM emission accept more than 21 operations?
 date: 2026-08-21
 status: current
 tags: [hial, vial, sv-uvm, accellera, nexsim, pgen, review-gallery, verification]
