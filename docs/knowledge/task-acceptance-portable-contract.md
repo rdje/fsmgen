@@ -20,10 +20,10 @@ evidence: t/2072-task-acceptance-box-boundaries.t; t/2071-audit-source-acceptanc
 reverify: (scripts/decision_records.py read 0026 && cat TASK_ACCEPTANCE.md) | rg -n 'change_paths.tsv|evidence_signatures.tsv|Current-Slice Freshness|ROOT CAUSE|NO REGRESSION' && scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2072-task-acceptance-box-boundaries.t
 ---
 
-`0026`/`TASK_ACCEPTANCE.md`: neutral checker; path EREs and scoped families use `change_paths.tsv` and `evidence_signatures.tsv` in `doctrine/task_acceptance/`.
+`0026`/`TASK_ACCEPTANCE.md`: neutral checker; path EREs/scoped families use `change_paths.tsv` and `evidence_signatures.tsv` in `doctrine/task_acceptance/`.
 
-Staged work needs fresh checked ROOT CAUSE/ADDRESSED/NO REGRESSION in one staged task. Root/regression signatures stay box-scoped; every header must change in the staged diff. Other edits cannot reuse old boxes. `scripts/check_doctrines.sh` enforces presence/freshness/scope/shape in hooks/CI; tests establish truth.
+Staged work needs fresh checked ROOT CAUSE/ADDRESSED/NO REGRESSION in one task. Root/regression signatures stay box-scoped; every header must change in the staged diff; other edits cannot reuse old boxes. `scripts/check_doctrines.sh` enforces presence/freshness/scope/shape in hooks/CI; tests establish truth.
 
-`FSM::Test::TaskAcceptanceIndexRuntime` uses bounded fixed cases in this repository's alternate index. T2068 checks native status/evidence/cleanup; T2070 `audit_*` evidence/doc fixtures leave declaration coverage separate. Gates may refresh stat-cache, never staged entries; retain raw observations and exact native index bytes. Audit `.py/.pl/.pm/.sh/.c/.t` under `docs/audits/` requires fresh evidence; doc neighbors are unclassified. Outdented siblings end boxes; tabs use four-column stops.
+`FSM::Test::TaskAcceptanceIndexRuntime` uses fixed bounded cases in this repo's alternate index. T2068 checks status/evidence/cleanup; T2070 `audit_*` evidence/doc fixtures leave declaration coverage separate. Gates may refresh stat-cache, never staged entries; retain raw observations and exact native index bytes. Audit `.py/.pl/.pm/.sh/.c/.t` under `docs/audits/` needs fresh evidence; doc neighbors are unclassified. Outdented siblings end boxes; tabs use four-column stops.
 
-`verify_failure.py` in `docs/audits/task-acceptance-index-observer-20261017/` preserves failure custody; prior controls pass; .1.2/.1.3 gated; cause unknown. Empty candidate-window host query: `docs/audits/index-observer-host-correlation-20261018/verify.py`.
+`verify_failure.py` in `docs/audits/task-acceptance-index-observer-20261017/` retains failure; prior controls pass; cause unknown. Approved intake: `docs/audits/task-acceptance-index-prospective-20261018/contract.json`. Empty log query: `docs/audits/index-observer-host-correlation-20261018/verify.py`.

@@ -1,0 +1,10 @@
+{
+  "schema": "fsmgen.approved_prospective_index_qualification.v1",
+  "owner": "TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.2",
+  "approved": "Director Approved on 2026-10-18 in response to proposal .1.5",
+  "controls_attempts": 1,
+  "historical_cause": "P1-open",
+  "controls": ["healthy", "query_gap", "write_gap", "retention_gap", "diagnostic_errno", "coverage_gap"],
+  "original_intake": "docs/audits/task-acceptance-index-observer-20261017",
+  "scope": "Fresh current-observer qualification only. Reuse original fixed controls, native admission, limits, witnesses and exclusive capture. Stop unexpected native failure after current-case settlement and retention, before any later case. A pass permits separately owned original regression after the qualification commits. No failed result promotion, retry-until-green, host change or independent HIAL/full-CI/push release."
+}
