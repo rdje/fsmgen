@@ -6,9 +6,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2` (pending)
-- next_action: After the lexical checkpoint is committed clean with an empty brief, qualify the fixed failure-only index observer in .1.2 before consuming the genuinely required original regression in .1.3.
+- active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2` (blocked)
+- next_action: Replay the sealed verify_failure.py custody proof, then resolve the new native rejection's cause with its P1 owner; qualification and original .1.3 remain gated, with no retry-as-repair.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; consume delivery/normal-commit receipts before selecting any successor.
-- blockers: Knowledge Map collection rollover debt forbids widening its allowance; preserve all unique facts/questions through governed compaction. Historical native EPERM remains P1-open under HIAL .3.2.10; SIP denies the requested probes. No authentication is pending.
+- blockers: New unforced native EPERM in .1.2 retains after-return context but no kernel cause; existing HIAL native P1/SIP tracing boundary applies. Knowledge Map rollover debt forbids allowance growth; preserve all facts/questions. No authentication is pending.
   Historical startup/parent qualification and full CI/push remain gated; Push whenever useful is explicitly authorized by user steering on 2026-10-11; required HIAL/full-CI qualifications still gate it. Visual mdBook QA remains pending.

@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-17",
+  "owner": "TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2",
+  "access": "Read-only public OS/API references; no external repository or host changes.",
+  "sources": [
+    {
+      "url": "https://pubs.opengroup.org/onlinepubs/009604599/functions/setpgid.html",
+      "boundary": "Open Group Issue 6 API contract, not a matched host-kernel implementation.",
+      "review": "Zero arguments select the caller and its own PID. The documented permission cases distinguish session-leader and cross-session/group requests; this does not identify the recorded native rejection branch."
+    },
+    {
+      "url": "https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/setpgid.2.html",
+      "boundary": "Apple archived manual; no claim that it is the exact current host build.",
+      "review": "Public error descriptions cannot recover call-time kernel state from the retained sequential after-return snapshots."
+    }
+  ],
+  "gap": "Latest Issue 8 page could not be retrieved by the browser tool. No exact host-kernel branch evidence was obtained. The native failure remains unproved causally; existing SIP-denied tracing evidence is separately owned."
+}

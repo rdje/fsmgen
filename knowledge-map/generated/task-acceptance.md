@@ -1,10 +1,11 @@
 # Knowledge Map: `task-acceptance`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **10** uniquely owned question entries.
+> **1** facts · **11** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="how are selected index fixture native rejections observed?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="how do audit index evidence profiles work?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="how do same-repository task-acceptance index probes work?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)
 - q="how does task acceptance prevent an old checklist from passing new work?" · facts=[task-acceptance-portable-contract](../../docs/knowledge/task-acceptance-portable-contract.md)

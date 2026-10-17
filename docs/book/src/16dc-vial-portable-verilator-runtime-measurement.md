@@ -479,7 +479,7 @@ contract is accepted. The first ownership failure and incomplete source-census
 boundary remain recorded; later passing cases cannot promote that failure.
 Audit-source declaration covers the listed executable formats. Committed-only
 source/evidence and document controls pass without a registry delta;
-Boundary repair is a checkpoint; original regression requires qualified failure-only observation. Full CI retains its owner.
+Boundary repair is a checkpoint; original regression requires qualified failure-only observation. Full CI retains its owner. The fixed index observer binds T2068/T2070/T2071, their adapter/checker, declarations and loaded project inputs. Its qualified failure-only witness preserves native return and errno; ordinary and stale-errno success query no native context and write no native event. Intentional session rejection and query/write/retention/coverage faults qualify the diagnostic boundary. Stage and case receipts retain original results, limits and cleanup independently of native-event capture. Admission rejects source or population substitution; captures are exclusive. Sequential after-return context cannot attribute a historical rejection whose native context was never captured. Replay the sealed qualification without executing the original tests: `python3 -B docs/audits/task-acceptance-index-observer-20261017/verify.py pre-source-join-controls`. The current aggregate is blocked by unforced native EPERM; retained after-return context leaves its cause unknown. Original regression remains gated. Inspect custody with `python3 -B docs/audits/task-acceptance-index-observer-20261017/verify_failure.py`.
 
 ### HDL behavior test policy
 

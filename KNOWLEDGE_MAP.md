@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1267** facts · **6990** unique questions · **7167** answer occurrences · **185** topic shards.
+> **1267** facts · **6991** unique questions · **7168** answer occurrences · **185** topic shards.
 
 Query first:
 
@@ -174,7 +174,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 | `specforge-field` | 1 | 5 | [`specforge-field.md`](knowledge-map/generated/specforge-field.md) |
 | `specforge-transaction` | 1 | 6 | [`specforge-transaction.md`](knowledge-map/generated/specforge-transaction.md) |
 | `sv-intermediate` | 1 | 4 | [`sv-intermediate.md`](knowledge-map/generated/sv-intermediate.md) |
-| `task-acceptance` | 1 | 10 | [`task-acceptance.md`](knowledge-map/generated/task-acceptance.md) |
+| `task-acceptance` | 1 | 11 | [`task-acceptance.md`](knowledge-map/generated/task-acceptance.md) |
 | `task-tree` | 6 | 37 | [`task-tree.md`](knowledge-map/generated/task-tree.md) |
 | `test-subprocess` | 1 | 166 | [`test-subprocess.md`](knowledge-map/generated/test-subprocess.md) |
 | `trial2-legacy` | 1 | 5 | [`trial2-legacy.md`](knowledge-map/generated/trial2-legacy.md) |

@@ -12,6 +12,7 @@ answers:
   - how do audit index evidence profiles work?
   - why can a gate change raw Git index bytes?
   - which audit sources require task acceptance?
+  - how are selected index fixture native rejections observed?
 date: 2026-10-17
 status: current
 tags: [doctrine, task-acceptance, evidence, checklist, portability]
@@ -19,24 +20,10 @@ evidence: t/2072-task-acceptance-box-boundaries.t; t/2071-audit-source-acceptanc
 reverify: (scripts/decision_records.py read 0026 && cat TASK_ACCEPTANCE.md) | rg -n 'change_paths.tsv|evidence_signatures.tsv|Current-Slice Freshness|ROOT CAUSE|NO REGRESSION' && scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2072-task-acceptance-box-boundaries.t
 ---
 
-`0026` and `TASK_ACCEPTANCE.md` define a neutral checker; no project tool names. Projects declare path EREs in `doctrine/task_acceptance/change_paths.tsv`
-and scoped signature families in `doctrine/task_acceptance/evidence_signatures.tsv`.
+`0026`/`TASK_ACCEPTANCE.md`: neutral checker; path EREs and scoped families use `change_paths.tsv` and `evidence_signatures.tsv` in `doctrine/task_acceptance/`.
 
-Matching staged changes need fresh checked ROOT CAUSE, ADDRESSED and NO
-REGRESSION boxes in one staged task file. Root-cause/no-regression signatures
-must match inside their own boxes. Every required header must change in the
-staged diff; other task edits cannot reuse old checklists.
+Staged work needs fresh checked ROOT CAUSE/ADDRESSED/NO REGRESSION in one staged task. Root/regression signatures stay box-scoped; every header must change in the staged diff. Other edits cannot reuse old boxes. `scripts/check_doctrines.sh` enforces presence/freshness/scope/shape in hooks/CI; tests establish truth.
 
-`scripts/check_doctrines.sh` supplies pre-commit/hosted enforcement of evidence
-presence, freshness, scope and shape. Tests/CI establish truth.
+`FSM::Test::TaskAcceptanceIndexRuntime` uses bounded fixed cases in this repository's alternate index. T2068 checks native status/evidence/cleanup; T2070 `audit_*` evidence/doc fixtures leave declaration coverage separate. Gates may refresh stat-cache, never staged entries; retain raw observations and exact native index bytes. Audit `.py/.pl/.pm/.sh/.c/.t` under `docs/audits/` requires fresh evidence; doc neighbors are unclassified. Outdented siblings end boxes; tabs use four-column stops.
 
-`FSM::Test::TaskAcceptanceIndexRuntime` uses bounded fixed cases and an alternate
-index in this repository. T2068 checks native status, evidence and cleanup.
-
-`audit_*` adds fixed evidence/doc cases. T2070 checks fixtures; declaration coverage remains separate.
-
-Delivery gates may refresh Git stat-cache metadata without changing staged entries. Retain raw observations; native fixtures still require exact index bytes.
-
-`docs/audits/` `.py/.pl/.pm/.sh/.c/.t` changes require fresh evidence. Document neighbors are unclassified.
-
-Outdented siblings end boxes; tabs use four-column stops.
+`python3 -B docs/audits/task-acceptance-index-observer-20261017/verify_failure.py` checks failure custody. Earlier controls passed; `.1.2` is blocked by native EPERM; `.1.3` stays gated; cause unknown.
