@@ -1,0 +1,50 @@
+{
+  "failed_capture_sha256": "31b83acb4eb935064a8f9c74fc3d7f849f3c307d950f75e8065f992c450d2f33",
+  "log_tool_sha256": "699adac9aabcc30be5fb208db6cdd97ab5ff300e65674fa976fbc5b723179f3c",
+  "result": {
+    "capture_failure": null,
+    "capture_limit_bytes": 262144,
+    "command": [
+      "/usr/bin/log",
+      "show",
+      "--style",
+      "json",
+      "--info",
+      "--debug",
+      "--start",
+      "@1792268332",
+      "--end",
+      "@1792268337",
+      "--timezone",
+      "UTC",
+      "--predicate",
+      "processID == 6828 OR eventMessage CONTAINS[c] \"setpgid\" OR eventMessage CONTAINS \"6828\""
+    ],
+    "deadline_seconds": 15,
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "[]"
+  },
+  "schema": "fsmgen.index_observer_host_correlation.v1",
+  "source_sha256": "136ffdb8640272434ff193b9dad76ab146b6bbea2c4080644171702b22077a3a",
+  "visibility": "host",
+  "window": {
+    "anchors": {
+      "control_retention_gap/ordinary-6828.json": {
+        "birth_unix": 1792268334.005572,
+        "bytes": 69,
+        "mtime_unix": 1792268334.0056326,
+        "sha256": "bcee7ebff682f8016faec836fb2a25d6e0e64fb6386f067ddb693c9dd3865f2a"
+      },
+      "control_retention_gap/stage_k.json": {
+        "birth_unix": 1792268334.0837014,
+        "bytes": 1298,
+        "mtime_unix": 1792268334.0838137,
+        "sha256": "14011494f98dc1376511593dcd3944fba119d0c7353b0ca87b5a6c8ce545a6d5"
+      }
+    },
+    "end_unix": 1792268337,
+    "limit": "Filesystem times supply a candidate window, not an exact syscall timestamp.",
+    "start_unix": 1792268332
+  }
+}

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2` (blocked)
-- next_action: Replay the sealed verify_failure.py custody proof, then resolve the new native rejection's cause with its P1 owner; qualification and original .1.3 remain gated, with no retry-as-repair.
+- active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.3` (pending)
+- next_action: Complete the due authenticated artifact cleanup in .3, commit it, then return to blocked .1.2 and its HIAL native causal owner; original regression remains gated.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; consume delivery/normal-commit receipts before selecting any successor.
 - blockers: New unforced native EPERM in .1.2 retains after-return context but no kernel cause; existing HIAL native P1/SIP tracing boundary applies. Knowledge Map rollover debt forbids allowance growth; preserve all facts/questions. No authentication is pending.

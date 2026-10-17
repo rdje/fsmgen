@@ -1,0 +1,40 @@
+{
+  "causal_attribution": "unproved",
+  "claim_legs": {
+    "causal_gap_owner": "HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10",
+    "durability": "Tracked capture/reader/result and complete dependency identities; original native capture remains sealed. Filesystem times are immutable observation evidence, not a current-state claim.",
+    "falsify": "Sealed raw native failure validation is independent of the log search. Hostile visibility/status/truncation/window/anchor/output/source mutations reject false promotion. A logging omission predicts the same empty query, so causal falsification is missing.",
+    "rederive": "Authenticated original relay/stage bytes and their observed filesystem timestamps derive the exact saved command/window; complete query status/streams are retained."
+  },
+  "dependency_sha256": {
+    "docs/audits/task-acceptance-index-observer-20261017/controls.json.gz": "31b83acb4eb935064a8f9c74fc3d7f849f3c307d950f75e8065f992c450d2f33",
+    "docs/audits/task-acceptance-index-observer-20261017/failure-reader.json.gz": "68265306aa50f365a877c2deeef553833916bc6e0f419f88e7755f18245ff02f",
+    "docs/audits/task-acceptance-index-observer-20261017/pre-source-join-controls.json.gz": "3cc53ea7363b9be5250d89cc8f86123b75e7cc5bf0b551266ecbc30a9bf3a2af",
+    "docs/audits/task-acceptance-index-observer-20261017/run.py": "2da54db788f17ff29d81c33a1e7d1918606db9d95e93793878ba48956b255664",
+    "docs/audits/task-acceptance-index-observer-20261017/verify.py": "46c54f01b3bb8c28ce6e2f32a70e68b9f7fa6c59033af015231cade34122d073",
+    "docs/audits/task-acceptance-index-observer-20261017/verify_failure.py": "7f0544104488f852032dc02085374415ed624a5f7104641a5b78318aacbd94f6"
+  },
+  "guard_preflight": {
+    "command": [
+      "scripts/run_with_ram_guard.sh",
+      "--",
+      "python3",
+      "-B",
+      "docs/audits/index-observer-host-correlation-20261018/capture.py",
+      "sandbox"
+    ],
+    "diagnostic": "ram-guard: process-tree inspection is unavailable; rerun outside the sandbox or with process-inspection approval",
+    "exit_code": 2,
+    "provenance": "Agent-observed exec tool result; no separately captured native streams.",
+    "query_started": false
+  },
+  "owner": "TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.4",
+  "predecessor_revision": "d12fb20891b5092fda1c21d16898084c18feee98",
+  "schema": "fsmgen.index_observer_host_correlation_manifest.v1",
+  "scope": "Successful empty bounded host query for a filesystem-derived candidate window. No exact syscall wall clock, store-presence control or completeness guarantee for native failures. No original test, recurrence, tracing, privilege authentication or host change. Read-only OS log executable is a required external diagnostic dependency; all owned outputs remain repository-local.",
+  "sha256": {
+    "capture.py": "136ffdb8640272434ff193b9dad76ab146b6bbea2c4080644171702b22077a3a",
+    "host.json": "e7afc4e1423643bb2fa647b10b456a37e06c02d3aa4af4e1994eee11e93ce222",
+    "verify.py": "4a02271d4a2180d1fcd7c4a4b152ced3c56af7e6015ec30e0b6c89ffcf6879fd"
+  }
+}

@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `infra/continuity / doctrine enforcement`
 - Created: `2026-10-17`
-- Last updated: `2026-10-17`
+- Last updated: `2026-10-18`
 - Owner: repo-local workflow
 - Priority: P1
 
@@ -46,7 +46,7 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY`
   Status: `active`
   Goal: `Enforce actual acceptance-box boundaries with native controls and committed recovery.`
-  Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2`
+  Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.3`
 
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1`
   Status: `active`
@@ -54,7 +54,7 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   Acceptance: `Retain the exact-function first false green, reproduce the real checker outcome through fixed primary-repository index cases, then repair only the demonstrated box boundary. Genuine root/regression sibling refusal and wrapped/blank/nested/peer-checkbox/heading controls must preserve native truth and every original adapter/checker contract. Complete source/Git custody, focused index/audit/ownership regressions, book/knowledge/live docs, staged doctrines and normal hooks qualify this repair; committed-only .2 remains separate.`
   Verification: `pending`
   Commit: `pending`
-  Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.3`
+  Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.3, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.4`
   Finding E1 P1 dependency: `index-audit native1 retains complete source and main-index conservation. audit_pl fixture Git preparation is refused by child self-setpgid(0,0), undef/errno1, before the checker runs; all retained groups settle and the fixture retires. The native cause/group/session were not captured and remain unknown. native-containment-dependency.json.gz binds exact stages, source and failed aggregate. Existing HIAL causal owner .19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10 remains P1-open. No passing case promotes this aggregate, no race or host-load cause is inferred, and no spent retry/admission relaxation/host change is selected. Commit the independently verified lexical checkpoint first; qualify a fixed failure-only observer in .1.2 before the genuinely required remaining regression in .1.3. Original .1 acceptance stays unchanged and open.`
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.1`
   Status: `done`
@@ -85,10 +85,28 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   Acceptance: `Consume only the genuinely required ordinary regression after committed .1.2, with exact input identities, original limits/results/native events/gaps and independent cleanup. Diagnose any new rejection before further execution. A pass qualifies current box/index/audit regression only and does not repair historical EPERM. No recurrence-only campaign or retry-as-repair. Complete book/live-doc, staged/normal delivery before closing .1 and selecting committed-only .2.`
   Verification: `pending`
   Commit: `pending`
+- ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.4`
+  Status: `done`
+  Goal: `Correlate the retained new index-observer rejection with bounded existing host evidence.`
+  Acceptance: `Replay the sealed failed-reader and earlier qualified controls without native test execution. Authenticate surviving PID6828 capture bytes before deriving a candidate UTC window from their filesystem timestamps; timestamps are not an exact syscall clock. Query only existing host logs for that fixed PID, syscall and window with bounded output and runtime. Preserve first visibility/tool failures, exact commands/statuses/streams, identities and explicit source/capture limitations. Distinguish an unavailable log from a successful empty result; attribute no cause without a matching mechanism. Keep .1.2/.1.3/.2 gated, perform no native retry, probe or host change, and commit reproducible evidence plus canonical book/task continuity.`
+  Verification: `Sealed failed-reader and earlier successful controls replay without native test execution. The current same-volume PGEN policy equals the reviewed snapshot and its hostile controls pass; the local containment adoption guide remains the canonical coordinated package. Original relay/stage bytes authenticate before observed filesystem times derive a bounded candidate UTC window. First guarded launch stops before query because sandbox process inspection is unavailable; the approved host launch retains query exit zero, stdout [] and empty stderr under unchanged resource guard. No syscall wall clock, log-store presence or native-failure completeness is proved. Tracked capture/reader/results/manifest bind exact source/dependency bytes; hostile visibility, status, truncation, window, identity, output and source controls reject promotion. Re-derivation is exact native capture/window/command custody; falsification distinguishes unavailable/truncated/altered results but cannot distinguish logging omission from absent cause; durability is complete tracked inputs and identity checks. HIAL P1 retains causal repair; .1.2/.1.3/.2 remain gated, with no retry, probe, authentication or host change. Canonical book/fact and staged doctrines/hooks qualify this evidence-only checkpoint.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.4: retain bounded native failure host correlation`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Diagnostic checkpoint .1.4: git log -S control_ready locates d12fb20891b5092fda1c21d16898084c18feee98, which preserves the failed native qualification and repairs its continuation predicate. Sealed native validation retains PID6828 setpgid undef/errno1. The failed call has sequential context but no kernel-cause evidence; the bounded host query adds no match and does not identify a cause.
+  - [x] **ADDRESSED (verified)** — Diagnostic checkpoint .1.4: authenticated surviving captures supply an explicitly limited candidate window; approved read-only query completes with exact empty stdout JSON and empty stderr. The saved reader verifies source/result/command/window custody and rejects hostile promotions. This addresses the remaining existing-host-evidence discriminator only; native qualification and causal repair remain blocked.
+  - [x] **NO REGRESSION** — Diagnostic checkpoint .1.4: sealed failed-reader, prior-control and host-correlation readers pass without original/native execution. Policy-review hostile controls pass with the selected source unchanged. knowledge-map: OK and book build pass. First staged doctrines reject task-evidence allowance, Knowledge Map growth and stale claim inventory; the declared task allowance update, lossless canonical fact reference and inventory regeneration repair those documentation-only failures before the required final staged/normal gates; historical cause, original regression, HIAL/full-CI/push and visual gates remain unchanged.
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2`
   Status: `pending`
   Goal: `Accept committed box-boundary behavior and restore original joined-parent acceptance.`
   Acceptance: `Using exact committed checker/adapter/test inputs, requalify native sibling refusals and valid evidence controls with no declaration delta. Preserve all first failures and source-custody boundaries. Complete focused/current documentation, staged/normal delivery and clean/empty-brief continuity before closing only this tree and restoring the original .4.3.3 frontier.`
+  Verification: `pending`
+  Commit: `pending`
+
+
+- ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.3`
+  Status: `pending`
+  Goal: `Complete due same-volume artifact cleanup without disturbing native evidence.`
+  Acceptance: `After .1.4 commits, authenticate the completed generated .artifacts/index-observer-host-correlation-20261018/book render, verify repository-local ownership, no tracked members, symlinks, nested repositories or shared links and independent complete membership. Remove only that exact render and verify residue. Census logs/bin files including existing Rust release, incremental and dependency directories; retain ambiguous, native/compiler and still-required outputs. Overwrite docs/ARTIFACT_CLEANUP.md with the latest date/summary and retain reproducible cleanup evidence. No native tests, tracing, host change or blocker promotion; commit clean continuity before returning to blocked .1.2.`
   Verification: `pending`
   Commit: `pending`
 
@@ -102,4 +120,6 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
 
 ## Blockers
 
-- None. Original HIAL, full-CI/push and visual owners retain their boundaries.
+- `.1.2` remains blocked on the new native rejection's cause; `.1.4` owns the
+  completed read-only historical correlation with no causal match. A supported observation of the kernel rejection cause is still missing under the reported SIP probe denial. Original `.1.3`/`.2`, HIAL,
+  full-CI/push and visual owners retain their qualification boundaries.

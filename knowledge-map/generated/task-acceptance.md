@@ -23,5 +23,5 @@
 
 _Portable task acceptance uses project-declared evidence registries_
 
-- **date:** 2026-10-17 · **status:** current
+- **date:** 2026-10-18 · **status:** current
 - **source and verification:** [`docs/knowledge/task-acceptance-portable-contract.md`](../../docs/knowledge/task-acceptance-portable-contract.md)

@@ -13,7 +13,7 @@ answers:
   - why can a gate change raw Git index bytes?
   - which audit sources require task acceptance?
   - how are selected index fixture native rejections observed?
-date: 2026-10-17
+date: 2026-10-18
 status: current
 tags: [doctrine, task-acceptance, evidence, checklist, portability]
 evidence: t/2072-task-acceptance-box-boundaries.t; t/2071-audit-source-acceptance.t; docs/audits/task-acceptance-audit-fixtures-20261017/stale-index-cache-reproduction.json.gz; t/2070-audit-index-fixture-policy.t; t/lib/FSM/Test/TaskAcceptanceIndexRuntime.pm; t/2068-task-acceptance-index-runtime.t; TASK_ACCEPTANCE.md; docs/decisions/0026-task-acceptance-uses-project-declared-evidence-registries.md; docs/tasks/TASK-ACCEPTANCE-PORTABLE-DOCTRINE.md
@@ -26,4 +26,4 @@ Staged work needs fresh checked ROOT CAUSE/ADDRESSED/NO REGRESSION in one staged
 
 `FSM::Test::TaskAcceptanceIndexRuntime` uses bounded fixed cases in this repository's alternate index. T2068 checks native status/evidence/cleanup; T2070 `audit_*` evidence/doc fixtures leave declaration coverage separate. Gates may refresh stat-cache, never staged entries; retain raw observations and exact native index bytes. Audit `.py/.pl/.pm/.sh/.c/.t` under `docs/audits/` requires fresh evidence; doc neighbors are unclassified. Outdented siblings end boxes; tabs use four-column stops.
 
-`python3 -B docs/audits/task-acceptance-index-observer-20261017/verify_failure.py` checks failure custody. Earlier controls passed; `.1.2` is blocked by native EPERM; `.1.3` stays gated; cause unknown.
+`verify_failure.py` in `docs/audits/task-acceptance-index-observer-20261017/` preserves failure custody; prior controls pass; .1.2/.1.3 gated; cause unknown. Empty candidate-window host query: `docs/audits/index-observer-host-correlation-20261018/verify.py`.
