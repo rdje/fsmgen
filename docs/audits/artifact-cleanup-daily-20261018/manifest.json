@@ -1,0 +1,12 @@
+{
+  "limits": "First inspection did not retain the failing path/stat fields. The separate native field discriminator is not a reconstruction. The second failed inspection did not save its first census; retained complete post-rejection manifests are a separately observed comparison. No file was deleted. Native startup cause remains outside this sweep.",
+  "owner": "TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.3",
+  "schema": "fsmgen.artifact_sweep_custody.v1",
+  "sha256": {
+    "cleanup.py": "68d9824e7099d42e1f2655edefcea9f495bc0e9195f5c8e1b5aba60c944a452a",
+    "first-inspection.json.gz": "6b4e64919c9b12b1303d9d4a959bf64fbe582c40638368db98bc0662834f364c",
+    "mismatched-inspection.json.gz": "81329e0f45869524ed2d31107272c0cba8b7a062eee91cf58f1ff2ee2a8c266d",
+    "result.json.gz": "dac73bbf5750816f486fb9da490f4543c0e662c8583f114c6ad9c05c4a417923",
+    "verify.py": "19d78adf020d0df964a999f8d0bfea7bc499a7b40334eed4c04a6a0595b40b2e"
+  }
+}

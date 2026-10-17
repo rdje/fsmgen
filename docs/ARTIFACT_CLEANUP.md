@@ -1,3 +1,3 @@
 # Latest artifact cleanup
 
-2026-10-16T22:01:32.780927+00:00 — Removed one authenticated byte-identical redundant historical book render; retained its complete peer, the current book and original native/compiler evidence. Rust log/bin paths censused.
+2026-10-17T22:35:10.484144+00:00 — No removal: render source views differ; both books and native evidence retained. Root and Rust log/bin locations censused with no disposable candidates.

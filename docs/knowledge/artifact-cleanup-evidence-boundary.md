@@ -5,7 +5,7 @@ answers:
   - "how does daily artifact cleanup preserve compiler and native evidence?"
   - "which dated cleanup removed the obsolete profile-preparation book?"
   - "how do artifact cleanup receipts distinguish mutable captures and immutable parents?"
-date: 2026-10-04
+date: 2026-10-18
 status: current
 tags: [artifacts, cleanup, locality, evidence, continuity]
 evidence: >-
@@ -15,18 +15,18 @@ evidence: >-
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md;
   docs/book/src/10-errors-strict-mode-and-troubleshooting.md
 reverify: >-
-  python3 -B docs/audits/artifact-cleanup-daily-20261003/verify.py
+  python3 -B docs/audits/artifact-cleanup-daily-20261018/verify.py
 ---
 
 Latest-only date/summary: docs/ARTIFACT_CLEANUP.md. Own fixed candidates before
 deletion; require regular same-volume nodes/parents, no symlinks/nested Git or
 shared links, untracked candidates and independent rg/os.walk membership.
-Immediate identity reinspection precedes exact removal/residue checks.
+Immediately recheck content/node identity before removal; allow read atime.
 
 Local October4 removes two duplicate historical source/index caches. Complete
 source bytes, the declared decoy and public index membership bind immutable Git;
 original audits/source, current book, logs and spent native/compiler work remain.
-Rust locations are absent or censused with no log/bin candidates at capture.
+Rust paths were absent or had no log/bin candidates at capture.
 Local October2 removed the profile-preparation book; October3 removed the
 preallocation render. Their dated proofs remain; see [prior cleanup](../audits/artifact-cleanup-daily-20261002/manifest.json).
 
