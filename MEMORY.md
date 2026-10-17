@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2` (blocked)
-- next_action: Resolve the new native rejection with its HIAL P1 owner after consuming .1.4's sealed empty host correlation; .1.2 qualification and original .1.3 remain gated, with no retry-as-repair.
+- next_action: Obtain the director's selection of .1.5's recorded unblocking proposal; preserve .1.2 and all existing original/startup/full-CI/push gates until their own evidence contracts are satisfied.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; consume delivery/normal-commit receipts before selecting any successor.
 - blockers: New unforced native EPERM in .1.2 retains after-return context but no kernel cause; existing HIAL native P1/SIP tracing boundary applies. Knowledge Map rollover debt forbids allowance growth; preserve all facts/questions. No authentication is pending.
