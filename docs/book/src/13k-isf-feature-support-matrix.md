@@ -1202,8 +1202,8 @@ parent acceptance and full alias stay open.
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-context-cause-consumer-association-20261012/verify.py
 ```
 
-The complete original join has a reviewed canonical proposal; publication
-and parent acceptance retain their separate source/native limits.
+The current reader admits the reviewed original join; parent acceptance and
+original source/native limits retain their separate scopes.
 
 Consumer contracts bind all expression/helper/loop/dataflow/typed operand roles.
 Passed flags prove no truth; operand/outcome/canonical/parent acceptance stays open:

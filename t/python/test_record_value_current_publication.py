@@ -117,6 +117,8 @@ class CurrentPublicationTests(unittest.TestCase):
                     'unique complete admitted cause source guidance')
         self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.consumer_fact.GUIDE, '')),
                     'unique complete admitted consumer source guidance')
+        self.refuse(lambda r: r.update(chapter=r['chapter'].replace(current.original_join_fact.GUIDE, '')),
+                    'unique complete admitted original-join guidance')
         self.refuse(lambda r: r.update(tooling_chapter=r['tooling_chapter'].replace(current.address_fact.REFERENCE, '')),
                     'complete current finite address tooling guidance')
         self.refuse(lambda r: r['queries']['direct'].update(stdout='malformed\n'),
@@ -214,7 +216,8 @@ class CurrentPublicationTests(unittest.TestCase):
         # build and every copied source are verified separately by the CLI.
         def html(guide):
             blocks = (guide + current.coordinate_fact.PARSER_GUIDE + current.raw_fact.GUIDE
-                      + current.cause_fact.GUIDE + current.consumer_fact.GUIDE).split('```bash\n')
+                      + current.cause_fact.GUIDE + current.consumer_fact.GUIDE
+                      + current.original_join_fact.GUIDE).split('```bash\n')
             text = blocks[0]
             for block in blocks[1:]:
                 code, rest = block.split('```\n', 1)
@@ -236,6 +239,9 @@ class CurrentPublicationTests(unittest.TestCase):
              'native complete current retained scope and gaps'),
             ('canonical/original consumer acceptance remains separate',
              'canonical/original consumer acceptance is complete',
+             'native complete current retained scope and gaps'),
+            ('parent acceptance and\noriginal source/native limits retain their separate scopes',
+             'all original parent and native scopes are qualified',
              'native complete current retained scope and gaps')):
             with self.subTest(old=old):
                 changed = valid.replace(old, new)
