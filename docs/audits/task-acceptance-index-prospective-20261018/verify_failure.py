@@ -83,10 +83,9 @@ def validate(record):
     raise AssertionError('failed intake promoted to qualified')
 
 
-def copy_discriminator(record):
-    # Compile only the exact retained private module, then call its pure
-    # predicate on a decoded literal. No supervisor or fixture is invoked.
-    source = unblob(record['sources_before'][str(AUDIT / 'ProspectiveIndexObserver.pm')])
+def probe_source(source):
+    # Compile the supplied private module, then call only its pure predicate
+    # on a decoded literal. No supervisor or fixture is invoked.
     probe = r'''
 use strict; use warnings; use JSON::PP (); use Storable qw(dclone);
 my $source = do {local $/; <STDIN>};
@@ -100,7 +99,12 @@ print IndexObserver::encode({before=>$before, direct=>$r, later_copy=>dclone($r)
                '-Idocs/audits/native-group-witness-20260927/failure-only', '-I' + str(ORIGINAL), '-e', probe]
     result = subprocess.run(command, input=source, capture_output=True, check=True, timeout=30, cwd=ROOT)
     assert result.stderr == b''
-    witness = json.loads(result.stdout)
+    return json.loads(result.stdout)
+
+
+def copy_discriminator(record):
+    source = unblob(record['sources_before'][str(AUDIT / 'ProspectiveIndexObserver.pm')])
+    witness = probe_source(source)
     assert witness['stop'] == 0 and witness['before'] == witness['direct']
     expected = copy.deepcopy(witness['before'])
     assert type(expected['exit_code']) is int

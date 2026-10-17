@@ -56,4 +56,15 @@ for name in current:
         assert subprocess.check_output(['git', 'show', 'HEAD:' + name], timeout=30) == (ROOT / name).read_bytes()
 failed = json.loads(gzip.decompress((ROOT / ORIGINAL / 'controls.json.gz').read_bytes()))
 assert validate_failure(failed)
-print('Inert source closure, unchanged original inputs, final-row stop and historical failure custody pass.')
+
+spec = importlib.util.spec_from_file_location('prospective_failure_reader', ROOT / AUDIT / 'verify_failure.py')
+reader = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(reader)
+spent = json.loads(gzip.decompress((ROOT / AUDIT / 'controls.json.gz').read_bytes()))
+assert reader.validate(spent)
+red = reader.copy_discriminator(spent)
+green = reader.probe_source((ROOT / AUDIT / 'ProspectiveIndexObserver.pm').read_bytes())
+assert red['later_copy']['exit_code'] == '0' and type(red['before']['exit_code']) is int
+assert green['stop'] == 0 and green['before'] == green['direct'] == green['later_copy']
+assert type(green['later_copy']['exit_code']) is int
+print('Inert source closure, unchanged originals, final-row stop, failed custody and exact failed-source RED/current-source GREEN copy controls pass.')

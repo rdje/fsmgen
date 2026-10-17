@@ -18,7 +18,7 @@ from verify_failure import validate_failure
 def verify_intake(record):
     verify(record)
     required = {str(AUDIT / name) for name in
-                ('ProspectiveIndexObserver.pm', 'observe.pl', 'run.py', 'verify.py', 'preflight.t', 'preflight.py', 'contract.json')}
+                ('ProspectiveIndexObserver.pm', 'observe.pl', 'run.py', 'verify.py', 'verify_failure.py', 'preflight.t', 'preflight.py', 'contract.json')}
     required.add(str(ORIGINAL / 'verify_failure.py'))
     assert required <= set(record['sources_after'])
     assert record['rows']

@@ -25,8 +25,11 @@ sub unexpected {
         =~ /operation=setpgid result=undef errno=1 /;
     return 1 if defined($result->{exec_error}) && length($result->{exec_error});
     return 1 if $result->{stage} eq 'index_git' && !$result->{ok};
-    return 1 if $result->{stage} eq 'index_checker'
-        && (!defined($result->{exit_code}) || $result->{exit_code} !~ /\A[01]\z/);
+    if ($result->{stage} eq 'index_checker') {
+        # Text inspection must not change the returned scalar's copy semantics.
+        my $exit_code = $result->{exit_code};
+        return 1 if !defined($exit_code) || $exit_code !~ /\A[01]\z/;
+    }
     return 0;
 }
 
@@ -34,7 +37,7 @@ sub unexpected {
     no warnings 'redefine';
     *IndexObserver::paths = sub {
         return sort { $a cmp $b } ($paths->(), "$IndexObserver::AUDIT/verify_failure.py", map { "$AUDIT/$_" }
-            qw(ProspectiveIndexObserver.pm observe.pl run.py verify.py preflight.t preflight.py contract.json));
+            qw(ProspectiveIndexObserver.pm observe.pl run.py verify.py verify_failure.py preflight.t preflight.py contract.json));
     };
     *IndexObserver::install = sub {
         my ($self) = @_;

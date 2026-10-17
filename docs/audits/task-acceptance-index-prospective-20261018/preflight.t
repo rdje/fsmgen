@@ -4,6 +4,7 @@ no warnings 'once';
 use Test::More;
 use JSON::PP ();
 use Scalar::Util qw(refaddr);
+use Storable qw(dclone);
 use Errno qw(EIO);
 use lib 'perl', 't/lib', 'docs/audits/native-group-witness-20260927',
     'docs/audits/native-group-witness-20260927/failure-only',
@@ -31,6 +32,24 @@ for my $mutation (qw(changed missing selector)) {
     eval { IndexObserver::validate($bad, 'control_healthy') };
     like($@, qr/closed observer admission or source identity changed/, "$mutation refuses before observation");
 }
+
+subtest 'decoded exit codes retain direct and later-copy kinds' => sub {
+    for my $row ([0, 0], [1, 0], [7, 1], [-1, 1], ['0.5', 1],
+                 ['null', 1], ['"0"', 0], ['"1"', 0], ['"7"', 1],
+                 ['false', 0], ['true', 0]) {
+        my ($literal, $stop) = @$row;
+        my $wire = '{"stage":"index_checker","ok":1,"exit_code":' . $literal
+            . ',"signal":0,"timed_out":0,"output_limited":0,"exec_error":null,'
+            . '"cleanup":{"leader_reaped":1,"group_gone":1,"surviving_descendants":0}}';
+        # Independent decodes keep the oracle untouched by the predicate.
+        my $actual = JSON::PP->new->decode($wire);
+        my $expected = JSON::PP->new->decode($wire);
+        is(ProspectiveIndexObserver::unexpected($actual, 0), $stop, "$literal stop decision retains");
+        is(IndexObserver::encode($actual), IndexObserver::encode($expected), "$literal direct kinds retain");
+        is(IndexObserver::encode(dclone($actual)), IndexObserver::encode(dclone($expected)),
+            "$literal later Storable copy kinds retain");
+    }
+};
 
 for my $mode (qw(success checker_refusal intentional_session unexpected_native unsettled)) {
     subtest $mode => sub {

@@ -60,4 +60,4 @@ Git. Native HDL/external execution has separate owners.
 
 Index stop predicate 7d012832f repeats this on exit_code; exact failed-source
 discriminator: `docs/audits/task-acceptance-index-prospective-20261018/verify_failure.py`.
-Correction owner: TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.3.
+Fix: local scalar copy; RED/GREEN: the neighboring `preflight.py`.
