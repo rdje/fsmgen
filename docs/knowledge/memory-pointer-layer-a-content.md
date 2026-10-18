@@ -15,43 +15,25 @@ evidence: docs/decisions/0067-layer-a-carries-no-decision-or-lane-summaries.md; 
 reverify: sed -n '/^## Durable context/,$p' MEMORY.md
 ---
 
-Layer A carries **the frontier pointer only**: active work unit, the single next
-action, in-flight/blocker flags, and the `HEAD` derivation its derived-state
-contract requires. Decision `0068` removed `current_state`, `push_state`, and the
-`Durable context` block outright. It holds no one-line summaries of decisions and
-no lane or leaf completion status. Cross-cutting
-rationale is `docs/decisions/INDEX.md` (layer C); lane status is the owning tree
-under `docs/tasks/` (layer B).
+Layer A contains only the active frontier, one next action, in-flight/blocker flags
+and derived `HEAD`. `0068` removed `current_state`, `push_state` and `Durable context`;
+no decision summaries or lane/leaf completion status belong here. Rationale goes
+to `docs/decisions/INDEX.md` (C), lane status to `docs/tasks/` (B). Current-frontier
+decision references are allowed because the pointer is overwritten, never appended.
 
-`MEMORY.md` may name the decisions the **current frontier** depends on. That is
-bounded by construction because the block is overwritten with the frontier
-rather than appended to.
+At the cap, check routing before raising limits. `0067` followed two limit-moving
+slices: `Durable context` occupied 23/50 lines, summarising 14 decisions and 10 leaves,
+each verified in its own authority. Growth was one line per decision/completed lane;
+raising the cap bought proportional time without changing the slope. `current_state`
+also repeated `0065`/`0066` over 9 lines. Removing both left 30 lines/1,690 bytes.
 
-When `MEMORY.md` approaches its cap, **the first question is which content is in
-the wrong layer, not what the cap should be.** Decision `0067` was reached after
-two slices had already moved limits: 23 of 50 lines were a `Durable context`
-block summarising 14 decisions and 10 task leaves, every one verified present in
-its own authority. The block grew by one line per decision and per completed
-lane, so raising a cap bought time proportional to the raise and changed nothing
-about the slope. The `current_state` field had begun the same drift, restating
-decisions `0065` and `0066` across 9 lines. Removing both took the file to
-**30 lines / 1,690 bytes**.
+Each Resume field has a 5-line `MEMORY_POINTER_FIELD_LINE_CAP` in
+`scripts/check_memory_architecture.sh`; narration fails on the write. The incentive
+persists: COMMIT overwrites this always-open file every slice, and one summary line
+costs less than opening the right authority. `0068` removed COMMIT's “when recording
+completed work”/“the new latest commit” instructions, a stronger recurring force
+than restraint rules; its checkpoint was 14 lines/654 bytes.
 
-Every `## Resume` field is now capped at 5 lines by
-`MEMORY_POINTER_FIELD_LINE_CAP` in `scripts/check_memory_architecture.sh`, so a
-field that starts narrating fails on the write that does it. The drift is an
-incentive, not an accident: `COMMIT.md` makes every slice overwrite this file,
-so it is the one layer an agent always has open, and one summary line is always
-cheaper than opening the right store.
-
-Decision `0068` then removed the instruction itself. `COMMIT.md` had said to
-overwrite the block "when recording completed work" and to point it at "the new
-latest commit" — a step every slice executes, which is a stronger force than any
-written rule about restraint. `MEMORY.md` is now 14 lines / 654 bytes.
-
-The copy had also drifted: it attributed "PNT is autonomous" to decision `0062`
-(push cadence) when the authority is `0003`.
-
-Current bounds are 120 lines and 32,768 bytes — see
-[[live-document-target-pair-calibration]] for why those two numbers answer
-different questions and neither is derived from the other.
+The copy had wrongly attributed autonomous PNT to `0062` (push cadence), instead
+of `0003`. Bounds remain 120 lines/32,768 bytes, answering separate questions with
+neither derived from the other: [[live-document-target-pair-calibration]].
