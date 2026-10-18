@@ -1094,3 +1094,8 @@ python3 -B docs/audits/original-join-parent-acceptance-20261018/prepare.py --cur
 Preparation grants no fresh original native/private assurance or full-alias,
 visual, HIAL, full-CI or push qualification. Complete execution and committed
 recovery remain required before parent closure.
+
+The fixed execution recorder admits committed preparation and keeps all cohorts
+in one source/index epoch. It retains first guarded results, external resource
+observations and complete copied book inputs. Recorder preparation qualifies
+inertly; the acceptance cohorts and committed recovery remain pending.
