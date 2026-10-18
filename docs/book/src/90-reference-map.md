@@ -1223,7 +1223,32 @@ selection without starting a semantic reader:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/epoch_constraints.py
 ```
 
-This is source selection only. A new complete physical checkout must qualify
-all original inert guards and source/index custody, with the empty locality
-directories declared before observation, before a fresh intake can be prepared.
-The older physical checkout and every failed or unused intake remain retained.
+The selected physical checkout now qualifies every source byte, mode, link,
+member and logical index entry, with its empty locality directories declared
+before observation. The unchanged original factory, runtime-repair and consumer
+canonical guards also pass against real files without semantic delegation:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/selected_checkout.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/selected_checkout_preflight.py
+```
+
+Raw Git index cache bytes are retained as dated observations. Recovery validates
+each index through Git's public interface and compares every logical stage entry;
+a genuine fresh index with identical entries passes, while malformed indexes,
+wrong entries, source changes and undeclared output refuse. Reverify that boundary:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/selected_index_portability.py
+```
+
+To reconstruct an absent generated fixture from committed state:
+
+```bash
+git --no-replace-objects worktree add --detach --relative-paths --lock --reason "Owned conjunctively selected historical saved-reader source fixture" .artifacts/original-join-selected-checkout-20261018 192c9dae1f788fb13a0b10c1d1eb952875b03dd6
+mkdir -p .artifacts/original-join-selected-checkout-20261018/.artifacts/{build,cache,logs,tmp}
+```
+
+Then run the inspections above. Every earlier checkout, failed capture and
+unused intake remains retained. Physical preparation does not admit a fresh
+intake or supply semantic, original-native/private, HIAL or full-CI qualification.

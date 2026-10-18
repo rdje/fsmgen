@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.1`
-- next_action: Prepare the complete selected192c9d historical checkout and independently qualify physical source/member/mode/link/index custody plus exact original inert guards. Declare empty locality directories before observation; preserve every prior checkout/failure/unused slot. Commit before a fresh intake.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.2`
+- next_action: Prepare a fresh closed intake using the committed selected192c9d checkout and portable physical/index qualification. Bind complete unchanged commands/contracts and historical versus primary cwd/source roles; preserve every failed/unused old slot. Qualify inert custody/role/prior-stop controls and commit before semantic execution.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; all historical failed captures and unused cohort slots retain.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
