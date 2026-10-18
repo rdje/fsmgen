@@ -5986,11 +5986,40 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Complete saved contracts, all three native1 captures and every later unused slot conserve. Guarded prospective failed-reader controls pass. All tests successful; Files=2, Tests=56 in selected-cache-checkpoint-focused.json.gz. Knowledge Map, native book/source currency, claim inventory/dispositions, staged scripts/check_doctrines.sh and normal hooks gate checkpoint commit; no further semantic cohort or original producer runs.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify the complete saved-reader runtime-output custody boundary before fresh intake.`
   Acceptance: `After the failed-custody checkpoint commits, derive the complete original historical prerequisite/association write and read graph, not only the first new path. Separate fixed Git source members from independently bounded declared runtime outputs with complete before/after namespace/content/type/producer/consumer and locality custody. Preserve the original native0/after-gap and all old failed/unused captures. Qualify actual complete cache/output producers and genuine source/runtime/omission/role/limit/future-progress controls without changing original semantic commands or reducing their meaning. Prepare a fresh same-project source image and closed intake, sync book/task/claims/normal gates and commit before a new once-only cohort.`
   Verification: `pending`
   Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.3`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub write_query_cache at3b71cb0 and the committed558e0e2c4 native0/after-cache checkpoint show a missing complete output contract. The pending leaf mixed graph/producer qualification, whole physical reconstruction and intake admission; they require ordered signoff before any new semantic cohort.
+  - [x] **ADDRESSED (verified)** — The authoritative task graph separates .1 runtime contract, .2 fresh physical preparation and .3 closed intake binding, retaining the complete original parent Goal/Acceptance and every spent/unused scope. The pointer selects .1; no checkout, runtime repair, new intake or semantic cohort starts in this ownership split.
+  - [x] **NO REGRESSION** — Focused task-tree regression reports All tests successful; scripts/check_doctrines.sh and normal hooks must pass before this split commit. Existing book behavior stays accurate; native copied-source delivery is rebuilt for the changed canonical pointers. No ceiling, Knowledge Map allowance or original contract changes.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1`
+  Status: `pending`
+  Goal: `Derive and qualify the complete historical runtime-output contract.`
+  Acceptance: `Use the committed native0/after-gap checkpoint and fixed whole source epoch. Enumerate both historical default readers, transitive source/import/data/subprocess and persistent/temporary filesystem write/read roles before selecting a closed source-versus-runtime contract. Independently qualify the actual unchanged cache producer and complete generated-source/cached/direct data, cold and warm or hostile cache states, full output membership, bounds, locality and typed role controls without any semantic cohort or original native/private producer. Unknown or unaccounted output roles remain explicit gaps and block fresh intake. Preserve every original contract, spent/unused slot and after-gap; sync canonical guidance and commit the qualified contract before physical preparation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.2`
+  Status: `pending`
+  Goal: `Prepare a fresh complete source image with declared runtime custody.`
+  Acceptance: `Only after the full runtime contract commits, reconstruct a new complete same-project selected192c9d checkout with relative metadata on the repository volume. Preserve all spent checkouts and cache outputs. Independently verify every source/member/mode/link/logical index and all declared required/optional output states, original factory/import/development/canonical guards and genuine wrong-source/runtime/role/omission/kind/limit/escape controls. Do not repair by deleting old caches, admitting runtime files as source, weakening original semantic requirements or raising resource/Knowledge Map ceilings. Full native/source/tool/index/cwd/locality custody and normal delivery gate commit before intake binding.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.3`
+  Status: `pending`
+  Goal: `Bind a fresh exclusive intake to the qualified source/output boundary.`
+  Acceptance: `After complete source/runtime qualification commits, bind all unchanged original commands/contracts to historical versus primary roles and fresh exclusive slots. Qualify complete source/output/index/cwd/tool/resource/book, every prior-stop position, immutable programme/proof admission and committed-only recovery controls. Preserve all old native1, native0/failed-custody and unused slots with their exact roles. Commit complete book/task/claim/staged/normal preparation before semantic execution; broader original/native/private/full-alias/HIAL/full-CI/push/visual scopes remain open.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.3`
   Status: `pending`
