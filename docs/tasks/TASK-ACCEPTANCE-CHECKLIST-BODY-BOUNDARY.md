@@ -49,13 +49,13 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.3`
 
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1`
-  Status: `active`
+  Status: `done`
   Goal: `Reproduce and repair sibling evidence borrowing with bounded native regressions.`
   Acceptance: `Retain the exact-function first false green, reproduce the real checker outcome through fixed primary-repository index cases, then repair only the demonstrated box boundary. Genuine root/regression sibling refusal and wrapped/blank/nested/peer-checkbox/heading controls must preserve native truth and every original adapter/checker contract. Complete source/Git custody, focused index/audit/ownership regressions, book/knowledge/live docs, staged doctrines and normal hooks qualify this repair; committed-only .2 remains separate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The lexical checkpoint .1.1 retains native boundary controls and the first dependency failure. Corrected failure-only observer .1.2 now qualifies complete unchanged controls; original regression .1.3 passes under that committed observer with exact source/index conservation and original native receipt populations. Failed native and copy-preservation aggregates stay failed, and historical EPERM causality stays HIAL P1-open. This closes .1 only; committed-only boundary acceptance .2 remains separate.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.3: accept original observed index regressions`
   Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.3, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.4, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.5`
-  Finding E1 P1 dependency: `index-audit native1 retains complete source and main-index conservation. audit_pl fixture Git preparation is refused by child self-setpgid(0,0), undef/errno1, before the checker runs; all retained groups settle and the fixture retires. The native cause/group/session were not captured and remain unknown. native-containment-dependency.json.gz binds exact stages, source and failed aggregate. Existing HIAL causal owner .19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10 remains P1-open. No passing case promotes this aggregate, no race or host-load cause is inferred, and no spent retry/admission relaxation/host change is selected. Commit the independently verified lexical checkpoint first; qualify a fixed failure-only observer in .1.2 before the genuinely required remaining regression in .1.3. Original .1 acceptance stays unchanged and open.`
+  Finding E1 P1 dependency at .1.1 checkpoint: `index-audit native1 retains complete source and main-index conservation. audit_pl fixture Git preparation is refused by child self-setpgid(0,0), undef/errno1, before the checker runs; all retained groups settle and the fixture retires. The native cause/group/session were not captured and remain unknown. native-containment-dependency.json.gz binds exact stages, source and failed aggregate. Existing HIAL causal owner .19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10 remains P1-open. No passing case promotes this aggregate, no race or host-load cause is inferred, and no spent retry/admission relaxation/host change is selected. Commit the independently verified lexical checkpoint first; qualify a fixed failure-only observer in .1.2 before the genuinely required remaining regression in .1.3. At that checkpoint original .1 acceptance stayed unchanged and open.`
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.1`
   Status: `done`
   Goal: `Land the verified lexical boundary checkpoint with native dependency failure preserved.`
@@ -144,11 +144,16 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   - [x] **NO REGRESSION** — Corrected qualification .1.2.4.2: knowledge-map: OK; six complete original 167-assertion TAP programmes contain no failing assertion. Strict complete native/receipt verifier and hostile saved-record controls pass with source and primary-index conservation. Book/map and staged doctrines/normal hooks qualify committed custody before original .1.3; independent HIAL/full-CI/push and visual owners remain open.
 
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Accept the original index/audit regression contract under the committed fixed observer.`
   Acceptance: `Consume only the genuinely required ordinary regression after committed .1.2, with exact input identities, original limits/results/native events/gaps and independent cleanup. Diagnose any new rejection before further execution. A pass qualifies current box/index/audit regression only and does not repair historical EPERM. No recurrence-only campaign or retry-as-repair. Complete book/live-doc, staged/normal delivery before closing .1 and selecting committed-only .2.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `From committed qualification c6bd93520 and unchanged committed input identities, corrected-regression.json.gz retains original T2068/T2070/T2071 native0, All tests successful, Files=3, Tests=14. Fixed index/policy/scope receipt populations equal [14,57,6], [40,342,36] and [20,199,20]. Every retained genuine native stage meets its original deadline/capture/settled-group contract; original target event streams are empty and all source/admission/receipt joins pass. T2068's deliberate synthetic unsettled receipt remains distinct from native execution, retains its workspace and independently removes it. Intentional checker refusals keep exit1; required evidence, freshness, literal audit-source classification and document exemptions pass without a registry delta. Source and primary index conserve. The archive also retains prior qualification controls; these overlap the qualification archive and are not new original-regression executions. Re-derivation is actual original TAP/results and native receipt populations; falsification is genuine negative owner/freshness/scope controls, substitution refusals, exact source joins and the separately qualified failure/gap oracles; durability is full tracked started/result custody, source/tool/command/raw output and existing complete reader. Book/current task/resume and staged doctrines/normal hooks qualify .1 before committed-only .2. No historical EPERM repair or independent HIAL/full-CI/push/visual closure follows.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.3: accept original observed index regressions`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Original regression .1.3: git log -S corrected-controls.json.gz locates 9ea42a97b's fixed source-admitted intake; c6bd93520 commits its complete qualification before this execution. Prior native failures could not qualify original regression. Current exact-source original programmes now complete under the committed failure-only observer; historical kernel cause is still unknown.
+  - [x] **ADDRESSED (verified)** — Original regression .1.3 passes all original index/policy/scope contracts with fixed receipt populations, native checker refusal/success truth, unchanged bounds and settled cleanup. Source/index conservation and complete admission/receipt joins pass; original target native-event streams are empty. Old failed records are not promoted and the synthetic unsettled control is not labeled native.
+  - [x] **NO REGRESSION** — Original regression .1.3: All tests successful, Files=3, Tests=14 for T2068/T2070/T2071; complete original native/receipt/source verifier passes. Book/map and staged doctrines/normal hooks qualify .1 closure before committed-only .2. Historical causality, independent HIAL/full-CI/push and visual owners remain open.
+
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.4`
   Status: `done`
   Goal: `Correlate the retained new index-observer rejection with bounded existing host evidence.`
@@ -205,8 +210,9 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
 
 ## Blockers
 
-- Current observer qualification `.1.2.4.2` passes; commit it before original
-  regression `.1.3`. Failed native and copy-preservation aggregates stay failed.
+- Current observer qualification `.1.2.4.2` and original regression `.1.3` pass;
+  commit original acceptance before committed-only box-boundary `.2`.
+  Failed native and copy-preservation aggregates stay failed.
   Historical kernel causality remains P1-open with HIAL; SIP is unchanged.
   Committed-only `.2` and independent HIAL/full-CI/push/visual owners retain
   their own evidence requirements.
