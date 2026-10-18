@@ -25,21 +25,21 @@ evidence: >-
 reverify: >-
   scripts/check_claim_verification.pl && prove -Iperl
   t/1636-claim-verification-doctrine.t && scripts/run_with_ram_guard.sh -- bash -c
-  'for r in verify_failed verify_corrected_failed verify_snapshot_failed selected_intake epoch_constraints verify_selected_failed verify_runtime_cache; do python3 -B
+  'for r in verify_{failed,corrected_failed,snapshot_failed} selected_intake epoch_constraints verify_{selected_failed,runtime_cache} default_dispatch; do python3 -B
   docs/audits/original-join-parent-acceptance-20261018/$r.py || exit; done'
 ---
 
-`0094`: bounded `claim_registries.jsonl` sets; `--registry` single-file fixtures.
+0094: bounded claim_registries.jsonl sets; --registry single-file fixtures.
 Legs: re-derive/falsify/durability or owned gaps. Reject bounds,
 unsafe/untracked paths, missing/duplicate markers, aliases. Truth/independence:
-review (`0074`); `0104` adopts `CLAIM-VERIFICATION-TEMPLATE-REVIEW.2`, checker unchanged.
+review (0074); 0104 adopts CLAIM-VERIFICATION-TEMPLATE-REVIEW.2, checker unchanged.
 
-`container_common.public`/`064cf9` rejects `a0561d9` live factory drift
-(twelve helpers intact). Factory-only: publication-test drift (`repaired_preflight`).
-`1a40a1d`/`model.inputs`: edited `8b9a726` knowledge/decision cards refuse.
+container_common.public/064cf9 rejects a0561d9 live factory drift
+(twelve helpers intact). Factory-only: publication-test drift (repaired_preflight).
+1a40a1d/model.inputs: edited 8b9a726 knowledge/decision cards refuse.
 Empty locality dirs fail custody; later full-source passes. Failures/gaps retain.
-`epoch_constraints.py`: all `192c9d` source/formal/import/runtime/canonical
+epoch_constraints.py: all 192c9d source/formal/import/runtime/canonical
 constraints pass; later epochs fail. Physical/intake pass; semantics/native/private/HIAL
 pending; current checks separate. Native0 after-gap: undeclared KM query cache.
-`verify_selected_failed.py`: later source/cache/query; `verify_runtime_cache.py`:
-permissive cache/strict output; roles pending.
+verify_selected_failed.py: later source/cache/query; verify_runtime_cache.py:
+permissive cache/strict output; default_dispatch.py: entry edges; roles pending.

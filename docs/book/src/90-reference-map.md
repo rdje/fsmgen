@@ -1342,3 +1342,18 @@ fields and file modes; no-cache queries can leave invalid cache data untouched.
 Strict canonical output evidence rejects those states. Complete default
 execution roles and the closed source/output custody contract remain next.
 Neither the failed attempt nor these preparation results grant runtime permission.
+
+Review the fixed default dispatch and direct dynamic-reader source edges without
+executing historical modules:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/default_dispatch.py
+```
+
+For the unchanged no-argument commands, this static review selects `core(False)`
+and `delivery(False)`, preserves the explicit publication branches, and binds
+nested admission/context/cause/consumer and factory source edges to their fixed
+Git epochs. It checks the corresponding complete source/site inventory and
+separating branch, command, source, omission and typed-role controls. These are
+static library refusals. Imported initialization, called-function effects,
+expanded dynamic readers and runtime-output custody still require qualification.
