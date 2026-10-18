@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2` (pending committed original regression)
-- next_action: After .1.3 commits cleanly, prepare committed-only box-boundary acceptance .2 using fixed same-repository cases and qualified failure-only observation; review the retained boundary driver before selecting its exact intake.
+- active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.2` (pending committed preparation)
+- next_action: After .2.1 commits cleanly, consume the closed committed boundary intake once: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/task-acceptance-committed-boundary-20261018/run.py. Preserve the first result; no recurrence campaign.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; consume delivery/normal-commit receipts before selecting any successor.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

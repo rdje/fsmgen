@@ -1,0 +1,7 @@
+{
+  "schema": "fsmgen.committed_boundary_intake.v1",
+  "owner": "TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.2",
+  "target": "t/2072-task-acceptance-box-boundaries.t",
+  "expected": [9, 90, 9],
+  "scope": "One committed-only boundary acceptance. Reuse qualified capture/result/stop methods unchanged, with exact complete base-source identity joins and separately committed closed admission data. Preserve first result, original native bounds and independent cleanup. No historical EPERM repair or independent HIAL/full-CI/push/visual closure."
+}
