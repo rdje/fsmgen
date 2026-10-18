@@ -1169,8 +1169,19 @@ git --no-replace-objects worktree add --detach --relative-paths --lock --reason 
 ```
 
 This restores source files; it does not repeat original producers or semantic
-captures. The full committed manifest verifies the reconstruction. A fresh
-committed intake is still required. Only historical
-saved readers may use this checkout; current publication stays in primary source.
-Complete semantic acceptance and every native/private and independent gate remain
-open.
+captures. The full committed manifest verifies the reconstruction.
+
+The intake preserves every original command and binds each working
+directory explicitly. Only historical saved readers use the dated checkout;
+current publication stays in primary source. Its inert complete source, role,
+command, index, resource, book and prior-stop controls pass. Inspect the closed
+intake without executing acceptance:
+
+```bash
+python3 -B docs/audits/original-join-parent-acceptance-20261018/snapshot_intake.py
+```
+
+The first source-size refusal and complete census are retained; the measured
+input bound preserves every member. Actual semantic execution requires this
+preparation commit. Complete semantic acceptance and every native/private and
+independent gate remain open.

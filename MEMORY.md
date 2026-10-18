@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.1`
-- next_action: Prepare the closed whole-checkout successor intake. Keep original commands; historical prerequisite/association run in the qualified relative linked checkout, current/frozen checks in primary. Bind complete physical/source/index/cwd custody and commit preparation before any semantic cohort.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2`
+- next_action: From the committed whole-checkout intake, activate .3.2 and stage only task/resume state. Execute the eight snapshot cohorts once in order with complete primary/historical source/index/cwd custody; stop and retain the first unexpected result. No failed or unused older slot may run.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; corrected prerequisite native1 and its complete result/receipt are retained. Seven later corrected slots remain unused.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
