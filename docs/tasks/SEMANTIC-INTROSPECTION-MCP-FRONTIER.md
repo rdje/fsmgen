@@ -3816,7 +3816,6 @@ For FSMGen, the analogs are:
   Verification: `Every complete original source-value obligation and full predicate/scalar/regex/remaining-boundary child contract qualifies under the unchanged parent acceptance. Independent direct-source/schema/phase reconstruction joins full known values, ordered roles, inherited operands and whole source-neutral public constructions. Actual native receipts bind their exact main fixture plans and drivers; intervention plans remain separate evidence. Fresh complete prerequisites pass in qualified current-source or fixed committed-publication contexts. Original settings/formatter/flags/encoding, identities and private/eval meanings remain explicitly unmeasured. Complete hostile and valid successor-progress controls qualify; whole first wrong-plan product/accepted reader epoch and repaired binding retain at observer-source-value-acceptance-20261011. Book/current/native/claim/staged gates and normal hooks gate closure. Full source-header child .3 and every original raw/native/private/visual scope remain separately owned.`
   Commit: `children .1/.2 and this aggregate .3 slice`
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.1`
   Status: `done`
   Goal: `Qualify every complete original failed-predicate source value.`
@@ -3838,13 +3837,11 @@ For FSMGen, the analogs are:
   Verification: `All three children qualify the complete unchanged remaining-value acceptance. Whole predicate/scalar/regex/source-census inputs, known values, constructor alternatives, inherited operands and original obligations independently join; original settings/formatter, identities/referents/receivers and private/eval meanings remain explicitly unmeasured. Complete original public/raw records attach only after source selection and retain every captured byte. Fresh prerequisite source readers and the exact committed-context publication reader pass in their proper contexts. Genuine complete value/profile/schema/member/role/encoding/native-promotion and unchanged-acceptance controls reject. Full products, first failures, programmes, receipts, proof and seal retain in observer-value-profile-boundaries-20261010. Source-value aggregate sibling .3 and every full-header/observer/raw scope retain their original contracts. Book/current/native/claim/staged gates and normal hooks gate this closure.`
   Commit: `children .1/.2 and this .3 slice`
 
-
   ## Acceptance Checklist (enforced)
 
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S for the remaining scalar/regex Goal locates its original combined contract. Source census obligation-plan.json independently assigns scalar construction, regex construction and original-profile boundaries. One implementation would mix separately falsifiable contracts; the committed failed-predicate reader passes without closing them.
   - [x] **ADDRESSED (verified)** — Exact original parent Goal/Acceptance remains unchanged. Three ordered children separately own complete scalar qualification, whole regex qualification and complete opaque-boundary/parent acceptance. MEMORY.md selects scalar .1; no artifact or runtime claim is promoted. The measured task allowance follows LIVE_DOCUMENT_SIZE_CONTAINMENT.md inside every unchanged ceiling; book behavior is unchanged.
   - [x] **NO REGRESSION** — scripts/check_task_tree_integrity.pl: all active task-tree invariants hold. The committed observer-predicate-values verify.py passes under the RAM guard; focused staged acceptance and scripts/check_doctrines.sh gate this decomposition commit.
-
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.1`
   Status: `done`
@@ -3871,7 +3868,6 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — actual-complete-reader-1.json passes entire fixed/current custody, every actual prerequisite execution, complete independent expressions/member/role/schema reconstruction and source-first public hypotheses. Full compiled values/flags/encoding/normalization and whole headers/traces agree. Actual byte/upgraded constructors conserve characters and separate modifiers; every complete hostile candidate rejects at its intended contract. First parser/POD and rendered-punctuation failures retain whole sources/HTML/results; corrected full native prose expectation preserves actual text. All programme/result epochs and pre-observation constructor refinement remain. Original native flags/encoding, identities/settings and all unchanged ancestor contracts stay unmeasured/open.
   - [x] **NO REGRESSION** — All tests successful. Files=2, Tests=308 (checks.json focused public book-path/feature-matrix audit). Whole committed scalar/predicate/source custody and complete prerequisite executions pass independently. Post-publication focused audits, mdBook build, entire native guide/copied sources, exact current publication authority, claims, staged scripts/check_doctrines.sh and normal hooks gate commit without any capacity-ceiling or Knowledge Map authority change.
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.2.3`
   Status: `done`
   Goal: `Qualify original opaque profile boundaries and complete remaining-value acceptance.`
@@ -3885,7 +3881,6 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — Complete independent source/schema/value/phase/obligation reconstruction joins all original remaining-value members before separately attaching whole original opaque evidence. Every genuine hostile value/profile/meaning/acceptance control rejects. Fresh current source prerequisites and complete dated checkpoint pass separately, preserving the first rejection. Original parent/child/higher contracts remain exact; only the remaining-value parent and this child close. Corrected guide and exact publication authority retain all prior ceilings and Knowledge Map allowance.
   - [x] **NO REGRESSION** — All tests successful; Files=2, Tests=308 in checks.json focused. Whole core/sealed replay, complete native guide/current copied-source checks, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commit before successor activation. Original opaque/private/native uncertainty, inherited dated roles and every higher header/raw/visual contract remain explicit.
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.2.3`
   Status: `done`
   Goal: `Qualify unchanged complete source-value parent acceptance.`
@@ -3898,7 +3893,6 @@ For FSMGen, the analogs are:
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S for the original source-value Goal identifies 6715ce66cf7b8a63c3a7f3125d722b578b29ad87 in actual-root-history-1.json. Complete census obligations and committed child products locate the missing parent join. Actual native-qualified.json main-plan identity differs from the initially attached intervention plan; full first source/accepted reader and corrected whole-product rejection establish the shared wrong-locator defect precisely.
   - [x] **ADDRESSED (verified)** — Complete independent source/schema/phase/obligation reconstruction joins every whole child value and source-neutral public construction. Actual native plan/driver identities now gate each fixture; the entire first accepted wrong-plan product rejects specifically at the corrected predicate binding. Genuine hostile candidates and valid whole successor progress controls qualify. Every fresh prerequisite and fixed main-plan extension conserves; only this child and the unchanged source-value parent close. Full-header/raw and original native/private uncertainties retain their owners and complete acceptance.
   - [x] **NO REGRESSION** — All tests successful; Files=2, Tests=308 in checks.json focused. Complete core/sealed replay, whole native guide/current source copies, exact unchanged-ceiling publication authority, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commit before full-header activation. First incomplete-reader acceptance remains defect evidence, never corrected qualification.
-
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.3.5.2.2.3`
   Status: `done`
@@ -3941,7 +3935,6 @@ For FSMGen, the analogs are:
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S in observer-current-publication-20261011/root-cause.json locates e0620dd2ffb04c340b91693a04f5885c8abb6595 as the exact canonical full-format uncertainty predecessor. The unchanged observer parent and pending publication contract require complete source/header meaning and governed current currency beyond the dated prefix predicate. Complete first-guide programme/HTML and focused refusal additionally locate the broad label-replacement defect. The source-bound first-nested-probe.json actual0/PASS and full first-reader.py.txt locate the flat-only members() census; the whole first sealed epoch and exact strict repair retain.
   - [x] **ADDRESSED (verified)** — observer-current-publication-20261011/acceptance-proof.json and proof.json join complete fresh semantic prerequisites, unchanged parent/children, whole original products and independent reviewed source/question/probe/current/native reconstruction. Genuine pre-seal owner/root/scope/meaning/question/probe/native-promotion, whole-member, actual-result and parent controls reject. Exact qualified guide repairs the first refusal without altering admitted evidence. observer-publication-namespace-repair-20261011/proof.json adds strict complete original and own namespace qualification after reproducing the actual nested-member false green; independent complete candidate archives, fixed first-manifest authority and fresh original/current readers qualify. Distinct re-derivation, falsification and durability legs retain; only finite observer nodes close.
   - [x] **NO REGRESSION** — All tests successful; Files=2, Tests=308 in focused, and all 17 focused Python tests pass in focused-python-qualified. Complete current publication, native canonical source copies and source index pass; the strict namespace repair adds fresh original/current preflight and independent full graph controls. Final saved-reader, book/current-native/claim/staged scripts/check_doctrines.sh and normal hooks gate commitment. Knowledge Map collection authority and every original ceiling remain unchanged; raw/cause/consumer/alias/cold/native/private/visual/HIAL/full-CI/push successors remain open.
-
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.4`
   Status: `done`
@@ -5220,7 +5213,6 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — Complete fixed source/native/product intake and directory/file topology, exact fixed-catalog/member recovery and real missing/changed archive refusals qualify. Fresh declared readers and independent complete source/class/phase/full-header/argument association controls qualify every unchanged predecessor acceptance and child contract. First local failure boundaries stay explicit; full raw/native/private successors remain open.
   - [x] **NO REGRESSION** — All tests successful Files=3 Tests=318; Python17 publication tests pass. Complete current/native/book/source/claim results retain in checks.json; strict saved replay, staged scripts/check_doctrines.sh and normal hooks complete this slice without a capacity ceiling or Knowledge Map change.
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.2`
   Status: `done`
   Goal: `Join every complete original raw-stack meaning and genuine hostile control.`
@@ -5416,7 +5408,6 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — The complete fixed preparation and original source graph authenticate; the prepared finite raw extension and equivalent contractions publish with no collection growth. The maintained factory checks exact current meanings, source/query/capacity and native guidance while preserving every original source condition and opaque/native/private boundary. Genuine current-instrument substitution rejects, and exact restoration passes.
   - [x] **NO REGRESSION** — All tests successful in the focused gate, including permanent current meaning/query/native/typed checkpoint controls and recovery/task/claim/book checks. Whole current native source-copy, Knowledge Map, size, claim/inventory, committed-only proof, staged scripts/check_doctrines.sh and normal hooks gate this commit.
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.5.3.3`
   Status: `done`
   Goal: `Close unchanged complete raw-stack acceptance after canonical qualification.`
@@ -5532,7 +5523,6 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.4`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.4: accept complete original consumer operands and outcomes`
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.1`
   Status: `done`
   Goal: `Prepare whole original consumer source and operand contracts.`
@@ -5552,7 +5542,6 @@ For FSMGen, the analogs are:
   Verification: `The full original independent operand/truth Goal/Acceptance and every complete descendant contract remain unchanged. Fresh complete helper, remaining and join replays plus isolated independent readers rederive every own source assertion/helper/actor/type/path/API/copy/cause meaning, typed operand and comparison outcome across all original modes. Exact complementary child allocation joins every original observation without native passed authority. Every whole original source/native/product/cause, qualified Storable kind witness, opaque synthetic trace and native/private boundary retains. All first child failures, source epochs, actual/expected statuses, repairs and genuine controls remain authenticated. Complete genuine native join and parent/descendant/borrowed narrower success/false-green/kind/source/structural/omission controls reach intended first refusals. Three development-only interface/construction/library-refusal probes precede formal freeze; their full source epochs retain and their caught library errors are never native status-1 controls. A source-reviewed expected-cause adjustment and over-budget static book proposals retain as development evidence. Distinct claim legs are whole original source and parent/descendant rederivation through fresh independent meaning readers, complete genuine native separating candidates with intended first causes, and committed complete source/programmes/commands/statuses/streams/products/proposals/snapshots/normal receipts with default recovery. Current source/query/capacity/book/native/focused/size/claim/inventory/sealed/default/staged/normal delivery qualifies only independent meanings and this acceptance leaf. Canonical publication, original consumer-parent acceptance, full alias downstream and every higher scope remain open.`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.4`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.4: accept complete independent consumer meanings`
-
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.3.2.1`
   Status: `done`
@@ -5718,7 +5707,6 @@ For FSMGen, the analogs are:
   Verification: `The genuine predecessor remains native1/expected1 at the intended unadmitted-target contract; the recorder setup failures stay separately failed with explicit custody gaps. The maintained reader admits exactly the committed complete reviewed proposal with unchanged card bytes, every old question/evidence/probe and all unrelated current canonical sources retained. All twelve prior helper bodies and every original parent/descendant contract retain. focused native0 passes 33 publication tests, including actual kind/source/omission/borrowed-meaning/capacity/native-promotion and first-failure controls. admission native0 independently binds current source/proposal/parent/query correspondence and complete fixed preparation/source/native/control/failure/repair custody. map native0 reports knowledge-map: OK with exact cached/direct projection. The book changes only its open checkpoint and shrinks without widening an allowance. Claim legs are exact source-bound predecessor/proposal/current/contract/capacity correspondence, genuine predecessor and changed-candidate refusals, and complete committed preparation plus current programme/source/native/raw-stream epochs with permanent watchers and saved recovery. Prior source-model/native/private/dated-execution limits remain; authentication is not fresh original semantic execution. Current native book/build, final size/claim/staged doctrines, sealed/default saved recovery and normal hooks remain mandatory before commit. Close only publication; original .4.3.3 parent/full-alias and HIAL/full-CI/push/visual scopes stay open.`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.2: publish complete original join canonical meanings`
 
-
   Finding P1 resolution: `The first publication recorder returns native1 during source-census setup because its declared tooling chapter is absent. No guarded predecessor command or complete source/Git epoch ran. recorder-first-failure.json.gz retains the exact first recorder and tool-reported exception. The first inline repair also returns1 because the published chapter contract is a Path, followed by an unchanged-recorder argument refusal native2. recorder-repair-setup-failures.json.gz preserves these statuses and explicit missing stream/full inline-programme boundaries. Repair the declaration using the published 90-reference-map path as a string, inspect each native setup result before dependent calls, then run a separately named predecessor check. None of these setup failures is a semantic refusal or a passing capture.`
 
   Acceptance Checklist (enforced):
@@ -5754,7 +5742,6 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — Original acceptance preparation binds every original contract, complete source/proof/native/failure-role premises and the current closeout module closure. Disjoint original ancestry maps to complete existing semantic readers and separately named current/book cohorts. Original/current Goal narrowing, omission/duplication, altered/missing source, command and typed assurance promotions reject inertly. No acceptance cohort runs and no parent is closed.
   - [x] **NO REGRESSION** — Original acceptance preparation: saved/current inventory and all hostile controls pass without original native execution. knowledge-map: OK; complete original Goal/Acceptance and current module identities conserve. Staged scripts/check_doctrines.sh, book/source-view qualification and normal hooks gate only this preparation; complete execution and committed recovery remain separately pending.
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2`
   Status: `active`
   Goal: `Execute complete original joined-meaning acceptance and current delivery.`
@@ -5776,7 +5763,6 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Execution preparation: focused execution_preflight.py controls pass, including genuine retained focused/native book oracles and exact source/index images; no acceptance cohort runs. knowledge-map: OK; every original Goal/Acceptance and the qualified project closure retain. Staged doctrines, book/source-view checks and normal hooks gate preparation; actual full acceptance, committed recovery and independent HIAL/full-CI/push/visual owners remain open.
   Finding E2 resolved: `First final-document preflight returns1 because its prospective tree model omits the owned docs/TASK_TREE.md update; the actual source pin correctly refuses new bytes against old HEAD. Retain full first log, programmes and current index document with the explicit post-failure capture scope in execution-preflight-docs-first.json.gz. Add that owned document to the model only; production committed-source admission stays strict. No acceptance cohort executes.`
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2`
   Status: `active`
   Goal: `Execute the fixed complete acceptance cohorts and commit verified evidence.`
@@ -5797,7 +5783,6 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — Failed checkpoint retains complete first native/source/tool/stream/resource/index custody and independently reproduces the exact source-epoch mismatch. Historical/current and missing/changed-helper guard controls separate the first cause without executing readers or bypassing a guard. The success reader and hostile failed-record controls refuse promotion; source-epoch repair and all later cohorts remain gated.
   - [x] **NO REGRESSION** — Failed checkpoint: failed-custody/source diagnosis and hostile controls pass with all original native inputs and first results unchanged. knowledge-map: OK; canonical source-role guidance preserves old facts/questions with net byte reduction and no collection growth. Staged doctrines, book/source views and normal hooks gate this checkpoint only; no acceptance cohort reruns or parent closure occurs.
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2`
   Status: `done`
   Goal: `Prepare a bounded historical source-epoch repair without weakening original contracts.`
@@ -5816,7 +5801,6 @@ For FSMGen, the analogs are:
   - [x] **ROOT CAUSE (WHY + WHERE)** — Source-role inventory: git log -S for import record_value_original_join_fact locates legitimate a0561d999b0354ed261289f66657bf8704c75ec9 publication; the committed failed c40 attempt and exact-source guard diagnosis identify the resulting source-role refusal. Cause, consumer, prerequisite and association all read the live factory unconditionally against fixed historical bytes; legitimate a0561d9 publication advanced only that factory within their complete project import closure. The intended guards retain; the caller selected the wrong source role for historical replay.
   - [x] **ADDRESSED (verified)** — Source-role inventory binds all four exact guards/revisions, twelve retained source interfaces per role and the whole identical historical import graph. Only the factory differs today. A closed historical-source proposal preserves default semantics and separately live publication, while explicit adapter/execution/intake gaps and every original contract stay open. Altered/missing/source/role/contract candidates reject without executing a cohort.
   - [x] **NO REGRESSION** — Source-role inventory: saved/current derivation and all hostile controls pass; knowledge-map: OK. Whole original Goal/Acceptance and every retained helper source conserve; first failed records remain immutable. Final staged doctrines, book/source views and normal hooks qualify this read-only preparation only, with no semantic/native acceptance or independent gate release.
-
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2`
   Status: `done`
@@ -5837,7 +5821,6 @@ For FSMGen, the analogs are:
   Verification: `Closed corrected intake preserves the complete immutable first inventory, every original Goal/Acceptance and all original source/model/native/private/control/first-failure premises. Only prerequisite and association commands gain an exact historical-source wrapper; their unchanged default entrypoints, guards, streams and complete nested readers retain. Six remaining semantic/current/focused/book/source commands are unchanged. Corrected exclusive work/started/result/source-view names cannot reuse the first failed slots. Recorder and saved reader conserve full source/index/tool/stream/resource/book custody, strict native success and first-failure stop; historical receipts separately prove declared reads and restored live source. Inert complete source/command/contract/role/receipt/exception/resource/book and prior-stop controls pass without any semantic reader or acceptance cohort. First preflight resource-sampler preparation bug retains whole first programmes/native1 stderr and diagnosis; sampler restores exactly from unchanged first recorder and corrected controls pass. Re-derivation is complete source/contract/import joins and actual inert wrapper/resource/book oracles; falsification is missing/changed/borrowed/promoted source/role/receipt/contract and stop controls; durability is committed closed inventory/programmes/first refusal and executable controls. Complete semantic/current acceptance, original native/private qualification and HIAL/full-CI/push/visual gates remain open. Final current book/source, claim, staged doctrine and normal hooks gate preparation delivery.`
   Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.3: prepare corrected original acceptance execution`
 
-
   Acceptance Checklist (enforced):
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S import record_value_original_join_fact identifies legitimate a0561d999b0354ed261289f66657bf8704c75ec9 factory advancement. The committed failed prerequisite intake selected live input for historical guards; complete four-role source inventory and qualified adapter bind the repair. The first corrected preflight additionally found a preparation-time overbroad replacement in sample(); whole first native1 result/programmes retain and the sampler is restored exactly.
   - [x] **ADDRESSED (verified)** — corrected_preflight.py passes closed source/command/contract/role/receipt, exceptional restoration, resource/book and prior-stop controls. Exact wrapper delegates only to inert runners in preparation; no semantic reader executes and original failed slots conserve. New exclusive corrected intake requires its own committed qualification before native launch.
@@ -5849,7 +5832,6 @@ For FSMGen, the analogs are:
   Acceptance: `After committed source-epoch repair and closed fresh intake, execute only the genuinely required corrected complete semantic/current cohorts, once per admitted slot, with full unchanged source/input/command/stream/resource custody and stop on first unexpected result. Preserve the original failed intake and every original contract/first failure/repair/native/private limit. Complete focused/current/book/claim/staged/normal delivery and commit before original .3 committed-only recovery or parent closure.`
   Verification: `Corrected prerequisite cohort terminal native1/expected0 is fully retained. The factory source view reaches the later cause-container repaired_preflight comparison, which reads live development-programme inputs when reconstructing a dated three-file repair. No guard trip or later cohort execution; source-role scope requires complete diagnosis before another intake. First corrected failure is not promoted.`
   Commit: `pending`
-
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3`
 
@@ -6075,9 +6057,34 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Expand fixed imported and data-backed executable source namespaces.`
   Acceptance: `Start from the committed default-dispatch sources and direct dynamic edges. Resolve transitive normal imports and source-defined module wrappers, fixed namespace modes, callable namespace exports, executable source embedded in saved records and input-only compilation roles. Bind complete expanded bytes/sites to named fixed Git/data premises without executing historical code. Preserve unresolved expansions explicitly; none can grant effect or custody qualification. Retain every original contract, scope and failed/spent/unused slot, then commit the closed source-expansion evidence before effect classification.`
+  Verification: `Source inspection identifies separate fixed modules, exported path namespaces and reconstructed field-reader data. The whole original Goal/Acceptance retain; ordered children qualify fixed module closure, embedded/compile-only data and their complete independent binding before effect classification. No historical module, producer, fixture or semantic cohort executes. Surplus empty separators compact without changing any other nonblank source line. Initial size gate identifies exact owned-allowance drift; current measurement plus the declared ratchet repairs it without raising a ceiling. Guarded focused task integrity reports All tests successful; Files=1, Tests=48.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1: separate fixed modules and executable data`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.3`
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "def historical():" identifies the fixed nested module boundary; static source also reconstructs executable field-reader data, which needs distinct qualification.
+  - [x] **ADDRESSED (verified)** — Ordered fixed-module, executable-data and complete-binding children preserve the entire original parent contract. Every other nonblank task line remains exact; independent node/field comparison and genuine task-integrity controls preserve all original ownership.
+  - [x] **NO REGRESSION** — All tests successful; Files=1, Tests=48 in guarded task-tree regression. Fresh measured declarations, native book/source views, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate this ownership slice.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.1`
+  Status: `pending`
+  Goal: `Close fixed imported and wrapper-loaded Python source namespaces.`
+  Acceptance: `Derive ordinary local imports and fixed module-wrapper targets from the qualified default edges, including nested publication/retention/model/book and namespace-exported paths. Retain complete fixed bytes, lexical sites, wrapper namespaces and callable exports with explicit path/search/language premises and genuine changed-target, omitted-import, namespace and source controls. No historical module executes; embedded data and compile-only sources remain separately owned.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2`
+  Status: `pending`
+  Goal: `Expand executable saved data and input-only compilation sources.`
+  Acceptance: `After fixed module closure commits, reconstruct every reachable data-backed executable source and compile-only preparation source from complete fixed records and source-defined transformations. Preserve whole original and transformed bytes, mode/name/namespace/exports and data premises; genuinely changed source/recipe/data/role candidates must refuse. Do not execute historical code or classify effects.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.3`
+  Status: `pending`
+  Goal: `Qualify complete executable-source allocation and recovery.`
+  Acceptance: `Join fixed modules and embedded/compile-only sources with independent complete dynamic/import/site membership, namespace exports and original command conservation. Retain source-only committed recovery, genuine omissions/wrong namespace/data/source/role controls and explicit shared premises or owned unresolved expansions. Synchronize book/task/claims/staged/normal delivery before effects can begin.`
   Verification: `pending`
   Commit: `pending`
 
@@ -6123,7 +6130,6 @@ For FSMGen, the analogs are:
   Verification: `pending`
   Commit: `pending`
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.3`
   Status: `pending`
   Goal: `Execute the freshly qualified complete intake and deliver original scoped acceptance.`
@@ -6131,14 +6137,12 @@ For FSMGen, the analogs are:
   Verification: `pending`
   Commit: `pending`
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.3`
   Status: `pending`
   Goal: `Qualify committed-only recovery and close only the original joined family.`
   Acceptance: `After .2 commits, independently recover exact committed acceptance from complete saved source/input/native/control/failure/repair evidence. Verify current canonical/source/query/capacity/book and every original unchanged Goal/Acceptance plus genuine omission/source/scope/future-progress refusal controls. Close this acceptance container, original join and containing consumer/cause family only after all mapped contracts pass. Preserve full alias, product/semantic/cold/permanent/host-native/private/visual/HIAL/full-CI/push owners and commit clean continuity before their next frontier.`
   Verification: `pending`
   Commit: `pending`
-
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.4`
   Status: `pending`
@@ -7136,7 +7140,6 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — Actual gate-cleanup native0 records exact qualified duplicate removal, dated empty residue, protected original/native/book bytes and conservation of every other ordinary candidate. Actual gate-post-core native0 passes the unchanged current canonical core with all selected ignored views absent. Complete saved authority and genuine controls verify without repeating deletion.
   - [x] **NO REGRESSION** — All tests successful in the focused task/claim/book gate. Saved source/authority and exact publication readers, mdBook build, unchanged ceiling and canonical allowances, claim/inventory, staged scripts/check_doctrines.sh and normal hooks gate commit before unchanged raw acceptance resumes. Complete actual commands, source epochs and terminal streams retain.
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.85`
   Status: `done`
   Goal: `Retain the completed static-inventory subtree before default runtime role expansion.`
@@ -7148,7 +7151,6 @@ For FSMGen, the analogs are:
   - [x] **ADDRESSED (verified)** — Exact full revision/path/file digest/complete node count and retention contract recover every original byte. Independent Perl parity and real production-checker controls pass; every active ancestor/current owner remains directly live. Current owner-only closure, unchanged policy and measured downward task ratchets are retained separately from overlapping historical source.
   - [x] **NO REGRESSION** — Guarded prove reports All tests successful; Files=2, Tests=56. Default source/control and delivered-state readers, mdBook/current copied-source, claims, staged scripts/check_doctrines.sh and normal hooks gate commit. No product/source/native contract, Knowledge Map allowance, resource ceiling or semantic/private qualification changes.
 
-
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.86`
   Status: `done`
   Goal: `Complete the due safe artifact cleanup and dispose only authenticated regular cache-test copies.`
@@ -7159,7 +7161,6 @@ For FSMGen, the analogs are:
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 2026-10-17T22:35:10.484144 identifies43a40fbd04549b264b7db615777ad2a3b8990a95; full prior text and actual UTC establish the due interval. Complete b919b7 source/output/native snapshots authenticate the fixed private copies; generic suffix/age alone gives no removal authority.
   - [x] **ADDRESSED (verified)** — Actual whole-byte/mode/node/membership qualification and immediate re-admission authorize only fixed regular copies, with per-target completed removal and full dated residue retained. Actual saved producer recovery passes with those copies absent. Primary/spent/book/Git/symlink and ordinary artifact observations conserve; genuine library and typed saved-record corruptions refuse. Latest-only record and runnable book route align.
   - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=61 in focused task/claim/public-cache tests. Final default saved cleanup and post-disposal producer readers, current book/source, claims, staged scripts/check_doctrines.sh and normal hooks gate commit. All original audit/native/compiler/semantic evidence and resource/storage/Knowledge Map ceilings remain; no original cohort or fresh whole-source checkout runs.
-
 
 ## Version-Retrievable Historical Views
 
