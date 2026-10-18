@@ -434,6 +434,15 @@ unretained residue; overlapping products are never added together. Replay:
 python3 -B docs/audits/task-terminal-rollover-20261011/verify.py
 ```
 
+The completed static-inventory subtree also retains exact full-source
+provenance and registry-owner checks. Reconstruct its original fields and
+actual native controls, then inspect closed delivery and measured budgets:
+
+```sh
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/inventory-task-rollover-20261019/rollover.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/inventory-task-rollover-20261019/delivery.py
+```
+
 Ownership records belong inside the first `## Task Tree` section and their
 parent child list. Matching IDs elsewhere in a file does not establish live
 registration. Completed semantic reset-question, reset-grammar and historical
