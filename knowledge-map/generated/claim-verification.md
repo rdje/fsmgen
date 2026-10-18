@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **55** uniquely owned question entries.
+> **4** facts · **56** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -56,6 +56,7 @@
 - q="which outcomes may close a claim inventory candidate?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="which reference-map measurements are historical activation context?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="why are AXI selector probes host-memory percentages and report bytes reviewed history?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="why did the factory-only corrected prerequisite replay still fail?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="why did the original prerequisite replay reject the canonical factory?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="why do schedule reports carry explicit transaction ownership?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="why do total fibers live fibers and execution types use separate evidence?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
@@ -86,7 +87,7 @@ _Claim records use one finite manifest-addressed registry set_
 
 ### claim-verification-record-enforcement
 
-_Claim records bind exact blocks to three structurally distinct legs_
+_Exact claim blocks bind three distinct structural evidence legs_
 
 - **date:** 2026-10-18 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-record-enforcement.md`](../../docs/knowledge/claim-verification-record-enforcement.md)

@@ -6,10 +6,10 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3`
-- next_action: From the committed corrected intake, activate .2.2.3 and stage only its task/resume state. Run each fixed corrected cohort once in order, retaining complete native custody and stopping at the first unexpected result. Preserve the failed first intake.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.2`
+- next_action: Inventory complete nested historical runtime file/programme/source and default/current input boundaries, including dated repair reconstructions. Qualify a whole source-bound replay before preparing any new intake. Both failed prerequisite slots and all later unused slots remain untouched.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
-- in_flight_background: None; the first cohort is terminal native1 and its complete result is retained.
+- in_flight_background: None; corrected prerequisite native1 and its complete result/receipt are retained. Seven later corrected slots remain unused.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
   Knowledge Map rollover debt forbids allowance growth; preserve all facts/questions. No decision or authentication is pending.
   Historical startup/parent qualification and full CI/push remain gated; Push whenever useful is explicitly authorized by user steering on 2026-10-11; required HIAL/full-CI qualifications still gate it. Visual mdBook QA remains pending.

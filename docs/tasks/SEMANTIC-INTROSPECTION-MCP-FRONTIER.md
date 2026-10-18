@@ -5844,12 +5844,40 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — knowledge-map: OK; complete original contracts, old programmes and first native failures conserve. Corrected inert controls pass, sampler matches the unchanged recorder, and six remaining commands retain. Fresh book/current copied sources, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commit. No full semantic/current/native or independent gate release is claimed.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Accept a corrected complete intake and restore committed parent recovery.`
   Acceptance: `After committed source-epoch repair and closed fresh intake, execute only the genuinely required corrected complete semantic/current cohorts, once per admitted slot, with full unchanged source/input/command/stream/resource custody and stop on first unexpected result. Preserve the original failed intake and every original contract/first failure/repair/native/private limit. Complete focused/current/book/claim/staged/normal delivery and commit before original .3 committed-only recovery or parent closure.`
+  Verification: `Corrected prerequisite cohort terminal native1/expected0 is fully retained. The factory source view reaches the later cause-container repaired_preflight comparison, which reads live development-programme inputs when reconstructing a dated three-file repair. No guard trip or later cohort execution; source-role scope requires complete diagnosis before another intake. First corrected failure is not promoted.`
+  Commit: `pending`
+
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.1`
+  Status: `done`
+  Goal: `Retain the complete first corrected prerequisite refusal and diagnose its exact input epoch.`
+  Acceptance: `Authenticate the committed corrected recorder, full source/index/tool/resource/stream and historical-read/restoration receipt. Keep actual1/expected0 failed, stop all seven later slots and preserve the first intake. Reproduce the exact old repaired_preflight changed-input predicate inertly from complete source/metadata/development records; identify all changed members and dated intended comparison without semantic recapture. Commit the terminal checkpoint and root cause before any repair.`
+  Verification: `Complete corrected prerequisite actual1/expected0, unchanged qualified source/index/tool custody, full native streams/resource observations and historical-read/restoration receipt authenticate. No guard trip occurs; seven later corrected slots and all first-intake slots conserve. The successful consumer refuses this failed record; genuine status/source/observation/stream/index/tool/restoration/borrowed-read mutations reject. Exact unchanged repaired_preflight changed-set AST executes inertly against all forty dated development inputs: historical qualification differs from first development in only the three declared repair files; the captured factory-only view additionally differs in t/python/test_record_value_current_publication.py. That test legitimately advanced with the factory in a0561d9. Restoring only its dated input satisfies this predicate; omitted/altered retained input or missing declared repair refuses. This isolates an incomplete runtime source view without semantic replay or repair qualification. Complete first/current source sets, exact test diff, Git history, source-membership distinctions and hostile results retain in corrected-failed-prerequisites-diagnosis.json.gz. Selected programme bytes join the native source snapshot; other qualified inputs are explicitly fixed-Git reconstruction. Both failed intakes remain failed. Re-derivation is exact full dated-input/predicate/source/custody reconstruction; falsification is genuine separating input and custody interventions; durability is committed full native/source/diagnosis programmes and records. The Knowledge Map adds the runtime-input question through non-growing fact-preserving compaction, without allowance growth. Book/task/resume/claim/staged/normal delivery gate checkpoint closure; complete runtime source-role repair remains next and no later cohort executes.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.1: retain corrected runtime input refusal`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S original_join pins a0561d999b0354ed261289f66657bf8704c75ec9 legitimate publication-test advancement. Native stderr stops at cause-container repaired_preflight changed-set equality. Exact unchanged AST and complete forty-member development image independently separate the dated three-file repair from the captured view with its additional advanced test; the factory import-only inventory missed this runtime programme input.
+  - [x] **ADDRESSED (verified)** — verify_corrected_failed.py authenticates the complete terminal native1 checkpoint, historical source/restoration and all custody, then reproduces the exact predicate without semantic delegation. Saved diagnosis and genuine input/custody controls pass. Both failed records remain failures and every later corrected slot stays unused; complete runtime source-role repair is explicitly owned in .2.
+  - [x] **NO REGRESSION** — knowledge-map: OK; both immutable failed-intake readers and controls pass. Whole original contracts and all sealed programmes/source-model/native/private/first-failure constraints conserve. Book/current source views, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate checkpoint commit. No semantic acceptance or HIAL/full-CI/push/visual qualification is claimed.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.2`
+  Status: `pending`
+  Goal: `Inventory complete dated runtime inputs before choosing a historical replay boundary.`
+  Acceptance: `After the terminal corrected failure checkpoint commits, enumerate all nested historical reader file/input/source/default/current boundaries, including development repair reconstructions. Preserve every original guard, exact inputs and native/private/control/first-failure premise. Select a complete source-bound dated replay with separately current obligations; qualify genuine whole-source/role/current-promotion/omission controls before preparing another exclusive intake. Do not chase one failing guard at a time or alter sealed evidence. If original meaning requires a decision beyond authority, record its precise blocker.`
   Verification: `pending`
   Commit: `pending`
 
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3`
+  Status: `pending`
+  Goal: `Prepare and accept a fully bounded successor to the failed corrected intake.`
+  Acceptance: `Only after complete runtime source-role repair qualifies and commits, prepare a new exclusive fixed intake with all original contracts and every spent marker preserved. Commit preparation before actual complete semantic/current execution; stop at first unexpected result and retain full custody. Do not reuse either failed prerequisite slot or narrow original acceptance. Commit full successful delivery before parent recovery.`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.3`
   Status: `pending`

@@ -1128,7 +1128,7 @@ no repository file changes. Run the controls without executing semantic readers:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/historical_factory_preflight.py
 ```
 
-The corrected intake is prepared with all original obligations and a fresh
+The corrected intake was prepared with all original obligations and a fresh
 exclusive namespace. Its inert source, command, role, receipt, resource, book and
 stop controls pass. The first preparation failure is retained with its repair.
 Inspect the closed intake without running acceptance:
@@ -1137,6 +1137,16 @@ Inspect the closed intake without running acceptance:
 python3 -B docs/audits/original-join-parent-acceptance-20261018/corrected_intake.py
 ```
 
-Complete semantic replay remains pending. Only the prerequisite and association
-cohorts receive historical factory bytes; current publication still uses the live
-factory and needs its separate check. The original failed intake remains failed.
+The corrected prerequisite cohort failed at a later dated repair comparison.
+The factory-only view omitted a runtime programme input: the publication test
+also advanced with legitimate publication. The exact unchanged predicate accepts
+its complete dated inputs and rejects the captured view. Inspect both failed
+custody and the inert diagnosis without repeating a semantic replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_corrected_failed.py
+```
+
+Both intakes remain failed. All later corrected cohorts remain unused. Complete
+runtime source-role inventory and repair must precede any new intake; current
+publication and every original native/private and independent gate stay separate.
