@@ -6061,9 +6061,37 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful; Files=2, Tests=61 in guarded task-tree/claim-inventory tests. Source-only generation and saved recovery pass; staged scripts/check_doctrines.sh, current copied book/source and normal hooks gate commit. No original semantic cohort, producer, new checkout or spent-cache mutation occurs; resource, storage and Knowledge Map ceilings preserve.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Close transitive default execution, data and guarded publication effects.`
   Acceptance: `After exact entry dispatch commits, resolve all reachable imported/dynamic function and data/subprocess paths with explicit fixed source/data premises, full site coverage and guarded branch exclusions. Join actual unchanged public-cache production. Every unresolved role stays an owned gap blocking custody and intake; do not infer behavior from candidate totals or command strings in saved records. Preserve original commands, every failed capture and native/private/resource boundary.`
+  Verification: `Fixed selected192c9d check_record_value_publication.historical executes the retained class/frame verify.py with a non-main namespace; that source initializes retention, model and book through its own module wrapper. Thus ordinary import closure cannot close the direct dynamic edges qualified by b8be20ac3. The complete original Goal/Acceptance retain; source expansion, reachable effects and independent allocation/cache join now have ordered child ownership before implementation. No historical reader, producer, new fixture or semantic cohort runs. Normal task/book-source/claim and staged/hook gates qualify this scope split.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2: separate transitive source expansion and effects`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 'def historical():' identifies ec5fc5a35a478027621292234fc871fb213a1071. The fixed factory historical() and retained verify.py module initializers expose nested executable source expansion beyond ordinary imports; dispatch edges alone do not establish its effects.
+  - [x] **ADDRESSED (verified)** — The unchanged parent contract now has ordered owners for complete fixed/data-backed executable expansion, reachable default effects and independent role allocation/cache evidence. Every source-language, native/private, first-failure and unused-slot boundary remains; no historical module executes in this split.
+  - [x] **NO REGRESSION** — All tests successful; Files=1, Tests=48 in the guarded task-tree regression. Current book/source views, exact claim inventory, staged scripts/check_doctrines.sh and normal hooks gate the task-only ownership change; enforcement ceilings and original semantic commands remain unchanged.
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1`
+  Status: `pending`
+  Goal: `Expand fixed imported and data-backed executable source namespaces.`
+  Acceptance: `Start from the committed default-dispatch sources and direct dynamic edges. Resolve transitive normal imports and source-defined module wrappers, fixed namespace modes, callable namespace exports, executable source embedded in saved records and input-only compilation roles. Bind complete expanded bytes/sites to named fixed Git/data premises without executing historical code. Preserve unresolved expansions explicitly; none can grant effect or custody qualification. Retain every original contract, scope and failed/spent/unused slot, then commit the closed source-expansion evidence before effect classification.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.2`
+  Status: `pending`
+  Goal: `Resolve reachable default function, data and subprocess effects.`
+  Acceptance: `Only after complete source expansion commits, assign every default-reachable call/data/import/dynamic boundary and conditional publication/temporary role from explicit source and fixed data premises. Distinguish stored commands and validated code from executed readers, and prove branch exclusions. Resolve the nested context proof-presence write guard; unknown roles block qualification. Original commands and meaning retain, no semantic cohort or original producer runs; whole before/after runtime custody remains a separate child of the parent contract.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.3`
+  Status: `pending`
+  Goal: `Qualify the complete default-role allocation and public-cache join.`
+  Acceptance: `After source and effect proofs commit, independently reconstruct complete source/site/member/branch/role allocation for both original default graphs and join actual unchanged public cache producer evidence. Genuine omitted source/call/role, wrong dynamic namespace/data, hidden write, nondefault branch and future-progress controls must refuse. Publish shared language/source-model premises and every missing evidence leg honestly. Commit book/task/claims/staged/normal delivery before typed source/output custody can begin.`
   Verification: `pending`
   Commit: `pending`
 
