@@ -1293,6 +1293,18 @@ retain. Inspect that resource refusal without rerunning the producer:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_runtime_inventory_failed.py
 ```
 
-The allocation phase is unmeasured. Bounded-memory repair must preserve every
-source and candidate site before the inventory can qualify. This failed attempt
-supplies no completed inventory, execution-role decision or runtime permission.
+The first process allocation phase remains unmeasured. A separate diagnostic
+completes the source census and initial comparison, then stops during repeated
+whole-inventory encoding inside corruption controls. Bounded structural
+comparison, branch copies and streamed publication complete the same source
+census under the unchanged guard. Inspect full source conservation, diagnostic
+events, native results and genuine corruption controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_inventory_memory.py
+```
+
+This comparison qualifies the memory repair. Committed inventory recovery and
+runtime execution/data roles remain separate obligations. Neither the failed
+attempt nor its repair grants runtime permission or expanded dynamic-code
+completeness.
