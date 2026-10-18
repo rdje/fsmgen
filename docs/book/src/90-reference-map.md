@@ -1249,6 +1249,18 @@ git --no-replace-objects worktree add --detach --relative-paths --lock --reason 
 mkdir -p .artifacts/original-join-selected-checkout-20261018/.artifacts/{build,cache,logs,tmp}
 ```
 
-Then run the inspections above. Every earlier checkout, failed capture and
-unused intake remains retained. Physical preparation does not admit a fresh
-intake or supply semantic, original-native/private, HIAL or full-CI qualification.
+Then run the inspections above. The fresh closed intake binds every unchanged
+original command and contract to this historical checkout or primary source.
+Inspect its complete roles and immutable preparation evidence without executing
+a semantic reader:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/selected_intake.py
+```
+
+Its inert controls check source, commands, cwd, contracts, physical members,
+logical index, resource observations, copied book and every prior-stop position.
+Prospective phase/index values are explicitly preparation models. Real execution
+requires the committed preparation and uses fresh exclusive capture paths.
+Every earlier checkout, failed capture and unused slot retains. Preparation
+supplies no semantic, original-native/private, HIAL or full-CI qualification.

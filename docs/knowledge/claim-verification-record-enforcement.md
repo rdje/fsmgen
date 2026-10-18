@@ -23,22 +23,22 @@ evidence: >-
 reverify: >-
   scripts/check_claim_verification.pl && prove -Iperl
   t/1636-claim-verification-doctrine.t && scripts/run_with_ram_guard.sh -- bash -c
-  'for reader in verify_failed verify_corrected_failed verify_snapshot_failed selected_checkout selected_checkout_preflight selected_index_portability epoch_constraints; do python3 -B
+  'for reader in verify_failed verify_corrected_failed verify_snapshot_failed selected_checkout selected_checkout_preflight selected_index_portability selected_intake epoch_constraints; do python3 -B
   docs/audits/original-join-parent-acceptance-20261018/$reader.py || exit; done'
 ---
 
-`claim_registries.jsonl` bounds registry sets; `--registry` keeps
+`claim_registries.jsonl` bounds sets; `--registry` keeps
 single-file fixtures (`0094`). Blocks bind re-derive/falsify/durability
 evidence/owned gaps. Reject invalid bounds, unsafe/untracked paths,
 missing/duplicate markers and aliased legs. Truth/oracle independence need review (`0074`). `0104` adopts
 `CLAIM-VERIFICATION-TEMPLATE-REVIEW.2` rules; checker unchanged.
 
 Historical defaults read live inputs. `container_common.public` (`064cf9`)
-rejects `a0561d9` factory advancement; twelve helpers retain. Factory-only replay
+rejects factory drift `a0561d9`; twelve helpers retain. Factory-only replay
 rejects its publication-test update in `repaired_preflight`. Whole `1a40a1d`
 rejects consumer `model.inputs`: knowledge/decision baseline `8b9a726` has
-later-edited cards. Empty locality dirs break the after observer; a separate
-full-source check passes. Failures/gap retain. Its
+edited cards. Empty locality dirs break the after observer; a separate
+full-source passes. Failures/gap retain. Its
 `epoch_constraints.py` selects `192c9d` from whole source/formal/import/runtime/
-canonical constraints; later epochs refuse. Physical custody passes; semantic admission
+canonical constraints; later epochs refuse. Physical/intake custody passes; semantic admission
 pending; current checks separate; native/private/HIAL open.
