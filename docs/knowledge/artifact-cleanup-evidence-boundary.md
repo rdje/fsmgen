@@ -5,7 +5,7 @@ answers:
   - "how does daily artifact cleanup preserve compiler and native evidence?"
   - "which dated cleanup removed the obsolete profile-preparation book?"
   - "how do artifact cleanup receipts distinguish mutable captures and immutable parents?"
-date: 2026-10-18
+date: 2026-10-19
 status: current
 tags: [artifacts, cleanup, locality, evidence, continuity]
 evidence: >-
@@ -15,7 +15,7 @@ evidence: >-
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md;
   docs/book/src/10-errors-strict-mode-and-troubleshooting.md
 reverify: >-
-  python3 -B docs/audits/artifact-cleanup-daily-20261018/verify.py
+  python3 -B docs/audits/artifact-cleanup-daily-20261019/verify.py
 ---
 
 Latest-only date/summary: docs/ARTIFACT_CLEANUP.md. Own fixed candidates before

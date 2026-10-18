@@ -571,6 +571,16 @@ A redundant render may be removed when its complete regular-file membership and 
 Compare copied source-view files too: chapter HTML can match while the resume pointer or task index differs. Guard content and stable node identity while allowing access-time updates caused by reading. A sweep with no proven disposable candidate retains all artifacts and records that result.
 `docs/ARTIFACT_CLEANUP.md` records the latest repository-owned sweep. Rust sweeps inspect release, incremental and dependency directories for `.bin` and `.log` files; retained evidence is recorded separately from disposable candidates.
 
+Private cache-test copies may also be disposed of after their complete
+source/output snapshots and native receipts are committed, every regular node
+matches those records, and saved verification succeeds without the copies.
+Preserve intentional symlink controls and all original native evidence. Inspect
+the dated cleanup without repeating deletion:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-cleanup-daily-20261019/verify.py
+```
+
 The repository RAM guard preserves standard input for the command it supervises.
 Pipes, input files and interpreter programs supplied on stdin therefore work:
 

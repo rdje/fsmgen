@@ -1,3 +1,3 @@
 # Latest artifact cleanup
 
-2026-10-17T22:35:10.484144+00:00 — No removal: render source views differ; both books and native evidence retained. Root and Rust log/bin locations censused with no disposable candidates.
+2026-10-18T22:43:20.243557+00:00 — Removed authenticated regular private cache-test copies; intentional symlink control, books, primary/spent caches and native/compiler/audit evidence retained. Root/Rust and stray-artifact census complete.
