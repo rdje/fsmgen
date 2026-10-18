@@ -1082,3 +1082,15 @@ Neither mode recaptures original executions or supplies native object identity.
 <div id="knowledge-map-architecture"></div>
 
 {{#include ../../../knowledge-map/KNOWLEDGE_MAP_ARCHITECTURE.md}}
+
+Original joined-parent acceptance remains open. Its closed preparation inventory
+preserves every original obligation and separates complete saved semantic readers
+from current publication/book checks. Inspect it without executing acceptance:
+
+```bash
+python3 -B docs/audits/original-join-parent-acceptance-20261018/prepare.py --current
+```
+
+Preparation grants no fresh original native/private assurance or full-alias,
+visual, HIAL, full-CI or push qualification. Complete execution and committed
+recovery remain required before parent closure.

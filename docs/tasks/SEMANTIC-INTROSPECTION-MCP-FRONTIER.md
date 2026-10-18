@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `Embedding And Public APIs / AI integration`
 - Created: `2026-06-14`
-- Last updated: `2026-10-17`
+- Last updated: `2026-10-18`
 - Owner: repo-local workflow
 
 ## Goal
@@ -5736,9 +5736,36 @@ For FSMGen, the analogs are:
   Finding P6 resolution: `The first normal driver returns1 at its whitespace assertion before git commit and before writing its normal receipt. Its first whitespace command stream/status was not saved; that missing leg is explicit. A separately retained same-index recheck returns native2 for a new blank line at EOF in the maintained original-join helper. The first precheck and programme are retained under original-join-publication-closeout-20261017. Trim only the redundant final newline, prove exact AST and compiled-code correspondence with a genuinely changed constant falsifier, then qualify fresh current focused checks, immutable v2 default recovery and final doctrines. Preserve the v1/v2 publication namespace and source epochs untouched; source/byte-count identity intentionally advances through a named closeout overlay, not a retroactive native-before claim. No whitespace exception is added. Exact before/after bodies match the qualified v2 source and differ by one final LF; AST including locations and compiled programme bytes match in the qualified interpreter, while a real constant change differs. Fresh closeout focused native0 passes the current publication tests, and frozen native0 reconstructs the unchanged v2 publication. Current static closure differs only by this explicit source/byte-count identity. Final seven-surface size/inventory/staged checks and normal hooks remain mandatory. The closeout normal driver must persist precheck output before asserting its result.`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Accept the complete unchanged original joined meanings and containing family.`
   Acceptance: `After committed canonical publication, qualify every unchanged original join/container and completed descendant Goal/Acceptance with whole source/context/cause/coordinate/consumer associations, complete genuine native controls and all first failures/repairs. Preserve current canonical facts/questions/probes and every original source-model/native/private uncertainty, including dated execution roles. Complete source/current/query/capacity/book/native/focused/claim/staged/normal and committed-only recovery must pass before closing only this leaf, its acceptance container, original join and containing consumer/cause family. Full alias downstream and broader product/semantic/cold/permanent/host-native/private/visual/HIAL/full-CI/push owners retain.`
+  Verification: `pending`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.1`
+  Status: `done`
+  Goal: `Recover complete original acceptance obligations and select bounded validation cohorts.`
+  Acceptance: `Preserve the original leaf and all containing Goal/Acceptance contracts. Bind the complete published original family and every completed descendant to exact committed source, proof/native/control/failure/repair roles. Map complete source/context/cause/coordinate/consumer associations, current canonical/query/capacity/book and unchanged helper/closeout inputs to executable validation cohorts. Separate frozen historical replay from current checks and committed recovery; forbid source/native/private/full-alias/HIAL promotions. Commit a reviewable exact inventory and plan with inert omission/source/scope controls before execution.`
+  Verification: `Complete fixed publication v2 proof supplies 224 original contracts: the 223-node family plus its separate full-alias successor. Every original current Goal/Acceptance retains. Exact disjoint ancestor partition has context1/cause202/consumer12/join8, covering the full original family without promoting the separate alias. Nine complete source anchors bind committed prerequisite/association/publication proofs, manifests and closeout correspondence; all fifteen current project modules match the committed closeout closure. Eight fixed cohorts name complete saved prerequisite readers, independent association, frozen publication recovery, current canonical/query/capacity, focused permanent controls and actual book/source-view checks. Inert saved/current inventory and nine hostile controls pass: omission, duplication, original contract, self-consistent altered source, missing source, assurance promotion, boolean/number scope alias, command substitution and live Goal narrowing. No acceptance cohort or original native producer executes. Re-derivation is whole fixed contracts/source and exact current obligation/module correspondence; falsification is genuine changed/missing/borrowed/scope/kind/command candidates; durability is the tracked generator, complete compressed original contracts/source/task snapshot and Git. This inventory is an execution plan and closed source premise, not semantic signoff or a universal natural-language proof. All original source-model/shared-premise/native/private uncertainty, dated execution roles and first failures/repairs remain required in .2. Parent/full-alias/HIAL/full-CI/push/visual closure remains separate. Current book/task/resume, Knowledge Map, measured task allowance and final staged/normal/source-view gates qualify preparation only.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.1: bind complete original acceptance inventory`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Original acceptance preparation: git log -S for the complete original joined-meaning Goal locates 86cb3b82c92469d736cdc8445ac0cf3101d7448d. Publication is complete, but its frozen proof explicitly leaves original parent acceptance open. The complete published family and unchanged containing contracts, not a partial current success, define this remaining obligation.
+  - [x] **ADDRESSED (verified)** — Original acceptance preparation binds every original contract, complete source/proof/native/failure-role premises and the current closeout module closure. Disjoint original ancestry maps to complete existing semantic readers and separately named current/book cohorts. Original/current Goal narrowing, omission/duplication, altered/missing source, command and typed assurance promotions reject inertly. No acceptance cohort runs and no parent is closed.
+  - [x] **NO REGRESSION** — Original acceptance preparation: saved/current inventory and all hostile controls pass without original native execution. knowledge-map: OK; complete original Goal/Acceptance and current module identities conserve. Staged scripts/check_doctrines.sh, book/source-view qualification and normal hooks gate only this preparation; complete execution and committed recovery remain separately pending.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2`
+  Status: `pending`
+  Goal: `Execute complete original joined-meaning acceptance and current delivery.`
+  Acceptance: `After committed preparation, qualify every original mapped contract and full saved native/source/model/control/failure/repair association without narrowing. Execute only the fixed bounded validation cohorts, retaining complete source/input/tool/command/status/stream custody and first unexpected failures. Current canonical facts/questions/probes, capacity, helper closeout identity, book/source views and focused/claim/staged/normal delivery must qualify; preserve dated execution/private/native limits. Commit verified evidence before committed-only recovery or parent closure.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.3`
+  Status: `pending`
+  Goal: `Qualify committed-only recovery and close only the original joined family.`
+  Acceptance: `After .2 commits, independently recover exact committed acceptance from complete saved source/input/native/control/failure/repair evidence. Verify current canonical/source/query/capacity/book and every original unchanged Goal/Acceptance plus genuine omission/source/scope/future-progress refusal controls. Close this acceptance container, original join and containing consumer/cause family only after all mapped contracts pass. Preserve full alias, product/semantic/cold/permanent/host-native/private/visual/HIAL/full-CI/push owners and commit clean continuity before their next frontier.`
   Verification: `pending`
   Commit: `pending`
 
