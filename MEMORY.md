@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2` (pending failed-checkpoint delivery)
-- next_action: After the failed checkpoint commits cleanly, trace complete historical/default/current dependencies and qualify a bounded source-epoch repair. Keep the first prerequisites intake spent and failed; do not run later cohorts or weaken any original source guard.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2` (pending source-role inventory delivery)
+- next_action: After inventory commits cleanly, implement and inertly qualify only its closed historical-source replay adapter. Read historical-factory-role-inventory.json.gz first; preserve all original guards/current obligations and execute no acceptance cohort before committed preparation.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; the first cohort is terminal native1 and its complete result is retained.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

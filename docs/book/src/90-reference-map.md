@@ -1109,3 +1109,14 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 A bounded historical/current source-epoch repair is owned before further
 acceptance. Every original guard, native/private limit and independent HIAL,
 full-CI, push and visual qualification remains required.
+
+The source-role review binds four historical guards to identical factory bytes.
+Their complete project import closures agree; only the factory differs today.
+The bounded proposal supplies that historical source only to historical semantic
+replays, preserving separately current publication checks. Inspect the inventory:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/epoch_inventory.py
+```
+
+The adapter, complete semantic replay and corrected intake remain unqualified.

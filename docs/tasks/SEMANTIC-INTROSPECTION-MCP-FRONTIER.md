@@ -5799,11 +5799,39 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Prepare a bounded historical source-epoch repair without weakening original contracts.`
   Acceptance: `After .1 commits cleanly, trace the complete transitive historical/default/current reader roles and all original Goal/Acceptance constraints. Select a fully source-bound replay of the correct historical namespaces with separately qualified current publication. Preserve all old guards, complete source/model/control/failure premises and dated/native/private assumptions; change no sealed source, old first capture or failed role. Prove exact source/namespace/context and current-role/omission/promotion refusals before committing any corrected fresh intake. If the full original contract cannot be preserved, record the precise decision blocker rather than narrowing it.`
   Verification: `pending`
   Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.1`
+  Status: `done`
+  Goal: `Inventory complete historical/default/current source roles and select an exact replay boundary.`
+  Acceptance: `Trace every nested historical factory guard and full reader/import/source/native/control/contract dependency from the committed failed intake. Bind each expected source revision and exact factory/helper/module identity, all reads requiring historical inputs and separately current obligations. Preserve original Goal/Acceptance and guards. Record a bounded exact source-image proposal with explicit unresolved legs; qualify only read-only/inert inventory and commit before implementation or cohort execution.`
+  Verification: `Read-only complete source-role inventory binds cause-container, consumer-parent, prerequisite and association default guards, their exact plans/integration declarations/source functions and original complete contracts. Their four source revisions all select identical factory bytes; all twelve retained helpers match live source in every role. Independently derived full static project import closure has fourteen modules, identical across all four revisions; factory alone differs from live source. The proposal therefore names an exact read-only historical factory view only in prerequisites/association, separately frozen publication recovery and unchanged live current/focused/book/source-view obligations. No old guard or source is changed. Saved/current source-role replay plus seven hostile missing-role/wrong-factory/missing-or-changed-import/current-role-promotion/missing-leg/narrowed-contract controls pass. Re-derivation is actual fixed Git source/guard/import and current byte comparison; falsification is complete self-consistent changed/omitted/borrowed-role/contract candidates; durability is tracked inventory/source bodies/edges/guard conditions and Git. Explicit missing legs remain: no replay adapter, no successful complete semantics under that source view and no corrected fresh intake. The original failed cohort and all source-model/datetime/native/private/full-alias/HIAL/full-CI/push/visual constraints retain. Book/task/resume and measured task allowance are synchronized; Knowledge Map, final staged/normal and copied source-view checks qualify inventory only. No acceptance cohort or original producer executes.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.1: bind historical reader source roles`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Source-role inventory: git log -S for import record_value_original_join_fact locates legitimate a0561d999b0354ed261289f66657bf8704c75ec9 publication; the committed failed c40 attempt and exact-source guard diagnosis identify the resulting source-role refusal. Cause, consumer, prerequisite and association all read the live factory unconditionally against fixed historical bytes; legitimate a0561d9 publication advanced only that factory within their complete project import closure. The intended guards retain; the caller selected the wrong source role for historical replay.
+  - [x] **ADDRESSED (verified)** — Source-role inventory binds all four exact guards/revisions, twelve retained source interfaces per role and the whole identical historical import graph. Only the factory differs today. A closed historical-source proposal preserves default semantics and separately live publication, while explicit adapter/execution/intake gaps and every original contract stay open. Altered/missing/source/role/contract candidates reject without executing a cohort.
+  - [x] **NO REGRESSION** — Source-role inventory: saved/current derivation and all hostile controls pass; knowledge-map: OK. Whole original Goal/Acceptance and every retained helper source conserve; first failed records remain immutable. Final staged doctrines, book/source views and normal hooks qualify this read-only preparation only, with no semantic/native acceptance or independent gate release.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2`
+  Status: `pending`
+  Goal: `Implement and qualify an exact historical-source replay adapter.`
+  Acceptance: `After the complete source-role inventory commits, implement only its closed read-only historical namespace with exact complete source/import/guard joins and independently qualified current publication. Change no sealed source, first record or original guard. Inert wrong/missing/borrowed/current-role/promotion controls and full original contract correspondence must qualify before any corrected intake is admitted. No acceptance cohort or original producer executes in this preparation.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.3`
+  Status: `pending`
+  Goal: `Commit a closed corrected intake for complete historical and current acceptance.`
+  Acceptance: `After qualified historical replay preparation, bind its exact code/data and unchanged semantic/current reader commands in a fresh exclusive intake. Preserve every spent marker, failed role, original source/model/native/control/contract premise and current publication obligation. Qualify inert complete admission/stop/custody and saved/current scope controls; commit final book/knowledge/task/normal delivery before parent .2.2.3 actual execution.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3`
   Status: `pending`
