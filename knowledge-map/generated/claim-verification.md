@@ -1,10 +1,11 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **58** uniquely owned question entries.
+> **4** facts · **59** uniquely owned question entries.
 
 ## Questions → facts
 
+- q="are cache types enforced?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="can a default saved reader still depend on live source?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="can the claim checker prove semantic truth or oracle independence?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="does claim registry sharding create separate claim namespaces?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
@@ -89,7 +90,7 @@ _Claim records use one finite manifest-addressed registry set_
 
 ### claim-verification-record-enforcement
 
-_Exact claim blocks bind three structural evidence legs_
+_Claim evidence legs_
 
-- **date:** 2026-10-18 · **status:** current
+- **date:** 2026-10-19 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-record-enforcement.md`](../../docs/knowledge/claim-verification-record-enforcement.md)

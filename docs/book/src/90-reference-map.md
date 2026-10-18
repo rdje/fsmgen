@@ -1315,5 +1315,21 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 ```
 
 This static candidate inventory leaves expanded dynamic code and actual runtime
-execution/data roles unresolved. Qualifying the unchanged public cache producer
-is next. Neither the failed attempt nor its repair grants runtime permission.
+execution/data roles unresolved. The unchanged public cache producer now has a complete
+fixed-projection fixture matrix and exact derived-output evidence:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_runtime_cache.py
+```
+
+Cold output matches the retained selected cache. Warm/direct queries, malformed
+and stale rows, fact owners, sources, member/byte changes and locality controls
+retain complete native results and before/after custody. Primary and spent
+cache data are preserved. Saved qualification repeats no producer or semantic
+cohort and requires no generated source fixture.
+
+The native consumer accepts equivalent noncanonical schema kinds, extra header
+fields and file modes; no-cache queries can leave invalid cache data untouched.
+Strict canonical output evidence rejects those states. Complete default
+execution roles and the closed source/output custody contract remain next.
+Neither the failed attempt nor these preparation results grant runtime permission.
