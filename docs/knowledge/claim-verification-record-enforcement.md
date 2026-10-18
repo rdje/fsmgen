@@ -12,6 +12,7 @@ answers:
   - "why did the original prerequisite replay reject the canonical factory?"
   - "can a default saved reader still depend on live source?"
   - "why did the factory-only corrected prerequisite replay still fail?"
+  - "why did the whole historical checkout reject canonical source bytes?"
 date: 2026-10-18
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
@@ -22,20 +23,23 @@ evidence: >-
 reverify: >-
   scripts/check_claim_verification.pl && prove -Iperl
   t/1636-claim-verification-doctrine.t && scripts/run_with_ram_guard.sh -- bash -c
-  'for reader in verify_failed verify_corrected_failed historical_checkout; do python3 -B
+  'for reader in verify_failed verify_corrected_failed verify_snapshot_failed snapshot_postrun_sources; do python3 -B
   docs/audits/original-join-parent-acceptance-20261018/$reader.py || exit; done'
 ---
 
-`doctrine/claim_verification/claim_registries.jsonl` selects bounded registries;
-explicit `--registry` retains single-file fixtures (`0094`). Exact blocks bind
-re-derive/falsify/durability evidence or owned gaps. Invalid bounds, unsafe or
-untracked paths, missing/duplicate markers and identical evidence/path legs
-reject. Truth and conceptual oracle independence need review (`0074`). `0104`
-adopts `CLAIM-VERIFICATION-TEMPLATE-REVIEW.2` rules without checker changes.
+`claim_registries.jsonl` (path above) bounds registry sets; `--registry` keeps
+explicit single-file fixtures (`0094`). Exact blocks bind re-derive/falsify/durability
+evidence or owned gaps. Reject invalid bounds, unsafe/untracked paths,
+missing/duplicate markers and identical evidence/path legs. Truth and conceptual
+oracle independence need review (`0074`). `0104` adopts
+`CLAIM-VERIFICATION-TEMPLATE-REVIEW.2` rules without checker changes.
 
-On 2026-10-18 the original prerequisite default rejects the live factory at
-`container_common.public` (`064cf9`); publication `a0561d9` advanced it.
-Twelve helpers match; old/current guards separate. The factory-only
-corrected view then rejects `repaired_preflight`: that commit also advanced the
-publication test. Both failures retain; full runtime source repair precedes later execution. A fixed whole checkout covers tracked inputs; current checks stay separate.
-Native/private/HIAL assurance stays open.
+Historical defaults read live inputs. At `container_common.public` (`064cf9`),
+`a0561d9` advanced the factory while twelve helpers retain; old/current guards
+separate. Factory-only replay next rejects that commit's publication-test update
+in `repaired_preflight`. Whole `1a40a1d` rejects consumer `model.inputs`:
+complete knowledge/decision baseline is `8b9a726`, with later-edited cards.
+The after observer rejects empty locality directories; a later full-source check
+passes. Failures and the original gap retain. Whole snapshots cover tracked
+inputs; select epochs from all original constraints. Current checks stay
+separate; native/private/HIAL assurance stays open.

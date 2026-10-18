@@ -1154,7 +1154,8 @@ before the legitimate publication change. Its physical files, tests, runtime
 inputs, modes, relative symlink endpoints, directories and index are independently
 verified. Every original contract retains. The original factory and dated repair
 guards pass inert controls against actual historical files, without replacing
-file reads. Inspect the whole prepared checkout without semantic replay:
+file reads. Before a reader launches, inspect the pristine checkout without
+semantic replay:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/historical_checkout.py
@@ -1185,3 +1186,29 @@ The first source-size refusal and complete census are retained; the measured
 input bound preserves every member. Actual semantic execution requires this
 preparation commit. Complete semantic acceptance and every native/private and
 independent gate remain open.
+
+The whole-checkout prerequisite replay also failed. Its consumer expects every
+knowledge and decision file from its declared canonical baseline; later edits to
+existing fact cards make the selected pre-publication checkout too recent.
+Inspect the complete failed custody and exact canonical predicate:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_snapshot_failed.py
+```
+
+The immediate after observer also rejected the artifact root and four empty
+locality directories created by the unchanged guard bootstrap. That observation
+gap is retained. A separate later full source check confirms every tracked byte,
+mode, symlink and index and no added runtime files. It does not replace the
+missing immediate-after qualification. Further replay requires a source epoch
+that satisfies all reader, runtime and canonical constraints together, with the
+locality output namespace declared. No later cohort ran and no failed intake is
+promoted.
+
+The current checkout has run a reader. Its separate later source check allows
+only the declared artifact root and four empty leaf directories, with no added
+files:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/snapshot_postrun_sources.py
+```

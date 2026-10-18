@@ -16,7 +16,7 @@
 
 ### memory-pointer-layer-a-content
 
-_MEMORY.md holds no decision or lane summaries — only current state and the frontier's own context_
+_MEMORY.md holds frontier state, never decision or lane summaries_
 
 - **date:** 2026-08-19 · **status:** current
 - **source and verification:** [`docs/knowledge/memory-pointer-layer-a-content.md`](../../docs/knowledge/memory-pointer-layer-a-content.md)
