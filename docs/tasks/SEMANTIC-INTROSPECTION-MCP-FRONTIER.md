@@ -6000,11 +6000,39 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Focused task-tree regression reports All tests successful; scripts/check_doctrines.sh and normal hooks must pass before this split commit. Existing book behavior stays accurate; native copied-source delivery is rebuilt for the changed canonical pointers. No ceiling, Knowledge Map allowance or original contract changes.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Derive and qualify the complete historical runtime-output contract.`
   Acceptance: `Use the committed native0/after-gap checkpoint and fixed whole source epoch. Enumerate both historical default readers, transitive source/import/data/subprocess and persistent/temporary filesystem write/read roles before selecting a closed source-versus-runtime contract. Independently qualify the actual unchanged cache producer and complete generated-source/cached/direct data, cold and warm or hostile cache states, full output membership, bounds, locality and typed role controls without any semantic cohort or original native/private producer. Unknown or unaccounted output roles remain explicit gaps and block fresh intake. Preserve every original contract, spent/unused slot and after-gap; sync canonical guidance and commit the qualified contract before physical preparation.`
   Verification: `pending`
   Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1`
+  Status: `pending`
+  Goal: `Inventory the complete fixed source and addressable I/O boundary population.`
+  Acceptance: `From the exact selected source graph and both unchanged historical commands, retain complete source/member/mode/body identity, formal/import/plan/data roles and every addressable file, directory, temporary, dynamic-execution and subprocess site. Enumerate delegated shell/Perl/tool boundaries and preserve unresolved execution/data classifications explicitly. Independent whole-input/site rederivation and genuine missing/changed/extra/role/type controls must reject. This census proves candidate completeness only, never actual runtime reachability or permission; no semantic cohort, new checkout or original native/private producer runs. Commit the inventory before producer qualification and default-role closure.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.2`
+  Status: `pending`
+  Goal: `Qualify the unchanged public cache producer independently of semantic cohorts.`
+  Acceptance: `After complete input/site inventory commits, use the exact fixed public producer and complete fixed generated projection in a private same-volume fixture. Qualify actual cold/warm, stale/invalid/member/owner/source/identity/type/locality and no-cache routes with full commands/statuses/streams/source/tool/before-after custody. Preserve first failures and complete producer outputs; compare independently to the retained selected cache and direct source data. No spent checkout/cache/semantic slot changes or original producer recapture. Commit the actual producer and closed derived-output evidence before declaring the default runtime contract.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3`
+  Status: `pending`
+  Goal: `Resolve default execution roles and qualify the complete source/output contract.`
+  Acceptance: `Join complete site inventory with actual producer evidence and both original default entrypoint/import/dynamic-reader call graphs. Distinguish executed, input-only, guarded publication and temporary roles with named source/data premises; unresolved roles block fresh intake. Qualify a closed typed bounded source-versus-output before/after schema, all member/body/index/locality/role/omission/future-progress controls and committed-only recovery. Do not infer runtime behavior from site totals or admit arbitrary artifacts. Preserve every old result/gap and original command/contract/native/private limit; book/task/claim/staged/normal delivery commits the contract before fresh physical preparation.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub write_query_cache at3b71cb0 and the retained native0/after-custody record distinguish an actual producer from the much larger fixed source-data graph. A source-site enumeration cannot establish default reachability; source inventory, actual producer qualification and role closure need independent signoff.
+  - [x] **ADDRESSED (verified)** — Three exact child owners retain the parent Goal/Acceptance and separate whole candidate inventory, unchanged producer evidence and default source/output contract. The frontier is inventory only; no semantic execution, new checkout or runtime-policy implementation occurs in this ownership split.
+  - [x] **NO REGRESSION** — scripts/check_doctrines.sh must report [doctrine] all doctrine checks passed and normal hooks must pass before commit. Canonical task integrity, exact source-view delivery and claim inventory gate the changed pointers/allowance; existing book behavior and every old captured source/contract/scope remain unchanged.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.2`
   Status: `pending`
