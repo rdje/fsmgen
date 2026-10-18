@@ -6009,11 +6009,40 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Inventory the complete fixed source and addressable I/O boundary population.`
   Acceptance: `From the exact selected source graph and both unchanged historical commands, retain complete source/member/mode/body identity, formal/import/plan/data roles and every addressable file, directory, temporary, dynamic-execution and subprocess site. Enumerate delegated shell/Perl/tool boundaries and preserve unresolved execution/data classifications explicitly. Independent whole-input/site rederivation and genuine missing/changed/extra/role/type controls must reject. This census proves candidate completeness only, never actual runtime reachability or permission; no semantic cohort, new checkout or original native/private producer runs. Commit the inventory before producer qualification and default-role closure.`
   Verification: `pending`
   Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.1`
+  Status: `done`
+  Goal: `Retain the first bounded static-inventory resource failure.`
+  Acceptance: `Authenticate native137/expected0 with the unchanged4096-MiB cutoff, exact full producer/input/command/stream/tool/index before/after custody and absence of completed inventory/control outputs. Preserve every original semantic/native0/after-gap and unused slot. Successful inventory qualification must refuse this result and genuine status/guard/source/tool/index/promotion controls must reject. Name the allocation-phase/attribution gap, own immediate bounded-memory repair and commit this terminal checkpoint without semantic replay, new checkout, source loss or cutoff increase.`
+  Verification: `The first complete-source static producer is stopped by the unchanged RAM guard with native137, empty stdout and a sampled descendant RSS above its4096-MiB cutoff. Complete exact producer/input/tool/command/stream/raw-index/logical-index before/after receipts retain in runtime-inventory-first-started/actual.json.gz. Source, tools, HEAD and all logical index entries conserve; no completed inventory or census controls exist. Separate verify_runtime_inventory_failed.py passes and rejects genuine status promotion/kind, changed cutoff, missing source, after-source gap, tool drift, logical-index drift and borrowed stdout. Resource controls retain full fixed Git membership/code projection independently of the incomplete producer. Re-derivation is full saved receipt/input/Git reconstruction; falsification is actual separating candidate intervention; durability is the complete saved programmes/products/task/Git. Allocation phase and root allocation cause remain unmeasured, owned immediately by .2; whole-corpus retention/copy/serialization is only a hypothesis. No source is omitted and no cutoff rises. Focused task/claim tests and fresh book/source/claim/staged/normal gates qualify the checkpoint; original semantic/native0/after-cache gap, all unused slots and broader gates retain.`
+  Commit: `this slice`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S 4096 identifies the unchanged guard at06c38fba703c53708875df14f501f1be3e94f891. Full first runtime_inventory.py native stderr identifies descendant RSS cutoff termination; the saved original producer and native137 result establish the resource-refusal locus. Allocation-phase attribution is explicitly missing and owned by .2, not inferred from hypotheses.
+  - [x] **ADDRESSED (verified)** — verify_runtime_inventory_failed.py reconstructs full first source/tool/index custody and accepts only the failed resource result; genuine status/kind/guard/source/after/tool/index/stdout corruptions refuse. Complete first programmes/streams and separate fixed input population retain. Only terminal failure recovery closes; bounded successful inventory remains open.
+  - [x] **NO REGRESSION** — Focused prove reports All tests successful; Files=2, Tests=56. mdBook build passes; current native copied-source and claim inventory plus scripts/check_doctrines.sh and normal hooks gate commit. The historical semantic after-cache gap, spent fixture, unused cohort slots, unchanged limits and native/private/HIAL/full-CI/push gates remain open.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.2`
+  Status: `pending`
+  Goal: `Measure allocation phases and repair complete inventory within the unchanged memory guard.`
+  Acceptance: `After the resource checkpoint commits, use complete fixed inputs and preserved first programme to distinguish parse/build retention, whole-corpus copying and serialization allocation hypotheses with bounded phase observations and controlled source comparisons. Keep original/prototype namespaces and failures intact. Implement streaming, sharding or copy-on-write validation only with exact whole-input/source/site/type/scope conservation and independently rejecting known-bad controls; do not drop source bodies/sites or raise guard/storage/Knowledge Map ceilings to pass. Qualify actual complete unchanged input under the standard guard with full native/tool/source/index custody, disclose any remaining attribution gap and commit before final inventory delivery.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.3`
+  Status: `pending`
+  Goal: `Deliver the complete bounded static inventory with committed recovery.`
+  Acceptance: `After measured memory repair commits, reconstruct complete source/member/body/mode/role/site and delegated-boundary inventory from fixed Git inputs, independently reproduce all declared populations and reject omission/type/source/scope/promotion candidates. Preserve parser/dynamic/execution-role gaps without granting runtime permission. Current book/source/query/claim/staged/normal delivery and committed-only saved recovery close only inventory before public producer qualification; no semantic cohort, fresh checkout or original native/private probe runs.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.2`
   Status: `pending`

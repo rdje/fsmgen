@@ -1284,3 +1284,15 @@ cache-bearing fixture, every earlier failure and every unused slot. Complete
 runtime producer/consumer and output-custody qualification is required before
 preparing a fresh intake. Association and all later cohorts remain unused;
 original-native/private, full-alias, HIAL, full-CI, push and visual scopes stay open.
+
+The first complete-source static inventory attempt also stopped at the unchanged
+process memory guard. Its full source, tool, index and terminal-result custody
+retain. Inspect that resource refusal without rerunning the producer:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_runtime_inventory_failed.py
+```
+
+The allocation phase is unmeasured. Bounded-memory repair must preserve every
+source and candidate site before the inventory can qualify. This failed attempt
+supplies no completed inventory, execution-role decision or runtime permission.
