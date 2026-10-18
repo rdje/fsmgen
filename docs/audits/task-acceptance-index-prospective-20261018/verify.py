@@ -18,7 +18,7 @@ from verify_failure import validate_failure
 def verify_intake(record):
     verify(record)
     required = {str(AUDIT / name) for name in
-                ('ProspectiveIndexObserver.pm', 'observe.pl', 'run.py', 'verify.py', 'verify_failure.py', 'preflight.t', 'preflight.py', 'contract.json')}
+                ('ProspectiveIndexObserver.pm', 'observe.pl', 'run.py', 'verify.py', 'verify_failure.py', 'preflight.t', 'preflight.py', 'contract.json', 'corrected-contract.json')}
     required.add(str(ORIGINAL / 'verify_failure.py'))
     assert required <= set(record['sources_after'])
     assert record['rows']
@@ -30,7 +30,7 @@ def verify_intake(record):
 if __name__ == '__main__':
     assert sys.argv[1:] in (['controls'], ['regression'])
     action = sys.argv[1]
-    record = json.loads(gzip.decompress((ROOT / AUDIT / (action + '.json.gz')).read_bytes()))
+    record = json.loads(gzip.decompress((ROOT / AUDIT / ('corrected-' + action + '.json.gz')).read_bytes()))
     verify_intake(record)
     if action == 'controls':
         falsify(record)

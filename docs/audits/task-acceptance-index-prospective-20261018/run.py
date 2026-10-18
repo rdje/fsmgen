@@ -17,14 +17,14 @@ sys.path.insert(0, str(ROOT / ORIGINAL))
 import run as original
 
 original.AUDIT = AUDIT
-original.WORK = Path('.artifacts/task-acceptance-index-prospective-20261018')
+original.WORK = Path('.artifacts/task-acceptance-index-corrected-20261018')
 original.LIB += ['-I' + str(AUDIT), '-MProspectiveIndexObserver']
 
 
 def committed_inputs():
     assert Path.cwd().resolve() == ROOT
-    contract = json.loads((ROOT / AUDIT / 'contract.json').read_bytes())
-    assert contract['owner'] == 'TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.2'
+    contract = json.loads((ROOT / AUDIT / 'corrected-contract.json').read_bytes())
+    assert contract['owner'] == 'TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2'
     assert contract['controls_attempts'] == 1 and contract['historical_cause'] == 'P1-open'
     for name, row in original.sources().items():
         assert subprocess.check_output(['git', 'show', 'HEAD:' + name], timeout=30) == original.unblob(row), \
@@ -52,7 +52,7 @@ def main():
     with (work / (action + '-started')).open('xb') as stream:
         stream.write(b'One approved prospective intake; no retry-until-green.\n')
     if action == 'regression':
-        proof = AUDIT / 'controls.json.gz'
+        proof = AUDIT / 'corrected-controls.json.gz'
         assert subprocess.check_output(['git', 'show', 'HEAD:' + str(proof)], timeout=30) == proof.read_bytes()
         subprocess.run(['python3', '-B', str(AUDIT / 'verify.py'), 'controls'], check=True, timeout=30)
         original.qualified_sources(json.loads(gzip.decompress(proof.read_bytes())), original.sources())
@@ -60,10 +60,11 @@ def main():
     started = {'action': action, 'sources_before': before, 'git_before': git_before,
                'tools': {name: original.digest(Path(shutil.which(name)).resolve().read_bytes())
                          for name in ('perl', 'prove', 'bash', 'git', 'awk', 'grep', 'mktemp', 'mkdir', 'rm', 'rmdir')},
-               'scope': 'Approved prospective current-observer qualification. Historical native causes remain P1-open. '
+               'scope': 'Approved corrected current-observer qualification after the verified scalar-copy repair. '
+                        'Historical native causes remain P1-open and the prior copy-preservation intake remains failed. '
                         'Fixed same-repository alternate indexes; unchanged native calls, limits and failure-only witness. '
                         'OS tools are required read-only external dependencies; all owned data is repository-local.'}
-    original.save(action + '-started.json.gz', started)
+    original.save('corrected-' + action + '-started.json.gz', started)
     rows = []
     if action == 'controls':
         for scenario in ('healthy', 'query_gap', 'write_gap', 'retention_gap', 'diagnostic_errno', 'coverage_gap'):
@@ -90,7 +91,7 @@ def main():
                            for path in sorted(work.glob('*/*.json*')) if path.is_file()},
               'admissions': {path.name: original.blob(path.read_bytes())
                              for path in sorted(work.glob('*-admission.json'))}}
-    original.save(action + '.json.gz', record)
+    original.save('corrected-' + action + '.json.gz', record)
     print(action, 'native statuses', [row['status'] for row in rows],
           'sources conserved', before == after, 'primary index conserved', git_before == git_after, flush=True)
     subprocess.run(['python3', '-B', str(AUDIT / 'verify.py'), action], check=True, timeout=30)

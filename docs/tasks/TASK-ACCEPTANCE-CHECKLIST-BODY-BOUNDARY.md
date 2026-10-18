@@ -75,7 +75,7 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2: retain native rejection and harden observation guards`
   Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.2, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.3, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4`
   Approved contract: `Director Approved on 2026-10-18 selects .1.5's scoped separation. Historical and new EPERM causes stay P1-open with HIAL .19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10; no prior failed result changes. After committed .1.2.1 preparation, .1.2.2 may consume one fresh bounded current observer qualification. Any unexpected native rejection stops further native execution after the current case settles and its result is retained. A complete pass can close current observer qualification only and admit .1.3. No host-protection change, retry-until-green, cause-repair claim or independent startup/full-CI/push release follows.`
-  Blocked by: `The sole approved prospective attempt failed result-copy preservation, not native admission. .1.2.3 corrects and verifies that defect inertly; .1.2.4 owns the new director decision before any fresh native intake. Original .1.3/.2 remain gated. Historical kernel cause and SIP-denied probe route are unchanged.`
+  Blocked by: `The sole approved prospective attempt failed result-copy preservation, not native admission. .1.2.3 corrects and verifies that defect inertly. Director approval now admits .1.2.4.1 committed preparation and one .1.2.4.2 corrected qualification. Original .1.3/.2 remain gated. Historical kernel cause and SIP-denied probe route are unchanged.`
   Qualification finding Q1: `First native20 control failed twenty inherited-parent-counter assertions; PID-keyed counters repair it. Complete first source/streams/results retain in first-controls.json.gz. Source review found a missing saved/live-input join; the guard and hostile controls now repair it. No native stale-input false green or original test is claimed.`
   Acceptance Checklist (enforced):
   - [x] **ROOT CAUSE (WHY + WHERE)** — Checkpoint .1.2: git log -S locates a055d3a28a30b10d029c82ca5e4831da069ee108 native admission provenance. Current ordinary checker stage_k fails before exec with undef/errno1, joined to PID6828/PGID6828/SID3382 after return. Kernel cause remains unknown. The collector tested expected exit polarity alone, so three failed TAP assertions did not stop later controls; full source and first results retain.
@@ -114,10 +114,29 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   - [x] **NO REGRESSION** — Scalar correction .1.2.3: All tests successful, Files=2, Tests=24; inert source/admission, final-control stop, result-reference/errno/cleanup ordering and TAP bailout checks pass. Strict failed-custody/hostile readers retain failure. Book/map and staged doctrines/normal hooks qualify the correction without native execution. Current native observer qualification, original regressions and independent HIAL/full-CI/push/visual requirements stay open.
 
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4`
-  Status: `blocked`
-  Goal: `Obtain the director decision for a fresh qualification of the causally corrected observer.`
+  Status: `active`
+  Goal: `Apply the director-approved fresh qualification of the causally corrected observer.`
   Acceptance: `After the verified .1.2.3 correction commits cleanly, present the exact failed first outcome, minimal correction, failed-source RED/current-source GREEN proof and unchanged historical EPERM boundary. The .1.5-approved single qualification is spent; do not execute another intake without selection. Proposed next scope: commit a fixed fresh namespace/source admission for the corrected observer, then one bounded complete run of the unchanged six native controls and capture-reuse refusal, preserving every original result and stopping on unexpected native/oracle failure. No run-until-green, historical cause claim or independent HIAL/full-CI/push release. A complete committed pass alone may admit .1.3.`
-  Verification: `pending director selection; no fresh intake prepared or executed`
+  Approval: `Director Approved on 2026-10-18 selects one fresh qualification of the corrected observer after c7be79a9e. Prepare and commit a fixed distinct intake first, then consume it once. All failed native and copy-preservation records remain failed and immutable; only a complete current qualification can admit .1.3. No host change, causal-repair claim, run-until-green or independent HIAL/full-CI/push release is authorized.`
+  Verification: `Approval recorded; preparation .1.2.4.1 precedes native execution .1.2.4.2.`
+  Commit: `pending`
+  Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2`
+- ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.1`
+  Status: `done`
+  Goal: `Commit the approved corrected-observer intake before native execution.`
+  Acceptance: `Use a fixed corrected workspace and new prefixed receipts in the existing audit directory; preserve all old contracts, markers and captures. Add the fresh approval contract to complete source admission. Reuse the corrected predicate, unchanged original controls/witnesses and source/TAP/settlement oracles. Qualify namespace/admission/source join and existing exact failed-source RED/current-source GREEN copy controls inertly. Commit book/current task/resume state and required normal gates before .1.2.4.2; no native fixture runs here.`
+  Verification: `Fresh corrected-contract.json binds approval, owner .1.2.4.2 and one attempt. Current runner/observer share .artifacts/task-acceptance-index-corrected-20261018; new records use corrected-controls/corrected-regression prefixes while all old contracts, records and spent markers retain. The exact corrected scalar predicate, original controls/witnesses and complete original verifier remain unchanged. Inert admission/copy/stop checks pass All tests successful, Files=2, Tests=24; Python preflight verifies shared cross-language namespace, added contract identity, changed/missing source refusal, failed-final-row stop and exact failed-source RED/current-source GREEN copies. Strict old failed-custody replay remains failed. The fresh workspace/receipts are unused and the qualified native helper binary hash still matches its manifest. Re-derivation is actual configured namespace/source closure and full original input checks; falsification is independent decoded/copy and source/selector/partial/failing-final-row controls; durability is committed contract/source/tests plus unchanged sealed failure records. Book/fact/current task and measured containment are synchronized; final staged doctrines and normal hooks gate delivery. First staged gate flags the expanded Memory blocker line crossing its warning threshold; wrapping the same field preserves every fact within unchanged limits. No native qualification or original regression executes here.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.1: prepare approved corrected observer intake`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Corrected intake preparation .1.2.4.1: git log -S 'my $exit_code = $result->{exit_code}' locates c7be79a9e74888901a357cb220dc328d5024f3ce, which fixes the demonstrated scalar-copy defect. The prior control intake remains failed and spent; reusing its marker or receipt cannot qualify corrected source. Director approval selects a distinct committed intake without changing native admission or historical causality.
+  - [x] **ADDRESSED (verified)** — Corrected intake preparation .1.2.4.1 binds the new approval contract and exact source closure to a fixed corrected workspace with new prefixed records. Inert Perl/Python namespace agreement and source-substitution checks pass. The same original controls, witness, bounds, stop-after-settlement and source/TAP/result/errno oracles are retained. Committed-input/exclusive-capture checks precede any native execution.
+  - [x] **NO REGRESSION** — Corrected intake preparation .1.2.4.1: All tests successful, Files=2, Tests=24 for inert copy/admission/stop and original admission controls. Exact failed-source RED/current-source GREEN, strict failed-custody and hostile promotion replays pass. Book/map and staged doctrines/normal hooks qualify preparation only; current observer qualification and original .1.3/.2 await .1.2.4.2. Historical/native HIAL/full-CI/push and visual requirements remain open.
+
+- ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2`
+  Status: `pending`
+  Goal: `Consume the approved single corrected-observer qualification.`
+  Acceptance: `Use only committed .1.2.4.1 inputs and the fresh exclusive corrected intake under the RAM guard. Run the unchanged fixed six controls and reuse refusal once, stopping on the first unexpected native/oracle failure after case settlement and result retention. Preserve exact inputs/tools/commands/raw streams, native results/events, stage/case/child receipts and independent cleanup. Accept only complete original TAP/coverage/identity/bounds/errno/result oracles. Commit the first result before any successor; only a complete pass can close current .1.2 and admit .1.3. Historical failures, EPERM attribution and independent HIAL/full-CI/push gates stay unchanged.`
+  Verification: `pending`
   Commit: `pending`
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.3`
   Status: `pending`
@@ -182,8 +201,8 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
 ## Blockers
 
 - The sole approved `.1.2.2` attempt failed observer copy preservation;
-  `.1.2.3` verifies its inert correction. `.1.2.4` owns the new decision before
-  any further native intake.
+  `.1.2.3` verifies its inert correction. Director approval permits committed
+  `.1.2.4.1` preparation, then one `.1.2.4.2` qualification.
   The kernel cause remains P1-open with HIAL; the SIP-denied route is unchanged.
   Original `.1.3`/`.2` require complete committed qualification; independent
   HIAL/full-CI/push and visual owners retain their evidence boundaries.

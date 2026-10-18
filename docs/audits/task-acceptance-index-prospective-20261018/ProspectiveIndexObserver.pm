@@ -4,7 +4,7 @@ use warnings;
 use IndexObserver;
 
 our $AUDIT = 'docs/audits/task-acceptance-index-prospective-20261018';
-$IndexObserver::WORK = '.artifacts/task-acceptance-index-prospective-20261018';
+$IndexObserver::WORK = '.artifacts/task-acceptance-index-corrected-20261018';
 my $paths = \&IndexObserver::paths;
 my $install = \&IndexObserver::install;
 
@@ -37,7 +37,7 @@ sub unexpected {
     no warnings 'redefine';
     *IndexObserver::paths = sub {
         return sort { $a cmp $b } ($paths->(), "$IndexObserver::AUDIT/verify_failure.py", map { "$AUDIT/$_" }
-            qw(ProspectiveIndexObserver.pm observe.pl run.py verify.py verify_failure.py preflight.t preflight.py contract.json));
+            qw(ProspectiveIndexObserver.pm observe.pl run.py verify.py verify_failure.py preflight.t preflight.py contract.json corrected-contract.json));
     };
     *IndexObserver::install = sub {
         my ($self) = @_;

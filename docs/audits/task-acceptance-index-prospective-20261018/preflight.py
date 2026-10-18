@@ -29,6 +29,8 @@ assert not runner.ready_for_reuse(rows[:-1])
 
 current = runner.original.sources()
 assert str(ORIGINAL / 'verify_failure.py') in current
+assert str(AUDIT / 'corrected-contract.json') in current
+assert runner.original.perl('print $IndexObserver::WORK') == str(runner.original.WORK).encode()
 assert qualified_sources({'sources_after': current}, current)
 for kind in ('changed', 'missing'):
     bad = copy.deepcopy(current)

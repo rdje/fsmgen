@@ -1,0 +1,10 @@
+{
+  "schema": "fsmgen.approved_prospective_index_qualification.v1",
+  "owner": "TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2",
+  "approved": "Director Approved on 2026-10-18 after scalar-copy correction c7be79a9e",
+  "controls_attempts": 1,
+  "historical_cause": "P1-open",
+  "controls": ["healthy", "query_gap", "write_gap", "retention_gap", "diagnostic_errno", "coverage_gap"],
+  "original_intake": "docs/audits/task-acceptance-index-observer-20261017",
+  "scope": "One fresh corrected-observer qualification. Use committed inputs, a fixed distinct corrected workspace and corrected-prefixed receipts. Reuse original controls, native admission, limits and witnesses. Preserve all spent markers and failed records. Stop unexpected native or oracle failure after current-case settlement and retention, before any later case/control. Only a complete committed pass permits separately owned original regression. No retry-until-green, failed-result promotion, host change, historical causal-repair claim or independent HIAL/full-CI/push release."
+}

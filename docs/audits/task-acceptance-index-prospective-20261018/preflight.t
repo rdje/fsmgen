@@ -20,7 +20,7 @@ no warnings 'redefine';
 local *IndexObserver::install = sub { ++$installed };
 require ProspectiveIndexObserver;
 
-is($IndexObserver::WORK, '.artifacts/task-acceptance-index-prospective-20261018', 'fresh fixed namespace');
+is($IndexObserver::WORK, '.artifacts/task-acceptance-index-corrected-20261018', 'fresh fixed corrected namespace');
 my $admission = IndexObserver::admission('control_healthy');
 ok(IndexObserver::validate($admission, 'control_healthy'), 'complete old and new source closure passes');
 for my $mutation (qw(changed missing selector)) {
