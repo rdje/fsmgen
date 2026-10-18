@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2`
-- next_action: Prepare and commit the closed corrected intake using the qualified historical source view. Bind complete historical/current commands, source and custody; preserve the failed first intake. No acceptance cohort executes until preparation commits.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3`
+- next_action: From the committed corrected intake, activate .2.2.3 and stage only its task/resume state. Run each fixed corrected cohort once in order, retaining complete native custody and stopping at the first unexpected result. Preserve the failed first intake.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; the first cohort is terminal native1 and its complete result is retained.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

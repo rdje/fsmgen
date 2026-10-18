@@ -1128,5 +1128,15 @@ no repository file changes. Run the controls without executing semantic readers:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/historical_factory_preflight.py
 ```
 
-Complete semantic replay and the corrected intake remain unqualified. The current
-publication route still uses the live factory and needs its separate check.
+The corrected intake is prepared with all original obligations and a fresh
+exclusive namespace. Its inert source, command, role, receipt, resource, book and
+stop controls pass. The first preparation failure is retained with its repair.
+Inspect the closed intake without running acceptance:
+
+```bash
+python3 -B docs/audits/original-join-parent-acceptance-20261018/corrected_intake.py
+```
+
+Complete semantic replay remains pending. Only the prerequisite and association
+cohorts receive historical factory bytes; current publication still uses the live
+factory and needs its separate check. The original failed intake remains failed.

@@ -5799,11 +5799,11 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Prepare a bounded historical source-epoch repair without weakening original contracts.`
   Acceptance: `After .1 commits cleanly, trace the complete transitive historical/default/current reader roles and all original Goal/Acceptance constraints. Select a fully source-bound replay of the correct historical namespaces with separately qualified current publication. Preserve all old guards, complete source/model/control/failure premises and dated/native/private assumptions; change no sealed source, old first capture or failed role. Prove exact source/namespace/context and current-role/omission/promotion refusals before committing any corrected fresh intake. If the full original contract cannot be preserved, record the precise decision blocker rather than narrowing it.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete four-role source/import inventory, inert exact historical adapter and closed corrected intake preparation qualify through the three committed children. Old sources, guards, failed intake and every original contract conserve. Actual complete semantic/current execution remains separately pending in .2.2.3; no parent, native/private or independent gate closes here.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.3: prepare corrected original acceptance execution`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.1`
@@ -5831,12 +5831,17 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — knowledge-map: OK; complete original contracts and historical guard/import bodies remain byte-bound. Inert controls pass; current factory disk bytes and normal Path.read_bytes restore. Book/native copied sources, staged scripts/check_doctrines.sh and normal hooks gate this preparation commit; complete semantic/current acceptance remains pending.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Commit a closed corrected intake for complete historical and current acceptance.`
   Acceptance: `After qualified historical replay preparation, bind its exact code/data and unchanged semantic/current reader commands in a fresh exclusive intake. Preserve every spent marker, failed role, original source/model/native/control/contract premise and current publication obligation. Qualify inert complete admission/stop/custody and saved/current scope controls; commit final book/knowledge/task/normal delivery before parent .2.2.3 actual execution.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Closed corrected intake preserves the complete immutable first inventory, every original Goal/Acceptance and all original source/model/native/private/control/first-failure premises. Only prerequisite and association commands gain an exact historical-source wrapper; their unchanged default entrypoints, guards, streams and complete nested readers retain. Six remaining semantic/current/focused/book/source commands are unchanged. Corrected exclusive work/started/result/source-view names cannot reuse the first failed slots. Recorder and saved reader conserve full source/index/tool/stream/resource/book custody, strict native success and first-failure stop; historical receipts separately prove declared reads and restored live source. Inert complete source/command/contract/role/receipt/exception/resource/book and prior-stop controls pass without any semantic reader or acceptance cohort. First preflight resource-sampler preparation bug retains whole first programmes/native1 stderr and diagnosis; sampler restores exactly from unchanged first recorder and corrected controls pass. Re-derivation is complete source/contract/import joins and actual inert wrapper/resource/book oracles; falsification is missing/changed/borrowed/promoted source/role/receipt/contract and stop controls; durability is committed closed inventory/programmes/first refusal and executable controls. Complete semantic/current acceptance, original native/private qualification and HIAL/full-CI/push/visual gates remain open. Final current book/source, claim, staged doctrine and normal hooks gate preparation delivery.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.3: prepare corrected original acceptance execution`
 
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S import record_value_original_join_fact identifies legitimate a0561d999b0354ed261289f66657bf8704c75ec9 factory advancement. The committed failed prerequisite intake selected live input for historical guards; complete four-role source inventory and qualified adapter bind the repair. The first corrected preflight additionally found a preparation-time overbroad replacement in sample(); whole first native1 result/programmes retain and the sampler is restored exactly.
+  - [x] **ADDRESSED (verified)** — corrected_preflight.py passes closed source/command/contract/role/receipt, exceptional restoration, resource/book and prior-stop controls. Exact wrapper delegates only to inert runners in preparation; no semantic reader executes and original failed slots conserve. New exclusive corrected intake requires its own committed qualification before native launch.
+  - [x] **NO REGRESSION** — knowledge-map: OK; complete original contracts, old programmes and first native failures conserve. Corrected inert controls pass, sampler matches the unchanged recorder, and six remaining commands retain. Fresh book/current copied sources, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commit. No full semantic/current/native or independent gate release is claimed.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3`
   Status: `pending`
