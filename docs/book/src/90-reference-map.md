@@ -1304,7 +1304,16 @@ events, native results and genuine corruption controls:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_inventory_memory.py
 ```
 
-This comparison qualifies the memory repair. Committed inventory recovery and
-runtime execution/data roles remain separate obligations. Neither the failed
-attempt nor its repair grants runtime permission or expanded dynamic-code
-completeness.
+This comparison qualifies the memory repair. The committed complete inventory
+reader regenerates every source, site, coordinate, role and parse-gap field and
+repeats the corruption controls. Run it, then inspect the retained committed
+recovery and independent immutable source/index custody:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/bounded_runtime_inventory.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_inventory_delivery.py
+```
+
+This static candidate inventory leaves expanded dynamic code and actual runtime
+execution/data roles unresolved. Qualifying the unchanged public cache producer
+is next. Neither the failed attempt nor its repair grants runtime permission.

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.3`
-- next_action: Qualify committed-only recovery and complete independent source/site/control delivery of the bounded static inventory; preserve explicit runtime-role and dynamic-code gaps before producer qualification. Run no semantic cohort or fresh checkout.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.2`
+- next_action: Qualify the unchanged fixed public cache producer and complete generated projection in a private same-volume fixture, including cold/warm/corruption/no-cache routes and exact source/output custody. Preserve the spent fixture and every semantic slot.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; native0 prerequisite custody failed and all later cohort slots remain unused.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

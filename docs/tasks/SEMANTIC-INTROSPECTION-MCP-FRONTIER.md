@@ -6009,11 +6009,11 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1`
-  Status: `active`
+  Status: `done`
   Goal: `Inventory the complete fixed source and addressable I/O boundary population.`
   Acceptance: `From the exact selected source graph and both unchanged historical commands, retain complete source/member/mode/body identity, formal/import/plan/data roles and every addressable file, directory, temporary, dynamic-execution and subprocess site. Enumerate delegated shell/Perl/tool boundaries and preserve unresolved execution/data classifications explicitly. Independent whole-input/site rederivation and genuine missing/changed/extra/role/type controls must reject. This census proves candidate completeness only, never actual runtime reachability or permission; no semantic cohort, new checkout or original native/private producer runs. Commit the inventory before producer qualification and default-role closure.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Children retain the complete first resource refusal, separately measured bounded-memory repair and committed full inventory recovery. Fixed complete source bodies/modes/roles, Python collector/independent AST-walk sites and raw line addresses for opaque/delegated code conserve under independent Git/index/custody and genuine missing/type/source/scope controls. Parse/dynamic/executed/input-only roles remain explicit unresolved candidates; no static population establishes actual runtime effects or permission. Full original failures, native/after-cache gaps and unused slots remain. Actual public cache-producer qualification is next.`
+  Commit: `this slice`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.3`
 
@@ -6042,12 +6042,17 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Focused prove reports All tests successful; Files=2, Tests=56; fresh default memory qualification, mdBook build/current copied-source, claims, staged scripts/check_doctrines.sh and normal hooks gate commit. No resource/storage/Knowledge Map ceiling increase, semantic cohort, fresh checkout or runtime permission occurs. Committed complete inventory delivery is the next separately owned leaf.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.1.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Deliver the complete bounded static inventory with committed recovery.`
   Acceptance: `After measured memory repair commits, reconstruct complete source/member/body/mode/role/site and delegated-boundary inventory from fixed Git inputs, independently reproduce all declared populations and reject omission/type/source/scope/promotion candidates. Preserve parser/dynamic/execution-role gaps without granting runtime permission. Current book/source/query/claim/staged/normal delivery and committed-only saved recovery close only inventory before public producer qualification; no semantic cohort, fresh checkout or original native/private probe runs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `From committed1fe2cbc655dfafdb60b206fd0b142ec6af6563f6, actual default complete-inventory recovery returns native0 under the unchanged guard. It independently rebuilds the fixed Git census, original collector/AST-walk address coverage, every body/mode/role/site/coordinate/parse-gap field and strict corruption controls, and compares the whole saved domain. Full before/after source/tool/HEAD/logical/raw index and native streams retain; no publication or semantic cohort repeats. verify_inventory_delivery.py independently reconstructs the entire committed logical index and every instrument/input byte, accepts only the actual read-only command/result, and rejects genuine status/type/epoch/command/source/index/after/stdout substitutions. Default saved delivery reader passes without a generated source fixture. Parser/dynamic expansion and actual execution/data roles remain explicit limits of this static candidate inventory. Canonical RAM-guard fact preserves every prior fact/question while adding a non-growing dated memory diagnosis and runnable qualification; generated query route resolves. Re-derivation is actual committed complete-source/site/role reconstruction plus independent full Git/index/custody reader; falsification is genuine census and native/epoch/custody candidates; durability is committed full programmes/receipts/census/controls/task/query route. Fresh focused/native/source/book/claim/staged/normal delivery gates close only inventory; actual unchanged public cache producer is next. Original semantic/native0 after-cache gap, all unused slots and broader native/private/HIAL/full-CI/push gates remain open.`
+  Commit: `this slice`
 
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S copy.deepcopy(value) locates the preserved prototype; the separate .2 diagnostic identifies its repeated full encoding/control resource refusal. The committed repair still required fresh recovery of the entire fixed-source/site/role product rather than a memory-only success claim. Original first-process attribution and runtime-role limits remain explicit.
+  - [x] **ADDRESSED (verified)** — Actual committed default recovery reconstructs every declared census field and strict original corruption case; independent immutable Git-index/source and native/custody reader rejects genuine substitutions. No generated source fixture or semantic replay is needed. A smaller canonical fact retains all old facts/questions and adds the verified memory route; book and next public-producer owner align.
+  - [x] **NO REGRESSION** — Focused task/claim/RAM-guard contracts report All tests successful; Files=5, Tests=71. Default delivery and memory readers, current query/native book/copied-source, claims, staged scripts/check_doctrines.sh and normal hooks gate commit. No source/site drops, cutoff/storage/Knowledge Map allowance increases, spent fixture change or runtime permission occur.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.2`
   Status: `pending`

@@ -2,7 +2,7 @@
 
 > **AUTO-GENERATED — DO NOT EDIT.** Regenerate with `knowledge-map/scripts/gen_knowledge_map.sh`.
 > Canonical facts remain in `docs/knowledge docs/decisions`; shards are bounded derived views, and `.artifacts/` query caches are disposable.
-> **1267** facts · **6996** unique questions · **7173** answer occurrences · **185** topic shards.
+> **1267** facts · **6997** unique questions · **7174** answer occurrences · **185** topic shards.
 
 Query first:
 
@@ -18,7 +18,7 @@ The query is a case-insensitive fixed-substring search. Add `--no-cache` to read
 |---|---:|---:|---|
 | `abc-discovery` | 1 | 5 | [`abc-discovery.md`](knowledge-map/generated/abc-discovery.md) |
 | `accellera-standards` | 1 | 5 | [`accellera-standards.md`](knowledge-map/generated/accellera-standards.md) |
-| `agent-runtime` | 1 | 6 | [`agent-runtime.md`](knowledge-map/generated/agent-runtime.md) |
+| `agent-runtime` | 1 | 7 | [`agent-runtime.md`](knowledge-map/generated/agent-runtime.md) |
 | `aggregate-parameter` | 1 | 4 | [`aggregate-parameter.md`](knowledge-map/generated/aggregate-parameter.md) |
 | `aggregate-typedef` | 1 | 3 | [`aggregate-typedef.md`](knowledge-map/generated/aggregate-typedef.md) |
 | `ahb-hburst` | 1 | 4 | [`ahb-hburst.md`](knowledge-map/generated/ahb-hburst.md) |
