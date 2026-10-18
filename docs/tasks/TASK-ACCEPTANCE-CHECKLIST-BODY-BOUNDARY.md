@@ -1,9 +1,8 @@
 # TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY: Keep Acceptance Evidence Inside Its Box
 
 ## Metadata
-
 - Tree ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / doctrine enforcement`
 - Created: `2026-10-17`
 - Last updated: `2026-10-18`
@@ -11,13 +10,11 @@
 - Priority: P1
 
 ## Goal
-
 Prevent a fresh acceptance box from borrowing evidence from an outdented
 sibling task or prose block. Preserve valid continuation/nested evidence and
 all existing freshness, scope, declaration and supervision contracts.
 
 ## Origin
-
 Publication finding P4 in `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`
 owns the initial discovery. Exact checker extraction/signature functions over
 an in-memory Markdown sibling fixture admitted an unrelated token with native
@@ -26,7 +23,6 @@ there. Preserve that boundary and reproduce through the actual checker first.
 Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-sibling-evidence-first.json.gz`.
 
 ## Acceptance Criteria
-
 - Preserve native first results, full input/programme/command/stream custody,
   and relevant introducing history before repairing the demonstrated boundary.
 - Use only fixed named cases in the existing primary-repository alternate-index
@@ -42,9 +38,8 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   joined-parent acceptance `.4.3.3`. No HIAL/full-CI/push/visual closure follows.
 
 ## Task Tree
-
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY`
-  Status: `active`
+  Status: `done`
   Goal: `Enforce actual acceptance-box boundaries with native controls and committed recovery.`
   Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.3`
 
@@ -180,11 +175,11 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   - [x] **ADDRESSED (verified)** — Planning .1.5 records a bounded prospective-qualification contract, strict-causality alternative, preserved admission/failure/source/cleanup boundaries and the exact director decision required. Saved native results remain failed. No existing gate is removed and no runtime is admitted by this recommendation.
   - [x] **NO REGRESSION** — Planning .1.5: failed native-custody and host-query readers pass without executing fixtures or querying new host evidence. knowledge-map: OK and staged doctrine/normal-hook checks verify only documentary continuity and the permitted measured task allowance. Product chapter behavior is unchanged; final native book source-view checks cover current copied sources. Existing HIAL/full-CI/push/visual gates stay open.
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2`
-  Status: `active`
+  Status: `done`
   Goal: `Accept committed box-boundary behavior and restore original joined-parent acceptance.`
   Acceptance: `Using exact committed checker/adapter/test inputs, requalify native sibling refusals and valid evidence controls with no declaration delta. Preserve all first failures and source-custody boundaries. Complete focused/current documentation, staged/normal delivery and clean/empty-brief continuity before closing only this tree and restoring the original .4.3.3 frontier.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The committed-only closed T2072 run passes its complete native source/receipt/case oracle. All nine cases, ninety Git stages and nine checkers satisfy exact intended sibling/peer/heading refusals and valid wrapped/blank/nested/tab controls, with no declaration delta. All native bounds and settled cleanup qualify; failure-event output is empty and source/primary index conserve. The complete unchanged qualified base joins and every new native input matches committed preparation. Full started/result streams, tools, sources, admission and receipts are retained. Offline current-source replay passes; six hostile saved records reject self-consistent source, index, lost capture, population, promoted sibling and unsettled-cleanup substitutions, rehashing changed semantic receipts. Real native-before false greens remain rejected by the same oracle. Re-derivation is actual native outcomes and independent complete receipt/case joins; falsification is the retained real-before RED and hostile semantic records; durability is tracked exact inputs, immutable raw proofs, independent replay/controls and Git. Staged doctrines, normal hooks and book/source-view checks qualify delivery; all admitted native input bytes remain unchanged. Historical kernel causality stays HIAL P1-open and independent startup/full-CI/push/visual owners remain. This closes only this repair tree and restores original joined-parent acceptance .4.3.3 after commit.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.2: accept committed native box boundaries`
   Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.2`
   Scope: `Reuse the already qualified native capture/result/stop methods unchanged. A separate private data overlay admits only T2072 with a fresh workspace and complete source population. Require every qualified base source identity to remain exact, verify method identities before/after overlay load, and separately bind every new input to committed HEAD and full admission. This does not relax or reuse the original regression entrypoint's whole-source gate. Retained post-fix native data has nine cases, ninety Git stages and nine checkers; its checker/adapter/T2072 bytes match current source. Native .2 execution still requires committed preparation and full actual output/custody acceptance.`
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.1`
@@ -199,11 +194,18 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   - [x] **NO REGRESSION** — Boundary preparation .2.1: All tests successful, Files=3, Tests=36 for closed admission, unchanged method identities and original copy/stop/admission checks. Inert historical/native case oracle and component joins pass without a new native fixture. Staged doctrines/normal hooks and book/source-view checks qualify only preparation; actual committed boundary .2.2, historical HIAL/native causality and independent full-CI/push/visual requirements remain open.
 
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Accept exact committed box-boundary behavior and close this repair tree.`
   Acceptance: `Consume the fresh committed closed T2072 intake once under the RAM guard. Preserve first native outcome, all source/input/command/stream/case/stage and failure-only native-event custody. Require exact expected sibling/peer/heading refusals, wrapped/blank/nested/tab successes, no registry delta, original bounds and settled cleanup, source/index conservation and complete admission/receipt population. Stop unexpected native failure after current-case settlement and retention, with no recurrence campaign. Commit complete evidence and synchronized docs before closing only this tree and restoring the original joined-parent frontier. Historical native causality and independent HIAL/full-CI/push/visual owners stay open.`
-  Verification: `pending`
-  Commit: `pending`
+  Delivery finding D1 resolved: `First staged doctrines return1: task_evidence total lines118376 exceeds baseline110919 plus growth7453 by four. Native and task acceptance pass. Full first log remains delivery-first.log.gz. Remove redundant blank separators only; preserve every fact and the existing line allowance, remeasure byte allowance and qualify final gates. The first local edit asserts before modifying the task; an erroneously started duplicate gate is terminated and not claimed passing. No native fixture repeats.`
+  Independent replay: `After retaining the first native result, add a separate post-result hostile-record checker. It is never loaded by the native intake and does not change any admitted input. Rehash mutated receipt envelopes to test the actual case, cleanup, coverage and source/index oracles rather than only digest rejection; execute no new native fixture.`
+  Verification: `The committed-only closed T2072 run passes its complete native source/receipt/case oracle. All nine cases, ninety Git stages and nine checkers satisfy exact intended sibling/peer/heading refusals and valid wrapped/blank/nested/tab controls, with no declaration delta. All native bounds and settled cleanup qualify; failure-event output is empty and source/primary index conserve. The complete unchanged qualified base joins and every new native input matches committed preparation. Full started/result streams, tools, sources, admission and receipts are retained. Offline current-source replay passes; six hostile saved records reject self-consistent source, index, lost capture, population, promoted sibling and unsettled-cleanup substitutions, rehashing changed semantic receipts. Real native-before false greens remain rejected by the same oracle. Re-derivation is actual native outcomes and independent complete receipt/case joins; falsification is the retained real-before RED and hostile semantic records; durability is tracked exact inputs, immutable raw proofs, independent replay/controls and Git. Staged doctrines, normal hooks and book/source-view checks qualify delivery; all admitted native input bytes remain unchanged. Historical kernel causality stays HIAL P1-open and independent startup/full-CI/push/visual owners remain. This closes only this repair tree and restores original joined-parent acceptance .4.3.3 after commit.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.2: accept committed native box boundaries`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Committed acceptance .2.2: git log -S BoundaryIndexObserver locates df13f547a3a78dc792a308f530b51792e58331e7, the closed committed-only intake over unchanged qualified methods. Retained real pre-fix sibling cases admitted unrelated evidence; current exact checker/adapter/test inputs must independently refuse those cases before repair closure. Historical native EPERM has no causal attribution here.
+  - [x] **ADDRESSED (verified)** — Committed acceptance .2.2: the complete first native result satisfies all nine intended case outcomes and all native receipt/admission/source/index/bounds/cleanup joins. Independent offline semantic controls rehash changed envelopes and reject source/index/capture/population/sibling-green/unsettled-cleanup substitutions. No native rerun, admitted input change, declaration delta or failed-aggregate promotion occurs.
+  - [x] **NO REGRESSION** — Committed acceptance .2.2: prior inert preparation reports All tests successful, Files=3, Tests=36; the current full native acceptance and unchanged-source watcher pass. Original T2068/T2070/T2071 were already committed with Files=3, Tests=14 and remain source-identical. knowledge-map: OK, staged doctrines, normal hooks and book/source-view checks qualify final delivery; historical HIAL/native causality and independent full-CI/push/visual owners retain their gates.
+
 
 
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.3`
@@ -220,7 +222,6 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   - [x] **NO REGRESSION** — Maintenance .3: saved cleanup and native-failure readers pass; canonical mdBook build passes. knowledge-map: OK and the full staged doctrine/normal-hook workflow qualify synchronized source views, exact reference authority and claim inventory. Original native qualification and causal repair are unchanged; no original tests or full-CI/push execution occurs.
 
 ## Decisions
-
 - 2026-10-17: The publication was committed clean before this pivot. Current
   publication evidence independently met its own fresh box signatures; this
   guard defect still requires its own verified repair.
@@ -229,9 +230,8 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
 
 ## Blockers
 
-- Current observer qualification `.1.2.4.2` and original regression `.1.3` pass;
-  commit original acceptance before committed-only box-boundary `.2`.
-  Failed native and copy-preservation aggregates stay failed.
-  Historical kernel causality remains P1-open with HIAL; SIP is unchanged.
-  Committed-only `.2` and independent HIAL/full-CI/push/visual owners retain
-  their own evidence requirements.
+- None for this completed repair. Resume original joined-parent acceptance
+  `.4.3.3` in `SEMANTIC-INTROSPECTION-MCP-FRONTIER` after the clean commit.
+- Earlier native and copy-preservation aggregates stay failed. Historical
+  kernel causality remains P1-open with HIAL; SIP is unchanged. Independent
+  startup/full-CI/push/visual owners retain their evidence requirements.

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.2.2` (pending committed preparation)
-- next_action: After .2.1 commits cleanly, consume the closed committed boundary intake once: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/task-acceptance-committed-boundary-20261018/run.py. Preserve the first result; no recurrence campaign.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3` (pending repair delivery)
+- next_action: After the boundary repair commits cleanly, open the original joined-parent leaf and its canonical publication evidence; qualify its unchanged complete acceptance. Preserve historical native and independent HIAL/full-CI/push gates.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; consume delivery/normal-commit receipts before selecting any successor.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
