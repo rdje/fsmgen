@@ -5965,11 +5965,40 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful; Files=2, Tests=56 in selected-delivery-focused-first.json.gz. Native copied-source and knowledge-map: OK pass. Final source-bound controls, current book/source/claim checks, staged scripts/check_doctrines.sh and normal hooks must pass before semantic successor activation; unchanged limits and every prior failed capture retain.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Execute and deliver the new complete semantic/current intake.`
   Acceptance: `Only after the selected-checkout intake commits, run every unchanged complete cohort once in declared order. Stop at first unexpected result and commit a terminal checkpoint before repair. Retain full native/stream/source/index/tool/resource/book custody, every earlier failure and all original contracts. Complete successful book/claim/staged/normal delivery before original parent recovery; independent native/private/full-alias/HIAL/full-CI/push/visual limits retain.`
   Verification: `pending`
   Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.1`
+  Status: `done`
+  Goal: `Retain native-successful prerequisites and the exact runtime after-custody failure.`
+  Acceptance: `Authenticate complete native0 stdout/stderr, primary source/index/tools/resource and historical before observations. Preserve after valueNone/error as the original gap; independently census the later whole source/runtime state, identify the complete cache producer/consumer call graph and retain all programme/input/history/native bytes. Successful acceptance must refuse this record and genuine promotion/omission/status/source/index/resource/role controls must reject. Commit this terminal checkpoint before any repair or further semantic cohort; retain every unused slot.`
+  Verification: `Complete once-only prerequisite execution returns native0 and exact expected whole saved-reader stdout. The immediate historical after observer returns valueNone with unexpected-directory error; successful acceptance refuses this record, so no later cohort runs. Complete primary source/index/tools/cwd/resource and historical before custody retain. Independent later whole filesystem enumeration and every Git source byte/mode/link/hash/logical index match the recorded before state; the exact added Knowledge Map query-cache directories/file retain with complete bytes. Public direct no-cache query native0 matches every cached question/owner/source row and independent fixed-shard fingerprint; it changes no cache or member. Source programmes, optional-config presence/absence and full first later-helper FileNotFound refusal retain before corrected diagnostic. The strengthened reader instrument-key refusal and unchanged reproduction retain before the corrected mapping. Actual changed-source/cache/typed query/native status/source/index/tool/resource/cwd/false-after candidates reject. Original after pathname/content observation stays missing, never replaced by the later frame. Root history locates the cache producer at3b71cb0 and closed observer at732b7d6; complete read/write/output graph and attribution controls are successor-owned before any new intake. Re-derivation: fixed Git plus complete actual source/cache/index/native/direct-query correspondence. Falsification: genuine custody/source/cache/role/status/omission interventions and successful-reader refusal. Durability: original whole native/source/resource/gap bytes, later diagnostic/programme/first-failure/control records and committed-only reader. Original three native1 intakes, all unused later slots and every native/private/full-alias/HIAL/full-CI/push/visual limit retain. Book/query/card/capacity/claim/focused/staged/normal gates accompany this terminal checkpoint only.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.1: retain native0 prerequisite after-cache gap`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub write_query_cache identifies3b71cb0 in knowledge-map/scripts/knowledge_map.pl; git log -S unexpected directory identifies732b7d6 in selected_checkout.py. The unchanged public cached query writes questions.jsonl, while the observer admits only the five empty locality directories. Full native0 stdout and the retained exact after error discriminate semantic success from custody failure. Immediate after pathname/content remains unobserved.
+  - [x] **ADDRESSED (verified)** — verify_selected_failed.py authenticates the exact native0/after-gap as failed acceptance and rejects false promotion. Separate later complete source/index/cache/direct-query proof and genuine corruptions pass. First optional-config and instrument-key diagnostic refusals retain complete old programmes/streams; corrected optional presence/absence and key mapping pass. This checkpoint closes retention only; the complete runtime-boundary repair is owned by .2 and execution by .3.
+  - [x] **NO REGRESSION** — Complete saved contracts, all three native1 captures and every later unused slot conserve. Guarded prospective failed-reader controls pass. All tests successful; Files=2, Tests=56 in selected-cache-checkpoint-focused.json.gz. Knowledge Map, native book/source currency, claim inventory/dispositions, staged scripts/check_doctrines.sh and normal hooks gate checkpoint commit; no further semantic cohort or original producer runs.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2`
+  Status: `pending`
+  Goal: `Qualify the complete saved-reader runtime-output custody boundary before fresh intake.`
+  Acceptance: `After the failed-custody checkpoint commits, derive the complete original historical prerequisite/association write and read graph, not only the first new path. Separate fixed Git source members from independently bounded declared runtime outputs with complete before/after namespace/content/type/producer/consumer and locality custody. Preserve the original native0/after-gap and all old failed/unused captures. Qualify actual complete cache/output producers and genuine source/runtime/omission/role/limit/future-progress controls without changing original semantic commands or reducing their meaning. Prepare a fresh same-project source image and closed intake, sync book/task/claims/normal gates and commit before a new once-only cohort.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.3`
+  Status: `pending`
+  Goal: `Execute the freshly qualified complete intake and deliver original scoped acceptance.`
+  Acceptance: `Only after complete runtime/source preparation commits, run each unchanged original cohort once in declared order. Stop at the first unexpected result and commit full terminal native/source/index/cwd/tool/resource/book custody before repair. Complete current publication delivery and committed-only recovery before parent closure; retain every prior failure, unused slot and independent native/private/full-alias/HIAL/full-CI/push/visual limit.`
+  Verification: `pending`
+  Commit: `pending`
+
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.3`
   Status: `pending`

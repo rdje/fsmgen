@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **57** uniquely owned question entries.
+> **4** facts · **58** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -56,6 +56,7 @@
 - q="which outcomes may close a claim inventory candidate?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="which reference-map measurements are historical activation context?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="why are AXI selector probes host-memory percentages and report bytes reviewed history?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="why did native0 prerequisites fail after custody?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="why did the factory-only corrected prerequisite replay still fail?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="why did the original prerequisite replay reject the canonical factory?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="why did the whole historical checkout reject canonical source bytes?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)

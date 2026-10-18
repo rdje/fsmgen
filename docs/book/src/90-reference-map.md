@@ -1264,3 +1264,23 @@ Prospective phase/index values are explicitly preparation models. Real execution
 requires the committed preparation and uses fresh exclusive capture paths.
 Every earlier checkout, failed capture and unused slot retains. Preparation
 supplies no semantic, original-native/private, HIAL or full-CI qualification.
+
+The selected prerequisite child returned native status 0 with its complete
+expected saved-reader result. Acceptance stopped at the immediate after
+observer's unexpected-directory error. Its original `value: null` and error
+remain an observation gap. A separate later full scan finds an undeclared
+Knowledge Map query cache, verifies every tracked source byte, mode, link and
+logical index, and retains complete direct-query correspondence. That observation
+does not replace the missing immediate-after custody.
+
+Read the committed failed-custody record without repeating a semantic cohort:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_selected_failed.py
+```
+
+The earlier pristine-inspection commands apply before execution. Preserve this
+cache-bearing fixture, every earlier failure and every unused slot. Complete
+runtime producer/consumer and output-custody qualification is required before
+preparing a fresh intake. Association and all later cohorts remain unused;
+original-native/private, full-alias, HIAL, full-CI, push and visual scopes stay open.
