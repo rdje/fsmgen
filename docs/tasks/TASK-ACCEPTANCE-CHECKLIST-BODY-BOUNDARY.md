@@ -68,14 +68,14 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   Verification: `Exact completed checkpoint, native failures, source/index custody, tests, checklist and claim legs retrieve unchanged; no live owner references this terminal's removed fields. Task integrity verifies complete source and node reconstruction.`
   Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2: qualify fixed index failure observation`
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify a fixed failure-only observer for the required native index/audit regression.`
   Acceptance: `Reuse the qualified native FailureWitness without changing production admission, success errno/results, fixed bounds or tools. Bind the exact selected tests, adapter/native stage population and complete source inputs before use. Genuine ordinary/stale success, intentional session rejection, query/write/retention/coverage and source-substitution controls must qualify the fixed observer; success performs no context query or capture. Preserve first failure and its missing historical context. Commit observer qualification before any new selected index/audit execution; create no other Git repository and change no host security.`
-  Verification: `Checkpoint under docs/audits/task-acceptance-index-observer-20261017 only: prior controls pass in pre-source-join-controls.json.gz; current controls.json.gz fails on unforced ordinary checker PID6828, setpgid undef/errno1. After-return PGID6828/SID3382 and independent cleanup retain; cause remains unknown. The modeled retention collision stays separate. Old collector continued later controls because expected nonzero hid failed TAP; the predicate is repaired without replay. Source-join/early-stop controls and strict failed-result reader qualify only tooling/evidence. Complete qualification and .1.3 remain gated.`
-  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2: retain native rejection and harden observation guards`
+  Verification: `Current corrected observer qualifies in corrected-controls.json.gz under docs/audits/task-acceptance-index-prospective-20261018. The unchanged six native controls each satisfy all 167 TAP assertions and original [3,21,2] case/Git/checker coverage; positive/diagnostic-errno success and intentional query/write/retention/coverage diagnostic gaps have exact expected outcomes. Capture reuse refuses before another fixture. Full native result/reference/errno, failure-only silence/context, independent absence/cleanup, receipt/source/admission joins and original bounds pass; source and primary index conserve. The immutable failed native observer aggregate and prospective copy-preservation attempt remain failed. Historical EPERM causality is still P1-open with HIAL; this complete current qualification alone admits .1.3 after commit.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2: qualify corrected index failure observation`
   Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.2, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.3, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4`
   Approved contract: `Director Approved on 2026-10-18 selects .1.5's scoped separation. Historical and new EPERM causes stay P1-open with HIAL .19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10; no prior failed result changes. After committed .1.2.1 preparation, .1.2.2 may consume one fresh bounded current observer qualification. Any unexpected native rejection stops further native execution after the current case settles and its result is retained. A complete pass can close current observer qualification only and admit .1.3. No host-protection change, retry-until-green, cause-repair claim or independent startup/full-CI/push release follows.`
-  Blocked by: `The sole approved prospective attempt failed result-copy preservation, not native admission. .1.2.3 corrects and verifies that defect inertly. Director approval now admits .1.2.4.1 committed preparation and one .1.2.4.2 corrected qualification. Original .1.3/.2 remain gated. Historical kernel cause and SIP-denied probe route are unchanged.`
+  Boundary: `Current observer qualification is complete. Commit .1.2.4.2 before .1.3; .2 still requires original regression acceptance. Historical kernel cause, SIP-denied probe route and independent HIAL/full-CI/push/visual prerequisites are unchanged.`
   Qualification finding Q1: `First native20 control failed twenty inherited-parent-counter assertions; PID-keyed counters repair it. Complete first source/streams/results retain in first-controls.json.gz. Source review found a missing saved/live-input join; the guard and hostile controls now repair it. No native stale-input false green or original test is claimed.`
   Acceptance Checklist (enforced):
   - [x] **ROOT CAUSE (WHY + WHERE)** — Checkpoint .1.2: git log -S locates a055d3a28a30b10d029c82ca5e4831da069ee108 native admission provenance. Current ordinary checker stage_k fails before exec with undef/errno1, joined to PID6828/PGID6828/SID3382 after return. Kernel cause remains unknown. The collector tested expected exit polarity alone, so three failed TAP assertions did not stop later controls; full source and first results retain.
@@ -114,12 +114,12 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   - [x] **NO REGRESSION** — Scalar correction .1.2.3: All tests successful, Files=2, Tests=24; inert source/admission, final-control stop, result-reference/errno/cleanup ordering and TAP bailout checks pass. Strict failed-custody/hostile readers retain failure. Book/map and staged doctrines/normal hooks qualify the correction without native execution. Current native observer qualification, original regressions and independent HIAL/full-CI/push/visual requirements stay open.
 
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4`
-  Status: `active`
+  Status: `done`
   Goal: `Apply the director-approved fresh qualification of the causally corrected observer.`
   Acceptance: `After the verified .1.2.3 correction commits cleanly, present the exact failed first outcome, minimal correction, failed-source RED/current-source GREEN proof and unchanged historical EPERM boundary. The .1.5-approved single qualification is spent; do not execute another intake without selection. Proposed next scope: commit a fixed fresh namespace/source admission for the corrected observer, then one bounded complete run of the unchanged six native controls and capture-reuse refusal, preserving every original result and stopping on unexpected native/oracle failure. No run-until-green, historical cause claim or independent HIAL/full-CI/push release. A complete committed pass alone may admit .1.3.`
   Approval: `Director Approved on 2026-10-18 selects one fresh qualification of the corrected observer after c7be79a9e. Prepare and commit a fixed distinct intake first, then consume it once. All failed native and copy-preservation records remain failed and immutable; only a complete current qualification can admit .1.3. No host change, causal-repair claim, run-until-green or independent HIAL/full-CI/push release is authorized.`
-  Verification: `Approval recorded; preparation .1.2.4.1 precedes native execution .1.2.4.2.`
-  Commit: `pending`
+  Verification: `Approved corrected intake is committed in 9ea42a97b; the sole .1.2.4.2 qualification passes all original controls and complete custody. Earlier failed results remain immutable. Current observer qualification is complete; original .1.3 may start only after this result commits.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2: qualify corrected index failure observation`
   Children: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.1, TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2`
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.1`
   Status: `done`
@@ -133,11 +133,16 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
   - [x] **NO REGRESSION** — Corrected intake preparation .1.2.4.1: All tests successful, Files=2, Tests=24 for inert copy/admission/stop and original admission controls. Exact failed-source RED/current-source GREEN, strict failed-custody and hostile promotion replays pass. Book/map and staged doctrines/normal hooks qualify preparation only; current observer qualification and original .1.3/.2 await .1.2.4.2. Historical/native HIAL/full-CI/push and visual requirements remain open.
 
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Consume the approved single corrected-observer qualification.`
   Acceptance: `Use only committed .1.2.4.1 inputs and the fresh exclusive corrected intake under the RAM guard. Run the unchanged fixed six controls and reuse refusal once, stopping on the first unexpected native/oracle failure after case settlement and result retention. Preserve exact inputs/tools/commands/raw streams, native results/events, stage/case/child receipts and independent cleanup. Accept only complete original TAP/coverage/identity/bounds/errno/result oracles. Commit the first result before any successor; only a complete pass can close current .1.2 and admit .1.3. Historical failures, EPERM attribution and independent HIAL/full-CI/push gates stay unchanged.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `The sole approved corrected run from committed 9ea42a97b completes unchanged healthy/query-gap/write-gap/retention-gap/diagnostic-errno/coverage-gap controls: each retains exactly 167 successful TAP assertions, with native statuses [0,25,25,25,0,25] matching positive and intentional diagnostic outcomes. Reuse exits17 before another fixture. Complete original receipt populations, source/admission identities, result/reference/errno invariants, successful-call silence, intentional native context/gap distinctions, fixed stage bounds and independent child/group absence pass. Sources and primary index conserve. The complete original verifier and hostile source/index/capture/query/coverage promotions pass; no earlier failed aggregate is promoted. Re-derivation is actual native outputs and case/stage/child data under fixed contracts; falsification is genuine named fault controls, exclusive reuse refusal and hostile saved-record/source substitutions; durability is tracked corrected-started/result gzip records with full source/tool/command/raw stream/capture custody and existing readers. Book/current canonical fact and clean normal delivery complete this qualification before .1.3. Historical EPERM, independent HIAL/full-CI/push and visual requirements remain open.`
+  Commit: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.2.4.2: qualify corrected index failure observation`
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Corrected qualification .1.2.4.2: git log -S corrected-controls.json.gz identifies 9ea42a97b, which binds the director-approved distinct intake after c7be79a9e's scalar-copy repair. Earlier failed receipts cannot prove this corrected source. The genuine native matrix now satisfies the original copy/result/errno/context/cleanup and source oracles; historical kernel cause remains unknown.
+  - [x] **ADDRESSED (verified)** — Corrected qualification .1.2.4.2 completes all six unchanged native controls with their expected success/diagnostic outcomes and rejects spent capture reuse. Complete admission/source/receipt joins, successful-call diagnostic silence, intentional failure/gap distinctions and original result/copy/errno/bounds/cleanup invariants pass. Only current fixed observer qualification closes; failed native/copy aggregates remain failed.
+  - [x] **NO REGRESSION** — Corrected qualification .1.2.4.2: knowledge-map: OK; six complete original 167-assertion TAP programmes contain no failing assertion. Strict complete native/receipt verifier and hostile saved-record controls pass with source and primary-index conservation. Book/map and staged doctrines/normal hooks qualify committed custody before original .1.3; independent HIAL/full-CI/push and visual owners remain open.
+
 - ID: `TASK-ACCEPTANCE-CHECKLIST-BODY-BOUNDARY.1.3`
   Status: `pending`
   Goal: `Accept the original index/audit regression contract under the committed fixed observer.`
@@ -200,9 +205,8 @@ Evidence: `docs/audits/original-join-canonical-publication-20261017/checklist-si
 
 ## Blockers
 
-- The sole approved `.1.2.2` attempt failed observer copy preservation;
-  `.1.2.3` verifies its inert correction. Director approval permits committed
-  `.1.2.4.1` preparation, then one `.1.2.4.2` qualification.
-  The kernel cause remains P1-open with HIAL; the SIP-denied route is unchanged.
-  Original `.1.3`/`.2` require complete committed qualification; independent
-  HIAL/full-CI/push and visual owners retain their evidence boundaries.
+- Current observer qualification `.1.2.4.2` passes; commit it before original
+  regression `.1.3`. Failed native and copy-preservation aggregates stay failed.
+  Historical kernel causality remains P1-open with HIAL; SIP is unchanged.
+  Committed-only `.2` and independent HIAL/full-CI/push/visual owners retain
+  their own evidence requirements.

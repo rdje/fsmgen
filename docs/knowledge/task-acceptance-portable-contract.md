@@ -26,4 +26,4 @@ Staged work needs fresh checked ROOT CAUSE/ADDRESSED/NO REGRESSION in one task. 
 
 `FSM::Test::TaskAcceptanceIndexRuntime` uses fixed bounded cases in this repo's alternate index. T2068 checks status/evidence/cleanup; T2070 `audit_*` evidence/doc fixtures leave declaration coverage separate. Gates may refresh stat-cache, never staged entries; retain raw observations and exact native index bytes. Audit `.py/.pl/.pm/.sh/.c/.t` under `docs/audits/` needs fresh evidence; doc neighbors are unclassified. Outdented siblings end boxes; tabs use four-column stops.
 
-`docs/audits/task-acceptance-index-observer-20261017/verify_failure.py` retains failure; prior controls pass; cause unknown. Fresh intake: `docs/audits/task-acceptance-index-prospective-20261018/corrected-contract.json`. Empty log query: `docs/audits/index-observer-host-correlation-20261018/verify.py`.
+`docs/audits/task-acceptance-index-observer-20261017/verify_failure.py` retains failure; prior controls pass; cause unknown. Qualified: `docs/audits/task-acceptance-index-prospective-20261018/corrected-controls.json.gz`. Empty log query: `docs/audits/index-observer-host-correlation-20261018/verify.py`.
