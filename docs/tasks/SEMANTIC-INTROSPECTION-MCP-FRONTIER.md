@@ -5819,11 +5819,16 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement and qualify an exact historical-source replay adapter.`
   Acceptance: `After the complete source-role inventory commits, implement only its closed read-only historical namespace with exact complete source/import/guard joins and independently qualified current publication. Change no sealed source, first record or original guard. Inert wrong/missing/borrowed/current-role/promotion controls and full original contract correspondence must qualify before any corrected intake is admitted. No acceptance cohort or original producer executes in this preparation.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Exact committed source-role inventory supplies one read-only factory input in explicitly historical prerequisite/association roles. All fourteen historical imports bind, thirteen unchanged live modules and the current factory fingerprint conserve; no sealed programme, guard or disk source changes. Inert extraction executes each of the four original public guard bodies with semantic delegation intercepted: live source refuses and the recorded source reaches delegation. Missing/altered factory, import and original contract; current/publication/book/borrowed roles; nested views; and exceptional exit controls reject or restore normal reads as required. Complete semantic replay and corrected intake remain unqualified; original failed capture and all native/private/HIAL/full-CI/push/visual limits retain. Re-derivation is exact original AST guard execution and source/import comparison; falsification is genuine wrong/missing/changed/role candidates and restoration controls; durability is committed inventory, adapter and executable controls. Knowledge Map, book copied sources, staged doctrines and normal hooks qualify this inert preparation only.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2: qualify historical factory source view`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S for whole unchanged current canonical factory identifies e646348fcdfe212fc28bf1e6b88350214d2ad63c in the cause-container guard. The failed intake and committed four-role inventory show the caller supplied the advanced live factory to a fixed historical identity check; old guard and delegated factory source remain unchanged.
+  - [x] **ADDRESSED (verified)** — historical_factory_preflight.py passes exact four-guard live refusal/historical delegation, whole image/import/contract and closed-role controls, normal and exceptional restoration. Only the declared historical factory read changes within one process; disk sources and current-role readers stay outside that view. No semantic cohort executes.
+  - [x] **NO REGRESSION** — knowledge-map: OK; complete original contracts and historical guard/import bodies remain byte-bound. Inert controls pass; current factory disk bytes and normal Path.read_bytes restore. Book/native copied sources, staged scripts/check_doctrines.sh and normal hooks gate this preparation commit; complete semantic/current acceptance remains pending.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.3`
   Status: `pending`

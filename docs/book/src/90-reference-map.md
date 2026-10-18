@@ -1119,4 +1119,14 @@ replays, preserving separately current publication checks. Inspect the inventory
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/epoch_inventory.py
 ```
 
-The adapter, complete semantic replay and corrected intake remain unqualified.
+The adapter now passes inert tests of every original guard, complete source and
+import identity, historical/current role separation and restoration after errors.
+It supplies only the recorded factory read during declared historical replays;
+no repository file changes. Run the controls without executing semantic readers:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/historical_factory_preflight.py
+```
+
+Complete semantic replay and the corrected intake remain unqualified. The current
+publication route still uses the live factory and needs its separate check.

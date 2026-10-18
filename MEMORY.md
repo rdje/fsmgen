@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2` (pending source-role inventory delivery)
-- next_action: After inventory commits cleanly, implement and inertly qualify only its closed historical-source replay adapter. Read historical-factory-role-inventory.json.gz first; preserve all original guards/current obligations and execute no acceptance cohort before committed preparation.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.2.2`
+- next_action: Prepare and commit the closed corrected intake using the qualified historical source view. Bind complete historical/current commands, source and custody; preserve the failed first intake. No acceptance cohort executes until preparation commits.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; the first cohort is terminal native1 and its complete result is retained.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
