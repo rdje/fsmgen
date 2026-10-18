@@ -6035,16 +6035,46 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Guarded focused prove reports All tests successful; Files=3, Tests=61. Final default saved producer qualification, non-growing canonical route, mdBook/current copied-source, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commit. Primary/spent bytes, source/index/tools and all original semantic/native/private/HIAL/full-CI/push limitations conserve. Resource/storage/Knowledge Map allowances remain unchanged; no fresh whole-source checkout or semantic cohort runs.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Resolve default execution roles and qualify the complete source/output contract.`
   Acceptance: `Join complete site inventory with actual producer evidence and both original default entrypoint/import/dynamic-reader call graphs. Distinguish executed, input-only, guarded publication and temporary roles with named source/data premises; unresolved roles block fresh intake. Qualify a closed typed bounded source-versus-output before/after schema, all member/body/index/locality/role/omission/future-progress controls and committed-only recovery. Do not infer runtime behavior from site totals or admit arbitrary artifacts. Actual native consumer preserves equivalent noncanonical schema kinds/extra header/mode and no-cache invalid data; enforce canonical source-derived body/mode/member custody independently, with closed metadata field/type/uid/link/unknown-field and empty-versus-warm before/after controls. Preserve every old result/gap and original command/contract/native/private limit; book/task/claim/staged/normal delivery commits the contract before fresh physical preparation.`
+  Verification: `Task-only decomposition preserves the complete parent Goal/Acceptance and every existing evidence/gap. Ordered children separate exact dispatch/source edges, transitive effects, typed output custody and committed recovery. No reader, producer, new physical fixture or semantic cohort runs. Initial staged gate diagnoses task allowance overflow and a focused-index line overflow; shorter index projection and exact actual-plus-ratchet task declarations repair these with no ceiling increase. The unchanged RAM guard later terminates at its host cutoff during claim dispositions; complete first log retains as runtime-contract-split-first-gate.txt.gz. Attribution to a specific process remains unproved. Fresh guarded admission, staged doctrines and normal hooks remain required before implementation.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3: separate runtime contract qualifications`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub write_query_cache and immutable selected192c9d verify.py main guards expose distinct default dispatch and downstream dynamic/imported effects. Prior producer evidence explicitly leaves those roles and typed custody open; one mixed leaf cannot safely confer all qualifications.
+  - [x] **ADDRESSED (verified)** — Four ordered child contracts retain the whole original parent and independently own dispatch/source edges, complete transitive effects, closed typed custody and committed-only recovery. The first child alone is next; original native0/after-gap, failed/spent fixtures and unused cohort slots retain.
+  - [x] **NO REGRESSION** — All tests successful; Files=3, Tests=71 in guarded task-tree, claim-inventory and claim-disposition regression. The repeated gate passes resource/size/claims, then diagnoses this box missing its declared native evidence signature; corrected with that actual focused result. Fresh staged scripts/check_doctrines.sh and normal hooks gate this ownership commit. Existing mdBook behavior remains accurate; no source, producer, runtime permission, resource/storage or Knowledge Map ceiling changes.
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.1`
+  Status: `pending`
+  Goal: `Trace both default entry dispatches and fixed dynamic-reader source edges.`
+  Acceptance: `Derive exact default argparse and branch predicates for both selected192c9d original entrypoints without importing or executing them. Retain complete fixed entry source and named call/exec/import/input boundaries, including nested admission/context/cause/consumer edges and all nondefault publication/producer branches. Reconcile to complete static inventory and original command declarations; genuine changed source, branch, role, omission and command controls must refuse. This is dispatch/source-edge qualification only; downstream expanded function effects and output schema remain unqualified. No semantic cohort, original producer, new checkout or spent fixture/cache changes.`
   Verification: `pending`
   Commit: `pending`
 
-  Acceptance Checklist (enforced):
-  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S sub write_query_cache at3b71cb0 and the retained native0/after-custody record distinguish an actual producer from the much larger fixed source-data graph. A source-site enumeration cannot establish default reachability; source inventory, actual producer qualification and role closure need independent signoff.
-  - [x] **ADDRESSED (verified)** — Three exact child owners retain the parent Goal/Acceptance and separate whole candidate inventory, unchanged producer evidence and default source/output contract. The frontier is inventory only; no semantic execution, new checkout or runtime-policy implementation occurs in this ownership split.
-  - [x] **NO REGRESSION** — scripts/check_doctrines.sh must report [doctrine] all doctrine checks passed and normal hooks must pass before commit. Canonical task integrity, exact source-view delivery and claim inventory gate the changed pointers/allowance; existing book behavior and every old captured source/contract/scope remain unchanged.
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2`
+  Status: `pending`
+  Goal: `Close transitive default execution, data and guarded publication effects.`
+  Acceptance: `After exact entry dispatch commits, resolve all reachable imported/dynamic function and data/subprocess paths with explicit fixed source/data premises, full site coverage and guarded branch exclusions. Join actual unchanged public-cache production. Every unresolved role stays an owned gap blocking custody and intake; do not infer behavior from candidate totals or command strings in saved records. Preserve original commands, every failed capture and native/private/resource boundary.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.3`
+  Status: `pending`
+  Goal: `Qualify the closed typed source and runtime-output custody schema.`
+  Acceptance: `Only after effect closure, independently admit exact canonical source-derived body/mode/member and closed metadata field/type/uid/link/unknown-field before/after states. Qualify empty/warm, omission, role, locality, limit and future-progress controls against retained actual producer outputs; permissive native cache acceptance is not strict custody. Preserve old native0/after-gap; no fresh image or semantic cohort.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.4`
+  Status: `pending`
+  Goal: `Qualify committed-only recovery and deliver the complete runtime contract.`
+  Acceptance: `After graph and custody qualifications commit, reconstruct the full contract from committed source/data with original command/contract conservation, genuine whole-record controls and no ignored fixture dependency. Synchronize book/task/claim/current source views and staged/normal gates. Parent closes only with every original obligation; fresh physical preparation and intake remain separate.`
+  Verification: `pending`
+  Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.2`
   Status: `pending`
