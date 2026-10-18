@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.2`
-- next_action: Inventory complete nested historical runtime file/programme/source and default/current input boundaries, including dated repair reconstructions. Qualify a whole source-bound replay before preparing any new intake. Both failed prerequisite slots and all later unused slots remain untouched.
+- active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.1`
+- next_action: Prepare the closed whole-checkout successor intake. Keep original commands; historical prerequisite/association run in the qualified relative linked checkout, current/frozen checks in primary. Bind complete physical/source/index/cwd custody and commit preparation before any semantic cohort.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; corrected prerequisite native1 and its complete result/receipt are retained. Seven later corrected slots remain unused.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

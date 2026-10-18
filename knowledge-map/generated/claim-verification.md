@@ -87,7 +87,7 @@ _Claim records use one finite manifest-addressed registry set_
 
 ### claim-verification-record-enforcement
 
-_Exact claim blocks bind three distinct structural evidence legs_
+_Exact claim blocks bind three structural evidence legs_
 
 - **date:** 2026-10-18 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-record-enforcement.md`](../../docs/knowledge/claim-verification-record-enforcement.md)

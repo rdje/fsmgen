@@ -1147,6 +1147,30 @@ custody and the inert diagnosis without repeating a semantic replay:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_corrected_failed.py
 ```
 
-Both intakes remain failed. All later corrected cohorts remain unused. Complete
-runtime source-role inventory and repair must precede any new intake; current
-publication and every original native/private and independent gate stay separate.
+Both intakes remain failed. All later corrected cohorts remain unused.
+
+Historical replay preparation now uses a complete fixed Git checkout immediately
+before the legitimate publication change. Its physical files, tests, runtime
+inputs, modes, relative symlink endpoints, directories and index are independently
+verified. Every original contract retains. The original factory and dated repair
+guards pass inert controls against actual historical files, without replacing
+file reads. Inspect the whole prepared checkout without semantic replay:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/historical_checkout.py
+```
+
+The generated fixture is on the project volume and uses relative links to the
+same Git repository. In a fresh clone with no generated fixture, reconstruct it
+from the retained Git revision before running the inspection command:
+
+```bash
+git --no-replace-objects worktree add --detach --relative-paths --lock --reason "Owned historical saved-reader source fixture" .artifacts/original-join-historical-checkout-20261018 1a40a1da89216f4761ef73e67cefb029c78e8f94
+```
+
+This restores source files; it does not repeat original producers or semantic
+captures. The full committed manifest verifies the reconstruction. A fresh
+committed intake is still required. Only historical
+saved readers may use this checkout; current publication stays in primary source.
+Complete semantic acceptance and every native/private and independent gate remain
+open.
