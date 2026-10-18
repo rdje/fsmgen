@@ -5920,16 +5920,44 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — knowledge-map: OK; whole original Goal/Acceptance and all sealed sources/native failures/limits conserve. Successful acceptance reader refuses this failed result, and false status/cwd/after/source/index/tool/resource/canonical candidates reject. Book/copied source currency, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate checkpoint commit. Every later slot stays unused and original/native/private/HIAL/full-CI/push/visual scopes remain open.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Derive a historical replay boundary satisfying every declared source-epoch constraint.`
   Acceptance: `After the checkpoint commits, trace the whole relevant reader/source/runtime/canonical input graph and its recorded successful qualification epochs. Bind complete original namespaces, all factory/import and development repair constraints and every canonical baseline together. Select a fixed or explicitly composed source image only when the full conjunction is satisfied; do not assume the latest pre-publication commit is the correct epoch or chase one guard at a time. Preserve all original source/control/native/private and first-failure premises; qualify complete inert source/omission/role/conflict controls and commit before any new intake. If constraints cannot be reconciled without changing original meaning, record the exact decision blocker.`
+  Verification: `Complete fixed-Git conjunction selects the recorded association-final192c9d boundary. Each whole recorded publication source graph, complete top reader/archive namespace, every formal programme, retained helper, transitive factory import, consumer canonical baseline and complete dated repair-input population agrees; only the five declared publication targets retain their fixed/afterimage roles. Addressable Python filesystem-read census preserves the complete recorded source population for checkout review. Actual later1a40a1d and a0561d9 epochs refuse, as do genuinely omitted/extra/mode/identity/canonical/test source images and lost-contract/locality/current-promotion records. Initial development control correctly refuses its unchanged selected card; exact programme/cause and preliminary derivation retain. Corrected controls select actually changed source members. Original contracts, commands, all three failed intakes and later unused slots conserve. Re-derivation is complete Git/source-graph/formal/import/runtime/canonical correspondence; falsification is real incompatible epochs plus altered complete input images and closed role/contract/locality controls; durability is committed exact source revisions, full records and producing reader. This qualifies source selection only: physical checkout and native before/after source/index custody still require successor preparation; semantic/native/private/HIAL/full-CI/push/visual acceptance remains open. First staged gate refuses task-document growth beyond its declared allowance; complete console retains. Measured allowance is recalibrated under the existing live owner and unchanged ceilings. Selected claim template matches the reviewed source; cleanup is not due.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.2: select conjunctive historical source epoch`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S every unchanged current canonical source byte and the unchanged model.inputs guard explain why a latest-pre-publication boundary does not satisfy the earlier physical canonical baseline. The whole source-role graphs and repaired_preflight input population jointly constrain the epoch, beyond factory imports alone.
+  - [x] **ADDRESSED (verified)** — epoch_constraints.py selects the recorded completed association boundary using complete fixed-Git source namespaces, formal/import/development/canonical inputs and original contracts. Actual incompatible later epochs and genuine source-image/role/omission controls refuse. The vacuous development control is retained as failure and repaired with actually differing source members. Physical and semantic admission remain expressly unqualified.
+  - [x] **NO REGRESSION** — knowledge-map: OK; scripts/check_doctrines.sh and normal hooks gate this source-selection slice. Original Goal/Acceptance fields and all commands, source/native/private assumptions, first failures and spent/unused slots retain. Book/copied-source and claim-inventory checks qualify current documentation; no original producer or semantic cohort runs.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3`
+  Status: `active`
+  Goal: `Prepare and accept a successor only after complete epoch compatibility qualifies.`
+  Acceptance: `After conjunctive whole-source/canonical preparation commits, prepare a fresh exclusive closed intake preserving all original commands/contracts and every failed or unused older slot. Commit source/book/task/normal preparation before actual semantic/current cohorts. Run each once, stop at first unexpected result and retain full primary/historical source/index/cwd/native/resource/book custody. Complete successful delivery before original parent recovery.`
   Verification: `pending`
   Commit: `pending`
 
-- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.1`
   Status: `pending`
-  Goal: `Prepare and accept a successor only after complete epoch compatibility qualifies.`
-  Acceptance: `After conjunctive whole-source/canonical preparation commits, prepare a fresh exclusive closed intake preserving all original commands/contracts and every failed or unused older slot. Commit source/book/task/normal preparation before actual semantic/current cohorts. Run each once, stop at first unexpected result and retain full primary/historical source/index/cwd/native/resource/book custody. Complete successful delivery before original parent recovery.`
+  Goal: `Prepare the complete selected historical checkout and physical custody.`
+  Acceptance: `Use the committed conjunctive epoch selection to reconstruct a new complete same-project192c9d checkout on the repository volume. Preserve the old checkout and every failed/unused intake. Independently hash every source/member/mode/symlink/index and qualify the exact original factory, namespace, runtime-repair and canonical guards using real files without semantic delegation. Predeclare the exact locality directories before observation; genuine physical omission/change/extra/mode/link/role controls must reject. Retain full preparation/native/source/contract custody, sync book/task/knowledge and commit before new intake.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.2`
+  Status: `pending`
+  Goal: `Prepare a fresh intake from the fully qualified selected checkout.`
+  Acceptance: `Only after physical qualification commits, bind every unchanged original command/contract to the selected whole historical versus primary role with complete before/after source/index/tool/resource/locality custody. Preserve all spent/unused old slots and every native/private limit. Qualify inert source/cwd/role/command/member/prior-stop controls and commit before semantic execution.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3`
+  Status: `pending`
+  Goal: `Execute and deliver the new complete semantic/current intake.`
+  Acceptance: `Only after the selected-checkout intake commits, run every unchanged complete cohort once in declared order. Stop at first unexpected result and commit a terminal checkpoint before repair. Retain full native/stream/source/index/tool/resource/book custody, every earlier failure and all original contracts. Complete successful book/claim/staged/normal delivery before original parent recovery; independent native/private/full-alias/HIAL/full-CI/push/visual limits retain.`
   Verification: `pending`
   Commit: `pending`
 

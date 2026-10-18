@@ -23,7 +23,7 @@ evidence: >-
 reverify: >-
   scripts/check_claim_verification.pl && prove -Iperl
   t/1636-claim-verification-doctrine.t && scripts/run_with_ram_guard.sh -- bash -c
-  'for reader in verify_failed verify_corrected_failed verify_snapshot_failed snapshot_postrun_sources; do python3 -B
+  'for reader in verify_failed verify_corrected_failed verify_snapshot_failed snapshot_postrun_sources epoch_constraints; do python3 -B
   docs/audits/original-join-parent-acceptance-20261018/$reader.py || exit; done'
 ---
 
@@ -34,12 +34,12 @@ missing/duplicate markers and identical evidence/path legs. Truth and conceptual
 oracle independence need review (`0074`). `0104` adopts
 `CLAIM-VERIFICATION-TEMPLATE-REVIEW.2` rules without checker changes.
 
-Historical defaults read live inputs. At `container_common.public` (`064cf9`),
-`a0561d9` advanced the factory while twelve helpers retain; old/current guards
-separate. Factory-only replay next rejects that commit's publication-test update
-in `repaired_preflight`. Whole `1a40a1d` rejects consumer `model.inputs`:
-complete knowledge/decision baseline is `8b9a726`, with later-edited cards.
-The after observer rejects empty locality directories; a later full-source check
-passes. Failures and the original gap retain. Whole snapshots cover tracked
-inputs; select epochs from all original constraints. Current checks stay
-separate; native/private/HIAL assurance stays open.
+Historical defaults read live inputs. `container_common.public` (`064cf9`)
+rejects `a0561d9` factory advancement; twelve helpers retain. Factory-only replay
+rejects its publication-test update in `repaired_preflight`. Whole `1a40a1d`
+rejects consumer `model.inputs`: knowledge/decision baseline `8b9a726` has
+later-edited cards. Empty locality dirs break the after observer; a separate
+full-source check passes. Failures/gap retain. Its
+`epoch_constraints.py` selects `192c9d` from whole source/formal/import/runtime/
+canonical constraints; later epochs refuse. Physical/semantic admission
+pending; current checks separate; native/private/HIAL open.

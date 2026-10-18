@@ -1212,3 +1212,18 @@ files:
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/snapshot_postrun_sources.py
 ```
+
+The complete fixed-Git source constraint audit selects the recorded completed
+association revision `192c9d`, including the consumer canonical baseline,
+formal readers, whole source namespaces, factory imports and development-repair
+inputs. Actual later epochs and altered source images refuse. Inspect this
+selection without starting a semantic reader:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/epoch_constraints.py
+```
+
+This is source selection only. A new complete physical checkout must qualify
+all original inert guards and source/index custody, with the empty locality
+directories declared before observation, before a fresh intake can be prepared.
+The older physical checkout and every failed or unused intake remain retained.
