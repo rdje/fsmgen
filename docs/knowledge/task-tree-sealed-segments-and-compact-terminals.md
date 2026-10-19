@@ -16,7 +16,8 @@ answers:
   - "what retention contract does a task-tree version object require?"
   - "how is task-tree migration completeness proved?"
   - "can completed live claim owners become compact task terminals?"
-date: 2026-10-11
+  - "what bounds live task narrative fields?"
+date: 2026-10-19
 status: current
 tags: [task-tree, continuity, containment, jsonl, segment, archive, provenance]
 evidence: docs/tasks/history/SEMANTIC-INTROSPECTION-MCP-FRONTIER/acceptance-history.jsonl; docs/tasks/history/HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE/acceptance-history.jsonl; docs/decisions/0042-task-trees-seal-completed-subtrees-with-exact-provenance.md; docs/TASK_TREE.md; docs/TASK_TREE_README.md; docs/tasks/TEMPLATE.md; scripts/check_task_tree_integrity.pl; scripts/check_claim_verification.pl; t/1549-task-tree-integrity-doctrine.t; docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md
@@ -27,6 +28,8 @@ Decision `0042` keeps active nodes and frontier ancestry in the live task tree. 
 finite per-part/aggregate bounds and one validated combined graph. A compact `version_object` retains its original goal, full revision/path/file digest,
 node count, named retention contract, closed verification and commit evidence.
 Before compaction, census live registry owners; keep every live `owner_task` ID.
+
+Live narrative fields each have a 4096-byte cap.
 
 Current compact retrieval validates retrieved leaves as ordinary leaves. Nested compact terminals lack the required Acceptance field and reject. Keep
 those terminals live and select a flat completed subtree; the checker remains

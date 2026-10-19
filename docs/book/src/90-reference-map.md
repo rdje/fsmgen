@@ -1997,3 +1997,42 @@ and the earlier source/type/route corruptions. This admits only named sources,
 declared dependencies and frozen inputs. The full advertised helper still
 requires its own retained actual successful run. No original cohort, custody,
 runtime, native/private, HIAL or full-CI authority follows from this repair.
+
+
+The complete retry after native admission `1816f09c` is retained in
+`complete-reader-selected-intake-retry-capture.json.gz`. Claim checks and the
+first saved reader pass before the unchanged inner guard reports host usage
+of 88.2% against its 88% cutoff and terminates the descendant tree. The actual
+helper and collector return 137. All capture files, native source/listing and
+equal before/after owning boundaries remain; this is a resource refusal, not
+complete helper success or a newly diagnosed reader assertion.
+
+The preceding launch setup mistyped a manually copied owner. Its collector
+refused before helper/input publication; every missing file remains explicit
+in `complete-reader-selected-intake-capture.json.gz`. Corrected setup derives
+the owner from `MEMORY.md`, and temporary same-volume capture custody restores
+the exact earlier refusal bytes after the attempt. Independent retention
+checks conserve original obligations and only the owning Verification delta;
+actual inert type/member/source/boundary/command candidates refuse.
+
+No raw VM sample or independent OS/host-cause/peak attribution accompanies
+this attempt; the guard report supplies none of those guarantees. The user's
+capacity-wait direction remains active. Limits stay unchanged, and this same
+repair waits for capacity before another complete helper qualification.
+Original semantic/cohort/custody/operational/native/private/HIAL/full-CI gates
+remain open under their existing owners.
+
+
+The live task record is bounded independently of Markdown page limits. Its
+complete over-bound Verification source and completed gate refusal retain in
+`complete-reader-wait-task-field-refusal.json.gz`; the current field routes to
+that full record and the original evidence. No prior fact or source is dropped.
+The same audit retains a later doctrine-only raw host/process sample window;
+that window cannot supply missing measurements for the earlier helper run.
+
+```bash
+knowledge-map/scripts/query_knowledge_map.sh --no-cache 'what bounds live task narrative fields?'
+```
+
+The canonical task-history card now answers this policy question within the
+existing Knowledge Map allowance. All former facts and questions remain.

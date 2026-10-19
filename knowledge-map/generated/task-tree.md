@@ -1,7 +1,7 @@
 # Knowledge Map: `task-tree`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **6** facts · **37** uniquely owned question entries.
+> **6** facts · **38** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -26,6 +26,7 @@
 - q="how is task-tree migration completeness proved?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="is the HIAL task tree Current Frontier prose a live resume source?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
 - q="is the semantic task tree Current Frontier prose a live resume source?" · facts=[task-tree-in-file-secondary-views-are-historical](../../docs/knowledge/task-tree-in-file-secondary-views-are-historical.md)
+- q="what bounds live task narrative fields?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="what does TASK-TREE-INTEGRITY enforce?" · facts=[task-tree-live-node-integrity](../../docs/knowledge/task-tree-live-node-integrity.md)
 - q="what is a compact completed task-tree terminal?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 - q="what is a task-tree sealed subtree segment?" · facts=[task-tree-sealed-segments-and-compact-terminals](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
@@ -77,7 +78,7 @@ _Active task-tree live-node structure is mechanically enforced_
 
 _Long-running task trees use exact-provenance sealed segments or compact terminals_
 
-- **date:** 2026-10-11 · **status:** current
+- **date:** 2026-10-19 · **status:** current
 - **source and verification:** [`docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md`](../../docs/knowledge/task-tree-sealed-segments-and-compact-terminals.md)
 
 ### task-tree-stale-status-drift-repair
