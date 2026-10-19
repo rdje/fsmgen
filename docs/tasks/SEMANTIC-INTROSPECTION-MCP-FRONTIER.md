@@ -6043,10 +6043,45 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Repair live helper coupling in frozen route recovery and replace the obsolete public current gate.`
   Acceptance: `P1 candidate found while qualifying payload fact metadata: verify_claim_readers.sh still ends in verify_operand_route.py --current. The capture-era verifier requires one exact old card transform and exact initial command list, and its default derive also reads the live helper listing/source. Reproduce current/default authorizer refusals read-only under the unchanged RAM guard, retaining full source/card/helper/published proof and streams. Preserve every sealed byte and old scope; supersede with closed frozen recovery and a scoped current card/archive/query/ordered-command contract that permits legitimate additive readers and containment. Genuine stale source/list/card/provenance/type/receipt controls must refuse. Run the actual complete advertised source-reader sequence after repairing it, current authorizers only, without original semantic/model/recipe/cohort execution or spent capture use. Commit focused/book/claim/staged/normal verification before aggregate data recovery. No Knowledge Map allowance, enforcement ceiling, original custody/image/default/effect/runtime or HIAL/full-CI/push gate is waived. Finish the in-flight payload slice before activating this repair.`
   Verification: `P1 confirmed by actual public saved/current authorizer modes: saved recovery exits1 at complete array membership while comparing the evolved live helper listing; --current exits1 at the old exact card transform. Full original verifier, live helper/card, published proof and guard/terminal streams retain in payload-boundary-prior-route-saved.json.gz and payload-boundary-prior-route-current.json.gz. Neither probe executes listed readers or original semantics. Source inspection isolates unconditional live listing and helper programme capture inside derive, while only card selection obeys the saved/current switch. The immutable capture itself is preserved; the public dispatcher still selects its obsolete current gate. Repair is the immediate next frontier after payload closure, before aggregate data recovery; native model/data source qualification remains separate.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.4`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.4`
+  Status: `done`
+  Goal: `Define a bounded P1 recovery plan and a clean implementation handoff.`
+  Acceptance: `Keep both actual saved/current failures and all sealed evidence, split the repair into independent frozen recovery, scoped live dispatch and complete public sequence qualification, and select the first unstarted implementation leaf. Commit the plan and clean pointer before the recommended session reset; no functional repair is claimed by this planning slice.`
+  Verification: `Both public failures and complete source/proof/helper/card captures are committed at c9eb8fb30d0ebbee30841ab7515a889b6745d4b5. Native creator inputs exist at dccd681e075c3b9df74811109de8a7cc427dae7a for executable-operand-route-qualified.json.gz, verify_operand_route.py and verify_claim_readers.sh in the audit directory; the creator declares the prior card revision 3ecd34eaab9061eb5e39e63fd64e946d99995afe. Recover these exact inputs before implementing the new frozen parser. Three ordered implementation leaves now separate immutable recovery from evolving live checks and actual sequence success. Aggregate data recovery explicitly depends on their completed parent. The first implementation remains pending; no functional prototype or job is left in flight. A fresh session is recommended under the user session-health instruction before this P1 implementation. The unpublished zero child draft is rejected by the actual integrity checker and replaced with unused positive child4; complete before/after task sources and refusal retain. Corrected task integrity reports All tests successful; Files1 Tests48. Claim inventory, staged doctrines and normal hooks gate this metadata checkpoint.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.4: define bounded reader-route repair handoff`
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S and the c9eb8fb30 committed public-mode refusals locate the legacy derive live-list dependency and current-card exact-transform boundary. Repair needs distinct frozen/current/sequence units; mixing them would recreate partial input selection.
+  - [x] **ADDRESSED (verified)** — The parent has three ordered implementation children, aggregate recovery waits for repair, and the pointer selects the first unstarted leaf. Sealed sources/proofs and both observed failures retain; this slice changes planning only.
+  - [x] **NO REGRESSION** — Corrected task integrity reports All tests successful; Files=1, Tests=48 under the unchanged RAM guard. The initial invalid planning ID and exact repair retain. Claim inventory and staged/normal doctrines gate commit; functional code and book behavior are unchanged.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.1`
+  Status: `pending`
+  Goal: `Close original route recovery over captured inputs only.`
+  Acceptance: `Pin the complete original route proof, creator programme, helper and before-card source under native Git identities. Re-derive its whole transform, ordered command membership, captured protocol and genuine controls using new code and frozen data, never a live helper/card or original semantic code. Preserve sealed files and first failures. Observe current mutation/default-independence and source/provenance/type/receipt controls; default recovery must remain independent of later helper/card changes. Commit focused/book/claim/staged/normal qualification before live dispatch changes.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.2`
+  Status: `pending`
+  Goal: `Qualify scoped live reader routes and replace the obsolete terminal gate.`
+  Acceptance: `After frozen recovery commits, derive live card/archive/query and command-list truth on read with a separately scoped checker. Preserve every original child reader in order, permit qualified additive readers and containment, and reject omitted/reordered/wrong-role/source/query/type/receipt candidates. Replace only the obsolete terminal current gate; keep original captured commands and programme bytes. Qualify actual current listing and captured controls without executing original models/recipes/cohorts. Commit native/focused/book/staged/normal gates before complete sequence execution.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3`
+  Status: `pending`
+  Goal: `Verify the complete advertised source-reader sequence and finish the P1 repair.`
+  Acceptance: `After both new boundaries commit, execute the actual full advertised helper under the unchanged RAM guard, current authorizers only. Preserve complete command/source/input/stream/status evidence and every first failure; own and repair any additional default/live coupling before claiming success. Retain all original semantic/custody/runtime/HIAL boundaries, synchronize book/current fact routes, run focused and staged/normal gates, and close the parent only after complete sequence success before aggregate data recovery.`
+  Verification: `pending`
   Commit: `pending`
 
 
