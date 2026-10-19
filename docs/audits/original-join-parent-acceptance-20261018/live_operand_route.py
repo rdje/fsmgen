@@ -19,22 +19,28 @@ BASE = 'd5ea1fc9ed7e3fc502bcf4aeaf4b0da89226281a'
 CONTRACT_REVISION = 'ff44aaf3c04fc8d7904d11f5e0f7cd9b664a6292'
 CONTRACT_SOURCES = {AUDIT + name + '.py' for name in
                     ('prepare', 'canonical_contracts', 'check_canonical_progress')}
+INTAKE_REVISION = '8e4116bcd5063c699a3b6a8793042a3564e26cd9'
+INTAKE_SOURCES = {AUDIT + name + '.py' for name in
+                  ('selected_intake', 'verify_selected_failed', 'qualify_selected_intake_roles')}
+INTAKE_PROOF = AUDIT + 'selected-intake-roles-qualified.json.gz'
 FROZEN_INPUTS = [AUDIT + name + '.json.gz' for name in
-                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')]
+                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF]
 SELF = AUDIT + 'live_operand_route.py'
 HELPER = frozen.HELPER
-OUTPUT = AUDIT + 'canonical-live-operand-route-qualified.json.gz'
+OUTPUT = AUDIT + 'selected-intake-live-route-qualified.json.gz'
 TERMINAL = ['python3', '-B', SELF, '--current']
 OPTIONAL = [['python3', '-B', AUDIT + name + '.py'] for name in
             ('frozen_operand_route', 'check_frozen_route_independence',
-             'canonical_contracts', 'check_canonical_progress')]
+             'canonical_contracts', 'check_canonical_progress', 'qualify_selected_intake_roles')]
 DEPENDENCIES = [AUDIT + 'frozen_operand_route.py', AUDIT + 'rollover_source_card.py',
-                'scripts/check_source_recovery_card.sh', *sorted(CONTRACT_SOURCES)]
+                'scripts/check_source_recovery_card.sh', *sorted(CONTRACT_SOURCES | INTAKE_SOURCES)]
 SCOPE = ('Current source/archive/question/reverify and ordered reader membership only. '
-         'Original and already-published child readers retain their exact order and '
-         'native source identities; the obsolete terminal is replaced. Only the '
+         'Original and already-published child readers retain their exact order. '
+         'Only the named canonical and selected-intake source replacements bind to '
+         'separately qualified immutable revisions; unchanged entrypoint identities '
+         'and complete original versions of replaced published sources retain. Only the '
          'explicit native-qualified optional readers may be added. The named '
-         'canonical contract library/readers and their frozen proof inputs bind '
+         'canonical and intake library/readers and their frozen proof inputs bind '
          'to the separately qualified immutable revision; other transitive '
          'dependencies are outside this route claim. Actual helper '
          'listing and public queries execute, never listed readers or original '
@@ -42,8 +48,11 @@ SCOPE = ('Current source/archive/question/reverify and ordered reader membership
          'custody, native/private, HIAL and full-CI gates remain separately owned.')
 
 
-def native(path, *, identity_only=False):
-    revision = CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE
+def native(path, *, identity_only=False, revision=None):
+    if revision is None:
+        revision = (INTAKE_REVISION if path in INTAKE_SOURCES or path == INTAKE_PROOF else
+                    CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE)
+    assert revision in (BASE, CONTRACT_REVISION, INTAKE_REVISION), 'closed native source epochs'
     entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', revision, '--', path)
     assert entry.count(b'\0') == 1, 'one native admitted source'
     header, name = entry[:-1].split(b'\t')
@@ -87,6 +96,8 @@ def authority():
     proof = native(str(card.PATH))
     baseline_card = native(frozen.CARD)
     return dict(helper=helper, sources=sources, required=required,
+                replaced_sources={path: native(path, revision=BASE) for path in sorted(
+                    {command[-1] for command in required} & INTAKE_SOURCES)},
                 frozen_inputs={path: native(path, identity_only=True) for path in FROZEN_INPUTS},
                 source_card_proof=proof, baseline_card=baseline_card)
 
@@ -212,6 +223,11 @@ def controls(value, fixed):
         ('changed-source', lambda x: x['sources'].__setitem__(next(iter(x['sources'])), frozen.blob(b'changed source\n'))),
         ('changed-contract-library', lambda x: x['sources'].__setitem__(AUDIT + 'prepare.py', frozen.blob(b'changed library\n'))),
         ('wrong-contract-source-revision', lambda x: x['authority']['sources'][AUDIT + 'prepare.py'].__setitem__('revision', BASE)),
+        ('changed-selected-intake', lambda x: x['sources'].__setitem__(AUDIT + 'selected_intake.py', frozen.blob(b'changed intake\n'))),
+        ('changed-failed-custody-consumer', lambda x: x['sources'].__setitem__(AUDIT + 'verify_selected_failed.py', frozen.blob(b'changed custody\n'))),
+        ('wrong-intake-source-revision', lambda x: x['authority']['sources'][AUDIT + 'selected_intake.py'].__setitem__('revision', BASE)),
+        ('lost-original-intake-source', lambda x: x['authority']['replaced_sources'].pop(AUDIT + 'selected_intake.py')),
+        ('missing-intake-role-proof', lambda x: x['frozen_inputs'].pop(INTAKE_PROOF)),
         ('missing-frozen-proof', lambda x: x['frozen_inputs'].pop(FROZEN_INPUTS[0])),
         ('changed-frozen-proof', lambda x: x['frozen_inputs'][FROZEN_INPUTS[0]].__setitem__('sha256', '0' * 64)),
         ('boolean-frozen-proof-size', lambda x: x['frozen_inputs'][FROZEN_INPUTS[1]].__setitem__('bytes', True)),
@@ -256,7 +272,7 @@ def main():
     args = parser.parse_args()
     fixed = authority()
     value = current_value(fixed)
-    product = dict(schema='fsmgen.live_operand_route.v2', inputs=value,
+    product = dict(schema='fsmgen.live_operand_route.v3', inputs=value,
                    result=review(value, fixed), controls=controls(value, fixed))
     if args.write:
         card.save_record(OUTPUT, product)

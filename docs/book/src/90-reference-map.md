@@ -1936,7 +1936,8 @@ readers from `ff44aaf3c04fc8d7904d11f5e0f7cd9b664a6292`. Both saved regression
 readers append to the advertised helper. Their frozen proof files bind to exact
 native revision/path/mode/object/size/SHA256 references, with full committed
 bytes recoverable through required Git history. Established reader order,
-source identities, shell protocol and card/archive/question routes retain.
+shell protocol and card/archive/question routes retain. The later selected-intake
+replacements and their retained former identities are documented below.
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
@@ -1982,8 +1983,17 @@ candidate retain. Exact recursive primitive and population checks now reject
 that case and altered instrument/evidence/command/scope metadata. These
 interventions are controls, not actual full native intake observations.
 
-The revised selected-intake and failed-custody sources still require explicit
-native admission in the route checker before the full advertised helper can
-qualify. Until that checkpoint, the current live route command above refuses
-those revised source identities. No original cohort, custody, runtime,
-native/private, HIAL or full-CI authority follows from this saved-role repair.
+The route checker now admits the exact selected-intake, failed-custody and
+role-qualifier sources from `8e4116bcd5063c699a3b6a8793042a3564e26cd9`.
+The role proof binds through its full native revision/path/mode/object/size/hash
+identity. The former published source bodies also remain in the authority
+record, separate from their qualified replacements. Existing reader order,
+protocol, questions and unchanged source identities retain; the role reader
+appends to the advertised helper.
+
+The current live route command above passes again. Controls reject changed
+replacement sources, borrowed revision, missing former source or role proof,
+and the earlier source/type/route corruptions. This admits only named sources,
+declared dependencies and frozen inputs. The full advertised helper still
+requires its own retained actual successful run. No original cohort, custody,
+runtime, native/private, HIAL or full-CI authority follows from this repair.
