@@ -1856,3 +1856,27 @@ bytes survive; missing-file controls refuse. This proves partial retention,
 not saved-reader success, complete peaks, timing or old host-cause attribution.
 Only run the isolated probe through the unchanged guard. Inspect its retained
 partial files after any interruption; never promote them to a completed run.
+
+
+The subsequent recoverable instrumented first-reader probe completed under the
+same guard limits. Its raw source/start/sample/stream/completion record is
+`first-reader-recoverable-profile.json.gz`. Validate it without running that
+reader again:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_first_reader_profile.py
+```
+
+The qualifier binds the native collector and both guard boundaries, derives
+occupied capacity from retained raw counters, and checks descendant allocation
+using fixed-point closure and ancestor walking. The current reader returns
+through custody validation, controls and diagnosis; its original prerequisite
+cohort remains failed. Missing/type/source/route/scope/stream and phase-grammar
+controls refuse. The first new reviewer's changed-scope admission is retained
+before its complete-metadata correction.
+
+This qualifies one instrumented current-reader admission. It does not establish
+OS accounting accuracy, between-sample peaks, old exclusive host causation,
+future headroom or complete advertised wrapper success. The uninstrumented
+whole sequence remains pending, with the prior refusals and original
+semantic/custody/native/private qualifications preserved.
