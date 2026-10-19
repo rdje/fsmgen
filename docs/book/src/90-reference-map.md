@@ -1440,3 +1440,27 @@ registry bytes; the explicit current check observes the complete tracked live
 registry namespace. The initial result's unretained live-input gap stays separate
 from the later complete admission capture. This qualifies ledger retention and
 source-family ownership; executable operand bindings remain pending.
+
+Check fixed module-wrapper definitions before binding their caller arguments:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/wrapper_templates.py
+```
+
+This source-only reader retains whole original files and exact function spans.
+An independent token grammar checks the AST-derived parameter, input, logical
+filename, namespace, return and loader-call structure. Dictionary wrappers
+compile `path.read_bytes()` with `str(path)` as the logical name. File-module
+wrappers declare an importlib specification, module creation and loader call;
+the return kind is recorded separately. Local callable declarations and the
+recovery helper's explicit borrowing through its caller's namespace are joined
+to every fixed wrapper route. Altered source, input/name/namespace/return,
+loader, callable, omitted definition/route and permission candidates refuse.
+
+These are source-template contracts. Actual argument types and payload bytes,
+builtin and public loader behavior, import hooks, runtime source/cache image,
+namespace mutation and target exports remain unqualified. No historical module,
+recipe or semantic cohort runs. The retained first checker failures concern a
+nested-call coordinate collision and a valid semicolon statement separator;
+their complete instrument sources and outputs remain alongside the repaired
+reader.

@@ -1,0 +1,41 @@
+{
+  "book_aggregate_measurement": {
+    "after": {
+      "bytes_total": 3957130,
+      "files": 64,
+      "lines_total": 71014
+    },
+    "before": {
+      "bytes_total": 3955749,
+      "files": 64,
+      "lines_total": 70990
+    },
+    "prior_revision": "0ab0b27250c296c58980452050d932e259e59f31"
+  },
+  "root_history": {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "-S",
+      "def module(path):",
+      "--",
+      "docs/audits/record-value-class-frame-retention-20261006/verify.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "commit 50dd117496d4d226bff3cf2a5226caab45104416\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Tue Oct 6 22:12:06 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.2.2.2.6.3.2: qualify complete semantic retention\n    \n    Retain every original source proposition, qualifier, question, literal and route obligation before atomic publication.\n    \n    Bind full source-class/frame/body/phase/operand additions, frozen collection authority, genuine loss controls and complete actual-result qualification. Preserve and reproduce failed drafts and native rendering before exact repair.\n    \n    Update bounded live pointers and verified mdBook guidance; atomic current publication remains the pending frontier.\n"
+  },
+  "streams": {
+    "wrapper-templates-book.txt": "ram-guard: PID 70830; host 79.6%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (15723927 bytes)\n INFO HTML book written to `/Volumes/SSD/Documents/github/fsmgen/.artifacts/mdbook-caller-modules`\n",
+    "wrapper-templates-claims.txt": "claim-inventory: wrote doctrine/claim_verification/inventory.jsonl\nclaim-inventory: current-surface census and independent census agree (numeric_lines=13543, candidates=1993, quantified=968, conservative=1025, constants=3023, original_constants=615, open_migration_owners=0, untracked_producers=0, unwatched_candidates=1993)\nclaim-inventory: partition adoption_reference_or_structure=118\nclaim-inventory: partition code_or_data_example=3484\nclaim-inventory: partition derived_and_watched_projection=186\nclaim-inventory: partition identifier_literal_or_navigation=7762\n",
+    "wrapper-templates-complete.txt": "ram-guard: PID 68274; host 65.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nFixed wrapper source spans, independent token templates, lexical callable routes and saved refusals agree; typed payload, loader/cache semantics and runtime remain unqualified.\n",
+    "wrapper-templates-first.txt": "ram-guard: PID 62185; host 46.2%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/original-join-parent-acceptance-20261018/wrapper_templates.py\", line 366, in <module>\n    result = json.loads(prepare.encoded(derive(graph)))\n                                        ~~~~~~^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/original-join-parent-acceptance-20261018/wrapper_templates.py\", line 251, in derive\n    binding = declaration(graph, route)\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/original-join-parent-acceptance-20261018/wrapper_templates.py\", line 210, in declaration\n    assert len(calls) == 1 and isinstance(calls[0].func, ast.Name) and calls[0].func.id == 'module'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+    "wrapper-templates-focused.txt": "ram-guard: PID 66132; host 47.7%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nt/1549-task-tree-integrity-doctrine.t .. ok\nt/1637-claim-verification-inventory.t .. ok\nAll tests successful.\nFiles=2, Tests=61, 15 wallclock secs ( 0.02 usr  0.00 sys +  9.66 cusr  4.04 csys = 13.72 CPU)\nResult: PASS\n",
+    "wrapper-templates-replay.txt": "ram-guard: PID 69661; host 79.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nFixed wrapper source spans, independent token templates, lexical callable routes and saved refusals agree; typed payload, loader/cache semantics and runtime remain unqualified.\n",
+    "wrapper-templates-second.txt": "ram-guard: PID 62336; host 46.3%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nTraceback (most recent call last):\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/original-join-parent-acceptance-20261018/wrapper_templates.py\", line 368, in <module>\n    product = dict(result=result, review=review(result, graph), controls=controls(result, graph),\n                                         ~~~~~~^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/original-join-parent-acceptance-20261018/wrapper_templates.py\", line 287, in review\n    source, contract = token_contract(prepare.unblob(value['sources'][name]['body']))\n                       ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/original-join-parent-acceptance-20261018/wrapper_templates.py\", line 175, in token_contract\n    stream.take('def', 'module', '(', 'name', ',', 'path', ')', ':', 'spec', '=',\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                'importlib', '.', 'util', '.', 'spec_from_file_location', '(', 'name', ',', 'path', ')',\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                'result', '=', 'importlib', '.', 'util', '.', 'module_from_spec', '(', 'spec', ')',\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                'spec', '.', 'loader', '.', 'exec_module', '(', 'result', ')', 'return', 'result')\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Volumes/SSD/Documents/github/fsmgen/docs/audits/original-join-parent-acceptance-20261018/wrapper_templates.py\", line 134, in take\n    assert actual == word, ('wrapper token grammar', self.index, actual, word)\n           ^^^^^^^^^^^^^^\nAssertionError: ('wrapper token grammar', 30, ';', 'spec')\n",
+    "wrapper-templates-source-index.txt": "book-source-index: complete indexed directory and checked source projection agree\n",
+    "wrapper-templates-source-views.txt": "book-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\n",
+    "wrapper-templates-third.txt": "ram-guard: PID 62498; host 45.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nFixed wrapper source spans, independent token templates, lexical callable routes and saved refusals agree; typed payload, loader/cache semantics and runtime remain unqualified.\n"
+  }
+}
