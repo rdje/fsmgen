@@ -2036,3 +2036,16 @@ knowledge-map/scripts/query_knowledge_map.sh --no-cache 'what bounds live task n
 
 The canonical task-history card now answers this policy question within the
 existing Knowledge Map allowance. All former facts and questions remain.
+
+
+The latest post-wait attempt is `complete-reader-post-wait-capture.json.gz`.
+Claim checks and the first saved reader pass before both guards stop the run.
+The outer guard interrupts the collector before its finished and after-source
+records publish; those records remain explicitly missing. Earlier complete
+boundaries and later process observations cannot supply this run's missing
+helper outcome or immediate custody.
+
+`complete-reader-post-wait-retention.json.gz` retains the executed checker,
+whole partial data, native/source/original-contract/listing reconstruction and
+genuine type/gap/fabricated-completion/source/command refusals. This qualifies
+retention, with full helper success still pending the requested capacity wait.
