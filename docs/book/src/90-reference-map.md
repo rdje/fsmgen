@@ -1931,5 +1931,19 @@ denied live reads and narrowed live Goals distinguish their roles. The first
 new qualifier's own progress-only refusal remains retained before this split.
 Inline historical recovery requires no version lookup. JSON emission streams
 the same canonical value; no memory or historical host-cause guarantee is
-claimed. Current native source admission and the complete advertised helper
-still require their own qualification before the route repair closes.
+claimed. The current route admits the exact canonical library and regression
+readers from `ff44aaf3c04fc8d7904d11f5e0f7cd9b664a6292`. Both saved regression
+readers append to the advertised helper. Their frozen proof files bind to exact
+native revision/path/mode/object/size/SHA256 references, with full committed
+bytes recoverable through required Git history. Established reader order,
+source identities, shell protocol and card/archive/question routes retain.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
+```
+
+The route controls reject changed library/provenance and missing, changed or
+wrong-typed proof identities as well as altered routes. This covers the named
+sources, declared dependencies and frozen inputs; other transitive dependencies
+are outside the route claim. The complete advertised helper still requires
+its own retained actual successful execution before the route repair closes.

@@ -16,35 +16,56 @@ import rollover_source_card as card
 ROOT = Path(__file__).resolve().parents[3]
 AUDIT = frozen.AUDIT
 BASE = 'd5ea1fc9ed7e3fc502bcf4aeaf4b0da89226281a'
+CONTRACT_REVISION = 'ff44aaf3c04fc8d7904d11f5e0f7cd9b664a6292'
+CONTRACT_SOURCES = {AUDIT + name + '.py' for name in
+                    ('prepare', 'canonical_contracts', 'check_canonical_progress')}
+FROZEN_INPUTS = [AUDIT + name + '.json.gz' for name in
+                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')]
 SELF = AUDIT + 'live_operand_route.py'
 HELPER = frozen.HELPER
-OUTPUT = AUDIT + 'live-operand-route-qualified.json.gz'
+OUTPUT = AUDIT + 'canonical-live-operand-route-qualified.json.gz'
 TERMINAL = ['python3', '-B', SELF, '--current']
 OPTIONAL = [['python3', '-B', AUDIT + name + '.py'] for name in
-            ('frozen_operand_route', 'check_frozen_route_independence')]
+            ('frozen_operand_route', 'check_frozen_route_independence',
+             'canonical_contracts', 'check_canonical_progress')]
 DEPENDENCIES = [AUDIT + 'frozen_operand_route.py', AUDIT + 'rollover_source_card.py',
-                'scripts/check_source_recovery_card.sh']
+                'scripts/check_source_recovery_card.sh', *sorted(CONTRACT_SOURCES)]
 SCOPE = ('Current source/archive/question/reverify and ordered reader membership only. '
          'Original and already-published child readers retain their exact order and '
          'native source identities; the obsolete terminal is replaced. Only the '
-         'explicit native-qualified optional readers may be added. Actual helper '
+         'explicit native-qualified optional readers may be added. The named '
+         'canonical contract library/readers and their frozen proof inputs bind '
+         'to the separately qualified immutable revision; other transitive '
+         'dependencies are outside this route claim. Actual helper '
          'listing and public queries execute, never listed readers or original '
          'models/recipes/cohorts. Whole sequence success and original semantic, '
          'custody, native/private, HIAL and full-CI gates remain separately owned.')
 
 
-def native(path):
-    entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', BASE, '--', path)
+def native(path, *, identity_only=False):
+    revision = CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE
+    entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', revision, '--', path)
     assert entry.count(b'\0') == 1, 'one native admitted source'
     header, name = entry[:-1].split(b'\t')
     mode, kind, oid, size = header.decode().split()
     assert mode in ('100644', '100755') and kind == 'blob' and name.decode() == path, 'regular native admitted source: ' + path
-    body = frozen.git('show', BASE + ':' + path)
+    body = frozen.git('show', revision + ':' + path)
     assert size.isdecimal() and len(body) == int(size)
     assert body == frozen.git('cat-file', 'blob', oid)
     assert hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest() == oid
-    return dict(revision=BASE, path=path, mode=mode, oid=oid,
-                retention_contract='fsmgen_required_history', body=frozen.blob(body))
+    result = dict(revision=revision, path=path, mode=mode, oid=oid,
+                  retention_contract='fsmgen_required_history')
+    if identity_only:
+        # Exact immutable references recover the full committed proof. Do not
+        # duplicate large binary bodies in every structural control candidate.
+        result['identity'] = identity(body)
+    else:
+        result['body'] = frozen.blob(body)
+    return result
+
+
+def identity(body):
+    return dict(bytes=len(body), sha256=hashlib.sha256(body).hexdigest())
 
 
 def unblob(value):
@@ -66,6 +87,7 @@ def authority():
     proof = native(str(card.PATH))
     baseline_card = native(frozen.CARD)
     return dict(helper=helper, sources=sources, required=required,
+                frozen_inputs={path: native(path, identity_only=True) for path in FROZEN_INPUTS},
                 source_card_proof=proof, baseline_card=baseline_card)
 
 
@@ -111,7 +133,7 @@ def query_review(rows, current):
 
 def review(value, fixed):
     assert set(value) == {'authority', 'card', 'archive', 'descriptor', 'caps', 'helper',
-                          'sources', 'listing', 'queries', 'programme', 'scope'}
+                          'sources', 'frozen_inputs', 'listing', 'queries', 'programme', 'scope'}
     frozen.equal(value['authority'], fixed)
     frozen.equal(value['scope'], SCOPE)
     programme = unblob(value['programme'])
@@ -131,6 +153,9 @@ def review(value, fixed):
     assert value['sources'].keys() == needed, 'complete admitted current source population'
     for path in needed:
         frozen.equal(value['sources'][path], fixed['sources'][path]['body'])
+    assert value['frozen_inputs'].keys() == fixed['frozen_inputs'].keys(), 'complete frozen proof population'
+    for path in FROZEN_INPUTS:
+        frozen.equal(value['frozen_inputs'][path], fixed['frozen_inputs'][path]['identity'])
     receipt = value['listing']
     assert set(receipt) == {'command', 'status', 'stdout', 'stderr'}
     frozen.equal(receipt['command'], ['bash', HELPER, '--list'])
@@ -157,6 +182,7 @@ def current_value(fixed):
     value = dict(authority=fixed, card=frozen.blob(current), archive=frozen.blob(card.read_file(card.ARCHIVE)),
         descriptor=card.selected_descriptor(), caps=card.limits(), helper=frozen.blob(helper),
         sources={path: frozen.blob(card.read_file(path)) for path in sorted(needed)},
+        frozen_inputs={path: identity(card.read_file(path)) for path in FROZEN_INPUTS},
         listing=listing(helper, fixed['required'], fixed), queries=card.public_queries(current),
         programme=frozen.blob(card.read_file(SELF)), scope=SCOPE)
     review(value, fixed)
@@ -184,6 +210,11 @@ def controls(value, fixed):
         ('changed-helper-protocol', lambda x: x.__setitem__('helper', frozen.blob(helper + b'echo extra\n'))),
         ('missing-source', lambda x: x['sources'].pop(next(iter(x['sources'])))),
         ('changed-source', lambda x: x['sources'].__setitem__(next(iter(x['sources'])), frozen.blob(b'changed source\n'))),
+        ('changed-contract-library', lambda x: x['sources'].__setitem__(AUDIT + 'prepare.py', frozen.blob(b'changed library\n'))),
+        ('wrong-contract-source-revision', lambda x: x['authority']['sources'][AUDIT + 'prepare.py'].__setitem__('revision', BASE)),
+        ('missing-frozen-proof', lambda x: x['frozen_inputs'].pop(FROZEN_INPUTS[0])),
+        ('changed-frozen-proof', lambda x: x['frozen_inputs'][FROZEN_INPUTS[0]].__setitem__('sha256', '0' * 64)),
+        ('boolean-frozen-proof-size', lambda x: x['frozen_inputs'][FROZEN_INPUTS[1]].__setitem__('bytes', True)),
         ('wrong-native-provenance', lambda x: x['authority']['helper'].__setitem__('revision', '0' * 40)),
         ('lost-baseline-question', lambda x: x.__setitem__('card', frozen.blob(unblob(x['card']).replace(
             ('  - ' + json.dumps(card.questions(unblob(fixed['baseline_card']['body']))[-1]) + '\n').encode(), b'', 1)))),
@@ -225,7 +256,7 @@ def main():
     args = parser.parse_args()
     fixed = authority()
     value = current_value(fixed)
-    product = dict(schema='fsmgen.live_operand_route.v1', inputs=value,
+    product = dict(schema='fsmgen.live_operand_route.v2', inputs=value,
                    result=review(value, fixed), controls=controls(value, fixed))
     if args.write:
         card.save_record(OUTPUT, product)
