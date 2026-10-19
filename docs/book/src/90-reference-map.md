@@ -1357,3 +1357,20 @@ Git epochs. It checks the corresponding complete source/site inventory and
 separating branch, command, source, omission and typed-role controls. These are
 static library refusals. Imported initialization, called-function effects,
 expanded dynamic readers and runtime-output custody still require qualification.
+
+The stopped conservative module expansion is also reproducible without loading
+historical code:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_fixed_module_gap.py
+```
+
+It retains complete reached source bytes and partial import/wrapper sites,
+including file-loader modules and Python retained under `.py.txt` names. It
+stops where a recovery function receives `module` through its caller's `ns`
+dictionary and selects preparation programs from a finite loop. The saved
+reader verifies this exact diagnostic and rejecting record controls. Calls in
+nondefault and uncalled bodies are included: this does not establish that the
+recovery runs under either original default command. Caller/parameter binding,
+complete source closure, executable-data expansion, effects and runtime custody
+remain open. No historical reader or preparation producer is executed.

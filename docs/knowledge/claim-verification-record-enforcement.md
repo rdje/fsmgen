@@ -25,21 +25,21 @@ evidence: >-
 reverify: >-
   scripts/check_claim_verification.pl && prove -Iperl
   t/1636-claim-verification-doctrine.t && scripts/run_with_ram_guard.sh -- bash -c
-  'for r in verify_{failed,corrected_failed,snapshot_failed} selected_intake epoch_constraints verify_{selected_failed,runtime_cache} default_dispatch; do python3 -B
+  'for r in verify_{failed,corrected_failed,snapshot_failed} selected_intake epoch_constraints verify_{selected_failed,runtime_cache} default_dispatch qualify_fixed_module_gap; do python3 -B
   docs/audits/original-join-parent-acceptance-20261018/$r.py || exit; done'
 ---
 
-0094: bounded claim_registries.jsonl sets; --registry single-file fixtures.
-Legs: re-derive/falsify/durability or owned gaps. Reject bounds,
-unsafe/untracked paths, missing/duplicate markers, aliases. Truth/independence:
-review (0074); 0104 adopts CLAIM-VERIFICATION-TEMPLATE-REVIEW.2, checker unchanged.
-
-container_common.public/064cf9 rejects a0561d9 live factory drift
-(twelve helpers intact). Factory-only: publication-test drift (repaired_preflight).
+0094: bounded sets; --registry single-file fixtures.
+Re-derive/falsify/durability or owned gaps; reject bounds/paths,
+untracked paths, absent/duplicate markers, aliases. Truth/independence:
+0074 review. 0104: CLAIM-VERIFICATION-TEMPLATE-REVIEW.2; checker same.
+container_common.public/064cf9 rejects a0561d9 factory drift; 12 helpers intact.
+Factory-only: repaired_preflight publication-test drift.
 1a40a1d/model.inputs: edited 8b9a726 knowledge/decision cards refuse.
 Empty locality dirs fail custody; later full-source passes. Failures/gaps retain.
-epoch_constraints.py: all 192c9d source/formal/import/runtime/canonical
-constraints pass; later epochs fail. Physical/intake pass; semantics/native/private/HIAL
-pending; current checks separate. Native0 after-gap: undeclared KM query cache.
+epoch_constraints: 192c9d source/formal/import/runtime/canonical passes;
+later epochs fail. Physical/intake pass; semantics/native/private/HIAL
+pending; current separate. Native0 after-gap: undeclared KM query cache.
 verify_selected_failed.py: later source/cache/query; verify_runtime_cache.py:
-permissive cache/strict output; default_dispatch.py: entry edges; roles pending.
+permissive cache/strict output; default_dispatch: entry edges.
+qualify_fixed_module_gap.py: caller namespace stop; closure/effects open.

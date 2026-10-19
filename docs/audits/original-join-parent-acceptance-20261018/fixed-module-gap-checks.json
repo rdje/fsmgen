@@ -1,0 +1,71 @@
+{
+  "observations": [
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/qualify_fixed_module_gap.py",
+        "--write"
+      ],
+      "label": "write",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/fixed-module-gap-write.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/qualify_fixed_module_gap.py"
+      ],
+      "label": "saved",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/fixed-module-gap-saved.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "prove",
+        "-Iperl",
+        "t/1549-task-tree-integrity-doctrine.t",
+        "t/1637-claim-verification-inventory.t"
+      ],
+      "label": "focused-first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/fixed-module-gap-focused-first.txt.gz",
+      "tool_observed_status": 1
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "prove",
+        "-Iperl",
+        "t/1549-task-tree-integrity-doctrine.t",
+        "t/1637-claim-verification-inventory.t"
+      ],
+      "label": "focused-missed-repair",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/fixed-module-gap-focused-missed-repair.txt.gz",
+      "tool_observed_status": 1
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "prove",
+        "-Iperl",
+        "t/1549-task-tree-integrity-doctrine.t",
+        "t/1637-claim-verification-inventory.t"
+      ],
+      "label": "focused-final",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/fixed-module-gap-focused-final.txt.gz",
+      "tool_observed_status": 0
+    }
+  ],
+  "predecessor_revision": "a4d82d154a499745542c663b4145b1d021859d08",
+  "schema": "fsmgen.fixed_module_gap_check_observations.v1",
+  "scope": "Tool-observed results and complete merged stdout/stderr, not independent native historical receipts. Both failed task-format checks retain. No original semantic reader or producer runs. predecessor_revision is HEAD before this slice; complete new analyzer programmes are retained in the qualified diagnostic, rather than claimed present in that predecessor."
+}

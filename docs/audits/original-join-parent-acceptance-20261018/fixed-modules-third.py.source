@@ -1,0 +1,276 @@
+"""Expand fixed Python module candidates without importing historical code.
+
+This is source closure, not default reachability. Imports inside functions and
+nondefault branches are deliberately included. Embedded executable data,
+compile-only inputs, effects and output custody have separate task owners.
+"""
+import argparse
+import ast
+import gzip
+import json
+import posixpath
+import sys
+
+import default_dispatch as dispatch
+import epoch_constraints as epoch
+import execute
+import prepare
+import runtime_inventory as inventory
+
+PATH = execute.AUDIT / 'fixed-modules-qualified.json.gz'
+MAX_SOURCES = 256
+MAX_BYTES = 32 * 1024 * 1024
+
+
+class Unknown(ValueError):
+    """An expression is outside the deliberately small source grammar."""
+
+
+class Graph:
+    def __init__(self):
+        self.members = epoch.tree(epoch.REVISION)[1]
+        self.bodies = {}
+        self.environments = {}
+        self.imports = {}
+        self.routes = {}
+        self.boundaries = {}
+
+    def read(self, name):
+        assert name in self.members, 'fixed source member: ' + name
+        assert self.members[name]['mode'] in ('100644', '100755'), 'regular source'
+        if name not in self.bodies:
+            assert len(self.bodies) < MAX_SOURCES, 'bounded module population'
+            assert sum(map(len, self.bodies.values())) + self.members[name]['bytes'] <= MAX_BYTES
+            self.bodies[name] = epoch.read(epoch.REVISION, name)
+        return self.bodies[name]
+
+    def imported(self, caller, module):
+        """Model the explicit sibling namespace and maintained scripts path."""
+        for directory in (posixpath.dirname(caller), 'scripts'):
+            target = directory + '/' + module.replace('.', '/') + '.py'
+            if target in self.members:
+                return target
+        assert module.split('.')[0] in sys.stdlib_module_names, 'unresolved import: ' + module
+        return None
+
+    def value(self, node, env, caller):
+        if isinstance(node, ast.Constant):
+            return node.value
+        if isinstance(node, ast.Name):
+            if node.id not in env:
+                raise Unknown(node.id)
+            return env[node.id]
+        if isinstance(node, (ast.Tuple, ast.List)):
+            return [self.value(item, env, caller) for item in node.elts]
+        if isinstance(node, ast.Dict) and all(key is not None for key in node.keys):
+            return {self.value(key, env, caller): self.value(value, env, caller)
+                    for key, value in zip(node.keys, node.values)}
+        if isinstance(node, ast.Subscript):
+            return self.value(node.value, env, caller)[self.value(node.slice, env, caller)]
+        if isinstance(node, ast.Attribute):
+            value = self.value(node.value, env, caller)
+            if type(value) is dict:
+                return value[node.attr]
+            if type(value) is str and node.attr == 'parent':
+                return posixpath.dirname(value)
+        if isinstance(node, ast.BinOp):
+            left, right = self.value(node.left, env, caller), self.value(node.right, env, caller)
+            if isinstance(node.op, ast.Div) and type(left) is str and type(right) is str:
+                return posixpath.join(left, right)
+            if isinstance(node.op, ast.Add) and type(left) is type(right) and isinstance(left, (str, list)):
+                return left + right
+        if isinstance(node, ast.GeneratorExp) and len(node.generators) == 1:
+            generator = node.generators[0]
+            if not generator.ifs and not generator.is_async and isinstance(generator.target, ast.Name):
+                return [self.value(node.elt, dict(env, **{generator.target.id: item}), caller)
+                        for item in self.value(generator.iter, env, caller)]
+        if isinstance(node, ast.Call) and not node.keywords and len(node.args) == 1:
+            operation = inventory.spelling(node.func)
+            if operation in ('Path', 'str'):
+                value = self.value(node.args[0], env, caller)
+                if type(value) is str:
+                    return value
+            if operation == 'module':
+                target, _ = self.wrapper_call(node, env, caller)
+                return self.module(target)
+        raise Unknown(ast.dump(node))
+
+    def assign(self, target, value, env):
+        if isinstance(target, ast.Name):
+            env[target.id] = value
+        elif isinstance(target, (ast.Tuple, ast.List)) and isinstance(value, list) and len(target.elts) == len(value):
+            for item, part in zip(target.elts, value):
+                self.assign(item, part, env)
+
+    def assignments(self, statements, env, caller):
+        for node in statements:
+            if isinstance(node, ast.Assign):
+                try:
+                    value = self.value(node.value, env, caller)
+                except (Unknown, KeyError, TypeError, IndexError):
+                    continue
+                for target in node.targets:
+                    self.assign(target, value, env)
+
+    def module(self, name):
+        if name in self.environments:
+            return self.environments[name]
+        body = self.read(name)
+        tree = ast.parse(body, filename=name)
+        env = self.environments[name] = {}
+        # Function markers are syntax declarations, never live callables.
+        for node in tree.body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                env[node.name] = ('declared', name, node.name)
+        for node in ast.walk(tree):
+            if not isinstance(node, (ast.Import, ast.ImportFrom)):
+                continue
+            assert not isinstance(node, ast.ImportFrom) or node.level == 0, 'reviewed absolute imports'
+            modules = [item.name for item in node.names] if isinstance(node, ast.Import) else [node.module]
+            targets = []
+            for module in modules:
+                assert type(module) is str
+                target = self.imported(name, module)
+                targets.append(target)
+                namespace = self.module(target) if target else None
+                if node in tree.body and namespace is not None:
+                    if isinstance(node, ast.Import):
+                        imported = next(item for item in node.names if item.name == module)
+                        env[imported.asname or module] = namespace
+                    else:
+                        for item in node.names:
+                            if item.name == '*':
+                                env.update({key: value for key, value in namespace.items() if not key.startswith('_')})
+                            elif item.name in namespace:
+                                env[item.asname or item.name] = namespace[item.name]
+            self.imports[(name, node.lineno, node.col_offset)] = dict(
+                source=dispatch.source(node, body.decode()), modules=modules, targets=targets)
+        self.assignments(tree.body, env, name)
+        # PLAN/BASE are obtained from the actual imported capture/common source;
+        # read only their fixed JSON declaration, never the historical loader.
+        if 'BASE' in env and type(env['BASE']) is str:
+            plan = env['BASE'] + '/plan.json'
+            if plan in self.members:
+                env['PLAN'] = json.loads(self.read(plan))
+                self.assignments(tree.body, env, name)
+        self.scan(name, tree, env)
+        return env
+
+    def wrapper_call(self, call, env, caller):
+        tree = ast.parse(self.bodies[caller])
+        functions = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == 'module']
+        assert len(functions) == 1, 'source-defined module wrapper'
+        function = functions[0]
+        parameters = [arg.arg for arg in function.args.args]
+        assert not call.keywords and len(call.args) == len(parameters), 'closed wrapper arguments'
+        arguments = {key: self.value(value, env, caller) for key, value in zip(parameters, call.args)}
+        sites = [node for node in ast.walk(function) if isinstance(node, ast.Call)]
+        loaders = [node for node in sites if inventory.spelling(node.func) == 'importlib.util.spec_from_file_location']
+        if loaders:
+            assert len(loaders) == 1 and len(loaders[0].args) == 2
+            namespace, target = [self.value(node, arguments, caller) for node in loaders[0].args]
+            assert any(inventory.spelling(node.func) == 'spec.loader.exec_module' for node in sites)
+            kind, file_field = 'importlib file module', True
+        else:
+            dictionaries = [node for node in ast.walk(function) if isinstance(node, ast.Dict)
+                            and any(isinstance(key, ast.Constant) and key.value == '__name__' for key in node.keys)]
+            assert len(dictionaries) == 1
+            keys = [ast.literal_eval(key) for key in dictionaries[0].keys]
+            namespace = ast.literal_eval(dictionaries[0].values[keys.index('__name__')])
+            compiles = [node for node in sites if inventory.spelling(node.func) == 'compile']
+            assert len(compiles) == 1 and len(compiles[0].args) == 3
+            target = self.value(compiles[0].args[1], arguments, caller)
+            kind, file_field = 'exec dictionary namespace', '__file__' in keys
+        assert type(target) is str and target.endswith('.py') and type(namespace) is str
+        return target, dict(module_name=namespace, file_field=file_field, loader=kind)
+
+    def scan(self, name, tree, env):
+        text = self.bodies[name].decode()
+        owners = {}
+
+        def visit(node, owner):
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                owner = node
+            owners[id(node)] = owner
+            for child in ast.iter_child_nodes(node):
+                visit(child, owner)
+
+        visit(tree, None)
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
+                continue
+            operation = node.func.id
+            if operation not in ('module', 'exec', 'compile', 'eval', '__import__'):
+                continue
+            owner = owners[id(node)]
+            local = dict(env)
+            if owner is not None:
+                self.assignments(owner.body, local, name)
+            site = dict(source=dispatch.source(node, text), owner=owner.name if owner else '<module>', operation=operation)
+            key = (name, node.lineno, node.col_offset)
+            if operation == 'module':
+                try:
+                    target, wrapper = self.wrapper_call(node, local, name)
+                except (Unknown, KeyError, TypeError, IndexError):
+                    site['unresolved'] = 'fixed wrapper argument requires namespace/data allocation'
+                else:
+                    self.module(target)
+                    self.routes[key] = dict(site, target=target, **wrapper)
+            elif operation == 'exec':
+                assert len(node.args) == 2 and isinstance(node.args[0], ast.Call)
+                compile_call = node.args[0]
+                assert inventory.spelling(compile_call.func) == 'compile' and len(compile_call.args) == 3
+                assert ast.literal_eval(compile_call.args[2]) == 'exec'
+                try:
+                    target = self.value(compile_call.args[1], local, name)
+                except (Unknown, KeyError, TypeError, IndexError):
+                    site['unresolved'] = 'parametric wrapper or executable data; retained for allocation'
+                else:
+                    if type(target) is str and target in self.members and target.endswith('.py'):
+                        self.module(target)
+                        site['fixed_target'] = target
+                    else:
+                        site['unresolved'] = 'executable data with a synthetic filename; separate data owner'
+            elif operation == 'compile':
+                site['input_role'] = 'exec operand' if any(isinstance(parent, ast.Call) and parent.func is not None
+                    and isinstance(parent.func, ast.Name) and parent.func.id == 'exec' and node in parent.args
+                    for parent in ast.walk(tree)) else 'compile-only candidate; separate data owner'
+            else:
+                raise AssertionError('unreviewed dynamic language boundary: ' + operation)
+            self.boundaries[key] = site
+
+    def build(self):
+        initial = dispatch.build()
+        for name in initial['sources']:
+            if name.endswith('.py'):
+                self.module(name)
+        # Revisit after namespace exports have propagated through cyclic imports.
+        for _ in range(MAX_SOURCES):
+            before = (set(self.bodies), dict(self.routes), dict(self.boundaries))
+            for name in sorted(self.environments):
+                tree = ast.parse(self.bodies[name])
+                self.assignments(tree.body, self.environments[name], name)
+                self.scan(name, tree, self.environments[name])
+            if before == (set(self.bodies), self.routes, self.boundaries):
+                break
+        else:
+            raise AssertionError('source closure did not converge')
+        return dict(revision=epoch.REVISION, commands=initial['commands'],
+                    sources={name: dict(body=prepare.blob(body), mode=self.members[name]['mode'],
+                                        oid=self.members[name]['oid'], sites=inventory.python_sites(body, name))
+                             for name, body in sorted(self.bodies.items()) if name.endswith('.py')},
+                    imports=[dict(caller=key[0], **row) for key, row in sorted(self.imports.items())],
+                    wrappers=[dict(caller=key[0], **row) for key, row in sorted(self.routes.items())],
+                    boundaries=[dict(caller=key[0], **row) for key, row in sorted(self.boundaries.items())],
+                    effects_qualified=False, runtime_permission=False)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--inspect', action='store_true')
+    args = parser.parse_args()
+    result = Graph().build()
+    print('sources', len(result['sources']))
+    for row in result['boundaries']:
+        if row.get('unresolved') or row.get('fixed_target'):
+            print(row['caller'], row['source']['line'], row.get('fixed_target', row.get('unresolved')))
