@@ -1906,3 +1906,30 @@ goal or evidence. The real task checker accepts that terminal and rejects a
 wrong archived count; every other live node reconstructs exactly. No ceiling,
 source/cohort admission, original runtime/custody/native or full-CI gate is
 waived by either retention operation.
+
+
+Canonical contract checking now resolves admitted compact terminals before
+comparing original obligations. It validates exact revision/path/source digest,
+retention, root Goal, archived count/status, flat child closure and closed leaf
+evidence. Original Goal/Acceptance text and membership stay exact; neither a
+rehashed narrowed scope nor a coherent omitted original member is accepted.
+The formerly failing epoch reader and original inventory again match their
+unchanged saved records.
+
+Replay the captured canonical qualification, or explicitly check current
+original obligations:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/canonical_contracts.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/canonical_contracts.py --current
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/check_canonical_progress.py
+```
+
+Default recovery uses the captured compact snapshot. Explicit current mode
+reads the live task. An actual legitimate progress change passes both modes;
+denied live reads and narrowed live Goals distinguish their roles. The first
+new qualifier's own progress-only refusal remains retained before this split.
+Inline historical recovery requires no version lookup. JSON emission streams
+the same canonical value; no memory or historical host-cause guarantee is
+claimed. Current native source admission and the complete advertised helper
+still require their own qualification before the route repair closes.

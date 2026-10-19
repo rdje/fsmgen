@@ -72,13 +72,78 @@ def premises():
     return plan, proof, original, family
 
 
-def check_contracts(current, original, plan):
+def _contract_field(body, name, required=False):
+    values = re.findall(rb'^  ' + re.escape(name.encode()) + rb': `(.*)`$', body, re.M)
+    assert len(values) <= 1, 'unique contract field: ' + name
+    assert not required or len(values) == 1, 'required contract field: ' + name
+    return values[0].decode() if values else None
+
+
+def _read_task_version(revision, path):
+    result = subprocess.run(['git', '--no-replace-objects', 'show', revision + ':' + path],
+                            cwd=ROOT, stdin=subprocess.DEVNULL, capture_output=True, timeout=30)
+    assert result.returncode == 0 and not result.stderr, 'required task version retrieval under fsmgen_required_history'
+    return result.stdout
+
+
+def _version_contracts(root, descriptor, read_version):
+    """Resolve a flat terminal through the admitted task-tree contract (0042)."""
+    one = lambda key: _contract_field(descriptor, key, required=True)
+    assert one('Terminal') == 'version_object' and one('Status') == 'done', 'closed task version object'
+    assert _contract_field(descriptor, 'Acceptance') is None, 'compact Acceptance belongs to its archive'
+    assert not re.search(rb'^  Children(?: continuation(?: \d+)?)?:', descriptor, re.M), 'no live compact children'
+    revision, path = one('Revision'), one('Retrieval path')
+    digest, count = one('Retrieved SHA256'), one('Archived node count')
+    assert re.fullmatch(r'(?:[0-9a-f]{40}|[0-9a-f]{64})', revision), 'exact task source revision'
+    assert path == TASK, 'original contract task source path'
+    assert re.fullmatch(r'[0-9a-f]{64}', digest), 'exact task source digest'
+    assert re.fullmatch(r'[1-9][0-9]*', count), 'positive archived contract count'
+    assert one('Retention contract') == 'fsmgen_required_history', 'named task history retention'
+    assert all(one(key) not in ('', 'pending') for key in ('Goal', 'Verification', 'Commit')), 'closed compact evidence'
+    source = read_version(revision, path)
+    assert type(source) is bytes and hashlib.sha256(source).hexdigest() == digest, 'whole task version identity'
+    sections = re.findall(rb'^## Task Tree\n(.*?)(?=^## |\Z)', source, re.M | re.S)
+    assert len(sections) == 1, 'one canonical archived task section'
+    graph = nodes(sections[0])
+    assert root.split('.')[0] in graph and root in graph, 'archived tree and terminal root'
+    selected = {name: body for name, body in graph.items() if name == root or name.startswith(root + '.')}
+    assert len(selected) == int(count), 'complete archived contract population'
+    assert _contract_field(selected[root], 'Goal', True) == one('Goal'), 'archived terminal Goal identity'
+    for name, body in selected.items():
+        assert _contract_field(body, 'Terminal') is None, 'flat archived contract subtree'
+        assert _contract_field(body, 'Status', True) in ('done', 'deferred', 'superseded'), 'terminal archived contract status'
+        assert _contract_field(body, 'Goal', True), 'nonempty archived contract Goal'
+        declared = []
+        for line in re.findall(rb'^  Children(?: continuation(?: \d+)?)?: `(.*)`$', body, re.M):
+            declared.extend(line.decode().split(', ') if line else [])
+        actual = {child for child in selected if child.startswith(name + '.') and '.' not in child[len(name) + 1:]}
+        assert len(declared) == len(set(declared)) and set(declared) == actual, 'archived direct-child closure'
+        if not actual:
+            assert _contract_field(body, 'Acceptance', True), 'archived leaf acceptance'
+            assert all(_contract_field(body, key, True) not in ('', 'pending')
+                       for key in ('Verification', 'Commit')), 'closed archived leaf evidence'
+    return selected
+
+
+def check_contracts(current, original, plan, *, read_version=None):
     """Progress may add acceptance substeps; every original obligation remains."""
     current = nodes(current)
+    reader = _read_task_version if read_version is None else read_version
+    assert callable(reader), 'task version reader callable'
+    # Resolve only terminals that cover original obligations. New completed
+    # progress remains ordinary current work; unrelated history is not loaded.
+    for root, descriptor in list(current.items()):
+        if _contract_field(descriptor, 'Terminal') != 'version_object':
+            continue
+        if not any(name == root or name.startswith(root + '.') for name in original):
+            continue
+        selected = _version_contracts(root, descriptor, reader)
+        assert not (set(selected) - {root}) & current.keys(), 'no archive/live contract collision'
+        current.update(selected)
     for name, body in original.items():
         assert name in current, 'missing original contract: ' + name
         for key in ('Goal', 'Acceptance'):
-            assert field(current[name], key) == field(body.encode(), key), (name, key)
+            assert _contract_field(current[name], key) == _contract_field(body.encode(), key), (name, key)
     family_names = {name for name in current
                     if name == plan['family'] or name.startswith(plan['family'] + '.')}
     assert all(name in original or name.startswith(plan['acceptance'] + '.') for name in family_names)
