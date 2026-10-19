@@ -55,3 +55,5 @@ bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.s
 ```
 
 Those readers retain their pinned epochs, first failures and native/private gaps.
+
+Saved cache replay pins Git epochs.

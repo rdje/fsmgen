@@ -13,6 +13,36 @@ import prepare
 import runtime_cache_producer as producer
 
 PATH = execute.AUDIT / 'runtime-cache-producer-final-qualified.json.gz'
+SOURCE_REVISION = 'b919b7f8ec74627ecb83fb80cb9d8b2f74c7f45d'
+SELF = 'verify_runtime_cache.py'
+
+
+def captured_source(name):
+    """Recover the complete published instrument, never a mutable substitute."""
+    assert name in (*producer.NAMES, SELF), 'closed captured source member'
+    path = str(execute.AUDIT / name)
+    entry = execute.command(['git', '--no-replace-objects', 'ls-tree', '--full-tree',
+                             '-l', '-z', SOURCE_REVISION, '--', path])
+    assert entry.count(b'\0') == 1, 'one original source member'
+    header, actual_path = entry[:-1].split(b'\t')
+    mode, kind, oid, size = header.decode().split()
+    assert mode == '100644' and kind == 'blob' and actual_path.decode() == path
+    assert size.isdecimal()
+    body = execute.command(['git', '--no-replace-objects', 'show', SOURCE_REVISION + ':' + path])
+    assert len(body) == int(size)
+    assert body == execute.command(['git', '--no-replace-objects', 'cat-file', 'blob', oid])
+    assert hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest() == oid
+    return body
+
+
+def validate_sources(start, *, current=False):
+    """Saved evidence binds to its epoch; operational checks also bind live bytes."""
+    assert set(start['sources']) == set(producer.NAMES)
+    for name in producer.NAMES:
+        body = captured_source(name)
+        typed.strict_equal(start['sources'][name], prepare.blob(body))
+        if current:
+            assert body == execute.read(execute.AUDIT / name), 'current producer instrument: ' + name
 
 
 def load(suffix):
@@ -75,17 +105,18 @@ def fixed_output(state, bodies, modes, canonical):
     return True
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true',
+                        help='also require the original instruments in the current checkout')
     args = parser.parse_args()
     start, finish = load('started'), load('actual')
     tree, members, bodies = producer.projection()
     assert start['revision'] == producer.epoch.REVISION and prepare.unblob(start['tree']) == tree
     assert start['members'] == members and set(start['bodies']) == set(bodies)
     assert all(full_body(start['bodies'][name]) == body for name, body in bodies.items())
-    assert set(start['sources']) == set(producer.NAMES)
-    assert all(full_body(start['sources'][name]) == execute.read(execute.AUDIT / name) for name in producer.NAMES)
+    validate_sources(start, current=args.current or args.write)
     assert finish['started'] == prepare.identity(execute.read(Path(str(producer.PREFIX) + '-started.json.gz')))
     assert finish['completed'] == list(producer.LABELS) and finish['error'] is None
     assert finish['sources_after'] == dict(value=start['sources'], error=None)
@@ -197,7 +228,8 @@ if __name__ == '__main__':
     assert b'assert not (parent /' in full_body(refusal['stderr'])
     inputs = ['started', 'actual', 'instrument-refusal', *producer.LABELS]
     product = dict(inputs={suffix: prepare.identity(execute.read(Path(str(producer.PREFIX) + '-' + suffix + '.json.gz'))) for suffix in inputs},
-                                programme=prepare.blob(execute.read(execute.AUDIT / 'verify_runtime_cache.py')),
+                                programme=prepare.blob(execute.read(execute.AUDIT / SELF) if args.current or args.write
+                                                       else captured_source(SELF)),
                                 cases=cases, before_refuse=before_refuse, after_refuse=after_refuse,
                                 preserved_noncanonical=preserved_noncanonical,
                                 scope='Actual unchanged public producer and complete fixed bundle/projection only. '
@@ -211,3 +243,9 @@ if __name__ == '__main__':
         saved = json.loads(gzip.decompress(execute.read(PATH)))
         assert typed.strict_equal(saved, product)
     print('Full unchanged public cache matrix and closed fixed derived-output evidence pass; permissive consumer shapes and default roles stay explicit.')
+
+
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
+    main()

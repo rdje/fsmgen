@@ -2059,3 +2059,30 @@ canonical-contract repair changed the current preparation instrument. All
 captured instruments still match their original committed source. The repair
 must distinguish saved evidence from current operational admission while
 preserving the original producer results. Full helper qualification stays open.
+
+
+The runtime-cache saved reader now reconstructs captured instruments and its
+original reader programme from their native Git epoch. It checks the complete
+member set, regular file identity, object hash and independent whole-body
+retrieval. Saved source metadata retains strict JSON types. Mutable preparation
+source cannot replace the historical instruments.
+
+```bash
+python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_runtime_cache.py
+python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_runtime_cache_roles.py
+```
+
+The saved matrix and original proof pass unchanged. Explicit `--current` and
+`--write` retain live instrument and consumer-programme checks; both currently
+refuse the changed preparation instrument. The qualification records those
+actual commands, original data conservation, and historical/changed/denied
+source-image controls. Coherently rehashed source, borrowed body, missing/extra
+member, wrong JSON type, path traversal and inconsistent native retrieval
+controls refuse.
+
+`runtime-cache-source-roles-qualified.json.gz` retains the complete source-role
+proof and immutable identities of every original input. The first successful
+proof and its source remain separately retained before review tightens the
+explicit current consumer-programme check. Native route admission of the
+replacement and complete helper qualification remain open; original producer,
+consumer-permissiveness, operational, custody and semantic gates retain.
