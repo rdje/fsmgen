@@ -1559,3 +1559,21 @@ wrong role/revision/member/input/namespace/argv/import/capture/proof/condition,
 missing callers and borrowed semantic progress refuse. Earlier complete drafts
 remain beside the final saved predicate qualification. Runtime exports,
 physical image, API identity, semantic outputs and default effects remain open.
+
+Bind the recovered-cause entrypoint's source contract with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/recovered_cause_inputs.py
+```
+
+The original outer plan selects `cause_join` and `cause_entry`. The reader binds
+that table's actual entry bytes and separate filename to the declared main
+namespace, sole argv entry, import-root/module restoration, exact `CAUSE_SUCCESS`
+stdout condition and `proof.json` reference. Both outer and original inner plan
+conditions retain their own roles. Native Path joins/module stems and distinct
+Git blob reads check the source inputs; altered revision/entry/input/namespace,
+argv/module/stdout/proof/member/caller/condition and borrowed progress refuse.
+An initial RAM-guard interruption and the first draft's missing Path-oracle leg
+retain separately from the corrected successful run and saved recovery. The
+memory cutoff is unchanged. Actual proof truth, runtime exports, physical image,
+API identity, default effects and original execution remain unqualified.
