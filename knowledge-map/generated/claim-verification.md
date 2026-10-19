@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **59** uniquely owned question entries.
+> **4** facts · **60** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -46,6 +46,7 @@
 - q="what is the exact static repeat cycle formula?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="when does a claim migration group become required complete?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are claim verification records stored?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
+- q="where are compile exec operands inventoried?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="where are inventoried claim candidates dispositioned?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are missing claim-evidence legs assigned to repair tasks?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are unwatched claims and untracked producers inventoried?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)

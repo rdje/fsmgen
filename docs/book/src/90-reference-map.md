@@ -1400,3 +1400,26 @@ actual checker rejection controls:
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/caller_task_capacity.py
 ```
+
+
+Inventory the remaining bare Python `compile` and `exec` syntax candidates:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/operand_inventory.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_operand_route.py
+```
+
+The inventory binds whole fixed source bytes, operand expressions, enclosing
+recipes, namespaces and source-binding owners. A separate token scan checks
+site membership and direct pairing. Its compile-only label means that the
+compile call has no direct `exec` parent; these syntax labels do not establish
+callable identity, data bindings or execution under an original default command.
+Saved source/role/omission/type interventions reconstruct and refuse. Actual
+source/data/namespace/export reconstruction and runtime custody remain gated.
+The query route retains every previous fact, question and ordered reader child
+command without growing its card. Its helper places the claim/prove checks and
+saved readers under the RAM guard; only command listing is used to qualify the
+route. The default route reader consumes its saved card snapshot; add `--current`
+to check live card freshness. A future-card control verifies that saved recovery
+ignores current-card changes while the live check refuses drift. Neither reader
+launches historical source or a preparation recipe.

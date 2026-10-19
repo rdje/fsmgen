@@ -1,0 +1,106 @@
+{
+  "observations": [
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/operand_inventory.py",
+        "--write"
+      ],
+      "label": "first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/executable-operands-first.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/operand_inventory.py"
+      ],
+      "label": "saved",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/executable-operands-saved.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/verify_operand_route.py",
+        "--write"
+      ],
+      "label": "route-first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/executable-operands-route-first.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "bash",
+        "-c",
+        "python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_operand_route.py --write && python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_operand_route.py"
+      ],
+      "label": "route-final",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/executable-operands-route-final.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "prove",
+        "-Iperl",
+        "t/1549-task-tree-integrity-doctrine.t",
+        "t/1637-claim-verification-inventory.t"
+      ],
+      "label": "focused",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/executable-operands-focused.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "bash",
+        "-c",
+        "python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_operand_route.py --write && python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_operand_route.py && python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_operand_route.py --current"
+      ],
+      "label": "route-saved-current",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/executable-operands-route-current-split.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "mdbook",
+        "build",
+        "docs/book",
+        "-d",
+        ".artifacts/mdbook-caller-modules"
+      ],
+      "label": "book-final",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/executable-operands-book-final.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "scripts/check_doctrines.sh"
+      ],
+      "label": "staged-doctrines",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/executable-operands-doctrines.txt.gz",
+      "tool_observed_status": 0
+    }
+  ],
+  "predecessor_revision": "3ecd34eaab9061eb5e39e63fd64e946d99995afe",
+  "schema": "fsmgen.executable_operand_check_observations.v1",
+  "scope": "Tool-observed source-only inventory, native helper listing and saved recovery. No historical source/recipe, original semantic cohort or original producer runs."
+}

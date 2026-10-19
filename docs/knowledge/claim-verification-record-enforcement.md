@@ -15,6 +15,7 @@ answers:
   - "why did the whole historical checkout reject canonical source bytes?"
   - "why did native0 prerequisites fail after custody?"
   - "are cache types enforced?"
+  - "where are compile exec operands inventoried?"
 date: 2026-10-19
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
@@ -23,10 +24,8 @@ evidence: >-
   doctrine/claim_verification/claim_registries.jsonl; scripts/check_claim_verification.pl;
   t/1636-claim-verification-doctrine.t; docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md
 reverify: >-
-  scripts/check_claim_verification.pl && prove -Iperl
-  t/1636-claim-verification-doctrine.t && scripts/run_with_ram_guard.sh -- bash -c
-  'for r in verify_{failed,corrected_failed,snapshot_failed} selected_intake epoch_constraints verify_{selected_failed,runtime_cache} default_dispatch qualify_{fixed_module_gap,caller_modules}; do python3 -B
-  docs/audits/original-join-parent-acceptance-20261018/$r.py || exit; done'
+  scripts/run_with_ram_guard.sh -- bash
+  docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh
 ---
 
 0094: bounded sets; --registry single-file fixtures.
@@ -43,3 +42,6 @@ pending; current separate. Native0 after-gap: undeclared KM query cache.
 verify_selected_failed.py: later source/cache/query; verify_runtime_cache.py:
 permissive cache/strict output; default_dispatch: entry edges.
 Module readers: retained stop; fixed closure qualified; data/effects open.
+
+operand_inventory.py: whole fixed-graph compile/exec syntax and token census;
+source/data bindings and runtime stay unqualified.
