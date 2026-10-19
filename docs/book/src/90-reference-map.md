@@ -1880,3 +1880,29 @@ OS accounting accuracy, between-sample peaks, old exclusive host causation,
 future headroom or complete advertised wrapper success. The uninstrumented
 whole sequence remains pending, with the prior refusals and original
 semantic/custody/native/private qualifications preserved.
+
+
+The next complete-attempt collector was stopped at guard startup, before input
+and inner-stream publication; every missing file remains explicit in
+`complete-reader-sequence-capture.json.gz`. A later admitted retry reached an
+additional current-reader defect, retained in
+`complete-reader-sequence-retry1-capture.json.gz` with complete source/input,
+listing, streams/status and unchanged before/after tracked boundaries.
+
+The retry passed claim checks and the initial custody/intake readers, then
+stopped in `epoch_constraints.py` through `prepare.check_contracts`. That check
+requires an old inline task `Acceptance` field. The current raw-address task is
+an admitted version-object terminal: its original acceptance text remains
+byte-identical in the native archived subtree. The independent retention
+proof is `sequence-repair-frontier.json.gz`; this is a reader-layout defect,
+with no demonstrated loss of an original obligation. The previous subtree
+retention qualification is unchanged and did not promise current reader
+compatibility. Canonical original-contract retrieval must be repaired and
+qualified before the complete helper is retried.
+
+The already-completed isolation subtree is also retained behind an exact
+native version object, bounding the live repair tree without losing any node,
+goal or evidence. The real task checker accepts that terminal and rejects a
+wrong archived count; every other live node reconstructs exactly. No ceiling,
+source/cohort admission, original runtime/custody/native or full-CI gate is
+waived by either retention operation.
