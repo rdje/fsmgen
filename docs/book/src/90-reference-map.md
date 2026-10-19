@@ -1623,3 +1623,24 @@ and borrowed-progress controls also refuse. Saved recovery consumes committed
 whole input records and rechecks the new allocation relation. Original source
 image, helper/API/export identities, semantic outputs, full executable source
 allocation, default effects and runtime custody remain separate qualifications.
+
+Check the combined fixed wrapper, direct-file and reader input allocation with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/fixed_input_coverage.py
+```
+
+This joins the prior qualified models against the complete fixed wrapper routes
+and compile-site inventory. Whole-source AST and token membership, native Path
+operations and versioned Git blob reads check the allocation and payloads.
+Each input retains its own revision, path, object and whole bytes, separately
+from its logical compilation filename and declared namespace. Distinct source
+versions at the same path remain distinct payload variants.
+
+Missing, duplicated or permuted contexts and wrong model, source, revision,
+namespace or authority refuse while the prior models remain unchanged.
+Importlib entries retain file candidates; the checker does not observe loader
+selection, bytecode caches or actual target exports. Saved complete programs,
+AST-transformed inputs and syntactic compile-only candidates retain explicit
+reconstruction owners. Complete executable-source allocation and original
+source-image/API/default/effect/runtime/custody qualification remain open.
