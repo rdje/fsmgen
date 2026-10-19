@@ -16,6 +16,7 @@ answers:
   - "why did native0 prerequisites fail after custody?"
   - "are cache types enforced?"
   - "where are compile exec operands inventoried?"
+  - "where are AST model inputs reconstructed?"
 date: 2026-10-19
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
@@ -45,3 +46,5 @@ Module readers: retained stop; fixed closure qualified; data/effects open.
 
 operand_inventory.py: whole fixed-graph compile/exec syntax and token census;
 source/data bindings and runtime stay unqualified.
+
+ast_model_inputs.py: whole typed trees/coordinates and caller contracts; original execution stays unqualified.

@@ -23,7 +23,7 @@ run_saved_reader() {
 
 run_saved_reader scripts/check_claim_verification.pl
 run_saved_reader prove -Iperl t/1636-claim-verification-doctrine.t
-for task_reader in verify_{failed,corrected_failed,snapshot_failed} selected_intake epoch_constraints verify_{selected_failed,runtime_cache} default_dispatch qualify_{fixed_module_gap,caller_modules} operand_inventory; do
+for task_reader in verify_{failed,corrected_failed,snapshot_failed} selected_intake epoch_constraints verify_{selected_failed,runtime_cache} default_dispatch qualify_{fixed_module_gap,caller_modules} operand_inventory ast_model_inputs; do
     run_saved_reader python3 -B "$task_reader_audit/$task_reader.py"
 done
 run_saved_reader python3 -B "$task_reader_audit/verify_operand_route.py" --current

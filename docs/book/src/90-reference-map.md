@@ -1662,3 +1662,22 @@ compile names. The declared namespace, complete caller/control source and
 `proof_result` use remain source contracts. No original reader, recipe or
 program runs. Concrete namespace values, actual exports, transitive source/data
 allocation, physical image and runtime behavior remain unqualified.
+
+Reconstruct the fixed model AST compilation inputs with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/ast_model_inputs.py
+```
+
+Both frame-model callers obtain the complete `cause_model.py` through the
+qualified primary namespace. Their recipes add lexical predicate-site labels;
+the metadata recipe also replaces its unsupported-type raise with a false
+guard. The checker retains the original and transformed typed trees, every
+coordinate, compile name, namespace, caller and declared export contract.
+
+A separate serialized-field oracle checks the complete transformation without
+calling the transformer or location fixer. Changed source, recipe, namespace,
+compile-name, missing-site/model, scalar-type and coordinate controls refuse.
+Saved recovery uses retained complete inputs and native Git references. No
+historical recipe or model executes; actual exports, full source allocation,
+default effects, physical image and runtime custody remain unqualified.
