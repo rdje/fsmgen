@@ -6100,9 +6100,36 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Expand executable saved data and input-only compilation sources.`
   Acceptance: `After fixed module closure commits, reconstruct every reachable data-backed executable source and compile-only preparation source from complete fixed records and source-defined transformations. Preserve whole original and transformed bytes, mode/name/namespace/exports and data premises; genuinely changed source/recipe/data/role candidates must refuse. Do not execute historical code or classify effects.`
+  Verification: `The qualified fixed graph contains direct file/parameter-backed exec operands, saved complete_program data, AST-transformed model code and input-only preparation compilation. They require complete operand allocation before reconstruction and independent data qualification; no historical source executes in this ownership split.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2: separate executable operand inventory and reconstruction`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3`
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S ast.fix_missing_locations identifies822103048448f36c1e5b8cd98f2926c13d0f7118; the committed fixed graph also retains saved complete_program and compile-only preparation operands. Fixed module namespaces alone do not reconstruct these distinct source families.
+  - [x] **ADDRESSED (verified)** — The unchanged original Goal/Acceptance now have ordered operand-inventory, reconstruction and qualification owners. Every earlier source/diagnostic/capture and runtime boundary remains; no historical code, recipe or producer executes.
+  - [x] **NO REGRESSION** — Guarded task-tree regression reports All tests successful. Fresh native book/source views, measured task declarations, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate this ownership split; no ceiling or Knowledge Map allowance grows.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.1`
+  Status: `pending`
+  Goal: `Inventory complete compile/exec operand sites and their fixed source/data binding obligations.`
+  Acceptance: `Independently enumerate every compile/exec site in the committed fixed-module graph, preserve whole source/coordinates/call ownership and enclosing source-defined recipes, distinguish syntactic exec operands from input-only compilation, and retain unresolved input/namespace/data roles with exact reconstruction owners. No historical code or data recipe executes; no effects, default reachability or executable allocation is qualified.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2`
+  Status: `pending`
+  Goal: `Reconstruct data-backed executable and input-only source operands.`
+  Acceptance: `After complete operand inventory commits, resolve fixed file/parameter input bindings, saved complete_program source and AST model transformations plus input-only preparation compilation from full fixed source/records. Keep whole raw/transformed bytes, recipe, logical name, namespace and export premises. Split distinct reconstruction families before implementation when required; no historical source executes or grants runtime authority.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3`
+  Status: `pending`
+  Goal: `Qualify complete executable-data expansion and reconstruction controls.`
+  Acceptance: `After operand reconstruction commits, independently join every inventoried compile/exec operand and all fixed/data/recipe/name/namespace/export premises. Genuine missing operand/input, changed source/data/recipe and borrowed-role candidates must refuse. Preserve original fixed graph and every first diagnostic; commit saved recovery/book/task/claim/staged/normal delivery before overall executable-source allocation.`
   Verification: `pending`
   Commit: `pending`
 
