@@ -1529,3 +1529,33 @@ byte fixture. Saved recovery retrieves and verifies all bytes again and binds
 the native Git/Python identities. Entrypoint, namespace/argv/capture binding,
 physical source image, original helper/API identity, full source allocation,
 default effects and original execution remain separate work.
+
+Bind the prerequisite reader's complete role and execution-input contracts:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/prerequisite_inputs.py
+```
+
+The source callers select `context`, `cause` and `consumer`. Each role retains
+its complete table, original `verify.py` bytes and declaration, with the entry
+as the compile filename, `__file__` and sole argv member, `__name__` set to
+`__main__`, and its root prepended to the import path. The source also clears
+the table's Python module stems and `capture`, then restores the prior path,
+argv and those module entries.
+These are bound source contracts; original execution remains gated.
+
+| Role | Proof within its root | Scope within its root | Source stdout contract |
+| --- | --- | --- | --- |
+| context | `proofs.json` | `scope.txt` | Ends with the declared suffix; prerequisite output may precede it |
+| cause | `proof.json` | `plan.json` | Exact declared suffix |
+| consumer | `proof.json` | `plan.json` | Exact declared suffix |
+
+The context branch retains the `ordinary`, `storable`, `controls` and execution
+capture inputs, their source-derived Path provenance and required namespace
+exports. Its caught-library-control condition stays distinct from native exits.
+Cause and consumer retain their exact original plan conditions. Explicit source
+predicates, actual Git blob reads and native Path checks qualify these bindings;
+wrong role/revision/member/input/namespace/argv/import/capture/proof/condition,
+missing callers and borrowed semantic progress refuse. Earlier complete drafts
+remain beside the final saved predicate qualification. Runtime exports,
+physical image, API identity, semantic outputs and default effects remain open.
