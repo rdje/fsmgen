@@ -1,6 +1,6 @@
 ---
 id: claim-verification-record-enforcement
-title: Claim evidence legs
+title: Claim evidence and original reader recovery
 answers:
   - "where is the claim template review?"
   - "how is claim verification mechanically enforced?"
@@ -19,35 +19,38 @@ answers:
   - "what binds compile-only inputs?"
   - "where are AST model inputs reconstructed?"
   - "why is the retained preparation correction a no-op?"
+  - "where are dated reader-recovery facts retained?"
 date: 2026-10-19
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
 evidence: >-
   CLAIM_VERIFICATION.md;
   doctrine/claim_verification/claim_registries.jsonl; scripts/check_claim_verification.pl;
-  docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md
+  docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md;
+  docs/audits/original-join-parent-acceptance-20261018/source-recovery-card-7748b2db479ffdf559f49ede08335b7418ebecfe979a9a9da973d9e582e2594a.txt; scripts/check_source_recovery_card.sh
 reverify: >-
   scripts/run_with_ram_guard.sh -- bash
   docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh
 ---
 
-0094: bounded sets; --registry single-file fixtures.
-Three legs or owned gaps; reject bounds/paths,
-untracked paths, absent/duplicate markers, aliases. Truth/independence:
-0074 review. 0104: CLAIM-VERIFICATION-TEMPLATE-REVIEW.2; checker same.
-container_common.public/064cf9 rejects a0561d9 factory drift; 12 helpers intact.
-Factory-only: repaired_preflight publication-test drift.
-1a40a1d/model.inputs: edited 8b9a726 knowledge/decision cards refuse.
-Empty locality dirs fail custody; later full-source passes. Failures/gaps retain.
-epoch_constraints: 192c9d source/formal/import/runtime/canonical passes;
-later epochs fail. Physical/intake pass; semantics/native/private/HIAL
-pending; current separate. Native0 after-gap: undeclared KM query cache.
-verify_selected_failed.py: later source/cache/query; verify_runtime_cache.py:
-permissive cache/strict output; default_dispatch: entry edges.
-Module readers: retained stop; fixed closure qualified; data/effects open.
+`CLAIM_VERIFICATION.md` owns live policy and registry contracts: distinct
+re-derivation, falsification and durability legs, or owned gaps. Structural
+checks do not prove semantic truth or oracle independence.
 
-operand_inventory.py: whole fixed-graph compile/exec syntax/token census; source/data bindings/runtime unqualified.
+Dated original reader-recovery facts retain in the complete pre-rollover card:
 
-ast_model_inputs.py: whole typed trees/coordinates/callers; original execution unqualified.
-preparation_correction.py: retained no-op.
-compile_only_inputs.py: bytes/names; code dropped.
+```bash
+cat docs/audits/original-join-parent-acceptance-20261018/source-recovery-card-7748b2db479ffdf559f49ede08335b7418ebecfe979a9a9da973d9e582e2594a.txt
+```
+
+The archive preserves every factory/source/intake/cache/compiler fact and its
+original scope. Current frontier: read `MEMORY.md`, then its owning leaf in
+`docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`.
+
+List current source-model replay commands with:
+
+```bash
+bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list
+```
+
+Those readers retain their pinned epochs, first failures and native/private gaps.

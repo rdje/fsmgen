@@ -1716,3 +1716,21 @@ the qualified no-op correction above. Changed input/name/role/context, missing
 or duplicate case, and borrowed execution controls refuse. Actual original
 stdin, compiler identity, prelaunch custody and complete executable-source,
 default-effect and runtime qualifications remain open.
+
+Check retained original reader-recovery facts and their question routes with:
+
+```bash
+scripts/run_with_ram_guard.sh -- scripts/check_source_recovery_card.sh
+```
+
+The fact card keeps its stable identity and every existing question. Its full
+pre-rollover text is retained byte-for-byte in the archive named by the card;
+live policy and task status route to their canonical owners. Current replay
+commands remain available through `verify_claim_readers.sh --list`.
+
+The checker validates the complete captured source and query receipts, then
+checks live public query results. Missing facts or initial questions, changed
+source provenance, lost query receipts, wrong targets, type collisions and
+oversized live text refuse. This named currency contract runs in every
+doctrine gate. It preserves dated meanings and leaves broader Knowledge Map
+debt and original semantic/native qualifications open.

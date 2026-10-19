@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **63** uniquely owned question entries.
+> **4** facts · **64** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -49,6 +49,7 @@
 - q="where are AST model inputs reconstructed?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="where are claim verification records stored?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
 - q="where are compile exec operands inventoried?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
+- q="where are dated reader-recovery facts retained?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="where are inventoried claim candidates dispositioned?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are missing claim-evidence legs assigned to repair tasks?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="where are unwatched claims and untracked producers inventoried?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
@@ -94,7 +95,7 @@ _Claim records use one finite manifest-addressed registry set_
 
 ### claim-verification-record-enforcement
 
-_Claim evidence legs_
+_Claim evidence and original reader recovery_
 
 - **date:** 2026-10-19 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-record-enforcement.md`](../../docs/knowledge/claim-verification-record-enforcement.md)

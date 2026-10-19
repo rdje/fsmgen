@@ -60,6 +60,11 @@ ceiling-authority guard on every doctrine run. Core verifiers execute inside
 the neutral checker. External contracts are explicit fail-closed degradation,
 never a green presence check.
 
+The Knowledge Map collection's named `source_recovery_question_routes`
+currency contract checks only its original reader-recovery card: exact retained
+source bytes, original and initial live question routes, and canonical policy,
+frontier and replay accessors. It claims no collection-wide semantic currency.
+
 The top-level `README.md` is both a governed bounded snapshot and the rendered
 GitHub project landing page. Containment preserves its purpose, quick start,
 architecture summary, and navigation in that first-class interface. It routes
