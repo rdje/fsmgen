@@ -1433,7 +1433,8 @@ and corrected programme remain retained. Python AST/shlex, the finite literal
 shell vocabulary and Git authenticity remain shared premises. Reconstructing a
 historical listing is not a new execution observation. The old
 `verify_operand_route.py` still has its capture-era live-input coupling;
-scoped live dispatch and complete wrapper execution remain pending.
+the scoped live gate below replaces its terminal use. Complete wrapper
+execution remains pending.
 
 
 The reconstruction families now have separate fixed-file/parameter, saved-program,
@@ -1800,6 +1801,28 @@ API. Original loader selection and callable identity remain unqualified, as
 do complete source, default effects, runtime and custody. No original program,
 model or recipe runs during these checks.
 
-The full saved-reader wrapper has an open defect in its final capture-era
-card/list verifier. Use the individual commands above while the task tree's
-reader-route repair remains pending.
+The wrapper now ends in a scoped live-route gate:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
+```
+
+This gate derives current card/archive/query and reverify truth on read, using
+the existing complete source-recovery contract. The helper's actual list must
+agree with its full reviewed shell protocol. Every established child remains
+in order; the obsolete capture-era terminal is replaced. Child source bytes
+must match their admitted native Git identities; this covers entrypoints and
+named route dependencies, with transitive source and effect qualification
+remaining separate. Explicitly admitted frozen
+recovery readers may be added; another reader or a changed source needs a new
+owned qualification. Genuine omitted/reordered reader, altered protocol,
+source/provenance, lost question, wrong query and typed receipt candidates
+refuse. A qualified additive structural candidate is accepted without running
+that candidate helper or its readers.
+
+The first new native-source census rejected executable regular Git files;
+its source/failure remain before the regular-mode correction. The successful
+live qualification runs only listing and public queries. Complete actual
+wrapper success remains separately owned and pending. No original model,
+recipe, semantic cohort or spent capture runs, and original custody, runtime,
+native/private, HIAL and full-CI gates retain their owners.
