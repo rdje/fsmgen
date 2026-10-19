@@ -1406,7 +1406,7 @@ Inventory the remaining bare Python `compile` and `exec` syntax candidates:
 
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/operand_inventory.py
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_operand_route.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/frozen_operand_route.py
 ```
 
 The inventory binds whole fixed source bytes, operand expressions, enclosing
@@ -1416,13 +1416,24 @@ compile call has no direct `exec` parent; these syntax labels do not establish
 callable identity, data bindings or execution under an original default command.
 Saved source/role/omission/type interventions reconstruct and refuse. Actual
 source/data/namespace/export reconstruction and runtime custody remain gated.
-The query route retains every previous fact, question and ordered reader child
-command without growing its card. Its helper places the claim/prove checks and
-saved readers under the RAM guard; only command listing is used to qualify the
-route. The default route reader consumes its saved card snapshot; add `--current`
-to check live card freshness. A future-card control verifies that saved recovery
-ignores current-card changes while the live check refuses drift. Neither reader
-launches historical source or a preparation recipe.
+The frozen route reader reconstructs the complete original card transform,
+ordered child commands, captured listing receipt and rejection controls from
+native Git objects. It binds the complete creator, helper and proof to their
+creator revision and the before-card to its declared revision. The old creator
+and helper remain unchanged data; neither executes. A separate parser compares
+the helper's source commands with the before-card's reader loop.
+
+Saved recovery succeeds with current filesystem reads denied. Actual new
+default runs beside changed and physically absent current card/helper files
+produce the same complete saved result in an isolated local workspace. Native
+Git lookups explicitly select the full tree to avoid cwd-relative filtering. Rehashed source,
+provenance, command, receipt, omission and Boolean-type candidates refuse.
+The initial new parser selected a nested descriptive scope; its full failure
+and corrected programme remain retained. Python AST/shlex, the finite literal
+shell vocabulary and Git authenticity remain shared premises. Reconstructing a
+historical listing is not a new execution observation. The old
+`verify_operand_route.py` still has its capture-era live-input coupling;
+scoped live dispatch and complete wrapper execution remain pending.
 
 
 The reconstruction families now have separate fixed-file/parameter, saved-program,
