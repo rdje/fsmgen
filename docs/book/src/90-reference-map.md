@@ -1734,3 +1734,28 @@ source provenance, lost query receipts, wrong targets, type collisions and
 oversized live text refuse. This named currency contract runs in every
 doctrine gate. It preserves dated meanings and leaves broader Knowledge Map
 debt and original semantic/native qualifications open.
+
+Join the fixed and reconstructed operand models to their original call sites:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/operand_allocation.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_operand_allocation.py
+```
+
+The join retains the whole prior models under native Git identities, including
+their source versions, reconstructed bytes or transformed trees, compilation
+names and namespace premises. It checks every original source, including files
+with no compiler calls, and pairs each original exec site with its exact compile
+operand. Importlib rows remain file candidates with no invented compiler site
+or observed loader-selected executable bytes.
+
+Missing or duplicate inputs and exchanged bindings, names, trees, namespaces or
+roles refuse. A separate control first runs the actual current reader on its
+published proof, then substitutes only a changed stored model with a fresh hash
+under the unchanged native reference. The reader rejects it before reporting
+success; the published proof remains untouched.
+
+The prior qualified models and their interpretation remain shared premises.
+Payload imports and recursive expansion, concrete namespace values, actual
+exports and complete source/default/effect/runtime qualification remain open.
+These checks execute current authorizers without running original programs.
