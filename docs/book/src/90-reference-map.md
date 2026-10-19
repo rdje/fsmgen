@@ -1507,3 +1507,25 @@ namespace/type, omitted input and premature allocation/runtime authority refuse.
 The initial generator-parenthesis comparison failure retains; source protocols
 now compare AST structure. Source-image, helper/API identity and actual exports,
 complete allocation, default effects and runtime custody remain unqualified.
+
+Verify complete original reader-table retention before binding entrypoints:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/reader_tables.py
+```
+
+The source selectors and finite prerequisite roles identify whole fixed Git
+directories, including source, capture and data files. Every blob is read and
+hashed. A separate raw-tree decoder and bounded batch-blob reader check the
+same membership, modes, object identities and whole byte identities. Saved
+controls cover changed revisions, member loss across multiple representations,
+mode/type/body/retention errors and actual truncated or corrupted blob frames.
+
+Each descriptor retains its revision, path, mode, object and byte identity under
+`fsmgen_required_history`. Complete original bytes remain in repository history;
+rewrites must preserve or materialize required objects, and failed retrieval
+must stop qualification. The result copies descriptors and a bounded actual
+byte fixture. Saved recovery retrieves and verifies all bytes again and binds
+the native Git/Python identities. Entrypoint, namespace/argv/capture binding,
+physical source image, original helper/API identity, full source allocation,
+default effects and original execution remain separate work.
