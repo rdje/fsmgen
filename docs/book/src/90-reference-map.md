@@ -2068,8 +2068,8 @@ retrieval. Saved source metadata retains strict JSON types. Mutable preparation
 source cannot replace the historical instruments.
 
 ```bash
-python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_runtime_cache.py
-python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_runtime_cache_roles.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_runtime_cache.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_runtime_cache_roles.py
 ```
 
 The saved matrix and original proof pass unchanged. Explicit `--current` and
@@ -2083,6 +2083,21 @@ controls refuse.
 `runtime-cache-source-roles-qualified.json.gz` retains the complete source-role
 proof and immutable identities of every original input. The first successful
 proof and its source remain separately retained before review tightens the
-explicit current consumer-programme check. Native route admission of the
-replacement and complete helper qualification remain open; original producer,
-consumer-permissiveness, operational, custody and semantic gates retain.
+explicit current consumer-programme check. The scoped current route now admits
+this committed replacement; complete helper qualification remains open. Original
+producer, consumer-permissiveness, operational, custody and semantic gates retain.
+
+
+The current route binds the repaired runtime-cache reader, its role qualifier,
+and the immutable proof to the committed implementation. Named unchanged cache
+projection/decode libraries retain their original epoch; canonical preparation
+keeps its separately qualified epoch. The original published cache reader also
+remains recoverable in full. Original reader order and helper protocol stay
+exact, with the qualified saved role reader appended.
+
+`runtime-cache-live-route-qualified.json.gz` retains native source/proof
+identities, actual helper listing and public queries, and genuine
+source/library/provenance/original-retention/proof/type/order controls. The
+route gate executes list/query operations; complete reader execution and every
+original semantic or operational acceptance remain separately required. Other
+transitive dependencies remain outside this named admission claim.
