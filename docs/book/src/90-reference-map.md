@@ -1488,3 +1488,22 @@ premises or separate work. The native interpreter identity is retained. The
 initial Path-aware plan-hook omission, serialized body-alias failure and strict
 route tuple/JSON-array replay mismatch retain complete diagnostic sources/results
 alongside the repaired saved reader.
+
+Bind direct file and fixed-Git compile operands with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/direct_inputs.py
+```
+
+The reader retains each input's whole bytes, logical filename, declared namespace
+and syntactic export uses. Native Path checks qualify direct path values without
+opening original files. Fixed-Git factories use the revision in their own plan;
+an independent tree/blob read and Git object hash check those payload bytes.
+The original cause-parent factory is older than the selected source image: its
+body predates the consumer-admission additions. Both versions retain, with the
+remaining source-allocation owner explicitly named. A filename or later body
+cannot substitute for the plan-revision input. Wrong source/revision/input/name,
+namespace/type, omitted input and premature allocation/runtime authority refuse.
+The initial generator-parenthesis comparison failure retains; source protocols
+now compare AST structure. Source-image, helper/API identity and actual exports,
+complete allocation, default effects and runtime custody remain unqualified.
