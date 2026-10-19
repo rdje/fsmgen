@@ -1,0 +1,30 @@
+{
+  "actual": {
+    "bytes_each": 2366453,
+    "bytes_total": 13215242,
+    "files": 599,
+    "line_bytes_each": 6264,
+    "lines_each": 7006,
+    "lines_total": 118620
+  },
+  "ceilings_unchanged": true,
+  "changes": {
+    "bytes_total": {
+      "actual": 13215242,
+      "new": 1976023,
+      "previous": 1972643
+    },
+    "lines_each": {
+      "actual": 7006,
+      "new": 606,
+      "previous": 602
+    },
+    "lines_total": {
+      "actual": 118620,
+      "new": 7702,
+      "previous": 7698
+    }
+  },
+  "policy": "LIVE_DOCUMENT_SIZE_CONTAINMENT.md",
+  "surface": "task_evidence"
+}

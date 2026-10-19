@@ -1577,3 +1577,28 @@ An initial RAM-guard interruption and the first draft's missing Path-oracle leg
 retain separately from the corrected successful run and saved recovery. The
 memory cutoff is unchanged. Actual proof truth, runtime exports, physical image,
 API identity, default effects and original execution remain unqualified.
+
+Bind the original association's admission input with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/admission_inputs.py
+```
+
+The outer plan selects `admission` and its own Git revision. The complete table
+retains source and data members; `sources[entry]` supplies the original
+`verify.py` bytes. Its filename, main namespace, sole argv entry, import root,
+module clearing and restoration remain separate source roles. The exact stdout
+predicate uses the entry's `SUCCESS` export, and the result predicate compares
+its `result` with `proof.json`. Returned proof, whole-table byte pins, stdout
+and outer condition retain their individual meanings.
+
+The original before-execution predicate requires ordinary, same-volume files
+whose bytes match the fixed table; the after-execution predicate checks every
+table member again. This source-only checker retains those predicates without
+executing them on historical files. Distinct Git blob reads and native Path
+operations check retained byte/path bindings. Changed source predicates and
+wrong revision/input/member/caller/namespace/argv/import/stdout/proof/condition
+or borrowed progress refuse. The initial sandbox process-inspection failure
+retains before the guarded successful run. Physical source-image truth, actual
+exports/proof semantics, API identity, default effects and original admission
+execution remain unqualified.

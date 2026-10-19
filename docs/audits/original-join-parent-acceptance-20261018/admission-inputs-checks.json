@@ -1,0 +1,21 @@
+{
+  "policy_review": {
+    "containment_guide_sha256": "8f77fa39c9bcb9cfc43166259a627a6ced64682030088400b727dccc5d674a53",
+    "external_claim_template_matches_reviewed": true,
+    "local_policies_already_adopted": true
+  },
+  "root_history": {
+    "command": [
+      "git",
+      "log",
+      "-1",
+      "-S",
+      "def fresh_admission():",
+      "--",
+      "docs/audits/original-context-cause-consumer-association-20261012/verify.py"
+    ],
+    "status": 0,
+    "stderr": "",
+    "stdout": "commit 192c9dae1f788fb13a0b10c1d1eb952875b03dd6\nAuthor: Richard DJE <richard.dje@gmail.com>\nDate:   Mon Oct 12 12:37:06 2026 +0200\n\n    SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.2: qualify original context cause consumer associations\n    \n    Independently bind every complete original source/context/cause/coordinate/consumer relationship under conserving whole source epochs and fresh unchanged saved admission. Preserve native/private assumptions, dated executions and both actual0/declared1 primitive-kind false greens; canonical typed equality reaches the intended corrected native refusals. Canonical/parent acceptance and full alias remain separate.\n    \n    Validation: complete saved admission replay and isolated whole-proof rederivation, independent source-first association, valid native case and all genuine intended rejecting native controls, focused regression checks, current source/query/book/native/capacity and claim gates, saved reconstruction, staged doctrines and normal hooks.\n"
+  }
+}
