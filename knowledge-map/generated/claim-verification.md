@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **62** uniquely owned question entries.
+> **4** facts · **63** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -39,6 +39,7 @@
 - q="how is single-file claim registry compatibility retained?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
 - q="how is the claim inventory source set derived?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="how is the original doctrine constant cohort preserved?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
+- q="what binds compile-only inputs?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="what bounds the claim verification registry set?" · facts=[claim-verification-finite-registry-set](../../docs/knowledge/claim-verification-finite-registry-set.md)
 - q="what checker rejects aliased claim verification legs?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="what independently checks claim inventory completeness?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)

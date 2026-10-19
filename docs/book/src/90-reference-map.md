@@ -1698,3 +1698,21 @@ An independent byte-window oracle and changed-source/recipe/condition/output
 controls check the relation. Actual original stdin and prelaunch custody remain
 unobserved. No historical preparation runs, and compile-only input binding
 remains a separate qualification.
+
+Bind the complete preparation compile-only inputs with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/compile_only_inputs.py
+```
+
+The reader joins each fixed preparation receipt to its whole source bytes and
+logical compilation name. Both original call sites are standalone expressions
+that discard their compiler results. Separate token and whole-line checks
+reject assignment or execution text even when supplied a stale accepted AST.
+
+The current compiler checks syntax and filenames without evaluating the code
+objects. Original failures and after-invocation descriptors retain, including
+the qualified no-op correction above. Changed input/name/role/context, missing
+or duplicate case, and borrowed execution controls refuse. Actual original
+stdin, compiler identity, prelaunch custody and complete executable-source,
+default-effect and runtime qualifications remain open.

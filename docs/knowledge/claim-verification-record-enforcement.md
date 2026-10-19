@@ -16,13 +16,14 @@ answers:
   - "why did native0 prerequisites fail after custody?"
   - "are cache types enforced?"
   - "where are compile exec operands inventoried?"
+  - "what binds compile-only inputs?"
   - "where are AST model inputs reconstructed?"
   - "why is the retained preparation correction a no-op?"
 date: 2026-10-19
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
 evidence: >-
-  CLAIM_VERIFICATION.md; docs/decisions/0074-actionable-claims-name-rederivation-falsification-and-durability.md;
+  CLAIM_VERIFICATION.md;
   doctrine/claim_verification/claim_registries.jsonl; scripts/check_claim_verification.pl;
   docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md
 reverify: >-
@@ -49,3 +50,4 @@ operand_inventory.py: whole fixed-graph compile/exec syntax/token census; source
 
 ast_model_inputs.py: whole typed trees/coordinates/callers; original execution unqualified.
 preparation_correction.py: retained no-op.
+compile_only_inputs.py: bytes/names; code dropped.
