@@ -329,9 +329,11 @@ This preparation is not connected to production lowering; parent owner routes,
 output writer handoffs and complete physical admission remain prerequisites.
 The first-`when` action omission now has a precise source refusal: entry bodies
 accept only inline samples, and other actions must follow the guard or use a
-later branch after `(on PORT)`. First-operation conditional macro intent and
-the false `x01` operand diagnosis for a canonical X/Z scalar literal remain
-separately owned before read integration.
+later branch after `(on PORT)`. First-operation conditional macro intent remains
+owned before read integration. Canonical X/Z scalar literals now retain their
+width/radix during backend rendering, repairing both the false `x01` operand
+diagnosis and substitution of a same-named signal. This is source/report/HDL-text
+qualification; runtime four-state behavior remains separately owned.
 The macro work repairs existing ISF/IAL1 parser expansion and transaction
 scheduling. First sample-only bit/field conditionals and `cond` can still be
 admitted as entry gates rather than ordinary branches; use explicit activation

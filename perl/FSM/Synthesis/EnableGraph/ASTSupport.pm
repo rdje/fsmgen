@@ -1044,6 +1044,9 @@ sub _ast_to_systemverilog_internal ($self, $ast, $parent_precedence) {
     } elsif ($ast->isa('FSM::AST::Literal') || $ast->isa('FSM::CoreAST::Literal')) {
         my $normalized = FSM::Package::IntegerLiteralSupport->systemverilog_literal_from_literal_like($ast);
         return $normalized if defined $normalized;
+        # Symbolic X/Z literals have no integer normalization. Their typed
+        # renderer retains width and radix; value alone can look like a signal.
+        return $ast->to_systemverilog() if $ast->can('to_systemverilog');
         return $ast->value || "0";
 
     } elsif ($ast->isa('FSM::AST::BinaryOp') || $ast->isa('FSM::CoreAST::BinaryOp') || $ast->isa('FSM::HDL::SubstitutedBinaryOp')) {

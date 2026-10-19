@@ -168,8 +168,9 @@ and book.
   repair (`.2.1.3`) now rejects unsupported entry actions while preserving inline
   samples and later branches. The same selector drops the true-path assignment
   of a first `select`; its conditional-macro source-intent repair (`.2.1.5`) is
-  owned and scheduled next, before the false `x01` literal diagnosis (`.2.1.4`)
-  and read integration (`.2.1.2`). First-operation select remains precisely
+  owned before read integration (`.2.1.2`). The independent literal repair
+  (`.2.1.4`) preserves typed X/Z width/radix and prevents false operand errors
+  or substitution of a declared signal named `x01`. First-operation select remains precisely
   refused until that repair qualifies. This work repairs existing **ISF/IAL1**
   parser expansions and transaction scheduling. Qualification also exposes
   first sample-only bit/field/`cond` shorthand admitted as entry gates and

@@ -7,10 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.5`
-- next_action: Independently join all parameter-backed compile operands to complete source/caller/plan/table/input and namespace/argv/import/capture roles before the full fixed-input join.
+- next_action: Independently qualify complete parameter-backed compile-input coverage from the committed prerequisite, recovered-cause and admission bindings, preserving original execution gates.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
-- in_flight_background: None; native0 prerequisite custody failed and all later cohort slots remain unused.
+- in_flight_background: None; original semantic cohort slots remain unused.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
   Knowledge Map rollover debt forbids allowance growth; preserve all facts/questions. No decision or authentication is pending.
   Historical startup/parent qualification and full CI/push remain gated; Push whenever useful is explicitly authorized by user steering on 2026-10-11; required HIAL/full-CI qualifications still gate it. Visual mdBook QA remains pending.
-  Fresh context recommended before the next leaf to restore session focus.

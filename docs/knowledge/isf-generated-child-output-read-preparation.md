@@ -6,18 +6,19 @@ answers:
   - "can actor outputs named start or done preserve child handshakes?"
   - "is the generated output read plan connected to production?"
   - "what prerequisites precede generated output read integration?"
-date: 2026-10-02
+  - "why did const_3bx01 become an undeclared x01 operand?"
+date: 2026-10-19
 status: current
 tags: [isf, generated, output, reads, scope, preparation]
 evidence: >-
   perl/FSM/Scheduler/ISF/ChildOutputReads.pm;
   perl/FSM/Scheduler/ISF/LoweringIR.pm;
-  t/2039-isf-child-output-read-preparation.t;
+  t/2039-isf-child-output-read-preparation.t; t/2073-symbolic-literal-operand-rendering.t;
   docs/audits/record-output-owner-read-preparation-20261002/scope.txt;
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib
-  t/2039-isf-child-output-read-preparation.t
+  t/2039-isf-child-output-read-preparation.t t/2073-symbolic-literal-operand-rendering.t
 ---
 
 At ingress commit `851358dd6dca12ba69a2d2491bc70d766dd4dde1`, actual
@@ -55,9 +56,9 @@ Unused inherited owner metadata also leaves the child handshake namespace.
 Ordinary data-writer declarations remain for their separate handoff owner;
 data writers colliding with handshake names refuse. No parent port, DT,
 register, reset, payload capture or clock edge is introduced by this plan.
-Actual prepared data carriers pass standalone strict checks. The intentionally
-retained scalar `const_3bx01` control still fails with false operand `x01`;
-it is an owned prerequisite, not a successful literal/runtime claim.
+Prepared carriers pass strict checks. At preparation, `const_3bx01` falsely
+read `x01`; `.2.1.4` now preserves typed width/radix in backend rendering.
+T2073 checks transports and signal collisions.
 
 Full independent expected products, literal recursive type facts and emitter
 precedence fixtures re-derive the plan. Hostile history/port/entry/path/type/
@@ -68,9 +69,7 @@ retain falsification and durability; transport parity alone is not signoff.
 P2 `.2.1.3` closes first-`when` activation action loss with precise refusal for
 unsupported entry payloads; supported sample entries and later branches remain
 intact. [The activation card](isf-first-when-activation-body.md) records the
-actual phase contracts. The related first-operation conditional macro repair
-`.2.1.5` is next, followed by the false `x01` pre-generation operand diagnosis
-`.2.1.4`, before production read integration `.2.1.2`.
+actual phase contracts. Macro `.2.1.5` remains before read integration `.2.1.2`.
 Owner writer handoffs and complete physical mapping/public admission
 remain open. No output execution, arbitration, field writers or X/Z behavior
 is established here; no HDL compiler/analyzer/simulator is invoked.

@@ -163,7 +163,7 @@ _Maintained record output corpus preserves complete discovery and cohort applica
 
 _Generated record outputs require live owner views and original-edge write handoffs_
 
-- **date:** 2026-10-02 · **status:** current
+- **date:** 2026-10-19 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-record-output-generated-ingress.md`](../../docs/knowledge/isf-record-output-generated-ingress.md)
 
 ### isf-record-output-hdl-profiles

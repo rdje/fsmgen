@@ -171,8 +171,10 @@ qualifies private typed data inputs, source-name masking and emitted operand
 rebasing, including record outputs named `start` and `done`. Production owner
 routes and output writer handoffs remain open. Entry `when` bodies now refuse
 unsupported actions rather than dropping them. First-operation conditional macro
-intent and scalar X/Z false-operand diagnosis still precede read integration;
-this preparation does not establish output execution or X/Z behavior.
+intent still precedes read integration. The scalar X/Z false-operand defect is
+repaired: typed literals retain width/radix through backend rendering, including
+when their digits match a signal name. Output execution and X/Z runtime behavior
+require separate qualification.
 Actual local/imported/alias/mixed,
 reverse-copy and owning-domain carriers strictly replay; this establishes source
 and carrier admission, with execution still pending. See the

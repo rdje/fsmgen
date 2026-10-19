@@ -1,0 +1,24 @@
+{
+  "observations": [
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "status": 0,
+      "stderr": "",
+      "stdout": "25769803776\n"
+    },
+    {
+      "command": [
+        "vm_stat"
+      ],
+      "status": 0,
+      "stderr": "",
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                    53278.\nPages active:                                 505299.\nPages inactive:                               480709.\nPages speculative:                             25082.\nPages throttled:                                   0.\nPages wired down:                             208735.\nPages purgeable:                               15675.\n\"Translation faults\":                   105311015398.\nPages copy-on-write:                     14517503648.\nPages zero filled:                       28576252117.\nPages reactivated:                         628015732.\nPages purged:                               59273708.\nFile-backed pages:                            399986.\nAnonymous pages:                              611104.\nPages stored in compressor:                   499522.\nPages occupied by compressor:                 265960.\nDecompressions:                            541021343.\nCompressions:                              781300956.\nPageins:                                   697451351.\nPageouts:                                     358165.\nSwapins:                                     5030294.\nSwapouts:                                   16957763.\n"
+    }
+  ],
+  "scope": "Post-interruption host census only. Not a cutoff-time VM snapshot, independent peak derivation or exclusive actor attribution.",
+  "timestamp": "2026-10-19T08:55:00.519368+00:00"
+}

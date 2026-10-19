@@ -469,6 +469,23 @@ subtest 'CoreAST direct SystemVerilog rendering preserves same-precedence right 
     );
 };
 
+subtest 'symbolic literals retain their width and radix through backend rendering' => sub {
+    my $support = FSM::Synthesis::EnableGraph::ASTSupport->new(flattened_dt => {});
+    for my $case (
+        ['x01', 3, 'binary', "3'bx01"],
+        ['10Xz0011', 8, 'binary', "8'b10Xz0011"],
+        ['Z', 4, 'hex', "4'hZ"],
+        ['001', 3, 'binary', "3'b1"],
+        [3, 3, 'decimal', "3'd3"],
+    ) {
+        my ($value, $width, $radix, $expected) = @$case;
+        my $literal = FSM::CoreAST::Literal->new($value, width => $width, radix => $radix);
+        is($support->ast_to_systemverilog($literal), $expected, "$expected keeps its typed spelling");
+        is($literal->value, $value, 'rendering preserves the original literal value');
+        is($literal->width, $width, 'rendering preserves the original width');
+    }
+};
+
 done_testing();
 
 sub parse_fsm_module {

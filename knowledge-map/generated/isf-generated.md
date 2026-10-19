@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **12** facts · **43** uniquely owned question entries.
+> **12** facts · **44** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -43,6 +43,7 @@
 - q="which schedule kinds describe generated actor storage handoffs?" · facts=[isf-generated-report-enumerations](../../docs/knowledge/isf-generated-report-enumerations.md)
 - q="why are competing child or parent storage writers rejected?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="why did a generated child completing a named output fail to release its parent?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
+- q="why did const_3bx01 become an undeclared x01 operand?" · facts=[isf-generated-child-output-read-preparation](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
 - q="why did corrected generated record-input runtime fail the blocking copy check?" · facts=[isf-generated-blocking-binding-observation](../../docs/knowledge/isf-generated-blocking-binding-observation.md)
 - q="why did the first generated record-input runtime compile fail?" · facts=[isf-generated-input-first-compile-failure](../../docs/knowledge/isf-generated-input-first-compile-failure.md)
 - q="why does spawn bind a same-named child input twice?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
@@ -76,7 +77,7 @@ _Generated child named completion preserves authored pulses and activation hands
 
 _Detached child output reads use private typed aliases and emitted operand roles_
 
-- **date:** 2026-10-02 · **status:** current
+- **date:** 2026-10-19 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-child-output-read-preparation.md`](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
 
 ### isf-generated-child-port-storage-shadowing

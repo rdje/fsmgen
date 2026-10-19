@@ -83,6 +83,14 @@ decimal or binary. Write `0b00001110` for intrinsic-width binary,
 Positive-width slots keep the existing decimal compatibility, so
 `(+size (DATA 10))` still means decimal ten.
 
+Binary value tokens can preserve unknown or high-impedance digits:
+`const_3bx01` emits `3'bx01`, and `const_8b10_Xz_0011` emits
+`8'b10Xz0011`. The same tokens work in ISF scalar assignments such as
+`(set result const_3bx01)` when `result` has width three. These remain typed
+literals even when a signal named `x01` exists. Symbolic literal emission and
+inspection are covered by regression tests; runtime four-state qualification
+remains separate.
+
 ## Explicit Signal Roles
 
 Use `+interface` when a signal's role must not depend on whether the source

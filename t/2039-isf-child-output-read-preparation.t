@@ -341,13 +341,8 @@ sub qualify {
         write_file($path, $emitted);
         write_file("$work/$_.fsm", $active_packages->{$_}) for keys %$active_packages;
         $check = FSM::Test::SourceQueryRunner::_capture([$^X, 'bin/fsmgen', '--quiet', '--strict', '--check', '--json', $path], '');
-        if ($name eq 'static_xz_refusal') {
-            is($check->{exit_code}, 1, 'precise owned X/Z false-operand prerequisite remains (SEM .2.1.4)');
-            like($check->{stdout}, qr/references undeclared internal operand 'x01'/, 'actual canonical literal names the false operand');
-        } else {
-            is($check->{exit_code}, 0, 'actual prepared child strict carrier check (no parent/runtime claim)')
-                or diag($check->{stdout}, $check->{stderr});
-        }
+        is($check->{exit_code}, 0, 'actual prepared child strict carrier check (no parent/runtime claim)')
+            or diag($check->{stdout}, $check->{stderr});
     }
     if (my $dir = $ENV{FSMGEN_OUTPUT_READ_CAPTURE}) {
         write_file("$dir/$name.json", $json->encode(normalize_repository_paths({actor => $actor, transaction => $tx,
