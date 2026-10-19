@@ -1602,3 +1602,24 @@ or borrowed progress refuse. The initial sandbox process-inspection failure
 retains before the guarded successful run. Physical source-image truth, actual
 exports/proof semantics, API identity, default effects and original admission
 execution remain unqualified.
+
+Check complete parameter-backed reader input allocation with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/parameter_input_coverage.py
+```
+
+This joins the qualified prerequisite, recovered-cause and admission bindings
+to the complete inventoried entry-table compilation sites and their finite
+source-listed contexts. A separate scan of whole source files enumerates those
+sites without choosing them by helper name. Native Git trees check complete
+table membership; actual entry blobs and Path operations check payloads,
+filenames and import names. Every original namespace, argv, capture, proof,
+stdout and condition field remains in its qualified binding.
+
+Missing or duplicated contexts and intact bindings assigned to the wrong site
+or model refuse. Changed revision, member, input, namespace, caller, capture
+and borrowed-progress controls also refuse. Saved recovery consumes committed
+whole input records and rechecks the new allocation relation. Original source
+image, helper/API/export identities, semantic outputs, full executable source
+allocation, default effects and runtime custody remain separate qualifications.
