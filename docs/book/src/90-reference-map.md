@@ -1759,3 +1759,36 @@ The prior qualified models and their interpretation remain shared premises.
 Payload imports and recursive expansion, concrete namespace values, actual
 exports and complete source/default/effect/runtime qualification remain open.
 These checks execute current authorizers without running original programs.
+
+Inspect reconstructed payload imports, namespaces and recursive input boundaries:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/payload_closure.py
+```
+
+The reader checks whole payload syntax against token and serialized-tree
+membership. Its AST rendering preserves syntax fields and is explicitly a
+derived representation. The original transformed tree and its coordinates
+remain in the prior model.
+
+Namespace reads and writes retain distinct roles. The value-frame recipe's
+`namespace[name]` selector is bound to its source-declared finite iterator and
+dictionary, with an independent token check of the literal entries. Required
+exports must have source-defined bindings; concrete original namespace values
+and actual exports remain unobserved.
+
+One input-only preparation payload contains nested compile/exec calls. Those
+calls remain recorded. Its exclusion follows from the outer compiler result
+being discarded, under the declared compiler API premise. Assignment or
+execution of that result fails the exclusion check. Within executable payloads,
+new references to `compile`, `exec`, `eval` or `__import__`, unowned imports,
+missing namespace inputs and altered selectors also refuse.
+
+Standard library names are declarations checked against the current Python
+API. Original loader selection and callable identity remain unqualified, as
+do complete source, default effects, runtime and custody. No original program,
+model or recipe runs during these checks.
+
+The full saved-reader wrapper has an open defect in its final capture-era
+card/list verifier. Use the individual commands above while the task tree's
+reader-route repair remains pending.

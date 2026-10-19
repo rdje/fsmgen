@@ -20,6 +20,7 @@ answers:
   - "where are AST model inputs reconstructed?"
   - "why is the retained preparation correction a no-op?"
   - "where are dated reader-recovery facts retained?"
+  - "where are payload namespace selectors qualified?"
 date: 2026-10-19
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
@@ -27,7 +28,7 @@ evidence: >-
   CLAIM_VERIFICATION.md;
   doctrine/claim_verification/claim_registries.jsonl; scripts/check_claim_verification.pl;
   docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md;
-  docs/audits/original-join-parent-acceptance-20261018/source-recovery-card-7748b2db479ffdf559f49ede08335b7418ebecfe979a9a9da973d9e582e2594a.txt; scripts/check_source_recovery_card.sh
+  docs/audits/original-join-parent-acceptance-20261018/payload_closure.py; scripts/check_source_recovery_card.sh
 reverify: >-
   scripts/run_with_ram_guard.sh -- bash
   docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh
