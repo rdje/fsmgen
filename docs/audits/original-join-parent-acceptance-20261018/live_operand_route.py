@@ -30,26 +30,30 @@ CACHE_DEPENDENCIES = {AUDIT + name + '.py' for name in
                       ('runtime_cache_producer', 'epoch_constraints', 'execute',
                        'selected_postrun', 'selected_checkout')}
 CACHE_PROOF = AUDIT + 'runtime-cache-source-roles-qualified.json.gz'
+DISPATCH_REVISION = 'c3434d27c76d21936b968d15df6d4b9cc7b89932'
+DISPATCH_SOURCES = {AUDIT + name + '.py' for name in
+                    ('default_dispatch', 'saved_reader_sources', 'qualify_default_dispatch_roles')}
+DISPATCH_PROOF = AUDIT + 'default-dispatch-source-roles-qualified.json.gz'
 FROZEN_INPUTS = [AUDIT + name + '.json.gz' for name in
-                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF]
+                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF]
 SELF = AUDIT + 'live_operand_route.py'
 HELPER = frozen.HELPER
-OUTPUT = AUDIT + 'runtime-cache-live-route-qualified.json.gz'
+OUTPUT = AUDIT + 'default-dispatch-live-route-qualified.json.gz'
 TERMINAL = ['python3', '-B', SELF, '--current']
 OPTIONAL = [['python3', '-B', AUDIT + name + '.py'] for name in
             ('frozen_operand_route', 'check_frozen_route_independence',
              'canonical_contracts', 'check_canonical_progress', 'qualify_selected_intake_roles',
-             'qualify_runtime_cache_roles')]
+             'qualify_runtime_cache_roles', 'qualify_default_dispatch_roles')]
 DEPENDENCIES = [AUDIT + 'frozen_operand_route.py', AUDIT + 'rollover_source_card.py',
                 'scripts/check_source_recovery_card.sh',
-                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES)]
+                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES)]
 SCOPE = ('Current source/archive/question/reverify and ordered reader membership only. '
          'Original and already-published child readers retain their exact order. '
-         'Only the named canonical, selected-intake and runtime-cache source replacements bind to '
+         'Only the named canonical, selected-intake, runtime-cache and default-dispatch source replacements bind to '
          'separately qualified immutable revisions; unchanged entrypoint identities '
          'and complete original versions of replaced published sources retain. Only the '
          'explicit native-qualified optional readers may be added. The named '
-         'canonical, intake and cache library/readers and their frozen proof inputs bind '
+         'canonical, intake, cache and dispatch library/readers and their frozen proof inputs bind '
          'to separately qualified immutable revisions. Named unchanged cache decode '
          'dependencies retain their original native epoch; other transitive '
          'dependencies are outside this route claim. Actual helper '
@@ -60,10 +64,11 @@ SCOPE = ('Current source/archive/question/reverify and ordered reader membership
 
 def native(path, *, identity_only=False, revision=None):
     if revision is None:
-        revision = (CACHE_REVISION if path in CACHE_SOURCES or path == CACHE_PROOF else
+        revision = (DISPATCH_REVISION if path in DISPATCH_SOURCES or path == DISPATCH_PROOF else
+                    CACHE_REVISION if path in CACHE_SOURCES or path == CACHE_PROOF else
                     INTAKE_REVISION if path in INTAKE_SOURCES or path == INTAKE_PROOF else
                     CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE)
-    assert revision in (BASE, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION), 'closed native source epochs'
+    assert revision in (BASE, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION), 'closed native source epochs'
     entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', revision, '--', path)
     assert entry.count(b'\0') == 1, 'one native admitted source'
     header, name = entry[:-1].split(b'\t')
@@ -108,7 +113,7 @@ def authority():
     baseline_card = native(frozen.CARD)
     return dict(helper=helper, sources=sources, required=required,
                 replaced_sources={path: native(path, revision=BASE) for path in sorted(
-                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES))},
+                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES))},
                 frozen_inputs={path: native(path, identity_only=True) for path in FROZEN_INPUTS},
                 source_card_proof=proof, baseline_card=baseline_card)
 
@@ -245,6 +250,16 @@ def controls(value, fixed):
         ('lost-original-cache-reader', lambda x: x['authority']['replaced_sources'].pop(AUDIT + 'verify_runtime_cache.py')),
         ('missing-cache-role-proof', lambda x: x['frozen_inputs'].pop(CACHE_PROOF)),
         ('boolean-cache-proof-size', lambda x: x['frozen_inputs'][CACHE_PROOF].__setitem__('bytes', True)),
+        ('changed-dispatch-reader', lambda x: x['sources'].__setitem__(AUDIT + 'default_dispatch.py', frozen.blob(b'changed dispatch\n'))),
+        ('changed-native-source-reader', lambda x: x['sources'].__setitem__(AUDIT + 'saved_reader_sources.py', frozen.blob(b'changed getter\n'))),
+        ('changed-dispatch-role-qualifier', lambda x: x['sources'].__setitem__(AUDIT + 'qualify_default_dispatch_roles.py', frozen.blob(b'changed qualifier\n'))),
+        ('wrong-dispatch-source-revision', lambda x: x['authority']['sources'][AUDIT + 'default_dispatch.py'].__setitem__('revision', BASE)),
+        ('wrong-getter-source-revision', lambda x: x['authority']['sources'][AUDIT + 'saved_reader_sources.py'].__setitem__('revision', BASE)),
+        ('lost-original-dispatch-reader', lambda x: x['authority']['replaced_sources'].pop(AUDIT + 'default_dispatch.py')),
+        ('missing-dispatch-role-proof', lambda x: x['frozen_inputs'].pop(DISPATCH_PROOF)),
+        ('changed-dispatch-role-proof', lambda x: x['frozen_inputs'][DISPATCH_PROOF].__setitem__('sha256', '0' * 64)),
+        ('wrong-dispatch-proof-revision', lambda x: x['authority']['frozen_inputs'][DISPATCH_PROOF].__setitem__('revision', BASE)),
+        ('boolean-dispatch-proof-size', lambda x: x['frozen_inputs'][DISPATCH_PROOF].__setitem__('bytes', True)),
         ('missing-frozen-proof', lambda x: x['frozen_inputs'].pop(FROZEN_INPUTS[0])),
         ('changed-frozen-proof', lambda x: x['frozen_inputs'][FROZEN_INPUTS[0]].__setitem__('sha256', '0' * 64)),
         ('boolean-frozen-proof-size', lambda x: x['frozen_inputs'][FROZEN_INPUTS[1]].__setitem__('bytes', True)),
@@ -289,7 +304,7 @@ def main():
     args = parser.parse_args()
     fixed = authority()
     value = current_value(fixed)
-    product = dict(schema='fsmgen.live_operand_route.v4', inputs=value,
+    product = dict(schema='fsmgen.live_operand_route.v5', inputs=value,
                    result=review(value, fixed), controls=controls(value, fixed))
     if args.write:
         card.save_record(OUTPUT, product)

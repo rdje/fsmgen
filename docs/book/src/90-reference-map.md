@@ -2129,7 +2129,16 @@ write output is not recaptured during this qualification.
 
 `default-dispatch-source-roles-qualified.json.gz` retains native source/data
 references and genuine historical/changed/denied-image, type/member/body and
-native-retrieval controls. Original proof and inventory bytes stay exact. Native
-admission of these replacements, remaining reader qualification and full helper
-success remain required; original operational, custody and semantic permissions
-retain their existing gates.
+native-retrieval controls. Original proof and inventory bytes stay exact. Original
+operational, custody and semantic permissions retain their existing gates.
+
+The scoped route now admits the committed dispatch reader, shared native-source
+getter and role qualifier, together with the immutable role proof. Their source
+epoch is separate from the canonical preparation epoch. The complete original
+dispatch reader remains retrievable, and the helper appends the qualified role
+reader while preserving all established reader order and shell protocol.
+
+`default-dispatch-live-route-qualified.json.gz` retains native identities, actual
+listing and public queries, and changed-source, wrong-epoch, missing-original,
+proof and JSON-type refusals. This gate runs listing and query operations.
+Remaining saved readers and the complete helper still require qualification.
