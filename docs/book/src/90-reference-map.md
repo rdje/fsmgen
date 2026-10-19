@@ -1644,3 +1644,21 @@ selection, bytecode caches or actual target exports. Saved complete programs,
 AST-transformed inputs and syntactic compile-only candidates retain explicit
 reconstruction owners. Complete executable-source allocation and original
 source-image/API/default/effect/runtime/custody qualification remain open.
+
+Reconstruct the saved complete-program field-reader input with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/saved_program_input.py
+```
+
+The checker extracts literal edit rules from the complete original recipe
+source. It reconstructs the whole saved program and compares it with a
+separate byte-splice result over native Git inputs. Changed source, recipe,
+saved data, namespace, compile-name and result-role candidates refuse; the byte
+oracle separately rejects corrupted programs and missing or duplicated edits.
+
+The ordinary, storable and controls modes retain their distinct logical
+compile names. The declared namespace, complete caller/control source and
+`proof_result` use remain source contracts. No original reader, recipe or
+program runs. Concrete namespace values, actual exports, transitive source/data
+allocation, physical image and runtime behavior remain unqualified.
