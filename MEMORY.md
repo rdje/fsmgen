@@ -7,9 +7,9 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2`
-- next_action: Wait for host capacity as requested, then retain and qualify a complete advertised helper retry from the unchanged committed native admission under the 88-percent/4096-MiB guard.
+- next_action: Repair the runtime-cache saved/current instrument comparison, retaining exact historical producer evidence and strict operational admission; then qualify the remaining advertised readers and complete helper under unchanged resource limits.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; original semantic cohort slots remain unused.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
   Knowledge Map rollover debt forbids allowance growth; preserve all facts/questions. No decision or authentication is pending.
-  Host capacity currently defers complete advertised reader qualification. Historical startup/parent qualification and full CI/push remain gated; Push whenever useful is explicitly authorized by user steering on 2026-10-11; required HIAL/full-CI qualifications still gate it. Visual mdBook QA remains pending.
+  The complete helper now exposes runtime-cache saved/current instrument coupling; capacity still governs verification. Historical startup/parent qualification and full CI/push remain gated; Push whenever useful is explicitly authorized by user steering on 2026-10-11; required HIAL/full-CI qualifications still gate it. Visual mdBook QA remains pending.

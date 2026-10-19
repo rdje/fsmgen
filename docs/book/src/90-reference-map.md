@@ -2049,3 +2049,13 @@ helper outcome or immediate custody.
 whole partial data, native/source/original-contract/listing reconstruction and
 genuine type/gap/fabricated-completion/source/command refusals. This qualifies
 retention, with full helper success still pending the requested capacity wait.
+
+
+A later capacity retry reaches a complete reader failure rather than a guard
+interruption. `complete-reader-capacity-retry-capture.json.gz` retains every
+run record and equal before/after source boundaries. The runtime-cache saved
+reader compares historical producer instruments with current files; the
+canonical-contract repair changed the current preparation instrument. All
+captured instruments still match their original committed source. The repair
+must distinguish saved evidence from current operational admission while
+preserving the original producer results. Full helper qualification stays open.
