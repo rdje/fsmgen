@@ -1423,3 +1423,20 @@ route. The default route reader consumes its saved card snapshot; add `--current
 to check live card freshness. A future-card control verifies that saved recovery
 ignores current-card changes while the live check refuses drift. Neither reader
 launches historical source or a preparation recipe.
+
+
+The reconstruction families now have separate fixed-file/parameter, saved-program,
+AST-transform and input-only source owners. Their bounded task ledger retains
+completed raw-address-role history through an exact version terminal:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/operand_task_capacity.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/operand_task_capacity.py --current
+```
+
+This reader reconstructs the complete original task source and every selected
+node with independent native controls. Saved recovery uses retained admission
+registry bytes; the explicit current check observes the complete tracked live
+registry namespace. The initial result's unretained live-input gap stays separate
+from the later complete admission capture. This qualifies ledger retention and
+source-family ownership; executable operand bindings remain pending.

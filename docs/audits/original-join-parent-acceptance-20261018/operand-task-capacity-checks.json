@@ -1,0 +1,82 @@
+{
+  "observations": [
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/operand_task_capacity.py",
+        "--write"
+      ],
+      "label": "first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/operand-task-capacity-first.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "bash",
+        "-c",
+        "python3 -B docs/audits/original-join-parent-acceptance-20261018/operand_task_capacity.py --capture-admission && python3 -B docs/audits/original-join-parent-acceptance-20261018/operand_task_capacity.py && python3 -B docs/audits/original-join-parent-acceptance-20261018/operand_task_capacity.py --current"
+      ],
+      "label": "qualified",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/operand-task-capacity-qualified.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "prove",
+        "-Iperl",
+        "t/1549-task-tree-integrity-doctrine.t",
+        "t/1554-live-document-size-doctrine.t"
+      ],
+      "label": "focused",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/operand-task-capacity-focused.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "mdbook",
+        "build",
+        "docs/book",
+        "-d",
+        ".artifacts/mdbook-caller-modules"
+      ],
+      "label": "book",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/operand-task-capacity-book.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "scripts/check_doctrines.sh"
+      ],
+      "label": "staged-doctrines",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/operand-task-capacity-staged-doctrines.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/operand_task_capacity.py",
+        "--current"
+      ],
+      "label": "current-final",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/operand-task-capacity-current-final.txt.gz",
+      "tool_observed_status": 0
+    }
+  ],
+  "predecessor_revision": "dccd681e075c3b9df74811109de8a7cc427dae7a",
+  "schema": "fsmgen.operand_task_capacity_checks.v1",
+  "scope": "Tool-observed bookkeeping/native task-checker results only. Complete first proof retains its original live-input gap; later admission is separately captured, never a replacement. No original producer, data recipe or semantic cohort runs."
+}
