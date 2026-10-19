@@ -1826,3 +1826,33 @@ live qualification runs only listing and public queries. Complete actual
 wrapper success remains separately owned and pending. No original model,
 recipe, semantic cohort or spent capture runs, and original custody, runtime,
 native/private, HIAL and full-CI gates retain their owners.
+
+
+The first complete advertised wrapper attempt is retained in
+`reader-sequence-first.json.gz` in the same audit directory. Claim checks pass,
+then the unchanged RAM guard stops the sequence at its reported host cutoff.
+The exact native tracked-input boundary, ordered listing, producer/helper
+source and complete observed streams/status retain. No complete wrapper or
+first saved-reader success is claimed by that attempt.
+
+A separate instrumented first-reader probe also trips the guard. Its collector
+was terminated before final-only publication; the original collector source
+and outer terminal retain, while its unpublished samples, inner terminal and
+phase stream remain missing. Later raw host observations cannot establish the
+cause or peak of that earlier event. Eager saved-source JSON loading is a
+source-level candidate, with resource isolation still separately owned.
+
+The corrected collector publishes recoverable partial files before finishing:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/profile_first_reader.py --run
+```
+
+It prints its repository-relative diagnostic directory before launch. Started
+metadata and samples are flushed, child streams go directly to local files,
+and a completion file is separate. An actual harmless-child control reaps its
+child, terminates only the collector before publication, and proves retained
+bytes survive; missing-file controls refuse. This proves partial retention,
+not saved-reader success, complete peaks, timing or old host-cause attribution.
+Only run the isolated probe through the unchanged guard. Inspect its retained
+partial files after any interruption; never promote them to a completed run.

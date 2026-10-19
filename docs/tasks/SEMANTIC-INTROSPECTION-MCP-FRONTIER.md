@@ -6086,9 +6086,52 @@ For FSMGen, the analogs are:
 
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Verify the complete advertised source-reader sequence and finish the P1 repair.`
   Acceptance: `After both new boundaries commit, execute the actual full advertised helper under the unchanged RAM guard, current authorizers only. Preserve complete command/source/input/stream/status evidence and every first failure; own and repair any additional default/live coupling before claiming success. Retain all original semantic/custody/runtime/HIAL boundaries, synchronize book/current fact routes, run focused and staged/normal gates, and close the parent only after complete sequence success before aggregate data recovery.`
+  Verification: `The first actual complete advertised helper is retained with native0213f8268 tracked source/tree and exact before/after owning-input boundaries. Claim checks pass before the unchanged guard reports host88.5 percent and exits137 without a first saved-reader success. Complete listing, original command, all streams/status and producer/source bytes retain in reader-sequence-first.json.gz. This is an observed guard event, not descendant/host-cause attribution or whole-sequence success. The resource boundary requires separate isolation, bounded-repair/admission and complete-sequence qualification leaves before aggregate recovery.`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.1`
+  Status: `active`
+  Goal: `Retain the first full-sequence guard refusal and isolate its source/resource boundary.`
+  Acceptance: `Preserve the exact native source/listing/input/streams and unchanged guard event. Inspect source and native archive sizes, then isolate only the current first saved authorizer under independent raw host/process telemetry and unchanged cutoffs. No original cohort, semantic recipe, spent capture, cache deletion or cutoff change is allowed. Distinguish observed phase/resource facts from missing causal or complete-peak evidence; commit focused/book/claim/staged/normal evidence and an exact repair/unblock frontier.`
+  Verification: `pending`
+  Commit: `pending`
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.1.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.1.2`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.1.1`
+  Status: `done`
+  Goal: `Preserve both actual guard refusals and make diagnostic retention interruption-safe.`
+  Acceptance: `Keep the full first advertised sequence and exact source/streams. Preserve the isolated outer guard terminal and complete first collector source with missing in-memory streams explicit. Replace final-only collector storage with flushed on-volume started/sample/child streams, prove partial recovery using a harmless synthetic child, and commit focused/book/claim/staged/normal evidence plus the resource blocker. Do not retry the saved reader, raise cutoffs, claim attribution or consume original cohorts.`
+  Verification: `Re-derive: run_reader_sequence.py retains the exact native0213f8268 complete tracked tree, unchanged before/after owning-input boundary, full helper/listing/programme bytes and actual advertised guard command. Claim checks and its focused test complete before the inner guard reports host88.5 percent against unchanged88 and returns137; no first saved-reader success or whole sequence completion is claimed. The isolated instrumented current-reader attempt begins at reported86.8 and its outer guard reports90.6, terminates the full collector tree and returns137. Falsify: the first collector publishes only after child termination, so the actual outer stop leaves no final profile. Complete first collector source/outer streams/status retain in first-reader-profile-interrupted.json.gz; raw in-memory samples, inner terminal, phase stream and complete peak/exclusive cause remain explicitly missing. Source inspection locates eager gzip/JSON and source-record materialization in the first reader as candidates only; native archive sizes are observations, not attribution. Later raw host counters/pressure retain separately in sequence-post-stop-host.json.gz and cannot retroactively supply simultaneous counters for either event. Repair: profile_first_reader.py now fsyncs started metadata and sample JSONL, attaches child output directly to on-volume files, prints the recovery directory before launch and separates completion from partial evidence. It captures only pid/parent/RSS, without process command paths. Actual harmless-child testing reaps the child then terminates only its collector before final publication; every retained byte survives, absent completion stays explicit and real omitted-file controls refuse. Locality rejects symlinks, foreign repositories and off-volume diagnostic paths. Durability: first/full/interrupted sources and streams, complete synthetic before/after/control product and final proof retain in the adjacent first-reader retention receipts; task/book preserve both gaps and ordered follow-up ownership. Final syntax, guarded retention test and focused task/claim suites pass All tests successful Files2 Tests61. Later successful guard starts are lower samples, not original causal evidence or a future capacity guarantee. Exact book aggregate and measured task allowances, current claims and staged/normal doctrines gate commit. No original semantic/cohort/spent/private operation or safety cutoff changes; the next isolated attempt must use the recoverable collector before choosing resource repair/admission or complete sequence qualification.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.1.1: retain guard refusals and partial diagnostic streams`
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S identifies 06c38fba703c53708875df14f501f1be3e94f891 for the guard host-cutoff path. Actual advertised and isolated attempts return137 at reported88.5 and90.6 against unchanged88; the first isolated collector holds samples/streams in memory until child completion and is itself terminated, losing its unpublished profile. Eager source-record loading remains a source candidate, not proven host causation.
+  - [x] **ADDRESSED (verified)** — Both exact guard refusals and complete first producer/collector sources retain with missing evidence explicit. The replacement fsyncs source/start/sample evidence and writes child streams directly to local files. A harmless child is reaped, its collector is actually terminated, retained bytes agree and real missing-member controls reject; no saved authorizer is retried in this retention repair.
+  - [x] **NO REGRESSION** — Final guarded retention test passes, and task/claim suites report All tests successful; Files=2, Tests=61. Source syntax checks pass. Exact book/source/claim/task declarations and staged scripts/check_doctrines.sh plus normal hooks gate commit. Isolated admission, actual complete sequence, original semantic/custody/native/HIAL/full-CI qualifications remain open.
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.1.2`
+  Status: `pending`
+  Goal: `Isolate the first saved-reader resource phase with retained raw observations.`
+  Acceptance: `Only after the retention predecessor commits and unchanged RAM admission permits the diagnostic, capture the current first reader with flushed raw host/process/phase evidence. Independent same-snapshot capacity derivation and sampled descendant membership must distinguish observed facts from missing complete peaks/exclusive host attribution. Use those facts to select the bounded repair/admission leaf; no cutoff, original semantic/cohort or custody boundary changes.`
+  Verification: `Two actual attempts terminate at reported host88.5 and90.6 percent against the unchanged88 limit; the second outer guard also kills its final-only collector. No admissible isolated phase profile or complete first-reader success is available. Later harmless-test guard starts report lower host capacity use, so a fresh monitored attempt is eligible after the retention predecessor commits; this is no guarantee it will complete, no old-event attribution and no safety-limit waiver.`
+  Commit: `pending`
+
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.2`
+  Status: `pending`
+  Goal: `Repair or qualify bounded first-reader recovery before another complete sequence.`
+  Acceptance: `Use the committed isolated evidence to select a safe bounded source/data reader repair, or establish sufficient admissible host capacity with unchanged limits. Preserve every original record/control and source meaning; a changed entrypoint needs explicit new native admission in the live route gate. Split a broader parser/storage repair before implementation. Current guard/resource cause and unobserved peaks stay explicit; no original model/cohort runs and no safety limit is raised.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3`
+  Status: `pending`
+  Goal: `Qualify complete advertised sequence after resource admission.`
+  Acceptance: `After the resource-repair/admission predecessor commits, rerun the actual complete advertised helper under unchanged RAM limits with full source/input/listing/stream/status retention. Preserve all first refusals, repair owned couplings, and close the route parent only after complete success; synchronize book/fact/task/claims/staged/normal delivery before aggregate data recovery.`
   Verification: `pending`
   Commit: `pending`
 
