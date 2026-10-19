@@ -1464,3 +1464,27 @@ recipe or semantic cohort runs. The retained first checker failures concern a
 nested-call coordinate collision and a valid semicolon statement separator;
 their complete instrument sources and outputs remain alongside the repaired
 reader.
+
+Bind typed source arguments and fixed-epoch payload candidates with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/typed_callers.py
+```
+
+Path constructors and joins retain their source expressions and types through
+caller namespaces and finite loops. A separate native public Path API check
+reconstructs their path values without opening original files. The complete
+source/declaration population and contextual wrapper routes must match the
+committed graph. Each route retains its original Git source bytes separately
+from the logical filename and namespace. Changing an actual Path constructor
+to `str` produces the same text but refuses path division in both the model
+and the native API; saved input/type/path/namespace/omission controls also refuse.
+
+Direct byte inputs are conditional on the fixed source image. Importlib rows
+retain file candidates; selected executable input and bytecode/cache behavior
+remain unqualified. Source-value/namespace/loop grammar, runtime callable and
+API identity, actual exports, default effects and custody remain explicit
+premises or separate work. The native interpreter identity is retained. The
+initial Path-aware plan-hook omission, serialized body-alias failure and strict
+route tuple/JSON-array replay mismatch retain complete diagnostic sources/results
+alongside the repaired saved reader.
