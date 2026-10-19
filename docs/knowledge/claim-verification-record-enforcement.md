@@ -17,13 +17,14 @@ answers:
   - "are cache types enforced?"
   - "where are compile exec operands inventoried?"
   - "where are AST model inputs reconstructed?"
+  - "why is the retained preparation correction a no-op?"
 date: 2026-10-19
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
 evidence: >-
   CLAIM_VERIFICATION.md; docs/decisions/0074-actionable-claims-name-rederivation-falsification-and-durability.md;
   doctrine/claim_verification/claim_registries.jsonl; scripts/check_claim_verification.pl;
-  t/1636-claim-verification-doctrine.t; docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md
+  docs/tasks/CLAIM-VERIFICATION-TEMPLATE-REVIEW.md
 reverify: >-
   scripts/run_with_ram_guard.sh -- bash
   docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh
@@ -44,7 +45,7 @@ verify_selected_failed.py: later source/cache/query; verify_runtime_cache.py:
 permissive cache/strict output; default_dispatch: entry edges.
 Module readers: retained stop; fixed closure qualified; data/effects open.
 
-operand_inventory.py: whole fixed-graph compile/exec syntax and token census;
-source/data bindings and runtime stay unqualified.
+operand_inventory.py: whole fixed-graph compile/exec syntax/token census; source/data bindings/runtime unqualified.
 
-ast_model_inputs.py: whole typed trees/coordinates and caller contracts; original execution stays unqualified.
+ast_model_inputs.py: whole typed trees/coordinates/callers; original execution unqualified.
+preparation_correction.py: retained no-op.

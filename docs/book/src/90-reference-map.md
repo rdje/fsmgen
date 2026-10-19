@@ -1681,3 +1681,20 @@ compile-name, missing-site/model, scalar-type and coordinate controls refuse.
 Saved recovery uses retained complete inputs and native Git references. No
 historical recipe or model executes; actual exports, full source allocation,
 default effects, physical image and runtime custody remain unqualified.
+
+Check the correction to the retained preparation-source explanation with:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/preparation_correction.py
+```
+
+The pinned first and corrected preparation files are byte-identical. Neither
+contains the doubled newline escape named by the archived correction recipe.
+Its replacement-equality test therefore passes as a no-op; it does not prove
+that a correction occurred. This supersedes that explanation while preserving
+the complete archived files, native failures and after-invocation descriptors.
+
+An independent byte-window oracle and changed-source/recipe/condition/output
+controls check the relation. Actual original stdin and prelaunch custody remain
+unobserved. No historical preparation runs, and compile-only input binding
+remains a separate qualification.

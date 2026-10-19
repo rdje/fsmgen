@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **61** uniquely owned question entries.
+> **4** facts · **62** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -65,6 +65,7 @@
 - q="why did the whole historical checkout reject canonical source bytes?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="why do schedule reports carry explicit transaction ownership?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="why do total fibers live fibers and execution types use separate evidence?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="why is the retained preparation correction a no-op?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="why was the experimental UVM resource peak removed from the rationale ledger?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 
 ## Facts
