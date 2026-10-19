@@ -2101,3 +2101,35 @@ source/library/provenance/original-retention/proof/type/order controls. The
 route gate executes list/query operations; complete reader execution and every
 original semantic or operational acceptance remain separately required. Other
 transitive dependencies remain outside this named admission claim.
+
+
+The next dispatch saved reader exposed a source-metadata comparison: its full
+current result differed from the original proof only in the preparation
+instrument bytes. `default-dispatch-source-diagnosis.json.gz` retains both
+complete products and a historical metadata-only intervention. That intervention
+passes every original graph/control/scope/permission field without executing
+historical preparation code.
+
+Dispatch saved replay now reads its original reader and premise metadata from
+the pinned native audit epoch. The shared source reader restricts single-member
+source names and verifies regular Git entries, exact size, object hash and
+whole-body retrieval agreement. It returns bytes for metadata, never executes
+them. The original static dispatch/edge analysis and its unqualified transitive
+effects remain unchanged.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/default_dispatch.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_default_dispatch_roles.py
+```
+
+The actual saved reader passes its original complete proof; explicit
+`--current` still compares live metadata and refuses the changed sources.
+Existing `--write` retains current metadata and exclusive publication. Original
+write output is not recaptured during this qualification.
+
+`default-dispatch-source-roles-qualified.json.gz` retains native source/data
+references and genuine historical/changed/denied-image, type/member/body and
+native-retrieval controls. Original proof and inventory bytes stay exact. Native
+admission of these replacements, remaining reader qualification and full helper
+success remain required; original operational, custody and semantic permissions
+retain their existing gates.

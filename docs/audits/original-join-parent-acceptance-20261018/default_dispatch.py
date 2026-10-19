@@ -16,9 +16,13 @@ import epoch_constraints as epoch
 import execute
 import prepare
 import runtime_inventory as inventory
+import saved_reader_sources as reader_sources
 
 AUTHORITY = 'b919b7f8ec74627ecb83fb80cb9d8b2f74c7f45d'
 PATH = execute.AUDIT / 'default-dispatch-qualified.json.gz'
+SELF = 'default_dispatch.py'
+PREMISES = ('runtime_inventory.py', 'bounded_runtime_inventory.py', 'epoch_constraints.py',
+            'execute.py', 'prepare.py', 'selected_checkout.py')
 BASES = {key: epoch.BASES[key] for key in ('prerequisites', 'association')}
 SCOPE = ('Exact selected-epoch default entry dispatch and direct fixed dynamic-source edges only. '
          'No historical module, saved semantic cohort, original producer or new source fixture runs. '
@@ -229,20 +233,31 @@ def controls(value):
     return outcomes
 
 
-if __name__ == '__main__':
+def source_metadata(*, current=False):
+    return dict(programme=prepare.blob(reader_sources.body(SELF, current=current)),
+                premises={name: prepare.blob(reader_sources.body(name, current=current))
+                          for name in PREMISES})
+
+
+def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true',
+                        help='compare current reader and premise metadata instead of its saved epoch')
     args = parser.parse_args()
     expected = build()
     outcomes = controls(expected)
     product = dict(result=expected, controls=outcomes,
-                   programme=prepare.blob(execute.read(execute.AUDIT / 'default_dispatch.py')),
-                   premises={name: prepare.blob(execute.read(execute.AUDIT / name)) for name in
-                             ('runtime_inventory.py', 'bounded_runtime_inventory.py', 'epoch_constraints.py',
-                              'execute.py', 'prepare.py', 'selected_checkout.py')})
+                   **source_metadata(current=args.current or args.write))
     if args.write:
         execute.save(PATH, product)
     else:
         saved = json.loads(gzip.decompress(execute.read(PATH)))
         assert bounded.strict_equal(saved, product)
     print('Fixed default dispatch and direct dynamic-source edges pass; transitive effects and runtime custody remain unqualified.')
+
+
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
+    main()

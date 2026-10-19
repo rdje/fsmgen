@@ -38,7 +38,7 @@ reverify: >-
 re-derivation, falsification and durability legs, or owned gaps. Structural
 checks do not prove semantic truth or oracle independence.
 
-Dated original reader-recovery facts retain in the complete pre-rollover card:
+Dated original reader-recovery facts retain in the pre-rollover card:
 
 ```bash
 cat docs/audits/original-join-parent-acceptance-20261018/source-recovery-card-7748b2db479ffdf559f49ede08335b7418ebecfe979a9a9da973d9e582e2594a.txt
@@ -56,4 +56,4 @@ bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.s
 
 Those readers retain their pinned epochs, first failures and native/private gaps.
 
-Saved cache replay pins Git epochs.
+Saved cache/dispatch pin Git source epochs.
