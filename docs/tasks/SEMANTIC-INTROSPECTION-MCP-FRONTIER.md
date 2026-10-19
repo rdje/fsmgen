@@ -5813,11 +5813,52 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful; Files=2, Tests=66 in guarded task/size checks. Saved source/controls and --current eligibility, native book/current source copies, measured downward task ratchets, claim inventory, staged scripts/check_doctrines.sh and normal hooks gate commit. Ceilings, Knowledge Map allowances, original semantic commands and every first/spent/unused/native/private boundary remain unchanged.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind fixed wrapper and direct reader source operands.`
   Acceptance: `From the complete operand inventory, bind every fixed module-wrapper template and direct file/parameter-backed exec source to actual source bytes rather than a compilation filename alone. Preserve caller/parameter/namespace exports, complete fixed data premises, original input and logical-name bytes, and genuine changed-source/path/namespace/omission controls. No historical source executes; unresolved bindings block later allocation.`
+  Verification: `The complete committed compile inventory distinguishes path.read_bytes wrapper templates, imported file loaders, direct file/fixed-Git operands and parameter-backed reader byte tables. The existing abstract path strings and compilation filenames do not establish actual input kind or payload identity. Ordered template, typed caller, direct-source, reader-table and independent join leaves preserve the entire original binding contract before any historical execution or effects. The first staged gate refuses the longer index row at the focused-document width allowance. Full first index/gate bytes retain; the bounded row now routes complete duplicate status detail to this canonical tree, whose original source/cleanup/capture/role nodes remain intact. No allowance or ceiling is widened for the index.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2: separate fixed operand template and byte binding`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.5`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.1`
+  Status: `pending`
+  Goal: `Qualify fixed module-wrapper input and namespace templates.`
+  Acceptance: `Join every fixed-graph wrapper route to its actual source-defined callable and compile/loader definition. Retain whole function bytes, parameter and namespace declarations, actual input expression, public loader primitive and exact logical name/file-field/export obligations. Distinguish direct Path.read_bytes compilation from importlib file loading without executing historical modules. Preserve explicit source-image/cache/API premises and owned unresolved roles; genuine altered input/template/namespace/loader candidates must refuse.`
   Verification: `pending`
   Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.2`
+  Status: `pending`
+  Goal: `Bind typed caller arguments and wrapper input payloads.`
+  Acceptance: `From qualified wrapper definitions, derive actual caller/global/namespace/parameter/finite-loop values with explicit Path versus string kinds. Bind the actual wrapper input expression to complete fixed source bytes and compare logical names separately. Preserve all imported/borrowed callables and candidate membership; wrong type/path/caller/input/namespace/source/omission controls must refuse. No historical module executes and no filename alone establishes input identity.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.3`
+  Status: `pending`
+  Goal: `Bind direct file and fixed-Git executable source inputs.`
+  Acceptance: `Resolve direct file.read_bytes, old_frame and fixed-Git/public factory compile operands from complete source-defined paths and Git revision contracts. Retain actual original input bytes, name, namespace/export premises and complete role membership; genuine wrong source/revision/input/name/namespace controls must refuse. Preserve all original source/image/toolchain and runtime gaps without historical execution.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4`
+  Status: `pending`
+  Goal: `Bind parameter-backed original reader byte tables.`
+  Acceptance: `Resolve prerequisite reader, cause_qualification and association fresh_admission parameter tables from whole fixed plans, declarations, caller/argument values and source/body maps. Retain exact whole original bytes versus logical names and all explicit namespace/argv/capture roles. Genuine wrong data/member/parameter/revision/namespace and borrowed-progress controls must refuse; never execute a historical reader or replay an original semantic slot.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.5`
+  Status: `pending`
+  Goal: `Qualify complete fixed executable-input binding coverage.`
+  Acceptance: `Independently join every applicable inventoried wrapper/direct/reader input to its template, typed caller, complete actual payload and namespace/name/export premises. Expose public loader/cache/source-image assumptions and every unresolved binding. Genuine omitted/misallocated input, wrong source/caller/type/data/role and namespace controls must refuse. Commit saved complete recovery/book/task/claims/staged/normal delivery before saved-program reconstruction.`
+  Verification: `pending`
+  Commit: `pending`
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S def module(path): identifies50dd117496d4d226bff3cf2a5226caab45104416 in the fixed class-frame retention reader. Its wrapper compiles path.read_bytes, while the complete operand inventory also retains imported loader primitives and bodies[entry]/sources[entry] tables; abstract path spelling and compile filename alone cannot establish payload identity.
+  - [x] **ADDRESSED (verified)** — Ordered wrapper-template, typed caller/input, direct file/Git, reader-table and independent binding owners retain the entire original Goal/Acceptance, complete source universe and all unresolved input/namespace/runtime boundaries. No historical module, recipe or semantic cohort runs in this decomposition.
+  - [x] **NO REGRESSION** — Guarded task-tree regression reports All tests successful; Files=1, Tests=48. Current native book/source copies, measured task declarations, claim inventory, staged scripts/check_doctrines.sh and normal hooks qualify this task-owned scope split without raising a ceiling or Knowledge Map allowance.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.3`
   Status: `pending`
