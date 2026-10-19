@@ -1,0 +1,26 @@
+{
+  "archive": {
+    "bytes": 20207756,
+    "sha256": "62b0e841a2b9e5b726a1e1e2803eaf82234323892b9215c5f00393320dd7fddd"
+  },
+  "programme": {
+    "bytes": 3015,
+    "sha256": "667f2848cceb971c3c248cea438368453d83c55c9fd72005a843c255be394678"
+  },
+  "records": [
+    {
+      "bytes": 22774997,
+      "former_path": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-first-qualified.json.gz",
+      "offset": 0,
+      "sha256": "49309c9310576fbeee10c6b398bc4306bb9a207396bffe17b7abea95a501cdad"
+    },
+    {
+      "bytes": 22774993,
+      "former_path": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-qualified.json.gz",
+      "offset": 22774997,
+      "sha256": "3c520a6bb3adb76b0b9b90c6837c5e2bbfb881abe9ce00f00c45605065c69b21"
+    }
+  ],
+  "recovery": "LZMA-decompress the archive; each ordered offset/byte range is the exact former gzip file.",
+  "schema": "fsmgen.caller_module_draft_retention.v1"
+}

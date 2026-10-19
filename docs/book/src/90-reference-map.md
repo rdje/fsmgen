@@ -1371,6 +1371,32 @@ stops where a recovery function receives `module` through its caller's `ns`
 dictionary and selects preparation programs from a finite loop. The saved
 reader verifies this exact diagnostic and rejecting record controls. Calls in
 nondefault and uncalled bodies are included: this does not establish that the
-recovery runs under either original default command. Caller/parameter binding,
-complete source closure, executable-data expansion, effects and runtime custody
-remain open. No historical reader or preparation producer is executed.
+recovery runs under either original default command. This retained diagnostic
+grants no source-closure or runtime authority. No historical reader or preparation
+producer is executed.
+
+The separate successor resolves the caller-supplied loader, finite preparation
+loop and generator paths without changing that saved diagnostic:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_caller_modules.py
+```
+
+Its fixed imported/wrapper source graph retains complete source bytes, lexical
+sites, callable exports, namespace bindings and module targets. A separate
+source/import census, rooted member traversal and literal caller/loop oracle
+check allocation; changed source, missing imports/members/sites/exports, wrong
+caller/path/namespace and typed permission controls refuse. Python AST, the
+reviewed expression/wrapper grammar and interpreter standard-library membership
+remain explicit premises. Nondefault and uncalled bodies are included.
+Executable data, compile-only inputs, complete executable-source allocation,
+default reachability, effects and runtime custody remain separate qualifications.
+
+
+The saved task-capacity reader retrieves the complete completed subtree and
+checks its exact version terminal with independent node reconstruction and
+actual checker rejection controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/caller_task_capacity.py
+```

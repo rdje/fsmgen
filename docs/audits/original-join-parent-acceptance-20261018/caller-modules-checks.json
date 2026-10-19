@@ -1,0 +1,214 @@
+{
+  "observations": [
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/caller_modules.py"
+      ],
+      "label": "guard-first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-guard-first.txt.gz",
+      "tool_observed_status": 2
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/caller_modules.py"
+      ],
+      "label": "inspect-first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-inspect-first.txt.gz",
+      "tool_observed_status": 1
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/caller_modules.py"
+      ],
+      "label": "finite",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-finite.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/caller_modules.py"
+      ],
+      "label": "comprehension",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-comprehension.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/qualify_caller_modules.py",
+        "--write"
+      ],
+      "label": "write-first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-write-first.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/qualify_caller_modules.py",
+        "--write"
+      ],
+      "label": "write-json-native",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-write-json-native.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/qualify_caller_modules.py"
+      ],
+      "label": "saved-before-compaction",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-saved-before-compaction.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/qualify_caller_modules.py",
+        "--write"
+      ],
+      "label": "compact-first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-compact-first.txt.gz",
+      "tool_observed_status": 1
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/qualify_caller_modules.py",
+        "--write"
+      ],
+      "label": "final-write",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-final-write.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/verify_caller_drafts.py",
+        "--pack"
+      ],
+      "label": "draft-pack",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-draft-pack.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "prove",
+        "-Iperl",
+        "t/1549-task-tree-integrity-doctrine.t",
+        "t/1637-claim-verification-inventory.t"
+      ],
+      "label": "focused",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-focused.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "bash",
+        "-c",
+        "python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_caller_modules.py && python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_fixed_module_gap.py && python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_caller_drafts.py"
+      ],
+      "label": "final-saved",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-final-saved.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/check_live_document_size.sh"
+      ],
+      "label": "size-first",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-size-first.txt.gz",
+      "tool_observed_status": 1
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "python3",
+        "-B",
+        "docs/audits/original-join-parent-acceptance-20261018/caller_task_capacity.py",
+        "--write"
+      ],
+      "label": "capacity-write",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-capacity-write.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "bash",
+        "-c",
+        "python3 -B docs/audits/original-join-parent-acceptance-20261018/caller_task_capacity.py && prove -Iperl t/1549-task-tree-integrity-doctrine.t t/1637-claim-verification-inventory.t"
+      ],
+      "label": "capacity-focused",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-capacity-focused.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "mdbook",
+        "build",
+        "docs/book",
+        "-d",
+        ".artifacts/mdbook-caller-modules"
+      ],
+      "label": "book",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-book.txt.gz",
+      "tool_observed_status": 0
+    },
+    {
+      "command": [
+        "scripts/run_with_ram_guard.sh",
+        "--",
+        "scripts/check_doctrines.sh"
+      ],
+      "label": "doctrines",
+      "merged_stream": "docs/audits/original-join-parent-acceptance-20261018/caller-modules-observed-doctrines.txt.gz",
+      "tool_observed_status": 0
+    }
+  ],
+  "predecessor_revision": "c862c27c5f9955d98d4d732fe29c33032532cad8",
+  "schema": "fsmgen.caller_module_check_observations.v1",
+  "scope": "Tool-observed merged instrument/check streams; no native historical reader. Initial guard/process denial, finite-loop failure, partial generator diagnostic, JSON draft stages and compact-replay alias refusal retain. Exact earlier draft gzip bytes recover from the shared archive; final candidate changes reconstruct whole JSON identities. The failed draft compact stage is not a semantic cohort."
+}

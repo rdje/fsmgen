@@ -25,12 +25,12 @@ evidence: >-
 reverify: >-
   scripts/check_claim_verification.pl && prove -Iperl
   t/1636-claim-verification-doctrine.t && scripts/run_with_ram_guard.sh -- bash -c
-  'for r in verify_{failed,corrected_failed,snapshot_failed} selected_intake epoch_constraints verify_{selected_failed,runtime_cache} default_dispatch qualify_fixed_module_gap; do python3 -B
+  'for r in verify_{failed,corrected_failed,snapshot_failed} selected_intake epoch_constraints verify_{selected_failed,runtime_cache} default_dispatch qualify_{fixed_module_gap,caller_modules}; do python3 -B
   docs/audits/original-join-parent-acceptance-20261018/$r.py || exit; done'
 ---
 
 0094: bounded sets; --registry single-file fixtures.
-Re-derive/falsify/durability or owned gaps; reject bounds/paths,
+Three legs or owned gaps; reject bounds/paths,
 untracked paths, absent/duplicate markers, aliases. Truth/independence:
 0074 review. 0104: CLAIM-VERIFICATION-TEMPLATE-REVIEW.2; checker same.
 container_common.public/064cf9 rejects a0561d9 factory drift; 12 helpers intact.
@@ -42,4 +42,4 @@ later epochs fail. Physical/intake pass; semantics/native/private/HIAL
 pending; current separate. Native0 after-gap: undeclared KM query cache.
 verify_selected_failed.py: later source/cache/query; verify_runtime_cache.py:
 permissive cache/strict output; default_dispatch: entry edges.
-qualify_fixed_module_gap.py: caller namespace stop; closure/effects open.
+Module readers: retained stop; fixed closure qualified; data/effects open.
