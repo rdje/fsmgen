@@ -5855,9 +5855,50 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — Guarded task-tree and claim-inventory probes report All tests successful; Files=2, Tests=61. Exact saved reader recovery, current source/book verification and staged/normal doctrine delivery cover this bounded input slice without authorizing runtime or raising a ceiling.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Bind parameter-backed original reader byte tables.`
   Acceptance: `Resolve prerequisite reader, cause_qualification and association fresh_admission parameter tables from whole fixed plans, declarations, caller/argument values and source/body maps. Retain exact whole original bytes versus logical names and all explicit namespace/argv/capture roles. Genuine wrong data/member/parameter/revision/namespace and borrowed-progress controls must refuse; never execute a historical reader or replay an original semantic slot.`
+  Verification: `Complete source recipes distinguish prerequisite reader(role) with finite context/cause/consumer caller loops, recovered cause_qualification and association fresh_admission. They load whole fixed Git directories containing executable source and capture/data files. Ordered bounded-retention, source/caller/namespace/argv/capture binding and whole-join leaves preserve the complete original Goal/Acceptance. The existing fsmgen_required_history guarantee retains every referenced revision/path, with restoration before rewrite publication. A native Git size census is preliminary planning input only: independent whole byte/object falsification and saved durability qualification belong to .1; no table dimensions are published as qualified here. No original source, reader, factory or cohort runs in this split.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4: separate bounded reader-table qualification`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.5`
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S def reader(role): identifiesde401bf0ac73901d7608a23ccf24c33a0d2b2129 adding the original role-parametric reader. Its complete recipe and cause/admission counterparts load whole body tables and bind entrypoint/namespace/argv/capture roles. direct-inputs-version-finding.json also establishes distinct fixed-Git source epochs; reducing these inputs to an entry file or later source image cannot preserve their contracts.
+  - [x] **ADDRESSED (verified)** — Ordered complete bounded retrieval, prerequisite-role, recovered-cause, admission and independent whole-table join owners preserve all original Goal/Acceptance obligations, every original namespace member and all unresolved image/API/runtime roles. The existing required-history contract supplies named byte retention and recovery obligations; native source readers remain forbidden.
+  - [x] **NO REGRESSION** — Guarded task-tree regression reports All tests successful; Files=1, Tests=48. Current book/source checks and staged scripts/check_doctrines.sh/normal hooks verify complete ownership and unchanged ceilings for this task-owned scope split.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.1`
+  Status: `pending`
+  Goal: `Qualify bounded complete original reader-table retrieval.`
+  Acceptance: `Derive every required fixed reader namespace from complete original plans, source selectors and finite caller roles. Retain whole-table membership, modes, object identities, exact byte identities and repository-relative version retrieval under fsmgen_required_history. Qualify complete native bounded byte retrieval with a distinct raw-tree/object/body oracle and saved recovery. Never narrow tables to Python files or entrypoints; genuine missing/wrong revision/member/mode/type/body/protocol candidates must refuse. Preserve exact source and backup/recovery premises without original execution.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.2`
+  Status: `pending`
+  Goal: `Bind prerequisite reader role, byte-table and entrypoint inputs.`
+  Acceptance: `From qualified complete retained tables and original reader-contracts declarations, resolve every context/cause/consumer source caller and parameter binding, table revision, compile entry/input bytes, logical name, namespace, argv/import-module/stdout and capture/proof/scope roles. Retain all nondefault/source and current-image premises. Wrong role/revision/member/input/namespace/argv/progress controls must refuse without running original readers.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.3`
+  Status: `pending`
+  Goal: `Bind recovered cause byte-table and entrypoint inputs.`
+  Acceptance: `Resolve original cause_qualification from whole plan cause_join/cause_entry, qualified fixed table and helper protocol. Retain complete original input bytes, separate filename, namespace/argv/import/stdout/proof roles and source-image/data premises. Wrong source/revision/entry/member/namespace/capture/borrowed-progress controls must refuse; original semantic execution remains gated.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.4`
+  Status: `pending`
+  Goal: `Bind admission byte-table and entrypoint inputs.`
+  Acceptance: `Resolve original fresh_admission from whole original association plan admission/revision and qualified complete table. Bind the actual sources[entry] bytes, filename, namespace/argv/import/stdout/proof/condition roles, complete caller membership and every source-image/API premise. Wrong data/revision/member/input/namespace/role/progress controls must refuse without admission replay.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.2.2.4.5`
+  Status: `pending`
+  Goal: `Qualify complete parameter-backed executable input coverage.`
+  Acceptance: `Independently join every inventoried parameter-backed compile operand to complete source/caller/parameter/plan/table/input bytes and all namespace/argv/import/capture roles. Preserve every source variant for full executable allocation and original runtime/image/cache/native/private gaps. Genuine omitted/misallocated source/input/role/progress controls must refuse; commit complete saved/book/task/claims/staged/normal delivery before the full fixed-input join.`
   Verification: `pending`
   Commit: `pending`
 
