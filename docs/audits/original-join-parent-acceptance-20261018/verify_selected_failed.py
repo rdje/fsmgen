@@ -119,12 +119,12 @@ def failed(row, started, observation, instruments):
     assert reader.validate_resources(row['samples'], row['resource_complete'])
     assert reader.validate_streams('prerequisites', reader.unblob(row['stdout']), reader.unblob(row['stderr']), rows, inventory)
     profile = json.loads(gzip.decompress(reader.unblob(rows[str(execute.AUDIT / 'selected-intake.json.gz')])))
-    assert selected_intake.validate(profile)
-    assert row['working_directory'] == selected_intake.cwd('prerequisites', profile)
+    assert selected_intake.validate(profile, captured=True)
+    assert row['working_directory'] == selected_intake.cwd('prerequisites', profile, captured=True)
     member_types(row['snapshot_before']['members'])
     reader.unblob(row['snapshot_before']['git']['index'])
     reader.unblob(row['snapshot_before']['git']['entries'])
-    assert selected_intake.validate_observation('prerequisites', row['snapshot_before'], profile)
+    assert selected_intake.validate_observation('prerequisites', row['snapshot_before'], profile, captured=True)
     assert later(observation, row['snapshot_before'], instruments)
     return True
 

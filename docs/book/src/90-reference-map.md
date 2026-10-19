@@ -1947,3 +1947,43 @@ wrong-typed proof identities as well as altered routes. This covers the named
 sources, declared dependencies and frozen inputs; other transitive dependencies
 are outside the route claim. The complete advertised helper still requires
 its own retained actual successful execution before the route repair closes.
+
+
+The next complete attempt from native `bf34e8bf` is retained in
+`complete-reader-canonical-capture.json.gz`. It passes claim checks and the
+first three saved readers, then stops at `selected_intake.fixed`: that saved
+profile still derives its historical instrument identities from current files.
+A complete native/current instrument comparison isolates `prepare.py` after
+its canonical contract repair. The record has equal before/after source and
+owning boundaries, all streams/status, and no observed guard cutoff.
+
+The selected intake now separates instrument roles explicitly:
+
+```bash
+# Reconstruct the unchanged saved instrument identities from native Git data.
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/selected_intake.py
+# Require the original instruments in current files; this still refuses.
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/selected_intake.py --current
+# Replay the complete captured/operational role and custody qualification.
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_selected_intake_roles.py
+```
+
+Library validation and operational intake/cwd/observation defaults remain
+strict. The saved CLI and failed-custody consumer explicitly select captured
+instrument identities; every other evidence/manifest check remains in force.
+Historical source bytes are data, never newly executed original instruments.
+Changed or denied current instrument images leave saved review independent
+while every operational default refuses. Actual saved and failed-custody
+readers pass; the original native0 after-cache custody gap remains failed.
+
+The old profile equality also admitted a float byte count in an isolated
+predicate intervention with its reference injected. Its complete source and
+candidate retain. Exact recursive primitive and population checks now reject
+that case and altered instrument/evidence/command/scope metadata. These
+interventions are controls, not actual full native intake observations.
+
+The revised selected-intake and failed-custody sources still require explicit
+native admission in the route checker before the full advertised helper can
+qualify. Until that checkpoint, the current live route command above refuses
+those revised source identities. No original cohort, custody, runtime,
+native/private, HIAL or full-CI authority follows from this saved-role repair.

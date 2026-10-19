@@ -1,6 +1,7 @@
 """Bind unchanged acceptance commands to the qualified conjunctive source image."""
 import argparse
 import gzip
+import hashlib
 import json
 
 import execute
@@ -35,13 +36,45 @@ def fixed(name):
     return body
 
 
+def captured_instrument(name):
+    """Read historical instrument data; never authorize its current execution."""
+    assert name in INSTRUMENTS, 'closed captured instrument population'
+    path = str(execute.AUDIT / name)
+    entry = execute.command(['git', '--no-replace-objects', 'ls-tree', '--full-tree', '-l', '-z', REVISION, '--', path])
+    assert entry.count(b'\0') == 1, 'one native captured instrument'
+    header, member = entry[:-1].split(b'\t')
+    mode, kind, oid, size = header.decode().split()
+    assert mode == '100644' and kind == 'blob' and member.decode() == path
+    body = execute.command(['git', '--no-replace-objects', 'show', REVISION + ':' + path])
+    assert size.isdecimal() and len(body) == int(size)
+    assert body == execute.command(['git', '--no-replace-objects', 'cat-file', 'blob', oid])
+    assert hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest() == oid
+    return body
+
+
+def exact(value, reference):
+    assert type(value) is type(reference), 'exact selected intake primitive kind'
+    if isinstance(reference, dict):
+        assert value.keys() == reference.keys(), 'complete selected intake fields'
+        for name in reference:
+            exact(value[name], reference[name])
+    elif isinstance(reference, list):
+        assert len(value) == len(reference), 'complete selected intake array'
+        for actual, expected in zip(value, reference):
+            exact(actual, expected)
+    else:
+        assert value == reference, 'exact selected intake value'
+
+
 def base_inventory():
     return snapshot_intake.base_inventory()
 
 
-def profile():
+def profile(*, captured=False):
+    assert type(captured) is bool, 'explicit captured instrument role'
     body, inventory = base_inventory()
-    instruments = {name: prepare.identity(fixed(name)) for name in INSTRUMENTS}
+    instrument = captured_instrument if captured else fixed
+    instruments = {name: prepare.identity(instrument(name)) for name in INSTRUMENTS}
     evidence = {name: fixed(name) for name in EVIDENCE}
     qualification = json.loads(gzip.decompress(evidence['selected-checkout-portable-qualification-actual.json.gz']))
     started = json.loads(gzip.decompress(evidence['selected-checkout-portable-qualification-started.json.gz']))
@@ -81,8 +114,8 @@ def profile():
                       'source-model/shared/native/private limit and independent gate retains. No semantic execution.')
 
 
-def validate(value):
-    assert value == profile(), 'closed selected-checkout command/source/cwd/contract intake'
+def validate(value, *, captured=False):
+    exact(value, profile(captured=captured))
     return True
 
 
@@ -91,8 +124,8 @@ def effective(value):
     return base_inventory()[1]
 
 
-def cwd(label, value):
-    assert validate(value) and label in value['commands']
+def cwd(label, value, *, captured=False):
+    assert validate(value, captured=captured) and label in value['commands']
     return value['working_directories'][label]
 
 
@@ -103,8 +136,8 @@ def observe_snapshot():
     return value
 
 
-def validate_observation(label, value, specification):
-    assert label in HISTORICAL and validate(specification)
+def validate_observation(label, value, specification, *, captured=False):
+    assert label in HISTORICAL and validate(specification, captured=captured)
     expected = json.loads(gzip.decompress(fixed('selected-checkout-prepared.json.gz')))
     assert checkout.matches_prepared(value, expected)
     return True
@@ -113,9 +146,10 @@ def validate_observation(label, value, specification):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true', help='require unchanged live instrument bytes')
     args = parser.parse_args()
     value = profile() if args.write else json.loads(gzip.decompress(execute.read(PATH)))
-    assert validate(value)
+    assert validate(value, captured=not (args.write or args.current))
     if args.write:
         execute.save(PATH, value)
     print('Closed selected-checkout intake preserves all original commands/contracts and three failed intakes; no semantic reader executes.')
