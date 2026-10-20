@@ -2199,6 +2199,41 @@ with `.`; raw stderr hashes identify the original streams. Native route admissio
 and remaining-reader/full-helper execution still qualify separately. Executable
 data, default effects and original operational custody remain unqualified.
 
+An established-order probe found a P1 assurance gap: the whole route checker
+accepted removal, reordering or movement of previously published optional
+qualifiers. Its mandatory comparison covered the original baseline, while
+optional readers had only uniqueness checks. The complete first proposal and
+accepted structural candidates retain in `caller-established-order-diagnosis.json.gz`.
+Candidate helpers were never executed.
+
+The gate now binds every established reader to the immutable published helper
+at its declared Git epoch, separately from original mandatory/source epochs.
+All published commands must remain in their relative order and remain present.
+The original shell protocol and mandatory sequence still apply. Qualified
+additive extensions remain allowed.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_published_reader_order.py
+```
+
+`published-reader-order-qualified.json.gz` retains actual listing and scoped
+whole-review controls. The caller's original admitted bytes are supplied only
+as structural metadata during those probes. Its current replacement still
+requires separate native admission. Saved replay checks the dated native helper
+snapshots and current predicate compatibility; historical programme frames bind
+to their proof's publication commit. `published-order-publication-controls.json.gz`
+checks native proof/source integrity with genuine changed candidates. The probes
+execute listing, query, current authorizer and shared-checker operations. Saved
+child CLI commands remain outside the probe; retrieved historical source/model/
+recipe/cohort bodies and candidate helper bodies remain data only.
+
+A failed currency adapter can produce secondary missing-proof/history-recovery
+hints for other adapters. The first exception in the retained staged refusal
+identifies a missing card replay route; P2 task `.88` owns clearer failure
+messages. The exact canonical replay marker remains required.
+
+
+
 
 
 

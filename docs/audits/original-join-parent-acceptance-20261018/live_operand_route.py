@@ -16,6 +16,7 @@ import rollover_source_card as card
 ROOT = Path(__file__).resolve().parents[3]
 AUDIT = frozen.AUDIT
 BASE = 'd5ea1fc9ed7e3fc502bcf4aeaf4b0da89226281a'
+PUBLISHED_REVISION = '89890bacf79c3f70e5efb905ff793a5ddca4ab4a'
 CONTRACT_REVISION = 'ff44aaf3c04fc8d7904d11f5e0f7cd9b664a6292'
 CONTRACT_SOURCES = {AUDIT + name + '.py' for name in
                     ('prepare', 'canonical_contracts', 'check_canonical_progress')}
@@ -58,6 +59,8 @@ SCOPE = ('Current source/archive/question/reverify and ordered reader membership
          'separately qualified immutable revisions; unchanged entrypoint identities '
          'and complete original versions of replaced published sources retain. Only the '
          'explicit native-qualified optional readers may be added. The named '
+         'published helper snapshot additionally binds complete established reader membership '
+         'and relative order, including previously admitted optional qualifiers. The named '
          'canonical, intake, cache, dispatch and fixed-gap library/readers and their frozen proof inputs bind '
          'to separately qualified immutable revisions. Named unchanged cache decode '
          'dependencies retain their original native epoch. The unchanged shared metadata getter '
@@ -75,7 +78,7 @@ def native(path, *, identity_only=False, revision=None):
                     CACHE_REVISION if path in CACHE_SOURCES or path == CACHE_PROOF else
                     INTAKE_REVISION if path in INTAKE_SOURCES or path == INTAKE_PROOF else
                     CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE)
-    assert revision in (BASE, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION), 'closed native source epochs'
+    assert revision in (BASE, PUBLISHED_REVISION, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION), 'closed native source epochs'
     entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', revision, '--', path)
     assert entry.count(b'\0') == 1, 'one native admitted source'
     header, name = entry[:-1].split(b'\t')
@@ -112,20 +115,25 @@ def authority():
     original = frozen.reconstruct(frozen.native_inputs())['commands'][:-1]
     cursor = iter(required)
     assert all(any(command == current for current in cursor) for command in original)
+    published_helper = native(HELPER, revision=PUBLISHED_REVISION)
+    published_body = unblob(published_helper['body'])
+    published = frozen.helper_commands(published_body)[:-1]
+    helper_review(published_body, unblob(helper['body']), required, published)
     names = sorted({command[-1] for command in required} | {row[-1] for row in OPTIONAL} | set(DEPENDENCIES))
     # The prove command's file is also its last argument. Every referenced
     # source is a primary-repository regular blob, not a submodule interface.
     sources = {name: native(name) for name in names}
     proof = native(str(card.PATH))
     baseline_card = native(frozen.CARD)
-    return dict(helper=helper, sources=sources, required=required,
+    return dict(helper=helper, published_helper=published_helper, published=published,
+                sources=sources, required=required,
                 replaced_sources={path: native(path, revision=BASE) for path in sorted(
                     {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES | FIXED_GAP_SOURCES))},
                 frozen_inputs={path: native(path, identity_only=True) for path in FROZEN_INPUTS},
                 source_card_proof=proof, baseline_card=baseline_card)
 
 
-def commands_review(commands, required):
+def commands_review(commands, required, published):
     assert type(commands) is list and commands, 'complete current command array'
     frozen.equal(commands[-1], TERMINAL)
     mandatory = []
@@ -137,9 +145,12 @@ def commands_review(commands, required):
         else:
             mandatory.append(command)
     frozen.equal(mandatory, required)
+    assert type(published) is list and published, 'complete published reader snapshot'
+    cursor = iter(commands[:-1])
+    assert all(any(command == current for current in cursor) for command in published), 'complete published reader membership and order'
 
 
-def helper_review(body, native_helper, required):
+def helper_review(body, native_helper, required, published):
     def protocol(value):
         text = value.decode()
         text, count = re.subn(r'^for task_reader in .*; do$', 'for task_reader in READERS; do', text, flags=re.M)
@@ -151,7 +162,7 @@ def helper_review(body, native_helper, required):
 
     assert protocol(body) == protocol(native_helper), 'complete helper listing/execution protocol'
     commands = frozen.helper_commands(body)
-    commands_review(commands, required)
+    commands_review(commands, required, published)
     return commands
 
 
@@ -182,7 +193,7 @@ def review(value, fixed):
     assert len(blocks) == 1, 'one current reverify command'
     frozen.equal(shlex.split(' '.join(line.strip() for line in blocks[0].splitlines())),
                  ['scripts/run_with_ram_guard.sh', '--', 'bash', HELPER])
-    commands = helper_review(unblob(value['helper']), unblob(fixed['helper']['body']), fixed['required'])
+    commands = helper_review(unblob(value['helper']), unblob(fixed['helper']['body']), fixed['required'], fixed['published'])
     needed = {command[-1] for command in commands[:-1]} | set(DEPENDENCIES)
     assert value['sources'].keys() == needed, 'complete admitted current source population'
     for path in needed:
@@ -202,7 +213,7 @@ def review(value, fixed):
 
 def listing(body, required, fixed):
     # Check the complete protocol before executing the new helper's list mode.
-    helper_review(body, unblob(fixed['helper']['body']), required)
+    helper_review(body, unblob(fixed['helper']['body']), required, fixed['published'])
     command = ['bash', HELPER, '--list']
     result = subprocess.run(command, cwd=ROOT, stdin=subprocess.DEVNULL, capture_output=True, timeout=30)
     return dict(command=command, status=result.returncode, stdout=result.stdout.decode(), stderr=result.stderr.decode())
@@ -210,7 +221,7 @@ def listing(body, required, fixed):
 
 def current_value(fixed):
     helper = card.read_file(HELPER)
-    commands = helper_review(helper, unblob(fixed['helper']['body']), fixed['required'])
+    commands = helper_review(helper, unblob(fixed['helper']['body']), fixed['required'], fixed['published'])
     current = card.read_file(card.SOURCE)
     needed = {command[-1] for command in commands[:-1]} | set(DEPENDENCIES)
     value = dict(authority=fixed, card=frozen.blob(current), archive=frozen.blob(card.read_file(card.ARCHIVE)),
@@ -231,6 +242,26 @@ def rewritten_listing(value, helper):
     return value
 
 
+def changed_published_helper(helper, published, change):
+    """Construct a genuine changed established-qualifier candidate, never run it."""
+    loop = re.search(rb'^for task_reader in (.*); do$', helper, re.M)
+    assert loop
+    words = loop[1].split()
+    optional = [Path(command[-1]).stem.encode() for command in published if command in OPTIONAL]
+    assert len(optional) >= 2, 'separate established qualifier operands'
+    left, right = words.index(optional[-2]), words.index(optional[-1])
+    assert left < right
+    if change == 'reordered':
+        words[left], words[right] = words[right], words[left]
+    elif change == 'omitted':
+        words.pop(right)
+    elif change == 'moved':
+        words.insert(0, words.pop(right))
+    else:
+        raise AssertionError('closed established-reader control')
+    return helper[:loop.start(1)] + b' '.join(words) + helper[loop.end(1):]
+
+
 def controls(value, fixed):
     result = []
     helper = unblob(value['helper'])
@@ -240,6 +271,13 @@ def controls(value, fixed):
     for label, mutation in (
         ('omitted-reader', lambda x: rewritten_listing(x, helper[:loop.start(1)] + b' '.join(words[1:]) + helper[loop.end(1):])),
         ('reordered-readers', lambda x: rewritten_listing(x, helper[:loop.start(1)] + b' '.join(reversed(words)) + helper[loop.end(1):])),
+        ('reordered-published-qualifiers', lambda x: rewritten_listing(x, changed_published_helper(helper, fixed['published'], 'reordered'))),
+        ('omitted-published-qualifier', lambda x: rewritten_listing(x, changed_published_helper(helper, fixed['published'], 'omitted'))),
+        ('moved-published-qualifier', lambda x: rewritten_listing(x, changed_published_helper(helper, fixed['published'], 'moved'))),
+        ('wrong-published-helper-revision', lambda x: x['authority']['published_helper'].__setitem__('revision', BASE)),
+        ('changed-published-helper', lambda x: x['authority']['published_helper'].__setitem__('body', frozen.blob(b'changed published helper\n'))),
+        ('missing-published-reader', lambda x: x['authority']['published'].pop()),
+        ('reordered-published-snapshot', lambda x: x['authority']['published'].reverse()),
         ('wrong-terminal-role', lambda x: rewritten_listing(x, helper.replace(b'/live_operand_route.py"', b'/verify_operand_route.py"'))),
         ('changed-helper-protocol', lambda x: x.__setitem__('helper', frozen.blob(helper + b'echo extra\n'))),
         ('missing-source', lambda x: x['sources'].pop(next(iter(x['sources'])))),
@@ -320,7 +358,7 @@ def main():
     args = parser.parse_args()
     fixed = authority()
     value = current_value(fixed)
-    product = dict(schema='fsmgen.live_operand_route.v5', inputs=value,
+    product = dict(schema='fsmgen.live_operand_route.v6', inputs=value,
                    result=review(value, fixed), controls=controls(value, fixed))
     if args.write:
         card.save_record(OUTPUT, product)

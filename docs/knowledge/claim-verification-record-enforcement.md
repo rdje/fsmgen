@@ -21,6 +21,7 @@ answers:
   - "why is the retained preparation correction a no-op?"
   - "where are dated reader-recovery facts retained?"
   - "where are payload namespace selectors qualified?"
+  - "why did published optional reader omission or reordering pass?"
 date: 2026-10-20
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
@@ -34,26 +35,21 @@ reverify: >-
   docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh
 ---
 
-`CLAIM_VERIFICATION.md` owns live policy and registry contracts: distinct
-re-derivation, falsification and durability legs, or owned gaps. Structural
-checks do not prove semantic truth or oracle independence.
+`CLAIM_VERIFICATION.md`: policy/registries, distinct rederive/falsify/durability
+legs or owned gaps. Structural checks prove neither semantic truth nor oracle
+independence.
 
-Dated original reader-recovery facts retain in the pre-rollover card:
+Dated factory/source/intake/cache/compiler facts, original scope:
 
 ```bash
 cat docs/audits/original-join-parent-acceptance-20261018/source-recovery-card-7748b2db479ffdf559f49ede08335b7418ebecfe979a9a9da973d9e582e2594a.txt
 ```
 
-The archive preserves every factory/source/intake/cache/compiler fact and its
-original scope. Current frontier: read `MEMORY.md`, then its owning leaf in
+Frontier: `MEMORY.md`, then its task:
 `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`.
 
-List current source-model replay commands with:
+List: `bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list`.
 
-```bash
-bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list
-```
-
-Readers retain pinned epochs, first failures and native/private gaps.
-
+Pinned epochs, first failures and native/private gaps remain.
 Cache/dispatch/fixed-gap/caller metadata pins Git.
+Optional uniqueness missed membership/order. Native snapshots bind published membership/order; qualified additions remain.
