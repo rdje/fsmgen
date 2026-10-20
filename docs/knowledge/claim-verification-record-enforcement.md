@@ -45,11 +45,11 @@ Dated factory/source/intake/cache/compiler facts, original scope:
 cat docs/audits/original-join-parent-acceptance-20261018/source-recovery-card-7748b2db479ffdf559f49ede08335b7418ebecfe979a9a9da973d9e582e2594a.txt
 ```
 
-Frontier: `MEMORY.md`, then its task:
+Frontier: `MEMORY.md`, then:
 `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`.
 
 List: `bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list`.
 
 Pinned epochs, first failures and native/private gaps remain.
-Cache/dispatch/fixed-gap/caller metadata pins Git.
+Git pins cache/dispatch/fixed-gap/caller/operand metadata.
 Optional uniqueness missed membership/order. Native snapshots bind published membership/order; qualified additions remain.

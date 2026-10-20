@@ -18,7 +18,9 @@ import epoch_constraints as epoch
 import execute
 import prepare
 import qualify_caller_modules as caller
+import saved_reader_sources as reader_sources
 
+SELF = 'operand_inventory.py'
 AUTHORITY = '582e65084bbcdf7018ca0180ccfe01f859ce951e'
 INPUT = execute.AUDIT / 'caller-modules-qualified.json.gz'
 PATH = execute.AUDIT / 'executable-operands-qualified.json.gz'
@@ -197,15 +199,24 @@ def replay(expected, outcomes):
             raise AssertionError('saved intervention admitted')
 
 
+def source_metadata(*, current=False):
+    return {name: prepare.blob(reader_sources.body(name, current=current))
+            for name in PREMISES}
+
+
 if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true',
+                        help='compare current premise metadata instead of its saved epoch')
     args = parser.parse_args()
     result = derive()
     outcomes = controls(result)
     replay(result, outcomes)
     product = dict(result=result, controls=outcomes,
-        programmes={name: prepare.blob(execute.read(execute.AUDIT / name)) for name in PREMISES})
+        programmes=source_metadata(current=args.current or args.write))
     if args.write:
         execute.save(PATH, product)
     else:

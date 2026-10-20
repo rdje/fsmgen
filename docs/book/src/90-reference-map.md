@@ -2261,10 +2261,23 @@ The tracked native before/after boundary conserves and no RAM cutoff fires.
 products. Only dispatch, preparation, fixed-gap and caller programme metadata
 differs. Supplying their original native bytes as metadata restores the whole
 syntax inventory, independent token census, controls and scope. Historical source
-remains data; the original reader and proof are unchanged. Source-role repair,
-native admission and complete-helper success remain pending. Task-history
-retention is complete. Metadata repair, native admission and complete-helper retry
-remain separately owned. Replay the exact saved history proofs, or add `--current`
+remains data; the original proof is unchanged. The repaired saved reader now
+authenticates those original metadata bodies through native Git retrieval. Its
+existing derivation functions and no-argument API remain exact. Explicit
+`--current` and `--write` select live metadata, and publication remains exclusive.
+The actual saved CLI passes the complete original proof; current metadata and
+disabled assertions refuse. Separate full-record controls reject borrowed targets,
+changed verifier/proof data, missing metadata and Boolean/float substitutions:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_operand_roles.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_operand_role_records.py
+```
+
+This qualifies saved metadata and the original syntax/token/control/scope proof.
+Source/data bindings, default effects, runtime custody, native route admission
+and complete-helper success remain separately owned. Task-history retention
+is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
 ```bash
