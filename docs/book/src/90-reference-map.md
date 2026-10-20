@@ -2275,8 +2275,15 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 ```
 
 This qualifies saved metadata and the original syntax/token/control/scope proof.
-Source/data bindings, default effects, runtime custody, native route admission
-and complete-helper success remain separately owned. Task-history retention
+Source/data bindings, default effects and runtime custody remain separately
+owned. Native route admission now binds the exact repaired reader, qualifier and
+role proof to `1030bbb3b`, while retaining the complete original reader and every
+earlier source epoch. The helper adds only the operand qualifier after the caller.
+Omission, swap and movement reject at the new wrapper order assertion; prior
+published order and the qualified additive control remain intact. The route
+probes execute listing, query and current-authorizer operations. Listed child
+commands, candidate helpers and historical bodies are not launched by those
+probes. Actual complete-helper success remains pending. Task-history retention
 is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
