@@ -2298,9 +2298,26 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 The reader authenticates native source and task reconstruction, the whole archive
 identity and genuine member/source/type/stream refusal controls. Stored raw hashes
 identify original streams; the retained streams normalize the literal repository
-root and do not reconstruct private raw paths. Exact AST-product differences and
-their cause remain the next owned diagnosis. Whole-helper success, source/data
-bindings, default effects and runtime custody remain unqualified. Task-history
+root and do not reconstruct private raw paths.
+
+The complete AST-product diagnosis isolates programme metadata for dispatch,
+preparation, operand inventory, fixed-gap and caller readers. Supplying their
+original native bytes only as metadata restores the entire saved product: AST
+fields and coordinates, source/input/native/Python frames, controls and limits.
+The original proof and reader remain unchanged. Read the complete dated products,
+exact typed differences and separating intervention without executing historical
+models or repeating the helper:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/diagnose_ast_model_inputs.py
+```
+
+The diagnostic authenticates native programme/proof frames and complete difference
+membership, checks whole canonical JSON separately, and exercises genuine altered
+member/source/type/intervention candidates. This qualifies the mismatch diagnosis.
+Metadata repair, native route admission and the actual helper retry remain
+separately owned. Whole-helper success, source/data bindings, default effects and
+runtime custody remain unqualified. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
