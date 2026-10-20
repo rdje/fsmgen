@@ -2304,7 +2304,7 @@ The complete AST-product diagnosis isolates programme metadata for dispatch,
 preparation, operand inventory, fixed-gap and caller readers. Supplying their
 original native bytes only as metadata restores the entire saved product: AST
 fields and coordinates, source/input/native/Python frames, controls and limits.
-The original proof and reader remain unchanged. Read the complete dated products,
+The diagnostic retains the original proof and reader frames. Read the dated products,
 exact typed differences and separating intervention without executing historical
 models or repeating the helper:
 
@@ -2315,9 +2315,24 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 The diagnostic authenticates native programme/proof frames and complete difference
 membership, checks whole canonical JSON separately, and exercises genuine altered
 member/source/type/intervention candidates. This qualifies the mismatch diagnosis.
-Metadata repair, native route admission and the actual helper retry remain
-separately owned. Whole-helper success, source/data bindings, default effects and
-runtime custody remain unqualified. Task-history
+Saved replay now selects authenticated original programme metadata. Explicit
+`--current` and `--write` select live metadata; the existing exclusive publication
+boundary remains. The actual saved CLI passes the entire unchanged original
+proof, while current metadata and disabled assertions refuse. Every pre-existing
+AST-reader function body, including `derive(raw)`, remains byte-exact. The original
+source-model premises and qualification limits still apply. Review the role proof,
+source conservation and genuine full-record corruptions:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_ast_input_roles.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_ast_input_role_records.py
+```
+
+The shared reviewer rejects borrowed targets, changed verifier/proof bodies,
+omitted metadata and Boolean/float primitive substitutions. This qualifies saved
+metadata and the complete original reconstruction proof. Native route admission
+and the actual helper retry remain separately owned. Whole-helper success,
+source/data bindings, default effects and runtime custody remain unqualified. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 

@@ -15,7 +15,9 @@ import operand_inventory as operands
 import prepare
 import prerequisite_inputs as prerequisite
 import saved_program_input as saved
+import saved_reader_sources as source
 
+SELF = 'ast_model_inputs.py'
 AUTHORITY = '99f212ba474b527fede4b749fcd4ded23ef19c14'
 OWNER = fixed_inputs.RECONSTRUCTION + '.4'
 PATH = execute.AUDIT / 'ast-model-inputs-qualified.json.gz'
@@ -27,7 +29,7 @@ MODELS = {
     'docs/audits/record-value-original-value-frames-20261005/frame_model.py':
         ('cause_source', 'direct_value_source_model', False),
 }
-PREMISES = tuple(dict.fromkeys(('ast_model_inputs.py', *saved.PREMISES)))
+PREMISES = tuple(dict.fromkeys((SELF, *saved.PREMISES)))
 LIMITS = dict(runtime_source_image_qualified=False, runtime_callable_identity_qualified=False,
               namespace_values_qualified=False, actual_exports_qualified=False,
               complete_source_allocation_qualified=False, default_reachability_qualified=False,
@@ -66,6 +68,11 @@ UNSUPPORTED = """    if function.name == 'metadata_type':
                 raise ValueError('unexpected finite metadata raise')
         Unsupported().visit(function)
 """
+
+
+def source_metadata(*, current=False):
+    """Original native programme bodies are metadata, never executable inputs."""
+    return {name: prepare.blob(source.body(name, current=current)) for name in PREMISES}
 
 
 def typed(value):
@@ -329,8 +336,11 @@ def controls(expected, raw):
 
 
 if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true')
     args = parser.parse_args()
     raw = {str(path): execute.read(path) for path in (fixed_inputs.PATH, operands.INPUT)}
     for name, body in raw.items():
@@ -346,7 +356,7 @@ if __name__ == '__main__':
     product = dict(result=result, controls=controls(result, raw), native=native,
         inputs={name: prepare.blob(body) for name, body in raw.items()},
         native_python=dict(implementation=sys.implementation.name, version=list(sys.version_info)),
-        programmes={name: prepare.blob(execute.read(execute.AUDIT / name)) for name in PREMISES})
+        programmes=source_metadata(current=args.write or args.current))
     if args.write:
         execute.save(PATH, product)
     else:
