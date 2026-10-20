@@ -2251,6 +2251,20 @@ hints for other adapters. The first exception in the retained staged refusal
 identifies a missing card replay route; P2 task `.88` owns clearer failure
 messages. The exact canonical replay marker remains required.
 
+After caller admission, the actual complete helper passes the caller reader and
+stops at `operand_inventory.py` while comparing its saved product. The full
+attempt retains in `complete-reader-post-caller-20261020.json.gz`; stream paths
+normalize the repository root, while raw hashes identify the original streams.
+The tracked native before/after boundary conserves and no RAM cutoff fires.
+
+`operand-inventory-source-diagnosis.json.gz` compares the complete saved/current
+products. Only dispatch, preparation, fixed-gap and caller programme metadata
+differs. Supplying their original native bytes as metadata restores the whole
+syntax inventory, independent token census, controls and scope. Historical source
+remains data; the original reader and proof are unchanged. Source-role repair,
+native admission and complete-helper success remain pending. Task-history
+retention precedes splitting those implementation steps.
+
 
 
 
