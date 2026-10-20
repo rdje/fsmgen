@@ -2263,7 +2263,19 @@ differs. Supplying their original native bytes as metadata restores the whole
 syntax inventory, independent token census, controls and scope. Historical source
 remains data; the original reader and proof are unchanged. Source-role repair,
 native admission and complete-helper success remain pending. Task-history
-retention precedes splitting those implementation steps.
+retention is complete. Metadata repair, native admission and complete-helper retry
+remain separately owned. Replay the exact saved history proofs, or add `--current`
+to separately census current registry-owner eligibility:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/caller_admission_capacity.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/adjacent_operand_capacity.py
+```
+
+Both proofs retain the complete source and each original subtree, independent
+whole-node reconstruction and native descriptor/node/owner refusal controls.
+Their products overlap; no recorded task contract is discarded. All active
+frontier ancestors and current registry owners remain in the live task tree.
 
 
 
