@@ -34,28 +34,34 @@ DISPATCH_REVISION = 'c3434d27c76d21936b968d15df6d4b9cc7b89932'
 DISPATCH_SOURCES = {AUDIT + name + '.py' for name in
                     ('default_dispatch', 'saved_reader_sources', 'qualify_default_dispatch_roles')}
 DISPATCH_PROOF = AUDIT + 'default-dispatch-source-roles-qualified.json.gz'
+FIXED_GAP_REVISION = '7e588f8d84df65aee3afc0344f000f2aee672ecc'
+FIXED_GAP_SOURCES = {AUDIT + name + '.py' for name in
+                     ('qualify_fixed_module_gap', 'qualify_fixed_gap_roles')}
+FIXED_GAP_PROOF = AUDIT + 'fixed-gap-source-roles-qualified.json.gz'
 FROZEN_INPUTS = [AUDIT + name + '.json.gz' for name in
-                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF]
+                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF, FIXED_GAP_PROOF]
 SELF = AUDIT + 'live_operand_route.py'
 HELPER = frozen.HELPER
-OUTPUT = AUDIT + 'default-dispatch-live-route-qualified.json.gz'
+OUTPUT = AUDIT + 'fixed-gap-live-route-qualified.json.gz'
 TERMINAL = ['python3', '-B', SELF, '--current']
 OPTIONAL = [['python3', '-B', AUDIT + name + '.py'] for name in
             ('frozen_operand_route', 'check_frozen_route_independence',
              'canonical_contracts', 'check_canonical_progress', 'qualify_selected_intake_roles',
-             'qualify_runtime_cache_roles', 'qualify_default_dispatch_roles')]
+             'qualify_runtime_cache_roles', 'qualify_default_dispatch_roles',
+             'qualify_fixed_gap_roles')]
 DEPENDENCIES = [AUDIT + 'frozen_operand_route.py', AUDIT + 'rollover_source_card.py',
                 'scripts/check_source_recovery_card.sh',
-                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES)]
+                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES | FIXED_GAP_SOURCES)]
 SCOPE = ('Current source/archive/question/reverify and ordered reader membership only. '
          'Original and already-published child readers retain their exact order. '
-         'Only the named canonical, selected-intake, runtime-cache and default-dispatch source replacements bind to '
+         'Only the named canonical, selected-intake, runtime-cache, default-dispatch and fixed-gap source replacements bind to '
          'separately qualified immutable revisions; unchanged entrypoint identities '
          'and complete original versions of replaced published sources retain. Only the '
          'explicit native-qualified optional readers may be added. The named '
-         'canonical, intake, cache and dispatch library/readers and their frozen proof inputs bind '
+         'canonical, intake, cache, dispatch and fixed-gap library/readers and their frozen proof inputs bind '
          'to separately qualified immutable revisions. Named unchanged cache decode '
-         'dependencies retain their original native epoch; other transitive '
+         'dependencies retain their original native epoch. The unchanged shared metadata getter '
+         'retains its dispatch admission epoch; other transitive '
          'dependencies are outside this route claim. Actual helper '
          'listing and public queries execute, never listed readers or original '
          'models/recipes/cohorts. Whole sequence success and original semantic, '
@@ -64,11 +70,12 @@ SCOPE = ('Current source/archive/question/reverify and ordered reader membership
 
 def native(path, *, identity_only=False, revision=None):
     if revision is None:
-        revision = (DISPATCH_REVISION if path in DISPATCH_SOURCES or path == DISPATCH_PROOF else
+        revision = (FIXED_GAP_REVISION if path in FIXED_GAP_SOURCES or path == FIXED_GAP_PROOF else
+                    DISPATCH_REVISION if path in DISPATCH_SOURCES or path == DISPATCH_PROOF else
                     CACHE_REVISION if path in CACHE_SOURCES or path == CACHE_PROOF else
                     INTAKE_REVISION if path in INTAKE_SOURCES or path == INTAKE_PROOF else
                     CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE)
-    assert revision in (BASE, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION), 'closed native source epochs'
+    assert revision in (BASE, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION), 'closed native source epochs'
     entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', revision, '--', path)
     assert entry.count(b'\0') == 1, 'one native admitted source'
     header, name = entry[:-1].split(b'\t')
@@ -113,7 +120,7 @@ def authority():
     baseline_card = native(frozen.CARD)
     return dict(helper=helper, sources=sources, required=required,
                 replaced_sources={path: native(path, revision=BASE) for path in sorted(
-                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES))},
+                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES | FIXED_GAP_SOURCES))},
                 frozen_inputs={path: native(path, identity_only=True) for path in FROZEN_INPUTS},
                 source_card_proof=proof, baseline_card=baseline_card)
 
@@ -260,6 +267,15 @@ def controls(value, fixed):
         ('changed-dispatch-role-proof', lambda x: x['frozen_inputs'][DISPATCH_PROOF].__setitem__('sha256', '0' * 64)),
         ('wrong-dispatch-proof-revision', lambda x: x['authority']['frozen_inputs'][DISPATCH_PROOF].__setitem__('revision', BASE)),
         ('boolean-dispatch-proof-size', lambda x: x['frozen_inputs'][DISPATCH_PROOF].__setitem__('bytes', True)),
+        ('changed-fixed-gap-reader', lambda x: x['sources'].__setitem__(AUDIT + 'qualify_fixed_module_gap.py', frozen.blob(b'changed fixed-gap reader\n'))),
+        ('changed-fixed-gap-role-qualifier', lambda x: x['sources'].__setitem__(AUDIT + 'qualify_fixed_gap_roles.py', frozen.blob(b'changed qualifier\n'))),
+        ('wrong-fixed-gap-source-revision', lambda x: x['authority']['sources'][AUDIT + 'qualify_fixed_module_gap.py'].__setitem__('revision', BASE)),
+        ('wrong-fixed-gap-qualifier-revision', lambda x: x['authority']['sources'][AUDIT + 'qualify_fixed_gap_roles.py'].__setitem__('revision', BASE)),
+        ('lost-original-fixed-gap-reader', lambda x: x['authority']['replaced_sources'].pop(AUDIT + 'qualify_fixed_module_gap.py')),
+        ('missing-fixed-gap-role-proof', lambda x: x['frozen_inputs'].pop(FIXED_GAP_PROOF)),
+        ('changed-fixed-gap-role-proof', lambda x: x['frozen_inputs'][FIXED_GAP_PROOF].__setitem__('sha256', '0' * 64)),
+        ('wrong-fixed-gap-proof-revision', lambda x: x['authority']['frozen_inputs'][FIXED_GAP_PROOF].__setitem__('revision', BASE)),
+        ('boolean-fixed-gap-proof-size', lambda x: x['frozen_inputs'][FIXED_GAP_PROOF].__setitem__('bytes', True)),
         ('missing-frozen-proof', lambda x: x['frozen_inputs'].pop(FROZEN_INPUTS[0])),
         ('changed-frozen-proof', lambda x: x['frozen_inputs'][FROZEN_INPUTS[0]].__setitem__('sha256', '0' * 64)),
         ('boolean-frozen-proof-size', lambda x: x['frozen_inputs'][FROZEN_INPUTS[1]].__setitem__('bytes', True)),

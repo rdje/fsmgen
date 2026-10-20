@@ -2162,9 +2162,17 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 
 `fixed-gap-source-roles-qualified.json.gz` binds native sources, unchanged
 original data, actual CLI outcomes and separating metadata/member/type controls.
-Native admission of this replacement, remaining readers and complete helper
-execution still qualify separately. Source closure, default reachability,
-effects and original operational custody remain open.
+The native route now admits the committed fixed-gap reader, qualifier and
+immutable role proof, while the shared getter keeps its dispatch epoch. The
+complete replaced reader retains at its original epoch. Established reader
+order and helper protocol remain exact; only the qualified role reader appends.
+
+`fixed-gap-live-route-qualified.json.gz` binds actual listing and public queries
+to native whole-source/proof identities. Changed sources, wrong epochs, missing
+original retention and altered or wrongly typed proofs refuse. This gate runs
+listing and queries; remaining readers and actual complete helper execution
+still qualify separately. Source closure, default reachability, effects and
+original operational custody remain open.
 
 
 
