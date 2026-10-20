@@ -2174,6 +2174,32 @@ listing and queries; remaining readers and actual complete helper execution
 still qualify separately. Source closure, default reachability, effects and
 original operational custody remain open.
 
+The post-fixed-gap complete attempt reaches the caller-module reader and stops
+on its saved comparison. The complete diagnosis isolates dispatch, preparation
+and fixed-gap metadata; original Git metadata alone restores every original
+caller graph, review, control and scope field.
+
+Caller saved replay now uses those original metadata bytes. Its conservative
+imported/wrapper graph and declared AST/grammar/interpreter premises remain
+unchanged. Explicit `--current` still rejects changed metadata, `--write` keeps
+current metadata and exclusive publication, and disabled assertions refuse.
+The shared qualifier binds an exact reader target; previously admitted readers
+and qualifiers remain unchanged.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_caller_modules.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_caller_roles.py
+```
+
+`caller-source-diagnosis.json.gz`, `caller-source-roles-qualified.json.gz` and
+`caller-role-record-controls.json.gz` retain the full comparison, native source
+and original proof identities, actual CLI results and separating source, target,
+member, type and proof candidates. CLI diagnostics replace the repository root
+with `.`; raw stderr hashes identify the original streams. Native route admission
+and remaining-reader/full-helper execution still qualify separately. Executable
+data, default effects and original operational custody remain unqualified.
+
+
 
 
 The due artifact sweep retains a dated census of regular log/bin paths and

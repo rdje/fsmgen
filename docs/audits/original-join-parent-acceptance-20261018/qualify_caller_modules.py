@@ -14,8 +14,10 @@ import epoch_constraints as epoch
 import execute
 import prepare
 import qualify_fixed_module_gap as stopped
+import saved_reader_sources as reader_sources
 
 PATH = execute.AUDIT / 'caller-modules-qualified.json.gz'
+SELF = 'qualify_caller_modules.py'
 PREMISES = (*stopped.PREMISES, 'caller_modules.py', 'qualify_caller_modules.py')
 SCOPE = ('Conservative fixed imported/wrapper-loaded Python source namespaces at the selected '
          'Git epoch, including nondefault and uncalled bodies. Ordinary sibling/scripts '
@@ -224,22 +226,35 @@ def replay_controls(graph, outcomes):
             raise AssertionError('retained candidate no longer refuses: ' + outcome['label'])
 
 
-def derive():
+def source_metadata(*, current=False):
+    return {name: prepare.blob(reader_sources.body(name, current=current))
+            for name in PREMISES}
+
+
+def derive(*, current=False):
     graph = json.loads(prepare.encoded(caller_modules.Graph().build()))
     outcomes = controls(graph)
     replay_controls(graph, outcomes)
     return dict(schema='fsmgen.caller_fixed_module_closure.v1', graph=graph, review=review(graph),
                 controls=outcomes, scope=SCOPE,
-                programmes={name: prepare.blob(execute.read(execute.AUDIT / name)) for name in PREMISES})
+                programmes=source_metadata(current=current))
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true',
+                        help='compare current premise metadata instead of its saved epoch')
     args = parser.parse_args()
-    value = derive()
+    value = derive(current=args.current or args.write)
     if args.write:
         execute.save(PATH, value)
     else:
         bounded.strict_equal(json.loads(gzip.decompress(execute.read(PATH))), value)
     print('Fixed caller namespaces, finite module paths and conservative imported/wrapper source closure pass; executable data, default effects and custody remain unqualified.')
+
+
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
+    main()

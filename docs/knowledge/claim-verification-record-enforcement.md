@@ -54,6 +54,6 @@ List current source-model replay commands with:
 bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list
 ```
 
-Those readers retain their pinned epochs, first failures and native/private gaps.
+Readers retain pinned epochs, first failures and native/private gaps.
 
-Cache/dispatch/fixed-gap metadata pins Git.
+Cache/dispatch/fixed-gap/caller metadata pins Git.
