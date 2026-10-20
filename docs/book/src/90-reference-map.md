@@ -2195,9 +2195,27 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 `caller-role-record-controls.json.gz` retain the full comparison, native source
 and original proof identities, actual CLI results and separating source, target,
 member, type and proof candidates. CLI diagnostics replace the repository root
-with `.`; raw stderr hashes identify the original streams. Native route admission
-and remaining-reader/full-helper execution still qualify separately. Executable
-data, default effects and original operational custody remain unqualified.
+with `.`; raw stderr hashes identify the original streams. The caller native
+route now binds the reader, target wrapper, shared verifier
+and original role proof to their immutable publication. The shared metadata
+getter retains its dispatch epoch and the complete replaced caller source
+retains at its original epoch. Only the qualified caller wrapper appends to the
+helper; published membership/order and the complete shell protocol still apply.
+The admitted caller wrapper must also remain after every established reader.
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
+```
+
+`caller-live-route-qualified.json.gz` retains actual listing/query observations
+and genuine source, proof, epoch, membership, primitive-type and established-order
+refusals. The first proposal still accepted omission or movement of that new
+wrapper because the published snapshot predates it. The full first positive and
+changed inputs retain in `caller-new-wrapper-membership-diagnosis.json.gz`.
+The repaired reviewer rejects those same candidates by binding the admitted
+addition after the native snapshot; qualified further additions still pass.
+Remaining-reader/full-helper execution still qualifies separately.
+Executable data, default effects and original operational custody remain unqualified.
 
 An established-order probe found a P1 assurance gap: the whole route checker
 accepted removal, reordering or movement of previously published optional
@@ -2218,8 +2236,9 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 
 `published-reader-order-qualified.json.gz` retains actual listing and scoped
 whole-review controls. The caller's original admitted bytes are supplied only
-as structural metadata during those probes. Its current replacement still
-requires separate native admission. Saved replay checks the dated native helper
+as structural metadata during those probes. Its replacement awaited native
+admission at that probe epoch; the caller admission described above closes that
+separate route gap. Saved replay checks the dated native helper
 snapshots and current predicate compatibility; historical programme frames bind
 to their proof's publication commit. `published-order-publication-controls.json.gz`
 checks native proof/source integrity with genuine changed candidates. The probes

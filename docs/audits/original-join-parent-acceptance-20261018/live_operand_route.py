@@ -39,29 +39,36 @@ FIXED_GAP_REVISION = '7e588f8d84df65aee3afc0344f000f2aee672ecc'
 FIXED_GAP_SOURCES = {AUDIT + name + '.py' for name in
                      ('qualify_fixed_module_gap', 'qualify_fixed_gap_roles')}
 FIXED_GAP_PROOF = AUDIT + 'fixed-gap-source-roles-qualified.json.gz'
+CALLER_REVISION = '8bf1c8bbce8d9f2b0ef8abd2ec9dff2c59378e2a'
+CALLER_SOURCES = {AUDIT + name + '.py' for name in
+                  ('qualify_caller_modules', 'saved_source_roles', 'qualify_caller_roles')}
+CALLER_PROOF = AUDIT + 'caller-source-roles-qualified.json.gz'
+CALLER_COMMAND = ['python3', '-B', AUDIT + 'qualify_caller_roles.py']
 FROZEN_INPUTS = [AUDIT + name + '.json.gz' for name in
-                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF, FIXED_GAP_PROOF]
+                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF, FIXED_GAP_PROOF, CALLER_PROOF]
 SELF = AUDIT + 'live_operand_route.py'
 HELPER = frozen.HELPER
-OUTPUT = AUDIT + 'fixed-gap-live-route-qualified.json.gz'
+OUTPUT = AUDIT + 'caller-live-route-qualified.json.gz'
 TERMINAL = ['python3', '-B', SELF, '--current']
 OPTIONAL = [['python3', '-B', AUDIT + name + '.py'] for name in
             ('frozen_operand_route', 'check_frozen_route_independence',
              'canonical_contracts', 'check_canonical_progress', 'qualify_selected_intake_roles',
              'qualify_runtime_cache_roles', 'qualify_default_dispatch_roles',
-             'qualify_fixed_gap_roles')]
+             'qualify_fixed_gap_roles', 'qualify_caller_roles')]
 DEPENDENCIES = [AUDIT + 'frozen_operand_route.py', AUDIT + 'rollover_source_card.py',
                 'scripts/check_source_recovery_card.sh',
-                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES | FIXED_GAP_SOURCES)]
+                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES)]
 SCOPE = ('Current source/archive/question/reverify and ordered reader membership only. '
          'Original and already-published child readers retain their exact order. '
-         'Only the named canonical, selected-intake, runtime-cache, default-dispatch and fixed-gap source replacements bind to '
+         'Only the named canonical, selected-intake, runtime-cache, default-dispatch, fixed-gap and caller source replacements bind to '
          'separately qualified immutable revisions; unchanged entrypoint identities '
          'and complete original versions of replaced published sources retain. Only the '
          'explicit native-qualified optional readers may be added. The named '
          'published helper snapshot additionally binds complete established reader membership '
          'and relative order, including previously admitted optional qualifiers. The named '
-         'canonical, intake, cache, dispatch and fixed-gap library/readers and their frozen proof inputs bind '
+         'caller addition must itself remain after every established reader, while '
+         'other qualified additive extensions remain permitted. The named '
+         'canonical, intake, cache, dispatch, fixed-gap and caller library/readers and their frozen proof inputs bind '
          'to separately qualified immutable revisions. Named unchanged cache decode '
          'dependencies retain their original native epoch. The unchanged shared metadata getter '
          'retains its dispatch admission epoch; other transitive '
@@ -73,12 +80,13 @@ SCOPE = ('Current source/archive/question/reverify and ordered reader membership
 
 def native(path, *, identity_only=False, revision=None):
     if revision is None:
-        revision = (FIXED_GAP_REVISION if path in FIXED_GAP_SOURCES or path == FIXED_GAP_PROOF else
+        revision = (CALLER_REVISION if path in CALLER_SOURCES or path == CALLER_PROOF else
+                    FIXED_GAP_REVISION if path in FIXED_GAP_SOURCES or path == FIXED_GAP_PROOF else
                     DISPATCH_REVISION if path in DISPATCH_SOURCES or path == DISPATCH_PROOF else
                     CACHE_REVISION if path in CACHE_SOURCES or path == CACHE_PROOF else
                     INTAKE_REVISION if path in INTAKE_SOURCES or path == INTAKE_PROOF else
                     CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE)
-    assert revision in (BASE, PUBLISHED_REVISION, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION), 'closed native source epochs'
+    assert revision in (BASE, PUBLISHED_REVISION, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION, CALLER_REVISION), 'closed native source epochs'
     entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', revision, '--', path)
     assert entry.count(b'\0') == 1, 'one native admitted source'
     header, name = entry[:-1].split(b'\t')
@@ -128,7 +136,7 @@ def authority():
     return dict(helper=helper, published_helper=published_helper, published=published,
                 sources=sources, required=required,
                 replaced_sources={path: native(path, revision=BASE) for path in sorted(
-                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES | FIXED_GAP_SOURCES))},
+                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES))},
                 frozen_inputs={path: native(path, identity_only=True) for path in FROZEN_INPUTS},
                 source_card_proof=proof, baseline_card=baseline_card)
 
@@ -194,6 +202,11 @@ def review(value, fixed):
     frozen.equal(shlex.split(' '.join(line.strip() for line in blocks[0].splitlines())),
                  ['scripts/run_with_ram_guard.sh', '--', 'bash', HELPER])
     commands = helper_review(unblob(value['helper']), unblob(fixed['helper']['body']), fixed['required'], fixed['published'])
+    # The published snapshot predates this newly admitted wrapper. Its native
+    # source qualification authorizes addition, not subsequent omission/movement.
+    cursor = iter(commands[:-1])
+    assert all(any(command == current for current in cursor)
+               for command in [*fixed['published'], CALLER_COMMAND]), 'complete admitted caller membership and order'
     needed = {command[-1] for command in commands[:-1]} | set(DEPENDENCIES)
     assert value['sources'].keys() == needed, 'complete admitted current source population'
     for path in needed:
@@ -278,6 +291,9 @@ def controls(value, fixed):
         ('changed-published-helper', lambda x: x['authority']['published_helper'].__setitem__('body', frozen.blob(b'changed published helper\n'))),
         ('missing-published-reader', lambda x: x['authority']['published'].pop()),
         ('reordered-published-snapshot', lambda x: x['authority']['published'].reverse()),
+        ('reordered-admitted-caller', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND], 'reordered'))),
+        ('omitted-admitted-caller', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND], 'omitted'))),
+        ('moved-admitted-caller', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND], 'moved'))),
         ('wrong-terminal-role', lambda x: rewritten_listing(x, helper.replace(b'/live_operand_route.py"', b'/verify_operand_route.py"'))),
         ('changed-helper-protocol', lambda x: x.__setitem__('helper', frozen.blob(helper + b'echo extra\n'))),
         ('missing-source', lambda x: x['sources'].pop(next(iter(x['sources'])))),
@@ -314,6 +330,17 @@ def controls(value, fixed):
         ('changed-fixed-gap-role-proof', lambda x: x['frozen_inputs'][FIXED_GAP_PROOF].__setitem__('sha256', '0' * 64)),
         ('wrong-fixed-gap-proof-revision', lambda x: x['authority']['frozen_inputs'][FIXED_GAP_PROOF].__setitem__('revision', BASE)),
         ('boolean-fixed-gap-proof-size', lambda x: x['frozen_inputs'][FIXED_GAP_PROOF].__setitem__('bytes', True)),
+        ('changed-caller-reader', lambda x: x['sources'].__setitem__(AUDIT + 'qualify_caller_modules.py', frozen.blob(b'changed caller reader\n'))),
+        ('changed-caller-role-wrapper', lambda x: x['sources'].__setitem__(AUDIT + 'qualify_caller_roles.py', frozen.blob(b'changed wrapper\n'))),
+        ('changed-shared-role-verifier', lambda x: x['sources'].__setitem__(AUDIT + 'saved_source_roles.py', frozen.blob(b'changed shared verifier\n'))),
+        ('wrong-caller-source-revision', lambda x: x['authority']['sources'][AUDIT + 'qualify_caller_modules.py'].__setitem__('revision', BASE)),
+        ('wrong-shared-verifier-revision', lambda x: x['authority']['sources'][AUDIT + 'saved_source_roles.py'].__setitem__('revision', FIXED_GAP_REVISION)),
+        ('lost-original-caller-reader', lambda x: x['authority']['replaced_sources'].pop(AUDIT + 'qualify_caller_modules.py')),
+        ('missing-caller-role-proof', lambda x: x['frozen_inputs'].pop(CALLER_PROOF)),
+        ('changed-caller-role-proof', lambda x: x['frozen_inputs'][CALLER_PROOF].__setitem__('sha256', '0' * 64)),
+        ('borrowed-caller-role-proof', lambda x: x['frozen_inputs'].__setitem__(CALLER_PROOF, copy.deepcopy(x['frozen_inputs'][FIXED_GAP_PROOF]))),
+        ('wrong-caller-proof-revision', lambda x: x['authority']['frozen_inputs'][CALLER_PROOF].__setitem__('revision', FIXED_GAP_REVISION)),
+        ('boolean-caller-proof-size', lambda x: x['frozen_inputs'][CALLER_PROOF].__setitem__('bytes', True)),
         ('missing-frozen-proof', lambda x: x['frozen_inputs'].pop(FROZEN_INPUTS[0])),
         ('changed-frozen-proof', lambda x: x['frozen_inputs'][FROZEN_INPUTS[0]].__setitem__('sha256', '0' * 64)),
         ('boolean-frozen-proof-size', lambda x: x['frozen_inputs'][FROZEN_INPUTS[1]].__setitem__('bytes', True)),
