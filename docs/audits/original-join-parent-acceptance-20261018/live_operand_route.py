@@ -49,31 +49,38 @@ OPERAND_SOURCES = {AUDIT + name + '.py' for name in
                    ('operand_inventory', 'qualify_operand_roles')}
 OPERAND_PROOF = AUDIT + 'operand-source-roles-qualified.json.gz'
 OPERAND_COMMAND = ['python3', '-B', AUDIT + 'qualify_operand_roles.py']
+AST_INPUT_REVISION = '82f0a5661eb79061dbb874fcb45b1066c29051a5'
+AST_INPUT_SOURCES = {AUDIT + name + '.py' for name in
+                     ('ast_model_inputs', 'qualify_ast_input_roles')}
+AST_INPUT_PROOF = AUDIT + 'ast-input-source-roles-qualified.json.gz'
+AST_INPUT_COMMAND = ['python3', '-B', AUDIT + 'qualify_ast_input_roles.py']
 FROZEN_INPUTS = [AUDIT + name + '.json.gz' for name in
-                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF, FIXED_GAP_PROOF, CALLER_PROOF, OPERAND_PROOF]
+                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF, FIXED_GAP_PROOF, CALLER_PROOF, OPERAND_PROOF, AST_INPUT_PROOF]
 SELF = AUDIT + 'live_operand_route.py'
 HELPER = frozen.HELPER
-OUTPUT = AUDIT + 'operand-inventory-live-route-qualified.json.gz'
+OUTPUT = AUDIT + 'ast-input-live-route-qualified.json.gz'
 TERMINAL = ['python3', '-B', SELF, '--current']
 OPTIONAL = [['python3', '-B', AUDIT + name + '.py'] for name in
             ('frozen_operand_route', 'check_frozen_route_independence',
              'canonical_contracts', 'check_canonical_progress', 'qualify_selected_intake_roles',
              'qualify_runtime_cache_roles', 'qualify_default_dispatch_roles',
-             'qualify_fixed_gap_roles', 'qualify_caller_roles', 'qualify_operand_roles')]
+             'qualify_fixed_gap_roles', 'qualify_caller_roles', 'qualify_operand_roles',
+             'qualify_ast_input_roles')]
 DEPENDENCIES = [AUDIT + 'frozen_operand_route.py', AUDIT + 'rollover_source_card.py',
                 'scripts/check_source_recovery_card.sh',
-                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES | OPERAND_SOURCES)]
+                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES | OPERAND_SOURCES | AST_INPUT_SOURCES)]
 SCOPE = ('Current source/archive/question/reverify and ordered reader membership only. '
          'Original and already-published child readers retain their exact order. '
-         'Only the named canonical, selected-intake, runtime-cache, default-dispatch, fixed-gap, caller and operand source replacements bind to '
+         'Only the named canonical, selected-intake, runtime-cache, default-dispatch, fixed-gap, caller, operand and AST-input source replacements bind to '
          'separately qualified immutable revisions; unchanged entrypoint identities '
          'and complete original versions of replaced published sources retain. Only the '
          'explicit native-qualified optional readers may be added. The named '
          'published helper snapshot additionally binds complete established reader membership '
          'and relative order, including previously admitted optional qualifiers. The named '
          'caller addition must itself remain after every established reader; the operand '
-         'addition must follow the caller. Other qualified additive extensions remain permitted. The named '
-         'canonical, intake, cache, dispatch, fixed-gap, caller and operand library/readers and their frozen proof inputs bind '
+         'addition must follow the caller; the AST-input addition must follow the operand. '
+         'Other qualified additive extensions remain permitted. The named '
+         'canonical, intake, cache, dispatch, fixed-gap, caller, operand and AST-input library/readers and their frozen proof inputs bind '
          'to separately qualified immutable revisions. Named unchanged cache decode '
          'dependencies retain their original native epoch. The unchanged shared metadata getter '
          'retains its dispatch admission epoch; other transitive '
@@ -85,14 +92,15 @@ SCOPE = ('Current source/archive/question/reverify and ordered reader membership
 
 def native(path, *, identity_only=False, revision=None):
     if revision is None:
-        revision = (OPERAND_REVISION if path in OPERAND_SOURCES or path == OPERAND_PROOF else
+        revision = (AST_INPUT_REVISION if path in AST_INPUT_SOURCES or path == AST_INPUT_PROOF else
+                    OPERAND_REVISION if path in OPERAND_SOURCES or path == OPERAND_PROOF else
                     CALLER_REVISION if path in CALLER_SOURCES or path == CALLER_PROOF else
                     FIXED_GAP_REVISION if path in FIXED_GAP_SOURCES or path == FIXED_GAP_PROOF else
                     DISPATCH_REVISION if path in DISPATCH_SOURCES or path == DISPATCH_PROOF else
                     CACHE_REVISION if path in CACHE_SOURCES or path == CACHE_PROOF else
                     INTAKE_REVISION if path in INTAKE_SOURCES or path == INTAKE_PROOF else
                     CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE)
-    assert revision in (BASE, PUBLISHED_REVISION, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION, CALLER_REVISION, OPERAND_REVISION), 'closed native source epochs'
+    assert revision in (BASE, PUBLISHED_REVISION, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION, CALLER_REVISION, OPERAND_REVISION, AST_INPUT_REVISION), 'closed native source epochs'
     entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', revision, '--', path)
     assert entry.count(b'\0') == 1, 'one native admitted source'
     header, name = entry[:-1].split(b'\t')
@@ -142,7 +150,7 @@ def authority():
     return dict(helper=helper, published_helper=published_helper, published=published,
                 sources=sources, required=required,
                 replaced_sources={path: native(path, revision=BASE) for path in sorted(
-                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES | OPERAND_SOURCES))},
+                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES | OPERAND_SOURCES | AST_INPUT_SOURCES))},
                 frozen_inputs={path: native(path, identity_only=True) for path in FROZEN_INPUTS},
                 source_card_proof=proof, baseline_card=baseline_card)
 
@@ -216,6 +224,9 @@ def review(value, fixed):
     cursor = iter(commands[:-1])
     assert all(any(command == current for current in cursor)
                for command in [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND]), 'complete admitted operand membership and order'
+    cursor = iter(commands[:-1])
+    assert all(any(command == current for current in cursor)
+               for command in [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND]), 'complete admitted AST-input membership and order'
     needed = {command[-1] for command in commands[:-1]} | set(DEPENDENCIES)
     assert value['sources'].keys() == needed, 'complete admitted current source population'
     for path in needed:
@@ -317,6 +328,20 @@ def controls(value, fixed):
         ('wrong-operand-proof-revision', lambda x: x['authority']['frozen_inputs'][OPERAND_PROOF].__setitem__('revision', CALLER_REVISION)),
         ('boolean-operand-proof-size', lambda x: x['frozen_inputs'][OPERAND_PROOF].__setitem__('bytes', True)),
         ('float-operand-proof-size', lambda x: x['frozen_inputs'][OPERAND_PROOF].__setitem__('bytes', float(x['frozen_inputs'][OPERAND_PROOF]['bytes']))),
+        ('reordered-admitted-ast-input', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND], 'reordered'))),
+        ('omitted-admitted-ast-input', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND], 'omitted'))),
+        ('moved-admitted-ast-input', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND], 'moved'))),
+        ('changed-ast-input-reader', lambda x: x['sources'].__setitem__(AUDIT + 'ast_model_inputs.py', frozen.blob(b'changed AST-input reader\n'))),
+        ('changed-ast-input-role-wrapper', lambda x: x['sources'].__setitem__(AUDIT + 'qualify_ast_input_roles.py', frozen.blob(b'changed AST-input wrapper\n'))),
+        ('wrong-ast-input-source-revision', lambda x: x['authority']['sources'][AUDIT + 'ast_model_inputs.py'].__setitem__('revision', BASE)),
+        ('wrong-ast-input-wrapper-revision', lambda x: x['authority']['sources'][AUDIT + 'qualify_ast_input_roles.py'].__setitem__('revision', OPERAND_REVISION)),
+        ('lost-original-ast-input-reader', lambda x: x['authority']['replaced_sources'].pop(AUDIT + 'ast_model_inputs.py')),
+        ('missing-ast-input-role-proof', lambda x: x['frozen_inputs'].pop(AST_INPUT_PROOF)),
+        ('changed-ast-input-role-proof', lambda x: x['frozen_inputs'][AST_INPUT_PROOF].__setitem__('sha256', '0' * 64)),
+        ('borrowed-ast-input-role-proof', lambda x: x['frozen_inputs'].__setitem__(AST_INPUT_PROOF, copy.deepcopy(x['frozen_inputs'][OPERAND_PROOF]))),
+        ('wrong-ast-input-proof-revision', lambda x: x['authority']['frozen_inputs'][AST_INPUT_PROOF].__setitem__('revision', OPERAND_REVISION)),
+        ('boolean-ast-input-proof-size', lambda x: x['frozen_inputs'][AST_INPUT_PROOF].__setitem__('bytes', True)),
+        ('float-ast-input-proof-size', lambda x: x['frozen_inputs'][AST_INPUT_PROOF].__setitem__('bytes', float(x['frozen_inputs'][AST_INPUT_PROOF]['bytes']))),
         ('wrong-terminal-role', lambda x: rewritten_listing(x, helper.replace(b'/live_operand_route.py"', b'/verify_operand_route.py"'))),
         ('changed-helper-protocol', lambda x: x.__setitem__('helper', frozen.blob(helper + b'echo extra\n'))),
         ('missing-source', lambda x: x['sources'].pop(next(iter(x['sources'])))),
@@ -387,6 +412,8 @@ def controls(value, fixed):
         except AssertionError as error:
             if label in ('reordered-admitted-operand', 'omitted-admitted-operand', 'moved-admitted-operand'):
                 assert str(error) == 'complete admitted operand membership and order'
+            if label in ('reordered-admitted-ast-input', 'omitted-admitted-ast-input', 'moved-admitted-ast-input'):
+                assert str(error) == 'complete admitted AST-input membership and order'
             result.append(dict(label=label, candidate=candidate, refusal=str(error)))
         else:
             raise AssertionError('changed current route admitted: ' + label)
@@ -410,7 +437,7 @@ def main():
     args = parser.parse_args()
     fixed = authority()
     value = current_value(fixed)
-    product = dict(schema='fsmgen.live_operand_route.v7', inputs=value,
+    product = dict(schema='fsmgen.live_operand_route.v8', inputs=value,
                    result=review(value, fixed), controls=controls(value, fixed))
     if args.write:
         card.save_record(OUTPUT, product)

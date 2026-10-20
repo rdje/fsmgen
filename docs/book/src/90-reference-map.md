@@ -2330,8 +2330,25 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 
 The shared reviewer rejects borrowed targets, changed verifier/proof bodies,
 omitted metadata and Boolean/float primitive substitutions. This qualifies saved
-metadata and the complete original reconstruction proof. Native route admission
-and the actual helper retry remain separately owned. Whole-helper success,
+metadata and the complete original reconstruction proof. The native route now
+binds the repaired AST-input reader, wrapper and proof to `82f0a5661`, retaining
+every earlier source/proof epoch. The helper appends the AST-input qualifier after
+the operand qualifier. Its established protocol, reader membership and order
+remain exact. Check current admission against the retained native predecessor
+and genuine source/proof/native/member/type/order controls without running
+listed child readers:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_ast_input_route.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
+```
+
+The first command compares every prior authority frame and helper command with
+the complete native predecessor and rechecks every retained refusal candidate.
+Both checks qualify the installed route. The second executes only listing and
+public queries. The bounded card is compared with the committed metadata repair;
+its earlier dated body and every original question remain retained.
+The actual helper retry remains separately owned. Whole-helper success,
 source/data bindings, default effects and runtime custody remain unqualified. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
