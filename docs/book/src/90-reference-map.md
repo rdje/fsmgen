@@ -2142,3 +2142,31 @@ reader while preserving all established reader order and shell protocol.
 listing and public queries, and changed-source, wrong-epoch, missing-original,
 proof and JSON-type refusals. This gate runs listing and query operations.
 Remaining saved readers and the complete helper still require qualification.
+
+
+The due artifact sweep retains a dated census of regular log/bin paths and
+metadata, explicit root/Rust location rows, and Git/symlink/volume exclusions.
+Independent `rg` membership agrees. All candidates are retained: metadata and
+age supply no disposal authority. Replay the saved observation without another
+filesystem sweep or deletion:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-census-20261020/census.py
+```
+
+The reader checks the fixed prior cleanup record, producer identity, complete
+saved membership and refusal controls. It makes no future absence, content
+identity or physical disk-reclamation claim. The latest sweep date remains in
+`docs/ARTIFACT_CLEANUP.md`.
+
+
+This sweep also completes the required task-history rollover. The completed
+T1983 helper/caller qualification unit retains its exact original source and
+node graph behind native version retrieval. Independent reconstruction and
+real checker refusals qualify retention; all live obligations remain visible.
+The first full proof and the primitive-type repair retain separately. Replay
+the strict delivered reader without changing the live task:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-census-20261020/rollover_task.py
+```
