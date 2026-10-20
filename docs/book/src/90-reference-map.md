@@ -2283,8 +2283,25 @@ Omission, swap and movement reject at the new wrapper order assertion; prior
 published order and the qualified additive control remain intact. The route
 probes execute listing, query and current-authorizer operations. Listed child
 commands, candidate helpers and historical bodies are not launched by those
-probes. Actual complete-helper success remains pending. Task-history retention
-is complete. Replay the exact saved history proofs, or add `--current`
+probes.
+
+The actual full helper at native `912025a65` passes operand inventory, then stops
+at `ast_model_inputs.py:353` while comparing its complete saved product. Exact
+native source/tree/listing/task before-and-after states and complete streams retain
+in `complete-reader-post-operand-20261020.json.gz`. No RAM cutoff is reported.
+Read and verify this dated observation without repeating the helper:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_operand_capture.py
+```
+
+The reader authenticates native source and task reconstruction, the whole archive
+identity and genuine member/source/type/stream refusal controls. Stored raw hashes
+identify original streams; the retained streams normalize the literal repository
+root and do not reconstruct private raw paths. Exact AST-product differences and
+their cause remain the next owned diagnosis. Whole-helper success, source/data
+bindings, default effects and runtime custody remain unqualified. Task-history
+retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
 ```bash
