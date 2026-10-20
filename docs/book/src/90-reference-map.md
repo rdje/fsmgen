@@ -2143,6 +2143,30 @@ listing and public queries, and changed-source, wrong-epoch, missing-original,
 proof and JSON-type refusals. This gate runs listing and query operations.
 Remaining saved readers and the complete helper still require qualification.
 
+The next complete attempt passes the repaired dispatch reader, then stops in
+`qualify_fixed_module_gap.py`. Its original stopped graph, control and scope
+proof agrees exactly after replacing only dispatch/preparation source metadata
+with authenticated original bytes. `fixed-gap-source-diagnosis.json.gz` retains
+the complete comparison and metadata-only intervention; historical code never
+executes.
+
+The fixed-gap saved reader now uses its native source epoch. Explicit
+`--current` still rejects changed metadata, and `--write` keeps current metadata
+and exclusive publication. Disabled assertions refuse before qualification.
+Replay its original stopped proof and the retained source-role qualification:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_fixed_module_gap.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_fixed_gap_roles.py
+```
+
+`fixed-gap-source-roles-qualified.json.gz` binds native sources, unchanged
+original data, actual CLI outcomes and separating metadata/member/type controls.
+Native admission of this replacement, remaining readers and complete helper
+execution still qualify separately. Source closure, default reachability,
+effects and original operational custody remain open.
+
+
 
 The due artifact sweep retains a dated census of regular log/bin paths and
 metadata, explicit root/Rust location rows, and Git/symlink/volume exclusions.

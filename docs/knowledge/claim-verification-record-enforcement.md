@@ -21,7 +21,7 @@ answers:
   - "why is the retained preparation correction a no-op?"
   - "where are dated reader-recovery facts retained?"
   - "where are payload namespace selectors qualified?"
-date: 2026-10-19
+date: 2026-10-20
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
 evidence: >-
@@ -56,4 +56,4 @@ bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.s
 
 Those readers retain their pinned epochs, first failures and native/private gaps.
 
-Saved cache/dispatch pin Git source epochs.
+Cache/dispatch/fixed-gap metadata pins Git.

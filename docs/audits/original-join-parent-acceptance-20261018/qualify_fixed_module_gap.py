@@ -12,8 +12,10 @@ import execute
 import fixed_modules
 import prepare
 import runtime_inventory as inventory
+import saved_reader_sources as reader_sources
 
 PATH = execute.AUDIT / 'fixed-module-gap-qualified.json.gz'
+SELF = 'qualify_fixed_module_gap.py'
 STOP = 'docs/audits/record-value-class-frame-retention-20261006/recoveries.py'
 CALLER = 'docs/audits/record-value-class-frame-retention-20261006/verify.py'
 PREMISES = ('qualify_fixed_module_gap.py', 'fixed_modules.py', 'default_dispatch.py',
@@ -113,16 +115,32 @@ def controls(expected):
     return result
 
 
-if __name__ == '__main__':
+def source_metadata(*, current=False):
+    return {name: prepare.blob(reader_sources.body(name, current=current))
+            for name in PREMISES}
+
+
+def product(*, current=False):
+    value = derive()
+    return dict(result=value, controls=controls(value), programmes=source_metadata(current=current))
+
+
+def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true',
+                        help='compare current premise metadata instead of its saved epoch')
     args = parser.parse_args()
-    value = derive()
-    product = dict(result=value, controls=controls(value),
-                   programmes={name: prepare.blob(execute.read(execute.AUDIT / name)) for name in PREMISES})
+    value = product(current=args.current or args.write)
     if args.write:
-        execute.save(PATH, product)
+        execute.save(PATH, value)
     else:
         saved = json.loads(gzip.decompress(execute.read(PATH)))
-        bounded.strict_equal(saved, product)
+        bounded.strict_equal(saved, value)
     print('Stopped fixed-module candidate diagnostic reconstructs exactly; source closure and default effects remain unqualified.')
+
+
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
+    main()
