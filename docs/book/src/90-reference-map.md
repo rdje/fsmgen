@@ -2348,8 +2348,21 @@ the complete native predecessor and rechecks every retained refusal candidate.
 Both checks qualify the installed route. The second executes only listing and
 public queries. The bounded card is compared with the committed metadata repair;
 its earlier dated body and every original question remain retained.
-The actual helper retry remains separately owned. Whole-helper success,
-source/data bindings, default effects and runtime custody remain unqualified. Task-history
+The actual full helper at native `a9b95de36` passes the repaired AST-input
+reader, then stops at `preparation_correction.py:206` during its complete saved
+comparison. It exits with status 1; no RAM cutoff is reported. Complete native
+source/tree/listing/task before-and-after states and normalized streams retain
+in `complete-reader-post-ast-input-20261021.json.gz`. Read the dated result and
+exercise genuine source/member/type/result/stream controls without repeating
+the helper:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_ast_input_capture.py
+```
+
+The complete differing product fields and root cause remain owned by the next
+diagnosis. Whole-helper success, source/data bindings, default effects and runtime
+custody remain unqualified. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
