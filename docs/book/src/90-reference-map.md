@@ -2592,6 +2592,23 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 
 Native admission and actual whole-helper success remain separate. The dated
 admission replay does not admit later source changes automatically.
+
+The actual complete helper at native `cc595d5dd` passes both the allocation
+reader and dependent data qualifier, then stops at `payload_closure.py:523`.
+Its complete saved-product comparison returns status 1 with exact-scalar refusal;
+no RAM cutoff is reported. Whole native source/tree/listing/task before-and-after
+states agree. Complete normalized streams and original raw identities retain in
+`complete-reader-post-allocation-20261021.json.gz`. Replay the dated observation
+and genuine source/member/primitive/result/stream controls without rerunning
+the helper:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_allocation_capture.py
+```
+
+Differing fields and root attribution are owned by the next diagnosis. This
+capture establishes the observed failure and earlier passes; it does not close
+the whole reader sequence or original runtime qualifications.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history
