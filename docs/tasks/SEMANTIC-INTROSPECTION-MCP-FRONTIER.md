@@ -7131,11 +7131,16 @@ For FSMGen, the analogs are:
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.89`
-  Status: `pending`
+  Status: `done`
   Goal: `Complete the due same-volume safe artifact census before the next reader repair.`
   Acceptance: `Reuse the published artifact census contract with a new exclusive dated observation. Inventory repository-owned regular log/bin candidates and root/Rust locations without entering foreign repositories, submodules, symlinks or other volumes. Retain every candidate unless exact disposal authority proves deletion safe. Preserve complete census/independent membership/controls, overwrite only the latest cleanup date/summary, synchronize book/task/pointer and required gates, then commit before resuming preparation metadata repair.`
-  Verification: `Due at startup: last recorded cleanup2026-10-19T23:28:01.989393+00:00; current native clock2026-10-21T06:27:28Z. No candidate has deletion authority from age or suffix alone.`
-  Commit: `pending`
+  Verification: `The new exclusive dated census reuses the byte-exact published collector/reviewer/controls through an installed-source wrapper authenticated against native7e1f42a97; historical Git bytes remain comparison data. Complete same-volume regular log/bin lstat metadata, root/Rust location rows, Git/foreign-repository/symlink/volume exclusions and independent rg command/status/membership retain in artifact-census-20261021/census.json.gz. Every candidate is retained because age/suffix/lstat metadata do not prove disposal authority; no content identity, reclamation or future absence is claimed. Saved replay authenticates both producer sources and fixed prior cleanup record; missing member, unsafe path, Boolean size and invented-removal controls refuse. Re-derivation is the complete filesystem census and native prior/source reconstruction; falsification is independent rg membership and genuine saved-record controls; durability is committed wrapper/unchanged contract, complete dated census, latest-only record and task/book/Git. R13 roadmap direction and API behavior remain unchanged; book command selects the current dated saved census. Focused task/claim, native book/source/index, fresh independent claim census, staged doctrine and normal hooks gate commit before preparation metadata repair.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.89: complete due safe artifact census`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "Latest artifact cleanup" and the complete native7e1f42a97 prior record establish that the scheduled census is due. The published collector contract preserves ownership, same-volume and foreign-repository boundaries; candidate suffix/age cannot authorize deletion.
+  - [x] **ADDRESSED (verified)** — Actual exclusive census and independent rg membership agree; all candidates retain without disposal authority. The latest-only record takes the captured UTC date, and saved replay plus real member/path/Boolean/removal candidates qualify without walking again or deleting.
+  - [x] **NO REGRESSION** — All tests successful in focused task/claim checks. Native mdBook/source/index, fresh independent claim inventory, scripts/check_doctrines.sh and normal hooks gate publication. The original collector source, native/compiler evidence and R13/API boundaries remain unchanged.
 
 ## Version-Retrievable Historical Views
 

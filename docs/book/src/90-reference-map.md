@@ -2399,7 +2399,7 @@ age supply no disposal authority. Replay the saved observation without another
 filesystem sweep or deletion:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-census-20261020/census.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-census-20261021/census.py
 ```
 
 The reader checks the fixed prior cleanup record, producer identity, complete
