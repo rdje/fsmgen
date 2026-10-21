@@ -5784,11 +5784,11 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful in focused task integrity checks. Saved exact source/function/product conservation, current native route, native book/source/index, independent claim checks, scripts/check_doctrines.sh and normal hooks gate publication. No original semantic/model/recipe/cohort or whole helper runs, and source/qualifier/native/runtime qualifications retain.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve the diagnosed allocation reader and dependent source-role frontier.`
   Acceptance: `After complete diagnosis commits, select independently bounded repair, source/proof native admission and actual retry leaves from the separated cause. Inspect and own dependent allocation-data qualifier metadata without borrowing current runtime authority. Preserve all original proofs, exact semantic/model/API bodies, helper protocol/membership/order, source/data/default/effect/runtime/custody/private/HIAL/full-CI gates and unchanged resource/containment limits. Schedule every necessary repair before closing this resolution container.`
-  Verification: `Primary and dependent saved metadata repairs plus complete role/semantic module conservation qualify. Immutable first refusals/diagnoses and the repaired diagnostic leaf guard retain. Native allocation/dependent route admission is next; actual whole-helper retry and original source/runtime qualifications remain separate.`
-  Commit: `pending`
+  Verification: `Complete actual ordered-helper success and source/tree/listing/task custody are committed at nativea7b846efc4320b9400a6e77a75e853c72eed639f. Every required child is done; first failures, complete diagnoses, source-role repairs, native admissions and every original contract remain retained. Only this reader-route obligation closes. The separately owned compile-only diagnostic-label leaf remains pending, its parent stays active, and original source/data/default/effect/runtime/custody/private/HIAL/full-CI authority remains open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.2: close only qualified reader-route obligations`
 
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6`
 
@@ -5898,12 +5898,12 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful in focused task/claim checks. Current route, storage recovery and complete native admission replay, mdBook/current copied-source, independent claim census, scripts/check_doctrines.sh and normal hooks gate publication. No child reader/helper/model/cohort executes and no resource or containment ceiling grows; actual full-helper and original runtime qualifications remain separately pending.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6`
-  Status: `active`
+  Status: `done`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2`
   Goal: `Retry the actual complete helper after allocation source-role admission.`
   Acceptance: `From clean committed source-role repairs/admission use the unchanged recoverable collector and exact task-only declaration under unchanged limits. Retain complete native/source/tree/listing/task boundaries and actual first command/status/streams, qualify before cause attribution, commit before diagnosis. Whole ordered success alone closes its route container; original source/data/default/effect/runtime/custody/private/HIAL/full-CI gates remain separate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete actual ordered-helper success and source/tree/listing/task custody are committed at nativea7b846efc4320b9400a6e77a75e853c72eed639f. Every required child is done; first failures, complete diagnoses, source-role repairs, native admissions and every original contract remain retained. Only this reader-route obligation closes. The separately owned compile-only diagnostic-label leaf remains pending, its parent stays active, and original source/data/default/effect/runtime/custody/private/HIAL/full-CI authority remains open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.2: close only qualified reader-route obligations`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.1`
   Status: `done`
@@ -5919,13 +5919,13 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful in focused task/claim checks. Exact dated capture and genuine controls, mdBook/native copied-source/index, independent claims, staged scripts/check_doctrines.sh and normal hooks gate publication. No original semantic/model/recipe/cohort executes or qualification advances beyond the captured reader sequence; runtime/private/HIAL/full-CI gates remain open.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2`
-  Status: `active`
+  Status: `done`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5`
   Goal: `Resolve the qualified complete-helper result and resume original source closure.`
   Finding (owned P1): `Actual full helper at nativecc595d5dd exits1 at payload_closure.py:523 complete saved comparison after both allocation/dependent passes. Reproduce the dated observation with verify_post_allocation_capture.py; no RAM cutoff is reported. The differing fields and root cause are not yet measured. Impact: whole-reader success and executable-source closure remain blocked. This immediate next leaf owns complete first source/product diagnosis and separating intervention, then verified repair/native admission as needed before another helper retry. Original semantic/runtime/custody and private/HIAL claims are not promoted.`
   Acceptance: `Only after the complete first result commits, derive the next action from its whole observed outcome. Own any refusal with complete source/product comparisons and separating controls before repair; retain every first epoch. Whole ordered success alone closes the route container; original semantic/source/default/effect/runtime/custody/private/HIAL/full-CI gates remain separate. Preserve roadmap/book/task alignment and commit each safe slice.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete actual ordered-helper success and source/tree/listing/task custody are committed at nativea7b846efc4320b9400a6e77a75e853c72eed639f. Every required child is done; first failures, complete diagnoses, source-role repairs, native admissions and every original contract remain retained. Only this reader-route obligation closes. The separately owned compile-only diagnostic-label leaf remains pending, its parent stays active, and original source/data/default/effect/runtime/custody/private/HIAL/full-CI authority remains open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.2: close only qualified reader-route obligations`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.1`
   Status: `done`
@@ -5981,12 +5981,12 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful in focused task/claim checks. Saved full native admission, byte delivery and payload role/module controls, mdBook/native source/index, independent claims, staged scripts/check_doctrines.sh and normal hooks gate publication. Original source/default/effect/runtime/custody/private/HIAL/full-CI and actual whole-helper success remain separate; no resource or containment ceiling grows.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5`
-  Status: `active`
+  Status: `done`
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.2`
   Goal: `Retry the whole helper after payload native admission.`
   Acceptance: `From clean committed payload admission declare only the exact owning task boundary and use the unchanged recoverable collector under unchanged limits. Retain and qualify complete actual first command/status/streams and native/source/tree/listing/task before/after. Commit before any further diagnosis. Only whole ordered success closes the route container; original semantic/source/default/effect/runtime/custody/private/HIAL/full-CI gates remain separate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete actual ordered-helper success and source/tree/listing/task custody are committed at nativea7b846efc4320b9400a6e77a75e853c72eed639f. Every required child is done; first failures, complete diagnoses, source-role repairs, native admissions and every original contract remain retained. Only this reader-route obligation closes. The separately owned compile-only diagnostic-label leaf remains pending, its parent stays active, and original source/data/default/effect/runtime/custody/private/HIAL/full-CI authority remains open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.2: close only qualified reader-route obligations`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.1`
   Status: `done`
@@ -6002,11 +6002,17 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful in focused task/claim checks. Saved complete capture and genuine controls, mdBook/native copied-source/index, independent claims, staged scripts/check_doctrines.sh and normal hooks gate publication. Source/model/default/effect/runtime/custody/private/HIAL/full-CI scopes and resource ceilings retain; route-container closure remains a separate next slice.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Resolve the qualified whole-helper result and resume the exact source frontier.`
   Acceptance: `Only after the complete first result commits, derive next work from the entire observed outcome. Own any refusal through complete source/product diagnosis and separating controls before repair, preserving every first epoch. Whole ordered success permits closure only of eligible route containers whose original goals and children are satisfied; original source/data/default/effect/runtime/custody/private/HIAL/full-CI gates stay separate. Commit each safe slice with accurate roadmap/book/task alignment.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Complete actual ordered-helper success and source/tree/listing/task custody are committed at nativea7b846efc4320b9400a6e77a75e853c72eed639f. Every required child is done; first failures, complete diagnoses, source-role repairs, native admissions and every original contract remain retained. Only this reader-route obligation closes. The first validator accepted a genuine undeclared root permission field; its complete source/proof/accepted-candidate control retains. Exact root membership now rejects it at the intended predicate, and a new exclusive strict proof preserves all first epochs. The separately owned compile-only diagnostic-label leaf remains pending, its parent stays active, and original source/data/default/effect/runtime/custody/private/HIAL/full-CI authority remains open.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6.2.5.2: close only qualified reader-route obligations`
+
+  Acceptance Checklist (enforced):
+
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S PAYLOAD_REVISION pins native5e824c9c7 admission, and nativea7b846efc commits the actual complete ordered-helper success. Exact original ancestor goals/acceptance and child states permit only the bounded payload/allocation retry/resolution closure; the pending diagnostic-label obligation prevents broader parent closure.
+  - [x] **ADDRESSED (verified)** — Complete native before/after task reconstruction preserves every original node, goal, acceptance, child population and unrelated byte. Every closed parent child is done, the pending label and its active parent remain unchanged, and genuine narrowed-contract/premature-parent/reopened-child/native controls refuse. Saved capture verifies without repeating the helper.
+  - [x] **NO REGRESSION** — All tests successful in focused task/claim checks. Exact saved closure/source/capture and genuine controls, mdBook/native copied-source/index, independent claims, staged scripts/check_doctrines.sh and normal hooks gate publication. Every original semantic/source/data/default/effect/runtime/custody/private/HIAL/full-CI scope and resource ceiling retains; the diagnostic-label repair is the next owned slice.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.4`
   Status: `pending`

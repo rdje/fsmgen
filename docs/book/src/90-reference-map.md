@@ -2695,9 +2695,26 @@ helper again:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_payload_capture.py
 ```
 
-This establishes the complete ordered reader sequence. Eligible route-container
-closure is reviewed next; original semantic/source/data/default/effect/runtime,
-custody, private/HIAL and full-CI qualifications remain separate.
+This establishes the complete ordered reader sequence. Its payload/allocation
+retry and resolution obligations now close under exact original contract and
+completed-child checks. Every unrelated task byte, original goal/acceptance and
+child population retains. The pending compile-only unexpected-admission label
+keeps its parent active and is the next owned fix. Replay this bounded closure
+and genuine narrowed-contract, premature-parent, reopened-child and native-source
+controls without consulting later live progress or running the helper:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/reader_route_closure.py
+```
+
+The first closure validator accepted an undeclared root permission field in a
+controlled in-process record. Its complete source/proof/control remains retained.
+Exact root membership now rejects that candidate before provenance checks; a new
+exclusive strict proof preserves the original valid closure facts and all first
+epochs. No runtime authority or helper execution occurred in this control.
+
+Original semantic/source/data/default/effect/runtime, custody, private/HIAL and
+full-CI qualifications remain separate.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history

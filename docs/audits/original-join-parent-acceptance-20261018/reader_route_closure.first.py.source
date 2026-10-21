@@ -1,0 +1,124 @@
+"""Qualify bounded reader-route closure without closing original source/runtime work."""
+import argparse
+import copy
+import gzip
+import json
+import re
+import sys
+
+import diagnose_payload_sources as diagnostic
+import epoch_constraints as epoch
+import verify_post_payload_capture as capture
+
+sys.path.insert(0, 'docs/audits/task-terminal-rollover-20261011')
+import common
+
+BASE = 'a7b846efc4320b9400a6e77a75e853c72eed639f'
+TASK = capture.collector.TASK
+AUDIT = diagnostic.AUDIT
+SELF = AUDIT / 'reader_route_closure.py'
+OUTPUT = AUDIT / 'reader-route-closure-qualified.json.gz'
+POINTER = epoch.read(BASE, 'MEMORY.md').decode()
+OWNER = re.search(r'- active_work_unit: `([^`]+)`', POINTER).group(1)
+CLOSED = [OWNER]
+for _ in range(4):
+    CLOSED.append(CLOSED[-1].rsplit('.', 1)[0])
+PENDING_LABEL = CLOSED[-1].rsplit('.', 1)[0] + '.4'
+SCOPE = ('Dated exact native task/source contract and bounded reader-route status closure '
+         'from the complete committed helper success only. Every original goal, '
+         'acceptance, child population and unrelated task byte retains. The pending '
+         'diagnostic label and original source/data/default/effect/runtime/custody/'
+         'private/HIAL/full-CI scopes remain open. No helper or original code reruns.')
+
+
+def retained(row, *, owner=False):
+    if owner:
+        row = row.split(b'\n  Acceptance Checklist (enforced):', 1)[0]
+    return b'\n'.join(line for line in row.splitlines()
+        if not line.startswith((b'  Status:', b'  Verification:', b'  Commit:'))).rstrip()
+
+
+def validate(before, after):
+    old, current = common.nodes(before), common.nodes(after)
+    assert set(current) == set(old), 'exact task population'
+    assert all(current[name] == row for name, row in old.items() if name not in CLOSED), 'every unrelated task byte'
+    for name in CLOSED:
+        row = current[name]
+        assert common.field(row, 'Status') == 'done', 'only completed closure'
+        assert retained(row, owner=name == OWNER) == retained(old[name]), 'original complete goal/acceptance/children contract'
+        if re.search(rb'^  Children:', row, re.M):
+            for child in common.field(row, 'Children').split(', '):
+                assert common.field(current[child], 'Status') == 'done', 'every closed parent child complete'
+    assert common.field(current[PENDING_LABEL], 'Status') == 'pending'
+    assert common.field(current[PENDING_LABEL.rsplit('.', 1)[0]], 'Status') == 'active'
+    restored = after
+    for name in CLOSED:
+        restored = restored.replace(current[name], old[name], 1)
+    assert restored == before, 'whole task outside exact declared closure'
+    return {name: dict(goal=common.field(old[name], 'Goal'), acceptance=common.field(old[name], 'Acceptance')) for name in CLOSED}
+
+
+def qualify(value):
+    diagnostic.equal(value['schema'], 'fsmgen.reader_route_closure.v1')
+    diagnostic.equal(value['scope'], SCOPE)
+    diagnostic.equal(value['revision'], BASE)
+    diagnostic.equal(value['owner'], OWNER)
+    before = diagnostic.comparison.unpack(value['before'])
+    after = diagnostic.comparison.unpack(value['after'])
+    diagnostic.equal(before, epoch.read(BASE, TASK))
+    diagnostic.equal(value['contracts'], validate(before, after))
+    raw = diagnostic.comparison.unpack(value['capture'])
+    diagnostic.equal(raw, epoch.read(BASE, str(capture.PATH)))
+    assert capture.review(capture.captured(raw))
+    diagnostic.equal(value['programme'], diagnostic.allocation.prepare.blob(diagnostic.read(SELF)))
+    return True
+
+
+def controls(value):
+    outcomes = []
+    for label in ('narrowed-acceptance', 'premature-parent', 'reopened-child', 'changed-native'):
+        bad = copy.deepcopy(value)
+        if label == 'changed-native':
+            bad['revision'] = '0' * 40
+        else:
+            after = diagnostic.comparison.unpack(bad['after'])
+            nodes = common.nodes(after)
+            if label == 'narrowed-acceptance':
+                row = nodes[CLOSED[-1]]
+                changed = re.sub(rb'^  Acceptance:.*$', b'  Acceptance: `narrowed`', row, count=1, flags=re.M)
+            elif label == 'premature-parent':
+                row = nodes[PENDING_LABEL.rsplit('.', 1)[0]]
+                changed = row.replace(b'  Status: `active`', b'  Status: `done`', 1)
+            else:
+                row = nodes[OWNER.rsplit('.', 1)[0] + '.1']
+                changed = row.replace(b'  Status: `done`', b'  Status: `pending`', 1)
+            assert changed != row
+            bad['after'] = diagnostic.allocation.prepare.blob(after.replace(row, changed, 1))
+        try:
+            qualify(bad)
+        except AssertionError as error:
+            outcomes.append(dict(label=label, refusal=str(error)))
+        else:
+            raise AssertionError('changed reader-route closure admitted: ' + label)
+    return outcomes
+
+
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--write', action='store_true')
+    args = parser.parse_args()
+    if args.write:
+        before, after = epoch.read(BASE, TASK), diagnostic.read(TASK)
+        value = dict(schema='fsmgen.reader_route_closure.v1', scope=SCOPE, revision=BASE, owner=OWNER,
+            before=diagnostic.allocation.prepare.blob(before), after=diagnostic.allocation.prepare.blob(after),
+            contracts=validate(before, after), capture=diagnostic.allocation.prepare.blob(diagnostic.read(capture.PATH)),
+            programme=diagnostic.allocation.prepare.blob(diagnostic.read(SELF)))
+    else:
+        value = json.loads(gzip.decompress(diagnostic.read(OUTPUT)))
+    qualify(value)
+    outcomes = controls(value)
+    if args.write:
+        diagnostic.save(OUTPUT, value)
+    print('Exact original reader-route contracts and completed child states qualify bounded closure; pending diagnostic and original source/runtime/private/HIAL gates retain. Genuine contract/parent/child/native controls refuse.')
