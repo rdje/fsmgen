@@ -5,7 +5,8 @@ answers:
   - "what syntax and bit order are selected for SPECFORGE byte-group reductions?"
   - "what must be preserved before parameterized reductions can ship?"
   - "what reduction width groundwork is implemented?"
-date: 2026-10-21
+  - "how are declared reduction records prepared without source admission?"
+date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
 evidence: docs/audits/specforge-reduction-intake-20261021/packet.json; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
@@ -133,3 +134,22 @@ expression/backend-text controls. Its complete dated audit is
 Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2074-unary-reduction-width-foundation.t`.
 Unary source admission still refuses; detached public inventories, source/corpus
 and actual HDL behavior remain successors. This prerequisite does not close R1.
+
+## Declared-expression record prerequisite
+
+`ISF-REDUCTION-DELIVERY.1.2.1` prepares detached unary records from selected
+expression payloads and existing declaration/path/sample facts. Expression
+preorder preserves separate occurrences and canonicalizes the bitwise aliases.
+Source clauses and assignment pairs are not expression payloads: their heads
+can be signal names. The integrating caller must select contexts and bind
+owner/scope to source. Structural snapshots alone do not attest provenance.
+Lost authored width dependencies remain omitted rather than inferred.
+
+Real parsed caller rules, scalar paths, local/sample and drive scopes plus
+hostile operand/schema and mutation controls qualify the private producer.
+The first draft admitted an invalid owner through a dropped regex predicate;
+scalar predicates and exact helper arity apply decision 0113. Detaching before
+numeric reads follows 0114. Complete draft, diagnosis and checks remain in
+`docs/audits/reduction-record-preparation-20261022.json`.
+Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2075-isf-reduction-record-preparation.t`.
+No source, public-report or runtime admission is claimed by this preparation.

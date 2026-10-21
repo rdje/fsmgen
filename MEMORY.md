@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2`
-- next_action: Admit unary reductions through declared scalar validation, IAL0 and detached native/API/MCP reports under decision 0117. Width groundwork is committed; source/corpus/profile/runtime qualification remains owned by the exact reduction-tree successors. Director priority is required SPECFORGE delivery, qualified push and canonical feedback response.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.2`
+- next_action: Integrate the qualified reduction producer with selected ISF expression contexts, canonical IAL0 unary admission and detached reports under decision 0117; follow the exact task acceptance and qualify source/API/MCP/corpus before the fixed HDL witness.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None; original semantic cohort slots remain unused.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

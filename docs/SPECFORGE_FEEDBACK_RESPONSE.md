@@ -21,7 +21,9 @@ Decision `0117` selects unary `(^ X)`, `(& X)`, `(| X)` and grouped
 `(reduce-groups OP X N)`, with positive literal N, least-significant group
 first and an unpadded short final group. Logical `!` keeps its Boolean meaning;
 optional `(~ X)` is separately owned. The internal scalar-width and distinct-intermediate groundwork is verified under
-`ISF-REDUCTION-DELIVERY.1.1`; these source forms are not implemented yet.
+`ISF-REDUCTION-DELIVERY.1.1`. On 2026-10-22, `.1.2.1` also qualifies private
+selected-expression declaration/path/schema records. Neither prerequisite
+opens source admission or public inventories; these forms are not implemented yet.
 `docs/tasks/ISF-REDUCTION-DELIVERY.md` owns unary delivery first, followed by
 preserved generic widths, real parameter overrides/legality and grouped
 reductions. No default-width unroll will stand in for the required generic

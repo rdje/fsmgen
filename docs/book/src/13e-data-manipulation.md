@@ -14,7 +14,9 @@ SPECFORGE request `.12` is owned by
 [Decision 0117](../../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 selects the following contract. Internal reduction widths and distinct intermediate
 names are prepared; source admission, public inventories and HDL runtime remain
-pending. The selected authoring forms remain unimplemented at this checkpoint.
+pending. Selected-expression record preparation now validates declared operands
+and detached metadata privately; it is not integrated with parser admission or
+public reports. The selected authoring forms remain unimplemented.
 
 Unary `(^ X)`, `(& X)` and `(| X)` will reduce a declared packed scalar
 signal, scalar field, static slice or bit selection to a single bit. Existing

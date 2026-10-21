@@ -7146,7 +7146,7 @@ For FSMGen, the analogs are:
   Status: `active`
   Goal: `Implement and independently qualify required unary reductions.`
   Acceptance: `After .1, split safe source/IR/emitter/report slices before implementation. Unary ^, & and | produce one bit for admitted signals/slices/bit selections; existing multi-operand and logical semantics retain. Qualify real scalar/slice truth tables and invalid operand diagnostics through native/API/MCP, carriers, supported backend behavior and corpus/book/capability contracts. Preserve supplied unrolled baseline and all first failures.`
-  Verification: `Contract selected in 0117; ISF-REDUCTION-DELIVERY.1.1 prepares widths/identities without source admission. .1.2 owns source/public/corpus admission next; fixed observer and runtime qualification remain .1.3/.1.4. Required R1 stays open.`
+  Verification: `Contract selected in 0117; ISF-REDUCTION-DELIVERY.1.1 prepares widths/identities and .1.2.1 private declared-expression records without source admission. .1.2.2 owns source/public integration next; fixed observer and runtime qualification remain .1.3/.1.4. Required R1 stays open.`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.3`
