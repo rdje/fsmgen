@@ -2491,8 +2491,22 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 ```
 
 The dependent allocation-data qualifier still directly records current source
-metadata. Its first actual result after the committed reader repair will be
-captured before diagnosis. Native current-route admission requires the repaired
+metadata. A recoverable collector is prepared against the committed repaired
+reader, unchanged qualifier, guard and complete native input proofs. Its
+preparation and saved-preparation entrypoints execute only read-only native Git
+under instrumentation; receipts identify the in-process invocation explicitly.
+Changed command/source/proof/member and primitive-type records refuse. Replay
+that saved preparation without launching the qualifier:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/run_allocation_qualifier.py --check-prepared
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_collector.py
+```
+
+The first actual qualifier result remains unused until collector preparation
+commits. Its exact task-only declaration, complete native source/tree/index/proof
+boundary, fixed command/status and fsynced streams will retain before diagnosis.
+Native current-route admission requires the repaired
 reader and independently qualified dependent source-role proofs. That admission
 and actual whole-helper success remain separate; the dated admission replay
 does not admit later source changes automatically.
