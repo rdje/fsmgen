@@ -2698,8 +2698,8 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 This establishes the complete ordered reader sequence. Its payload/allocation
 retry and resolution obligations now close under exact original contract and
 completed-child checks. Every unrelated task byte, original goal/acceptance and
-child population retains. The pending compile-only unexpected-admission label
-keeps its parent active and is the next owned fix. Replay this bounded closure
+child population retains. At that dated closure, the pending compile-only
+unexpected-admission label keeps its parent active. Replay this bounded closure
 and genuine narrowed-contract, premature-parent, reopened-child and native-source
 controls without consulting later live progress or running the helper:
 
@@ -2712,6 +2712,22 @@ controlled in-process record. Its complete source/proof/control remains retained
 Exact root membership now rejects that candidate before provenance checks; a new
 exclusive strict proof preserves the original valid closure facts and all first
 epochs. No runtime authority or helper execution occurred in this control.
+
+The compile-only checker now names compile-only in its unexpected-admission
+diagnostic. Only that label and its exclusive output literal changed. The entire
+original role-control product retains after projecting the explicit checker
+source bytes, and the original proof remains immutable. Actual saved replay
+passes. A controlled in-process reviewer shim admits only the borrowed-target
+candidate to exercise the diagnostic; the checker refuses with the corrected
+label, and the shim is restored. No candidate code or helper executes. Replay
+complete source/product conservation, actual result and branch qualification:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_compile_only_role_label.py
+```
+
+The remaining eligible P1 reader-route ancestors are reviewed next before
+aggregate data recovery resumes.
 
 Original semantic/source/data/default/effect/runtime, custody, private/HIAL and
 full-CI qualifications remain separate.

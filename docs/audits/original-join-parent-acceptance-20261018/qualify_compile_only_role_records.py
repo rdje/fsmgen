@@ -11,7 +11,7 @@ from saved_source_roles import Qualification
 
 SELF = 'qualify_compile_only_role_records.py'
 BASE = '7924366a830e2cf95b809d3711a734aaafe32a03'
-PATH = model.execute.AUDIT / 'compile-only-role-record-controls.json.gz'
+PATH = model.execute.AUDIT / 'compile-only-role-record-controls-label-corrected.json.gz'
 
 
 def functions(raw):
@@ -60,7 +60,7 @@ def derive():
             outcomes.append(dict(label=label, path=list(path), before=original, after=replacement,
                                  candidate=candidate, refusal=str(error)))
         else:
-            raise AssertionError('changed preparation role record admitted: ' + label)
+            raise AssertionError('changed compile-only role record admitted: ' + label)
     assert model.execute.read(qualifier.output) == raw, 'whole original qualification conserved'
     return dict(schema='fsmgen.compile_only_role_record_controls.v1', input=model.prepare.blob(raw),
         conservation=dict(revision=BASE, path=str(model.execute.AUDIT / model.SELF),
