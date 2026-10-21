@@ -1,6 +1,6 @@
 ---
 id: claim-verification-record-enforcement
-title: Claim evidence and reader recovery
+title: Claim and reader recovery
 answers:
   - "where is the claim template review?"
   - "how is claim verification mechanically enforced?"
@@ -22,6 +22,7 @@ answers:
   - "where are dated reader-recovery facts retained?"
   - "where are payload namespace selectors qualified?"
   - "why did published optional reader omission or reordering pass?"
+  - "how are large proof archives stored?"
 date: 2026-10-21
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
@@ -35,20 +36,21 @@ reverify: >-
   docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh
 ---
 
-`CLAIM_VERIFICATION.md`: policy/registries, distinct rederive/falsify/durability
-legs or owned gaps. Structure proves no semantic truth or oracle independence.
+`CLAIM_VERIFICATION.md`: registries, distinct rederive/falsify/durability or owned gaps.
+Structure proves no semantic truth/oracle independence.
 
-Dated factory/source/intake/cache/compiler facts, original scope:
+Dated facts, original scope:
 
 ```bash
 cat docs/audits/original-join-parent-acceptance-20261018/source-recovery-card-7748b2db479ffdf559f49ede08335b7418ebecfe979a9a9da973d9e582e2594a.txt
 ```
 
-Frontier: `MEMORY.md` →
+At: `MEMORY.md` →
 `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`.
 
 List: `bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list`.
 
 Epoch/failure/native/private gaps stay.
-Git pins cache/dispatch/fixed-gap/caller/operand/AST/preparation/compile-only/allocation metadata.
-Uniqueness missed membership/order. Git snapshots bind published order/membership; qualified additions retain.
+Git: cache/dispatch/fixed-gap/caller/operand/AST/preparation/compile-only/allocation metadata.
+Uniqueness missed membership/order. Git pins published order/membership + qualified additions.
+Large archives: allocation_proof_parts.py.

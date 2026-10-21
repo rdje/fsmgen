@@ -2339,11 +2339,11 @@ route against its retained native predecessor and genuine source/proof/native/
 member/type/order controls without running listed child readers:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_compile_only_route.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_allocation_route.py
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
 ```
 
-The first command checks the recorded compile-only admission against its
+The first command checks the recorded allocation/dependent admission against its
 complete native predecessor and rechecks every retained refusal candidate.
 The second checks currently installed reader sources with actual listing and
 public queries. Later reader repairs require their own native admission before
@@ -2569,12 +2569,29 @@ Replay complete native source/function/module and record conservation:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_data_role_records.py
 ```
 
-Native source/proof route admission is next. This targeted result is separate
-from the dated whole-helper refusal. Native
-current-route admission requires the repaired
-reader and independently qualified dependent source-role proofs. That admission
-and actual whole-helper success remain separate; the dated admission replay
-does not admit later source changes automatically.
+Native admission now binds the allocation reader/wrapper/proof to `4d27e7c1b`
+and the dependent qualifier/wrapper/proof to `d1354a3a3`. Both complete semantic
+record proofs bind the admitted source and original role inputs. Every prior
+source/proof epoch, original reader, helper protocol and control order retains.
+Only the qualified allocation and dependent wrappers append after compile-only;
+genuine omission, swap and movement refuse at their explicit ordering checks.
+Actual listing/public queries pass without launching listed readers.
+
+The complete new route archive exceeds GitHub's regular-file limit. Its fixed
+byte parts and `allocation-live-route-parts.json` recover every original gzip
+byte and authenticate full membership, order, paths, sizes and hashes. The
+original producer, first native verifier source and complete first proof retain.
+The current verifier conserves that whole first result while separately binding
+the delivery code and manifest. Replay recovery and genuine manifest/byte/type/
+physical-leaf controls with the redundant raw archive absent:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/allocation_proof_parts.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_proof_parts.py
+```
+
+Native admission and actual whole-helper success remain separate. The dated
+admission replay does not admit later source changes automatically.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history

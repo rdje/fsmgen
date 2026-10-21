@@ -1,7 +1,7 @@
 # Knowledge Map: `claim-verification`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **4** facts · **66** uniquely owned question entries.
+> **4** facts · **67** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -26,6 +26,7 @@
 - q="how are generated child route width claims falsified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are incidental numerals separated from actionable claim debt?" · facts=[claim-verification-current-surface-inventory](../../docs/knowledge/claim-verification-current-surface-inventory.md)
 - q="how are intent actor and transaction timing claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
+- q="how are large proof archives stored?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="how are missing claim evidence legs owned?" · facts=[claim-verification-record-enforcement](../../docs/knowledge/claim-verification-record-enforcement.md)
 - q="how are paired AHB BUSY phase-pipeline and subordinate-shape claims verified?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
 - q="how are reviewed incidental numerals recorded?" · facts=[claim-verification-candidate-dispositions](../../docs/knowledge/claim-verification-candidate-dispositions.md)
@@ -97,7 +98,7 @@ _Claim records use one finite manifest-addressed registry set_
 
 ### claim-verification-record-enforcement
 
-_Claim evidence and reader recovery_
+_Claim and reader recovery_
 
 - **date:** 2026-10-21 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-record-enforcement.md`](../../docs/knowledge/claim-verification-record-enforcement.md)

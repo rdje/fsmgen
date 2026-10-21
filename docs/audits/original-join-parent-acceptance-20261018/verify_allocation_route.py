@@ -1,0 +1,149 @@
+"""Verify both allocation source-role admissions and conserve all prior route epochs."""
+import argparse
+import copy
+import gzip
+import json
+
+import live_operand_route as route
+import allocation_proof_parts as parts
+
+SELF = route.AUDIT + 'verify_allocation_route.py'
+FIRST = route.AUDIT + 'allocation-native-admission-qualified.json.gz'
+FIRST_SOURCE = route.AUDIT + 'verify_allocation_route.first.py.source'
+FIRST_SHA = '0a089bb95c9904908c94cabd7e68bd434e390f0cde195c423b9b2729a9ac2ded'
+OUTPUT = route.AUDIT + 'allocation-native-admission-storage-qualified.json.gz'
+PRIOR = route.AUDIT + 'compile-only-live-route-qualified.json.gz'
+BASE = 'd1354a3a33390064306a9efbeed543b81019b396'
+GROUPS = (
+    (route.ALLOCATION_COMMAND, 'operand_allocation.py', route.ALLOCATION_PROOF,
+     route.ALLOCATION_REVISION, 'allocation-role-record-controls.json.gz'),
+    (route.ALLOCATION_DATA_COMMAND, 'qualify_operand_allocation.py', route.ALLOCATION_DATA_PROOF,
+     route.ALLOCATION_DATA_REVISION, 'allocation-data-role-record-controls.json.gz'),
+)
+SCOPE = ('Complete native allocation/dependent source and role-proof admission, '
+         'prior authority/source/proof/helper protocol/member/order conservation, '
+         'native semantic-record binding, actual listing/public query receipts '
+         'and genuine route controls only. Native Git, finite shell parsing and '
+         'qualified source roles remain shared premises. No listed reader, '
+         'historical body, model/recipe/cohort or whole helper executes. Original '
+         'source/data/default/effect/runtime/custody/private/HIAL/full-CI gaps remain.')
+
+
+def native(path):
+    return route.native(path, revision=BASE)
+
+
+def derive():
+    prior_reference = native(PRIOR)
+    prior_raw = route.unblob(prior_reference.pop('body'))
+    prior_reference['identity'] = route.identity(prior_raw)
+    prior = json.loads(gzip.decompress(prior_raw))
+    before = prior['inputs']
+    prior_labels = [row['label'] for row in prior['controls']]
+    prior_commands = prior['result']['commands']
+    del prior, prior_raw
+    raw = parts.read()
+    product = json.loads(gzip.decompress(raw))
+    route.frozen.equal(product['schema'], 'fsmgen.live_operand_route.v11')
+    value = product['inputs']
+    fixed = route.authority()
+    route.frozen.equal(value['programme'], route.frozen.blob(route.card.read_file(route.SELF)))
+    route.frozen.equal(product['result'], route.review(value, fixed))
+
+    old_authority = before['authority']
+    projected = copy.deepcopy(fixed)
+    projected_sources, projected_proofs = dict(value['sources']), dict(value['frozen_inputs'])
+    records = {}
+    for command, basename, proof, revision, record_name in GROUPS:
+        reader = route.AUDIT + basename
+        del projected['sources'][command[-1]]
+        projected['sources'][reader] = old_authority['sources'][reader]
+        del projected['replaced_sources'][reader]
+        del projected['frozen_inputs'][proof]
+        route.frozen.equal(fixed['replaced_sources'][reader], old_authority['sources'][reader])
+        del projected_sources[command[-1]]
+        projected_sources[reader] = before['sources'][reader]
+        del projected_proofs[proof]
+        reference = route.native(route.AUDIT + record_name, revision=revision)
+        record_raw = route.unblob(reference.pop('body'))
+        reference['identity'] = route.identity(record_raw)
+        record = json.loads(gzip.decompress(record_raw))
+        route.frozen.equal(record['conservation']['after'], fixed['sources'][reader]['body'])
+        role = route.native(proof, revision=revision)
+        role_raw = route.unblob(role['body'])
+        route.frozen.equal(record['input'], route.frozen.blob(role_raw))
+        route.frozen.equal(route.identity(role_raw), fixed['frozen_inputs'][proof]['identity'])
+        records[proof] = reference
+    route.frozen.equal(projected, old_authority)
+    route.frozen.equal(projected_sources, before['sources'])
+    route.frozen.equal(projected_proofs, before['frozen_inputs'])
+    for field in ('archive', 'caps', 'descriptor', 'queries'):
+        route.frozen.equal(value[field], before[field])
+    card_reference = native(route.frozen.CARD)
+    route.frozen.equal(value['card'], card_reference['body'])
+    route.card.live_questions_retained(route.unblob(before['card']), route.unblob(value['card']))
+
+    previous_helper = route.unblob(before['helper'])
+    expected = previous_helper.replace(b'qualify_compile_only_roles; do',
+        b'qualify_compile_only_roles qualify_allocation_roles qualify_allocation_data_roles; do')
+    assert expected != previous_helper, 'exact allocation/dependent wrapper additions'
+    route.frozen.equal(route.unblob(value['helper']), expected)
+    additions = [group[0] for group in GROUPS]
+    route.frozen.equal(product['result']['commands'], prior_commands[:-1] + additions + prior_commands[-1:])
+    labels = [row['label'] for row in product['controls']]
+    assert len(labels) == len(set(labels)), 'unique genuine route controls'
+    assert [label for label in labels if label in prior_labels] == prior_labels, 'all prior controls retain order'
+    new_labels = [label for label in labels if label not in prior_labels]
+    assert new_labels and all('allocation' in label for label in new_labels), 'only allocation/data controls added'
+    outcomes = []
+    for row in product['controls']:
+        if row['label'] == 'native-qualified-additive-reader':
+            route.review(row['candidate'], fixed)
+            outcomes.append(dict(label=row['label'], result=row['result']))
+            continue
+        try:
+            route.review(row['candidate'], fixed)
+        except AssertionError as error:
+            route.frozen.equal(str(error), row['refusal'])
+            if row['label'] in ('float-allocation-proof-size', 'float-allocation-data-proof-size'):
+                assert str(error) == 'JSON value kind'
+            outcomes.append(dict(label=row['label'], refusal=str(error)))
+        else:
+            raise AssertionError('changed admitted route candidate accepted: ' + row['label'])
+    route.frozen.equal(route.identity(parts.read()), route.identity(raw))
+    result = dict(schema='fsmgen.allocation_native_admission.v1', scope=SCOPE,
+        prior=prior_reference, proof=route.identity(raw), native_revision=BASE,
+        programmes={path: route.frozen.blob(route.card.read_file(path))
+                    for path in (SELF, route.SELF, route.HELPER)},
+        native_semantic_records=records, original_commands=prior_commands,
+        admitted_commands=product['result']['commands'],
+        card_epochs=dict(prior=before['card'], committed=card_reference),
+        preserved_authority=route.identity(json.dumps(old_authority, sort_keys=True,
+            separators=(',', ':'), allow_nan=False).encode()),
+        prior_controls=prior_labels, new_controls=new_labels, outcomes=outcomes)
+    first_raw = parts.read_regular(FIRST)
+    assert route.identity(first_raw)['sha256'] == FIRST_SHA, 'immutable first native admission'
+    first = json.loads(gzip.decompress(first_raw))
+    route.frozen.equal(first['programmes'][SELF], route.frozen.blob(parts.read_regular(FIRST_SOURCE)))
+    projected_result = copy.deepcopy(result)
+    projected_result['programmes'][SELF] = first['programmes'][SELF]
+    route.frozen.equal(projected_result, first)
+    result['storage'] = dict(manifest=route.frozen.blob(parts.read_regular(parts.MANIFEST)),
+        programme=route.frozen.blob(parts.read_regular(parts.SELF)),
+        first_native=route.identity(first_raw), first_source=first['programmes'][SELF],
+        contract='Exact original compressed bytes from fixed regular same-volume parts; no child execution.')
+    return result
+
+
+if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--write', action='store_true')
+    args = parser.parse_args()
+    value = derive()
+    if args.write:
+        route.card.save_record(OUTPUT, value)
+    else:
+        route.frozen.equal(json.loads(gzip.decompress(route.card.read_file(OUTPUT))), value)
+    print('Native allocation/dependent reader/proof admission conserves every prior epoch, source/control contract, helper protocol and ordered member; genuine controls qualify.')
