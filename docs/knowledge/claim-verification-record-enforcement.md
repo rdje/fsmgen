@@ -1,6 +1,6 @@
 ---
 id: claim-verification-record-enforcement
-title: Claim and reader recovery
+title: Claims/readers
 answers:
   - "where is the claim template review?"
   - "how is claim verification mechanically enforced?"
@@ -51,6 +51,6 @@ At: `MEMORY.md` →
 List: `bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list`.
 
 Epoch/failure/native/private gaps stay.
-Git: cache/dispatch/fixed-gap/caller/operand/AST/preparation/compile-only/allocation metadata.
+Git: cache/dispatch/fixed-gap/caller/operand/AST/preparation/compile-only/allocation/payload metadata.
 Uniqueness missed membership/order. Git pins published order/membership + qualified additions.
 Large archives: allocation_proof_parts.py.

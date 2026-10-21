@@ -2606,9 +2606,29 @@ the helper:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_allocation_capture.py
 ```
 
-Differing fields and root attribution are owned by the next diagnosis. This
-capture establishes the observed failure and earlier passes; it does not close
-the whole reader sequence or original runtime qualifications.
+The complete comparison now isolates programme metadata in
+`default_dispatch.py`, `operand_allocation.py`, `operand_inventory.py`,
+`prepare.py`, `qualify_caller_modules.py` and `qualify_fixed_module_gap.py`.
+Supplying original native images only for those metadata reads restores every
+original product field and canonical byte: lexical payloads, namespace/export
+selector contracts, discarded compiler-result exclusions, controls/refusals,
+native allocation and Python metadata. The diagnostic's complete product
+assembly matches the native reader's main assignment AST, and every called
+audit function binds to its current API. Historical images remain data.
+
+The complete first original/current products retain before classification or
+intervention. Separate whole intervention/difference and saved-control archives
+preserve the result. Genuine missing payload/control/member, source/native/
+capture/intervention changes, numeric aliases and borrowed first references
+refuse. Replay the complete saved diagnosis and recorded control outcomes
+without collecting products or rerunning the helper:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_payload_source_diagnosis.py
+```
+
+Saved metadata repair is next. This diagnosis does not close the whole reader
+sequence or original runtime qualifications.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history

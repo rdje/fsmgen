@@ -98,7 +98,7 @@ _Claim records use one finite manifest-addressed registry set_
 
 ### claim-verification-record-enforcement
 
-_Claim and reader recovery_
+_Claims/readers_
 
 - **date:** 2026-10-21 · **status:** current
 - **source and verification:** [`docs/knowledge/claim-verification-record-enforcement.md`](../../docs/knowledge/claim-verification-record-enforcement.md)
