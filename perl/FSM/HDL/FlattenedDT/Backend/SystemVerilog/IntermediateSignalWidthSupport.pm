@@ -39,6 +39,7 @@ no warnings 'experimental::signatures';
 
 use FSM::Debug;
 use FSM::Package::IntegerLiteralSupport;
+use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
 use Scalar::Util qw(blessed);
 
 =head2 new
@@ -159,7 +160,7 @@ sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $s
 
     if ($ast->isa('FSM::AST::UnaryOp')) {
         my $operator = eval { $ast->operator } || $ast->{operator} || '';
-        return 1 if $operator eq '!';
+        return 1 if $operator eq '!' || is_reduction_operator($operator);
         my $operand = eval { $ast->operand } || $ast->{operand};
         my $operand_width = $self->infer_width_from_intermediate_ast($operand, $signal_registry, $seen_signals);
         return (defined($operand_width) && $operand_width > 0) ? $operand_width : 1;
@@ -181,7 +182,7 @@ sub infer_width_from_intermediate_ast ($self, $ast, $signal_registry = undef, $s
 
     if ($ast->isa('FSM::HDL::SubstitutedUnaryOp')) {
         my $operator = eval { $ast->operator } || $ast->{operator} || '';
-        return 1 if $operator eq '!';
+        return 1 if $operator eq '!' || is_reduction_operator($operator);
         my $operand = eval { $ast->operand } || $ast->{operand};
         my $operand_width = $self->infer_width_from_intermediate_ast($operand, $signal_registry, $seen_signals);
         return (defined($operand_width) && $operand_width > 0) ? $operand_width : 1;

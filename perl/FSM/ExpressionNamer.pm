@@ -3,6 +3,7 @@ package FSM::ExpressionNamer;
 use strict;
 use warnings;
 use Carp qw(confess);
+use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
 use v5.20;
 use feature 'signatures';
 no warnings 'experimental::signatures';
@@ -237,6 +238,9 @@ sub name_unary_op_ast($self, $unary_op) {
         '~' => 'inv',
         '+' => 'pos',
         '-' => 'neg',
+        '^' => 'reduce_xor',
+        '&' => 'reduce_and',
+        '|' => 'reduce_or',
     );
     
     my $op_prefix = $unary_prefixes{$op} // $op;
@@ -251,7 +255,7 @@ sub name_unary_op_ast($self, $unary_op) {
     # Store definition
     $self->{_signal_definitions}{$signal_name} = {
         type => 'expression',
-        width => $self->infer_ast_width($operand),
+        width => is_reduction_operator($op) ? 1 : $self->infer_ast_width($operand),
         ast => $unary_op,
         original_expr => $sv_expr,
         definition => $sv_expr,
@@ -529,6 +533,9 @@ sub name_ast_unary_op($self, $unary_op) {
         '~' => 'inv',
         '+' => 'pos',
         '-' => 'neg',
+        '^' => 'reduce_xor',
+        '&' => 'reduce_and',
+        '|' => 'reduce_or',
     );
     
     my $op_prefix = $unary_prefixes{$op} // $op;
@@ -856,8 +863,8 @@ sub infer_ast_width($self, $ast) {
         return (defined($width) && $width > 0) ? $width : 32;
     }
     elsif ($ast->isa('FSM::CoreAST::UnaryOp')) {
-        if ($ast->operator eq '!') {
-            return 1; # Logical negation always 1-bit
+        if ($ast->operator eq '!' || is_reduction_operator($ast->operator)) {
+            return 1; # Logical negation and reductions always produce one bit.
         } else {
             return $self->infer_ast_width($ast->operand);
         }
@@ -904,7 +911,7 @@ sub infer_ast_width($self, $ast) {
         return 1;
     }
     elsif ($ast->isa('FSM::AST::UnaryOp')) {
-        if ($ast->operator eq '!') {
+        if ($ast->operator eq '!' || is_reduction_operator($ast->operator)) {
             return 1;
         } else {
             return $self->infer_ast_width($ast->operand);

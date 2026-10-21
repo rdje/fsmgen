@@ -43,6 +43,7 @@ use Math::BigInt;
 use Scalar::Util qw(blessed);
 
 use FSM::AST::Node;
+use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::HDL::ASTFactorization;
@@ -644,7 +645,7 @@ sub _expression_width ($self, $ast) {
 
     if ($self->_is_unary_ast($ast)) {
         my $operator = eval { $ast->operator } || '';
-        return 1 if $self->_is_not_operator($operator);
+        return 1 if $self->_is_not_operator($operator) || is_reduction_operator($operator);
         return $self->_expression_width($ast->operand)
             if $self->_is_bitwise_not_operator($operator);
         return undef;

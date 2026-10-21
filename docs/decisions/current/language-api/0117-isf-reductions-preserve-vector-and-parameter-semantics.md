@@ -4,6 +4,7 @@ title: ISF reductions preserve vector and parameter semantics
 answers:
   - "what syntax and bit order are selected for SPECFORGE byte-group reductions?"
   - "what must be preserved before parameterized reductions can ship?"
+  - "what reduction width groundwork is implemented?"
 date: 2026-10-21
 status: current
 tags: [isf, reductions, specforge, parameters]
@@ -119,3 +120,16 @@ sources, corpus/tests, decision, task evidence and per-slice Git commits.
 Runtime and implementation evidence are missing at contract selection.
 Publication additionally requires the existing full-CI and exact-SHA hosted
 qualification; SPECFORGE separately owns pin/bundle regeneration and integration.
+
+## Width prerequisite
+
+`ISF-REDUCTION-DELIVERY.1.1` prepares scalar reduction width inference across
+Core/runtime/substituted AST consumers, distinct named intermediates and
+operand-preserving context propagation. The corrected regression fails against
+exact predecessor modules and passes against the repair, alongside existing
+expression/backend-text controls. Its complete dated audit is
+`docs/audits/unary-reduction-width-foundation-20261021.json`.
+
+Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2074-unary-reduction-width-foundation.t`.
+Unary source admission still refuses; detached public inventories, source/corpus
+and actual HDL behavior remain successors. This prerequisite does not close R1.

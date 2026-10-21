@@ -11,6 +11,7 @@ use Scalar::Util qw(blessed);
 use FSM::CoreAST;
 use FSM::Debug;
 use FSM::Package::AggregatePathSupport;
+use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::PayloadLiteralSupport;
 use FSM::Package::PayloadTypeSupport;
@@ -1018,7 +1019,7 @@ sub infer_exact_expression_width($self, $expr) {
     }
 
     if ($expr->isa('FSM::CoreAST::UnaryOp')) {
-        return 1 if $expr->operator eq '!';
+        return 1 if $expr->operator eq '!' || is_reduction_operator($expr->operator);
         return $self->infer_exact_expression_width($expr->operand);
     }
 
@@ -1096,6 +1097,9 @@ sub propagate_width_to_expression($self, $expr, $width) {
         $self->propagate_width_to_expression($expr->left, $width) if $expr->left;
         $self->propagate_width_to_expression($expr->right, $width) if $expr->right;
     } elsif (ref($expr) eq 'FSM::CoreAST::UnaryOp') {
+        # A reduction consumes its operand at the operand's own width. A wider
+        # destination or sibling expression cannot resize that input vector.
+        return if is_reduction_operator($expr->operator);
         $self->propagate_width_to_expression($expr->operand, $width) if $expr->operand;
     }
 }

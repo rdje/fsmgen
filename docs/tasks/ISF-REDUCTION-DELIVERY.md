@@ -41,10 +41,44 @@ implementation tree avoids growing the near-rollover coordination task file.
   Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
-  Status: `pending`
+  Status: `active`
   Goal: `Implement and qualify unary XOR, AND and OR reductions end to end.`
   Acceptance: `Before source edits, inspect the shared recursive expression parser, declared signal/type resolution, AST and every relevant width consumer, ISF scalar validation, IAL0 replay, HDL emitter profiles and normalized reports. Add arity-dependent unary semantics without changing multi-operand behavior. Reject undeclared, aggregate, non-vector or malformed operands contextually. Prove result width in direct and nested expressions, scalar/slice/index truth tables, retained caller parity inputs and unchanged binary/unrolled controls. Qualify supported HDL profiles with actual compilation/runtime through published tools; retain first failures under the HIAL failure-only prerequisite. Add a runnable supported corpus case, named detached report inventory and complete native/API/real MCP/capability parity. Update ISF reference/book/feedback and focused checks; split any unsafe expansion before implementation. Commit before generic-width work.`
   Verification: `pending; historical unary refusal is retained by SEM .91`
+  Commit: `children below`
+  Children: `ISF-REDUCTION-DELIVERY.1.1, ISF-REDUCTION-DELIVERY.1.2, ISF-REDUCTION-DELIVERY.1.3, ISF-REDUCTION-DELIVERY.1.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.1.1`
+  Status: `done`
+  Goal: `Prepare exact unary reduction widths and distinct intermediate identities without new source admission.`
+  Acceptance: `Inspect shared expression width propagation, Core/runtime/substituted AST naming, direct intermediate widths and enable-graph width classification. Qualify unary ^/&/| as one-bit results independent of operand width, nested concatenation/comparison use and distinct readable intermediate identities; assignment-context width propagation must not resize a reduction operand. Preserve binary vector, logical negation, inversion and ordinary operand-propagation behavior. Add a meaningful RED-to-GREEN regression across the real independent consumers with adversarial vector-width and collision controls. Shared source parsing must still refuse unary reductions in this preparatory commit. Run focused expression/AST/backend-generation checks without external HDL execution, update decision/book/feedback and preserve actual test evidence. Runtime, source/corpus/public inventories remain explicitly pending under successors; commit before admission changes.`
+  Verification: `Actual original RED and corrected native-predecessor RED fail four top-level subtests; the corrected current regression passes. The initial post-repair failure identifies an oracle error: runtime literals have their own stored definition, so the test now compares only all distinct reduction definitions and uses legal signal names. All current exact/Core/runtime/substituted/intermediate/enable widths and nested concatenations/comparisons are scalar where required; destination propagation cannot resize operands. Binary vectors, logical negation, inversion and ordinary propagation retain controls. Guarded focused All tests successful Files=7 Tests=21; fresh native --strict --check --json accepts the exact caller baseline and retains both unary arity refusals. Complete normalized logs, original test, corrected native capsule recipe/identities, current source hashes and typed outcomes are retained in docs/audits/unary-reduction-width-foundation-20261021.json. Re-derivation is current production-consumer regression and native supplied checks; falsification is the same corrected assertions against exact predecessor modules plus vector/identity/propagation controls; durability is tracked source/test/audit and this commit. No new source admission, public inventory, external HDL execution or R1/R2/R3 delivery claim. Book/task checks separately pass All tests successful Files=3 Tests=356, mdBook build and complete source/index contracts pass; native decision/Knowledge Map/task/claim checks pass. The final expanded comparison regression also fails against native predecessor modules and passes the complete current focused suite. Staged/normal gates precede commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.1.1: preserve scalar reduction widths and identities`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostics from T2074 RED locate operand-width leakage in ExpressionBuilder/ExpressionNamer/direct intermediate inference, absent enable-graph reduction width, generated-name collisions and destination propagation. Fresh --strict --check --json still shows the independent arity refusal.
+  - [x] **ADDRESSED (verified)** — Corrected assertions fail against exact native predecessor modules and pass against the repair; actual nested widths, complete distinct definition identities and operand-preservation controls qualify. Source grammar and public admission are unchanged. Complete logs and source identities remain in the dated width-foundation audit.
+  - [x] **NO REGRESSION** — Guarded expression/naming/AST/intermediate/VHDL-text checks report All tests successful, Files=7, Tests=21; fresh supplied native baseline passes and unary forms retain their refusal. Book/task All tests successful Files=3 Tests=356, mdBook build, complete source/index, native decision/task and knowledge-map: OK pass. scripts/check_doctrines.sh plus normal hooks gate the commit. No external HDL runtime is inferred.
+
+- ID: `ISF-REDUCTION-DELIVERY.1.2`
+  Status: `pending`
+  Goal: `Admit unary reductions through declared scalar validation, IAL0 and detached public reports.`
+  Acceptance: `After .1, qualify source/arity/type/path/scope validation, direct/nested reduction assignment widths, source/carrier parity and default retained caller parity. Add the detached reductions inventory through native check/semantic/schedule, API and actual newline MCP, with capability and source/version/query applicability, supported corpus admission and independent report/semantic controls. Preserve binary and logical behavior. Generate HDL for supported profiles without borrowing runtime proof. Commit any growing preparatory slice with its exact missing qualification boundary; do not close the required unary feature before .4.`
+  Verification: `pending width foundation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.1.3`
+  Status: `pending`
+  Goal: `Commit the exact unary HDL witness and qualify its failure-only observer admission.`
+  Acceptance: `Coordinate the existing HIAL .19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.7 for this director-prioritized genuinely needed witness. Before supervised HDL execution, commit exact tests/source/bench, fixed targets/profile/count and complete independent truth-table oracle. Separately qualify any changed observer identity/coverage using immutable native/failure-only helpers, original arguments/limits/results/errno and independent cleanup. No spent original/reused admission or recurrence campaign, host-policy change or authentication request.`
+  Verification: `pending authored source and fixed witness`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.1.4`
+  Status: `pending`
+  Goal: `Qualify actual unary HDL behavior, profile boundaries and complete required R1 delivery.`
+  Acceptance: `After .2/.3, consume one fresh admitted observation for the genuine unary witness. Independently prove XOR/AND/OR, scalar/bit/slice/odd parity and nested widths against public HDL pins, plus an actually wrong reduction control and unchanged binary/unrolled controls. Qualify each supported profile or precise refusal with native/API/MCP/carrier/corpus/book parity. Preserve complete first failures and settle all owned jobs; captured native rejection stops further runtime until diagnosed. Commit exact scope evidence and close SEM .92.2 only on complete R1 delivery; required R2/R3 and publication remain open.`
+  Verification: `pending exact witness and observer admission`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2`

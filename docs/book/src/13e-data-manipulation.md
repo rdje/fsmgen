@@ -12,7 +12,9 @@ control flow; it introduces no new macro language or framework.
 SPECFORGE request `.12` is owned by
 [the reduction delivery tree](../../../docs/tasks/ISF-REDUCTION-DELIVERY.md).
 [Decision 0117](../../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
-selects the following contract. These forms remain unimplemented at this checkpoint.
+selects the following contract. Internal reduction widths and distinct intermediate
+names are prepared; source admission, public inventories and HDL runtime remain
+pending. The selected authoring forms remain unimplemented at this checkpoint.
 
 Unary `(^ X)`, `(& X)` and `(| X)` will reduce a declared packed scalar
 signal, scalar field, static slice or bit selection to a single bit. Existing
