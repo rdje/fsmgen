@@ -2390,8 +2390,21 @@ reader, wrapper and role proof to `fecc3ff3b`. The complete current-route proof
 authenticates all prior epochs and the original preparation reader. The helper
 adds only its qualified wrapper after AST input; genuine omission, swap and
 movement controls reject at the new ordering assertion. Actual listing and
-public queries pass without executing listed child readers. Actual whole-helper
-success remains separate. Source/data bindings, default effects and runtime
+public queries pass without executing listed child readers.
+The actual whole helper at native `b52f4ef2b` then passes preparation and stops
+at `compile_only_inputs.py:262` during its complete saved-product comparison.
+It exits with status 1; no RAM cutoff is reported. Complete native source/tree/
+listing/task before-and-after states and normalized streams retain in
+`complete-reader-post-preparation-20261021.json.gz`. Replay its exact saved
+result and genuine source/member/type/result/stream controls without repeating
+the helper:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_preparation_capture.py
+```
+
+The differing product fields and cause remain for the next diagnosis.
+Actual whole-helper success, source/data bindings, default effects and runtime
 custody remain unqualified. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
