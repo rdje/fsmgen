@@ -2517,9 +2517,35 @@ resource-limit controls without rerunning the qualifier:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_allocation_qualifier_capture.py
 ```
 
-Exact differing product fields and their cause remain unproved under the next
-diagnostic owner. This targeted result is separate from the dated whole-helper
-refusal. Native current-route admission requires the repaired
+The complete dependent-qualifier diagnosis isolates the allocation reader's
+programme metadata. Original native metadata alone restores the entire original
+candidate payload/hash, input identity, changed-model binding, positive/refusal
+outputs, scope and execution flag. In-process product rederivation traces the
+physical current allocation audit-reader calls; historical images affect only
+the declared metadata reads. The saved CLI comparison and whole helper do not
+repeat. Replay complete first/guarded products and genuine metadata/source/trace/
+member/type controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/diagnose_allocation_data_sources.py
+```
+
+The first diagnostic's physical-source bypass omitted explicit leaf-kind and
+device checks. Controlled Path metadata reproduces that gap without real
+invalid-path I/O or reader execution. The current gate accepts regular source
+and rejects non-file, symlink and foreign-volume cases before reading bytes.
+The complete first source/products remain immutable; guarded qualification uses
+a new exclusive slot and conserves the whole first result apart from declared
+producer/workspace fields. First-run leaf/device custody was not measured and
+remains unqualified. Replay the controlled before/after gate evidence:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_data_source_guard.py
+```
+
+Dependent saved-metadata repair and full role/semantic conservation are next.
+This targeted result is separate from the dated whole-helper refusal. Native
+current-route admission requires the repaired
 reader and independently qualified dependent source-role proofs. That admission
 and actual whole-helper success remain separate; the dated admission replay
 does not admit later source changes automatically.
