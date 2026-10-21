@@ -2339,11 +2339,11 @@ route against its retained native predecessor and genuine source/proof/native/
 member/type/order controls without running listed child readers:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_allocation_route.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_payload_route.py
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
 ```
 
-The first command checks the recorded allocation/dependent admission against its
+The first command checks the recorded payload admission against its
 complete native predecessor and rechecks every retained refusal candidate.
 The second checks currently installed reader sources with actual listing and
 public queries. Later reader repairs require their own native admission before
@@ -2658,8 +2658,31 @@ conservation and genuine interventions:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_payload_role_records.py
 ```
 
-Native payload source/proof admission is next. Whole reader success and original
-runtime qualifications remain open.
+Native payload admission now binds its reader, wrapper, original role proof and
+complete semantic-record conservation to `0e6c3199b`. The entire prior compressed
+route archive reconstructs directly from committed Git parts. Every earlier
+source/proof epoch, original reader, helper protocol/order and control order
+retains; only the payload qualifier appends after allocation-data. Current
+listing/public queries and genuine source/proof/member/type/order controls pass
+without launching listed readers. Fixed authenticated byte parts preserve the
+complete first new gzip archive, with the redundant raw file absent. Replay
+whole recovery and genuine manifest/byte/physical-leaf controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_payload_proof_parts.py
+```
+
+The first native verifier refused exact query-array equality because the prior
+archive predates the committed archive-storage lookup question. Complete field
+comparison proves every previous query receipt and archive/caps/descriptor field
+unchanged. Its full source/refusal and both complete archives remain immutable.
+The corrected verifier admits exactly that native-card question, conserves all
+old receipts/order, and checks the new command and whole answer. Genuine missing,
+reordered, borrowed, altered/extra-answer and numeric-alias records refuse.
+This correction reuses the retained actual receipts; it repeats no producer,
+public query or child reader. The current admission replay is shown above.
+
+Actual whole-reader success is next; original runtime qualifications remain open.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history

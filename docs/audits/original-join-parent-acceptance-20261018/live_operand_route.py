@@ -74,11 +74,16 @@ ALLOCATION_DATA_SOURCES = {AUDIT + name + '.py' for name in
                            ('qualify_operand_allocation', 'qualify_allocation_data_roles')}
 ALLOCATION_DATA_PROOF = AUDIT + 'allocation-data-source-roles-qualified.json.gz'
 ALLOCATION_DATA_COMMAND = ['python3', '-B', AUDIT + 'qualify_allocation_data_roles.py']
+PAYLOAD_REVISION = '0e6c3199b0cb0f60a178028ec6acdb63321e07d3'
+PAYLOAD_SOURCES = {AUDIT + name + '.py' for name in
+                   ('payload_closure', 'qualify_payload_roles')}
+PAYLOAD_PROOF = AUDIT + 'payload-source-roles-qualified.json.gz'
+PAYLOAD_COMMAND = ['python3', '-B', AUDIT + 'qualify_payload_roles.py']
 FROZEN_INPUTS = [AUDIT + name + '.json.gz' for name in
-                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF, FIXED_GAP_PROOF, CALLER_PROOF, OPERAND_PROOF, AST_INPUT_PROOF, PREPARATION_PROOF, COMPILE_ONLY_PROOF, ALLOCATION_PROOF, ALLOCATION_DATA_PROOF]
+                 ('canonical-contracts-qualified', 'canonical-contract-progress-qualified')] + [INTAKE_PROOF, CACHE_PROOF, DISPATCH_PROOF, FIXED_GAP_PROOF, CALLER_PROOF, OPERAND_PROOF, AST_INPUT_PROOF, PREPARATION_PROOF, COMPILE_ONLY_PROOF, ALLOCATION_PROOF, ALLOCATION_DATA_PROOF, PAYLOAD_PROOF]
 SELF = AUDIT + 'live_operand_route.py'
 HELPER = frozen.HELPER
-OUTPUT = AUDIT + 'allocation-live-route-qualified.json.gz'
+OUTPUT = AUDIT + 'payload-live-route-qualified.json.gz'
 TERMINAL = ['python3', '-B', SELF, '--current']
 OPTIONAL = [['python3', '-B', AUDIT + name + '.py'] for name in
             ('frozen_operand_route', 'check_frozen_route_independence',
@@ -86,13 +91,13 @@ OPTIONAL = [['python3', '-B', AUDIT + name + '.py'] for name in
              'qualify_runtime_cache_roles', 'qualify_default_dispatch_roles',
              'qualify_fixed_gap_roles', 'qualify_caller_roles', 'qualify_operand_roles',
              'qualify_ast_input_roles', 'qualify_preparation_roles', 'qualify_compile_only_roles',
-             'qualify_allocation_roles', 'qualify_allocation_data_roles')]
+             'qualify_allocation_roles', 'qualify_allocation_data_roles', 'qualify_payload_roles')]
 DEPENDENCIES = [AUDIT + 'frozen_operand_route.py', AUDIT + 'rollover_source_card.py',
                 'scripts/check_source_recovery_card.sh',
-                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES | OPERAND_SOURCES | AST_INPUT_SOURCES | PREPARATION_SOURCES | COMPILE_ONLY_SOURCES | ALLOCATION_SOURCES | ALLOCATION_DATA_SOURCES)]
+                *sorted(CONTRACT_SOURCES | INTAKE_SOURCES | CACHE_SOURCES | CACHE_DEPENDENCIES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES | OPERAND_SOURCES | AST_INPUT_SOURCES | PREPARATION_SOURCES | COMPILE_ONLY_SOURCES | ALLOCATION_SOURCES | ALLOCATION_DATA_SOURCES | PAYLOAD_SOURCES)]
 SCOPE = ('Current source/archive/question/reverify and ordered reader membership only. '
          'Original and already-published child readers retain their exact order. '
-         'Only the named canonical, selected-intake, runtime-cache, default-dispatch, fixed-gap, caller, operand, AST-input, preparation, compile-only, allocation and allocation-data source replacements bind to '
+         'Only the named canonical, selected-intake, runtime-cache, default-dispatch, fixed-gap, caller, operand, AST-input, preparation, compile-only, allocation, allocation-data and payload source replacements bind to '
          'separately qualified immutable revisions; unchanged entrypoint identities '
          'and complete original versions of replaced published sources retain. Only the '
          'explicit native-qualified optional readers may be added. The named '
@@ -102,9 +107,10 @@ SCOPE = ('Current source/archive/question/reverify and ordered reader membership
          'addition must follow the caller; the AST-input addition must follow the operand; '
          'the preparation addition must follow the AST-input qualifier; '
          'the compile-only addition must follow preparation; allocation must follow compile-only; '
-         'the allocation-data qualifier must follow allocation. '
+         'the allocation-data qualifier must follow allocation; '
+         'the payload qualifier must follow allocation-data. '
          'Other qualified additive extensions remain permitted. The named '
-         'canonical, intake, cache, dispatch, fixed-gap, caller, operand, AST-input, preparation, compile-only, allocation and allocation-data library/readers and their frozen proof inputs bind '
+         'canonical, intake, cache, dispatch, fixed-gap, caller, operand, AST-input, preparation, compile-only, allocation, allocation-data and payload library/readers and their frozen proof inputs bind '
          'to separately qualified immutable revisions. Named unchanged cache decode '
          'dependencies retain their original native epoch. The unchanged shared metadata getter '
          'retains its dispatch admission epoch; other transitive '
@@ -116,7 +122,8 @@ SCOPE = ('Current source/archive/question/reverify and ordered reader membership
 
 def native(path, *, identity_only=False, revision=None):
     if revision is None:
-        revision = (ALLOCATION_DATA_REVISION if path in ALLOCATION_DATA_SOURCES or path == ALLOCATION_DATA_PROOF else
+        revision = (PAYLOAD_REVISION if path in PAYLOAD_SOURCES or path == PAYLOAD_PROOF else
+                    ALLOCATION_DATA_REVISION if path in ALLOCATION_DATA_SOURCES or path == ALLOCATION_DATA_PROOF else
                     ALLOCATION_REVISION if path in ALLOCATION_SOURCES or path == ALLOCATION_PROOF else
                     COMPILE_ONLY_REVISION if path in COMPILE_ONLY_SOURCES or path == COMPILE_ONLY_PROOF else
                     PREPARATION_REVISION if path in PREPARATION_SOURCES or path == PREPARATION_PROOF else
@@ -128,7 +135,7 @@ def native(path, *, identity_only=False, revision=None):
                     CACHE_REVISION if path in CACHE_SOURCES or path == CACHE_PROOF else
                     INTAKE_REVISION if path in INTAKE_SOURCES or path == INTAKE_PROOF else
                     CONTRACT_REVISION if path in CONTRACT_SOURCES or path in FROZEN_INPUTS else BASE)
-    assert revision in (BASE, PUBLISHED_REVISION, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION, CALLER_REVISION, OPERAND_REVISION, AST_INPUT_REVISION, PREPARATION_REVISION, COMPILE_ONLY_REVISION, ALLOCATION_REVISION, ALLOCATION_DATA_REVISION), 'closed native source epochs'
+    assert revision in (BASE, PUBLISHED_REVISION, CONTRACT_REVISION, INTAKE_REVISION, CACHE_REVISION, DISPATCH_REVISION, FIXED_GAP_REVISION, CALLER_REVISION, OPERAND_REVISION, AST_INPUT_REVISION, PREPARATION_REVISION, COMPILE_ONLY_REVISION, ALLOCATION_REVISION, ALLOCATION_DATA_REVISION, PAYLOAD_REVISION), 'closed native source epochs'
     entry = frozen.git('ls-tree', '--full-tree', '-l', '-z', revision, '--', path)
     assert entry.count(b'\0') == 1, 'one native admitted source'
     header, name = entry[:-1].split(b'\t')
@@ -178,7 +185,7 @@ def authority():
     return dict(helper=helper, published_helper=published_helper, published=published,
                 sources=sources, required=required,
                 replaced_sources={path: native(path, revision=BASE) for path in sorted(
-                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES | OPERAND_SOURCES | AST_INPUT_SOURCES | PREPARATION_SOURCES | COMPILE_ONLY_SOURCES | ALLOCATION_SOURCES | ALLOCATION_DATA_SOURCES))},
+                    {command[-1] for command in required} & (INTAKE_SOURCES | CACHE_SOURCES | DISPATCH_SOURCES | FIXED_GAP_SOURCES | CALLER_SOURCES | OPERAND_SOURCES | AST_INPUT_SOURCES | PREPARATION_SOURCES | COMPILE_ONLY_SOURCES | ALLOCATION_SOURCES | ALLOCATION_DATA_SOURCES | PAYLOAD_SOURCES))},
                 frozen_inputs={path: native(path, identity_only=True) for path in FROZEN_INPUTS},
                 source_card_proof=proof, baseline_card=baseline_card)
 
@@ -267,6 +274,9 @@ def review(value, fixed):
     cursor = iter(commands[:-1])
     assert all(any(command == current for current in cursor)
                for command in [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND, PREPARATION_COMMAND, COMPILE_ONLY_COMMAND, ALLOCATION_COMMAND, ALLOCATION_DATA_COMMAND]), 'complete admitted allocation-data membership and order'
+    cursor = iter(commands[:-1])
+    assert all(any(command == current for current in cursor)
+               for command in [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND, PREPARATION_COMMAND, COMPILE_ONLY_COMMAND, ALLOCATION_COMMAND, ALLOCATION_DATA_COMMAND, PAYLOAD_COMMAND]), 'complete admitted payload membership and order'
     needed = {command[-1] for command in commands[:-1]} | set(DEPENDENCIES)
     assert value['sources'].keys() == needed, 'complete admitted current source population'
     for path in needed:
@@ -438,6 +448,20 @@ def controls(value, fixed):
         ('wrong-allocation-data-proof-revision', lambda x: x['authority']['frozen_inputs'][ALLOCATION_DATA_PROOF].__setitem__('revision', ALLOCATION_REVISION)),
         ('boolean-allocation-data-proof-size', lambda x: x['frozen_inputs'][ALLOCATION_DATA_PROOF].__setitem__('bytes', True)),
         ('float-allocation-data-proof-size', lambda x: x['frozen_inputs'][ALLOCATION_DATA_PROOF].__setitem__('bytes', float(x['frozen_inputs'][ALLOCATION_DATA_PROOF]['bytes']))),
+        ('reordered-admitted-payload', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND, PREPARATION_COMMAND, COMPILE_ONLY_COMMAND, ALLOCATION_COMMAND, ALLOCATION_DATA_COMMAND, PAYLOAD_COMMAND], 'reordered'))),
+        ('omitted-admitted-payload', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND, PREPARATION_COMMAND, COMPILE_ONLY_COMMAND, ALLOCATION_COMMAND, ALLOCATION_DATA_COMMAND, PAYLOAD_COMMAND], 'omitted'))),
+        ('moved-admitted-payload', lambda x: rewritten_listing(x, changed_published_helper(helper, [*fixed['published'], CALLER_COMMAND, OPERAND_COMMAND, AST_INPUT_COMMAND, PREPARATION_COMMAND, COMPILE_ONLY_COMMAND, ALLOCATION_COMMAND, ALLOCATION_DATA_COMMAND, PAYLOAD_COMMAND], 'moved'))),
+        ('changed-payload-reader', lambda x: x['sources'].__setitem__(AUDIT + 'payload_closure.py', frozen.blob(b'changed payload reader\n'))),
+        ('changed-payload-role-wrapper', lambda x: x['sources'].__setitem__(AUDIT + 'qualify_payload_roles.py', frozen.blob(b'changed payload wrapper\n'))),
+        ('wrong-payload-source-revision', lambda x: x['authority']['sources'][AUDIT + 'payload_closure.py'].__setitem__('revision', BASE)),
+        ('wrong-payload-wrapper-revision', lambda x: x['authority']['sources'][AUDIT + 'qualify_payload_roles.py'].__setitem__('revision', ALLOCATION_REVISION)),
+        ('lost-original-payload-reader', lambda x: x['authority']['replaced_sources'].pop(AUDIT + 'payload_closure.py')),
+        ('missing-payload-role-proof', lambda x: x['frozen_inputs'].pop(PAYLOAD_PROOF)),
+        ('changed-payload-role-proof', lambda x: x['frozen_inputs'][PAYLOAD_PROOF].__setitem__('sha256', '0' * 64)),
+        ('borrowed-payload-role-proof', lambda x: x['frozen_inputs'].__setitem__(PAYLOAD_PROOF, copy.deepcopy(x['frozen_inputs'][ALLOCATION_PROOF]))),
+        ('wrong-payload-proof-revision', lambda x: x['authority']['frozen_inputs'][PAYLOAD_PROOF].__setitem__('revision', ALLOCATION_REVISION)),
+        ('boolean-payload-proof-size', lambda x: x['frozen_inputs'][PAYLOAD_PROOF].__setitem__('bytes', True)),
+        ('float-payload-proof-size', lambda x: x['frozen_inputs'][PAYLOAD_PROOF].__setitem__('bytes', float(x['frozen_inputs'][PAYLOAD_PROOF]['bytes']))),
         ('wrong-terminal-role', lambda x: rewritten_listing(x, helper.replace(b'/live_operand_route.py"', b'/verify_operand_route.py"'))),
         ('changed-helper-protocol', lambda x: x.__setitem__('helper', frozen.blob(helper + b'echo extra\n'))),
         ('missing-source', lambda x: x['sources'].pop(next(iter(x['sources'])))),
@@ -518,6 +542,8 @@ def controls(value, fixed):
                 assert str(error) == 'complete admitted allocation membership and order'
             if label in ('reordered-admitted-allocation-data', 'omitted-admitted-allocation-data', 'moved-admitted-allocation-data'):
                 assert str(error) == 'complete admitted allocation-data membership and order'
+            if label in ('reordered-admitted-payload', 'omitted-admitted-payload', 'moved-admitted-payload'):
+                assert str(error) == 'complete admitted payload membership and order'
             result.append(dict(label=label, candidate=candidate, refusal=str(error)))
         else:
             raise AssertionError('changed current route admitted: ' + label)
@@ -541,7 +567,7 @@ def main():
     args = parser.parse_args()
     fixed = authority()
     value = current_value(fixed)
-    product = dict(schema='fsmgen.live_operand_route.v11', inputs=value,
+    product = dict(schema='fsmgen.live_operand_route.v12', inputs=value,
                    result=review(value, fixed), controls=controls(value, fixed))
     if args.write:
         card.save_record(OUTPUT, product)
