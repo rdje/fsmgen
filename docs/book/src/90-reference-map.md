@@ -2330,23 +2330,23 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 
 The shared reviewer rejects borrowed targets, changed verifier/proof bodies,
 omitted metadata and Boolean/float primitive substitutions. This qualifies saved
-metadata and the complete original reconstruction proof. The native route now
-binds the repaired AST-input reader, wrapper and proof to `82f0a5661`, retaining
-every earlier source/proof epoch. The helper appends the AST-input qualifier after
-the operand qualifier. Its established protocol, reader membership and order
-remain exact. Check current admission against the retained native predecessor
-and genuine source/proof/native/member/type/order controls without running
-listed child readers:
+metadata and the complete original reconstruction proof. The dated AST-input
+admission binds its reader, wrapper and proof to `82f0a5661`, retaining every
+earlier source/proof epoch. The helper appends that qualifier after the operand
+qualifier with exact protocol, membership and order. Its dated full proof retains
+in `ast-input-native-admission-qualified.json.gz`. Check the current combined
+route against its retained native predecessor and genuine source/proof/native/
+member/type/order controls without running listed child readers:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_ast_input_route.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_preparation_route.py
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
 ```
 
 The first command compares every prior authority frame and helper command with
 the complete native predecessor and rechecks every retained refusal candidate.
 Both checks qualify the installed route. The second executes only listing and
-public queries. The bounded card is compared with the committed metadata repair;
+public queries. The bounded card is compared with the committed diagnosis;
 its earlier dated body and every original question remain retained.
 The actual full helper at native `a9b95de36` passes the repaired AST-input
 reader, then stops at `preparation_correction.py:206` during its complete saved
@@ -2385,9 +2385,14 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 ```
 
 This qualifies saved metadata and preserves the original no-op finding and
-stdin/custody gaps. Native admission and actual whole-helper success remain
-separate. Source/data bindings, default effects and runtime custody remain
-unqualified. Task-history
+stdin/custody gaps. Native preparation admission now binds the exact repaired
+reader, wrapper and role proof to `fecc3ff3b`. The complete current-route proof
+authenticates all prior epochs and the original preparation reader. The helper
+adds only its qualified wrapper after AST input; genuine omission, swap and
+movement controls reject at the new ordering assertion. Actual listing and
+public queries pass without executing listed child readers. Actual whole-helper
+success remains separate. Source/data bindings, default effects and runtime
+custody remain unqualified. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
