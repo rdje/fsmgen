@@ -2682,7 +2682,22 @@ reordered, borrowed, altered/extra-answer and numeric-alias records refuse.
 This correction reuses the retained actual receipts; it repeats no producer,
 public query or child reader. The current admission replay is shown above.
 
-Actual whole-reader success is next; original runtime qualifications remain open.
+The actual complete helper at native `5e824c9c7` now passes every listed reader
+and qualifier, including payload closure and the terminal current native route.
+It returns status 0. The complete successful guard stream retains the unchanged
+limits, and native source/tree/listing/task before-and-after states agree. All
+first normalized streams and original raw identities retain in
+`complete-reader-post-payload-20261021.json.gz`. Replay the entire dated result
+and genuine source/member/typed-result/pass/guard controls without running the
+helper again:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_payload_capture.py
+```
+
+This establishes the complete ordered reader sequence. Eligible route-container
+closure is reviewed next; original semantic/source/data/default/effect/runtime,
+custody, private/HIAL and full-CI qualifications remain separate.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history
