@@ -2557,9 +2557,20 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 ```
 
 The `qualify()` callable remains compatible. Reversing its one metadata-expression
-change reconstructs the whole original function text. Independent complete
-role-record and semantic/module conservation remains next before native route
-admission. This targeted result is separate from the dated whole-helper refusal. Native
+change reconstructs the whole original function text, including nested controls.
+Removing only the exact declared metadata import/constants/helper and CLI
+selection also reconstructs the entire original module AST. Complete role-record
+controls reject borrowed target/scope, changed source/proof, omitted member and
+Boolean/float aliases. Short-key borrowing and an invented source premise refuse;
+parsed namespace/refusal/default/write changes also refuse without execution.
+Replay complete native source/function/module and record conservation:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_data_role_records.py
+```
+
+Native source/proof route admission is next. This targeted result is separate
+from the dated whole-helper refusal. Native
 current-route admission requires the repaired
 reader and independently qualified dependent source-role proofs. That admission
 and actual whole-helper success remain separate; the dated admission replay
