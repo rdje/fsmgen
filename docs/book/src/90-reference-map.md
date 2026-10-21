@@ -2371,8 +2371,22 @@ member/type/native/source/capture/intervention controls:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/diagnose_preparation_sources.py
 ```
 
-Reader repair, native admission and actual whole-helper success remain separate
-steps. Source/data bindings, default effects and runtime custody remain
+The saved preparation reader now authenticates original programme metadata
+through native Git. Every pre-existing function body and the
+`derive(raw, references)` API remain byte-exact. The actual default CLI passes
+the unchanged original proof; explicit `--current` metadata and disabled
+assertions refuse. Explicit `--write` still selects live metadata and the
+existing exclusive publication path. Replay its complete saved role and
+full-record source/member/type/native controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_preparation_roles.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_preparation_role_records.py
+```
+
+This qualifies saved metadata and preserves the original no-op finding and
+stdin/custody gaps. Native admission and actual whole-helper success remain
+separate. Source/data bindings, default effects and runtime custody remain
 unqualified. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:

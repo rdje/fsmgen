@@ -14,7 +14,9 @@ import execute
 import prepare
 import prerequisite_inputs as prerequisite
 import saved_program_input as saved
+import saved_reader_sources as source
 
+SELF = 'preparation_correction.py'
 OWNER = models.OWNER.rsplit('.', 1)[0] + '.5.1'
 PATH = execute.AUDIT / 'preparation-correction-qualified.json.gz'
 BASE = 'docs/audits/primary-raw-cause-container-acceptance-20261012'
@@ -23,7 +25,7 @@ CUSTODY = BASE + '/preparation-source-custody.json'
 TAGS = ('preparation-first', 'preparation-anchor-read-first')
 NAMES = (READER, CUSTODY, *(BASE + '/' + tag + suffix
          for tag in TAGS for suffix in ('.json', '.py.txt', '-source.txt')))
-PREMISES = tuple(dict.fromkeys(('preparation_correction.py', *models.PREMISES)))
+PREMISES = tuple(dict.fromkeys((SELF, *models.PREMISES)))
 LIMITS = dict(escape_correction_observed=False, original_stdin_observed=False,
               prelaunch_custody_qualified=False, original_execution_qualified=False,
               compile_only_inputs_qualified=False, complete_source_allocation_qualified=False,
@@ -41,6 +43,11 @@ SCOPE = ('Correction of the retained preparation-source explanation only. The pi
          'explanation. No historical source, function, preparation, reader or cohort runs. '
          'Compile-only binding and every complete allocation/default/effect/runtime/'
          'custody and native/private qualification remain separately owned.')
+
+
+def source_metadata(*, current=False):
+    """Original native programme bodies are metadata, never executable inputs."""
+    return {name: prepare.blob(source.body(name, current=current)) for name in PREMISES}
 
 
 def recipe(body):
@@ -187,8 +194,11 @@ def controls(expected, raw, references):
 
 
 if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true')
     args = parser.parse_args()
     raw, references = {}, {}
     for name in NAMES:
@@ -201,7 +211,7 @@ if __name__ == '__main__':
     product = dict(result=value, controls=controls(value, raw, references), references=references,
         inputs={name: prepare.blob(body) for name, body in raw.items()},
         native_python=dict(implementation=sys.implementation.name, version=list(sys.version_info)),
-        programmes={name: prepare.blob(execute.read(execute.AUDIT / name)) for name in PREMISES})
+        programmes=source_metadata(current=args.write or args.current))
     if args.write: execute.save(PATH, product)
     else: bounded.strict_equal(json.loads(gzip.decompress(execute.read(PATH))), product)
     print('Retained preparation correction is explicitly qualified as a no-op: whole first/corrected bodies agree and no replacement site exists. Archived explanation is superseded, native failures and historical attribution gaps retain; no original execution or compile-input qualification follows.')
