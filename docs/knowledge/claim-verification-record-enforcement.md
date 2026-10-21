@@ -22,7 +22,7 @@ answers:
   - "where are dated reader-recovery facts retained?"
   - "where are payload namespace selectors qualified?"
   - "why did published optional reader omission or reordering pass?"
-date: 2026-10-20
+date: 2026-10-21
 status: current
 tags: [claim-verification, doctrine, evidence, registry]
 evidence: >-
@@ -36,8 +36,7 @@ reverify: >-
 ---
 
 `CLAIM_VERIFICATION.md`: policy/registries, distinct rederive/falsify/durability
-legs or owned gaps. Structural checks prove neither semantic truth nor oracle
-independence.
+legs or owned gaps. Structure proves no semantic truth or oracle independence.
 
 Dated factory/source/intake/cache/compiler facts, original scope:
 
@@ -51,5 +50,5 @@ Frontier: `MEMORY.md`, then:
 List: `bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list`.
 
 Epoch/failure/native/private gaps stay.
-Git pins cache/dispatch/fixed-gap/caller/operand/AST/preparation metadata.
+Git pins cache/dispatch/fixed-gap/caller/operand/AST/preparation/compile-only metadata.
 Uniqueness missed membership/order. Git snapshots bind published order/membership; qualified additions retain.

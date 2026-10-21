@@ -2403,9 +2403,25 @@ the helper:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_preparation_capture.py
 ```
 
-The differing product fields and cause remain for the next diagnosis.
-Actual whole-helper success, source/data bindings, default effects and runtime
-custody remain unqualified. Task-history
+The complete saved/current diagnosis isolates programme metadata only.
+Supplying original native metadata restores the entire original compile-only
+product: input bindings, source/token/line oracles, current syntax-compilation
+records, native references, controls, Python identity and scope. Historical
+bodies remain data; current syntax compilation executes no generated code.
+Replay the complete comparison and genuine member/type/native/intervention
+controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/diagnose_compile_only_sources.py
+```
+
+The first diagnostic used a preparation-only collection key in one negative
+control and failed. Its complete source, comparison and streams retain; the
+corrected binding control qualifies a new exclusive artifact. Default replay
+authenticates that failed attempt without promoting it. Reader repair, native
+admission and actual whole-helper success remain separate steps. Original
+callable identity, stdin and prelaunch custody, complete source/default/effect/
+runtime and private qualifications remain open. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
