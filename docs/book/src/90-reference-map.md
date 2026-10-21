@@ -2432,6 +2432,16 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_compile_only_role_records.py
 ```
 
+The admission verifier's projection comment now names compile-only correctly.
+A new exclusive proof preserves the complete original admission product except
+for the explicit verifier source bytes. Every semantic function is unchanged,
+and the original proof remains immutable. Replay the whole conservation proof
+and retained actual default-CLI result:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_compile_only_comment.py
+```
+
 Native compile-only admission now binds the exact repaired reader, wrapper
 and role proof to `5600ebe36`. The complete current proof conserves every
 earlier source/proof epoch and original reader. Its helper command population

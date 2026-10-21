@@ -7,7 +7,7 @@ import json
 import live_operand_route as route
 
 SELF = route.AUDIT + 'verify_compile_only_route.py'
-OUTPUT = route.AUDIT + 'compile-only-native-admission-qualified.json.gz'
+OUTPUT = route.AUDIT + 'compile-only-native-admission-comment-corrected.json.gz'
 PRIOR = route.AUDIT + 'preparation-live-route-qualified.json.gz'
 BASE = '5600ebe362bf42fc7fffcd407884f4b1dbd0d8fd'
 SCOPE = ('Complete native source/proof epoch and published helper protocol/order '
@@ -41,7 +41,7 @@ def derive():
     route.frozen.equal(product['result'], route.review(value, fixed))
 
     # Compare whole previous source/proof frames after removing exactly the
-    # admitted AST addition and restoring its authenticated prior reader row.
+    # admitted compile-only addition and restoring its authenticated prior reader row.
     old_authority = before['authority']
     projected = copy.deepcopy(fixed)
     del projected['sources'][route.COMPILE_ONLY_COMMAND[-1]]
