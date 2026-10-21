@@ -2439,9 +2439,26 @@ equals the predecessor plus only the compile-only qualifier after preparation.
 Genuine omission, swap and movement refuse at that new ordering assertion;
 source/proof/epoch/member/type controls and the qualified additive positive
 also retain. Current listing/public queries pass without launching listed child
-readers. Actual whole-helper success remains separate. Original callable
-identity, stdin and prelaunch custody, complete source/default/effect/runtime
-and private qualifications remain open. Task-history
+readers. The actual whole helper at native `7530d3438` passes compile-only,
+then stops at `operand_allocation.py:281` during the complete saved-product
+comparison. It exits with status 1; no RAM cutoff is reported. The entire
+native tree/source/listing/task boundary and normalized streams retain in
+`complete-reader-post-compile-only-20261021.json.gz`. Replay this dated result
+and genuine native/source/member/type/result/stream controls without repeating
+the helper:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_compile_only_capture.py
+```
+
+An earlier task-declaration typo changed nothing. The collector then refused
+its initial task-only boundary before listing or launching readers. Its native
+source, actual stream and observed empty output directory retain separately;
+the saved verifier checks that failure too. The exact differing allocation
+fields and their cause remain unproved under the next diagnostic owner.
+Whole-helper success remains open, along with original callable identity,
+stdin and prelaunch custody, complete source/default/effect/runtime and private
+qualifications. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
