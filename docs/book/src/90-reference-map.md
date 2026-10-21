@@ -2543,8 +2543,23 @@ remains unqualified. Replay the controlled before/after gate evidence:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_data_source_guard.py
 ```
 
-Dependent saved-metadata repair and full role/semantic conservation are next.
-This targeted result is separate from the dated whole-helper refusal. Native
+The dependent qualifier now authenticates original native source metadata for
+saved replay. Its original proof records qualifier/allocation sources using full
+relative path keys. A closed adapter preserves that contract and the unchanged
+shared mode collector/reviewer. Actual saved CLI passes the original proof;
+explicit `--current` metadata and disabled assertions refuse. Current/write
+selection changes only the qualifier's metadata, while nested current
+allocation audit readers retain saved mode. The original exclusive write
+boundary and every control/input/native binding remain. Replay the source roles:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_data_roles.py
+```
+
+The `qualify()` callable remains compatible. Reversing its one metadata-expression
+change reconstructs the whole original function text. Independent complete
+role-record and semantic/module conservation remains next before native route
+admission. This targeted result is separate from the dated whole-helper refusal. Native
 current-route admission requires the repaired
 reader and independently qualified dependent source-role proofs. That admission
 and actual whole-helper success remain separate; the dated admission replay

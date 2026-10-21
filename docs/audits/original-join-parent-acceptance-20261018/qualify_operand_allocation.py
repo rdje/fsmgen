@@ -9,9 +9,17 @@ import runpy
 import sys
 
 import operand_allocation as allocation
+import saved_reader_sources as source
 
 PATH = allocation.execute.AUDIT / 'operand-allocation-data-control-qualified.json.gz'
 SOURCE = allocation.execute.AUDIT / 'qualify_operand_allocation.py'
+SELF = 'qualify_operand_allocation.py'
+PREMISES = (SELF, 'operand_allocation.py')
+
+
+def source_metadata(*, current=False):
+    return {str(allocation.execute.AUDIT / name):
+            allocation.prepare.blob(source.body(name, current=current)) for name in PREMISES}
 
 
 def qualify():
@@ -57,15 +65,19 @@ def qualify():
         original=allocation.prepare.identity(original), candidate=allocation.prepare.blob(candidate),
         changed_model=allocation.prepare.identity(changed_model), refusal=refusal,
         positive_stdout=positive.getvalue(), stdout=output.getvalue(), original_programme_execution=False,
-        programmes={str(path): allocation.prepare.blob(allocation.execute.read(path))
-                    for path in (SOURCE, allocation.execute.AUDIT / 'operand_allocation.py')})
+        programmes=source_metadata())
 
 
 if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true', help='compare installed qualifier/allocation source metadata')
     args = parser.parse_args()
     product = qualify()
+    if args.write or args.current:
+        product['programmes'] = source_metadata(current=True)
     if args.write:
         allocation.execute.save(PATH, product)
     else:
