@@ -2503,10 +2503,23 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_collector.py
 ```
 
-The first actual qualifier result remains unused until collector preparation
-commits. Its exact task-only declaration, complete native source/tree/index/proof
-boundary, fixed command/status and fsynced streams will retain before diagnosis.
-Native current-route admission requires the repaired
+The first actual dependent qualifier at native `1576146bb` reaches its final
+saved-product comparison at `qualify_operand_allocation.py:72`. It returns
+status 1 with empty stdout and an exact-scalar refusal; no RAM cutoff is
+reported. Complete native source/tree/index/proof/task before-and-after states
+agree. The index reconstructs from the complete native tree, and the sole
+owning task status change restores the exact native task. Full normalized
+streams retain in `allocation-data-qualifier-first-result-20261021.json.gz`.
+Replay the exact saved result and genuine source/member/type/result/stream and
+resource-limit controls without rerunning the qualifier:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_allocation_qualifier_capture.py
+```
+
+Exact differing product fields and their cause remain unproved under the next
+diagnostic owner. This targeted result is separate from the dated whole-helper
+refusal. Native current-route admission requires the repaired
 reader and independently qualified dependent source-role proofs. That admission
 and actual whole-helper success remain separate; the dated admission replay
 does not admit later source changes automatically.
