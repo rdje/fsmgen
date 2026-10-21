@@ -2360,9 +2360,20 @@ the helper:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_post_ast_input_capture.py
 ```
 
-The complete differing product fields and root cause remain owned by the next
-diagnosis. Whole-helper success, source/data bindings, default effects and runtime
-custody remain unqualified. Task-history
+The complete saved/current comparison isolates only dispatch, preparation,
+fixed-gap, caller, operand and AST-input programme metadata. Supplying the
+original native bodies solely as metadata restores the entire original proof,
+including the no-op correction finding, source pairs, edit oracle and controls.
+Historical bodies remain data. Replay the full diagnosis and genuine
+member/type/native/source/capture/intervention controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/diagnose_preparation_sources.py
+```
+
+Reader repair, native admission and actual whole-helper success remain separate
+steps. Source/data bindings, default effects and runtime custody remain
+unqualified. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 

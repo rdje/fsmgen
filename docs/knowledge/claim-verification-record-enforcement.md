@@ -50,6 +50,6 @@ Frontier: `MEMORY.md`, then:
 
 List: `bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list`.
 
-Epochs, failures and native/private gaps remain.
-Git pins cache/dispatch/fixed-gap/caller/operand/AST metadata.
-Uniqueness missed membership/order. Native snapshots bind published order/membership; qualified additions remain.
+Epoch/failure/native/private gaps stay.
+Git pins cache/dispatch/fixed-gap/caller/operand/AST/preparation metadata.
+Uniqueness missed membership/order. Git snapshots bind published order/membership; qualified additions retain.
