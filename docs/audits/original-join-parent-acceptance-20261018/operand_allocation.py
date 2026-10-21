@@ -11,8 +11,10 @@ import fixed_input_coverage as fixed
 import operand_inventory as operands
 import prepare
 import prerequisite_inputs as prerequisite
+import saved_reader_sources as source
 
 AUTHORITY = '8762ea98ab1e30e9c54686ccb113e21097b1fa35'
+SELF = 'operand_allocation.py'
 OWNER = operands.OWNER + '.3.2'
 PATH = execute.AUDIT / 'operand-allocation-qualified.json.gz'
 SAVED = execute.AUDIT / 'saved-program-input-qualified.json.gz'
@@ -259,9 +261,16 @@ def controls(expected, models):
     return result
 
 
+def source_metadata(*, current=False):
+    return {name: prepare.blob(source.body(name, current=current)) for name in PREMISES}
+
+
 if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true', help='compare installed programme metadata')
     args = parser.parse_args()
     raw, references = {}, {}
     for path in MODEL_PATHS:
@@ -274,7 +283,7 @@ if __name__ == '__main__':
     result = assemble(models)
     product = dict(result=result, review=review(result, models), controls=controls(result, models),
         inputs={name: dict(reference=references[name], body=prepare.blob(body)) for name, body in raw.items()},
-        programmes={name: prepare.blob(execute.read(execute.AUDIT / name)) for name in PREMISES})
+        programmes=source_metadata(current=args.write or args.current))
     if args.write:
         execute.save(PATH, product)
     else:

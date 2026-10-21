@@ -2477,10 +2477,25 @@ genuine full-record member/type/source/native controls:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/diagnose_allocation_sources.py
 ```
 
-Saved-reader repair, the dependent allocation-data qualifier's source role,
-native admission and actual whole-helper success remain separately owned.
-The dependent qualifier directly records current source metadata; its first
-actual result after primary repair will be captured before diagnosis.
+The repaired allocation reader now authenticates original native programme
+metadata for saved replay. Every existing function body and the
+`assemble`/`review`/`controls` APIs remain byte-exact. Actual default replay passes
+the unchanged original proof; explicit `--current` metadata and disabled
+assertions refuse. Explicit `--write` retains live metadata selection and the
+original exclusive save boundary. Replay complete source-role and full-record
+source/member/type/native controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_roles.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_allocation_role_records.py
+```
+
+The dependent allocation-data qualifier still directly records current source
+metadata. Its first actual result after the committed reader repair will be
+captured before diagnosis. Native current-route admission requires the repaired
+reader and independently qualified dependent source-role proofs. That admission
+and actual whole-helper success remain separate; the dated admission replay
+does not admit later source changes automatically.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history
