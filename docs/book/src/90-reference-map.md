@@ -2339,11 +2339,11 @@ route against its retained native predecessor and genuine source/proof/native/
 member/type/order controls without running listed child readers:
 
 ```bash
-scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_preparation_route.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_compile_only_route.py
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
 ```
 
-The first command checks the recorded preparation admission against its
+The first command checks the recorded compile-only admission against its
 complete native predecessor and rechecks every retained refusal candidate.
 The second checks currently installed reader sources with actual listing and
 public queries. Later reader repairs require their own native admission before
@@ -2432,9 +2432,16 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_compile_only_role_records.py
 ```
 
-Native admission and actual whole-helper success remain separate steps.
-Original callable identity, stdin and prelaunch custody, complete source/
-default/effect/runtime and private qualifications remain open. Task-history
+Native compile-only admission now binds the exact repaired reader, wrapper
+and role proof to `5600ebe36`. The complete current proof conserves every
+earlier source/proof epoch and original reader. Its helper command population
+equals the predecessor plus only the compile-only qualifier after preparation.
+Genuine omission, swap and movement refuse at that new ordering assertion;
+source/proof/epoch/member/type controls and the qualified additive positive
+also retain. Current listing/public queries pass without launching listed child
+readers. Actual whole-helper success remains separate. Original callable
+identity, stdin and prelaunch custody, complete source/default/effect/runtime
+and private qualifications remain open. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 
