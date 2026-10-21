@@ -2627,8 +2627,25 @@ without collecting products or rerunning the helper:
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_payload_source_diagnosis.py
 ```
 
-Saved metadata repair is next. This diagnosis does not close the whole reader
-sequence or original runtime qualifications.
+The payload reader now authenticates original native programme metadata for
+saved replay. Explicit `--current` and `--write` select live metadata; the
+original exclusive write boundary remains. Actual saved CLI passes the entire
+unchanged original proof, while current metadata and disabled assertions refuse.
+Every pre-existing input, derivation, review, namespace/selector, compiler-result
+exclusion and control function body remains byte-exact. The unchanged shared
+role reviewer qualifies historical/changed/denied images and genuine member,
+path, hash, native and primitive metadata controls. Replay the complete role
+proof and exact source/function conservation:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_payload_roles.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_payload_role_functions.py
+```
+
+The prior complete diagnosis also replays after this legitimate repair without
+collecting products or rerunning the target CLI. Independent full role-record/
+module conservation and native payload source/proof admission are next. Whole
+reader success and original runtime qualifications remain open.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history

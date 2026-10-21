@@ -16,6 +16,8 @@ AUTHORITY = '14237e63cb12c8b0ce43251772cfdac17d5d084f'
 OWNER = allocation.OWNER.rsplit('.', 1)[0] + '.3'
 PATH = allocation.execute.AUDIT / 'payload-boundary-qualified.json.gz'
 SOURCE = allocation.execute.AUDIT / 'payload_closure.py'
+SELF = 'payload_closure.py'
+PREMISES = tuple(dict.fromkeys((SELF, *allocation.PREMISES)))
 EXEC_NAMES = {'compile', 'exec', 'eval', '__import__'}
 LIMITS = dict(original_programme_execution=False, concrete_namespace_values_qualified=False,
               actual_exports_qualified=False, original_import_selection_qualified=False,
@@ -505,9 +507,17 @@ def result_use_controls(models):
     return result
 
 
+def source_metadata(*, current=False):
+    return {name: allocation.prepare.blob(allocation.source.body(name, current=current))
+            for name in PREMISES}
+
+
 if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true')
     args = parser.parse_args()
     raw, reference, prior, models = inputs()
     value = derive(prior, models)
@@ -515,8 +525,7 @@ if __name__ == '__main__':
         semantic_controls=semantic_controls(prior, models), result_use_controls=result_use_controls(models),
         native_allocation=dict(reference=reference, body=allocation.prepare.blob(raw)),
         native_python=dict(implementation=sys.implementation.name, version=list(sys.version_info)),
-        programmes={name: allocation.prepare.blob(allocation.execute.read(allocation.execute.AUDIT / name))
-                    for name in dict.fromkeys(('payload_closure.py', *allocation.PREMISES))})
+        programmes=source_metadata(current=args.write or args.current))
     if args.write:
         allocation.execute.save(PATH, product)
     else:
