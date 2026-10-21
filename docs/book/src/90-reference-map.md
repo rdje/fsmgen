@@ -2643,9 +2643,23 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 ```
 
 The prior complete diagnosis also replays after this legitimate repair without
-collecting products or rerunning the target CLI. Independent full role-record/
-module conservation and native payload source/proof admission are next. Whole
-reader success and original runtime qualifications remain open.
+collecting products or rerunning the target CLI. Full role-record controls now
+reject borrowed target/scope, changed verifier/proof, omitted original and
+Boolean/float aliases. Exact removal of only the declared metadata constants,
+helper, assertion guard and current flag, followed by restoration of the original
+metadata expression, reconstructs the entire original module AST. Every original
+function text, namespace/selector/exclusion predicate, main statement and native
+input contract retains. Parsed-only namespace/exclusion weakening, metadata
+default/current-role changes, native-allocation substitution and hidden-write
+candidates refuse without execution. Replay complete native record/module
+conservation and genuine interventions:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_payload_role_records.py
+```
+
+Native payload source/proof admission is next. Whole reader success and original
+runtime qualifications remain open.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history
