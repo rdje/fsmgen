@@ -15,6 +15,18 @@ protocol does not require SPECFORGE to classify the root cause as `.fsm`,
 the exact FSMGen-facing artifacts, invocation, outputs, and expected/observed
 behavior so FSMGen maintainers can reproduce locally.
 
+## 2026-10-21: Request .12 contract selected; delivery pending
+
+Decision `0117` selects unary `(^ X)`, `(& X)`, `(| X)` and grouped
+`(reduce-groups OP X N)`, with positive literal N, least-significant group
+first and an unpadded short final group. Logical `!` keeps its Boolean meaning;
+optional `(~ X)` is separately owned. These forms are not implemented yet.
+`docs/tasks/ISF-REDUCTION-DELIVERY.md` owns unary delivery first, followed by
+preserved generic widths, real parameter overrides/legality and grouped
+reductions. No default-width unroll will stand in for the required generic
+behavior. Schedule/semantic inventories and native/API/MCP/HDL qualification
+are required. The previously documented .7/.8/.9/.10 boundaries remain in force.
+
 ## High-Level Response
 
 ### SPECFORGE request handoff — 2026-10-21

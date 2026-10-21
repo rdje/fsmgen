@@ -1,0 +1,27 @@
+{
+  "base_revision": "00573cce03e8525dc3799a2b4661449ad636284a",
+  "claim_preflight": "New explicitly unimplemented byte-group example is reviewed as syntax_or_example_value. Initial missing disposition and then wrong per-slice owner refused; corrected ownership uses the existing general_book group CLAIM-VERIFICATION-ADOPTION.5.3. This is contract review, not feature qualification.",
+  "corrected_focused": {
+    "command": "scripts/run_with_ram_guard.sh -- bash -c <same programme, task test t/1549-task-tree-integrity-doctrine.t>",
+    "exit_status": 0,
+    "stream": {
+      "normalization": "literal repository root only; raw bytes are not retained",
+      "normalized_text": "ram-guard: PID 58165; host 76.0%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nt/1303-isf-public-live-book-paths-audit.t .. ok\nt/1549-task-tree-integrity-doctrine.t ...... ok\nAll tests successful.\nFiles=3, Tests=356, 14 wallclock secs ( 0.02 usr  0.01 sys +  9.58 cusr  2.93 csys = 12.54 CPU)\nResult: PASS\n INFO Book building has started\n INFO Running the html backend\n WARN search index is very large (16015368 bytes)\n INFO HTML book written to `./docs/book/book`\nbook-source-references: complete source/role/member/relative-endpoint/current-byte/ignore contracts hold\nbook-source-index: complete indexed directory and checked source projection agree\n",
+      "original_bytes": 747,
+      "original_sha256": "acccd6d2312324db136943213add5eea7c1e2ed062173573caa5aedf9ea83aac"
+    }
+  },
+  "first_focused": {
+    "cause": "A task test filename was mistyped as t/1549-task-tree-integrity-audit.t; that file does not exist. Book tests ran, but the whole programme failed before build/source checks.",
+    "command": "scripts/run_with_ram_guard.sh -- bash -c <focused book/task/build programme>",
+    "exit_status": 2,
+    "stream": {
+      "normalization": "literal repository root only; raw bytes are not retained",
+      "normalized_text": "ram-guard: PID 57619; host 68.4%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nt/1305-isf-book-feature-matrix-audit.t ..... ok\nt/1303-isf-public-live-book-paths-audit.t .. ok\nCannot detect source of 't/1549-task-tree-integrity-audit.t'! at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 256.\n\tTAP::Parser::IteratorFactory::detect_source(TAP::Parser::IteratorFactory=HASH(0x76cfde1b70), TAP::Parser::Source=HASH(0x100ae18d8)) called at /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 211\n\tTAP::Parser::IteratorFactory::make_iterator(TAP::Parser::IteratorFactory=HASH(0x76cfde1b70), TAP::Parser::Source=HASH(0x100ae18d8)) called at /System/Library/Perl/5.34/TAP/Parser.pm line 472\n\tTAP::Parser::_initialize(TAP::Parser=HASH(0x76cfde1678), HASH(0x76cfd77348)) called at /System/Library/Perl/5.34/TAP/Object.pm line 55\n\tTAP::Object::new(\"TAP::Parser\", HASH(0x76cfd77348)) called at /System/Library/Perl/5.34/TAP/Object.pm line 130\n\tTAP::Object::_construct(TAP::Harness=HASH(0x76cf377330), \"TAP::Parser\", HASH(0x76cfd77348)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 856\n\tTAP::Harness::make_parser(TAP::Harness=HASH(0x76cf377330), TAP::Parser::Scheduler::Job=HASH(0x76cfcd3e28)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 655\n\tTAP::Harness::_aggregate_single(TAP::Harness=HASH(0x76cf377330), TAP::Parser::Aggregator=HASH(0x76cf404a80), TAP::Parser::Scheduler=HASH(0x76cfcd3ca8)) called at /System/Library/Perl/5.34/TAP/Harness.pm line 747\n\tTAP::Harness::aggregate_tests(TAP::Harness=HASH(0x76cf377330), TAP::Parser::Aggregator=HASH(0x76cf404a80), \"t/1305-isf-book-feature-matrix-audit.t\", \"t/1303-isf-public-live-book-paths-audit.t\", \"t/1549-task-tree-integrity-audit.t\") called at /System/Library/Perl/5.34/TAP/Harness.pm line 558\n\tTAP::Harness::__ANON__() called at /System/Library/Perl/5.34/TAP/Harness.pm line 571\n\tTAP::Harness::runtests(TAP::Harness=HASH(0x76cf377330), \"t/1305-isf-book-feature-matrix-audit.t\", \"t/1303-isf-public-live-book-paths-audit.t\", \"t/1549-task-tree-integrity-audit.t\") called at /System/Library/Perl/5.34/App/Prove.pm line 548\n\tApp::Prove::_runtests(App::Prove=HASH(0x100ae17b8), HASH(0x76cf2bafa8), \"t/1305-isf-book-feature-matrix-audit.t\", \"t/1303-isf-public-live-book-paths-audit.t\", \"t/1549-task-tree-integrity-audit.t\") called at /System/Library/Perl/5.34/App/Prove.pm line 506\n\tApp::Prove::run(App::Prove=HASH(0x100ae17b8)) called at /usr/bin/prove line 13\n",
+      "original_bytes": 2455,
+      "original_sha256": "cd59f9b762dae51270d14e79fe63a869ed2fab23f5d85e3b7fe18cbfddb5bebb"
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.1",
+  "schema": "fsmgen.specforge_reduction_contract_checks.v1"
+}

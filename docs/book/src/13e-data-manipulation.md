@@ -7,6 +7,33 @@ The shorthand here belongs to ISF/IAL1: existing parser expansions feed the
 transaction scheduler. The current repair work preserves their intended
 control flow; it introduces no new macro language or framework.
 
+## Selected reduction design — implementation pending
+
+SPECFORGE request `.12` is owned by
+[the reduction delivery tree](../../../docs/tasks/ISF-REDUCTION-DELIVERY.md).
+[Decision 0117](../../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
+selects the following contract. These forms remain unimplemented at this checkpoint.
+
+Unary `(^ X)`, `(& X)` and `(| X)` will reduce a declared packed scalar
+signal, scalar field, static slice or bit selection to a single bit. Existing
+multi-operand expressions keep their meaning. Logical `!` remains a Boolean
+operation. The retained `(! (^ DATA[7:0]))` case will express odd byte parity;
+`(! (^ DATA))` will express one whole-vector parity bit.
+
+The selected grouped form is `(reduce-groups OP X N)`, for literal OP `^`, `&`
+or `|` and positive decimal literal N. It produces `ceil(width(X)/N)` bits.
+Bit i reduces positions `N*i` through `min(width(X)-1, N*i+N-1)` of X's packed
+value. The last group may be short; no padding changes it. A strict assignment
+must match the derived group count. For byte parity, N is 8. Optional `(~ X)`
+will complement each vector bit without changing logical `!`.
+
+Required grouped delivery includes preserved authored width dependencies,
+actual HDL parameter overrides, consistent registers/intermediates, contextual
+invalid-width/group diagnostics, schedule and semantic inventories, and
+independent HDL behavior. Merely accepting the source or unrolling defaults
+will not close the request. Each shipped slice will replace its pending
+boundary with runnable examples and the qualified backend/profile limits.
+
 ## `(update var expr)` — Variable Modification
 
 ```lisp

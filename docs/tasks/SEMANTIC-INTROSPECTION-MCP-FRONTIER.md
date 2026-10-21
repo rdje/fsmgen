@@ -7131,24 +7131,29 @@ For FSMGen, the analogs are:
   Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.5`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Select exact reduction, grouping and parameter-elaboration contracts.`
   Acceptance: `After .91 commits, map each packet requirement to parser/expression/width/IR/backend/public-report contracts and existing generic-width .33.3 ownership. Select group spelling, bit order, short-tail behavior, operand/result kinds, target-width checking and supported profiles. Distinguish logical ! from vector inversion; specify override-sensitive group/count/output width without baking defaults. Split genuine dependencies into bounded leaves and preserve the paused reader-route/aggregate frontier. Commit the decision and book/request contract before source changes; no full CI or host-security waiver.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Decision 0117 selects exact unary/group/optional inversion semantics, dependency and legality boundaries, detached public inventories and independent qualification. Code-path inspection finds shared arity gate in ExpressionBuilder, unary width consumers and numeric-default IAL0 sizing; retained --strict --check --json refusals remain the unchanged baseline. ISF-REDUCTION-DELIVERY owns bounded implementation and coordinates existing .33.3/.32.3 prerequisites; the main task remains a bounded coordinator. Book and feedback label all selected forms unimplemented. Focused book/task checks pass All tests successful Files=3 Tests=356; mdBook build and complete source/index contracts pass. Native decision catalog, task integrity, regenerated Knowledge Map and complete claim dispositions pass. The first preflight lacked a syntax-example disposition, then used a non-group owner; the corrected entry uses configured general_book ownership. A mistyped task-test selector exits 2 before build; the corrected programme exits 0. Full normalized logs and boundaries remain in docs/audits/specforge-reduction-contract-20261021.json. Staged/normal doctrine gates qualify this contract-only commit; runtime/feature evidence remains missing until implementation.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.1: select reduction and parameter contracts`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Retained --strict --check --json reports refuse unary ^ by arity. ExpressionBuilder requires multiple operands; unary width consumers and the ISF FSM emitter need explicit result/dependency semantics.
+  - [x] **ADDRESSED (verified)** — Decision 0117, authenticated decision catalog, independent implementation tree, book and canonical feedback select the exact contract and preserve pending implementation/profile/parameter qualification.
+  - [x] **NO REGRESSION** — All tests successful, Files=3, Tests=356; mdBook and complete source/index checks pass. knowledge-map: OK; native decision, task integrity and complete claim dispositions pass before staged scripts/check_doctrines.sh and normal hooks. No compiler source or accepted behavior changes.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.2`
   Status: `pending`
   Goal: `Implement and independently qualify required unary reductions.`
   Acceptance: `After .1, split safe source/IR/emitter/report slices before implementation. Unary ^, & and | produce one bit for admitted signals/slices/bit selections; existing multi-operand and logical semantics retain. Qualify real scalar/slice truth tables and invalid operand diagnostics through native/API/MCP, carriers, supported backend behavior and corpus/book/capability contracts. Preserve supplied unrolled baseline and all first failures.`
-  Verification: `pending contract .92.1`
+  Verification: `Contract selected in 0117; implementation owned by ISF-REDUCTION-DELIVERY.1`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.3`
   Status: `pending`
   Goal: `Implement parameter-correct grouped reductions and target validation.`
   Acceptance: `After .1 and the exact generic-width prerequisites it selects, split source/IR/lowering/backend/report slices. For W-bit data and positive literal N, produce ceil(W/N) ordered group results including a short final group. Prove defaults and supported overrides, contextual target mismatch/invalid group/operand refusal, unchanged existing expressions and truthful source/count reports. Do not claim whole-vector unary reduction is byte parity. R3 remains open until actual compiled HDL and public transport qualification.`
-  Verification: `pending selected width dependencies`
+  Verification: `Contract selected in 0117; prerequisites and groups owned by ISF-REDUCTION-DELIVERY.2-.5`
   Commit: `pending`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.4`

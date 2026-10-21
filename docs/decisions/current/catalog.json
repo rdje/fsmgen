@@ -1313,6 +1313,28 @@
       },
       "path": "docs/decisions/current/continuity/0116-engineer-selects-clean-context-refresh-checkpoints.md",
       "type": "feedback/governance"
+    },
+    {
+      "content": {
+        "bytes": 6873,
+        "line_bytes": 196,
+        "lines": 121,
+        "sha256": "21a083595c3e2cef90565224e0bf2f6f410f54fc44e0871e8a279f51aba67b78"
+      },
+      "id": "0117",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected; implementation and qualification pending"
+        ],
+        "knowledge_id": "isf-reduction-and-group-contract",
+        "knowledge_status": "current",
+        "questions": [
+          "what syntax and bit order are selected for SPECFORGE byte-group reductions?",
+          "what must be preserved before parameterized reductions can ship?"
+        ]
+      },
+      "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",
+      "type": "language and lowering contract"
     }
   ],
   "schema_version": 1,
