@@ -2405,6 +2405,21 @@ Both proofs retain the complete source and each original subtree, independent
 whole-node reconstruction and native descriptor/node/owner refusal controls.
 Their products overlap; no recorded task contract is discarded. All active
 frontier ancestors and current registry owners remain in the live task tree.
+Additional closed source-audit subtrees now use exact native version objects
+under the same retention contract. Complete source and before/after snapshots
+retain; independent whole-node reconstruction and genuine native controls
+qualify each terminal. A final delivery reader also rejects unrelated task
+edits, omitted nodes, narrowed ownership and primitive-type substitutions:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/closed_task_capacity.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/verify_closed_task_delivery.py
+```
+
+Default replay uses the dated admission snapshot. Add `--current` for a
+separate check of current registry-owner and terminal eligibility. Complete
+source, extracted nodes and retained snapshots overlap; no task contract is
+discarded, and no original semantic reader or complete helper runs.
 
 
 
