@@ -1,0 +1,12 @@
+{
+  "component_exit_status": null,
+  "group_absent_at_followup": true,
+  "observed_group": 75287,
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.93",
+  "scope": "The passive observer failed decoding unrelated OS process arguments as UTF-8. The component printed its positive footer, but its exit status was not captured by the failed observer and is not qualified. No signals were sent. This ad hoc observer is retired; the unchanged standard guard/component path must provide the actual status.",
+  "source": {
+    "bytes": 2909,
+    "sha256": "fb3d863b7a3b4aa2c1ea570f0131c6ddb84cf6a787c5144b7f4d00e21dff9b82"
+  },
+  "status": 1
+}

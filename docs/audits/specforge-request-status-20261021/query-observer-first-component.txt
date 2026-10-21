@@ -1,0 +1,1 @@
+source-recovery-card: exact retained source, live original questions, current canonical/replay routes and public query results hold

@@ -1,0 +1,16 @@
+ram-guard: PID 75260; host 81.9%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s
+Traceback (most recent call last):
+  File "./.artifacts/tmp/specforge-query-diagnostic-20261021/watch.py", line 22, in <module>
+    raw=subprocess.check_output(['/bin/ps','-axo','pid=,ppid=,lstart=,command='],text=True)
+  File "<PYTHON_STDLIB>/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "<PYTHON_STDLIB>/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_STDLIB>/subprocess.py", line 1208, in communicate
+    stdout = self.stdout.read()
+  File "<frozen codecs>", line 325, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe9 in position 291405: invalid continuation byte

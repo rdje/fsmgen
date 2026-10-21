@@ -1,0 +1,50 @@
+import gzip,hashlib,json,os,signal,subprocess,time
+from pathlib import Path
+ROOT=Path.cwd()
+QUESTION='why did native0 prerequisites fail after custody?'
+OUTPUT=Path('.artifacts/logs/specforge-query-diagnostic-20261021.json')
+assert not OUTPUT.exists()
+assert os.environ.get('FSMGEN_RAM_GUARD_ACTIVE')=='1'
+def identity(raw): return dict(bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest())
+def normalize(raw): return raw.decode().replace(str(ROOT),'.')
+keys=dict(KM_ROOT=str(ROOT),KM_SCAN_DIRS='docs/knowledge docs/decisions',KM_OUTPUT='KNOWLEDGE_MAP.md',KM_SHARD_DIR='knowledge-map/generated',KM_QUERY_CACHE_DIR='.artifacts/knowledge-map/query',KM_TITLE='Knowledge Map')
+environment=dict(os.environ)
+for key,value in keys.items():
+ if key=='KM_ROOT' or not environment.get(key): environment[key]=value
+commands=[('git-root',['git','-C','knowledge-map/scripts','rev-parse','--show-toplevel'],None),('wrapper',['knowledge-map/scripts/query_knowledge_map.sh','--no-cache',QUESTION],None),('direct-query',['perl','knowledge-map/scripts/knowledge_map.pl','query','--no-cache',QUESTION],environment)]
+result=dict(owner='SEMANTIC-INTROSPECTION-MCP-FRONTIER.93',scope='Bounded distinct read-only bootstrap/wrapper/direct controls; informational timing does not attribute the historical timeout. Each diagnostic gets a new owned session for timeout cleanup; this differs from the original adapter process placement. No historical model/cohort/helper executes.',guard={k:os.environ[k] for k in ['FSMGEN_RAM_GUARD_ACTIVE','FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT','FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB']},cases=[])
+for label,argv,env in commands:
+ start=time.monotonic()
+ process=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env,start_new_session=True)
+ timed_out=False
+ try:
+  stdout,stderr=process.communicate(timeout=60)
+ except subprocess.TimeoutExpired:
+  timed_out=True
+  try: os.killpg(process.pid,signal.SIGTERM)
+  except ProcessLookupError: pass
+  try: stdout,stderr=process.communicate(timeout=3)
+  except subprocess.TimeoutExpired:
+   try: os.killpg(process.pid,signal.SIGKILL)
+   except ProcessLookupError: pass
+   stdout,stderr=process.communicate(timeout=3)
+ elapsed=time.monotonic()-start
+ try:
+  os.killpg(process.pid,0)
+ except ProcessLookupError:
+  absent=True
+ except PermissionError:
+  absent=False
+ else:
+  absent=False
+ row=dict(label=label,argv=argv,pid=process.pid,status=process.returncode,timed_out=timed_out,elapsed_seconds_informational=elapsed,owned_session=True,group_absent=absent,stdout=normalize(stdout),stderr=normalize(stderr),raw_streams=dict(stdout=identity(stdout),stderr=identity(stderr)))
+ if env is not None: row['selected_environment']={key:('.' if key=='KM_ROOT' else env[key]) for key in keys}
+ result['cases'].append(row)
+ OUTPUT.write_text(json.dumps(result,sort_keys=True,indent=2)+'\n')
+ assert absent,'owned group settlement is not established'
+ print(label+': '+str(row['status'])+'; timeout='+str(timed_out),flush=True)
+ if timed_out or process.returncode!=0:
+  break
+result['controller']=identity(Path(__file__).read_bytes())
+OUTPUT.write_text(json.dumps(result,sort_keys=True,indent=2)+'\n')
+print('Diagnostic receipt retained; historical causality is not inferred from positive controls.')

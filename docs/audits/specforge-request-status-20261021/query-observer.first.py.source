@@ -1,0 +1,48 @@
+import json,os,re,signal,subprocess,time
+from pathlib import Path
+root=Path.cwd(); start=time.monotonic()
+log=Path('.artifacts/logs/specforge-query-qualified-20261021.txt')
+trace=Path('.artifacts/logs/specforge-query-observation-20261021.jsonl')
+assert not log.exists() and not trace.exists()
+pattern=re.compile(r'^\s*(\d+)\s+(\d+)\s+(\w+\s+\w+\s+\d+\s+\S+\s+\d+)\s+(.*)$')
+def group_exists(pid):
+ try: os.killpg(pid,0)
+ except ProcessLookupError: return False
+ return True
+with log.open('xb') as output,trace.open('x') as observations:
+ command=['scripts/check_source_recovery_card.sh']
+ process=subprocess.Popen(command,stdin=subprocess.DEVNULL,stdout=output,stderr=subprocess.STDOUT,start_new_session=True)
+ def record(value):
+  observations.write(json.dumps(value,sort_keys=True)+'\n'); observations.flush()
+ record(dict(event='start',owner='SEMANTIC-INTROSPECTION-MCP-FRONTIER.93',command=command,pid=process.pid,scope='Passive OS process metadata hints only; new diagnostic session differs from original adapter placement. No historical native identity or continuous execution-stage claim. Underlying public query timeout and RAM limits are unchanged.'))
+ samples=0
+ while process.poll() is None:
+  if samples<1000:
+   rows={}
+   raw=subprocess.check_output(['/bin/ps','-axo','pid=,ppid=,lstart=,command='],text=True)
+   for line in raw.splitlines():
+    m=pattern.match(line)
+    if m:
+     text=m[4].replace(str(root),'.')
+     text=re.sub(r'/opt/homebrew/Cellar/python@[^/]+/[^/]+/Frameworks/Python.framework/Versions/[^/]+/Resources/Python.app/Contents/MacOS/Python','<PYTHON>',text)
+     rows[int(m[1])]=dict(pid=int(m[1]),parent=int(m[2]),start_display=m[3],command=text)
+   selected={process.pid}; previous=None
+   while selected!=previous:
+    previous=set(selected); selected.update(pid for pid,row in rows.items() if row['parent'] in selected)
+   record(dict(event='sample',elapsed_seconds_informational=time.monotonic()-start,processes=[rows[pid] for pid in sorted(selected) if pid in rows]))
+   samples+=1
+  elif samples==1000:
+   record(dict(event='sampling_gap',reason='fixed observation capacity reached; command continues under its existing guard'))
+   samples+=1
+  time.sleep(2)
+ status=process.wait(); required_cleanup=group_exists(process.pid)
+ if required_cleanup:
+  record(dict(event='owned_group_cleanup',group=process.pid,signal='SIGTERM'))
+  os.killpg(process.pid,signal.SIGTERM); time.sleep(3)
+  if group_exists(process.pid):
+   record(dict(event='owned_group_cleanup',group=process.pid,signal='SIGKILL'))
+   os.killpg(process.pid,signal.SIGKILL); time.sleep(1)
+ absent=not group_exists(process.pid)
+ record(dict(event='finish',status=status,group_absent=absent,required_cleanup=required_cleanup,elapsed_seconds_informational=time.monotonic()-start))
+assert absent,'owned diagnostic session did not settle'
+raise SystemExit(status if status else (1 if required_cleanup else 0))

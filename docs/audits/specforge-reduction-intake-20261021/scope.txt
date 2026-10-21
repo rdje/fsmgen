@@ -1,0 +1,46 @@
+# SPECFORGE byte-group reduction intake — 2026-10-21
+
+Receipt and baseline owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.91`.
+Required/optional delivery owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92`.
+
+The director supplied `sf-isf-byte-group-reduction` from the sibling SPECFORGE
+public request directory, resolving the temporary wait for `.12`, and then
+prioritized implementation/answers of all five packets followed by a qualified
+push and tracked response. Only FSMGen is writable.
+
+`packet.json` retains request/signoff/expected/command material, exact source
+bytes and supplied bounded strict-check observations. Every member retains
+its byte length and SHA-256. The local ISF copies match that packet exactly.
+The foreign `commands.sh` was read and retained as data, never executed.
+Historical pin/upstream/corpus observations are supplied context, not results
+re-derived here.
+
+`current-checks.json` contains actual current `--strict --check --json`
+commands, statuses and complete normalized reports at
+`15a9dceec64f26ba514102abbaf80bd9b367a7c4`. The unrolled binary-XOR baseline
+passes; slice and parameterized unary XOR both fail with the precise arity
+error. Only the current repository root is normalized to `.`. Original raw
+stream hashes/sizes are retained, but their raw bytes are not; no byte-exact
+reconstruction claim follows.
+
+This confirms a missing feature consistent with the present contract. Unary
+XOR reduces an entire operand to one bit; it does not itself implement one
+parity bit per byte. Required delivery must select an explicit grouping form
+and prove default/override widths, group ordering, a short last group, target
+width diagnostics, scheduled FSM, supported HDL and public report contracts.
+Vector inversion is optional; logical negation must keep its existing meaning.
+The packet's illustrative whole-vector form is not a selected group syntax.
+
+Re-derivation: run the stored relative commands on the retained inputs under
+`scripts/run_with_ram_guard.sh`. Saved-only independent identity/outcome and
+refusal controls run without compiler or HDL execution:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-request-status-20261021/verify.py
+```
+
+Durability: the packet, source copies, full normalized current products,
+manifest and independent controls are committed with the canonical feedback,
+book and explicit implementation leaves. No reduction implementation or HDL
+runtime result is claimed. SPECFORGE `.46.c` remains blocked until a qualified
+published revision is pinned and integrated by SPECFORGE.

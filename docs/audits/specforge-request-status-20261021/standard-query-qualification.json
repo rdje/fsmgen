@@ -1,0 +1,11 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "scripts/check_source_recovery_card.sh"
+  ],
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.93",
+  "scope": "Unchanged standard source-recovery component with its original query deadline and memory envelope; current qualification only, not historical causal repair.",
+  "status": 0,
+  "stdout_stderr": "ram-guard: PID 79848; host 79.5%; host cutoff 88%; descendant RSS cutoff 4096 MiB; poll 2s\nsource-recovery-card: exact retained source, live original questions, current canonical/replay routes and public query results hold\n"
+}

@@ -1,0 +1,327 @@
+{
+  "cases": {
+    "duration-baseline": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-duration-intake-20260930/baseline-good.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1695,
+          "sha256": "c76a1e7b4452963906d6dde9f5bda54922bb217c23318ae4b26593436ad5596b"
+        }
+      },
+      "source": "docs/audits/specforge-duration-intake-20260930/baseline-good.isf",
+      "source_identity": {
+        "bytes": 229,
+        "sha256": "089ef9857e195d0eb7b8d567757d6ff5904cd155585861ee10d39f4816692970"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"link_quiet\",\n      \"signal_count\" : 2,\n      \"state_count\" : 236\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-duration-intake-20260930/baseline-good.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"input\",\n            \"name\" : \"start\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"done\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : null,\n            \"origin\" : \"explicit\"\n         }\n      ],\n      \"resolved_path\" : \"./docs/audits/specforge-duration-intake-20260930/baseline-good.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"matched\" : false\n   }\n}\n"
+    },
+    "duration-units": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-duration-intake-20260930/wait-in-ms.isf"
+      ],
+      "expected_success": false,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1958,
+          "sha256": "532733ab71a1f5b0fc53475c7fc4785e8b1bb074c963ea4de31be932bcadd585"
+        }
+      },
+      "source": "docs/audits/specforge-duration-intake-20260930/wait-in-ms.isf",
+      "source_identity": {
+        "bytes": 229,
+        "sha256": "069ce6a1f7dcc07521a53412d8f5c884f5fdc096cdc9bdae593e8193c9085261"
+      },
+      "status": 1,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 1,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : true,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {\n         \"error\" : 1\n      },\n      \"success\" : false,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [\n      {\n         \"code\" : null,\n         \"expected_child_source_file\" : null,\n         \"expected_rtl_metadata_file\" : null,\n         \"family\" : \"unclassified\",\n         \"generated_child_source\" : null,\n         \"message\" : \"Transaction 'quiet': runtime dynamic wait count expression '(time 12 ms)' must use a supported expression operator shape in transaction body\",\n         \"migration_hint_available\" : false,\n         \"parent_composition_source\" : null,\n         \"rtl_metadata_file\" : null,\n         \"severity\" : \"error\",\n         \"source_file\" : \"./docs/audits/specforge-duration-intake-20260930/wait-in-ms.isf\",\n         \"stability\" : \"unclassified\",\n         \"summary\" : \"Unclassified FSMGen failure.\",\n         \"support_accounting\" : {\n            \"matched\" : false\n         }\n      }\n   ],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-duration-intake-20260930/wait-in-ms.isf\",\n      \"resolved_path\" : \"./docs/audits/specforge-duration-intake-20260930/wait-in-ms.isf\"\n   },\n   \"success\" : false\n}\n"
+    },
+    "frequency-declaration": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-duration-intake-20260930/clock-frequency.isf"
+      ],
+      "expected_success": false,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1877,
+          "sha256": "172b811d7f84fd6254db61e06290f30f61851d2628be2b3849970fecc990f0f9"
+        }
+      },
+      "source": "docs/audits/specforge-duration-intake-20260930/clock-frequency.isf",
+      "source_identity": {
+        "bytes": 248,
+        "sha256": "d79b82d7427d25a7cc3c4d860415840910a625fb4f80cc1cec3a56255de73fb7"
+      },
+      "status": 1,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 1,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : true,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {\n         \"error\" : 1\n      },\n      \"success\" : false,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [\n      {\n         \"code\" : null,\n         \"expected_child_source_file\" : null,\n         \"expected_rtl_metadata_file\" : null,\n         \"family\" : \"unclassified\",\n         \"generated_child_source\" : null,\n         \"message\" : \"Error: (clock ...) requires exactly one name\",\n         \"migration_hint_available\" : false,\n         \"parent_composition_source\" : null,\n         \"rtl_metadata_file\" : null,\n         \"severity\" : \"error\",\n         \"source_file\" : \"./docs/audits/specforge-duration-intake-20260930/clock-frequency.isf\",\n         \"stability\" : \"unclassified\",\n         \"summary\" : \"Unclassified FSMGen failure.\",\n         \"support_accounting\" : {\n            \"matched\" : false\n         }\n      }\n   ],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-duration-intake-20260930/clock-frequency.isf\",\n      \"resolved_path\" : \"./docs/audits/specforge-duration-intake-20260930/clock-frequency.isf\"\n   },\n   \"success\" : false\n}\n"
+    },
+    "named-timers": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-timer-intake-20260930/named-timers.isf"
+      ],
+      "expected_success": false,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1874,
+          "sha256": "729e7b5657a73dbfc1d1c57b94f6b62b788fe5b18672d71ee9efa813aba94795"
+        }
+      },
+      "source": "docs/audits/specforge-timer-intake-20260930/named-timers.isf",
+      "source_identity": {
+        "bytes": 368,
+        "sha256": "08a6dfcb09b78343e36fbe0e93b1d9fab1e3177e87843d62db2c4ce47d8d725b"
+      },
+      "status": 1,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 1,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : true,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {\n         \"error\" : 1\n      },\n      \"success\" : false,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [\n      {\n         \"code\" : null,\n         \"expected_child_source_file\" : null,\n         \"expected_rtl_metadata_file\" : null,\n         \"family\" : \"unclassified\",\n         \"generated_child_source\" : null,\n         \"message\" : \"Error: unknown actor clause 'timers' in actor 'link_timers'\",\n         \"migration_hint_available\" : false,\n         \"parent_composition_source\" : null,\n         \"rtl_metadata_file\" : null,\n         \"severity\" : \"error\",\n         \"source_file\" : \"./docs/audits/specforge-timer-intake-20260930/named-timers.isf\",\n         \"stability\" : \"unclassified\",\n         \"summary\" : \"Unclassified FSMGen failure.\",\n         \"support_accounting\" : {\n            \"matched\" : false\n         }\n      }\n   ],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-timer-intake-20260930/named-timers.isf\",\n      \"resolved_path\" : \"./docs/audits/specforge-timer-intake-20260930/named-timers.isf\"\n   },\n   \"success\" : false\n}\n"
+    },
+    "record-input": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "isf/record_input.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 2607,
+          "sha256": "ffd22a96fe02f27a272cfd637456a60cc17cd1b8afd794b31e3dd65b263fb74b"
+        }
+      },
+      "source": "isf/record_input.isf",
+      "source_identity": {
+        "bytes": 365,
+        "sha256": "d444ca92ac52ad56258038ae0f1a4bfa6cf6686c8d5d62ab271c23204ba8616f"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"record_input\",\n      \"signal_count\" : 5,\n      \"state_count\" : 4\n   },\n   \"source\" : {\n      \"input\" : \"isf/record_input.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"input\",\n            \"name\" : \"start\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"input\",\n            \"fields\" : [\n               {\n                  \"lsb\" : 5,\n                  \"msb\" : 5,\n                  \"path\" : \"flag\",\n                  \"signed\" : 0,\n                  \"width\" : 1\n               },\n               {\n                  \"lsb\" : 0,\n                  \"msb\" : 4,\n                  \"path\" : \"data\",\n                  \"signed\" : 1,\n                  \"state_model\" : \"four_state\",\n                  \"width\" : 5\n               }\n            ],\n            \"name\" : \"packet\",\n            \"type\" : \"frame\",\n            \"type_kind\" : \"record\",\n            \"width\" : 6\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"seen\",\n            \"width\" : 5\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"done\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : null,\n            \"origin\" : \"legacy_default\"\n         }\n      ],\n      \"resolved_path\" : \"./isf/record_input.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"classification\" : \"supported_smoke\",\n      \"coverage\" : \"isf_pipeline_cli\",\n      \"entry_id\" : \"feature.isf_record_input\",\n      \"family\" : \"language_feature_fixture\",\n      \"matched\" : true,\n      \"source_kind\" : \"isf\",\n      \"strict_supported\" : true\n   }\n}\n"
+    },
+    "record-input-children": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "isf/record_input_children.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 3666,
+          "sha256": "6cd50d0c5a6668967493ca40770e4722683a82b6ee8a892de2f097a39a35d15e"
+        }
+      },
+      "source": "isf/record_input_children.isf",
+      "source_identity": {
+        "bytes": 903,
+        "sha256": "f69ad37b3908f44542b027354a756eefac3b13512b36ba3c7f5db07fdd2535af"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : 4,\n      \"module_name\" : \"record_input_children_top\",\n      \"signal_count\" : 9,\n      \"state_count\" : 0\n   },\n   \"source\" : {\n      \"input\" : \"isf/record_input_children.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"input\",\n            \"domain\" : \"io\",\n            \"name\" : \"start\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"input\",\n            \"domain\" : \"io\",\n            \"fields\" : [\n               {\n                  \"lsb\" : 5,\n                  \"msb\" : 5,\n                  \"path\" : \"flag\",\n                  \"signed\" : 0,\n                  \"width\" : 1\n               },\n               {\n                  \"lsb\" : 0,\n                  \"msb\" : 4,\n                  \"path\" : \"data\",\n                  \"signed\" : 1,\n                  \"state_model\" : \"four_state\",\n                  \"width\" : 5\n               }\n            ],\n            \"name\" : \"packet\",\n            \"type\" : \"frame\",\n            \"type_kind\" : \"record\",\n            \"width\" : 6\n         },\n         {\n            \"direction\" : \"input\",\n            \"domain\" : \"idle\",\n            \"fields\" : [\n               {\n                  \"lsb\" : 5,\n                  \"msb\" : 5,\n                  \"path\" : \"flag\",\n                  \"signed\" : 0,\n                  \"width\" : 1\n               },\n               {\n                  \"lsb\" : 0,\n                  \"msb\" : 4,\n                  \"path\" : \"data\",\n                  \"signed\" : 1,\n                  \"state_model\" : \"four_state\",\n                  \"width\" : 5\n               }\n            ],\n            \"name\" : \"unused\",\n            \"type\" : \"frame\",\n            \"type_kind\" : \"record\",\n            \"width\" : 6\n         },\n         {\n            \"direction\" : \"output\",\n            \"domain\" : \"io\",\n            \"name\" : \"seen\",\n            \"width\" : 5\n         },\n         {\n            \"direction\" : \"output\",\n            \"domain\" : \"io\",\n            \"name\" : \"again\",\n            \"width\" : 5\n         },\n         {\n            \"direction\" : \"output\",\n            \"domain\" : \"io\",\n            \"name\" : \"done\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : \"idle\",\n            \"origin\" : \"domain_absent\"\n         },\n         {\n            \"domain\" : \"io\",\n            \"origin\" : \"explicit\"\n         }\n      ],\n      \"resolved_path\" : \"./isf/record_input_children.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"classification\" : \"supported_smoke\",\n      \"coverage\" : \"isf_pipeline_cli\",\n      \"entry_id\" : \"feature.isf_record_input_children\",\n      \"family\" : \"language_feature_fixture\",\n      \"matched\" : true,\n      \"source_kind\" : \"isf\",\n      \"strict_supported\" : true\n   }\n}\n"
+    },
+    "record-output-source": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "isf/record_output.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 4174,
+          "sha256": "af998124f1eff307ee2aff3c99677345c10eaf8b73bfac64cda772f4230b61c7"
+        }
+      },
+      "source": "isf/record_output.isf",
+      "source_identity": {
+        "bytes": 593,
+        "sha256": "80f8c343a6a9852ae6753817cdecaef717d2084421c437f58c4580ca194eee97"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"record_output\",\n      \"signal_count\" : 6,\n      \"state_count\" : 5\n   },\n   \"source\" : {\n      \"input\" : \"isf/record_output.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"input\",\n            \"name\" : \"start\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"input\",\n            \"fields\" : [\n               {\n                  \"lsb\" : 8,\n                  \"msb\" : 9,\n                  \"path\" : \"kind\",\n                  \"signed\" : 0,\n                  \"width\" : 2\n               },\n               {\n                  \"lsb\" : 3,\n                  \"msb\" : 7,\n                  \"path\" : \"payload.data\",\n                  \"signed\" : 1,\n                  \"state_model\" : \"four_state\",\n                  \"width\" : 5\n               },\n               {\n                  \"lsb\" : 2,\n                  \"msb\" : 2,\n                  \"path\" : \"payload.flags[0]\",\n                  \"signed\" : 0,\n                  \"width\" : 1\n               },\n               {\n                  \"lsb\" : 0,\n                  \"msb\" : 1,\n                  \"path\" : \"payload.flags[1]\",\n                  \"signed\" : 0,\n                  \"state_model\" : \"two_state\",\n                  \"width\" : 2\n               }\n            ],\n            \"name\" : \"incoming\",\n            \"type\" : \"frame\",\n            \"type_kind\" : \"record\",\n            \"width\" : 10\n         },\n         {\n            \"direction\" : \"output\",\n            \"fields\" : [\n               {\n                  \"lsb\" : 8,\n                  \"msb\" : 9,\n                  \"path\" : \"kind\",\n                  \"signed\" : 0,\n                  \"width\" : 2\n               },\n               {\n                  \"lsb\" : 3,\n                  \"msb\" : 7,\n                  \"path\" : \"payload.data\",\n                  \"signed\" : 1,\n                  \"state_model\" : \"four_state\",\n                  \"width\" : 5\n               },\n               {\n                  \"lsb\" : 2,\n                  \"msb\" : 2,\n                  \"path\" : \"payload.flags[0]\",\n                  \"signed\" : 0,\n                  \"width\" : 1\n               },\n               {\n                  \"lsb\" : 0,\n                  \"msb\" : 1,\n                  \"path\" : \"payload.flags[1]\",\n                  \"signed\" : 0,\n                  \"state_model\" : \"two_state\",\n                  \"width\" : 2\n               }\n            ],\n            \"name\" : \"packet\",\n            \"type\" : \"frame\",\n            \"type_kind\" : \"record\",\n            \"width\" : 10\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"seen\",\n            \"width\" : 5\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"done\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : null,\n            \"origin\" : \"explicit\"\n         }\n      ],\n      \"resolved_path\" : \"./isf/record_output.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"classification\" : \"supported_smoke\",\n      \"coverage\" : \"isf_pipeline_cli\",\n      \"entry_id\" : \"feature.isf_record_output\",\n      \"family\" : \"language_feature_fixture\",\n      \"matched\" : true,\n      \"source_kind\" : \"isf\",\n      \"strict_supported\" : true\n   }\n}\n"
+    },
+    "reset-absent": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-unstated-reset-20260930/clock-domain-no-reset.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1776,
+          "sha256": "5b26cb6f720c806a65e989f1c5489d0d36e70d0a24e05bd72b922e2d48e50779"
+        }
+      },
+      "source": "docs/audits/specforge-unstated-reset-20260930/clock-domain-no-reset.isf",
+      "source_identity": {
+        "bytes": 173,
+        "sha256": "858e54c8e1795b8ce23c7221c500a1efe848f8e5b864ae73c5a1afc85faabfcc"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"link_state\",\n      \"signal_count\" : 2,\n      \"state_count\" : 2\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-unstated-reset-20260930/clock-domain-no-reset.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"input\",\n            \"domain\" : \"link\",\n            \"name\" : \"start\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"output\",\n            \"domain\" : \"link\",\n            \"name\" : \"done\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : \"link\",\n            \"origin\" : \"domain_absent\"\n         }\n      ],\n      \"resolved_path\" : \"./docs/audits/specforge-unstated-reset-20260930/clock-domain-no-reset.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"matched\" : false\n   }\n}\n"
+    },
+    "reset-explicit": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-unstated-reset-20260930/baseline-good.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1691,
+          "sha256": "d87c026045b2501155fda937fa54604b0f4e237afcbf89004e08482e9c6323ed"
+        }
+      },
+      "source": "docs/audits/specforge-unstated-reset-20260930/baseline-good.isf",
+      "source_identity": {
+        "bytes": 174,
+        "sha256": "3df2246049cdc0566cd85a93dea514ef1480644b03b5071b1b25963dd5c60f2d"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"link_state\",\n      \"signal_count\" : 2,\n      \"state_count\" : 2\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-unstated-reset-20260930/baseline-good.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"input\",\n            \"name\" : \"start\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"done\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : null,\n            \"origin\" : \"explicit\"\n         }\n      ],\n      \"resolved_path\" : \"./docs/audits/specforge-unstated-reset-20260930/baseline-good.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"matched\" : false\n   }\n}\n"
+    },
+    "reset-omitted": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-unstated-reset-20260930/omitted-reset.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1697,
+          "sha256": "e92a057ee2f3b1283622b979301289f81f96eb254ea7de5e8b8cbf1d032a1297"
+        }
+      },
+      "source": "docs/audits/specforge-unstated-reset-20260930/omitted-reset.isf",
+      "source_identity": {
+        "bytes": 139,
+        "sha256": "f840b7c36dc4ffb9eec6b00dfc8e1b80fe88b7cb3df18077f65c9984f928fb31"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"link_state\",\n      \"signal_count\" : 2,\n      \"state_count\" : 2\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-unstated-reset-20260930/omitted-reset.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"input\",\n            \"name\" : \"start\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"done\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : null,\n            \"origin\" : \"legacy_default\"\n         }\n      ],\n      \"resolved_path\" : \"./docs/audits/specforge-unstated-reset-20260930/omitted-reset.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"matched\" : false\n   }\n}\n"
+    },
+    "timer-baseline": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-timer-intake-20260930/baseline-good.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1798,
+          "sha256": "7d9e7902919b2707af556d4c6d30ad123ce9adc1eb09543ef6fdcbb5c2761312"
+        }
+      },
+      "source": "docs/audits/specforge-timer-intake-20260930/baseline-good.isf",
+      "source_identity": {
+        "bytes": 226,
+        "sha256": "533ee9195e6b2c5cf9602168fd445cf86dfaa57aae4a6683ab602bd83209a5f6"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"link_timers\",\n      \"signal_count\" : 3,\n      \"state_count\" : 4\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-timer-intake-20260930/baseline-good.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"input\",\n            \"name\" : \"start\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"input\",\n            \"name\" : \"ack\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"done\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : null,\n            \"origin\" : \"explicit\"\n         }\n      ],\n      \"resolved_path\" : \"./docs/audits/specforge-timer-intake-20260930/baseline-good.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"matched\" : false\n   }\n}\n"
+    }
+  },
+  "normalization": "Only the current repository root is replaced with a dot in streams; raw byte identities remain separate.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.91",
+  "revision": "15a9dceec64f26ba514102abbaf80bd9b367a7c4",
+  "schema": "fsmgen.specforge_request_status.v1"
+}

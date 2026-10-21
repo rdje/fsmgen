@@ -1,6 +1,6 @@
 ---
 id: specforge-feature-intake-and-strict-port-question
-title: SPECFORGE feature intentions, unknown-port validation defect and width/interface controls
+title: SPECFORGE requests and controls
 answers:
   - "where is the response to SPECFORGE's six feature requests and strict-port question?"
   - "does accepting an unknown interface-port clause mean it is supported?"
@@ -9,26 +9,30 @@ answers:
   - "where is the SPECFORGE storage-register-access request owned?"
   - "why does read-only actor storage status appear as an HDL input?"
   - "why do generated transaction children duplicate or export actor storage?"
-date: 2026-09-30
+  - "why did the SPECFORGE handoff gate fail?"
+date: 2026-10-21
 status: current
 tags: [specforge, isf, parameters, interface, verification, semantic-api, mcp, storage, register-access]
 evidence: t/1904-isf-generated-child-storage-reads.t; docs/audits/generated-child-storage-ownership-20260926.json; docs/decisions/0107-actor-storage-has-one-owner-across-generated-children.md; t/1903-isf-internal-storage-ownership.t; docs/audits/specforge-storage-register-access-intake-20260926.json; docs/SPECFORGE_FEEDBACK_RESPONSE.md; docs/audits/specforge-feature-intake-20260926.json; docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md
 reverify: scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature-intake.py .artifacts/specforge-intake-recheck-new && scripts/run_with_ram_guard.sh -- python3 -B docs/audits/replay-specforge-feature-intake.py .artifacts/storage-access-recheck-new --storage-access
 ---
 
-`docs/SPECFORGE_FEEDBACK_RESPONSE.md`, under `2026-09-26: Configuration, Verification And
-Phase-Metadata Requests`, records required/optional scopes, dependencies and order for the supplied
-packets. Parent `.33` owns them; intake `.33.1` implements none of those features.
+`docs/SPECFORGE_FEEDBACK_RESPONSE.md` records September 26 configuration, verification and
+phase-metadata required/optional scopes, dependencies and order. Parent `.33` owns them;
+intake `.33.1` implements none.
 
-The response's current delivery status also records the complete unstated-reset
-question answer and the later packed record-input source admission. Reset was
-answered in `f6c44aa5a4517967632d25c2a190d2f1c2e22f59`; record inputs are admitted
-in `25c01f0127144922ade78951b91439e1d9221c08`, with frontend/public,
-generated/domain/native and consumer qualification still open. Record outputs,
-root-list ports and variants remain deferred; durations and named timers are
-not implemented. The book matrix now distinguishes this admitted source subset
-from full feature delivery. Dated refused intake observations remain historical
-evidence. Status replies must also reach the tracked response, not only chat.
+The October 21 handoff acknowledges `.7`–`.10` and `.12` (SEM `.92`).
+Durations/timers remain absent. Reset was answered at
+`f6c44aa5a4517967632d25c2a190d2f1c2e22f59`. Record inputs were admitted at
+`25c01f0127144922ade78951b91439e1d9221c08`; selected inputs are qualified.
+Output/copy admission is bounded; generated outputs, member writes,
+runtime and full consumer delivery remain open. Root-list ports/variants are
+optional. Publication/caller integration are separate; its register is read-only.
+Book subsets agree; old refusals stay historical. Replies belong in the tracked response.
+
+Handoff gate: SEM `.93` owns unattributed query timeout, current passes and observer
+failure; complete evidence: `docs/audits/specforge-request-status-20261021/`.
+No limits changed; current passes do not prove historical repair.
 
 At `a7bf398ac3c1008b996bf0a92bdd18c9464d9fda`, native strict checks accepted `bogus-clause` and
 unsupported `present` port options and emitted the same HDL as the clause-free control except its
@@ -60,8 +64,7 @@ Partial/bank and competing writer qualification remains owned by .39.2.2.4.
 Resolved reset widths reject overflow without
 warnings. Explicit bindings and local state remain separate; decision `0107` owns shared semantics.
 
-Audits retain exact caller bytes/hashes, native reports, output-role controls and the independent
-HDL width oracle. Replay uses retained inputs and a fresh repository-relative same-volume
-destination, capturing current outcomes without signing off changed behavior. Use a new destination
-each time. Caller-wide impact counts were not independently measured; controls qualify neither the
-whole caller corpus, future features nor four-state knownness.
+Audits retain caller bytes/hashes, native reports, output-role controls and an independent
+HDL width oracle. Replay needs a fresh repository-relative same-volume destination each time;
+it captures current outcomes without signing off changed behavior. Caller-wide counts remain
+unmeasured; controls do not qualify the whole corpus, future features or four-state knownness.

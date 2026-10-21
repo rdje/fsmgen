@@ -17,6 +17,66 @@ behavior so FSMGen maintainers can reproduce locally.
 
 ## High-Level Response
 
+### SPECFORGE request handoff — 2026-10-21
+
+FSMGen acknowledges receipt of all five supplied packets, `FSMGEN-REQUESTS.7`–`.10`
+and `.12`. Requests `.7`–`.10` already had FSMGen owners; `.12` is now retained
+and assigned to SEM `.92`. Forwarding these packets again is not a prerequisite. The SPECFORGE records
+still say `signed_off` with `forwarded: null`; that foreign tracking state was
+read only and has not been changed here. Receipt, implementation and downstream
+integration are separate milestones.
+
+| SPECFORGE request | FSMGen disposition | What SPECFORGE can use / what remains |
+| --- | --- | --- |
+| `.7` — physical-time durations | Accepted; SEM `.60.1`; implementation open. | Existing cycle-count bounds remain available. Physical units, declared clock-rate conversion and counter-based duration waits are not delivered. Contract selection is `.60.1.2`; FSMGen owns conversion, directed rounding, parameter override/count-width behavior and reports. Do not invent a clock rate or unroll a large duration as an implied substitute. |
+| `.8` — named timers | Accepted; SEM `.60.2`; implementation open. | Existing transaction watchdogs retain their error-path meaning. They do not provide concurrent named timers or ordinary expiry conditions. Contract selection is `.60.2.2`; cycle-based timers can be delivered independently of physical-time units. Start/restart/stop, reset/control precedence, concurrent expiry and reports remain required. |
+| `.9` — unstated reset | Answered; SEM `.60.3` done. | Omitted legacy reset selects asynchronous active-low `rst_n` and reports `legacy_default`. An explicit reset reports `explicit`. A clock-only named domain has no reset, reports `domain_absent`, and does not guarantee startup state or values. No form leaves reset policy unresolved until instantiation. SPECFORGE must decide whether its adapter may accept the compiler default; details and report locations are in the dated answer below. |
+| `.10` — aggregate interface ports | Accepted; SEM `.60.4`; partial delivery. | The qualified packed-record input subset is available locally: local/imported types, scalar field reads, exact-type input-to-storage copies, public reports, and the documented SystemVerilog profile. Whole record outputs/copies have bounded source/carrier/public admission. Generated output handoffs, output member writes and output execution/full consumer signoff remain open; list-root ports and variants remain optional. Do not close the complete request on input delivery alone. |
+| `.12` — byte-group reductions | Accepted; SEM `.92`; implementation open. | The supplied unrolled baseline passes, while unary XOR slice and parameterized forms remain refused. Required unary XOR/AND/OR, parameter-correct grouped reductions (including a short final group), target-width diagnostics, FSM/HDL and public reports are owned by `.92.1`–`.92.4`; optional vector inversion is `.92.5`. SPECFORGE `.46.c` stays blocked until the new form is qualified, published and integrated. |
+
+**Availability:** the reset answer and record-input changes are committed in
+this FSMGen checkout. Read-only `git ls-remote` on 2026-10-21 confirms published `main` is still
+`54ac1c22d5314943027494f4c270f9c612e62704`; it predates these changes.
+The exact receipt is in `docs/audits/specforge-request-status-20261021/`.
+An old SPECFORGE pin cannot consume later local commits. A qualified publish followed by SPECFORGE's own
+pin refresh and bundle/integration checks is still needed. FSMGen will publish
+an exact revision and documented subset; no SPECFORGE pin or repository is
+changed here. Required full-CI and historical qualification gates remain owned.
+
+For bounded integration checking after an appropriate revision is available:
+
+```bash
+./bin/fsmgen --strict --check --json isf/record_input.isf
+./bin/fsmgen --strict --emit-semantic-json isf/record_input.isf
+./bin/fsmgen --emit-schedule-json isf/record_input.isf
+```
+
+Use `isf/record_input_children.isf` for the documented generated/domain input
+subset, and SystemVerilog for its qualified HDL profile. Passing
+`isf/record_output.isf` source checking does not establish the outstanding
+output execution or generated-output support. Current bounded checks and
+complete reports are retained in that audit directory; they do not rerun HDL
+behavior or the caller corpus. Request `.12` has its own fresh local baseline in
+`docs/audits/specforge-reduction-intake-20261021/`.
+
+**Priority and completion:** the director requests these deliveries at the next
+handoff-ready checkpoint on 2026-10-21, followed by a qualified push and a
+response here. This supersedes ordinary independent-PNT ordering. Required
+reduction contract selection is SEM `.92.1`; durations `.60.1`, named timers
+`.60.2` and remaining required aggregate ports `.60.4` retain implementation
+ownership. Their exact dependency order must follow the checked contracts,
+including generic-width behavior, rather than making packet receipt or optional
+extensions a completion condition. The reset question needs no new feature.
+Publication remains SEM `.69` with the existing qualification gates; the new
+push instruction does not assert those gates have passed.
+
+**Handoff finding:** SPECFORGE's awaiting-forward register and FSMGen's existing
+receipt/delivery records disagree for `.7`–`.10`. This response supplies the
+FSMGen acknowledgement and exact remaining boundaries. SPECFORGE's owner can
+reconcile its register against this response; no additional feature is implied
+by that bookkeeping correction.
+
+
 ### Current delivery status — 2026-10-02
 
 The requested feature set is not complete. This is the canonical downstream

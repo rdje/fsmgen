@@ -1,0 +1,30 @@
+{
+  "files": {
+    "baseline-good.isf": {
+      "bytes": 597,
+      "sha256": "74276311d8560f74c7dbda7a5dd0f8c398023593f50783a634e6262dbf984776"
+    },
+    "byte-parity-param-width.isf": {
+      "bytes": 395,
+      "sha256": "c14c840d7eca4d86be5721a6f4cbdee928761d3bee960cd2918d57f008f41fdf"
+    },
+    "current-checks.json": {
+      "bytes": 9633,
+      "sha256": "7e2d5f9f6f6dc6d974ddc2c102bcef23305916f4118e332a897b47fdb222a55c"
+    },
+    "packet.json": {
+      "bytes": 30672,
+      "sha256": "53302c455ec1a7b63b738662e9221c6679e6b795857b133fa189598c17a8dc6c"
+    },
+    "reduction-over-slice.isf": {
+      "bytes": 436,
+      "sha256": "347d17cca1d39cee0341a343374f983fa83bb3130c7cc75a539f8db12a0f812e"
+    },
+    "scope.txt": {
+      "bytes": 2575,
+      "sha256": "d3a6d7e80c5fdcb7f94a321e0c69ab053e4499ecf8e53aa9b7d55e862fa77204"
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.91",
+  "schema": "fsmgen.specforge_reduction_intake_manifest.v1"
+}

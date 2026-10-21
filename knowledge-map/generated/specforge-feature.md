@@ -1,7 +1,7 @@
 # Knowledge Map: `specforge-feature`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **7** uniquely owned question entries.
+> **1** facts · **8** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -9,6 +9,7 @@
 - q="does accepting an unknown interface-port clause mean it is supported?" · facts=[specforge-feature-intake-and-strict-port-question](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)
 - q="where is the SPECFORGE storage-register-access request owned?" · facts=[specforge-feature-intake-and-strict-port-question](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)
 - q="where is the response to SPECFORGE's six feature requests and strict-port question?" · facts=[specforge-feature-intake-and-strict-port-question](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)
+- q="why did the SPECFORGE handoff gate fail?" · facts=[specforge-feature-intake-and-strict-port-question](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)
 - q="why do generated transaction children duplicate or export actor storage?" · facts=[specforge-feature-intake-and-strict-port-question](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)
 - q="why does an undriven positive-width actor output disappear?" · facts=[specforge-feature-intake-and-strict-port-question](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)
 - q="why does read-only actor storage status appear as an HDL input?" · facts=[specforge-feature-intake-and-strict-port-question](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)
@@ -17,7 +18,7 @@
 
 ### specforge-feature-intake-and-strict-port-question
 
-_SPECFORGE feature intentions, unknown-port validation defect and width/interface controls_
+_SPECFORGE requests and controls_
 
-- **date:** 2026-09-30 · **status:** current
+- **date:** 2026-10-21 · **status:** current
 - **source and verification:** [`docs/knowledge/specforge-feature-intake-and-strict-port-question.md`](../../docs/knowledge/specforge-feature-intake-and-strict-port-question.md)

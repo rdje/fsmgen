@@ -2793,3 +2793,17 @@ the strict delivered reader without changing the live task:
 ```bash
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-census-20261020/rollover_task.py
 ```
+
+The SPECFORGE handoff acknowledges the supplied duration, named-timer,
+unstated-reset, record-port and reduction packets. The canonical
+[feedback response](reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt)
+separates receipt, local delivery, publication and caller integration. Required
+feature delivery is the director's priority after the handoff checkpoint.
+A retained source-query timeout remains causally open under SEM `.93`;
+current positive controls do not explain that earlier failure. Inspect its
+native source, saved diagnostics and adverse evidence controls without rerunning
+the query or an original semantic workload:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/specforge-request-status-20261021/query_verify.py
+```

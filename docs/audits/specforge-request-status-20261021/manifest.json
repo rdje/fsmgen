@@ -1,0 +1,87 @@
+{
+  "files": {
+    "card-consolidation.json": {
+      "bytes": 13899,
+      "sha256": "983c8e55b95c59558e22d3d9db7dee8c6bc0c51cdeee6d63ad5b0e1d70c30e3e"
+    },
+    "current-checks.json": {
+      "bytes": 36477,
+      "sha256": "c140d54fbb5fb6858906a4e747046fa902476f624e8995904ac3302918df1aff"
+    },
+    "first-gate-refusal.json.gz": {
+      "bytes": 61399,
+      "sha256": "9966cc183f7473ebb736c8f4f813dd2746945b53001595a68edd89e25ef5482b"
+    },
+    "handoff.json": {
+      "bytes": 9616,
+      "sha256": "7da93bc5ac594e648fb1332e95dff010bb875fe53c2cd4e57a48ec72a745737c"
+    },
+    "query-diagnostic-controller.py.source": {
+      "bytes": 3297,
+      "sha256": "01a7da47b4763d36ffb8178aaa549aec47f66ef3deaa97cc81016558f5ef7308"
+    },
+    "query-diagnostic-log.txt": {
+      "bytes": 265,
+      "sha256": "fcce2bf8480b454244d8f6aa642ef0710e75f010b2530d56edbd0fab8122cda2"
+    },
+    "query-diagnostic.json": {
+      "bytes": 3486,
+      "sha256": "ff28fe32de4badcb41ad167ae94cbb6036f206d7949ba7c4cb3e0e934b9a5efc"
+    },
+    "query-observer-first-component.txt": {
+      "bytes": 132,
+      "sha256": "7bc71e06e05af49ac019a8e3bc3650fab23b75f2ab8749b674abae9f8c6906f0"
+    },
+    "query-observer-first-error.txt": {
+      "bytes": 1006,
+      "sha256": "691207be6cd4221c20e301a7892c01f14ed068b77f3714d9a5de0d8c2e934304"
+    },
+    "query-observer-first-refusal.json": {
+      "bytes": 634,
+      "sha256": "5f7fb0a6a926468af77344afffbeed1e77da2633ccd564b3f1eb8296b704cca4"
+    },
+    "query-observer-first-trace.jsonl": {
+      "bytes": 17936,
+      "sha256": "8025a9df5732b245a3ff54d272082d5dabe94bd3369086459e8a6910570694a7"
+    },
+    "query-observer.first.py.source": {
+      "bytes": 2909,
+      "sha256": "fb3d863b7a3b4aa2c1ea570f0131c6ddb84cf6a787c5144b7f4d00e21dff9b82"
+    },
+    "query-verifier-first-refusal.json": {
+      "bytes": 5643,
+      "sha256": "2ad8038464926661c7deed883035c382101c96a8c2d9013853791e8ba46e1ac1"
+    },
+    "query_verify.py": {
+      "bytes": 5956,
+      "sha256": "24b8893e67306e12d966131a1c64169d1cb5df851214148e6881b99357b772c3"
+    },
+    "scope.txt": {
+      "bytes": 3977,
+      "sha256": "4fe191db08ac1dcd97b19e599ae6943e5e14b3be45ebd6ef2794a3884369969f"
+    },
+    "second-gate-refusal.json.gz": {
+      "bytes": 140428,
+      "sha256": "c163d5b7f86d26bc6bd49c1bd3f48903146048b19ba4289c336f4b4ba4dcd50b"
+    },
+    "standard-query-qualification.json": {
+      "bytes": 601,
+      "sha256": "4b092bba78511c10e720cfa40d673feec0e3575c16f51f8419ee09570b601a0f"
+    },
+    "third-gate-refusal.json.gz": {
+      "bytes": 281005,
+      "sha256": "d044e8fe8e5e16841324e2d540b73b4154ecff2197b459a3e7772454afddc711"
+    },
+    "verification.json": {
+      "bytes": 985,
+      "sha256": "06102f1cbf9418dbf52ad882843baec0b3df35ef95b499f03cd4320176823f88"
+    },
+    "verify.py": {
+      "bytes": 7329,
+      "sha256": "57498cab3e697f0f0ff38b920fc26685a0c9b63ed7aa09ed7dd2569d12e471bc"
+    }
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.91",
+  "revision": "15a9dceec64f26ba514102abbaf80bd9b367a7c4",
+  "schema": "fsmgen.specforge_request_status_manifest.v1"
+}

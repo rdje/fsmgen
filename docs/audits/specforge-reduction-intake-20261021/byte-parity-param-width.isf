@@ -1,0 +1,19 @@
+(actor requester
+  (params
+    (DATA_WIDTH 16)
+    (DATA_BYTES 2)
+  )
+  (clock CLK)
+  (reset (RESETn async active_low))
+  (watchdog 65536)
+  (interface
+    (output DATA (width DATA_WIDTH))
+    (output DATACHK (width DATA_BYTES))
+    (output VALID (width 1))
+  )
+  (drive (DATA val) (DATA val))
+  (drive (VALID val) (VALID val))
+  (rule parity_bytes (== VALID 1)
+    (DATACHK (! (^ DATA)))
+  )
+)

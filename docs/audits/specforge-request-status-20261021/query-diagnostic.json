@@ -1,0 +1,105 @@
+{
+  "cases": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "knowledge-map/scripts",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "elapsed_seconds_informational": 0.36697183293290436,
+      "group_absent": true,
+      "label": "git-root",
+      "owned_session": true,
+      "pid": 67106,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 37,
+          "sha256": "e0990cb420f7fa168a8a1a5a860c25136db0400bc7b431eda73b6ad45fe9da5e"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": ".\n",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "knowledge-map/scripts/query_knowledge_map.sh",
+        "--no-cache",
+        "why did native0 prerequisites fail after custody?"
+      ],
+      "elapsed_seconds_informational": 4.624759332975373,
+      "group_absent": true,
+      "label": "wrapper",
+      "owned_session": true,
+      "pid": 67119,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 144,
+          "sha256": "6f573925f0ae4b3dd7cad1f0b4a51210a7c5a57b18c9ac94b35100033d714b9a"
+        }
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "why did native0 prerequisites fail after custody?\tclaim-verification-record-enforcement\tdocs/knowledge/claim-verification-record-enforcement.md\n",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "perl",
+        "knowledge-map/scripts/knowledge_map.pl",
+        "query",
+        "--no-cache",
+        "why did native0 prerequisites fail after custody?"
+      ],
+      "elapsed_seconds_informational": 2.4062853341456503,
+      "group_absent": true,
+      "label": "direct-query",
+      "owned_session": true,
+      "pid": 67189,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 144,
+          "sha256": "6f573925f0ae4b3dd7cad1f0b4a51210a7c5a57b18c9ac94b35100033d714b9a"
+        }
+      },
+      "selected_environment": {
+        "KM_OUTPUT": "KNOWLEDGE_MAP.md",
+        "KM_QUERY_CACHE_DIR": ".artifacts/knowledge-map/query",
+        "KM_ROOT": ".",
+        "KM_SCAN_DIRS": "docs/knowledge docs/decisions",
+        "KM_SHARD_DIR": "knowledge-map/generated",
+        "KM_TITLE": "Knowledge Map"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "why did native0 prerequisites fail after custody?\tclaim-verification-record-enforcement\tdocs/knowledge/claim-verification-record-enforcement.md\n",
+      "timed_out": false
+    }
+  ],
+  "controller": {
+    "bytes": 3297,
+    "sha256": "01a7da47b4763d36ffb8178aaa549aec47f66ef3deaa97cc81016558f5ef7308"
+  },
+  "guard": {
+    "FSMGEN_RAM_GUARD_ACTIVE": "1",
+    "FSMGEN_RAM_GUARD_EFFECTIVE_HOST_MAX_PCT": "88",
+    "FSMGEN_RAM_GUARD_EFFECTIVE_PROCESS_MAX_RSS_MB": "4096"
+  },
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.93",
+  "scope": "Bounded distinct read-only bootstrap/wrapper/direct controls; informational timing does not attribute the historical timeout. Each diagnostic gets a new owned session for timeout cleanup; this differs from the original adapter process placement. No historical model/cohort/helper executes."
+}

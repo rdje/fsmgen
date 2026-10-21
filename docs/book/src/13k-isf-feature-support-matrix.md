@@ -19,9 +19,10 @@ work awaiting implementation.
 | Optional interfaces | Zero widths are rejected; the unsupported `present` option is rejected. | Explicit presence, absent-input values and supported per-instance specialization. |
 | Actor invariants | Verification checks are written inside transactions; their existing meaning is always-on. | Actor-level `assert`/`assume`/`cover`, including actors without transactions. |
 | Known-value checks | `known` and `isunknown` are unsupported. | Verification-only knownness with independent X/Z behavior evidence. |
-| Physical-time durations | Timing bounds use cycle counts; clocks carry signal identity without a declared rate. | Exact duration conversion against a declared frequency/period, authored-duration and derived-cycle reports, and counter-based duration waits while preserving existing cycle-count behavior. Owned by SEM `.60.1`; not shipped. |
-| Named timers | Transaction watchdog expiry is an error path; named actor timers and distinct per-await limits are refused. | Concurrent actor-owned timers with start/restart/stop, ordinary expiry conditions and schedule metadata. Cycle limits are required; duration limits follow duration support. Distinct per-await watchdog limits are optional. Owned by SEM `.60.2`; not shipped. |
-| Record interface ports | Local/imported packed actor record inputs, live scalar field reads and exact-type input-to-storage copies are admitted. Frontend/generated/domain source, carriers and complete public products are qualified; direct/generated binary behavior passes both emitter options with SystemVerilog parsing. Current ISF Verilog and selected VHDL profiles refuse precisely. Selected input delivery is qualified; full output-dependent consumer delivery remains open. | Record outputs and exact-type whole copies now have bounded source/carrier admission with conservative physical writer checks; bounded public source/profile/corpus products are qualified; generated/execution qualification and output member writes remain open. Root-list ports and variants are optional. The complete request is owned by SEM `.60.4` and is not finished. |
+| Physical-time durations | Cycle bounds; clocks name signals without rates. | SEM `.60.1`: exact conversion from declared frequency/period, authored-duration/derived-cycle reports and counter-based waits; preserve cycle counts. Not shipped. |
+| Named timers | Watchdog expiry is an error; named timers and distinct per-await limits refuse. | SEM `.60.2`: concurrent actor timers, start/restart/stop, ordinary expiry and reports. Cycle limits required; duration limits depend on durations; per-await watchdog limits optional. Not shipped. |
+| Unary and grouped reductions | Unrolled parity passes; unary XOR slices and parameterized operands refuse by arity. | SEM `.92`: unary XOR/AND/OR, parameter-sized groups, short tails, result-width refusal, FSM/HDL and public reports. Vector inversion optional. Not shipped. |
+| Record interface ports | Qualified record inputs: local/imported types, scalar reads, same-type storage copies, frontend/generated/domain carriers and complete public reports. Binary runs used SystemVerilog parsing for both emitter options; current Verilog/selected VHDL refuse. | SEM `.60.4`: input signoff done; whole outputs/copies have bounded source/carrier/public/profile/corpus admission with conservative writers. Generated outputs, execution, member writes and full consumer signoff remain open; root-list/variants optional. Details below and in [types](13j-type-enum-aggregate.md). |
 | Transaction phase groups | Membership cannot be carried as checked transaction metadata. | Checked phase/member/role facts without invented values, order or behavior. |
 
 Default/strict native/API/MCP queries reject unknown or malformed port options;
@@ -30,11 +31,14 @@ roles without added assignments. Reset-only outputs reset and hold under the
 module hardware-reset contract, with no semantic data-driver blocks. Evaluate
 presence/reset through realized semantic/HDL interfaces and behavior.
 
-Derived-width requests require generic-width support but retain distinct scope.
-[SPECFORGE feedback response](reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt)
-records scopes, repair order, reproductions, owners, delivery status and reset
-answers. Omitted resets use the legacy default; clock-only domains have no reset
-or guaranteed initialization. No form defers reset policy to instantiation.
+Derived widths require generic widths; their scope stays separate.
+[Feedback response](reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt)
+records scopes, repair order, reproductions, owners, delivery and reset answers.
+SPECFORGE `.7`–`.10` and `.12` are received and prioritized: required delivery,
+qualified publication, then response. Receipt, local delivery and integration
+differ; old pins lack new commits. Reset omission uses the legacy default;
+clock-only means no reset or guaranteed initialization. No form defers reset
+policy. Optional extensions stay separate.
 
 ## Status Vocabulary
 

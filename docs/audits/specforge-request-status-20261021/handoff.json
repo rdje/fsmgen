@@ -1,0 +1,180 @@
+{
+  "checked_on": "2026-10-21",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.91",
+  "remote": {
+    "command": [
+      "git",
+      "ls-remote",
+      "--exit-code",
+      "--heads",
+      "origin",
+      "main"
+    ],
+    "status": 0,
+    "stdout": "54ac1c22d5314943027494f4c270f9c612e62704\trefs/heads/main\n"
+  },
+  "request_records": {
+    "sf-isf-aggregate-interface-ports": {
+      "bytes": 1285,
+      "path": "../specforge/docs/upstream/fsmgen/sf-isf-aggregate-interface-ports/request.json",
+      "record": {
+        "failure_class": "rejected-input",
+        "feedback_record": "aggregate-interface-ports",
+        "forwarded": null,
+        "id": "sf-isf-aggregate-interface-ports",
+        "kind": "feature_request",
+        "owner": "FSMGEN-REQUESTS.10",
+        "resolution": null,
+        "schema_version": 1,
+        "signed_off": "2026-09-29",
+        "specforge_side": "SPECFORGE does not yet read layout tables into records (DOC-INTENT-TAXONOMY.4b) and lowers no link-layer interface; USB 3.2 is classed physical-link (default: no executable target, ADR 0033 section 6) and its owner directed these link-layer requests on 2026-09-29",
+        "status": "signed_off",
+        "title": "Record-typed interface ports whose fields a transaction reads and drives by name",
+        "upstream_reference": null,
+        "verified_on": [
+          {
+            "fsmgen_revision": "54ac1c22d5314943027494f4c270f9c612e62704",
+            "result": "reproduced: record-port and record-port-field-guard refused (aggregate type aliases only on actor-owned storage); baseline accepted (strict checks; no generation inside the pinned checkout)",
+            "role": "pinned"
+          },
+          {
+            "fsmgen_revision": "8513cef4254db4572ab8dd3c94f3953df358f0a9",
+            "result": "reproduced by commands.sh: the same two refused with the same diagnostic, baseline accepted",
+            "role": "upstream"
+          }
+        ]
+      },
+      "sha256": "54876a2b9ff400b212c7f68885f012aca443227875baae79cc0804c89e12c8a7"
+    },
+    "sf-isf-byte-group-reduction": {
+      "bytes": 1293,
+      "path": "../specforge/docs/upstream/fsmgen/sf-isf-byte-group-reduction/request.json",
+      "record": {
+        "failure_class": "rejected-input",
+        "feedback_record": "byte-group-reduction",
+        "forwarded": null,
+        "id": "sf-isf-byte-group-reduction",
+        "kind": "feature_request",
+        "owner": "FSMGEN-REQUESTS.12",
+        "resolution": null,
+        "schema_version": 1,
+        "signed_off": "2026-10-20",
+        "specforge_side": "SPECFORGE lowers one-bit parity checks over fixed-width signals since EXTRACTION-REPRESENTATION-GAPS.46.b; the 49 byte-granular checks over a parameterised width stay residuals, owned by EXTRACTION-REPRESENTATION-GAPS.46.c until a pin carries the form",
+        "status": "signed_off",
+        "title": "A reduction operator, and a per-byte reduction over a parameterised width, for parity check signals",
+        "upstream_reference": null,
+        "verified_on": [
+          {
+            "fsmgen_revision": "54ac1c22d5314943027494f4c270f9c612e62704",
+            "result": "reproduced: reduction-over-slice and byte-parity-param-width refused (expression operator '^' requires at least 2 operands); baseline accepted (strict checks; no generation inside the pinned checkout)",
+            "role": "pinned"
+          },
+          {
+            "fsmgen_revision": "82f0a5661eb79061dbb874fcb45b1066c29051a5",
+            "result": "reproduced by commands.sh: the same two refused with the same diagnostic, baseline accepted",
+            "role": "upstream"
+          }
+        ]
+      },
+      "sha256": "00d6acb7a4afadbf0dbde7f23c8e169f5925e4939645b7a104e5e1b7f2820b7c"
+    },
+    "sf-isf-duration-time-units": {
+      "bytes": 1492,
+      "path": "../specforge/docs/upstream/fsmgen/sf-isf-duration-time-units/request.json",
+      "record": {
+        "failure_class": "rejected-input",
+        "feedback_record": "duration-time-units",
+        "forwarded": null,
+        "id": "sf-isf-duration-time-units",
+        "kind": "feature_request",
+        "owner": "FSMGEN-REQUESTS.7",
+        "resolution": null,
+        "schema_version": 1,
+        "signed_off": "2026-09-29",
+        "specforge_side": "SPECFORGE keeps each timing record with its unit in its IR (TimingConstraintRecord) and lowers none; USB 3.2 is classed physical-link (default: no executable target, ADR 0033 section 6) and its owner directed these link-layer requests on 2026-09-29; representing the link-layer state machine is EXTRACTION-REPRESENTATION-GAPS.3.b.iii.g and later leaves",
+        "status": "signed_off",
+        "title": "Durations stated in time units, against a declared clock frequency, lowered to a counter",
+        "upstream_reference": null,
+        "verified_on": [
+          {
+            "fsmgen_revision": "54ac1c22d5314943027494f4c270f9c612e62704",
+            "result": "reproduced: wait-in-ms, watchdog-in-us and clock-frequency refused with the diagnostics in README section 4; baseline accepted (strict checks; no generation inside the pinned checkout); a 234-cycle static wait checks in 3 s, 2,345 in 21 s, 23,456 not in 90 s",
+            "role": "pinned"
+          },
+          {
+            "fsmgen_revision": "8513cef4254db4572ab8dd3c94f3953df358f0a9",
+            "result": "reproduced by commands.sh: the same three refused, baseline accepted; its schedule report lowers the 234-cycle wait to 236 states with no counter",
+            "role": "upstream"
+          }
+        ]
+      },
+      "sha256": "43b0a28f42af45275616cd7d780583dd5ebdd9c2d755a8a1bc49f7af892e9a9d"
+    },
+    "sf-isf-named-timers": {
+      "bytes": 1449,
+      "path": "../specforge/docs/upstream/fsmgen/sf-isf-named-timers/request.json",
+      "record": {
+        "failure_class": "rejected-input",
+        "feedback_record": "named-timers",
+        "forwarded": null,
+        "id": "sf-isf-named-timers",
+        "kind": "feature_request",
+        "owner": "FSMGEN-REQUESTS.8",
+        "resolution": null,
+        "schema_version": 1,
+        "signed_off": "2026-09-29",
+        "specforge_side": "SPECFORGE carries each timer's value, unit and the state it runs in (EXTRACTION-REPRESENTATION-GAPS.3.b.iii.c) and lowers none; carrying the state each expiry leads to is EXTRACTION-REPRESENTATION-GAPS.3.b.iii.g; USB 3.2 is classed physical-link (default: no executable target, ADR 0033 section 6) and its owner directed these link-layer requests on 2026-09-29",
+        "status": "signed_off",
+        "title": "Several author-declared named timers, started and stopped in bodies, whose expiry is an ordinary condition",
+        "upstream_reference": null,
+        "verified_on": [
+          {
+            "fsmgen_revision": "54ac1c22d5314943027494f4c270f9c612e62704",
+            "result": "reproduced: named-timers refused (unknown actor clause 'timers') and two-await-limits refused (single watchdog counter); baseline accepted (strict checks; no generation inside the pinned checkout)",
+            "role": "pinned"
+          },
+          {
+            "fsmgen_revision": "8513cef4254db4572ab8dd3c94f3953df358f0a9",
+            "result": "reproduced by commands.sh: the same two refused, baseline accepted; its schedule report has a pending_timeout state that pulses done and sets last_error",
+            "role": "upstream"
+          }
+        ]
+      },
+      "sha256": "2f96eb7a9ac9baabadbf88e1f81b53224827158e92f690ffc4830f9575aecb48"
+    },
+    "sf-isf-unstated-reset": {
+      "bytes": 1311,
+      "path": "../specforge/docs/upstream/fsmgen/sf-isf-unstated-reset/request.json",
+      "record": {
+        "failure_class": "unknown",
+        "feedback_record": "unstated-reset",
+        "forwarded": null,
+        "id": "sf-isf-unstated-reset",
+        "kind": "question",
+        "owner": "FSMGEN-REQUESTS.9",
+        "resolution": null,
+        "schema_version": 1,
+        "signed_off": "2026-09-29",
+        "specforge_side": "SPECFORGE's .isf adapter refuses a document whose clock and reset are not grounded in its own sentences (no source-grounded system clock/reset contract) and does not rely on FSMGen's default; the answer decides how FSMGEN-REQUESTS.9 lowers such a document",
+        "status": "signed_off",
+        "title": "Which .isf form states that the specification names no reset pin, and can a defaulted reset be told from a stated one?",
+        "upstream_reference": null,
+        "verified_on": [
+          {
+            "fsmgen_revision": "54ac1c22d5314943027494f4c270f9c612e62704",
+            "result": "reproduced: omitted-reset, clock-domain-no-reset and baseline all accepted (strict checks; no generation inside the pinned checkout)",
+            "role": "pinned"
+          },
+          {
+            "fsmgen_revision": "8513cef4254db4572ab8dd3c94f3953df358f0a9",
+            "result": "reproduced by commands.sh: all three accepted; the omitted reset's semantic JSON equals the stated baseline's apart from the input path, and the clock-only domain reports reset null",
+            "role": "upstream"
+          }
+        ]
+      },
+      "sha256": "9db23165ca977dadf9043d8a1e47a534d63c734b8e691110e0f0137f14f5f87b"
+    }
+  },
+  "schema": "fsmgen.specforge_handoff_receipt.v1",
+  "scope": "Read-only supplied request records and actual published main. FSMGen .7-.10 receipt already exists under .60; .12 is newly acknowledged under .92 after its temporary hold. The director prioritizes required implementations/answers, then qualified push and tracked response. No foreign record, pin, message or repository changed."
+}

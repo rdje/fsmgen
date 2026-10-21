@@ -1,0 +1,63 @@
+# SPECFORGE request handoff check — 2026-10-21
+
+Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.91`.
+
+This check reconciles existing receipt and delivery for SPECFORGE requests
+`.7`–`.10`. The director temporarily held `.12`, then supplied its packet and prioritized
+all five deliveries before a qualified push. Fresh reduction-source checks are
+retained separately in `docs/audits/specforge-reduction-intake-20261021/`; no
+reduction implementation is claimed.
+
+`current-checks.json` retains the exact command, status, source identity and
+complete normalized stdout/stderr for each bounded strict source check at
+`15a9dceec64f26ba514102abbaf80bd9b367a7c4`. Only the current repository root
+is replaced with `.` in streams; separate hashes/sizes identify original raw
+streams. The original unnormalized stream bytes are not retained, and no
+byte-exact raw-stream reconstruction is claimed. No compiler source changed.
+
+`handoff.json` retains read-only sibling request records and their original
+identities. They still have `signed_off` and `forwarded: null`, despite FSMGen's
+existing `.60` intake. Its actual `git ls-remote` result confirms published
+`main` is `54ac1c22d5314943027494f4c270f9c612e62704`. Local completion does
+not update that remote or SPECFORGE's pin. Existing HIAL/startup qualification,
+full CI and exact-SHA hosted qualification remain publication obligations;
+SEM `.69` owns the deferred push checkpoint. No foreign repo/ticket/pin was
+written, and no message was sent.
+
+Re-derivation: repeat each stored relative `argv` from the repository root
+under `scripts/run_with_ram_guard.sh` and compare semantic outcomes. This is a
+new source check, not replay of a spent runtime fixture. Current refusal cases
+are `duration-units`, `frequency-declaration` and `named-timers`; other listed
+sources pass. The reset cases expose respectively `legacy_default`, `explicit`
+and `domain_absent` in `source.reset_provenance`. Complete historical public
+transport/carrier/HDL evidence remains in the existing packet/delivery audits.
+The source-check observation does not establish new HDL behavior, output
+member writes, generated output handoffs or full aggregate delivery.
+
+Falsification: an independently fixed refusal-name set, exact expected argv,
+integer status, boolean report outcome, native Git source identity and literal
+reset origins distinguish these outcomes. Mutating accepted success, a refusal
+status, a source identity or a reset origin must fail those checks. The checks
+and their actual refusal output are recorded in the owning task verification.
+
+Durability: source inputs are committed already; complete normalized products,
+sibling status receipts and the data-file manifest are retained here in Git.
+The canonical downstream response and mdBook explain the same delivered,
+unimplemented, unpublished and held boundaries. This does not independently
+measure SPECFORGE's corpus or timing claims.
+
+The second complete staged gate has two separate refusals: the overview's
+per-part byte debt and one source-recovery query reaching its existing timeout.
+second-gate-refusal.json.gz retains the whole normalized diagnostic/index and
+source epoch with original byte identities. The overview consolidates duplicate
+status prose inside unchanged bounds; no feature detail or example is removed.
+
+The bounded query diagnostic's exact executed controller is retained as data in
+query-diagnostic-controller.py.source. query-diagnostic.json and its log retain
+Git-root, wrapper and direct-query positive controls, expected route and owned
+session settlement. The controller's new sessions differ from the original
+adapter placement. Timings are informational; no historical execution-stage or
+causal repair is established. SEM .93 remains P1-owned for observation at the
+next required qualification before publication. No query source or deadline
+was changed. The attempted cancellation found the failed gate already exited;
+no cancellation signal was sent.

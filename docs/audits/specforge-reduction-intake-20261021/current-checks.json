@@ -1,0 +1,95 @@
+{
+  "cases": {
+    "baseline-good": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-reduction-intake-20261021/baseline-good.isf"
+      ],
+      "expected_success": true,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1929,
+          "sha256": "69344a099041d0844c0d1999d6a575027ecce3e216ce7d1dc02087facb54d69e"
+        }
+      },
+      "source": "docs/audits/specforge-reduction-intake-20261021/baseline-good.isf",
+      "source_identity": {
+        "bytes": 597,
+        "sha256": "74276311d8560f74c7dbda7a5dd0f8c398023593f50783a634e6262dbf984776"
+      },
+      "status": 0,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 0,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : false,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {},\n      \"success\" : true,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"result\" : {\n      \"composition_child_count\" : null,\n      \"module_name\" : \"requester\",\n      \"signal_count\" : 22,\n      \"state_count\" : 0\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-reduction-intake-20261021/baseline-good.isf\",\n      \"interface_ports\" : [\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"DATA\",\n            \"width\" : 16\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"DATACHK0\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"DATACHK1\",\n            \"width\" : 1\n         },\n         {\n            \"direction\" : \"output\",\n            \"name\" : \"VALID\",\n            \"width\" : 1\n         }\n      ],\n      \"reset_provenance\" : [\n         {\n            \"domain\" : null,\n            \"origin\" : \"explicit\"\n         }\n      ],\n      \"resolved_path\" : \"./docs/audits/specforge-reduction-intake-20261021/baseline-good.isf\"\n   },\n   \"success\" : true,\n   \"support_accounting\" : {\n      \"matched\" : false\n   }\n}\n"
+    },
+    "byte-parity-param-width": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-reduction-intake-20261021/byte-parity-param-width.isf"
+      ],
+      "expected_success": false,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 2217,
+          "sha256": "976af70a57e176135470252d0fc58a77badc8c88fac610fa761942ce561a038d"
+        }
+      },
+      "source": "docs/audits/specforge-reduction-intake-20261021/byte-parity-param-width.isf",
+      "source_identity": {
+        "bytes": 395,
+        "sha256": "c14c840d7eca4d86be5721a6f4cbdee928761d3bee960cd2918d57f008f41fdf"
+      },
+      "status": 1,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 1,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : true,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {\n         \"error\" : 1\n      },\n      \"success\" : false,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [\n      {\n         \"code\" : null,\n         \"expected_child_source_file\" : null,\n         \"expected_rtl_metadata_file\" : null,\n         \"family\" : \"unclassified\",\n         \"generated_child_source\" : null,\n         \"message\" : \"Source file: './docs/audits/specforge-reduction-intake-20261021/byte-parity-param-width.isf'\\nError parsing FSM with adapter: Malformed expression operator '^' with 1 operand(s). This active form requires at least 2 operands. See docs/book/src/90-reference-map.md for the current supported boundary and owning chapter map.\",\n         \"migration_hint_available\" : false,\n         \"parent_composition_source\" : null,\n         \"rtl_metadata_file\" : null,\n         \"severity\" : \"error\",\n         \"source_file\" : \"./docs/audits/specforge-reduction-intake-20261021/byte-parity-param-width.isf\",\n         \"stability\" : \"unclassified\",\n         \"summary\" : \"Unclassified FSMGen failure.\",\n         \"support_accounting\" : {\n            \"matched\" : false\n         }\n      }\n   ],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-reduction-intake-20261021/byte-parity-param-width.isf\",\n      \"resolved_path\" : \"./docs/audits/specforge-reduction-intake-20261021/byte-parity-param-width.isf\"\n   },\n   \"success\" : false\n}\n"
+    },
+    "reduction-over-slice": {
+      "argv": [
+        "perl",
+        "bin/fsmgen",
+        "--strict",
+        "--check",
+        "--json",
+        "docs/audits/specforge-reduction-intake-20261021/reduction-over-slice.isf"
+      ],
+      "expected_success": false,
+      "raw_streams": {
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 2205,
+          "sha256": "38063b0606d07ef8d1536c36fe90bc9b88315c7e543cb8b81e4d158d72e56a3b"
+        }
+      },
+      "source": "docs/audits/specforge-reduction-intake-20261021/reduction-over-slice.isf",
+      "source_identity": {
+        "bytes": 436,
+        "sha256": "347d17cca1d39cee0341a343374f983fa83bb3130c7cc75a539f8db12a0f812e"
+      },
+      "status": 1,
+      "stderr": "",
+      "stdout": "{\n   \"check_schema_version\" : 1,\n   \"command\" : {\n      \"json\" : true,\n      \"mode\" : \"check\",\n      \"strict_mode\" : true,\n      \"target_language\" : \"systemverilog\"\n   },\n   \"diagnostic_summary\" : {\n      \"code_counts\" : {},\n      \"codes\" : [],\n      \"contract_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"diagnostic_count\" : 1,\n      \"diagnostic_summary_schema_version\" : 1,\n      \"has_diagnostics\" : true,\n      \"has_stable_codes\" : false,\n      \"matched_support_accounting\" : false,\n      \"report_source\" : \"FSM::Support::SerializableDiagnosticSummary\",\n      \"severity_counts\" : {\n         \"error\" : 1\n      },\n      \"success\" : false,\n      \"unique_codes\" : []\n   },\n   \"diagnostics\" : [\n      {\n         \"code\" : null,\n         \"expected_child_source_file\" : null,\n         \"expected_rtl_metadata_file\" : null,\n         \"family\" : \"unclassified\",\n         \"generated_child_source\" : null,\n         \"message\" : \"Source file: './docs/audits/specforge-reduction-intake-20261021/reduction-over-slice.isf'\\nError parsing FSM with adapter: Malformed expression operator '^' with 1 operand(s). This active form requires at least 2 operands. See docs/book/src/90-reference-map.md for the current supported boundary and owning chapter map.\",\n         \"migration_hint_available\" : false,\n         \"parent_composition_source\" : null,\n         \"rtl_metadata_file\" : null,\n         \"severity\" : \"error\",\n         \"source_file\" : \"./docs/audits/specforge-reduction-intake-20261021/reduction-over-slice.isf\",\n         \"stability\" : \"unclassified\",\n         \"summary\" : \"Unclassified FSMGen failure.\",\n         \"support_accounting\" : {\n            \"matched\" : false\n         }\n      }\n   ],\n   \"generated_output\" : {\n      \"emitted\" : false\n   },\n   \"producer\" : {\n      \"name\" : \"FSMGen\",\n      \"report_source\" : \"FSM::Support::CheckDiagnostics\"\n   },\n   \"source\" : {\n      \"input\" : \"docs/audits/specforge-reduction-intake-20261021/reduction-over-slice.isf\",\n      \"resolved_path\" : \"./docs/audits/specforge-reduction-intake-20261021/reduction-over-slice.isf\"\n   },\n   \"success\" : false\n}\n"
+    }
+  },
+  "normalization": "Only current repository root replaced with a dot in streams; raw stream identities retained separately, raw bytes not retained.",
+  "owner": "SEMANTIC-INTROSPECTION-MCP-FRONTIER.91",
+  "revision": "15a9dceec64f26ba514102abbaf80bd9b367a7c4",
+  "schema": "fsmgen.specforge_reduction_baseline.v1"
+}

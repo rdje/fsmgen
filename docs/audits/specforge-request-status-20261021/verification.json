@@ -1,0 +1,42 @@
+{
+  "controls": [
+    {
+      "label": "accepted-success",
+      "refusal": "boolean report outcome"
+    },
+    {
+      "label": "refusal-status",
+      "refusal": "integer outcome"
+    },
+    {
+      "label": "boolean-status",
+      "refusal": "integer outcome"
+    },
+    {
+      "label": "source-identity",
+      "refusal": "native source identity"
+    },
+    {
+      "label": "reset-origin",
+      "refusal": "literal reset origin"
+    },
+    {
+      "label": "omitted-case",
+      "refusal": "complete status cases"
+    },
+    {
+      "label": "reduction-success",
+      "refusal": "integer outcome"
+    },
+    {
+      "label": "reduction-arity",
+      "refusal": "exact unary-XOR refusal"
+    }
+  ],
+  "revision": "15a9dceec64f26ba514102abbaf80bd9b367a7c4",
+  "scope": "Saved source-check outcomes only; no compiler, HDL runtime or foreign code executes.",
+  "verifier": {
+    "bytes": 7329,
+    "sha256": "57498cab3e697f0f0ff38b920fc26685a0c9b63ed7aa09ed7dd2569d12e471bc"
+  }
+}
