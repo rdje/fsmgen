@@ -5751,9 +5751,81 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful in focused task/claim checks. Complete saved capture and prelaunch controls, native mdBook/source/index, independent fresh claim census, scripts/check_doctrines.sh and normal hooks gate publication. Original semantic/model/recipe/cohort does not execute; complete success and root diagnosis remain separate.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Diagnose the retained post-compile-only full-helper result and select its next owner.`
   Acceptance: `After the first actual result commits, reconstruct every complete original/current proof difference at its first refusal and require a separating intervention before repair. Split independent repair, native admission and retry. Also own the stale admitted AST addition comment in verify_compile_only_route.py: its compile-only projection is named incorrectly; reproduce by source inspection, correct under its own proof-conservation leaf and verify exact behavior. Whole ordered success alone closes the route container; original source/data/default/effect/runtime/custody/private/HIAL/full-CI qualifications remain separate.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.1`
+  Status: `done`
+  Goal: `Diagnose the complete allocation saved/current product without historical execution.`
+  Acceptance: `Use the committed complete post-compile-only actual refusal, immutable original allocation proof and exact native current reader/model references. Reconstruct and retain every complete original/current source/model/input/binding/control/scope product and all typed differing paths before classification. Require a separating declared-source-metadata-only intervention before selecting any repair. Historical programme/model/recipe bodies remain data; preserve first products even if later review refuses. Qualify genuine member/binding/native/source/capture/type/intervention controls, bounded fact/card routing and task/book/claim/staged/normal delivery. Inspect dependent allocation-data qualifier source metadata before scheduling subsequent repairs; no whole helper or original semantic cohort reruns.`
+  Verification: `Whole original/current allocation products and every typed differing path retain against nativef219e892a and the committed actual full-helper refusal. Only dispatch/operand/preparation/caller/fixed-gap programme metadata differs. Supplying original native bytes solely to declared source-metadata reads restores the complete original model-to-site binding, lexical compile/exec pairing, input/native-reference, review/control and scope product. Historical programme/model/recipe bodies remain data and no whole helper repeats. Complete first products retain in allocation-source-diagnosis.json.gz before cause classification or controls. Whole typed equality and canonical encoding independently conserve every other field. Genuine omitted difference/binding/programme/read, changed native/source/capture/intervention and Boolean/float source-size candidates refuse; float reaches JSON value kind. Current target source, every original native source record and the complete unchanged original proof authenticate; original fixed/reconstructed-source/AST/compile-only models remain shared data premises. Dependent qualify_operand_allocation.py remains byte-exact at nativef219e892a with SHA256 5e86ebcacb1da147c18feaf0e7a202d8e5e984c603fdb90a6ce1b380c3c5331b. Its final programmes field directly reads current qualifier/allocation source, while its stored proof freezes original metadata. This establishes a dependent metadata obligation, not a future runtime result: a targeted first actual capture and complete diagnosis are scheduled after primary reader repair and before native admission. Separate leaves own the primary repair, dependent capture/diagnosis/resolution, native admission and actual helper retry. The inaccurate AST projection comment is separately owned and next; its correction must preserve the complete original admission proof and functions through a new exclusive output. Re-derivation is whole native proof/source/model/input and current allocation product; falsification is the separating metadata-only intervention, canonical typed whole-product equality and genuine complete-record controls; durability is committed producer, complete first products/native capture, bounded fact routing, task/book and Git. The fact card retains every question/fact without byte growth. R13 scope and public APIs remain unchanged; book distinguishes this metadata diagnosis from saved-reader repair, dependent qualifier role and complete source/payload/namespace/default/effect/runtime/custody/private/HIAL/full-CI gaps. Focused task/claim, saved complete diagnostic/capture controls, native book/source/index, independent fresh claims, staged doctrine and normal hooks gate publication under unchanged resource/containment limits. The first focused publication run catches the newly expanded resolution container still marked pending. Complete failed test output retains in allocation-diagnosis-first-focused-refusal.json.gz; only its container status changes to active, then focused/native publication repeats. The complete saved diagnosis remains unchanged.`
+  Commit: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.1: diagnose complete allocation metadata refusal`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S programmes authenticates the unchanged native allocation reader; the committed whole helper refuses at operand_allocation.py:281. Complete typed products isolate only declared programme metadata. Original native metadata alone restores the whole immutable original allocation product.
+  - [x] **ADDRESSED (verified)** — Complete first original/current/intervention products retain before review. Genuine full-record member/binding/native/source/capture/intervention/type candidates reject, with float reaching JSON value kind. Primary repair, dependent metadata obligation and targeted first capture/diagnosis, native admission and actual retry are explicitly scheduled; no original proof or semantic body changes.
+  - [x] **NO REGRESSION** — All tests successful in focused task/claim checks. Complete saved diagnosis/capture and genuine controls, native book/source/index, independent claims, scripts/check_doctrines.sh and normal hooks gate publication. Original semantic/model/recipe/cohort and whole helper never rerun; source/effect/runtime/HIAL/full-CI qualifications retain.
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.2`
+  Status: `pending`
+  Goal: `Correct the compile-only admission projection comment with whole proof conservation.`
+  Acceptance: `The current verify_compile_only_route.py comment calls its compile-only projection an AST addition. Correct that wording under exact native before/after source conservation. Retain the original admission proof untouched and qualify a new exclusive proof whose complete derived product differs only in the explicit verifier source bytes. Preserve every function body and original authority/source/proof/control/command result, default replay and native current route. Book/task/claim/staged/normal delivery and commit precede moving on; no whole helper or original semantic cohort runs.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3`
+  Status: `active`
+  Goal: `Resolve the diagnosed allocation reader and dependent source-role frontier.`
+  Acceptance: `After complete diagnosis commits, select independently bounded repair, source/proof native admission and actual retry leaves from the separated cause. Inspect and own dependent allocation-data qualifier metadata without borrowing current runtime authority. Preserve all original proofs, exact semantic/model/API bodies, helper protocol/membership/order, source/data/default/effect/runtime/custody/private/HIAL/full-CI gates and unchanged resource/containment limits. Schedule every necessary repair before closing this resolution container.`
+  Verification: `pending`
+  Commit: `pending`
+
+  Children: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.1, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.2, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.3, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.4, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.5, SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.1`
+  Status: `pending`
+  Goal: `Repair allocation saved programme metadata.`
+  Acceptance: `Use the committed complete diagnosis and unchanged original allocation proof. Add explicit native saved versus current/write metadata selection through the shared getter; preserve every pre-existing function body and assemble/review/control API. Qualify actual saved/current/disabled-assertion CLI, genuine source/member/type/native/full-record controls and unchanged original model/site/input/control contracts. Preserve exclusive publication. Commit task/book/claim/focused/staged/normal delivery before the dependent qualifier capture; no whole helper repeats.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.2`
+  Status: `pending`
+  Goal: `Retain the first actual dependent allocation-data qualifier result.`
+  Acceptance: `Only after primary repair commits, run the unchanged dependent qualifier default once under unchanged limits and retain exact committed sources, native original proof/input references, command/status/whole streams and source/proof before/after. Preserve first success or refusal without attributing differing fields. Qualify genuine complete-record/native/member/type/result controls and commit synchronized delivery before diagnosis; no whole helper or historical semantic producer runs.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.3`
+  Status: `pending`
+  Goal: `Diagnose the complete dependent qualifier product.`
+  Acceptance: `After its first actual result commits, retain complete native original/current qualifier products and original proof/source/control premises. Reconstruct every typed difference and require a separating metadata-only intervention or schedule the actual alternative cause before repair. Historical code stays data; record all shared premises, genuine whole-record controls and missing legs. Commit book/task/claims/focused/staged/normal delivery before resolution.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.4`
+  Status: `pending`
+  Goal: `Resolve the diagnosed dependent qualifier source-role frontier.`
+  Acceptance: `Use the committed actual capture and full diagnosis. Preserve the actual positive/changed-model refusal behavior, original native data proof, source/input contracts and every semantic/API/control body. Any metadata-expression change is explicitly isolated and conserves the full remaining function/source product. Qualify saved/current/disabled-assertion behavior, complete-record/native/member/type/source controls and new exclusive role evidence without recapturing originals. Commit synchronized delivery before native admission; unresolved nonmetadata findings require exact owned follow-up.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.5`
+  Status: `pending`
+  Goal: `Admit qualified allocation and dependent readers to the native route.`
+  Acceptance: `Only after both repairs and role proofs commit, bind exact source/wrapper/proof epochs while conserving every prior authority/source/proof and original reader. Preserve helper protocol, membership, published and admitted order; add only separately qualified wrappers. Prove actual listing/public queries and genuine source/proof/native/member/type/order controls. Update current book replay and commit all required gates before the actual complete helper.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.3.3.2.3.3.4.5.5.5.2.3.6`
+  Status: `pending`
+  Goal: `Retry the actual complete helper after allocation source-role admission.`
+  Acceptance: `From clean committed source-role repairs/admission use the unchanged recoverable collector and exact task-only declaration under unchanged limits. Retain complete native/source/tree/listing/task boundaries and actual first command/status/streams, qualify before cause attribution, commit before diagnosis. Whole ordered success alone closes its route container; original source/data/default/effect/runtime/custody/private/HIAL/full-CI gates remain separate.`
   Verification: `pending`
   Commit: `pending`
 

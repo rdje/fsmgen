@@ -2454,8 +2454,23 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 An earlier task-declaration typo changed nothing. The collector then refused
 its initial task-only boundary before listing or launching readers. Its native
 source, actual stream and observed empty output directory retain separately;
-the saved verifier checks that failure too. The exact differing allocation
-fields and their cause remain unproved under the next diagnostic owner.
+the saved verifier checks that failure too. The complete allocation diagnosis
+now isolates programme metadata in `default_dispatch.py`, `operand_inventory.py`,
+`prepare.py`, `qualify_caller_modules.py` and `qualify_fixed_module_gap.py`.
+Original native metadata alone restores every model/site binding, lexical
+compile/exec pair, input/reference, review/control and scope field. Whole first
+products retain before classification; historical programmes and fixed models
+remain data. Replay the complete comparison, separating intervention and
+genuine full-record member/type/source/native controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/diagnose_allocation_sources.py
+```
+
+Saved-reader repair, the dependent allocation-data qualifier's source role,
+native admission and actual whole-helper success remain separately owned.
+The dependent qualifier directly records current source metadata; its first
+actual result after primary repair will be captured before diagnosis.
 Whole-helper success remains open, along with original callable identity,
 stdin and prelaunch custody, complete source/default/effect/runtime and private
 qualifications. Task-history

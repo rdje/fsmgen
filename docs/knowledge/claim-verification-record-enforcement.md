@@ -1,6 +1,6 @@
 ---
 id: claim-verification-record-enforcement
-title: Claim evidence and original reader recovery
+title: Claim evidence and reader recovery
 answers:
   - "where is the claim template review?"
   - "how is claim verification mechanically enforced?"
@@ -44,11 +44,11 @@ Dated factory/source/intake/cache/compiler facts, original scope:
 cat docs/audits/original-join-parent-acceptance-20261018/source-recovery-card-7748b2db479ffdf559f49ede08335b7418ebecfe979a9a9da973d9e582e2594a.txt
 ```
 
-Frontier: `MEMORY.md`, then:
+Frontier: `MEMORY.md` →
 `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`.
 
 List: `bash docs/audits/original-join-parent-acceptance-20261018/verify_claim_readers.sh --list`.
 
 Epoch/failure/native/private gaps stay.
-Git pins cache/dispatch/fixed-gap/caller/operand/AST/preparation/compile-only metadata.
+Git pins cache/dispatch/fixed-gap/caller/operand/AST/preparation/compile-only/allocation metadata.
 Uniqueness missed membership/order. Git snapshots bind published order/membership; qualified additions retain.
