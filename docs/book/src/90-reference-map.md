@@ -2343,11 +2343,12 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/live_operand_route.py --current
 ```
 
-The first command compares every prior authority frame and helper command with
-the complete native predecessor and rechecks every retained refusal candidate.
-Both checks qualify the installed route. The second executes only listing and
-public queries. The bounded card is compared with the committed diagnosis;
-its earlier dated body and every original question remain retained.
+The first command checks the recorded preparation admission against its
+complete native predecessor and rechecks every retained refusal candidate.
+The second checks currently installed reader sources with actual listing and
+public queries. Later reader repairs require their own native admission before
+that current-source check can pass. The bounded card is compared with the
+committed diagnosis; its earlier body and every original question retain.
 The actual full helper at native `a9b95de36` passes the repaired AST-input
 reader, then stops at `preparation_correction.py:206` during its complete saved
 comparison. It exits with status 1; no RAM cutoff is reported. Complete native
@@ -2418,10 +2419,22 @@ scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acc
 The first diagnostic used a preparation-only collection key in one negative
 control and failed. Its complete source, comparison and streams retain; the
 corrected binding control qualifies a new exclusive artifact. Default replay
-authenticates that failed attempt without promoting it. Reader repair, native
-admission and actual whole-helper success remain separate steps. Original
-callable identity, stdin and prelaunch custody, complete source/default/effect/
-runtime and private qualifications remain open. Task-history
+authenticates that failed attempt without promoting it.
+The repaired compile-only reader now authenticates original native programme
+metadata. Every existing function body and `derive(raw, references)` remain
+byte-exact. Its actual default CLI passes the unchanged original proof; explicit
+`--current` metadata and disabled assertions refuse. Explicit `--write` retains
+live metadata selection and the original exclusive save boundary. Replay the
+complete role and full-record source/member/type/native controls:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_compile_only_roles.py
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/original-join-parent-acceptance-20261018/qualify_compile_only_role_records.py
+```
+
+Native admission and actual whole-helper success remain separate steps.
+Original callable identity, stdin and prelaunch custody, complete source/
+default/effect/runtime and private qualifications remain open. Task-history
 retention is complete. Replay the exact saved history proofs, or add `--current`
 to separately census current registry-owner eligibility:
 

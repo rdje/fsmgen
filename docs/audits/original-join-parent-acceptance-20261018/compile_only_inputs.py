@@ -19,7 +19,9 @@ import preparation_correction as correction
 import prepare
 import prerequisite_inputs as prerequisite
 import saved_program_input as saved
+import saved_reader_sources as source
 
+SELF = 'compile_only_inputs.py'
 AUTHORITY = '0691a5fb19e7f43d11bd85466a9571c363609e4a'
 OWNER = correction.OWNER.rsplit('.', 1)[0] + '.2'
 PATH = execute.AUDIT / 'compile-only-inputs-qualified.json.gz'
@@ -27,7 +29,7 @@ BASE = 'docs/audits/original-context-cause-consumer-prerequisites-20261012'
 READER = BASE + '/verify.py'
 RECEIPTS = ('preparation-first', 'preparation-second')
 MODEL_PATHS = (fixed_inputs.PATH, operands.INPUT, correction.PATH)
-PREMISES = tuple(dict.fromkeys(('compile_only_inputs.py', *correction.PREMISES)))
+PREMISES = tuple(dict.fromkeys((SELF, *correction.PREMISES)))
 CUSTODY_OWNER = operands.OWNER.rsplit('.', 3)[0] + '.3'
 LIMITS = dict(original_compile_callable_qualified=False, original_stdin_observed=False,
               prelaunch_custody_qualified=False, original_execution_qualified=False,
@@ -55,6 +57,11 @@ FIRST_LOOP = """for row, error in ((first, 'AssertionError'), (second, "NameErro
          'whole explicitly after-invocation preparation source reconstruction')
     compile(raw, row['source']['path'], 'exec')
 """
+
+
+def source_metadata(*, current=False):
+    """Original native programme bodies are metadata, never executable inputs."""
+    return {name: prepare.blob(source.body(name, current=current)) for name in PREMISES}
 
 
 def original_domain(raw):
@@ -239,8 +246,11 @@ def controls(expected, raw, references):
 
 
 if __name__ == '__main__':
+    if not __debug__:
+        raise SystemExit('Acceptance assertions must be enabled.')
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--write', action='store_true')
+    parser.add_argument('--current', action='store_true')
     args = parser.parse_args()
     raw = {str(path): execute.read(path) for path in MODEL_PATHS}
     for name, body in raw.items(): assert body == epoch.read(AUTHORITY, name)
@@ -257,7 +267,7 @@ if __name__ == '__main__':
     product = dict(result=value, controls=controls(value, raw, references), references=references,
         inputs={name: prepare.blob(body) for name, body in raw.items()},
         native_python=dict(implementation=sys.implementation.name, version=list(sys.version_info)),
-        programmes={name: prepare.blob(execute.read(execute.AUDIT / name)) for name in PREMISES})
+        programmes=source_metadata(current=args.write or args.current))
     if args.write: execute.save(PATH, product)
     else: bounded.strict_equal(json.loads(gzip.decompress(execute.read(PATH))), product)
     print('Complete preparation input bytes and compilation names bind to standalone discarded compiler results; native source/data joins and genuine controls agree. Current syntax compilation executes no code; original input/callable/prelaunch and complete allocation/effect/runtime qualifications remain open.')
