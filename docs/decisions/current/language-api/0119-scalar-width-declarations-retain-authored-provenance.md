@@ -6,11 +6,13 @@ answers:
   - "how will private ISF width declarations distinguish equal defaults?"
   - "why cannot an ISF width parameter be copied blindly into IAL0 size syntax?"
   - "where are authored bank depth and watchdog parameter references lost?"
+  - "which scopes must generated child width declarations preserve?"
+  - "where is library parameter override source provenance lost?"
 date: 2026-10-22
 status: current
 tags: [isf, width, parameters, lowering, provenance]
-evidence: docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: python3 -B docs/audits/width-carrier-contract-verify-20261022.py
+evidence: docs/audits/width-physical-verify-20261022.py; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
+reverify: python3 -B docs/audits/width-physical-verify-20261022.py
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -111,3 +113,40 @@ Reverify these retained observations with
 first namespace/static-use and independent single-slot control receipts, joins
 selected source hashes to Git, and rejects hostile width/kind/equality products.
 No HDL tools, API/MCP qualification or full IR capture is claimed.
+
+## Physical associations and selected private IR contract
+
+The `.2.3.1.2` audit captures actual source preparations, formal plans, physical
+actors, full module IR, domain realizations and carriers. Formal plan declarations
+and projected source ports retain width records; module port/storage projections
+discard them. Domain clones preserve lexical owners while renaming module actors.
+Library and resolved ATL clones likewise retain exported source owners before
+their IR projections. The known reusable-formal refusal remains separately owned.
+
+Connected generated controls use an actor alias of W=8 for one formal and local
+transaction W=4 for another. Child module parameters currently contain local W=4;
+copying the actor-derived token into that module without its environment would
+lose or change its meaning. Activation clauses retain original override values
+beside separately resolved instance products. Library use overrides differ:
+`_validate_use_params` overwrites original values before cloning. A named LIMIT
+and literal16 produce identical complete private products. Mandatory
+`.2.3.2.1.2` preserves that source before resolution; specialization stays `.4`.
+
+Select a detached private IR map `_width_declarations` keyed by actual physical
+signal, with original declaration identity, token/kind/owner and explicit lexical
+scope. Use actual formal marks/plans, local-port precedence and bank element
+indices, never equal widths or generated-name guesses. Keep scoped canonical
+parameter/constant declarations in `_width_scopes`, separating actor and
+transaction environments; retain static-use sources separately. Source clones
+must carry original actor identity before module/domain renaming. Each physical
+module owns detached maps; library instance selection remains separate from
+source defaults. Literal/type/reset declarations and existing public/carrier
+projections stay exact. Later IAL0 allocation uses those explicit scopes.
+
+`python3 -B docs/audits/width-physical-verify-20261022.py` checks the retained
+packets, scope/physical identities and hostile allocation/kind controls. Initial
+unconnected-output and malformed await-list refusals are retained, not promoted
+to successful native cases. First-touch JSON observations supersede lossy audit
+Storable copies; their explicit copy counterfactual preserves originals while
+changing numeric kinds. This does not assert a production copier defect. Native
+and private audit products establish neither generic HDL nor runtime behavior.

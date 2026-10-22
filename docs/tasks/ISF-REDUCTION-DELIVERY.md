@@ -38,7 +38,7 @@ implementation tree avoids growing the near-rollover coordination task file.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -419,16 +419,16 @@ implementation tree avoids growing the near-rollover coordination task file.
   Status: `active`
   Goal: `Carry declared scalar width provenance through LoweringIR and canonical IAL0 without numeric guessing.`
   Acceptance: `After .2.2, preserve the selected dependency records through source preparation, physical formal rewriting, generated instances/domains and canonical carrier emission. Bind each record to its real declaration and selected parameter environment; preserve resets/defaults/types and unrelated equal-width declarations. Reuse IAL0 sizing contracts and keep unresolved HDL override behavior explicit. Qualify actual carriers and isolation with independent expected identities, then commit before public-report closure; split unsafe expansion first.`
-  Verification: `pending parser preservation`
+  Verification: `Parser preservation and source/physical audit are qualified. Mandatory static-use and scoped IR/IAL0 propagation remain open; immediate P1 .11 precedes propagation.`
   Commit: `pending`
   Children: `ISF-REDUCTION-DELIVERY.2.3.1, ISF-REDUCTION-DELIVERY.2.3.2, ISF-REDUCTION-DELIVERY.2.3.3, ISF-REDUCTION-DELIVERY.2.3.4`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify physical declaration loss points and existing IAL0 symbolic-size namespace contracts before carrier edits.`
   Acceptance: `Inspect actual preparation/formal/child/domain/storage projections and public IAL0 size/static/type resolution. Use source/native/private controls to distinguish original declaration identity, physical names, selected environment and parameter/type namespace precedence. Retain literal-versus-symbolic and equal-default controls; qualify any proposed carrier spelling through actual canonical replay without external HDL execution. Name missing generic/legality legs, choose the bounded representation and refine successors before source edits. Preserve source/caller kinds, existing refusals, facts/questions and all original receipts; commit this audit/design slice before propagation.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `Children qualify namespace/static erasure and actual source/formal/generated/library/ATL/domain associations. Decision0119 selects detached declaration maps and explicit actor/transaction environments. Literal/type/reset/public defaults remain unchanged. New source-erasure prerequisites and P1/P2 wait/await defects have explicit ordered owners; no propagation, generic HDL or runtime closure is inferred.`
+  Commit: `children below; closure with ISF-REDUCTION-DELIVERY.2.3.1.2`
   Children: `ISF-REDUCTION-DELIVERY.2.3.1.1, ISF-REDUCTION-DELIVERY.2.3.1.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.1.1`
@@ -444,11 +444,16 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Focused T2094 and book/task checks report All tests successful Files=4 Tests=55; mdBook/source/index and scripts/check_doctrines.sh plus normal hooks gate the audit. No production source changes or HDL-tool execution.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Audit actual formal/generated/library/domain source-to-physical declaration associations and parameter environments.`
   Acceptance: `After .1, reuse committed namespace/static-use facts and current parser captures; inspect the real prepared source, formal identity plan, physical actors, module/child/domain declarations and canonical carriers for bounded independent fixtures. Bind metadata to actual names and chosen scopes, preserve caller kinds and original actor/type/reset identity, and separate known reusable-formal refusals from supported paths. Select exact IR/source-environment propagation, refine .2.3.2/.3 leaves before code, retain complete selected observations and pass focused/native/book/doctrine checks. No generic HDL, unqualified source admission or default-width dependency inference; commit before propagation.`
-  Verification: `pending namespace/static-use audit`
-  Commit: `pending`
+  Verification: `Actual complete source/preparation/formal/physical/IR/domain/realization/carrier products show parser width records survive source cloning/formal plans and disappear at explicit module port/storage projections. Direct widths8/4/6 and original formal identities remain distinct. Domains keep lexical actor owners while module names change; library/ATL clones retain exported owners and source defaults. Final documented scalar-await controls strict-check and expose actor-derived formal8 beside local formal4, with child params selecting local W4. Activation source values remain in raw clauses while selected instance products resolve them. Independently varied library LIMIT versus literal16 sources yield identical complete private products: _validate_use_params overwrites original overrides before cloning. Mandatory .2.3.2.1.2 owns source retention, beside existing bank-depth/watchdog .1.1. Decision0119 selects actual-signal-keyed private declaration records, explicit scoped environments and source actor identity before renaming; literals/types/resets and public/carrier values stay unchanged. Initial unconnected actor-output refusal, malformed await-list ARRAY rendering, and generated leading-runtime-wait silent entry loss are distinct retained epochs. Explicit count-operand bindings reproduce the wait load defect with valid native products, so it is independent of missing wiring. P1 .11.1/.2 are immediate successors; P2 .12 owns contextual malformed-await refusal before generic emission. The original Storable observer loses numeric kinds; fresh first-touch JSON snapshots match actual executed root IR, while an explicit copy counterfactual changes kinds without mutating its caller. No production copier defect is inferred. Source/native/private epochs and producer code retain in the dated width-physical/generated audit packets; width-physical-verify-20261022.py joins selected source hashes to Git8061449a3 and rejects wrong formal/domain owners, numeric caller flags, changed override sources and child widths. Its first draft misattributes the malformed-await refusal to wiring; that failed verifier output is retained separately. Re-derivation is actual source/preparation/physical/native products; falsification is independent alias/scope/instance/domain and single-slot source controls, the copier counterfactual and hostile records; durability is tracked producers/verifier/receipts, decision/book/task and exact Git joins. Full dependency footprints, raw-root stream reconstruction, API/MCP and external HDL/runtime are not claimed. Current focused All tests successful Files=2 Tests=51; book/source/index and staged/normal doctrines qualify this audit before P1 repair.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.1.2: qualify physical width scopes and own wait defects`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json / --emit-semantic-json / --emit-schedule-json and complete first-touch private products locate source-to-IR record loss, destructive library override resolution, child entry wait-edge replacement and opaque malformed-await rendering. Source identities join Git; original positive, refusal and lossy observer epochs remain distinct.
+  - [x] **ADDRESSED (verified)** — Independent lexical/physical/environment oracles qualify actor/formal/generated/library/ATL/domain audit scope and the selected private propagation contract. Mandatory static-use retention and ordered P1 wait/P2 diagnostics owners schedule every uncovered defect. Fresh JSON snapshots replace the lossy audit copier; no code repair, generic or runtime completion is claimed.
+  - [x] **NO REGRESSION** — Focused parser and task checks report All tests successful Files=2 Tests=51. Native documented scalar-await controls and the retained-product hostile verifier pass. No production source changes or HDL-tool execution; book/source/index and scripts/check_doctrines.sh plus normal hooks gate this audit commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2`
   Status: `active`
@@ -459,16 +464,32 @@ implementation tree avoids growing the near-rollover coordination task file.
   Children: `ISF-REDUCTION-DELIVERY.2.3.2.1, ISF-REDUCTION-DELIVERY.2.3.2.2, ISF-REDUCTION-DELIVERY.2.3.2.3, ISF-REDUCTION-DELIVERY.2.3.2.4, ISF-REDUCTION-DELIVERY.2.3.2.5, ISF-REDUCTION-DELIVERY.2.3.2.6`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.1`
-  Status: `pending`
-  Goal: `Preserve static parameter-use provenance before bank-depth and watchdog finalization erases it.`
+  Status: `active`
+  Goal: `Preserve static source associations before destructive parser finalization.`
   Acceptance: `Mandatory before generic emission .3 or specialization .4. Audit .2.3.1.1 supplies legal one-slot source peers: depth W versus literal2 and watchdog W versus literal2 yield identical complete parsed actors at W=2 with an identical explicit source label, plus identical selected IR/carriers. Root causes are Parser::_finalize_actor_storage_depths and _finalize_actor_watchdog_limit replacing tokens with values. Capture actual original token/kind/lexical owner through the existing successful resolvers, preserving literal/default independence, scalar aliases, package scope, numeric values and caller kinds without a new evaluator. Census other accepted symbolic finalization consumers and own any additional erasure before claiming generic-profile safety. Prove meaningful original RED-to-GREEN and unchanged default native/carrier/public products. This is private provenance; dynamic depths/watchdogs are not thereby implemented. Split if needed, synchronize exact boundaries and commit before IR propagation.`
   Verification: `pending; source-only first and one-slot controls retained by .2.3.1.1`
+  Commit: `pending`
+
+  Children: `ISF-REDUCTION-DELIVERY.2.3.2.1.1, ISF-REDUCTION-DELIVERY.2.3.2.1.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.1.1`
+  Status: `pending`
+  Goal: `Preserve authored bank-depth and watchdog references through existing successful static resolution.`
+  Acceptance: `Use the committed independent one-slot peers from .2.3.1.1. Preserve original token/kind/lexical owner privately before finalization, retaining literal/default independence, scalar aliases/package scope, numeric primitives and complete native/carrier/public defaults. Census remaining accepted symbolic finalizers without new expression admission or a separate evaluator; original RED-to-GREEN and caller/result isolation must qualify before commit. No dynamic depth/watchdog implementation claim.`
+  Verification: `pending physical audit; mandatory before IR/generic propagation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.1.2`
+  Status: `pending`
+  Goal: `Preserve authored reusable-library parameter override values before parser resolution overwrites them.`
+  Acceptance: `After .1, use .2.3.1.2 paired LIMIT versus literal16 sources: complete actual parser/preparation/IR/carrier products are identical under the same source label. Parser::_validate_use_params overwrites each use override and then clones the resolved records into library_uses. Preserve the detached authored scalar/aggregate override and source scope separately from the existing canonical resolved value, before either original uses or library_uses loses it. Cover actor params/constants/package/enum and literals with independently expected resolution, aliases, cloned instances, caller kinds and native/carrier/public conservation; do not change admission, shapes or implement specialization. Record meaningful original RED/GREEN and complete static-use census, synchronize docs and commit before generated/library IR propagation.`
+  Verification: `pending .1; first named/literal products retained by .2.3.1.2`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.2`
   Status: `pending`
   Goal: `Carry actor interface and storage declaration provenance into private module IR.`
-  Acceptance: `After .1 and the physical audit, preserve actual associations on module ports, storage entries/elements and selected static-use metadata with detached copies. Keep defaults/types/resets and unrelated numeric controls exact, bind generated bank elements to the declaration without inferring from widths, and compare complete old projections after removing only owned metadata. Preserve caller/result isolation and existing carrier/public bytes. Commit this bounded actor-data prerequisite before formal/generated/domain expansion.`
+  Acceptance: `After .1 and the physical audit, preserve actual associations in detached _width_declarations keyed by actual port/storage signal names, with original declaration identity, lexical scope and source token/kind/owner. Preserve separate _width_scopes canonical actor/transaction parameter environments and selected static-use sources; carry original actor identity before source renaming. Keep defaults/types/resets and unrelated numeric controls exact, bind generated bank elements to the declaration without inferring from widths, and compare complete old projections after removing only owned metadata. Preserve caller/result isolation and existing carrier/public bytes. Commit this bounded actor-data prerequisite before formal/generated/domain expansion.`
   Verification: `pending static provenance and physical audit`
   Commit: `pending`
 
@@ -683,6 +704,35 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S CLASSIFICATIONS locates the core verifier in 0cee23da7. Independent work-unit/name-only Git history identifies CLI/corpus/static-verifier evidence outside the first filename family, so that family alone cannot establish full retained activity coverage. Actual artifact bytes, full decoded loader hints and the canonical intake join locate the precise additional scope without inferring execution from names.
   - [x] **ADDRESSED (verified)** — Independent full-subtree Git attribution joins every artifact and original byte identity to its work unit, core proof or intake. Literal evidence classes and a separately written broad loader oracle account the additional hints; hostile missing artifact/work unit and fabricated execution claims reject. The read-only core verifier also passes. Prepared files, before-edit observations and qualified reconstruction remain distinct, with historical environment gaps explicit.
   - [x] **NO REGRESSION** — Current guarded width smoke reports All tests successful Files=1 Tests=6. Both read-only audit verifiers pass; no historical source/private/native/HDL workload is rerun and no production source changes. mdBook/source/index plus staged scripts/check_doctrines.sh and normal hooks gate this closure; fixed witness/admission and actual runtime remain open.
+
+- ID: `ISF-REDUCTION-DELIVERY.11`
+  Status: `active`
+  Goal: `P1: preserve generated-child leading runtime wait sampling and zero bypass.`
+  Acceptance: `Immediate successor to .2.3.1.2, before static/width propagation. The audit's generated live controls use a legal leading runtime-expression wait. Native check/semantic/schedule all admit, but child entry emits only start-to-wait, never loads the counter or bypasses zero, and drops the now-unread actor operand from the child interface. LoweringIR::_build_child_ir injects/replaces entry transitions after _build_transaction's dynamic-wait preparation. Reuse canonical dynamic-wait edge construction while preserving guarded/repeated activation and terminal handshakes. Keep first complete sources/products immutable, independently prove zero/one/positive counts and stable sampled values, and qualify public/native/carriers plus bounded actual HDL behavior before closing the defect. Split risky scope first; no unrelated controller/generic feature change.`
+  Verification: `First source/private/native evidence in width-generated-live-controls-20261022.json.gz and preceding physical packets under docs/audits; .2.3.1.2 owns current audit closure before this repair.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.11.1, ISF-REDUCTION-DELIVERY.11.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.11.1`
+  Status: `pending`
+  Goal: `Repair generated-child runtime wait entry edges through the existing sampled-count machinery.`
+  Acceptance: `After the audit commit, retain exact admitted scalar/expression leading-wait reproductions and unchanged final RED-to-GREEN regression. Trace injected and authored entry paths plus activation guards; restore conditional counter loads and zero bypass through canonical helpers. Independently check actual IR/carriers for zero/one/positive and repeated activation, count-source interface retention and unrelated waits/handshakes. Complete caller-kind and native/API/newline consistency controls; synchronize book and decision, pass focused/staged gates and commit before fixed runtime witness execution.`
+  Verification: `pending current audit closure`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.11.2`
+  Status: `pending`
+  Goal: `Qualify the repaired generated-child leading runtime wait with a fixed external HDL witness.`
+  Acceptance: `After .1, pin exact source/bench/targets, expected counts/edges and process-observer/resource admission before executing new external workloads. Use the already qualified host/tool path and public tool APIs, with all fixtures/output on the repository volume; do not replay historical HIAL workloads or inspect submodule internals. Independently observe zero bypass, positive sampled counts, later operand changes and reset/repeated start behavior at public pins, with hostile expected-edge controls and full source/process/result evidence. Retain unavailable legs as an owned blocker instead of claiming runtime closure. Commit complete defect qualification before resuming width propagation.`
+  Verification: `pending source repair`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.12`
+  Status: `pending`
+  Goal: `P2: reject non-scalar await ports before opaque ARRAY carrier rendering.`
+  Acceptance: `Schedule after P1 .11 and before generic-width emission .3. The physical audit's connected (await (== data 0)) source is outside the documented (await port) grammar. Private lowering/schedule admit it, LoweringIR::_ir_await puts the raw list into guard.port, and FSM rendering interpolates ARRAY(address); native check/semantic later refuse Unsupported action form with an opaque address. Validate the documented scalar port shape before IR/carrier/report construction using the canonical await contract; do not admit arbitrary await expressions. Preserve actual scalar waits, watchdog resolution, transaction ownership and complete caller kinds. Retain first source/refusal/carrier evidence, add genuine RED/GREEN and transport-consistent contextual diagnostics, synchronize user boundaries and commit a focused repair.`
+  Verification: `Initial and connected await controls retain exact native/private products in dated width audit packets; malformed-list handling remains unfixed.`
+  Commit: `pending`
 
 ## Blockers
 

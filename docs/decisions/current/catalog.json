@@ -1380,10 +1380,10 @@
     },
     {
       "content": {
-        "bytes": 7071,
-        "line_bytes": 583,
-        "lines": 113,
-        "sha256": "8a057132dd108850324591aea9f72d7a90c9ff73e59d5a47b3d778faddb21dab"
+        "bytes": 9812,
+        "line_bytes": 690,
+        "lines": 152,
+        "sha256": "a81e9c66a54e1041e8b2b97f26098eefef182881339529546df43fd7a2a7b18c"
       },
       "id": "0119",
       "metadata": {
@@ -1396,7 +1396,9 @@
           "where do authored ISF scalar width dependencies disappear?",
           "how will private ISF width declarations distinguish equal defaults?",
           "why cannot an ISF width parameter be copied blindly into IAL0 size syntax?",
-          "where are authored bank depth and watchdog parameter references lost?"
+          "where are authored bank depth and watchdog parameter references lost?",
+          "which scopes must generated child width declarations preserve?",
+          "where is library parameter override source provenance lost?"
         ]
       },
       "path": "docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md",

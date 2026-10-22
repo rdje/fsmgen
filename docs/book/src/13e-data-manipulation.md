@@ -246,6 +246,10 @@ depths and watchdog limits. Those currently become fixed default values during
 parsing. Carrier work must preserve the selected namespace: a bare IAL0 size
 name can select a named type even when an ISF width selected a same-named scalar
 parameter. Private width records alone do not resolve either prerequisite.
+Generated children also need the actor and transaction parameter environments
+kept distinct, including aliases. Named library override values currently become
+resolved literals before lowering; their source relationships must also survive
+before generic specialization can be qualified.
 
 ## `(update var expr)` — Variable Modification
 

@@ -606,6 +606,10 @@ value.
 
 ## `(await port)` — Conditional Stall
 
+The operand is a scalar port token. Predicate-list operands are unsupported;
+their current late carrier error can contain an opaque address. Earlier source
+validation is tracked under `ISF-REDUCTION-DELIVERY.12`.
+
 ```lisp
 (await PREADY)                        ;; default watchdog from actor
 (await PREADY (watchdog 100))         ;; per-await override
@@ -695,6 +699,11 @@ escape as a system-level failure, but the scheduled artifact should still not
 ask the counter to decrement at zero.
 
 ## `(wait N)` — Unconditional Exact-Cycle Delay
+
+Known generated-child defect: a leading runtime-count wait can enter its wait
+state without loading the sampled count or bypassing zero. Native checks can
+accept that output. Repair and runtime qualification are tracked under
+`ISF-REDUCTION-DELIVERY.11`; this path is not currently qualified.
 
 A positive static wait with no following statement holds in its final state.
 It does not invent a completion pulse or return to entry. Terminal `(point NAME)`
