@@ -9,6 +9,7 @@ answers:
   - "why do reductions preserve delegated storage sample declarations?"
   - "why did admitted reductions fail when transaction formals were present?"
   - "why do sampled clock/reset reductions need declared carrier widths?"
+  - "why do direct transaction count parameters mask runtime reductions?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
@@ -222,3 +223,23 @@ source records to native/API/newline products and actual generated IAL0.
 Broader source/profile/corpus coverage and actual HDL runtime remain `.1.2.3`
 through `.1.4`; generic widths/groups and publication remain required. This
 source milestone does not close R1–R3 or unblock SPECFORGE `.46.c`.
+
+## Direct count-parameter scope defect — repair pending
+
+`ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.1` retains paired native sources and
+actual source preparation/declared-scope facts in
+`docs/audits/reduction-direct-count-scope-diagnosis-20261022.json.gz`.
+A direct transaction parameter `count=2` controls standalone waits while the
+runtime `count` is a declared actor pin or private formal. Canonical T1936 and
+current preparation exclude that parameter from runtime static symbols, but
+include it in standalone count symbols. Ordinary reads strict-check; unary
+reductions incorrectly refuse because `_without_static_values` masks every
+transaction parameter regardless of placement/expression context.
+
+The owned repair must reuse canonical generated-transaction placement and
+scope ownership, retaining generated-parameter static precedence and actor
+static/unknown refusal. It must cover original parsing plus child/domain/module
+recapture contexts, preserve caller kinds, and avoid duplicate placement/pruning
+logic or Parser/LoweringIR load recursion. No repair is claimed by the diagnosis.
+This blocks completion of scoped unary source qualification; runtime, generic
+groups and publication retain their independent obligations.

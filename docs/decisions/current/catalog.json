@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 13824,
+        "bytes": 15134,
         "line_bytes": 322,
-        "lines": 224,
-        "sha256": "c99934ab2a6b0382989ff85a7efb0444c833408751fb91b9038c2b29b7b8821a"
+        "lines": 245,
+        "sha256": "c8be572da26048a40d72c274d7b76183f27f6223107a790954bbf6b1c41c193f"
       },
       "id": "0117",
       "metadata": {
@@ -1335,7 +1335,8 @@
           "how are declared reduction records prepared without source admission?",
           "why do reductions preserve delegated storage sample declarations?",
           "why did admitted reductions fail when transaction formals were present?",
-          "why do sampled clock/reset reductions need declared carrier widths?"
+          "why do sampled clock/reset reductions need declared carrier widths?",
+          "why do direct transaction count parameters mask runtime reductions?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

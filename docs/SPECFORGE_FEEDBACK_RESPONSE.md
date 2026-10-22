@@ -33,7 +33,10 @@ rejects private input-formal assignments when the actor also has a record
 interface port; `ISF-REDUCTION-DELIVERY.8` owns the repair before remaining
 aggregate consumer signoff. Read-only formal reductions remain supported.
 Declared clock/reset samples and their chains also preserve their scalar widths
-through actual source, carriers and public reduction records.
+through actual source, carriers and public reduction records. A remaining
+source-scope defect rejects runtime reduction operands sharing a direct
+transaction count-parameter name; its paired baselines and exact diagnosis are
+tracked for repair before unary source signoff.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

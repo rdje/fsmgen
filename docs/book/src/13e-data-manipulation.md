@@ -56,6 +56,12 @@ formal's distinct physical identity. Samples of declared clocks and resets
 retain their one-bit widths through aliases and chains. A clock-only named
 domain gains no reset declaration.
 
+A current source-scope defect still rejects a reduction over a runtime signal
+or formal whose name also denotes a direct transaction count parameter. The
+ordinary runtime/count scopes are distinct; this reduction-specific mask is
+tracked under `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.2` and must be repaired
+before scoped unary qualification closes.
+
 Schedule reports expose `reductions`; successful directly parsed ISF check and
 semantic reports expose `source.reductions`. They are omitted when absent and
 from failed or unrelated source reports. Each entry records `owner_kind`,
