@@ -479,3 +479,27 @@ units/artifacts or a fabricated execution class. Full observations are retained
 in `docs/audits/reduction-replay-activity-20261022.json.gz`. The retained-evidence
 identity audit is closed within these explicit historical limits. The fixed
 HDL witness/admission and actual runtime qualification remain successors.
+
+## Fixed unary runtime witness preparation
+
+`ISF-REDUCTION-DELIVERY.1.3.1` fixes the source, public-pin bench, vector table
+and T2090 before HDL execution. The source covers declared vector/scalar/bit/
+slice operators, odd parity, nested results, binary/unrolled controls and a
+helper-like external input. Golden production uses population counts; the
+independent oracle walks bits and packs strings without wide-integer assumptions. Every stored input/result bit and hostile missing,
+substituted or changed-vector controls are checked.
+
+The exact source and actual carrier emit identical Verilog-family HDL except
+for date banners. A real source counterfactual changes only unary XOR to AND.
+The planned runtime bench compares complete public pins, repeats the fixed
+sweep and checks disabled writes/reset. Process completion and semantic result
+are distinct: positives require complete PASS/hold/reset markers; the wrong
+source must report its distinguishing value mismatch with no PASS.
+
+The fixed stage membership is both Verilog-family positives and the wrong
+SystemVerilog source, through unchanged VerilatorRuntime compile/runtime APIs.
+T2090 defaults to source/generation checks with an explicit unadmitted runtime
+skip. This is preparation, not simulation qualification. Fresh target-specific
+observer/admission qualification under .1.3.2 precedes .1.4 execution. No spent
+admission, historical workload, X/Z or external-override claim is introduced.
+Reverify source-only preparation with `scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2090-isf-unary-reduction-runtime.t`.

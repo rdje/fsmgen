@@ -161,6 +161,22 @@ applicability; executing a query is a separate operation. Invalid source queries
 retain failed check/semantic reports without successful source inventories;
 schedule refusal retains its RPC error boundary.
 
+The fixed unary runtime witness is prepared in
+`t/data/unary_reduction_runtime.isf`, with a public-pin bench and independently
+checked golden vectors alongside it. It includes scalar/bit/slice reductions,
+odd parity, nested results, ordinary binary/unrolled controls and an externally
+driven helper-like input name. Source checks and generation pass; the HDL
+stages remain pending a fresh fixed observer admission. A default test skip
+does not qualify simulation. The planned counterfactual changes an actual
+source operator; the same bench must report its wrong public value and never
+semantic PASS. Paired inputs are fixed rather than an exhaustive cross product;
+X/Z execution and external parameter overrides remain outside this witness.
+
+```bash
+./bin/fsmgen --strict --check --json t/data/unary_reduction_runtime.isf
+./bin/fsmgen --strict --quiet --output .artifacts/sv/unary_reduction_runtime.sv t/data/unary_reduction_runtime.isf
+```
+
 ## Grouped reductions — implementation pending
 
 SPECFORGE request `.12` remains open in

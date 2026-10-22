@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.1.3`
-- next_action: Read the fixed-witness and HIAL admission/public-tool contracts. Commit exact unary source, bench, targets/profile/count and independent oracle plus required observer admission before any HDL execution; runtime qualification remains .1.4.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.1.3.2`
+- next_action: Qualify a fresh fixed unary observer/admission for committed T2090, source/bench/vectors and exact three-pair coverage, coordinating HIAL .11.7. Keep immutable helpers and original bounds unchanged; commit qualification before actual .1.4 HDL execution.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
