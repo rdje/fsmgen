@@ -56,6 +56,10 @@ inputs resembling generated intermediate labels retain their external roles,
 widths and independent values. This applies to ordinary binary/unrolled
 expressions as well as sources containing reductions; native/API/carrier and
 generated-text checks do not replace the pending HDL runtime qualification.
+Repeated writes also retain their distinct reduction RHS and actual per-state
+enables. Nested concatenation preserves the scalar reductions and logical
+negation widths; ordinary binary/unrolled and authored-label controls remain
+independent. This closes the scoped capture qualification, not HDL execution.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

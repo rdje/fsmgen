@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 20992,
+        "bytes": 22338,
         "line_bytes": 500,
-        "lines": 331,
-        "sha256": "6e1256eb595fda28a791e0aa68f2ec1d30f8f20e910d08e630403eb980f4aceb"
+        "lines": 352,
+        "sha256": "9e0f15ac6ddef2e7dd5ff37ae68e0b486e26ce63aefb54330aac332735b35e8c"
       },
       "id": "0117",
       "metadata": {
@@ -1339,7 +1339,8 @@
           "why do direct transaction count parameters mask runtime reductions?",
           "why did standalone static counts look like cross-domain wire reads?",
           "why did qualified static names borrow record fields in reduction preview?",
-          "why did generated intermediate names overwrite declared inputs?"
+          "why did generated intermediate names overwrite declared inputs?",
+          "how are reduction values tied to actual write enables?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

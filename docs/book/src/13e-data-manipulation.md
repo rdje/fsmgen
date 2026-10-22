@@ -73,6 +73,21 @@ of the computed result of `(^ data other)`. Binary and unrolled expressions
 can coexist with unary reductions without adding internal drivers to those
 inputs. Their declared widths and semantic input records are preserved.
 
+Repeated transaction writes keep separate expressions and per-state write
+enables, including when their readable names resemble declared inputs:
+
+```lisp
+(set out_repeat (^ data))
+(set out_repeat (& data))
+(set out_repeat (| data))
+```
+
+Each result is one bit for a declared eight-bit `data`. Nested concatenation
+also preserves scalar result widths: `(concat (! (^ data)) (concat (^ data[3:0])
+(& data[0])) tag)` occupies four bits when `tag` is one bit. Source/carrier,
+semantic and generated-source qualification covers these operator, width and
+enable associations; HDL execution remains separately qualified.
+
 Scalar record-field samples also keep their declared signedness and state model
 in private carrier declarations and semantic nets. A reduction consumes that
 complete scalar value and returns one unsigned bit. For example:

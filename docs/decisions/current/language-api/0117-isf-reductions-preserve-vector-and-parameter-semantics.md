@@ -13,6 +13,7 @@ answers:
   - "why did standalone static counts look like cross-domain wire reads?"
   - "why did qualified static names borrow record fields in reduction preview?"
   - "why did generated intermediate names overwrite declared inputs?"
+  - "how are reduction values tied to actual write enables?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
@@ -328,4 +329,24 @@ Its unchanged settled RED-to-GREEN comparison and independent literal input,
 object/driver and real mux checks falsify accidental aliasing. Renamed controls
 retain complete native reports and generated SV except its date banner.
 Tracked tests, dated audits and Git retain durability. External HDL runtime and
-the remaining complete capture/type/profile qualification stay separately owned.
+public corpus/profile qualification stay separately owned. Capture results follow.
+
+## Executed capture qualification
+
+`ISF-REDUCTION-DELIVERY.1.2.3.2.2` joins independently authored operator/operand
+and width expectations to actual output-drive families, generated helper
+definitions, output mux arms and continuous enable chains. State constants are
+read from generated declarations; readable RHS labels alone are not identity.
+Repeated writes retain XOR, AND, OR and authored scalar inputs independently.
+Nested concatenation keeps scalar reductions and logical negation at their
+declared result widths; ordinary vector XOR and unrolled parity stay distinct.
+
+T2086 qualifies actual source/carriers, complete native/API/newline products
+and caller data. A real source control replaces the first XOR with AND: native
+validation accepts that well-formed source, while the independent value/enable
+oracle rejects its first write. An operand with only its low bit set separates
+the two intended values. First complete sources/products are retained in
+`docs/audits/reduction-capture-first-20261022.json.gz`.
+Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2086-isf-reduction-capture-identity.t`.
+These checks establish source/generated-text associations, not HDL execution.
+Public corpus/profile closure and the fixed runtime witness remain successors.

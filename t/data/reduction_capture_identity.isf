@@ -1,0 +1,25 @@
+(actor capture_pipeline
+ (clock clk) (reset (rst_n sync active_low))
+ (interface (input start) (input data (width 8)) (input other (width 8))
+  (input and_data) (input or_data) (input out_repeat_and_data_en)
+  (input intermediate_xor_data_other_1 (width 8))
+  (input intermediate_complex_expr_2)
+  (input reduce_xor_data) (input expr_reduce_xor_data)
+  (output out_reduce (width 3)) (output out_nested (width 4))
+  (output out_repeat) (output out_user (width 5))
+  (output out_label (width 8)) (output out_label_bit)
+  (output out_binary (width 8)) (output out_unrolled) (output done))
+ (transaction main (on start)
+  (set out_repeat (^ data)) (set out_repeat (& data))
+  (set out_repeat (| data)) (set out_repeat and_data)
+  (set out_repeat or_data) (complete done))
+ (rule reduce_rule start (out_reduce (concat (^ data) (& data) (| data))))
+ (rule nested_rule start
+  (out_nested (concat (! (^ data)) (concat (^ data[3:0]) (& data[0])) reduce_xor_data)))
+ (rule user_rule start
+  (out_user (concat reduce_xor_data expr_reduce_xor_data and_data or_data out_repeat_and_data_en)))
+ (rule label_rule start (out_label intermediate_xor_data_other_1))
+ (rule label_bit_rule start (out_label_bit intermediate_complex_expr_2))
+ (rule binary_rule start (out_binary (^ data other)))
+ (rule unrolled_rule start
+  (out_unrolled (^ data[0] data[1] data[2] data[3] data[4] data[5] data[6] data[7]))))
