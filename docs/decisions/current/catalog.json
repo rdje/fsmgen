@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 19457,
+        "bytes": 20992,
         "line_bytes": 500,
-        "lines": 306,
-        "sha256": "4f5bda854368e6958d8643933ba8df1758f28a87aa185dd5c1e618363023e582"
+        "lines": 331,
+        "sha256": "6e1256eb595fda28a791e0aa68f2ec1d30f8f20e910d08e630403eb980f4aceb"
       },
       "id": "0117",
       "metadata": {
@@ -1338,7 +1338,8 @@
           "why do sampled clock/reset reductions need declared carrier widths?",
           "why do direct transaction count parameters mask runtime reductions?",
           "why did standalone static counts look like cross-domain wire reads?",
-          "why did qualified static names borrow record fields in reduction preview?"
+          "why did qualified static names borrow record fields in reduction preview?",
+          "why did generated intermediate names overwrite declared inputs?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

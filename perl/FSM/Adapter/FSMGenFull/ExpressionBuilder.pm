@@ -447,8 +447,6 @@ sub parse_state_active_expression($self, $operator, $operands) {
 }
 
 sub generate_intermediate_signal($self, $operator, $operands) {
-    $self->{intermediate_counter}++;
-    
     # Extract names from operands if they are signal references
     my @names;
     for my $op (@$operands) {
@@ -480,7 +478,13 @@ sub generate_intermediate_signal($self, $operator, $operands) {
         $base_name = "complex_expr";
     }
     
-    return "intermediate_${base_name}_" . $self->{intermediate_counter};
+    # register_signal deliberately refines an existing object. A generated
+    # helper must instead own a fresh name before it reaches registration.
+    my $name;
+    do {
+        $name = "intermediate_${base_name}_" . ++$self->{intermediate_counter};
+    } while ($self->{signal_manager}->has_symbol_name($name));
+    return $name;
 }
 
 sub create_binary_operator_tree($self, $operator, $operands) {

@@ -51,6 +51,11 @@ Source qualification also covers transaction/rule/used-drive scalar field and
 list-leaf paths, nearest private-formal widths and contextual refusals. Check
 and semantic reports retain primary diagnostics; schedule RPC preserves its
 existing generic error boundary.
+Capture qualification also repairs a shared parser name collision: declared
+inputs resembling generated intermediate labels retain their external roles,
+widths and independent values. This applies to ordinary binary/unrolled
+expressions as well as sources containing reductions; native/API/carrier and
+generated-text checks do not replace the pending HDL runtime qualification.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-reduction`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **10** uniquely owned question entries.
+> **1** facts · **11** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,6 +10,7 @@
 - q="what reduction width groundwork is implemented?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="what syntax and bit order are selected for SPECFORGE byte-group reductions?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did admitted reductions fail when transaction formals were present?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
+- q="why did generated intermediate names overwrite declared inputs?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did qualified static names borrow record fields in reduction preview?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did standalone static counts look like cross-domain wire reads?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why do direct transaction count parameters mask runtime reductions?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)

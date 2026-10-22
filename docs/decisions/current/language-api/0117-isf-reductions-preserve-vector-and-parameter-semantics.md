@@ -12,6 +12,7 @@ answers:
   - "why do direct transaction count parameters mask runtime reductions?"
   - "why did standalone static counts look like cross-domain wire reads?"
   - "why did qualified static names borrow record fields in reduction preview?"
+  - "why did generated intermediate names overwrite declared inputs?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
@@ -304,3 +305,27 @@ native/API/newline refusal products. Reverify with
 `scripts/run_with_ram_guard.sh -- prove -Iperl t/2082-isf-reduction-static-namespaces.t`.
 This repair adds no static/literal reduction admission and does not close the
 remaining operand/type/carrier cohort, full unary runtime, groups or publication.
+
+## Generated intermediate identity
+
+Capture qualification found an ordinary parser defect independent of unary
+reductions. A declared input whose name matched an intermediate candidate was
+reused by `register_signal`, promoted to an intermediate and given a driving
+AST. Native success concealed duplicate HDL declarations/internal input drivers
+and missing semantic input records. The original sources, complete streams and
+executed ordinary trace retain in
+`docs/audits/intermediate-namespace-first-20261022.json.gz`.
+
+Intermediate allocation now probes the SignalManager's existing declaration
+namespaces before registration. Membership uses keys, including zero-valued
+symbols, without resolving values or changing caller data. Occupied suffixes
+are skipped; normal signal refinement remains unchanged. Noncolliding helper
+names keep their existing counter sequence. This shared allocator also serves
+computed test selectors; no generated HDL text rewriting is used.
+
+Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2085-parser-intermediate-namespace.t`.
+Its unchanged settled RED-to-GREEN comparison and independent literal input,
+object/driver and real mux checks falsify accidental aliasing. Renamed controls
+retain complete native reports and generated SV except its date banner.
+Tracked tests, dated audits and Git retain durability. External HDL runtime and
+the remaining complete capture/type/profile qualification stay separately owned.

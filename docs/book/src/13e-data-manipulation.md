@@ -67,6 +67,12 @@ records. Invalid paths and aggregate roots retain contextual source refusals.
 Check and semantic queries carry those diagnostics; schedule RPC keeps its
 existing bounded generic failure message.
 
+Declared input names resembling generated labels retain their external identity.
+For example, an input named `intermediate_xor_data_other_1` remains independent
+of the computed result of `(^ data other)`. Binary and unrolled expressions
+can coexist with unary reductions without adding internal drivers to those
+inputs. Their declared widths and semantic input records are preserved.
+
 Scalar record-field samples also keep their declared signedness and state model
 in private carrier declarations and semantic nets. A reduction consumes that
 complete scalar value and returns one unsigned bit. For example:

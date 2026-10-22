@@ -150,6 +150,17 @@ sub get_all_signal_names($self) {
     return keys %{$self->{signal_registry}};
 }
 
+# Name allocation must inspect declaration ownership, not resolved values:
+# zero-valued symbols and aggregate/type roots still occupy their names.
+sub has_symbol_name($self, $name) {
+    return 0 unless defined($name) && !ref($name);
+    for my $table (qw(signal_registry constants constant_definitions enums
+                      defines params types aggregate_symbols)) {
+        return 1 if exists $self->{$table}{$name};
+    }
+    return 0;
+}
+
 sub initialize_signal_usage($self, $signal_name) {
     $self->{signal_usage}{$signal_name} //= {
         referenced_in_conditions => 0,
