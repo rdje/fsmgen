@@ -20,10 +20,11 @@ answers:
   - "which corpus phases and public queries cover maintained unary reductions?"
   - "why did corpus accounting fail after unary reduction admission?"
   - "how can failed reduction predecessor tests load current modules?"
+  - "how is the complete retained reduction replay evidence set accounted?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/audits/unary-corpus-public-products-20261022.json.gz; t/2089-unary-reduction-corpus-public-closure.t; docs/audits/reduction-replay-identity-20261022.json.gz
+evidence: docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/audits/unary-corpus-public-products-20261022.json.gz; t/2089-unary-reduction-corpus-public-closure.t; docs/audits/reduction-replay-identity-20261022.json.gz; docs/audits/reduction-replay-activity-20261022.json.gz
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
@@ -464,5 +465,17 @@ The frozen filename-family census and its explicit selectors pass the read-only
 verifier in `docs/audits/reduction-replay-identity-verify-20261022.py`, with full
 source observations retained in `docs/audits/reduction-replay-identity-20261022.json.gz`.
 Reverify with `scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reduction-replay-identity-verify-20261022.py`.
-The independent work-unit artifact census remains `.10.2`; the parent identity
-audit and fixed HDL witness are not closed by this core slice.
+The independent `.10.2` census derives evidence from work-unit Git commits and
+all changed artifact paths, then joins the core records and canonical intake.
+It accounts additional CLI/corpus receipts and the earlier static QA verifier.
+Their library-root hints are ordinary repository/test roots, captured extension
+help, task narratives or declaration metadata. None establishes an additional
+reconstructed predecessor launch. Before-edit and supplied source observations
+remain distinct from qualified reconstruction; every original stays byte-exact.
+
+Reverify the complete join with `scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reduction-replay-activity-verify-20261022.py`.
+That read-only verifier also runs the core verifier and rejects omitted work
+units/artifacts or a fabricated execution class. Full observations are retained
+in `docs/audits/reduction-replay-activity-20261022.json.gz`. The retained-evidence
+identity audit is closed within these explicit historical limits. The fixed
+HDL witness/admission and actual runtime qualification remain successors.

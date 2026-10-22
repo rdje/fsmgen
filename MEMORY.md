@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.10.2`
-- next_action: Derive all related audit artifacts from owning-work-unit Git commits, join the additional CLI/corpus/verifier records to the qualified core replay census, and close .10 only after complete retained evidence classification. Commit before fixed HDL witness/admission preparation.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.1.3`
+- next_action: Read the fixed-witness and HIAL admission/public-tool contracts. Commit exact unary source, bench, targets/profile/count and independent oracle plus required observer admission before any HDL execution; runtime qualification remains .1.4.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

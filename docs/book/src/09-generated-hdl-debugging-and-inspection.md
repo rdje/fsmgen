@@ -40,8 +40,14 @@ and primary diagnostic:
 
 ```bash
 git rev-parse HEAD
+git status --short
 ./bin/fsmgen --strict --check --json isf/unary_reductions.isf
 ```
+
+If local changes affect the input or producer, retain those exact bytes and the
+diff with the result. A committed revision alone does not describe a changed
+worktree. Preserve before-edit observations as their own source epoch instead
+of relabeling them as a reconstructed earlier build.
 
 For custom Perl embedding or an old-module overlay, also establish which files
 and method definitions actually loaded. Preparing old files or naming a log

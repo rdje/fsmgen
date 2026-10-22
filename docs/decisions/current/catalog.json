@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 30090,
-        "line_bytes": 663,
-        "lines": 468,
-        "sha256": "bbaeb604da271806e097d78d369c068e7651ece5d9beb29b25594f4710611354"
+        "bytes": 31160,
+        "line_bytes": 719,
+        "lines": 481,
+        "sha256": "fe228a6385bf6c2978fe48fa20fb6c7e79e7674da02578113ada1c83efbed970"
       },
       "id": "0117",
       "metadata": {
@@ -1346,7 +1346,8 @@
           "why did traced check semantic or schedule reports contain non-JSON stdout?",
           "which corpus phases and public queries cover maintained unary reductions?",
           "why did corpus accounting fail after unary reduction admission?",
-          "how can failed reduction predecessor tests load current modules?"
+          "how can failed reduction predecessor tests load current modules?",
+          "how is the complete retained reduction replay evidence set accounted?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

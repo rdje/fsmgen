@@ -1,13 +1,14 @@
 # Knowledge Map: `isf-reduction`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **18** uniquely owned question entries.
+> **1** facts · **19** uniquely owned question entries.
 
 ## Questions → facts
 
 - q="how are declared reduction records prepared without source admission?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="how are reduction values tied to actual write enables?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="how can failed reduction predecessor tests load current modules?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
+- q="how is the complete retained reduction replay evidence set accounted?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="what must be preserved before parameterized reductions can ship?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="what reduction width groundwork is implemented?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="what syntax and bit order are selected for SPECFORGE byte-group reductions?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
