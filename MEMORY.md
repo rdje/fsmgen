@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.7.1.2`
-- next_action: Implement decision0118: repair known one-bit private complement classification and direct VHDL foreign-tilde refusal using the settled immutable RED in private-complement-reproduction-20261022.json.gz. Qualify scalar/wide/unknown/logical/reduction/profile/source boundaries, then commit; caller-debug warning child .3 precedes generic-width .2.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.7.1.3`
+- next_action: Repair top-level AST renderer caller metadata under decision0118, preserving render bytes and debug routing. Then qualify unsupported direct-VHDL process refusal under .7.1.4 before generic-width .2.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

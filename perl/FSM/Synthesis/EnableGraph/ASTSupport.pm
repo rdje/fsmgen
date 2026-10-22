@@ -1616,10 +1616,15 @@ sub _operand_is_single_bit ($self, $ast) {
         if ($op eq 'not' || $op eq '!' || is_reduction_operator($op)) {
             fsm_debug("      RESULT: single-bit (logical NOT or reduction)", 3);
             return 1;
-        } else {
-            fsm_debug("      RESULT: multi-bit (other unary operator)", 3);
-            return 0;
         }
+        if ($self->_is_bitwise_not_operator($op)) {
+            my $width = $self->_expression_width($ast);
+            my $result = defined($width) && $width == 1 ? 1 : 0;
+            fsm_debug("      RESULT: " . ($result ? 'single-bit' : 'multi-bit') . " (known complement width)", 3);
+            return $result;
+        }
+        fsm_debug("      RESULT: multi-bit (other unary operator)", 3);
+        return 0;
 
     } elsif ($ast->isa('FSM::HDL::IntermediateSignalRef')) {
         fsm_debug("      PATH: IntermediateSignalRef", 3);

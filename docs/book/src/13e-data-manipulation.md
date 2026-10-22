@@ -226,10 +226,12 @@ selects `(reduce-groups OP X N)` for literal OP `^`, `&`, `|` and positive
 decimal literal N. It will produce `ceil(width(X)/N)` bits, least-significant
 group first, with an unpadded short final group. Strict targets must match that
 count. For byte parity N is 8. Optional `(~ X)` will complement each vector bit.
-Source inversion remains refused. Separately owned private complement
-classification and direct-VHDL token-refusal defects are reproduced under
+Source inversion remains refused. Private complement classification now follows
+known operand width: scalar results stay scalar, while wide or unresolved
+results cannot borrow scalar status. Direct VHDL refuses residual complement
+tokens after translating supported reductions, including in conditions. See
 [decision 0118](../../../docs/decisions/current/language-api/0118-private-complement-width-and-profile-boundaries.md);
-their repair does not admit optional inversion.
+this repair does not admit optional inversion or qualify VHDL execution.
 
 Declared unary source, public records, bounded generation profiles and the
 fixed Verilog-family runtime witness are qualified. Direct

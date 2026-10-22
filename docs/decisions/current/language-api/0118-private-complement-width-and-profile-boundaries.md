@@ -9,15 +9,15 @@ answers:
 date: 2026-10-22
 status: current
 tags: [expression, width, complement, vhdl, diagnostics, provenance]
-evidence: docs/audits/private-complement-reproduction-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm
+evidence: docs/audits/private-complement-reproduction-20261022.json.gz; docs/audits/private-complement-repair-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm
 ---
 # 0118 — Private complement width and profile boundaries
 
 - Type: private expression and backend contract
-- Status: selected; current defects reproduced; repairs pending
+- Status: selected; complement classifier/profile repaired; caller diagnostics pending
 - Owner: `ISF-REDUCTION-DELIVERY.7.1`
 
-## Proven current behavior
+## Authenticated pre-repair behavior
 
 The private enable-graph expression-width reader preserves the operand width
 of `~`, but its single-bit classifier recognizes logical negation and reductions
@@ -45,7 +45,22 @@ After supported reduction translation, direct VHDL must refuse untranslated
 complement tokens rather than return foreign syntax. Keep supported scalar and
 vector reduction folds unchanged. Supply defined caller metadata without
 changing rendered values or debug routing. Implementation and independent
-preservation are owned by `.7.1.2` and `.7.1.3`; neither is qualified yet.
+preservation are owned by `.7.1.2` and `.7.1.3`.
+
+## Complement repair
+
+Leaf `.7.1.2` recognizes `~` only through its explicit width-preserving
+semantics and the existing expression-width reader. Declared width one is
+scalar; wide and unresolved complements stay conservative. Unsupported unary
+operators cannot borrow scalar status. Logical and reduction results keep
+their existing scalar behavior. Direct VHDL rejects residual `~` after supported
+reduction conversion; assignments, comparisons and generated conditions share
+that check. Source inversion remains refused and no HDL execution is inferred.
+The unchanged authenticated probe and expanded real-owner regression qualify
+these boundaries. Caller metadata remains `.3`. An initial condition fixture
+used unsupported `always @*` rather than generated `always_comb`; that harness
+error and the converter's independently owned silent-drop defect remain
+explicit under `.4`, without extending this repair's supported profile.
 
 ## Evidence provenance
 

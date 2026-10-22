@@ -733,6 +733,8 @@ sub _sv_expr_to_vhdl ($expr, $ctx = {}) {
         return $true . ' when ' . _sv_condition_to_vhdl($trimmed, $ctx) . ' else ' . $false;
     }
     $trimmed = _sv_reduction_expressions_to_vhdl($trimmed, $ctx);
+    confess _unsupported("bitwise complement expression '$expr' is outside the direct VHDL scaffold")
+        if $trimmed =~ /~/;
     my $target_decl = _decl_for_lvalue($ctx->{target_lhs}, $ctx->{decls_by_name} || {});
     if ($target_decl && $target_decl->{scalar} && $trimmed =~ /^-?\d+$/) {
         my $low_bit = substr($trimmed, -1) =~ /[13579]\z/ ? 1 : 0;

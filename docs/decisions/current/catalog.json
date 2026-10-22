@@ -1356,15 +1356,15 @@
     },
     {
       "content": {
-        "bytes": 3577,
-        "line_bytes": 196,
-        "lines": 64,
-        "sha256": "98525c5b456e4e53e40eda78281efe793724feefde5296ddd980f96cd7520778"
+        "bytes": 4575,
+        "line_bytes": 252,
+        "lines": 79,
+        "sha256": "d8fba2af04b4f0595d914173a13e7b203e8b5c4e7b84012c98e226b01ae314a1"
       },
       "id": "0118",
       "metadata": {
         "authority_status": [
-          "- Status: selected; current defects reproduced; repairs pending"
+          "- Status: selected; complement classifier/profile repaired; caller diagnostics pending"
         ],
         "knowledge_id": "private-complement-width-and-profile-boundaries",
         "knowledge_status": "current",

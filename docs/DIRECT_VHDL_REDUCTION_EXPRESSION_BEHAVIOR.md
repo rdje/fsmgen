@@ -21,6 +21,11 @@ context now reaches continuous assignments, comparisons, combinational and
 sequential conditions, and reset conversion, so width handling cannot vary by
 expression location.
 
+After supported reduction translation, any remaining `~` expression is refused
+with a targeted bitwise-complement diagnostic. This includes assignment,
+comparison and condition contexts. Private `~(S)` is outside this conversion
+profile; supported complemented reductions such as `(~|S)` still translate.
+
 ## Vector Fold Helpers
 
 Each module emits only the helpers required by its reduction operators. The
