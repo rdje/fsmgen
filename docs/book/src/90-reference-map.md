@@ -2769,6 +2769,8 @@ discarded, and no original semantic reader or complete helper runs.
 
 The due artifact sweep retains a dated census of regular log/bin paths and
 metadata, explicit root/Rust location rows, and Git/symlink/volume exclusions.
+Start a new sweep after 24 hours have elapsed since `docs/ARTIFACT_CLEANUP.md`;
+a new calendar date alone does not satisfy that prerequisite.
 Independent `rg` membership agrees. All candidates are retained: metadata and
 age supply no disposal authority. Replay the saved observation without another
 filesystem sweep or deletion:
