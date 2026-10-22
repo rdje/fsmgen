@@ -145,7 +145,12 @@ complete reports are retained in that audit directory; they do not rerun HDL
 behavior or the caller corpus. Request `.12` has its own fresh local baseline in
 `docs/audits/specforge-reduction-intake-20261021/`.
 
-**Priority and completion:** the director requests these deliveries at the next
+**Priority and completion:** decision `0121` records the director's 2026-10-22
+exclusive priority: work only on required `.7`–`.10`/`.12` delivery and
+demonstrated blockers, then qualified publication and feedback. Unrelated
+roadmap work and optional extensions are deferred. Independently discovered
+wait-runtime and malformed-await obligations remain owned after handoff unless
+a required validation failure proves them blocking. The director requests these deliveries at the next
 handoff-ready checkpoint on 2026-10-21, followed by a qualified push and a
 response here. This supersedes ordinary independent-PNT ordering. Required
 reduction contract selection is SEM `.92.1`; durations `.60.1`, named timers

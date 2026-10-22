@@ -15,6 +15,8 @@ Implement and qualify the required R1–R3 of SPECFORGE FSMGEN-REQUESTS.12.
 SEMANTIC-INTROSPECTION-MCP-FRONTIER `.92` retains request coordination and
 publication ownership. Decision `0117` selects the contract. This bounded
 implementation tree avoids growing the near-rollover coordination task file.
+Decision `0121` applies the director's exclusive required-request priority;
+independent defects remain owned after handoff unless they demonstrably block delivery.
 
 ## Non-Goals
 
@@ -38,7 +40,7 @@ implementation tree avoids growing the near-rollover coordination task file.
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -637,11 +639,11 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Guarded process/reduction/complement/direct scaffold CLI/pipeline checks report All tests successful Files=4 Tests=77. Fresh mdBook build, complete source/index and decision/claim checks plus staged scripts/check_doctrines.sh and normal hooks gate this slice. Exact source/test/streams and distinct evidence legs retain in the dated receipt. No external VHDL runtime, full CI, generic/grouped completion or publication claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.7.2`
-  Status: `pending`
+  Status: `deferred`
   Goal: `After required R1-R3 delivery, implement optional width-preserving vector inversion or record its exact bounded deferral.`
   Acceptance: `Carry the existing parent .7 optional R4 contract into an executable leaf after .6. Reuse the private width foundation without treating it as source admission. Implement only with complete independent value/width, carrier/public/profile/corpus/book qualification, or record the selected deferral and consequence. Logical ! remains Boolean, required R1-R3 cannot wait on optional R4, and source inversion stays refused until qualified.`
-  Verification: `Pending required delivery; private prerequisites alone do not admit source inversion.`
-  Commit: `pending`
+  Verification: `Decision0121 schedules optional inversion after all required SPECFORGE delivery/publication/feedback; private prerequisites do not admit source inversion and the current source refusal remains.`
+  Commit: `ISF-REDUCTION-DELIVERY.13: enforce exclusive required SPECFORGE priority`
 
 - ID: `ISF-REDUCTION-DELIVERY.8`
   Status: `pending`
@@ -708,8 +710,8 @@ implementation tree avoids growing the near-rollover coordination task file.
 - ID: `ISF-REDUCTION-DELIVERY.11`
   Status: `active`
   Goal: `P1: preserve generated-child leading runtime wait sampling and zero bypass.`
-  Acceptance: `Immediate successor to .2.3.1.2, before static/width propagation. The audit's generated live controls use a legal leading runtime-expression wait. Native check/semantic/schedule all admit, but child entry emits only start-to-wait, never loads the counter or bypasses zero, and drops the now-unread actor operand from the child interface. LoweringIR::_build_child_ir injects/replaces entry transitions after _build_transaction's dynamic-wait preparation. Reuse canonical dynamic-wait edge construction while preserving guarded/repeated activation and terminal handshakes. Keep first complete sources/products immutable, independently prove zero/one/positive counts and stable sampled values, and qualify public/native/carriers plus bounded actual HDL behavior before closing the defect. Split risky scope first; no unrelated controller/generic feature change.`
-  Verification: `Source repair .1 is qualified and committed separately before external witness .2. Exact entry truth partitions, caller kinds, source/native/API/newline and book checks pass; actual external HDL timing remains open. First audit reproductions and every source/oracle epoch remain immutable.`
+  Acceptance: `Former immediate successor to .2.3.1.2; decision0121 now defers separate external qualification until after required SPECFORGE handoff unless demonstrated blocking evidence changes that order. The audit's generated live controls use a legal leading runtime-expression wait. Native check/semantic/schedule all admit, but child entry emits only start-to-wait, never loads the counter or bypasses zero, and drops the now-unread actor operand from the child interface. LoweringIR::_build_child_ir injects/replaces entry transitions after _build_transaction's dynamic-wait preparation. Reuse canonical dynamic-wait edge construction while preserving guarded/repeated activation and terminal handshakes. Keep first complete sources/products immutable, independently prove zero/one/positive counts and stable sampled values, and qualify public/native/carriers plus bounded actual HDL behavior before closing the defect. Split risky scope first; no unrelated controller/generic feature change.`
+  Verification: `Source repair .1 is qualified and committed separately before external witness .2. Exact entry truth partitions, caller kinds, source/native/API/newline and book checks pass; actual external HDL timing remains open and is deferred after required handoff by decision0121 unless demonstrated blocking evidence changes the order. First audit reproductions and every source/oracle epoch remain immutable.`
   Commit: `pending`
   Children: `ISF-REDUCTION-DELIVERY.11.1, ISF-REDUCTION-DELIVERY.11.2`
 
@@ -726,18 +728,31 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Final All tests successful Files=1 Tests=9; preservation All tests successful Files=6 Tests=57; book/task All tests successful Files=2 Tests=50. Syntax and native exact book example pass. Retained identity/epoch verifier passes hostile controls; book/source/index and scripts/check_doctrines.sh plus normal hooks gate this source repair. External HDL runtime remains explicitly pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.11.2`
-  Status: `pending`
+  Status: `deferred`
   Goal: `Qualify the repaired generated-child leading runtime wait with a fixed external HDL witness.`
-  Acceptance: `After .1, pin exact source/bench/targets, expected counts/edges and process-observer/resource admission before executing new external workloads. Use the already qualified host/tool path and public tool APIs, with all fixtures/output on the repository volume; do not replay historical HIAL workloads or inspect submodule internals. Independently observe zero bypass, positive sampled counts, later operand changes and reset/repeated start behavior at public pins, with hostile expected-edge controls and full source/process/result evidence. Retain unavailable legs as an owned blocker instead of claiming runtime closure. Commit complete defect qualification before resuming width propagation.`
-  Verification: `pending source repair`
-  Commit: `pending`
+  Acceptance: `After .1, pin exact source/bench/targets, expected counts/edges and process-observer/resource admission before executing new external workloads. Use the already qualified host/tool path and public tool APIs, with all fixtures/output on the repository volume; do not replay historical HIAL workloads or inspect submodule internals. Independently observe zero bypass, positive sampled counts, later operand changes and reset/repeated start behavior at public pins, with hostile expected-edge controls and full source/process/result evidence. Retain unavailable legs as an owned blocker instead of claiming runtime closure. Commit complete defect qualification at the decision0121 post-handoff frontier; required width propagation resumes first.`
+  Verification: `Decision0121 defers this independent external runtime witness until after required SPECFORGE delivery/publication/feedback, unless a required validation failure proves it blocks delivery. Source repair .11.1 remains qualified; no HDL timing closure is claimed.`
+  Commit: `ISF-REDUCTION-DELIVERY.13: enforce exclusive required SPECFORGE priority`
 
 - ID: `ISF-REDUCTION-DELIVERY.12`
-  Status: `pending`
+  Status: `deferred`
   Goal: `P2: reject non-scalar await ports before opaque ARRAY carrier rendering.`
-  Acceptance: `Schedule after P1 .11 and before generic-width emission .3. The physical audit's connected (await (== data 0)) source is outside the documented (await port) grammar. Private lowering/schedule admit it, LoweringIR::_ir_await puts the raw list into guard.port, and FSM rendering interpolates ARRAY(address); native check/semantic later refuse Unsupported action form with an opaque address. Validate the documented scalar port shape before IR/carrier/report construction using the canonical await contract; do not admit arbitrary await expressions. Preserve actual scalar waits, watchdog resolution, transaction ownership and complete caller kinds. Retain first source/refusal/carrier evidence, add genuine RED/GREEN and transport-consistent contextual diagnostics, synchronize user boundaries and commit a focused repair.`
-  Verification: `Initial and connected await controls retain exact native/private products in dated width audit packets; malformed-list handling remains unfixed.`
-  Commit: `pending`
+  Acceptance: `Decision0121 supersedes the former after-P1/before-generic ordering: schedule after required SPECFORGE handoff unless a required test establishes this diagnostic defect as a blocker. The physical audit's connected (await (== data 0)) source is outside the documented (await port) grammar. Private lowering/schedule admit it, LoweringIR::_ir_await puts the raw list into guard.port, and FSM rendering interpolates ARRAY(address); native check/semantic later refuse Unsupported action form with an opaque address. Validate the documented scalar port shape before IR/carrier/report construction using the canonical await contract; do not admit arbitrary await expressions. Preserve actual scalar waits, watchdog resolution, transaction ownership and complete caller kinds. Retain first source/refusal/carrier evidence, add genuine RED/GREEN and transport-consistent contextual diagnostics, synchronize user boundaries and commit a focused repair.`
+  Verification: `Initial and connected await controls retain exact native/private products in dated width audit packets; malformed-list handling remains unfixed and owned after required SPECFORGE handoff under decision0121.`
+  Commit: `ISF-REDUCTION-DELIVERY.13: enforce exclusive required SPECFORGE priority`
+
+- ID: `ISF-REDUCTION-DELIVERY.13`
+  Status: `done`
+  Goal: `Apply the director's exclusive SPECFORGE delivery priority to the saved frontier.`
+  Acceptance: `Record the 2026-10-22 directive in a durable decision, task index, downstream response, book and resume pointer. Limit active execution to required .7-.10/.12 delivery and demonstrated prerequisites; unrelated roadmap work and optional extensions remain deferred. Reassess the independently found generated-wait runtime and malformed-await obligations without erasing their evidence or claiming closure. Select the exact next required generic-width leaf from the clean committed state. Validate task/decision/navigation/doc contracts and commit this ordering slice before implementation.`
+  Verification: `Decision0121 records the director's exclusive priority. Independent generated-wait runtime, malformed-await and optional inversion work retain explicit post-handoff ownership without losing prior evidence. Required width/static-source preservation is the next implementation leaf. Authenticated decision/navigation and live task-tree checks pass. The exact existing book/task tests pass All tests successful Files=2 Tests=50; the mdBook builds and complete source/copied-build/index checks pass. Initial sandbox RAM-guard refusal and a subsequent nonexistent-test-name invocation executed no test cases; process-inspection approval and the discovered exact paths qualify the successful run. Claim inventory/dispositions and diff hygiene pass. The initial staged driver rejects extra book-paragraph bytes and a root-cause box using git log -1 instead of its declared pickaxe signature. Compacting the same paragraph preserves all prior reset/integration facts under the unchanged allowance; the relevant executed git log -S supplies the actual pointer provenance. A subsequent staged run exposes task/rationale transition allowances at their prior measurements. Apply the existing decision0070 procedure to the measured totals plus each declared ratchet step, without raising an enforcement ceiling or changing a rollover surface. Corrected staged doctrines and normal hooks qualify the commit; no product behavior changes.`
+  Commit: `ISF-REDUCTION-DELIVERY.13: enforce exclusive required SPECFORGE priority`
+
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S ISF-REDUCTION-DELIVERY.11.2 -- MEMORY.md identifies commit24f0d0220; git show HEAD:MEMORY.md identifies the saved generated-wait witness frontier after the committed source repair. The live .11/.12 acceptance placed independent defect work before generic widths, despite the director's exclusive required-request priority. Decision0121 explicitly supersedes that ordering.
+  - [x] **ADDRESSED (verified)** — Required .2.3.2.1.1 is the saved next implementation leaf. Exact .11.2/.12/.7.2 statuses and reasons preserve post-handoff ownership and evidence. The task index, current decision catalog/navigation, response and book agree on required requests and demonstrated blockers only. No product source or supported contract changes.
+  - [x] **NO REGRESSION** — All tests successful Files=2 Tests=50 from the exact existing book/task tests. mdBook build, complete source/copied-build/index checks, authenticated decisions, task integrity, claim census/dispositions and git diff --check pass. scripts/check_doctrines.sh and normal hooks gate this priority-only change without raising enforcement ceilings or relaxing publication qualification.
 
 ## Blockers
 

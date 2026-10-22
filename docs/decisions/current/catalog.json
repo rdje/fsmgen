@@ -1425,6 +1425,28 @@
       },
       "path": "docs/decisions/current/language-api/0120-generated-child-runtime-wait-entry-preserves-sampling.md",
       "type": "generated transaction entry contract"
+    },
+    {
+      "content": {
+        "bytes": 2623,
+        "line_bytes": 160,
+        "lines": 49,
+        "sha256": "bd5ebe8fa728907519c145404b506b9ebba55b6adab7eba062421a813bdedebe"
+      },
+      "id": "0121",
+      "metadata": {
+        "authority_status": [
+          "- Status: accepted"
+        ],
+        "knowledge_id": "required-specforge-delivery-controls-task-selection",
+        "knowledge_status": "current",
+        "questions": [
+          "which work has exclusive priority until SPECFORGE requests are delivered?",
+          "may independent defects interrupt required SPECFORGE feature delivery?"
+        ]
+      },
+      "path": "docs/decisions/current/continuity/0121-required-specforge-delivery-controls-task-selection.md",
+      "type": "feedback/governance"
     }
   ],
   "schema_version": 1,

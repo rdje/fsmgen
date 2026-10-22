@@ -34,11 +34,11 @@ presence/reset through realized semantic/HDL interfaces and behavior.
 Derived widths require generic widths; their scope stays separate.
 [Feedback response](reference-source/docs/SPECFORGE_FEEDBACK_RESPONSE.markdown.source.txt)
 records scopes, repair order, reproductions, owners, delivery and reset answers.
-SPECFORGE `.7`–`.10` and `.12` are received and prioritized: required delivery,
-qualified publication, then response. Receipt, local delivery and integration
-differ; old pins lack new commits. Reset omission uses the legacy default;
-clock-only means no reset or guaranteed initialization. No form defers reset
-policy. Optional extensions stay separate.
+SPECFORGE `.7`–`.10`/`.12` exclusively govern required delivery and proven
+blockers, then qualified publication/response (`0121`). Other and optional work
+stays owned after handoff. Receipt, local delivery and integration differ;
+old pins lack new commits. Reset omission selects the legacy default;
+clock-only has no reset or guaranteed initialization. No form defers reset policy.
 
 ## Status Vocabulary
 
