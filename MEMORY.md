@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2`
-- next_action: Complete type/carrier/operand qualification from the committed qualified-static audit: signed/state sample types in carriers and semantic nets; local/storage/owner/path and caller controls. Preserve documented refusals and .8 exception. Commit before capture identity/corpus/profile; .10 audits predecessor identities before runtime.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
+- next_action: Complete remaining owner/path/refusal operand qualification, preserving documented limits and .8. Commit before capture identity/corpus/profile; .10 audits predecessor identities before runtime. The overdue artifact sweep precedes the next implementation slice from a clean boundary.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

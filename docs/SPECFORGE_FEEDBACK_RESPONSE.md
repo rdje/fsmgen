@@ -44,6 +44,9 @@ Runtime expression counts, guards and body reads retain crossing checks.
 Qualified enum/package constants also retain their static identity when a
 record input has a matching root/member. Invalid static reductions now refuse
 consistently in check, semantic and schedule preview before carrier emission.
+Record-field scalar sample chains retain their exact signed/four-state,
+unsigned/two-state or unspecified-state types in actual IAL0 and semantic nets.
+These checks establish source/type preservation; X/Z execution remains unqualified.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

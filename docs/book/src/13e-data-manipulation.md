@@ -59,6 +59,25 @@ formal's distinct physical identity. Samples of declared clocks and resets
 retain their one-bit widths through aliases and chains. A clock-only named
 domain gains no reset declaration.
 
+Scalar record-field samples also keep their declared signedness and state model
+in private carrier declarations and semantic nets. A reduction consumes that
+complete scalar value and returns one unsigned bit. For example:
+
+```lisp
+(actor sampled_parity
+  (clock clk) (reset (rst_n sync active_low))
+  (types (type frame (record (data (four_state (signed (bits 3)))))))
+  (interface (input start) (input packet (type frame)) (output parity) (output done))
+  (transaction main (on start)
+    (sample packet.data as q) (sample q as again)
+    (set parity (^ again)) (complete done)))
+```
+
+Both `q` and `again` retain the signed three-bit four-state type. Explicit
+two-state fields keep that model; fields without a declared state model gain
+none. These source, carrier and semantic checks do not establish X/Z execution
+behavior; runtime qualification remains separate.
+
 A direct transaction count parameter does not hide a same-named runtime pin or
 formal inside a reduction. For example, the wait below uses the static count 2,
 while the parity reads the declared runtime input's 8 bits:
