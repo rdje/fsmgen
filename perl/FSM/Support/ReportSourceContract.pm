@@ -7,6 +7,7 @@ use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::ISFResetProvenance qw(reset_provenance_contract);
 use FSM::Support::ISFInterfacePortMetadata qw(interface_port_metadata_contract);
+use FSM::Support::ISFReductions qw(reduction_metadata_contract);
 
 our @EXPORT_OK = qw(
     build_report_source_contract
@@ -66,6 +67,7 @@ sub report_source_optional_fields {
     return {
         reset_provenance => reset_provenance_contract(),
         interface_ports => interface_port_metadata_contract(),
+        reductions => reduction_metadata_contract(),
     };
 }
 

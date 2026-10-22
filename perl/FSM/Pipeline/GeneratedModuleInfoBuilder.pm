@@ -22,6 +22,7 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Package::ExpressionOperatorSupport ();
 use FSM::IR::LoweredRTLIR;
 use FSM::IR::LoweredRTLIRBuilder;
 
@@ -151,7 +152,10 @@ sub _render_check_condition_sv ($cond, $seen = undef) {
         }
         my $operand = _render_check_condition_sv($cond->operand, $seen);
         return undef unless defined($operand) && length($operand);
-        return _check_sv_unary_operator($cond->operator) . "($operand)";
+        my $operator = _check_sv_unary_operator($cond->operator);
+        return "($operator($operand))"
+            if FSM::Package::ExpressionOperatorSupport::is_reduction_operator($operator);
+        return "$operator($operand)";
     }
 
     if (blessed($cond) && $cond->isa('FSM::CoreAST::Concatenation')) {

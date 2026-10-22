@@ -9,6 +9,7 @@ no warnings 'experimental::signatures';
 use Data::Dumper;
 use Scalar::Util qw(blessed);
 use FSM::CoreAST;
+use FSM::Package::ExpressionOperatorSupport ();
 use FSM::Debug;
 use FSM::Package::AggregateExpressionTypeSupport;
 use FSM::Package::AggregatePathSupport;
@@ -2811,6 +2812,8 @@ sub expression_to_systemverilog_text($self, $expr) {
         my $op = $op_map{$expr->operator} // $expr->operator;
         my $operand = $self->expression_to_systemverilog_text($expr->operand);
         $operand = defined($operand) && length($operand) ? $operand : '0';
+        return "($op($operand))"
+            if FSM::Package::ExpressionOperatorSupport::is_reduction_operator($op);
         return "$op($operand)";
     }
 
@@ -3484,6 +3487,10 @@ sub parse_signal_action($self, $action) {
 
     if ($source_expr && $source_expr->can('width') && $source_expr->width) {
         $rhs_width = $source_expr->width;
+        $rhs_explicit = 1;
+    } elsif ($source_expr && $source_expr->isa('FSM::CoreAST::UnaryOp')
+        && FSM::Package::ExpressionOperatorSupport::is_reduction_operator($source_expr->operator)) {
+        $rhs_width = 1;
         $rhs_explicit = 1;
     } elsif (ref($source_expr) eq 'FSM::CoreAST::SignalRef' && $source_expr->slice) {
         my ($high, $low) = @{$source_expr->slice};

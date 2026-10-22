@@ -15,20 +15,24 @@ protocol does not require SPECFORGE to classify the root cause as `.fsm`,
 the exact FSMGen-facing artifacts, invocation, outputs, and expected/observed
 behavior so FSMGen maintainers can reproduce locally.
 
-## 2026-10-21: Request .12 contract selected; delivery pending
+## 2026-10-22: Request .12 unary source milestone; delivery pending
 
 Decision `0117` selects unary `(^ X)`, `(& X)`, `(| X)` and grouped
 `(reduce-groups OP X N)`, with positive literal N, least-significant group
-first and an unpadded short final group. Logical `!` keeps its Boolean meaning;
-optional `(~ X)` is separately owned. The internal scalar-width and distinct-intermediate groundwork is verified under
-`ISF-REDUCTION-DELIVERY.1.1`. On 2026-10-22, `.1.2.1` also qualifies private
-selected-expression declaration/path/schema records. Neither prerequisite
-opens source admission or public inventories; these forms are not implemented yet.
-`docs/tasks/ISF-REDUCTION-DELIVERY.md` owns unary delivery first, followed by
-preserved generic widths, real parameter overrides/legality and grouped
-reductions. No default-width unroll will stand in for the required generic
-behavior. Schedule/semantic inventories and native/API/MCP/HDL qualification
-are required. The previously documented .7/.8/.9/.10 boundaries remain in force.
+first and an unpadded short final group. Unary declared scalar/slice/bit source
+forms now enter canonical IAL0. Successful ISF check/semantic reports expose
+`source.reductions`; schedule reports expose `reductions`, with detached
+owner/context/operator/operand and exact operand/result widths. Try the
+`isf/unary_reductions.isf` fixture using the three commands below with that path.
+The supplied fixed-slice parity source now strict-checks locally.
+
+`ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
+corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is
+not complete R1 delivery. Parameter-dependent grouped behavior (R2/R3),
+publication and SPECFORGE integration are still pending. No default-width
+unroll substitutes for generic behavior. Logical `!` stays Boolean; optional
+vector inversion is separately owned. **SPECFORGE `.46.c` remains blocked.**
+Requests `.7`/`.8`/`.9`/`.10` retain the boundaries below.
 
 ## High-Level Response
 
@@ -47,7 +51,7 @@ integration are separate milestones.
 | `.8` — named timers | Accepted; SEM `.60.2`; implementation open. | Existing transaction watchdogs retain their error-path meaning. They do not provide concurrent named timers or ordinary expiry conditions. Contract selection is `.60.2.2`; cycle-based timers can be delivered independently of physical-time units. Start/restart/stop, reset/control precedence, concurrent expiry and reports remain required. |
 | `.9` — unstated reset | Answered; SEM `.60.3` done. | Omitted legacy reset selects asynchronous active-low `rst_n` and reports `legacy_default`. An explicit reset reports `explicit`. A clock-only named domain has no reset, reports `domain_absent`, and does not guarantee startup state or values. No form leaves reset policy unresolved until instantiation. SPECFORGE must decide whether its adapter may accept the compiler default; details and report locations are in the dated answer below. |
 | `.10` — aggregate interface ports | Accepted; SEM `.60.4`; partial delivery. | The qualified packed-record input subset is available locally: local/imported types, scalar field reads, exact-type input-to-storage copies, public reports, and the documented SystemVerilog profile. Whole record outputs/copies have bounded source/carrier/public admission. Generated output handoffs, output member writes and output execution/full consumer signoff remain open; list-root ports and variants remain optional. Do not close the complete request on input delivery alone. |
-| `.12` — byte-group reductions | Accepted; SEM `.92`; implementation open. | The supplied unrolled baseline passes, while unary XOR slice and parameterized forms remain refused. Required unary XOR/AND/OR, parameter-correct grouped reductions (including a short final group), target-width diagnostics, FSM/HDL and public reports are owned by `.92.1`–`.92.4`; optional vector inversion is `.92.5`. SPECFORGE `.46.c` stays blocked until the new form is qualified, published and integrated. |
+| `.12` — byte-group reductions | Accepted; SEM `.92`; implementation open. | The unrolled baseline and declared unary XOR slice now pass locally; full unary qualification and parameterized groups remain open. Required unary XOR/AND/OR, parameter-correct grouped reductions (including a short final group), target-width diagnostics, FSM/HDL and public reports are owned by `.92.1`–`.92.4`; optional vector inversion is `.92.5`. SPECFORGE `.46.c` stays blocked until the new form is qualified, published and integrated. |
 
 **Availability:** the reset answer and record-input changes are committed in
 this FSMGen checkout. Read-only `git ls-remote` on 2026-10-21 confirms published `main` is still

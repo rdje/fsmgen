@@ -7,6 +7,7 @@ use Exporter 'import';
 use JSON::PP ();
 use FSM::Support::ISFResetProvenance qw(reset_provenance_contract);
 use FSM::Support::ISFInterfacePortMetadata qw(interface_port_metadata_contract);
+use FSM::Support::ISFReductions qw(reduction_metadata_contract);
 use FSM::Support::ISFResourceCatalog qw(
     isf_backlog_resource_kind_values
     isf_enforced_resource_kind_values
@@ -307,6 +308,7 @@ sub build_isf_public_interface_contract {
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
         schedule_report_reset_provenance => reset_provenance_contract(),
         schedule_report_interface_ports => interface_port_metadata_contract(),
+        schedule_report_reductions => reduction_metadata_contract(),
         schedule_report_reset_kind_values => isf_public_interface_schedule_report_reset_kind_values(),
         schedule_report_reset_polarity_values => isf_public_interface_schedule_report_reset_polarity_values(),
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
@@ -722,6 +724,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_reset_keys
             schedule_report_reset_provenance
             schedule_report_interface_ports
+            schedule_report_reductions
             schedule_report_reset_kind_values
             schedule_report_reset_polarity_values
             schedule_report_storage_required_keys

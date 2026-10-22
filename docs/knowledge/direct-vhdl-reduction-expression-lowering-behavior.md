@@ -10,7 +10,7 @@ answers:
   - "does named-drive VHDL still contain (|drive_zero_start)?"
   - "which unary reduction operands still fail in direct VHDL?"
   - "does reduction lowering widen the public FSM grammar?"
-date: 2026-07-30
+date: 2026-10-22
 status: current
 tags: [vhdl, backend, reduction, expression, scalar, vector, fold, fail-closed]
 evidence: docs/DIRECT_VHDL_REDUCTION_EXPRESSION_BEHAVIOR.md; docs/DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md; docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; t/1542-isf-rule-transaction-named-drive-priority-readiness.t; t/1543-direct-vhdl-reduction-expression-readiness.t; t/1420-vhdl-direct-backend-scaffold.t; t/386-hdl-generator-facade-target-language-boundary-audit.t
@@ -31,9 +31,9 @@ fail closed before output.
 
 The real named-drive positive and complemented scalar reductions are now
 token-free. Existing AMBA `HRESP` and APB `wait_ctr`/`addr_q` vector truthiness
-remains supported through the helpers. Public one-operand source forms remain
-rejected, and decision `0023` still withholds external VHDL compile/runtime
-qualification because no authoritative compiler is installed.
+remains supported through the helpers. Decision `0117` now admits declared
+unary source forms. Ranges still refuse here; decision `0023` withholds external
+VHDL compile/runtime qualification; no authoritative compiler was available.
 
 Runtime revalidation on Darwin requires the separately qualified opt-in; a
 skipped T1542 is not executable evidence. Retain the RAM guard defaults.

@@ -1,0 +1,18 @@
+(actor unary_reductions
+  (clock clk)
+  (reset (rst_n sync active_low))
+  (interface
+    (input valid)
+    (input data (width 8))
+    (output parity)
+    (output all_set)
+    (output any_set)
+    (output odd_parity)
+    (output slice_parity)
+    (output selected_bit))
+  (rule xor_check valid (parity (^ data)))
+  (rule all_check valid (all_set (& data)))
+  (rule any_check valid (any_set (| data)))
+  (rule odd_check valid (odd_parity (! (^ data))))
+  (rule slice_check valid (slice_parity (^ data[7:4])))
+  (rule bit_check valid (selected_bit (& data[3]))))

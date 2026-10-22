@@ -24,6 +24,7 @@ use FSM::Package::Symbols;
 use FSM::SourcePathResolver;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(capture_interface_port_metadata);
+use FSM::Support::ISFReductions qw(capture_actor_reductions);
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
 use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
 use FSM::Support::ISFRecordPortScopes qw(record_context_scope);
@@ -413,6 +414,9 @@ sub _build_actor($self, $actor_ast, $source_label) {
         $result->{interface},
         ref($result->{clock_domains}) eq 'HASH' ? $result->{clock_domains}{default} : undef,
     );
+
+    my $reductions = capture_actor_reductions(actor => $result);
+    $result->{reduction_metadata} = $reductions if @$reductions;
 
     fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;

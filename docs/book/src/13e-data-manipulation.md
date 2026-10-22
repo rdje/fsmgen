@@ -7,36 +7,73 @@ The shorthand here belongs to ISF/IAL1: existing parser expansions feed the
 transaction scheduler. The current repair work preserves their intended
 control flow; it introduces no new macro language or framework.
 
-## Selected reduction design — implementation pending
+## Unary reductions
 
-SPECFORGE request `.12` is owned by
-[the reduction delivery tree](../../../docs/tasks/ISF-REDUCTION-DELIVERY.md).
+`(^ X)`, `(& X)` and `(| X)` reduce a declared packed scalar signal,
+scalar field, static slice or bit selection to one unsigned bit. A selected
+bit reduces to itself. The aliases `xor`, `and`, `or` have the same unary
+meaning; multiple operands retain their existing vector operations. Logical
+`!` produces one Boolean: `(! (^ DATA[7:0]))` expresses odd byte parity,
+while `(! (^ DATA))` produces one whole-vector parity bit.
+
+The runnable `isf/unary_reductions.isf` fixture includes:
+
+```lisp
+(actor unary_reductions
+  (clock clk)
+  (reset (rst_n sync active_low))
+  (interface (input valid) (input data (width 8))
+    (output parity) (output all_set) (output any_set)
+    (output odd_parity) (output slice_parity) (output selected_bit))
+  (rule xor_check valid (parity (^ data)))
+  (rule all_check valid (all_set (& data)))
+  (rule any_check valid (any_set (| data)))
+  (rule odd_check valid (odd_parity (! (^ data))))
+  (rule slice_check valid (slice_parity (^ data[7:4])))
+  (rule bit_check valid (selected_bit (& data[3]))))
+```
+
+```bash
+./bin/fsmgen --strict --check --json isf/unary_reductions.isf
+./bin/fsmgen --strict --emit-semantic-json isf/unary_reductions.isf
+./bin/fsmgen --emit-schedule-json isf/unary_reductions.isf
+```
+
+Existing context restrictions still apply; runtime wait expressions retain their
+symbol-only operator subset.
+
+Operands need explicit positive-width scalar declarations. Unknown signals,
+aggregate roots, parameter/constant values, literals, compound expressions and
+invalid paths are refused. Local declarations and scalar sample aliases retain
+their declared widths through the generated IAL0 carrier; a destination cannot
+resize a reduction operand.
+
+Schedule reports expose `reductions`; successful directly parsed ISF check and
+semantic reports expose `source.reductions`. They are omitted when absent and
+from failed or unrelated source reports. Each entry records `owner_kind`,
+`owner`, `context`, `kind: "unary"`, `operator`, `operand`, `operand_width`,
+`result_width`. Transactions precede rules, then used named drives in lexical
+order; occurrences follow expression preorder. For `(^ data[7:4])`, operand
+width is 4 and result width is 1. API and newline MCP use the same detached
+records. These records describe source expressions, not hardware execution.
+
+## Grouped reductions — implementation pending
+
+SPECFORGE request `.12` remains open in
+[the delivery tree](../../../docs/tasks/ISF-REDUCTION-DELIVERY.md).
 [Decision 0117](../../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
-selects the following contract. Internal reduction widths and distinct intermediate
-names are prepared; source admission, public inventories and HDL runtime remain
-pending. Selected-expression record preparation now validates declared operands
-and detached metadata privately; it is not integrated with parser admission or
-public reports. The selected authoring forms remain unimplemented.
+selects `(reduce-groups OP X N)` for literal OP `^`, `&`, `|` and positive
+decimal literal N. It will produce `ceil(width(X)/N)` bits, least-significant
+group first, with an unpadded short final group. Strict targets must match that
+count. For byte parity N is 8. Optional `(~ X)` will complement each vector bit.
 
-Unary `(^ X)`, `(& X)` and `(| X)` will reduce a declared packed scalar
-signal, scalar field, static slice or bit selection to a single bit. Existing
-multi-operand expressions keep their meaning. Logical `!` remains a Boolean
-operation. The retained `(! (^ DATA[7:0]))` case will express odd byte parity;
-`(! (^ DATA))` will express one whole-vector parity bit.
-
-The selected grouped form is `(reduce-groups OP X N)`, for literal OP `^`, `&`
-or `|` and positive decimal literal N. It produces `ceil(width(X)/N)` bits.
-Bit i reduces positions `N*i` through `min(width(X)-1, N*i+N-1)` of X's packed
-value. The last group may be short; no padding changes it. A strict assignment
-must match the derived group count. For byte parity, N is 8. Optional `(~ X)`
-will complement each vector bit without changing logical `!`.
-
-Required grouped delivery includes preserved authored width dependencies,
-actual HDL parameter overrides, consistent registers/intermediates, contextual
-invalid-width/group diagnostics, schedule and semantic inventories, and
-independent HDL behavior. Merely accepting the source or unrolling defaults
-will not close the request. Each shipped slice will replace its pending
-boundary with runnable examples and the qualified backend/profile limits.
+Unary source admission and public records are implemented; full source/profile
+coverage and actual HDL runtime qualification remain separately owned. Direct
+VHDL retains its bounded declaration-aware fold generation and range refusal;
+external VHDL execution is unqualified under decision 0023. Required grouped
+delivery still needs preserved authored width dependencies, actual HDL parameter
+overrides, consistent intermediate widths and independent behavior. Accepting
+source or unrolling defaults does not complete R1–R3 or unblock SPECFORGE `.46.c`.
 
 ## `(update var expr)` — Variable Modification
 

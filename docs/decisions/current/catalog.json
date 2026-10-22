@@ -1316,15 +1316,15 @@
     },
     {
       "content": {
-        "bytes": 8920,
-        "line_bytes": 196,
-        "lines": 155,
-        "sha256": "91916ccb590668fff612a5026ac0f5c2d45e2bb4989ea2e352460708949329b0"
+        "bytes": 10749,
+        "line_bytes": 261,
+        "lines": 181,
+        "sha256": "4d7dcf9e9801af606f02f27a164988dec33c7d06b92ec14ab6964314b91ca0a6"
       },
       "id": "0117",
       "metadata": {
         "authority_status": [
-          "- Status: selected; implementation and qualification pending"
+          "- Status: selected; unary source integration implemented; qualification continues"
         ],
         "knowledge_id": "isf-reduction-and-group-contract",
         "knowledge_status": "current",

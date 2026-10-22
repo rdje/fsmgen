@@ -10,6 +10,7 @@ use Storable qw(dclone);
 use FSM::Debug;
 use FSM::Support::ISFResetProvenance qw(snapshot_reset_provenance);
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
+use FSM::Support::ISFReductions qw(snapshot_reductions);
 
 # Emits JSON schedule report from LoweringIR.
 # Consumes the same IR as Emitter::FSM — no string coupling.
@@ -66,6 +67,8 @@ sub report_hash($self, $ir) {
         crossings     => $self->_crossing_summary($ir),
     };
 
+    $report->{reductions} = snapshot_reductions($ir->{reductions})
+        if ref($ir->{reductions}) eq 'ARRAY' && @{$ir->{reductions}};
     return $report;
 }
 

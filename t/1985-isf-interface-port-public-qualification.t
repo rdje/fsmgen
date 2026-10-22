@@ -27,6 +27,11 @@ my @unchanged = qw(isf/record_input_types.fsm bin/fsmgen bin/fsmgen-mcp
     t/lib/FSM/Test/SourceQueryRunner.pm);
 my $bytes_before = {map {$_ => sha256_hex(read_file($_))} @unchanged};
 my %supported = (
+    'isf/unary_reductions.isf' => [
+        p('valid','input',1), p('data','input',8), p('parity','output',1),
+        p('all_set','output',1), p('any_set','output',1), p('odd_parity','output',1),
+        p('slice_parity','output',1), p('selected_bit','output',1),
+    ],
     'isf/interface_port_metadata.isf' => [
         p('start','input',1), {name=>'data',direction=>'input',width=>8,type=>'byte',type_kind=>'bits'},
         p('spare','output',2), p('done','output',1),

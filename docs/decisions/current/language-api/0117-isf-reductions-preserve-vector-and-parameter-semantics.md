@@ -9,12 +9,12 @@ answers:
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/specforge-reduction-intake-20261021/packet.json; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
+evidence: docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
 - Type: language and lowering contract
-- Status: selected; implementation and qualification pending
+- Status: selected; unary source integration implemented; qualification continues
 - Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.1`
 
 ## Context
@@ -25,10 +25,10 @@ parameter-dependent widths. Its retained source and current refusals are in
 `(! (^ DATA))` means inversion of a whole-vector parity bit; it cannot mean a
 vector of independently inverted byte parities.
 
-The shared expression builder currently requires multiple operands for `^`,
+At intake the shared expression builder required multiple operands for `^`,
 `&` and `|`. ISF preserves expressions in scheduled IAL0 text, but emitting a
-numeric default width loses its dependency. Existing unary AST nodes and their
-width consumers also need explicit reduction result semantics. Passing a
+numeric default width loses its dependency. At intake, unary AST nodes and their
+width consumers also needed explicit reduction result semantics. Passing a
 source check cannot establish HDL behavior or safe external parameter overrides.
 
 ## Decision
@@ -132,8 +132,8 @@ expression/backend-text controls. Its complete dated audit is
 `docs/audits/unary-reduction-width-foundation-20261021.json`.
 
 Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2074-unary-reduction-width-foundation.t`.
-Unary source admission still refuses; detached public inventories, source/corpus
-and actual HDL behavior remain successors. This prerequisite does not close R1.
+That prerequisite retained source refusal; the integration below opens declared
+unary forms. Full source/profile and HDL behavior qualification remain successors.
 
 ## Declared-expression record prerequisite
 
@@ -153,3 +153,29 @@ numeric reads follows 0114. Complete draft, diagnosis and checks remain in
 `docs/audits/reduction-record-preparation-20261022.json`.
 Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2075-isf-reduction-record-preparation.t`.
 No source, public-report or runtime admission is claimed by this preparation.
+
+## Unary source integration
+
+`ISF-REDUCTION-DELIVERY.1.2.2` connects explicit declaration/path validation,
+canonical IAL0 unary parsing and detached optional schedule/check/semantic
+records. Source selection visits expression positions, preserving owner/context
+and expression order; an assignment target named `xor` is not an operator.
+Static values mask same-named wires consistently with shared frontend resolution.
+A scalar sample retains its explicit private declaration and known type/width
+before its reduction is read by the canonical frontend. No inferred declaration
+or width fallback admits an unknown operand.
+
+Unary AST, canonical serializers and the executed enable-graph capture renderer
+group both the operand and expression. Direct VHDL recognizes exactly one
+balanced operand wrapper through its existing bounded fold path. The real
+negation predicate must also classify Core/runtime/substituted reductions as
+one bit, consistently with exact width inference; otherwise it emits a redundant
+compound NOR that the VHDL converter refuses. Source negation keeps its Boolean
+meaning. Other unary behavior stays unchanged; the independent private scalar
+complement classifier gap is P2-owned under `.7.1` after unary delivery. Direct VHDL still refuses range slices; this
+integration does not qualify external VHDL execution under decision 0023.
+`isf/unary_reductions.isf` is the supported source fixture; T2076 binds literal
+source records to native/API/newline products and actual generated IAL0.
+Broader source/profile/corpus coverage and actual HDL runtime remain `.1.2.3`
+through `.1.4`; generic widths/groups and publication remain required. This
+source milestone does not close R1–R3 or unblock SPECFORGE `.46.c`.

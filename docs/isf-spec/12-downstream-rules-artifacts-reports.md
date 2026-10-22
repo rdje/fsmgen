@@ -1141,6 +1141,11 @@ clock_domains
 crossings
 ```
 
+The optional `reductions` inventory is present for unary reduction occurrences;
+successful directly parsed ISF check/semantic products use `source.reductions`.
+Its detached schema and boundaries are specified in the public report reference.
+
+
 Generated names in reports and generated artifacts are deterministic for the
 same source and FSMGen version. They can be used as report-local or
 artifact-local identifiers when another public field explicitly references the

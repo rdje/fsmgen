@@ -124,7 +124,10 @@ subtest 'converter matrix lowers scalar and vector OR AND XOR reductions' => sub
             ["scalar unary $operator", '', "(${operator}X)", output => qr/Y <= \(X\);/],
             ["scalar complemented unary $operator", '', "(~${operator}X)", output => qr/Y <= \(not X\);/],
             ["vector unary $operator", '[3:0] ', "(${operator}X)", output => vector_pattern($operator, 0)],
-            ["vector complemented unary $operator", '[3:0] ', "(~${operator}X)", output => vector_pattern($operator, 1)];
+            ["vector complemented unary $operator", '[3:0] ', "(~${operator}X)", output => vector_pattern($operator, 1)],
+            ["scalar grouped operand $operator", '', "(${operator}(X))", output => qr/Y <= \(X\);/],
+            ["vector grouped operand $operator", '[3:0] ', "(${operator}(X))", output => vector_pattern($operator, 0)],
+            ["complemented grouped operand $operator", '[3:0] ', "(~${operator}(X))", output => vector_pattern($operator, 1)];
     }
 
     for my $case (@cases) {
@@ -215,6 +218,10 @@ subtest 'static bit selects lower and every other operand shape fails closed' =>
     }
 
     my @unsupported = (
+        ["(^(X | X))", "input wire [3:0] X", qr/operand shape is unresolved or compound/],
+        ["(^((X)))", "input wire [3:0] X", qr/operand shape is unresolved or compound/],
+        ["(^(UNKNOWN))", "input wire X", qr/operand 'UNKNOWN' has no resolved declaration/],
+        ["(^(X[5]))", "input wire [3:0] X", qr/operand 'X\[5\]' selects outside declared range/],
         ["(|X[2:2])", "input wire [3:0] X", qr/operand 'X\[2:2\]' is a 1-bit range slice/],
         ["(|X[5])", "input wire [3:0] X", qr/operand 'X\[5\]' selects outside declared range \[3:0\]/],
         ["(|X[0])", "input wire X", qr/operand 'X\[0\]' selects a scalar declaration/],
@@ -309,28 +316,37 @@ SV
     );
 };
 
-subtest 'explicit unary reduction source forms remain outside the public language' => sub {
+subtest 'declared unary reduction source forms enter the public language under SPECFORGE R1' => sub {
     for my $case (
-        ['or',  '|'],
-        ['and', '&'],
-        ['xor', '^'],
+        ['or',  '|', 0], ['or',  '|', 1],
+        ['and', '&', 0], ['and', '&', 1],
+        ['xor', '^', 0], ['xor', '^', 1],
     ) {
-        my ($name, $operator) = @$case;
+        my ($name, $operator, $negated) = @$case;
+        my $tag = ($negated ? 'not_' : '') . $name;
+        my $expression = "(${operator} X)";
+        $expression = "(! $expression)" if $negated;
         my $source = <<"FSM";
-(?fsm:direct_vhdl_unary_${name}_source
+(?fsm:direct_vhdl_unary_${tag}_source
   (+system (clock clk) (sreset reset))
   (+size (X 4) (Y 1))
-  (idle (= (Y (${operator} X))))
+  (idle (= (Y $expression)))
 )
 FSM
-        my $payload = failed_check_json($source, "direct_vhdl_unary_${name}_source.fsm");
-        ok(!$payload->{success}, "explicit unary $name source is rejected");
-        is($payload->{diagnostic_summary}{diagnostic_count}, 1, "explicit unary $name has one diagnostic");
-        like(
-            $payload->{diagnostics}[0]{message},
-            qr/Malformed expression operator '\Q$operator\E' with 1 operand\(s\).*requires at least 2 operands/s,
-            "explicit unary $name retains the n-ary arity boundary",
-        );
+        my $path = File::Spec->catfile($workspace, "direct_vhdl_unary_${tag}_source.fsm");
+        write_file($path, $source);
+        my ($success, undef, undef, $stdout, $stderr) = run(
+            command => [File::Spec->catfile($repo_root, 'bin', 'fsmgen'),
+                '--quiet', '--strict', '--check', '--json', $path]);
+        ok($success, "declared unary $tag passes public checking");
+        is(join('', @{$stderr || []}), '', 'machine-report stderr remains clean');
+        my $payload = decode_json(join('', @{$stdout || []}));
+        ok($payload->{success}, "declared unary $tag reports success");
+        my $vhdl = generate_hdl($path, 'vhdl');
+        my $pattern = $negated
+            ? qr/Y <=[^\n]*not[^\n]*fsmgen_direct_vhdl_reduce_${name}\(X\)/
+            : qr/Y <=\s*\(*fsmgen_direct_vhdl_reduce_${name}\(X\)/;
+        like($vhdl, $pattern, "public unary $tag retains its polarity and declaration-aware fold");
     }
 };
 

@@ -8,6 +8,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use Scalar::Util qw(blessed);
 use FSM::Package::IntegerLiteralSupport;
+use FSM::Package::ExpressionOperatorSupport ();
 
 # FSM Core AST - Semantic Foundation for Decision Tree FSMs
 # Format-agnostic, semantically complete representation
@@ -1096,6 +1097,8 @@ package FSM::CoreAST::UnaryOp;
         my $op = $op_map->{$self->{operator}} // $self->{operator};
         my $operand_verilog = $self->operand && $self->operand->can('to_verilog') ? 
                              $self->operand->to_verilog : '0';
+        return "($op($operand_verilog))"
+            if FSM::Package::ExpressionOperatorSupport::is_reduction_operator($op);
         return "$op($operand_verilog)";
     }
     
@@ -1112,6 +1115,8 @@ package FSM::CoreAST::UnaryOp;
         my $op = $op_map->{$self->{operator}} // $self->{operator};
         my $operand_sv = $self->operand && $self->operand->can('to_systemverilog') ? 
                          $self->operand->to_systemverilog : '0';
+        return "($op($operand_sv))"
+            if FSM::Package::ExpressionOperatorSupport::is_reduction_operator($op);
         return "$op($operand_sv)";
     }
 

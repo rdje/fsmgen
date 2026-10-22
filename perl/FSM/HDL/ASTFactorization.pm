@@ -7,6 +7,7 @@ use Scalar::Util qw(blessed refaddr);
 use Digest::SHA qw(sha256_hex);
 use Data::Dumper;
 use FSM::Debug;
+use FSM::Package::ExpressionOperatorSupport ();
 
 =head1 NAME
 
@@ -1192,6 +1193,8 @@ sub to_systemverilog {
     my $self = shift;
     my $operand_sv = blessed($self->{operand}) && $self->{operand}->can('to_systemverilog') 
         ? $self->{operand}->to_systemverilog() : $self->{operand};
+    return "($self->{operator}($operand_sv))"
+        if FSM::Package::ExpressionOperatorSupport::is_reduction_operator($self->{operator});
     return "$self->{operator}$operand_sv";
 }
 

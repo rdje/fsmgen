@@ -320,6 +320,9 @@ sub parse_recursive_expression($self, $expr, %options) {
 
     fsm_debug("          Recursive expr: $operator with " . scalar(@operands) . " operands", 3);
 
+    return $self->parse_unary_reduction($operator, $normalized_operator, $operands[0], %options)
+        if @operands == 1 && is_reduction_operator($normalized_operator);
+
     my @parsed_operands;
     for my $operand (@operands) {
         my $parsed = $self->parse_expression($operand, %options);
@@ -388,6 +391,30 @@ sub parse_recursive_expression($self, $expr, %options) {
     }
 
     return $self->finalize_nary_expression($normalized_operator, \@parsed_operands);
+}
+
+sub parse_unary_reduction($self, $display_operator, $operator, $operand, %options) {
+    my $display = defined($operand) && !ref($operand) ? $operand : '<expression>';
+    my $invalid = sub {
+        Carp::confess "Reduction '$display_operator' operand '$display' requires a declared positive-width packed scalar signal, static slice or bit selection. "
+            . supported_boundary_hint();
+    };
+    $invalid->() unless defined($operand) && !ref($operand)
+        && $operand =~ /\A([A-Za-z_]\w*)(?:(?:\.[A-Za-z_]\w*)|(?:\[\d+(?::\d+)?\]))*\z/;
+    my $signal = $self->{signal_manager}->get_signal($1);
+    $invalid->() unless $signal && ($signal->get_attribute('width_declared')
+        || $signal->get_attribute('explicit_port_role')
+        || $signal->type eq 'clock' || $signal->type eq 'reset');
+    my $parsed = $self->parse_expression($operand, %options);
+    $invalid->() unless blessed($parsed) && ($parsed->isa('FSM::CoreAST::SignalRef')
+        || $parsed->isa('FSM::CoreAST::IndexedRef') || $parsed->isa('FSM::CoreAST::AggregateRef'));
+    if ($parsed->isa('FSM::CoreAST::AggregateRef')) {
+        my $spec = $parsed->type_spec;
+        $invalid->() unless ref($spec) eq 'HASH' && ($spec->{kind} eq 'bit' || $spec->{kind} eq 'bits');
+    }
+    my $width = $self->infer_exact_expression_width($parsed);
+    $invalid->() unless defined($width) && $width > 0;
+    return FSM::CoreAST::UnaryOp->new(operator => $operator, operand => $parsed);
 }
 
 sub parse_state_active_expression($self, $operator, $operands) {

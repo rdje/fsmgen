@@ -15,6 +15,8 @@ sub new($class, %args) { bless {}, $class }
 sub emit($self, $ir) {
     fsm_trace_enter('Emitter::FSM emit', 2);
 
+    $self->{reduction_samples} = _reduction_sample_declarations($ir);
+
     $self->{outputs} = { map { $_->{name} => 1 } grep { $_->{direction} eq 'output' } @{$ir->{ports}} };
 
     my @lines;
@@ -43,7 +45,8 @@ sub emit($self, $ir) {
     }
     push @lines, $self->_emit_system($ir);
     push @lines, '';
-    if (@{$ir->{explicit_interface_ports} || []} || @{$ir->{explicit_internal_signals} || []}) {
+    if (@{$ir->{explicit_interface_ports} || []} || @{$ir->{explicit_internal_signals} || []}
+        || keys %{$self->{reduction_samples}}) {
         push @lines, $self->_emit_interface($ir);
         push @lines, '';
     }
@@ -156,6 +159,7 @@ sub _emit_interface($self, $ir) {
     for my $name (@{$ir->{explicit_internal_signals} || []}) {
         push @l, "    (internal $name)";
     }
+    push @l, map { "    (internal $_)" } sort keys %{$self->{reduction_samples}};
     push @l, '  )';
     return join("\n", @l);
 }
@@ -188,6 +192,11 @@ sub _emit_size($self, $ir) {
         my $width_token = $type_refs->{$name} // $ctrs->{$name};
         push @l, "    ($name $width_token" . _reset_suffix($resets, $name) . ")";
     }
+    for my $name (sort keys %{$self->{reduction_samples}}) {
+        next if $declared{$name};
+        $declared{$name} = 1;
+        push @l, "    ($name $self->{reduction_samples}{$name})";
+    }
     # Preserve the known widths of an assembled scalar and its operands.
     # Otherwise concat may infer a list or implicitly scalar input parts.
     my $widths = $ir->{signal_widths} || {};
@@ -205,6 +214,40 @@ sub _emit_size($self, $ir) {
     }
     return '' unless @l;
     return join("\n", '  (+size', @l, '  )');
+}
+
+# A source sample is an explicit private declaration. Preserve its known
+# width/type before the shared frontend parses a reduction using that alias.
+# Restrict this additional carrier evidence to actors using the new feature;
+# ordinary legacy inferred samples retain their current carrier contract.
+sub _reduction_sample_declarations {
+    my ($ir) = @_;
+    return {} unless ref($ir->{reductions}) eq 'ARRAY' && @{$ir->{reductions}};
+    my %declared = map {$_->{name} => 1} @{$ir->{ports} || []};
+    $declared{$_} = 1 for keys %{$ir->{counters} || {}}, @{$ir->{explicit_internal_signals} || []};
+    my %aggregate;
+    for my $storage (@{$ir->{declared_storage} || []}) {
+        for my $signal (@{$storage->{signals} || []}) {
+            $declared{$signal->{name}} = 1;
+            my $kind = ($signal->{type_spec} || {})->{kind} // '';
+            $aggregate{$signal->{name}} = 1 if $kind eq 'record' || $kind eq 'list';
+        }
+    }
+    my $widths = $ir->{signal_widths} || {};
+    my $types = $ir->{signal_type_refs} || {};
+    my %samples;
+    for my $block (@{$ir->{states} || []}, @{$ir->{dt_blocks} || []}) {
+        for my $assignment (@{$block->{assignments} || []}) {
+            next unless ($assignment->{source_kind} // '') eq 'sample_capture';
+            my ($name, $source) = @{$assignment}{qw(lhs rhs)};
+            next unless defined($name) && $name =~ /\A[A-Za-z_]\w*\z/ && !$declared{$name};
+            next unless defined($widths->{$name}) && $widths->{$name} > 0;
+            # A named scalar type retains signedness/state semantics. Numeric
+            # width is used only where the original declaration is width-only.
+            $samples{$name} = $types->{$name} // ($aggregate{$source} ? undef : $types->{$source}) // $widths->{$name};
+        }
+    }
+    return \%samples;
 }
 
 # `(reset V)` marker for a register with an opt-in hardware reset value; empty otherwise.

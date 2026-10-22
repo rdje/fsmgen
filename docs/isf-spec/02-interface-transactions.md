@@ -1555,7 +1555,8 @@ For the runtime surface, `(wait count_signal)` is accepted when `count_signal`
 has a known unsigned width. `(wait (<op> ...))` is accepted when every signal
 referenced by the non-empty list expression has known width and the
 expression-width helper can derive a positive result width. Its bounded
-operator grammar admits unary `!`, binary `<<`/`>>`, and multi-operand arithmetic
+operator grammar admits unary `!` and declared scalar reductions `& | ^`,
+binary `<<`/`>>`, and multi-operand arithmetic
 `+ - * / %`, bitwise `& | ^`, comparisons `== != < <= > >=`, and `concat`.
 Unsupported `~`, `&&`, `||` and unary `concat` fail at wait validation before
 scheduled carrier emission; no bitwise/logical reinterpretation is performed.
@@ -2052,6 +2053,15 @@ Current lowering:
   operation. Known assemble target and signal-part widths are retained in
   `+size`, so an inferred assembled word remains a packed scalar for extraction;
   existing declarations and static constants take precedence.
+
+Unary `(^ X)`, `(& X)` and `(| X)` reduce an explicitly declared positive-width
+packed scalar signal, scalar field, static slice or bit selection to one
+unsigned bit. Multi-operand forms retain their existing meaning; logical `!`
+stays Boolean. Runtime static values, literals, compound operands, aggregate
+roots and unresolved paths are refused. Scalar local/sample declarations retain
+their known widths through scheduled IAL0. Successful source reduction inventories
+are specified in the public report reference; full profile/runtime and generic
+grouped-reduction qualification remain separately owned by decision `0117`.
 
 The emitted shift expressions use the normal `.fsm` expression surface. Raw
 `<<` and `>>`, plus `shl` and `shr` aliases, are accepted as binary operators

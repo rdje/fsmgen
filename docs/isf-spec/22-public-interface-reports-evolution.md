@@ -5,7 +5,7 @@
 machine-readable schedule report. On success, the CLI report path is expected
 to keep stderr clean and emit the JSON payload on stdout.
 
-The bounded public top-level key family is:
+The base public top-level key family is:
 
 ```text
 schema_version
@@ -46,6 +46,17 @@ compile_issues
 clock_domains
 crossings
 ```
+
+Unary reduction inventories are optional: schedule `reductions` and successful
+ISF check/semantic `source.reductions` appear only when source occurrences exist.
+Entries require `owner_kind` (transaction/rule/drive), `owner`, `context`,
+`kind` (`unary`), `operator` (`^`/`&`/`|`), `operand`, positive integer
+`operand_width` and `result_width` (1). Order is transactions, rules, then used
+drives lexically; each expression uses preorder. Snapshots are detached and
+JSON-safe. Failed and unrelated source reports omit this field. Discovery uses
+`schedule_report_reductions` and `source_optional_fields.reductions`. These
+records establish source meaning, not HDL runtime qualification or preserved
+parameter-width dependencies. See the book's data manipulation chapter.
 
 Declared interface metadata is independent of inferred hardware. Successful
 check/semantic reports for directly parsed ISF sources include optional

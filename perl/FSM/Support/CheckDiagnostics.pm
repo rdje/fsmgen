@@ -10,6 +10,7 @@ use File::Spec;
 use JSON::PP ();
 use FSM::Support::ISFResetProvenance qw(snapshot_reset_provenance);
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
+use FSM::Support::ISFReductions qw(snapshot_reductions);
 
 use FSM::Support::DiagnosticCodes qw(diagnostic_code_metadata);
 use FSM::Support::RegressionCorpus qw(regression_corpus_entries);
@@ -137,6 +138,8 @@ sub _source_contract {
             ? (reset_provenance => snapshot_reset_provenance($args{reset_provenance})) : ()),
         ($args{include_isf_declarations} && exists($args{interface_ports})
             ? (interface_ports => snapshot_interface_port_metadata($args{interface_ports})) : ()),
+        ($args{include_isf_declarations} && exists($args{reductions})
+            ? (reductions => snapshot_reductions($args{reductions})) : ()),
     };
 }
 

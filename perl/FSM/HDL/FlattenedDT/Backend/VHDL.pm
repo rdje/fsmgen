@@ -892,10 +892,13 @@ sub _sv_reduction_expressions_to_vhdl ($expr, $ctx) {
     my $decls_by_name = $ctx->{decls_by_name} || {};
     my $identifier = qr/[A-Za-z_][A-Za-z0-9_]*/;
     my $candidate_operand = qr/$identifier(?:\[[0-9]+(?::[0-9]+)?\])?/;
+    # Source unary ASTs group the operand as well as the expression. Accept
+    # exactly one balanced wrapper around the same declaration-proven operand.
+    my $reduction_operand = qr/(?:$candidate_operand|\(\s*$candidate_operand\s*\))/;
     my $converted = $expr;
 
     $converted =~ s{
-        (\(\s*(~?)\s*([|&^])\s*($candidate_operand)\s*\))
+        (\(\s*(~?)\s*([|&^])\s*($reduction_operand)\s*\))
     }{
         _sv_reduction_to_vhdl(
             $1,
@@ -919,6 +922,7 @@ sub _sv_reduction_expressions_to_vhdl ($expr, $ctx) {
 }
 
 sub _sv_reduction_to_vhdl ($authored, $complement, $operator, $operand, $decls_by_name, $boolean_context = 0) {
+    $operand =~ s/\A\(\s*(.*?)\s*\)\z/$1/;
     my ($base, $select) = $operand =~ /^([A-Za-z_][A-Za-z0-9_]*)(?:\[([^\]]+)\])?$/;
     my $decl = defined($base) ? $decls_by_name->{$base} : undef;
     confess _unsupported(
@@ -969,8 +973,8 @@ sub _sv_reduction_to_vhdl ($authored, $complement, $operator, $operand, $decls_b
 
 sub _required_vector_reduction_helpers ($body, $decls_by_name) {
     my %required;
-    while ($body =~ /\(\s*~?\s*([|&^])\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)/g) {
-        my ($operator, $operand) = ($1, $2);
+    while ($body =~ /\(\s*~?\s*([|&^])\s*(?:([A-Za-z_][A-Za-z0-9_]*)|\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*\))\s*\)/g) {
+        my ($operator, $operand) = ($1, $2 // $3);
         my $decl = $decls_by_name->{$operand};
         $required{$operator} = 1
             if $decl && !$decl->{scalar};

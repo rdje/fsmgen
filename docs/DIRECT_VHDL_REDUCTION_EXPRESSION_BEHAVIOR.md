@@ -73,13 +73,14 @@ Decision `0023` still applies: textual generation and internal regression
 prove the scoped lowering, but no executable VHDL analyzer/runtime
 qualification is claimed until an authoritative compiler profile exists.
 
-## Verification
+## Original `.2` verification (2026-07-30)
 
 - t1543 passes 6 top-level subtests/79 nested assertions covering scalar and
   complemented OR/AND/XOR, vector folds and helper bodies, signed-vector casts,
   static bit selects, range/invalid/unresolved/compound rejection, helper
   collisions, condition context, public pipeline truthiness, and unchanged
-  public source arity.
+  historical public source arity (replaced by declared unary admission under
+  decision `0117`; HDL runtime remains separately unqualified).
 - t1542 passes 7 top-level subtests/95 nested assertions and proves the real
   named-drive positive and complemented scalar shapes contain no reduction
   token while existing assertion-enabled SystemVerilog and native-Verilog

@@ -127,14 +127,14 @@
 
 _Direct VHDL lowers scalar and vector unary reductions without foreign tokens_
 
-- **date:** 2026-07-30 · **status:** current
+- **date:** 2026-10-22 · **status:** current
 - **source and verification:** [`docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md`](../../docs/knowledge/direct-vhdl-reduction-expression-lowering-behavior.md)
 
 ### direct-vhdl-reduction-expression-readiness-audit
 
 _Direct VHDL reduction audit and preservation reconcile scalar identity with vector folds_
 
-- **date:** 2026-07-30 · **status:** current
+- **date:** 2026-10-22 · **status:** current
 - **source and verification:** [`docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md`](../../docs/knowledge/direct-vhdl-reduction-expression-readiness-audit.md)
 
 ### direct-vhdl-reduction-expression-token-leak

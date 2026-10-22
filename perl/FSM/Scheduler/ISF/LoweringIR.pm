@@ -24,6 +24,7 @@ use FSM::Scheduler::ISF::ChildCompletionOutputs qw(prepare_child_completion_outp
 use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
+use FSM::Support::ISFReductions qw(capture_actor_reductions);
 use FSM::Scheduler::ISF::RecordSamples;
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
 use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
@@ -614,6 +615,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         reset_provenance => _clone_isf_value($actor->{reset_provenance}),
         # Generated transaction ports are private, not actor declarations.
         interface_port_metadata => undef,
+        reductions => capture_actor_reductions(actor => {%$actor, transactions => [$tx], rules => []}),
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
@@ -1697,6 +1699,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         reset      => $actor->{reset},
         reset_provenance => _clone_isf_value($actor->{reset_provenance}),
         interface_port_metadata => snapshot_interface_port_metadata($actor->{interface_port_metadata}),
+        reductions => capture_actor_reductions(actor => $actor),
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
@@ -7412,7 +7415,7 @@ sub _activation_binding_expr_width {
     }
 
     return 1 if $op =~ /\A(?:==|!=|<|<=|>|>=|&&|\|\|)\z/;
-    return 1 if $op eq '!';
+    return 1 if $op eq '!' || (@$expr == 2 && $op =~ /\A[&|^]\z/);
     return $operand_widths[0] if ($op eq '~' || $op eq '<<' || $op eq '>>') && defined($operand_widths[0]);
     if ($op =~ /\A(?:\+|-|\*|\/|%|&|\||\^)\z/) {
         return undef if grep { !defined($_) || $_ <= 0 } @operand_widths;
@@ -8567,6 +8570,7 @@ sub _wait_expression_operator_accepts_arity {
     # Do not admit logical/bitwise aliases that the carrier cannot parse.
     return $arity >= 2 if $op eq 'concat';
     return $arity == 1 if $op eq '!';
+    return $arity >= 1 if $op =~ /\A[&|^]\z/;
     return $arity == 2 if $op =~ /\A(?:<<|>>)\z/;
     return $arity >= 2 if $op =~ /\A(?:\+|-|\*|\/|%|&|\||\^|==|!=|<|<=|>|>=)\z/;
     return 0;

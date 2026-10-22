@@ -10,6 +10,7 @@ use FSM::Adapter::FSMGenFull::ExpressionBuilder;
 use FSM::HDL::ASTFactorization;
 use FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalWidthSupport;
 use FSM::Synthesis::EnableGraph::ASTSupport;
+use FSM::HDL::FlattenedDT;
 
 my $manager = FSM::Adapter::FSMGenFull::SignalManager->new;
 my $builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(signal_manager => $manager);
@@ -34,6 +35,7 @@ subtest 'real width consumers preserve scalar reduction results over wide operan
             is($namer->infer_ast_width($ast), 1, "$operator/$width Core AST naming width");
             is($intermediate->infer_width_from_intermediate_ast($ast), 1, "$operator/$width direct intermediate width");
             is($enable->_expression_width($ast), 1, "$operator/$width enable-graph width");
+            is($enable->_operand_is_single_bit($ast), 1, "$operator/$width scalar classification agrees");
             my $concat = FSM::CoreAST::Concatenation->new($ast,
                 FSM::CoreAST::Literal->new('0', width => 3, radix => 'binary'));
             is($builder->infer_exact_expression_width($concat), 4, "$operator/$width nested concat is four bits");
@@ -54,10 +56,36 @@ subtest 'runtime and substituted ASTs retain the same result width' => sub {
         is($namer->infer_ast_width($runtime), 1, "$operator runtime naming does not borrow literal width");
         is($intermediate->infer_width_from_intermediate_ast($runtime), 1, "$operator runtime intermediate is scalar");
         is($enable->_expression_width($runtime), 1, "$operator runtime enable width is scalar");
+        is($enable->_operand_is_single_bit($runtime), 1, "$operator runtime scalar classification agrees");
         my $substituted = FSM::HDL::SubstitutedUnaryOp->new(operator => $operator, operand => $literal);
         is($intermediate->infer_width_from_intermediate_ast($substituted), 1, "$operator substituted intermediate is scalar");
         is($enable->_expression_width($substituted), 1, "$operator substituted enable width is scalar");
+        is($enable->_operand_is_single_bit($substituted), 1, "$operator substituted scalar classification agrees");
     }
+};
+
+subtest 'all reduction renderers preserve the complete operand boundary' => sub {
+    my $renderer = FSM::HDL::FlattenedDT->new(debug => 0);
+    my $render_support = $renderer->{enable_graph_ast_support};
+    my $operand = FSM::CoreAST::BinaryOp->new('|', core_signal('left', 8), core_signal('right', 8));
+    my $runtime_operand = FSM::AST::BinaryOp->new('|',
+        FSM::AST::Literal->new("8'h02"), FSM::AST::Literal->new("8'h04"));
+    for my $operator ('^', '&', '|') {
+        my $node = core_unary($operator, $operand);
+        my $expected = "($operator(left | right))";
+        is($node->to_systemverilog, $expected, "$operator Core SV groups the whole operand");
+        is($node->to_verilog, $expected, "$operator Core Verilog groups the whole operand");
+        is($render_support->ast_to_systemverilog($node), "($operator((left | right)))",
+            "$operator executed enable renderer preserves its precedence-grouped operand");
+        my $runtime = FSM::AST::UnaryOp->new($operator, $runtime_operand);
+        is($runtime->to_systemverilog, "($operator(8'h2 | 8'h4))",
+            "$operator runtime AST groups the whole operand");
+        my $substituted = FSM::HDL::SubstitutedUnaryOp->new(operator=>$operator, operand=>$operand);
+        is($substituted->to_systemverilog, $expected,
+            "$operator substituted AST groups the whole operand");
+    }
+    # Private AST rendering is broader than source admission: a compound
+    # source operand remains refused by the separately qualified frontend.
 };
 
 subtest 'all operators have distinct readable named intermediates' => sub {
@@ -104,14 +132,16 @@ subtest 'binary vector and other unary width contracts remain unchanged' => sub 
         is($enable->_expression_width($binary), 16, "$operator binary enable width remains vector");
     }
     is($builder->infer_exact_expression_width(core_unary('!', $wide)), 1, 'logical negation remains scalar');
+    is($enable->_operand_is_single_bit(core_unary('!', $wide)), 1, 'logical negation keeps scalar classification');
+    is($enable->_operand_is_single_bit(core_unary('~', $wide)), 0, 'wide complement keeps vector classification');
     is($namer->infer_ast_width(core_unary('!', $wide)), 1, 'logical naming remains scalar');
     is($builder->infer_exact_expression_width(core_unary('~', $wide)), 16, 'bitwise complement remains vector');
     is($namer->infer_ast_width(core_unary('~', $wide)), 16, 'bitwise complement naming inference remains vector');
     $manager->register_signal('bus', width => 8, width_declared => 1);
     for my $operator ('^', '&', '|') {
-        my $accepted = eval { $builder->parse_expression([$operator, 'bus']); 1 };
-        ok(!$accepted, "$operator unary source admission remains closed in this prerequisite");
-        like($@, qr/requires at least 2 operands/, "$operator retains the source arity boundary");
+        my $expression = $builder->parse_expression([$operator, 'bus']);
+        isa_ok($expression, 'FSM::CoreAST::UnaryOp', "$operator admitted declared unary expression");
+        is($builder->infer_exact_expression_width($expression), 1, "$operator source result is scalar");
     }
 };
 

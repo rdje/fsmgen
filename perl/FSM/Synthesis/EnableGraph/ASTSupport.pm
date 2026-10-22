@@ -1613,8 +1613,8 @@ sub _operand_is_single_bit ($self, $ast) {
         fsm_debug("      PATH: UnaryOp", 3);
         my $op = eval { $ast->operator } || '';
         fsm_debug("      Unary operator: '$op'", 3);
-        if ($op eq 'not' || $op eq '!') {
-            fsm_debug("      RESULT: single-bit (logical NOT)", 3);
+        if ($op eq 'not' || $op eq '!' || is_reduction_operator($op)) {
+            fsm_debug("      RESULT: single-bit (logical NOT or reduction)", 3);
             return 1;
         } else {
             fsm_debug("      RESULT: multi-bit (other unary operator)", 3);
@@ -1650,6 +1650,7 @@ sub _render_unary_op ($self, $ast) {
     my $operand = $ast->operand;
     my $operand_sv = $self->_ast_to_systemverilog_internal($operand, 10);
     my $op_symbol = $self->_map_unary_operator($operator);
+    return "($op_symbol($operand_sv))" if is_reduction_operator($op_symbol);
 
     if ($operator eq 'not' || $operator eq '!') {
         return "(~|$operand_sv)" unless $self->_operand_is_single_bit($operand);

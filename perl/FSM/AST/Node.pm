@@ -9,6 +9,7 @@ use Scalar::Util qw(blessed);
 use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use FSM::Package::IntegerLiteralSupport;
+use FSM::Package::ExpressionOperatorSupport ();
 
 =head1 NAME
 
@@ -177,6 +178,8 @@ sub operand ($self) {
 sub to_systemverilog ($self) {
     my $op = $self->{operator};
     my $operand_sv = $self->{operand}->to_systemverilog();
+    return "($op($operand_sv))"
+        if FSM::Package::ExpressionOperatorSupport::is_reduction_operator($op);
     
     if ($op eq '!') {
         return "!$operand_sv";

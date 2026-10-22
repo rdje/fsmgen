@@ -335,7 +335,7 @@ The current live expression surface includes:
 - literals
 - signal references
 - indexed and sliced references
-- unary `!`
+- unary `!` and declared scalar/vector reductions `(^ X)`, `(& X)`, `(| X)`
 - negated n-ary bitwise/logical-style forms `!&`, `!|`, and `!^`
 - comparison operators such as `==`, `!=`, `<`, `<=`, `>`, `>=`
 - arithmetic, shift, and bitwise operators such as `+`, `-`, `*`, `/`, `%`,
@@ -345,7 +345,13 @@ The current live expression surface includes:
   `or`, `nor`, `xor`, and `xnor`
 - RHS pack expressions with `(concat ...)` or the shorter `(cat ...)` alias
 
-The arithmetic/bitwise expression families are n-ary except for shifts.
+Arithmetic/bitwise families are n-ary except for shifts and unary reductions.
+The unary bitwise forms produce one unsigned bit and require a declared packed
+scalar signal, scalar field, static slice or bit selection. Literals, static
+values and compound source operands are refused. The `and`/`or`/`xor` aliases
+have the same unary meaning; logical `!` retains its Boolean meaning. See
+[Data Manipulation](13e-data-manipulation.md) for examples and current profile,
+public-report and runtime qualification boundaries.
 
 Operators such as `+`, `*`, `&`, `|`, and `^` combine all operands; `-`, `/`,
 and `%` are left-associative, so `(/ a b c)` means `((a / b) / c)` and

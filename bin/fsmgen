@@ -529,6 +529,7 @@ my $verify_hdl = 0;
 my $isf_schedule_report;
 my $isf_reset_provenance;
 my $isf_interface_ports;
+my $isf_reductions;
 my $isf_declarations_known = 0;
 
 # Store original ARGV to check for bare flags before GetOptions processes them
@@ -1246,6 +1247,7 @@ if ($fsm_file =~ /\.isf$/i) {
 
     $isf_reset_provenance = $actor->{reset_provenance};
     $isf_interface_ports = $actor->{interface_port_metadata};
+    $isf_reductions = $actor->{reduction_metadata};
     $isf_declarations_known = 1;
 
     if ($emit_schedule_json) {
@@ -1519,6 +1521,7 @@ if ($emit_semantic_json) {
         source_file => $public_source_file,
         reset_provenance => $isf_reset_provenance,
         ($isf_declarations_known ? (interface_ports => $isf_interface_ports) : ()),
+        (defined($isf_reductions) ? (reductions => $isf_reductions) : ()),
         target_language => $target_language,
         strict_mode => $strict_mode,
         result => $result,
@@ -1534,6 +1537,7 @@ if ($check_json_mode) {
         source_file => $public_source_file,
         reset_provenance => $isf_reset_provenance,
         ($isf_declarations_known ? (interface_ports => $isf_interface_ports) : ()),
+        (defined($isf_reductions) ? (reductions => $isf_reductions) : ()),
         target_language => $target_language,
         strict_mode => $strict_mode,
         module_info => $result->{module_info},

@@ -722,7 +722,8 @@ iterate any authored actions.
 - `wait (<op> ...)`: use the same runtime zero-bypass and predecessor-edge
   snapshot contract as scalar runtime waits when every referenced signal has
   known width and the expression-width helper derives a positive result width.
-  The bounded count grammar supports unary `!`, binary `<<`/`>>`, and
+  The bounded count grammar supports unary `!` and declared reductions `& | ^`,
+  binary `<<`/`>>`, and
   arithmetic `+ - * / %`, bitwise `& | ^`, comparisons `== != < <= > >=`,
   and `concat` with multiple operands. It rejects `~`, `&&`, `||` and
   single-operand `concat` during wait validation; these are not translated

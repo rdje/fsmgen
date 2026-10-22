@@ -9,7 +9,7 @@ answers:
   - "does FSM source accept one-operand OR AND XOR?"
   - "what happens to complemented reductions like (~|VECTOR)?"
   - "which test characterizes direct VHDL reduction expressions?"
-date: 2026-07-30
+date: 2026-10-22
 status: current
 tags: [vhdl, backend, reduction, expression, scalar, vector, fail-closed, audit]
 evidence: docs/DIRECT_VHDL_REDUCTION_EXPRESSION_READINESS_AUDIT.md; docs/tasks/DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.md; docs/decisions/0023-vhdl-generation-success-is-not-reduction-expression-validation.md; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; t/1543-direct-vhdl-reduction-expression-readiness.t; t/1542-isf-rule-transaction-named-drive-priority-readiness.t
@@ -23,14 +23,14 @@ backend-owned `std_logic` folds for declared vectors and rejects only range,
 invalid-select, unresolved, compound, malformed, residual, or helper-collision
 shapes.
 
-Public `.fsm` one-operand `|`, `&`, and `^` forms already fail the n-ary arity
-gate and remain unchanged. The actual named-drive operand is declared scalar,
-so identity fixes the observed `(|drive_zero_start)`. Public vector truthiness
-now lowers through explicit helper loops rather than native reduction syntax.
+The audit retained public unary source refusal. Decision `0117` now admits
+declared `(| X)`, `(& X)`, `(^ X)`; runtime qualification stays separate.
+The named-drive operand is scalar, so identity fixes `(|drive_zero_start)`.
+Vector truthiness lowers through helper loops, not native reduction syntax.
 
-No VHDL compiler is installed, so the audit does not select or qualify native
-VHDL vector-reduction syntax. t1543 durably characterizes the current scalar/
-vector pipeline, six-case converter matrix, and public parser boundary. The
+The audit lacked an authoritative compiler; native vector syntax and external
+execution remain unqualified. T1543 covers scalar/vector and parser boundaries;
+the original six-case converter matrix remains version-retrievable. That
 audit changed no behavior. Clean audit commit `16f6140c4` and activation commit
 `2da0d42c0` led to the separate completed implementation.
 

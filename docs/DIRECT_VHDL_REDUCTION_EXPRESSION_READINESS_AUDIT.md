@@ -58,12 +58,11 @@ the general expression rewrites do not recognize unary reductions first:
 | vector | `(&X)` | returns invalid VHDL `( and X)` |
 | vector | `(^X)` | fails through the unrelated arithmetic-expression boundary |
 
-The behavior is now durably characterized by
-`t/1543-direct-vhdl-reduction-expression-readiness.t`. That test also proves
-that explicit one-operand `(| X)`, `(& X)`, and `(^ X)` source forms already
-fail at the public expression parser with “requires at least 2 operands.” The
-active public operators `|`, `&`, and `^` remain n-ary binary-tree operators;
-this backend task does not turn them into source-level reduction operators.
+The audit was characterized by T1543, including public unary source refusal.
+That historical backend task did not widen the grammar. Decision `0117` and
+`ISF-REDUCTION-DELIVERY.1.2.2` now admit declared unary source forms and update
+T1543 accordingly. Existing multi-operand forms retain binary-tree semantics;
+VHDL ranges and external compile/runtime qualification remain outside this scope.
 
 ## Width And Context Trace
 
