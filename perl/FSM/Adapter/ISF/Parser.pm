@@ -2079,6 +2079,20 @@ sub _actor_watchdog_package_constant_limit {
     return undef;
 }
 
+# Record provenance only in the successful canonical resolution branch. Equal
+# numeric defaults cannot establish which declaration supplied a width. Keep
+# this private source association separate from the existing resolved number;
+# carrier propagation, specialization and public projection have their own
+# qualification boundaries. Named types already retain their own reference.
+sub _preserve_symbolic_width_declaration {
+    my ($entry, $token, $kind, $owner) = @_;
+    $entry->{_width_declaration} = {
+        token => _clone_isf_value($token),
+        kind  => $kind,
+        owner => $owner,
+    };
+}
+
 sub _finalize_actor_interface_widths($self, $actor) {
     my $actor_name = $actor->{actor_name} // 'unknown';
 
@@ -2114,6 +2128,7 @@ sub _finalize_actor_interface_widths($self, $actor) {
                 my $constant_width = _positive_integer_from_literal_value($constant_value);
                 confess "Error: actor '$actor_name' interface port '$port_name' package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
                     unless defined $constant_width;
+                _preserve_symbolic_width_declaration($port, $width, 'package_constant', $package_name);
                 $port->{width} = $constant_width;
                 next;
             }
@@ -2127,6 +2142,7 @@ sub _finalize_actor_interface_widths($self, $actor) {
                 my $param_width = _positive_integer_from_literal_value(_param_resolved_value($param));
                 confess "Error: actor '$actor_name' interface port '$port_name' width parameter '$width' must resolve to a positive integer\n"
                     unless defined $param_width;
+                _preserve_symbolic_width_declaration($port, $width, 'actor_parameter', $actor_name);
                 $port->{width} = $param_width;
                 next;
             }
@@ -2136,6 +2152,7 @@ sub _finalize_actor_interface_widths($self, $actor) {
                 my $constant_width = _positive_integer_from_literal_value(_constant_resolved_value($constant));
                 confess "Error: actor '$actor_name' interface port '$port_name' width constant '$width' must resolve to a positive integer\n"
                     unless defined $constant_width;
+                _preserve_symbolic_width_declaration($port, $width, 'actor_constant', $actor_name);
                 $port->{width} = $constant_width;
                 next;
             }
@@ -2191,6 +2208,7 @@ sub _finalize_actor_storage_widths($self, $actor) {
             my $constant_width = _positive_integer_from_literal_value($constant_value);
             confess "Error: actor '$actor_name' $context package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
                 unless defined $constant_width;
+            _preserve_symbolic_width_declaration($entry, $width, 'package_constant', $package_name);
             $entry->{width} = $constant_width;
             $_->{width} = $constant_width for @{$entry->{signals} || []};
             next;
@@ -2205,6 +2223,7 @@ sub _finalize_actor_storage_widths($self, $actor) {
             my $param_width = _positive_integer_from_literal_value(_param_resolved_value($param));
             confess "Error: actor '$actor_name' $context width parameter '$width' must resolve to a positive integer\n"
                 unless defined $param_width;
+            _preserve_symbolic_width_declaration($entry, $width, 'actor_parameter', $actor_name);
             $entry->{width} = $param_width;
             $_->{width} = $param_width for @{$entry->{signals} || []};
             next;
@@ -2215,6 +2234,7 @@ sub _finalize_actor_storage_widths($self, $actor) {
             my $constant_width = _positive_integer_from_literal_value(_constant_resolved_value($constant));
             confess "Error: actor '$actor_name' $context width constant '$width' must resolve to a positive integer\n"
                 unless defined $constant_width;
+            _preserve_symbolic_width_declaration($entry, $width, 'actor_constant', $actor_name);
             $entry->{width} = $constant_width;
             $_->{width} = $constant_width for @{$entry->{signals} || []};
             next;
@@ -2413,6 +2433,7 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                     my $param_width = _positive_integer_from_literal_value(_param_resolved_value($transaction_param));
                     confess "Error: actor '$actor_name' $context width transaction parameter '$width' must resolve to a positive integer\n"
                         unless defined $param_width;
+                    _preserve_symbolic_width_declaration($port, $width, 'transaction_parameter', $transaction_name);
                     $tx->{_transaction_param_port_widths}{$width} = 1;
                     $port->{width} = $param_width;
                     next;
@@ -2433,6 +2454,7 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                     my $constant_width = _positive_integer_from_literal_value($constant_value);
                     confess "Error: actor '$actor_name' $context package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
                         unless defined $constant_width;
+                    _preserve_symbolic_width_declaration($port, $width, 'package_constant', $package_name);
                     $port->{width} = $constant_width;
                     next;
                 }
@@ -2446,6 +2468,7 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                     my $param_width = _positive_integer_from_literal_value(_param_resolved_value($param));
                     confess "Error: actor '$actor_name' $context width parameter '$width' must resolve to a positive integer\n"
                         unless defined $param_width;
+                    _preserve_symbolic_width_declaration($port, $width, 'actor_parameter', $actor_name);
                     $port->{width} = $param_width;
                     next;
                 }
@@ -2455,6 +2478,7 @@ sub _finalize_actor_transaction_port_widths($self, $actor) {
                     my $constant_width = _positive_integer_from_literal_value(_constant_resolved_value($constant));
                     confess "Error: actor '$actor_name' $context width constant '$width' must resolve to a positive integer\n"
                         unless defined $constant_width;
+                    _preserve_symbolic_width_declaration($port, $width, 'actor_constant', $actor_name);
                     $port->{width} = $constant_width;
                     next;
                 }

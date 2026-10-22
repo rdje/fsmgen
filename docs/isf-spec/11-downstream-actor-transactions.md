@@ -238,11 +238,12 @@ Rules:
   positive integer; accepted parser output and scheduled `.fsm` artifacts use
   the resolved integer width while `actor_params[]` preserves the authored
   parameter declaration.
-- The resolved width does not retain its association with that parameter;
-  equal numeric values cannot establish a dependency. Emitted HDL parameters
-  currently do not resize these ports, storage or reset widths. Library
-  use-site overrides likewise do not re-specialize parameter-dependent shapes.
-  Generic width preservation and specialization remain pending.
+- Private parser declarations retain the authored width token, source kind and
+  lexical owner separately from the resolved width. Carriers and public width
+  reports still use resolved numbers; equal values cannot establish a dependency.
+  Emitted HDL parameters currently do not resize ports, storage or reset widths.
+  Library use-site overrides do not re-specialize parameter-dependent shapes.
+  Carrier/public propagation and generic specialization remain pending.
 - `CONST` may name a declared actor constant that resolves to a positive
   integer; accepted parser output and scheduled `.fsm` artifacts use the
   resolved integer width while `actor_constants[]` and scheduled `+constants`

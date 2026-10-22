@@ -7,13 +7,13 @@ answers:
 date: 2026-10-22
 status: current
 tags: [isf, width, parameters, lowering, provenance]
-evidence: docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md
-reverify: python3 -B docs/audits/scalar-width-foundation-verify-20261022.py
+evidence: docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
+reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2094-isf-authored-width-declarations.t
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
 - Type: private declaration and lowering contract
-- Status: selected; implementation pending
+- Status: private parser preservation qualified; carrier/public propagation pending
 - Owner: `ISF-REDUCTION-DELIVERY.2.1`
 
 ## Context
@@ -66,3 +66,22 @@ publication remain open until their actual behavior is qualified.
 This bounded record owns the new fact/question without growing the rollover-
 debt Knowledge Map card collection or the saturated decision 0117. Both original
 records remain byte-exact; no previous question or fact is removed.
+
+## Private parser preservation
+
+Leaf `.2.2` captures symbolic actor interface/storage and transaction-port
+declarations at their successful existing resolution branches. Parameters,
+constants and package constants retain distinct kinds; local transaction
+parameters retain their transaction owner, and library clones retain the source
+export owner. Literal/default widths and named types gain no invented parameter
+dependency. Aliases keep their authored token, with numeric defaults unchanged.
+
+The unchanged strengthened regression fails through an exactly observed
+predecessor parser and passes currently, including package/constant storage,
+transaction shadows and detached library clones. Complete native check/semantic/
+schedule products and carrier bytes match the committed baseline after only
+fixture-directory normalization. The parsed actors differ solely by the exact
+independently expected private records. Historical audit qualification remains
+available through `scalar-width-foundation-verify-20261022.py`; current retained
+products are checked by `scalar-width-declarations-verify-20261022.py` in
+`docs/audits/`. Public inventory, carrier propagation and generic HDL remain open.

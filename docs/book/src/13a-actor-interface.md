@@ -599,11 +599,12 @@ storage is not emitted a second time when it shares a name with a declared port.
 
 A parameter-sized width currently uses the parameter's resolved default.
 For example, `wdata` above is fixed at 32 bits in the scheduled carrier;
-changing an emitted HDL parameter does not resize it. Parameter aliases retain
-their authored declarations, but each numeric port width does not yet retain
-its parameter association. Equal numeric widths do not establish a shared
-dependency. Named scalar types keep their separate type references. Generic
-width propagation and library shape specialization remain pending.
+changing an emitted HDL parameter does not resize it. Source parsing preserves
+authored symbolic width associations separately from resolved defaults;
+carriers and public width reports still use the resolved numbers. Equal numeric
+widths do not establish a shared dependency. Named scalar types keep their
+separate type references. Generic width propagation and library shape
+specialization remain pending.
 
 Declared inputs remain public even when no transaction or rule reads them.
 The scheduled FSM carries their roles in `+interface`; `+size` carries their
