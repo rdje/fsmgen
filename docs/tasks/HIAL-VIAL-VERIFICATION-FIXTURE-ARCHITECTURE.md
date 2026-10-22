@@ -1963,10 +1963,26 @@ decomposes the architecture needed to move beyond that bounded foundation.
   Commit: `this commit`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.7`
-  Status: `pending`
+  Status: `active`
   Goal: `Capture native causality at the next newly required feature HDL qualification.`
   Acceptance: `Historical pre-exec EPERM remains P1-owned. Select the next genuinely needed roadmap HDL witness after generated-input completion, including backend/input closure .60.4.3.2.5.5 if it requires runtime, otherwise record-output .60.4.3.3. Before use, prepare and commit its exact test/source/bench and separately qualify any changed fixed observer target/profile/coverage with unchanged failure-only/native helper contracts. Preserve complete original bounds/results/identities/errors/gaps and independent cleanup. Diagnose any captured rejection before further execution; a pass schedules the next ordinary opportunity. Never replay spent originals or run a recurrence-only campaign, change host protections or request authentication.`
-  Verification: `SEM .60.4.3.2.5.5.3.2.2 changes current T2024/T2025 target membership to SystemVerilog-only after precise Verilog profile refusal. Future direct/generated runs require fresh fixed observer identity/scope/count qualification: direct now has two compile/runtime pairs, generated three. Earlier two-emitter admissions and spent captures remain immutable and must not be reused. No new HDL execution occurs in this profile repair. Next genuinely required observation remains pending newly required runtime selection; current generated capture has no native event or diagnostic gap`
+  Verification: `SEM .60.4.3.2.5.5.3.2.2 changes current T2024/T2025 target membership to SystemVerilog-only after precise Verilog profile refusal. Future direct/generated runs require fresh fixed observer identity/scope/count qualification: direct now has two compile/runtime pairs, generated three. Earlier two-emitter admissions and spent captures remain immutable and must not be reused. No new HDL execution occurs in this profile repair. Director-prioritized ISF-REDUCTION-DELIVERY.1.3.2 now selects committed unary witness 91bf7e48888213164d76b9eef1a5bb7589bd7a09, T2090 with SystemVerilog/Verilog positives and one real wrong-source SystemVerilog control. Child .1 separately qualifies new fixed admission before child .2 observes actual HDL; old admissions remain spent. Historical generated capture has no native event or diagnostic gap`
+  Commit: `pending`
+
+  Children: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.7.1, HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.7.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.7.1`
+  Status: `done`
+  Goal: `Qualify the fixed unary T2090 observer before feature HDL execution.`
+  Acceptance: `Linked ISF-REDUCTION-DELIVERY.1.3.2 owns a new fixed target admission for committed unary source/bench/vectors/test and all tracked bin/perl producers. Qualify unchanged native/failure-only/stage helpers through silent ordinary/stale success, actual session-leader rejection, modeled diagnostic faults, exact arguments/results/bounds/errno and independent PID/group cleanup. Reject wrong/missing/extra/changed/reused admissions and missing qualification before target execution. Seal independent hostile evidence and commit before child .2; no feature HDL or host-policy changes.`
+  Verification: `ISF .1.3.2 fixed unary qualification passes Files=1 Tests=61. Complete native/adapter/argument/result/errno/bound identities, silent success, deliberate real rejection, modeled gaps, hostile admissions and independent PID/group cleanup are sealed under docs/audits/unary-observer-20261022/. Saved independent hostile verification passes after preserving a rejected first sealing package and restoring the exact qualified sealer bytes; no native recurrence replaces that refusal. All tracked bin/perl membership is independently Git-derived; witness and immutable helpers stay exact. No feature HDL or historical-cause claim.`
+  Commit: `this commit with ISF-REDUCTION-DELIVERY.1.3.2`
+
+- ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.11.7.2`
+  Status: `pending`
+  Goal: `Observe genuinely required unary reduction runtime with the committed observer.`
+  Acceptance: `After child .1 and ISF .1.3.2 commit, ISF .1.4 consumes one fresh exclusive unary admission with exact three compile/runtime pairs. Retain original arguments/results/bounds, identities, failure-only native context, all diagnostic gaps and independent cleanup. Diagnose any unexpected outcome before further execution. A pass leaves historical EPERM causality open and schedules the next ordinary opportunity; never replay spent originals.`
+  Verification: `Pending qualified integration commitment.`
   Commit: `pending`
 
 - ID: `HIAL-VIAL-VERIFICATION-FIXTURE-ARCHITECTURE.19.2.3.1.2.2.5.5.2.3.1.2.2.3.2.10.12`

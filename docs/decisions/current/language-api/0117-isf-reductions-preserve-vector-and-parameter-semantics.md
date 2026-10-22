@@ -498,8 +498,8 @@ source must report its distinguishing value mismatch with no PASS.
 
 The fixed stage membership is both Verilog-family positives and the wrong
 SystemVerilog source, through unchanged VerilatorRuntime compile/runtime APIs.
-T2090 defaults to source/generation checks with an explicit unadmitted runtime
-skip. This is preparation, not simulation qualification. Fresh target-specific
-observer/admission qualification under .1.3.2 precedes .1.4 execution. No spent
-admission, historical workload, X/Z or external-override claim is introduced.
-Reverify source-only preparation with `scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2090-isf-unary-reduction-runtime.t`.
+T2090 defaults to source checks with runtime skipped. Fixed observer proof:
+`docs/audits/unary-observer-20261022/verify.py`. It binds tracked producers and
+rejects hostile admission/result/context/cleanup evidence. Actual HDL remains
+.1.4 after .1.3.2 commits. Historical cause, X/Z and overrides remain unproved.
+Reverify source-only: `scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2090-isf-unary-reduction-runtime.t`.

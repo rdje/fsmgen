@@ -166,7 +166,9 @@ The fixed unary runtime witness is prepared in
 checked golden vectors alongside it. It includes scalar/bit/slice reductions,
 odd parity, nested results, ordinary binary/unrolled controls and an externally
 driven helper-like input name. Source checks and generation pass; the HDL
-stages remain pending a fresh fixed observer admission. A default test skip
+stages remain unexecuted. The fixed observer is separately qualified under
+`docs/audits/unary-observer-20261022/`; execution requires its own fresh admission.
+A default test skip
 does not qualify simulation. The planned counterfactual changes an actual
 source operator; the same bench must report its wrong public value and never
 semantic PASS. Paired inputs are fixed rather than an exhaustive cross product;
@@ -176,6 +178,33 @@ X/Z execution and external parameter overrides remain outside this witness.
 ./bin/fsmgen --strict --check --json t/data/unary_reduction_runtime.isf
 ./bin/fsmgen --strict --quiet --output .artifacts/sv/unary_reduction_runtime.sv t/data/unary_reduction_runtime.isf
 ```
+
+The required unary-reduction witness now has its own fixed observer in
+`docs/audits/unary-observer-20261022/`. It binds the committed source, bench,
+independently checked vector table, T2090 and complete tracked `bin/`/`perl/`
+producer membership. Git independently reconstructs that membership. Feature
+coverage is fixed to both Verilog-family positive compile/runtime pairs and
+the actual wrong-source SystemVerilog pair. A positive needs complete public-pin
+PASS/hold/reset markers; the wrong source must report its distinguishing value
+mismatch with no PASS. Process completion alone cannot pass either oracle.
+
+Finite observer qualification preserves silent success, actual session-leader
+rejection, modeled diagnostic gaps, original arguments/results/bounds/errno and
+independent controlled PID/group absence. Wrong, changed, omitted, additional,
+reused or unsealed admissions cannot start feature execution. The first saved
+verification caught sealer comment drift after admission; its rejected package
+is preserved separately. Restoring exact qualified bytes and sealing a fresh
+package passes independent saved hostile checks without replaying native
+controls. Inspect these records without executing HDL:
+
+```sh
+python3 -B docs/audits/unary-observer-20261022/verify.py
+```
+
+This qualifies the observer. Actual unary HDL remains a separately admitted
+successor; default T2090 runtime skips establish no simulation result. The
+historical native cause and successful-child feature PID identities remain
+unproved.
 
 ## Grouped reductions — implementation pending
 
