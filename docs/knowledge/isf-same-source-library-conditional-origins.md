@@ -53,7 +53,7 @@ resolved-static constructor/clone origins; file-backed identity remains SEM
 follow. The origin proof changes no production parser/scheduler/public schema or
 activation/refusals; HDL/macro runtime is unproved.
 
-2026-10-22: T1092/T2097 qualify recursive LispishAdapter heads in actor
-defaults/library overrides, detached raw callers and unchanged scalar kinds.
-Authored override source retention stays pending. Evidence:
+2026-10-22: T1092/T2097 qualify recursive LispishAdapter heads, actor
+defaults/library overrides, detached raw callers and scalar kinds. Override
+sources retain detached name/tree/owner lists; IR stays pending. Evidence:
 `docs/audits/nested-normalization-qualification-20261022.py`.

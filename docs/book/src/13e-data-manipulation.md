@@ -247,13 +247,15 @@ implicit values gain no dependency. Carrier work must preserve the selected name
 name can select a named type even when an ISF width selected a same-named scalar
 parameter. Private width records alone do not resolve either prerequisite.
 Generated children also need the actor and transaction parameter environments
-kept distinct, including aliases. Named library override values currently become
-resolved literals before lowering; their source relationships must also survive
-before generic specialization can be qualified. Nested aggregate lists now
+kept distinct, including aliases. Private library override records preserve each
+authored name, value tree and lexical owner separately from resolved values.
+Original uses and resolved library uses own independent source lists; default-only
+uses gain no invented source. Carrier/public propagation and specialization remain
+pending. Nested aggregate lists
 normalize first rows recursively: `((1 2) (3 4))` keeps two flat rows, including
 inside actor defaults and compatible library overrides. Scalar and flat-list
-values keep their existing kinds. Authored override source retention remains
-pending; the earlier prototype capture is not qualified delivery.
+values keep their existing kinds. Per-source resolved kinds remain unchanged:
+parameter/literal strings and package/enum numbers are distinct.
 
 ## `(update var expr)` — Variable Modification
 

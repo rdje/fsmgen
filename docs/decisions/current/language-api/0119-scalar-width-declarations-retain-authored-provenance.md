@@ -13,7 +13,7 @@ date: 2026-10-22
 status: current
 tags: [isf, width, parameters, lowering, provenance]
 evidence: docs/audits/width-physical-verify-20261022.py; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py
+reverify: python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -128,10 +128,10 @@ Connected generated controls use an actor alias of W=8 for one formal and local
 transaction W=4 for another. Child module parameters currently contain local W=4;
 copying the actor-derived token into that module without its environment would
 lose or change its meaning. Activation clauses retain original override values
-beside separately resolved instance products. Library use overrides differ:
-`_validate_use_params` overwrites original values before cloning. A named LIMIT
-and literal16 produce identical complete private products. Mandatory
-`.2.3.2.1.2` preserves that source before resolution; specialization stays `.4`.
+beside separately resolved instance products. The audit observed library uses
+losing original values in `_validate_use_params`: named LIMIT and literal16 gave
+identical complete private products. `.2.3.2.1.2.3` now retains detached ordered
+name/value/lexical-owner source lists before resolution; specialization stays `.4`.
 
 Select a detached private IR map `_width_declarations` keyed by actual physical
 signal, with original declaration identity, token/kind/owner and explicit lexical
@@ -143,7 +143,7 @@ must carry original actor identity before module/domain renaming. Each physical
 module owns detached maps; library instance selection remains separate from
 source defaults. Literal/type/reset declarations and existing public/carrier
 projections stay exact. Later IAL0 allocation uses those explicit scopes.
-Nested aggregate heads also remain mis-normalized; `.2.3.2.1.2.2` owns the prerequisite repair, qualified in `docs/audits/library-override-diagnosis-verify-20261022.py`.
+Nested heads now normalize recursively under `.2.3.2.1.2.2`; original diagnosis: `docs/audits/library-override-diagnosis-verify-20261022.py`.
 
 `python3 -B docs/audits/width-physical-verify-20261022.py` checks the retained
 packets, scope/physical identities and hostile allocation/kind controls. Initial
@@ -162,6 +162,6 @@ Aliases and package owners remain distinct from equal defaults. Literal/implicit
 values gain no dependency; resolved primitives, carriers and public defaults
 remain unchanged. This does not implement generic shapes or public inventories.
 The task owns the parser-finalizer census and complete qualification evidence;
-library-source preservation remains `.2.3.2.1.2`, followed by scoped IR/IAL0 work.
+library source lists now persist privately; scoped IR/IAL0 propagation remains.
 Reverify retained original/current products and hostile association controls:
 `python3 -B docs/audits/static-references-20261022.py verify`.

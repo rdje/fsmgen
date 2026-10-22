@@ -7596,6 +7596,9 @@ sub _resolve_library_uses($self, $actor, $forms, $source_label) {
             scheduled_fsm       => "$module.fsm",
             actor               => _clone_isf_value($exported_actor),
             parameter_overrides => _clone_isf_value($use->{parameter_overrides} || []),
+            (exists($use->{_parameter_override_sources})
+                ? (_parameter_override_sources => _clone_isf_value($use->{_parameter_override_sources}))
+                : ()),
             bindings            => $bindings,
             (defined($use->{domain}) ? (domain => $use->{domain}) : ()),
         };
@@ -7961,18 +7964,25 @@ sub _parse_library_form($self, $form, $source_label) {
 
 sub _validate_use_params($self, $actor, $use, $exported_actor) {
     my %declared = map { $_->{name} => $_ } @{$exported_actor->{params} || []};
+    my @sources;
     for my $override (@{$use->{parameter_overrides} || []}) {
         my $name = $override->{name};
         confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' overrides unknown parameter '$name'\n"
             unless exists $declared{$name};
         confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' parameter '$name' shape does not match actor '$exported_actor->{actor_name}' declaration\n"
             unless _param_values_shape_compatible($declared{$name}{value}, $override->{value});
-        $override->{value} = $self->_resolve_library_use_param_value(
+        # Retain the authored tree before resolution can erase its references
+        # or inspect scalar flags. Existing consumers keep canonical values.
+        my $authored_value = _clone_isf_value($override->{value});
+        my $resolved_value = $self->_resolve_library_use_param_value(
             $actor,
             $override->{value},
             "actor '$actor->{actor_name}' use '$use->{instance}' parameter '$name'",
         );
+        push @sources, {name => $name, value => $authored_value, owner => $actor->{actor_name}};
+        $override->{value} = $resolved_value;
     }
+    $use->{_parameter_override_sources} = \@sources if @sources;
     return 1;
 }
 

@@ -249,10 +249,10 @@ Rules:
   gain no dependency. IAL0 carrier spelling must also preserve the selected namespace:
   bare size names can select a named type before a same-named scalar parameter.
   Generated declarations also need distinct actor and transaction environments.
-  Library override values currently lose their authored references during static
-  resolution; preserving those sources is required before generic specialization.
+  Private library override records retain authored name/value/lexical-owner lists
+  independently in original and resolved uses, beside unchanged canonical values.
   Nested aggregate first rows now normalize recursively without changing scalar
-  kinds; authored override source retention still needs separate qualification.
+  kinds; carrier/public source propagation and generic specialization remain pending.
 - `CONST` may name a declared actor constant that resolves to a positive
   integer; accepted parser output and scheduled `.fsm` artifacts use the
   resolved integer width while `actor_constants[]` and scheduled `+constants`
