@@ -68,6 +68,10 @@ sub normalize_form($self, $form, $preserve_empty_lists = 0) {
                 ? $self->normalize_form($elem, $preserve_empty_lists)
                 : $elem;
         }
+        # An aggregate's first row is itself a Lispish form. Normalize it
+        # just like the remaining rows instead of returning its raw tail.
+        $head = $self->normalize_form($head, $preserve_empty_lists)
+            if ref($head) eq 'ARRAY';
         return [$head, $first_arg, @rest];
     }
 

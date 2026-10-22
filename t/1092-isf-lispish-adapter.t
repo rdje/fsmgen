@@ -7,6 +7,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use Lispish;
+use JSON::PP;
 use FSM::Adapter::ISF::LispishAdapter;
 
 subtest 'normalize_form flattens Lispish nested head convention' => sub {
@@ -40,6 +41,29 @@ subtest 'normalize_form handles numeric literals' => sub {
     is($form->[0], 'latency');
     is_deeply($form->[1], ['min', '2'], 'min clause');
     is_deeply($form->[2], ['max', '16'], 'max clause');
+};
+
+subtest 'nested list heads normalize recursively without changing the raw caller' => sub {
+    my $adapter = FSM::Adapter::ISF::LispishAdapter->new();
+    my $json = JSON::PP->new->canonical;
+    for my $case (
+        ['((1 2) (3 4))', '[["1","2"],["3","4"]]'],
+        ['((1 2 3) (4 5 6) (7 8 9))', '[["1","2","3"],["4","5","6"],["7","8","9"]]'],
+        ['(((1 2) (3 4)) ((5 6) (7 8)))', '[[["1","2"],["3","4"]],[["5","6"],["7","8"]]]'],
+        ['((1 2))', '[["1","2"],null]'],
+        ['(pair (1) (2))', '["pair",["1",null],["2",null]]'],
+        ['(when (== flag 1) (set data (| left right)))',
+            '["when",["==","flag","1"],["set","data",["|","left","right"]]]'],
+    ) {
+        my $raw = Lispish::single(\$case->[0]);
+        my $before = $json->encode($raw);
+        my $form = $adapter->normalize_form($raw);
+        is($json->encode($form), $case->[1], "literal shape and kinds: $case->[0]");
+        is($json->encode($raw), $before, 'normalization preserves complete raw caller');
+        # Mutating the returned first row must not reach a raw Lispish row.
+        $form->[0][0] = 'changed' if ref($form->[0]) eq 'ARRAY';
+        is($json->encode($raw), $before, 'returned list head is detached');
+    }
 };
 
 subtest 'find_form_by_head locates form in multi-form result' => sub {

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.2.1.2.2`
-- next_action: Repair owned nested aggregate head normalization before qualifying library override source retention; follow the retained diagnosis and decision0121.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.2.1.2.3`
+- next_action: Qualify detached authored library override sources on the repaired normalizer, preserving each original source's primitive kinds and resolved products.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
