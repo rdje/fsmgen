@@ -109,11 +109,11 @@ implementation tree avoids growing the near-rollover coordination task file.
   Children: `ISF-REDUCTION-DELIVERY.1.2.3.1, ISF-REDUCTION-DELIVERY.1.2.3.2, ISF-REDUCTION-DELIVERY.1.2.3.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify declared scalar field, local and sample operand scopes through real source and carriers.`
   Acceptance: `Read the canonical record/sample contracts and preserve existing record-port whole-aggregate sample/root refusals and storage-only sampling delegation. Independently qualify scalar record/storage fields, bounded paths, signed/state-preserving leaf samples and sample chains, local scopes, shadowing/static namespaces and legal owner labels. Use actual ISF and canonical source checks, generated IAL0 and detached inventories; no hand-built scope alone certifies admission. Retain first failures before repair and split any growing defect before edits. Prove profile/type boundaries touched by any repair; update book/reference/capabilities only for actual behavior. Focused checks and a source-scoped commit close this leaf before capture/corpus successors; no HDL execution or full R1 claim.`
-  Verification: `Starting from clean 21843f970. The published record-input contract admits scalar-leaf samples, preserves signed/state traits and refuses whole-record sampling; do not invent broader sampling as part of reductions.`
-  Commit: `pending`
+  Verification: `All declared operand children are closed within their exact source-only boundaries. Child nodes retain their separate dated source/type/formal/timing/parameter/static evidence; the complete pre-closure task snapshot is retained in the final operand-scope audit. Existing .8 and documented baseline refusals remain open with their owners. Capture identity/nested widths, public corpus/profile and HDL runtime are separate successors; no complete R1-R3 or publication closure.`
+  Commit: `children below; final operand closure with ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.1.2.3.1.1, ISF-REDUCTION-DELIVERY.1.2.3.1.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.1`
@@ -130,11 +130,11 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Guarded unary/record sample facts, contexts, carriers, ownership and replay report All tests successful, Files=9 Tests=44. Fresh existing widening/storage-field observations match original ordinary/strict/schedule statuses. Book/task checks report All tests successful, Files=3 Tests=356; mdBook build and complete source/index checks pass. scripts/check_doctrines.sh and normal hooks gate this repair; external HDL runtime and full required delivery remain successors.
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2`
-  Status: `active`
+  Status: `done`
   Goal: `Complete remaining declared operand-scope qualification after delegated sampling repair.`
   Acceptance: `After .1, independently qualify actual field/local/formal and scalar-sample scopes, signed/state-preserving leaf chains, static namespace and owner-label boundaries, native canonical path/compound refusals and caller isolation. Preserve the existing distinction between record-port sampling restrictions and delegated storage behavior. Split newly reproduced defects before edits and commit the complete scoped source/carrier coverage before capture identity and corpus/profile successors.`
-  Verification: `Starting from clean 3fa3e868c. Canonical formal-scope cards and actual record sample carrier/semantic tests are reviewed. First actual-source probe covers direct scalar record/storage fields, signed leaf sample chains, local slices, nearest formal widths, untyped named-drive masks, and controlled owner-label baselines before any source repair. Initial native check streams are retained at .artifacts/logs/reduction-operand-scopes-first-20261022.jsonl: field/storage/leaf-chain/local positives pass; untyped drive and non-HDL owner labels refuse. The input-formal write fails at the existing record context gate before reduction capture. Controlled record/non-record and read-only comparisons are running before classifying it; no complete unary delivery is claimed.`
-  Commit: `children below`
+  Verification: `All declared operand children are closed within their exact source-only boundaries. Child nodes retain their separate dated source/type/formal/timing/parameter/static evidence; the complete pre-closure task snapshot is retained in the final operand-scope audit. Existing .8 and documented baseline refusals remain open with their owners. Capture identity/nested widths, public corpus/profile and HDL runtime are separate successors; no complete R1-R3 or publication closure.`
+  Commit: `children below; final operand closure with ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.1, ISF-REDUCTION-DELIVERY.1.2.3.1.2.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.1`
@@ -159,11 +159,11 @@ implementation tree avoids growing the near-rollover coordination task file.
   Commit: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.1: preserve unary formal expressions and source reports`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Complete remaining operand scopes after formal reduction rewriting repair.`
   Acceptance: `Qualify the parent field/storage/local/formal/scalar-sample, signed/state, static mask, legal owner and canonical path/compound contracts against actual sources and carriers. Preserve all initial failures, distinguish the separately owned existing mixed-record/private-formal write defect .8, and do not claim R1/runtime/group delivery from source qualification. Commit before capture identity and corpus/profile successors.`
-  Verification: `Starting from clean 63f35c5f0. Complete remaining actual field/storage/local/scalar-sample and static/owner/path controls. Also compare direct timing-signal reads and sampled aliases against their non-reduction baselines before assuming a new feature boundary; retain first complete source/streams and split any reproduced defect before repair.`
-  Commit: `children below`
+  Verification: `All declared operand children are closed within their exact source-only boundaries. Child nodes retain their separate dated source/type/formal/timing/parameter/static evidence; the complete pre-closure task snapshot is retained in the final operand-scope audit. Existing .8 and documented baseline refusals remain open with their owners. Capture identity/nested widths, public corpus/profile and HDL runtime are separate successors; no complete R1-R3 or publication closure.`
+  Commit: `children below; final operand closure with ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.1, ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.1`
@@ -188,11 +188,11 @@ implementation tree avoids growing the near-rollover coordination task file.
   Commit: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.1: preserve timing sample reduction facts`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Finish the remaining declared operand cohort after timing sample repair.`
   Acceptance: `Complete the parent actual field/storage/local/scalar-leaf and sample-chain, signed/state, nearest formal/static masks, legal owner and canonical path/compound contracts. Preserve timing and delegated sample distinctions, original failures, caller isolation and real source/carrier/report parity. Keep the separately owned existing private-formal write defect .8 explicit. Commit complete scoped qualification before capture identity and corpus/profile successors; runtime and complete R1-R3 delivery stay open.`
-  Verification: `Starting from clean b0de11914. Canonical T1936 establishes that direct transaction parameters belong to standalone count scope, while runtime expressions retain actor/formal value scope; generated parameters have separate expression scope. First paired native count/formal and count/actor-pin controls are running before any assumption or repair. Then complete actual signed/state, field/local and owner/path qualification; no complete R1 claim.`
-  Commit: `children below`
+  Verification: `All declared operand children are closed within their exact source-only boundaries. Child nodes retain their separate dated source/type/formal/timing/parameter/static evidence; the complete pre-closure task snapshot is retained in the final operand-scope audit. Existing .8 and documented baseline refusals remain open with their owners. Capture identity/nested widths, public corpus/profile and HDL runtime are separate successors; no complete R1-R3 or publication closure.`
+  Commit: `children below; final operand closure with ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.1, ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.2, ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.1`
@@ -222,11 +222,11 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Current expanded T2080 reports All tests successful Files=1 Tests=7; original first GREEN is separately Files=1 Tests=4. Existing T1936/T2075/T2077/T2078/T2079 all pass in the mixed epoch whose aggregate FAIL is explicitly retained for .9. Book/task checks, native exact book example, source/index/claim checks and scripts/check_doctrines.sh plus normal hooks gate this bounded repair. No runtime or complete feature-delivery inference.
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3`
-  Status: `active`
+  Status: `done`
   Goal: `Complete declared operand qualification after parameter scope repair.`
   Acceptance: `Finish the parent actual signed/state record/storage/local/scalar samples, names, canonical bounds/compound and caller-isolation cohort, retaining every first failure and the existing .8 compatibility limit. Close scoped source qualification only on complete evidence and a task-scoped commit before capture identity and corpus/profile successors. Required runtime/generic/group publication remains open.`
-  Verification: `Direct/generated parameter scopes and static domain counts are repaired; top multi-domain inventories retain authored operands. From clean 2054883aa, exact paired native probes pass direct port/storage fields, record-port and local sample chains, rule fields and used named-drive fields. Storage-member capture and direct record-port wait references retain their documented complete baseline refusals. Initial full sources/streams are in .artifacts/tmp/reduction-operand-cohort-20261022 and reduction-operand-cohort-first-20261022.jsonl. The scope extension initially collided with the prior formal-repair console/JSONL basename. Its JSONL preflight preserved every old native record; the redirected small console log is restored byte-exact from its immutable formal audit after raw byte-count/SHA verification, and the new failed attempt is retained separately. A current-revision-qualified basename and preflight before fixture writes own the rerun. Namespace and parameterized-local check/schedule comparisons remain pending; decide from canonical scope facts before source edits. Actual carrier/type/state and full public cohort qualification remain open. Existing mixed-record private-formal writes remain separately owned by .8.`
-  Commit: `children below`
+  Verification: `All declared operand children are closed within their exact source-only boundaries. Child nodes retain their separate dated source/type/formal/timing/parameter/static evidence; the complete pre-closure task snapshot is retained in the final operand-scope audit. Existing .8 and documented baseline refusals remain open with their owners. Capture identity/nested widths, public corpus/profile and HDL runtime are separate successors; no complete R1-R3 or publication closure.`
+  Commit: `children below; final operand closure with ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.1, ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.1`
@@ -243,11 +243,11 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Current expanded record/source/discovery/parameter/namespace checks report All tests successful Files=4 Tests=21; first unchanged GREEN is separately Files=1 Tests=3. Syntax, fresh book/task/source/index/claim checks and scripts/check_doctrines.sh plus normal hooks gate the commit. Failed/successful epochs and documented unsupported baselines remain distinct. External HDL runtime, generic/group delivery and publication stay pending.
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2`
-  Status: `active`
+  Status: `done`
   Goal: `Finish actual declared operand and signed/state carrier qualification after static namespace repair.`
   Acceptance: `Complete the parent source/carrier/semantic type-state and owner/path cohort after .3.1. Preserve declared record/storage/local and sample facts, untyped/nearest masks, complete refusal products and caller kinds; distinguish documented pre-existing aggregate-storage capture/record-wait and local literal-width boundaries from new regressions. Keep the existing .8 write exception explicit. Own every reproduced defect and commit full qualification before capture identity and corpus/profile successors; no external runtime or full R1-R3 signoff from these source checks.`
-  Verification: `Qualified static masking and actual signed/state sample carrier/net qualification are complete. Child .1 retains independent full-type and native/API/newline evidence. Child .2 owns remaining owner/path/name, nearest/untyped masks and complete refusal qualification, preserving the retained initial cohort and existing documented boundaries.`
-  Commit: `children below`
+  Verification: `All declared operand children are closed within their exact source-only boundaries. Child nodes retain their separate dated source/type/formal/timing/parameter/static evidence; the complete pre-closure task snapshot is retained in the final operand-scope audit. Existing .8 and documented baseline refusals remain open with their owners. Capture identity/nested widths, public corpus/profile and HDL runtime are separate successors; no complete R1-R3 or publication closure.`
+  Commit: `children below; final operand closure with ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
   Children: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.1, ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.1`
@@ -263,11 +263,17 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Guarded qualification reports All tests successful Files=1 Tests=7; existing preservation reports All tests successful Files=3 Tests=15; book lowering/path/matrix checks report All tests successful Files=3 Tests=310. mdBook, native source asset/index, task and claim checks pass. First staged scripts/check_doctrines.sh rejects only task_evidence aggregate transition allowances, not an enforcement ceiling. Its complete log and registry snapshots retain in reduction-operand-types-gate-20261022.json.gz. Apply the containment procedure to measured growth plus the surface's existing ratchet step; preserve baseline, owner and every ceiling. Fresh staged/normal gates qualify the final state. Full CI and runtime remain separately owned.
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2`
-  Status: `active`
+  Status: `done`
   Goal: `Finish remaining declared owner/path/refusal qualification after actual signed/state carriers.`
   Acceptance: `Complete parent .3.2 owner/path/name, nearest/untyped masking, direct/generated formal, binary and canonical bounds controls, preserving complete failed products and caller kinds. Reuse retained initial cohort and canonical documented refusals; keep .8 explicit. Qualify real source/carrier/native/API/newline products, own every defect and commit before capture identity/profile/corpus successors. No runtime or full R1-R3 closure.`
-  Verification: `Typed carrier prerequisite is qualified by .1; remaining owner/path/refusal qualification is pending.`
-  Commit: `pending`
+  Verification: `Actual transaction/rule/used-drive scalar record/list and storage paths, explicit local selection, nearest direct formal versus outer record and unused-definition controls qualify. Complete emitted carriers strictly replay; independently expected source owner/context/operator/path/width rows match native/API/actual newline check, semantic and schedule products. Actual unknown/aggregate/bounds/compound/untyped-drive sources refuse, with no failure inventory or partial success; failed source captures preserve complete caller data/kinds despite stale earlier metadata. First T2084 is RED Files=1 Tests=3 failed3: exactly five schedule-RPC cause expectations contradict the canonical message-only policy. The Knowledge Map, book and actual public safety producer bind that oracle error. Corrected response inspection is non-autovivifying and preserves generic schedule errors while check/semantic retain primary diagnostics and correct tool error flags. Corrected T2084 passes All tests successful Files=1 Tests=3; current private T2075 passes separately Files=1 Tests=5. Complete first/final source/task/log epochs, actual policy and producer identities retain in docs/audits/reduction-operand-scope-qa-first-20261022.json.gz and reduction-operand-scope-qa-final-20261022.json.gz. Earlier parameter/timing/formal/static qualification remains separately dated, not relabeled as this run; no perl/bin production changes occur in this slice. Book builds and copied source/index checks pass; staged task/claim/doctrine and normal hooks qualify the commit. Re-derivation is actual source/declarations/carriers and complete public products; falsification is independent scope/width/owner facts, genuine native refusals, failed-caller preservation and the original wrong-oracle RED; durability is tracked regression/audits/book/feedback/task and Git. Normalized raw-root reconstruction and separately unpersisted complete successful transport payloads remain explicit limits. Existing aggregate-storage member sample, record-port wait and parameterized-local refusals plus .8 retain their owners. Independent complete node/Goal/Acceptance/Children preservation and the post-run toolchain observation retain in docs/audits/reduction-operand-scope-qa-closure-20261022.json.gz. Dated closure replay and genuine narrowed-goal/child/identity controls use docs/audits/reduction-operand-scope-qa-verify-20261022.py. Capture identity/nested width, corpus/profile, HDL runtime, generic groups and full R1-R3/publication remain open.`
+  Commit: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2: qualify source operand scopes and refusals`
+
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json and --emit-schedule-json products join nearest declarations to source owner/path/width records. The first complete T2084 RED identifies a draft oracle error in the schedule RPC cause assertion; canonical safety metadata, book 11 and the adapter deliberately suppress raw command stderr without a selected schedule failure schema. Complete source and failed log retain; no product defect or new error contract is invented.
+  - [x] **ADDRESSED (verified)** — Independent declared fields/list leaves/storage/local and nearest-formal expectations agree through strict complete carriers and native/API/newline products. Unknown/aggregate/bounds/compound/untyped-drive sources genuinely refuse without inventories or partial success. Failed actual-source capture preserves caller kinds and cannot reuse stale records. Corrected report comparisons preserve observed responses, expected tool error flags and the established generic schedule boundary. Existing .8 and documented refusals remain explicit.
+  - [x] **NO REGRESSION** — Corrected current source qualification reports All tests successful Files=1 Tests=3; current private declaration/scope preservation separately reports All tests successful Files=1 Tests=5. First wrong-oracle RED and prior source/type epochs remain distinct. mdBook builds and source-asset/index checks pass; staged task/claim/doctrine checks and normal hooks gate this bounded source qualification. No perl/bin production changes, external HDL runtime, full corpus/profile or R1-R3 publication claim.
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3.2`
   Status: `pending`

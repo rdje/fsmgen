@@ -59,6 +59,14 @@ formal's distinct physical identity. Samples of declared clocks and resets
 retain their one-bit widths through aliases and chains. A clock-only named
 domain gains no reset declaration.
 
+Transaction setters, rules and used named drives can read scalar record/list
+leaves and owned storage fields. Explicit locals and nearest private formals
+supply their own widths; an untyped drive parameter cannot borrow an outer
+wire's declaration. Unused drive definitions add no instantiated reduction
+records. Invalid paths and aggregate roots retain contextual source refusals.
+Check and semantic queries carry those diagnostics; schedule RPC keeps its
+existing bounded generic failure message.
+
 Scalar record-field samples also keep their declared signedness and state model
 in private carrier declarations and semantic nets. A reduction consumes that
 complete scalar value and returns one unsigned bit. For example:

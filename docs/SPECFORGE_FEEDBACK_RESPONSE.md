@@ -47,6 +47,10 @@ consistently in check, semantic and schedule preview before carrier emission.
 Record-field scalar sample chains retain their exact signed/four-state,
 unsigned/two-state or unspecified-state types in actual IAL0 and semantic nets.
 These checks establish source/type preservation; X/Z execution remains unqualified.
+Source qualification also covers transaction/rule/used-drive scalar field and
+list-leaf paths, nearest private-formal widths and contextual refusals. Check
+and semantic reports retain primary diagnostics; schedule RPC preserves its
+existing generic error boundary.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is
