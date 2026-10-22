@@ -2025,6 +2025,7 @@ sub _finalize_actor_watchdog_limit($self, $actor) {
             my $constant_value = _positive_integer_from_literal_value(_constant_resolved_value($constant));
             confess "Error: actor '$actor_name' watchdog constant '$token' must resolve to a positive integer\n"
                 unless defined $constant_value;
+            _preserve_symbolic_static_declaration($actor, 'watchdog', $token, 'actor_constant', $actor_name);
             $actor->{watchdog} = "$constant_value";
             return 1;
         }
@@ -2034,6 +2035,7 @@ sub _finalize_actor_watchdog_limit($self, $actor) {
             my $param_value = _positive_integer_from_literal_value(_param_resolved_value($param));
             confess "Error: actor '$actor_name' watchdog parameter '$token' must resolve to a positive integer\n"
                 unless defined $param_value;
+            _preserve_symbolic_static_declaration($actor, 'watchdog', $token, 'actor_parameter', $actor_name);
             $actor->{watchdog} = "$param_value";
             return 1;
         }
@@ -2070,6 +2072,7 @@ sub _actor_watchdog_package_constant_limit {
         my $integer_value = _positive_integer_from_literal_value($constant_value);
         confess "Error: actor '$actor_name' watchdog package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
             unless defined $integer_value;
+        _preserve_symbolic_static_declaration($actor, 'watchdog', $token, 'package_constant', $package_name);
         return $integer_value;
     }
 
@@ -2087,6 +2090,18 @@ sub _actor_watchdog_package_constant_limit {
 sub _preserve_symbolic_width_declaration {
     my ($entry, $token, $kind, $owner) = @_;
     $entry->{_width_declaration} = {
+        token => _clone_isf_value($token),
+        kind  => $kind,
+        owner => $owner,
+    };
+}
+
+# Static dimensions need their source association before their existing
+# resolvers replace the token. These records do not make the resolved depth
+# or watchdog dynamic, and literals/defaults deliberately acquire no record.
+sub _preserve_symbolic_static_declaration {
+    my ($entry, $dimension, $token, $kind, $owner) = @_;
+    $entry->{"_${dimension}_declaration"} = {
         token => _clone_isf_value($token),
         kind  => $kind,
         owner => $owner,
@@ -2357,6 +2372,7 @@ sub _finalize_actor_storage_depths($self, $actor) {
                 $resolved_depth = _positive_integer_from_literal_value($constant_value);
                 confess "Error: actor '$actor_name' storage bank '$storage_name' package constant '$package_name.$constant_name' must resolve to a positive integer scalar\n"
                     unless defined $resolved_depth;
+                _preserve_symbolic_static_declaration($entry, 'depth', $depth, 'package_constant', $package_name);
             } elsif (_is_package_constant_reference_shape($depth)) {
                 confess "Error: actor '$actor_name' storage bank '$storage_name' references unknown package constant '$depth'\n";
             } else {
@@ -2365,10 +2381,12 @@ sub _finalize_actor_storage_depths($self, $actor) {
                     $resolved_depth = _positive_integer_from_literal_value(_param_resolved_value($param));
                     confess "Error: actor '$actor_name' storage bank '$storage_name' depth parameter '$depth' must resolve to a positive integer\n"
                         unless defined $resolved_depth;
+                    _preserve_symbolic_static_declaration($entry, 'depth', $depth, 'actor_parameter', $actor_name);
                 } elsif (my $constant = _actor_constant_by_name($actor, $depth)) {
                     $resolved_depth = _positive_integer_from_literal_value(_constant_resolved_value($constant));
                     confess "Error: actor '$actor_name' storage bank '$storage_name' depth constant '$depth' must resolve to a positive integer\n"
                         unless defined $resolved_depth;
+                    _preserve_symbolic_static_declaration($entry, 'depth', $depth, 'actor_constant', $actor_name);
                 } elsif (_actor_interface_signal_by_name($actor, $depth)) {
                     confess "Error: actor '$actor_name' storage bank '$storage_name' depth token '$depth' is a runtime interface signal; storage bank depths accept positive integer literals, actor constants, actor scalar parameters, or qualified package scalar constants only\n";
                 } else {

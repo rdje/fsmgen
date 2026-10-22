@@ -40,7 +40,7 @@ independent defects remain owned after handoff unless they demonstrably block de
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -421,7 +421,7 @@ independent defects remain owned after handoff unless they demonstrably block de
   Status: `active`
   Goal: `Carry declared scalar width provenance through LoweringIR and canonical IAL0 without numeric guessing.`
   Acceptance: `After .2.2, preserve the selected dependency records through source preparation, physical formal rewriting, generated instances/domains and canonical carrier emission. Bind each record to its real declaration and selected parameter environment; preserve resets/defaults/types and unrelated equal-width declarations. Reuse IAL0 sizing contracts and keep unresolved HDL override behavior explicit. Qualify actual carriers and isolation with independent expected identities, then commit before public-report closure; split unsafe expansion first.`
-  Verification: `Parser preservation and source/physical audit are qualified. Mandatory static-use and scoped IR/IAL0 propagation remain open; immediate P1 .11 precedes propagation.`
+  Verification: `Parser preservation and source/physical audit are qualified. Bank-depth/actor-watchdog parser retention is qualified; library-source and scoped IR/IAL0 propagation remain open under decision0121 priority.`
   Commit: `pending`
   Children: `ISF-REDUCTION-DELIVERY.2.3.1, ISF-REDUCTION-DELIVERY.2.3.2, ISF-REDUCTION-DELIVERY.2.3.3, ISF-REDUCTION-DELIVERY.2.3.4`
 
@@ -475,11 +475,17 @@ independent defects remain owned after handoff unless they demonstrably block de
   Children: `ISF-REDUCTION-DELIVERY.2.3.2.1.1, ISF-REDUCTION-DELIVERY.2.3.2.1.2`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.1.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve authored bank-depth and watchdog references through existing successful static resolution.`
   Acceptance: `Use the committed independent one-slot peers from .2.3.1.1. Preserve original token/kind/lexical owner privately before finalization, retaining literal/default independence, scalar aliases/package scope, numeric primitives and complete native/carrier/public defaults. Census remaining accepted symbolic finalizers without new expression admission or a separate evaluator; original RED-to-GREEN and caller/result isolation must qualify before commit. No dynamic depth/watchdog implementation claim.`
-  Verification: `pending physical audit; mandatory before IR/generic propagation`
-  Commit: `pending`
+  Verification: `Original unchanged T2096 fails source-identity subtests 1 and 3 against the exact 7fce9eb2 parser; repaired parser passes All tests successful Files=1 Tests=3. Independent one-slot, alias/equal-default, actor-constant/package, literal/implicit and library-clone controls retain exact depth-number/watchdog-string primitives, complete caller JSON kinds and detached records. Original/current native strict check, semantic and schedule bytes plus complete private actors/carriers/reports match after removing only the exact new fields. Loaded parser hashes and compiled method files bind both actual epochs. Focused depth/watchdog/width/timing/public-shell preservation passes All tests successful Files=11 Tests=32; book/task checks pass Files=2 Tests=50. The book builds and complete source/index/copied-build checks pass. The initial saved verifier expects verbose TAP from nonverbose prove; original producer bytes and a repeated saved-only refusal are retained, then its summary oracle is corrected without changing or replaying the product. Corrected saved verifier rejects hostile source identity, owner, kind, primitive and peer controls. Parser census: actor constants/parameters retain value beside resolved_value; named types retain type/type_spec; field extents require literal indices. Transaction parameter/default, wait/repeat, local-watchdog, latency/contract and activation sources remain in clauses despite resolved helper projections. Clock/domain and verification finalizers select identities or declared widths rather than independent scalar parameter tokens. Destructive library-use resolution stays .2.3.2.1.2. Re-derivation is original actual source/products and loaded identities; falsification is genuine unchanged RED/GREEN plus independent literal/scope and hostile saved controls; durability is tracked regression, producer/verifier, before/after and qualification receipts, decision0119 and Git. Full transitive environment/footprint, raw-root reconstruction, public dependency inventory, IR/carrier propagation and generic HDL remain explicit gaps under successors. Public sync is the current private-preservation boundary in book/downstream/decision; syntax, diagnostics, capability/schema and executable defaults stay exact. First staged doctrines refuse the stale decision digest, task/rationale allowances and decision-line rollover. The complete failed gate/index/decision/registry retain in static-references-gate-refusal-20261022.json.gz. Refresh authenticated identity and exact measured warning allowances; route duplicated uncommitted decision qualification/census here, retaining the concise cross-cutting contract below rollover. No fact, ceiling or rollover allowance is widened. Corrected staged doctrines and normal hooks gate the parser-only commit; no new evaluator or dynamic-depth/watchdog claim.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.2.1.1: retain authored static depth and watchdog references`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json admits both symbolic and literal default peers while original parser diagnostics at t/2096-isf-authored-static-references.t identify missing source records. _finalize_actor_storage_depths and _finalize_actor_watchdog_limit overwrite tokens after successful static resolution. Complete original products and loaded source/method identities retain in static-references-before-20261022.json.gz.
+  - [x] **ADDRESSED (verified)** — Existing successful branches now retain detached token/kind/lexical-owner records before assignment. Unchanged RED/GREEN, independent alias/constant/package/literal/default/library controls and hostile saved mutations qualify retention. Complete original/current carrier and native products conserve defaults and kinds; the corrected saved verifier passes without runtime or generic support claims.
+  - [x] **NO REGRESSION** — All tests successful Files=1 Tests=3 for T2096; preservation Files=11 Tests=32; book/task Files=2 Tests=50. Parser syntax OK, mdBook/source/index/copied-build checks and saved verification pass. scripts/check_doctrines.sh and normal hooks qualify the final staged parser slice; source-footprint/API-MCP/generic HDL gaps remain explicit. No HDL tool or historical native workload executes.
+
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.1.2`
   Status: `pending`
@@ -753,6 +759,13 @@ independent defects remain owned after handoff unless they demonstrably block de
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S ISF-REDUCTION-DELIVERY.11.2 -- MEMORY.md identifies commit24f0d0220; git show HEAD:MEMORY.md identifies the saved generated-wait witness frontier after the committed source repair. The live .11/.12 acceptance placed independent defect work before generic widths, despite the director's exclusive required-request priority. Decision0121 explicitly supersedes that ordering.
   - [x] **ADDRESSED (verified)** — Required .2.3.2.1.1 is the saved next implementation leaf. Exact .11.2/.12/.7.2 statuses and reasons preserve post-handoff ownership and evidence. The task index, current decision catalog/navigation, response and book agree on required requests and demonstrated blockers only. No product source or supported contract changes.
   - [x] **NO REGRESSION** — All tests successful Files=2 Tests=50 from the exact existing book/task tests. mdBook build, complete source/copied-build/index checks, authenticated decisions, task integrity, claim census/dispositions and git diff --check pass. scripts/check_doctrines.sh and normal hooks gate this priority-only change without raising enforcement ceilings or relaxing publication qualification.
+
+- ID: `ISF-REDUCTION-DELIVERY.14`
+  Status: `deferred`
+  Goal: `P3: align the auxiliary ISF synchronization inventory with retired live journals.`
+  Acceptance: `After required SPECFORGE handoff under decision0121, repair the Current Inventory / Live-Doc Touchpoints in docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md: it still names ROADMAP_STATUS.md, CHANGES.md and LIVE_ACHIEVEMENT_STATUS.md as write destinations despite decisions0047-0049 and the corrected checklist section5. Reproduce with rg on those names, preserve historical task evidence, align the auxiliary inventory with the current canonical checklist, and verify references/book/task/doctrines before a focused commit. This stale guidance risks restoring retired journals; it does not block private static-source preservation.`
+  Verification: `Observed during mandatory feature-checklist review; current normative COMMIT.md and checklist section5 already supply the correct workflow. Scheduled after required delivery; no journal writes occur.`
+  Commit: `pending`
 
 ## Blockers
 

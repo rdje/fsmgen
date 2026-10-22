@@ -150,3 +150,16 @@ to successful native cases. First-touch JSON observations supersede lossy audit
 Storable copies; their explicit copy counterfactual preserves originals while
 changing numeric kinds. This does not assert a production copier defect. Native
 and private audit products establish neither generic HDL nor runtime behavior.
+
+## Private static-source preservation
+
+Leaf `.2.3.2.1.1` captures detached `_depth_declaration` on symbolic banks and
+`_watchdog_declaration` on symbolic actor watchdogs at successful existing
+resolution branches: authored `token`, source `kind` and lexical `owner`.
+Aliases and package owners remain distinct from equal defaults. Literal/implicit
+values gain no dependency; resolved primitives, carriers and public defaults
+remain unchanged. This does not implement generic shapes or public inventories.
+The task owns the parser-finalizer census and complete qualification evidence;
+library-source preservation remains `.2.3.2.1.2`, followed by scoped IR/IAL0 work.
+Reverify retained original/current products and hostile association controls:
+`python3 -B docs/audits/static-references-20261022.py verify`.

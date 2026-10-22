@@ -244,9 +244,9 @@ Rules:
   Emitted HDL parameters currently do not resize ports, storage or reset widths.
   Library use-site overrides do not re-specialize parameter-dependent shapes.
   Carrier/public propagation and generic specialization remain pending.
-- Bank-depth and watchdog references currently resolve to fixed values without
-  retained source associations. Their preservation is a generic-width
-  prerequisite. IAL0 carrier spelling must also preserve the selected namespace:
+- Private bank-depth and actor-watchdog records retain source token, kind and
+  lexical owner beside unchanged fixed defaults; literals and implicit values
+  gain no dependency. IAL0 carrier spelling must also preserve the selected namespace:
   bare size names can select a named type before a same-named scalar parameter.
   Generated declarations also need distinct actor and transaction environments.
   Library override values currently lose their authored references during static

@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.2.1.1`
-- next_action: Preserve authored bank-depth and watchdog references before resolution for required grouped-reduction width propagation; follow decision0121.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.2.1.2`
+- next_action: Preserve authored reusable-library overrides before static resolution; then carry required scoped width records into IR, under decision0121.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
