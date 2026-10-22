@@ -8,7 +8,25 @@ use Storable qw(dclone);
 use FSM::Support::ISFRecordPortValues qw(record_value_scope);
 
 our @EXPORT_OK = qw(record_actor_scope record_transaction_scope record_drive_scope
-    record_context_scope record_reference_root_kind);
+    record_context_scope record_reference_root_kind record_timing_scope);
+
+# Declared clocks/resets are scalar bits. Nearest declarations, including an
+# unresolved binding, mask these outer facts; absent timing pins are not added.
+sub record_timing_scope {
+    my %args = @_;
+    _arguments(\%args, [qw(actor scope)]);
+    _require(ref($args{actor}) eq 'HASH' && ref($args{scope}) eq 'HASH',
+        'timing scope requires an actor and nearest declaration map');
+    my $actor = $args{actor};
+    my %timing;
+    for my $entry ($actor, @{($actor->{clock_domains} || {})->{domains} || []}) {
+        for my $name ($entry->{clock}, ($entry->{reset} || {})->{name}) {
+            next unless defined($name) && !ref($name) && length($name);
+            $timing{$name} = {role => 'input', type_spec => {kind => 'bits', width => 1, signed => 0}};
+        }
+    }
+    return record_value_scope(outer => \%timing, local => $args{scope});
+}
 
 # Preparatory declaration projection only. Existing parser/lowering validators
 # still own declaration admission, including local collisions and options.

@@ -8,10 +8,11 @@ answers:
   - "how are declared reduction records prepared without source admission?"
   - "why do reductions preserve delegated storage sample declarations?"
   - "why did admitted reductions fail when transaction formals were present?"
+  - "why do sampled clock/reset reductions need declared carrier widths?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
+evidence: docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
@@ -186,6 +187,26 @@ role controls. Reverify with
 `scripts/run_with_ram_guard.sh -- prove -Iperl t/2078-isf-reduction-formal-arity.t`.
 The independent existing mixed-record/private-formal write refusal is owned by
 `.8`; this arity repair does not broaden source write roles.
+
+Declared timing samples need the same scalar facts in source and carriers.
+The record-port sample plan intentionally omits timing roots; the reduction
+consumer can still resolve a known scalar root in its already declared scope.
+Qualified namespaces, delegated aggregates and unknown/static masks remain
+outside this fallback. Sample chains retain the resolved scalar facts.
+`record_timing_scope` shares actual clock/reset declarations with source and
+width consumers, preserving nearer declarations and unresolved masks without
+inventing an absent reset. Reduced-actor width propagation projects actual
+nearest scalar declarations before sample chains; report numbers supply no
+width evidence. The existing feature boundary preserves ordinary actors.
+The first source repair exposed a second RED: missing sample declarations made
+actual canonical replay refuse the timing operand. T2079 binds both stages to
+real sources/carriers, exact sample storage widths/roles, no phantom timing
+storage, complete native/API/newline products and named/no-reset/nearest-mask
+controls. Reverify with
+`scripts/run_with_ram_guard.sh -- prove -Iperl t/2079-isf-reduction-timing-samples.t`.
+This scoped source qualification does not close broader source/profile/corpus,
+external HDL runtime, generic groups or required R1-R3 publication.
+
 
 Unary AST, canonical serializers and the executed enable-graph capture renderer
 group both the operand and expression. Direct VHDL recognizes exactly one

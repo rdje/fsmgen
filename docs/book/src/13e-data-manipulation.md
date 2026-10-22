@@ -52,7 +52,9 @@ unrelated scalar reduction is added. This does not admit reducing an aggregate
 or sampling a whole record port; record-port samples still require scalar leaves.
 Formal-port rewriting preserves these unary forms and uses the nearest formal
 width. Source records retain authored operands; generated IAL0 uses each
-formal's distinct physical identity.
+formal's distinct physical identity. Samples of declared clocks and resets
+retain their one-bit widths through aliases and chains. A clock-only named
+domain gains no reset declaration.
 
 Schedule reports expose `reductions`; successful directly parsed ISF check and
 semantic reports expose `source.reductions`. They are omitted when absent and

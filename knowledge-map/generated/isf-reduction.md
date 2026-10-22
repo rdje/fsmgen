@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-reduction`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **6** uniquely owned question entries.
+> **1** facts · **7** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -11,6 +11,7 @@
 - q="what syntax and bit order are selected for SPECFORGE byte-group reductions?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did admitted reductions fail when transaction formals were present?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why do reductions preserve delegated storage sample declarations?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
+- q="why do sampled clock/reset reductions need declared carrier widths?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 
 ## Facts
 

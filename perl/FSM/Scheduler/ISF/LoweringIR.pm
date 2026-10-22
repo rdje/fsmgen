@@ -28,6 +28,7 @@ use FSM::Support::ISFReductions qw(capture_actor_reductions);
 use FSM::Scheduler::ISF::RecordSamples;
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
 use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
+use FSM::Support::ISFRecordPortScopes qw(record_transaction_scope record_timing_scope);
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
@@ -5233,6 +5234,18 @@ sub _build_signal_width_map {
     for my $direction (qw(inputs outputs)) {
         for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
             $widths{$port->{name}} = $port->{width} // 1;
+        }
+    }
+    # Reduced actors emit explicit scalar sample declarations. Supply their
+    # widths from actual nearest declarations, including timing roots, before
+    # propagating sample chains; report numbers are not declaration evidence.
+    if (ref($actor->{reduction_metadata}) eq 'ARRAY' && @{$actor->{reduction_metadata}}) {
+        my $scope = record_timing_scope(actor => $actor,
+            scope => record_transaction_scope(actor => $actor, transaction => $tx));
+        for my $name (keys %$scope) {
+            my $spec = $scope->{$name}{type_spec};
+            next unless ref($spec) eq 'HASH' && ($spec->{kind} eq 'bit' || $spec->{kind} eq 'bits');
+            $widths{$name} = $spec->{width};
         }
     }
     _collect_sample_widths($tx->{clauses}, \%widths);

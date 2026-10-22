@@ -8,7 +8,7 @@ use Scalar::Util qw(refaddr);
 use Storable qw(dclone);
 use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
 use FSM::Support::ISFRecordPortValues qw(record_value_scope record_value_reference);
-use FSM::Support::ISFRecordPortScopes qw(record_actor_scope record_transaction_scope record_drive_scope);
+use FSM::Support::ISFRecordPortScopes qw(record_actor_scope record_transaction_scope record_drive_scope record_timing_scope);
 use FSM::Support::ISFRecordPortSamples qw(record_transaction_samples);
 
 our @EXPORT_OK = qw(capture_actor_reductions capture_expression_reductions snapshot_reductions reduction_metadata_contract);
@@ -28,13 +28,21 @@ sub capture_actor_reductions {
             return unless _has_reduction($expression, {});
             unless ($scope) {
                 $scope = _without_static_values($actor,
-                    _timing_scope($actor, record_transaction_scope(actor => $actor, transaction => $tx)), $tx);
+                    record_timing_scope(actor => $actor, scope => record_transaction_scope(actor => $actor, transaction => $tx)), $tx);
                 my $samples = record_transaction_samples(actor => $actor, transaction => $tx, port_only => 1);
                 for my $sample (@{$samples->{samples}}) {
-                    # An unresolved/delegated sample masks the alias, but the
-                    # record-port consumer must not reinterpret its source.
-                    my $value = $sample->{reference} && record_value_reference(scope => $scope, token => $sample->{source},
-                        access => 'read', allow_whole => 1, context => "transaction '$tx->{name}' sample '$sample->{source}'");
+                    # The port-only plan omits timing roots. A scalar root
+                    # already resolved in this scope still supplies its facts;
+                    # dotted namespaces and delegated aggregates remain masked.
+                    my ($root) = $sample->{source} =~ /\A([A-Za-z_]\w*)(?:\[\d+(?::\d+)?\])*\z/;
+                    my $spec = defined($root) && exists($scope->{$root})
+                        ? $scope->{$root}{type_spec} : undef;
+                    my $known_scalar = ref($spec) eq 'HASH'
+                        && ($spec->{kind} eq 'bit' || $spec->{kind} eq 'bits');
+                    my $value = ($sample->{reference} || $known_scalar)
+                        ? record_value_reference(scope => $scope, token => $sample->{source},
+                            access => 'read', allow_whole => 1,
+                            context => "transaction '$tx->{name}' sample '$sample->{source}'") : undef;
                     $scope = record_value_scope(outer => $scope, local => {
                         $sample->{alias} => {role => 'local', type_spec => $value && $value->{type_spec}{kind} =~ /\A(?:bit|bits)\z/ ? $value->{type_spec} : undef}});
                 }
@@ -50,7 +58,7 @@ sub capture_actor_reductions {
         my $emit = sub {
             my ($expression, $context) = @_;
             return unless _has_reduction($expression, {});
-            $actor_scope ||= _without_static_values($actor, _timing_scope($actor, record_actor_scope(actor => $actor)));
+            $actor_scope ||= _without_static_values($actor, record_timing_scope(actor => $actor, scope => record_actor_scope(actor => $actor)));
             push @records, @{capture_expression_reductions(expression => $expression, scope => $actor_scope,
                 owner_kind => 'rule', owner => $rule->{name}, context => $context)};
         };
@@ -74,7 +82,7 @@ sub capture_actor_reductions {
         for my $i (0 .. $#{$drive->{body} || []}) {
             my $expression = $drive->{body}[$i][1];
             next unless _has_reduction($expression, {});
-            $scope ||= _without_static_values($actor, _timing_scope($actor, record_drive_scope(actor => $actor, drive => $drive)));
+            $scope ||= _without_static_values($actor, record_timing_scope(actor => $actor, scope => record_drive_scope(actor => $actor, drive => $drive)));
             push @records, @{capture_expression_reductions(expression => $expression, scope => $scope,
                 owner_kind => 'drive', owner => $name, context => "drive '$name' assignment[$i] RHS")};
         }
@@ -93,18 +101,6 @@ sub _without_static_values {
         }
     }
     return record_value_scope(outer => $scope, local => \%values);
-}
-
-sub _timing_scope {
-    my ($actor, $scope) = @_;
-    my %timing;
-    for my $entry ($actor, @{($actor->{clock_domains} || {})->{domains} || []}) {
-        for my $name ($entry->{clock}, ($entry->{reset} || {})->{name}) {
-            next unless _text($name);
-            $timing{$name} = {role => 'input', type_spec => {kind => 'bits', width => 1, signed => 0}};
-        }
-    }
-    return record_value_scope(outer => \%timing, local => $scope);
 }
 
 sub _clauses {
