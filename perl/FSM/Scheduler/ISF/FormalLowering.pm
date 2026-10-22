@@ -53,15 +53,29 @@ sub verify {
         $context->{prepared}, $context->{plan}, $modules);
 }
 
-sub report_ir {
-    my ($class, $context, $ir, $domain) = @_;
-    return $ir unless $context;
+sub _report_preparation {
+    my ($context, $domain) = @_;
     my $prepared = defined($domain)
         ? $context->{prepared}{domain_source_products}{$domain}{preparation}
         : $context->{prepared};
     confess "Formal report projection has no original source preparation\n" unless ref($prepared) eq 'HASH';
+    return $prepared;
+}
+
+# Both domain views and top-level aggregation describe authored expressions.
+# Derive this detached inventory without rewriting an executable parent IR.
+sub source_reductions {
+    my ($class, $context, $domain) = @_;
+    my $prepared = _report_preparation($context, $domain);
+    return capture_actor_reductions(actor => $prepared->{actor});
+}
+
+sub report_ir {
+    my ($class, $context, $ir, $domain) = @_;
+    return $ir unless $context;
+    my $prepared = _report_preparation($context, $domain);
     my $view = dclone($ir);
-    $view->{reductions} = capture_actor_reductions(actor => $prepared->{actor});
+    $view->{reductions} = $class->source_reductions($context, $domain);
     my $bindings = $prepared->{transaction_binding_report_products};
     _same_record_identity($ir->{transaction_port_bindings}, $bindings,
         [qw(site_kind owner owner_kind target_transaction role width instance parent_port child_port

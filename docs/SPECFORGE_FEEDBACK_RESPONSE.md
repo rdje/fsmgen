@@ -38,9 +38,9 @@ operands also retain their declared actor-pin or nearest-formal widths when a
 direct transaction count parameter has the same name. Standalone waits keep
 their static count; generated-child parameters retain static expression scope.
 The repair reuses canonical placement and preserves authored public records.
-An existing multi-domain exception can still mistake a standalone static count
-for a same-named wire in another domain after formal rewriting. This also affects
-ordinary non-reduction sources; `ISF-REDUCTION-DELIVERY.9` owns its repair next.
+Domain validation also preserves standalone static wait/repeat counts after
+formal rewriting; those tokens do not read a same-named foreign-domain wire.
+Runtime expression counts, guards and body reads retain crossing checks.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

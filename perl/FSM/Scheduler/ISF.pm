@@ -162,6 +162,11 @@ sub _emit_multi_domain_schedule_report($self, $actor, $ir, $formal = undef) {
     }
 
     my $report = $self->{json_emitter}->multi_domain_report_hash($ir, \%domain_report_by_name);
+    if ($formal) {
+        my $reductions = FSM::Scheduler::ISF::FormalLowering->source_reductions($formal);
+        if (@$reductions) { $report->{reductions} = $reductions; }
+        else { delete $report->{reductions}; }
+    }
     return $self->{json_emitter}->emit_report_hash($report);
 }
 

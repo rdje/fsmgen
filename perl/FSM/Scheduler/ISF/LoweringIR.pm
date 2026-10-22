@@ -3332,7 +3332,10 @@ sub _validate_transaction_clause_domain_refs {
         return 1;
     }
     if ($keyword eq 'wait') {
-        _validate_domain_expr_reads($clause->[1], $domain, $signal_domains, $local_signals, $constants, "$context wait clause");
+        # A standalone static count does not read a same-named runtime wire.
+        # The canonical wait classifier preserves its own namespace/diagnostics.
+        _validate_domain_expr_reads($clause->[1], $domain, $signal_domains, $local_signals, $constants, "$context wait clause")
+            unless _static_wait_count_spec($clause->[1], $tx->{name}, $label, $actor);
         return 1;
     }
     if ($keyword eq 'update' || $keyword eq 'set') {
@@ -3448,7 +3451,8 @@ sub _validate_transaction_clause_domain_refs {
         return 1;
     }
     if ($keyword eq 'repeat') {
-        _validate_domain_expr_reads($clause->[1], $domain, $signal_domains, $local_signals, $constants, "$context repeat count");
+        _validate_domain_expr_reads($clause->[1], $domain, $signal_domains, $local_signals, $constants, "$context repeat count")
+            unless defined _static_repeat_count_value($clause->[1], $actor, $tx->{name});
         for my $subclause (@{$clause}[2 .. $#$clause]) {
             _validate_transaction_clause_domain_refs($subclause, $actor, $tx, $domain, $signal_domains, $local_signals, $transaction_domains, $constants, $drive_use_domains, 'repeat body');
         }
@@ -8451,6 +8455,84 @@ sub _wait_cycles {
     return $spec->{cycles};
 }
 
+# Static wait classification is shared with domain validation. It has no
+# runtime width lookup: expression counts and runtime scalar operands return
+# undef and retain their ordinary declaration/domain checks.
+sub _static_wait_count_spec {
+    my ($count, $tn, $label, $actor) = @_;
+    return undef unless defined($count) && !ref($count);
+
+    my $literal_value = _non_negative_integer_from_literal($count);
+    return {
+        kind   => 'static',
+        cycles => $literal_value,
+        source => $count,
+    } if defined $literal_value;
+
+    if (my $package_constant = _actor_package_constant_reference($actor, $count)) {
+        my ($package_name, $constant_name, $suffix) = @$package_constant;
+        my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
+        if (defined $constant_payload) {
+            confess "Transaction '$tn': wait count token '$count' is ambiguous: it matches local enum member '$count' and imported package constant '$count' in $label\n"
+                if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
+            confess "Transaction '$tn': wait count package constant '$package_name.$constant_name' aggregate/member path '$count' remains deferred; wait counts accept only qualified package scalar constants in this slice\n"
+                if $suffix ne '';
+            my $constant_value = _package_constant_scalar_value($constant_payload);
+            my $integer_value = defined($constant_value) && !ref($constant_value)
+                ? _non_negative_integer_from_literal($constant_value)
+                : undef;
+            confess "Transaction '$tn': wait count package constant '$package_name.$constant_name' must resolve to a non-negative integer scalar in $label\n"
+                unless defined $integer_value;
+            return {
+                kind   => 'static',
+                cycles => $integer_value,
+                source => $count,
+            };
+        }
+
+        confess "Transaction '$tn': wait count references unknown package constant '$count' in $label\n"
+            if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
+    }
+
+    if (_is_hdl_identifier($count)) {
+        if (_transaction_param_by_name($actor, $tn, $count)) {
+            my $param_value = _transaction_param_wait_count_value($count, $actor, $tn);
+            confess "Transaction '$tn': wait count transaction parameter '$count' must resolve to a non-negative integer literal in $label\n"
+                unless defined $param_value;
+            return {
+                kind   => 'static',
+                cycles => $param_value,
+                source => $count,
+            };
+        }
+
+        my $constant = _actor_constant_by_name($actor, $count);
+        if ($constant) {
+            my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
+            confess "Transaction '$tn': wait constant '$count' must resolve to a non-negative integer literal in $label\n"
+                unless defined $constant_value;
+            return {
+                kind   => 'static',
+                cycles => $constant_value,
+                source => $count,
+            };
+        }
+
+        my $param = _actor_param_by_name($actor, $count);
+        if ($param) {
+            my $param_value = _non_negative_integer_from_literal(_param_resolved_value($param));
+            confess "Transaction '$tn': wait parameter '$count' must resolve to a non-negative integer literal in $label\n"
+                unless defined $param_value;
+            return {
+                kind   => 'static',
+                cycles => $param_value,
+                source => $count,
+            };
+        }
+    }
+    return undef;
+}
+
 sub _wait_count_spec {
     my ($clause, $tn, $label, $actor, $widths, $allow_dynamic) = @_;
 
@@ -8459,75 +8541,10 @@ sub _wait_count_spec {
             && defined($clause->[1]);
 
     my $count = $clause->[1];
+    my $static = _static_wait_count_spec($count, $tn, $label, $actor);
+    return $static if $static;
     if (!ref($count)) {
-        my $literal_value = _non_negative_integer_from_literal($count);
-        return {
-            kind   => 'static',
-            cycles => $literal_value,
-            source => $count,
-        } if defined $literal_value;
-
-        if (my $package_constant = _actor_package_constant_reference($actor, $count)) {
-            my ($package_name, $constant_name, $suffix) = @$package_constant;
-            my $constant_payload = _actor_package_constant_payload($actor, $package_name, $constant_name);
-            if (defined $constant_payload) {
-                confess "Transaction '$tn': wait count token '$count' is ambiguous: it matches local enum member '$count' and imported package constant '$count' in $label\n"
-                    if $suffix eq '' && _actor_local_enum_member_exists($actor, $package_name, $constant_name);
-                confess "Transaction '$tn': wait count package constant '$package_name.$constant_name' aggregate/member path '$count' remains deferred; wait counts accept only qualified package scalar constants in this slice\n"
-                    if $suffix ne '';
-                my $constant_value = _package_constant_scalar_value($constant_payload);
-                my $integer_value = defined($constant_value) && !ref($constant_value)
-                    ? _non_negative_integer_from_literal($constant_value)
-                    : undef;
-                confess "Transaction '$tn': wait count package constant '$package_name.$constant_name' must resolve to a non-negative integer scalar in $label\n"
-                    unless defined $integer_value;
-                return {
-                    kind   => 'static',
-                    cycles => $integer_value,
-                    source => $count,
-                };
-            }
-
-            confess "Transaction '$tn': wait count references unknown package constant '$count' in $label\n"
-                if $suffix eq '' && !_actor_local_enum_member_exists($actor, $package_name, $constant_name);
-        }
-
         if (_is_hdl_identifier($count)) {
-            if (_transaction_param_by_name($actor, $tn, $count)) {
-                my $param_value = _transaction_param_wait_count_value($count, $actor, $tn);
-                confess "Transaction '$tn': wait count transaction parameter '$count' must resolve to a non-negative integer literal in $label\n"
-                    unless defined $param_value;
-                return {
-                    kind   => 'static',
-                    cycles => $param_value,
-                    source => $count,
-                };
-            }
-
-            my $constant = _actor_constant_by_name($actor, $count);
-            if ($constant) {
-                my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
-                confess "Transaction '$tn': wait constant '$count' must resolve to a non-negative integer literal in $label\n"
-                    unless defined $constant_value;
-                return {
-                    kind   => 'static',
-                    cycles => $constant_value,
-                    source => $count,
-                };
-            }
-
-            my $param = _actor_param_by_name($actor, $count);
-            if ($param) {
-                my $param_value = _non_negative_integer_from_literal(_param_resolved_value($param));
-                confess "Transaction '$tn': wait parameter '$count' must resolve to a non-negative integer literal in $label\n"
-                    unless defined $param_value;
-                return {
-                    kind   => 'static',
-                    cycles => $param_value,
-                    source => $count,
-                };
-            }
-
             my $width = _dynamic_wait_source_width($count, $widths);
             if (defined $width) {
                 confess "Transaction '$tn': runtime dynamic wait count '$count' is not supported in $label in the current dynamic-wait slice\n"

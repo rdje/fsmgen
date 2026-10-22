@@ -10,10 +10,11 @@ answers:
   - "why did admitted reductions fail when transaction formals were present?"
   - "why do sampled clock/reset reductions need declared carrier widths?"
   - "why do direct transaction count parameters mask runtime reductions?"
+  - "why did standalone static counts look like cross-domain wire reads?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
+evidence: docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
@@ -251,7 +252,29 @@ and actual source/carrier/native/API/newline products. Reverify with
 `scripts/run_with_ram_guard.sh -- prove -Iperl t/2080-isf-reduction-parameter-scopes.t`.
 This bounded repair does not close remaining unary qualification, runtime,
 generic groups or publication.
-The domain probe separately reproduces an ordinary-source defect: rewritten
-standalone count tokens can be mistaken for foreign-domain actor wires.
-`ISF-REDUCTION-DELIVERY.9` owns its immediate successor repair; neither the
-shared expression query nor a reduced test case closes that count-position bug.
+The domain probe separately reproduced an ordinary-source defect: after formal
+rewriting, domain validation treated standalone static counts as reads of a
+same-named foreign-domain actor wire. `.9` shares the unchanged static branch of
+`_wait_count_spec` through `_static_wait_count_spec`; repeat domain validation
+reuses its existing static count resolver. Only standalone count positions use
+these facts. Expression counts, guards and loop bodies keep runtime ownership
+checks. T2081 binds exact source scopes, actual domain report/state producers,
+strict complete carrier bundles and native/API/newline equality, with hostile
+runtime-crossing controls. Generated artifacts are joined through their actual
+`scheduled_fsm` identities, never guessed from logical domain spellings.
+Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2081-isf-domain-static-count-scope.t`.
+
+Multi-domain report aggregation must use the detached original-source view for
+both domain-local and top-level inventories. A physical parent IR supplies
+execution identities, not authored operand spellings. Complete transport parity
+alone cannot detect this error: every transport can repeat the same physical
+name. The independent authored inventory and executed report-call probe bind
+the missing top-level projection while checking IR/source/carrier isolation.
+
+Predecessor replay must establish the loaded module identity, not just retain a
+command line. The earlier count-scope audit put `-Iperl` before its overlay and
+therefore loaded current code; its exact-predecessor identity claim is invalid.
+The corrected overlay-first INC/helper probe plus native c51 replay reproduce
+the ordinary domain refusal. The final unchanged T2081 also fails against the
+independently inspected 300b23660 predecessor. Preserve the old receipt and this
+explicit correction; matching exit status never repairs a wrong source identity.

@@ -258,13 +258,27 @@ These positions have different lookup rules from runtime expressions. For
 example, if a direct transaction has both `(params (count 2))` and an input formal
 named `count`, `(wait count)` uses the parameter default, while
 `(set observed count)` reads the formal. Inside a dynamic wait expression such as
-`(wait (+ count 4'd1))`, `count` is also a runtime operand. A known multi-domain
-exception remains: after formal rewriting, a standalone static count can be
-mistaken for a same-named actor wire in another domain and refused as a crossing.
-`ISF-REDUCTION-DELIVERY.9` owns the repair; use distinct count-parameter and
-foreign-wire names until it is qualified. Generated children
+`(wait (+ count 4'd1))`, `count` is also a runtime operand. Domain validation
+uses the same distinction: standalone static waits and repeats do not read a
+same-named actor wire in another domain. Expression counts, guards and body reads
+still need valid runtime ownership or an explicit crossing. Generated children
 emit their parameters in their own module. Actor parameters/constants and
 resolved enum/package symbols retain their existing expression lookup rules.
+
+In this actor, the auxiliary transaction's private `count` and its standalone
+wait retain their own scopes. Neither operation reads the core actor pin:
+
+```lisp
+(actor scoped_domain_counts
+ (clock-domains (domain core (clock clk) (reset rst_n) :default)
+  (domain aux (clock aux_clk) (reset aux_rst_n)))
+ (interface (input start) (input count (width 8)) (output out) (output done)
+  (input aux_start (domain aux)) (output aux_out (domain aux)) (output aux_done (domain aux)))
+ (transaction main (ports (input count (width 4))) (params (count 2))
+  (on start) (set count 4'd5) (wait count) (set out (^ count)) (complete done))
+ (transaction aux_main (domain aux) (ports (input count (width 3))) (params (count 3))
+  (on aux_start) (set count 3'd5) (wait count) (set aux_out (& count)) (complete aux_done)))
+```
 
 Input bindings may pass scalar actor-side signals, numeric/exact-width
 literals, or non-empty list expressions; output bindings still name scalar
