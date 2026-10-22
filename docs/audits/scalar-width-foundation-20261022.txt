@@ -1,0 +1,133 @@
+Owner: ISF-REDUCTION-DELIVERY.2.1
+Capture boundary: a7dc2b369; production code unchanged during this audit.
+Exact selected source identities and full normalized products:
+  docs/audits/scalar-width-foundation-20261022.json.gz
+Read-only verifier:
+  python3 -B docs/audits/scalar-width-foundation-verify-20261022.py
+Producer (fresh output required; no HDL tool execution):
+  scripts/run_with_ram_guard.sh -- python3 -B docs/audits/scalar-width-foundation-20261022.py .artifacts/width-audit-new
+
+Scope and observed boundary
+---------------------------
+The paired source has separate WIDTH, ALIAS, OTHER, literal, constant and named
+type declarations with the same resolved width. The actor keeps the parameter
+alias declaration (ALIAS WIDTH), but the data/alias_data/other_data/constant_data
+ports retain only their resolved numbers. Literal width JSON kind differs;
+that incidental numeric/string distinction is not dependency provenance.
+Named types already retain their type reference and resolved specification.
+Saved storage retains its resolved width and reset value but loses ALIAS.
+
+The transaction case has its own WIDTH shadowing actor WIDTH, and ALIAS refers
+to the transaction parameter. Its port widths become numbers. The existing
+_transaction_param_port_widths is a set of used parameter names, not an
+association between each declaration and its token; do not reconstruct that
+association from equal values or this set. Actual generated child/parent/top
+carriers confirm the same loss while preserving their physical identities.
+
+The same-source library actor is cloned with width eight while its use-site
+override explicitly requests sixteen. The actual generated top keeps the
+override, but the child carrier still has numeric width eight. This matches the
+already documented shape-specialization backlog, owned by .4 and SEM .33.3.3.
+It is not a newly discovered contract regression or an implemented override.
+
+All successful private probes preserve complete original caller JSON kinds.
+Native strict check, semantic and schedule queries accept those source cases.
+Derived arithmetic remains refused at actor parameter admission; public
+check/semantic exit one and schedule exits 255, with the actual '/' leaf cause.
+No HDL compiler, simulator, version probe or foreign script was executed.
+
+Canonical code and existing evaluators
+-------------------------------------
+perl/FSM/Adapter/ISF/Parser.pm:
+  _finalize_actor_interface_widths and _finalize_actor_storage_widths replace
+  tokens after the existing package/actor-parameter/actor-constant resolution.
+  _finalize_actor_transaction_port_widths first resolves local transaction
+  parameters, then package/actor parameters/constants; preserve that order.
+  _transaction_param_declarations_for_static_widths already resolves aliases
+  and validates local defaults. _finalize_actor_param_values preserves authored
+  value separately from resolved_value. Reuse both, without a new evaluator.
+  _resolve_typed_width_entry already preserves named types; scalar/aggregate
+  legality and reset-fit checks remain authoritative.
+perl/FSM/Scheduler/ISF/LoweringIR.pm:
+  _build_ports and _build_declared_storage explicitly project numeric widths;
+  preparation, formal allocation, generated children and domain partitioning
+  need association-preserving propagation, rather than report-only inference.
+perl/FSM/Scheduler/ISF/Emitter/FSM.pm:
+  _emit_size emits numeric widths or retained named types plus reset metadata.
+perl/FSM/Adapter/FSMGenFull/Parser.pm:
+  resolve_declared_width_contract / evaluate_constant_integer_expression
+  already handle public IAL0 +size arithmetic and named static symbols. They
+  return resolved widths; passing a symbolic +size token alone cannot establish
+  generic HDL. Reuse these semantics when derived arithmetic is exposed; do not
+  independently implement division, alias resolution or constant arithmetic.
+  IAL0 parameter graphs allow acyclic out-of-order references, whereas the
+  requested ISF derived-parameter contract requires earlier declarations.
+  Preserve that source-level distinction when sharing arithmetic evaluation.
+
+Selected implementation sequence
+--------------------------------
+.2.2 captures a private _width_declaration at the existing successful width
+resolution branch: original token, source kind and lexical owner. Its resolved
+number stays in width. Explicit literals and default-one declarations must not
+be reclassified as parameter dependencies. Distinguish actor parameter, actor
+constant, package constant and transaction parameter using the existing branch,
+including local shadowing. Named type references keep their existing carrier.
+Keep original token JSON kinds detached before any numeric inspection; avoid
+duplicating the numeric default or substituting an alias's ultimate value.
+Library clones inherit actual declaration evidence, not override guesses.
+This is private preparation: native reports/carriers remain unchanged until
+their independently qualified successor, and no generic HDL is advertised.
+
+.2.3 carries those declaration associations through physical source preparation,
+LoweringIR and IAL0. Before altering carrier spelling, qualify canonical replay
+and use an explicit supported metadata contract if execution would otherwise
+change prematurely. Cover type/reset/default preservation, generated formal
+identities, domain ownership and library clones. Split these consumers before
+implementation if they cannot fit one safe slice.
+
+.2.4 selects detached public declaration/default inventory and schema/version/
+query applicability, including reduction operand_width_source where genuinely
+known. Independent source declarations are its oracle; cross-transport agreement
+alone cannot prove provenance. No successful inventory belongs in failed or
+unrelated products. Exact API and actual newline MCP remain required here.
+
+.3 owns real symbolic HDL propagation and overrides; .4 owns specialization,
+parameter legality and external relationship guards; SEM .32.3 still owns
+derived arithmetic, ceiling division/clog2 and its source diagnostics. Required
+reduce-groups must wait for those actual contracts. Default-only success cannot
+close them. Existing HIAL admission remains necessary before HDL execution.
+
+Policy/startup review
+---------------------
+README and local bootstrap/memory/doctrine/toolbox/commit/acceptance policies
+were read. The external claim template hash exactly matches the retained
+September 23 reviewed template; local deliberate policy is already adopted.
+The project-owned containment guide and root doctrine are coordinated local
+authorities; no external update or threshold change is required. Cleanup is
+current at the October 22 entry; no artifact deletion is justified or performed.
+The stale SEM .32.3 input locator is superseded by the request retained here:
+../specforge/docs/upstream/fsmgen/sf-isf-derived-width-parameter/README.md.
+Sibling inputs are read-only. Their corpus quantities remain supplied claims.
+
+Evidence limits
+---------------
+Re-derivation: actual source/parser/IR/carrier and native products, plus exact
+Git joins for the selected source inputs.
+Falsification: literal named declaration/alias/scope oracles and hostile changed
+width, alias, formal identity and library-specialization records rejected by
+the independent read-only verifier. This does not prove future metadata code.
+Durability: tracked producer, unchanged receipt, verifier and exact Git source
+objects. Complete dependency footprints and raw absolute-root streams are not
+retained; normalized stream text has original byte counts and SHA-256 values.
+Missing implementation, API/MCP, actual generic HDL and runtime legs have the
+successor owners above. No full-CI, hosted, required R1-R3 or publication closure.
+The first RAM-guard launch refused sandbox process inspection before starting
+the producer; the authorized outside-sandbox launch completed under the guard.
+The first staged doctrine refusal retains its complete patch and normalized log
+in scalar-width-foundation-gate-refusal-20261022.json.gz. Task-evidence warning
+allowance needs a measured declaration; Knowledge Map rollover forbids growth.
+The original card is restored exactly. Decision 0117 also refuses growth at its
+own fixed per-file bounds; that attempted source and actual refusal are retained
+in scalar-width-foundation-route-refusal-20261022.json.gz. Bounded decision 0119
+owns the selected provenance contract and new fact/questions. Both old records
+stay byte-exact; no recorded fact/question or ceiling is removed/raised.

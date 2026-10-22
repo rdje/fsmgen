@@ -384,10 +384,44 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Actual guarded HDL observation reports All tests successful Files=1 Tests=4, no skips, with all six declared stages and complete original limits/cleanup. Independent saved identity/semantic/hostile verification passes. All production sources, immutable helpers and fixed inputs remain byte-identical to committed admission. Complete prior source/public/profile/corpus checks retain their scope. mdBook/source/index, fresh book/ISF reference aggregates, staged scripts/check_doctrines.sh and normal hooks gate this bounded R1 commit; grouped/override/VHDL/XZ/publication claims remain withheld.
 
 - ID: `ISF-REDUCTION-DELIVERY.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve authored scalar width dependencies and resolved defaults.`
   Acceptance: `Coordinate SEM .33.3.1 and .32.3; audit public IAL0 parameterized sizing and reuse its evaluator. Retain dependency metadata from actor/transaction/library declarations through parser, LoweringIR, IAL0 and sanitized reports. Never infer a dependency from matching numbers. Cover constants versus parameters, aliases, reset/default sizing and unrelated equal-width controls. Keep incomplete HDL override support explicitly bounded in book/capabilities; qualify detached report and carrier parity, then commit this foundation.`
-  Verification: `pending after unary delivery`
+  Verification: `Source-only audit .2.1 establishes exact parser/projection/carrier loss boundaries and existing evaluator contracts. Private declaration preservation, carrier propagation and public qualification remain owned by .2.2-.2.4; generic HDL and specialization remain .3/.4.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.2.1, ISF-REDUCTION-DELIVERY.2.2, ISF-REDUCTION-DELIVERY.2.3, ISF-REDUCTION-DELIVERY.2.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.1`
+  Status: `done`
+  Goal: `Audit existing width evaluators and loss boundaries; select the bounded dependency representation and implementation sequence.`
+  Acceptance: `Read existing IAL0 sizing and actor/transaction/library/static/type contracts through public declarations, parser, LoweringIR, IAL0 and reports. Retain exact current source and native report/carrier observations with literal-versus-parameter and equal-default controls; do not execute HDL or sibling scripts. Identify existing evaluators and every selected loss boundary, define authored dependency versus resolved environment and remaining derived-width/override obligations, and refine successor leaves before source edits. Synchronize current book/downstream boundaries only where needed. Verify policy sources and today's cleanup record; retain exact input/revision/evidence and missing legs, pass focused docs/doctrines and commit this audit before implementation.`
+  Verification: `Actual equal-default parameter/alias/other/literal/constant/type, transaction-shadow and library-override sources pass native strict check/semantic/schedule; complete private caller kinds survive. Parser finalizers erase symbolic declaration associations, LoweringIR copies numbers and IAL0 emits them; named types and parameter alias declarations survive separately. Actual library override16 remains with child width8, matching the already owned specialization backlog. Derived arithmetic retains its exact native refusal. The read-only verifier joins selected source hashes to a7dc2b369 Git objects and passes independent literal/alias/scope/carrier oracles plus hostile changed width/alias/formal/library records. Existing public IAL0 expression fixture strict-checks successfully. Guarded focused All tests successful Files=6 Tests=18; book/task All tests successful Files=3 Tests=52. mdBook builds; complete source/index/copied-build checks pass. External claim source exactly matches the retained reviewed template; cleanup is current and no deletion occurs. Complete producer/products/oracle and selected boundaries retain in scalar-width-foundation-20261022 artifacts; qualification streams are separate. Re-derivation is actual source/private/native/carrier evidence; falsification is literal named declarations and hostile association controls; durability is tracked receipts/producers/verifier and exact Git sources. Full dependency footprints/raw-root stream reconstruction, implementation, API/MCP and actual generic HDL/runtime remain explicit missing legs under successors. Public sync scope is current book/downstream/fact boundaries only; source syntax, capability/schema and executable carriers are unchanged. First staged doctrines retain exact task/card allowance refusals; the saturated 0117 reroute also refuses its per-file bound. Both originals remain byte-exact; new bounded decision 0119 owns the selected contract/questions. Complete failed patch/source/logs remain in the gate/route-refusal receipts. Measured task/rationale warning allowances change; Knowledge Map allowance and all ceilings stay unchanged. Corrected staged doctrines and normal hooks qualify commit before .2.2.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.1: audit authored scalar width loss boundaries`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --strict --check --json and --emit-semantic-json/--emit-schedule-json products agree with the source-only private probe: parser width finalizers replace named tokens before LoweringIR projections and numeric IAL0 emission. Literal named declarations, alias and transaction-shadow controls expose the association loss without guessing from equal defaults; the existing library shape gap retains .4 ownership.
+  - [x] **ADDRESSED (verified)** — The bounded audit, immutable full products and independent read-only verifier select private declaration capture followed by separately owned carrier/public qualification. Hostile named width, alias, formal identity and library records reject. Current default-only behavior and missing implementation/override/API/MCP legs are explicit in book/downstream/task records; no feature repair or generic HDL claim.
+  - [x] **NO REGRESSION** — Guarded existing width/type/library checks report All tests successful Files=6 Tests=18; book-example/task checks report All tests successful Files=3 Tests=52. Public IAL0 strict check succeeds, mdBook builds and complete source/index/copied-output contracts pass. Claims and regenerated Knowledge Map pass; staged scripts/check_doctrines.sh plus normal hooks gate this source-only audit.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.2`
+  Status: `pending`
+  Goal: `Preserve authored scalar width declarations through parser normalization using the existing static evaluator.`
+  Acceptance: `After .2.1, implement its selected detached dependency representation for actor, transaction and reusable-library source declarations, including aliases and parameter/constant distinctions. Preserve resolved numeric defaults, caller JSON kinds, declaration identity and existing diagnostics. Independently test actual parsed source and hostile equal-default/scope/type controls, retaining genuine RED-to-GREEN evidence. Split discovered dependencies before edits; synchronize exact private/public boundaries and commit before carrier changes.`
+  Verification: `pending audit`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3`
+  Status: `pending`
+  Goal: `Carry declared scalar width provenance through LoweringIR and canonical IAL0 without numeric guessing.`
+  Acceptance: `After .2.2, preserve the selected dependency records through source preparation, physical formal rewriting, generated instances/domains and canonical carrier emission. Bind each record to its real declaration and selected parameter environment; preserve resets/defaults/types and unrelated equal-width declarations. Reuse IAL0 sizing contracts and keep unresolved HDL override behavior explicit. Qualify actual carriers and isolation with independent expected identities, then commit before public-report closure; split unsafe expansion first.`
+  Verification: `pending parser preservation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.4`
+  Status: `pending`
+  Goal: `Qualify detached native/API/MCP width-dependency reports and close the bounded foundation.`
+  Acceptance: `After .2.2/.2.3, publish the selected source-bound dependency/default records through applicable successful check/semantic/schedule reports, actual API and newline MCP, manifest/schema/fixture metadata and independent declaration/carrier oracles. Qualify constant/parameter/alias/equal-default and reset controls, caller/result isolation and failures without invented metadata. Synchronize ISF/downstream/book/feedback and preserve existing public products outside the owned fields. Record precise incomplete override/derived-width boundaries under .3/.4 and SEM .32.3; focused broader and staged doctrines pass before parent .2 closure and commit.`
+  Verification: `pending carrier preservation`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.3`

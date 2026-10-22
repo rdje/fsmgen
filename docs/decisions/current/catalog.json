@@ -1377,6 +1377,28 @@
       },
       "path": "docs/decisions/current/language-api/0118-private-complement-width-and-profile-boundaries.md",
       "type": "private expression and backend contract"
+    },
+    {
+      "content": {
+        "bytes": 3802,
+        "line_bytes": 206,
+        "lines": 68,
+        "sha256": "eea2825cec78b1898ca34c27efbeca78d97f146968fbc35f0470ca3ff4c29072"
+      },
+      "id": "0119",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected; implementation pending"
+        ],
+        "knowledge_id": "isf-authored-scalar-width-provenance",
+        "knowledge_status": "current",
+        "questions": [
+          "where do authored ISF scalar width dependencies disappear?",
+          "how will private ISF width declarations distinguish equal defaults?"
+        ]
+      },
+      "path": "docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md",
+      "type": "private declaration and lowering contract"
     }
   ],
   "schema_version": 1,
