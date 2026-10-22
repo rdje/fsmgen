@@ -19,10 +19,11 @@ answers:
   - "why did traced check semantic or schedule reports contain non-JSON stdout?"
   - "which corpus phases and public queries cover maintained unary reductions?"
   - "why did corpus accounting fail after unary reduction admission?"
+  - "how can failed reduction predecessor tests load current modules?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/audits/unary-corpus-public-products-20261022.json.gz; t/2089-unary-reduction-corpus-public-closure.t
+evidence: docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/audits/unary-corpus-public-products-20261022.json.gz; t/2089-unary-reduction-corpus-public-closure.t; docs/audits/reduction-replay-identity-20261022.json.gz
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
@@ -438,3 +439,30 @@ allocation and removal of only that exact owner independently explain both
 differences. The minimal test correction retains every membership assertion
 and passes with the width/record foundations. No parser/backend repair or new
 runtime maturity follows from this corpus slice.
+
+## Declared predecessor payload identities
+
+`ISF-REDUCTION-DELIVERY.10.1` qualifies the retained corrected width wrapper
+and its separately strengthened final variant. Their hoisted native directory
+loads the declared predecessor blobs; both `%INC` file hashes and compiled
+method source locations match. Other dependencies are observed current source,
+so this establishes the named-module comparison, not a complete historical build.
+The root-first control loads current width methods and those width groups pass.
+Its historical source-refusal assertions still fail because unary admission was
+deliberately opened later. The different nonzero exits retain different causes.
+
+The count audit's existing correction remains intact. Fresh source-only loads
+qualify its declared historical lowerers and coherent dependencies against Git;
+the root-first control selects current code. Prepared module snapshots, actual
+before-edit worktree probes, captured extension-help examples and reconstructed
+predecessor launches remain separate evidence classes. No historical HIAL,
+compiler, simulator or native count workload is replayed. Full original loaded
+footprints and environments remain unrecorded; new observations cannot restore
+them retroactively.
+
+The frozen filename-family census and its explicit selectors pass the read-only
+verifier in `docs/audits/reduction-replay-identity-verify-20261022.py`, with full
+source observations retained in `docs/audits/reduction-replay-identity-20261022.json.gz`.
+Reverify with `scripts/run_with_ram_guard.sh -- python3 -B docs/audits/reduction-replay-identity-verify-20261022.py`.
+The independent work-unit artifact census remains `.10.2`; the parent identity
+audit and fixed HDL witness are not closed by this core slice.

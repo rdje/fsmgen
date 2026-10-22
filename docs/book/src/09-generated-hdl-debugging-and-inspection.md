@@ -33,6 +33,25 @@ directories there and rejects parent-directory or symlink escapes before it
 writes data. External source inputs remain caller-authorized read-only inputs
 and may live elsewhere when that access is genuinely required.
 
+## Reproducing a Source Result
+
+Record the project revision alongside the exact input, command, complete result
+and primary diagnostic:
+
+```bash
+git rev-parse HEAD
+./bin/fsmgen --strict --check --json isf/unary_reductions.isf
+```
+
+For custom Perl embedding or an old-module overlay, also establish which files
+and method definitions actually loaded. Preparing old files or naming a log
+after a revision does not establish that identity; entrypoint library setup and
+preloaded modules can affect selection. A nonzero exit does not identify its
+cause either: an archived test can still reject syntax admitted by a later
+revision while its width checks pass. Compare the actual failed assertion or
+diagnostic with the intended scope. Keep original and superseding observations
+separate. These source checks do not establish HDL runtime behavior.
+
 ## Output Shape
 
 Today, direct FSM/DT lowering is flattened.

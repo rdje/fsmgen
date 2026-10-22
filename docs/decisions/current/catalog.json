@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 28203,
-        "line_bytes": 607,
-        "lines": 440,
-        "sha256": "7633b6a99a940dccff347c8bf32b34cabd9e651b6497db21feacb1d8bd7611fd"
+        "bytes": 30090,
+        "line_bytes": 663,
+        "lines": 468,
+        "sha256": "bbaeb604da271806e097d78d369c068e7651ece5d9beb29b25594f4710611354"
       },
       "id": "0117",
       "metadata": {
@@ -1345,7 +1345,8 @@
           "why did --quiet print ISF and PPIF progress banners?",
           "why did traced check semantic or schedule reports contain non-JSON stdout?",
           "which corpus phases and public queries cover maintained unary reductions?",
-          "why did corpus accounting fail after unary reduction admission?"
+          "why did corpus accounting fail after unary reduction admission?",
+          "how can failed reduction predecessor tests load current modules?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",
