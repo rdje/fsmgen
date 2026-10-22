@@ -249,7 +249,10 @@ parameter. Private width records alone do not resolve either prerequisite.
 Generated children also need the actor and transaction parameter environments
 kept distinct, including aliases. Named library override values currently become
 resolved literals before lowering; their source relationships must also survive
-before generic specialization can be qualified.
+before generic specialization can be qualified. Nested aggregate lists also
+have an owned normalization defect: `((1 2) (3 4))` retains an extra list around
+its first row's second leaf. Source preservation must fix that boundary first;
+prototype capture is not qualified delivery. The delivery tree owns the repair.
 
 ## `(update var expr)` — Variable Modification
 

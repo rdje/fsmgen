@@ -8,11 +8,12 @@ answers:
   - "where are authored bank depth and watchdog parameter references lost?"
   - "which scopes must generated child width declarations preserve?"
   - "where is library parameter override source provenance lost?"
+  - "why is library source preservation blocked on nested aggregate normalization?"
 date: 2026-10-22
 status: current
 tags: [isf, width, parameters, lowering, provenance]
 evidence: docs/audits/width-physical-verify-20261022.py; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: python3 -B docs/audits/width-physical-verify-20261022.py
+reverify: python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -142,6 +143,7 @@ must carry original actor identity before module/domain renaming. Each physical
 module owns detached maps; library instance selection remains separate from
 source defaults. Literal/type/reset declarations and existing public/carrier
 projections stay exact. Later IAL0 allocation uses those explicit scopes.
+Nested aggregate heads also remain mis-normalized; `.2.3.2.1.2.2` owns the prerequisite repair, qualified in `docs/audits/library-override-diagnosis-verify-20261022.py`.
 
 `python3 -B docs/audits/width-physical-verify-20261022.py` checks the retained
 packets, scope/physical identities and hostile allocation/kind controls. Initial

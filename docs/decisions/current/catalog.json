@@ -1380,10 +1380,10 @@
     },
     {
       "content": {
-        "bytes": 10621,
+        "bytes": 10947,
         "line_bytes": 690,
-        "lines": 165,
-        "sha256": "07f30c4e615356eb6585d59e7770b16d2079fd7bef04c5a631e0c4a91da56aae"
+        "lines": 167,
+        "sha256": "dd907f67fed3e733f4e0d1a39ed6df67436f721947bdda12493af522ecca0320"
       },
       "id": "0119",
       "metadata": {
@@ -1398,7 +1398,8 @@
           "why cannot an ISF width parameter be copied blindly into IAL0 size syntax?",
           "where are authored bank depth and watchdog parameter references lost?",
           "which scopes must generated child width declarations preserve?",
-          "where is library parameter override source provenance lost?"
+          "where is library parameter override source provenance lost?",
+          "why is library source preservation blocked on nested aggregate normalization?"
         ]
       },
       "path": "docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md",

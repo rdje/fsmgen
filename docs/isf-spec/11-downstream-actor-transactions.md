@@ -251,6 +251,8 @@ Rules:
   Generated declarations also need distinct actor and transaction environments.
   Library override values currently lose their authored references during static
   resolution; preserving those sources is required before generic specialization.
+  Nested aggregate first rows also remain mis-normalized; source preservation
+  is gated on the owned normalizer repair, not the unqualified capture prototype.
 - `CONST` may name a declared actor constant that resolves to a positive
   integer; accepted parser output and scheduled `.fsm` artifacts use the
   resolved integer width while `actor_constants[]` and scheduled `+constants`
