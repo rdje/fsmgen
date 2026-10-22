@@ -41,6 +41,9 @@ The repair reuses canonical placement and preserves authored public records.
 Domain validation also preserves standalone static wait/repeat counts after
 formal rewriting; those tokens do not read a same-named foreign-domain wire.
 Runtime expression counts, guards and body reads retain crossing checks.
+Qualified enum/package constants also retain their static identity when a
+record input has a matching root/member. Invalid static reductions now refuse
+consistently in check, semantic and schedule preview before carrier emission.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

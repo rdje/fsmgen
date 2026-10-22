@@ -44,7 +44,10 @@ symbol-only operator subset.
 
 Operands need explicit positive-width scalar declarations. Unknown signals,
 aggregate roots, parameter/constant values, literals, compound expressions and
-invalid paths are refused. Local declarations and scalar sample aliases retain
+invalid paths are refused. Qualified enum and package constants retain their
+static identity even when an input record has a matching root/member name;
+preview, check and semantic queries refuse those operands in source space.
+Local declarations and scalar sample aliases retain
 their declared widths through the generated IAL0 carrier; a destination cannot
 resize a reduction operand. Whole packed-storage samples and their sample
 chains retain their existing inference and carrier declarations when an

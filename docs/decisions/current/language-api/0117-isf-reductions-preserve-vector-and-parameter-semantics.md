@@ -11,10 +11,11 @@ answers:
   - "why do sampled clock/reset reductions need declared carrier widths?"
   - "why do direct transaction count parameters mask runtime reductions?"
   - "why did standalone static counts look like cross-domain wire reads?"
+  - "why did qualified static names borrow record fields in reduction preview?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
+evidence: docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
@@ -278,3 +279,28 @@ The corrected overlay-first INC/helper probe plus native c51 replay reproduce
 the ordinary domain refusal. The final unchanged T2081 also fails against the
 independently inspected 300b23660 predecessor. Preserve the old receipt and this
 explicit correction; matching exit status never repairs a wrong source identity.
+
+## Qualified static operand identity
+
+The declared-value scope accepts declaration roots. Filtering qualified static
+keys from that root projection therefore cannot by itself preserve namespace
+ownership: an enum/package token can also name a colliding record member.
+Actual canonical membership and declared/masked scopes demonstrated the false
+field width before native carrier validation rejected the same static operand.
+Schedule preview had incorrectly advertised success and signal provenance.
+
+Source capture now passes the canonical transaction or actor static set into
+expression capture. Exact membership, including a selected descendant of a
+known static value, is checked before declared-field resolution. This is a
+membership query over existing canonical facts; declaration paths and bounds
+remain owned by the common value resolver. Unrelated fields stay declared.
+Namespace maps are sets: marker values are not read or coerced. Private callers
+without a static namespace retain their existing declared-scope behavior;
+source callers supply actual canonical facts, not a copied report inventory.
+
+T2082 retains the genuine native/preview discrepancy, actual parsed scopes,
+caller-kind checks, source-owner/alias and selection controls, and complete
+native/API/newline refusal products. Reverify with
+`scripts/run_with_ram_guard.sh -- prove -Iperl t/2082-isf-reduction-static-namespaces.t`.
+This repair adds no static/literal reduction admission and does not close the
+remaining operand/type/carrier cohort, full unary runtime, groups or publication.

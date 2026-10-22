@@ -61,6 +61,7 @@ sub capture_actor_reductions {
                 $scope = _without_static_values($statics->()->{transactions}{$tx->{name}}, $scope);
             }
             push @records, @{capture_expression_reductions(expression => $expression, scope => $scope,
+                static_symbols => $statics->()->{transactions}{$tx->{name}},
                 owner_kind => 'transaction', owner => $tx->{name}, context => $context)};
         };
         _clauses($tx->{clauses}, $actor, $emit, \%used_drives, "transaction '$tx->{name}'");
@@ -72,6 +73,7 @@ sub capture_actor_reductions {
             return unless _has_reduction($expression, {});
             $actor_scope ||= _without_static_values($statics->()->{actor}, record_timing_scope(actor => $actor, scope => record_actor_scope(actor => $actor)));
             push @records, @{capture_expression_reductions(expression => $expression, scope => $actor_scope,
+                static_symbols => $statics->()->{actor},
                 owner_kind => 'rule', owner => $rule->{name}, context => $context)};
         };
         $emit->($rule->{when}[1], "rule '$rule->{name}' guard") if ref($rule->{when}) eq 'ARRAY';
@@ -96,6 +98,7 @@ sub capture_actor_reductions {
             next unless _has_reduction($expression, {});
             $scope ||= _without_static_values($statics->()->{actor}, record_timing_scope(actor => $actor, scope => record_drive_scope(actor => $actor, drive => $drive)));
             push @records, @{capture_expression_reductions(expression => $expression, scope => $scope,
+                static_symbols => $statics->()->{actor},
                 owner_kind => 'drive', owner => $name, context => "drive '$name' assignment[$i] RHS")};
         }
     }
@@ -104,8 +107,8 @@ sub capture_actor_reductions {
 
 sub _without_static_values {
     my ($static, $scope) = @_;
-    # Qualified enum/package tokens are paths, not declaration roots. Their
-    # existing path/namespace validator owns them; do not invent root masks.
+    # Qualified statics are paths, not declaration roots. Operand selection
+    # checks their exact namespace membership; unrelated root fields stay typed.
     my %values = map {$_ => {role => 'local', type_spec => undef}}
         grep {/\A[A-Za-z_]\w*\z/} keys %$static;
     return record_value_scope(outer => $scope, local => \%values);
@@ -199,17 +202,26 @@ sub reduction_metadata_contract {
 # Scope roots use the existing detached declaration/path contract.
 sub capture_expression_reductions {
     my %args = @_;
+    my $static = exists($args{static_symbols}) ? delete($args{static_symbols}) : {};
     _keys(\%args, [qw(expression scope owner_kind owner context)], 'capture');
+    _require(ref($static) eq 'HASH', 'capture static symbols must be a map');
+    for my $name (keys %$static) {
+        _require(scalar($name =~ /\A[A-Za-z_]\w*(?:(?:\.[A-Za-z_]\w*)|(?:\[\d+(?::\d+)?\]))*\z/),
+            'capture static symbols require canonical symbol paths');
+    }
+    # Canonical namespace maps are sets: membership, not marker values, owns
+    # the token. Copy names without reading/coercing caller-owned markers.
+    $static = {map {$_ => 1} keys %$static};
     my $identity = _identity(\%args);
     my $scope = record_value_scope(outer => $args{scope}, local => {});
     my @records;
     my $expression = ref($args{expression}) ? dclone($args{expression}) : $args{expression};
-    _expression($expression, $scope, $identity, \@records, {});
+    _expression($expression, $scope, $identity, \@records, {}, $static);
     return snapshot_reductions(\@records);
 }
 
 sub _expression {
-    my ($expression, $scope, $identity, $records, $active) = @_;
+    my ($expression, $scope, $identity, $records, $active, $static) = @_;
     return unless ref($expression);
     _require(ref($expression) eq 'ARRAY', "$identity->{context} expression must be scalar or a list");
     my $address = refaddr($expression);
@@ -222,6 +234,8 @@ sub _expression {
     if (@$expression == 2 && is_reduction_operator($operator)) {
         my $operand = $expression->[1];
         _require(_text($operand), "$identity->{context} reduction '$head' operand must be a declared packed scalar signal, slice or bit selection");
+        _require(!_static_operand($operand, $static),
+            "$identity->{context} reduction '$head' operand '$operand' is not a declared packed scalar signal");
         my $value = record_value_reference(scope => $scope, token => $operand,
             access => 'read', context => "$identity->{context} reduction '$head' operand '$operand'");
         _require(defined($value), "$identity->{context} reduction '$head' operand '$operand' is not a declared packed scalar signal");
@@ -229,7 +243,19 @@ sub _expression {
             operand => $operand, operand_width => 0 + $value->{width}, result_width => 1};
         return;
     }
-    _expression($_, $scope, $identity, $records, $active) for @{$expression}[1 .. $#$expression];
+    _expression($_, $scope, $identity, $records, $active, $static) for @{$expression}[1 .. $#$expression];
+}
+
+sub _static_operand {
+    my ($token, $static) = @_;
+    # A selection from a known static value cannot borrow a colliding record
+    # declaration. This only queries canonical membership; the existing value
+    # resolver still validates all nonstatic declaration paths and bounds.
+    while (1) {
+        return 1 if exists $static->{$token};
+        last unless $token =~ s/(?:\.[A-Za-z_]\w*|\[\d+(?::\d+)?\])\z//;
+    }
+    return 0;
 }
 
 # A detached structural snapshot is not an attestation of source ownership.
