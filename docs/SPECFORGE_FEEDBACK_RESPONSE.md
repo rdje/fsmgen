@@ -62,13 +62,20 @@ negation widths; ordinary binary/unrolled and authored-label controls remain
 independent. This closes the scoped capture qualification, not HDL execution.
 Profile qualification preserves the tested fixed-width SystemVerilog/Verilog
 generation and existing VHDL scalar/static-bit identities and vector folds.
-VHDL range reductions and indexed-bit XOR chains retain explicit refusals with
+VHDL range reductions and the tested unrolled indexed-bit parity chain retain explicit refusals with
 destination preservation; no compiler/runtime or external-override claim follows.
 The same qualification repairs CLI quiet intent-progress leaks and late trace
 routing, keeping traced check/semantic/schedule stdout clean and reports intact.
 
-`ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
-corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is
+The maintained unary corpus representative also records exact supported phases
+and explicit nonclaims. Whole discovery and source/version/query allocation
+preserve unaffected catalog entries and order. Actual maintained success and
+invalid-operand products retain complete native/API/newline parity and independent
+declaration/reduction expectations; discovery is not every-source execution.
+
+`ISF-REDUCTION-DELIVERY.1.2.2` owns integration and `.1.2.3` owns bounded
+source/public/profile/corpus qualification. Predecessor evidence identity audit
+and actual HDL behavior qualification remain `.10`, `.1.3` and `.1.4`; this is
 not complete R1 delivery. Parameter-dependent grouped behavior (R2/R3),
 publication and SPECFORGE integration are still pending. No default-width
 unroll substitutes for generic behavior. Logical `!` stays Boolean; optional

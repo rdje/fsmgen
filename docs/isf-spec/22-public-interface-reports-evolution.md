@@ -58,6 +58,16 @@ JSON-safe. Failed and unrelated source reports omit this field. Discovery uses
 records establish source meaning, not HDL runtime qualification or preserved
 parameter-width dependencies. See the book's data manipulation chapter.
 
+The maintained `feature.isf_unary_reductions` representative retains explicit
+internal supported-phase and nonclaim arrays through source-query cohort
+selection. It owns source admission, check/semantic/schedule reports and
+fixed-width SystemVerilog/Verilog generation; the fixture's range case keeps
+its VHDL refusal. Compilation/simulation, X/Z execution, external overrides,
+grouped reductions and full consumer delivery are not implied. These arrays
+do not extend the sanitized public catalog-entry schema. Complete manifest
+discovery and source/version/query allocation preserve unaffected entries and
+their order; this is applicability, not execution of every corpus query.
+
 Declared interface metadata is independent of inferred hardware. Successful
 check/semantic reports for directly parsed ISF sources include optional
 `source.interface_ports`; schedule reports include `interface_ports`, and each

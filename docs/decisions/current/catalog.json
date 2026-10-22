@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 25578,
-        "line_bytes": 500,
-        "lines": 402,
-        "sha256": "6883e652f0819fc038b056b41bcfe29397160bd96cdc886f523814f43a443ef5"
+        "bytes": 28203,
+        "line_bytes": 607,
+        "lines": 440,
+        "sha256": "7633b6a99a940dccff347c8bf32b34cabd9e651b6497db21feacb1d8bd7611fd"
       },
       "id": "0117",
       "metadata": {
@@ -1343,7 +1343,9 @@
           "how are reduction values tied to actual write enables?",
           "which unary generation profiles are qualified and which shapes refuse?",
           "why did --quiet print ISF and PPIF progress banners?",
-          "why did traced check semantic or schedule reports contain non-JSON stdout?"
+          "why did traced check semantic or schedule reports contain non-JSON stdout?",
+          "which corpus phases and public queries cover maintained unary reductions?",
+          "why did corpus accounting fail after unary reduction admission?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

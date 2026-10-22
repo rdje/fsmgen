@@ -17,10 +17,12 @@ answers:
   - "which unary generation profiles are qualified and which shapes refuse?"
   - "why did --quiet print ISF and PPIF progress banners?"
   - "why did traced check semantic or schedule reports contain non-JSON stdout?"
+  - "which corpus phases and public queries cover maintained unary reductions?"
+  - "why did corpus accounting fail after unary reduction admission?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
+evidence: docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/audits/unary-corpus-public-products-20261022.json.gz; t/2089-unary-reduction-corpus-public-closure.t
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
@@ -400,3 +402,39 @@ the distinction between qualification and the actual CLI repair. Earlier
 first-quiet trace-file content was missing; the superseding epoch retains full
 available trace files and records absent files explicitly. Raw-root byte
 reconstruction and a whole original worktree snapshot remain missing.
+
+## Maintained unary corpus and discovery
+
+`feature.isf_unary_reductions` already owns `isf/unary_reductions.isf`; no new
+membership is needed. Its internal supported phases now distinguish parse,
+typecheck, lowering, check, semantic/schedule reports and fixed-width
+SystemVerilog/Verilog generation from VHDL range generation, compilation,
+simulation, X/Z execution, external parameter overrides, grouped reductions
+and complete consumer delivery. Internal phase/nonclaim arrays survive cohort
+selection without extending the sanitized public manifest/catalog schema.
+
+T2089 preserves complete catalog, every supported source/version/query cohort,
+all catalog source bytes, whole native/API/newline discovery and actual
+maintained success/refusal products. Independently literal declarations and
+ordered owner/operator/operand/width records reject shared transport corruption,
+including JSON-kind changes. An invalid declared operand keeps complete failed
+check/semantic products without successful source snapshots; schedule retains
+its existing RPC error boundary. Full discovery records applicability, not
+execution of every source query. The source target-profile and caller/capture
+qualifications above retain their separately bounded evidence.
+
+Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2089-unary-reduction-corpus-public-closure.t t/248-regression-corpus-accounting.t`.
+The immutable draft receipts preserve capture-regex and discovery-schema oracle
+corrections separately from actual catalog metadata qualification. A draft also
+assumed the wrong native schedule status and RPC code; the observed refusal
+boundary is retained unchanged. The first caller probe is rejected by the
+test runner's safe-identity gate before source execution; its settled successor
+uses exact canonical retained inputs, without relaxing that gate.
+
+The broader preservation run finds stale T248 accounting literals: commit
+`21843f970e94f91cbe3a2b2bd3226a602a42ade1` added exactly the unary owner but
+left the pre-admission supported/strict census expectations. Full retained
+allocation and removal of only that exact owner independently explain both
+differences. The minimal test correction retains every membership assertion
+and passes with the width/record foundations. No parser/backend repair or new
+runtime maturity follows from this corpus slice.

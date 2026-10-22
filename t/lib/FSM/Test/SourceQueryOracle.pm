@@ -5,6 +5,7 @@ use warnings;
 use Exporter 'import';
 use JSON::PP ();
 use FSM::Test::RecordOutputCorpusOracle qw(record_output_ports record_output_type);
+use FSM::Test::UnaryReductionCorpusOracle qw(unary_reduction_ports unary_reduction_records);
 
 our @EXPORT_OK = qw(source_query_semantic_errors source_query_envelope_errors);
 my $json = JSON::PP->new->canonical->allow_nonref;
@@ -22,6 +23,11 @@ sub source_query_semantic_errors {
         && grep {$_ eq $kind} @{$queries{$row->{file_kind}}};
     my $failed = exists $args->{expected_diagnostic};
     my $checked = $report;
+    if (!$failed && $row->{source_id} eq 'isf/unary_reductions.isf') {
+        my $prefix = $kind eq 'schedule' ? '' : '/source';
+        _check(\@errors, $report, "$prefix/interface_ports", unary_reduction_ports());
+        _check(\@errors, $report, "$prefix/reductions", unary_reduction_records());
+    }
     if (!$failed && $row->{source_id} eq 'isf/record_output.isf') {
         _check(\@errors, $report, $kind eq 'schedule' ? '/interface_ports' : '/source/interface_ports',
             record_output_ports());

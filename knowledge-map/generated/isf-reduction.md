@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-reduction`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **15** uniquely owned question entries.
+> **1** facts · **17** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -10,9 +10,11 @@
 - q="what must be preserved before parameterized reductions can ship?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="what reduction width groundwork is implemented?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="what syntax and bit order are selected for SPECFORGE byte-group reductions?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
+- q="which corpus phases and public queries cover maintained unary reductions?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="which unary generation profiles are qualified and which shapes refuse?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did --quiet print ISF and PPIF progress banners?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did admitted reductions fail when transaction formals were present?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
+- q="why did corpus accounting fail after unary reduction admission?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did generated intermediate names overwrite declared inputs?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did qualified static names borrow record fields in reduction preview?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did standalone static counts look like cross-domain wire reads?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)

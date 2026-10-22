@@ -145,6 +145,22 @@ order; occurrences follow expression preorder. For `(^ data[7:4])`, operand
 width is 4 and result width is 1. API and newline MCP use the same detached
 records. These records describe source expressions, not hardware execution.
 
+The maintained `feature.isf_unary_reductions` corpus entry owns this fixture's
+parse, typecheck, lowering, check, semantic/schedule reports and fixed-width
+SystemVerilog/Verilog generation. Its range example retains the documented
+VHDL refusal. HDL compilation/simulation, X/Z execution, external parameter
+overrides, grouped reductions and complete downstream delivery remain separate.
+The internal catalog records these phase boundaries explicitly; public discovery
+keeps its existing sanitized schema.
+
+For MCP discovery, call `fsmgen_capability_query` with `{"section":"all"}`
+for the complete manifest, or `fsmgen_discover_sources` with
+`{"query":"feature.isf_unary_reductions"}` for the fixture's source identity
+and available `check`, `semantic`, `schedule` queries. Discovery describes
+applicability; executing a query is a separate operation. Invalid source queries
+retain failed check/semantic reports without successful source inventories;
+schedule refusal retains its RPC error boundary.
+
 ## Grouped reductions — implementation pending
 
 SPECFORGE request `.12` remains open in

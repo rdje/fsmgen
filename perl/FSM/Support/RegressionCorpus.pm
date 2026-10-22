@@ -4604,6 +4604,10 @@ my @REGRESSION_CORPUS = (
         strict_supported => 1,
         expected_module_name => 'unary_reductions',
         expected_semantic_source_root_kind => 'fsm',
+        supported_phases => [qw(parse typecheck lowering check semantic_report schedule_report
+            systemverilog_generation verilog_generation)],
+        explicit_nonclaims => [qw(vhdl_range_generation hdl_compilation hdl_simulation
+            xz_execution external_parameter_overrides grouped_reductions full_consumer_delivery)],
     },
     {
         id => 'feature.isf_declared_interface_metadata',

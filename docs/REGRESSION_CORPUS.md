@@ -637,7 +637,19 @@ through
 locks the published top-level and path-list fields for both in-process and CLI
 manifest output while keeping the exact file lists widenable.
 
-## Current named entries
+## Selected named entries
+
+These examples are a subset of the live catalog. For the complete current
+inventory and support accounting, use `./bin/fsmgen --capability-manifest` and
+its `support_accounting.catalog_entries` field.
+
+The maintained unary representative records source admission,
+check/semantic/schedule reports and fixed-width SystemVerilog/Verilog generation
+as supported phases. Its range reduction retains VHDL refusal; compilation,
+simulation, X/Z execution, external parameter overrides, grouped reductions
+and complete consumer delivery remain explicit nonclaims. Internal phase and
+nonclaim arrays survive source-query selection without extending the sanitized
+public catalog schema. See the book's data manipulation chapter for examples.
 
 | ID | File | Classification | Coverage |
 | --- | --- | --- | --- |
@@ -858,6 +870,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.isf_verification_observation_metadata` | [isf/verification_observation_metadata.isf](isf/verification_observation_metadata.isf) | `supported_smoke` | `isf_pipeline_cli` |
 | `feature.isf_verification_observation_uvm_passive_monitor_skeleton` | [isf/verification_observation_metadata.isf](isf/verification_observation_metadata.isf) | `supported_smoke` | `isf_verification_output_uvm_passive_monitor_skeleton_cli` |
 | `feature.isf_storage_field_metadata` | [isf/storage_fields.isf](isf/storage_fields.isf) | `supported_smoke` | `isf_pipeline_cli` |
+| `feature.isf_unary_reductions` | [isf/unary_reductions.isf](isf/unary_reductions.isf) | `supported_smoke` | `isf_pipeline_cli` |
 | `feature.partial_lhs_with_size` | [t/corpus/partial_lhs_with_size.fsm](t/corpus/partial_lhs_with_size.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.partial_lhs_inferred_width` | [t/corpus/partial_lhs_inferred_width.fsm](t/corpus/partial_lhs_inferred_width.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_rhs_concat_pack` | [t/corpus/direct_rhs_concat_pack.fsm](t/corpus/direct_rhs_concat_pack.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
