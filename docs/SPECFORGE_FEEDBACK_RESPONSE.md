@@ -95,8 +95,10 @@ behavior. Logical `!` stays Boolean; optional vector inversion is separately
 owned. Private complement classification now follows known width; direct VHDL
 refuses residual complement tokens after supported reduction translation.
 Top-level AST caller diagnostics are defined and warning-free; nested metadata,
-render bytes and debug routing are preserved. Unsupported process-header refusal
-remains owned before generic-width work. **SPECFORGE `.46.c` remains blocked.**
+render bytes and debug routing are preserved. Direct VHDL now refuses unsupported
+process headers instead of silently dropping their behavior; generated multiline
+comb/ff conversion is preserved. Generic-width/grouped delivery remains pending.
+**SPECFORGE `.46.c` remains blocked.**
 Requests `.7`/`.8`/`.9`/`.10` retain the boundaries below.
 
 ## High-Level Response

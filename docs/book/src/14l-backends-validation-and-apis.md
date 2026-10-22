@@ -35,6 +35,24 @@ struct outputs as VHDL `std_logic_vector` ports with the generated packed
 widths.
 It is covered by direct pipeline, CLI, and facade tests.
 
+Direct conversion accepts generated multiline `always_comb begin` and
+`always_ff @(...) begin` process headers, followed by the existing bounded body
+and sensitivity checks. For example, this combinational block retains its
+assignment:
+
+```systemverilog
+always_comb begin
+  Y = A;
+end
+```
+
+Legacy `always @*`, other `always` forms, `always_latch`, `initial` and `final`
+refuse conversion. Inline bodies such as `always_comb begin Y = A; end`, split
+headers and labeled headers also refuse. No partial VHDL artifact is returned
+for these process shapes. Comments and quoted metadata do not count as process
+headers. This guard preserves the generated scaffold's profile; it does not
+provide arbitrary SystemVerilog translation or executable VHDL qualification.
+
 Authored ISF packed record inputs remain outside that VHDL scaffold. The supplied
 whole-copy and field-guard sources refuse their typed input declaration; the
 mixed signed/two-state direct witness refuses its packed member, and the generated
@@ -50,7 +68,8 @@ vectors use required-only backend-owned `std_logic` OR/AND/XOR fold helpers,
 with signed casts and helper-collision rejection. Range slices, invalid
 selects, unresolved/compound/malformed/residual shapes fail closed. The real
 named-drive, AMBA `HRESP`, and APB `wait_ctr`/`addr_q` outputs contain no
-SystemVerilog reduction token. Public source arity remains unchanged. Decision
+SystemVerilog reduction token. Declared unary source reductions are separately
+admitted under decision `0117`. Decision
 `0023` still prevents textual generation from being called executable VHDL
 qualification; `ghdl`, `nvc`, and `vcom` are currently unavailable on this
 environment's `PATH`.

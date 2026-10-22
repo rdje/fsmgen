@@ -51,6 +51,10 @@ Private complement rendering preserves known scalar versus vector width;
 unknown widths stay conservative. Direct VHDL rejects residual `~` after
 supported reduction translation, including assignments and conditions. This
 does not admit source `(~ X)` or qualify external VHDL execution.
+The direct converter refuses unsupported procedural headers instead of dropping
+their behavior. Generated multiline comb/ff blocks retain their bounded
+conversion; legacy always/latch/startup/final and noncanonical header shapes
+return no partial artifact. No public report or source syntax changes here.
 
 The source/lowering contract remains bounded even though schedule JSON
 `schema_version: 1` is now stable:

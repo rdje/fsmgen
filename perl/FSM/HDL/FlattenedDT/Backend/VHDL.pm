@@ -353,6 +353,32 @@ sub _parse_continuous_assignments ($body) {
 }
 
 sub _parse_processes ($body, $decls_by_name) {
+    # Discover procedural keywords outside comments, quoted metadata and
+    # identifiers. This converter accepts only the generated multiline profile;
+    # silently overlooking another process would discard executable behavior.
+    my $lexeme = qr{
+        "(?:\\.|[^"\\])*"
+        | //[^\n]*
+        | /\*.*?\*/
+        | \\[^\s]+
+        | [A-Za-z_\$][A-Za-z0-9_\$]*
+    }xs;
+    $body =~ s{($lexeme)}{
+        my $token = $1;
+        $token =~ /\A(?:\/\/|\/\*)/ ? ($token =~ s/[^\n]/ /gr) : $token;
+    }gex;
+    while ($body =~ /($lexeme)/g) {
+        my ($token, $offset) = ($1, $-[0]);
+        next unless $token =~ /\A(?:always|always_comb|always_ff|always_latch|initial|final)\z/;
+        my $start = rindex($body, "\n", $offset) + 1;
+        my $end = index($body, "\n", $offset);
+        $end = length($body) if $end < 0;
+        my $header = substr($body, $start, $end - $start);
+        confess _unsupported("unsupported direct process header '$header'; expected generated always_comb/always_ff begin blocks")
+            unless $header =~ /\A\s*always_comb\s+begin\s*\z/
+                || $header =~ /\A\s*always_ff\s*\@\([^)]+\)\s+begin\s*\z/;
+    }
+
     my @lines = split /\n/, $body;
     my @processes;
 

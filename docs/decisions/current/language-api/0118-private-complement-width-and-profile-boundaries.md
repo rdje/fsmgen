@@ -9,12 +9,12 @@ answers:
 date: 2026-10-22
 status: current
 tags: [expression, width, complement, vhdl, diagnostics, provenance]
-evidence: docs/audits/private-complement-reproduction-20261022.json.gz; docs/audits/private-complement-repair-20261022.json.gz; docs/audits/ast-caller-diagnostics-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm
+evidence: docs/audits/private-complement-reproduction-20261022.json.gz; docs/audits/private-complement-repair-20261022.json.gz; docs/audits/ast-caller-diagnostics-20261022.json.gz; docs/audits/direct-vhdl-process-boundaries-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm
 ---
 # 0118 — Private complement width and profile boundaries
 
 - Type: private expression and backend contract
-- Status: selected; complement classifier/profile and caller diagnostics repaired; unsupported process refusal pending
+- Status: selected; bounded complement, caller diagnostic and process-refusal repairs qualified
 - Owner: `ISF-REDUCTION-DELIVERY.7.1`
 
 ## Authenticated pre-repair behavior
@@ -73,6 +73,20 @@ metadata. The unchanged valid regression fails before this repair and passes
 after it. Its initial wrong Core constructor invocation is retained separately
 as a harness error, not product evidence. Public syntax, report schemas and HDL
 support boundaries do not change.
+
+## Process-refusal repair
+
+Leaf `.7.1.4` retains the actual ordinary conditional `always @*` source and
+returned VHDL: no error, no process and no assignment. A lexical guard now
+accounts for `always`, `always_comb`, `always_ff`, `always_latch`, `initial` and
+`final`. Only generated multiline comb/ff begin headers reach existing body
+conversion; the other keywords and noncanonical headers explicitly refuse
+without returning an artifact. Comments are excluded from discovery and block
+depth, and quoted metadata or longer identifiers cannot invent a keyword.
+Actual sync/async reset and combinational controls preserve their processes
+and assignments. Public unary admission is verified independently; the initial
+legacy strict-reset spelling failure remains a separate harness epoch. This
+finite profile repair makes no arbitrary-translation or VHDL execution claim.
 
 ## Evidence provenance
 

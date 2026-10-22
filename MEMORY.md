@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.7.1.4`
-- next_action: Reproduce and reject unsupported direct-VHDL process headers under .7.1.4, preserving generated combinational/sequential conversion. Then resume generic-width .2.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.2`
+- next_action: Audit authored scalar width dependencies under .2 and its SEM .33.3.1/.32.3 contracts; split the foundation before edits if needed.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

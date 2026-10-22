@@ -2,7 +2,7 @@
 
 ## Shipped Contract
 
-`DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2` makes generated unary OR, AND,
+The original `DIRECT-VHDL-REDUCTION-EXPRESSION-LOWERING.2` made generated unary OR, AND,
 and XOR reductions truthful in the direct VHDL backend without changing the
 public `.fsm` expression grammar.
 
@@ -25,6 +25,14 @@ After supported reduction translation, any remaining `~` expression is refused
 with a targeted bitwise-complement diagnostic. This includes assignment,
 comparison and condition contexts. Private `~(S)` is outside this conversion
 profile; supported complemented reductions such as `(~|S)` still translate.
+
+Process discovery accepts the generated multiline `always_comb begin` and
+`always_ff @(...) begin` headers before applying their existing statement and
+sensitivity checks. Legacy `always`, `always_latch`, `initial`, `final`, inline
+bodies and other comb/ff headers refuse conversion without returning an
+artifact. Comments and quoted metadata cannot invent executable process
+headers; comments within a supported header do not change its meaning. This
+finite guard does not make the scaffold an arbitrary SystemVerilog translator.
 
 ## Vector Fold Helpers
 
@@ -67,9 +75,11 @@ fail-closed exactly because no equally bounded operand contract was selected.
 
 ## Public And Backend Boundaries
 
-Explicit one-operand `(| X)`, `(& X)`, and `(^ X)` forms remain rejected by
-the public parser's existing n-ary arity rule. This backend repair consumes
-only generated SystemVerilog shapes. Binary/n-ary source operators, arithmetic,
+Declared one-operand `(| X)`, `(& X)`, and `(^ X)` source forms are now admitted
+under [decision 0117](decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md).
+The original reduction-adapter repair preceded that source admission. Backend
+process guarding consumes only the bounded generated SystemVerilog profile.
+Binary/n-ary source operators, arithmetic,
 concatenation, comparisons, literals, other HDL targets, named-drive priority,
 reports, normalized semantic JSON, MCP, support accounting, AHB behavior,
 HIAL/VIAL, scale, simulator profiles, and decision `0020` do not widen.
