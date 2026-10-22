@@ -1,0 +1,20 @@
+{
+  "cache_devices_match_repository": true,
+  "cache_paths": [
+    ".artifacts/cache/unary-runtime/ccache",
+    ".artifacts/tmp/unary-runtime-ccache",
+    ".artifacts/cache/unary-runtime/clang-modules",
+    ".artifacts/cache/unary-runtime/xdg"
+  ],
+  "census_argv": [
+    "/bin/ps",
+    "-axo",
+    "pid=,ppid=,pgid=,command="
+  ],
+  "matching_commands": [],
+  "successful_child_births_observed": false,
+  "workspaces": [
+    ".artifacts/tmp/tests/OaWHfMbG_0"
+  ],
+  "workspaces_absent": true
+}

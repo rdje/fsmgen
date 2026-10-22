@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-reduction`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **19** uniquely owned question entries.
+> **1** facts · **20** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -14,6 +14,7 @@
 - q="what syntax and bit order are selected for SPECFORGE byte-group reductions?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="which corpus phases and public queries cover maintained unary reductions?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="which unary generation profiles are qualified and which shapes refuse?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
+- q="which unary reductions have actual HDL runtime qualification?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did --quiet print ISF and PPIF progress banners?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did admitted reductions fail when transaction formals were present?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)
 - q="why did corpus accounting fail after unary reduction admission?" · facts=[isf-reduction-and-group-contract](../../docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md)

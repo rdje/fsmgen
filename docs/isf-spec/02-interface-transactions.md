@@ -2060,8 +2060,10 @@ unsigned bit. Multi-operand forms retain their existing meaning; logical `!`
 stays Boolean. Runtime static values, literals, compound operands, aggregate
 roots and unresolved paths are refused. Scalar local/sample declarations retain
 their known widths through scheduled IAL0. Successful source reduction inventories
-are specified in the public report reference; full profile/runtime and generic
-grouped-reduction qualification remain separately owned by decision `0117`.
+are specified in the public report reference. Bounded source/public/corpus and
+SystemVerilog/Verilog runtime qualification are complete; see the book data
+manipulation chapter and decision `0117`. External VHDL execution, parameter
+overrides and generic grouped reductions remain unqualified.
 
 The emitted shift expressions use the normal `.fsm` expression surface. Raw
 `<<` and `>>`, plus `shl` and `shr` aliases, are accepted as binary operators

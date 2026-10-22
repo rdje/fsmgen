@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.1.4`
-- next_action: Consume one fresh exclusive unary admission for committed T2090 through the qualified unary-observer-20261022 driver, coordinating HIAL .11.7.2. Retain all six stages/results/bounds, source identities and independent cleanup; diagnose any unexpected outcome before further runtime.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.7.1`
+- next_action: Repair the owned private one-bit complement classifier after unary R1. Recover its retained RED and canonical unary/profile contracts, qualify explicit known unary semantics without admitting source inversion or leaking VHDL complement tokens, then commit before generic-width .2.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

@@ -21,10 +21,11 @@ answers:
   - "why did corpus accounting fail after unary reduction admission?"
   - "how can failed reduction predecessor tests load current modules?"
   - "how is the complete retained reduction replay evidence set accounted?"
+  - "which unary reductions have actual HDL runtime qualification?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/audits/unary-corpus-public-products-20261022.json.gz; t/2089-unary-reduction-corpus-public-closure.t; docs/audits/reduction-replay-identity-20261022.json.gz; docs/audits/reduction-replay-activity-20261022.json.gz
+evidence: docs/audits/unary-runtime-observation-20261022/manifest.json; docs/audits/reduction-qualified-static-scopes-20261022.json.gz; docs/audits/domain-static-count-scopes-20261022.json.gz; docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm; docs/audits/unary-corpus-public-products-20261022.json.gz; t/2089-unary-reduction-corpus-public-closure.t; docs/audits/reduction-replay-identity-20261022.json.gz; docs/audits/reduction-replay-activity-20261022.json.gz
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
@@ -480,26 +481,26 @@ in `docs/audits/reduction-replay-activity-20261022.json.gz`. The retained-eviden
 identity audit is closed within these explicit historical limits. The fixed
 HDL witness/admission and actual runtime qualification remain successors.
 
-## Fixed unary runtime witness preparation
+## Fixed unary witness and runtime qualification
 
-`ISF-REDUCTION-DELIVERY.1.3.1` fixes the source, public-pin bench, vector table
-and T2090 before HDL execution. The source covers declared vector/scalar/bit/
-slice operators, odd parity, nested results, binary/unrolled controls and a
-helper-like external input. Golden production uses population counts; the
-independent oracle walks bits and packs strings without wide-integer assumptions. Every stored input/result bit and hostile missing,
-substituted or changed-vector controls are checked.
+The source, public-pin bench, vectors and T2090 cover
+vector/scalar/bit/slice operators, odd parity, nested widths, binary/unrolled
+controls and a helper-like input. Population-count golden production and an
+independent bit-walk/string oracle check every stored input/result bit;
+changed, missing and substituted vectors reject. Actual source/carrier HDL
+agrees except date banners. A real source control changes only XOR to AND.
 
-The exact source and actual carrier emit identical Verilog-family HDL except
-for date banners. A real source counterfactual changes only unary XOR to AND.
-The planned runtime bench compares complete public pins, repeats the fixed
-sweep and checks disabled writes/reset. Process completion and semantic result
-are distinct: positives require complete PASS/hold/reset markers; the wrong
-source must report its distinguishing value mismatch with no PASS.
+Fixed observer qualification is committed separately at `5dce0bc6a`.
+The fresh `unary_oct22` observation passes both Verilog-family compile/runtime
+pairs, repeated public-pin sweeps and hold/reset. The actual wrong source
+reports its row-one mismatch with only the selected output bit changed and no
+PASS. Process completion and semantic acceptance remain distinct. Full stage
+arguments/results/bounds, unchanged committed inputs and independent cleanup
+are sealed; hostile saved controls reject. Native events and gaps are empty.
 
-The fixed stage membership is both Verilog-family positives and the wrong
-SystemVerilog source, through unchanged VerilatorRuntime compile/runtime APIs.
-T2090 defaults to source checks with runtime skipped. Fixed observer proof:
-`docs/audits/unary-observer-20261022/verify.py`. It binds tracked producers and
-rejects hostile admission/result/context/cleanup evidence. Actual HDL remains
-.1.4 after .1.3.2 commits. Historical cause, X/Z and overrides remain unproved.
-Reverify source-only: `scripts/run_with_ram_guard.sh -- prove -Iperl -It/lib t/2090-isf-unary-reduction-runtime.t`.
+ISF `.1.4` and SEM `.92.2` close bounded R1. Read-only runtime reverification:
+`python3 -B docs/audits/unary-runtime-observation-20261022/verify.py`.
+T2090 still defaults to source checks with runtime skipped. Generated build/HDL
+bytes and successful child birth identities are absent from this runtime epoch.
+Historical native cause, X/Z, external overrides, VHDL execution and grouped
+reductions remain unproved; required R2/R3 and publication stay open.

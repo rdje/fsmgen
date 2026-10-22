@@ -1,0 +1,43 @@
+{
+  "baseline_revision": "5dce0bc6a30df60c89377cea99a6b17def8f9806",
+  "capture": "unary_oct22",
+  "claim_legs": {
+    "durability": "Committed fixed witness/observer and complete immutable stage/admission/source identities, static verifier, book/task and Git.",
+    "falsification": "Actual compiled wrong source yields only the intended row-one output-bit mismatch; hostile saved marker/result/coverage/bound/cleanup corruptions reject.",
+    "rederivation": "Independent bit-walk/vector oracle, literal declarations/reduction records and actual compiled public-pin verdicts; complete source/Git/stage identities."
+  },
+  "gaps": [
+    "Successful-child PID birth identities are not observed by the failure-only hook.",
+    "Generated HDL and native build files were removed by the fixed test cleanup; their exact bytes are not retained in this runtime epoch.",
+    "No full Cartesian paired-input, X/Z, external override, VHDL runtime or complete transitive toolchain/environment attestation.",
+    "Historical native EPERM cause remains unproved; no recurrence-only invocation."
+  ],
+  "observer_manifest_sha256": "2dcd6076cd0b6caf140241ac4c1c6423de01203ceb2cd5f4438ea4753f9afa22",
+  "owner": "ISF-REDUCTION-DELIVERY.1.4",
+  "schema": "fsmgen.unary_runtime_observation.v1",
+  "scope": "Both Verilog-family positives and actual wrong-source SystemVerilog; fixed two-state vectors, reset/hold/repeated sweeps.",
+  "sha256": {
+    "evidence/admission.json": "2a1315d9b08bc03fb9371da650fbf4ff1bc2c1d53e68f4f04ad8bbf39c33d991",
+    "evidence/after.json": "c780ccadeae5ff4da0c9704f43f8f9bdb1ddf40a87f511275cde00e7e58818a0",
+    "evidence/before.json": "a66939a13663fa155724fda51796e269a8d846499bae07e3d8e8a082060ef778",
+    "evidence/compile_a.json": "ad6d7cb884d0b34cdfbe4cc85e060454494f79456a1899cfdcd74568f9b019a9",
+    "evidence/compile_c.json": "92c9e20e397975745aa8c75ba45fbcfbc0a4ad7ef2d5678dcecde7aced91c73b",
+    "evidence/compile_e.json": "6ecf997a478d18b23c8130cc7e1c95aa38651f1d5971d8d5b38afb3fb342c4ba",
+    "evidence/events.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/inputs/2090-isf-unary-reduction-runtime.t": "2d8394375c027586dc12579e88342fafd6abd9a6e98c9003d2d8a5d8b0b04e92",
+    "evidence/inputs/unary_reduction_runtime.isf": "fc5ac2b4357ec0147de23df33e56040040c446727e7dfb238e1c9a64a04b6a39",
+    "evidence/inputs/unary_reduction_runtime_tb.sv": "fa737e18c9a7135ed194ea4abe6ba785df4b8a2157c75c14007605de5abc39b7",
+    "evidence/inputs/unary_reduction_runtime_vectors.hex": "75b18940a3f445171008891e81a19dc37beeb1d7975a5d0e9d15e951e4d664af",
+    "evidence/outer.json": "822da30fa72298bd3885fbea58de10b2e2f3ab6ed6382bc1012d7ad697650bcd",
+    "evidence/postcheck.json": "080b5e5a50701253d065e2e380ad2451a9e97d7eff53564e9882049a6a765b50",
+    "evidence/run-log-identity.json": "cdecfa08df6694da7539b69f844cedcdac16dc02a38b0dc6cab1549bb7093951",
+    "evidence/run.log": "efcf85b0c2d24b3116520f7ff38181fac1b0fe6dfe80f67132e80e388a600c04",
+    "evidence/run.pl": "ab379cacba61db2301f40d9af02b3c3dc7acd05e1611180e73100ffbf20f3b61",
+    "evidence/runtime_b.json": "6ea0ae1cb13c76ee39f5b77bc6472e5080f1a753bf787885af970fb280b604ac",
+    "evidence/runtime_d.json": "6f9fcdd6a103d1b25247006bb9538fb91419da1eb5f5e4149675e5716bc5b560",
+    "evidence/runtime_f.json": "ced0f5d427388ca34fe672fbfd3551e2f4ab866216aff326a663719baf2d1613",
+    "evidence/summary.json": "dddcaad79d40c93a6a00f9a42ac99aa554d61a0f0840475b79eac9e62c8b0ad3",
+    "seal.py": "214ccec2ee61498549b2558d69f3752772128434c6f064638cbd78e85e04015b",
+    "verify.py": "cc99a9c296f8372c4c88c720752ef8b04a273626782e664e8ffec06f6aa619af"
+  }
+}

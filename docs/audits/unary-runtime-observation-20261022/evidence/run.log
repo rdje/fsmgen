@@ -1,0 +1,98 @@
+outer_ok=1 status=success exit=0
+docs/audits/unary-observer-20261022/observe.t .. 
+# Subtest: complete fixed vectors have an independent bit-walk oracle and hostile controls
+    ok 1 - every stored input/result bit is independently re-derived
+    ok 2 - a wrong expected output bit cannot pass
+    ok 3 - an omitted vector cannot pass
+    ok 4 - a substituted input row cannot pass
+    ok 5 - actual low-bit-only operand separates whole-vector XOR and AND
+    ok 6 - public-pin comparison rejects unknown or wrong output bits
+    ok 7 - both complete sweeps are required
+    ok 8 - fixed disabled-write control remains in bench
+    ok 9 - fixed reset control remains in bench
+    1..9
+ok 1 - complete fixed vectors have an independent bit-walk oracle and hostile controls
+# Subtest: fixed source and actual carrier preserve complete declarations and generated widths
+    ok 1 - complete independent authored port roles/widths
+    ok 2 - complete independent reduction source records
+    ok 3 - caller data and JSON kinds preserved
+    ok 4 - exact single carrier membership
+    ok 5 - actual canonical carrier strictly checks
+    ok 6 - carrier invents no authored ISF inventory
+    ok 7 - systemverilog actual fixed source emission
+    ok 8 - generation stderr clean
+    ok 9 - systemverilog independent port valid/1
+    ok 10 - systemverilog independent port data/8
+    ok 11 - systemverilog independent port other/8
+    ok 12 - systemverilog independent port scalar/1
+    ok 13 - systemverilog independent port intermediate_xor_data_other_1/1
+    ok 14 - systemverilog independent port out_xor/1
+    ok 15 - systemverilog independent port out_and/1
+    ok 16 - systemverilog independent port out_or/1
+    ok 17 - systemverilog independent port out_odd/1
+    ok 18 - systemverilog independent port out_scalar_xor/1
+    ok 19 - systemverilog independent port out_scalar_and/1
+    ok 20 - systemverilog independent port out_scalar_or/1
+    ok 21 - systemverilog independent port out_bit/1
+    ok 22 - systemverilog independent port out_slice/1
+    ok 23 - systemverilog independent port out_nested/4
+    ok 24 - systemverilog independent port out_binary_xor/8
+    ok 25 - systemverilog independent port out_binary_and/8
+    ok 26 - systemverilog independent port out_binary_or/8
+    ok 27 - systemverilog independent port out_unrolled/1
+    ok 28 - systemverilog independent port out_label/1
+    ok 29 - systemverilog external helper-like pin has no internal driver
+    ok 30 - verilog actual fixed source emission
+    ok 31 - generation stderr clean
+    ok 32 - verilog independent port valid/1
+    ok 33 - verilog independent port data/8
+    ok 34 - verilog independent port other/8
+    ok 35 - verilog independent port scalar/1
+    ok 36 - verilog independent port intermediate_xor_data_other_1/1
+    ok 37 - verilog independent port out_xor/1
+    ok 38 - verilog independent port out_and/1
+    ok 39 - verilog independent port out_or/1
+    ok 40 - verilog independent port out_odd/1
+    ok 41 - verilog independent port out_scalar_xor/1
+    ok 42 - verilog independent port out_scalar_and/1
+    ok 43 - verilog independent port out_scalar_or/1
+    ok 44 - verilog independent port out_bit/1
+    ok 45 - verilog independent port out_slice/1
+    ok 46 - verilog independent port out_nested/4
+    ok 47 - verilog independent port out_binary_xor/8
+    ok 48 - verilog independent port out_binary_and/8
+    ok 49 - verilog independent port out_binary_or/8
+    ok 50 - verilog independent port out_unrolled/1
+    ok 51 - verilog independent port out_label/1
+    ok 52 - verilog external helper-like pin has no internal driver
+    ok 53 - counterfactual changes exactly the first unary XOR
+    ok 54 - systemverilog actual fixed source emission
+    ok 55 - generation stderr clean
+    ok 56 - well-formed wrong source changes only its intended operator record
+    1..56
+ok 2 - fixed source and actual carrier preserve complete declarations and generated widths
+# Subtest: fixed public-pin runtime requires fresh observer admission
+    ok 1 - systemverilog fixed bench compiles
+    ok 2 - systemverilog fixed process completes
+    ok 3 - every fixed vector sweep completes
+    ok 4 - disabled writes retain outputs
+    ok 5 - reset clears and retains public outputs
+    ok 6 - no semantic rejection or deadline
+    ok 7 - verilog fixed bench compiles
+    ok 8 - verilog fixed process completes
+    ok 9 - every fixed vector sweep completes
+    ok 10 - disabled writes retain outputs
+    ok 11 - reset clears and retains public outputs
+    ok 12 - no semantic rejection or deadline
+    ok 13 - wrong fixed bench compiles
+    ok 14 - wrong fixed process completes
+    ok 15 - independent public-pin oracle rejects actual wrong reduction
+    ok 16 - wrong reduction cannot reach semantic PASS
+    1..16
+ok 3 - fixed public-pin runtime requires fresh observer admission
+ok 4 - all fixed witness and named producer bytes preserved
+1..4
+ok
+All tests successful.
+Files=1, Tests=4, 34 wallclock secs ( 0.01 usr  0.00 sys + 14.52 cusr 13.10 csys = 27.63 CPU)
+Result: PASS

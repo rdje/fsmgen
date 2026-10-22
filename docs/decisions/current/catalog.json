@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 32735,
-        "line_bytes": 719,
-        "lines": 505,
-        "sha256": "1b72e9c042b0f724f1be69ae3060e28e80e849417e70e678298c1c4fe864c864"
+        "bytes": 32761,
+        "line_bytes": 781,
+        "lines": 506,
+        "sha256": "3043e8693e2418801c69472ec3afd5d87a07fcd60dd2901e16ff050755242430"
       },
       "id": "0117",
       "metadata": {
@@ -1347,7 +1347,8 @@
           "which corpus phases and public queries cover maintained unary reductions?",
           "why did corpus accounting fail after unary reduction admission?",
           "how can failed reduction predecessor tests load current modules?",
-          "how is the complete retained reduction replay evidence set accounted?"
+          "how is the complete retained reduction replay evidence set accounted?",
+          "which unary reductions have actual HDL runtime qualification?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

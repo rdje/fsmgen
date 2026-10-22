@@ -7143,11 +7143,11 @@ For FSMGen, the analogs are:
   - [x] **NO REGRESSION** — All tests successful, Files=3, Tests=356; mdBook and complete source/index checks pass. knowledge-map: OK; native decision, task integrity and complete claim dispositions pass before staged scripts/check_doctrines.sh and normal hooks. No compiler source or accepted behavior changes.
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement and independently qualify required unary reductions.`
   Acceptance: `After .1, split safe source/IR/emitter/report slices before implementation. Unary ^, & and | produce one bit for admitted signals/slices/bit selections; existing multi-operand and logical semantics retain. Qualify real scalar/slice truth tables and invalid operand diagnostics through native/API/MCP, carriers, supported backend behavior and corpus/book/capability contracts. Preserve supplied unrolled baseline and all first failures.`
-  Verification: `Decision 0117 and ISF-REDUCTION-DELIVERY.1.2.2 now integrate declared unary source, canonical IAL0 and detached native/API/newline reports, with current focused qualification and synchronized book/reference/feedback. Broader source/profile/corpus signoff is .1.2.3; fixed observer and actual runtime qualification remain .1.3/.1.4. Required R1 stays open; private P2 complement classification is separately .7.1.`
-  Commit: `pending`
+  Verification: `ISF-REDUCTION-DELIVERY.1 closes bounded R1 after source/public/profile/corpus and retained predecessor identity qualification. Committed witness 91bf7e488 and fixed observer 5dce0bc6a execute one fresh unary observation: SystemVerilog/Verilog positive compile/runtime pairs pass independent complete vectors, nested/scalar/slice/bit/odd values, hold/reset and binary/unrolled/helper-name controls. The actually compiled wrong-source reduction yields exactly its intended output-bit mismatch and no PASS. Overall All tests successful Files=1 Tests=4, no skips; complete original six-stage results/bounds, before/after committed inputs, empty native events/gaps and independent cleanup retain under docs/audits/unary-runtime-observation-20261022/. Independent saved hostile verification passes. Generated HDL/build bytes and successful-child births are not retained; X/Z, VHDL execution, external overrides, grouped R2/R3 and publication remain open. The original sandbox archival census denial is separately retained and corrected under the guard without HDL replay. Private P2 complement classification is next under .7.1; full push/hosted qualification stays .69.`
+  Commit: `with ISF-REDUCTION-DELIVERY.1.4`
 
 - ID: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.3`
   Status: `pending`

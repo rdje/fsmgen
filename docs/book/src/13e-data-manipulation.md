@@ -86,14 +86,15 @@ Each result is one bit for a declared eight-bit `data`. Nested concatenation
 also preserves scalar result widths: `(concat (! (^ data)) (concat (^ data[3:0])
 (& data[0])) tag)` occupies four bits when `tag` is one bit. Source/carrier,
 semantic and generated-source qualification covers these operator, width and
-enable associations; HDL execution remains separately qualified.
+enable associations; the fixed public-pin witness below adds HDL execution.
 
-The qualified generation subset uses declared fixed widths:
+The qualified generation subset uses declared fixed widths. The separate
+fixed runtime witness below qualifies both Verilog-family targets:
 
 | Target option | Unary generation boundary |
 | --- | --- |
 | `systemverilog`, `sv` | Scalar/vector, static bit/slice, logical negation and nested concatenation retain their expressions and widths. |
-| `verilog`, `v` | Tested scalar/vector, bit/slice, negation and concatenation forms retain their reduction RTL through the compatibility emitter. This text check does not qualify a compiler or runtime. |
+| `verilog`, `v` | Tested scalar/vector, bit/slice, negation and concatenation forms retain their reduction RTL through the compatibility emitter. The fixed witness below also qualifies compilation and runtime. |
 | `vhdl` | Scalar/static-bit identities and declared-vector fold helpers remain available, including the tested negation/concatenation forms. Range reductions and the tested unrolled indexed-bit parity chain retain precise scaffold refusals. |
 
 Refused generation preserves an existing HDL destination and creates no absent
@@ -161,17 +162,16 @@ applicability; executing a query is a separate operation. Invalid source queries
 retain failed check/semantic reports without successful source inventories;
 schedule refusal retains its RPC error boundary.
 
-The fixed unary runtime witness is prepared in
+The fixed unary runtime witness is qualified in
 `t/data/unary_reduction_runtime.isf`, with a public-pin bench and independently
 checked golden vectors alongside it. It includes scalar/bit/slice reductions,
 odd parity, nested results, ordinary binary/unrolled controls and an externally
-driven helper-like input name. Source checks and generation pass; the HDL
-stages remain unexecuted. The fixed observer is separately qualified under
-`docs/audits/unary-observer-20261022/`; execution requires its own fresh admission.
-A default test skip
-does not qualify simulation. The planned counterfactual changes an actual
-source operator; the same bench must report its wrong public value and never
-semantic PASS. Paired inputs are fixed rather than an exhaustive cross product;
+driven helper-like input name. Source checks, generation and actual HDL
+execution pass through the separately committed fixed observer. Both
+Verilog-family targets complete repeated sweeps and hold/reset checks. The
+actual source-operator counterfactual reports its distinguishing wrong public
+value and never reaches semantic PASS. Default test skips do not qualify simulation. Paired inputs are fixed rather
+than an exhaustive cross product;
 X/Z execution and external parameter overrides remain outside this witness.
 
 ```bash
@@ -191,20 +191,31 @@ mismatch with no PASS. Process completion alone cannot pass either oracle.
 Finite observer qualification preserves silent success, actual session-leader
 rejection, modeled diagnostic gaps, original arguments/results/bounds/errno and
 independent controlled PID/group absence. Wrong, changed, omitted, additional,
-reused or unsealed admissions cannot start feature execution. The first saved
-verification caught sealer comment drift after admission; its rejected package
-is preserved separately. Restoring exact qualified bytes and sealing a fresh
-package passes independent saved hostile checks without replaying native
-controls. Inspect these records without executing HDL:
+reused or unsealed admissions cannot start feature execution. Inspect the
+separately qualified observer without executing HDL:
 
 ```sh
 python3 -B docs/audits/unary-observer-20261022/verify.py
 ```
 
-This qualifies the observer. Actual unary HDL remains a separately admitted
-successor; default T2090 runtime skips establish no simulation result. The
-historical native cause and successful-child feature PID identities remain
-unproved.
+The subsequent fresh `unary_oct22` observation passes every declared stage.
+Each positive target completes both full fixed sweeps, disabled-write hold and
+synchronous reset checks. The real wrong source changes only the selected XOR
+to AND; its row-one mismatch changes only that output bit. Full original stage
+results and bounds, unchanged committed input identities and independent
+workspace/command cleanup are sealed. No native failure event or diagnostic gap
+occurs. Verify the saved runtime evidence without re-executing it:
+
+```sh
+python3 -B docs/audits/unary-runtime-observation-20261022/verify.py
+```
+
+This completes bounded unary R1 qualification. The maintained corpus fixture
+retains its separate source/generation phase contract; discovery does not imply
+that every corpus source was simulated. Generated HDL/build bytes were removed
+by the fixed test cleanup and are not retained in this runtime epoch. Successful
+child birth identities, historical native causality and external VHDL execution
+remain unproved. Parameter-dependent groups and publication are still pending.
 
 ## Grouped reductions — implementation pending
 
@@ -216,8 +227,8 @@ decimal literal N. It will produce `ceil(width(X)/N)` bits, least-significant
 group first, with an unpadded short final group. Strict targets must match that
 count. For byte parity N is 8. Optional `(~ X)` will complement each vector bit.
 
-Unary source admission and public records are implemented; full source/profile
-coverage and actual HDL runtime qualification remain separately owned. Direct
+Declared unary source, public records, bounded generation profiles and the
+fixed Verilog-family runtime witness are qualified. Direct
 VHDL retains its bounded declaration-aware fold generation and range refusal;
 external VHDL execution is unqualified under decision 0023. Required grouped
 delivery still needs preserved authored width dependencies, actual HDL parameter
