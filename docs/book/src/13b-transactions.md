@@ -700,10 +700,25 @@ ask the counter to decrement at zero.
 
 ## `(wait N)` — Unconditional Exact-Cycle Delay
 
-Known generated-child defect: a leading runtime-count wait can enter its wait
-state without loading the sampled count or bypassing zero. Native checks can
-accept that output. Repair and runtime qualification are tracked under
-`ISF-REDUCTION-DELIVERY.11`; this path is not currently qualified.
+Generated transactions apply the count split on their guarded start edge, even
+when their first authored clause is a runtime wait. A positive count is sampled;
+zero proceeds to the following statement. Consecutive waits and supported pending
+samples retain the same rules. Source/carrier checks and a complete native/API/MCP
+scalar case qualify the entry repair. External HDL timing of this repaired
+generated-entry path remains pending under `ISF-REDUCTION-DELIVERY.11.2`.
+
+This child receives its runtime count through an explicit activation binding:
+
+```lisp
+(actor generated_count_wait
+  (clock clk) (reset (rst_n async active_low))
+  (interface (input start) (input cycles (width 3)) (output done))
+  (transaction worker (ports (input count (width 3)))
+    (wait count) (complete done))
+  (transaction parent (on start)
+    (spawn worker as job (bind (input count cycles)))
+    (await_all job) (complete done)))
+```
 
 A positive static wait with no following statement holds in its final state.
 It does not invent a completion pulse or return to entry. Terminal `(point NAME)`

@@ -1,7 +1,7 @@
 # Knowledge Map: `isf-generated`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **12** facts · **44** uniquely owned question entries.
+> **13** facts · **46** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -30,6 +30,7 @@
 - q="how do child ports differ from same-named actor storage across domains?" · facts=[isf-generated-child-port-storage-shadowing](../../docs/knowledge/isf-generated-child-port-storage-shadowing.md)
 - q="how do generated child storage reads preserve aggregate types?" · facts=[isf-generated-child-aggregate-reads](../../docs/knowledge/isf-generated-child-aggregate-reads.md)
 - q="how does a generated child write the parent actor storage register?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
+- q="how does a generated runtime wait preserve start guarding and zero bypass?" · facts=[isf-generated-leading-runtime-wait-entry](../../docs/decisions/current/language-api/0120-generated-child-runtime-wait-entry-preserves-sampling.md)
 - q="is generated mixed-state whole-copy runtime qualified?" · facts=[isf-generated-input-first-compile-failure](../../docs/knowledge/isf-generated-input-first-compile-failure.md)
 - q="is set-field a partial child storage write?" · facts=[isf-generated-child-writer-contract-frontier](../../docs/knowledge/isf-generated-child-writer-contract-frontier.md)
 - q="is the generated output read plan connected to production?" · facts=[isf-generated-child-output-read-preparation](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
@@ -43,6 +44,7 @@
 - q="which schedule kinds describe generated actor storage handoffs?" · facts=[isf-generated-report-enumerations](../../docs/knowledge/isf-generated-report-enumerations.md)
 - q="why are competing child or parent storage writers rejected?" · facts=[isf-generated-child-scalar-writes](../../docs/knowledge/isf-generated-child-scalar-writes.md)
 - q="why did a generated child completing a named output fail to release its parent?" · facts=[isf-generated-child-named-completion](../../docs/knowledge/isf-generated-child-named-completion.md)
+- q="why did a generated child leading runtime wait lose count sampling?" · facts=[isf-generated-leading-runtime-wait-entry](../../docs/decisions/current/language-api/0120-generated-child-runtime-wait-entry-preserves-sampling.md)
 - q="why did const_3bx01 become an undeclared x01 operand?" · facts=[isf-generated-child-output-read-preparation](../../docs/knowledge/isf-generated-child-output-read-preparation.md)
 - q="why did corrected generated record-input runtime fail the blocking copy check?" · facts=[isf-generated-blocking-binding-observation](../../docs/knowledge/isf-generated-blocking-binding-observation.md)
 - q="why did the first generated record-input runtime compile fail?" · facts=[isf-generated-input-first-compile-failure](../../docs/knowledge/isf-generated-input-first-compile-failure.md)
@@ -128,6 +130,13 @@ _Exact T2025 observer qualification gates genuine generated input runtime_
 
 - **date:** 2026-10-01 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-generated-input-observer-qualification.md`](../../docs/knowledge/isf-generated-input-observer-qualification.md)
+
+### isf-generated-leading-runtime-wait-entry
+
+_Generated child runtime wait entry preserves sampling_
+
+- **date:** 2026-10-22 · **status:** current
+- **source and verification:** [`docs/decisions/current/language-api/0120-generated-child-runtime-wait-entry-preserves-sampling.md`](../../docs/decisions/current/language-api/0120-generated-child-runtime-wait-entry-preserves-sampling.md)
 
 ### isf-generated-report-enumerations
 

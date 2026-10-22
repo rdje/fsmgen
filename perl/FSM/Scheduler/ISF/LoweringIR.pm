@@ -697,7 +697,27 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
             $state->{transitions} = [{ target => $entry->{name} }];
         }
     }
-    guard_child_activation($ir, $entry) if $entry;
+    if ($entry) {
+        guard_child_activation($ir, $entry);
+        my ($first_body) = grep {
+            $_->{kind} ne 'entry' && $_->{name} !~ /_timeout$/
+        } @{$ir->{states}};
+        if ($first_body && $first_body->{dynamic_wait_entry}) {
+            # Child entry allocation and activation guarding replace the source
+            # entry edges. Rebuild the canonical count split with the final
+            # activation guard, removing source-entry loads with the old guard.
+            $entry->{assignments} = [
+                grep { ($_->{source_kind} // '') ne 'dynamic_wait_counter_load' }
+                    @{$entry->{assignments}}
+            ];
+            $entry->{transitions} = [];
+            _link_dynamic_wait_predecessor($tx->{name}, $entry, $first_body);
+            my %state_index = map {
+                $ir->{states}[$_]{name} => $_
+            } 0 .. $#{$ir->{states}};
+            _append_dynamic_wait_zero_sample_clones($ir->{states}, \%state_index);
+        }
+    }
     FSM::Scheduler::ISF::RecordSamples->apply_to_module($ir, $actor, [$tx]);
     _finalize_ir($ir);
     $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);

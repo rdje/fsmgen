@@ -1403,6 +1403,28 @@
       },
       "path": "docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md",
       "type": "private declaration and lowering contract"
+    },
+    {
+      "content": {
+        "bytes": 3125,
+        "line_bytes": 225,
+        "lines": 56,
+        "sha256": "1970c86df3dddcce5452be1c394e2c73843be1c01fe9a3367ca1ac4e93639e86"
+      },
+      "id": "0120",
+      "metadata": {
+        "authority_status": [
+          "- Status: source repair qualified; external generated-entry runtime pending"
+        ],
+        "knowledge_id": "isf-generated-leading-runtime-wait-entry",
+        "knowledge_status": "current",
+        "questions": [
+          "why did a generated child leading runtime wait lose count sampling?",
+          "how does a generated runtime wait preserve start guarding and zero bypass?"
+        ]
+      },
+      "path": "docs/decisions/current/language-api/0120-generated-child-runtime-wait-entry-preserves-sampling.md",
+      "type": "generated transaction entry contract"
     }
   ],
   "schema_version": 1,
