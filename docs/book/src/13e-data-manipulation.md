@@ -241,6 +241,12 @@ delivery still needs preserved authored width dependencies, actual HDL parameter
 overrides, consistent intermediate widths and independent behavior. Accepting
 source or unrolling defaults does not complete R1–R3 or unblock SPECFORGE `.46.c`.
 
+Generic widths also require retaining the original parameter references in bank
+depths and watchdog limits. Those currently become fixed default values during
+parsing. Carrier work must preserve the selected namespace: a bare IAL0 size
+name can select a named type even when an ISF width selected a same-named scalar
+parameter. Private width records alone do not resolve either prerequisite.
+
 ## `(update var expr)` — Variable Modification
 
 ```lisp

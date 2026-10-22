@@ -244,6 +244,10 @@ Rules:
   Emitted HDL parameters currently do not resize ports, storage or reset widths.
   Library use-site overrides do not re-specialize parameter-dependent shapes.
   Carrier/public propagation and generic specialization remain pending.
+- Bank-depth and watchdog references currently resolve to fixed values without
+  retained source associations. Their preservation is a generic-width
+  prerequisite. IAL0 carrier spelling must also preserve the selected namespace:
+  bare size names can select a named type before a same-named scalar parameter.
 - `CONST` may name a declared actor constant that resolves to a positive
   integer; accepted parser output and scheduled `.fsm` artifacts use the
   resolved integer width while `actor_constants[]` and scheduled `+constants`

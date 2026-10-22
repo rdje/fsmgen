@@ -416,10 +416,102 @@ implementation tree avoids growing the near-rollover coordination task file.
   - [x] **NO REGRESSION** — Focused All tests successful Files=13 Tests=36; strengthened current All tests successful Files=1 Tests=3. Corrected public checks All tests successful Files=3 Tests=15; book/task All tests successful Files=3 Tests=52. T1985 passes as a file; the original parent invocation exits2 on its next missing selector, retained separately from the corrected three-file pass. mdBook/source contracts pass; staged/normal doctrines gate the commit.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Carry declared scalar width provenance through LoweringIR and canonical IAL0 without numeric guessing.`
   Acceptance: `After .2.2, preserve the selected dependency records through source preparation, physical formal rewriting, generated instances/domains and canonical carrier emission. Bind each record to its real declaration and selected parameter environment; preserve resets/defaults/types and unrelated equal-width declarations. Reuse IAL0 sizing contracts and keep unresolved HDL override behavior explicit. Qualify actual carriers and isolation with independent expected identities, then commit before public-report closure; split unsafe expansion first.`
   Verification: `pending parser preservation`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.1, ISF-REDUCTION-DELIVERY.2.3.2, ISF-REDUCTION-DELIVERY.2.3.3, ISF-REDUCTION-DELIVERY.2.3.4`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.1`
+  Status: `active`
+  Goal: `Qualify physical declaration loss points and existing IAL0 symbolic-size namespace contracts before carrier edits.`
+  Acceptance: `Inspect actual preparation/formal/child/domain/storage projections and public IAL0 size/static/type resolution. Use source/native/private controls to distinguish original declaration identity, physical names, selected environment and parameter/type namespace precedence. Retain literal-versus-symbolic and equal-default controls; qualify any proposed carrier spelling through actual canonical replay without external HDL execution. Name missing generic/legality legs, choose the bounded representation and refine successors before source edits. Preserve source/caller kinds, existing refusals, facts/questions and all original receipts; commit this audit/design slice before propagation.`
+  Verification: `pending`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.1.1, ISF-REDUCTION-DELIVERY.2.3.1.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.1.1`
+  Status: `done`
+  Goal: `Qualify width-token namespace precedence and source parameter-use erasure before choosing IAL0 spelling.`
+  Acceptance: `Use independently authored ISF and direct IAL0 sources to test type/scalar symbol precedence, arithmetic disambiguation and literal/equal-default controls through actual strict/semantic products. Inspect scalar static uses such as bank dimensions and watchdog limits before/after parser finalization; distinguish retained source information from accidental numeric/JSON-kind equality. Retain all first sources, statuses, products and actual missing legs without HDL execution. Own required metadata or refusal prerequisites and bound the next physical audit; synchronize the selected current boundary and commit before further investigation/implementation.`
+  Verification: `Native strict --check --json and --emit-semantic-json prove the independently declared namespace widths: ISF parameter16, bare IAL0 type8, explicit integer-expression16 and literal16. Current carriers still emit numeric16. Canonical Parser::resolve_declared_width_contract tries named types before scalar widths; the arithmetic evaluator resolves parameter payloads. Complete parsed actors, selected IR and carriers from independently varied depth/watchdog peers equal the literal baseline without field removal, under an identical explicit source label. Root causes are ISF Parser::_finalize_actor_storage_depths and _finalize_actor_watchdog_limit replacing tokens; source actor AST is not retained. Duplicate actor parameter/constant W is an expected refusal, not a precedence success. Mandatory .2.3.2.1 owns private static-source preservation and further consumer census; .2.3.3 owns namespace-safe IAL0 expression preservation. The read-only verifier joins selected source hashes to exact Git revision7d9d3a682 and rejects hostile width, numeric Boolean and invented retained-source products. First complete normalized native/private products and executed producer source retain in width-carrier-contract-first-20261022.json.gz; independent single-slot controls retain in width-static-use-controls-20261022.json.gz under docs/audits. Sealing strips only producer.path checkout prefix and joins original/normalized baseline hashes; original producer source and raw-capture byte hashes remain explicit. Re-derivation is actual authored source and native/private observations; falsification is namespace/literal and independently varied single-slot controls plus hostile products; durability is tracked producers/verifier/receipts, decision0119 and Git. Full IR, raw-root reconstruction, external HDL and API/MCP are not claimed. Current focused/book/source streams retain in width-carrier-contract-qualification-20261022.json.gz. All tests successful Files=4 Tests=55; complete staged doctrines pass before final evidence staging and normal hooks requalify the committed index.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.1.1: qualify carrier namespace and static-use prerequisites`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json and --emit-semantic-json namespace peers select different widths; canonical type-first and scalar-expression branches explain it. Complete one-slot parsed actor equality locates irreversible bank-depth/watchdog token replacement in the two finalizers; no equal-number inference is used.
+  - [x] **ADDRESSED (verified)** — Independent source/namespace/primitive oracles and hostile receipt controls qualify the source-only audit. Mandatory private static-use and unambiguous carrier successors own the exact readiness gaps before generic emission. Existing default behavior and known reusable-formal boundaries remain separate.
+  - [x] **NO REGRESSION** — Focused T2094 and book/task checks report All tests successful Files=4 Tests=55; mdBook/source/index and scripts/check_doctrines.sh plus normal hooks gate the audit. No production source changes or HDL-tool execution.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.1.2`
+  Status: `pending`
+  Goal: `Audit actual formal/generated/library/domain source-to-physical declaration associations and parameter environments.`
+  Acceptance: `After .1, reuse committed namespace/static-use facts and current parser captures; inspect the real prepared source, formal identity plan, physical actors, module/child/domain declarations and canonical carriers for bounded independent fixtures. Bind metadata to actual names and chosen scopes, preserve caller kinds and original actor/type/reset identity, and separate known reusable-formal refusals from supported paths. Select exact IR/source-environment propagation, refine .2.3.2/.3 leaves before code, retain complete selected observations and pass focused/native/book/doctrine checks. No generic HDL, unqualified source admission or default-width dependency inference; commit before propagation.`
+  Verification: `pending namespace/static-use audit`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2`
+  Status: `active`
+  Goal: `Preserve exact private declaration associations through physical preparation and module IR.`
+  Acceptance: `After .1, propagate actual parser-owned associations through actor ports/storage, local formals, generated children/library uses and domain partitioning. Bind source owner/token and selected environment to real physical declarations without guessing from widths or generated spelling. Preserve named types, resets/defaults and unrelated literals; prove caller/result isolation, complete old projections after removing only owned metadata, and exact carrier/public conservation. Split independent consumers before edits if needed. No symbolic HDL or new public inventory admission in this prerequisite; commit before IAL0 changes.`
+  Verification: `pending audit`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.2.1, ISF-REDUCTION-DELIVERY.2.3.2.2, ISF-REDUCTION-DELIVERY.2.3.2.3, ISF-REDUCTION-DELIVERY.2.3.2.4, ISF-REDUCTION-DELIVERY.2.3.2.5, ISF-REDUCTION-DELIVERY.2.3.2.6`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.1`
+  Status: `pending`
+  Goal: `Preserve static parameter-use provenance before bank-depth and watchdog finalization erases it.`
+  Acceptance: `Mandatory before generic emission .3 or specialization .4. Audit .2.3.1.1 supplies legal one-slot source peers: depth W versus literal2 and watchdog W versus literal2 yield identical complete parsed actors at W=2 with an identical explicit source label, plus identical selected IR/carriers. Root causes are Parser::_finalize_actor_storage_depths and _finalize_actor_watchdog_limit replacing tokens with values. Capture actual original token/kind/lexical owner through the existing successful resolvers, preserving literal/default independence, scalar aliases, package scope, numeric values and caller kinds without a new evaluator. Census other accepted symbolic finalization consumers and own any additional erasure before claiming generic-profile safety. Prove meaningful original RED-to-GREEN and unchanged default native/carrier/public products. This is private provenance; dynamic depths/watchdogs are not thereby implemented. Split if needed, synchronize exact boundaries and commit before IR propagation.`
+  Verification: `pending; source-only first and one-slot controls retained by .2.3.1.1`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.2`
+  Status: `pending`
+  Goal: `Carry actor interface and storage declaration provenance into private module IR.`
+  Acceptance: `After .1 and the physical audit, preserve actual associations on module ports, storage entries/elements and selected static-use metadata with detached copies. Keep defaults/types/resets and unrelated numeric controls exact, bind generated bank elements to the declaration without inferring from widths, and compare complete old projections after removing only owned metadata. Preserve caller/result isolation and existing carrier/public bytes. Commit this bounded actor-data prerequisite before formal/generated/domain expansion.`
+  Verification: `pending static provenance and physical audit`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.3`
+  Status: `pending`
+  Goal: `Bind direct-formal physical declarations to original width sources and local parameter environments.`
+  Acceptance: `After .2, reuse the actual preparation/identity plan and physical formal marks; carry source token/kind/owner separately from allocated signal names and actor/module parameter names. Qualify actor/formal/sibling shadows, aliases, unused/read-only declarations, collision-safe allocation and count/value namespace distinctions. Preserve complete original inputs and old IR/carrier/public projections outside owned metadata; do not repair unrelated controller or reusable-formal behavior. Commit before generated/domain propagation.`
+  Verification: `pending actor IR provenance`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.4`
+  Status: `pending`
+  Goal: `Preserve generated transaction and reusable-actor width declarations and selected environments.`
+  Acceptance: `After .2/.3, qualify generated child interfaces, independent library/ATL instances and explicit/inherited parameter source associations using actual supported constructors. Keep source owners distinct from module/instance identity; preserve original expressions versus resolved overrides without guessing from equal defaults. Retain known reusable-formal refusal ownership under SEM .60...3.1.2.5; do not promote that unsupported path. Require isolated cloned records, exact ordinary defaults, carriers/public products and scoped environment controls; split constructors if needed and commit before domain closure.`
+  Verification: `pending formal provenance`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.5`
+  Status: `pending`
+  Goal: `Retain original width-source ownership through domain selection and realization.`
+  Acceptance: `After prior propagation, qualify actual DomainSource clones, original domain preparations and final module/child declarations. Preserve lexical source owners while physical actor/module names change; no cross-domain borrowing, duplicate or wrong-scope source inventory. Check independent default domains, formal shadows, caller kinds and detached results, actual strict carriers and complete public conservation. Keep source-only report restoration separate from executable IR, then commit.`
+  Verification: `pending generated provenance`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.6`
+  Status: `pending`
+  Goal: `Close bounded source/preparation/module-IR declaration and environment conservation.`
+  Acceptance: `Join every selected source declaration and actual physical IR declaration across the qualified actor/formal/generated/library/domain fixtures, with independent membership/kind/owner/token/environment expectations and wrong-allocation controls. Retain literal/type/reset independence and the newly preserved static-use boundaries; original source/caller/returned data stay isolated. Existing carriers/public products remain exact. Synchronize book/downstream/decision scope, pass focused/staged gates and close .2.3.2 before canonical IAL0 changes.`
+  Verification: `pending domain provenance`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.3`
+  Status: `pending`
+  Goal: `Preserve width dependencies through unambiguous canonical IAL0 and its semantic declarations.`
+  Acceptance: `After .1/.2, reuse the qualified IAL0 expression/static/type contracts to preserve actual scoped width dependencies and resolved defaults. Qualify type/parameter names, direct transaction versus module scopes, aliases and constants without numeric guessing or HDL text replacement. If existing syntax cannot safely carry a selected relation, choose an explicit bounded contract under this owner before admitting it. Preserve all default/type/reset semantics and literal controls, actual strict carriers and sanitized semantic boundaries; generic HDL propagation remains .3. Commit before parent qualification.`
+  Verification: `pending physical propagation`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.4`
+  Status: `pending`
+  Goal: `Qualify complete source/preparation/IR/IAL0 dependency conservation and close carrier foundation.`
+  Acceptance: `After .1-.3, independently enumerate actual source and physical declarations in actor/formal/generated/library/domain scopes, compare complete canonical carriers and selected parameter environments, and reject lost/misbound/equal-default/type/reset associations. Reuse existing evaluator and declaration provenance rather than reconstructed numbers. Verify source/caller/result isolation and focused public transport preservation; synchronize book/downstream/decision boundaries. Preserve first failures and actual missing generic/legality/public-inventory legs under .3/.4/.2.4. Focused checks, exact source/build contracts and staged doctrines pass before parent closure and commit.`
+  Verification: `pending IAL0 preservation`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.4`

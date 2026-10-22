@@ -4,11 +4,13 @@ title: Scalar width declarations retain authored provenance
 answers:
   - "where do authored ISF scalar width dependencies disappear?"
   - "how will private ISF width declarations distinguish equal defaults?"
+  - "why cannot an ISF width parameter be copied blindly into IAL0 size syntax?"
+  - "where are authored bank depth and watchdog parameter references lost?"
 date: 2026-10-22
 status: current
 tags: [isf, width, parameters, lowering, provenance]
-evidence: docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: scripts/run_with_ram_guard.sh -- prove -Iperl t/2094-isf-authored-width-declarations.t
+evidence: docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
+reverify: python3 -B docs/audits/width-carrier-contract-verify-20261022.py
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -85,3 +87,27 @@ independently expected private records. Historical audit qualification remains
 available through `scalar-width-foundation-verify-20261022.py`; current retained
 products are checked by `scalar-width-declarations-verify-20261022.py` in
 `docs/audits/`. Public inventory, carrier propagation and generic HDL remain open.
+
+## Carrier namespace and static-use prerequisites
+
+The source-only `.2.3.1.1` audit supplies a type `word_t` of width eight and a
+same-named parameter sixteen. ISF selects the parameter; bare IAL0 `+size`
+selects the type. IAL0 `(+ word_t 0)` selects the scalar parameter through the
+existing integer evaluator. Preserve the chosen namespace and expression, not
+just token spelling: current IAL0 still resolves that expression numerically.
+This default check establishes neither generic HDL nor override legality.
+
+At parameter default two, changing only bank `(depth 2)` to `(depth W)`, or only
+`(watchdog 2)` to `(watchdog W)`, yields exactly identical complete parsed actors,
+selected IR and carrier files with the same explicit source label. Storage-depth
+and watchdog finalizers overwrite the references without retaining raw source.
+Keep their primitive kinds and numeric defaults while preserving original
+token/kind/lexical owner before generic emission. Mandatory successor `.2.3.2.1`
+owns this and the remaining static-use census; `.2.3.3` owns unambiguous IAL0
+expression preservation. Existing default-only behavior remains correct.
+
+Reverify these retained observations with
+`python3 -B docs/audits/width-carrier-contract-verify-20261022.py`. It reads the
+first namespace/static-use and independent single-slot control receipts, joins
+selected source hashes to Git, and rejects hostile width/kind/equality products.
+No HDL tools, API/MCP qualification or full IR capture is claimed.
