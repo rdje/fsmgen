@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.7.1.3`
-- next_action: Repair top-level AST renderer caller metadata under decision0118, preserving render bytes and debug routing. Then qualify unsupported direct-VHDL process refusal under .7.1.4 before generic-width .2.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.7.1.4`
+- next_action: Reproduce and reject unsupported direct-VHDL process headers under .7.1.4, preserving generated combinational/sequential conversion. Then resume generic-width .2.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

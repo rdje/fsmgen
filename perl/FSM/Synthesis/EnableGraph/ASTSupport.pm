@@ -79,6 +79,9 @@ sub ast_to_systemverilog ($self, $ast) {
     my $sv = $self->_ast_to_systemverilog_internal($simplified_ast, undef);
 
     my ($package, $filename, $line, $subroutine) = caller(1);
+    # A file-scope call has no outer subroutine frame, even with debug off.
+    $subroutine //= '(top level)';
+    $line //= (caller(0))[2] // 0;
     fsm_debug("*** AST_TO_SV_DEBUG: $sv ***", 3);
     fsm_debug("    Called from: $subroutine at line $line", 3);
     fsm_debug("    AST type: " . ref($simplified_ast), 3);

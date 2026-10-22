@@ -9,12 +9,12 @@ answers:
 date: 2026-10-22
 status: current
 tags: [expression, width, complement, vhdl, diagnostics, provenance]
-evidence: docs/audits/private-complement-reproduction-20261022.json.gz; docs/audits/private-complement-repair-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm
+evidence: docs/audits/private-complement-reproduction-20261022.json.gz; docs/audits/private-complement-repair-20261022.json.gz; docs/audits/ast-caller-diagnostics-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Synthesis/EnableGraph/ASTSupport.pm; perl/FSM/HDL/FlattenedDT/Backend/VHDL.pm
 ---
 # 0118 — Private complement width and profile boundaries
 
 - Type: private expression and backend contract
-- Status: selected; complement classifier/profile repaired; caller diagnostics pending
+- Status: selected; complement classifier/profile and caller diagnostics repaired; unsupported process refusal pending
 - Owner: `ISF-REDUCTION-DELIVERY.7.1`
 
 ## Authenticated pre-repair behavior
@@ -57,10 +57,22 @@ their existing scalar behavior. Direct VHDL rejects residual `~` after supported
 reduction conversion; assignments, comparisons and generated conditions share
 that check. Source inversion remains refused and no HDL execution is inferred.
 The unchanged authenticated probe and expanded real-owner regression qualify
-these boundaries. Caller metadata remains `.3`. An initial condition fixture
+these boundaries. Caller metadata is qualified below. An initial condition fixture
 used unsupported `always @*` rather than generated `always_comb`; that harness
 error and the converter's independently owned silent-drop defect remain
 explicit under `.4`, without extending this repair's supported profile.
+
+## Caller diagnostic repair
+
+Leaf `.7.1.3` retains existing outer-subroutine metadata when available. For a
+file-scope invocation, the renderer uses `(top level)` and the immediate call
+line, with a defined zero fallback if no line exists. Message construction no
+longer warns before debug gating. Actual Core, runtime and substituted renders
+preserve expression bytes, low-level silence, stdout/file routing and nested
+metadata. The unchanged valid regression fails before this repair and passes
+after it. Its initial wrong Core constructor invocation is retained separately
+as a harness error, not product evidence. Public syntax, report schemas and HDL
+support boundaries do not change.
 
 ## Evidence provenance
 

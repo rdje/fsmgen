@@ -94,8 +94,9 @@ integration remain pending. No default-width unroll substitutes for generic
 behavior. Logical `!` stays Boolean; optional vector inversion is separately
 owned. Private complement classification now follows known width; direct VHDL
 refuses residual complement tokens after supported reduction translation.
-Caller diagnostic noise and unsupported process-header refusal remain owned
-before generic-width work. **SPECFORGE `.46.c` remains blocked.**
+Top-level AST caller diagnostics are defined and warning-free; nested metadata,
+render bytes and debug routing are preserved. Unsupported process-header refusal
+remains owned before generic-width work. **SPECFORGE `.46.c` remains blocked.**
 Requests `.7`/`.8`/`.9`/`.10` retain the boundaries below.
 
 ## High-Level Response

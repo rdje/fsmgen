@@ -33,6 +33,12 @@ directories there and rejects parent-directory or symlink escapes before it
 writes data. External source inputs remain caller-authorized read-only inputs
 and may live elsewhere when that access is genuinely required.
 
+Private AST rendering is quiet below debug level `3`, including direct calls
+from file scope. At level `3`, its caller diagnostic uses `(top level)` and the
+actual call line when no outer subroutine exists; nested calls retain their
+subroutine metadata. These informational messages follow the selected trace
+file or stdout routing without changing the rendered expression.
+
 ## Reproducing a Source Result
 
 Record the project revision alongside the exact input, command, complete result
