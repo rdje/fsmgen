@@ -46,7 +46,10 @@ Operands need explicit positive-width scalar declarations. Unknown signals,
 aggregate roots, parameter/constant values, literals, compound expressions and
 invalid paths are refused. Local declarations and scalar sample aliases retain
 their declared widths through the generated IAL0 carrier; a destination cannot
-resize a reduction operand.
+resize a reduction operand. Whole packed-storage samples and their sample
+chains retain their existing inference and carrier declarations when an
+unrelated scalar reduction is added. This does not admit reducing an aggregate
+or sampling a whole record port; record-port samples still require scalar leaves.
 
 Schedule reports expose `reductions`; successful directly parsed ISF check and
 semantic reports expose `source.reductions`. They are omitted when absent and

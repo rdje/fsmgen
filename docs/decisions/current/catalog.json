@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 10749,
+        "bytes": 11257,
         "line_bytes": 261,
-        "lines": 181,
-        "sha256": "4d7dcf9e9801af606f02f27a164988dec33c7d06b92ec14ab6964314b91ca0a6"
+        "lines": 187,
+        "sha256": "4b54c1ae20dc564a2e76b5f2c6c15d974f4dd3319ece36cf8915e9ef09c0c591"
       },
       "id": "0117",
       "metadata": {
@@ -1332,7 +1332,8 @@
           "what syntax and bit order are selected for SPECFORGE byte-group reductions?",
           "what must be preserved before parameterized reductions can ship?",
           "what reduction width groundwork is implemented?",
-          "how are declared reduction records prepared without source admission?"
+          "how are declared reduction records prepared without source admission?",
+          "why do reductions preserve delegated storage sample declarations?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

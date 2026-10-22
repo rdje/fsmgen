@@ -216,7 +216,7 @@ sub _emit_size($self, $ir) {
     return join("\n", '  (+size', @l, '  )');
 }
 
-# A source sample is an explicit private declaration. Preserve its known
+# A scalar source sample is an explicit private declaration. Preserve its known
 # width/type before the shared frontend parses a reduction using that alias.
 # Restrict this additional carrier evidence to actors using the new feature;
 # ordinary legacy inferred samples retain their current carrier contract.
@@ -242,9 +242,19 @@ sub _reduction_sample_declarations {
             my ($name, $source) = @{$assignment}{qw(lhs rhs)};
             next unless defined($name) && $name =~ /\A[A-Za-z_]\w*\z/ && !$declared{$name};
             next unless defined($widths->{$name}) && $widths->{$name} > 0;
+            # Whole packed-storage captures (and their sample chains) retain
+            # the legacy inference owner. They are not declared scalar facts
+            # supplied by the reduction feature. Follow captures in IR order,
+            # just as sample width inference follows source clause order.
+            if ($aggregate{$source}) {
+                $aggregate{$name} = 1;
+                delete $samples{$name};
+                next;
+            }
+            delete $aggregate{$name};
             # A named scalar type retains signedness/state semantics. Numeric
             # width is used only where the original declaration is width-only.
-            $samples{$name} = $types->{$name} // ($aggregate{$source} ? undef : $types->{$source}) // $widths->{$name};
+            $samples{$name} = $types->{$name} // $types->{$source} // $widths->{$name};
         }
     }
     return \%samples;

@@ -24,7 +24,9 @@ forms now enter canonical IAL0. Successful ISF check/semantic reports expose
 `source.reductions`; schedule reports expose `reductions`, with detached
 owner/context/operator/operand and exact operand/result widths. Try the
 `isf/unary_reductions.isf` fixture using the three commands below with that path.
-The supplied fixed-slice parity source now strict-checks locally.
+The supplied fixed-slice parity source now strict-checks locally. Broader
+qualification also preserves delegated whole-storage sampling when an unrelated
+reduction is added; whole-record port sampling remains refused.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

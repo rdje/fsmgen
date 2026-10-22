@@ -101,10 +101,53 @@ implementation tree avoids growing the near-rollover coordination task file.
   Commit: `ISF-REDUCTION-DELIVERY.1.2.2: admit unary reductions and detached source reports`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete unary source/public/corpus coverage before the fixed HDL witness.`
   Acceptance: `After .2, independently compare complete native/API/actual newline MCP check/semantic/schedule products, semantic widths, source/version/query applicability, corpus discovery and precise invalid source/profile controls. Re-derive retained baseline and scalar/slice/bit/field/local/sample cases including nested results and original IAL0 carriers. Cover legal owner labels, canonical compound/bounds controls, static/package namespaces, ordinary sample ownership and same-LHS capture identity before signoff. Update exact capability/reference/book/feedback contracts, pass focused gates and commit. This closes source/public qualification only; actual HDL behavior and R1 delivery require .1.3/.1.4.`
   Verification: `Next frontier after integrated source admission; complete source/profile/corpus signoff and runtime remain open.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.1.2.3.1, ISF-REDUCTION-DELIVERY.1.2.3.2, ISF-REDUCTION-DELIVERY.1.2.3.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.1.2.3.1`
+  Status: `active`
+  Goal: `Qualify declared scalar field, local and sample operand scopes through real source and carriers.`
+  Acceptance: `Read the canonical record/sample contracts and preserve existing record-port whole-aggregate sample/root refusals and storage-only sampling delegation. Independently qualify scalar record/storage fields, bounded paths, signed/state-preserving leaf samples and sample chains, local scopes, shadowing/static namespaces and legal owner labels. Use actual ISF and canonical source checks, generated IAL0 and detached inventories; no hand-built scope alone certifies admission. Retain first failures before repair and split any growing defect before edits. Prove profile/type boundaries touched by any repair; update book/reference/capabilities only for actual behavior. Focused checks and a source-scoped commit close this leaf before capture/corpus successors; no HDL execution or full R1 claim.`
+  Verification: `Starting from clean 21843f970. The published record-input contract admits scalar-leaf samples, preserves signed/state traits and refuses whole-record sampling; do not invent broader sampling as part of reductions.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.1.2.3.1.1, ISF-REDUCTION-DELIVERY.1.2.3.1.2`
+
+- ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.1`
+  Status: `done`
+  Goal: `Repair the P1 regression that applies record-port sample restrictions to delegated storage samples when reductions occur.`
+  Acceptance: `Preserve the valid actual whole-storage sample baseline and otherwise equivalent unrelated scalar-reduction case before edits. Bind the observed ordinary/strict/schedule failure to the reduction hook's default sample plan, using the existing port-only contract and packed-storage inference owner. Preserve reduction-required scalar sample declarations while leaving unrelated delegated sample declarations/types unchanged. Compare actual baseline/repaired carriers and strict replay, metadata, caller kinds and supported source/API products; retain record-port whole-sample/root refusals and existing storage-path/width negatives. Capture any subsequent carrier failure before repair. Add a permanent independent regression, synchronize scoped contracts/book/facts and run focused checks; commit this repair before remaining operand qualification. No runtime, aggregate-layout invention or optional inversion admission.`
+  Verification: `First complete 24-observation scope probe under .artifacts/logs/reduction-scopes-first-20261022.jsonl: direct record fields and record-leaf chains pass; implicit widening and storage-field captures retain existing failures. Whole-storage baseline passes ordinary/strict/schedule with statuses 0/0/0; adding (^ bus) over unrelated declared eight-bit input gives 1/1/255. First diagnostic is Invalid ISF record value: transaction main sample requires a scalar value; packet is a whole record. ADR 0114 explicitly delegates storage-only aggregate samples under port_only. The reduction capture calls record_transaction_samples without that selection; preserve the complete first source/streams before touching it. The unchanged same-actor T2077 regression is RED at actual parsing, and the read-only executed hook trace prints port_only absent before the failure at ISFReductions.pm line 32. The first port-only repair restores parsing and strict replay but the unchanged T2077 fails carrier equality: the unrelated q gains internal and +size entries. That complete second RED and port-selection source are retained. The emitter now follows whole-storage sample ancestry in actual capture order and leaves those aliases with the legacy owner; scalar sample declarations remain. Unresolved/delegated facts mask the reduction scope instead of being re-read through record-port validation. The unchanged original RED test now passes All tests successful Files=1 Tests=2. Expanded chain/carrier/native/API/newline coverage and existing unary/record facts, contexts, carriers, ownership and replay pass All tests successful Files=9 Tests=44. Fresh widening and storage-field sample observations preserve all original ordinary/strict/schedule statuses. Book/task checks pass Files=3 Tests=356; the book builds and complete source/index contracts pass. Complete normalized source epochs, first streams, executed trace, intermediate carrier RED and settled repair logs retain in docs/audits/reduction-delegated-storage-sampling-20261022.json.gz. Re-derivation uses real paired ISF and actual carriers/reports; falsification is exact one-RHS baseline comparison, original parser RED, intermediate carrier RED and existing negative controls; durability is tracked source/test/audit/decision and Git. Original raw-root stream byte reconstruction and whole original worktree capture are explicitly missing. No external HDL execution or complete R1 claim. Staged doctrines and normal hooks gate commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.1.2.3.1.1: preserve delegated sample ownership`
+
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Actual --check --json baseline/reduction products and the executed hook trace bind the scalar-only sample refusal to ISFReductions.pm calling record_transaction_samples without port_only. The unchanged test then locates a second RED at t/2077-isf-reduction-delegated-samples.t line 61: Emitter/FSM.pm adds unrelated internal and +size declarations. Complete first sources and streams retain in the dated audit.
+  - [x] **ADDRESSED (verified)** — The existing port-only plan preserves delegation and unresolved masks. Actual capture ancestry leaves whole-storage aliases/chains with their legacy inference owner while known scalar sample declarations remain. The unchanged original RED test passes; expanded exact-carrier and strict replay assertions, independent inventory and complete native/API/newline equality pass without broadening aggregate reduction or record-port sampling.
+  - [x] **NO REGRESSION** — Guarded unary/record sample facts, contexts, carriers, ownership and replay report All tests successful, Files=9 Tests=44. Fresh existing widening/storage-field observations match original ordinary/strict/schedule statuses. Book/task checks report All tests successful, Files=3 Tests=356; mdBook build and complete source/index checks pass. scripts/check_doctrines.sh and normal hooks gate this repair; external HDL runtime and full required delivery remain successors.
+
+- ID: `ISF-REDUCTION-DELIVERY.1.2.3.1.2`
+  Status: `active`
+  Goal: `Complete remaining declared operand-scope qualification after delegated sampling repair.`
+  Acceptance: `After .1, independently qualify actual field/local/formal and scalar-sample scopes, signed/state-preserving leaf chains, static namespace and owner-label boundaries, native canonical path/compound refusals and caller isolation. Preserve the existing distinction between record-port sampling restrictions and delegated storage behavior. Split newly reproduced defects before edits and commit the complete scoped source/carrier coverage before capture identity and corpus/profile successors.`
+  Verification: `Delegated sampling repair is committed at the preceding checkpoint; next qualify remaining declared operand scopes without claiming complete unary delivery.`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.1.2.3.2`
+  Status: `pending`
+  Goal: `Qualify reduction capture identity and nested type/width propagation in the executed pipeline.`
+  Acceptance: `After scoped operands, bind actual generated/semantic RHS values and enables for all reduction operators, logical negation, nested scalar uses and ordinary source controls, including same-LHS assignments and legal names resembling generated RHS labels. Preserve original binary/unrolled behavior and independent expected widths/polarities; do not infer identity from pretty names or snapshots alone. Own any reproduced collision or type defect before repair, qualify source/native/API/carrier parity, synchronize durable boundaries and commit. Actual HDL runtime remains the separately committed fixed witness.`
+  Verification: `pending scoped operand qualification`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.1.2.3.3`
+  Status: `pending`
+  Goal: `Close unary public discovery, corpus applicability and explicit backend-profile qualification.`
+  Acceptance: `After .1/.2, qualify complete native/API/actual newline success/failure products, source/version/query identity, complete corpus discovery and declaration expectations, and supported or precisely refused generation profiles with applicable output preservation. Exercise retained caller baseline, source fixture and all repaired contexts. Preserve every first failure; metadata/generation does not establish runtime. Synchronize exact discovery/reference/book/feedback contracts, run focused and warranted preservation checks, then commit and close parent .1.2.3 only on complete source/public/corpus signoff. Next is the fixed HDL witness and observer admission under .1.3.`
+  Verification: `pending scoped operands and capture qualification`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.1.3`

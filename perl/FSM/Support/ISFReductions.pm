@@ -29,9 +29,11 @@ sub capture_actor_reductions {
             unless ($scope) {
                 $scope = _without_static_values($actor,
                     _timing_scope($actor, record_transaction_scope(actor => $actor, transaction => $tx)), $tx);
-                my $samples = record_transaction_samples(actor => $actor, transaction => $tx);
+                my $samples = record_transaction_samples(actor => $actor, transaction => $tx, port_only => 1);
                 for my $sample (@{$samples->{samples}}) {
-                    my $value = record_value_reference(scope => $scope, token => $sample->{source},
+                    # An unresolved/delegated sample masks the alias, but the
+                    # record-port consumer must not reinterpret its source.
+                    my $value = $sample->{reference} && record_value_reference(scope => $scope, token => $sample->{source},
                         access => 'read', allow_whole => 1, context => "transaction '$tx->{name}' sample '$sample->{source}'");
                     $scope = record_value_scope(outer => $scope, local => {
                         $sample->{alias} => {role => 'local', type_spec => $value && $value->{type_spec}{kind} =~ /\A(?:bit|bits)\z/ ? $value->{type_spec} : undef}});

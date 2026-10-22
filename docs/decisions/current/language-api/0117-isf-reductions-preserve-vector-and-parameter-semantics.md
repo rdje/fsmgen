@@ -6,6 +6,7 @@ answers:
   - "what must be preserved before parameterized reductions can ship?"
   - "what reduction width groundwork is implemented?"
   - "how are declared reduction records prepared without source admission?"
+  - "why do reductions preserve delegated storage sample declarations?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
@@ -163,7 +164,12 @@ and expression order; an assignment target named `xor` is not an operator.
 Static values mask same-named wires consistently with shared frontend resolution.
 A scalar sample retains its explicit private declaration and known type/width
 before its reduction is read by the canonical frontend. No inferred declaration
-or width fallback admits an unknown operand.
+or width fallback admits an unknown operand. The reduction consumer uses the
+existing port-only sample plan and leaves its unresolved/delegated samples
+masked. Whole packed-storage captures and their sample chains retain the
+legacy inference owner instead of receiving scalar declarations merely because
+an unrelated reduction occurs. Record-port whole samples remain refused.
+Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2077-isf-reduction-delegated-samples.t`.
 
 Unary AST, canonical serializers and the executed enable-graph capture renderer
 group both the operand and expression. Direct VHDL recognizes exactly one
