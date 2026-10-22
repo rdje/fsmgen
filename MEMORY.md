@@ -7,7 +7,7 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
 - active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.3.2`
-- next_action: Qualify executed reduction capture identity and nested type/width propagation, then corpus/profile and .10 before runtime. At the next clean boundary recheck cleanup .2 against the canonical prior timestamp plus24h; the initial attempt was not due.
+- next_action: Qualify executed reduction capture identity and nested type/width propagation through actual generated RHS values and enables, preserving ordinary controls. Commit before public corpus/profile qualification and .10 predecessor identity audit; runtime remains separately owned.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

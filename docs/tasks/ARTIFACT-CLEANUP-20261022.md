@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ARTIFACT-CLEANUP-20261022`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `infra/continuity / same-volume artifact maintenance`
 - Created: `2026-10-22`
 - Last updated: `2026-10-22`
@@ -33,7 +33,7 @@ artifact sweep when due, preserving original native/compiler evidence.
 ## Task Tree
 
 - ID: `ARTIFACT-CLEANUP-20261022`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify actual due status, perform the safe census when due and preserve reduction continuity.`
   Children: `ARTIFACT-CLEANUP-20261022.1, ARTIFACT-CLEANUP-20261022.2`
 
@@ -45,12 +45,16 @@ artifact sweep when due, preserving original native/compiler evidence.
   Commit: `ARTIFACT-CLEANUP-20261022.1: qualify elapsed-time census admission`
 
 - ID: `ARTIFACT-CLEANUP-20261022.2`
-  Status: `blocked`
+  Status: `done`
   Goal: `Capture and qualify the same-volume artifact census after its elapsed-time prerequisite.`
   Acceptance: `After actual UTC exceeds 2026-10-22T06:50:19.603025Z, authenticate the unchanged published collector against the then-current committed native revision and create an exclusive current-source wrapper/output. Retain complete regular log/bin metadata, root/Rust locations, exclusions and independent rg membership; keep all candidates without exact disposal authority. Qualify saved replay and genuine missing-member/path/Boolean/removal controls, update latest-only record and book reader route, run gates and commit from a clean boundary before returning to reduction work. Recheck the canonical prior record before capture in case another sweep supersedes this schedule.`
-  Verification: `No capture yet; .1 qualifies that the initial attempt occurred before the prior sweep plus24h.`
-  Commit: `pending`
-  Blocked by: `Actual UTC must exceed the canonical prior cleanup timestamp plus24h. Continue ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.3.2.2 meanwhile; recheck due status at its next clean commit boundary.`
+  Verification: `Clean 2eed19b15 precedes activation and binds the exact installed published collector/reviewer/controls. Actual collection admits elapsed time against the complete native prior record, preserves same-volume regular log/bin lstat metadata, root/Rust location rows, exclusions and independent rg command/status/membership in docs/audits/artifact-census-20261022/census.json.gz. Every candidate remains retained: suffix, age and metadata supply no exact disposal authority. No content identity, physical reclamation or future absence is claimed. Saved replay authenticates the actual wrapper and native prior record and rejects genuine missing-member/unsafe-path/Boolean-size/invented-removal records. After the latest-only cleanup date is overwritten from the admitted observation, both current saved census and historical not-due admission readers pass without another walk, deletion or original native execution. knowledge-map: OK; book route points to the actual current saved census, preserving the separate elapsed-time explanation. Re-derivation is the actual census and native source/prior identity; falsification is independent rg membership, genuine saved-record refusals and the preserved earlier not-due observation; durability is tracked wrapper/unchanged contract, complete census, latest-only record, book/task and Git. Source/API behavior remains unchanged. Focused source/book/index/task/claim and staged/normal doctrine checks gate commit before reduction capture identity resumes.`
+  Commit: `ARTIFACT-CLEANUP-20261022.2: complete due safe artifact census`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "Latest artifact cleanup" and the complete native prior record identify the canonical timestamp; actual collect() rechecks elapsed time before walking. The earlier real not-due refusal remains separately retained. Installed current collector functions are byte-equal to the exact native source; historical Git bytes are comparison data, never executed bodies.
+  - [x] **ADDRESSED (verified)** — Admitted actual census and independent rg membership agree. Complete location/metadata/exclusion rows retain every candidate without disposal authority. Latest-only date uses the observed UTC and the book points to the corresponding successful saved reader. Saved census controls and the earlier not-due reader pass after the record changes, without repeating filesystem collection or deletion.
+  - [x] **NO REGRESSION** — Current saved census and historical admission readers pass with genuine member/path/primitive-kind/removal and due/source/diagnostic controls. knowledge-map: OK; fresh source/book/index/task/claim checks and scripts/check_doctrines.sh plus normal hooks qualify this maintenance commit. No product source change, HDL execution, content/reclamation measurement or foreign repository write occurs.
 
 ## Acceptance Checklist (enforced)
 
@@ -60,4 +64,4 @@ artifact sweep when due, preserving original native/compiler evidence.
 
 ## Blockers
 
-- `.2` waits for the elapsed-time boundary; reduction work continues meanwhile.
+- None. Existing HIAL/publication qualification remains separately owned.

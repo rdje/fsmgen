@@ -49,7 +49,6 @@ Only `active` rows are PNT-eligible. Live `docs/tasks/` nodes are authoritative;
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ARTIFACT-CLEANUP-20261022` | `active` | `infra/continuity` | `.1` qualifies the initial not-due refusal; `.2` waits for actual UTC to exceed the canonical prior sweep plus24h. Reduction work continues meanwhile | [task](docs/tasks/ARTIFACT-CLEANUP-20261022.md) |
 | `LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION` | `active` | `infra/continuity` | `.29` is done; `.12` remains behind director-deferred `.26` | [task](docs/tasks/LIVE-DOCUMENT-SIZE-CONTAINMENT-ADOPTION.md) |
 | `SEMANTIC-INTROSPECTION-MCP-FRONTIER` | `active` | `R13 / semantic API and MCP` | Director priority: SPECFORGE .7-.10/.12 delivery, qualified push and feedback. .91 handoff and .92.1 contract are done; ISF-REDUCTION-DELIVERY.1 owns unary reductions next. .93 retains historical query attribution; .60 owns durations/timers/remaining ports. Prior reader-route and HIAL/full-CI obligations retain. | [task](docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md) |
 | `ISF-REDUCTION-DELIVERY` | `active` | `R14 / R13` | Declared operand scopes, types, carriers and source refusals are qualified under `.1.2.3.1`; `.1.2.3.2` next qualifies executed capture identity and nested widths. `.10` audits related predecessor identities before runtime. Corpus/profile, runtime/generic/groups remain open | [task](docs/tasks/ISF-REDUCTION-DELIVERY.md) |
