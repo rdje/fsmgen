@@ -1316,15 +1316,15 @@
     },
     {
       "content": {
-        "bytes": 32761,
+        "bytes": 32747,
         "line_bytes": 781,
         "lines": 506,
-        "sha256": "3043e8693e2418801c69472ec3afd5d87a07fcd60dd2901e16ff050755242430"
+        "sha256": "9337c3aa20dca1c6d9e6cc13d3ae992432e4207295380123e41a5c2d539a020b"
       },
       "id": "0117",
       "metadata": {
         "authority_status": [
-          "- Status: selected; unary source integration implemented; qualification continues"
+          "- Status: unary R1 qualified; generic/grouped qualification pending"
         ],
         "knowledge_id": "isf-reduction-and-group-contract",
         "knowledge_status": "current",
@@ -1353,6 +1353,30 @@
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",
       "type": "language and lowering contract"
+    },
+    {
+      "content": {
+        "bytes": 3577,
+        "line_bytes": 196,
+        "lines": 64,
+        "sha256": "98525c5b456e4e53e40eda78281efe793724feefde5296ddd980f96cd7520778"
+      },
+      "id": "0118",
+      "metadata": {
+        "authority_status": [
+          "- Status: selected; current defects reproduced; repairs pending"
+        ],
+        "knowledge_id": "private-complement-width-and-profile-boundaries",
+        "knowledge_status": "current",
+        "questions": [
+          "why is a one-bit private complement classified as a vector?",
+          "does the archived scalar complement failure have its matching source?",
+          "why can direct VHDL emit a foreign tilde from private complement?",
+          "why does top-level AST rendering warn about an undefined caller?"
+        ]
+      },
+      "path": "docs/decisions/current/language-api/0118-private-complement-width-and-profile-boundaries.md",
+      "type": "private expression and backend contract"
     }
   ],
   "schema_version": 1,

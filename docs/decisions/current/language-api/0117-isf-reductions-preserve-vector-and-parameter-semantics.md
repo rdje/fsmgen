@@ -30,7 +30,7 @@ evidence: docs/audits/unary-runtime-observation-20261022/manifest.json; docs/aud
 # 0117 — ISF reductions preserve vector and parameter semantics
 
 - Type: language and lowering contract
-- Status: selected; unary source integration implemented; qualification continues
+- Status: unary R1 qualified; generic/grouped qualification pending
 - Owner: `SEMANTIC-INTROSPECTION-MCP-FRONTIER.92.1`
 
 ## Context
