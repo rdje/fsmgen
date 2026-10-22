@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.3.3`
-- next_action: Qualify complete unary public discovery, corpus/source/version/query applicability and selected generation profiles or precise refusals, preserving original controls. Commit source/public closure before the .10 predecessor identity audit and fixed HDL witness; runtime remains separately owned.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.3.3.2`
+- next_action: Qualify exhaustive unary public discovery and maintained corpus/source/version/query applicability, preserving unaffected catalog/cohort records and bounded generation/refusal contracts. Commit source/public closure before the .10 predecessor identity audit and fixed HDL witness; runtime remains separately owned.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

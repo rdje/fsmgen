@@ -375,8 +375,11 @@ artifact local.
 - `--verify-hdl` / `--validate-hdl` runs external SystemVerilog validation
   after writing generated HDL.
 - `-q, --quiet` suppresses informational messages, including the interactive
-  banner, processing line, and success summaries. Human failure diagnostics
-  still print, and machine JSON modes remain JSON-only.
+  banner, ISF/IAL2 lowering headings, `Wrote:` announcements, trace-location
+  notices, processing line, and success summaries. Human failure diagnostics
+  still print. A requested trace file receives source lookup and intent lowering
+  before HDL generation; check, semantic and schedule stdout remain JSON-only
+  when tracing is enabled.
 - `-h, --help` prints the full CLI help.
 
 `--capability-manifest` is different from the HDL-generation options: it emits

@@ -60,6 +60,12 @@ Repeated writes also retain their distinct reduction RHS and actual per-state
 enables. Nested concatenation preserves the scalar reductions and logical
 negation widths; ordinary binary/unrolled and authored-label controls remain
 independent. This closes the scoped capture qualification, not HDL execution.
+Profile qualification preserves the tested fixed-width SystemVerilog/Verilog
+generation and existing VHDL scalar/static-bit identities and vector folds.
+VHDL range reductions and indexed-bit XOR chains retain explicit refusals with
+destination preservation; no compiler/runtime or external-override claim follows.
+The same qualification repairs CLI quiet intent-progress leaks and late trace
+routing, keeping traced check/semantic/schedule stdout clean and reports intact.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

@@ -796,6 +796,7 @@ if ($emit_capability_manifest) {
 
 my $check_json_mode = $check_mode && $json_output;
 my $machine_json_mode = $check_json_mode || $emit_semantic_json;
+my $show_progress = !($machine_json_mode || $emit_schedule_json || $quiet);
 if ($emit_semantic_json && ($check_mode || $json_output)) {
     die "Error: --emit-semantic-json cannot be combined with --check, --json, or --check-json\n";
 }
@@ -863,6 +864,19 @@ if (@ARGV != 1) {
 }
 
 my $fsm_input = $ARGV[0];
+
+# Route traces before source lookup and intent lowering, including paths that
+# return their machine report before reaching the HDL generator.
+if ($trace_log_enabled) {
+    ensure_project_output_directory(
+        dirname($trace_log_path),
+        label => '--trace-log parent directory',
+    );
+    set_fsm_trace_output_file($trace_log_path);
+    print "Trace logging enabled - trace output will be saved to: $trace_log_path\n\n"
+        if $show_progress;
+}
+
 my $path_resolver = FSM::SourcePathResolver->new(
     extra_search_paths => \@source_search_paths,
 );
@@ -1114,7 +1128,7 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
                 open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
                 print $isf_fh $item->{text};
                 close $isf_fh;
-                print "Wrote: $isf_path\n" unless $machine_json_mode;
+                print "Wrote: $isf_path\n" if $show_progress;
             }
 
             for my $fname (sort keys %$files) {
@@ -1123,19 +1137,19 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
                 print $fh $files->{$fname};
                 close $fh;
                 register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
-                print "Wrote: $path\n" unless $machine_json_mode;
+                print "Wrote: $path\n" if $show_progress;
             }
 
             $fsm_file = File::Spec->catfile($dir, $entry_basename);
         }
 
-        unless ($machine_json_mode) {
+        if ($show_progress) {
             print "=== IAL2 Protocol/Platform Intent Bundle ===\n\n";
             print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
             print "Channels: " . scalar(@{$ppif_result->{report}{channels} || []}) . "\n";
             print "Generated review artifacts in: $dir\n" if $dir;
-            print "HDL entry: " . $entry_basename . "\n" if $dir && !$quiet;
-            print "Lowered aggregate HDL entry to: $fsm_file\n\n" unless $quiet;
+            print "HDL entry: " . $entry_basename . "\n" if $dir;
+            print "Lowered aggregate HDL entry to: $fsm_file\n\n";
         }
     } else {
         $isf_schedule_report = $ppif_result->{generated_ial1_schedule_report};
@@ -1188,7 +1202,7 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
                 open my $isf_fh, '>', $isf_path or die "Cannot write $isf_path: $!\n";
                 print $isf_fh $item->{text};
                 close $isf_fh;
-                print "Wrote: $isf_path\n" unless $machine_json_mode;
+                print "Wrote: $isf_path\n" if $show_progress;
             }
 
             for my $fname (sort keys %$files) {
@@ -1197,18 +1211,18 @@ if ($fsm_file =~ /\.(?:ppif|axi|apb|ahb)$/i) {
                 print $fh $files->{$fname};
                 close $fh;
                 register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
-                print "Wrote: $path\n" unless $machine_json_mode;
+                print "Wrote: $path\n" if $show_progress;
             }
             $fsm_file = File::Spec->catfile($dir, $entry_basename);
         }
 
-        unless ($machine_json_mode) {
+        if ($show_progress) {
             print "=== IAL2 Protocol/Platform Intent ===\n\n";
             print "Source: " . $ppif_result->{report}{source_object}{id} . "\n";
             my @ial1_names = map { $_->{name} } grep { defined($_->{name}) } ppif_generated_ial1_items($ppif_result);
             print "Generated IAL1: " . (@ial1_names == 1 ? $ial1_names[0] : join(', ', @ial1_names)) . "\n"
                 if @ial1_names;
-            print "Lowered to: $fsm_file\n\n" unless $quiet;
+            print "Lowered to: $fsm_file\n\n";
         }
     }
 }
@@ -1352,15 +1366,15 @@ if ($fsm_file =~ /\.isf$/i) {
             print $fh $files->{$fname};
             close $fh;
             register_lowered_source_origin(\%lowered_source_origins, $path, $public_source_file);
-            print "Wrote: $path\n" unless $machine_json_mode;
+            print "Wrote: $path\n" if $show_progress;
         }
         $fsm_file = File::Spec->catfile($dir, $entry_basename);
     }
 
-    unless ($machine_json_mode) {
+    if ($show_progress) {
         print "=== ISF Intent Scheduling ===\n\n";
         print "Actor: " . $actor->{actor_name} . "\n";
-        print "Lowered to: $fsm_file\n\n" unless $quiet;
+        print "Lowered to: $fsm_file\n\n";
     }
 }
 
@@ -1387,17 +1401,6 @@ if (!$check_mode && !$emit_semantic_json && !$output_file) {
 # for caller-selected output paths.
 $output_file = resolve_cli_project_output_path($output_file, 'generated HDL output path')
     if defined $output_file && length $output_file;
-# Set up trace routing
-if ($trace_log_enabled) {
-    ensure_project_output_directory(
-        dirname($trace_log_path),
-        label => '--trace-log parent directory',
-    );
-    set_fsm_trace_output_file($trace_log_path);
-    print "Trace logging enabled - trace output will be saved to: $trace_log_path\n\n"
-        unless $machine_json_mode;
-}
-
 unless ($machine_json_mode || $quiet) {
     print "=== FSM HDL Generator ===\n\n";
     print "Processing FSM file: $fsm_file\n";

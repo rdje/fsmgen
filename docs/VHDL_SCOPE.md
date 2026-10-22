@@ -21,8 +21,10 @@ This document defines the scoped R14 VHDL backend plan for FSMGen.
   to one-bit `and` semantics, same-width vector addition/subtraction chains
   lower through `numeric_std` unsigned casts, and same-width vector
   multiplication/division/modulo chains lower through explicit target-width
-  `numeric_std` resize. Same-width scalar/vector XOR chains lower to VHDL
-  `xor`.
+  `numeric_std` resize. Same-width scalar/vector XOR chains over supported
+  named operands lower to VHDL `xor`. The tested unrolled parity RHS
+  `data[0] ^ data[1] ^ data[2] ^ data[3] ^ data[4] ^ data[5] ^ data[6] ^ data[7]`
+  remains outside this arithmetic subset and refuses before HDL publication.
 - The direct scaffold now includes generic-bearing direct-root module headers:
   generated SystemVerilog `parameter` blocks lower to VHDL generics, with
   arithmetic integer-expression defaults as `integer`, one-bit sized-literal

@@ -88,6 +88,18 @@ also preserves scalar result widths: `(concat (! (^ data)) (concat (^ data[3:0])
 semantic and generated-source qualification covers these operator, width and
 enable associations; HDL execution remains separately qualified.
 
+The qualified generation subset uses declared fixed widths:
+
+| Target option | Unary generation boundary |
+| --- | --- |
+| `systemverilog`, `sv` | Scalar/vector, static bit/slice, logical negation and nested concatenation retain their expressions and widths. |
+| `verilog`, `v` | Tested scalar/vector, bit/slice, negation and concatenation forms retain their reduction RTL through the compatibility emitter. This text check does not qualify a compiler or runtime. |
+| `vhdl` | Scalar/static-bit identities and declared-vector fold helpers remain available, including the tested negation/concatenation forms. Range reductions and the tested unrolled indexed-bit parity chain retain precise scaffold refusals. |
+
+Refused generation preserves an existing HDL destination and creates no absent
+destination. Schedule preview stays target neutral. These generation checks do
+not establish HDL execution, external width overrides or grouped reductions.
+
 Scalar record-field samples also keep their declared signedness and state model
 in private carrier declarations and semantic nets. A reduction consumes that
 complete scalar value and returns one unsigned bit. For example:

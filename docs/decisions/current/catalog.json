@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 22338,
+        "bytes": 25578,
         "line_bytes": 500,
-        "lines": 352,
-        "sha256": "9e0f15ac6ddef2e7dd5ff37ae68e0b486e26ce63aefb54330aac332735b35e8c"
+        "lines": 402,
+        "sha256": "6883e652f0819fc038b056b41bcfe29397160bd96cdc886f523814f43a443ef5"
       },
       "id": "0117",
       "metadata": {
@@ -1340,7 +1340,10 @@
           "why did standalone static counts look like cross-domain wire reads?",
           "why did qualified static names borrow record fields in reduction preview?",
           "why did generated intermediate names overwrite declared inputs?",
-          "how are reduction values tied to actual write enables?"
+          "how are reduction values tied to actual write enables?",
+          "which unary generation profiles are qualified and which shapes refuse?",
+          "why did --quiet print ISF and PPIF progress banners?",
+          "why did traced check semantic or schedule reports contain non-JSON stdout?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

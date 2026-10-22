@@ -14,6 +14,9 @@ answers:
   - "why did qualified static names borrow record fields in reduction preview?"
   - "why did generated intermediate names overwrite declared inputs?"
   - "how are reduction values tied to actual write enables?"
+  - "which unary generation profiles are qualified and which shapes refuse?"
+  - "why did --quiet print ISF and PPIF progress banners?"
+  - "why did traced check semantic or schedule reports contain non-JSON stdout?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
@@ -111,6 +114,11 @@ Qualify each existing HDL backend/profile independently. SystemVerilog is the
 first delivery target; other profiles retain an explicit refusal until their
 expression and parameter contracts are verified. A parser success, generated
 carrier, lint result or sibling emitter option is not runtime qualification.
+
+Preserve existing bounded generation contracts while qualifying new source
+forms. The fixed-width generation cohort below verifies compatibility Verilog
+text and the existing direct-VHDL fold subset; it does not qualify external
+parameter overrides, analyzers or runtime. Unsupported shapes retain refusals.
 
 ### Delivery order and evidence
 
@@ -350,3 +358,45 @@ the two intended values. First complete sources/products are retained in
 Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2086-isf-reduction-capture-identity.t`.
 These checks establish source/generated-text associations, not HDL execution.
 Public corpus/profile closure and the fixed runtime witness remain successors.
+
+## Source target-profile qualification
+
+T2087 joins actual ISF and canonical carriers to every public language/alias.
+Independent output widths and physical write values qualify the fixed-width
+SystemVerilog and compatibility-Verilog cohort. Existing direct VHDL scalar
+and static-bit reductions retain identity; declared vectors use required
+`std_logic` fold helpers with the selected neutral value, operator and range.
+The tested negation/concatenation forms retain these results. Range slices and
+ordinary unrolled indexed-bit XOR chains retain their precise scaffold refusals;
+existing destinations stay byte-exact and absent destinations remain absent.
+Target-neutral schedules and complete native/facade products retain their roles.
+
+The first draft oracle incorrectly required blanket non-SystemVerilog refusal.
+Canonical VHDL readiness/lowering contracts already preserve bounded generation
+and withhold external execution. Its complete RED is retained; correcting that
+oracle is not a compiler repair. Wrong actual mux values and fold neutral values
+or operators are rejected independently. Reverify with
+`scripts/run_with_ram_guard.sh -- prove -Iperl t/2087-unary-reduction-target-profiles.t`.
+No backend expression code changes or compiler/runtime claims follow.
+
+## Quiet intent generation and traced reports
+
+Profile qualification then found genuine CLI defects. Intent headings and
+`Wrote:` announcements checked machine mode without consistently checking
+quiet. Trace-file routing started after intent lowering, so early events reached
+stdout and traced check/semantic/schedule reports became undecodable; their
+early-return paths could leave the requested trace file absent.
+
+`bin/fsmgen` now derives one informational-output predicate and routes requested
+trace files before source lookup/lowering. Help/capability fast paths and
+argument validation keep their order. Quiet suppresses informational notices;
+verbose messages, human errors, generated artifacts and machine products retain
+their contracts. The unchanged settled T2088 RED-to-GREEN comparison covers
+actual ISF, single-channel PPIF and bundle paths, both quiet aliases, complete
+HDL/lowered bytes, early trace delivery and whole traced/untraced machine reports.
+Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2088-cli-quiet-intent-progress.t`.
+Separate immutable wrong-oracle, first quiet and settled trace epochs retain
+the distinction between qualification and the actual CLI repair. Earlier
+first-quiet trace-file content was missing; the superseding epoch retains full
+available trace files and records absent files explicitly. Raw-root byte
+reconstruction and a whole original worktree snapshot remain missing.
