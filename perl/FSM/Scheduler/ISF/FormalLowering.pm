@@ -9,6 +9,7 @@ use FSM::Scheduler::ISF::PreparedFormalReservations;
 use FSM::Scheduler::ISF::FormalIdentityPlan;
 use FSM::Scheduler::ISF::FormalClauseResolver;
 use FSM::Scheduler::ISF::FormalReservationCoverage;
+use FSM::Support::ISFReductions qw(capture_actor_reductions);
 
 sub prepare {
     my ($class, $lowerer, $source) = @_;
@@ -60,6 +61,7 @@ sub report_ir {
         : $context->{prepared};
     confess "Formal report projection has no original source preparation\n" unless ref($prepared) eq 'HASH';
     my $view = dclone($ir);
+    $view->{reductions} = capture_actor_reductions(actor => $prepared->{actor});
     my $bindings = $prepared->{transaction_binding_report_products};
     _same_record_identity($ir->{transaction_port_bindings}, $bindings,
         [qw(site_kind owner owner_kind target_transaction role width instance parent_port child_port

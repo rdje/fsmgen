@@ -286,6 +286,15 @@ eight-bit actor input of the same name. The dynamic wait reads the private value
   (set payload data) (wait payload) (set observed payload) (complete done)))
 ```
 
+The example above has scalar interface pins. An existing compatibility defect
+affects actors that also declare a record interface port: the record-context
+gate rejects assignment to a private input-direction scalar formal with
+`cannot write declared input`, although the same scalar-only actor accepts it.
+[The tracked repair](../../../docs/tasks/ISF-REDUCTION-DELIVERY.md) is
+`ISF-REDUCTION-DELIVERY.8`,
+scheduled before remaining SPECFORGE aggregate consumer signoff. Read-only
+formal operands retain their declared scope, including unary reductions.
+
 The schedule reports `payload` as the authored wait count source. Its
 `inferred_storage` table lists the allocated private name at width four.
 Read-only and unused direct formals are explicitly internal too: an unbound

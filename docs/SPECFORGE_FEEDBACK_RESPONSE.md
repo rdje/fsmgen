@@ -26,7 +26,12 @@ owner/context/operator/operand and exact operand/result widths. Try the
 `isf/unary_reductions.isf` fixture using the three commands below with that path.
 The supplied fixed-slice parity source now strict-checks locally. Broader
 qualification also preserves delegated whole-storage sampling when an unrelated
-reduction is added; whole-record port sampling remains refused.
+reduction is added; whole-record port sampling remains refused. Unary forms
+also survive formal-port rewriting with their own declared operand widths and
+authored report identities. A separately tracked existing compatibility defect
+rejects private input-formal assignments when the actor also has a record
+interface port; `ISF-REDUCTION-DELIVERY.8` owns the repair before remaining
+aggregate consumer signoff. Read-only formal reductions remain supported.
 
 `ISF-REDUCTION-DELIVERY.1.2.2` owns this integration. Broader source/profile,
 corpus and actual HDL behavior qualification remain `.1.2.3`–`.1.4`; this is

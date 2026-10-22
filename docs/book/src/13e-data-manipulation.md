@@ -50,6 +50,9 @@ resize a reduction operand. Whole packed-storage samples and their sample
 chains retain their existing inference and carrier declarations when an
 unrelated scalar reduction is added. This does not admit reducing an aggregate
 or sampling a whole record port; record-port samples still require scalar leaves.
+Formal-port rewriting preserves these unary forms and uses the nearest formal
+width. Source records retain authored operands; generated IAL0 uses each
+formal's distinct physical identity.
 
 Schedule reports expose `reductions`; successful directly parsed ISF check and
 semantic reports expose `source.reductions`. They are omitted when absent and

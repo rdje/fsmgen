@@ -16,5 +16,5 @@
 
 _Production lowering separates direct formal storage and authored reports_
 
-- **date:** 2026-10-02 · **status:** current
+- **date:** 2026-10-22 · **status:** current
 - **source and verification:** [`docs/knowledge/isf-production-formal-scope.md`](../../docs/knowledge/isf-production-formal-scope.md)

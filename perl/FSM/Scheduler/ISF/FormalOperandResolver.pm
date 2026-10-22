@@ -6,6 +6,7 @@ use Carp qw(confess);
 use FSM::Adapter::FSMGenFull::ExpressionBuilder;
 use FSM::Package::AggregatePathSupport;
 use FSM::Package::IntegerLiteralSupport;
+use FSM::Package::ExpressionOperatorSupport qw(is_reduction_operator);
 use FSM::Scheduler::ISF::FormalIdentityPlan;
 use FSM::Support::HDLInstanceIdentifierPolicy;
 
@@ -70,6 +71,7 @@ sub expression {
     confess "Formal operand expression has unsupported operator '$op'\n" unless $family;
     my $valid_arity = $family eq 'unary' ? @args == 1
         : $family eq 'binary' ? @args == 2 : @args >= 2;
+    $valid_arity = 1 if @args == 1 && is_reduction_operator($normalized);
     confess "Formal operand expression has invalid arity for '$op'\n" unless $valid_arity;
     return [$op, map {$self->expression($_, %options)} @args];
 }

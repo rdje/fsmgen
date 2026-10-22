@@ -7,6 +7,7 @@ answers:
   - "what reduction width groundwork is implemented?"
   - "how are declared reduction records prepared without source admission?"
   - "why do reductions preserve delegated storage sample declarations?"
+  - "why did admitted reductions fail when transaction formals were present?"
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
@@ -170,6 +171,21 @@ masked. Whole packed-storage captures and their sample chains retain the
 legacy inference owner instead of receiving scalar declarations merely because
 an unrelated reduction occurs. Record-port whole samples remain refused.
 Reverify with `scripts/run_with_ram_guard.sh -- prove -Iperl t/2077-isf-reduction-delegated-samples.t`.
+
+Formal operand rewriting must share canonical normalization and unary reduction
+classification. Its former family-only arity check rejected an already admitted
+reduction whenever direct formals activated source rewriting. T2078 exercises
+all canonical/alias spellings, nested use, distinct physical formal widths and
+authored source inventories through actual carriers and native/API/newline
+products. The detached formal report view re-derives reduction records from its
+original preparation actor: LoweringIR must retain physical operand identities
+for execution, while source reports retain authored spellings. The initial
+arity-only repair exposed this second omission rather than qualifying the
+generated spelling as authored provenance. It preserves unrelated arity and
+role controls. Reverify with
+`scripts/run_with_ram_guard.sh -- prove -Iperl t/2078-isf-reduction-formal-arity.t`.
+The independent existing mixed-record/private-formal write refusal is owned by
+`.8`; this arity repair does not broaden source write roles.
 
 Unary AST, canonical serializers and the executed enable-graph capture renderer
 group both the operand and expression. Direct VHDL recognizes exactly one

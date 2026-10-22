@@ -1316,10 +1316,10 @@
     },
     {
       "content": {
-        "bytes": 11257,
+        "bytes": 12366,
         "line_bytes": 261,
-        "lines": 187,
-        "sha256": "4b54c1ae20dc564a2e76b5f2c6c15d974f4dd3319ece36cf8915e9ef09c0c591"
+        "lines": 203,
+        "sha256": "099d9b225c721d86ca4025a3c34179ca090d67f9f585a0086ff535804aa5ef8a"
       },
       "id": "0117",
       "metadata": {
@@ -1333,7 +1333,8 @@
           "what must be preserved before parameterized reductions can ship?",
           "what reduction width groundwork is implemented?",
           "how are declared reduction records prepared without source admission?",
-          "why do reductions preserve delegated storage sample declarations?"
+          "why do reductions preserve delegated storage sample declarations?",
+          "why did admitted reductions fail when transaction formals were present?"
         ]
       },
       "path": "docs/decisions/current/language-api/0117-isf-reductions-preserve-vector-and-parameter-semantics.md",

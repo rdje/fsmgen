@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.3.1.2`
-- next_action: Qualify remaining actual field/local/formal/scalar-sample scopes, static masks and legal owner labels. Retain first failures and commit scoped source/carrier evidence before capture identity and corpus/profile successors.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2`
+- next_action: Complete actual field/storage/local/formal/scalar-sample scope qualification, signed/state traits, static masks and legal owner/path controls. Preserve the separately owned record/formal write defect .8; commit before capture and corpus/profile successors.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
