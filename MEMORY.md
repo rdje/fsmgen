@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.2`
-- next_action: Repair direct count-parameter masking of runtime reductions using canonical placement/scope facts. Resume from the tracked diagnosis audit; preserve generated/static precedence, child/domain recapture and caller kinds. Split shared-query preparation before growing code changes.
+- active_work_unit: `ISF-REDUCTION-DELIVERY.9`
+- next_action: Repair false cross-domain validation of standalone transaction count parameters after formal rewriting. Resume from the retained ordinary/reduction and predecessor pair in the parameter-scope audit; reuse canonical count ownership and preserve real runtime crossing refusals. Commit before the remaining operand cohort.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

@@ -258,7 +258,11 @@ These positions have different lookup rules from runtime expressions. For
 example, if a direct transaction has both `(params (count 2))` and an input formal
 named `count`, `(wait count)` uses the parameter default, while
 `(set observed count)` reads the formal. Inside a dynamic wait expression such as
-`(wait (+ count 4'd1))`, `count` is also a runtime operand. Generated children
+`(wait (+ count 4'd1))`, `count` is also a runtime operand. A known multi-domain
+exception remains: after formal rewriting, a standalone static count can be
+mistaken for a same-named actor wire in another domain and refused as a crossing.
+`ISF-REDUCTION-DELIVERY.9` owns the repair; use distinct count-parameter and
+foreign-wire names until it is qualified. Generated children
 emit their parameters in their own module. Actor parameters/constants and
 resolved enum/package symbols retain their existing expression lookup rules.
 

@@ -56,11 +56,22 @@ formal's distinct physical identity. Samples of declared clocks and resets
 retain their one-bit widths through aliases and chains. A clock-only named
 domain gains no reset declaration.
 
-A current source-scope defect still rejects a reduction over a runtime signal
-or formal whose name also denotes a direct transaction count parameter. The
-ordinary runtime/count scopes are distinct; this reduction-specific mask is
-tracked under `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.2` and must be repaired
-before scoped unary qualification closes.
+A direct transaction count parameter does not hide a same-named runtime pin or
+formal inside a reduction. For example, the wait below uses the static count 2,
+while the parity reads the declared runtime input's 8 bits:
+
+```lisp
+(actor counted_parity
+  (clock clk) (reset (rst_n sync active_low))
+  (interface (input start) (input count (width 8)) (output parity) (output done))
+  (transaction main
+    (params (count 2)) (on start)
+    (wait count) (set parity (^ count)) (complete done)))
+```
+
+A nearer private formal supplies its own width. Generated-child parameters
+remain static expression values and cannot borrow a same-named actor wire's
+width; actor parameters/constants and unknown operands remain refused.
 
 Schedule reports expose `reductions`; successful directly parsed ISF check and
 semantic reports expose `source.reductions`. They are omitted when absent and

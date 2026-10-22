@@ -17,18 +17,30 @@ our @EXPORT_OK = qw(capture_actor_reductions capture_expression_reductions snaps
 # positions are visited; an assignment target named "xor" is not an operator.
 sub capture_actor_reductions {
     my %args = @_;
+    my $has_selection = exists $args{transaction};
+    my $selected = delete $args{transaction};
     _keys(\%args, ['actor'], 'actor capture');
     my $actor = $args{actor};
     _require(ref($actor) eq 'HASH', 'actor capture requires a parsed actor');
+    _require(_text($selected) && scalar(grep {$_->{name} eq $selected} @{$actor->{transactions} || []}),
+        'actor capture requires a declared selected transaction') if $has_selection;
+    my $static_scopes;
+    my $statics = sub {
+        # Runtime invocation avoids a Parser/LoweringIR compile-time cycle.
+        # This query reuses canonical placement and returns detached facts.
+        require FSM::Scheduler::ISF::LoweringIR;
+        $static_scopes ||= FSM::Scheduler::ISF::LoweringIR->new->expression_static_scopes($actor);
+    };
     my (@records, %used_drives);
     for my $tx (@{$actor->{transactions} || []}) {
+        next if defined($selected) && $tx->{name} ne $selected;
         my $scope;
         my $emit = sub {
             my ($expression, $context) = @_;
             return unless _has_reduction($expression, {});
             unless ($scope) {
-                $scope = _without_static_values($actor,
-                    record_timing_scope(actor => $actor, scope => record_transaction_scope(actor => $actor, transaction => $tx)), $tx);
+                $scope = _without_static_values($statics->()->{transactions}{$tx->{name}},
+                    record_timing_scope(actor => $actor, scope => record_transaction_scope(actor => $actor, transaction => $tx)));
                 my $samples = record_transaction_samples(actor => $actor, transaction => $tx, port_only => 1);
                 for my $sample (@{$samples->{samples}}) {
                     # The port-only plan omits timing roots. A scalar root
@@ -46,7 +58,7 @@ sub capture_actor_reductions {
                     $scope = record_value_scope(outer => $scope, local => {
                         $sample->{alias} => {role => 'local', type_spec => $value && $value->{type_spec}{kind} =~ /\A(?:bit|bits)\z/ ? $value->{type_spec} : undef}});
                 }
-                $scope = _without_static_values($actor, $scope, $tx);
+                $scope = _without_static_values($statics->()->{transactions}{$tx->{name}}, $scope);
             }
             push @records, @{capture_expression_reductions(expression => $expression, scope => $scope,
                 owner_kind => 'transaction', owner => $tx->{name}, context => $context)};
@@ -54,11 +66,11 @@ sub capture_actor_reductions {
         _clauses($tx->{clauses}, $actor, $emit, \%used_drives, "transaction '$tx->{name}'");
     }
     my $actor_scope;
-    for my $rule (@{$actor->{rules} || []}) {
+    for my $rule (@{defined($selected) ? [] : $actor->{rules} || []}) {
         my $emit = sub {
             my ($expression, $context) = @_;
             return unless _has_reduction($expression, {});
-            $actor_scope ||= _without_static_values($actor, record_timing_scope(actor => $actor, scope => record_actor_scope(actor => $actor)));
+            $actor_scope ||= _without_static_values($statics->()->{actor}, record_timing_scope(actor => $actor, scope => record_actor_scope(actor => $actor)));
             push @records, @{capture_expression_reductions(expression => $expression, scope => $actor_scope,
                 owner_kind => 'rule', owner => $rule->{name}, context => $context)};
         };
@@ -82,7 +94,7 @@ sub capture_actor_reductions {
         for my $i (0 .. $#{$drive->{body} || []}) {
             my $expression = $drive->{body}[$i][1];
             next unless _has_reduction($expression, {});
-            $scope ||= _without_static_values($actor, record_timing_scope(actor => $actor, scope => record_drive_scope(actor => $actor, drive => $drive)));
+            $scope ||= _without_static_values($statics->()->{actor}, record_timing_scope(actor => $actor, scope => record_drive_scope(actor => $actor, drive => $drive)));
             push @records, @{capture_expression_reductions(expression => $expression, scope => $scope,
                 owner_kind => 'drive', owner => $name, context => "drive '$name' assignment[$i] RHS")};
         }
@@ -91,15 +103,11 @@ sub capture_actor_reductions {
 }
 
 sub _without_static_values {
-    my ($actor, $scope, $transaction) = @_;
-    my %values = map {$_->{name} => {role => 'local', type_spec => undef}}
-        (@{$actor->{params} || []}, @{$actor->{constants} || []});
-    for my $clause (@{($transaction || {})->{clauses} || []}) {
-        next unless ref($clause) eq 'ARRAY' && ($clause->[0] // '') eq 'params';
-        for my $parameter (@{$clause}[1 .. $#$clause]) {
-            $values{$parameter->[0]} = {role => 'local', type_spec => undef};
-        }
-    }
+    my ($static, $scope) = @_;
+    # Qualified enum/package tokens are paths, not declaration roots. Their
+    # existing path/namespace validator owns them; do not invent root masks.
+    my %values = map {$_ => {role => 'local', type_spec => undef}}
+        grep {/\A[A-Za-z_]\w*\z/} keys %$static;
     return record_value_scope(outer => $scope, local => \%values);
 }
 

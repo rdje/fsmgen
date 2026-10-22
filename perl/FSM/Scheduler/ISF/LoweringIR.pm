@@ -233,7 +233,7 @@ sub prepare_formal_source($self, $source_actor) {
             locals => \%locals,
             # Direct transaction parameters are compile-time count/width inputs,
             # not emitted parent expression symbols. Generated children emit them.
-            static_symbols => { %$static, $generated->{$name} ? %params : () },
+            static_symbols => _transaction_expression_static_symbols($static, \%params, $generated->{$name}),
             static_count_symbols => { %$static, %params },
             pruned_repeats => \%pruned_repeats,
             named_drives => { %drives },
@@ -525,6 +525,29 @@ sub _formal_expression_static_symbols {
     return \%names;
 }
 
+# Source consumers need placement without building modules or reimplementing
+# the live activation walker. Detach before count/parameter resolution, which
+# may inspect scalar numeric flags. Returned namespaces are independent maps.
+sub expression_static_scopes($self, $source_actor) {
+    confess "Expression scopes require a parsed actor\n" unless ref($source_actor) eq 'HASH';
+    my $actor = _clone_isf_value($source_actor);
+    my %generated = _generated_child_transaction_refs($actor);
+    my $static = _formal_expression_static_symbols($actor);
+    my %transactions;
+    for my $tx (@{$actor->{transactions} || []}) {
+        my %params = $generated{$tx->{name}}
+            ? map {$_->{name} => 1} @{_transaction_param_declarations($tx, $actor)} : ();
+        $transactions{$tx->{name}} =
+            _transaction_expression_static_symbols($static, \%params, $generated{$tx->{name}});
+    }
+    return {actor => {%$static}, transactions => \%transactions};
+}
+
+sub _transaction_expression_static_symbols {
+    my ($actor_static, $params, $generated) = @_;
+    return {%$actor_static, $generated ? %$params : ()};
+}
+
 # The detached output-view planner uses the same resolved static namespace as
 # formal lowering. Do not reconstruct imported constants or enum paths there.
 sub child_output_read_scope($self, $actor, $tx) {
@@ -616,7 +639,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         reset_provenance => _clone_isf_value($actor->{reset_provenance}),
         # Generated transaction ports are private, not actor declarations.
         interface_port_metadata => undef,
-        reductions => capture_actor_reductions(actor => {%$actor, transactions => [$tx], rules => []}),
+        reductions => capture_actor_reductions(actor => $actor, transaction => $tx->{name}),
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),

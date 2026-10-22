@@ -13,7 +13,7 @@ answers:
 date: 2026-10-22
 status: current
 tags: [isf, reductions, specforge, parameters]
-evidence: docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
+evidence: docs/audits/reduction-parameter-scopes-20261022.json.gz; docs/audits/reduction-timing-sample-scopes-20261022.json.gz; docs/audits/specforge-reduction-intake-20261021/packet.json; docs/audits/unary-reduction-source-integration-20261022.json.gz; docs/tasks/ISF-REDUCTION-DELIVERY.md; perl/FSM/Adapter/FSMGenFull/ExpressionBuilder.pm; perl/FSM/Scheduler/ISF/Emitter/FSM.pm
 ---
 # 0117 — ISF reductions preserve vector and parameter semantics
 
@@ -224,7 +224,7 @@ Broader source/profile/corpus coverage and actual HDL runtime remain `.1.2.3`
 through `.1.4`; generic widths/groups and publication remain required. This
 source milestone does not close R1–R3 or unblock SPECFORGE `.46.c`.
 
-## Direct count-parameter scope defect — repair pending
+## Direct count-parameter and runtime expression scopes
 
 `ISF-REDUCTION-DELIVERY.1.2.3.1.2.2.2.1` retains paired native sources and
 actual source preparation/declared-scope facts in
@@ -233,13 +233,25 @@ A direct transaction parameter `count=2` controls standalone waits while the
 runtime `count` is a declared actor pin or private formal. Canonical T1936 and
 current preparation exclude that parameter from runtime static symbols, but
 include it in standalone count symbols. Ordinary reads strict-check; unary
-reductions incorrectly refuse because `_without_static_values` masks every
+reductions formerly refused because `_without_static_values` masked every
 transaction parameter regardless of placement/expression context.
 
-The owned repair must reuse canonical generated-transaction placement and
-scope ownership, retaining generated-parameter static precedence and actor
-static/unknown refusal. It must cover original parsing plus child/domain/module
-recapture contexts, preserve caller kinds, and avoid duplicate placement/pruning
-logic or Parser/LoweringIR load recursion. No repair is claimed by the diagnosis.
-This blocks completion of scoped unary source qualification; runtime, generic
-groups and publication retain their independent obligations.
+`LoweringIR::expression_static_scopes` now detaches source before querying the
+existing live generated-child classifier and canonical static declarations.
+Formal preparation and the query share transaction expression-scope composition;
+standalone count scopes remain separate. Reduction capture queries these facts
+lazily, avoiding a Parser/LoweringIR compile-time cycle. Generated-child capture
+selects its transaction from the full source actor instead of discarding the
+activation graph that establishes parameter ownership. Qualified static paths
+remain under their existing namespace/path validator, not invented root masks.
+
+T2080 checks declared runtime widths, static waits, generated/static/unknown
+refusals, canonical live/zero-pruned placement, domains, caller-kind isolation
+and actual source/carrier/native/API/newline products. Reverify with
+`scripts/run_with_ram_guard.sh -- prove -Iperl t/2080-isf-reduction-parameter-scopes.t`.
+This bounded repair does not close remaining unary qualification, runtime,
+generic groups or publication.
+The domain probe separately reproduces an ordinary-source defect: rewritten
+standalone count tokens can be mistaken for foreign-domain actor wires.
+`ISF-REDUCTION-DELIVERY.9` owns its immediate successor repair; neither the
+shared expression query nor a reduced test case closes that count-position bug.
