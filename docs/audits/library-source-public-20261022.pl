@@ -4,6 +4,7 @@ use lib 'perl', 't/lib';
 use Cwd qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 use JSON::PP;
+use Time::HiRes qw(time clock_gettime CLOCK_MONOTONIC);
 use FSM::Test::ProjectDataLocality;
 use FSM::Test::SourceQueryRunner qw(normalize_repository_paths);
 use FSM::Support::SemanticIntrospectionMCPAdapter;
@@ -22,10 +23,16 @@ for my $name (qw(alias nested defaults)) {
     for my $kind (qw(check semantic schedule)) {
         my $request = {jsonrpc => '2.0', id => 1, method => 'tools/call', params => {
             name => $tools{$kind}, arguments => {source_id => $path}}};
+        my $started_utc_epoch = time;
+        my $api_started = clock_gettime(CLOCK_MONOTONIC);
         my $response = $api->handle_jsonrpc_request($request);
+        my $api_finished = clock_gettime(CLOCK_MONOTONIC);
         my $wire = FSM::Test::SourceQueryRunner::_capture(
             [$^X, 'bin/fsmgen-mcp', '--workspace-root', '.'], $json->encode($request) . "\n");
         my $record = {name => $name, kind => $kind, request => $request, api => $response, wire => $wire,
+            observation => {programme_pid => 0 + $$, started_utc_epoch => $started_utc_epoch,
+                api_started_monotonic => $api_started, api_finished_monotonic => $api_finished,
+                newline_finished_monotonic => clock_gettime(CLOCK_MONOTONIC)},
             source_sha256_before => $before, source_sha256_after => digest($path)};
         # Publish complete original products before any oracle can refuse.
         print $json->encode(normalize_repository_paths($record, $root)), "\n" or die $!;

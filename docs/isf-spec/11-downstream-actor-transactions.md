@@ -252,7 +252,8 @@ Rules:
   Private library override records retain authored name/value/lexical-owner lists
   independently in original and resolved uses, beside unchanged canonical values.
   Nested aggregate first rows now normalize recursively without changing scalar
-  kinds; carrier/public source propagation and generic specialization remain pending.
+  kinds. Selected alias/nested/default native/API/newline reports conserve resolved
+  values; carrier/public source inventories and generic specialization remain pending.
 - `CONST` may name a declared actor constant that resolves to a positive
   integer; accepted parser output and scheduled `.fsm` artifacts use the
   resolved integer width while `actor_constants[]` and scheduled `+constants`

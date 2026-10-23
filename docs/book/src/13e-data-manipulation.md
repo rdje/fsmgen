@@ -256,6 +256,8 @@ normalize first rows recursively: `((1 2) (3 4))` keeps two flat rows, including
 inside actor defaults and compatible library overrides. Scalar and flat-list
 values keep their existing kinds. Per-source resolved kinds remain unchanged:
 parameter/literal strings and package/enum numbers are distinct.
+Alias, nested-override and default-only fixtures retain existing reports through
+native, API and real newline MCP queries; dependency inventories remain pending.
 
 ## `(update var expr)` — Variable Modification
 

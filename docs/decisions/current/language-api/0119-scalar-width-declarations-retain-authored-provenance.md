@@ -13,7 +13,7 @@ date: 2026-10-22
 status: current
 tags: [isf, width, parameters, lowering, provenance]
 evidence: docs/audits/width-physical-verify-20261022.py; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify
+reverify: python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
@@ -131,7 +131,7 @@ lose or change its meaning. Activation clauses retain original override values
 beside separately resolved instance products. The audit observed library uses
 losing original values in `_validate_use_params`: named LIMIT and literal16 gave
 identical complete private products. `.2.3.2.1.2.3` now retains detached ordered
-name/value/lexical-owner source lists before resolution; specialization stays `.4`.
+name/value/lexical-owner source lists before resolution; selected alias/nested/default native/API/newline reports conserve old products. Specialization stays `.4`.
 
 Select a detached private IR map `_width_declarations` keyed by actual physical
 signal, with original declaration identity, token/kind/owner and explicit lexical
