@@ -26,6 +26,12 @@ MCP write-horizon and HIAL/VIAL owners retain that scope; the reduction frontier
 and decision0121 priority do not change. Design meaning, observed execution and
 evidence-backed causality must remain distinguishable.
 
+Director instruction, 2026-10-23: implement POD-based FSMGen API reference
+generation now, following the HTMLBatch/mdBook discussion. This explicitly
+selects the documentation task ahead of the saved .2.3.2.4.2 implementation;
+SPECFORGE priorities and publication gates resume afterward. The constructor
+checkpoint is committed before activating that task.
+
 ## Non-Goals
 
 - This tree does not close durations, named timers or record-output delivery.
@@ -608,8 +614,8 @@ evidence-backed causality must remain distinguishable.
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.2`
   Status: `pending`
   Goal: `Qualify reusable library and ATL constructor source/default/override environments.`
-  Acceptance: `Use independent actual library and ATL instances; preserve source export owner, module/instance identity, original override expressions and selected resolved parameter records separately from source defaults. Keep reusable-formal refusal and specialization ownership; prove exact old products, detached records and sibling isolation before commit.`
-  Verification: `pending generated constructor slice`
+  Acceptance: `Use independent actual library and ATL instances; preserve source export owner, module/instance identity, original override expressions and actual constructor-selected parameter records separately from source defaults. Copy the existing library metadata producer: default alias expressions are not relabeled as recomputed resolved values. ATL has default-only selections under its existing grammar; admit no new override syntax. Keep reusable-formal refusal and specialization ownership; prove exact old products, detached records and sibling isolation before commit. Private metadata only: no public/corpus admission, carrier, generic HDL or evaluator change.`
+  Verification: `Preparation checkpoint at 3994e966e: actual library and ATL constructors clone source actors and delegate to _build_parent_ir; _library_instance_metadata selects overrides beside raw default alias expressions. Parser ATL resolutions have no override fields under current grammar. No implementation or source epoch has started. The refined acceptance preserves these boundaries for resumption after the director-requested POD API reference. This checkpoint closes preparation only; implementation remains pending.`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.3`
@@ -913,3 +919,9 @@ evidence-backed causality must remain distinguishable.
 
 Publication retains the HIAL/startup, full-CI and query-incident obligations
 under SEM `.69` and `.93`. No external access or product decision is pending.
+
+## Constructor preparation checkpoint acceptance
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — git log -S identifies _library_instance_metadata introduction at 220dd8a18; git show 3994e966e:perl/FSM/Scheduler/ISF/LoweringIR.pm confirms separate library/ATL constructors and their common parent builder; the existing parameter metadata producer retains raw default aliases. Parser ATL resolution inspection confirms default-only source metadata. Only task preparation is dirty when the director requests the POD pivot.
+- [x] **ADDRESSED (verified)** — Save the refined scope and precise pending frontier, return .4.2 to pending without claiming implementation, and record the latest director priority before the new task is activated.
+- [x] **NO REGRESSION** — Current task integrity and knowledge-map: OK remain required through scripts/check_doctrines.sh and normal hooks. No code, source feature, API, carrier, or book behavior changes in this checkpoint.
