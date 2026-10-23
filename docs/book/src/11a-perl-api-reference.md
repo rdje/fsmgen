@@ -36,7 +36,7 @@ list or browser Find to navigate the standalone module pages.
 For `fsmgen_check`, `fsmgen_semantic_introspect` and
 `fsmgen_schedule_preview`, supply `source_id` or `source_path`. Discovery
 expresses this alternative with `anyOf`; both may be supplied. Every supplied
-selector must be a nonempty string, including the unused one. When both are
+selector must be a nonempty JSON string, including the unused one. When both are
 present, `source_path` selects the source. Paths remain subject to workspace
 containment and source/query applicability; schema admission alone does not
 prove that a file exists or supports the requested query. See the
@@ -76,8 +76,9 @@ with a string `name`; present `arguments` must be an object. Metadata tools
 enforce their required fields, declared kinds and closed argument objects.
 Malformed parameters return JSON-RPC `-32602`; unknown string tool names or
 diagnostic codes retain their lookup errors. Integral numbers such as `1.0`
-and `1e0` are accepted as integers. The remaining source admission leniency is
-outside the supported contract. The
+and `1e0` are accepted as integers. Quoted tool versions are refused; URI
+versions remain textual path components. Validation preserves supplied values
+and their JSON kinds in later copies. See the
 [argument-admission notes](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#CURRENT_ARGUMENT_ADMISSION)
 describe the remaining compatibility limits.
 
@@ -85,14 +86,12 @@ describe the remaining compatibility limits.
 
 The live MCP audit has identified the compatibility defects below. A client
 that validates responses strictly can reject legitimate current results.
-These descriptor and validation gaps are pending repair; the complete operating
+These descriptor and error-message gaps are pending repair; the complete operating
 reference and its drift checks remain under qualification.
 
 | Surface | Current discrepancy |
 | --- | --- |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |
-| VIAL tool versions | Some numeric strings are accepted despite the integer schema; supply JSON integers |
-| Embedded caller data | Invalid numbers supplied to source identity string fields can change kind in later copies of a caller's request; use the declared kinds while this is repaired |
 | Error messages | Some failures retain automatic Perl locations or reference addresses; use error codes and structured diagnostics for program decisions |
 
 ## Build and preview

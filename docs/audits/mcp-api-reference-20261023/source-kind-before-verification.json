@@ -1,0 +1,49 @@
+{
+  "tools": 9,
+  "input_fields": 22,
+  "labeled_cases_per_entrypoint": 615,
+  "selected_native_sources": 399,
+  "findings": {
+    "unsupported_input_admitted": [
+      "fsmgen_check:language_version:numeric_string",
+      "fsmgen_check:language_version:version_string",
+      "fsmgen_semantic_introspect:language_version:numeric_string",
+      "fsmgen_semantic_introspect:language_version:version_string",
+      "fsmgen_vial_inspect:language_version:numeric_string",
+      "fsmgen_vial_inspect:language_version:version_string"
+    ],
+    "invalid_input_error_class": [
+      "fsmgen_schedule_preview:source_id:zero",
+      "fsmgen_schedule_preview:source_id:one",
+      "fsmgen_schedule_preview:source_id:fraction",
+      "fsmgen_schedule_preview:source_path:zero",
+      "fsmgen_schedule_preview:source_path:one",
+      "fsmgen_schedule_preview:source_path:fraction"
+    ],
+    "caller_value_changed": [],
+    "caller_clone_changed": [
+      "fsmgen_check:source_id:zero",
+      "fsmgen_check:source_id:one",
+      "fsmgen_check:source_path:zero",
+      "fsmgen_check:source_path:one",
+      "fsmgen_semantic_introspect:source_id:zero",
+      "fsmgen_semantic_introspect:source_id:one",
+      "fsmgen_semantic_introspect:source_path:zero",
+      "fsmgen_semantic_introspect:source_path:one",
+      "fsmgen_schedule_preview:source_id:zero",
+      "fsmgen_schedule_preview:source_id:one",
+      "fsmgen_schedule_preview:source_path:zero",
+      "fsmgen_schedule_preview:source_path:one"
+    ]
+  },
+  "controls_rejected": [
+    "missing_case",
+    "false_omission",
+    "wrong_scalar_kind",
+    "borrowed_api_reply",
+    "lost_wire_reply",
+    "prechanged_api_input",
+    "concealed_text_control",
+    "boolean_detached_control"
+  ]
+}

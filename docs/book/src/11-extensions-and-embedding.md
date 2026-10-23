@@ -2986,7 +2986,9 @@ perl bin/fsmgen-mcp --workspace-root . --request-json '{"jsonrpc":"2.0","id":33,
 The tool accepts only required relative `source_id`, optional `language_version`
 and optional `source_style: auto|normal|terse`. It has no `source_path` alias or
 absolute-path input. Omitted version selects v1 and omitted style selects auto;
-the resource always uses auto. `tools/list`, resource templates, capability
+tool versions are JSON integers, and quoted numbers or Booleans are invalid
+parameters. URI version components remain textual; the resource always uses
+auto. `tools/list`, resource templates, capability
 manifest and VIAL source-discovery query kinds all advertise this route.
 
 Both text JSON and `structuredContent` carry `query_kind: inspection` and the
@@ -3146,7 +3148,7 @@ cohort, but task acceptance still owns the feature-specific semantic argument.
 
 ### Existing VIAL Summary Queries
 
-Select `language_version: 2` explicitly for VIAL v2, including the implemented
+Select JSON integer `language_version: 2` explicitly for VIAL v2, including the implemented
 lifecycle-control family. Omission selects v1; the adapter never guesses from
 the filename. Version selectors are rejected on hardware queries, and VIAL
 does not support schedule preview. These summary-query arguments are closed to
@@ -3188,7 +3190,7 @@ The read-only adapter currently has a bounded client profile:
 | One-shot JSON-RPC probe through `--request-json` | shipped | `t/1442-fsmgen-mcp-jsonrpc-cli.t` and `t/1445-semantic-introspection-mcp-schema-snapshots.t` |
 | MCP 2025-06-18 stdio transport using newline-delimited JSON-RPC and `initialize`, `resources/list`, `resources/templates/list`, `resources/read`, `tools/list`, `tools/call`, and `ping` | shipped | `t/1441-semantic-introspection-mcp-adapter.t`, `t/1443-semantic-introspection-mcp-protocol-hardening.t`, `t/1446-semantic-introspection-mcp-stdio-framing.t`, and the schema fixture in `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json` |
 | Local clients that can launch `perl bin/fsmgen-mcp --workspace-root ROOT` and speak the shipped JSON-RPC profile | compatible with the shipped read-only profile | Same fixture plus the documented workflow examples above |
-| Resource subscriptions and list-change notifications | not advertised in the shipped profile; resources are static with `listChanged: false` | `t/1449-semantic-introspection-mcp-resource-change-boundary.t` |
+| Resource subscriptions and list-change notifications | not advertised in the shipped profile; resource listings are static with `listChanged: false` | `t/1449-semantic-introspection-mcp-resource-change-boundary.t` |
 | MCP client `roots` capability and `roots/list` negotiation | not consumed in the shipped profile; `--workspace-root` remains authoritative | `t/1447-semantic-introspection-mcp-roots-boundary.t` |
 | MCP prompt templates through `prompts/list` and `prompts/get` | not advertised in the shipped profile; use resources/tools for semantic queries | `t/1448-semantic-introspection-mcp-prompts-boundary.t` |
 | MCP completion API through `completion/complete` | not advertised in the shipped profile; no candidate provider is selected yet | `t/1450-semantic-introspection-mcp-completion-boundary.t` |

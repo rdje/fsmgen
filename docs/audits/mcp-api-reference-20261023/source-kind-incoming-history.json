@@ -1,0 +1,14 @@
+{
+  "packet_sha256": "5afa5dd8c60029f555b41503227a1bac11c973bc1fd260ee2e1caecdf3e49051",
+  "current_source_reads_disabled": true,
+  "exact_git_sources_recovered": {
+    "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm": {
+      "sha256": "671b3ca23e085757c0ee49c888beb7d50aa896de2f77acf48966ba592b5bdb24",
+      "bytes": 65223
+    },
+    "t/python/test_fixture_mcp_metadata_schemas.py": {
+      "sha256": "f6e51ab5e432dacca730c88a6022300d8167bcdc3ac4886a23a1618c7938b663",
+      "bytes": 13812
+    }
+  }
+}

@@ -206,7 +206,7 @@ class MCPMetadataSchemaTest(unittest.TestCase):
                 self.assertTrue(_reader.errors({'code': CODE, 'limit_examples': invalid}, schema))
 
 
-def save_capture(argument, capture):
+def save_capture(argument, capture, extra_paths=()):
     sys.path.insert(0, str(ROOT / 'scripts'))
     from generate_pod_reference import local_path
     output = local_path(ROOT, argument)
@@ -215,6 +215,8 @@ def save_capture(argument, capture):
              if p.endswith('.pm')]
     paths += ['bin/fsmgen-mcp', 't/python/test_fixture_mcp_stdio.py',
               't/python/test_fixture_mcp_metadata_schemas.py']
+    paths += list(extra_paths)
+    assert len(paths) == len(set(paths))
     record = {'head': subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip(),
               'source_sha256': {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths}}
     with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:

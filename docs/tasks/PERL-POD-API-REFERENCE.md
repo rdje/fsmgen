@@ -208,12 +208,12 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.3: admit integer capability payloads`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4`
-  Status: `active`
+  Status: `done`
   Children: `PERL-POD-API-REFERENCE.6.1.2.2.4.1, PERL-POD-API-REFERENCE.6.1.2.2.4.2, PERL-POD-API-REFERENCE.6.1.2.2.4.3, PERL-POD-API-REFERENCE.6.1.2.2.4.4`
   Goal: `Enforce advertised metadata-tool argument types and closed fields consistently.`
   Acceptance: `Five metadata tools accept an unpublished argument despite closed schemas; discovery/examples/support also accept wrong array-typed fields, while capability/diagnostic wrong types expose ARRAY reference addresses in errors. Reuse established project JSON-kind/argument facilities where suitable, or select a bounded validator for exactly the published schema vocabulary without introducing an unrelated evaluator/dependency. Preserve all valid supported values, JSON scalar kinds and intended per-tool limits; reject invalid types/fields cleanly with actual API/newline controls. Split validation cohorts if needed, document and commit.`
-  Verification: `Actual extra-argument calls succeed on capability, discovery, examples, diagnostic and support tools. Wrong-array query/limit calls succeed on discovery/examples/support; wrong-array section/code errors contain ARRAY(0x...) strings. Exact wire captures retained; implementation/qualification pending. P2 numeric-limit defect is also owned here before complete reference/publication: JSON integer 1e30 reaches _bounded_limit as a Perl exponent string and falls back to 10, whereas 101 caps at 100. Reproduce through actual public calls with a controlled catalog large enough to distinguish the results, then normalize valid JSON integer limits consistently without conflating Boolean/string kinds or silently changing zero/default policies. The public dispatcher confirms 101 => 100 samples but 1e30 => 10 with a controlled 121-entry catalog; real per-code populations are too small to distinguish those limits. Reproduce with perl -Iperl docs/audits/mcp-api-reference-20261023/probe_diagnostic_limits.pl. Complete typed public results and source hashes retain in diagnostic-controlled-before/after.json.gz; the exact decimal-regex root cause is confirmed. Fix at this leaf before reference completion/publication, splitting bounded validation/numeric leaves first if needed.`
-  Commit: `pending`
+  Verification: `Completed .4.1's full admission/copy audit, .4.2's metadata/envelope repair, .4.3's per-operation numeric policies and .4.4's source/VIAL kind repair. The final selected argument population has no unsupported admission, wrong invalid-input class or caller-copy change; complete schema-admitted results and URI routes conserve. Original failures, source capsules, independent readers and actual adverse controls retain, with current POD/book/KMap. This closes argument enforcement only; error-location, example-schema and complete operational/model reference successors remain.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.4: enforce source and VIAL argument kinds`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.1`
   Status: `done`
@@ -237,11 +237,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.3: repair large integer catalog limits`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Close remaining source-selector kind discrepancies found by the admission audit.`
   Acceptance: `Refine from .4.1's actual results before editing. Check source identity, VIAL version/style and source-query argument kinds against published schemas; preserve all valid request behavior, applicability, source_path precedence and format authority. Distinguish textual URI version decoding from typed tool arguments so a fix cannot break versioned resources. Apply only confirmed repairs with actual native/API/newline controls and full result conservation, synchronize exact guidance and commit; close with a no-change qualification if the audit finds no discrepancy.`
-  Verification: `Confirmed via actual --request-json fsmgen_vial_inspect: language_version as JSON string 2 succeeds and selects numeric version 2, despite the advertised integer schema. Original full response is retained at .artifacts/mcp-api-reference/argument-string-version.json; the admission matrix will bind exact source/observer/raw identities. _vial_language_version also decodes textual URI segments, so keep that valid path separate from typed tool admission. This leaf owns the strict-kind repair, source-identity caller-copy preservation and full valid-result/resource conservation. The matrix also confirms direct length reads can change invalid numeric source identities in later caller copies; reject wrong kinds before text inspection, with detached-copy checks. No valid-input or global wire corruption claim is made.`
-  Commit: `pending`
+  Verification: `The fresh pre-repair matrix retains 6 unsupported version admissions, 6 wrong invalid-input classes and 12 source caller-copy changes; the repaired full API/pipe matrix has none across the same 615 cases. All 75 schema-admitted results and complete values for ten resources/six paired tool calls conserve, including textual versions and unversioned v1 defaults. Both original reader populations/eight controls pass and five additional restored-admission/copy/borrowed-result/resource/source controls reject. T2104 genuinely fails three original subtests and passes all four after the scoped guard fix; it covers unused selectors, direct calls, fresh copies, integral spellings and URI routes. Files=27 Tests=84 plus all three actual persistent source tests pass. Current POD/book/KMap and source/capture custody retain exact limits; no full protocol, feature, runtime or platform qualification is inferred.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.4: enforce source and VIAL argument kinds`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5`
   Status: `pending`
@@ -1082,3 +1082,53 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
   status (including dependent containment/README checks). Correct it to active
   under the task-tree status contract; its pending leaves and selected .4.4
   frontier are unchanged. Retain the original refusal and rerun normal gates.
+
+
+## Acceptance Checklist — .6.1.2.2.4.4
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '!length($arguments->{$key})' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 308677c9f's direct caller-scalar length guard. Fresh original requests reproduce the 6/6/12 version/error/copy observations. T2104 also demonstrates invalid numeric unused selectors reaching its injected runner, while its original URI/resource subtest stays positive. The shared _vial_language_version parser accepts textual URI versions and was also called directly on tool values, admitting quoted versions without a JSON-kind gate.
+- [x] **ADDRESSED (verified)** — Source identity checks inspect a detached local value and require nonempty JSON string kind before length/resolution. A separate bound-argument version helper requires numeric integer kind before the existing enum parser; textual URI parsing stays intact. All repaired matrix findings clear, caller JSON and later copies preserve, all 75 schema-admitted results conserve, and complete before/after resource/tool values/raw bytes match. Five actual restored-version/restored-copy/borrowed-result/wrong-resource/borrowed-source controls reject, with the original eight controls on both matrices. T2104 covers direct and JSON-RPC callers, unused selectors, literal kinds, numeric spellings/defaults and resource parity; actual source tests enforce schema/refusal behavior over persistent stdio. POD/book remove resolved caveats and clarify URI kinds and static listings.
+- [x] **NO REGRESSION** — All tests successful. Files=27, Tests=84 across the MCP cohort and all three new admission/limit regressions. All three actual persistent source tests pass. Source/path precedence, strict workspace/applicability rules and every captured resource/tool result preserve. Python 3.9 syntax, native POD/book/source/delivery and staged doctrines qualify. The selected argument/control population does not establish complete protocol, source-feature, filesystem-input, runtime, arbitrary-precision or platform coverage.
+
+### .6.1.2.2.4.4 evidence and continuity
+
+- Re-derivation: identical complete requests through the actual public decoded
+  API and persistent UTF-8 pipe, with fresh caller serialization/later-copy
+  snapshots. Separate initialized resource/tool captures cover both VIAL
+  versions and unversioned defaults. Falsification: independent schema/case/
+  source/raw-frame/full-result joins, original and repaired scalar controls,
+  original T2104 RED/repaired GREEN and five coherent repair-specific adverse
+  interventions. Durability: complete original/repaired matrices and resources,
+  exact native/observer source capsules, tracked tests/readers, comparisons and
+  original/final logs in the dated audit directory.
+- The fresh baseline is 792f272a2. The repaired matrix retains its sole native
+  adapter overlay explicitly. Resource captures fingerprint all tracked FSM
+  modules and named launcher/framing/collector sources; the exact adapter hash
+  joins each resource capture to its paired matrix. No repaired worktree bytes
+  are mislabeled as predecessor bytes. Incoming numeric adapter/collector
+  sources also recover exactly from Git with current-source reads disabled.
+- The field matrix is not a combinatorial proof. Additional native-API tests
+  exercise invalid numeric identities even when an alternate valid path wins;
+  that original admission is observed with an explicitly injected hardware
+  runner. Correctly quoted numeric-looking strings in an unused selector stay
+  strings and preserve path precedence. No new hardware-feature or backend
+  qualification follows from those admission controls.
+- The version helper separates bound JSON data from URI text parsing. Numeric
+  integral spellings retain enum selection; quoted versions are invalid params.
+  Omitted versions, source style, normalized provenance/public reports, path
+  authority and underlying public VIAL API behavior preserve. No private helper
+  becomes a supported API and no transport/runtime feature is introduced.
+- The Knowledge Map retains every original fact/question within its unchanged
+  allowance. Equivalent compact globs preserve every original reverify path;
+  the added T2102-T2104 paths are explicit, and no sealed source epoch is run.
+  The book compatibility matrix now says static resource listings rather than
+  ambiguously implying static source-bound payloads.
+- The metadata capture helper accepts an explicit extra-source footprint for
+  the source-resource collector; original default callers remain valid. Its
+  actual captures retain all required producer identities. Historical captures
+  stay byte-identical and exact source history remains the recovery authority.
+- Complete normal gates/commit, clear the message and verify a clean tree.
+  Next is .6.1.2.2.5's automatic Perl/input-record error-location repair, then
+  example documentation typing and the full result-model/reference gap matrix.
+  The P2 claim paragraph-context scanner repair remains scheduled at .6.6.1;
+  publication, historical attribution and required feature frontiers retain.

@@ -513,9 +513,10 @@ sub _source_query_payload {
     die "FSMGEN_JSONRPC_INVALID_PARAMS: unknown source query argument"
         if grep { !$allowed{$_} } keys %$arguments;
     for my $key (qw(source_path source_id)) {
+        next unless exists $arguments->{$key};
+        my $identity = $arguments->{$key};
         die "FSMGEN_JSONRPC_INVALID_PARAMS: source identity must be a nonempty string"
-            if exists($arguments->{$key}) && (!defined($arguments->{$key})
-                || ref($arguments->{$key}) || !length($arguments->{$key}));
+            unless _is_json_string($identity) && length($identity);
     }
     my $source = $arguments->{source_path} // $arguments->{source_id};
     die "FSMGEN_JSONRPC_INVALID_PARAMS: source_path or source_id is required"
@@ -565,10 +566,19 @@ sub _vial_capabilities {
     return $version == 2 ? vial_tool_capabilities_v2() : vial_tool_capabilities();
 }
 
+sub _vial_argument_version {
+    my ($arguments) = @_;
+    my $version = exists($arguments->{language_version}) ? $arguments->{language_version} : 1;
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: VIAL language_version must be a JSON integer"
+        unless _is_json_integer($version);
+    # URI components are textual and use _vial_language_version directly.
+    # Bound resource payloads already carry the numeric version it produces.
+    return _vial_language_version($version);
+}
+
 sub _vial_source_query_payload {
     my ($self, $kind, $source, $arguments) = @_;
-    my $version = _vial_language_version(
-        exists($arguments->{language_version}) ? $arguments->{language_version} : 1);
+    my $version = _vial_argument_version($arguments);
     # Preserve original components: resolving symlinks here would defeat the
     # public filesystem facade's source and import authority checks.
     my $source_id = File::Spec->file_name_is_absolute($source)
@@ -608,8 +618,7 @@ sub _vial_inspection_payload {
     die "FSMGEN_JSONRPC_INVALID_PARAMS: inspection requires a relative VIAL source_id"
         unless defined($source) && !ref($source) && $source =~ /\.vial\z/i
             && $source !~ m{(?:\A/|\A~|\A[A-Za-z]:|://|\\|\x00)};
-    my $version = _vial_language_version(
-        exists($arguments->{language_version}) ? $arguments->{language_version} : 1);
+    my $version = _vial_argument_version($arguments);
     my $style = exists($arguments->{source_style}) ? $arguments->{source_style} : 'auto';
     die "FSMGEN_JSONRPC_INVALID_PARAMS: source_style must be auto, normal, or terse"
         unless defined($style) && !ref($style) && $style =~ /\A(?:auto|normal|terse)\z/;
@@ -1419,7 +1428,7 @@ service. It does not implement HTTP or Content-Length framing.
 C<fsmgen_check>, C<fsmgen_semantic_introspect> and
 C<fsmgen_schedule_preview> require C<source_id> or C<source_path>. Their
 C<inputSchema> uses C<anyOf>, so both selectors are permitted. Each supplied
-selector must be a nonempty string, even when the other selects the source.
+selector must be a nonempty JSON string, even when the other selects the source.
 When both are supplied, C<source_path> takes precedence. Prefer workspace-relative
 identities; absolute paths are accepted only when the configured workspace
 and the source format's public filesystem rules admit them.
@@ -1454,15 +1463,16 @@ see L</DIAGNOSTIC SAMPLE LIMITS>.
 Metadata admission preserves the caller's request values and kinds through
 later copies. Resource reads and capability aliases keep their own contracts.
 
-VIAL tool C<language_version> fields are integers. Version components inside
-resource URIs are text parsed from the URI; do not infer a tool argument's kind
-from that textual spelling. Some tool numeric-string versions are currently
-accepted contrary to discovery and remain under repair.
+VIAL tool C<language_version> fields must be JSON integers C<1> or C<2>;
+omission selects C<1>. Quoted versions are invalid parameters. Integral decimal
+or exponent spellings select the corresponding version. Version components
+inside resource URIs are textual C<1> or C<2> path components, parsed separately
+from tool arguments; their existing versioned and unversioned defaults remain.
 
-Embedded callers supplying invalid numbers to source identity string fields can
-still observe changed kinds in later copies of their request data. These source
-selector cases remain under repair; they do not establish a global wire or
-valid-input defect. Use the declared source argument kinds.
+Source and metadata argument validation preserves supplied values and their
+JSON kinds in subsequent copies. It does not coerce invalid numeric identities
+to strings or quoted versions to numbers. Source existence, containment and
+query applicability remain separate checks after structural admission.
 
 =head1 CAPABILITY QUERY PAYLOADS
 
