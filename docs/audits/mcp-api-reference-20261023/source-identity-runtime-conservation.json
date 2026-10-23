@@ -1,0 +1,14 @@
+{
+  "before_revision": "9032514b0",
+  "module": "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm",
+  "excluded_sections": [
+    "list_tools",
+    "_source_query_tool_descriptor",
+    "_source_tool_properties",
+    "POD"
+  ],
+  "remaining_bytes_identical": true,
+  "remaining_sha256": "ec18a0253839d0b6504badafb5c033d5ba2dc3c285df76f2e16d2f29a16ecc9f",
+  "before_sha256": "ef8d456ceb0efe001ff2f449bbde3de265bbd5bc7bf08e835812a86458f89611",
+  "after_sha256": "436e7e9619744edce679e0c79301fd2d04d69c3d6bd82a33230975dfdedf6c9b"
+}

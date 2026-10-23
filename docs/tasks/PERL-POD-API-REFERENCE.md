@@ -187,11 +187,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Advertise the existing required source identity alternatives accurately.`
   Acceptance: `The captured check/semantic/schedule input schemas admit an empty object, while real calls reject it for absent source_id/source_path. Express the existing identity alternative in discovery without changing valid request precedence/applicability. Prove real empty/valid/refused cases and descriptor conformance, preserve scalar/source kinds and compatibility, synchronize exact guidance and commit.`
-  Verification: `Measured in live-inventory.json: all three empty calls return -32602 while required lists are empty and no identity alternative is declared. Saved-reader qualification pending .6.1.2.1.`
-  Commit: `pending`
+  Verification: `Live RED finds 15 schema/request mismatches. Discovery-only anyOf plus minLength repair makes both actual persistent regressions pass, including VIAL version applicability. Complete before/after captures conserve 12 valid results and 51 refusals; four coherent missing-call/report/schema/wire interventions fail at their intended checks. All other tool metadata and query runtime conserve. Broader MCP cohort passes All tests successful Files=23, Tests=64; POD/book guidance, local field anchor, native source/delivery and staged doctrines qualify this commit. Error-location repair remains explicitly pending .6.1.2.2.5.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.1: advertise required MCP source selectors`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.2`
   Status: `pending`
@@ -232,7 +232,7 @@ HIAL, claim, locality, or source-feature signoff gates.
   Status: `pending`
   Goal: `Join every public result contract and documentation obligation into a complete gap matrix.`
   Acceptance: `Follow the manifest's full contract-surface graph, current report/schema producers, typed VIAL inspection contract and relevant book/POD. Inventory every public field family, nested record, meaning/unit/order/optionality/version/identity/failure boundary and its canonical documentation, stability and representative evidence. Names or object schemas alone do not count as semantic explanation. Separate compact/full variants and source temporal/schedule/runtime availability; retain explicit omissions and exact owners. No private compiler implementation is promoted to public API.`
-  Verification: `pending current interface conformance`
+  Verification: `Pending result-model/documentation census after interface repairs. Reproduced documentation debt: the book semantic_introspection JSON excerpt omits the currently shipped VIAL inspection tool/template, while live discovery and the following VIAL section include them. The gap matrix must own its refresh or explicitly partial presentation before reference completion; existing discovery remains authoritative.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.4`
@@ -740,3 +740,47 @@ HIAL, claim, locality, or source-feature signoff gates.
   or Knowledge Map allowance increases. Task warning growth uses the unchanged
   measured-ratchet policy. Retain the full refusal, refresh the
   derived inventory after final staging and rerun the same gates.
+
+## Acceptance Checklist — .6.1.2.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '_source_tool_properties' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 129cfae08: source descriptors declare no required alternative and accept empty selector strings, while the runtime already rejects them. The qualified live census and new original regression demonstrate the mismatch; all original valid and refusal products are retained.
+- [x] **ADDRESSED (verified)** — Source discovery uses anyOf, allowing either or both selectors, and minLength for every supplied selector. The two real persistent regressions pass. Complete saved results preserve all 12 valid reports and 51 refusal reasons/codes; coherent controls detect a missing call, changed full report, lost requirement and lost wire reply at the intended checks. Other discovery metadata and runtime code conserve. POD/manual explain precedence, nonempty unused selectors, workspace/applicability and VIAL boundaries.
+- [x] **NO REGRESSION** — All tests successful. Files=23, Tests=64 across existing MCP protocol/schema/source-failure/UTF-8 tests. New actual selector/version regressions pass; saved-reader controls, syntax and native POD/book/source/delivery gates qualify. The changed module reports:
+
+  perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm syntax OK
+
+### .6.1.2.2.1 evidence and continuity
+
+- Re-derivation: real persistent pre/post discovery and source requests, complete
+  raw UTF-8 exchanges and actual reports in source-identity-before/after.json.gz.
+  Falsification: the separate saved reader joins raw frames/decoded records,
+  exact descriptor changes and full valid results; four coherent interventions
+  target distinct checks. Runtime code outside the named descriptor/POD regions
+  is byte-identical. Durability: tracked captures, selected source/observer SHA,
+  replay reader, comparison, original fixtures and complete compressed logs in
+  docs/audits/mcp-api-reference-20261023/. No whole-platform/runtime claim.
+- Initial helper invocation failed before capture because local_path lacked its
+  root argument; corrected before the qualified capture. Original short pipe
+  deadlines expired during native compilation; complete replies and clean exits
+  retain. Source requests now use a bounded 120-second deadline. The transport
+  ping tests retain their shorter deadline; no latency guarantee is inferred.
+- Knowledge Map records the selector fact without increasing aggregate card
+  bytes, dropping questions or growing any allowance. Existing facts remain.
+  The current guide removes only the repaired compatibility row; the remaining
+  measured defects retain exact repair owners. The book's older manifest excerpt
+  omission is owned by .6.1.2.3's scheduled exhaustive documentation matrix.
+- After normal commit gates, clear the message and verify a clean tree. Next:
+  .6.1.2.2.2, advertise the existing diagnostic sample-limit argument without
+  silently changing its current default/zero semantics. No source epoch is open.
+- Captures name the predecessor HEAD and fingerprint the actual observed
+  files, including uncommitted repair/observer sources. The saved reader can
+  recover those exact bytes from the eventual slice commit after current code
+  changes; it never substitutes predecessor bytes for the repaired producer.
+  The first native delivery check omitted the required --verify-build path;
+  the full refusal retains and the correct docs/book/book invocation passes.
+- The first staged gate catches the audit guide warning threshold; the second
+  rejects the attempted debt declaration without a positive frozen baseline.
+  Contain the small guide immediately by removing duplicated repair detail,
+  keeping all substantive detail in this task and the complete captures. Both
+  refusals and the original guide retain; no limit or allowance increases, no
+  debt remains, and the unchanged doctrine gate reruns.

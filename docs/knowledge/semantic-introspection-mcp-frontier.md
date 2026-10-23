@@ -91,18 +91,18 @@ reverify: >-
 
 Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. Earlier history: `git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md`.
 
-Product contract and client examples:
-`docs/book/src/11-extensions-and-embedding.md`; schemas are in
+Contract/examples: `docs/book/src/11-extensions-and-embedding.md`; snapshots:
 `t/fixtures/semantic_introspection_mcp/read_only_schema_snapshot.json`.
-`SemanticIntrospectionContract` and `SemanticIntrospectionSection` own the
-manifest section; `SemanticIntrospectionMCPAdapter` implements `bin/fsmgen-mcp`.
-Stable semantic API first, MCP adapter second remains the required design.
-No private Perl AST, scheduler, lowering, or generator hashes are public APIs.
+`SemanticIntrospectionContract`/`SemanticIntrospectionSection`: manifest ownership.
+`SemanticIntrospectionMCPAdapter`: `bin/fsmgen-mcp`. Semantic API first.
+No private Perl AST/scheduler/lowering/generator hash API.
+Discover families, names and applicability: `./bin/fsmgen --capability-manifest`,
+`tools/list`. Catalog discovery never scans workspace; results retain relative
+identity/public provenance.
 
-Discover current query families, tool/resource names and applicability through
-`./bin/fsmgen --capability-manifest` and `tools/list`. Catalog-backed source
-discovery never scans the workspace. Results retain relative identity and
-public API provenance.
+2026-10-23: check/semantic/schedule need source_id or source_path; each supplied
+value is nonempty; source_path wins. Controls:
+`docs/tasks/PERL-POD-API-REFERENCE.md` (.6.1.2.2.1).
 
 One-shot JSON-RPC and newline stdio use UTF-8 JSON with
 MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested

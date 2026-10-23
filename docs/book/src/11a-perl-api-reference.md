@@ -33,6 +33,16 @@ subset; VIAL tooling's plan/run operations have a separate host boundary.
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
 
+For `fsmgen_check`, `fsmgen_semantic_introspect` and
+`fsmgen_schedule_preview`, supply `source_id` or `source_path`. Discovery
+expresses this alternative with `anyOf`; both may be supplied. Every supplied
+selector must be a nonempty string, including the unused one. When both are
+present, `source_path` selects the source. Paths remain subject to workspace
+containment and source/query applicability; schema admission alone does not
+prove that a file exists or supports the requested query. See the
+[selector reference](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#SOURCE_QUERY_SELECTORS)
+for the separate VIAL inspection and version-selection boundaries.
+
 ## Current MCP schema compatibility
 
 The live MCP audit has identified the compatibility defects below. A client
@@ -42,7 +52,6 @@ reference and its drift checks remain under qualification.
 
 | Surface | Current discrepancy |
 | --- | --- |
-| Check, semantic and schedule tools | A source identity is required at runtime; the input schemas omit that alternative requirement |
 | Diagnostic explanation | `limit_examples` is supported by existing workflows but missing from the closed input schema |
 | Capability sections | The selected manifest version is an integer payload; the schema declares an object payload |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |

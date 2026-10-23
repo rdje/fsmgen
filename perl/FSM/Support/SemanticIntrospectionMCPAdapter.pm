@@ -181,21 +181,15 @@ sub list_tools {
                 _capability_query_output_schema(),
                 _read_only_closed_world_tool_annotations(),
             ),
-            _tool_descriptor(
+            _source_query_tool_descriptor(
                 'fsmgen_check',
                 'Check a workspace-contained hardware or VIAL source through its public report contract.',
-                _source_tool_properties(1),
-                [],
-                _source_query_output_schema(),
-                _read_only_closed_world_tool_annotations(),
+                1,
             ),
-            _tool_descriptor(
+            _source_query_tool_descriptor(
                 'fsmgen_semantic_introspect',
                 'Inspect hardware normalized semantics or the complete public VIAL check result and semantic_report.',
-                _source_tool_properties(1),
-                [],
-                _source_query_output_schema(),
-                _read_only_closed_world_tool_annotations(),
+                1,
             ),
             _tool_descriptor(
                 'fsmgen_vial_inspect',
@@ -209,13 +203,9 @@ sub list_tools {
                 _vial_inspection_output_schema(),
                 _read_only_closed_world_tool_annotations(),
             ),
-            _tool_descriptor(
+            _source_query_tool_descriptor(
                 'fsmgen_schedule_preview',
                 'Run read-only schedule JSON for a workspace-contained ISF, PPIF or supported protocol-alias source.',
-                _source_tool_properties(),
-                [],
-                _source_query_output_schema(),
-                _read_only_closed_world_tool_annotations(),
             ),
             _tool_descriptor(
                 'fsmgen_discover_sources',
@@ -1037,6 +1027,20 @@ sub _tool_descriptor {
     return $descriptor;
 }
 
+sub _source_query_tool_descriptor {
+    my ($name, $description, $with_vial_version) = @_;
+    my $descriptor = _tool_descriptor(
+        $name, $description, _source_tool_properties($with_vial_version), [],
+        _source_query_output_schema(), _read_only_closed_world_tool_annotations(),
+    );
+    # Either selector is sufficient, and the runtime also accepts both.
+    $descriptor->{inputSchema}{anyOf} = [
+        { required => ['source_path'] },
+        { required => ['source_id'] },
+    ];
+    return $descriptor;
+}
+
 sub _source_tool_properties {
     my ($with_vial_version) = @_;
     return {
@@ -1046,10 +1050,12 @@ sub _source_tool_properties {
         }) : ()),
         source_path => {
             type => 'string',
+            minLength => 1,
             description => 'Workspace-root-contained source path.',
         },
         source_id => {
             type => 'string',
+            minLength => 1,
             description => 'Alias for source_path, usually a repo-relative path.',
         },
     };
@@ -1330,6 +1336,24 @@ request, so clients keep stdin open across exchanges. Flushing does not change
 the selected handle or its buffering mode. Notifications produce no response.
 An output write/flush failure throws. This is a blocking loop, not a background
 service. It does not implement HTTP or Content-Length framing.
+
+=head1 SOURCE QUERY SELECTORS
+
+C<fsmgen_check>, C<fsmgen_semantic_introspect> and
+C<fsmgen_schedule_preview> require C<source_id> or C<source_path>. Their
+C<inputSchema> uses C<anyOf>, so both selectors are permitted. Each supplied
+selector must be a nonempty string, even when the other selects the source.
+When both are supplied, C<source_path> takes precedence. Prefer workspace-relative
+identities; absolute paths are accepted only when the configured workspace
+and the source format's public filesystem rules admit them.
+
+Schema admission does not establish file existence, workspace containment or
+source/query applicability. Check and semantic queries accept the optional
+C<language_version> selector only for VIAL; omission selects version 1.
+Schedule preview has no version selector and does not accept VIAL sources.
+The separate C<fsmgen_vial_inspect> tool requires a relative C<source_id> and
+has no C<source_path> alias. Discover current applicability and schemas before
+selecting a query.
 
 =head1 CATALOG SAMPLE RESULTS
 

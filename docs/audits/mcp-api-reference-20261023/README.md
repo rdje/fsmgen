@@ -36,7 +36,7 @@ and complete backing-model semantics are not inferred from these counts.
 
 | Owner suffix under `.6.1.2.2` | Evidence |
 | --- | --- |
-| `.1` source identities | Empty source-tool arguments satisfy the descriptors but are refused by the real server |
+| `.1` source identities | Repaired after the census: discovery now requires a nonempty selector alternative; original observations remain in the saved capture |
 | `.2` diagnostic limit | Existing `limit_examples` calls succeed although the closed schema omits the field |
 | `.3` capability payload | The selected manifest version is numeric against an object-only payload declaration |
 | `.4` argument enforcement | Undeclared fields and some wrong types are accepted; two malformed metadata arguments expose reference addresses |
@@ -46,6 +46,20 @@ and complete backing-model semantics are not inferred from these counts.
 Findings are per-exchange observations and can overlap; they are not a count
 of distinct defects. Exact repair nodes, priority and follow-up reference work
 live in `docs/tasks/PERL-POD-API-REFERENCE.md`.
+
+## Source-selector repair
+
+`source-identity-before.json.gz` and `source-identity-after.json.gz` retain full persistent exchanges from predecessor `9032514b0`, with actual source hashes.
+All 12 valid results conserve, including aliases, absolute-path admission and source_path precedence; all 51 refusals preserve their reason/code. Private
+error locations remain owned. Live VIAL/version and existing MCP regressions pass.
+
+```bash
+python3 -B docs/audits/mcp-api-reference-20261023/verify_source_identity.py docs/audits/mcp-api-reference-20261023/source-identity-before.json.gz docs/audits/mcp-api-reference-20261023/source-identity-after.json.gz
+```
+
+The reader joins raw/decoded data, sources, exact metadata changes, unchanged query runtime and full results. Four coherent adverse controls reject at their
+intended checks. Task .6.1.2.2.1 owns detailed evidence and original failures;
+these selected queries imply no full-feature, platform, timing or runtime claim.
 
 ## Limits and numeric control
 

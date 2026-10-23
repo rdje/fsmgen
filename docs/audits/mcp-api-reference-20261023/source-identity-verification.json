@@ -1,0 +1,15 @@
+{
+  "valid_results_conserved": 12,
+  "refusals_preserved": 51,
+  "automatic_location_repair_pending": true,
+  "controls_rejected": [
+    "missing_call",
+    "changed_valid_report",
+    "missing_selector_requirement",
+    "lost_wire_reply"
+  ],
+  "capture_sha256": {
+    "docs/audits/mcp-api-reference-20261023/source-identity-before.json.gz": "52fd9b39b6f72e1c6265880b06e06452b2c8ea88638f1df2a8d3a549dac561a4",
+    "docs/audits/mcp-api-reference-20261023/source-identity-after.json.gz": "f4c785c0ce8563e81d06af195c5cb406bc8dc42c10beb5e3ac26d214ffd2f2cd"
+  }
+}
