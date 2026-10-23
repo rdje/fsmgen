@@ -251,8 +251,12 @@ kept distinct, including aliases. Actor module IR now keeps detached declaration
 maps keyed by actual interface/storage signals, plus separate canonical actor
 and transaction environments. Original actor identity survives module renaming;
 bank elements retain their explicit declaration indices. Literal/default widths,
-named types and resets keep their existing meanings. Direct-formal, generated
-transaction and domain propagation still need their own qualification.
+named types and resets keep their existing meanings. Direct-formal records now
+follow actual identity-plan allocations with original names, lexical scopes and
+width sources intact. Actor aliases, local aliases and sibling environments
+stay separate, including count tokens versus same-named runtime formals.
+Parent capture excludes generated-child declarations. Generated transaction and
+domain propagation still need their own qualification.
 Private library override records preserve each
 authored name, value tree and lexical owner separately from resolved values.
 Original uses and resolved library uses own independent source lists; default-only

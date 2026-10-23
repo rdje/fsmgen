@@ -256,6 +256,9 @@ Rules:
   Private library override records retain authored name/value/lexical-owner lists
   independently in original and resolved uses, beside unchanged canonical values.
   Parent IR snapshots these selected sources separately from child defaults.
+  Direct-formal IR records retain actual plan identities, original names and
+  lexical source ownership at their allocated private signals. Parent selection
+  excludes generated/pruned transactions; literal/type defaults stay independent.
   Nested aggregate first rows now normalize recursively without changing scalar
   kinds. Selected alias/nested/default native/API/newline reports conserve resolved
   values; carrier/public source inventories and generic specialization remain pending.

@@ -40,6 +40,17 @@ sub capture_actor_width_metadata {
             };
         }
     }
+    for my $formal (@{$args{direct_formals} || []}) {
+        my $port = $formal->{port};
+        next unless exists $port->{_width_declaration};
+        my $origin = $port->{_isf_formal_identity};
+        $declarations{$origin->{physical_name}} = {
+            scope => {kind => 'transaction', actor => $owner, owner => $origin->{source}[2]},
+            source => _copy($port->{_width_declaration}),
+            declaration => {kind => 'transaction_port', name => $origin->{source}[3],
+                direction => $formal->{direction}, identity => _copy($origin->{source})},
+        };
+    }
     for my $use (@{$actor->{library_uses} || []}) {
         $overrides{$use->{instance}} = _copy($use->{_parameter_override_sources})
             if exists $use->{_parameter_override_sources};

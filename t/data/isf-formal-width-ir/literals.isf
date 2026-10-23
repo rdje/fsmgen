@@ -1,0 +1,8 @@
+(actor literal_formal_width_ir (clock clk) (reset rst_n)
+  (types (type word_t (bits 8)))
+  (interface (input start) (input data (width 8)) (output result (width 8)) (output done))
+  (rule actor_copy 1 (result data))
+  (transaction main
+    (ports (input data (width 8)) (input unused) (input typed (type word_t))
+      (output result (width 8)))
+    (on start) (update result data) (complete done)))

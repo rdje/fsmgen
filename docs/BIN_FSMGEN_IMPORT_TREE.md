@@ -36,7 +36,7 @@ destination atomicity. The older closure dimensions below keep their capture
 boundary.
 
 Scoped update on `2026-10-23`: LoweringIR imports
-`FSM::Support::ISFWidthDeclarations` for detached actor width associations,
+`FSM::Support::ISFWidthDeclarations` for detached actor/direct-formal width associations,
 lexical environments and static-use sources. Resolution still uses the existing
 parser/lowering resolvers. This adds no public schema or fresh closure census.
 

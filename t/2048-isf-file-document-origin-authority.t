@@ -90,7 +90,7 @@ for my $path (@inputs) {
                 is_deeply([map {$_->{absolute}} @selected], [($layout eq 'adjacent' ? 1 : 0) x @selected],
                     'actual canonical absolute root candidate versus relative FSMLIB candidate');
                 my @controls;
-                for my $name (qw(identity document_digest producer_swap source_operation target coverage scalar_kind)) {
+                for my $name (qw(identity document_digest producer_swap source_operation target coverage scalar_kind source_actor_identity source_actor_missing override_source override_source_owner)) {
                     my ($bad_actor,$bad_proof)=(clone($actor),clone($proof));
                     if ($name eq 'identity') {$bad_proof->{atl}[0]{resolution}{library_source}='sources/forged.isf'}
                     elsif ($name eq 'document_digest') {$bad_proof->{documents}[0]{source_sha256}='0' x 64}
@@ -99,6 +99,10 @@ for my $path (@inputs) {
                     elsif ($name eq 'target') {$bad_actor->{library_uses}[0]{actor}{actor_name}='forged'}
                     elsif ($name eq 'coverage') {pop @{$bad_proof->{documents}}}
                     elsif ($name eq 'scalar_kind') {$bad_proof->{atl}[0]{actor_id}="$bad_proof->{atl}[0]{actor_id}"}
+                    elsif ($name eq 'source_actor_identity') {$bad_actor->{_width_source_actor_name}='forged'}
+                    elsif ($name eq 'source_actor_missing') {delete $bad_actor->{_width_source_actor_name}}
+                    elsif ($name eq 'override_source') {$bad_actor->{library_uses}[0]{_parameter_override_sources}[0]{value}='3'}
+                    elsif ($name eq 'override_source_owner') {$bad_actor->{library_uses}[0]{_parameter_override_sources}[0]{owner}='worker'}
                     my $before=$json->encode([$bad_actor,$bad_proof]);
                     my $accepted=eval {$authority->validate($bad_actor,$bad_proof);1};
                     my $diagnostic=$@;
@@ -245,6 +249,12 @@ sub documents_for {
 sub expected_projection {
     my ($actor,$proof,$identity)=@_;
     my $out=clone(defined($proof)?[$actor,$proof]:$actor);
+    if (defined $proof) {
+        current_width_metadata($out->[0]);
+        current_width_metadata($_->{actor}) for @{$out->[1]{actors}};
+        current_width_metadata($_->{target}) for @{$out->[1]{uses}};
+        current_width_metadata($_->{resolution}{actor}) for @{$out->[1]{atl}};
+    } else {current_width_metadata($out)}
     project_values($out,$identity);
     return $out unless defined $proof;
     my $p=$out->[1];
@@ -254,6 +264,35 @@ sub expected_projection {
     $_->{ledger}{actor_sha256}=sha256_hex($json->encode($_->{resolution}{actor})) for @{$p->{atl}};
     $p->{actor_sha256}=sha256_hex($json->encode($out->[0]));
     return $out;
+}
+# These immutable fixtures author literal WIDTH=2/3 overrides, independently of
+# their resolved products. Do not infer source tokens from equal defaults or
+# relax whole-actor authentication. Unknown fixture shapes need a new oracle.
+sub current_width_metadata {
+    my ($actor)=@_;
+    my $owner=$actor->{actor_name};
+    die 'unexpected historical actor identity' unless defined($owner) && !ref($owner)
+        && ($owner eq 'library_top' || $owner eq 'worker' || $owner eq 'mirror');
+    die 'wrong source actor identity' if exists($actor->{_width_source_actor_name})
+        && $actor->{_width_source_actor_name} ne $owner;
+    $actor->{_width_source_actor_name}=$owner;
+    for my $key (qw(uses library_uses)) {
+        for my $use (@{$actor->{$key}}) {
+            if (@{$use->{parameter_overrides}}) {
+                my $value=$use->{instance} eq 'first' ? '2' : $use->{instance} eq 'second' ? '3' : undef;
+                die 'unexpected historical override declaration' unless $owner eq 'library_top' && defined($value)
+                    && $json->encode($use->{parameter_overrides}) eq $json->encode([{name=>'WIDTH',value=>$value}]);
+                my $expected=[{name=>'WIDTH',value=>$value,owner=>'library_top'}];
+                die 'wrong authored override source' if exists($use->{_parameter_override_sources})
+                    && $json->encode($use->{_parameter_override_sources}) ne $json->encode($expected);
+                $use->{_parameter_override_sources}=clone($expected);
+            } else {
+                die 'invented historical override source' if exists $use->{_parameter_override_sources};
+            }
+            current_width_metadata($use->{actor}) if exists $use->{actor};
+        }
+    }
+    current_width_metadata($_->{actor}) for values %{$actor->{_atl_actor_type_resolutions} || {}};
 }
 sub project_values {
     my ($v,$identity)=@_;

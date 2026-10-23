@@ -1617,6 +1617,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     my @immediate_assertions;
     my %point_bindings;   # ISF-TRIGGER-ANCHOR.5: name -> state for (point …)/(on … as …); for (at …)
     my @bank_accesses;
+    my @width_direct_formals;
     my $transaction_port_bindings = _transaction_port_binding_metadata($actor);
     my %signal_widths = _declared_storage_signal_widths($actor);
     my %storage_roles = _declared_storage_roles($actor);
@@ -1657,6 +1658,14 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
                 confess "Transaction '$tx->{name}': formal '$port->{name}' collides with an actor interface port; separate direct formal physical identities are not supported yet\n"
                     if exists $formals{$port->{name}};
             }
+        }
+        # This is the same live parent selection used by actual lowering.
+        # Generated/pruned transactions never contribute parent declarations.
+        # The canonical port map above has already validated each source mark.
+        for my $pair (['inputs', 'input'], ['outputs', 'output']) {
+            push @width_direct_formals, map {{port => $_, direction => $pair->[1]}}
+                grep {exists $_->{_isf_formal_identity}}
+                @{($tx->{ports} || {})->{$pair->[0]} || []};
         }
         my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses, $resets, $asserts) =
             $self->_build_transaction($tx, $actor, $ti++, $generated_children, \%point_bindings);
@@ -1801,7 +1810,7 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
     } @{$width_actor->{transactions} || []};
     my $width_metadata = capture_actor_width_metadata(actor => $width_actor,
         params => $ir->{params}, constants => $ir->{constants},
-        transaction_params => \%width_transaction_params);
+        transaction_params => \%width_transaction_params, direct_formals => \@width_direct_formals);
     $ir->{$_} = $width_metadata->{$_} for keys %$width_metadata;
     $ir->{resource_arbitration} = _apply_rule_user_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _merge_priority_resolution(

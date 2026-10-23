@@ -117,6 +117,32 @@ qualified resolver and checks actual declarations against prepared module scopes
 before emission. Generated-child ports retain their published names. This scope
 repair does not repair sibling-controller or local-call reachability.
 
+Private width-source records now follow those direct-formal allocations. They
+retain the authored formal name, actual plan identity and lexical environment
+separately from the private signal name. Unused and read-only declarations keep
+their associations; equal default widths do not merge actor or sibling scopes.
+Literal, implicit and named-type widths gain no parameter dependency.
+
+For example, `inherited` below resolves the actor's alias to eight bits, while
+`local_data` resolves the transaction's alias to four bits:
+
+```lisp
+(actor width_scopes (clock clk) (reset rst_n)
+  (params (W 8) (ACTOR_ALIAS W))
+  (interface (input start) (input data (width W))
+    (output result (width W)) (output done))
+  (rule copy 1 (result data))
+  (transaction work (params (W 4) (LOCAL_ALIAS W))
+    (ports (input inherited (width ACTOR_ALIAS))
+      (input local_data (width LOCAL_ALIAS)))
+    (on start) (complete done)))
+```
+
+The private records preserve both dependencies and their separate environments.
+Scheduled carriers and public width reports still contain resolved defaults.
+This does not implement generic HDL or library shape specialization; generated
+transaction and domain provenance retain separate qualification work.
+
 A current reusable-actor defect remains owned for immediate repair: library and
 resolved ATL child constructors currently enter raw module lowering before child
 formal isolation. A worker whose direct `payload` formal shares its actor pin or
