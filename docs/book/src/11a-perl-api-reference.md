@@ -61,8 +61,13 @@ value's JSON type and use its public contract for field meanings. See
 Match each tool's `inputSchema`: arguments are objects, and quoted numbers,
 numbers and Booleans are different kinds. Omitted arguments and explicit null
 are distinct requests. VIAL tool versions require integers; versions inside
-resource URIs are textual path components. Current admission leniency is outside
-the supported contract. The
+resource URIs are textual path components. `tools/call` requires object `params`
+with a string `name`; present `arguments` must be an object. Metadata tools
+enforce their required fields, declared kinds and closed argument objects.
+Malformed parameters return JSON-RPC `-32602`; unknown string tool names or
+diagnostic codes retain their lookup errors. Integral numbers such as `1.0`
+and `1e0` are accepted as integers. The remaining source admission leniency is
+outside the supported contract. The
 [argument-admission notes](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#CURRENT_ARGUMENT_ADMISSION)
 describe the remaining compatibility limits.
 
@@ -77,9 +82,8 @@ reference and its drift checks remain under qualification.
 | --- | --- |
 | Metadata limits | Very large JSON integers such as `1e30` can select the default sample limit instead of the cap; use positive limits from 1 through 100 until repaired |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |
-| Metadata-tool arguments | Some extra fields and wrong types are accepted despite the advertised schemas; that leniency is outside the supported argument contract |
 | VIAL tool versions | Some numeric strings are accepted despite the integer schema; supply JSON integers |
-| Embedded caller data | Invalid numbers supplied to string fields can change kind in later copies of a caller's request; use the declared kinds while this is repaired |
+| Embedded caller data | Invalid numbers supplied to source identity string fields can change kind in later copies of a caller's request; use the declared kinds while this is repaired |
 | Error messages | Some failures retain automatic Perl locations or reference addresses; use error codes and structured diagnostics for program decisions |
 
 ## Build and preview

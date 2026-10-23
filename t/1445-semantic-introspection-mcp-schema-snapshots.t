@@ -168,8 +168,9 @@ subtest 'diagnostic discovery and bounded samples retain their public contract' 
     for my $arguments ({}, {code => 'UNKNOWN_DIAGNOSTIC_FIXTURE'}) {
         my $response = $client->handle_jsonrpc_request({jsonrpc => '2.0', id => 1,
             method => 'tools/call', params => {name => 'fsmgen_explain_diagnostic', arguments => $arguments}});
-        is($response->{error}{code}, -32000, 'existing missing/unknown code refusal classification is preserved');
-        like($response->{error}{message}, qr/(?:Diagnostic code argument is required|Unknown FSMGen diagnostic code)/,
+        is($response->{error}{code}, exists($arguments->{code}) ? -32000 : -32602,
+            'missing required code is invalid params; unknown string code retains semantic refusal');
+        like($response->{error}{message}, qr/(?:requires argument 'code'|Unknown FSMGen diagnostic code)/,
             'refusal retains the public reason');
     }
     is($json->encode($manifest), $before, 'counterfactual bounds checks do not mutate the actual manifest');

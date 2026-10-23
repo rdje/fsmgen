@@ -67,6 +67,37 @@ def capture_capability(server):
 
 
 class MCPMetadataSchemaTest(unittest.TestCase):
+    def test_metadata_argument_refusals_over_persistent_stdio(self):
+        bases = {
+            'fsmgen_capability_query': {'section': 'semantic_introspection'},
+            'fsmgen_discover_sources': {'query': 'axi', 'limit': 1},
+            'fsmgen_find_examples': {'query': 'axi', 'limit': 1},
+            'fsmgen_explain_diagnostic': {'code': CODE, 'limit_examples': 1},
+            'fsmgen_support_summary': {'limit_examples': 1},
+        }
+        with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
+            client = MetadataClient(server)
+            tools = {t['name']: t for t in client.call('tools/list')['tools']}
+            invalid = [None, False, True, 0, 1, [], '']
+            params = [None, False, [], {}, {'name': None}, {'name': False}, {'name': []}]
+            for name, base in bases.items():
+                params.extend({'name': name, 'arguments': value} for value in invalid)
+                params.append({'name': name, 'arguments': dict(base, unpublished_argument=True)})
+                for field in tools[name]['inputSchema']['properties']:
+                    # Boolean true satisfies neither advertised primitive kind;
+                    # numeric-looking strings and fractions are covered by T2102.
+                    params.append({'name': name, 'arguments': dict(base, **{field: True})})
+            params.append({'name': 'fsmgen_explain_diagnostic', 'arguments': {}})
+            for index, arguments in enumerate(params, 100):
+                with self.subTest(params=arguments):
+                    server.send({'jsonrpc': '2.0', 'id': index, 'method': 'tools/call', 'params': arguments})
+                    response = server.receive()
+                    self.assertEqual(response['id'], index)
+                    self.assertEqual(response['error']['code'], -32602)
+                    self.assertNotIn('result', response)
+                    self.assertNotRegex(response['error']['message'], r'(?:ARRAY|HASH|Boolean)\(0x[0-9a-f]+\)')
+            self.assertEqual(client.call('ping'), {})
+
     def test_capability_sections_match_output_schema_and_public_values(self):
         with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
             exchanges = capture_capability(server)

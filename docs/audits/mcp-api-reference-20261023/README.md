@@ -39,7 +39,7 @@ and complete backing-model semantics are not inferred from these counts.
 | `.1` source identities | Repaired after the census: discovery now requires a nonempty selector alternative; original observations remain in the saved capture |
 | `.2` diagnostic limit | Repaired: discovery advertises the diagnostic sample limit; defaults retain |
 | `.3` capability payload | Repaired: selected version retains its integer payload; the schema admits it |
-| `.4` argument enforcement | Undeclared fields and some wrong types are accepted; two malformed metadata arguments expose reference addresses |
+| `.4` argument enforcement | Metadata/envelope repaired; source kinds and numeric-limit normalization remain owned |
 | `.5` error locations | Persistent refusals retain the adapter location and input-record suffix |
 | `.6` documentation type | Ordinary example results contain a documentation object against an array declaration |
 

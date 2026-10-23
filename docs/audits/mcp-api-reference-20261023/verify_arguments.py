@@ -104,8 +104,15 @@ def verify(record):
     expected_native = {p for p in subprocess.check_output(['git', 'ls-tree', '-r', '--name-only',
         record['head'], 'perl/FSM']).decode().splitlines() if p.endswith('.pm')}
     assert set(record['source_sha256']) == expected_native | set(record['observer_sources'])
+    overrides = record.get('native_source_overrides', {})
+    assert set(overrides) <= expected_native, 'unowned native overlay path'
     for path in expected_native:
-        assert native_digest(record['head'], path) == record['source_sha256'][path], 'native source boundary mismatch'
+        identity = record['source_sha256'][path]
+        if path in overrides:
+            assert native_digest(record['head'], path) != identity, 'redundant native overlay'
+            assert hashlib.sha256(overrides[path].encode('utf-8')).hexdigest() == identity, 'native overlay hash mismatch'
+        else:
+            assert native_digest(record['head'], path) == identity, 'native source boundary mismatch'
     for path, source in record['observer_sources'].items():
         assert hashlib.sha256(source.encode('utf-8')).hexdigest() == record['source_sha256'][path]
     sent = [json.loads(line) for line in record['sent_utf8'].splitlines()]

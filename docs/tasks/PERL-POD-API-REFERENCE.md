@@ -223,11 +223,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.1: qualify argument kinds and caller preservation`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Enforce metadata argument object, required/closed-field and JSON-kind contracts.`
   Acceptance: `Use .4.1's exact public-boundary findings and established kind facilities. Preserve valid values and per-tool selection/default behavior; reject unsupported root argument shapes, unknown fields and wrong kinds without stringifying references or mutating input values. Handle dispatcher normalization explicitly so invalid falsy values cannot bypass admission. Qualify actual API/newline refusals, full valid-result conservation, scalar/Boolean controls and schema drift; synchronize POD/book and commit. Leave numeric normalization to its distinct leaf.`
-  Verification: `The matrix confirms unsupported metadata fields/kinds, invalid falsy argument normalization, malformed tools/call params/name classifications and metadata filter caller-kind effects. Implement admission at the public dispatch boundary: capability/examples and resources share private payload helpers with different internal argument shapes. Use detached scalar-kind inspection, preserve every valid result and both caller serialization/clone kinds, and reject invalid parameter shapes with the existing invalid-params channel. The current per-tool numeric policies remain unchanged until .4.3.`
-  Commit: `pending`
+  Verification: `T2102 genuinely fails three original subtests and passes after the public-boundary repair; all five metadata tools enforce their exact advertised primitive/required/closed-field contracts. A complete actual API/pipe matrix rejects all 369 targeted malformed cases, conserves all 81 previously successful complete responses and preserves metadata caller values/copy kinds. Original unsupported/misclassified/copy observations become 6/6/12, all separately owned source cases; these overlapping case categories are not distinct-defect counts. Both saved reader populations and eight controls pass, with four additional actual repair counterfeits rejected. Files=25 Tests=75 and all three live metadata tests pass. Aliases/defaults and integral number admission remain valid; numeric selection repair remains .4.3. Exact source overlay/capture/runtime conservation, logs, POD/book and required gates retain.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.2: enforce metadata argument contracts`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.3`
   Status: `pending`
@@ -961,3 +961,43 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
   No wider rationale or private-implementation API is introduced.
 - After native/staged/normal commit gates, clear the message, verify clean state
   and activate .6.1.2.2.4.2. All required capture/reader jobs have been consumed.
+
+
+## Acceptance Checklist — .6.1.2.2.4.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '$params->{arguments} || {}' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 129cfae08's falsy normalization. The committed .4.1 matrix proves missing metadata schema admission and direct lc caller-kind effects. Fresh T2102 runs on e01874c41 fail the wrong-kind/envelope/schema-drift subtests; its integral/default/alias subtest remains a positive control. Exact original output retains.
+- [x] **ADDRESSED (verified)** — Public call_tool validation uses the actual metadata input descriptors and fails closed on unsupported schema vocabulary. The dispatcher separately distinguishes absent arguments from explicit null; detached primitive inspection distinguishes numeric/string/Boolean kinds without caller reads. Actual API/pipe comparison retains every request/result, validates all targeted refusals and full successful-result conservation, and preserves metadata caller copies. Four genuine restored-admission/changed-result/lost-copy/tampered-source controls reject, alongside all eight original reader controls on both captures. T2102 checks every reviewed metadata field, integral spellings, direct defaults, resource/capability aliases and five real schema-drift interventions; the persistent stdio test checks actual invalid calls and continued server health. POD/book document the exact changed boundary and remaining source/numeric limits.
+- [x] **NO REGRESSION** — All tests successful. Files=25, Tests=75 across the existing MCP cohort plus T2102. All three live metadata tests pass, including complete current capability/diagnostic values. Captured runtime before END equals the final adapter despite later POD edits. Python readers parse as 3.9; native POD/book/source/delivery and staged doctrines qualify. No sealed source epoch, full toolchain/platform, latency or arbitrary-number-range claim follows.
+
+### .6.1.2.2.4.2 evidence and continuity
+
+- Re-derivation is the identical complete request population through the real
+  initialized persistent server and decoded JSON-RPC API, with fresh before/
+  after serialization and later Storable copies. Falsification uses independent
+  schema/case/source/raw-frame joins, full original-success conservation,
+  original and repair-specific adverse controls, plus T2102's literal-kind,
+  default/alias and deliberately changed-descriptor controls. Durability is the
+  complete original capture, repaired metadata-admission-after.json.gz, tracked
+  producers/readers/tests and final comparison/logs in the dated audit directory.
+- The repaired capture names e01874c41 as its base and retains the sole changed
+  native adapter verbatim as a hashed overlay. It does not mislabel worktree
+  bytes as that commit. Every other native module matches the original source
+  population. Observer sources remain complete hashed capsules. Later POD-only
+  edits retain separate final-source/runtime conservation evidence.
+- The bounded local validator covers only the current metadata vocabulary and
+  rejects unimplemented advertised constraints. It is not a general JSON Schema
+  engine. Native integer classification uses the decoded finite numeric value;
+  quoted numbers, Booleans and fractional values remain distinct. Integral
+  decimal/exponent admission does not repair each tool's limit normalization.
+- The prior T1445 missing-code expectation changes to invalid-params because
+  code is a required field. Unknown string codes retain the semantic lookup
+  refusal. Valid values/default policies, the unsupported string-tool lookup,
+  capability/examples aliases and resource helper invocations conserve.
+- The initial metadata reader run passes; its final readability change replaces
+  an implicit list-length index with explicit enumeration and is reverified.
+  No failed product observation is rewritten or dropped. Original .4.1 defects
+  and observer mistakes retain their immutable evidence and scoped conclusions.
+- Knowledge Map routes this repair without losing questions/facts or growing
+  its authority. No new cross-cutting rationale or private supported API is
+  introduced. Complete normal gates and commit before .4.3's numeric limits;
+  .4.4 still owns source identities and VIAL version kinds/caller preservation.

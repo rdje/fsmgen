@@ -98,6 +98,11 @@ def main():
     record = {'head': head, 'source_sha256': identities,
               'observer_sources': {p: (ROOT / p).read_text() for p in selected if p not in native},
               'python_version': sys.version}
+    # Repair captures can precede their commit. Retain every changed native
+    # byte as an explicit overlay over the exact HEAD, never label it that HEAD.
+    record['native_source_overrides'] = {
+        p: (ROOT / p).read_text() for p in native
+        if hashlib.sha256(subprocess.check_output(['git', 'show', head + ':' + p])).hexdigest() != identities[p]}
     with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
         for request in ({'jsonrpc': '2.0', 'id': 0, 'method': 'initialize',
                          'params': {'protocolVersion': '2025-06-18', 'capabilities': {},

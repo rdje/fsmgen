@@ -259,11 +259,18 @@ sub list_tools {
 
 sub call_tool {
     my ($self, $name, $arguments) = @_;
-    $arguments ||= {};
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: tool name must be a string"
+        unless _is_json_string($name);
     die "MCP tool name is required" unless defined($name) && length($name);
+    # An omitted/undef hash remains the embedded Perl method's default. The
+    # JSON-RPC boundary separately rejects an explicitly supplied JSON null.
+    $arguments = {} unless defined $arguments;
+    die "FSMGEN_JSONRPC_INVALID_PARAMS: tool arguments must be an object"
+        unless ref($arguments) eq 'HASH' && !blessed($arguments);
 
     my $payload;
     if ($name eq 'fsmgen_capability_query') {
+        $self->_validate_metadata_arguments($name, $arguments);
         $payload = $self->_capability_query_payload($arguments);
     } elsif ($name eq 'fsmgen_check') {
         $payload = $self->_source_query_payload('check', $arguments);
@@ -274,12 +281,16 @@ sub call_tool {
     } elsif ($name eq 'fsmgen_schedule_preview') {
         $payload = $self->_source_query_payload('schedule', $arguments);
     } elsif ($name eq 'fsmgen_find_examples') {
+        $self->_validate_metadata_arguments($name, $arguments);
         $payload = $self->_examples_payload($arguments);
     } elsif ($name eq 'fsmgen_discover_sources') {
+        $self->_validate_metadata_arguments($name, $arguments);
         $payload = $self->_sources_payload($arguments);
     } elsif ($name eq 'fsmgen_explain_diagnostic') {
+        $self->_validate_metadata_arguments($name, $arguments);
         $payload = $self->_diagnostic_payload($arguments);
     } elsif ($name eq 'fsmgen_support_summary') {
+        $self->_validate_metadata_arguments($name, $arguments);
         $payload = $self->_support_summary_payload($arguments);
     } else {
         die "Unsupported MCP tool: $name";
@@ -298,6 +309,63 @@ sub call_tool {
             || _is_vial_inspection_failure_report($payload->{report}, $payload->{query_kind}))
             ? JSON::PP::true : JSON::PP::false,
     };
+}
+
+sub _is_json_string {
+    my ($value) = @_;
+    return 0 unless defined($value) && !ref($value);
+    # Inspect only this detached scalar. Text/numeric reads of the caller's
+    # scalar can change its JSON kind in a subsequent Storable copy.
+    return JSON::PP->new->allow_nonref->canonical->encode($value) =~ /\A"/;
+}
+
+sub _is_json_integer {
+    my ($value) = @_;
+    return 0 unless defined($value) && !ref($value);
+    my $literal = JSON::PP->new->allow_nonref->canonical->encode($value);
+    return 0 unless $literal =~ /\A-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?\z/;
+    return $value == int($value);
+}
+
+sub _validate_metadata_arguments {
+    my ($self, $name, $arguments) = @_;
+    my ($tool) = grep { $_->{name} eq $name } @{$self->list_tools->{tools}};
+    my $schema = $tool ? $tool->{inputSchema} : undef;
+    # This is deliberately the primitive metadata vocabulary, not a general
+    # JSON Schema evaluator. Refuse producer drift rather than ignore a newly
+    # advertised constraint. Source-query schemas have a separate admission path.
+    die "Unsupported metadata input schema"
+        unless ref($schema) eq 'HASH'
+            && join(',', sort keys %$schema) eq 'additionalProperties,properties,required,type'
+            && $schema->{type} eq 'object'
+            && ref($schema->{properties}) eq 'HASH'
+            && ref($schema->{required}) eq 'ARRAY'
+            && JSON::PP::is_bool($schema->{additionalProperties})
+            && !$schema->{additionalProperties};
+    my $properties = $schema->{properties};
+    for my $property (values %$properties) {
+        die "Unsupported metadata input schema"
+            unless ref($property) eq 'HASH'
+                && !grep { $_ ne 'type' && $_ ne 'description' } keys %$property;
+        die "Unsupported metadata input schema"
+            unless defined($property->{type})
+                && ($property->{type} eq 'string' || $property->{type} eq 'integer');
+    }
+    for my $required (@{$schema->{required}}) {
+        die "Unsupported metadata input schema"
+            unless _is_json_string($required) && exists $properties->{$required};
+        die "FSMGEN_JSONRPC_INVALID_PARAMS: $name requires argument '$required'"
+            unless exists $arguments->{$required};
+    }
+    for my $key (sort keys %$arguments) {
+        die "FSMGEN_JSONRPC_INVALID_PARAMS: unsupported argument '$key' for $name"
+            unless exists $properties->{$key};
+        my $type = $properties->{$key}{type};
+        my $valid = $type eq 'string'
+            ? _is_json_string($arguments->{$key}) : _is_json_integer($arguments->{$key});
+        die "FSMGEN_JSONRPC_INVALID_PARAMS: $name argument '$key' must be a JSON $type"
+            unless $valid;
+    }
 }
 
 sub handle_jsonrpc_request {
@@ -335,8 +403,13 @@ sub handle_jsonrpc_request {
             _reject_unsupported_list_cursor($request->{params});
             $result = $self->list_tools();
         } elsif ($method eq 'tools/call') {
-            my $params = $request->{params} || {};
-            $result = $self->call_tool($params->{name}, $params->{arguments} || {});
+            my $params = $request->{params};
+            die "FSMGEN_JSONRPC_INVALID_PARAMS: tools/call params must be an object"
+                unless ref($params) eq 'HASH' && !blessed($params);
+            die "FSMGEN_JSONRPC_INVALID_PARAMS: tool arguments must be an object"
+                if exists($params->{arguments})
+                    && (ref($params->{arguments}) ne 'HASH' || blessed($params->{arguments}));
+            $result = $self->call_tool($params->{name}, $params->{arguments});
         } elsif ($method eq 'ping') {
             $result = {};
         } else {
@@ -1315,6 +1388,9 @@ that every CLI action is exposed as a tool.
 =head2 call_tool($name, $arguments)
 
 Returns a tool result with C<content>, C<structuredContent> and C<isError>.
+The embedded Perl method defaults an omitted or C<undef> C<$arguments> to an
+empty hash; any supplied defined value must be an unblessed hash. This optional
+Perl default does not admit explicit JSON null at the JSON-RPC boundary.
 Expected source-check/inspection refusals set C<isError> while retaining their
 structured report. Unsupported tools and invalid invocations can throw; the
 JSON-RPC dispatcher translates those exceptions. Source queries are constrained
@@ -1360,19 +1436,33 @@ selecting a query.
 
 Follow each tool's C<inputSchema>. Arguments are JSON objects; quoted numbers,
 numbers and Booleans have distinct kinds. Omitting C<arguments> and explicitly
-supplying JSON null are different requests, even though legacy normalization
-currently accepts some invalid forms. Such leniency is outside the supported
-argument contract.
+supplying JSON null are different requests. C<tools/call> requires object
+C<params> with a string C<name>; C<arguments> may be omitted but must be an
+object when present. Malformed parameter/name/argument kinds return JSON-RPC
+C<-32602>. Outer parameter metadata such as C<_meta> is not a tool argument.
+
+The metadata tools C<fsmgen_capability_query>, C<fsmgen_discover_sources>,
+C<fsmgen_find_examples>, C<fsmgen_explain_diagnostic> and
+C<fsmgen_support_summary> enforce their declared required fields, primitive
+types and closed argument objects. For example, diagnostic C<code> must be
+present and string-valued; an unknown string code still produces the semantic
+lookup error, while a missing code or numeric code is an invalid parameter.
+String fields accept strings that look numeric; integer fields reject quoted
+numbers, Booleans and fractional numbers. Integral number spellings such as
+C<1.0> and C<1e0> are integers. Admission does not change each operation's
+sample-limit policy; see L</DIAGNOSTIC SAMPLE LIMITS> for its current caveat.
+Metadata admission preserves the caller's request values and kinds through
+later copies. Resource reads and capability aliases keep their own contracts.
 
 VIAL tool C<language_version> fields are integers. Version components inside
 resource URIs are text parsed from the URI; do not infer a tool argument's kind
 from that textual spelling. Some tool numeric-string versions are currently
 accepted contrary to discovery and remain under repair.
 
-Embedded callers supplying invalid numbers to string fields can also observe
-changed kinds in later copies of their request data. The observed cases concern
-invalid arguments; they do not establish a global wire or valid-input defect.
-Use the declared kinds while these admission/caller-preservation repairs finish.
+Embedded callers supplying invalid numbers to source identity string fields can
+still observe changed kinds in later copies of their request data. These source
+selector cases remain under repair; they do not establish a global wire or
+valid-input defect. Use the declared source argument kinds.
 
 =head1 CAPABILITY QUERY PAYLOADS
 
