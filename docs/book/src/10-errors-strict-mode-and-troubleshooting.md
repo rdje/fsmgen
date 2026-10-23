@@ -571,6 +571,13 @@ A redundant render may be removed when its complete regular-file membership and 
 Compare copied source-view files too: chapter HTML can match while the resume pointer or task index differs. Guard content and stable node identity while allowing access-time updates caused by reading. A sweep with no proven disposable candidate retains all artifacts and records that result.
 `docs/ARTIFACT_CLEANUP.md` records the latest repository-owned sweep. Rust sweeps inspect release, incremental and dependency directories for `.bin` and `.log` files; retained evidence is recorded separately from disposable candidates.
 
+Read the latest dated census and its membership/primitive-kind controls without
+walking the filesystem again or deleting candidates:
+
+```bash
+scripts/run_with_ram_guard.sh -- python3 -B docs/audits/artifact-census-20261023/census.py
+```
+
 Private cache-test copies may also be disposed of after their complete
 source/output snapshots and native receipts are committed, every regular node
 matches those records, and saved verification succeeds without the copies.

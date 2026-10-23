@@ -898,11 +898,16 @@ evidence-backed causality must remain distinguishable.
   - [x] **NO REGRESSION** — knowledge-map: OK and task/claim doctrines pass in the original full gate; only the owned allowance fails. Fresh inventory and staged scripts/check_doctrines.sh plus normal hooks qualify the correction.
 
 - ID: `ISF-REDUCTION-DELIVERY.18`
-  Status: `pending`
+  Status: `done`
   Goal: `Complete the elapsed-time-admitted daily artifact census after the generated-width commit.`
   Acceptance: `The actual UTC boundary now exceeds the unchanged latest cleanup record by 24 hours. After .2.3.2.4.1 is committed and the tree is clean, reuse the installed authenticated collector/reviewer and genuine saved-record controls with a fresh owner/revision/output. Verify independent membership and root/Rust locations; preserve candidates without exact disposal authority. Overwrite only the latest cleanup record, synchronize the saved-reader book route and required gates, commit, then resume .2.3.2.4.2. No spent source or compiler epoch is replayed.`
-  Verification: `pending clean generated-width handoff`
-  Commit: `pending`
+  Verification: `Generated-width work is committed at 0456d31a1 and the tree was clean before activation. The actual exclusive dated census reuses the byte-exact installed published collector/reviewer/controls authenticated against that revision; historical bytes remain comparison inputs. Complete scoped same-volume regular log/bin lstat metadata, root/Rust locations, exclusions and independent rg command/status/membership retain in docs/audits/artifact-census-20261023/census.json.gz. No candidate has exact disposal authority, so every candidate remains and no deletion is performed. Saved replay verifies the prior cleanup bytes against Git, source identities, original admission interval and actual membership; missing-member, unsafe-path, Boolean-size and invented-removal controls refuse. Latest-only cleanup record uses the actual captured UTC and the book exposes the current saved reader. Re-derivation is the actual filesystem census; falsification is independent rg membership and genuine saved-record interventions; durability is tracked unchanged contract, exclusive wrapper/receipt, record/task/book and Git. Scope excludes content identity, reclamation, future absence and original/compiler execution. Focused saved-reader, task/decision/book/source/index and claim/doctrine checks qualify commit before .2.3.2.4.2. No source feature, public API or roadmap direction changes.`
+  Commit: `ISF-REDUCTION-DELIVERY.18: complete due artifact census`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "Latest artifact cleanup" and native 0456d31a1 identify the exact prior UTC record. Actual collector admission now exceeds 24 hours, after the earlier startup refusal; suffix or age cannot authorize disposal.
+  - [x] **ADDRESSED (verified)** — The admitted exclusive census and independent rg membership agree. All candidates retain without disposal authority, the latest-only record takes the captured UTC, and saved member/path/Boolean/removal controls reject without another walk or deletion.
+  - [x] **NO REGRESSION** — Saved published-contract replay and current task/book/source/index/decision checks pass. knowledge-map: OK, complete claim checks, staged scripts/check_doctrines.sh and normal hooks gate this dated maintenance slice. Original/native/compiler evidence and every enforcement ceiling remain unchanged.
 
 ## Blockers
 
