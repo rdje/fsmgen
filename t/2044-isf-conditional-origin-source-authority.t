@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
+use Digest::SHA qw(sha256_hex);
 use FSM::Test::DiagnosticCause qw(diagnostic_cause_matches);
 use JSON::PP;
 use FSM::Test::ConditionalOriginAuthority;
@@ -15,17 +16,20 @@ for my $path (@paths) {
     subtest "independently supplied source authority $name" => sub {
         my $saved = $json->decode(read_file($path));
         my $authority = FSM::Test::ConditionalOriginAuthority->from_source($saved->{source}, $saved->{label});
-        my $actor = clone($saved->{instrumented});
+        is($saved->{ledger}{actor_sha256}, sha256_hex($json->encode($saved->{instrumented})),
+            'immutable historical actor digest still authenticates exact original bytes/kinds');
+        my $actor = with_width_source_identity($saved->{instrumented});
         my $ledger = clone($saved->{ledger});
-        is($json->encode($authority->actor), $json->encode($saved->{ordinary}),
-            'complete actual actor and original primitive kinds match immutable independent product');
+        $ledger->{actor_sha256} = sha256_hex($json->encode($actor));
+        is($json->encode($authority->actor), $json->encode(with_width_source_identity($saved->{ordinary})),
+            'complete current actor adds only exact source identity to immutable independent product');
         is($json->encode($authority->ledger), $json->encode($ledger),
             'complete reconstructed origins match immutable qualified product');
         ok($authority->validate($actor, $ledger), 'opaque actor and ledger JSON reload authenticates against caller source');
         my $actor_before = $json->encode($actor);
         my $ledger_before = $json->encode($ledger);
         my @controls;
-        for my $mutation (qw(source_identity catalog_owner catalog_form target omission duplicate schema_kind extra_field actor_identity actor_kind)) {
+        for my $mutation (qw(source_identity catalog_owner catalog_form target omission duplicate schema_kind extra_field actor_identity actor_kind actor_source_identity actor_source_omission)) {
             my $bad_actor = clone($actor);
             my $bad_ledger = clone($ledger);
             my $group = @{$bad_ledger->{entries}} ? 'entries' : 'residuals';
@@ -38,6 +42,8 @@ for my $path (@paths) {
             elsif ($mutation eq 'schema_kind') {$bad_ledger->{schema_version} = '1'}
             elsif ($mutation eq 'extra_field') {$bad_ledger->{extra} = 'forged'}
             elsif ($mutation eq 'actor_identity') {$bad_actor->{actor_name} = 'forged_actor'}
+            elsif ($mutation eq 'actor_source_identity') {$bad_actor->{_width_source_actor_name} = 'forged_source_actor'}
+            elsif ($mutation eq 'actor_source_omission') {delete $bad_actor->{_width_source_actor_name}}
             else {
                 my $width = $bad_actor->{interface}{inputs}[0]{width};
                 $bad_actor->{interface}{inputs}[0]{width} = '' . $width;
@@ -48,7 +54,7 @@ for my $path (@paths) {
             my $accepted = eval {$authority->validate($bad_actor, $bad_ledger); 1};
             my $diagnostic = $@;
             ok(!$accepted, "$mutation actually refuses");
-            ok(diagnostic_cause_matches($diagnostic, $mutation =~ /\Aactor_(?:identity|kind)\z/
+            ok(diagnostic_cause_matches($diagnostic, $mutation =~ /\Aactor_(?:identity|kind|source_identity|source_omission)\z/
                 ? 'conditional origin actor differs from authoritative source'
                 : 'conditional origin ledger differs from authoritative source'),
                 'precise source-bound diagnostic');
@@ -76,8 +82,10 @@ subtest 'identical complete actors require the independently supplied source int
     is($json->encode($macro->{instrumented}), $json->encode($authored->{instrumented}), 'whole actors are identical');
     my $authority = FSM::Test::ConditionalOriginAuthority->from_source($macro->{source}, $macro->{label});
     my $forged = clone($authored->{ledger});
+    my $actor = with_width_source_identity($authored->{instrumented});
+    $forged->{actor_sha256} = sha256_hex($json->encode($actor));
     $forged->{source_sha256} = $macro->{ledger}{source_sha256};
-    ok(!eval {$authority->validate($authored->{instrumented}, $forged); 1},
+    ok(!eval {$authority->validate($actor, $forged); 1},
         'valid authored-when catalog plus matching embedded digest cannot replace select intent');
     ok(diagnostic_cause_matches($@, 'conditional origin ledger differs from authoritative source'), 'source operation authenticates independently of target shape');
 };
@@ -104,5 +112,12 @@ subtest 'unqualified imports stay closed at the local authority boundary' => sub
 done_testing;
 
 sub clone {$json->decode($json->encode($_[0]))}
+sub with_width_source_identity {
+    my ($historical) = @_;
+    die "historical source actor already has width identity\n" if exists $historical->{_width_source_actor_name};
+    my $actor = clone($historical);
+    $actor->{_width_source_actor_name} = $historical->{actor_name};
+    return $actor;
+}
 sub read_file {open my $f, '<:raw', $_[0] or die $!; local $/; return <$f>}
 sub write_file {open my $f, '>:raw', $_[0] or die $!; print {$f} $_[1] or die $!; close $f or die $!}

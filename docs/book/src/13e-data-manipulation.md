@@ -247,17 +247,25 @@ implicit values gain no dependency. Carrier work must preserve the selected name
 name can select a named type even when an ISF width selected a same-named scalar
 parameter. Private width records alone do not resolve either prerequisite.
 Generated children also need the actor and transaction parameter environments
-kept distinct, including aliases. Private library override records preserve each
+kept distinct, including aliases. Actor module IR now keeps detached declaration
+maps keyed by actual interface/storage signals, plus separate canonical actor
+and transaction environments. Original actor identity survives module renaming;
+bank elements retain their explicit declaration indices. Literal/default widths,
+named types and resets keep their existing meanings. Direct-formal, generated
+transaction and domain propagation still need their own qualification.
+Private library override records preserve each
 authored name, value tree and lexical owner separately from resolved values.
 Original uses and resolved library uses own independent source lists; default-only
 uses gain no invented source. Carrier/public propagation and specialization remain
-pending. Nested aggregate lists
+pending. Parent IR retains the selected override sources separately from child
+default environments; it does not re-specialize the child. Nested aggregate lists
 normalize first rows recursively: `((1 2) (3 4))` keeps two flat rows, including
 inside actor defaults and compatible library overrides. Scalar and flat-list
 values keep their existing kinds. Per-source resolved kinds remain unchanged:
 parameter/literal strings and package/enum numbers are distinct.
 Alias, nested-override and default-only fixtures retain existing reports through
 native, API and real newline MCP queries; dependency inventories remain pending.
+Actor declarations and literal/type controls also conserve complete native/API/newline reports.
 
 ## `(update var expr)` — Variable Modification
 

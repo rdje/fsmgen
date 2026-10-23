@@ -160,6 +160,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
 
     my $result = {
         actor_name   => $actor_name,
+        # Source lexical identity survives library/module/domain renaming.
+        _width_source_actor_name => $actor_name,
         clock        => undef,
         reset        => undef,
         clock_domains => undef,

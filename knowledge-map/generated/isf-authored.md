@@ -19,5 +19,5 @@
 
 _Scalar width declarations retain authored provenance_
 
-- **date:** 2026-10-22 · **status:** current
+- **date:** 2026-10-23 · **status:** current
 - **source and verification:** [`docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md`](../../docs/decisions/current/language-api/0119-scalar-width-declarations-retain-authored-provenance.md)

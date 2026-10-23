@@ -239,7 +239,11 @@ Rules:
   the resolved integer width while `actor_params[]` preserves the authored
   parameter declaration.
 - Private parser declarations retain the authored width token, source kind and
-  lexical owner separately from the resolved width. Carriers and public width
+  lexical owner separately from the resolved width. Private actor module IR
+  associates actual interface/storage signals with detached source declarations
+  and explicit lexical scopes; bank elements retain declaration indices. Actor
+  and transaction environments remain separate, including authored aliases and
+  resolved defaults. Original actor identity survives module renaming. Carriers and public width
   reports still use resolved numbers; equal values cannot establish a dependency.
   Emitted HDL parameters currently do not resize ports, storage or reset widths.
   Library use-site overrides do not re-specialize parameter-dependent shapes.
@@ -251,6 +255,7 @@ Rules:
   Generated declarations also need distinct actor and transaction environments.
   Private library override records retain authored name/value/lexical-owner lists
   independently in original and resolved uses, beside unchanged canonical values.
+  Parent IR snapshots these selected sources separately from child defaults.
   Nested aggregate first rows now normalize recursively without changing scalar
   kinds. Selected alias/nested/default native/API/newline reports conserve resolved
   values; carrier/public source inventories and generic specialization remain pending.

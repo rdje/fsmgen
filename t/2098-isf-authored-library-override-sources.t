@@ -136,4 +136,27 @@ subtest 'nested source lists detach original uses, resolved uses, siblings and f
     is($json->encode(parse($text)), $before, 'fresh parses retain complete independent state');
 };
 
+subtest 'private IR retains use-site sources separately from child default environments' => sub {
+    my $actor = parse(source('(W ALIAS) (TREE ((LIMIT ALIAS) (shared.LIMIT 16)))'));
+    my $before = $json->encode($actor);
+    my $lowerer = FSM::Scheduler::ISF->new->{ir};
+    my $ir = $lowerer->build_module($actor);
+    my $expected = [
+        {name => 'W', value => 'ALIAS', owner => 'library_sources'},
+        {name => 'TREE', value => [['LIMIT', 'ALIAS'], ['shared.LIMIT', '16']], owner => 'library_sources'},
+    ];
+    is($json->encode($ir->{_width_static_uses}{library_overrides}),
+        $json->encode({first => $expected}), 'only explicit selected sources survive in the parent IR');
+    for my $use (@{$actor->{library_uses}}) {
+        my $child = $ir->{children}{$use->{module}};
+        is($child->{_width_scopes}{actor}{owner}, 'child', 'renamed child keeps exported source owner');
+        is($child->{_width_scopes}{actor}{params}[0]{value}, '8',
+            'source default environment stays separate from instance override');
+    }
+    my $fresh = $json->encode($lowerer->build_module($actor));
+    $ir->{_width_static_uses}{library_overrides}{first}[1]{value}[0][0] = 'WRONG';
+    is($json->encode($actor), $before, 'nested IR use sources do not share caller storage');
+    is($json->encode($lowerer->build_module($actor)), $fresh, 'fresh IR preserves all source/default data');
+};
+
 done_testing;

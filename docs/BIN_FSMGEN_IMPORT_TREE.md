@@ -35,6 +35,11 @@ SystemVerilog path. T2028 qualifies imported/unused/direct/generated sources and
 destination atomicity. The older closure dimensions below keep their capture
 boundary.
 
+Scoped update on `2026-10-23`: LoweringIR imports
+`FSM::Support::ISFWidthDeclarations` for detached actor width associations,
+lexical environments and static-use sources. Resolution still uses the existing
+parser/lowering resolvers. This adds no public schema or fresh closure census.
+
 Current baseline:
 - Import closure reverified on `2026-09-06`; line-count samples below retain their `2026-08-29` capture boundary.
 - Startup import review refreshed on `2026-09-06`; the live static trace includes

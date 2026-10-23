@@ -25,6 +25,7 @@ use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 use FSM::Support::ISFReductions qw(capture_actor_reductions);
+use FSM::Support::ISFWidthDeclarations qw(capture_actor_width_metadata);
 use FSM::Scheduler::ISF::RecordSamples;
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
 use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
@@ -1792,6 +1793,16 @@ sub _build_parent_ir($self, $actor, $generated_children, $pruned_transactions = 
         bank_accesses => \@bank_accesses,
         transaction_port_bindings => $transaction_port_bindings,
     };
+    # Canonical resolvers may inspect scalar flags. Keep their lexical snapshot
+    # detached from the caller and from the executable IR parameter records.
+    my $width_actor = _clone_isf_value($actor);
+    my %width_transaction_params = map {
+        $_->{name} => _transaction_param_declarations($_, $width_actor)
+    } @{$width_actor->{transactions} || []};
+    my $width_metadata = capture_actor_width_metadata(actor => $width_actor,
+        params => $ir->{params}, constants => $ir->{constants},
+        transaction_params => \%width_transaction_params);
+    $ir->{$_} = $width_metadata->{$_} for keys %$width_metadata;
     $ir->{resource_arbitration} = _apply_rule_user_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _merge_priority_resolution(
         _apply_rule_priority_resolution($ir, $actor),

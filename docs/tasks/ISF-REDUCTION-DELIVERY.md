@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14 / ISF; R13 public semantic reports`
 - Created: `2026-10-21`
-- Last updated: `2026-10-22`
+- Last updated: `2026-10-23`
 - Owner: repo-local workflow
 
 ## Goal
@@ -554,17 +554,22 @@ independent defects remain owned after handoff unless they demonstrably block de
   - [x] **NO REGRESSION** — All tests successful Files=12 Tests=113 retain unchanged product/test inputs from the committed foundation; current book/task checks separately pass Files=2 Tests=50 after the prose/frontier updates. Public programme and saved hostile/input/capture controls pass. Final mdBook/source/index, task/decision, claim and scripts/check_doctrines.sh plus normal hooks qualify this audit/helper closure. Product syntax, diagnostics, report schemas and executable defaults remain unchanged; generic/public dependency propagation and P1 .16 stay open.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Carry actor interface and storage declaration provenance into private module IR.`
   Acceptance: `After .1 and the physical audit, preserve actual associations in detached _width_declarations keyed by actual port/storage signal names, with original declaration identity, lexical scope and source token/kind/owner. Preserve separate _width_scopes canonical actor/transaction parameter environments and selected static-use sources; carry original actor identity before source renaming. Keep defaults/types/resets and unrelated numeric controls exact, bind generated bank elements to the declaration without inferring from widths, and compare complete old projections after removing only owned metadata. Preserve caller/result isolation and existing carrier/public bytes. Commit this bounded actor-data prerequisite before formal/generated/domain expansion.`
-  Verification: `pending static provenance and physical audit`
-  Commit: `pending`
+  Verification: `Parser source actor identity now survives physical module renaming. A detached private producer associates only actual actor interface/storage symbolic widths with declaration identity, lexical scope and original token/kind/owner; bank element indices are explicit. Canonical existing actor/transaction resolvers supply separate environments, including aliases, package constants/enums and primitive kinds. Watchdog/depth and selected library source lists remain separate from child defaults. Fixed T2099 fails all three predecessor subtests and passes unchanged; the added T2098 IR assertions likewise fail before propagation and pass afterward. Complete actual source/preparation/module IR projections match after removing only the owned metadata; caller/results/siblings remain isolated and carriers remain exact. Both complete native epochs pass check/semantic/schedule for actor and literal/type controls. Initial public comparison fails solely on native checkout-prefix versus sanitized API source.resolved_path; original failed packet remains byte-exact. Corrected root normalization qualifies only the unfinished public programme, with complete native/API/newline and text/structured parity. No native/private epoch is replayed. Saved association/environment/kind/allocation controls reject 17 altered packets. The new source-name field exposes historical complete-actor fixture failures at T2044 and T2055; precise expected identity/digest adaptations preserve every immutable artifact and all source/proof/diagnostic controls, adding wrong/missing source-name refusals. Final guarded focused cohort passes All tests successful Files=17 Tests=256; all changed production modules are syntax OK. Original failures, corrected programmes, selected code/test/input versions and complete typed products remain in docs/audits/width-ir-*-20261023 packets and qualifier. Re-derivation is actual parser/preparation/IR/carrier/public products and canonical environments; falsification is fixed predecessor/current regressions, independent literal associations, old-projection and hostile controls; durability is tracked source/tests/producers/receipts, decision119 and Git. Full transitive footprints, raw-root reconstruction, generic HDL, historical query causality and formal/generated/domain closure remain unqualified. Final book/task/source/index/decision checks and staged/normal doctrine gates qualify the commit.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.2.2: carry actor width sources into private IR`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostics at t/2099-isf-actor-width-ir-provenance.t line 43 show absent source maps despite retained parser records. Actual _build_ports/_declared_storage_for_ir projections drop those records; module constructors rename actor_name before IR construction. T2044 line20 and T2055 line74 additionally expose immutable complete-actor expectations and actor digests predating the new source-name field. Original observations and selected sources are retained.
+  - [x] **ADDRESSED (verified)** — Fixed actor/library regressions go RED to GREEN. Independent literal token/kind/owner/scope/index and lexical-environment oracles qualify detached maps and original actor identity. Complete old private/carrier/native products are conserved; corrected public parity preserves the original path-oracle failure and reuses native/private epochs. Historical fixtures add only exact source identity and full actor digest binding, retaining complete authentication and declared refusal reasons. Saved hostile association/kind/allocation controls reject; no generic/specialization or successor closure is inferred.
+  - [x] **NO REGRESSION** — All tests successful Files=17 Tests=256 covers parser, actor/static/library sources, public contracts and actual conditional/formal origin authentication; Parser, LoweringIR and ISFWidthDeclarations are syntax OK. Native check/semantic/schedule and complete API/newline/text/structured products agree for selected controls. Final book/task/source/index/decision checks, staged scripts/check_doctrines.sh and normal hooks gate this source-only commit; P1 .16 and required successor qualifications stay open.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.3`
   Status: `pending`
   Goal: `Bind direct-formal physical declarations to original width sources and local parameter environments.`
   Acceptance: `After .2, reuse the actual preparation/identity plan and physical formal marks; carry source token/kind/owner separately from allocated signal names and actor/module parameter names. Qualify actor/formal/sibling shadows, aliases, unused/read-only declarations, collision-safe allocation and count/value namespace distinctions. Preserve complete original inputs and old IR/carrier/public projections outside owned metadata; do not repair unrelated controller or reusable-formal behavior. Commit before generated/domain propagation.`
-  Verification: `pending actor IR provenance`
+  Verification: `pending direct-formal qualification`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4`

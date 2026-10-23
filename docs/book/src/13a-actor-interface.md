@@ -600,7 +600,9 @@ storage is not emitted a second time when it shares a name with a declared port.
 A parameter-sized width currently uses the parameter's resolved default.
 For example, `wdata` above is fixed at 32 bits in the scheduled carrier;
 changing an emitted HDL parameter does not resize it. Source parsing preserves
-authored symbolic width associations separately from resolved defaults;
+authored symbolic width associations separately from resolved defaults. Private
+module IR now binds actor ports and storage elements to those declarations and
+keeps actor and transaction parameter environments separate;
 carriers and public width reports still use the resolved numbers. Equal numeric
 widths do not establish a shared dependency. Named scalar types keep their
 separate type references. Generic width propagation and library shape
@@ -840,6 +842,11 @@ integer. A scalar entry lowers to one internal storage signal with the
 authored name. A bank lowers to deterministic scalar element names in the
 scheduled `.fsm` review artifact: `data_0`, `data_1`, `data_2`, and so on up
 to the resolved depth.
+
+Each private bank-element width association retains the bank declaration and
+its explicit element index. The authored depth reference stays separate from
+the width reference. Neither association changes the fixed resolved dimensions
+or the authored reset values.
 
 This scalarized representation is deliberate for the first reusable FIFO work.
 

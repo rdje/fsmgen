@@ -1,0 +1,7 @@
+(actor plain_width_ir
+  (clock clk) (reset rst_n) (watchdog 3)
+  (types (type word_t (bits 8)))
+  (interface (input start) (input data (width 8))
+    (input typed_data (type word_t)) (output result (width 8)))
+  (storage (var saved (width 8) (reset 3)) (bank mem (width 8) (depth 2)))
+  (transaction main (on start) (set result data)))

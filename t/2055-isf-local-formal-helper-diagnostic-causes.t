@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use lib 'perl', 't/lib';
 use Test::More;
+use Digest::SHA qw(sha256_hex);
 use JSON::PP;
 use FSM::Test::LocalFormalOriginAuthority;
 
@@ -53,6 +54,18 @@ for my $case (@{$cases->{rows}}) {
         my $context = $json->decode($json->encode(
             $band eq 'positive' ? $input->{context} : $input->{base_context}));
         my $proof = $json->decode($json->encode($input->{proof}));
+        # Preserve the historical cause fixtures. Add only the new parser
+        # identity at its two known source/physical actor locations, then bind
+        # the complete source actor digest without changing origin intent.
+        die "historical cause fixture actor digest differs\n"
+            unless $proof->{source_ledger}{actor_sha256}
+                eq sha256_hex($json->encode($context->{prepared}{actor}));
+        for my $actor ($context->{actor}, $context->{prepared}{actor}) {
+            die "unexpected historical cause fixture identity\n"
+                if exists($actor->{_width_source_actor_name}) || $actor->{actor_name} ne 'formal_origin';
+            $actor->{_width_source_actor_name} = 'formal_origin';
+        }
+        $proof->{source_ledger}{actor_sha256} = sha256_hex($json->encode($context->{prepared}{actor}));
         if ($band ne 'positive') {
             my $mutation = $input->{mutation};
             if ($band eq 'wrong_context') {
