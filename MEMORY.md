@@ -6,11 +6,11 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `ISF-REDUCTION-DELIVERY.2.3.2.4.2`
-- next_action: Qualify reusable library and ATL constructor source/default/selected-override environments while preserving old products and existing specialization boundaries.
+- active_work_unit: `PERL-POD-API-REFERENCE.6.1.1.2`
+- next_action: Diagnose and repair the pre-existing MCP schema snapshot sample-entry mismatch, then complete the exhaustive human/AI reference census.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None. Before/after source epochs are sealed and must not be rerun.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.
   Knowledge Map rollover debt forbids allowance growth; preserve all facts/questions. No decision or authentication is pending.
   Prior reader-route closure resumes at SEMANTIC-INTROSPECTION-MCP-FRONTIER.60.4.3.3.5.2.1.5.2.2.3.1.2.1.3.1.2.3.2.3.3.3.3.2.3.2.3.3.2.3.4.3.3.2.2.3.3.2.3.3.2.1.3.2.1.2.3.5.5; aggregate recovery remains owned behind it.
-  Historical startup/parent qualification and full CI/push remain gated under .69; required SPECFORGE delivery controls task selection (decision0121). Historical query .93 and current source-query .16 causality stay open before publication; no auth or product decision is pending. Broader visual mdBook QA remains pending.
+  Historical startup/parent qualification and full CI/push remain gated under .69; The director explicitly prioritizes complete MCP operational documentation now; required SPECFORGE delivery resumes afterward (decision0121). Historical query .93 and current source-query .16 causality stay open before publication; no auth or product decision is pending. Broader visual mdBook QA remains pending.

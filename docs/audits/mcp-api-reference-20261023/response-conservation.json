@@ -1,0 +1,10 @@
+{
+  "cases": [
+    "launcher",
+    "adapter_default",
+    "adapter_forced_flush"
+  ],
+  "complete_reply_bytes_equal_before_after": true,
+  "before_capture": "stdio-counterfactual-before.json.gz",
+  "after_capture": "stdio-counterfactual-after.json.gz"
+}

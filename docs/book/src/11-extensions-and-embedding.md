@@ -3001,6 +3001,13 @@ report values. Newline responses remain compact, with exactly one message per
 line; one-shot responses remain formatted. Tool text still carries the complete
 ASCII-escaped JSON payload alongside its equal `structuredContent` value.
 
+Keep the server's stdin open for a persistent session. Each response is flushed
+to stdout before the server reads the next request; clients can wait for that
+reply before sending another request. Input EOF ends the server loop. Embedded
+callers get the same delivery behavior with a supplied output handle, without
+changing Perl's selected handle or buffering mode. An output write/flush
+failure ends the loop with an error. Notifications produce no response.
+
 For example, these calls return the same Unicode request identity:
 
 ```bash

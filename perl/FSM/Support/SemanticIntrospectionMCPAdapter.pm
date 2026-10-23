@@ -8,6 +8,7 @@ use Cwd qw(abs_path getcwd);
 use File::Basename qw(dirname);
 use File::Spec;
 use IPC::Cmd qw(run);
+use IO::Handle ();
 use JSON::PP ();
 use Scalar::Util qw(blessed);
 
@@ -404,7 +405,14 @@ sub run_stdio {
             };
         };
 
-        print {$out} $self->_encode_compact($response), "\n" if $response;
+        if ($response) {
+            print {$out} $self->_encode_compact($response), "\n"
+                or die "FSMGen MCP adapter cannot write response: $!";
+            # A persistent client waits for this reply before sending its next
+            # request. Flush the actual output handle without changing its mode
+            # or Perl's globally selected handle.
+            $out->flush or die "FSMGen MCP adapter cannot flush response: $!";
+        }
     }
 }
 
@@ -1317,7 +1325,10 @@ corresponding JSON-RPC error responses. No list pagination is implemented.
 
 Runs the server until input EOF; the default handles are STDIN and STDOUT.
 Transport is one UTF-8 JSON object per line. Responses are compact JSON lines;
-notifications produce no response. This is a blocking loop, not a background
+each response is flushed to the supplied output handle before reading the next
+request, so clients keep stdin open across exchanges. Flushing does not change
+the selected handle or its buffering mode. Notifications produce no response.
+An output write/flush failure throws. This is a blocking loop, not a background
 service. It does not implement HTTP or Content-Length framing.
 
 =head1 FUNCTIONS

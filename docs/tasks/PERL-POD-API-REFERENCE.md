@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `PERL-POD-API-REFERENCE`
-- Status: `done`
+- Status: `active`
 - Roadmap lane: `R13 / documentation and embedding`
 - Created: `2026-10-23`
 - Last updated: `2026-10-23`
@@ -19,7 +19,9 @@ and synchronized with their inputs.
 
 The prior constructor preparation is committed at `5de680064`; reusable width
 work resumes at `ISF-REDUCTION-DELIVERY.2.3.2.4.2` after this requested task.
-This explicit 2026-10-23 priority exception does not waive existing publication,
+The director further requires a thorough human/AI-agent operating reference for
+every shipped MCP surface; .6 owns that explicit extension after the clean
+initial delivery c63f76753. This 2026-10-23 priority exception does not waive existing publication,
 HIAL, claim, locality, or source-feature signoff gates.
 
 ## Non-Goals
@@ -47,15 +49,24 @@ HIAL, claim, locality, or source-feature signoff gates.
   inferring full method semantics from headings or file counts.
 - Update the book, relevant discovery/build instructions, task state, and
   generated projections; pass focused checks and required doctrine gates.
+- The MCP operating reference covers every published method, tool, resource,
+  template, request/result schema, field meaning, refusal/error, limit and
+  lifecycle/transport boundary. Humans and external agents can discover, select
+  and use the supported operations from this reference with tested examples.
+- Temporal inspection, source semantics, schedule prediction and actual
+  simulation/execution are described precisely, including availability limits;
+  documentation must never imply an unimplemented authoring or execution tool.
+- An explicit source/runtime/schema/documentation coverage join detects omitted
+  MCP surfaces and protects the reference as capabilities evolve.
 - Commit each slice before its successor. Hosted publication retains the
   standing full-CI and exact-SHA requirements.
 
 ## Task Tree
 
 - ID: `PERL-POD-API-REFERENCE`
-  Status: `done`
+  Status: `active`
   Goal: `Deliver a reproducible POD API reference through the native mdBook workflow.`
-  Children: `PERL-POD-API-REFERENCE.1, PERL-POD-API-REFERENCE.2, PERL-POD-API-REFERENCE.3, PERL-POD-API-REFERENCE.4, PERL-POD-API-REFERENCE.5`
+  Children: `PERL-POD-API-REFERENCE.1, PERL-POD-API-REFERENCE.2, PERL-POD-API-REFERENCE.3, PERL-POD-API-REFERENCE.4, PERL-POD-API-REFERENCE.5, PERL-POD-API-REFERENCE.6`
 
 - ID: `PERL-POD-API-REFERENCE.1`
   Status: `done`
@@ -113,6 +124,93 @@ HIAL, claim, locality, or source-feature signoff gates.
   Acceptance: `Bind the generating Python runtime identity into the cache fingerprint with a genuine missing/stale-runtime RED/GREEN control. Independently rejoin all source/POD/selected-facade populations to final generated/copied/native links, check examples, output freshness, no-write reuse, relevant regression and current book/source/index/doctrine contracts. Retain limits and original failures, commit the clean delivery, and restore ISF-REDUCTION-DELIVERY.2.3.2.4.2. No unqualified push or closure of separately owned legacy/manual/historical gates.`
   Verification: `The fixed runtime test first fails on the genuine missing Python field, then passes with real implementation/release identity. Missing/stale-runtime controls refuse without asset writes and ordinary regeneration restores exact bytes. All 20 generator/example tests pass. Production transition preserves every source/rendered-output hash; only the expected manifest changes. Final independent native delivery joins 399 sources, 112 POD/287 explicit no-POD pages, six selected guides and 404 copied members across 3975 local href/fragment checks. Current check/generate/native build conserve all reference bytes and mtimes. Fresh same-volume root with spaces repeats complete bytes, both cwd forms, genuine malformed/missing native refusals and explicit owned repair. Native source/index/build checks and required doctrines/hooks gate the commit. Exact packets and executable readers are retained; hosted/platform/whole-manual scopes stay unqualified.`
   Commit: `PERL-POD-API-REFERENCE.5.3: qualify runtime-bound POD reference delivery`
+
+- ID: `PERL-POD-API-REFERENCE.6`
+  Status: `active`
+  Goal: `Deliver a complete operating reference for humans and AI agents using the shipped FSMGen MCP server.`
+  Children: `PERL-POD-API-REFERENCE.6.1, PERL-POD-API-REFERENCE.6.2, PERL-POD-API-REFERENCE.6.3, PERL-POD-API-REFERENCE.6.4, PERL-POD-API-REFERENCE.6.5, PERL-POD-API-REFERENCE.6.6, PERL-POD-API-REFERENCE.6.7`
+  Acceptance: `Follow the director's explicit 2026-10-23 thoroughness requirement. Join every published protocol/API surface to precise current behavior, data contracts, constraints, errors and tested human/agent workflows. Use POD for Perl/API reference and mdBook for accessible client guidance, with one clearly linked authority per fact. No empty inventory or schema-only stub counts as operational documentation. Split each broad cohort before implementation, preserve existing producer and protocol limitations, and commit each completed slice.`
+  Verification: `Initial renderer, selected binding POD and native delivery are committed through c63f76753. Complete MCP operational coverage is not yet qualified; .6.1 establishes the exhaustive inventory and documentation-gap matrix.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.1, PERL-POD-API-REFERENCE.6.1.2`
+  Goal: `Inventory every shipped MCP surface and select exact documentation cohorts.`
+  Acceptance: `Query canonical MCP decisions/facts; read the public adapter, launcher, contract/schema producers and existing manual/tests. Independently join actual initialized capabilities, methods, tools/list, resources/list, templates/list, schema snapshots, source-query applicability and typed inspection contracts. Inventory request/result fields, constraints/defaults/limits/errors and links to their current documentation; explicitly mark gaps without treating a name or schema alone as sufficient explanation. Preserve source/runtime identities and original observations. Refine .6.2-.6.7 into safe exact leaves before edits, register defects and availability gaps under existing owners, and commit the audit plus durable frontier.`
+  Verification: `The incoming request is explicit authority to continue POD/MCP documentation ahead of the saved ISF frontier. Existing Knowledge Map MCP routes were retrieved during the preceding clean-commit handoff; complete census and operational documentation-gap review remain pending.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.1`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.1.1, PERL-POD-API-REFERENCE.6.1.1.2`
+  Goal: `Reproduce and repair any persistent stdio response-buffering defect before documenting client workflows.`
+  Acceptance: `The adapter's run_stdio prints responses to a pipe without an explicit flush; verify with a real persistent subprocess that keeps stdin open and waits for its first response. Retain the exact request/raw response/process outcome before EOF and after orderly EOF, source/runtime identities and a competing EOF-only control. If buffering is confirmed, repair only transport response delivery without changing report bytes, IDs or notification behavior. Add an actual open-pipe regression, qualify custom handles and relevant existing transport/schema/source-failure tests, synchronize POD/book and commit before continuing the census.`
+  Verification: `Source review finds no explicit flush in launcher/run_stdio; persistent-pipe behavior is not yet measured. This is a suspected client-driving blocker, not a confirmed failure or timing guarantee.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.1.1`
+  Status: `done`
+  Goal: `Commit the verified persistent response-flush repair and actual open-pipe regression.`
+  Acceptance: `Complete .6.1.1's transport repair with real launcher/custom-handle RED/GREEN, independent forced-flush control, exact response-byte conservation, orderly EOF and unchanged selected/buffering state. Retain the broader cohort's exact original outcome. If its snapshot failure reproduces with the byte-exact predecessor adapter and complete projection equality, own that separate fixture issue in immediate successor .6.1.1.2 instead of disguising it as a passing broad gate. Commit the verified scoped transport repair before that fixture successor.`
+  Verification: `Both live regressions fail before repair and pass afterward. Actual launcher/default-adapter probes lack a reply before EOF while forced autoflush succeeds; after repair all three stream and complete reply bytes conserve. The broader cohort passes 22 files but t/1445's first sample-entry key differs from its saved fixture. The byte-exact predecessor reproduces the snapshot failure and its complete projected products equal the repaired adapter. This independent pre-existing fixture failure is owned by immediate successor .6.1.1.2; no broad green claim.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.1.1: flush persistent MCP responses before reading again`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.1.2`
+  Status: `pending`
+  Goal: `Resolve the MCP schema snapshot's sample-dependent catalog projection failure.`
+  Acceptance: `Reproduce the exact t/1445 failure using the original adapter and compare complete projected products before/after the flush-only repair. Trace the differing support-summary sample fields to actual catalog selection, history and its public optional-field contract. Repair the smallest correct observation/fixture contract, preserving strict protocol/schema coverage and meaningful real catalog checks; never blindly regenerate a fixture or weaken assertions to obtain green. Add a real catalog-variant/ordering control where warranted, qualify the fixed snapshot plus relevant cohort, synchronize public field guidance and commit before the exhaustive census.`
+  Verification: `Current broader gate reports first support-summary sample keys diagnostic_code versus family. probe_snapshot.py really reruns the original assertion/projector with the byte-exact c63f76753 adapter and the current adapter: both fail and complete projections are identical. Fixture/catalog root cause and correct repair remain pending; no product schema change is inferred.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2`
+  Status: `pending`
+  Goal: `Complete the exhaustive public-surface and documentation-gap census after transport admission.`
+  Acceptance: `Perform the full .6.1 census and refine every successor from actual published methods/tools/resources/templates/schema/query applicability. Retain complete source/runtime/schema identities, current documentation locations, unexplained gaps and explicit owned limitations; no schema/name-only stub counts as reference completion. Commit the audit before operational-reference edits.`
+  Verification: `pending persistent stdio qualification`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.2`
+  Status: `pending`
+  Goal: `Document connection, lifecycle, protocol and host safety contracts completely.`
+  Acceptance: `After .6.1, split exact cohorts as needed. Cover launcher/configuration and roots, one-shot versus persistent stdio, UTF-8 framing, handshake/version/capabilities, discovery, requests/notifications/IDs, server shutdown, pagination/progress/cancellation/concurrency and all unavailable negotiated features. Describe actual behavior and error envelopes with executable success/refusal examples. Compare pinned official MCP requirements where relevant, own real discrepancies, preserve existing implementation scope and qualify native rendering before each commit.`
+  Verification: `pending exhaustive inventory`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.3`
+  Status: `pending`
+  Goal: `Document every tool, static resource and resource template at field and operation level.`
+  Acceptance: `After .6.1, create bounded leaves for the complete discovered operation population. Give purpose, selection/applicability, every argument/query parameter/default/enum/range/encoding rule, result envelope and field semantics, failures, side effects, stability and tool/resource equivalence or differences. Cross-link actual input/output schemas and underlying public data contracts; include successful and refusal examples through the real server. No discovered surface may be omitted or represented only by an auto-generated name/schema.`
+  Verification: `pending exhaustive operation population`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.4`
+  Status: `pending`
+  Goal: `Document complete public result-model interpretation and source/query applicability.`
+  Acceptance: `Split from .6.1's exact report/schema cohorts. Explain public identities, source locations/provenance, diagnostics, capability/support evidence, normalized hardware versus source/schedule/VIAL data and typed nested records. Describe versioning, units, ordering, optional/null/absent fields and extension boundaries where applicable. Link authoritative field dictionaries/schemas and worked reports; never expose private compiler objects as a supported API. Verify against complete actual outputs and independent semantic expectations, including refusal behavior.`
+  Verification: `pending result-model and schema inventory`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.5`
+  Status: `pending`
+  Goal: `Provide complete agent/human workflows including temporal questions and current execution limits.`
+  Acceptance: `Build discover/select/check/inspect/schedule/diagnose/recheck workflows using real current tools/resources and explicit goal/decision/output examples. Explain source temporal declarations, typed lifecycle conditions/action bodies, schedule timing and any actual temporal execution access separately. Explicitly state which authoring/editing/generation/simulation/debug/iteration steps need external host capabilities or remain unavailable, and link their owned roadmap tasks. Execute every documented workflow and adverse branch; claim no CPU/DSP/MCU/ASIC/SoC end-to-end capacity without corresponding qualification.`
+  Verification: `pending exact capability and data-contract census`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.6`
+  Status: `pending`
+  Goal: `Guard complete MCP documentation coverage and runnable examples against drift.`
+  Acceptance: `Join the exhaustive published methods/tools/resources/templates/schema/applicability population to explicit reference records and executable examples. Derive field membership from authoritative producers/schemas and verify descriptions and canonical links, not copied counts. Add genuine missing-surface/field/stale-schema/wrong-result controls without tests that only mirror implementation. Integrate focused checks through existing workflows, preserve all original failures and commit bounded guards.`
+  Verification: `pending completed documented cohorts`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.7`
+  Status: `pending`
+  Goal: `Qualify the complete MCP operating reference and restore required feature delivery.`
+  Acceptance: `Require an exact source/runtime/schema/documentation join with no unexplained surface/field omissions, all real-server workflow/result/refusal controls, native POD/book/link delivery and relevant regression/doctrine checks. Review the human and AI navigation and operational completeness against .6.1's entire inventory. Preserve explicit capability and hosted/platform limits, commit cleanly, clear the message and restore ISF-REDUCTION-DELIVERY.2.3.2.4.2.`
+  Verification: `pending complete MCP reference`
+  Commit: `pending`
 
 ## Decisions
 
@@ -401,3 +499,39 @@ HIAL, claim, locality, or source-feature signoff gates.
   verify clean state. Resume the committed source-only reusable constructor
   leaf ISF-REDUCTION-DELIVERY.2.3.2.4.2. No source/compiler epoch is replayed by
   this documentation qualification, and no preview/background job remains.
+
+
+## Acceptance Checklist — .6.1.1.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'print {$out}' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 129cfae08, the original unflushed run_stdio print. Real launcher and adapter pipes return no reply during the open-input observation and emit the complete response only after EOF; the same adapter with externally forced autoflush replies before EOF. Both fixed live tests fail on the original adapter. This isolates response buffering rather than malformed JSON or a crashed child.
+- [x] **ADDRESSED (verified)** — Flush each completed response on the actual output handle, check write/flush failure, and retain selected handle/buffering mode. Actual launcher and custom-handle regressions now pass with multiple exchanges, Unicode/zero IDs, initialization, notification silence, refusal/recovery and orderly EOF. All independent probe replies conserve exact bytes while both former buffered paths now deliver before EOF. The existing CI fixture glob discovers these tests; POD/book describe persistent exchanges accurately.
+- [x] **NO REGRESSION** — The six real POD programs and native book/source/index/complete reference delivery pass. The 23-file MCP cohort passes 22 files; T1445's snapshot assertion fails equally with the byte-exact predecessor, with complete old/new projected-product equality. That pre-existing fixture issue is owned by immediate .6.1.1.2 and the full original failure is retained; the broad cohort is explicitly not green. The changed module reports:
+
+  perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm syntax OK
+
+### .6.1.1.1 transport evidence and unresolved snapshot
+
+- The original open-pipe observation, fixed RED/GREEN logs and exact failed
+  fixture request/before-EOF/after-EOF/process/stderr bytes are retained under
+  docs/audits/mcp-api-reference-20261023. The owned failed fixtures remain local;
+  no necessary result or background process is stranded in them.
+- probe_stdio.py produces the independent launcher/default/forced-flush
+  observations and selected full source identities. Before/after compressed
+  packets and response-conservation.json retain every complete reply. These
+  are bounded observations, not a latency guarantee, full transitive footprint
+  or supported-platform matrix. Re-derivation is the actual live transport;
+  falsification is the forced-flush counterfactual and fixed regression;
+  durability is complete captured bytes, source identities, producers and Git.
+- stdio-regression.log.gz retains the complete 23-file run and original T1445
+  refusal. probe_snapshot.py preserves that test's assertions/projector and
+  changes only its fixture-root location for isolated execution. It preloads
+  the exact predecessor module and compares complete projections with the new
+  module. Both fail identically against the expected fixture. No fixture or
+  public schema is edited in this transport slice, and no passing broad gate
+  is inferred. The immediate successor owns diagnosis and verified repair.
+- The pinned official MCP 2025-06-18 transport/lifecycle references describe
+  subprocess newline UTF-8 exchanges and input-close shutdown:
+  https://modelcontextprotocol.io/specification/2025-06-18/basic/transports
+  and https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle.
+  The complete client reference remains .6-owned; this repair alone does not
+  qualify every tool, schema, temporal question or end-to-end design workflow.
