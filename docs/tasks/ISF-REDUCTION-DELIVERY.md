@@ -40,7 +40,7 @@ independent defects remain owned after handoff unless they demonstrably block de
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -849,6 +849,18 @@ independent defects remain owned after handoff unless they demonstrably block de
   Acceptance: `Own the 2026-10-22 final defaults schedule timeout and missing original partial streams from .2.3.2.1.2.3.1. Keep the original after packet, current traced native success and invalid one-second startup control separate. The first interval lacks process start/stop/trace/partial streams, so a later pass or unrelated delayed echo does not establish cause. Reuse the SEM .93 adjudication: retain the causal gap and attach bounded explicit process/clock/trace/settlement observation to the next genuinely required source query before publication; no recurrence-only campaign, weakened deadline/RAM/SIP/host policy or authentication request. Determine whether authoritative execution-service/host evidence can attribute the original interval, or flag its precise unavailable authority. If a project fault is isolated, split its smallest verified repair first. The future capture-stream loss is already repaired and controlled; missing historical bytes cannot be manufactured. Required feature delivery continues under decision0121, while .69 publication stays gated on this before-publication observation and explicit causal disposition.`
   Verification: `Original before/after/interruption and exact helper-unit receipts retain under docs/audits/library-source-*20261022*. The native diagnostic stage passed, but its parent programme failed an invalid startup control. No historic causal repair is established. Unrelated queued shell observations have no recorded process-bound timing and are context only, not an attribution oracle.`
   Commit: `pending before-publication diagnosis`
+
+- ID: `ISF-REDUCTION-DELIVERY.17`
+  Status: `done`
+  Goal: `Check the director-required daily cleanup admission at startup.`
+  Acceptance: `Reuse the authenticated installed census contract in a new exclusive dated slot. Enumerate same-volume regular log/bin candidates and root/Rust locations, exclude foreign repositories and symlinks, and compare independent rg membership. Retain candidates without exact disposal authority. Commit the dated receipt, latest-only record and saved reader route with fresh acceptance and doctrine gates before resuming .2.3.2.4. Startup policy review is read-only: compare the designated claim source to its retained review and keep the locally adopted README/containment authority.`
+  Verification: `Actual UTC and exact prior record show the sweep is not yet due; the unchanged authenticated collector refuses at its 24-hour admission assertion before walking. The startup date alone was insufficient. No census, deletion or latest-record overwrite occurs. Exact command, wrapper source, prior bytes and elapsed admission retain in docs/audits/artifact-census-20261023/admission.json. Claim source matches the retained review; README/containment policies remain locally adopted. Resume .2.3.2.4; recheck admission after 07:15:32 UTC if the session continues. The first staged doctrine gate rejects task-evidence line/byte allowance growth. Its complete log is retained in the admission audit; measured warning-debt growth is declared with the surface ratchet step and unchanged baselines/ceilings. No product or publication claim.`
+  Commit: `ISF-REDUCTION-DELIVERY.17: check startup cleanup admission`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "Latest artifact cleanup" and exact HEAD record establish the prior UTC boundary; the unchanged collector refuses at its 24-hour assertion. Staged live-document diagnostics identify task_evidence total-line/byte allowance exhaustion.
+  - [x] **ADDRESSED (verified)** — Preserve the actual admission refusal, original prior record and all artifacts. Declare only measured warning-debt growth plus the existing ratchet step; every baseline and ceiling remains unchanged. Resume the existing feature frontier.
+  - [x] **NO REGRESSION** — knowledge-map: OK and task/claim doctrines pass in the original full gate; only the owned allowance fails. Fresh inventory and staged scripts/check_doctrines.sh plus normal hooks qualify the correction.
 
 ## Blockers
 

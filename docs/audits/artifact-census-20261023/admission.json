@@ -1,0 +1,21 @@
+{
+  "command": [
+    "scripts/run_with_ram_guard.sh",
+    "--",
+    "python3",
+    "-B",
+    "docs/audits/artifact-census-20261023/census.py",
+    "--write"
+  ],
+  "diagnostic": "artifact-census-20261020/census.py:49: assert (now - datetime.fromisoformat(previous[1].decode())).total_seconds() > 86400; AssertionError",
+  "due": false,
+  "elapsed_seconds": 84089.93783,
+  "exit": 1,
+  "observed_utc": "2026-10-23T06:37:01.848363+00:00",
+  "owner": "ISF-REDUCTION-DELIVERY.17",
+  "policy_source_matches_retained_review": true,
+  "prior": "# Latest artifact cleanup\n\n2026-10-22T07:15:31.910533+00:00 \u2014 No removal: same-volume regular log/bin census and root/Rust locations qualified; native/compiler/audit evidence and all candidates retained without disposal authority.\n",
+  "producer": "\"\"\"Repeat the published safe artifact census in a new exclusive dated slot.\"\"\"\nimport importlib.util\nfrom pathlib import Path\nimport subprocess\n\nif not __debug__:\n    raise SystemExit('Census assertions must be enabled.')\n\nROOT = Path(__file__).resolve().parents[3]\nBASE = '365e230bcfe4fd48411a94658a37534787cb82a8'\nSOURCE = 'docs/audits/artifact-census-20261020/census.py'\n\n# Execute only the installed, authenticated census implementation. Native Git\n# bytes are a comparison input; no historical body is compiled or executed.\npath = ROOT / SOURCE\nassert not path.is_symlink() and path.is_file() and path.stat().st_dev == ROOT.stat().st_dev\nassert path.read_bytes() == subprocess.check_output(\n    ['git', '--no-replace-objects', 'show', BASE + ':' + SOURCE], cwd=ROOT)\nspec = importlib.util.spec_from_file_location('artifact_census_contract', path)\ncontract = importlib.util.module_from_spec(spec)\nspec.loader.exec_module(contract)\n\n# The fixed collector/reviewer/control functions remain byte-exact. Only this\n# observation's native boundary, owner, producer identity and output slot differ.\ncontract.BASE = BASE\ncontract.OWNER = 'ISF-REDUCTION-DELIVERY.17'\ncontract.SELF = Path(__file__).resolve().relative_to(ROOT).as_posix()\ncontract.OUTPUT = Path(__file__).with_name('census.json.gz')\n\nif __name__ == '__main__':\n    contract.main()\n",
+  "revision": "365e230bcfe4fd48411a94658a37534787cb82a8",
+  "scope": "Startup cleanup admission only; no census or removal occurred."
+}
