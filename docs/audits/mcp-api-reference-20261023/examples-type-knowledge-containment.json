@@ -1,0 +1,13 @@
+{
+  "head": "1bf8c9a2ebed3f5397709a7350f5d43ee76c5168",
+  "path": "docs/knowledge/semantic-introspection-mcp-frontier.md",
+  "old_sha256": "7000cae02853359d3935bb3b9c9daece61080f6206d34b611e0584e265df5a80",
+  "new_sha256": "7384e07ffa0b1dabc44a79dcd5fbb4a885518621599992d36c1372f95819e64a",
+  "old_bytes": 13120,
+  "new_bytes": 13117,
+  "old_block": "2026-10-23: check/semantic/schedule need source_id or source_path; each supplied\nvalue is nonempty; source_path wins. Controls:\n`docs/tasks/PERL-POD-API-REFERENCE.md` (.6.1.2.2.1).\nDiagnostic limit_examples: omitted/zero/negative => 10; support-summary zero\n=> no samples. Positive samples cap at 100, including large integers (fixed\nPERL-POD-API-REFERENCE.6.1.2.2.4.3; 2026-10-23 API/newline controls).\nCapability payloads: object/integer; manifest_schema_version is integer.\nall/contracts/examples: direct objects (.6.1.2.2.3, 2026-10-23).\nSame tree: .6.1.2.2.4 kinds/copies; .5.2 loaded-code/record suffixes and authored locations; .5.3 case fixed; .5.4 zero preserved.",
+  "new_block": "2026-10-23 controls in `docs/tasks/PERL-POD-API-REFERENCE.md`, prefix `.6.1.2.2`:\n.1 check/semantic/schedule: every supplied source_id/source_path is nonempty;\nsource_path wins. .4.3 diagnostic limit_examples: omitted/zero/negative => 10;\nsupport-summary zero => no samples; positives cap at 100, even large integers\n(API/newline controls). .3 capability payloads: object/integer;\nmanifest_schema_version integer; all/contracts/examples direct objects.\n.4 kinds/copies; .5.2 loaded-code/record suffixes/authored locations;\n.5.3 case fixed; .5.4 zero preserved. .6 examples.documentation is the manifest documentation object.",
+  "added_question": "what type is MCP examples documentation?",
+  "original_metadata_questions_and_outside_block_bytes_preserved": true,
+  "scope": "One explicit task-file/prefix now scopes the same dated unit references; source-selector, limit, capability, copy and error facts retain their values and evidence. New documentation-object fact is the only added semantic obligation."
+}

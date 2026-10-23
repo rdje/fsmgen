@@ -24,6 +24,8 @@ SAMPLE_OPERATIONS = (('fsmgen_explain_diagnostic', 'limit_examples', {'code': CO
                      ('fsmgen_discover_sources', 'limit', {}),
                      ('fsmgen_find_examples', 'limit', {}))
 SAMPLE_LIMITS = ('omitted', 0, -1, 1, 100, 101, 1e30, 1e300)
+EXAMPLE_ARGUMENTS = ({}, {'limit': 2}, {'query': 'CoMpOsItIoN', 'limit': 3},
+                     {'query': '__no_matching_catalog_entry__', 'limit': 1}, {'query': 'i2c', 'limit': 1e30})
 
 
 class MetadataClient:
@@ -84,7 +86,55 @@ def capture_limits(server):
     return client.exchanges
 
 
+def capture_examples(server):
+    client = MetadataClient(server)
+    client.call('tools/list')
+    client.call('resources/read', {'uri': 'fsmgen://capabilities'})
+    client.call('resources/read', {'uri': 'fsmgen://examples'})
+    client.call('tools/call', {'name': 'fsmgen_capability_query', 'arguments': {'section': 'examples'}})
+    client.call('tools/call', {'name': 'fsmgen_capability_query', 'arguments': {'section': 'documentation'}})
+    client.call('tools/call', {'name': 'fsmgen_support_summary', 'arguments': {'limit_examples': 0}})
+    for arguments in EXAMPLE_ARGUMENTS:
+        client.call('tools/call', {'name': 'fsmgen_find_examples', 'arguments': arguments})
+    return client.exchanges
+
+
 class MCPMetadataSchemaTest(unittest.TestCase):
+    def test_examples_documentation_matches_complete_public_manifest_object(self):
+        with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
+            exchanges = capture_examples(server)
+        tools = {t['name']: t for t in exchanges[1]['response']['result']['tools']}
+        schema = tools['fsmgen_find_examples']['outputSchema']
+        _reader.check_schema(schema)
+        self.assertEqual(schema['properties']['documentation']['type'], 'object')
+        manifest = json.loads(exchanges[2]['response']['result']['contents'][0]['text'])
+        resource = json.loads(exchanges[3]['response']['result']['contents'][0]['text'])
+        self.assertEqual(_reader.encoded(resource), _reader.encoded(exchanges[4]['response']['result']['structuredContent']))
+        self.assertEqual(_reader.encoded(exchanges[5]['response']['result']['structuredContent']),
+                         _reader.encoded({'section': 'documentation', 'payload': manifest['documentation']}))
+        support = exchanges[6]['response']['result']['structuredContent']
+        self.assertEqual(support['sample_catalog_entries'], [])
+        self.assertIs(type(manifest['documentation']), dict)
+        for exchange, arguments in zip(exchanges[7:], EXAMPLE_ARGUMENTS):
+            with self.subTest(arguments=arguments):
+                result = exchange['response']['result']
+                self.assertIs(result['isError'], False)
+                query, limit = arguments.get('query', ''), arguments.get('limit', 25)
+                matches = [e for e in manifest['support_accounting']['catalog_entries']
+                           if query.lower() in e['id'].lower() or query.lower() in e['relpath'].lower()]
+                selected = matches[:min(int(limit), len(matches))]
+                expected = {'documentation': manifest['documentation'], 'query': query, 'limit': limit,
+                            'support_summary': support, 'returned_count': len(selected), 'catalog_entries': selected}
+                payload = result['structuredContent']
+                self.assertEqual(_reader.errors(payload, schema), [])
+                self.assertEqual(_reader.encoded(payload), _reader.encoded(expected))
+                self.assertEqual(_reader.encoded(json.loads(result['content'][0]['text'])), _reader.encoded(expected))
+                for wrong in ([], True, 1, 'documentation', None):
+                    counterfeit = dict(payload, documentation=wrong)
+                    self.assertTrue(_reader.errors(counterfeit, schema))
+                if arguments == {}:
+                    self.assertEqual(_reader.encoded(payload), _reader.encoded(resource))
+
     def test_large_integer_limits_keep_each_live_catalog_policy(self):
         with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
             exchanges = capture_limits(server)
@@ -219,6 +269,10 @@ def save_capture(argument, capture, extra_paths=()):
     assert len(paths) == len(set(paths))
     record = {'head': subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip(),
               'source_sha256': {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths}}
+    record['observer_sources'] = {p: (ROOT / p).read_text() for p in paths if not p.endswith('.pm')}
+    record['native_source_overrides'] = {
+        p: (ROOT / p).read_text() for p in paths if p.endswith('.pm') and hashlib.sha256(
+            subprocess.check_output(['git', 'show', record['head'] + ':' + p])).hexdigest() != record['source_sha256'][p]}
     with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
         record['exchanges'] = capture(server)
         record['sent_utf8'] = server.sent.decode('utf-8')
@@ -237,5 +291,9 @@ if __name__ == '__main__':
         save_capture(sys.argv[2], capture_capability)
     elif len(sys.argv) == 3 and sys.argv[1] == '--capture-limits':
         save_capture(sys.argv[2], capture_limits)
+    elif len(sys.argv) == 3 and sys.argv[1] == '--capture-examples':
+        top_modules = [p for p in subprocess.check_output(['git', 'ls-files', '-z', 'perl']).decode().split('\0')
+                       if p.endswith('.pm') and not p.startswith('perl/FSM/')]
+        save_capture(sys.argv[2], capture_examples, extra_paths=top_modules + ['README.md', 'bin/fsmgen'])
     else:
         unittest.main()

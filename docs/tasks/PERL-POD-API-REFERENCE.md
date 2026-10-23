@@ -179,12 +179,12 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.1: qualify live MCP interface and conformance gaps`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2`
-  Status: `active`
+  Status: `done`
   Children: `PERL-POD-API-REFERENCE.6.1.2.2.1, PERL-POD-API-REFERENCE.6.1.2.2.2, PERL-POD-API-REFERENCE.6.1.2.2.3, PERL-POD-API-REFERENCE.6.1.2.2.4, PERL-POD-API-REFERENCE.6.1.2.2.5, PERL-POD-API-REFERENCE.6.1.2.2.6`
   Goal: `Repair only confirmed advertised-schema/runtime contract discrepancies.`
   Acceptance: `Refine one exact child leaf per independent .6.1.2.1 discrepancy before implementation. Preserve existing valid behavior and published compatibility while making discovery accurately describe accepted requests/results. Prove real before/after requests and metadata, valid/refused cases and full typed outputs with adverse controls. Synchronize precise POD/manual guidance and relevant schema snapshots; commit each repair before its successor.`
-  Verification: `pending actual conformance evidence and exact repair children`
-  Commit: `pending`
+  Verification: `All six confirmed interface repair cohorts close with actual schema/value/admission/error controls and original evidence retained. Required source alternatives, diagnostic limits, capability payload kinds, argument/copy/numeric behavior, bounded error preservation and examples documentation typing are qualified. This closes the selected discrepancies, not exhaustive protocol/model/reference signoff; remaining reference-address findings stay P2-owned by .6.2.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.6: declare examples documentation as an object`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.1`
   Status: `done`
@@ -280,14 +280,14 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.5.4: preserve nonempty zero-valued error reasons`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.6`
-  Status: `active`
+  Status: `done`
   Goal: `Correct the example tool's documentation result type without altering returned metadata.`
-  Acceptance: `The actual examples result carries the public documentation section object, but outputSchema declares an array. Correct the declaration to its authoritative current contract; never reshape correct public values to satisfy a wrong schema. Compare complete actual documentation/catalog records with the capability manifest, text/structured results and schema metadata, include wrong-type controls, synchronize precise guidance and commit.`
-  Verification: `Saved-reader inspection finds documentation object against array schema on ordinary valid find_examples calls, independently of malformed-argument cases. Full original records and raw wire frames are retained in the live census.`
-  Commit: `pending`
+  Acceptance: `The actual examples result carries the public documentation section object, but outputSchema declares an array. Correct the declaration to its authoritative current contract; never reshape correct public values to satisfy a wrong schema. Compare complete actual documentation/catalog records with the capability manifest, text/structured results and schema metadata, include wrong-type controls, synchronize precise guidance and commit. Promote the new type fact within the unchanged Knowledge Map allowance, preserving all original questions/metadata and fact meanings through explicit scoped-ID abbreviation.`
+  Verification: `Fresh real-server RED fails the declared array type. Repaired live cohort passes all five tests; four focused Perl files/18 subtests and native documentation paths pass. Complete before/after source/frame/value joins conserve all eleven non-discovery exchanges, including five example queries, default resource/alias and documentation selector. Only the documentation descriptor changes to its existing open-object contract. Five restored-schema/changed-object/borrowed-catalog/text/source controls reject. New FAQ preserves all original routes and existing metadata/fact meanings within unchanged Knowledge Map authority; native POD/book/source/delivery qualify.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.6: declare examples documentation as an object`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Join every public result contract and documentation obligation into a complete gap matrix.`
   Acceptance: `Follow the manifest's full contract-surface graph, current report/schema producers, typed VIAL inspection contract and relevant book/POD. Inventory every public field family, nested record, meaning/unit/order/optionality/version/identity/failure boundary and its canonical documentation, stability and representative evidence. Names or object schemas alone do not count as semantic explanation. Separate compact/full variants and source temporal/schedule/runtime availability; retain explicit omissions and exact owners. No private compiler implementation is promoted to public API.`
   Verification: `Pending result-model/documentation census after interface repairs. Reproduced documentation debt: the book semantic_introspection JSON excerpt omits the currently shipped VIAL inspection tool/template, while live discovery and the following VIAL section include them. The gap matrix must own its refresh or explicitly partial presentation before reference completion; existing discovery remains authoritative.`
@@ -1314,3 +1314,48 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
   and operating-reference gap graph. P2 original reference-address findings
   are explicitly scheduled for current qualification/repair under .6.2.
   Historical attribution, full CI/push and final visual gates remain open.
+
+
+## Acceptance Checklist — .6.1.2.2.6
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S "documentation => { type => 'array'" -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 837eb3c92's declaration. DocumentationSection/DocumentationContract and the actual manifest/resource/tool results publish an object. Fresh original real-server regression fails array versus object, and the independent reader retains that precise violation on all five valid example queries. Original malformed-input cases are not used as evidence for this result-kind defect.
+- [x] **ADDRESSED (verified)** — The examples descriptor now declares the existing open documentation object. The comparator proves that single declaration is the complete runtime diff; all eleven non-tools/list exchanges and every other descriptor conserve exactly. Five complete example results join the full manifest documentation/catalog and independently projected support summary, including default/filtered/empty/large-limit cases; resource and capability aliases agree. Five coherent restored-array/changed-documentation/borrowed-catalog/text-mismatch/borrowed-source interventions reject. POD/book explain grouped path metadata, filter/limit scope and aliases without advertising document search or execution.
+- [x] **NO REGRESSION** — All tests successful. Files=4, Tests=18 for support queries, complete schema snapshots, structured outputs and native documentation path existence. All five actual live metadata tests pass, including wrong documentation kinds and earlier capability/admission/limit controls. Python 3.9 syntax, native POD/book/source/index/copied-byte/link and Knowledge Map gates qualify. All original question routes survive with one new field lookup; two missing-route/wrong-destination controls reject. The selected cases do not establish complete nested model, protocol, platform or runtime coverage.
+
+### .6.1.2.2.6 evidence, containment and next scope
+
+- Re-derivation: initialized actual stdio queries for discovery, full manifest,
+  examples resource, examples/documentation capability selectors, support
+  summary and five default/filtered/empty/large-limit example queries.
+  Falsification: independent schema/full-value/catalog/support/alias/text/source
+  joins, genuine original RED/repaired GREEN and coherent adverse controls.
+  Durability: `examples-type-*` complete packets, sources, comparisons, logs,
+  regression and tracked reader under the dated MCP audit directory.
+- Both captures share exact HEAD 1bf8c9a2e and all 431 selected inputs: every
+  tracked Perl module plus named launcher/bootstrap/framing/collector sources.
+  The after adapter is an explicit native overlay; observer source text and
+  hashes preserve the exact uncommitted collector. Generic capture adds source
+  custody without changing existing default requests. Current/historical input
+  recovery never pretends predecessor bytes are the repaired producer.
+- The first new reader refused its own dot-form error-path assumption. The
+  existing schema evaluator reports slash-form paths. Exact reader source,
+  observed errors and original refusal retain; the corrected reader qualifies
+  both actual payloads and the intended original schema violation. No product
+  failure is inferred from that observer correction.
+- The new examples documentation lookup is in the existing canonical MCP card.
+  One explicit task-file/prefix scopes the same dated selector/limit/capability/
+  copy/error facts. Original metadata/questions and all bytes outside that
+  rephrased block preserve; each old unit identity reconstructs from the named
+  prefix. Retained old/new prose, exact source hashes and complete before/after
+  question rows support review. The card shrinks overall; no allowance or
+  ceiling changes. Every original route survives and the new route resolves.
+- The documentation object preserves human_contract/downstream_alignment path
+  arrays and its section contract, independently of catalog filtering. Exact
+  paths remain deliberately widenable. Full nested field interpretation stays
+  in .6.1.2.3/.6.4's explicit gap graph; this repair does not declare it complete.
+- Complete normal staged/commit gates, empty the brief and verify clean state.
+  The selected interface-discrepancy container closes; next is .6.1.2.3's full
+  backing-model/documentation census, followed by bounded operating-reference
+  cohorts. P2 original reference-address/protocol findings stay with .6.2;
+  claim paragraph-context repair stays .6.6.1 before final signoff. Historical
+  attribution, full CI/push and whole-reference visual gates retain.

@@ -1,7 +1,7 @@
 # Knowledge Map: `semantic-introspection`
 
 > **AUTO-GENERATED — DO NOT EDIT.** Return to the [Knowledge Map](../../KNOWLEDGE_MAP.md).
-> **1** facts · **77** uniquely owned question entries.
+> **1** facts · **78** uniquely owned question entries.
 
 ## Questions → facts
 
@@ -68,6 +68,7 @@
 - q="what owns semantic introspection for AI automation?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what serverInfo title does FSMGen MCP expose?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="what source discovery boundary is selected for FSMGen MCP?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
+- q="what type is MCP examples documentation?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="where are FSMGen MCP schema snapshots?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="where is FSMGen semantic introspection advertised?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)
 - q="where is the public source query applicability map?" · facts=[semantic-introspection-mcp-frontier](../../docs/knowledge/semantic-introspection-mcp-frontier.md)

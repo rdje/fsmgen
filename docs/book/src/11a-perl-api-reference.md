@@ -84,15 +84,22 @@ describe the remaining compatibility limits.
 
 ## Current MCP schema compatibility
 
-The live MCP audit has identified the compatibility defects below. A client
-that validates responses strictly can reject legitimate current results.
-These descriptor and error-message gaps are pending repair; the complete operating
-reference and its drift checks remain under qualification.
+The tool argument and result declarations identified by the live census have
+been repaired. The complete operating reference, nested model coverage and
+drift checks remain under qualification. Remaining error-message compatibility
+debt is tracked below.
 
 | Surface | Current discrepancy |
 | --- | --- |
-| Example lookup | `documentation` contains the public documentation object; the schema declares an array |
 | Error messages | Reference addresses may remain. Use codes and structured diagnostics |
+
+Example lookup returns a `documentation` object containing grouped Markdown
+path lists and their public section contract. It is the manifest's complete
+documentation section. Query and limit select catalog entries; they do not
+filter that metadata or search document contents. The examples resource and
+capability alias return the default examples object. See
+[example documentation](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#EXAMPLE_DOCUMENTATION)
+for the metadata groups and their relationship to catalog results.
 
 Adapter messages remove recognized final Perl locations naming loaded code or
 the entry script, including spaced paths and input line/chunk annotations.

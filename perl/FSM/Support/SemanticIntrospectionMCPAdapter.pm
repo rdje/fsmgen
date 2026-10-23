@@ -1188,7 +1188,7 @@ sub _vial_inspection_output_schema {
 sub _examples_output_schema {
     return _object_schema(
         {
-            documentation => { type => 'array', items => _open_object_schema() },
+            documentation => _open_object_schema(),
             query => { type => 'string' },
             limit => { type => 'integer' },
             support_summary => _open_object_schema(),
@@ -1507,6 +1507,49 @@ objects directly, rather than a uniform C<payload> wrapper. Versioned VIAL
 tooling and VIAL inspection capability selectors use wrapped object payloads.
 Consult the selected section's public contract for its complete field meaning;
 the tool's envelope schema does not freeze every nested capability record.
+
+=head1 EXAMPLE DOCUMENTATION
+
+C<fsmgen_find_examples> returns a C<documentation> object, the complete
+C<documentation> section of the capability manifest. It contains metadata and
+repository-relative Markdown pointers, not document contents or an array of
+search hits. The object has these public groups:
+
+=over 4
+
+=item C<human_contract>
+
+An ordered list of repository-relative paths to the human-facing contract and
+manual entry points.
+
+=item C<downstream_alignment>
+
+An ordered list of repository-relative paths to downstream integration and
+alignment guidance.
+
+=item C<section_contract>
+
+The bounded public documentation contract: its schema version, status, owner,
+producer and entry points, published top-level/path-list keys, path constraints,
+grouped path-list contracts and consumption guidance. The path contract says
+that pointers name tracked repository-relative Markdown files; exact path
+lists may widen deliberately. Preserve the returned metadata rather than
+assuming a fixed list of files.
+
+=back
+
+The optional C<query> filters only catalog entry identifiers and relative
+paths, case-insensitively; C<limit> bounds those catalog results. Neither
+changes the documentation object. C<catalog_entries> contains the selected
+full catalog records and C<returned_count> counts them. The embedded
+C<support_summary> describes the full support population with no sampled
+catalog entries; see L</CATALOG SAMPLE RESULTS> for compact versus full records.
+
+C<fsmgen://examples> and capability selector C<examples> return the same default
+examples object. Capability selector C<documentation> instead returns the
+documentation section in its C<section>/C<payload> envelope. These are metadata
+queries: they do not execute examples, search document contents, scan the
+workspace or automatically read the referenced files.
 
 =head1 DIAGNOSTIC SAMPLE LIMITS
 

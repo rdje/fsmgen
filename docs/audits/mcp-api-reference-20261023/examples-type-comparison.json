@@ -1,0 +1,29 @@
+{
+  "selected_source_files": 431,
+  "complete_unchanged_exchanges": 11,
+  "example_queries": 5,
+  "original_schema_violations": [
+    [
+      "$/documentation: expected array, got dict"
+    ],
+    [
+      "$/documentation: expected array, got dict"
+    ],
+    [
+      "$/documentation: expected array, got dict"
+    ],
+    [
+      "$/documentation: expected array, got dict"
+    ],
+    [
+      "$/documentation: expected array, got dict"
+    ]
+  ],
+  "controls": [
+    "restored_array",
+    "changed_documentation",
+    "borrowed_catalog",
+    "text_mismatch",
+    "borrowed_source"
+  ]
+}

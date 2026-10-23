@@ -41,7 +41,7 @@ and complete backing-model semantics are not inferred from these counts.
 | `.3` capability payload | Repaired: selected version retains its integer payload; the schema admits it |
 | `.4` argument enforcement | Repaired: metadata/envelope, numeric limits, source kinds and caller copies |
 | `.5` error locations | Location/source/operator/zero preservation repaired; grammar bounded |
-| `.6` documentation type | Ordinary example results contain a documentation object against an array declaration |
+| `.6` documentation type | Repaired: documentation retains the manifest object; discovery declares it |
 
 Findings are per-exchange observations and can overlap; they are not a count
 of distinct defects. Exact repair nodes, priority and follow-up reference work
