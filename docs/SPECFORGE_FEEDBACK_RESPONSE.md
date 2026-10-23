@@ -91,7 +91,10 @@ birth identities are not retained by this fixed runtime capture.
 
 Parameter-dependent grouped behavior (R2/R3), publication and SPECFORGE
 integration remain pending. No default-width unroll substitutes for generic
-behavior. Logical `!` stays Boolean; optional vector inversion is separately
+behavior. Generated child declarations now retain private source and lexical
+environment associations; their carriers/public reports remain fixed at resolved
+defaults. Reusable/domain propagation and generic HDL remain pending.
+Logical `!` stays Boolean; optional vector inversion is separately
 owned. Private complement classification now follows known width; direct VHDL
 refuses residual complement tokens after supported reduction translation.
 Top-level AST caller diagnostics are defined and warning-free; nested metadata,

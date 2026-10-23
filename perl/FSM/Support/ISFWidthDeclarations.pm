@@ -5,7 +5,7 @@ use warnings;
 use Carp qw(confess);
 use Exporter 'import';
 
-our @EXPORT_OK = qw(capture_actor_width_metadata);
+our @EXPORT_OK = qw(capture_actor_width_metadata capture_generated_width_metadata);
 
 # Snapshot already admitted declarations. Resolution belongs to the parser and
 # canonical lowering parameter/constant resolvers, never to this projection.
@@ -71,6 +71,41 @@ sub capture_actor_width_metadata {
         _width_static_uses => {scope => _copy($scope), storage_depths => \%depths, library_overrides => \%overrides,
             (exists($actor->{_watchdog_declaration}) ? (watchdog => _copy($actor->{_watchdog_declaration})) : ())},
     };
+}
+
+# A generated transaction has its own formal namespace and keeps only selected
+# inherited actor ports. Use those actual declarations, then intersect with the
+# final physical products; neither default widths nor generated names identify
+# a lexical source. Actor storage read ports retain their original declaration.
+sub capture_generated_width_metadata {
+    my %args = @_;
+    my $actor = $args{actor};
+    my $tx = $args{transaction};
+    my $owner = $actor->{_width_source_actor_name} // $actor->{actor_name};
+    my $metadata = capture_actor_width_metadata(%args, direct_formals => []);
+    my $declarations = $metadata->{_width_declarations};
+    for my $pair (['inputs', 'input'], ['outputs', 'output']) {
+        for my $port (@{($tx->{ports} || {})->{$pair->[0]} || []}) {
+            # Even a literal/type formal shadows a symbolic actor declaration.
+            delete $declarations->{$port->{name}};
+            next unless exists $port->{_width_declaration};
+            $declarations->{$port->{name}} = {
+                scope => {kind => 'transaction', actor => $owner, owner => $tx->{name}},
+                source => _copy($port->{_width_declaration}),
+                declaration => {kind => 'transaction_port', name => $port->{name},
+                    direction => $pair->[1],
+                    identity => ['transaction_port', $owner, $tx->{name}, $port->{name}]},
+            };
+        }
+    }
+    # The auxiliary width table can retain inherited names after port pruning.
+    # All authored declarations realized here are ports, including storage reads.
+    my %physical = map { $_->{name} => 1 } @{$args{ports}};
+    delete $declarations->{$_} for grep { !$physical{$_} } keys %$declarations;
+    # The child reads scalar ports, not parent-owned banks or library instances.
+    $metadata->{_width_static_uses}{storage_depths} = {};
+    $metadata->{_width_static_uses}{library_overrides} = {};
+    return $metadata;
 }
 
 # Copy without serialization or scalar inspection, preserving primitive kinds.

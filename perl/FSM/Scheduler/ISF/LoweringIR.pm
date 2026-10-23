@@ -25,7 +25,7 @@ use FSM::Scheduler::ISF::ChildCompletion qw(retain_child_completions);
 use FSM::Support::HDLInstanceIdentifierPolicy;
 use FSM::Support::ISFInterfacePortMetadata qw(snapshot_interface_port_metadata);
 use FSM::Support::ISFReductions qw(capture_actor_reductions);
-use FSM::Support::ISFWidthDeclarations qw(capture_actor_width_metadata);
+use FSM::Support::ISFWidthDeclarations qw(capture_actor_width_metadata capture_generated_width_metadata);
 use FSM::Scheduler::ISF::RecordSamples;
 use FSM::Support::ISFRecordPortContexts qw(validate_actor_record_contexts);
 use FSM::Support::ISFRecordPortSamples qw(actor_has_record_port);
@@ -721,6 +721,17 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     }
     FSM::Scheduler::ISF::RecordSamples->apply_to_module($ir, $actor, [$tx]);
     _finalize_ir($ir);
+    # Preserve the actor environment separately from the transaction parameters
+    # emitted by this module. A same-named local parameter may shadow an actor
+    # width source while inherited actor ports still use that original source.
+    my $width_actor = _clone_isf_value($actor);
+    my ($width_tx) = grep { $_->{name} eq $tx->{name} } @{$width_actor->{transactions}};
+    my $width_metadata = capture_generated_width_metadata(actor => $width_actor,
+        transaction => $width_tx, params => _actor_param_declarations($width_actor),
+        constants => _actor_constant_declarations($width_actor),
+        transaction_params => {$tx->{name} => $ir->{params}},
+        ports => $ir->{ports});
+    $ir->{$_} = $width_metadata->{$_} for keys %$width_metadata;
     $ir->{logical_controllers} = FSM::Scheduler::ISF::LogicalControllers->inventory($ir, $actor);
     return $ir;
 }

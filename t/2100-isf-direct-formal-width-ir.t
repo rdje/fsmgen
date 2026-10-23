@@ -84,8 +84,8 @@ subtest 'parent capture excludes generated-child formals' => sub {
         'actual direct parent formal retains its actor-derived alias');
     is_deeply([sort keys %{$row->{ir}{_width_declarations}}], [qw(data isf_port_parent_data)],
         'parent has only its authored actor port and live direct formal');
-    ok(!exists $row->{ir}{children}{worker}{_width_declarations},
-        'generated child propagation stays with its own successor');
+    is_deeply([sort keys %{$row->{ir}{children}{worker}{_width_declarations}}], [qw(child_data response)],
+        'generated child declarations remain exclusively in their own module');
 };
 
 subtest 'formal metadata is detached from original inputs, sibling results and old IR records' => sub {

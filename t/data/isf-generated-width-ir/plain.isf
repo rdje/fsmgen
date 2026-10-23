@@ -1,0 +1,11 @@
+(actor plain_generated_width_ir (clock clk) (reset rst_n)
+  (types (type word_t (bits 8)))
+  (interface (input start) (input data (width 8)) (output result (width 8)) (output done))
+  (transaction worker
+    (ports (input data (type word_t)) (input literal (width 8))
+      (input implicit) (output response (width 8)))
+    (update response data) (complete done))
+  (transaction parent (on start)
+    (spawn worker as first (bind (input data data) (input literal 0)
+      (input implicit 0) (output response result)))
+    (await_all first) (complete done)))

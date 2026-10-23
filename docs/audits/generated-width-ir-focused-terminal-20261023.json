@@ -1,0 +1,14 @@
+{
+  "owner": "ISF-REDUCTION-DELIVERY.2.3.2.4.1",
+  "observation": "Execution-service terminal result for the guarded focused cohort",
+  "session_id": 51867,
+  "log_path": ".artifacts/generated-width-focused-20261023.log",
+  "log_sha256": "ed19dd158bc3beba3592a6c1340acb5b33dc2bc9ec0af40cbb00ee9fef5849a3",
+  "result": {
+    "chunk_id": "d5db46",
+    "wall_time_seconds": 0.000014167,
+    "exit_code": 0,
+    "original_token_count": 186,
+    "output": "t/1936-isf-formal-source-context.t ............................ ok\nt/1939-isf-formal-helper-identity.t ........................... ok\nt/1955-isf-formal-domain-source-products.t .................... ok\nt/1961-isf-formal-source-binding-reports.t .................... ok\nt/2046-isf-library-document-origin-authority.t ................ ok\nt/2047-isf-atl-document-origin-authority.t .................... ok\nt/2048-isf-file-document-origin-authority.t ................... ok\nt/2052-isf-local-formal-origin-authority.t .................... ok\nt/2055-isf-local-formal-helper-diagnostic-causes.t ............ ok\nAll tests successful.\nFiles=23, Tests=283, 2590 wallclock secs ( 0.55 usr  0.12 sys + 596.98 cusr 941.46 csys = 1539.11 CPU)\nResult: PASS\n"
+  }
+}

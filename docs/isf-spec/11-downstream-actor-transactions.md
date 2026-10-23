@@ -259,6 +259,10 @@ Rules:
   Direct-formal IR records retain actual plan identities, original names and
   lexical source ownership at their allocated private signals. Parent selection
   excludes generated/pruned transactions; literal/type defaults stay independent.
+  Generated children now retain only final selected formal/inherited/storage-read
+  port declarations and separate actor/selected-transaction environments. Their
+  auxiliary width table does not establish interface membership. Resolved carrier
+  and public products stay unchanged; reusable/domain closure remains pending.
   Nested aggregate first rows now normalize recursively without changing scalar
   kinds. Selected alias/nested/default native/API/newline reports conserve resolved
   values; carrier/public source inventories and generic specialization remain pending.

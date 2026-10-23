@@ -351,6 +351,20 @@ automatic same-name wiring does not add a second driver. The actor pin remains
 separate. See [Composition](13f-composition.md#spawn-child-as-name--parallel-fork)
 for a complete example.
 
+Generated-child width provenance now follows the final selected ports: explicit
+formals, inherited inputs that remain in the interface, and actor-storage read
+ports. An actor alias of `W=8` remains distinct from a child-local `W=4`, even
+when both declarations appear in the same generated module. Private metadata
+keeps these lexical environments separate; scheduled carriers and public reports
+still describe their fixed resolved defaults. This does not provide generic
+HDL resizing or library shape specialization.
+
+The connected scope example includes independent four-bit and six-bit children:
+
+```bash
+./bin/fsmgen --quiet --strict --emit-semantic-json t/data/isf-generated-width-ir/generated.isf
+```
+
 A callee formal name in `(bind ...)` is an identity, including when it shares an
 actor record input name. The caller actual still follows the admitted scalar
 binding contract. See the [record-input binding example](13j-type-enum-aggregate.md)

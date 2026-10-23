@@ -13,12 +13,12 @@ date: 2026-10-23
 status: current
 tags: [isf, width, parameters, lowering, provenance, formal]
 evidence: docs/audits/width-physical-verify-20261022.py; docs/audits/width-generated-port-controls-20261022.json.gz; docs/audits/width-carrier-contract-first-20261022.json.gz; docs/audits/width-static-use-controls-20261022.json.gz; docs/audits/width-carrier-contract-verify-20261022.py; docs/audits/scalar-width-foundation-20261022.json.gz; docs/audits/scalar-width-foundation-20261022.txt; docs/audits/scalar-width-foundation-verify-20261022.py; docs/tasks/ISF-REDUCTION-DELIVERY.md; docs/audits/scalar-width-declarations-qualification-20261022.json.gz; docs/audits/scalar-width-declarations-native-20261022.json.gz; t/2094-isf-authored-width-declarations.t; perl/FSM/Adapter/ISF/Parser.pm
-reverify: python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
+reverify: python3 -B docs/audits/generated-width-ir-20261023.py verify && python3 -B docs/audits/formal-width-ir-20261023.py verify && python3 -B docs/audits/width-ir-qualification-20261023.py verify && python3 -B docs/audits/width-physical-verify-20261022.py && python3 -B docs/audits/library-override-diagnosis-verify-20261022.py && python3 -B docs/audits/library-source-retention-20261022.py verify && python3 -B docs/audits/library-source-qualification-20261022.py verify
 ---
 # 0119 — Scalar width declarations retain authored provenance
 
 - Type: private declaration and lowering contract
-- Status: private parser and actor/direct-formal IR preservation qualified; carrier/public propagation pending
+- Status: private parser and actor/direct-formal/generated IR preservation qualified; carrier/public propagation pending
 - Owner: `ISF-REDUCTION-DELIVERY.2.1`
 
 ## Context
@@ -141,8 +141,8 @@ authored aliases and resolved values. `_width_static_uses` separately snapshots
 watchdog/depth and selected library sources. Parser source actor identity
 survives module renaming; historical origin oracles add exact source-name/literal-use metadata and rebind full actor digests. Each module owns detached maps; instance overrides
 remain separate from source defaults. Literal/type/reset declarations stay
-exact. Direct formals now retain actual plan identities, original names, lexical
-sources and isolated environments; generated/domain and IAL0 qualification remain.
+exact. Direct formals retain original names, plan identities and isolated lexical scopes. Generated formal/inherited/storage-read ports retain actor and selected transaction sources.
+Final ports own membership; auxiliary widths can retain removed inputs. Parent banks/library instances stay parent owned. Reusable/domain and IAL0 qualification remain.
 Nested heads now normalize recursively under `.2.3.2.1.2.2`; original diagnosis: `docs/audits/library-override-diagnosis-verify-20261022.py`.
 
 `python3 -B docs/audits/width-physical-verify-20261022.py` checks the retained

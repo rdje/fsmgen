@@ -18,6 +18,14 @@ implementation tree avoids growing the near-rollover coordination task file.
 Decision `0121` applies the director's exclusive required-request priority;
 independent defects remain owned after handoff unless they demonstrably block delivery.
 
+Director DBIQNP discussion, 2026-10-23: reaffirm the long-term goal of an external
+agent authoring, simulating at VIAL level, debugging, fixing and iterating through
+production-quality semantic API/MCP contracts, including precise temporal
+behavior. This is discussion, not an activation or delivery claim. Existing R13,
+MCP write-horizon and HIAL/VIAL owners retain that scope; the reduction frontier
+and decision0121 priority do not change. Design meaning, observed execution and
+evidence-backed causality must remain distinguishable.
+
 ## Non-Goals
 
 - This tree does not close durations, named timers or record-output delivery.
@@ -40,7 +48,7 @@ independent defects remain owned after handoff unless they demonstrably block de
 - ID: `ISF-REDUCTION-DELIVERY`
   Status: `active`
   Goal: `Deliver required unary and parameter-correct grouped reductions.`
-  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17`
+  Children: `ISF-REDUCTION-DELIVERY.1, ISF-REDUCTION-DELIVERY.2, ISF-REDUCTION-DELIVERY.3, ISF-REDUCTION-DELIVERY.4, ISF-REDUCTION-DELIVERY.5, ISF-REDUCTION-DELIVERY.6, ISF-REDUCTION-DELIVERY.7, ISF-REDUCTION-DELIVERY.8, ISF-REDUCTION-DELIVERY.9, ISF-REDUCTION-DELIVERY.10, ISF-REDUCTION-DELIVERY.11, ISF-REDUCTION-DELIVERY.12, ISF-REDUCTION-DELIVERY.13, ISF-REDUCTION-DELIVERY.14, ISF-REDUCTION-DELIVERY.15, ISF-REDUCTION-DELIVERY.16, ISF-REDUCTION-DELIVERY.17, ISF-REDUCTION-DELIVERY.18`
 
 - ID: `ISF-REDUCTION-DELIVERY.1`
   Status: `done`
@@ -578,10 +586,37 @@ independent defects remain owned after handoff unless they demonstrably block de
   - [x] **NO REGRESSION** — All tests successful Files=23 Tests=326 covers actor/formal/library/ATL/file origins, prepared scopes, identities, bindings and width/default controls. LoweringIR and ISFWidthDeclarations are syntax OK. Complete selected native/API/newline/text/structured products conserve old output; saved hostile controls reject. Final book example/task/build/source/index/decision checks and staged scripts/check_doctrines.sh plus normal hooks gate this bounded source-only commit; P1 .16 and required successors remain open.
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve generated transaction and reusable-actor width declarations and selected environments.`
   Acceptance: `After .2/.3, qualify generated child interfaces, independent library/ATL instances and explicit/inherited parameter source associations using actual supported constructors. Keep source owners distinct from module/instance identity; preserve original expressions versus resolved overrides without guessing from equal defaults. Retain known reusable-formal refusal ownership under SEM .60...3.1.2.5; do not promote that unsupported path. Require isolated cloned records, exact ordinary defaults, carriers/public products and scoped environment controls; split constructors if needed and commit before domain closure.`
-  Verification: `pending generated/reusable-actor qualification`
+  Verification: `Generated transaction constructor sources/environments are qualified by .4.1; reusable constructors and complete instance joins remain .4.2/.4.3.`
+  Commit: `pending`
+  Children: `ISF-REDUCTION-DELIVERY.2.3.2.4.1, ISF-REDUCTION-DELIVERY.2.3.2.4.2, ISF-REDUCTION-DELIVERY.2.3.2.4.3`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.1`
+  Status: `done`
+  Goal: `Retain generated transaction physical-port width sources and isolated lexical environments.`
+  Acceptance: `Use the actual generated-child constructor and final selected ports to retain original actor/formal/storage-read declarations without inferring from numeric widths. Preserve actor versus local aliases, shadows, constants, unused explicit ports and exclusion of removed inherited inputs/storage. Snapshot canonical actor and selected transaction environments separately from executable child params. Prove unchanged source callers, old complete IR/carriers and native/API/newline products, literal/type controls and mutation isolation with fixed RED/GREEN tests. Public/corpus admission and HDL behavior are unchanged; no generic-width claim. Synchronize book/contract boundaries, retain dated evidence and commit before reusable constructors.`
+  Verification: `The generated constructor now snapshots actual source declarations after final port selection and canonical finalization. Original actor/formal/storage-read owners remain distinct from physical module names; only the selected transaction environment accompanies the actor environment. Local W4/ALIAS4 and sibling W6 remain distinct from actor W8/ACTOR_ALIAS8, constants and equal defaults. Unused explicit formals retain source records; removed inherited inputs/storage and literal/type/default ports gain none. Caller/source/result/sibling and executable-parameter mutation isolation qualify. Fixed T2101 fails all three top-level subtests before propagation and passes unchanged afterward. The first native source fixture has unconnected implicit outputs; exact refusal and full original inputs retain, while the corrected native fixture uses actual explicit output bindings. The first projection draft incorrectly trusts auxiliary signal widths that retain pruned inputs; independent complete physical membership exposes it, and the producer now intersects only final child ports. Complete old source/IR/carrier/report products match after removing only new child metadata; native check/semantic/schedule bytes match, and complete API/text/structured/newline products agree. Saved wrong-owner/token/member/scope/default/kind controls refuse. Guarded focused cohort passes All tests successful Files=23 Tests=283; book-example/task checks pass Files=2 Tests=50. Both production modules are syntax OK. Complete original/corrected/draft products, selected source versions, execution-service terminal outcome and final checks retain under docs/audits/generated-width-ir-*-20261023 artifacts with generated-width-ir-20261023.py. Re-derivation is actual constructors and complete source/carrier/public products; falsification is fixed RED/GREEN, literal source/physical/scope oracles, old-product conservation and hostile records; durability is tracked code/tests/producers/receipts/readers, decision119 and Git. Full transitive source footprints, raw-root reconstruction, historical query attribution, generic HDL/runtime and reusable/domain closure remain unqualified. Public sync scope is book/downstream/decision/feedback only: source admission, manifest/schema, executable carriers and shipped corpus stay unchanged. The first staged doctrine gate exposes focused-document allowance exhaustion and rationale rollover pressure from duplicated new execution prose. Full original staged sources and refusal retain; deduplicating only the new rationale footer into this canonical task preserves every fact and reader command. Rationale returns below rollover with unchanged line allowance; its byte dimension and focused/task warning allowances follow measured ratchets with every ceiling unchanged. Final native book/build/source/index/task/decision checks and staged/normal doctrines qualify the commit. Daily .18 census precedes .4.2 reusable work.`
+  Commit: `ISF-REDUCTION-DELIVERY.2.3.2.4.1: retain generated width sources and scopes`
+
+  Acceptance Checklist (enforced):
+  - [x] **ROOT CAUSE (WHY + WHERE)** — Perl diagnostics at t/2101-isf-generated-width-ir.t line 50 show absent generated declaration maps despite actual source width records. _build_child_ir had no metadata projection. The retained first draft's complete map also exposes phantom inherited inputs when auxiliary signal_widths is mistaken for final interface membership; actual native --strict --check --json retains the separate unconnected-output fixture refusal.
+  - [x] **ADDRESSED (verified)** — The same fixed T2101 assertions go RED to GREEN. Actual final child ports select detached original source identities and actor/selected-transaction environments; literal/type controls and renamed-parent/sibling/caller mutations qualify. Complete old source/IR/carrier/native products conserve, with API/text/structured/newline parity and saved hostile association controls. Initial source refusal and draft remain immutable; no generic or reusable/domain closure is inferred.
+  - [x] **NO REGRESSION** — All tests successful Files=23 Tests=283 across width, storage, domain, formal and origin checks; book/task checks pass Files=2 Tests=50. Both changed modules are syntax OK. Complete selected public products conserve. Native book/source/index/task/decision checks, scripts/check_doctrines.sh and normal hooks gate this source-only metadata commit; publication and remaining constructor obligations retain their owners.
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.2`
+  Status: `pending`
+  Goal: `Qualify reusable library and ATL constructor source/default/override environments.`
+  Acceptance: `Use independent actual library and ATL instances; preserve source export owner, module/instance identity, original override expressions and selected resolved parameter records separately from source defaults. Keep reusable-formal refusal and specialization ownership; prove exact old products, detached records and sibling isolation before commit.`
+  Verification: `pending generated constructor slice`
+  Commit: `pending`
+
+- ID: `ISF-REDUCTION-DELIVERY.2.3.2.4.3`
+  Status: `pending`
+  Goal: `Close complete generated/reusable constructor declaration and environment conservation.`
+  Acceptance: `Join the qualified constructors to independent full source/physical membership oracles and hostile wrong-owner/default/instance controls. Include generated spawn/do override sources and actual selected instance records, especially multiple instances of one source module; retain module defaults separately without claiming shape re-specialization. Verify actual strict carriers and complete public conservation, synchronized book/downstream facts and required gates; close .4 before domain propagation. Any unsupported handoff source mapping remains explicitly owned and cannot be guessed.`
+  Verification: `pending reusable constructors`
   Commit: `pending`
 
 - ID: `ISF-REDUCTION-DELIVERY.2.3.2.5`
@@ -861,6 +896,13 @@ independent defects remain owned after handoff unless they demonstrably block de
   - [x] **ROOT CAUSE (WHY + WHERE)** — git log -S "Latest artifact cleanup" and exact HEAD record establish the prior UTC boundary; the unchanged collector refuses at its 24-hour assertion. Staged live-document diagnostics identify task_evidence total-line/byte allowance exhaustion.
   - [x] **ADDRESSED (verified)** — Preserve the actual admission refusal, original prior record and all artifacts. Declare only measured warning-debt growth plus the existing ratchet step; every baseline and ceiling remains unchanged. Resume the existing feature frontier.
   - [x] **NO REGRESSION** — knowledge-map: OK and task/claim doctrines pass in the original full gate; only the owned allowance fails. Fresh inventory and staged scripts/check_doctrines.sh plus normal hooks qualify the correction.
+
+- ID: `ISF-REDUCTION-DELIVERY.18`
+  Status: `pending`
+  Goal: `Complete the elapsed-time-admitted daily artifact census after the generated-width commit.`
+  Acceptance: `The actual UTC boundary now exceeds the unchanged latest cleanup record by 24 hours. After .2.3.2.4.1 is committed and the tree is clean, reuse the installed authenticated collector/reviewer and genuine saved-record controls with a fresh owner/revision/output. Verify independent membership and root/Rust locations; preserve candidates without exact disposal authority. Overwrite only the latest cleanup record, synchronize the saved-reader book route and required gates, commit, then resume .2.3.2.4.2. No spent source or compiler epoch is replayed.`
+  Verification: `pending clean generated-width handoff`
+  Commit: `pending`
 
 ## Blockers
 

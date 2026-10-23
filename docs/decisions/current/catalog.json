@@ -1380,15 +1380,15 @@
     },
     {
       "content": {
-        "bytes": 11432,
+        "bytes": 11694,
         "line_bytes": 690,
         "lines": 167,
-        "sha256": "85f931acf143663376660e4dfa240bfb963b0a4ec82b5bf326f977e06e6e17c8"
+        "sha256": "43b37eabd5b83010571e0eb91cc6c6e9f5b3b79a32bc742e71ab69bcde5e778a"
       },
       "id": "0119",
       "metadata": {
         "authority_status": [
-          "- Status: private parser and actor/direct-formal IR preservation qualified; carrier/public propagation pending"
+          "- Status: private parser and actor/direct-formal/generated IR preservation qualified; carrier/public propagation pending"
         ],
         "knowledge_id": "isf-authored-scalar-width-provenance",
         "knowledge_status": "current",
