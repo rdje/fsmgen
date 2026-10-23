@@ -33,6 +33,22 @@ subset; VIAL tooling's plan/run operations have a separate host boundary.
 The book search covers the manual and this guide. Use the API index, coverage
 list or browser Find to navigate the standalone module pages.
 
+## Current MCP schema compatibility
+
+The live MCP audit has identified the compatibility defects below. A client
+that validates responses strictly can reject legitimate current results.
+These descriptor and validation gaps are pending repair; the complete operating
+reference and its drift checks remain under qualification.
+
+| Surface | Current discrepancy |
+| --- | --- |
+| Check, semantic and schedule tools | A source identity is required at runtime; the input schemas omit that alternative requirement |
+| Diagnostic explanation | `limit_examples` is supported by existing workflows but missing from the closed input schema |
+| Capability sections | The selected manifest version is an integer payload; the schema declares an object payload |
+| Example lookup | `documentation` contains the public documentation object; the schema declares an array |
+| Metadata-tool arguments | Some extra fields and wrong types are accepted despite the advertised schemas; that leniency is outside the supported argument contract |
+| Error messages | Some failures retain automatic Perl locations or reference addresses; use error codes and structured diagnostics for program decisions |
+
 ## Build and preview
 
 Normal HTML builds and previews generate and validate the reference

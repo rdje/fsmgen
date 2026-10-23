@@ -1,0 +1,8 @@
+{
+  "capture": "docs/audits/mcp-api-reference-20261023/live-inventory.json.gz",
+  "capture_head": "ed92d0a12c27e382f63237590acb493738d6e29e",
+  "compressed_sha256": "492a17bb88fbe5a2c897189ad72ed8c84b5bbc0e57bbedfacb80a50bb3380b09",
+  "producer_sha256": "d8d04560486c78d3200cb9beb40266065108f980169f5d7738e57c28ccc94534",
+  "reader_sha256": "37d043d2ee519ad740493012e55bc90618eb034244c0a60e2d1138f61012ef48",
+  "uncompressed_sha256": "55be68aad3aa5593ef2415cbda77a6021413eb69a59a58a887c052879cb3c211"
+}

@@ -1,0 +1,6 @@
+{
+  "command": "scripts/check_claim_verification_inventory.pl",
+  "exit_status": 1,
+  "message": "claim-inventory: inventory drift; run scripts/check_claim_verification_inventory.pl --write",
+  "cause": "The task/container correction and measured budget refresh occurred after the earlier derived census. Regenerate after complete staging, then check again."
+}

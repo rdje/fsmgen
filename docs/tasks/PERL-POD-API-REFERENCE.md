@@ -164,10 +164,82 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.1.2: distinguish optional catalog fields in MCP schema snapshots`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.1, PERL-POD-API-REFERENCE.6.1.2.2, PERL-POD-API-REFERENCE.6.1.2.3, PERL-POD-API-REFERENCE.6.1.2.4`
   Goal: `Complete the exhaustive public-surface and documentation-gap census after transport admission.`
   Acceptance: `Perform the full .6.1 census and refine every successor from actual published methods/tools/resources/templates/schema/query applicability. Retain complete source/runtime/schema identities, current documentation locations, unexplained gaps and explicit owned limitations; no schema/name-only stub counts as reference completion. Commit the audit before operational-reference edits.`
   Verification: `Persistent transport and the independently failing catalog-snapshot observer are qualified; exhaustive public-surface/schema/documentation-gap census remains pending.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.1`
+  Status: `done`
+  Goal: `Capture complete live MCP discovery, method coverage and schema conformance observations.`
+  Acceptance: `Use the real persistent server after the transport repair. Retain initialized capabilities, complete tools/resources/templates and all static payloads, public manifest sections, source-query applicability, schema/property populations and exact raw exchanges. Join independently published contract names and dispatcher method membership to live discovery/calls, with source and observer identities and orderly shutdown. Measure missing source-identity alternatives, diagnostic limit_examples visibility and capability payload types across every public section before classifying gaps. Include genuine missing/extra member/type controls; own each confirmed discrepancy and commit this bounded capture before repairing schemas.`
+  Verification: `The real server at ed92d0a12 yields 7 dispatcher methods, 9 tools, 6 static resources, 13 listed templates and 74 complete exchanges. Independent raw-frame/contract/field/Git-source joins qualify 406 selected files (all 399 tracked FSM modules plus seven declared inputs), 21 input-property and 63 output-property paths. Eight genuine missing/extra/borrowed/Boolean/wire/source controls reject; JSON numeric enum equivalence and Boolean distinction are checked. Exact compressed bytes, source/observer identities, full results and a repeatable saved reader retain. Six exact conformance/error repair cohorts are owned in .6.1.2.2; no schema-conformance success, full result-documentation coverage, compiler epoch, temporal run or platform matrix is inferred. Book records current client compatibility defects; source/syntax/native/doctrine gates qualify the audit commit.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.1: qualify live MCP interface and conformance gaps`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.2.1, PERL-POD-API-REFERENCE.6.1.2.2.2, PERL-POD-API-REFERENCE.6.1.2.2.3, PERL-POD-API-REFERENCE.6.1.2.2.4, PERL-POD-API-REFERENCE.6.1.2.2.5, PERL-POD-API-REFERENCE.6.1.2.2.6`
+  Goal: `Repair only confirmed advertised-schema/runtime contract discrepancies.`
+  Acceptance: `Refine one exact child leaf per independent .6.1.2.1 discrepancy before implementation. Preserve existing valid behavior and published compatibility while making discovery accurately describe accepted requests/results. Prove real before/after requests and metadata, valid/refused cases and full typed outputs with adverse controls. Synchronize precise POD/manual guidance and relevant schema snapshots; commit each repair before its successor.`
+  Verification: `pending actual conformance evidence and exact repair children`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.1`
+  Status: `pending`
+  Goal: `Advertise the existing required source identity alternatives accurately.`
+  Acceptance: `The captured check/semantic/schedule input schemas admit an empty object, while real calls reject it for absent source_id/source_path. Express the existing identity alternative in discovery without changing valid request precedence/applicability. Prove real empty/valid/refused cases and descriptor conformance, preserve scalar/source kinds and compatibility, synchronize exact guidance and commit.`
+  Verification: `Measured in live-inventory.json: all three empty calls return -32602 while required lists are empty and no identity alternative is declared. Saved-reader qualification pending .6.1.2.1.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.2`
+  Status: `pending`
+  Goal: `Publish the diagnostic sample-limit argument already used by public workflows.`
+  Acceptance: `Advertise limit_examples in explain_diagnostic's closed input schema, preserving existing documented/native behavior and defaults. Qualify declared field/type, real capped results and refusals, snapshot compatibility and precise per-tool zero/default semantics. Do not silently impose uniform limit behavior across unrelated tools. Commit before generic argument enforcement.`
+  Verification: `Actual limit_examples calls succeed, and existing book/T1445 use the argument, but tools/list advertises code alone with additionalProperties false.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.3`
+  Status: `pending`
+  Goal: `Make capability-query output schemas admit every supported public section value.`
+  Acceptance: `The real manifest_schema_version section returns integer payload 1 against an object-only payload declaration. Preserve the complete wire values and existing section variants; correct only the advertised output typing with deliberate public-section semantics. Check every captured/current section, distinguish Boolean/numeric types and reject a genuinely wrong type in the conformance observer. Synchronize schema/reference guidance and commit.`
+  Verification: `Live section loop observes manifest_schema_version payload integer; the descriptor declares payload type object. Other captured selected payloads are objects. No new section or tool is required.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.4`
+  Status: `pending`
+  Goal: `Enforce advertised metadata-tool argument types and closed fields consistently.`
+  Acceptance: `Five metadata tools accept an unpublished argument despite closed schemas; discovery/examples/support also accept wrong array-typed fields, while capability/diagnostic wrong types expose ARRAY reference addresses in errors. Reuse established project JSON-kind/argument facilities where suitable, or select a bounded validator for exactly the published schema vocabulary without introducing an unrelated evaluator/dependency. Preserve all valid supported values, JSON scalar kinds and intended per-tool limits; reject invalid types/fields cleanly with actual API/newline controls. Split validation cohorts if needed, document and commit.`
+  Verification: `Actual extra-argument calls succeed on capability, discovery, examples, diagnostic and support tools. Wrong-array query/limit calls succeed on discovery/examples/support; wrong-array section/code errors contain ARRAY(0x...) strings. Exact wire captures retained; implementation/qualification pending.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.5`
+  Status: `pending`
+  Goal: `Remove automatic Perl/input-record locations from public persistent-server errors.`
+  Acceptance: `Real invalid-parameter errors include the adapter .pm line and STDIN record suffix. Trace _strip_perl_error_location's missing input-record case; preserve the meaningful public reason, authored source diagnostics and path-sanitization behavior while removing private automatic locations. Qualify persistent/default/custom handles and moved roots with spaces, exact original messages, safe hostile suffix/quote/operator controls and public code/message-only envelopes; commit a scoped fix.`
+  Verification: `The live pipe returns messages such as Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 457, <STDIN> line 32. The current strip regex only recognizes a bare final line number. Full original error messages are captured; no fix or broad cleanup claim yet.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.6`
+  Status: `pending`
+  Goal: `Correct the example tool's documentation result type without altering returned metadata.`
+  Acceptance: `The actual examples result carries the public documentation section object, but outputSchema declares an array. Correct the declaration to its authoritative current contract; never reshape correct public values to satisfy a wrong schema. Compare complete actual documentation/catalog records with the capability manifest, text/structured results and schema metadata, include wrong-type controls, synchronize precise guidance and commit.`
+  Verification: `Saved-reader inspection finds documentation object against array schema on ordinary valid find_examples calls, independently of malformed-argument cases. Full original records and raw wire frames are retained in the live census.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.3`
+  Status: `pending`
+  Goal: `Join every public result contract and documentation obligation into a complete gap matrix.`
+  Acceptance: `Follow the manifest's full contract-surface graph, current report/schema producers, typed VIAL inspection contract and relevant book/POD. Inventory every public field family, nested record, meaning/unit/order/optionality/version/identity/failure boundary and its canonical documentation, stability and representative evidence. Names or object schemas alone do not count as semantic explanation. Separate compact/full variants and source temporal/schedule/runtime availability; retain explicit omissions and exact owners. No private compiler implementation is promoted to public API.`
+  Verification: `pending current interface conformance`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.4`
+  Status: `pending`
+  Goal: `Select exact exhaustive reference cohorts and close the initial audit.`
+  Acceptance: `Join .1-.3's complete populations to documentation-gap owners and refine .6.2-.6.7 into bounded exact leaves, preserving every method/tool/resource/template/field/model/error/workflow obligation. Require no unexplained omission, retain original source/metadata/schema failures and evidence limits, commit the audit and select the first operational-reference leaf.`
+  Verification: `pending live/schema/model/documentation inventory`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.2`
@@ -580,3 +652,91 @@ HIAL, claim, locality, or source-feature signoff gates.
   production code conservation is requalified. Final native source checks
   require complete restaging after the pointer update; the first expected
   source-plane refusal is retained and the unchanged guard reruns before commit.
+
+
+### .6.1.2 initial schema-census checks to resolve
+
+- Source review identifies two potential published-schema gaps for actual
+  measurement: source-bound tool schemas have no required identity alternative
+  despite runtime requiring source_id or source_path; explain_diagnostic's
+  schema advertises code alone while the existing book/test and payload
+  producer accept limit_examples. Capture actual advertised schemas and real
+  refusals/results before classifying or repairing either. The census owns
+  full argument/default/limit/error conformance; no new tool is authorized by
+  this observation, and existing schema/API compatibility must be preserved.
+
+
+- Also measure capability_query's payload declaration against every public
+  manifest section: the adapter returns the selected section value while the
+  advertised payload property is currently object-only. Array/scalar sections
+  must be observed before classifying any output-schema mismatch. Limit/default
+  differences between discovery, examples and diagnostic samples are census
+  obligations, not automatically permission to change established semantics.
+
+
+### .6.1.2.1 live measurement frontier
+
+- inventory_mcp.py captures the real persistent handshake/discovery, every
+  static resource, every public manifest section, all tool metadata and focused
+  argument/limit/refusal cases. It joins runtime names to the independent
+  manifest declarations, fingerprints all tracked FSM modules and selected
+  launchers/schema/docs against HEAD, and verifies unchanged inputs and orderly
+  EOF. Raw UTF-8 exchanges and complete decoded values are retained locally.
+- Observed schema/validation/error discrepancies are owned by exact .6.1.2.2
+  children above. The saved-reader, adverse controls and bounded capture commit
+  must finish before source repair. No hardware compilation or temporal run
+  occurred; this is metadata/interface evidence, not end-to-end design capacity.
+- MCP's pinned tools specification requires structured results to conform to
+  advertised output schemas and describes input validation:
+  https://modelcontextprotocol.io/specification/2025-06-18/server/tools.
+  Complete human/AI reference semantics remain in the planned result/document
+  matrix; names and schema objects alone do not close that requirement.
+
+
+## Acceptance Checklist — .6.1.2.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'outputSchema' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 837eb3c92's envelope schemas. Actual ordinary capability-version/example results violate the declared payload/documentation types. The live publisher also omits source identity alternatives and the existing diagnostic limit argument, accepts some invalid metadata arguments and retains private references/locations in errors. Complete raw exchanges, published declarations and source-boundary custody make each discrepancy reviewable; exact .6.1.2.2 leaves own repairs before field-reference completion.
+- [x] **ADDRESSED (verified)** — The bounded metadata audit now covers all published methods/tool/resource/template names and named schema properties, joins them to independent manifest/dispatcher/Git definitions, and rechecks the durable compressed capture. Missing/extra/borrowed field or member, lost reply, Boolean identity and stale-source interventions reject. The prepublication reader numeric-enum control first fails, then accepts equivalent numeric spellings while rejecting Boolean aliases under the pinned JSON Schema rule. The book discloses actual compatibility defects; none is misrepresented as repaired or conformant.
+- [x] **NO REGRESSION** — All selected runtime modules, launcher/client/schema inputs at capture match ed92d0a12; its MCP cohort is recorded as All tests successful Files=23, Tests=64. This metadata-only audit runs no source/compiler epoch. Actual saved-reader/controls pass, both new Python producers parse as Python 3.9 grammar, and the unchanged launcher reports:
+
+  bin/fsmgen-mcp syntax OK
+
+### .6.1.2.1 evidence legs and next action
+
+- Re-derivation is the real persistent collector, complete raw UTF-8 exchanges
+  and publisher/manifest/dispatcher joins. Falsification is the independent
+  saved reader's eight actual missing/extra/borrowed/type/wire/source mutations
+  plus numeric/Boolean schema controls. Durability is the compressed exact
+  capture, custody hashes, selected Git source boundary, complete outputs,
+  tracked collector/reader and audit README. No count substitutes for field
+  semantics or complete backing-model documentation.
+- The bounded reader supports exactly its declared schema keyword subset,
+  checks all emitted branches for unhandled keywords and preserves findings.
+  The numeric control's original source/result is retained. Instance equality
+  follows the pinned JSON Schema mathematical-number rule with Boolean types
+  distinct; no general-validator or arbitrary toolchain-footprint claim is made.
+- Current limits/defaults are captured per operation and are not silently
+  normalized into a single policy. Invalid-argument observations are evidence
+  of defects, not newly promised argument forms. Finding categories may
+  overlap within one exchange; they are not counts of distinct product bugs.
+- The API guide now records the six measured client compatibility gaps. The
+  field/result/workflow matrix remains .6.1.2.3/.4 and .6.2-.7; schema names or
+  opaque object schemas alone do not satisfy the director's thoroughness goal.
+- After the required source/native/staged/normal commit gates, clear the
+  message, verify clean state and activate .6.1.2.2.1's identity-schema repair.
+  No server, child or required verification process remains from the capture.
+
+
+- The first staged doctrine pass rejects the repair container's pending status
+  after it gains children. Set only that container active, as required by the
+  existing task-tree vocabulary; its implementation leaves remain pending.
+  Retain the original refusal and rerun the unchanged integrity/native/staged
+  gates. This tracking correction changes no interface or source behavior.
+
+
+- The next doctrine pass identifies the new nested audit README as uncovered.
+  Register exactly this dated evidence landing as a bounded snapshot with its
+  own review-envelope-derived budget. No broad audit wildcard, existing ceiling
+  or Knowledge Map allowance increases. Task warning growth uses the unchanged
+  measured-ratchet policy. Retain the full refusal, refresh the
+  derived inventory after final staging and rerun the same gates.

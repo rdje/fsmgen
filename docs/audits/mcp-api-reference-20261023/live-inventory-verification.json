@@ -1,0 +1,299 @@
+{
+  "adverse_controls": {
+    "boolean_request_identity": "rejected",
+    "borrowed_field_type": "rejected",
+    "extra_tool": "rejected",
+    "lost_wire_reply": "rejected",
+    "missing_field": "rejected",
+    "missing_section": "rejected",
+    "missing_tool": "rejected",
+    "stale_source_hash": "rejected"
+  },
+  "capture_sha256": "492a17bb88fbe5a2c897189ad72ed8c84b5bbc0e57bbedfacb80a50bb3380b09",
+  "exchanges": 74,
+  "findings": [
+    {
+      "errors": [
+        "$/payload: expected object, got int"
+      ],
+      "exchange_id": 21,
+      "kind": "output_schema_mismatch",
+      "label": "section:manifest_schema_version"
+    },
+    {
+      "errors": [
+        "$/unpublished_argument: additional property"
+      ],
+      "exchange_id": 31,
+      "kind": "invalid_arguments_accepted",
+      "label": "extra-argument:fsmgen_capability_query"
+    },
+    {
+      "exchange_id": 32,
+      "kind": "private_location",
+      "label": "base:fsmgen_check"
+    },
+    {
+      "error": {
+        "code": -32602,
+        "message": "Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 457, <STDIN> line 33."
+      },
+      "exchange_id": 32,
+      "kind": "schema_admitted_base_refused",
+      "label": "base:fsmgen_check"
+    },
+    {
+      "exchange_id": 33,
+      "kind": "private_location",
+      "label": "extra-argument:fsmgen_check"
+    },
+    {
+      "errors": [
+        "$/unpublished_argument: additional property"
+      ],
+      "exchange_id": 35,
+      "kind": "invalid_arguments_accepted",
+      "label": "extra-argument:fsmgen_discover_sources"
+    },
+    {
+      "errors": [
+        "$/unpublished_argument: additional property"
+      ],
+      "exchange_id": 37,
+      "kind": "invalid_arguments_accepted",
+      "label": "extra-argument:fsmgen_explain_diagnostic"
+    },
+    {
+      "errors": [
+        "$/documentation: expected array, got dict"
+      ],
+      "exchange_id": 38,
+      "kind": "output_schema_mismatch",
+      "label": "base:fsmgen_find_examples"
+    },
+    {
+      "errors": [
+        "$/unpublished_argument: additional property"
+      ],
+      "exchange_id": 39,
+      "kind": "invalid_arguments_accepted",
+      "label": "extra-argument:fsmgen_find_examples"
+    },
+    {
+      "errors": [
+        "$/documentation: expected array, got dict"
+      ],
+      "exchange_id": 39,
+      "kind": "output_schema_mismatch",
+      "label": "extra-argument:fsmgen_find_examples"
+    },
+    {
+      "exchange_id": 40,
+      "kind": "private_location",
+      "label": "base:fsmgen_schedule_preview"
+    },
+    {
+      "error": {
+        "code": -32602,
+        "message": "Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 457, <STDIN> line 41."
+      },
+      "exchange_id": 40,
+      "kind": "schema_admitted_base_refused",
+      "label": "base:fsmgen_schedule_preview"
+    },
+    {
+      "exchange_id": 41,
+      "kind": "private_location",
+      "label": "extra-argument:fsmgen_schedule_preview"
+    },
+    {
+      "exchange_id": 42,
+      "kind": "private_location",
+      "label": "base:fsmgen_semantic_introspect"
+    },
+    {
+      "error": {
+        "code": -32602,
+        "message": "Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 457, <STDIN> line 43."
+      },
+      "exchange_id": 42,
+      "kind": "schema_admitted_base_refused",
+      "label": "base:fsmgen_semantic_introspect"
+    },
+    {
+      "exchange_id": 43,
+      "kind": "private_location",
+      "label": "extra-argument:fsmgen_semantic_introspect"
+    },
+    {
+      "errors": [
+        "$/unpublished_argument: additional property"
+      ],
+      "exchange_id": 45,
+      "kind": "invalid_arguments_accepted",
+      "label": "extra-argument:fsmgen_support_summary"
+    },
+    {
+      "exchange_id": 46,
+      "kind": "private_location",
+      "label": "base:fsmgen_vial_inspect"
+    },
+    {
+      "exchange_id": 47,
+      "kind": "private_location",
+      "label": "extra-argument:fsmgen_vial_inspect"
+    },
+    {
+      "exchange_id": 48,
+      "kind": "private_reference",
+      "label": "wrong-type:fsmgen_capability_query"
+    },
+    {
+      "errors": [
+        "$/query: expected string, got list"
+      ],
+      "exchange_id": 49,
+      "kind": "invalid_arguments_accepted",
+      "label": "wrong-type:fsmgen_discover_sources"
+    },
+    {
+      "errors": [
+        "$/query: expected string, got list"
+      ],
+      "exchange_id": 49,
+      "kind": "output_schema_mismatch",
+      "label": "wrong-type:fsmgen_discover_sources"
+    },
+    {
+      "errors": [
+        "$/query: expected string, got list"
+      ],
+      "exchange_id": 50,
+      "kind": "invalid_arguments_accepted",
+      "label": "wrong-type:fsmgen_find_examples"
+    },
+    {
+      "errors": [
+        "$/documentation: expected array, got dict",
+        "$/query: expected string, got list"
+      ],
+      "exchange_id": 50,
+      "kind": "output_schema_mismatch",
+      "label": "wrong-type:fsmgen_find_examples"
+    },
+    {
+      "exchange_id": 51,
+      "kind": "private_reference",
+      "label": "wrong-type:fsmgen_explain_diagnostic"
+    },
+    {
+      "errors": [
+        "$/limit_examples: expected integer, got list"
+      ],
+      "exchange_id": 52,
+      "kind": "invalid_arguments_accepted",
+      "label": "wrong-type:fsmgen_support_summary"
+    },
+    {
+      "errors": [
+        "$/documentation: expected array, got dict"
+      ],
+      "exchange_id": 57,
+      "kind": "output_schema_mismatch",
+      "label": "limit:fsmgen_find_examples:0"
+    },
+    {
+      "errors": [
+        "$/documentation: expected array, got dict"
+      ],
+      "exchange_id": 58,
+      "kind": "output_schema_mismatch",
+      "label": "limit:fsmgen_find_examples:1"
+    },
+    {
+      "errors": [
+        "$/documentation: expected array, got dict"
+      ],
+      "exchange_id": 59,
+      "kind": "output_schema_mismatch",
+      "label": "limit:fsmgen_find_examples:101"
+    },
+    {
+      "errors": [
+        "$/documentation: expected array, got dict"
+      ],
+      "exchange_id": 60,
+      "kind": "output_schema_mismatch",
+      "label": "limit:fsmgen_find_examples:-1"
+    },
+    {
+      "errors": [
+        "$/limit_examples: additional property"
+      ],
+      "exchange_id": 65,
+      "kind": "invalid_arguments_accepted",
+      "label": "limit:fsmgen_explain_diagnostic:0"
+    },
+    {
+      "errors": [
+        "$/limit_examples: additional property"
+      ],
+      "exchange_id": 66,
+      "kind": "invalid_arguments_accepted",
+      "label": "limit:fsmgen_explain_diagnostic:1"
+    },
+    {
+      "errors": [
+        "$/limit_examples: additional property"
+      ],
+      "exchange_id": 67,
+      "kind": "invalid_arguments_accepted",
+      "label": "limit:fsmgen_explain_diagnostic:101"
+    },
+    {
+      "errors": [
+        "$/limit_examples: additional property"
+      ],
+      "exchange_id": 68,
+      "kind": "invalid_arguments_accepted",
+      "label": "limit:fsmgen_explain_diagnostic:-1"
+    },
+    {
+      "exchange_id": 69,
+      "kind": "private_location",
+      "label": "cursor:tools/list"
+    },
+    {
+      "exchange_id": 70,
+      "kind": "private_location",
+      "label": "cursor:resources/list"
+    },
+    {
+      "exchange_id": 71,
+      "kind": "private_location",
+      "label": "cursor:resources/templates/list"
+    },
+    {
+      "exchange_id": 72,
+      "kind": "private_location",
+      "label": "unknown-resource"
+    },
+    {
+      "exchange_id": 73,
+      "kind": "private_location",
+      "label": "unknown-tool"
+    },
+    {
+      "exchange_id": 74,
+      "kind": "private_location",
+      "label": "unknown-method"
+    }
+  ],
+  "methods": 7,
+  "reader_sha256": "37d043d2ee519ad740493012e55bc90618eb034244c0a60e2d1138f61012ef48",
+  "resources": 6,
+  "scope": "Exact saved source/wire/field custody and the emitted schema keyword subset; findings are retained, not treated as successful conformance.",
+  "selected_source_files": 406,
+  "templates": 13,
+  "tools": 9
+}
