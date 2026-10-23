@@ -73,7 +73,9 @@ error flag and its diagnostic output. With the qualified Pod::Simple 3.42,
 formatting diagnostics can clear the flag even when the output reports an error;
 that output still fails generation. The generated coverage population is checked
 against all module sources. Source/tool fingerprints and complete output hashes
-prevent a stale, missing or modified tree from passing `--check`. Under the
+prevent a stale, missing or modified tree from passing `--check`. The fingerprint
+includes Perl/Pod::Simple versions and Python's implementation and release
+versions. Missing or changed runtime identities require regeneration. Under the
 same inputs and tool versions, fresh renders have identical file bytes;
 generated footers contain no wall-clock timestamp.
 

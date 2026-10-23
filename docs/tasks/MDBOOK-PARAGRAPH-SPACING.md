@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `project documentation`
 - Created: `2026-05-19`
-- Last updated: `2026-09-23`
+- Last updated: `2026-10-23`
 - Owner: repo-local workflow
 
 ## Goal
@@ -86,11 +86,11 @@ result.
   Commit: `MDBOOK-PARAGRAPH-SPACING.5.1 commit`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.5.2`
-  Status: `blocked`
+  Status: `pending`
   Goal: `Complete the actual browser DOM, CSS and visual spacing audit.`
   Acceptance: `Rebuild and rebind candidates if recorded source identities have moved, preserving the original capture. Serve the admitted build on loopback; inspect mandatory Chapter 12/14 and shortlist candidates with actual DOM metrics and screenshots in the in-app browser; record viewport, theme and computed CSS for ordinary paragraphs and list-contained prose. Select a bounded formatting-only repair only if a rendered defect is confirmed. Stop the server and close audit resources before handoff; no HTML-only visual signoff.`
-  Verification: `On 2026-09-23 the director reported enabling full CDP, then Computer Use and the Chrome extension. Each fresh reset followed by cua.getState still failed with CUA_REPL_ENABLED_SURFACES is required before browser discovery. No browser review, viewport, effective CSS or screenshot evidence exists.`
-  Blocked by: `Browser runtime initialization still fails after the reported Computer Use and Chrome setup. No connection is verified. A fresh chat or app restart is documented connection troubleshooting, not a confirmed remedy for this exact error. HIAL cleanup-first ordering is separately approved.`
+  Verification: `On 2026-09-23 the director reported enabling full CDP, then Computer Use and the Chrome extension. Each fresh reset followed by cua.getState still failed with CUA_REPL_ENABLED_SURFACES is required before browser discovery. No browser review, viewport, effective CSS or screenshot evidence for this spacing audit exists. On 2026-10-23 the POD task establishes actual Chrome/CUA browser access (docs/audits/pod-api-20261023/browser-qa.json); this removes the access blocker but does not execute the spacing review.`
+  Scheduling: `Actual spacing audit remains pending behind required SPECFORGE delivery under decision0121. Preserve the original initialization failures; current browser access is established by the separate focused POD review.`
   Commit: `pending`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.5.3`
@@ -105,7 +105,7 @@ result.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `MDBOOK-PARAGRAPH-SPACING.5.2` | `blocked` | HTML candidates are retained; actual browser/CSS/visual signoff awaits runtime enablement. |
+| 1 | `MDBOOK-PARAGRAPH-SPACING.5.2` | `pending` | HTML candidates are retained and browser access is established; actual spacing review awaits its scheduled turn after required delivery. |
 
 ## Decisions
 

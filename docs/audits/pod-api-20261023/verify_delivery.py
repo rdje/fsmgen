@@ -22,6 +22,10 @@ entrypoints = json.loads((root / 'docs/pod-api-entrypoints.json').read_bytes())
 assert {r['module'] for r in coverage if r['role'] == 'selected_entry_point'} == set(entrypoints)
 assert all(r['pod'] for r in coverage if r['module'] in entrypoints)
 manifest = json.loads((source / '.fsmgen-pod-reference.json').read_bytes())
+runtime = {'implementation': sys.implementation.name,
+           'implementation_version': list(sys.implementation.version),
+           'language_version': list(sys.version_info)}
+assert manifest['inputs']['versions']['python'] == runtime
 for path, identity in manifest['inputs']['sources'].items():
     assert hashlib.sha256((root / path).read_bytes()).hexdigest() == identity
 for path, identity in manifest['inputs']['tools'].items():
@@ -69,4 +73,5 @@ print(json.dumps({'book_output': relative.as_posix(), 'module_sources': len(expe
                   'provided_pod': sum(r['pod'] for r in coverage),
                   'missing_pod': sum(not r['pod'] for r in coverage),
                   'selected_entrypoints': len(entrypoints), 'copied_members': len(copied_files),
+                  'python_runtime': runtime,
                   'local_link_checks': links, 'source_and_native_bytes_equal': True}, indent=2))

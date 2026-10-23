@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `PERL-POD-API-REFERENCE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R13 / documentation and embedding`
 - Created: `2026-10-23`
 - Last updated: `2026-10-23`
@@ -53,7 +53,7 @@ HIAL, claim, locality, or source-feature signoff gates.
 ## Task Tree
 
 - ID: `PERL-POD-API-REFERENCE`
-  Status: `active`
+  Status: `done`
   Goal: `Deliver a reproducible POD API reference through the native mdBook workflow.`
   Children: `PERL-POD-API-REFERENCE.1, PERL-POD-API-REFERENCE.2, PERL-POD-API-REFERENCE.3, PERL-POD-API-REFERENCE.4, PERL-POD-API-REFERENCE.5`
 
@@ -86,12 +86,12 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.4: integrate POD reference with native mdBook delivery`
 
 - ID: `PERL-POD-API-REFERENCE.5`
-  Status: `active`
+  Status: `done`
   Goal: `Qualify complete reference delivery and restore the saved feature frontier.`
   Children: `PERL-POD-API-REFERENCE.5.1, PERL-POD-API-REFERENCE.5.2, PERL-POD-API-REFERENCE.5.3`
   Acceptance: `Independently join the declared source/POD/facade population to generated pages and working local links, run documented examples and ordinary native book builds, and verify repeatability, freshness, locality and relevant broader regression. Retain precise coverage boundaries and all original failures. Complete required doctrine/commit checks, leave the tree clean and message empty, and resume the preserved reusable-width frontier. No unqualified hosted publication or API/runtime expansion.`
-  Verification: `pending implementation and integration`
-  Commit: `PERL-POD-API-REFERENCE.5.1: retain POD discovery within Knowledge Map limits`
+  Verification: `Completed .5.1 discovery, .5.2 executable CI guard and .5.3 runtime-bound final native qualification. Full source/coverage/copied-byte/link joins, complete fixture controls, fresh relocated builds, native refusal retention/repair and no-write reuse pass. Existing publication/legacy-link/whole-manual visual limits remain explicitly owned; restore ISF-REDUCTION-DELIVERY.2.3.2.4.2 after the clean commit.`
+  Commit: `PERL-POD-API-REFERENCE.5.3: qualify runtime-bound POD reference delivery`
 
 - ID: `PERL-POD-API-REFERENCE.5.1`
   Status: `done`
@@ -105,14 +105,14 @@ HIAL, claim, locality, or source-feature signoff gates.
   Goal: `Guard actual facade POD examples in the existing CI fixture workflow.`
   Acceptance: `Promote the checked synopsis runner to a canonical script with isolated same-volume workspaces, retain the dated audit command as a compatibility route, and add a meaningful CI-discovered actual-example check. Execute source snippets and validate concrete public results, not copied headings or only exit codes. Keep runtime execution separate from documentation rendering, preserve previous capture identities and verify genuine malformed/invalid example controls before committing.`
   Verification: `Canonical isolated checker and existing audit compatibility command execute all six actual synopses with concrete result checks; evidence bytes match the prior real capture. The existing CI glob discovers seven example controls; all 19 generator/example tests and three relevant Perl contract files pass. Exact old-observer reproduction accepts counterfeit Boolean version true; current checker refuses it while accepting numeric 1 and 1.0. Timeout/invalid-program/wrong-result/stderr controls retain exact failure evidence.`
-  Commit: `PERL-POD-API-REFERENCE.5.2: guard executable POD examples in CI`
+  Commit: `15fc3dadf`
 
 - ID: `PERL-POD-API-REFERENCE.5.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Close complete POD reference qualification and restore the saved feature frontier.`
   Acceptance: `Bind the generating Python runtime identity into the cache fingerprint with a genuine missing/stale-runtime RED/GREEN control. Independently rejoin all source/POD/selected-facade populations to final generated/copied/native links, check examples, output freshness, no-write reuse, relevant regression and current book/source/index/doctrine contracts. Retain limits and original failures, commit the clean delivery, and restore ISF-REDUCTION-DELIVERY.2.3.2.4.2. No unqualified push or closure of separately owned legacy/manual/historical gates.`
-  Verification: `Python-runtime fingerprint omission recorded by .5.2; actual current manifest/tool identity retained in runtime-fingerprint-before.json. Repair and qualification pending.`
-  Commit: `pending`
+  Verification: `The fixed runtime test first fails on the genuine missing Python field, then passes with real implementation/release identity. Missing/stale-runtime controls refuse without asset writes and ordinary regeneration restores exact bytes. All 20 generator/example tests pass. Production transition preserves every source/rendered-output hash; only the expected manifest changes. Final independent native delivery joins 399 sources, 112 POD/287 explicit no-POD pages, six selected guides and 404 copied members across 3975 local href/fragment checks. Current check/generate/native build conserve all reference bytes and mtimes. Fresh same-volume root with spaces repeats complete bytes, both cwd forms, genuine malformed/missing native refusals and explicit owned repair. Native source/index/build checks and required doctrines/hooks gate the commit. Exact packets and executable readers are retained; hosted/platform/whole-manual scopes stay unqualified.`
+  Commit: `PERL-POD-API-REFERENCE.5.3: qualify runtime-bound POD reference delivery`
 
 ## Decisions
 
@@ -359,3 +359,45 @@ HIAL, claim, locality, or source-feature signoff gates.
 - Example execution stays separate from rendering. Existing CI workflow
   discovery needs no new job or workflow policy; hosted execution itself has
   not occurred and existing publication gates remain unchanged.
+
+
+## Acceptance Checklist — .5.3
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S "'versions': run_perl" -1 -- scripts/generate_pod_reference.py` identifies bb969f7ac: capture_inputs bound Perl/Pod versions but omitted the Python runtime that also serializes and generates reference files. The fixed real-generator test fails with KeyError: python before the repair; the actual production manifest also lacks that field. Both original observations are retained.
+- [x] **ADDRESSED (verified)** — Fingerprint Python implementation name, implementation release and language release, without paths or timestamps. The unchanged runtime test now passes and actual missing/stale saved-runtime controls refuse without writing assets; regeneration restores the original rendered bytes. Production source/output hashes conserve. Independent complete native delivery, current check/generate/build no-write metadata, and fresh relocated native refusal/repair qualification pass; all raw records and source identities are retained.
+- [x] **NO REGRESSION** — All 20 generator/example fixture tests pass, including all six actual facade synopses and prior adverse controls. Native book/source/index/complete delivery checks pass. The unchanged renderer remains:
+
+  scripts/pod_api_render.pl syntax OK
+
+### .5.3 final evidence and handoff
+
+- runtime-red.log.gz and runtime-green.log.gz retain the exact fixed-test
+  failure and complete successful suite. runtime-production-transition.json.gz
+  retains complete before/after manifests, source/output hash conservation and
+  actual generator output. The Python fingerprint repairs cache identity; it
+  does not assert byte equivalence across arbitrary different tool releases.
+- qualify_final.py is the repeatable current-reader producer. Its captured
+  final-qualification.json.gz joins complete source/tool/output identities,
+  native copied bytes and local links, and proves reference file bytes and
+  mtimes survive --check, ordinary generation and native build. Count claims
+  derive from actual source membership and independent HTML parsing; deliberate
+  generator/native adverse fixtures are the separate falsification leg.
+- final-relocated.json.gz and complete native command outputs preserve actual
+  fresh generation, both cwd forms, malformed/missing-output failures retaining
+  prior output, explicit repair, whole-byte identity and exact fixture cleanup.
+  Original .4 observations stay immutable. Source styles and rendered module
+  bytes remain unchanged from the browser-reviewed reference; later guide prose
+  changes are separately native/link-qualified, not new whole-manual visual QA.
+- Browser availability established by .4 also retires the stale browser-access
+  blocker in MDBOOK-PARAGRAPH-SPACING.5.2. Its actual whole-manual review and
+  resulting repair remain pending behind required delivery; no audit is passed
+  merely by correcting its availability metadata.
+- Existing unresolved legacy manual source hyperlinks remain owned/scheduled
+  by MDBOOK-LEGACY-SOURCE-LINKS. Existing HIAL/historical causality, full CI,
+  exact-SHA hosted/publication and broader supported-platform tests remain open
+  under their original owners. No module execution occurs during rendering,
+  and no API stability, language or MCP capability is expanded.
+- After required staged/normal commit gates, clear the ephemeral message and
+  verify clean state. Resume the committed source-only reusable constructor
+  leaf ISF-REDUCTION-DELIVERY.2.3.2.4.2. No source/compiler epoch is replayed by
+  this documentation qualification, and no preview/background job remains.

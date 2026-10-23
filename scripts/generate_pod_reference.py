@@ -97,9 +97,13 @@ def capture_inputs(root):
             sources[path.as_posix()] = local_path(root, path).read_bytes()
     require(sources, 'No repository-owned Perl modules found')
     tools = {path: local_path(root, path).read_bytes() for path in TOOLS}
+    versions = run_perl(root, ['--versions'])
+    versions['python'] = {'implementation': sys.implementation.name,
+                          'implementation_version': list(sys.implementation.version),
+                          'language_version': list(sys.version_info)}
     identity = {'schema': 1, 'sources': {p: digest(v) for p, v in sources.items()},
                 'tools': {p: digest(v) for p, v in tools.items()},
-                'versions': run_perl(root, ['--versions'])}
+                'versions': versions}
     return sources, identity
 
 

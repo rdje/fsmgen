@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import shutil
+import sys
 import tempfile
 import unittest
 
@@ -75,6 +76,33 @@ class PodReferenceTest(unittest.TestCase):
         self.assertEqual(self.build(), 'generated')
         self.assertNotEqual(old, self.hashes())
         self.assertEqual(self.build(check=True), 'current')
+
+    def test_python_runtime_identity_is_bound_and_stale_caches_are_refused(self):
+        self.build()
+        path = self.output / api.MARKER
+        expected = {'implementation': sys.implementation.name,
+                    'implementation_version': list(sys.implementation.version),
+                    'language_version': list(sys.version_info)}
+        manifest = json.loads(path.read_bytes())
+        self.assertEqual(manifest['inputs']['versions']['python'], expected)
+        original = self.hashes()
+        for absent in (True, False):
+            with self.subTest(missing_runtime=absent):
+                saved = json.loads(path.read_bytes())
+                if absent:
+                    del saved['inputs']['versions']['python']
+                else:
+                    saved['inputs']['versions']['python']['language_version'][0] = -1
+                path.write_bytes(api.encoded(saved))
+                before = {p: (p.read_bytes(), p.stat().st_mtime_ns)
+                          for p in self.output.rglob('*') if p.is_file()}
+                with self.assertRaisesRegex(api.ReferenceError, 'stale'):
+                    self.build(check=True)
+                self.assertEqual(before, {p: (p.read_bytes(), p.stat().st_mtime_ns)
+                                          for p in self.output.rglob('*') if p.is_file()})
+                self.assertEqual(self.build(), 'generated')
+                self.assertEqual(original, self.hashes())
+                self.assertEqual(self.build(check=True), 'current')
 
     def test_checker_diagnostic_is_fatal_even_if_errata_flag_is_cleared(self):
         self.build()
