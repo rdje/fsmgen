@@ -1,0 +1,7 @@
+{
+  "source_boundary": "d623c35dd46de43a3f528bfb6cf51a7dc1fbf0be",
+  "module": "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm",
+  "production_code_before_END_identical": true,
+  "before_sha256": "8eb4f6807b9cb4f563f72e894d0892346431bf0fc0b5e8dc54700396fec896b9",
+  "after_sha256": "ffe818be022515b6351e22e51e35901ea4eaf97a6d85e930519f6fb3cca65e29"
+}

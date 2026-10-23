@@ -208,10 +208,39 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.3: admit integer capability payloads`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4`
-  Status: `pending`
+  Status: `active`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.2.4.1, PERL-POD-API-REFERENCE.6.1.2.2.4.2, PERL-POD-API-REFERENCE.6.1.2.2.4.3, PERL-POD-API-REFERENCE.6.1.2.2.4.4`
   Goal: `Enforce advertised metadata-tool argument types and closed fields consistently.`
   Acceptance: `Five metadata tools accept an unpublished argument despite closed schemas; discovery/examples/support also accept wrong array-typed fields, while capability/diagnostic wrong types expose ARRAY reference addresses in errors. Reuse established project JSON-kind/argument facilities where suitable, or select a bounded validator for exactly the published schema vocabulary without introducing an unrelated evaluator/dependency. Preserve all valid supported values, JSON scalar kinds and intended per-tool limits; reject invalid types/fields cleanly with actual API/newline controls. Split validation cohorts if needed, document and commit.`
   Verification: `Actual extra-argument calls succeed on capability, discovery, examples, diagnostic and support tools. Wrong-array query/limit calls succeed on discovery/examples/support; wrong-array section/code errors contain ARRAY(0x...) strings. Exact wire captures retained; implementation/qualification pending. P2 numeric-limit defect is also owned here before complete reference/publication: JSON integer 1e30 reaches _bounded_limit as a Perl exponent string and falls back to 10, whereas 101 caps at 100. Reproduce through actual public calls with a controlled catalog large enough to distinguish the results, then normalize valid JSON integer limits consistently without conflating Boolean/string kinds or silently changing zero/default policies. The public dispatcher confirms 101 => 100 samples but 1e30 => 10 with a controlled 121-entry catalog; real per-code populations are too small to distinguish those limits. Reproduce with perl -Iperl docs/audits/mcp-api-reference-20261023/probe_diagnostic_limits.pl. Complete typed public results and source hashes retain in diagnostic-controlled-before/after.json.gz; the exact decimal-regex root cause is confirmed. Fix at this leaf before reference completion/publication, splitting bounded validation/numeric leaves first if needed.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.1`
+  Status: `done`
+  Goal: `Qualify argument-kind and entrypoint normalization boundaries before validation changes.`
+  Acceptance: `Query established JSON-kind facilities before designing new ones. Read the dispatcher, public argument schemas, affected payload helpers, canonical contracts/manual and relevant tests. Capture exact actual API/newline valid and invalid argument forms, closed fields, required fields and scalar kinds; distinguish omitted/null/falsy containers, numeric strings, integral/fractional numbers and Booleans. Include every published tool's typed fields where applicable, without running a historical source epoch. Refine subsequent fixes from actual discrepancies and public compatibility, bind source/observer identities, preserve original outcomes and commit this audit before implementation.`
+  Verification: `The qualified matrix binds 9 tools/22 input fields and 615 labeled requests through both actual API and persistent stdio at d623c35dd. It records 106 unsupported-input admissions, 235 invalid-input error-class observations, no ordinary caller serialization change and 22 later-clone kind changes on invalid inputs. These are case observations, not distinct bugs. Exact source/observer capsules, raw exchanges, caller snapshots, 13 primitive samples, direct-versus-detached operator controls and eight adverse controls qualify. Original incomplete/Unicode drafts and the observer Boolean/zero false-acceptance control retain. Runtime before END is byte-identical; precise fixes are owned by .4.2-.4.4, with current limits disclosed in POD/book. Native documentation and staged doctrines qualify the audit commit.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.1: qualify argument kinds and caller preservation`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.2`
+  Status: `pending`
+  Goal: `Enforce metadata argument object, required/closed-field and JSON-kind contracts.`
+  Acceptance: `Use .4.1's exact public-boundary findings and established kind facilities. Preserve valid values and per-tool selection/default behavior; reject unsupported root argument shapes, unknown fields and wrong kinds without stringifying references or mutating input values. Handle dispatcher normalization explicitly so invalid falsy values cannot bypass admission. Qualify actual API/newline refusals, full valid-result conservation, scalar/Boolean controls and schema drift; synchronize POD/book and commit. Leave numeric normalization to its distinct leaf.`
+  Verification: `The matrix confirms unsupported metadata fields/kinds, invalid falsy argument normalization, malformed tools/call params/name classifications and metadata filter caller-kind effects. Implement admission at the public dispatch boundary: capability/examples and resources share private payload helpers with different internal argument shapes. Use detached scalar-kind inspection, preserve every valid result and both caller serialization/clone kinds, and reject invalid parameter shapes with the existing invalid-params channel. The current per-tool numeric policies remain unchanged until .4.3.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.3`
+  Status: `pending`
+  Goal: `Repair valid large-integer sample limits while retaining each operation's policy.`
+  Acceptance: `Fix the public 1e30 => default discrepancy after typed admission. Preserve diagnostic/default-zero behavior, support/discovery zero-empty policies, negative/default behavior, bounded samples and the examples operation's distinct positive-limit policy. Qualify ordinary and large integral spellings, scalar kinds, actual complete outputs and clearly counterfactual populations when real catalog counts cannot distinguish bounds. Reject genuine fractional/wrong-kind inputs at the owning admission boundary, retain before/after data and adverse controls, update current caveats/claim records/POD/book, and commit.`
+  Verification: `Public dispatcher reproduction and exact decimal-predicate root cause are retained in diagnostic-controlled-before/after.json.gz; no fix yet.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.4.4`
+  Status: `pending`
+  Goal: `Close remaining source-selector kind discrepancies found by the admission audit.`
+  Acceptance: `Refine from .4.1's actual results before editing. Check source identity, VIAL version/style and source-query argument kinds against published schemas; preserve all valid request behavior, applicability, source_path precedence and format authority. Distinguish textual URI version decoding from typed tool arguments so a fix cannot break versioned resources. Apply only confirmed repairs with actual native/API/newline controls and full result conservation, synchronize exact guidance and commit; close with a no-change qualification if the audit finds no discrepancy.`
+  Verification: `Confirmed via actual --request-json fsmgen_vial_inspect: language_version as JSON string 2 succeeds and selects numeric version 2, despite the advertised integer schema. Original full response is retained at .artifacts/mcp-api-reference/argument-string-version.json; the admission matrix will bind exact source/observer/raw identities. _vial_language_version also decodes textual URI segments, so keep that valid path separate from typed tool admission. This leaf owns the strict-kind repair, source-identity caller-copy preservation and full valid-result/resource conservation. The matrix also confirms direct length reads can change invalid numeric source identities in later caller copies; reject wrong kinds before text inspection, with detached-copy checks. No valid-input or global wire corruption claim is made.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5`
@@ -868,3 +897,67 @@ HIAL, claim, locality, or source-feature signoff gates.
   Next: refine and execute .6.1.2.2.4's metadata argument validation and owned
   numeric-limit repair in safe committed leaves before the remaining error and
   example-schema repairs. Complete operating-reference/model work stays active.
+
+### .6.1.2.2.4.1 caller-kind finding
+
+The actual API matrix also changes caller numeric source identities and metadata
+filters into strings on a later Storable copy, even when ordinary serialization
+can still look numeric. The observed examples are invalid string-field inputs;
+no valid-input or global wire corruption claim is made. Direct `length` reads in
+_source_query_payload and `lc` reads in metadata helpers touch caller scalars.
+Decision 0114 and the public-copy-stability fact describe this mechanism; exact
+operator/detached-copy controls qualify the cause before classification closes.
+P2 fix ownership is immediate .4.2 for metadata and .4.4 for source selectors,
+with fresh decoded input plus complete before/after and post-clone preservation
+controls. The complete intermediate matrix/source capsules retain; final
+observer qualification first corrects omitted/null labels and UTF-8 literals.
+
+## Acceptance Checklist — .6.1.2.2.4.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '$params->{arguments} || {}' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 129cfae08's falsy normalization before tool admission. Actual API/pipe calls also show missing metadata field/type checks and VIAL numeric-string versions accepted against integer schemas. Direct length/lc reads of caller numeric string-field inputs reproduce later-copy kind changes; detached operator controls preserve them. The scoped canonical-JSON precedent is GHDLLifecycle's private integer validators; decision 0114 requires detachment before observation.
+- [x] **ADDRESSED (verified)** — The audit independently joins the complete current tool/field case population, literal kinds, exact raw frames, source/observer identities, API/pipe results and fresh caller snapshots. Eight genuine missing/mislabeled/borrowed/lost/prechanged/Boolean controls reject at intended checks. Primitive and direct/detached controls isolate kind classification and caller-copy mechanisms. Corrected omitted/null and UTF-8 cases plus the original observer false-acceptance source retain; no observation is silently rewritten. .4.2-.4.4 own exact bounded fixes, and POD/book disclose the measured current limits.
+- [x] **NO REGRESSION** — Production code before END remains byte-identical to d623c35dd, whose relevant MCP/VIAL cohort reports All tests successful Files=24, Tests=71. The actual matrix completes both routes with orderly EOF, no stderr, positive baseline queries and complete valid-result parity. The saved reader and eight controls pass; native POD/book/source/delivery and staged doctrines qualify this audit. New probe syntax:
+
+  docs/audits/mcp-api-reference-20261023/probe_argument_api.pl syntax OK
+
+### .6.1.2.2.4.1 qualification and next action
+
+- Re-derivation: exact actual JSON-RPC API/stdio requests, full responses, raw
+  UTF-8 frames, fresh before/after serialization and Storable-copy snapshots.
+  Predicate units are labeled cases per entrypoint and named tool properties;
+  categories overlap and are not counts of distinct defects. Falsification:
+  independent schema/case/literal/source/wire joins, eight adverse interventions,
+  numeric-versus-string/Boolean samples and direct-versus-detached operator
+  controls. Durability: complete three capture/source capsules, original/final
+  reader controls, producers/reader and full outputs in the dated audit directory.
+- Scope: all current tool argument fields and tools/call params/name/object
+  normalization. It is not a complete protocol-envelope, source-feature,
+  filesystem-input, external-toolchain, performance or platform qualification.
+  Native source files bind to the exact Git boundary; observer sources are
+  retained verbatim with hashes. Historical source/compiler epochs are sealed;
+  these are new bounded admission queries, not a replay of their qualification.
+- Existing GHDL private canonical-JSON integer checks distinguish strings and
+  Booleans but deliberately require bounded ordinary integer spellings. Reuse
+  the canonical-kind technique locally without a backend dependency; MCP's
+  integer semantics also admit integral exponent spellings. The finite prototype
+  confirms detached scalar inspection across the selected primitive population;
+  it is not a general JSON Schema validator or arbitrary-number-range claim.
+- Original case-generator omissions mislabeled null as omitted and lacked the
+  final case population; the next draft's hardcoded Unicode literal lacked its
+  source UTF-8 declaration. Both full drafts retain and the independent reader
+  rejects them. Corrected raw fixtures and explicit omitted/null/type joins pass.
+- One original observer copy-control comparison used Python equality and really
+  accepted false in place of numeric zero. Its full source, capture hash, exact
+  mutation and original accepted result retain. Type-aware JSON equality now
+  rejects it; actual native findings are unchanged. No product emitted that
+  counterfeit control, and no false native-result or broad wire claim is made.
+- The ordinary caller JSON remains equal in this matrix; the later-copy changes
+  affect invalid numeric inputs to string fields. Fresh direct length/lc controls
+  produce the same kind change; detached controls do not. .4.2 fixes metadata
+  admission/caller preservation, .4.3 fixes numeric limits, and .4.4 fixes source
+  kind admission/caller preservation while retaining textual URI decoding.
+- Knowledge Map routes this audit without losing facts/questions or increasing
+  its allowance. The shortened reverify glob has exact original path membership.
+  No wider rationale or private-implementation API is introduced.
+- After native/staged/normal commit gates, clear the message, verify clean state
+  and activate .6.1.2.2.4.2. All required capture/reader jobs have been consumed.

@@ -1356,6 +1356,24 @@ The separate C<fsmgen_vial_inspect> tool requires a relative C<source_id> and
 has no C<source_path> alias. Discover current applicability and schemas before
 selecting a query.
 
+=head1 CURRENT ARGUMENT ADMISSION
+
+Follow each tool's C<inputSchema>. Arguments are JSON objects; quoted numbers,
+numbers and Booleans have distinct kinds. Omitting C<arguments> and explicitly
+supplying JSON null are different requests, even though legacy normalization
+currently accepts some invalid forms. Such leniency is outside the supported
+argument contract.
+
+VIAL tool C<language_version> fields are integers. Version components inside
+resource URIs are text parsed from the URI; do not infer a tool argument's kind
+from that textual spelling. Some tool numeric-string versions are currently
+accepted contrary to discovery and remain under repair.
+
+Embedded callers supplying invalid numbers to string fields can also observe
+changed kinds in later copies of their request data. The observed cases concern
+invalid arguments; they do not establish a global wire or valid-input defect.
+Use the declared kinds while these admission/caller-preservation repairs finish.
+
 =head1 CAPABILITY QUERY PAYLOADS
 
 C<fsmgen_capability_query> always returns an object in C<structuredContent>.

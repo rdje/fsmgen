@@ -1,0 +1,10 @@
+{
+  "argument-matrix-initial.json.gz": {
+    "rejected": true,
+    "reason": "case population mismatch"
+  },
+  "argument-matrix-preunicode.json.gz": {
+    "rejected": true,
+    "reason": "scalar prototype literal population mismatch"
+  }
+}

@@ -58,6 +58,14 @@ selectors return their corresponding objects directly. Preserve the selected
 value's JSON type and use its public contract for field meanings. See
 [capability query payloads](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#CAPABILITY_QUERY_PAYLOADS).
 
+Match each tool's `inputSchema`: arguments are objects, and quoted numbers,
+numbers and Booleans are different kinds. Omitted arguments and explicit null
+are distinct requests. VIAL tool versions require integers; versions inside
+resource URIs are textual path components. Current admission leniency is outside
+the supported contract. The
+[argument-admission notes](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#CURRENT_ARGUMENT_ADMISSION)
+describe the remaining compatibility limits.
+
 ## Current MCP schema compatibility
 
 The live MCP audit has identified the compatibility defects below. A client
@@ -70,6 +78,8 @@ reference and its drift checks remain under qualification.
 | Metadata limits | Very large JSON integers such as `1e30` can select the default sample limit instead of the cap; use positive limits from 1 through 100 until repaired |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |
 | Metadata-tool arguments | Some extra fields and wrong types are accepted despite the advertised schemas; that leniency is outside the supported argument contract |
+| VIAL tool versions | Some numeric strings are accepted despite the integer schema; supply JSON integers |
+| Embedded caller data | Invalid numbers supplied to string fields can change kind in later copies of a caller's request; use the declared kinds while this is repaired |
 | Error messages | Some failures retain automatic Perl locations or reference addresses; use error codes and structured diagnostics for program decisions |
 
 ## Build and preview
