@@ -245,7 +245,7 @@ HIAL, claim, locality, or source-feature signoff gates.
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5`
   Status: `active`
-  Children: `PERL-POD-API-REFERENCE.6.1.2.2.5.1, PERL-POD-API-REFERENCE.6.1.2.2.5.2, PERL-POD-API-REFERENCE.6.1.2.2.5.3`
+  Children: `PERL-POD-API-REFERENCE.6.1.2.2.5.1, PERL-POD-API-REFERENCE.6.1.2.2.5.2, PERL-POD-API-REFERENCE.6.1.2.2.5.3, PERL-POD-API-REFERENCE.6.1.2.2.5.4`
   Goal: `Remove automatic Perl/input-record locations from public persistent-server errors.`
   Acceptance: `Real invalid-parameter errors include the adapter .pm line and STDIN record suffix. Trace _strip_perl_error_location's missing input-record case; preserve the meaningful public reason, authored source diagnostics and path-sanitization behavior while removing private automatic locations. Qualify persistent/default/custom handles and moved roots with spaces, exact original messages, safe hostile suffix/quote/operator controls and public code/message-only envelopes; commit a scoped fix.`
   Verification: `The live pipe returns messages such as Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 457, <STDIN> line 32. The current strip regex only recognizes a bare final line number. Full original error messages are captured; no fix or broad cleanup claim yet.`
@@ -259,17 +259,24 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.5.1: qualify error contexts and preservation contract`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5.2`
-  Status: `active`
+  Status: `done`
   Goal: `Remove only confirmed private native exception suffixes without damaging public reasons.`
   Acceptance: `Select only a final Perl-shaped frame naming a loaded module or the entry script, comparing literal filenames and choosing the rightmost valid suffix. Handle bare, line-record and chunk-record forms and one terminal LF independently of caller record separator. Repair the confirmed automatic-location cases while preserving authored source diagnostics, quotes/operators, redaction/truncation policy, error code/message-only envelopes, caller kinds and valid results. Prove actual before/after default/custom/persistent/moved-root behavior and meaningful hostile suffix/false-location controls. Add focused CI regression, synchronize POD/book/KMap, qualify related source/diagnostic/transport tests and commit before capitalized operator-context repair.`
-  Verification: `Qualified .5.1 packet and reader select the bounded loaded-code grammar. Preserve existing case-sensitive redaction for this slice; .5.3 immediately owns its separate capitalized-context repair.`
-  Commit: `pending`
+  Verification: `Original extended T1461 fails three of four subtests and both actual pipe tests fail before repair; all pass afterward. Complete before/final-after comparison checks 120 responses per capture, preserves native/caller/framing/source joins and clears every selected location/source-preservation discrepancy, leaving exactly the separately owned eight capitalized-context observations. Six reader controls on each packet and four repair controls reject. Broader MCP/quoted-division cohort passes Files=28 Tests=91; native POD/book/source/delivery and Knowledge Map checks pass. The additional zero-reason observation is owned by .5.4 before example typing.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.5.2: preserve public reasons when removing native error locations`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve capitalized division-operator context while continuing to redact actual paths.`
   Acceptance: `The actual .5.1 callback with capitalized Operator redacts its quoted slash while lowercase operator preserves it. Own this P2 authored-message corruption now, reproduce the context predicate with genuine RED controls, and make the bounded case-insensitive context repair after .5.2. Preserve singular/list context, ordinary roots and longer paths; qualify actual message/report paths, original/new controls and the same error packet before committing. No broad string/path exemption.`
   Verification: `Original capture and independent reader retain all eight capitalized-context observations. The prefix regex is case-sensitive; git log -S 'my $operator_context' locates 2dc265476. Immediate successor ownership is fixed; no source-report-wide corruption is inferred.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.6.1.2.2.5.4`
+  Status: `pending`
+  Goal: `Preserve nonempty zero-valued authored exception reasons.`
+  Acceptance: `Own the actual callback die of 0 plus newline returning the generic adapter message instead of the nonempty reason. This P2 embedded-exception loss comes from the post-format truthiness fallback. Immediately after .5.3, reproduce it with focused RED/GREEN API and pipe controls, select fallback by emptiness rather than truthiness, preserve truly empty fallback and code/message-only shape, synchronize POD/book and commit. No structured-report or native-CLI-wide corruption is inferred.`
+  Verification: `The .5.2 audit's actual public request and complete response retain in error-zero-reason-before.json, joined to the exact adapter in error-location-after.json.gz. After LF normalization the string 0 is nonempty but false; the handler chooses the generic fallback. Immediate follow-up ownership precedes example typing.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.6`
@@ -1205,3 +1212,40 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
   text was staged later than the inventory refresh. The original refusal
   retains. Refresh only after all final source/docs/evidence staging, then
   stage the resulting inventory and rerun the normal gate. No checker bypass.
+
+
+## Acceptance Checklist — .6.1.2.2.5.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sub _strip_perl_error_location' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 651eebc3c's shape-only regex. The committed native-hook audit and actual original extended T1461 expose both retained line/chunk/spaced-file locations and erased authored source suffixes. Handler chomp also depends on the embedding record separator. Original API and real stock/custom/moved-pipe RED output is retained, with exact test/adapter bytes.
+- [x] **ADDRESSED (verified)** — The formatter normalizes one final LF itself, finds literal loaded-code/entry-script filenames and strips only the rightmost matching final bare/line/chunk suffix. The handler no longer chomps using caller record state. Authored source references, fake suffix fragments, operators, internal newlines, caller copies, error classes and code/message-only envelopes preserve in the qualified population. Independent complete original/final comparison reduces 69 expected-message mismatches to the eight deliberately retained capitalized-context cases. Each packet passes all six original reader controls; four restored-location/over-stripping/operator-loss/wrong-class controls reject. POD/book document the recognized grammar and its provenance limits.
+- [x] **NO REGRESSION** — All tests successful. Files=28, Tests=91 for the established MCP cohort and native/API/newline quoted-division report parity. Both actual stock/custom/relocated pipe tests pass. Original focused T1461 RED fails three of four subtests, repaired GREEN passes all four. Python 3.9 syntax, adapter Perl syntax, Knowledge Map, native POD/book/source/index/copied-byte/link gates pass. No sealed source epoch, simulation, full CI or push is run; full publication and platform boundaries retain.
+
+### .6.1.2.2.5.2 custody and remaining scope
+
+- Re-derivation: actual decoded adapter calls and stock/custom launchers at
+  original and same-volume spaced roots, with native throw hooks, complete
+  wire frames and caller/later-copy snapshots. Falsification: independent
+  complete population/source/origin/frame/envelope/message joins, genuine
+  original regressions and coherent restored-defect controls. Durability:
+  `error-location-*` captures, comparisons, original RED source capsule, logs,
+  tests/readers and exact Git boundary in the dated MCP audit directory.
+- The final packet binds the completed adapter/POD source; the earlier repaired
+  packet retains its exact pre-final-POD producer rather than being overwritten.
+  The comparator proves every selected unrelated native source unchanged and
+  runtime bytes outside the helper/old handler chomp identical. The collector's
+  sole observer refinement permits an explicit owning leaf in copied markers;
+  its original default route and complete source capsules preserve.
+- ASCII/Unicode controls preserve the character cap and full truncated values;
+  ping and pre-existing bounded responses conserve. Native errors retain their
+  public classes, and no raw error data or extra transport frame appears.
+  This finite population does not establish arbitrary exception provenance,
+  every Perl/platform/handle/record grammar or all source-feature behavior.
+- .5.3 immediately owns capitalized operator-context redaction. Review also
+  reproduces a nonempty zero-valued authored exception becoming the generic
+  fallback; .5.4 immediately owns that P2 repair after .5.3. Its complete
+  original response joins the exact early repaired adapter capsule, and
+  git log -S '$error ||' locates c9fa73319's truthiness fallback. Neither issue
+  is mislabeled as repaired here or as structured-report-wide corruption.
+- Complete staged doctrines and normal commit hooks, empty the brief, verify
+  clean state, then continue .5.3/.4 and example result typing. Historical
+  attribution, full-CI/push gates and final whole-reference qualification retain.

@@ -33,7 +33,8 @@ def run(command, work, name, stdin=None):
     return {'exit_status': result.returncode, 'stdout_utf8': out.read_text(), 'stderr_utf8': err.read_text()}
 
 
-def capture(output_name, work_name, relocation_name):
+def capture(output_name, work_name, relocation_name, owner='PERL-POD-API-REFERENCE.6.1.2.2.5.1'):
+    assert owner in {'PERL-POD-API-REFERENCE.6.1.2.2.5.' + str(n) for n in (1, 2, 3)}
     output = local_path(ROOT, output_name)
     work, moved = (local_path(ROOT, name) for name in (work_name, relocation_name))
     assert output.suffix == '.gz' and not output.exists() and not work.exists() and not moved.exists()
@@ -57,7 +58,7 @@ def capture(output_name, work_name, relocation_name):
         target.write_bytes(origin.read_bytes())
         target.chmod(origin.stat().st_mode & 0o777)
     assert {p: digest((moved / p).read_bytes()) for p in copies} == {p: sources[p] for p in copies}
-    marker = {'owner': 'PERL-POD-API-REFERENCE.6.1.2.2.5.1', 'source_head': head,
+    marker = {'owner': owner, 'source_head': head,
               'files': {p: {'sha256': sources[p], 'bytes': (ROOT / p).stat().st_size} for p in copies}}
     (moved / '.error-context-owner.json').write_text(json.dumps(marker, indent=2) + '\n')
     record = {'head': head, 'source_sha256': sources, 'observer_sources': observer,
@@ -110,5 +111,5 @@ def capture(output_name, work_name, relocation_name):
 
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 4, 'Usage: capture_error_context.py OUTPUT.gz WORK_DIRECTORY RELOCATION_DIRECTORY'
+    assert len(sys.argv) in (4, 5), 'Usage: capture_error_context.py OUTPUT.gz WORK_DIRECTORY RELOCATION_DIRECTORY [OWNER]'
     capture(*sys.argv[1:])

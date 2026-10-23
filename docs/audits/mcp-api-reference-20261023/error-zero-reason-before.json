@@ -1,0 +1,27 @@
+{
+  "head": "b4e058e340a86e3a9359f9b9914b9198bbf2769f",
+  "adapter_sha256": "9c2d24edca6f920db7047d6396ed70f8e1ec067bac6937db6a2e133b56f9194a",
+  "exact_adapter_capsule": "docs/audits/mcp-api-reference-20261023/error-location-after.json.gz",
+  "authored_exception": "0\n",
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/call",
+    "params": {
+      "name": "fsmgen_check",
+      "arguments": {
+        "source_id": "fsm/ahb_lite_subordinate.fsm"
+      }
+    }
+  },
+  "raw_stdout_utf8": "{\"error\":{\"code\":-32000,\"message\":\"FSMGen MCP adapter error\"},\"id\":1,\"jsonrpc\":\"2.0\"}\n",
+  "response": {
+    "error": {
+      "code": -32000,
+      "message": "FSMGen MCP adapter error"
+    },
+    "id": 1,
+    "jsonrpc": "2.0"
+  },
+  "expected_message": "0"
+}

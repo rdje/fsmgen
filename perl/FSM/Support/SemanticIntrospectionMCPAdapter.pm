@@ -418,7 +418,6 @@ sub handle_jsonrpc_request {
         1;
     } or do {
         my $error = "$@";
-        chomp $error;
         $error = $self->_public_error_message($error);
         if ($error =~ s/\AFSMGEN_JSONRPC_METHOD_NOT_FOUND: /Unsupported JSON-RPC method: /) {
             return _jsonrpc_error_response($id, -32601, $error);
@@ -1327,7 +1326,27 @@ sub _jsonrpc_error_response {
 
 sub _strip_perl_error_location {
     my ($message) = @_;
-    $message =~ s/\s+at\s+\S+\s+line\s+\d+\.?\z//;
+    # Perl appends LF regardless of the caller's input record separator.
+    # Normalize exactly that final LF, including for newline-authored errors.
+    $message =~ s/\n\z//;
+
+    # A source diagnostic may itself end in "at design.isf line 17.". Only
+    # recognize frames naming loaded code or the entry script. Compare literal
+    # filenames: spaces and regexp metacharacters are ordinary filename bytes.
+    # Of the matching frames, remove only the rightmost complete final suffix.
+    my $frame_start = -1;
+    my %seen;
+    for my $file (__FILE__, $0, values %INC) {
+        next unless defined($file) && !ref($file) && length($file);
+        next if $seen{$file}++;
+        my $prefix = " at $file line ";
+        my $start = rindex($message, $prefix);
+        next if $start < 0;
+        my $tail = substr($message, $start + length($prefix));
+        next unless $tail =~ /\A[0-9]+(?:, <[^\r\n]*> (?:line|chunk) [0-9]+)?\.\z/;
+        $frame_start = $start if $start > $frame_start;
+    }
+    $message = substr($message, 0, $frame_start) if $frame_start >= 0;
     return $message;
 }
 
@@ -1597,6 +1616,36 @@ larger public support-accounting catalog contract. The examples query's
 embedded C<support_summary> has an empty C<sample_catalog_entries> array;
 its top-level C<catalog_entries> carry the selected full records. Do not
 confuse those records with compact samples.
+
+=head1 ERROR MESSAGES
+
+C<handle_jsonrpc_request> returns adapter failures as JSON-RPC errors with
+C<code> and C<message>; it does not include C<error.data>, raw commands or stderr.
+Invalid tool parameters use C<-32602>, unsupported methods use C<-32601>, and
+other adapter failures use C<-32000>. A valid source-query result can instead
+carry C<isError: true> and its structured diagnostic report. Use that report's
+fields to interpret source failures rather than parsing the adapter message.
+
+Message formatting removes a recognized final Perl location naming a loaded
+module or the entry script, including spaced filenames and optional input
+C<line> or C<chunk> annotations. It normalizes one terminal LF independently
+of the caller's input record separator. Authored source references such as
+C<Authored diagnostic at design.isf line 17.> remain meaningful message text;
+fake location fragments and quotes/operators are not general removal patterns.
+
+This is bounded string recognition: deliberately authored text identical to a
+loaded-code frame cannot be distinguished from Perl's automatic suffix. Other
+stack-trace grammars and C<#line> filename remappings are not promised by this
+formatter. Structured source reports retain their separate diagnostic contract.
+
+Messages then follow path redaction and control-character filtering, with a
+maximum of 2048 Perl characters including the C< [truncated]> marker when
+truncated. That limit is not a UTF-8 byte limit. Multi-line public reasons keep
+their internal newlines. The current capitalized C<Operator '/'> context still
+has a separately owned redaction discrepancy; lowercase operator context and
+ordinary filesystem-root/path redaction retain their established behavior.
+An authored zero-valued reason currently selects the generic fallback message;
+its nonempty-string preservation repair is separately owned.
 
 =head1 FUNCTIONS
 
