@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.2.5.4`
-- next_action: Repair the nonempty zero-valued authored reason fallback with actual RED/GREEN API/pipe and empty-message controls; commit before example result typing.
+- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.2.6`
+- next_action: Repair the examples tool documentation field schema from array to its actual public object contract; preserve complete results and qualify real schema/result controls before the backing-model/reference gap graph.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None. Earlier source epochs remain sealed and must not be rerun.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

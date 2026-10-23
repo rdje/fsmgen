@@ -425,7 +425,8 @@ sub handle_jsonrpc_request {
         if ($error =~ s/\AFSMGEN_JSONRPC_INVALID_PARAMS: /Invalid params: /) {
             return _jsonrpc_error_response($id, -32602, $error);
         }
-        return _jsonrpc_error_response($id, -32000, $error || 'FSMGen MCP adapter error');
+        $error = 'FSMGen MCP adapter error' unless length($error);
+        return _jsonrpc_error_response($id, -32000, $error);
     };
 
     return {
@@ -1644,8 +1645,8 @@ truncated. That limit is not a UTF-8 byte limit. Multi-line public reasons keep
 their internal newlines. Quoted division tokens in singular-operator and
 operator-list diagnostic contexts preserve regardless of capitalization.
 Ordinary filesystem roots and longer paths still follow path redaction.
-An authored zero-valued reason currently selects the generic fallback message;
-its nonempty-string preservation repair is separately owned.
+The generic C<FSMGen MCP adapter error> fallback applies only when formatting
+leaves an empty message. A nonempty zero-valued reason remains the string C<0>.
 
 =head1 FUNCTIONS
 

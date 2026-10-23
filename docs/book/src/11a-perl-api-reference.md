@@ -92,7 +92,7 @@ reference and its drift checks remain under qualification.
 | Surface | Current discrepancy |
 | --- | --- |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |
-| Error messages | Reference addresses may remain; zero-valued authored reasons can be lost. Use codes and structured diagnostics |
+| Error messages | Reference addresses may remain. Use codes and structured diagnostics |
 
 Adapter messages remove recognized final Perl locations naming loaded code or
 the entry script, including spaced paths and input line/chunk annotations.
@@ -100,7 +100,9 @@ Authored `.isf` and `.fsm` source references remain message text; one final
 newline is normalized independently of the embedding caller's record separator.
 Quoted division tokens in operator and operator-list diagnostics preserve
 regardless of capitalization; ordinary filesystem roots and longer paths still
-follow path redaction. Messages retain their character bound. See
+follow path redaction. Messages retain their character bound. Empty formatted
+messages use the generic fallback; a nonempty zero-valued reason remains a
+string. See
 [error messages](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#ERROR_MESSAGES)
 for the string-recognition boundary and structured-report guidance.
 

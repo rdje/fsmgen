@@ -65,6 +65,9 @@ class MCPErrorTest(unittest.TestCase):
             ('callback_fake_suffix', "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected"),
             ('callback_quotes', "Unsupported expression operator '/' at 'design.isf:17'"),
             ('callback_external_path', "Operator '/' while opening '[absolute-path-redacted]'"),
+            ('callback_zero', '0'),
+            ('callback_empty', 'FSMGen MCP adapter error'),
+            ('callback_control_only', 'FSMGen MCP adapter error'),
         ]
         for root in (ROOT, self.moved):
             for name, expected in cases:

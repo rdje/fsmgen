@@ -1,0 +1,155 @@
+{
+  "selected_sources": 434,
+  "copied_files": 431,
+  "zero_reasons_repaired": 2,
+  "complete_responses_conserved": 130,
+  "zero_empty_controls": [
+    {
+      "root": "original",
+      "case": "callback_zero",
+      "responses": [
+        {
+          "error": {
+            "code": -32000,
+            "message": "0"
+          },
+          "id": 1,
+          "jsonrpc": "2.0"
+        },
+        {
+          "id": 2,
+          "jsonrpc": "2.0",
+          "result": {}
+        }
+      ]
+    },
+    {
+      "root": "original",
+      "case": "callback_empty",
+      "responses": [
+        {
+          "error": {
+            "code": -32000,
+            "message": "FSMGen MCP adapter error"
+          },
+          "id": 1,
+          "jsonrpc": "2.0"
+        },
+        {
+          "id": 2,
+          "jsonrpc": "2.0",
+          "result": {}
+        }
+      ]
+    },
+    {
+      "root": "original",
+      "case": "callback_control_only",
+      "responses": [
+        {
+          "error": {
+            "code": -32000,
+            "message": "FSMGen MCP adapter error"
+          },
+          "id": 1,
+          "jsonrpc": "2.0"
+        },
+        {
+          "id": 2,
+          "jsonrpc": "2.0",
+          "result": {}
+        }
+      ]
+    },
+    {
+      "root": "spaced",
+      "case": "callback_zero",
+      "responses": [
+        {
+          "error": {
+            "code": -32000,
+            "message": "0"
+          },
+          "id": 1,
+          "jsonrpc": "2.0"
+        },
+        {
+          "id": 2,
+          "jsonrpc": "2.0",
+          "result": {}
+        }
+      ]
+    },
+    {
+      "root": "spaced",
+      "case": "callback_empty",
+      "responses": [
+        {
+          "error": {
+            "code": -32000,
+            "message": "FSMGen MCP adapter error"
+          },
+          "id": 1,
+          "jsonrpc": "2.0"
+        },
+        {
+          "id": 2,
+          "jsonrpc": "2.0",
+          "result": {}
+        }
+      ]
+    },
+    {
+      "root": "spaced",
+      "case": "callback_control_only",
+      "responses": [
+        {
+          "error": {
+            "code": -32000,
+            "message": "FSMGen MCP adapter error"
+          },
+          "id": 1,
+          "jsonrpc": "2.0"
+        },
+        {
+          "id": 2,
+          "jsonrpc": "2.0",
+          "result": {}
+        }
+      ]
+    }
+  ],
+  "original_reader_controls": [
+    "missing_case",
+    "wrong_native_origin",
+    "borrowed_wire",
+    "caller_mutation",
+    "raw_data",
+    "source"
+  ],
+  "repaired_reader_controls": [
+    "missing_case",
+    "wrong_native_origin",
+    "borrowed_wire",
+    "caller_mutation",
+    "raw_data",
+    "source"
+  ],
+  "repair_controls": [
+    "restored_zero_loss",
+    "zero_number",
+    "overwritten_empty",
+    "borrowed_source"
+  ],
+  "legacy_route": {
+    "checked_responses": 120,
+    "reader_controls": [
+      "missing_case",
+      "wrong_native_origin",
+      "borrowed_wire",
+      "caller_mutation",
+      "raw_data",
+      "source"
+    ]
+  }
+}

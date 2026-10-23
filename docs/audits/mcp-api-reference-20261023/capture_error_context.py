@@ -33,8 +33,8 @@ def run(command, work, name, stdin=None):
     return {'exit_status': result.returncode, 'stdout_utf8': out.read_text(), 'stderr_utf8': err.read_text()}
 
 
-def capture(output_name, work_name, relocation_name, owner='PERL-POD-API-REFERENCE.6.1.2.2.5.1'):
-    assert owner in {'PERL-POD-API-REFERENCE.6.1.2.2.5.' + str(n) for n in (1, 2, 3)}
+def capture(output_name, work_name, relocation_name, owner='PERL-POD-API-REFERENCE.6.1.2.2.5.1', include_zero=False):
+    assert owner in {'PERL-POD-API-REFERENCE.6.1.2.2.5.' + str(n) for n in (1, 2, 3, 4)}
     output = local_path(ROOT, output_name)
     work, moved = (local_path(ROOT, name) for name in (work_name, relocation_name))
     assert output.suffix == '.gz' and not output.exists() and not work.exists() and not moved.exists()
@@ -63,7 +63,7 @@ def capture(output_name, work_name, relocation_name, owner='PERL-POD-API-REFEREN
     (moved / '.error-context-owner.json').write_text(json.dumps(marker, indent=2) + '\n')
     record = {'head': head, 'source_sha256': sources, 'observer_sources': observer,
               'native_source_overrides': native_overrides, 'relocation': marker,
-              'relocation_path': moved.relative_to(ROOT).as_posix(), 'runs': []}
+              'relocation_path': moved.relative_to(ROOT).as_posix(), 'include_zero': include_zero, 'runs': []}
     for label, root in (('original', ROOT), ('spaced', moved)):
         invocation = ['perl', '-I' + str(root / 'perl'), str(root / PROBE), '--root', str(root)]
         api = run(invocation + ['--mode', 'api'], work, label + '-api')
@@ -88,8 +88,11 @@ def capture(output_name, work_name, relocation_name, owner='PERL-POD-API-REFEREN
                           'sent_utf8': server.sent.decode(), 'received_utf8': server.received.decode()}
         persistent.update(exit_status=server.process.returncode, orderly_eof=True)
         custom = []
-        for name in ('callback_plain', 'callback_authored_location', 'callback_fake_suffix', 'callback_quotes',
-                     'callback_external_path', 'callback_long_unicode'):
+        custom_names = ('callback_plain', 'callback_authored_location', 'callback_fake_suffix', 'callback_quotes',
+                        'callback_external_path', 'callback_long_unicode')
+        if include_zero:
+            custom_names += ('callback_zero', 'callback_empty', 'callback_control_only')
+        for name in custom_names:
             request = {'jsonrpc': '2.0', 'id': 1, 'method': 'tools/call',
                        'params': {'name': 'fsmgen_check', 'arguments': {'source_id': FIXTURE}}}
             ping = {'jsonrpc': '2.0', 'id': 2, 'method': 'ping', 'params': {}}
@@ -103,7 +106,7 @@ def capture(output_name, work_name, relocation_name, owner='PERL-POD-API-REFEREN
                            'responses': [json.loads(line) for line in captured['stdout_utf8'].splitlines()]})
         record['runs'].append({'root_kind': label, 'implementation_root_label': str(root),
                                'api_capture': api, 'api': data, 'one_shot': one_shot,
-                               'persistent': persistent, 'custom_stdio': custom})
+                               'persistent': persistent, 'custom_stdio': custom[:6], 'zero_stdio': custom[6:]})
     assert sources == {p: digest((ROOT / p).read_bytes()) for p in selected}, 'Input changed during capture'
     assert head == subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip()
     output.write_bytes(gzip.compress((json.dumps(record, indent=2, ensure_ascii=False) + '\n').encode(), mtime=0))
@@ -111,5 +114,6 @@ def capture(output_name, work_name, relocation_name, owner='PERL-POD-API-REFEREN
 
 
 if __name__ == '__main__':
-    assert len(sys.argv) in (4, 5), 'Usage: capture_error_context.py OUTPUT.gz WORK_DIRECTORY RELOCATION_DIRECTORY [OWNER]'
-    capture(*sys.argv[1:])
+    assert len(sys.argv) in (4, 5, 6), 'Usage: capture_error_context.py OUTPUT.gz WORK_DIRECTORY RELOCATION_DIRECTORY [OWNER [--with-zero]]'
+    assert len(sys.argv) != 6 or sys.argv[5] == '--with-zero'
+    capture(*sys.argv[1:5], include_zero=len(sys.argv) == 6)

@@ -244,12 +244,12 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.4.4: enforce source and VIAL argument kinds`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5`
-  Status: `active`
+  Status: `done`
   Children: `PERL-POD-API-REFERENCE.6.1.2.2.5.1, PERL-POD-API-REFERENCE.6.1.2.2.5.2, PERL-POD-API-REFERENCE.6.1.2.2.5.3, PERL-POD-API-REFERENCE.6.1.2.2.5.4`
   Goal: `Remove automatic Perl/input-record locations from public persistent-server errors.`
   Acceptance: `Real invalid-parameter errors include the adapter .pm line and STDIN record suffix. Trace _strip_perl_error_location's missing input-record case; preserve the meaningful public reason, authored source diagnostics and path-sanitization behavior while removing private automatic locations. Qualify persistent/default/custom handles and moved roots with spaces, exact original messages, safe hostile suffix/quote/operator controls and public code/message-only envelopes; commit a scoped fix.`
-  Verification: `The live pipe returns messages such as Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 457, <STDIN> line 32. The current strip regex only recognizes a bare final line number. Full original error messages are captured; no fix or broad cleanup claim yet.`
-  Commit: `pending`
+  Verification: `Qualified .5.1 native/source audit and committed .5.2-.5.4 repairs cover literal loaded-code suffixes, line/chunk/spaced paths, authored source locations, case-insensitive operator contexts and nonempty zero reasons. Complete original/repaired packets, genuine regressions, source custody and adverse controls retain. The grammar is bounded and does not promise arbitrary exception provenance; remaining protocol/reference-address and model coverage stays with .6.2 and the exhaustive frontier.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.5.4: preserve nonempty zero-valued error reasons`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5.1`
   Status: `done`
@@ -273,14 +273,14 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.5.3: preserve capitalized division-operator context`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5.4`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve nonempty zero-valued authored exception reasons.`
   Acceptance: `Own the actual callback die of 0 plus newline returning the generic adapter message instead of the nonempty reason. This P2 embedded-exception loss comes from the post-format truthiness fallback. Immediately after .5.3, reproduce it with focused RED/GREEN API and pipe controls, select fallback by emptiness rather than truthiness, preserve truly empty fallback and code/message-only shape, synchronize POD/book and commit. No structured-report or native-CLI-wide corruption is inferred.`
-  Verification: `The .5.2 audit's actual public request and complete response retain in error-zero-reason-before.json, joined to the exact adapter in error-location-after.json.gz. After LF normalization the string 0 is nonempty but false; the handler chooses the generic fallback. Immediate follow-up ownership precedes example typing.`
-  Commit: `pending`
+  Verification: `Fresh T1461 on 488e59745 fails the zero-message case in all three API record contexts; empty and filtered-empty controls remain positive. Actual custom pipes fail exactly two zero subcases at ordinary/spaced roots. The repaired focused protocol/framing/error cohort passes Files=3 Tests=9 and both actual pipe tests pass. Complete capture comparison repairs both zero-string responses and conserves all 130 others; four restored-loss/numeric-zero/overwritten-empty/borrowed-source controls reject, alongside original reader controls on both packets and a qualified 120-response no-extra-cases compatibility route. POD/book/source/delivery and Knowledge Map checks pass; the error-preservation container closes.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.5.4: preserve nonempty zero-valued error reasons`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.6`
-  Status: `pending`
+  Status: `active`
   Goal: `Correct the example tool's documentation result type without altering returned metadata.`
   Acceptance: `The actual examples result carries the public documentation section object, but outputSchema declares an array. Correct the declaration to its authoritative current contract; never reshape correct public values to satisfy a wrong schema. Compare complete actual documentation/catalog records with the capability manifest, text/structured results and schema metadata, include wrong-type controls, synchronize precise guidance and commit.`
   Verification: `Saved-reader inspection finds documentation object against array schema on ordinary valid find_examples calls, independently of malformed-argument cases. Full original records and raw wire frames are retained in the live census.`
@@ -303,7 +303,7 @@ HIAL, claim, locality, or source-feature signoff gates.
 - ID: `PERL-POD-API-REFERENCE.6.2`
   Status: `pending`
   Goal: `Document connection, lifecycle, protocol and host safety contracts completely.`
-  Acceptance: `After .6.1, split exact cohorts as needed. Cover launcher/configuration and roots, one-shot versus persistent stdio, UTF-8 framing, handshake/version/capabilities, discovery, requests/notifications/IDs, server shutdown, pagination/progress/cancellation/concurrency and all unavailable negotiated features. Describe actual behavior and error envelopes with executable success/refusal examples. Compare pinned official MCP requirements where relevant, own real discrepancies, preserve existing implementation scope and qualify native rendering before each commit.`
+  Acceptance: `After .6.1, split exact cohorts as needed. Cover launcher/configuration and roots, one-shot versus persistent stdio, UTF-8 framing, handshake/version/capabilities, discovery, requests/notifications/IDs, server shutdown, pagination/progress/cancellation/concurrency and all unavailable negotiated features. Describe actual behavior and error envelopes with executable success/refusal examples. Compare pinned official MCP requirements where relevant, own real discrepancies, preserve existing implementation scope and qualify native rendering before each commit. P2 original census reference-address error findings are explicitly scheduled here: qualify current resource/protocol inputs and own confirmed repair leaves before lifecycle/reference signoff.`
   Verification: `pending exhaustive inventory`
   Commit: `pending`
 
@@ -1279,3 +1279,38 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
 - Complete normal staged/commit gates, clear the brief and verify clean state,
   then continue .5.4 before example typing and the backing-model/reference gap
   graph. Historical source attribution, full CI/push and final visual gates retain.
+
+
+## Acceptance Checklist — .6.1.2.2.5.4
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '$error ||' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` locates c9fa73319's truthiness fallback. Actual authored 0 plus LF becomes the nonempty false string after formatting, then selects the generic message. Fresh original T1461 on 488e59745 fails only that case in all three API record contexts; actual custom pipes fail its two ordinary/spaced-root subcases. Empty and filtered-empty controls stay positive. Exact original adapter/tests/logs and complete native/public contexts retain.
+- [x] **ADDRESSED (verified)** — The handler chooses its generic fallback only when the formatted message is empty. Complete native/source/frame/value joins verify string 0 at both roots and preserve the empty/control-only fallback. Only those two responses change; all 130 others conserve. Both packets pass the six original reader interventions, and restored-loss/numeric-zero/overwritten-empty/borrowed-source controls reject. The comparator proves the fallback selection is the whole runtime diff; POD/book close the resolved caveat. Optional audit stdio-only controls preserve the historical API population and ordinary collector route.
+- [x] **NO REGRESSION** — All tests successful. Files=3, Tests=9 for focused protocol, UTF-8 framing and error-data/message behavior, with original T1461 RED/repaired GREEN. Both actual stock/custom/ordinary/spaced-pipe tests pass. A separately run no-extra-cases capture preserves all 120 historical public responses and passes its six reader controls. Python 3.9 syntax, native POD/book/source/index/copied-byte/link and Knowledge Map checks pass. No arbitrary-message provenance, full feature/platform/runtime or publication qualification follows from these finite controls.
+
+### .6.1.2.2.5.4 source custody and next frontier
+
+- Re-derivation: real adapter API record contexts and stock/custom transports,
+  including original/spaced roots and zero/empty/control-only authored throws.
+  Falsification: independent complete source/native/frame/envelope/value joins,
+  actual original RED/repaired GREEN and four coherent restored-defect controls.
+  Durability: `error-zero-*` packets, original source capsule, comparisons,
+  logs, CI tests and tracked reader under the dated MCP audit directory.
+- Fresh before/after packets share exact source HEAD 488e59745. Only the
+  adapter has a native after-overlay; all selected observer/other native source
+  hashes match. The complete footprint is 434 selected inputs and 431 verified
+  copied files. Original .5.2 zero discovery remains separately retrievable
+  with its own earlier exact adapter; it is not relabeled as this baseline.
+- New zero/empty controls are stdio-only audit fixtures and do not change the
+  historical thirteen-case API population. Existing collector invocations
+  still omit them; the explicit opt-in route has its own population checks.
+  The compatibility capture binds the same final source hashes and complete
+  public values, not merely a process exit or result count.
+- Source reports and valid results retain their contracts; error envelopes
+  remain code/message only. Nonempty zero is a string; truly empty messages
+  keep the generic fallback after normalization and filtering. The bounded
+  native-suffix/provenance limitations documented by .5.1/.5.2 still apply.
+- .6.1.2.2.5 closes after normal gates/commit. The next leaf is .6.1.2.2.6's
+  examples documentation object declaration, then the complete backing-model
+  and operating-reference gap graph. P2 original reference-address findings
+  are explicitly scheduled for current qualification/repair under .6.2.
+  Historical attribution, full CI/push and final visual gates remain open.

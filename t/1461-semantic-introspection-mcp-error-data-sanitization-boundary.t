@@ -91,6 +91,9 @@ for my $context ('no record', 'line record', 'chunk record') {
              "Unsupported expression operator '/' at 'design.isf:17'"],
             ["operator '/' while opening '/outside/private dir/source.fsm'\n",
              "operator '/' while opening '[absolute-path-redacted]'"],
+            ["0\n", '0'],
+            ["\n", 'FSMGen MCP adapter error'],
+            ["\x00\n", 'FSMGen MCP adapter error'],
             [('x' x 2200), ('x' x (2048 - length(' [truncated]'))) . ' [truncated]'],
             [('é' x 2200), ('é' x (2048 - length(' [truncated]'))) . ' [truncated]'],
         );

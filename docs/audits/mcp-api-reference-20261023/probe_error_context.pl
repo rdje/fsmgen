@@ -43,6 +43,10 @@ my @cases = (
     {name => 'ping', method => 'ping', params => {}, expected_result => {}},
 );
 my %cases = map {$_->{name} => $_} @cases;
+# Optional stdio-only controls leave the historical API population unchanged.
+$cases{callback_zero} = {message => "0\n"};
+$cases{callback_empty} = {message => "\n"};
+$cases{callback_control_only} = {message => "\x00\n"};
 
 sub request_for {
     my ($case, $id) = @_;
