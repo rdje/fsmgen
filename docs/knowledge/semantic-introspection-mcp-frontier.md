@@ -86,7 +86,7 @@ evidence: >-
   docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md; docs/tasks/IAL2-FEATURE-COMPLETENESS-FRONTIER.md; docs/SEMANTIC_INTROSPECTION_MCP_FIRST_CLASS_SELECTION.md; docs/TASK_TREE.md; ROADMAP_V2.md; docs/book/src/11-extensions-and-embedding.md; docs/book/src/14-feature-backlog.md; perl/FSM/Support/SemanticIntrospectionContract.pm; perl/FSM/Support/SemanticIntrospectionSection.pm; perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm; bin/fsmgen-mcp; https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle; https://modelcontextprotocol.io/specification/2025-06-18/basic/transports; https://modelcontextprotocol.io/specification/2025-06-18/client/roots; https://modelcontextprotocol.io/specification/2025-06-18/client/sampling;
   https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation; https://modelcontextprotocol.io/specification/2025-06-18/server/prompts; https://modelcontextprotocol.io/specification/2025-06-18/server/resources; https://modelcontextprotocol.io/specification/2025-06-18/server/tools; https://modelcontextprotocol.io/specification/2025-06-18/schema; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/completion; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/logging; https://modelcontextprotocol.io/specification/2025-06-18/server/utilities/pagination
 reverify: >-
-  scripts/run_with_ram_guard.sh -- prove -Iperl t/144*-semantic-introspection-mcp-*.t t/145*-semantic-introspection-mcp-*.t t/146*-semantic-introspection-mcp-*.t t/1868-semantic-introspection-mcp-source-failures.t t/1869-semantic-introspection-mcp-protocol-aliases.t t/188[2-6]-*.t t/1887-ast-factorization-structural-identity.t t/1889-authored-source-operand-diagnostics.t t/1890-isf-multiclock-strict-wiring.t t/1930-mcp-quoted-division-diagnostics.t
+  scripts/run_with_ram_guard.sh -- prove -Iperl t/14[4-6]*-semantic-introspection-mcp-*.t t/1868-semantic-introspection-mcp-source-failures.t t/1869-semantic-introspection-mcp-protocol-aliases.t t/188[2-6]-*.t t/1887-ast-factorization-structural-identity.t t/1889-authored-source-operand-diagnostics.t t/1890-isf-multiclock-strict-wiring.t t/1930-mcp-quoted-division-diagnostics.t
 ---
 
 Owner: `docs/tasks/SEMANTIC-INTROSPECTION-MCP-FRONTIER.md`. Earlier history: `git show 5a44ad496c852b168c31d4021cfdb158001a47c7:docs/knowledge/semantic-introspection-mcp-frontier.md`.
@@ -106,13 +106,15 @@ value is nonempty; source_path wins. Controls:
 Diagnostic limit_examples: omitted/zero/negative => 10; support-summary zero
 => no samples. Use 1..100. Large-integer fallback defect remains owned by
 PERL-POD-API-REFERENCE.6.1.2.2.4 (2026-10-23 public API witness).
+Capability payloads: object/integer; manifest_schema_version is integer.
+all/contracts/examples: direct objects (.6.1.2.2.3, 2026-10-23).
 
 One-shot JSON-RPC and newline stdio use UTF-8 JSON with
 MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested
 versions do not widen that profile. `--workspace-root` is the source authority;
 client roots are not consumed. Tools return text JSON and `structuredContent`
 with compact output schemas, `readOnlyHint: true`, and `openWorldHint: false`.
-Resources are static; list responses have no cursor. Prompts, completions,
+Resource listings are static and cursorless. Prompts, completions,
 subscriptions, logging, sampling, elicitation, progress/cancellation sessions,
 Streamable HTTP and service mode remain unshipped. Batch/non-object envelopes
 are invalid. JSON-RPC errors have code/message and no error.data.

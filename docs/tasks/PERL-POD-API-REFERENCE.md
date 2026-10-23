@@ -201,11 +201,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.2: advertise diagnostic sample limits`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Make capability-query output schemas admit every supported public section value.`
   Acceptance: `The real manifest_schema_version section returns integer payload 1 against an object-only payload declaration. Preserve the complete wire values and existing section variants; correct only the advertised output typing with deliberate public-section semantics. Check every captured/current section, distinguish Boolean/numeric types and reject a genuinely wrong type in the conformance observer. Synchronize schema/reference guidance and commit.`
-  Verification: `Live section loop observes manifest_schema_version payload integer; the descriptor declares payload type object. Other captured selected payloads are objects. No new section or tool is required.`
-  Commit: `pending`
+  Verification: `The original live test rejects the actual manifest-version integer and an equivalent numeric spelling against the old object-only schema. The corrected object/integer union admits every current section while rejecting Boolean/string/array/null alternatives. Complete before/after results conserve across 18 selectors and 12 manifest sections; 402 selected source files bind the capture. Five coherent missing/extra/type/borrowed-value/schema controls reject at their intended checks. Query runtime outside the schema/POD region is byte-identical. Both live metadata tests pass, prior diagnostic saved-reader controls remain green after a shared framing-helper extraction, and the broader MCP/VIAL capability cohort passes All tests successful Files=24, Tests=71. Native POD/book/source/delivery and staged doctrines qualify this commit.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.3: admit integer capability payloads`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.4`
   Status: `pending`
@@ -828,3 +828,43 @@ HIAL, claim, locality, or source-feature signoff gates.
   checks every supported integer from 1 through 100; its fresh focused run
   passes alongside the unchanged broader cohort. The original gate refusal
   retains, and no registry capacity or document ceiling increases.
+
+## Acceptance Checklist — .6.1.2.2.3
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'payload => _open_object_schema()' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 837eb3c92's object-only envelope. Actual manifest_schema_version returns an integer; the original real-server regression fails that result and the equivalent numeric 1.0 control against the advertised schema. Other current wrapped public sections are objects.
+- [x] **ADDRESSED (verified)** — The capability payload schema is the exact object/integer union; no result is reshaped. Both live metadata tests pass. The saved reader independently joins all 18 selectors to the 12-section public manifest plus named aliases, raw exchanges, complete typed values, exact descriptor change and 402 selected source identities. Five coherent omission/extra/Boolean/borrowed-value/missing-schema controls reject at their intended checks. Runtime outside the schema/POD is byte-identical. POD/book explain wrapped and direct-object variants without freezing private or deeper records.
+- [x] **NO REGRESSION** — All tests successful. Files=24, Tests=71 across MCP protocol/schema/source failures/UTF-8 and independent VIAL capability parity. Both live metadata tests and the complete prior diagnostic reader/controls pass; the shared framing helper preserves that reader's behavior. Native POD/book/source/delivery and staged doctrines qualify. Syntax:
+
+  perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm syntax OK
+
+### .6.1.2.2.3 evidence and continuity
+
+- Re-derivation is the persistent real server over every current public manifest
+  section and documented alias. Falsification joins manifest/resource values,
+  exact source/metadata membership, raw/decoded identity and full typed results;
+  genuine missing/extra sections, Boolean substitution, an integer borrowed for
+  an object section and a missing schema branch fail at distinct predicates.
+  Durability is complete original/repaired captures, original failure fixture,
+  selected source hashes, tracked collector/readers, comparison and full logs
+  in docs/audits/mcp-api-reference-20261023/. The selected source footprint is
+  explicit; no full toolchain/platform or feature/runtime claim is made.
+- Object/integer typing describes current wrapped values. The direct all,
+  contracts and examples results remain distinct object variants. Numeric 1.0
+  is an integer for schema purposes; Boolean true remains a different kind.
+  Full value joins detect a wrong integer in an object section even when the
+  generic envelope schema would admit that kind. No interface version changes.
+- The test collector and saved framing checks are shared with the diagnostic
+  cohort; its historical packets and all five original adverse controls recheck
+  green using their exact recorded source versions. The diagnostic packet's
+  Git-only recovery also passed after its commit with current-source reads
+  disabled. Older source/compiler epochs remain sealed and were not replayed.
+- Knowledge Map preserves all facts/questions within the original byte budget.
+  Its equivalent MCP test glob retains exact original path membership. Clarify
+  the old ambiguous 'Resources are static' sentence as static/cursorless resource
+  listings; source-bound reads remain dynamic queries. The audit-guide status
+  row shrinks; detailed evidence remains in the task/captures, with no allowance
+  or ceiling increase.
+- Complete normal commit gates, clear the message and verify a clean tree.
+  Next: refine and execute .6.1.2.2.4's metadata argument validation and owned
+  numeric-limit repair in safe committed leaves before the remaining error and
+  example-schema repairs. Complete operating-reference/model work stays active.

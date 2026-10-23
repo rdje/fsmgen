@@ -35,6 +35,20 @@ def metadata(before, after):
     return tool['inputSchema']
 
 
+def verify_metadata_packet(record):
+    assert record['orderly_eof'] is True and type(record['exit_status']) is int and record['exit_status'] == 0
+    requests = [json.loads(line) for line in record['sent_utf8'].splitlines()]
+    assert [r for r in requests if 'id' not in r] == [{'jsonrpc': '2.0', 'method': 'notifications/initialized'}]
+    requests = [r for r in requests if 'id' in r]
+    replies = [json.loads(line) for line in record['received_utf8'].splitlines()]
+    assert [r['id'] for r in requests] == list(range(len(requests)))
+    assert encoded(requests) == encoded([e['request'] for e in record['exchanges']]), 'request join failed'
+    assert encoded(replies) == encoded([e['response'] for e in record['exchanges']]), 'reply join failed'
+    for request, reply in zip(requests, replies):
+        assert type(request['id']) is int and type(reply['id']) is int and request['id'] == reply['id']
+        assert reply['jsonrpc'] == '2.0' and 'error' not in reply
+
+
 def verify(live_before, live_after, controlled_before, controlled_after):
     for live, controlled in ((live_before, controlled_before), (live_after, controlled_after)):
         # The Perl probe fingerprints actual files but has no Git subprocess.
@@ -47,17 +61,7 @@ def verify(live_before, live_after, controlled_before, controlled_after):
                 source_bytes(record, path)
     assert runtime(live_before) == runtime(live_after), 'query runtime changed'
     for record in (live_before, live_after):
-        assert record['orderly_eof'] is True and type(record['exit_status']) is int and record['exit_status'] == 0
-        requests = [json.loads(line) for line in record['sent_utf8'].splitlines()]
-        assert [r for r in requests if 'id' not in r] == [{'jsonrpc': '2.0', 'method': 'notifications/initialized'}]
-        requests = [r for r in requests if 'id' in r]
-        replies = [json.loads(line) for line in record['received_utf8'].splitlines()]
-        assert [r['id'] for r in requests] == list(range(len(requests)))
-        assert encoded(requests) == encoded([e['request'] for e in record['exchanges']]), 'request join failed'
-        assert encoded(replies) == encoded([e['response'] for e in record['exchanges']]), 'reply join failed'
-        for request, reply in zip(requests, replies):
-            assert type(request['id']) is int and type(reply['id']) is int and request['id'] == reply['id']
-            assert reply['jsonrpc'] == '2.0' and 'error' not in reply
+        verify_metadata_packet(record)
     assert live_before['sent_utf8'] == live_after['sent_utf8']
     schema = metadata(live_before['exchanges'][1]['response']['result'], live_after['exchanges'][1]['response']['result'])
     calls = 0

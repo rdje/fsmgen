@@ -1,0 +1,12 @@
+{
+  "live_diagnostic_queries_conserved": 7,
+  "controlled_queries_conserved": 8,
+  "large_integer_limit_defect": "1e30 selects default 10; owned by .6.1.2.2.4",
+  "controls_rejected": [
+    "missing_limit",
+    "wrong_type",
+    "changed_live_result",
+    "lost_reply",
+    "changed_controlled_result"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "capability_sections_conserved": 18,
+  "public_manifest_sections": 12,
+  "selected_source_files": 402,
+  "integer_payload_preserved": 1,
+  "controls_rejected": [
+    "missing_section",
+    "extra_section",
+    "boolean_payload",
+    "borrowed_integer",
+    "missing_integer_schema"
+  ]
+}

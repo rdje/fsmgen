@@ -1066,7 +1066,7 @@ sub _capability_query_output_schema {
     return _object_schema(
         {
             section => { type => 'string' },
-            payload => _open_object_schema(),
+            payload => { anyOf => [_open_object_schema(), { type => 'integer' }] },
             manifest_contract => _open_object_schema(),
             semantic_introspection => _open_object_schema(),
         },
@@ -1355,6 +1355,20 @@ Schedule preview has no version selector and does not accept VIAL sources.
 The separate C<fsmgen_vial_inspect> tool requires a relative C<source_id> and
 has no C<source_path> alias. Discover current applicability and schemas before
 selecting a query.
+
+=head1 CAPABILITY QUERY PAYLOADS
+
+C<fsmgen_capability_query> always returns an object in C<structuredContent>.
+For a selected manifest section, that object normally contains C<section> and
+C<payload>. The payload can currently be an object or an integer:
+C<manifest_schema_version> preserves the integer from the full manifest.
+Do not coerce it to a Boolean or require every payload to be an object.
+
+The C<all>, C<contracts> and C<examples> selectors return their corresponding
+objects directly, rather than a uniform C<payload> wrapper. Versioned VIAL
+tooling and VIAL inspection capability selectors use wrapped object payloads.
+Consult the selected section's public contract for its complete field meaning;
+the tool's envelope schema does not freeze every nested capability record.
 
 =head1 DIAGNOSTIC SAMPLE LIMITS
 

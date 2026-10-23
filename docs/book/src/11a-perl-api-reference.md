@@ -51,6 +51,13 @@ execute the examples. See the
 [diagnostic sample limits](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#DIAGNOSTIC_SAMPLE_LIMITS)
 and the current large-integer caveat below.
 
+`fsmgen_capability_query` returns an object. Selected sections normally use
+`{section, payload}`; the manifest version is an integer payload, while other
+current wrapped sections contain objects. The `all`, `contracts` and `examples`
+selectors return their corresponding objects directly. Preserve the selected
+value's JSON type and use its public contract for field meanings. See
+[capability query payloads](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#CAPABILITY_QUERY_PAYLOADS).
+
 ## Current MCP schema compatibility
 
 The live MCP audit has identified the compatibility defects below. A client
@@ -61,7 +68,6 @@ reference and its drift checks remain under qualification.
 | Surface | Current discrepancy |
 | --- | --- |
 | Metadata limits | Very large JSON integers such as `1e30` can select the default sample limit instead of the cap; use positive limits from 1 through 100 until repaired |
-| Capability sections | The selected manifest version is an integer payload; the schema declares an object payload |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |
 | Metadata-tool arguments | Some extra fields and wrong types are accepted despite the advertised schemas; that leniency is outside the supported argument contract |
 | Error messages | Some failures retain automatic Perl locations or reference addresses; use error codes and structured diagnostics for program decisions |

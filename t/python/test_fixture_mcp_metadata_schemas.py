@@ -21,34 +21,92 @@ FIELDS = ('id', 'relpath', 'family', 'classification', 'coverage', 'source_kind'
 LIMITS = ((None, 10), (0, 10), (1, 1), (2, 2), (100, 100), (101, 100), (-1, 10))
 
 
-def capture_diagnostic(server):
-    exchanges = []
+class MetadataClient:
+    def __init__(self, server):
+        self.server = server
+        self.exchanges = []
+        self.call('initialize', {'protocolVersion': '2025-06-18', 'capabilities': {},
+                                'clientInfo': {'name': 'metadata-schema-regression', 'version': '1'}})
+        server.send({'jsonrpc': '2.0', 'method': 'notifications/initialized'})
 
-    def call(method, params=None):
-        request = {'jsonrpc': '2.0', 'id': len(exchanges), 'method': method}
+    def call(self, method, params=None):
+        request = {'jsonrpc': '2.0', 'id': len(self.exchanges), 'method': method}
         if params is not None:
             request['params'] = params
-        server.send(request)
-        response = server.receive()
+        self.server.send(request)
+        response = self.server.receive()
         assert response['id'] == request['id']
-        exchanges.append({'request': request, 'response': response})
+        self.exchanges.append({'request': request, 'response': response})
         return response['result']
 
-    call('initialize', {'protocolVersion': '2025-06-18', 'capabilities': {},
-                        'clientInfo': {'name': 'metadata-schema-regression', 'version': '1'}})
-    server.send({'jsonrpc': '2.0', 'method': 'notifications/initialized'})
-    call('tools/list')
-    call('resources/read', {'uri': 'fsmgen://capabilities'})
+
+def capture_diagnostic(server):
+    client = MetadataClient(server)
+    client.call('tools/list')
+    client.call('resources/read', {'uri': 'fsmgen://capabilities'})
     for limit, _ in LIMITS:
         arguments = {'code': CODE}
         if limit is not None:
             arguments['limit_examples'] = limit
-        call('tools/call', {'name': 'fsmgen_explain_diagnostic', 'arguments': arguments})
-    call('tools/call', {'name': 'fsmgen_support_summary', 'arguments': {'limit_examples': 0}})
-    return exchanges
+        client.call('tools/call', {'name': 'fsmgen_explain_diagnostic', 'arguments': arguments})
+    client.call('tools/call', {'name': 'fsmgen_support_summary', 'arguments': {'limit_examples': 0}})
+    return client.exchanges
+
+
+def capture_capability(server):
+    client = MetadataClient(server)
+    client.call('tools/list')
+    result = client.call('resources/read', {'uri': 'fsmgen://capabilities'})
+    manifest = json.loads(result['contents'][0]['text'])
+    for uri in ('fsmgen://examples', 'fsmgen://vial/1/capabilities', 'fsmgen://vial/2/capabilities'):
+        client.call('resources/read', {'uri': uri})
+    aliases = {'all', 'contracts', 'examples', 'vial_tooling_v1', 'vial_tooling_v2', 'vial_inspection'}
+    for section in sorted(set(manifest) | aliases):
+        client.call('tools/call', {'name': 'fsmgen_capability_query', 'arguments': {'section': section}})
+    return client.exchanges
 
 
 class MCPMetadataSchemaTest(unittest.TestCase):
+    def test_capability_sections_match_output_schema_and_public_values(self):
+        with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
+            exchanges = capture_capability(server)
+            tools = {t['name']: t for t in exchanges[1]['response']['result']['tools']}
+            schema = tools['fsmgen_capability_query']['outputSchema']
+            _reader.check_schema(schema)
+            manifest = json.loads(exchanges[2]['response']['result']['contents'][0]['text'])
+            resources = {e['request']['params']['uri']: json.loads(e['response']['result']['contents'][0]['text'])
+                         for e in exchanges if e['request']['method'] == 'resources/read'}
+            seen = set()
+            for exchange in exchanges:
+                if exchange['request']['method'] != 'tools/call':
+                    continue
+                section = exchange['request']['params']['arguments']['section']
+                seen.add(section)
+                with self.subTest(section=section):
+                    result = exchange['response']['result']
+                    payload = result['structuredContent']
+                    self.assertIs(result['isError'], False)
+                    self.assertEqual(_reader.errors(payload, schema), [])
+                    self.assertEqual(_reader.encoded(json.loads(result['content'][0]['text'])), _reader.encoded(payload))
+                    if section == 'all':
+                        wanted = manifest
+                    elif section == 'contracts':
+                        wanted = {key: manifest[key] for key in ('manifest_contract', 'semantic_introspection')}
+                    elif section == 'examples':
+                        wanted = resources['fsmgen://examples']
+                    elif section.startswith('vial_tooling_v'):
+                        wanted = {'section': section, 'payload': resources['fsmgen://vial/' + section[-1] + '/capabilities']}
+                    elif section == 'vial_inspection':
+                        self.assertIs(type(payload['payload']), dict)
+                        continue  # Exact public API/transport parity is also covered by T1882.
+                    else:
+                        wanted = {'section': section, 'payload': manifest[section]}
+                    self.assertEqual(_reader.encoded(payload), _reader.encoded(wanted))
+            self.assertTrue(set(manifest) <= seen)
+            self.assertEqual(_reader.errors({'section': 'manifest_schema_version', 'payload': 1.0}, schema), [])
+            for invalid in (True, '1', [], None):
+                self.assertTrue(_reader.errors({'section': 'manifest_schema_version', 'payload': invalid}, schema))
+
     def test_diagnostic_limit_discovery_and_real_catalog_values(self):
         with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
             exchanges = capture_diagnostic(server)
@@ -77,7 +135,7 @@ class MCPMetadataSchemaTest(unittest.TestCase):
                 self.assertTrue(_reader.errors({'code': CODE, 'limit_examples': invalid}, schema))
 
 
-def save_capture(argument):
+def save_capture(argument, capture):
     sys.path.insert(0, str(ROOT / 'scripts'))
     from generate_pod_reference import local_path
     output = local_path(ROOT, argument)
@@ -89,18 +147,20 @@ def save_capture(argument):
     record = {'head': subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode().strip(),
               'source_sha256': {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths}}
     with Session(['perl', 'bin/fsmgen-mcp', '--workspace-root', '.']) as server:
-        record['exchanges'] = capture_diagnostic(server)
+        record['exchanges'] = capture(server)
         record['sent_utf8'] = server.sent.decode('utf-8')
         record['received_utf8'] = server.received.decode('utf-8')
     record['exit_status'] = server.process.returncode
     record['orderly_eof'] = True
     with gzip.GzipFile(filename=str(output), mode='wb', mtime=0) as out:
         out.write((json.dumps(record, indent=2, ensure_ascii=False) + '\n').encode())
-    print('Saved complete live diagnostic queries: ' + output.relative_to(ROOT).as_posix())
+    print('Saved complete live metadata queries: ' + output.relative_to(ROOT).as_posix())
 
 
 if __name__ == '__main__':
     if len(sys.argv) == 3 and sys.argv[1] == '--capture-diagnostic':
-        save_capture(sys.argv[2])
+        save_capture(sys.argv[2], capture_diagnostic)
+    elif len(sys.argv) == 3 and sys.argv[1] == '--capture-capability':
+        save_capture(sys.argv[2], capture_capability)
     else:
         unittest.main()
