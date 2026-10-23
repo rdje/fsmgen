@@ -72,11 +72,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.2: generate and validate deterministic POD reference`
 
 - ID: `PERL-POD-API-REFERENCE.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Complete supported entry-point POD and repair blocking existing POD defects.`
   Acceptance: `Follow the inventory's explicit facade set and existing API contracts. Write accurate POD for signatures, supported options, return shapes, errors, effects, stability and runnable examples; preserve all runtime code and established boundaries. Fix every existing POD defect that blocks correct generation. Explicitly classify and schedule internal documentation gaps without falsely advertising completeness. Verify actual API examples and parser/rendered coverage, update book discovery and commit.`
-  Verification: `pending generator and classified coverage`
-  Commit: `pending`
+  Verification: `Production generation and freshness check succeed; 399 module pages join to 112 provided-POD and 287 explicit no-POD entries. All six selected facades have POD and their extracted synopses execute with independently checked results. Three encoding declarations repaired. All nine changed module files conserve lexical code outside POD versus bb969f7ac. Existing facade cohort passes Files=6, Tests=20; generator controls remain green. Saved source/snippet hashes and readers are under docs/audits/pod-api-20261023.`
+  Commit: `PERL-POD-API-REFERENCE.3: document supported Perl bindings and repair POD encoding`
 
 - ID: `PERL-POD-API-REFERENCE.4`
   Status: `pending`
@@ -197,3 +197,26 @@ HIAL, claim, locality, or source-feature signoff gates.
   unknown extra members, symlinks, nested Git boundaries and foreign volumes
   fail before replacement. `--repair` permits replacement only of manifest-owned
   missing/modified files and still refuses extras.
+
+## Acceptance Checklist — .3
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — The .2 production refusal names the SystemVerilog classification module's unencoded curly quote at POD line 34; .1 independently identifies the paired selection/recovery files. `git log -S '“which' -1 -- perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/ConsolidatedIntermediateClassificationSupport.pm` locates its introduction. Five selected entry-point modules had no POD; HDLGenerator's older POD omitted bounded options and raw-result limitations.
+- [x] **ADDRESSED (verified)** — Add the three UTF-8 declarations and current binding documentation. Actual production render and `--check` pass. The complete coverage population and all six actual synopsis programs pass; `check_examples.py` checks concrete results rather than exit status alone. `compare_pod_code.py bb969f7ac` proves lexical code outside POD conserved across every changed Perl source. Initial synopsis-reader errors (crossing `=cut`, then assuming an actor_name report field) are retained and corrected to the actual scheduled_fsm schema.
+- [x] **NO REGRESSION** — Guarded existing contract cohort: All tests successful. Files=6, Tests=20. The real HTMLBatch adverse suite also passes unchanged. Native book source/index and staged doctrine gates are required for this commit.
+
+### .3 reproducible evidence
+
+- `scripts/run_with_ram_guard.sh -- python3 -B docs/audits/pod-api-20261023/check_examples.py`
+  extracts the six actual SYNOPSIS programs, retains local stdout/stderr and
+  validates generation, parse, schedule, capability, MCP and VIAL results.
+  `examples-evidence.json` binds the checked source/snippet hashes.
+- `python3 -B docs/audits/pod-api-20261023/compare_pod_code.py bb969f7ac <slice-commit>`
+  independently rechecks every changed Perl source against the original code;
+  `pod-code-conservation.json` records the capture's file/code identities.
+- Focused runtime cohort: t/375, t/1118, t/1143, t/1880, t/1441 and t/297
+  (exact filenames/observations in retained facade-tests.log.gz). It exercises
+  existing contracts after POD-only edits; it is not full CI or publication.
+- Remaining no-POD implementation modules are enumerated in generated coverage.
+  They are outside the selected binding-guide scope; this is explicit coverage,
+  not a claim of exhaustive method documentation or a newly stable interface.
+  Native automatic delivery and rendered/serve qualification remain .4/.5.

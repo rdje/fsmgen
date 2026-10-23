@@ -1,5 +1,7 @@
 package FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateClassificationSupport;
 
+=encoding utf8
+
 =head1 NAME
 
 FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateClassificationSupport - Own direct consolidated intermediate initial keep/filter classification

@@ -1,5 +1,7 @@
 package FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport;
 
+=encoding utf8
+
 =head1 NAME
 
 FSM::HDL::FlattenedDT::Backend::SystemVerilog::IntermediateSignalRecoverySupport - Own direct SystemVerilog intermediate-signal recovery and metadata normalization support

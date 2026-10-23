@@ -2455,3 +2455,114 @@ sub _clone {
 }
 
 1;
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+FSM::VIAL::Tool - Versioned VIAL tooling and typed source inspection
+
+=head1 SYNOPSIS
+
+    use FSM::VIAL::Tool qw(inspect_vial_source_file);
+    use JSON::PP;
+    my $result = inspect_vial_source_file({
+        workspace_root => '.',
+        source_id => 'vial/ahb_subordinate_base_output_arbitration.vial',
+        language_version => 1,
+    });
+    die JSON::PP->new->encode($result->{diagnostics}) unless $result->{success};
+    print JSON::PP->new->canonical->pretty->encode($result->{inspection});
+
+Run examples from the repository root with C<perl -Iperl>. This example checks
+and inspects source; it does not run a simulator.
+
+=head1 FUNCTIONS
+
+All functions are optional explicit exports. Nothing is exported by default.
+
+=head2 vial_tool_capabilities()
+
+Returns a detached hash describing the version-1 tooling contract. Takes no
+arguments; extra arguments throw. Inspect supported actions, request/result
+schemas, options and profiles before constructing a tooling request.
+
+=head2 vial_tool_capabilities_v2()
+
+The corresponding version-2 tooling contract. Takes no arguments. Version-2
+source/plan support does not imply a qualified runtime backend: version-2 run
+currently returns C<VIAL_VERSION_UNSUPPORTED>.
+
+=head2 vial_source_inspection_capabilities()
+
+Returns the typed source-inspection contract hash. Takes no arguments. Its
+inspection envelope is separate from the tooling result schema and covers
+source structure, rather than a runtime waveform or simulation history.
+
+=head2 inspect_vial_source($invocation)
+
+Takes exactly one unblessed hash with required scalar C<source_id> and C<text>.
+Optional keys are C<source_catalog> (a hash of imported source IDs to text),
+C<language_version> (C<1> or C<2>, default C<1>) and C<source_style>
+(C<auto>, C<normal> or C<terse>, default C<auto>). Unknown keys are rejected.
+Source/catalog values are captured before compiler phases execute.
+
+Returns C<fsmgen.vial_source_inspection.v1>: C<schema>, C<schema_version>,
+C<success>, C<check_result>, C<inspection> and C<diagnostics>. The container
+version stays one for both language versions; C<check_result> retains its
+selected tooling version. On failure, C<inspection> is null and diagnostics
+explain the refusal. Read C<success> before consuming the typed projection.
+
+=head2 inspect_vial_source_file($invocation)
+
+Filesystem adapter taking exactly one unblessed hash. Required keys are
+C<workspace_root> (an existing configured root) and C<source_id> (a safe
+workspace-relative VIAL source identity). Optional C<language_version> and
+C<source_style> have the same values/defaults as text inspection. It reads the
+source and import catalog within the workspace and returns the same inspection
+envelope. No arbitrary outside-workspace path is admitted.
+
+=head2 check_vial_source_file($invocation)
+
+Accepts the same filesystem invocation keys, but returns the version-selected
+VIAL tooling B<check result>, not the typed inspection envelope. It reads and
+validates sources without requesting runtime execution.
+
+=head2 execute_vial_tool_request($request, $environment)
+
+Executes the language-neutral, versioned tooling request. The optional
+environment is an unblessed hash containing C<source_catalog>, an initially
+empty C<artifact_sink> array, and optional C<repository_root>. Runtime requests
+require the repository host context. The exact complete request and option
+shapes are advertised by C<vial_tool_capabilities> or
+C<vial_tool_capabilities_v2>; pass those schemas' required fields, including
+explicit null/empty values, rather than an assumed CLI-shaped partial hash.
+
+Returns the selected C<fsmgen.vial_tool_result.v1> or C<v2> result with action,
+success/status, diagnostics, identities and applicable semantic/plan/artifact/
+runtime fields. Expected invocation and support refusals are diagnostic results.
+Check C<success> and the action/version contract before using optional fields.
+
+This is the execution-capable tooling boundary: admitted version-1 C<run>
+requests can invoke external backend tools and create repository-local runtime
+artifacts. Source inspection/check are separate operations. Artifact persistence
+follows C<artifact_policy> and the configured repository root; virtual artifacts
+are returned through the result/sink. Use the manual's lifecycle examples and
+capability profiles before requesting plan/run. This reference adds no new
+runtime or temporal-query capability.
+
+=head1 ERRORS AND STABILITY
+
+Inspection/check/tool requests represent expected input, support and host
+failures in their documented diagnostics. Capability accessors reject invalid
+arity with Perl exceptions; applications should also guard unexpected Perl
+exceptions at their host boundary. All returned interchange structures follow
+their published JSON-safe contracts. Private helper routines are implementation
+details. The manual's Public VIAL Lifecycle and capability/support chapters
+remain the authoritative worked references. The MCP adapter exposes only its
+documented read-only subset; see
+L<FSM::Support::SemanticIntrospectionMCPAdapter>.
+
+=cut

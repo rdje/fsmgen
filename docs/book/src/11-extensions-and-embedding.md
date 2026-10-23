@@ -3959,5 +3959,22 @@ The generator validates POD syntax, source/output freshness, complete output
 membership, local page links and fragments. Modules without POD receive an
 explicit coverage entry, without a claim that their methods are documented or
 supported. A malformed source document prevents publishing a replacement tree.
-The task-owned facade-POD repairs and native mdBook integration follow this
-validated generator slice; the normal book workflow is unchanged at this stage.
+The reference includes dedicated POD for the HDL generation, ISF parsing and
+scheduling, capability discovery, VIAL tooling and read-only MCP entry points.
+These guides cover signatures, results, failures, effects and stability, with
+runnable repository-root examples. Other module pages retain their existing
+implementation POD; coverage entries identify modules that lack documentation.
+
+Standalone generation and freshness checking are available from the repository
+root:
+
+```bash
+python3 -B scripts/generate_pod_reference.py
+python3 -B scripts/generate_pod_reference.py --check
+```
+
+Generated assets live in the ignored `docs/book/src/perl-api/` directory.
+Generation refuses unowned directories and unknown extra files. If known
+manifest-owned output has been damaged, inspect it first, then use `--repair`
+to regenerate it. That option still refuses unknown extras. Native build/serve
+integration is tracked by `PERL-POD-API-REFERENCE.4`.

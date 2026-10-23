@@ -98,3 +98,62 @@ sub _validate_parse_file_path($isf_path) {
 }
 
 1;
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+FSM::Adapter::ISF - Parse IAL1 source through the bounded ISF facade
+
+=head1 SYNOPSIS
+
+    use FSM::Adapter::ISF;
+    my $parser = FSM::Adapter::ISF->new(debug => 0);
+    my $actor = $parser->parse_file('isf/i2c_master.isf');
+    print $actor->{actor_name}, "\n";
+
+Run examples from the repository root with C<perl -Iperl>.
+
+=head1 METHODS
+
+=head2 new(debug =E<gt> 0)
+
+Constructs a parser facade. Call on the exact class name. The constructor takes
+an even option/value list; C<debug> is the only option and defaults to zero.
+Unknown options are rejected. Returns an C<FSM::Adapter::ISF> object.
+
+=head2 parse_file($path)
+
+Takes exactly one defined scalar naming a readable C<.isf> file, with a
+case-insensitive extension. Reads and parses that source and resolves its
+declared library/actor references. Returns the scheduler-consumable actor hash,
+including C<actor_name>, C<interface> and C<transactions>. Repository-relative
+paths are recommended.
+
+=head2 parse_source($text, $source_label)
+
+Takes exactly two defined scalar arguments: source text and its origin label.
+Returns the same actor shape as C<parse_file>. The label identifies diagnostics
+and provides origin context for library resolution; it is not a substitute for
+supplying imported sources. Source text must contain one entry actor. Parsing
+success alone does not establish that every construct can be scheduled or
+generated for a particular backend.
+
+=head1 ERRORS AND EFFECTS
+
+Invalid receiver/argument shape, unreadable files and parse/resolution failures
+throw Perl exceptions. Use C<eval> at an application boundary. Parsing can read
+referenced library sources and emit configured debug traces. It does not emit
+HDL or run a simulation.
+
+=head1 CONTRACT AND STABILITY
+
+This is the Perl parsing binding described in the manual's Extensions and
+Embedding chapter and the ISF interface contracts. The returned actor is an
+in-process scheduler input, not a frozen JSON interchange format. Do not depend
+on underscore-prefixed metadata. Use normalized reports for external consumers.
+Scheduling is provided by L<FSM::Scheduler::ISF>.
+
+=cut

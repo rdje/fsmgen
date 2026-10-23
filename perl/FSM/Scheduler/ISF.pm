@@ -495,3 +495,63 @@ sub _scheduled_module_name($domain) {
 
 
 1;
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+FSM::Scheduler::ISF - Lower parsed IAL1 actors and report their schedules
+
+=head1 SYNOPSIS
+
+    use FSM::Adapter::ISF;
+    use FSM::Scheduler::ISF;
+    my $actor = FSM::Adapter::ISF->new->parse_file('isf/i2c_master.isf');
+    my $scheduler = FSM::Scheduler::ISF->new(debug => 0);
+    my $schedule_json = $scheduler->report($actor);
+    print $schedule_json;
+
+Run examples from the repository root with C<perl -Iperl>.
+
+=head1 METHODS
+
+=head2 new(debug =E<gt> 0)
+
+Constructs the scheduler on the exact class name. Accepts an even option/value
+list containing only C<debug>, which defaults to zero. Unknown options throw.
+
+=head2 lower($actor)
+
+Takes exactly one scheduler-consumable actor hash returned by
+L<FSM::Adapter::ISF>. It must contain a scalar C<actor_name>, an C<interface>
+hash and a C<transactions> array. Applies the supported scheduling/lowering
+rules and returns C<< { files => { relative_filename => source_text, ... } } >>.
+The files contain lowered IAL0 source, including child/top artifacts where
+required. This method returns those sources in memory; it does not write them
+to disk or generate HDL. Filenames and artifact populations follow the actor's
+actual lowering, rather than an assumed single-module layout.
+
+=head2 report($actor)
+
+Accepts the same actor shape and returns a B<JSON string>, not a hash reference.
+Decode it with C<JSON::PP> when a Perl data structure is needed. The schedule
+report is the supported observation surface; private lowering-owner objects and
+underscore-prefixed fields are not its public schema.
+
+=head1 ERRORS AND EFFECTS
+
+Invalid invocants, argument shapes, unresolved references and unsupported
+scheduling/lowering combinations throw Perl exceptions. Parser acceptance does
+not guarantee lowering acceptance. Calls may emit configured debug traces.
+They do not execute VIAL, HDL simulators or external synthesis tools. No actor
+immutability or thread-safety guarantee is introduced by this reference.
+
+=head1 CONTRACT AND STABILITY
+
+The manual and ISF public interface contracts govern supported constructs,
+domain behavior and report fields. This POD documents their Perl binding.
+L<FSM::Pipeline::HDLGenerator> provides the top-level path from source to HDL.
+
+=cut

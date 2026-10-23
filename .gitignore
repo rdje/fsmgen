@@ -170,3 +170,6 @@ __pycache__/
 !LICENSE*
 !README*
 !*.md
+
+# Generated POD assets; refreshed and validated by the book preprocessor.
+/docs/book/src/perl-api/

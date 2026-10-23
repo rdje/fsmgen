@@ -1,5 +1,7 @@
 package FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport;
 
+=encoding utf8
+
 =head1 NAME
 
 FSM::HDL::FlattenedDT::Backend::SystemVerilog::ConsolidatedIntermediateSelectionSupport - Own dependency-aware consolidated intermediate rescue and final selection

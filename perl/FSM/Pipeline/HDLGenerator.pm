@@ -45,7 +45,7 @@ explicit frontend, orchestrator, builder, and backend-owner packages.
         target_language => 'systemverilog'
     );
     
-    my $result = $pipeline->generate_hdl_from_file($fsm_file);
+    my $result = $pipeline->generate_hdl_from_file('fsm/ahb_lite_subordinate.fsm');
     
     print "HDL Code:\n";
     print $result->{hdl_code};
@@ -462,40 +462,88 @@ __END__
 
 =head1 METHODS
 
-=head2 new(%args)
+=head2 new(%options)
 
-Creates a new HDL generation pipeline.
+Call on the exact C<FSM::Pipeline::HDLGenerator> class with an even option/value
+list. Duplicate, unknown, empty and nonscalar option names are rejected before
+facade state is constructed. The bounded public options are:
 
-Arguments:
-- debug_level: Debug verbosity level (0-4, default: 0)
-- target_language: Target HDL language (default: 'systemverilog')
-- quiet: Suppress informational messages (default: 0)
-- strict_mode: Enable strict support-tier enforcement (default: 0)
+=over 4
 
-=head2 generate_hdl_from_file($fsm_file)
+=item C<debug_level>
 
-Processes an FSM file through the complete pipeline and returns results.
+Integer C<0> through C<4>, default C<0>. Pipeline calls scope the process-global
+debug state; the debug subsystem is not thread-local.
 
-Returns a hashref with:
-- fsm_module: The parsed FSM module object
-- intent_hir: The extracted forward semantic intent IR summary for direct generated roots
-- module_info: Analysis of the FSM structure
-- hdl_code: Generated HDL code
-- statistics: Generation statistics
-- raw_ast: Original parsed AST
+=item C<target_language>
 
-=head1 ARCHITECTURE NOTE
+One of C<systemverilog>, C<sv>, C<verilog>, C<v> or C<vhdl>. The default is
+C<systemverilog>. Backend-specific support remains fail closed.
 
-The active runtime path now goes through explicit owner packages:
+=item C<strict_mode>
 
-1. source frontend,
-2. source/direct/composition orchestrators,
-3. forward-IR builders,
-4. generated-module or structural backend emitters,
-5. result metadata helpers.
+Boolean scalar C<0> or C<1>, default C<0>, selecting strict support-tier handling.
 
-C<FSM::Pipeline::HDLGenerator> now remains as the public facade that wires
-those owners together through shared pipeline configuration and the top-level
-C<generate_hdl_from_file(...)> entrypoint.
+=item C<source_search_paths>
+
+Array reference of nonempty scalar filesystem search roots, default empty.
+Keep project-owned paths relative to the repository root.
+
+=item C<quiet>
+
+Boolean scalar C<0> or C<1>, default C<0>. Accepted for API/presentation
+compatibility; CLI presentation is owned by C<bin/fsmgen>.
+
+=item C<extensions>
+
+Array reference of blessed typed-extension objects, default empty. Each object
+must expose a supported real C<after_parse_source> or C<after_generate_result>
+hook. See the manual's typed-extension contract for hook context and loading.
+
+=back
+
+Returns a reusable facade object. Owner-injection options are internal seams,
+not part of this bounded public option set. C<generation_mode> is not accepted;
+the current mode is C<flattened_debug_first>.
+
+=head2 generate_hdl_from_file($path)
+
+Call on an intact facade instance created by C<new>, with exactly one defined
+scalar source path. Supports the documented C<.fsm>, C<.isf> and C<.ppif> source
+roots through their ordered lowering pipeline. Subclasses and manually blessed
+stand-ins are not valid generation receivers.
+
+Returns the compatibility-heavy generation result hash. C<hdl_code> holds HDL
+text. C<module_info>, C<source_info>, C<statistics>, C<intent_hir>,
+C<lowered_rtl_ir>, C<structural_rtl_ir> and C<resolved_package_imports> follow
+their individual result contracts. Composition roots can add composition
+specification, plan and report values. Presence does not guarantee that every
+field is populated for every source kind.
+
+The entire result is B<not JSON-safe>: C<fsm_module>, C<raw_ast> and raw
+composition shells can contain implementation objects. For durable external
+consumers use the normalized semantic/report surfaces described in the manual,
+not serialization of the whole in-process result. Discover the exact bounded
+shape through the capability manifest's C<embedding.hdl_generator_result> and
+C<embedding.hdl_generator_facade> contracts.
+
+=head1 ERRORS AND EFFECTS
+
+Receiver, option, source, lowering and backend failures throw Perl exceptions;
+applications should use C<eval> at their host boundary. This facade returns HDL
+rather than choosing the CLI output file. It reads sources and imports, can
+create repository-local intermediate workspaces during higher-level lowering,
+emits configured debug traces and invokes supplied extension hooks. Extension
+side effects remain the host's responsibility. A generation call does not imply
+external HDL validation or VIAL simulation execution.
+
+=head1 CONTRACT AND STABILITY
+
+This is the thin Perl facade over frontend, lowering/orchestration and backend
+owners. Its documented constructor/method boundary is bounded public; it does
+not freeze every underlying owner or nested raw object. The manual's Extensions
+and Embedding chapter and machine-readable contracts remain authoritative.
+See L<FSM::Support::CapabilityManifest>, L<FSM::Adapter::ISF> and
+L<FSM::Scheduler::ISF>.
 
 =cut

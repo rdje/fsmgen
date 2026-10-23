@@ -1235,3 +1235,107 @@ sub _strip_perl_error_location {
 }
 
 1;
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+FSM::Support::SemanticIntrospectionMCPAdapter - Read-only local MCP binding
+
+=head1 SYNOPSIS
+
+    use FSM::Support::SemanticIntrospectionMCPAdapter;
+    use JSON::PP;
+    my $server = FSM::Support::SemanticIntrospectionMCPAdapter->new(
+        repo_root => '.', workspace_root => '.',
+    );
+    my $response = $server->handle_jsonrpc_request({
+        jsonrpc => '2.0', id => 1, method => 'tools/list', params => {},
+    });
+    print JSON::PP->new->canonical->pretty->encode($response);
+
+Run examples from the repository root with C<perl -Iperl>. For a complete
+stdio server use C<bin/fsmgen-mcp>.
+
+=head1 METHODS
+
+=head2 new(repo_root =E<gt> $repository, workspace_root =E<gt> $workspace)
+
+Returns an adapter object. Roots must exist; the workspace must be a directory.
+The repository defaults to the implementation's repository, and the workspace
+defaults to the current directory. Absolute roots are derived internally;
+public source identities are workspace-relative. C<manifest_builder> and
+C<runner> are internal injection seams, not additional frozen public options.
+
+=head2 initialize_result($params)
+
+Returns the MCP initialization result hash: protocol version, server identity,
+bounded resource/tool capabilities and read-only instructions. The adapter's
+current protocol version is C<2025-06-18>. This method does not return a JSON-RPC
+envelope; C<handle_jsonrpc_request> supplies one.
+
+=head2 list_resources()
+
+Returns C<< { resources => [...] } >> for the bounded static resource set.
+
+=head2 list_resource_templates()
+
+Returns C<< { resourceTemplates => [...] } >> derived from the semantic
+introspection manifest contract.
+
+=head2 read_resource($uri)
+
+Reads a supported resource URI and returns the MCP C<contents> result, with
+JSON text payloads. Unsupported/missing URIs or invalid query parameters throw.
+Discover concrete URI templates through C<list_resource_templates>.
+
+=head2 list_tools()
+
+Returns C<< { tools => [...] } >>, including each tool's current input/output
+schemas and annotations. Discover names and schemas here rather than assuming
+that every CLI action is exposed as a tool.
+
+=head2 call_tool($name, $arguments)
+
+Returns a tool result with C<content>, C<structuredContent> and C<isError>.
+Expected source-check/inspection refusals set C<isError> while retaining their
+structured report. Unsupported tools and invalid invocations can throw; the
+JSON-RPC dispatcher translates those exceptions. Source queries are constrained
+by the configured workspace and supported source/query applicability.
+
+=head2 handle_jsonrpc_request($request)
+
+Accepts a decoded single request hash and returns a JSON-RPC response hash, or
+C<undef> for notifications. Batch arrays are unsupported. Handles initialization,
+ping, resource discovery/reads and tool discovery/calls. Invalid envelopes,
+unsupported methods, invalid parameters and adapter failures produce the
+corresponding JSON-RPC error responses. No list pagination is implemented.
+
+=head2 run_stdio(in =E<gt> $input_handle, out =E<gt> $output_handle)
+
+Runs the server until input EOF; the default handles are STDIN and STDOUT.
+Transport is one UTF-8 JSON object per line. Responses are compact JSON lines;
+notifications produce no response. This is a blocking loop, not a background
+service. It does not implement HTTP or Content-Length framing.
+
+=head1 FUNCTIONS
+
+=head2 semantic_introspection_mcp_adapter_contract_source()
+
+Optional explicit export returning this module's contract-owner name.
+
+=head1 EFFECTS AND STABILITY
+
+The adapter reads sources/metadata and may invoke the bounded native check,
+semantic or schedule commands. VIAL tools provide check and typed source
+inspection. It does not expose authoring, arbitrary shell access or simulation
+execution. The wider VIAL plan/run lifecycle is a separate API boundary.
+
+The language-neutral semantic-introspection contract and the manual's MCP
+compatibility matrix govern supported resources, tools, failures and transport.
+This module is their Perl adapter, not a second semantic authority. See
+L<FSM::Support::CapabilityManifest> and L<FSM::VIAL::Tool>.
+
+=cut

@@ -1,0 +1,50 @@
+[
+  {
+    "exit_status": 0,
+    "module": "FSM::Adapter::ISF",
+    "observation": "expected public result accepted",
+    "snippet_sha256": "449be6ddc468259ce2fceb04e5eab142b7f9e032005376917771727109de81e4",
+    "source": "perl/FSM/Adapter/ISF.pm",
+    "source_sha256": "ee2f942e9ea8465a13b6917c9f7e1c42b71ba063218c53e7b5a4ffcf5126fb3e"
+  },
+  {
+    "exit_status": 0,
+    "module": "FSM::Pipeline::HDLGenerator",
+    "observation": "expected public result accepted",
+    "snippet_sha256": "06d95247ec8e4e3367f83bde24bb6d30ae40aa524c5d1f34643d96ebd6855c9c",
+    "source": "perl/FSM/Pipeline/HDLGenerator.pm",
+    "source_sha256": "d44def879b323cebf5384c21c4afe9709685ff357cffa1990e58c133f71d8a53"
+  },
+  {
+    "exit_status": 0,
+    "module": "FSM::Scheduler::ISF",
+    "observation": "expected public result accepted",
+    "snippet_sha256": "b50c5274cca97146a440d85ef619eee6d9dd400c39a1673c6b1cc54c4b967069",
+    "source": "perl/FSM/Scheduler/ISF.pm",
+    "source_sha256": "fe706d1f3f4c4f7936856f5422422cb02d054595f431e360d936b0b74ed33603"
+  },
+  {
+    "exit_status": 0,
+    "module": "FSM::Support::CapabilityManifest",
+    "observation": "expected public result accepted",
+    "snippet_sha256": "d1e776a505a7ea553db068d12b77a7ea60886138cf7977a86a9f77763ce7186c",
+    "source": "perl/FSM/Support/CapabilityManifest.pm",
+    "source_sha256": "b4a374a65b87af6b8eedb6c14d7128d4a91203f6f4bd76dfaeb283ba2091d8b6"
+  },
+  {
+    "exit_status": 0,
+    "module": "FSM::Support::SemanticIntrospectionMCPAdapter",
+    "observation": "expected public result accepted",
+    "snippet_sha256": "cb066a16356c673ceb2a66c6f7bbbd8aafec33886b5f2ef24dda5f62ffe2a5ee",
+    "source": "perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm",
+    "source_sha256": "3159d783f6a900c3b76bb40e35507610ee15288752334caa7a04036dbc3b9608"
+  },
+  {
+    "exit_status": 0,
+    "module": "FSM::VIAL::Tool",
+    "observation": "expected public result accepted",
+    "snippet_sha256": "0e31ad903f1ecded5bf845baecabf0ee2ee86ee6efcf4174aee0bbd3e7268a8c",
+    "source": "perl/FSM/VIAL/Tool.pm",
+    "source_sha256": "c21c94d0ee923e66a64a68f12488a334ed64454e062c5f2e10f5aa90155dee14"
+  }
+]
