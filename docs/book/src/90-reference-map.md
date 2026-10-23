@@ -82,6 +82,10 @@ configuration and actual accepted and refused boundary cases. See
 [the Knowledge Map architecture](#knowledge-map-architecture)
 and its public checker, `knowledge-map/scripts/check_knowledge_map.sh`.
 
+The query `knowledge-map/scripts/query_knowledge_map.sh 'POD API reference'`
+finds the dated signpost for the [Perl API Reference](11a-perl-api-reference.md).
+Its guide owns the generated reference scope and build/check commands.
+
 
 A collection rollover keeps each reader question at a bounded current card and
 provides authenticated retrieval of its complete dated predecessor. Current

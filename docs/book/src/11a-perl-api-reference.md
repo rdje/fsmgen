@@ -65,7 +65,10 @@ generated directory to avoid rebuilding in response to its own output.
 ## Validation and failures
 
 Generation rejects malformed POD, missing expected module pages, broken local
-links/fragments and unsafe paths. The generated coverage population is checked
+links/fragments and unsafe paths. The gate considers both the checker
+error flag and its diagnostic output. With the qualified Pod::Simple 3.42,
+formatting diagnostics can clear the flag even when the output reports an error;
+that output still fails generation. The generated coverage population is checked
 against all module sources. Source/tool fingerprints and complete output hashes
 prevent a stale, missing or modified tree from passing `--check`. Under the
 same inputs and tool versions, fresh renders have identical file bytes;

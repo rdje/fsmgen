@@ -86,10 +86,32 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.4: integrate POD reference with native mdBook delivery`
 
 - ID: `PERL-POD-API-REFERENCE.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Qualify complete reference delivery and restore the saved feature frontier.`
+  Children: `PERL-POD-API-REFERENCE.5.1, PERL-POD-API-REFERENCE.5.2, PERL-POD-API-REFERENCE.5.3`
   Acceptance: `Independently join the declared source/POD/facade population to generated pages and working local links, run documented examples and ordinary native book builds, and verify repeatability, freshness, locality and relevant broader regression. Retain precise coverage boundaries and all original failures. Complete required doctrine/commit checks, leave the tree clean and message empty, and resume the preserved reusable-width frontier. No unqualified hosted publication or API/runtime expansion.`
   Verification: `pending implementation and integration`
+  Commit: `PERL-POD-API-REFERENCE.5.1: retain POD discovery within Knowledge Map limits`
+
+- ID: `PERL-POD-API-REFERENCE.5.1`
+  Status: `done`
+  Goal: `Make POD reference discovery durable within the existing Knowledge Map bounds.`
+  Acceptance: `Add an atomic dated POD reference signpost. Preserve every existing fact/question and exact historical retrieval while removing the redundant fact-directory installer README pointer and retaining its full authoring guidance at the bundle entrypoint. Copy-edit only redundant wording in the related historical mdBook card as needed; retain all source meanings, metadata and questions with explicit before/after evidence and adverse controls. Do not raise any Knowledge Map allowance/ceiling. Prove query/parity/current-source checks and commit.`
+  Verification: `New atomic signpost/query resolves to the canonical API guide. Whole Git-archive/source membership and bytes preserve every other card; contained historical card retains identical metadata/questions and all reviewed body meanings. Every old query row survives, with exactly the new POD question added. Actual omission/owner/location/metadata controls reject. Collection remains within its unchanged authority; no allowance or ceiling changes. Knowledge Map parity/check passes; unchanged historical saved reader verifies exact book recovery while worker/operational admission stays false and owned by HIAL.`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.5.2`
+  Status: `pending`
+  Goal: `Guard actual facade POD examples in the existing CI fixture workflow.`
+  Acceptance: `Promote the checked synopsis runner to a canonical script with isolated same-volume workspaces, retain the dated audit command as a compatibility route, and add a meaningful CI-discovered actual-example check. Execute source snippets and validate concrete public results, not copied headings or only exit codes. Keep runtime execution separate from documentation rendering, preserve previous capture identities and verify genuine malformed/invalid example controls before committing.`
+  Verification: `pending discovery closure`
+  Commit: `pending`
+
+- ID: `PERL-POD-API-REFERENCE.5.3`
+  Status: `pending`
+  Goal: `Close complete POD reference qualification and restore the saved feature frontier.`
+  Acceptance: `Independently rejoin all source/POD/selected-facade populations to final generated/copied/native links, check examples, output freshness, no-write reuse, relevant regression and current book/source/index/doctrine contracts. Retain limits and original failures, commit the clean delivery, and restore ISF-REDUCTION-DELIVERY.2.3.2.4.2. No unqualified push or closure of separately owned legacy/manual/historical gates.`
+  Verification: `pending CI example guard`
   Commit: `pending`
 
 ## Decisions
@@ -274,3 +296,38 @@ HIAL, claim, locality, or source-feature signoff gates.
   format; retain every original entry in order and add the API child. The saved
   navigation join and native source/index/build checks qualify the result. No
   chapter or navigation member is removed and no bound increases.
+
+## Acceptance Checklist — .5.1
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'Fact files live here' -1 -- docs/knowledge/README.md` identifies 601a18a06, the original installer pointer. The full pre-slice query set has no POD route, while the current Knowledge Map collection has fixed rollover-debt authority. Adding a card without containment would exceed that authority; the installer only creates its pointer when the entire first scan directory is absent.
+- [x] **ADDRESSED (verified)** — Add the atomic reference signpost and preserve its default-directory/template/rename guidance at the bundle entrypoint. The related historical card is copy-edited without changing metadata, questions, source history, cause/repair, invocation contract, recovery operations or qualification limits. Whole before/after source and query joins, full retained old/new bodies and genuine adverse candidates pass. Byte/member authority is derived from the registry and required unchanged, not copied as a new limit.
+- [x] **NO REGRESSION** — knowledge-map: OK. The canonical historical --verify-saved reader returns zero and retains actual_worker_execution=false and operational_execution_admitted=false; only its existing book recovery is qualified. The actual generated reference freshness check passes. Native book/source/index and staged doctrine gates are required for this commit.
+
+### .5.1 preservation evidence
+
+- `verify_knowledge_route.py` authenticates complete original source files through
+  native Git archive plus an independent ls-tree membership join, preserves all
+  unrelated card bytes, and checks unchanged historical metadata, every old
+  question-owner row, exact history reconstruction and the complete reviewed
+  small body. The before packet and compressed full question set are retained.
+- Its actual missing-question, borrowed-owner, missing-card, lost-location and
+  changed-metadata candidates fail the same preservation predicates. The paired
+  full bodies make the manual semantic review visible; matching counts alone
+  are not presented as meaning preservation.
+- The source collection keeps its file membership count and adds only the small
+  bounded byte delta under existing authority. No Knowledge Map limit changes.
+  Re-derivation, falsification and durable base/source/body/question custody are
+  distinct legs in `knowledge-route-evidence.json` and its tracked reader.
+- The original historical reader's exact printed limits are retained in
+  knowledge-original-reverify.log.gz. Its open worker/protocol/final-admission
+  ownership remains unchanged; no new HIAL or hosted execution is inferred.
+- The book now routes the POD query and explains the qualified checker's
+  diagnostic-output boundary. No new API behavior or legacy-link repair is
+  introduced by this discovery slice.
+
+- The first .5.1 staged gate also finds the bundle README's ancillary-surface
+  allowance exhausted. Tighten its redundant opening/model prose while retaining
+  its purpose, reader roles, derived projection, automatic hook/CI behavior and
+  signpost boundary. With the relocated authoring instruction, the complete
+  README is smaller than its committed predecessor. No ancillary allowance
+  or ceiling increases; the complete first failure remains retained.

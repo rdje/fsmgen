@@ -1,13 +1,11 @@
 # Knowledge Map (KM) bundle
 
-A self-contained, **project-agnostic**, git-tracked deliverable that gives an AI/LLM (or a
-human) a **question-keyed, machine-derived index** over a repo's durable facts — so a future
-session **never has to do archaeology** (re-derive a fact from code or runtime) to find
-something that was already logged once.
+A self-contained, **project-agnostic**, git-tracked bundle provides a **question-keyed,
+machine-derived index** of established repository facts for humans and AI agents,
+avoiding re-derivation from code or runtime.
 
-It is an **additive extension** to the Durable Memory Architecture
-(`MEMORY_ARCHITECTURE.md`) + task-trees. It **replaces nothing** and requires **no
-conversion** of existing docs — see `FAQ.md`.
+An **additive extension** to `MEMORY_ARCHITECTURE.md` and task-trees: **no replacement
+or conversion** of existing docs. See `FAQ.md`.
 
 ## Adopt it in another project (copy the bundle)
 
@@ -40,15 +38,17 @@ disposable query data lives under `.artifacts/`.
 | `ci/knowledge-map-gate.yml` | the CI backstop |
 | `install.sh` | idempotent adoption helper |
 
+Fact files live in the first configured scan directory (default `docs/knowledge/`).
+Copy `knowledge-map/templates/FACT_TEMPLATE.md` there and rename it `<id>.md`.
+
 ## The model in one breath
 
 A **fact** is one `.md` with a non-empty `answers:` list in its YAML front-matter (the
 questions an agent would search for) plus `id`/`title`/`date` and `evidence`/`reverify`. The
-generator harvests those into a bounded root plus deterministic topic shards. The
-pre-commit hook regenerates + stages the complete projection (zero agent cost),
-CI checks it (no drift). A fact card is a
-**signpost** that points at the canonical home (book/code/decision record) — it does not copy
-it. Facts are added **lazily**, one at a time, whenever you establish a durable fact or catch
+generator derives a bounded root and deterministic topic shards. The pre-commit hook
+regenerates and stages the complete projection automatically; CI checks freshness.
+A card is a **signpost** to the canonical home (book/code/decision record), without
+copying its contents. Facts are added **lazily**, one at a time, whenever you establish a durable fact or catch
 yourself re-deriving one. **No migration project.**
 
 ## How a future agent uses it

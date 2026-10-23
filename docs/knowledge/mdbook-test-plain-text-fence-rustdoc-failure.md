@@ -18,12 +18,10 @@ evidence: >-
 reverify: python3 -B docs/audits/native-proxy-populated-controller-20260913/audit.py --verify-saved
 ---
 
-History: `8e0c5f1af948b928908005a7dcd6c73e3db5c152:docs/knowledge/mdbook-test-plain-text-fence-rustdoc-failure.md`.
-Untyped plain-text fences sent diagrams to rustdoc as Rust. The historical repair
-marked those fences `text`; its exact scope and original test result remain in Git.
+History at this path: `8e0c5f1af948b928908005a7dcd6c73e3db5c152`.
+Untyped diagram fences reached rustdoc as Rust; `text` repaired them. Git retains exact scope/original test result.
 
-From the repository root, use `mdbook build docs/book --dest-dir .artifacts/tmp/OWNED/book`.
-The CLI destination is relative to the invocation directory; omit `../../../`.
-The saved audit checks the mistaken render's exact copy, hash verification,
-inspection and removal from both locations. It does not rebuild, repeat cleanup,
-or reclassify the historical rustdoc test as a current full-book qualification.
+Repo-root: `mdbook build docs/book --dest-dir .artifacts/tmp/OWNED/book`.
+Destination uses invocation cwd; omit `../../../`.
+Saved audit verifies exact misplaced book copy/hash/inspection/removal at both locations.
+No rebuild or repeated cleanup; historical rustdoc results do not qualify the current full book.

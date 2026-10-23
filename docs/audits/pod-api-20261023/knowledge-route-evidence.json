@@ -1,0 +1,33 @@
+{
+  "base_revision": "295a0ba92dfed579aaf303cc0b2e9377e2510f6d",
+  "old_source_members": 1260,
+  "current_source_members": 1260,
+  "old_question_rows": 7046,
+  "only_new_question": "where is the Perl POD API reference?\tperl-pod-api\tdocs/knowledge/perl-pod-api.md",
+  "all_other_source_bytes_preserved": true,
+  "current_card_bytes": 3879677,
+  "unchanged_collection_limits": {
+    "files": 1260,
+    "bytes_total": 3879686
+  },
+  "prose_review": {
+    "original_body": "\nHistory: `8e0c5f1af948b928908005a7dcd6c73e3db5c152:docs/knowledge/mdbook-test-plain-text-fence-rustdoc-failure.md`.\nUntyped plain-text fences sent diagrams to rustdoc as Rust. The historical repair\nmarked those fences `text`; its exact scope and original test result remain in Git.\n\nFrom the repository root, use `mdbook build docs/book --dest-dir .artifacts/tmp/OWNED/book`.\nThe CLI destination is relative to the invocation directory; omit `../../../`.\nThe saved audit checks the mistaken render's exact copy, hash verification,\ninspection and removal from both locations. It does not rebuild, repeat cleanup,\nor reclassify the historical rustdoc test as a current full-book qualification.\n",
+    "contained_body": "\nHistory at this path: `8e0c5f1af948b928908005a7dcd6c73e3db5c152`.\nUntyped diagram fences reached rustdoc as Rust; `text` repaired them. Git retains exact scope/original test result.\n\nRepo-root: `mdbook build docs/book --dest-dir .artifacts/tmp/OWNED/book`.\nDestination uses invocation cwd; omit `../../../`.\nSaved audit verifies exact misplaced book copy/hash/inspection/removal at both locations.\nNo rebuild or repeated cleanup; historical rustdoc results do not qualify the current full book.\n",
+    "reviewed_meanings": [
+      "Untyped diagram fences reached rustdoc as Rust; `text` repaired them.",
+      "Git retains exact scope/original test result.",
+      "Repo-root: `mdbook build docs/book --dest-dir .artifacts/tmp/OWNED/book`.",
+      "Destination uses invocation cwd; omit `../../../`.",
+      "Saved audit verifies exact misplaced book copy/hash/inspection/removal at both locations.",
+      "No rebuild or repeated cleanup; historical rustdoc results do not qualify the current full book."
+    ]
+  },
+  "rejected_controls": [
+    "missing old question",
+    "borrowed question owner",
+    "missing old card",
+    "lost recovery location",
+    "changed original metadata"
+  ],
+  "contained_card_sha256": "e6c110129dfd8201c9b36181284a0961fd5b7d729898da2084a63fb861214ee9"
+}
