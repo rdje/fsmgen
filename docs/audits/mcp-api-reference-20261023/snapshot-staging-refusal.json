@@ -1,0 +1,7 @@
+{
+  "command": "python3 -B scripts/check_book_source_index.py",
+  "exit_status": 1,
+  "error": "ValueError: checked bytes/mode agree with Git result: MEMORY.md",
+  "cause": "In-flight pointer changed after earlier staging; expected source-plane guard requires complete restaging before checking native copied sources.",
+  "resolution": "Finalize metadata, restage the complete controlled sources, rebuild native source copies and rerun the unchanged guard."
+}

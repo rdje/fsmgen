@@ -1,0 +1,10 @@
+{
+  "added_value": [
+    "diagnostic_code"
+  ],
+  "after_sha256": "8dd0d71985ed681a659d1719adb0235c73c60083d76270afda1bec005491e5c0",
+  "all_other_projected_schema_members_equal": true,
+  "base": "fe68b8458b0c1cb2fae078394ca89302ed86710f",
+  "before_sha256": "aea0acb4df450676a46ec4332ca6c93d6c2e219967b01dd83f5120f3497ac213",
+  "only_changed_json_path": "tool_envelopes/support_summary/decoded_payload/sample_entry_optional_keys"
+}

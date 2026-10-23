@@ -1331,6 +1331,69 @@ the selected handle or its buffering mode. Notifications produce no response.
 An output write/flush failure throws. This is a blocking loop, not a background
 service. It does not implement HTTP or Content-Length framing.
 
+=head1 CATALOG SAMPLE RESULTS
+
+The compact catalog records in C<fsmgen_support_summary>'s
+C<sample_catalog_entries> and C<fsmgen_explain_diagnostic>'s
+C<support_examples> share these fields:
+
+=over 4
+
+=item C<id>
+
+The catalog entry identifier. Correlate examples by this identifier rather
+than their position in a sample; it is not a JSON-RPC request ID.
+
+=item C<relpath>
+
+The repository-relative catalog path. Before passing it as a source identity,
+ensure that the source exists under the configured workspace. Catalog samples
+do not discover arbitrary files in that workspace.
+
+=item C<family>
+
+The catalog's feature/protocol grouping, used by support-accounting aggregates.
+
+=item C<classification>
+
+The catalog's support classification. For example, C<supported_smoke> and
+C<expected_failure> describe different kinds of maintained examples; a refusal
+fixture must not be interpreted as a supported successful design.
+
+=item C<coverage>
+
+The catalog's named coverage bucket. This is a category, not a percentage or
+proof that all cases in that category have been qualified.
+
+=item C<source_kind>
+
+The catalog's source-kind label. Use source discovery's
+C<available_query_kinds> to select applicable operations; this label alone
+does not establish that every query accepts the source.
+
+=item C<strict_supported>
+
+A Boolean copied from the public catalog's strict-support declaration. Reading
+this field does not execute a fresh strict check or a regression test.
+
+=item C<diagnostic_code> (optional)
+
+Included only when the selected catalog entry declares a diagnostic code.
+It describes that example's expected diagnostic, not an error raised by this
+catalog query. Absence of this field is valid; do not require it on every entry.
+
+=back
+
+The common fields are retained for every compact record; C<diagnostic_code>
+depends on the selected entry. Samples preserve catalog order, which is not
+a stable choice of first example. These records intentionally omit other
+catalog metadata. C<fsmgen_find_examples>'s C<catalog_entries>, the full
+C<fsmgen://support-accounting> resource and the capability section retain the
+larger public support-accounting catalog contract. The examples query's
+embedded C<support_summary> has an empty C<sample_catalog_entries> array;
+its top-level C<catalog_entries> carry the selected full records. Do not
+confuse those records with compact samples.
+
 =head1 FUNCTIONS
 
 =head2 semantic_introspection_mcp_adapter_contract_source()

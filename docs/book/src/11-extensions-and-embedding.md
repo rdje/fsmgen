@@ -2746,6 +2746,17 @@ objects, `HDLGenerator` compatibility hashes, arbitrary shell output, network
 access, implicit file writes, write/generation tools, mutation workflows, and
 commit/push actions are not public semantic-introspection payloads.
 
+Compact support-summary and diagnostic samples retain `id`, `relpath`, `family`,
+`classification`, `coverage`, `source_kind` and Boolean `strict_supported`.
+`diagnostic_code` is present only when the selected catalog entry declares it.
+Samples follow catalog order; identify entries by `id` and handle both field
+variants. Reading catalog metadata does not execute a fresh check. The full
+support-accounting resource and `fsmgen_find_examples.catalog_entries` have a
+larger entry contract. The examples query's embedded support summary has no
+catalog samples; its top-level entries carry the full records. The
+[sample field reference](perl-api/FSM/Support/SemanticIntrospectionMCPAdapter.html#CATALOG_SAMPLE_RESULTS)
+explains each compact field and its interpretation.
+
 ### Read-only MCP Workflow Examples
 
 A generic local read-only client configuration uses the adapter command and an

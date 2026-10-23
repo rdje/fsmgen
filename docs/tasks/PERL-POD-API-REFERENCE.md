@@ -142,32 +142,32 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.1`
-  Status: `active`
+  Status: `done`
   Children: `PERL-POD-API-REFERENCE.6.1.1.1, PERL-POD-API-REFERENCE.6.1.1.2`
   Goal: `Reproduce and repair any persistent stdio response-buffering defect before documenting client workflows.`
   Acceptance: `The adapter's run_stdio prints responses to a pipe without an explicit flush; verify with a real persistent subprocess that keeps stdin open and waits for its first response. Retain the exact request/raw response/process outcome before EOF and after orderly EOF, source/runtime identities and a competing EOF-only control. If buffering is confirmed, repair only transport response delivery without changing report bytes, IDs or notification behavior. Add an actual open-pipe regression, qualify custom handles and relevant existing transport/schema/source-failure tests, synchronize POD/book and commit before continuing the census.`
-  Verification: `Source review finds no explicit flush in launcher/run_stdio; persistent-pipe behavior is not yet measured. This is a suspected client-driving blocker, not a confirmed failure or timing guarantee.`
-  Commit: `pending`
+  Verification: `The live buffering defect is reproduced, isolated with a forced-flush control and repaired at fe68b8458. Both real open-pipe regressions pass with conserved response bytes and unchanged handle state. The independent pre-existing catalog snapshot issue is repaired in .6.1.1.2; all 23 relevant Perl files/64 top-level tests now pass. Complete operational documentation census remains .6.1.2.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.1.2: distinguish optional catalog fields in MCP schema snapshots`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.1.1`
   Status: `done`
   Goal: `Commit the verified persistent response-flush repair and actual open-pipe regression.`
   Acceptance: `Complete .6.1.1's transport repair with real launcher/custom-handle RED/GREEN, independent forced-flush control, exact response-byte conservation, orderly EOF and unchanged selected/buffering state. Retain the broader cohort's exact original outcome. If its snapshot failure reproduces with the byte-exact predecessor adapter and complete projection equality, own that separate fixture issue in immediate successor .6.1.1.2 instead of disguising it as a passing broad gate. Commit the verified scoped transport repair before that fixture successor.`
   Verification: `Both live regressions fail before repair and pass afterward. Actual launcher/default-adapter probes lack a reply before EOF while forced autoflush succeeds; after repair all three stream and complete reply bytes conserve. The broader cohort passes 22 files but t/1445's first sample-entry key differs from its saved fixture. The byte-exact predecessor reproduces the snapshot failure and its complete projected products equal the repaired adapter. This independent pre-existing fixture failure is owned by immediate successor .6.1.1.2; no broad green claim.`
-  Commit: `PERL-POD-API-REFERENCE.6.1.1.1: flush persistent MCP responses before reading again`
+  Commit: `fe68b8458`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.1.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Resolve the MCP schema snapshot's sample-dependent catalog projection failure.`
   Acceptance: `Reproduce the exact t/1445 failure using the original adapter and compare complete projected products before/after the flush-only repair. Trace the differing support-summary sample fields to actual catalog selection, history and its public optional-field contract. Repair the smallest correct observation/fixture contract, preserving strict protocol/schema coverage and meaningful real catalog checks; never blindly regenerate a fixture or weaken assertions to obtain green. Add a real catalog-variant/ordering control where warranted, qualify the fixed snapshot plus relevant cohort, synchronize public field guidance and commit before the exhaustive census.`
-  Verification: `Current broader gate reports first support-summary sample keys diagnostic_code versus family. probe_snapshot.py really reruns the original assertion/projector with the byte-exact c63f76753 adapter and the current adapter: both fail and complete projections are identical. Fixture/catalog root cause and correct repair remain pending; no product schema change is inferred.`
-  Commit: `pending`
+  Verification: `The original schema test froze the first sampled record although diagnostic_code was already optional in its own introduction revision. The current first catalog entry is an expected-failure fixture with that optional code. Original/current adapter projections match completely and fail the old observer equally. The repaired observer separates common/optional schema keys; both real catalog variants in either order preserve complete values, text/structured equality, full membership and source immutability. Missing-common and unknown-field controls remain distinguishable. Only the explicit optional-key declaration is added to the golden projection; every other fixture member and production code outside POD conserve. The full MCP cohort now passes Files=23 Tests=64. Complete compact-sample field guidance and its corrected native POD anchor pass book/source/index/delivery checks.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.1.2: distinguish optional catalog fields in MCP schema snapshots`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2`
   Status: `pending`
   Goal: `Complete the exhaustive public-surface and documentation-gap census after transport admission.`
   Acceptance: `Perform the full .6.1 census and refine every successor from actual published methods/tools/resources/templates/schema/query applicability. Retain complete source/runtime/schema identities, current documentation locations, unexplained gaps and explicit owned limitations; no schema/name-only stub counts as reference completion. Commit the audit before operational-reference edits.`
-  Verification: `pending persistent stdio qualification`
+  Verification: `Persistent transport and the independently failing catalog-snapshot observer are qualified; exhaustive public-surface/schema/documentation-gap census remains pending.`
   Commit: `pending`
 
 - ID: `PERL-POD-API-REFERENCE.6.2`
@@ -535,3 +535,48 @@ HIAL, claim, locality, or source-feature signoff gates.
   and https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle.
   The complete client reference remains .6-owned; this repair alone does not
   qualify every tool, schema, temporal question or end-to-end design workflow.
+
+
+## Acceptance Checklist — .6.1.1.2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'sample_entry_keys' -1 -- t/1445-semantic-introspection-mcp-schema-snapshots.t` identifies a1cc9414a, which snapshots one arbitrary first entry. That same revision's adapter already conditionally includes diagnostic_code; its optional projection originates in c0204a138. The current first entry language.isf_storage_identifier.rejection carries that code (its corpus insertion is 089224807). This identifies the current sample and original observer weakness, not the first historical failing run. The original c63f76753 adapter and repaired adapter produce identical complete projections and the same original snapshot failure.
+- [x] **ADDRESSED (verified)** — Normalize only the declared diagnostic_code optional key in the schema projection and add its explicit optional-key declaration to the golden fixture. All other golden members remain identical. Real diagnostic/non-diagnostic catalog entries are reordered both ways without dropping members; actual complete sample values and text/structured equality qualify, with unchanged original manifest. Missing common fields and new unknown fields still fail the same observer. POD/book explain every compact field, optionality, catalog order and larger full-resource boundary. Production runtime code outside POD matches fe68b8458 exactly.
+- [x] **NO REGRESSION** — All tests successful. Files=23, Tests=64 across the complete MCP protocol/schema/source-failure/large-UTF-8 cohort. The fixed snapshot's focused run also passes. Native book/source/index/full generated-delivery and the new field-link/actual-anchor checks pass; all full outputs are retained.
+
+### .6.1.1.2 bounded fixture repair and reference evidence
+
+- snapshot-regression.log.gz retains the complete now-green cohort. The prior
+  23-file refusal, exact old/current full projections and original fixture are
+  retained by .6.1.1.1. probe_snapshot.py is that dated producer at fe68b8458;
+  replay its original test/fixture boundary rather than applying the old
+  failing assertion to the repaired current fixture.
+- snapshot-fixture-conservation.json independently compares complete parsed
+  old/current golden files. Only the declared optional-key path is added; no
+  unrelated protocol/schema projection is refreshed. Unknown-key and missing-
+  common-key interventions prove the observer is not merely ignoring changes.
+- The actual support query retains current sampled records. Re-derivation is
+  the real source-backed variant calls and full cohort; falsification is the
+  original same-projection failure, reversed optional variants and hostile
+  missing/extra fields; durability is tracked test/fixture, exact captures,
+  code/golden conservation, public field guidance and Git history.
+- The first native anchor assertion catches an incorrectly guessed hyphenated
+  heading. Pod::Simple publishes CATALOG_SAMPLE_RESULTS with underscores;
+  the corrected exact native link and anchor are checked. The initial refusal
+  and both builds remain retained; no broken new reference is committed.
+- The clean successor is .6.1.2's exhaustive operational-reference census.
+  The compact sample dictionary is one qualified result cohort, not completion
+  of all endpoint, report-schema, temporal or agent-workflow documentation.
+  Historical publication/full-CI, broader manual links and platform limits keep
+  their existing owners. No required external server/fixture process remains.
+
+
+- Final precommit review corrects an overbroad uncommitted draft: examples
+  catalog_entries retain full public records, while support-summary and
+  diagnostic samples are compact. The examples query's embedded support
+  summary has zero samples. Complete actual example-record and text/structured
+  assertions now guard this distinction in both real catalog orders. The
+  superseded staged draft is retained with source hashes; no incorrect draft
+  is published. The final 23-file/64-test cohort is rerun green, and current
+  production code conservation is requalified. Final native source checks
+  require complete restaging after the pointer update; the first expected
+  source-plane refusal is retained and the unchanged guard reruns before commit.

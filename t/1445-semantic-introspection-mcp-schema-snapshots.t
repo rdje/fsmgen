@@ -11,6 +11,8 @@ use JSON::PP qw(decode_json);
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Support::SemanticIntrospectionMCPAdapter;
+use FSM::Support::CapabilityManifest qw(build_capability_manifest);
+use FSM::Support::SupportAccountingContract qw(support_accounting_catalog_entry_optional_keys);
 
 my $repo_root = abs_path(File::Spec->catdir($FindBin::Bin, '..'));
 my $adapter = FSM::Support::SemanticIntrospectionMCPAdapter->new(
@@ -57,6 +59,66 @@ subtest 'snapshot fixture does not advertise mutation or ambient-access tools' =
 
     my $encoded = JSON::PP->new->ascii->canonical->encode($actual);
     unlike($encoded, qr/\Q$repo_root\E/, 'snapshot projection does not leak the machine-local repo root');
+};
+
+subtest 'support sample schema accepts both real optional-field variants in either order' => sub {
+    ok(scalar(grep { $_ eq 'diagnostic_code' } @{support_accounting_catalog_entry_optional_keys()}),
+        'the public catalog contract declares diagnostic_code optional');
+    my $manifest = build_capability_manifest();
+    my $entries = $manifest->{support_accounting}{catalog_entries};
+    my ($diagnostic) = grep { exists $_->{diagnostic_code} } @$entries;
+    my ($ordinary) = grep { !exists $_->{diagnostic_code} } @$entries;
+    ok($diagnostic && $ordinary, 'real catalog supplies both entry variants') or return;
+    my $expected = decode_json(slurp(File::Spec->catfile($repo_root, 't', 'fixtures',
+        'semantic_introspection_mcp', 'read_only_schema_snapshot.json')))
+        ->{tool_envelopes}{support_summary}{decoded_payload};
+    my @common = qw(classification coverage family id relpath source_kind strict_supported);
+    my $json = JSON::PP->new->canonical;
+    my $before = $json->encode($manifest);
+
+    for my $first ([$diagnostic, $ordinary], [$ordinary, $diagnostic]) {
+        my %selected = map { $_->{id} => 1 } @$first;
+        my @ordered = (@$first, grep { !$selected{$_->{id}} } @$entries);
+        is(scalar(@ordered), scalar(@$entries), 'reordering preserves complete catalog membership');
+        my $variant = {%$manifest, support_accounting => {
+            %{$manifest->{support_accounting}}, catalog_entries => \@ordered,
+        }};
+        my $client = FSM::Support::SemanticIntrospectionMCPAdapter->new(
+            repo_root => $repo_root, workspace_root => $repo_root, manifest_builder => sub { $variant });
+        my $result = $client->call_tool('fsmgen_support_summary', {limit_examples => 2});
+        my $payload = $result->{structuredContent};
+        is($json->encode(decode_json($result->{content}[0]{text})), $json->encode($payload),
+            'complete text and structured payloads retain identical values');
+        for my $index (0, 1) {
+            my $source = $first->[$index];
+            my %wanted = map { $_ => $source->{$_} } @common;
+            $wanted{diagnostic_code} = $source->{diagnostic_code} if exists $source->{diagnostic_code};
+            is_deeply($payload->{sample_catalog_entries}[$index], \%wanted,
+                'actual sample preserves common values and exactly the applicable optional code');
+        }
+        is_deeply(project_support_summary_payload($payload), $expected,
+            'snapshot schema is independent of the first real entry variant');
+        my $examples = $client->call_tool('fsmgen_find_examples', {limit => 2});
+        is_deeply($examples->{structuredContent}{catalog_entries}, $first,
+            'examples preserve selected full public catalog records rather than compact samples');
+        is_deeply($examples->{structuredContent}{support_summary}{sample_catalog_entries}, [],
+            'the examples query embeds support aggregates without catalog samples');
+        is($json->encode(decode_json($examples->{content}[0]{text})),
+            $json->encode($examples->{structuredContent}), 'full examples survive both result forms');
+        for my $mutation ('missing_common', 'unknown_field') {
+            my $bad = {%$payload, sample_catalog_entries => [
+                {%{$payload->{sample_catalog_entries}[0]}}, $payload->{sample_catalog_entries}[1],
+            ]};
+            if ($mutation eq 'missing_common') {
+                delete $bad->{sample_catalog_entries}[0]{family};
+            } else {
+                $bad->{sample_catalog_entries}[0]{unpublished_field} = 'counterfeit';
+            }
+            isnt($json->encode(project_support_summary_payload($bad)), $json->encode($expected),
+                "$mutation remains distinguishable from the admitted snapshot");
+        }
+    }
+    is($json->encode($manifest), $before, 'variant calls leave the original complete manifest unchanged');
 };
 
 done_testing();
@@ -255,7 +317,12 @@ sub project_support_summary_payload {
         },
         id_count_keys => sorted_keys($payload->{id_counts}),
         sample_count => scalar @{$payload->{sample_catalog_entries}},
-        sample_entry_keys => sorted_keys($payload->{sample_catalog_entries}[0] || {}),
+        # This is a schema projection, not a freeze of which catalog entry is
+        # first. Only this declared optional field is normalized; new unknown
+        # fields and missing common fields still change the snapshot.
+        sample_entry_keys => [grep { $_ ne 'diagnostic_code' }
+            @{sorted_keys($payload->{sample_catalog_entries}[0] || {})}],
+        sample_entry_optional_keys => ['diagnostic_code'],
     };
 }
 

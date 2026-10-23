@@ -537,6 +537,9 @@
                "relpath",
                "source_kind",
                "strict_supported"
+            ],
+            "sample_entry_optional_keys" : [
+               "diagnostic_code"
             ]
          },
          "isError" : false,
