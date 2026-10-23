@@ -6,8 +6,8 @@ Status and evidence: `docs/tasks/`. The system itself: `MEMORY_ARCHITECTURE.md`.
 ## Resume
 
 - repository_revision: derive with `git log -1 --format='%H %s'`; never shadow `HEAD` here.
-- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.2.5`
-- next_action: Remove automatic Perl/input-record error locations while preserving meaningful public reasons and authored diagnostics; verify persistent/custom handles and moved roots before the example-schema repair.
+- active_work_unit: `PERL-POD-API-REFERENCE.6.1.2.2.5.2`
+- next_action: Implement the qualified loaded-code suffix/terminal-LF repair with genuine RED/GREEN error preservation tests; commit before the separate capitalized operator-context fix.
 - in_flight_uncommitted: derive with `git status --short`; commit any owned slice before activating its successor.
 - in_flight_background: None. Earlier source epochs remain sealed and must not be rerun.
 - blockers: Historical native EPERM attribution stays P1-open with HIAL; the SIP boundary is unchanged.

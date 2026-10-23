@@ -92,7 +92,7 @@ reference and its drift checks remain under qualification.
 | Surface | Current discrepancy |
 | --- | --- |
 | Example lookup | `documentation` contains the public documentation object; the schema declares an array |
-| Error messages | Some failures retain automatic Perl locations or reference addresses; use error codes and structured diagnostics for program decisions |
+| Error messages | Reference addresses or automatic Perl locations may remain; authored source locations and capitalized `Operator '/'` tokens can be lost. Use codes and structured diagnostics |
 
 ## Build and preview
 

@@ -40,7 +40,7 @@ and complete backing-model semantics are not inferred from these counts.
 | `.2` diagnostic limit | Repaired: discovery advertises the diagnostic sample limit; defaults retain |
 | `.3` capability payload | Repaired: selected version retains its integer payload; the schema admits it |
 | `.4` argument enforcement | Repaired: metadata/envelope, numeric limits, source kinds and caller copies |
-| `.5` error locations | Persistent refusals retain the adapter location and input-record suffix |
+| `.5` error locations | Qualified error/context audit; location and authored-text repairs owned |
 | `.6` documentation type | Ordinary example results contain a documentation object against an array declaration |
 
 Findings are per-exchange observations and can overlap; they are not a count

@@ -1,0 +1,429 @@
+{
+  "selected_sources": 434,
+  "copied_files": 431,
+  "checked_responses": 120,
+  "findings": [
+    {
+      "label": "original:no_input_record",
+      "case": "callback_authored_location",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic"
+    },
+    {
+      "label": "original:no_input_record",
+      "case": "callback_external_path",
+      "expected": "Operator '/' while opening '[absolute-path-redacted]'",
+      "actual": "Operator '[absolute-path-redacted]' while opening '[absolute-path-redacted]'"
+    },
+    {
+      "label": "original:line_record",
+      "case": "missing_source",
+      "expected": "Invalid params: source_path or source_id is required",
+      "actual": "Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 522, <$record_input> line 1."
+    },
+    {
+      "label": "original:line_record",
+      "case": "quoted_version",
+      "expected": "Invalid params: VIAL language_version must be a JSON integer",
+      "actual": "Invalid params: VIAL language_version must be a JSON integer at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 572, <$record_input> line 1."
+    },
+    {
+      "label": "original:line_record",
+      "case": "unknown_tool",
+      "expected": "Unsupported MCP tool: fsmgen_no_such_tool",
+      "actual": "Unsupported MCP tool: fsmgen_no_such_tool at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 296, <$record_input> line 1."
+    },
+    {
+      "label": "original:line_record",
+      "case": "unknown_method",
+      "expected": "Unsupported JSON-RPC method: widgets/missing",
+      "actual": "Unsupported JSON-RPC method: widgets/missing at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 416, <$record_input> line 1."
+    },
+    {
+      "label": "original:line_record",
+      "case": "callback_plain",
+      "expected": "Callback rejected operator '/'",
+      "actual": "Callback rejected operator '/' at docs/audits/mcp-api-reference-20261023/probe_error_context.pl line 15, <$record_input> line 1."
+    },
+    {
+      "label": "original:line_record",
+      "case": "callback_authored_location",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic"
+    },
+    {
+      "label": "original:line_record",
+      "case": "callback_authored_plus_native",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic at design.isf line 17. at docs/audits/mcp-api-reference-20261023/probe_error_context.pl line 15, <$record_input> line 1."
+    },
+    {
+      "label": "original:line_record",
+      "case": "callback_fake_suffix",
+      "expected": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected",
+      "actual": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected at docs/audits/mcp-api-reference-20261023/probe_error_context.pl line 15, <$record_input> line 1."
+    },
+    {
+      "label": "original:line_record",
+      "case": "callback_external_path",
+      "expected": "Operator '/' while opening '[absolute-path-redacted]'",
+      "actual": "Operator '[absolute-path-redacted]' while opening '[absolute-path-redacted]'"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "missing_source",
+      "expected": "Invalid params: source_path or source_id is required",
+      "actual": "Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 522, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "quoted_version",
+      "expected": "Invalid params: VIAL language_version must be a JSON integer",
+      "actual": "Invalid params: VIAL language_version must be a JSON integer at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 572, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "unknown_tool",
+      "expected": "Unsupported MCP tool: fsmgen_no_such_tool",
+      "actual": "Unsupported MCP tool: fsmgen_no_such_tool at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 296, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "unknown_method",
+      "expected": "Unsupported JSON-RPC method: widgets/missing",
+      "actual": "Unsupported JSON-RPC method: widgets/missing at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 416, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "callback_plain",
+      "expected": "Callback rejected operator '/'",
+      "actual": "Callback rejected operator '/' at docs/audits/mcp-api-reference-20261023/probe_error_context.pl line 15, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "callback_authored_location",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic at design.isf line 17.\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "callback_authored_plus_native",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic at design.isf line 17. at docs/audits/mcp-api-reference-20261023/probe_error_context.pl line 15, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "callback_fake_suffix",
+      "expected": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected",
+      "actual": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected at docs/audits/mcp-api-reference-20261023/probe_error_context.pl line 15, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "callback_quotes",
+      "expected": "Unsupported expression operator '/' at 'design.isf:17'",
+      "actual": "Unsupported expression operator '/' at 'design.isf:17'\n"
+    },
+    {
+      "label": "original:chunk_record",
+      "case": "callback_external_path",
+      "expected": "Operator '/' while opening '[absolute-path-redacted]'",
+      "actual": "Operator '[absolute-path-redacted]' while opening '[absolute-path-redacted]'\n"
+    },
+    {
+      "label": "original:persistent",
+      "case": "missing_source",
+      "expected": "Invalid params: source_path or source_id is required",
+      "actual": "Invalid params: source_path or source_id is required at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 522, <STDIN> line 1."
+    },
+    {
+      "label": "original:persistent",
+      "case": "quoted_version",
+      "expected": "Invalid params: VIAL language_version must be a JSON integer",
+      "actual": "Invalid params: VIAL language_version must be a JSON integer at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 572, <STDIN> line 2."
+    },
+    {
+      "label": "original:persistent",
+      "case": "unknown_tool",
+      "expected": "Unsupported MCP tool: fsmgen_no_such_tool",
+      "actual": "Unsupported MCP tool: fsmgen_no_such_tool at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 296, <STDIN> line 3."
+    },
+    {
+      "label": "original:persistent",
+      "case": "unknown_method",
+      "expected": "Unsupported JSON-RPC method: widgets/missing",
+      "actual": "Unsupported JSON-RPC method: widgets/missing at perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm line 416, <STDIN> line 4."
+    },
+    {
+      "label": "original:custom_stdio",
+      "case": "callback_plain",
+      "expected": "Callback rejected operator '/'",
+      "actual": "Callback rejected operator '/' at docs/audits/mcp-api-reference-20261023/probe_error_context.pl line 15, <$custom_input> line 1."
+    },
+    {
+      "label": "original:custom_stdio",
+      "case": "callback_authored_location",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic"
+    },
+    {
+      "label": "original:custom_stdio",
+      "case": "callback_fake_suffix",
+      "expected": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected",
+      "actual": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected at docs/audits/mcp-api-reference-20261023/probe_error_context.pl line 15, <$custom_input> line 1."
+    },
+    {
+      "label": "original:custom_stdio",
+      "case": "callback_external_path",
+      "expected": "Operator '/' while opening '[absolute-path-redacted]'",
+      "actual": "Operator '[absolute-path-redacted]' while opening '[absolute-path-redacted]'"
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "missing_source",
+      "expected": "Invalid params: source_path or source_id is required",
+      "actual": "Invalid params: source_path or source_id is required at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 522."
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "quoted_version",
+      "expected": "Invalid params: VIAL language_version must be a JSON integer",
+      "actual": "Invalid params: VIAL language_version must be a JSON integer at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 572."
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "unknown_tool",
+      "expected": "Unsupported MCP tool: fsmgen_no_such_tool",
+      "actual": "Unsupported MCP tool: fsmgen_no_such_tool at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 296."
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "unknown_method",
+      "expected": "Unsupported JSON-RPC method: widgets/missing",
+      "actual": "Unsupported JSON-RPC method: widgets/missing at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 416."
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "callback_plain",
+      "expected": "Callback rejected operator '/'",
+      "actual": "Callback rejected operator '/' at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15."
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "callback_authored_location",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic"
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "callback_authored_plus_native",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic at design.isf line 17. at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15."
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "callback_fake_suffix",
+      "expected": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected",
+      "actual": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15."
+    },
+    {
+      "label": "spaced:no_input_record",
+      "case": "callback_external_path",
+      "expected": "Operator '/' while opening '[absolute-path-redacted]'",
+      "actual": "Operator '[absolute-path-redacted]' while opening '[absolute-path-redacted]'"
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "missing_source",
+      "expected": "Invalid params: source_path or source_id is required",
+      "actual": "Invalid params: source_path or source_id is required at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 522, <$record_input> line 1."
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "quoted_version",
+      "expected": "Invalid params: VIAL language_version must be a JSON integer",
+      "actual": "Invalid params: VIAL language_version must be a JSON integer at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 572, <$record_input> line 1."
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "unknown_tool",
+      "expected": "Unsupported MCP tool: fsmgen_no_such_tool",
+      "actual": "Unsupported MCP tool: fsmgen_no_such_tool at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 296, <$record_input> line 1."
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "unknown_method",
+      "expected": "Unsupported JSON-RPC method: widgets/missing",
+      "actual": "Unsupported JSON-RPC method: widgets/missing at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 416, <$record_input> line 1."
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "callback_plain",
+      "expected": "Callback rejected operator '/'",
+      "actual": "Callback rejected operator '/' at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15, <$record_input> line 1."
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "callback_authored_location",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic"
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "callback_authored_plus_native",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic at design.isf line 17. at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15, <$record_input> line 1."
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "callback_fake_suffix",
+      "expected": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected",
+      "actual": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15, <$record_input> line 1."
+    },
+    {
+      "label": "spaced:line_record",
+      "case": "callback_external_path",
+      "expected": "Operator '/' while opening '[absolute-path-redacted]'",
+      "actual": "Operator '[absolute-path-redacted]' while opening '[absolute-path-redacted]'"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "missing_source",
+      "expected": "Invalid params: source_path or source_id is required",
+      "actual": "Invalid params: source_path or source_id is required at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 522, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "quoted_version",
+      "expected": "Invalid params: VIAL language_version must be a JSON integer",
+      "actual": "Invalid params: VIAL language_version must be a JSON integer at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 572, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "unknown_tool",
+      "expected": "Unsupported MCP tool: fsmgen_no_such_tool",
+      "actual": "Unsupported MCP tool: fsmgen_no_such_tool at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 296, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "unknown_method",
+      "expected": "Unsupported JSON-RPC method: widgets/missing",
+      "actual": "Unsupported JSON-RPC method: widgets/missing at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 416, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "callback_plain",
+      "expected": "Callback rejected operator '/'",
+      "actual": "Callback rejected operator '/' at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "callback_authored_location",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic at design.isf line 17.\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "callback_authored_plus_native",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic at design.isf line 17. at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "callback_fake_suffix",
+      "expected": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected",
+      "actual": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15, <$record_input> chunk 1.\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "callback_quotes",
+      "expected": "Unsupported expression operator '/' at 'design.isf:17'",
+      "actual": "Unsupported expression operator '/' at 'design.isf:17'\n"
+    },
+    {
+      "label": "spaced:chunk_record",
+      "case": "callback_external_path",
+      "expected": "Operator '/' while opening '[absolute-path-redacted]'",
+      "actual": "Operator '[absolute-path-redacted]' while opening '[absolute-path-redacted]'\n"
+    },
+    {
+      "label": "spaced:one_shot",
+      "case": "missing_source",
+      "expected": "Invalid params: source_path or source_id is required",
+      "actual": "Invalid params: source_path or source_id is required at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 522."
+    },
+    {
+      "label": "spaced:one_shot",
+      "case": "quoted_version",
+      "expected": "Invalid params: VIAL language_version must be a JSON integer",
+      "actual": "Invalid params: VIAL language_version must be a JSON integer at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 572."
+    },
+    {
+      "label": "spaced:one_shot",
+      "case": "unknown_tool",
+      "expected": "Unsupported MCP tool: fsmgen_no_such_tool",
+      "actual": "Unsupported MCP tool: fsmgen_no_such_tool at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 296."
+    },
+    {
+      "label": "spaced:one_shot",
+      "case": "unknown_method",
+      "expected": "Unsupported JSON-RPC method: widgets/missing",
+      "actual": "Unsupported JSON-RPC method: widgets/missing at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 416."
+    },
+    {
+      "label": "spaced:persistent",
+      "case": "missing_source",
+      "expected": "Invalid params: source_path or source_id is required",
+      "actual": "Invalid params: source_path or source_id is required at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 522, <STDIN> line 1."
+    },
+    {
+      "label": "spaced:persistent",
+      "case": "quoted_version",
+      "expected": "Invalid params: VIAL language_version must be a JSON integer",
+      "actual": "Invalid params: VIAL language_version must be a JSON integer at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 572, <STDIN> line 2."
+    },
+    {
+      "label": "spaced:persistent",
+      "case": "unknown_tool",
+      "expected": "Unsupported MCP tool: fsmgen_no_such_tool",
+      "actual": "Unsupported MCP tool: fsmgen_no_such_tool at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 296, <STDIN> line 3."
+    },
+    {
+      "label": "spaced:persistent",
+      "case": "unknown_method",
+      "expected": "Unsupported JSON-RPC method: widgets/missing",
+      "actual": "Unsupported JSON-RPC method: widgets/missing at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 416, <STDIN> line 4."
+    },
+    {
+      "label": "spaced:custom_stdio",
+      "case": "callback_plain",
+      "expected": "Callback rejected operator '/'",
+      "actual": "Callback rejected operator '/' at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15, <$custom_input> line 1."
+    },
+    {
+      "label": "spaced:custom_stdio",
+      "case": "callback_authored_location",
+      "expected": "Authored diagnostic at design.isf line 17.",
+      "actual": "Authored diagnostic"
+    },
+    {
+      "label": "spaced:custom_stdio",
+      "case": "callback_fake_suffix",
+      "expected": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected",
+      "actual": "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected at [absolute-path-redacted] context at shelf line 7 [before v3][absolute-path-redacted] line 15, <$custom_input> line 1."
+    },
+    {
+      "label": "spaced:custom_stdio",
+      "case": "callback_external_path",
+      "expected": "Operator '/' while opening '[absolute-path-redacted]'",
+      "actual": "Operator '[absolute-path-redacted]' while opening '[absolute-path-redacted]'"
+    }
+  ],
+  "reader_controls": [
+    "missing_case",
+    "wrong_native_origin",
+    "borrowed_wire",
+    "caller_mutation",
+    "raw_data",
+    "source"
+  ]
+}

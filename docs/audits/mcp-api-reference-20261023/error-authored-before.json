@@ -1,0 +1,11 @@
+{
+   "authored_exception" : "Authored diagnostic at design.isf line 17.\n",
+   "response" : {
+      "error" : {
+         "code" : -32000,
+         "message" : "Authored diagnostic"
+      },
+      "id" : 1,
+      "jsonrpc" : "2.0"
+   }
+}

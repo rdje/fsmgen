@@ -108,7 +108,7 @@ Diagnostic limit_examples: omitted/zero/negative => 10; support-summary zero
 PERL-POD-API-REFERENCE.6.1.2.2.4.3; 2026-10-23 API/newline controls).
 Capability payloads: object/integer; manifest_schema_version is integer.
 all/contracts/examples: direct objects (.6.1.2.2.3, 2026-10-23).
-Tool admission/copies: same task .6.1.2.2.4.
+Same tree: .6.1.2.2.4 argument kinds/copies; .5.1 error audit (records/authored locations/case).
 
 One-shot JSON-RPC and newline stdio use UTF-8 JSON with
 MCP protocol `2025-06-18` (no Content-Length framing). Unsupported requested
