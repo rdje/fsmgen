@@ -65,11 +65,11 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.1: qualify source POD inventory and generation contract`
 
 - ID: `PERL-POD-API-REFERENCE.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement deterministic safe HTMLBatch generation and reference validation.`
   Acceptance: `Use repository-owned source snapshots and public POD interfaces to render the provided module POD, index and navigation. Bind output to complete relevant inputs/tool versions, keep paths relative and caches local, detect stale/missing/extra output, and protect unowned/symlinked/foreign paths. Prove ordinary generation, repeat identity, actual cross-page/fragment links and targeted malformed/stale/path controls. Split an unsafe expansion before implementation, synchronize build guidance, and commit before public-POD completion.`
-  Verification: `pending scope inventory`
-  Commit: `pending`
+  Verification: `Real HTMLBatch generator passes 12 Python fixture tests: local cross-page/fragment and no-POD links, nonexecution, fresh-render byte identity, no-write cache hit, stale sources, malformed diagnostics, incomplete/modified/extra output, symlink/nested-Git paths, unsafe manifests/URLs and lock contention. Production generation correctly refuses the .1-owned encoding errors without publishing. Perl syntax passes.`
+  Commit: `PERL-POD-API-REFERENCE.2: generate and validate deterministic POD reference`
 
 - ID: `PERL-POD-API-REFERENCE.3`
   Status: `pending`
@@ -171,3 +171,29 @@ HIAL, claim, locality, or source-feature signoff gates.
 ## Blockers
 
 - None at activation. Existing unrelated publication gates remain in force.
+
+## Acceptance Checklist — .2
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S '[output.html]' -1 -- docs/book/book.toml` identifies b8a083726, the native HTML configuration without POD generation. Real batch controls also exposed a globally scoped input separator that hid module pages and default external links that bypassed local fragment checks. Retained first/second/third logs show these failures; the input scope and public renderer hook now address them.
+- [x] **ADDRESSED (verified)** — The final real-render fixture suite reports `Ran 12 tests` and `OK`; malformed production POD is rejected before replacement. Complete populations are joined before publication. The generator fingerprints all source/tool bytes and versions and owns only its dedicated output tree. Generated local links, including no-POD pages, pass page/fragment checks.
+- [x] **NO REGRESSION** — Actual syntax diagnostics from the same checked source:
+
+  scripts/pod_api_render.pl syntax OK
+  scripts/lib/FSMGen/PodHTML.pm syntax OK
+
+### .2 evidence and boundaries
+
+- Run `python3 -B -m unittest discover -s t/python -p test_fixture_pod_api.py -v`.
+  Saved first failures and production refusal are compressed under
+  `docs/audits/pod-api-20261023/`; controls reproduce against the checked source.
+- A fresh render and unchanged cache hit are separate tests. Identity is earned
+  by complete file-byte comparison, broken by source/output mutations, and
+  retained by the manifest and executable test. No cross-tool-version identity
+  is claimed. The production POD population remains blocked until .3 repairs
+  the diagnosed encoding declarations. Native delivery/serve qualification is
+  still .4/.5, not implied by generator tests.
+- Temporary source snapshots and locking live under `.artifacts/`; the only
+  public output is the dedicated generated directory. Nonempty unowned trees,
+  unknown extra members, symlinks, nested Git boundaries and foreign volumes
+  fail before replacement. `--repair` permits replacement only of manifest-owned
+  missing/modified files and still refuses extras.

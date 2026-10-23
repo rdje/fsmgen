@@ -1,0 +1,8 @@
+{
+  "FSM::Adapter::ISF": "ISF parsing facade",
+  "FSM::Pipeline::HDLGenerator": "HDL generation facade",
+  "FSM::Scheduler::ISF": "ISF scheduling facade",
+  "FSM::Support::CapabilityManifest": "Capability discovery",
+  "FSM::Support::SemanticIntrospectionMCPAdapter": "Read-only MCP adapter",
+  "FSM::VIAL::Tool": "VIAL tooling and typed source inspection"
+}

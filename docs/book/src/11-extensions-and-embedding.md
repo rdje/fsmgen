@@ -3947,3 +3947,17 @@ For the exact extension boundary and design notes, see:
 
 - [EXTENSION_MODEL.md](../../EXTENSION_MODEL.md)
 - [ROADMAP_V2.md](../../ROADMAP_V2.md)
+
+## Perl POD Reference Generation
+
+The repository reference tool uses `Pod::Simple::HTMLBatch` and its public
+renderer hooks. It reads repository-owned module source without loading those
+modules. POD pages describe the Perl bindings and implementation; the semantic,
+MCP and stability contracts in this chapter remain authoritative.
+
+The generator validates POD syntax, source/output freshness, complete output
+membership, local page links and fragments. Modules without POD receive an
+explicit coverage entry, without a claim that their methods are documented or
+supported. A malformed source document prevents publishing a replacement tree.
+The task-owned facade-POD repairs and native mdBook integration follow this
+validated generator slice; the normal book workflow is unchanged at this stage.
