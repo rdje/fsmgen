@@ -266,14 +266,14 @@ HIAL, claim, locality, or source-feature signoff gates.
   Commit: `PERL-POD-API-REFERENCE.6.1.2.2.5.2: preserve public reasons when removing native error locations`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5.3`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve capitalized division-operator context while continuing to redact actual paths.`
   Acceptance: `The actual .5.1 callback with capitalized Operator redacts its quoted slash while lowercase operator preserves it. Own this P2 authored-message corruption now, reproduce the context predicate with genuine RED controls, and make the bounded case-insensitive context repair after .5.2. Preserve singular/list context, ordinary roots and longer paths; qualify actual message/report paths, original/new controls and the same error packet before committing. No broad string/path exemption.`
-  Verification: `Original capture and independent reader retain all eight capitalized-context observations. The prefix regex is case-sensitive; git log -S 'my $operator_context' locates 2dc265476. Immediate successor ownership is fixed; no source-report-wide corruption is inferred.`
-  Commit: `pending`
+  Verification: `Actual original live regression has two capitalized-context subcase failures at the ordinary and spaced roots; all positive stock/refusal/preservation controls retain. Case-insensitive singular/list context predicates repair all eight complete captured messages and conserve the other 112 responses. Both original/repaired source/frame/native/caller readers and six controls pass; four restored-loss/unredacted-path/authored-loss/changed-ping interventions reject. Focused native/API/newline report parity passes Files=2 Tests=8, and both actual pipe tests pass. POD/book/source/delivery/Knowledge Map checks pass; zero-reason fallback remains .5.4.`
+  Commit: `PERL-POD-API-REFERENCE.6.1.2.2.5.3: preserve capitalized division-operator context`
 
 - ID: `PERL-POD-API-REFERENCE.6.1.2.2.5.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve nonempty zero-valued authored exception reasons.`
   Acceptance: `Own the actual callback die of 0 plus newline returning the generic adapter message instead of the nonempty reason. This P2 embedded-exception loss comes from the post-format truthiness fallback. Immediately after .5.3, reproduce it with focused RED/GREEN API and pipe controls, select fallback by emptiness rather than truthiness, preserve truly empty fallback and code/message-only shape, synchronize POD/book and commit. No structured-report or native-CLI-wide corruption is inferred.`
   Verification: `The .5.2 audit's actual public request and complete response retain in error-zero-reason-before.json, joined to the exact adapter in error-location-after.json.gz. After LF normalization the string 0 is nonempty but false; the handler chooses the generic fallback. Immediate follow-up ownership precedes example typing.`
@@ -1249,3 +1249,33 @@ observer qualification first corrects omitted/null labels and UTF-8 literals.
 - Complete staged doctrines and normal commit hooks, empty the brief, verify
   clean state, then continue .5.3/.4 and example result typing. Historical
   attribution, full-CI/push gates and final whole-reference qualification retain.
+
+
+## Acceptance Checklist — .6.1.2.2.5.3
+
+- [x] **ROOT CAUSE (WHY + WHERE)** — `git log -S 'my $operator_context' -1 -- perl/FSM/Support/SemanticIntrospectionMCPAdapter.pm` identifies 2dc265476's case-sensitive prefix predicates. The committed .5.1/.5.2 native/public capture retains the capitalized Operator slash becoming an absolute-path redaction. A fresh real-pipe RED run on 031dbd425 fails exactly the two capitalized custom-handle subcases at ordinary/spaced roots, with other current controls positive. Exact original adapter/tests/log retain in error-operator-red.json.gz.
+- [x] **ADDRESSED (verified)** — Only the singular/list context predicates gain case-insensitive matching. Ordinary roots and longer paths retain redaction. Complete original/repaired source/native/frame/caller/envelope/message joins repair all eight selected capitalized responses and conserve all 112 others. The independent comparator proves those two modifiers are the complete runtime diff. Both packets pass the six existing reader controls, and four restored-loss/unredacted-path/authored-location-loss/changed-ping controls reject. The actual pipe regression is GREEN at both roots. POD/book remove the resolved caveat and accurately describe the envelope fields and bounded context.
+- [x] **NO REGRESSION** — All tests successful. Files=2, Tests=8 for focused error-data and full native/API/newline diagnostic/report parity, including successful division. Extended report and message controls cover title/upper/mixed context, singular/list phrases, contextual and ordinary roots, longer/quoted paths, URIs and relative text. Both actual pipe tests pass. Python 3.9 syntax, native POD/book/source/index/copied-byte/link and Knowledge Map gates qualify. The selected controls imply no full language, arbitrary-message provenance, platform or runtime qualification.
+
+### .6.1.2.2.5.3 custody and continuity
+
+- Re-derivation: actual public report/error and stock/custom UTF-8 transports,
+  plus complete error contexts from original and spaced same-volume roots.
+  Falsification: independent full-value/source/origin/framing joins, original
+  actual RED/repaired GREEN and coherent restored-loss/path/source/ping controls.
+  Durability: `error-operator-*` captures, comparisons, source capsule, logs,
+  CI tests and tracked reader in the dated MCP audit directory.
+- The incoming packet binds the exact 031dbd425 adapter via its earlier
+  explicit source overlay; the new packet binds this repair at that HEAD.
+  Every other selected source is byte-identical. The full source footprint is
+  434 paths and the copied root has 431 verified files. No prior artifact is
+  rewritten or relabeled. The original reader and location-only comparison
+  still recheck their own historical packets with their own expected gaps.
+- Case folding only changes recognition of operator diagnostic context. It
+  does not exempt longer absolute paths or ordinary quoted filesystem roots.
+  The remaining zero-reason fallback discrepancy stays visible in POD/book
+  and owned by immediate .5.4. Reference-address/protocol/model coverage and
+  final whole-reference signoff remain under the existing exhaustive frontier.
+- Complete normal staged/commit gates, clear the brief and verify clean state,
+  then continue .5.4 before example typing and the backing-model/reference gap
+  graph. Historical source attribution, full CI/push and final visual gates retain.

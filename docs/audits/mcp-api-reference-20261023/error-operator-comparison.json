@@ -1,0 +1,29 @@
+{
+  "selected_sources": 434,
+  "copied_files": 431,
+  "repaired_context_responses": 8,
+  "complete_responses_conserved": 112,
+  "remaining_selected_findings": [],
+  "original_reader_controls": [
+    "missing_case",
+    "wrong_native_origin",
+    "borrowed_wire",
+    "caller_mutation",
+    "raw_data",
+    "source"
+  ],
+  "repaired_reader_controls": [
+    "missing_case",
+    "wrong_native_origin",
+    "borrowed_wire",
+    "caller_mutation",
+    "raw_data",
+    "source"
+  ],
+  "repair_controls": [
+    "restored_capitalized_loss",
+    "unredacted_path",
+    "lost_authored_location",
+    "changed_ping"
+  ]
+}

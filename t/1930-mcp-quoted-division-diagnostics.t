@@ -55,9 +55,16 @@ subtest 'operator context does not exempt actual paths' => sub {
         ['Malformed expression operator "/" with invalid arity', 'Malformed expression operator "/" with invalid arity'],
         ["Active expression operators currently include '!', '+', '/', '%'", "Active expression operators currently include '!', '+', '/', '%'"],
         ['operators include "+", "/", "concat"', 'operators include "+", "/", "concat"'],
+        ["Unsupported expression Operator '/'", "Unsupported expression Operator '/'"],
+        ['Malformed expression OPERATOR "/" with invalid arity', 'Malformed expression OPERATOR "/" with invalid arity'],
+        ["Active expression Operators Currently Include '!', '+', '/', '%'", "Active expression Operators Currently Include '!', '+', '/', '%'"],
+        ['OPERATORS INCLUDE "+", "/", "concat"', 'OPERATORS INCLUDE "+", "/", "concat"'],
         ["operator '/' then opened '/outside/private dir/source.fsm'", "operator '/' then opened '[absolute-path-redacted]'"],
+        ["Operator '/' then opened '/outside/private dir/source.fsm'", "Operator '/' then opened '[absolute-path-redacted]'"],
         ["operator '/outside/source.fsm'", "operator '[absolute-path-redacted]'"],
+        ["OPERATOR '/outside/source.fsm'", "OPERATOR '[absolute-path-redacted]'"],
         ["path '/'", "path '[absolute-path-redacted]'"],
+        ["PATH '/'", "PATH '[absolute-path-redacted]'"],
         ['"/"', '"[absolute-path-redacted]"'],
         ['/', '[absolute-path-redacted]'],
         ["Source '$root/$source_id'", "Source '$source_id'"],
@@ -74,12 +81,14 @@ subtest 'operator context does not exempt actual paths' => sub {
         my $out = $adapter->call_tool('fsmgen_check', {source_id => $source_id});
         is($out->{structuredContent}{report}{message}, $expected, "contextual sanitization: $message");
     }
-    my $throwing = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root,
-        runner => sub { die "Malformed expression operator '/' while opening '/outside/private.fsm'\n" });
-    my $error = $throwing->handle_jsonrpc_request({jsonrpc => '2.0', id => 1, method => 'tools/call',
-        params => {name => 'fsmgen_check', arguments => {source_id => $source_id}}});
-    is($error->{error}{code}, -32000, 'runner failure keeps adapter error code');
-    is($error->{error}{message}, "Malformed expression operator '/' while opening '[absolute-path-redacted]'", 'message-only errors preserve operator and redact path');
-    ok(!exists $error->{error}{data}, 'no raw error payload introduced');
+    for my $operator ('operator', 'Operator', 'OPERATOR') {
+        my $throwing = FSM::Support::SemanticIntrospectionMCPAdapter->new(repo_root => $root, workspace_root => $root,
+            runner => sub { die "Malformed expression $operator '/' while opening '/outside/private.fsm'\n" });
+        my $error = $throwing->handle_jsonrpc_request({jsonrpc => '2.0', id => 1, method => 'tools/call',
+            params => {name => 'fsmgen_check', arguments => {source_id => $source_id}}});
+        is_deeply($error, {jsonrpc => '2.0', id => 1, error => {code => -32000,
+            message => "Malformed expression $operator '/' while opening '[absolute-path-redacted]'"}},
+            "$operator message-only error preserves operator and redacts path");
+    }
 };
 done_testing;

@@ -64,6 +64,7 @@ class MCPErrorTest(unittest.TestCase):
             ('callback_authored_location', 'Authored diagnostic at design.isf line 17.'),
             ('callback_fake_suffix', "Reason at design.isf line 17, <pretend> line 9; operator '/' rejected"),
             ('callback_quotes', "Unsupported expression operator '/' at 'design.isf:17'"),
+            ('callback_external_path', "Operator '/' while opening '[absolute-path-redacted]'"),
         ]
         for root in (ROOT, self.moved):
             for name, expected in cases:

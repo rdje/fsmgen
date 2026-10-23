@@ -1037,8 +1037,8 @@ sub _sanitize_quoted_public_path {
     # A quoted division token in an operator diagnostic is not a filesystem
     # root. Keep this exception contextual: ordinary quoted roots and longer
     # paths still go through the same containment/redaction policy.
-    my $operator_context = $prefix =~ /\boperator\s*\z/
-        || $prefix =~ /\boperators(?:\s+currently)?\s+include\s+(?:(['"])[^'"\r\n]+\1,\s*)*\z/;
+    my $operator_context = $prefix =~ /\boperator\s*\z/i
+        || $prefix =~ /\boperators(?:\s+currently)?\s+include\s+(?:(['"])[^'"\r\n]+\1,\s*)*\z/i;
     my $public = $path eq '/' && $operator_context
         ? $path : $self->_sanitize_public_path($path);
     return $quote . $public . $quote;
@@ -1620,7 +1620,7 @@ confuse those records with compact samples.
 =head1 ERROR MESSAGES
 
 C<handle_jsonrpc_request> returns adapter failures as JSON-RPC errors with
-C<code> and C<message>; it does not include C<error.data>, raw commands or stderr.
+C<code> and C<message>. The envelope has no C<error.data>, command or stderr fields.
 Invalid tool parameters use C<-32602>, unsupported methods use C<-32601>, and
 other adapter failures use C<-32000>. A valid source-query result can instead
 carry C<isError: true> and its structured diagnostic report. Use that report's
@@ -1641,9 +1641,9 @@ formatter. Structured source reports retain their separate diagnostic contract.
 Messages then follow path redaction and control-character filtering, with a
 maximum of 2048 Perl characters including the C< [truncated]> marker when
 truncated. That limit is not a UTF-8 byte limit. Multi-line public reasons keep
-their internal newlines. The current capitalized C<Operator '/'> context still
-has a separately owned redaction discrepancy; lowercase operator context and
-ordinary filesystem-root/path redaction retain their established behavior.
+their internal newlines. Quoted division tokens in singular-operator and
+operator-list diagnostic contexts preserve regardless of capitalization.
+Ordinary filesystem roots and longer paths still follow path redaction.
 An authored zero-valued reason currently selects the generic fallback message;
 its nonempty-string preservation repair is separately owned.
 
